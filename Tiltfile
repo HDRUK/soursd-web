@@ -1,6 +1,6 @@
-## Gateway Web Tiltfile
+## SPeeDI-AS api Tiltfile
 ##
-## Loki Sinclair <loki.sinclair@hdruk.ac.uk>
+## Peter Hammans <peter.hammans@hdruk.ac.uk>
 ##
 
 cfg = read_json('tiltconf.json')

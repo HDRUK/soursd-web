@@ -1,16 +1,22 @@
-import { http, HttpResponse } from "msw";
-import { setupServer, SetupServerApi } from "msw/node";
+import { createServer, Server } from "miragejs";
+import endpointRoutes from "./api/endpoint";
 
-function createServer() {
-  return setupServer(
-    http.get("/_endpoint_", () => {
-      return HttpResponse.json({});
-    })
-  );
+type ServerRoute = (
+  server: Server
+) => Server["get"] | Server["post"] | Server["patch"] | Server["delete"];
+
+function addRoutes(routes: ServerRoute[]) {}
+
+export function makeServer({ environment = "test" } = {}) {
+  return createServer({
+    environment,
+    seeds() {},
+    routes() {
+      this.urlPrefix = process.env.NEXT_PUBLIC_API_V1_URL || "";
+
+      [...endpointRoutes].forEach(route => {
+        route(this);
+      });
+    },
+  });
 }
-
-function listen(server: SetupServerApi) {
-  server.listen();
-}
-
-export { createServer, listen };
