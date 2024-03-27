@@ -1,5 +1,5 @@
 import { Server } from "miragejs";
 
-export default (server: Server) => {
+export default function getEntity(server: Server) {
   return server.get("/endpoint", () => ({}));
-};
+}

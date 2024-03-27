@@ -5,8 +5,6 @@ type ServerRoute = (
   server: Server
 ) => Server["get"] | Server["post"] | Server["patch"] | Server["delete"];
 
-function addRoutes(routes: ServerRoute[]) {}
-
 export function makeServer({ environment = "test" } = {}) {
   return createServer({
     environment,
