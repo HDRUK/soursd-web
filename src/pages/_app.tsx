@@ -1,5 +1,4 @@
 import { makeServer } from "@/mocks/server";
-import { Footer, PageLayout } from "@/modules";
 import theme from "@/theme";
 import { AppCacheProvider } from "@mui/material-nextjs/v14-pagesRouter";
 import { ThemeProvider } from "@mui/material/styles";
@@ -15,10 +14,7 @@ export default function App(props: AppProps) {
   return (
     <AppCacheProvider {...props}>
       <ThemeProvider theme={theme}>
-        <PageLayout>
-          <Component {...pageProps} />
-          <Footer />
-        </PageLayout>
+        <Component {...pageProps} />
       </ThemeProvider>
     </AppCacheProvider>
   );

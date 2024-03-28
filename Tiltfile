@@ -15,7 +15,6 @@ docker_build(
     dockerfile='./Dockerfile.dev'
 )
 
-k8s_yaml('chart/' + cfg.get('name') + '/' + cfg.get('name') + '.yaml')
 k8s_resource(
     cfg.get('name'),
     port_forwards=3000
