@@ -1,6 +1,7 @@
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
 import { locales } from "@/config";
 import { Footer, PageLayout } from "@/modules";
+import { Box } from "@mui/material";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import type { Metadata } from "next";
 import { NextIntlClientProvider, useMessages } from "next-intl";
@@ -34,7 +35,7 @@ export default function RootLayout({
           <AppRouterCacheProvider>
             <ThemeRegistry>
               <PageLayout>
-                {children}
+                <Box sx={{ mb: "200px" }}>{children}</Box>
                 <Footer />
               </PageLayout>
             </ThemeRegistry>

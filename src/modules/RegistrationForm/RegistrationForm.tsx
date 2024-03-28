@@ -6,7 +6,13 @@ import { useTranslations } from "next-intl";
 import { useCallback } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
-import { StyledForm, StyledFormPersonalDetails } from "./Footer.styles";
+import PersonIcon from "@mui/icons-material/Person";
+import EmailIcon from "@mui/icons-material/Email";
+import MessageIcon from "@mui/icons-material/Message";
+import {
+  StyledForm,
+  StyledFormPersonalDetails,
+} from "./RegistrationForm.styles";
 
 const schema = yup.object().shape({
   name: yup.string().required(),
@@ -20,7 +26,7 @@ interface FormValues {
   message: string;
 }
 
-export default function FooterForm() {
+export default function RegistrationForm() {
   const t = useTranslations("Footer");
   const theme = useTheme();
 
@@ -49,12 +55,14 @@ export default function FooterForm() {
           size="small"
           placeholder={t("namePlaceholder")}
           error={!!errors.name}
+          startAdornment={<PersonIcon sx={{ color: "white" }} />}
         />
         <OutlinedInput
           {...register("email")}
           size="small"
           placeholder={t("emailPlaceholder")}
           error={!!errors.email}
+          startAdornment={<EmailIcon sx={{ color: "white" }} />}
         />
       </StyledFormPersonalDetails>
       <Box sx={{ display: "flex", gap: theme.spacing(2) }}>
@@ -65,9 +73,10 @@ export default function FooterForm() {
             placeholder={t("messagePlaceholder")}
             error={!!errors.message}
             fullWidth
+            startAdornment={<MessageIcon sx={{ color: "white" }} />}
           />
         </Box>
-        <Button type="submit" variant="contained">
+        <Button type="submit" color="inherit" variant="contained">
           Send
         </Button>
       </Box>

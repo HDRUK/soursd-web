@@ -1,26 +1,13 @@
 "use client";
 
-import { Box, useTheme } from "@mui/material";
 import { HTMLAttributes, PropsWithChildren } from "react";
+import { StyledPageLayout } from "./PageLayout.styles";
 
-export type PageLayoutProps = PropsWithChildren<HTMLAttributes<HTMLDivElement>>;
+type PageLayoutProps = PropsWithChildren<HTMLAttributes<HTMLDivElement>>;
 
 export default function PageLayout({
   children,
   ...restProps
 }: PageLayoutProps) {
-  const theme = useTheme();
-
-  return (
-    <Box
-      sx={{
-        mx: "auto",
-        maxWidth: "1920px",
-        width: "100vw",
-        px: theme.spacing(20),
-      }}
-      {...restProps}>
-      {children}
-    </Box>
-  );
+  return <StyledPageLayout {...restProps}>{children}</StyledPageLayout>;
 }

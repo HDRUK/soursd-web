@@ -23,15 +23,17 @@
     "@emotion/styled": "^11.11.0",
     "@emotion/utils": "^1.2.1",
     "@hookform/resolvers": "^3.3.4",
+    "@mui/icons-material": "^5.15.14",
     "@mui/material": "^5.15.14",
     "@mui/material-nextjs": "^5.15.11",
+    "i": "^0.3.7",
     "next": "14.1.4",
     "next-intl": "^3.10.0",
+    "npm": "^10.5.0",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.51.1",
-    "yup": "^1.4.0",
-    "zod": "^3.22.4"
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^1.2.25",
