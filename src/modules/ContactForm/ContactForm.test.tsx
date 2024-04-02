@@ -47,7 +47,7 @@ describe("<ContacForm />", () => {
 
       expect(mockSubmit).toHaveBeenCalled();
     } else {
-      fail("Name, email or message do not exist");
+      fail("Name, email or message does not exist");
     }
   });
 });
