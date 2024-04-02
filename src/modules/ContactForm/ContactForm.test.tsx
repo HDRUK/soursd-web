@@ -49,49 +49,5 @@ describe("<ContacForm />", () => {
     } else {
       fail("Name, email or message do not exist");
     }
-
-    // fireEvent.input(screen.getByLabelText("email"), {
-    //   target: {
-    //     value: faker.internet.email(),
-    //   },
-    // });
-
-    // fireEvent.input(screen.getByLabelText("message"), {
-    //   target: {
-    //     value: faker.string.sample(),
-    //   },
-    // });
   });
 });
-
-// it("should display required error when value is invalid", async () => {
-//   render(<ContactForm login={mockLogin} />)
-
-//   fireEvent.submit(screen.getByRole("button"))
-
-//   expect(await screen.findAllByRole("alert")).toHaveLength(2)
-//   expect(mockLogin).not.toBeCalled()
-// })
-
-// it("should display matching error when email is invalid", async () => {
-//   render(<App login={mockLogin} />)
-
-//   fireEvent.input(screen.getByRole("textbox", { name: /email/i }), {
-//     target: {
-//       value: "test",
-//     },
-//   })
-
-//   fireEvent.input(screen.getByLabelText("password"), {
-//     target: {
-//       value: "password",
-//     },
-//   })
-
-//   fireEvent.submit(screen.getByRole("button"))
-
-//   expect(await screen.findAllByRole("alert")).toHaveLength(1)
-//   expect(mockLogin).not.toBeCalled()
-//   expect(screen.getByRole("textbox", { name: /email/i })).toHaveValue("test")
-//   expect(screen.getByLabelText("password")).toHaveValue("password")
-// })

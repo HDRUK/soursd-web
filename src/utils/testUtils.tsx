@@ -1,6 +1,5 @@
+import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
 import messages from "@/config/locales/en.json";
-import theme from "@/theme";
-import { ThemeProvider } from "@emotion/react";
 import { AppCacheProvider } from "@mui/material-nextjs/v14-pagesRouter";
 import {
   RenderHookOptions,
@@ -17,7 +16,7 @@ const Wrapper = ({ children }: { children: ReactNode }) => {
   return (
     <NextIntlClientProvider locale="en" messages={messages}>
       <AppCacheProvider>
-        <ThemeProvider theme={theme}>{children}</ThemeProvider>
+        <ThemeRegistry>{children}</ThemeRegistry>
       </AppCacheProvider>
     </NextIntlClientProvider>
   );

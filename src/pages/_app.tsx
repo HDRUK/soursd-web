@@ -13,9 +13,7 @@ export default function App(props: AppProps) {
 
   return (
     <AppCacheProvider {...props}>
-      <ThemeProvider theme={theme}>
-        <Component {...pageProps} />
-      </ThemeProvider>
+      <Component {...pageProps} />
     </AppCacheProvider>
   );
 }
