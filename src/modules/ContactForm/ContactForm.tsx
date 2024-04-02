@@ -76,7 +76,7 @@ export default function ContactForm({ onSubmit }: ContactFormProps) {
           />
         </Box>
         <Button type="submit" color="inherit" variant="contained">
-          Send
+          {t("sendButton")}
         </Button>
       </Box>
     </StyledForm>

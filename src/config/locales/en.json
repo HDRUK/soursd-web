@@ -6,6 +6,7 @@
   "ContactForm": {
     "namePlaceholder": "Name",
     "emailPlaceholder": "Email",
-    "messagePlaceholder": "Message"
+    "messagePlaceholder": "Message",
+    "sendButton": "Send"
   }
 }
