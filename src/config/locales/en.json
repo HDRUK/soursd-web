@@ -1,1 +1,12 @@
-{}
+{
+  "Footer": {
+    "contactFormTitle": "Contact Us",
+    "contactFormSubtitle": "Some subtitle here"
+  },
+  "ContactForm": {
+    "namePlaceholder": "Name",
+    "emailPlaceholder": "Email",
+    "messagePlaceholder": "Message",
+    "sendButton": "Send"
+  }
+}

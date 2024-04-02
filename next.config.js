@@ -7,7 +7,6 @@ const nextConfig = withNextIntl({
   swcMinify: true,
   env: {
     API_V1_URL: process.env.NEXT_PUBLIC_API_V1_URL,
-    API_V1_IP_URL: process.env.NEXT_PUBLIC_API_V1_IP_URL,
   },
   images: {
     remotePatterns: [
