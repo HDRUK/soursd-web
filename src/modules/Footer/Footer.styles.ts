@@ -42,7 +42,7 @@ export const StyledFeatureArea = styled("div")(
 );
 
 export const StyledLinks = styled("div")(
-  ({ theme }) => ss`
+  ({ theme }) => css`
     width: 100%;
     background: ${theme.palette.index?.blue};
 
