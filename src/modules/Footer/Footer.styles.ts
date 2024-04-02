@@ -10,25 +10,21 @@ export const StyledFeatureArea = styled("div")(
     :after {
       content: "";
       position: absolute;
-      background-size: cover;
-      width: 100%;
-      top: -90px;
-      height: 90px;
+      top: 0;
+      transform: translateY(-100%);
     }
 
     :before {
-      background: #0a1649;
+      background: ${theme.palette.index?.blue};
       border-top-right-radius: 100%;
-      top: -100px;
       height: 100px;
       width: 50%;
       left: 0;
     }
 
     :after {
-      background: #7446f8;
+      background: ${theme.palette.index?.purple};
       border-top-left-radius: 100%;
-      top: -50px;
       height: 50px;
       width: 100%;
       right: 0;
@@ -39,11 +35,11 @@ export const StyledFeatureArea = styled("div")(
 export const StyledLinks = styled("footer")(
   ({ theme }) => css`
     width: 100%;
-    background: #0a1649;
+    background: ${theme.palette.index?.blue};
     padding: ${theme.spacing(10)} ${theme.spacing(20)};
     position: relative;
     color: #fff;
-    border-top: 1px solid #ccc;
+    border-top: 1px solid ${theme.palette.grey["200"]};
     display: flex;
     gap: ${theme.spacing(15)};
   `

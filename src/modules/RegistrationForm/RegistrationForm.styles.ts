@@ -25,7 +25,7 @@ export const StyledForm = styled("form")(
     .MuiOutlinedInput-root:not(.Mui-error):hover
       .MuiOutlinedInput-notchedOutline,
     .MuiOutlinedInput-root:not(.Mui-error) .MuiOutlinedInput-notchedOutline {
-      border-color: white;
+      border-color: #fff;
     }
   `
 );

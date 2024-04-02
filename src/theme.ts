@@ -14,6 +14,12 @@ const theme = createTheme({
     fontFamily: roboto.style.fontFamily,
   },
   spacing: 4,
+  palette: {
+    index: {
+      purple: "#7446f8",
+      blue: "#0a1649",
+    },
+  },
 });
 
 export default theme;
