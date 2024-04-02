@@ -35,7 +35,7 @@ export default function RootLayout({
           <AppRouterCacheProvider>
             <ThemeRegistry>
               <PageLayout>
-                <Box sx={{ mb: "200px" }}>{children}</Box>
+                {children}
                 <Footer />
               </PageLayout>
             </ThemeRegistry>

@@ -1,12 +1,18 @@
 "use client";
 
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 import RegistrationForm from "../RegistrationForm/RegistrationForm";
-import { StyledFeatureArea, StyledFooter, StyledLinks } from "./Footer.styles";
+import { StyledFeatureArea, StyledLinks } from "./Footer.styles";
 
 export default function Footer() {
+  const theme = useTheme();
+
   return (
-    <footer>
+    <Box
+      component="footer"
+      sx={{
+        mt: theme.spacing(40),
+      }}>
       <StyledFeatureArea>
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <Box sx={{ flexGrow: 1 }}>
@@ -52,6 +58,6 @@ export default function Footer() {
           </Typography>
         </div>
       </StyledLinks>
-    </footer>
+    </Box>
   );
 }
