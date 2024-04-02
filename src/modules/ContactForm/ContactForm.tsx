@@ -16,7 +16,7 @@ const schema = yup.object().shape({
   message: yup.string().required(),
 });
 
-interface ContactFormValues {
+export interface ContactFormValues {
   name: string;
   email: string;
   message: string;
@@ -26,8 +26,8 @@ interface ContactFormProps {
   onSubmit: (data: ContactFormValues) => void;
 }
 
-export default function RegistrationForm({ onSubmit }: ContactFormProps) {
-  const t = useTranslations("Footer");
+export default function ContactForm({ onSubmit }: ContactFormProps) {
+  const t = useTranslations("ContactForm");
   const theme = useTheme();
 
   const {

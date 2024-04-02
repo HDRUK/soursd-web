@@ -1,12 +1,14 @@
 "use client";
 
 import { Box, Typography, useTheme } from "@mui/material";
-import ContactForm from "../ContactForm/ContactForm";
-import { StyledFeatureArea, StyledLinks } from "./Footer.styles";
+import { useTranslations } from "next-intl";
 import { useCallback } from "react";
+import ContactForm, { ContactFormValues } from "../ContactForm/ContactForm";
+import { StyledFeatureArea, StyledLinks } from "./Footer.styles";
 
 export default function Footer() {
   const theme = useTheme();
+  const t = useTranslations("Footer");
 
   const handleContactSubmit = useCallback((data: ContactFormValues) => {
     console.log("Submitted data", data);
@@ -21,10 +23,10 @@ export default function Footer() {
       <StyledFeatureArea>
         <Box sx={{ flexGrow: 1 }}>
           <Typography variant="h5" color="white">
-            Contact us
+            {t("contactFormTitle")}
           </Typography>
           <Typography variant="subtitle1" color="white">
-            Some subtitle here
+            {t("contactFormSubtitle")}
           </Typography>
         </Box>
         <ContactForm onSubmit={handleContactSubmit} />

@@ -1,7 +1,5 @@
 import { makeServer } from "@/mocks/server";
-import theme from "@/theme";
 import { AppCacheProvider } from "@mui/material-nextjs/v14-pagesRouter";
-import { ThemeProvider } from "@mui/material/styles";
 import type { AppProps } from "next/app";
 
 if (process.env.NEXT_PUBLIC_MOCK_DEV_SERVER === "true") {
