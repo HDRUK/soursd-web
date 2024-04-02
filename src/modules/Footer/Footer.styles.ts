@@ -4,7 +4,7 @@ export const StyledFeatureArea = styled("div")(
   ({ theme }) => css`
     background: #7446f8;
     position: relative;
-    padding: 20px ${theme.spacing(8)} ${theme.spacing(10)};
+    padding: 0 ${theme.spacing(8)} ${theme.spacing(11)};
 
     :before,
     :after {
@@ -12,17 +12,26 @@ export const StyledFeatureArea = styled("div")(
       position: absolute;
       background-size: cover;
       width: 100%;
-      top: -150px;
-      height: 165px;
-      left: 0;
+      top: -90px;
+      height: 90px;
     }
 
     :before {
-      background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNDQwIDMyMCI+PHBhdGggZmlsbD0iIzBCMTY0OSIgZmlsbC1vcGFjaXR5PSIxIiBkPSJNMCw5Nkw0OCw4NS4zQzk2LDc1LDE5Miw1MywyODgsMzcuM0MzODQsMjEsNDgwLDExLDU3Niw0OEM2NzIsODUsNzY4LDE3MSw4NjQsMjA4Qzk2MCwyNDUsMTA1NiwyMzUsMTE1MiwyMTMuM0MxMjQ4LDE5MiwxMzQ0LDE2MCwxMzkyLDE0NEwxNDQwLDEyOEwxNDQwLDMyMEwxMzkyLDMyMEMxMzQ0LDMyMCwxMjQ4LDMyMCwxMTUyLDMyMEMxMDU2LDMyMCw5NjAsMzIwLDg2NCwzMjBDNzY4LDMyMCw2NzIsMzIwLDU3NiwzMjBDNDgwLDMyMCwzODQsMzIwLDI4OCwzMjBDMTkyLDMyMCw5NiwzMjAsNDgsMzIwTDAsMzIwWiI+PC9wYXRoPjwvc3ZnPg==");
+      background: #0a1649;
+      border-top-right-radius: 100%;
+      top: -100px;
+      height: 100px;
+      width: 50%;
+      left: 0;
     }
 
     :after {
-      background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNDQwIDMyMCI+PHBhdGggZmlsbD0iIzc1NDZmOCIgZmlsbC1vcGFjaXR5PSIxIiBkPSJNMCwxMjhMODAsMTQ0QzE2MCwxNjAsMzIwLDE5Miw0ODAsMTgxLjNDNjQwLDE3MSw4MDAsMTE3LDk2MCw5MC43QzExMjAsNjQsMTI4MCw2NCwxMzYwLDY0TDE0NDAsNjRMMTQ0MCwzMjBMMTM2MCwzMjBDMTI4MCwzMjAsMTEyMCwzMjAsOTYwLDMyMEM4MDAsMzIwLDY0MCwzMjAsNDgwLDMyMEMzMjAsMzIwLDE2MCwzMjAsODAsMzIwTDAsMzIwWiI+PC9wYXRoPjwvc3ZnPg==");
+      background: #7446f8;
+      border-top-left-radius: 100%;
+      top: -50px;
+      height: 50px;
+      width: 100%;
+      right: 0;
     }
   `
 );
