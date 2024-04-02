@@ -41,9 +41,8 @@ export const StyledFeatureArea = styled("div")(
   `
 );
 
-export const StyledLinks = styled("div")(({ theme }) => {
-  console.log(theme.breakpoints.up("sm"));
-  return css`
+export const StyledLinks = styled("div")(
+  ({ theme }) => ss`
     width: 100%;
     background: ${theme.palette.index?.blue};
 
@@ -60,5 +59,5 @@ export const StyledLinks = styled("div")(({ theme }) => {
       flex-direction: row;
       padding: ${theme.spacing(10)} ${theme.spacing(20)};
     }
-  `;
-});
+  `
+);
