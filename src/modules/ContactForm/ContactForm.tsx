@@ -33,7 +33,6 @@ export default function RegistrationForm({ onSubmit }: ContactFormProps) {
   const {
     register,
     handleSubmit,
-    getValues,
     formState: { errors },
   } = useForm<ContactFormValues>({
     resolver: yupResolver(schema),
@@ -43,8 +42,6 @@ export default function RegistrationForm({ onSubmit }: ContactFormProps) {
       message: "",
     },
   });
-
-  console.log("**********", getValues());
 
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit)}>

@@ -41,8 +41,9 @@ export const StyledFeatureArea = styled("div")(
   `
 );
 
-export const StyledLinks = styled("footer")(
-  ({ theme }) => css`
+export const StyledLinks = styled("div")(({ theme }) => {
+  console.log(theme.breakpoints.up("sm"));
+  return css`
     width: 100%;
     background: ${theme.palette.index?.blue};
 
@@ -52,13 +53,12 @@ export const StyledLinks = styled("footer")(
     display: flex;
     gap: ${theme.spacing(5)};
     flex-direction: column;
-    padding: ${theme.spacing(8)}};
+    padding: ${theme.spacing(8)};
 
     ${theme.breakpoints.up("sm")} {
       gap: ${theme.spacing(15)};
       flex-direction: row;
       padding: ${theme.spacing(10)} ${theme.spacing(20)};
-
     }
-  `
-);
+  `;
+});
