@@ -1,18 +1,14 @@
 "use client";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Box, Button, OutlinedInput, useTheme } from "@mui/material";
-import { useTranslations } from "next-intl";
-import { useCallback } from "react";
-import { useForm } from "react-hook-form";
-import * as yup from "yup";
-import PersonIcon from "@mui/icons-material/Person";
 import EmailIcon from "@mui/icons-material/Email";
 import MessageIcon from "@mui/icons-material/Message";
-import {
-  StyledForm,
-  StyledFormPersonalDetails,
-} from "./RegistrationForm.styles";
+import PersonIcon from "@mui/icons-material/Person";
+import { Box, Button, OutlinedInput, useTheme } from "@mui/material";
+import { useTranslations } from "next-intl";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { StyledForm, StyledFormPersonalDetails } from "./ContactForm.styles";
 
 const schema = yup.object().shape({
   name: yup.string().required(),
@@ -20,21 +16,26 @@ const schema = yup.object().shape({
   message: yup.string().required(),
 });
 
-interface FormValues {
+interface ContactFormValues {
   name: string;
   email: string;
   message: string;
 }
 
-export default function RegistrationForm() {
+interface ContactFormProps {
+  onSubmit: (data: ContactFormValues) => void;
+}
+
+export default function RegistrationForm({ onSubmit }: ContactFormProps) {
   const t = useTranslations("Footer");
   const theme = useTheme();
 
   const {
     register,
     handleSubmit,
+    getValues,
     formState: { errors },
-  } = useForm<FormValues>({
+  } = useForm<ContactFormValues>({
     resolver: yupResolver(schema),
     defaultValues: {
       name: "",
@@ -43,12 +44,10 @@ export default function RegistrationForm() {
     },
   });
 
-  const handleOnSubmit = useCallback((data: object) => {
-    console.log("FORM DATA", data);
-  }, []);
+  console.log("**********", getValues());
 
   return (
-    <StyledForm onSubmit={handleSubmit(handleOnSubmit)}>
+    <StyledForm onSubmit={handleSubmit(onSubmit)}>
       <StyledFormPersonalDetails>
         <OutlinedInput
           {...register("name")}
@@ -56,6 +55,7 @@ export default function RegistrationForm() {
           placeholder={t("namePlaceholder")}
           error={!!errors.name}
           startAdornment={<PersonIcon sx={{ color: "white" }} />}
+          aria-label="name"
         />
         <OutlinedInput
           {...register("email")}
@@ -63,6 +63,7 @@ export default function RegistrationForm() {
           placeholder={t("emailPlaceholder")}
           error={!!errors.email}
           startAdornment={<EmailIcon sx={{ color: "white" }} />}
+          aria-label="email"
         />
       </StyledFormPersonalDetails>
       <Box sx={{ display: "flex", gap: theme.spacing(2) }}>
@@ -74,6 +75,7 @@ export default function RegistrationForm() {
             error={!!errors.message}
             fullWidth
             startAdornment={<MessageIcon sx={{ color: "white" }} />}
+            aria-label="message"
           />
         </Box>
         <Button type="submit" color="inherit" variant="contained">

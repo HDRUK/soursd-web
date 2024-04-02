@@ -5,6 +5,10 @@ export const StyledFeatureArea = styled("div")(
     background: #7446f8;
     position: relative;
     padding: 0 ${theme.spacing(8)} ${theme.spacing(11)};
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: ${theme.spacing(2)};
 
     :before,
     :after {
@@ -29,6 +33,11 @@ export const StyledFeatureArea = styled("div")(
       width: 100%;
       right: 0;
     }
+
+    ${theme.breakpoints.up("sm")} {
+      flex-direction: row;
+      align-items: center;
+    }
   `
 );
 
@@ -36,11 +45,20 @@ export const StyledLinks = styled("footer")(
   ({ theme }) => css`
     width: 100%;
     background: ${theme.palette.index?.blue};
-    padding: ${theme.spacing(10)} ${theme.spacing(20)};
+
     position: relative;
     color: #fff;
     border-top: 1px solid ${theme.palette.grey["200"]};
     display: flex;
-    gap: ${theme.spacing(15)};
+    gap: ${theme.spacing(5)};
+    flex-direction: column;
+    padding: ${theme.spacing(8)}};
+
+    ${theme.breakpoints.up("sm")} {
+      gap: ${theme.spacing(15)};
+      flex-direction: row;
+      padding: ${theme.spacing(10)} ${theme.spacing(20)};
+
+    }
   `
 );
