@@ -1,42 +1,40 @@
 import { css, styled } from "@mui/material";
+import PageDecoration from "../PageDecoration/PageDecoration";
 
-export const StyledFeatureArea = styled("div")(
-  ({ theme }) => css`
-    background: #7446f8;
-    position: relative;
-    padding: 0 ${theme.spacing(8)} ${theme.spacing(11)};
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: ${theme.spacing(2)};
+export const StyledFooter = styled(PageDecoration)(
+  () => css`
+    margin-top: 100px;
 
     :before,
     :after {
-      content: "";
-      position: absolute;
       top: 0;
       transform: translateY(-100%);
     }
 
     :before {
-      background: ${theme.palette.index?.blue};
       border-top-right-radius: 100%;
-      height: 100px;
-      width: 50%;
-      left: 0;
     }
 
     :after {
-      background: ${theme.palette.index?.purple};
       border-top-left-radius: 100%;
-      height: 50px;
-      width: 100%;
-      right: 0;
     }
+  `
+);
+
+export const StyledFeatureArea = styled("div")(
+  ({ theme }) => css`
+    background: ${theme.palette.backgroundPurple};
+    position: relative;
+    padding: ${theme.spacing(3)} ${theme.spacing(8)} ${theme.spacing(8)};
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: ${theme.spacing(2)};
 
     ${theme.breakpoints.up("sm")} {
       flex-direction: row;
       align-items: center;
+      padding-top: 0;
     }
   `
 );
@@ -44,8 +42,7 @@ export const StyledFeatureArea = styled("div")(
 export const StyledLinks = styled("div")(
   ({ theme }) => css`
     width: 100%;
-    background: ${theme.palette.index?.blue};
-
+    background: ${theme.palette.backgroundBlue};
     position: relative;
     color: #fff;
     border-top: 1px solid ${theme.palette.grey["200"]};

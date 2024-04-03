@@ -1,7 +1,9 @@
 "use client";
 
-import { Roboto } from "next/font/google";
+import { blueGrey, deepPurple, indigo } from "@mui/material/colors";
 import { createTheme } from "@mui/material/styles";
+import { createBreakpoints } from "@mui/system";
+import { Roboto } from "next/font/google";
 
 const roboto = Roboto({
   weight: ["300", "400", "500", "700"],
@@ -9,15 +11,51 @@ const roboto = Roboto({
   display: "swap",
 });
 
+const breakpoints = createBreakpoints({});
+
+console.log('breakpoints.up("sm")', breakpoints.up("sm"));
+
+const { palette } = createTheme();
+
+const createColor = (mainColor: string) =>
+  palette.augmentColor({ color: { main: mainColor } });
+
 const theme = createTheme({
   typography: {
     fontFamily: roboto.style.fontFamily,
+    fontSize: 12,
   },
   spacing: 4,
   palette: {
-    index: {
-      purple: "#7446f8",
-      blue: "#0a1649",
+    backgroundPurple: deepPurple["300"],
+    backgroundBlue: blueGrey["800"],
+    primary: createColor(indigo["300"]),
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          boxShadow: "none",
+        },
+      },
+    },
+    MuiToolbar: {
+      styleOverrides: {
+        root: {
+          backgroundColor: deepPurple["300"],
+          color: "#fff",
+          [breakpoints.up("sm")]: {
+            minHeight: "52px",
+          },
+        },
+      },
+    },
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          boxShadow: "none",
+        },
+      },
     },
   },
 });

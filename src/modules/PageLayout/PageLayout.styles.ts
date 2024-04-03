@@ -1,11 +1,9 @@
-import { css, styled } from "@mui/material";
+import { styled } from "@mui/material";
 
-export const StyledPageLayout = styled("div")(
-  ({ theme }) => css`
-    margin: auto;
-    max-width: 1920px;
-    width: 100vw;
-    padding: 0 ${theme.spacing(20)},
-  }}
-  `
-);
+export const StyledPageLayout = styled("div")(`
+  margin: auto;
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+`);

@@ -75,7 +75,7 @@ export default function ContactForm({ onSubmit }: ContactFormProps) {
             aria-label="message"
           />
         </Box>
-        <Button type="submit" color="inherit" variant="contained">
+        <Button type="submit" color="primary" variant="contained">
           {t("sendButton")}
         </Button>
       </Box>
