@@ -1,3 +1,4 @@
+// Navigation at this point essentially unknown
 export const getMainNavigationLinks = (locale: string) => [
   {
     tKey: "Navigation.home",

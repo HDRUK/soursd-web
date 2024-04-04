@@ -55,7 +55,7 @@ export default function Header({ children, ...restProps }: HeaderProps) {
             {!isDesktop && (
               <IconButton
                 color="inherit"
-                aria-label="open mobile menu"
+                aria-label={t("Header.ariaOpenMobileMenu")}
                 edge="start"
                 onClick={() => setIsDrawerOpen(!isDrawerOpen)}
                 sx={{ mx: 0 }}>
@@ -79,7 +79,7 @@ export default function Header({ children, ...restProps }: HeaderProps) {
                 </Typography>
                 <MenuList sx={{ display: "flex" }}>
                   {navigationLinks.map(({ tKey, ...restProps }) => (
-                    <MenuItem>
+                    <MenuItem key={tKey}>
                       <Link
                         {...restProps}
                         underline="none"
@@ -116,11 +116,11 @@ export default function Header({ children, ...restProps }: HeaderProps) {
             }}
             open={isDrawerOpen}
             onClose={() => setIsDrawerOpen(false)}
-            dismissAriaLabel="close mobile menu"
+            dismissAriaLabel={t("Header.ariaCloseMobileMenu")}
             isDismissable>
             <MenuList>
               {navigationLinks.map(({ tKey, ...restProps }) => (
-                <MenuItem>
+                <MenuItem key={tKey}>
                   <Link
                     {...restProps}
                     underline="none"

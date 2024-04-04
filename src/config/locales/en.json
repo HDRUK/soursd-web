@@ -2,6 +2,10 @@
   "Buttons": {
     "register": "Register"
   },
+  "Header": {
+    "ariaOpenMobileMenu": "open mobile menu",
+    "ariaCloseMobileMenu": "close mobile menu"
+  },
   "Footer": {
     "contactFormTitle": "Contact Us",
     "contactFormSubtitle": "Some subtitle here"
