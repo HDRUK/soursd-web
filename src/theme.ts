@@ -13,8 +13,6 @@ const roboto = Roboto({
 
 const breakpoints = createBreakpoints({});
 
-console.log('breakpoints.up("sm")', breakpoints.up("sm"));
-
 const { palette } = createTheme();
 
 const createColor = (mainColor: string) =>
