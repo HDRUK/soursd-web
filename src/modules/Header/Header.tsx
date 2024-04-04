@@ -1,6 +1,5 @@
 "use client";
 
-import { useResize } from "@/hooks/useResize";
 import { getMainNavigationLinks } from "@/utils/router";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
@@ -14,8 +13,10 @@ import {
   MenuList,
   Toolbar,
   Typography,
+  useMediaQuery,
   useTheme,
 } from "@mui/material";
+import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import { DetailedHTMLProps, HTMLAttributes, useEffect, useState } from "react";
 import HorizontalDrawer from "../HorizontalDrawer/HorizontalDrawer";
@@ -30,14 +31,15 @@ export default function Header({ children, ...restProps }: HeaderProps) {
   const theme = useTheme();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const params = useParams<{ locale: string }>();
+  const t = useTranslations();
 
-  const [windowWidth] = useResize();
+  const isDesktop = useMediaQuery(theme.breakpoints.up("sm"));
 
   useEffect(() => {
-    if (windowWidth > theme.breakpoints.values.sm && isDrawerOpen) {
+    if (isDesktop && isDrawerOpen) {
       setIsDrawerOpen(false);
     }
-  }, [windowWidth, isDrawerOpen]);
+  }, [isDesktop, isDrawerOpen]);
 
   const navigationLinks = params?.locale
     ? getMainNavigationLinks(params.locale)
@@ -50,73 +52,80 @@ export default function Header({ children, ...restProps }: HeaderProps) {
 
         <AppBar component="nav">
           <Toolbar variant="dense">
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              edge="start"
-              onClick={() => setIsDrawerOpen(!isDrawerOpen)}
-              sx={{ mx: 0, display: { sm: "none" } }}>
-              <MenuIcon />
-            </IconButton>
-            <Typography
-              component="div"
-              sx={{
-                flexGrow: 1,
-                display: { xs: "none", sm: "block" },
-              }}>
-              [Registry logo]
-            </Typography>
-            <MenuList
-              sx={{
-                display: { xs: "none", sm: "flex" },
-              }}>
-              {navigationLinks.map(({ label, ...restProps }) => (
-                <MenuItem>
-                  <Link
-                    {...restProps}
-                    underline="none"
-                    sx={{ color: "inherit" }}>
-                    {label}
-                  </Link>
-                </MenuItem>
-              ))}
-            </MenuList>
-            <Box sx={{ borderLeft: "1px solid rgba(255,255,255, 0.1)" }}>
-              <Button
-                variant="contained"
-                size="small"
+            {!isDesktop && (
+              <IconButton
+                color="inherit"
+                aria-label="open mobile menu"
+                edge="start"
+                onClick={() => setIsDrawerOpen(!isDrawerOpen)}
+                sx={{ mx: 0 }}>
+                <MenuIcon />
+              </IconButton>
+            )}
+            {isDesktop && (
+              <Box
+                data-testid="header-desktop-menu"
                 sx={{
-                  ml: theme.spacing(4),
-                  display: { xs: "none", sm: "block" },
+                  display: "flex",
+                  flexGrow: 1,
+                  alignItems: "center",
                 }}>
-                Register
-              </Button>
-            </Box>
+                <Typography
+                  component="div"
+                  sx={{
+                    flexGrow: 1,
+                  }}>
+                  [Registry logo]
+                </Typography>
+                <MenuList sx={{ display: "flex" }}>
+                  {navigationLinks.map(({ tKey, ...restProps }) => (
+                    <MenuItem>
+                      <Link
+                        {...restProps}
+                        underline="none"
+                        sx={{ color: "inherit" }}>
+                        {t(tKey)}
+                      </Link>
+                    </MenuItem>
+                  ))}
+                </MenuList>
+                <Box sx={{ borderLeft: "1px solid rgba(255,255,255, 0.1)" }}>
+                  <Button
+                    variant="contained"
+                    size="small"
+                    sx={{
+                      ml: theme.spacing(4),
+                    }}>
+                    {t("Buttons.register")}
+                  </Button>
+                </Box>
+              </Box>
+            )}
           </Toolbar>
         </AppBar>
-        <nav>
+
+        {!isDesktop && (
           <HorizontalDrawer
+            data-testid="header-mobile-menu"
+            component="nav"
             sx={{
-              display: { xs: "block", sm: "none" },
               "& .MuiDrawer-paper": {
                 boxSizing: "border-box",
                 minWidth: "200px",
               },
             }}
             open={isDrawerOpen}
-            ModalProps={{
-              keepMounted: true,
-            }}
             onClose={() => setIsDrawerOpen(false)}
+            dismissAriaLabel="close mobile menu"
             isDismissable>
             <MenuList>
-              {navigationLinks.map(({ label, ...restProps }) => (
+              {navigationLinks.map(({ tKey, ...restProps }) => (
                 <MenuItem>
                   <Link
                     {...restProps}
                     underline="none"
                     sx={{ color: "inherit" }}>
-                    {label}
+                    {t(tKey)}
                   </Link>
                 </MenuItem>
               ))}
@@ -124,11 +133,11 @@ export default function Header({ children, ...restProps }: HeaderProps) {
             <Divider />
             <Box p={2} display="flex" justifyContent="center">
               <Button variant="contained" size="small">
-                Register
+                {t("Buttons.register")}
               </Button>
             </Box>
           </HorizontalDrawer>
-        </nav>
+        )}
       </StyledHeader>
     </header>
   );

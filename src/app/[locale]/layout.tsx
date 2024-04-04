@@ -3,7 +3,6 @@ import { locales } from "@/config";
 import { Footer, PageLayout } from "@/modules";
 import Header from "@/modules/Header/Header";
 import PageContent from "@/modules/PageContent/PageContent";
-import { Box, Card, CardContent } from "@mui/material";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import type { Metadata } from "next";
 import { NextIntlClientProvider, useMessages } from "next-intl";

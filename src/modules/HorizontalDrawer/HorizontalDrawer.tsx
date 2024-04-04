@@ -15,12 +15,14 @@ import { ReactNode } from "react";
 export interface HorizontalDrawerProps extends DrawerProps {
   isDismissable?: boolean;
   dismissIcon?: ReactNode;
+  dismissAriaLabel?: string;
 }
 
 export default function HorizontalDrawer({
   children,
   isDismissable,
   dismissIcon,
+  dismissAriaLabel = "close drawer",
   onClose = noop => noop,
   anchor,
   variant = "temporary",
@@ -42,7 +44,7 @@ export default function HorizontalDrawer({
             }}>
             <IconButton
               onClick={() => onClose({}, "escapeKeyDown")}
-              aria-label="close drawer">
+              aria-label={dismissAriaLabel}>
               {dismissIcon || <ChevronLeftIcon />}
             </IconButton>
           </Box>

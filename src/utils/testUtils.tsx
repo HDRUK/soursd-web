@@ -9,8 +9,20 @@ import {
   render,
   renderHook,
 } from "@testing-library/react";
+import mediaQuery from "css-mediaquery";
 import { NextIntlClientProvider } from "next-intl";
 import React, { ReactNode } from "react";
+
+const defineMatchMedia = (width: number) => {
+  Object.defineProperty(window, "matchMedia", {
+    writable: true,
+    value: (query: any) => ({
+      matches: mediaQuery.match(query, { width }),
+      addListener: () => {},
+      removeListener: () => {},
+    }),
+  });
+};
 
 const Wrapper = ({ children }: { children: ReactNode }) => {
   return (
@@ -69,4 +81,8 @@ const customRenderHook = (
 
 export * from "@testing-library/react";
 
-export { customRender as render, customRenderHook as renderHook };
+export {
+  defineMatchMedia,
+  customRender as render,
+  customRenderHook as renderHook,
+};

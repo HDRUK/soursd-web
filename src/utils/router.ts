@@ -1,18 +1,18 @@
 export const getMainNavigationLinks = (locale: string) => [
   {
-    label: "Home",
+    tKey: "Navigation.home",
     to: `/${locale}`,
   },
   {
-    label: "About",
+    tKey: "Navigation.about",
     to: `/${locale}`,
   },
   {
-    label: "Features",
+    tKey: "Navigation.features",
     to: `/${locale}`,
   },
   {
-    label: "Contact",
+    tKey: "Navigation.contact",
     to: `/${locale}`,
   },
 ];
