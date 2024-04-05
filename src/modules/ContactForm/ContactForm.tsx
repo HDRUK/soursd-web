@@ -4,6 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import EmailIcon from "@mui/icons-material/Email";
 import MessageIcon from "@mui/icons-material/Message";
 import PersonIcon from "@mui/icons-material/Person";
+import SendIcon from "@mui/icons-material/Send";
 import { Box, Button, OutlinedInput, useTheme } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
@@ -75,7 +76,11 @@ export default function ContactForm({ onSubmit }: ContactFormProps) {
             aria-label="message"
           />
         </Box>
-        <Button type="submit" color="inherit" variant="contained">
+        <Button
+          type="submit"
+          color="primary"
+          variant="contained"
+          endIcon={<SendIcon />}>
           {t("sendButton")}
         </Button>
       </Box>

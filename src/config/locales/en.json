@@ -1,4 +1,11 @@
 {
+  "Buttons": {
+    "register": "Register"
+  },
+  "Header": {
+    "ariaOpenMobileMenu": "open mobile menu",
+    "ariaCloseMobileMenu": "close mobile menu"
+  },
   "Footer": {
     "contactFormTitle": "Contact Us",
     "contactFormSubtitle": "Some subtitle here"
@@ -8,5 +15,11 @@
     "emailPlaceholder": "Email",
     "messagePlaceholder": "Message",
     "sendButton": "Send"
+  },
+  "Navigation": {
+    "home": "Home",
+    "about": "About",
+    "features": "Features",
+    "contact": "Contact"
   }
 }

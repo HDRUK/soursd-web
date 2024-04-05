@@ -1,11 +1,11 @@
-import { fireEvent, render, screen, waitFor } from "@/utils/testUtils";
+import { act, fireEvent, render, screen } from "@/utils/testUtils";
 import { faker } from "@faker-js/faker";
 import { axe } from "jest-axe";
 import ContactForm from "./ContactForm";
 
 const mockSubmit = jest.fn();
 
-describe("<ContacForm />", () => {
+describe("<ContactForm />", () => {
   it("has no accessibility validations", async () => {
     const { container } = render(<ContactForm onSubmit={mockSubmit} />);
 
@@ -16,7 +16,9 @@ describe("<ContacForm />", () => {
   it("displays error state when values are not defined", async () => {
     render(<ContactForm onSubmit={mockSubmit} />);
 
-    fireEvent.submit(screen.getByRole("button"));
+    await act(() => {
+      fireEvent.submit(screen.getByRole("button"));
+    });
 
     expect(mockSubmit).not.toHaveBeenCalled();
   });
@@ -28,20 +30,24 @@ describe("<ContacForm />", () => {
     const email = screen.getByLabelText("email").querySelector("input");
     const message = screen.getByLabelText("message").querySelector("input");
 
-    if (name && email && message) {
-      fireEvent.change(name, {
-        target: {
-          value: faker.internet.displayName(),
-        },
-      });
-      fireEvent.change(email, {
-        target: {
-          value: faker.internet.email(),
-        },
-      });
-      fireEvent.change(message, { target: { value: faker.string.sample() } });
+    const nameValue = faker.internet.displayName();
+    const emailValue = faker.internet.email();
+    const messageValue = faker.string.sample();
 
-      await waitFor(() => {
+    if (name && email && message) {
+      await act(() => {
+        fireEvent.change(name, {
+          target: {
+            value: nameValue,
+          },
+        });
+        fireEvent.change(email, {
+          target: {
+            value: emailValue,
+          },
+        });
+        fireEvent.change(message, { target: { value: messageValue } });
+
         fireEvent.submit(screen.getByRole("button"));
       });
 
