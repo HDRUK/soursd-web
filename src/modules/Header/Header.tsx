@@ -19,7 +19,7 @@ import {
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import { DetailedHTMLProps, HTMLAttributes, useEffect, useState } from "react";
-import HorizontalDrawer from "../HorizontalDrawer/HorizontalDrawer";
+import HorizontalDrawer from "@/components/HorizontalDrawer";
 import { StyledHeader } from "./Header.styles";
 
 type HeaderProps = DetailedHTMLProps<
@@ -46,7 +46,7 @@ export default function Header({ children, ...restProps }: HeaderProps) {
     : [];
 
   return (
-    <header>
+    <header style={{ paddingBottom: "110px" }}>
       <StyledHeader {...restProps}>
         {children}
 

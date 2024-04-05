@@ -1,7 +1,7 @@
 "use client";
 
 import { HTMLAttributes, PropsWithChildren } from "react";
-import { StyledPageContent } from "./PageContent.styles";
+import { StyledPageContent } from "./PageSection.styles";
 
 type PageContentProps = PropsWithChildren<HTMLAttributes<HTMLDivElement>>;
 

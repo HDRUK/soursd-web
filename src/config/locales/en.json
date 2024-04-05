@@ -2,6 +2,10 @@
   "Buttons": {
     "register": "Register"
   },
+  "Carousel": {
+    "next": "next slide",
+    "previous": "previous slide"
+  },
   "Header": {
     "ariaOpenMobileMenu": "open mobile menu",
     "ariaCloseMobileMenu": "close mobile menu"

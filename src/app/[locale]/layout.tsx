@@ -2,7 +2,6 @@ import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
 import { locales } from "@/config";
 import { Footer, PageLayout } from "@/modules";
 import Header from "@/modules/Header/Header";
-import PageContent from "@/modules/PageContent/PageContent";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import type { Metadata } from "next";
 import { NextIntlClientProvider, useMessages } from "next-intl";
@@ -37,7 +36,7 @@ export default function RootLayout({
             <ThemeRegistry>
               <PageLayout>
                 <Header />
-                <PageContent>{children}</PageContent>
+                {children}
                 <Footer />
               </PageLayout>
             </ThemeRegistry>
