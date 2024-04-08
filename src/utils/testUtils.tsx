@@ -16,7 +16,7 @@ import React, { ReactNode } from "react";
 const defineMatchMedia = (width: number) => {
   Object.defineProperty(window, "matchMedia", {
     writable: true,
-    value: (query: any) => ({
+    value: <T,>(query: T) => ({
       matches: mediaQuery.match(query, { width }),
       addListener: () => {},
       removeListener: () => {},

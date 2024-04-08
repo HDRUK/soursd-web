@@ -1,6 +1,5 @@
 import theme from "@/theme";
 import {
-  act,
   defineMatchMedia,
   fireEvent,
   render,

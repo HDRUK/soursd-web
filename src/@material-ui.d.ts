@@ -7,4 +7,12 @@ declare module "@mui/material/styles/createPalette" {
   }
   interface Palette extends CustomPalette {}
   interface PaletteOptions extends CustomPalette {}
+  interface IconButtonProps {}
+}
+
+declare module "@mui/material/IconButton" {
+  interface CustomIconButtonProps {
+    variant?: "contained" | "default";
+  }
+  interface IconButtonOwnProps extends CustomIconButtonProps {}
 }

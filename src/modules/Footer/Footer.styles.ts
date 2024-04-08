@@ -3,7 +3,7 @@ import PageDecoration from "../PageDecoration/PageDecoration";
 
 export const StyledFooter = styled(PageDecoration)(
   () => css`
-    margin-top: 100px;
+    margin-top: 120px;
 
     :before,
     :after {
@@ -25,7 +25,7 @@ export const StyledFeatureArea = styled("div")(
   ({ theme }) => css`
     background: ${theme.palette.backgroundPurple};
     position: relative;
-    padding: ${theme.spacing(3)} ${theme.spacing(8)} ${theme.spacing(8)};
+    padding: ${theme.spacing(3)} ${theme.spacing(8)};
     display: flex;
     flex-direction: column;
     align-items: flex-start;
