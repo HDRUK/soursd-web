@@ -18,13 +18,17 @@ export default function Quote({
   children,
   profileImage,
   color = "highlight",
+  ...restProps
 }: QuoteProps) {
   const theme = useTheme();
 
   return (
-    <StyledBlockquote theme={theme} paletteColor={theme.palette[color]}>
+    <StyledBlockquote
+      {...restProps}
+      theme={theme}
+      paletteColor={theme.palette[color]}>
       <Mask>
-        {profileImage || <img src="/profile.picture.png" alt="Profile" />}
+        {<img src={profileImage || "/profile.picture.png"} alt="Profile" />}
       </Mask>
       <Box
         sx={{ padding: theme.spacing(2), maxWidth: "200px", display: "flex" }}>

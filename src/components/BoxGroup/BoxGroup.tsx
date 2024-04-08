@@ -19,9 +19,9 @@ export default function BoxGroup({
   return (
     <StyledBoxGroup
       component="section"
+      {...restProps}
       numCols={numCols}
-      theme={theme}
-      {...restProps}>
+      theme={theme}>
       {children}
     </StyledBoxGroup>
   );
