@@ -1,14 +1,11 @@
-import { CssBaseline, ThemeProvider } from "@mui/material";
-import type { Preview } from "@storybook/react";
-import ThemeRegistry from "../src/components/ThemeRegistry/ThemeRegistry";
-import { NextIntlClientProvider, useMessages } from "next-intl";
 import messages from "@/config/locales/en.json";
+import { CssBaseline } from "@mui/material";
+import type { Preview, StoryFn } from "@storybook/react";
+import { NextIntlClientProvider } from "next-intl";
+import ThemeRegistry from "../src/components/ThemeRegistry/ThemeRegistry";
+import { JSX, ReactElement } from "react";
 
-export const withMuiTheme = Story => {
-  // const messages = useMessages();
-
-  // console.log("Messages", messages);
-
+export const withMuiTheme = (Story: StoryFn) => {
   return (
     <NextIntlClientProvider locale="en" messages={messages}>
       <ThemeRegistry>
