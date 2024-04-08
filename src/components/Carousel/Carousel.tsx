@@ -20,7 +20,6 @@ export interface CarouselProps {
 
 export default function Carousel({
   children,
-  height = "auto",
   showArrows = true,
   prevIcon,
   nextIcon,
@@ -42,7 +41,6 @@ export default function Carousel({
     speed: 500,
     initialSlide: 0,
     swipeToSlide: true,
-    height,
     infinite: true,
     beforeChange: (index: number) => {
       setCurrentIndex(index);

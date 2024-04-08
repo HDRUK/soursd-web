@@ -3,6 +3,7 @@ import { IconButton, css, styled } from "@mui/material";
 export const StyledCarousel = styled("div")`
   position: relative;
 
+  .slick-slider,
   .slick-list,
   .slick-track,
   .slick-slide,
