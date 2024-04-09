@@ -14,9 +14,15 @@ export default function Page() {
         ))}
       </Carousel>
       <BoxGroup sx={{ mt: 1 }}>
-        <Quote>Researcher quote goes here</Quote>
-        <Quote>Researcher quote goes here</Quote>
-        <Quote>Researcher quote goes here</Quote>
+        <Quote subTitle="Researcher">
+          Researcher quote goes here quote goes here quote
+        </Quote>
+        <Quote subTitle="Researcher">
+          Researcher quote goes here quote goes here quote
+        </Quote>
+        <Quote subTitle="Researcher">
+          Researcher quote goes here quote goes here quote
+        </Quote>
       </BoxGroup>
     </div>
   );
