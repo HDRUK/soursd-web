@@ -27,6 +27,7 @@ const paletteTheme = createTheme({
     backgroundBlue: blueGrey["800"],
     primary: createColor(indigo["300"]),
     secondary: createColor(yellow["600"]),
+    highlight: createColor("#DBEDFB"),
   },
 });
 

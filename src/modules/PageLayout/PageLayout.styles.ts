@@ -6,4 +6,8 @@ export const StyledPageLayout = styled("div")(`
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+
+  > div {
+    flex-grow: 1;
+  }
 `);
