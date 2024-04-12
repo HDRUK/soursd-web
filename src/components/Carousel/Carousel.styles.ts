@@ -31,7 +31,10 @@ export const StyledCarousel = styled("div")(
   `
 );
 
-export const StyledCarouselSlide = styled(Box)(
+export const StyledCarouselSlide = styled(Box, {
+  shouldForwardProp: (propName: string) =>
+    propName !== "backgroundTransparencyColor",
+})(
   ({
     theme,
     backgroundTransparencyColor,
