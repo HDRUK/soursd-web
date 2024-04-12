@@ -1,6 +1,6 @@
-import { css, styled } from "@mui/material";
+import { Box, css, styled } from "@mui/material";
 
-export const StyledPageContent = styled("div")(
+export const StyledPageContent = styled(Box)(
   ({ theme }) => css`
     position: relative;
     z-index: 1;

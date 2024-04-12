@@ -27,6 +27,7 @@
     "@mui/material": "5.15.14",
     "@mui/material-nextjs": "5.15.11",
     "@mui/system": "^5.15.14",
+    "@mui/x-charts": "^7.1.1",
     "@testing-library/user-event": "^14.5.2",
     "i": "^0.3.7",
     "next": "14.1.4",

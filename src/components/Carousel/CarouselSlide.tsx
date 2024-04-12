@@ -1,34 +1,47 @@
 "use client";
 
-import { Typography } from "@mui/material";
+import { AugmentedColorPaletteOptions } from "@/types/theme";
+import { Box, BoxProps, Typography, useTheme } from "@mui/material";
 import { ReactNode } from "react";
 import { StyledBackgroundImage, StyledCarouselSlide } from "./Carousel.styles";
 
-export interface CarouselSlideProps {
-  title: ReactNode;
-  description: ReactNode;
+export interface CarouselSlideProps extends BoxProps {
+  heading?: ReactNode;
+  description?: ReactNode;
   button?: ReactNode;
   backgroundImage?: string;
+  backgroundTransparencyColor?: AugmentedColorPaletteOptions;
 }
 
 export default function CarouselSlide({
   backgroundImage,
-  title,
+  heading,
   description,
+  children,
   button,
+  ...restProps
 }: CarouselSlideProps) {
+  const theme = useTheme();
+
   return (
-    <StyledCarouselSlide>
+    <StyledCarouselSlide theme={theme} {...restProps}>
       {backgroundImage && (
         <StyledBackgroundImage backgroundImage={backgroundImage} />
       )}
-      <Typography variant="h5" color="white">
-        {title}
-      </Typography>
-      <Typography color="white" sx={{ maxWidth: { md: "50%" }, mb: 2 }}>
-        {description}
-      </Typography>
-      {button}
+      <Box sx={{ position: "relative" }}>
+        {heading && (
+          <Typography variant="h5" color="white">
+            {heading}
+          </Typography>
+        )}
+        {description && (
+          <Typography color="white" sx={{ maxWidth: { md: "50%" }, mb: 2 }}>
+            {description}
+          </Typography>
+        )}
+        {children}
+        {button}
+      </Box>
     </StyledCarouselSlide>
   );
 }

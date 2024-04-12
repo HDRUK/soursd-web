@@ -3,7 +3,13 @@ import Quote from "./Quote";
 
 describe("<Quote />", () => {
   it("has the correct image", async () => {
-    render(<Quote profileImage="/test.image.png" />);
+    render(
+      <Quote
+        name="Researcher"
+        description="NHS Scotland"
+        profileImage="/test.image.png"
+      />
+    );
 
     const image = screen.getByAltText("Profile");
 

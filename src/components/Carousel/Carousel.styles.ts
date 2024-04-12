@@ -1,49 +1,58 @@
-import { IconButton, css, styled } from "@mui/material";
+import { AugmentedColorPaletteOptions } from "@/types/theme";
+import { Box, IconButton, Theme, css, styled } from "@mui/material";
 
-export const StyledCarousel = styled("div")`
-  position: relative;
+export const StyledCarousel = styled("div")(
+  ({ variant }: { variant: "hero" | "default" }) => css`
+    position: relative;
 
-  .slick-slider,
-  .slick-list,
-  .slick-track,
-  .slick-slide,
-  .slick-slide > div {
+    .slick-slider,
+    .slick-list,
+    .slick-track,
+    .slick-slide,
+    .slick-slide > div {
+      height: 100%;
+    }
+
+    .slick-arrow {
+      display: none !important;
+    }
+
+    .slick-slide {
+      > div {
+        padding: 0 3px;
+        position: relative;
+
+        ${variant === "hero" &&
+        `
+        padding: 65px 80px;
+      `}
+      }
+    }
+  `
+);
+
+export const StyledCarouselSlide = styled(Box)(
+  ({
+    theme,
+    backgroundTransparencyColor,
+  }: {
+    theme: Theme;
+    backgroundTransparencyColor?: AugmentedColorPaletteOptions;
+  }) => css`
     height: 100%;
-  }
-`;
+    overflow: hidden;
 
-export const StyledCarouselSlide = styled("div")(
-  ({ theme }) => css`
-  padding: 65px 80px;
-  height: 100%;
-  position: relative;
-  background: ${theme.palette.backgroundBlue};
-  overflow: hidden;
-
-  :before,
-  :after {
-    content: "";
-    position: absolute;
-    right: -200px;
-    left: -200px;
-    transform: rotate(-5deg);
-  }
-
-  :before {
-    height: 10px;
-    background-color: #fff;
-    bottom: 20px;
-    box-shadow: 0px 8px 10px -5px rgba(0,0,0,0.2);
-    z-index: 1;
-  }
-
-  :after {
-    height: 120px;
-    background-color: ${theme.palette.grey["200"]};
-    bottom: -100px;
-  }
-}}
-`
+    ${backgroundTransparencyColor &&
+    `&:before {
+      content: "";
+      background: ${theme.palette[backgroundTransparencyColor].main};
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+    `}
+  `
 );
 
 export const StyledIconButton = styled(IconButton)`

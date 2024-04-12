@@ -1,69 +1,55 @@
 "use client";
 
 import FormatQuoteIcon from "@mui/icons-material/FormatQuote";
-import { Box, Palette, Typography, useTheme } from "@mui/material";
-import { HTMLAttributes } from "react";
+import { Box, CardContent, CardProps, Paper } from "@mui/material";
 import Mask from "../Mask";
-import { StyledBlockquote } from "./Quote.styles";
+import { StyledName } from "./Quote.styles";
 
-export interface QuoteProps extends HTMLAttributes<HTMLElement> {
-  color?: keyof Pick<
-    Palette,
-    "primary" | "secondary" | "success" | "info" | "error" | "highlight"
-  >;
+export interface QuoteProps extends CardProps {
   profileImage?: string;
-  subTitle?: string;
+  name?: string;
+  description: string;
 }
 
 export default function Quote({
   children,
   profileImage,
-  color = "highlight",
-  subTitle,
+  elevation = 3,
+  name,
+  description,
   ...restProps
 }: QuoteProps) {
-  const theme = useTheme();
-
   return (
-    <StyledBlockquote
-      {...restProps}
-      theme={theme}
-      paletteColor={theme.palette[color]}>
-      <Mask>
-        {<img src={profileImage || "/profile.picture.png"} alt="Profile" />}
-      </Mask>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          gap: theme.spacing(1),
-        }}>
+    <Paper aria-roledescription="quote" elevation={elevation} {...restProps}>
+      <CardContent component="blockquote" sx={{ pb: 2, m: 0 }}>
         <Box
           sx={{
-            px: theme.spacing(2),
-            pt: theme.spacing(1),
-            maxWidth: "300px",
+            display: "flex",
+            flexDirection: "column",
           }}>
           <FormatQuoteIcon
+            fontSize="large"
             sx={{ transform: "rotateY(180deg)", marginTop: "-0.22em" }}
           />
-          {children}
-          <FormatQuoteIcon />
+          <div>{children}</div>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Mask height="40px" width="40px">
+              <img src={profileImage || "/profile.picture.png"} alt="Profile" />
+            </Mask>
+            <StyledName variant="caption" data-testid="">
+              {name}
+              {description && (
+                <>
+                  ,&nbsp;
+                  <Box component="span" sx={{ fontWeight: "normal" }}>
+                    {description}
+                  </Box>
+                </>
+              )}
+            </StyledName>
+          </Box>
         </Box>
-        {subTitle && (
-          <Typography
-            variant="caption"
-            fontWeight="bold"
-            sx={{
-              px: theme.spacing(2),
-              alignItems: "flex-end",
-              flexGrow: 1,
-              display: "flex",
-            }}>
-            {subTitle}
-          </Typography>
-        )}
-      </Box>
-    </StyledBlockquote>
+      </CardContent>
+    </Paper>
   );
 }

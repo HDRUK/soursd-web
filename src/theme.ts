@@ -1,9 +1,16 @@
 "use client";
 
-import { blueGrey, deepPurple, indigo, yellow } from "@mui/material/colors";
+import {
+  blueGrey,
+  deepPurple,
+  grey,
+  indigo,
+  yellow,
+} from "@mui/material/colors";
 import { Palette, PaletteColor, createTheme } from "@mui/material/styles";
 import { createBreakpoints } from "@mui/system";
 import { Roboto } from "next/font/google";
+import { colorToRgba } from "./utils/theme";
 
 const roboto = Roboto({
   weight: ["300", "400", "500", "700"],
@@ -23,15 +30,63 @@ const createColor = (mainColor: string) => {
 
 const paletteTheme = createTheme({
   palette: {
-    backgroundPurple: deepPurple["300"],
-    backgroundBlue: blueGrey["800"],
-    primary: createColor(indigo["300"]),
-    secondary: createColor(yellow["600"]),
-    highlight: createColor("#DBEDFB"),
+    backgroundPurple: {
+      original: deepPurple["300"],
+      ...createColor(deepPurple["300"]),
+    },
+    backgroundBlue: {
+      original: blueGrey["800"],
+      ...createColor(blueGrey["800"]),
+    },
+    primary: {
+      original: indigo["300"],
+      ...createColor(indigo["300"]),
+    },
+    secondary: {
+      original: yellow["600"],
+      ...createColor(yellow["600"]),
+    },
+    highlight: {
+      original: "#5F9EA0",
+      ...createColor("#5F9EA0"),
+    },
+    highlight2: {
+      original: "#faebd7",
+      ...createColor("#faebd7"),
+    },
+    highlight3: {
+      original: "#152238",
+      ...createColor("#152238"),
+    },
+    default: {
+      original: grey["600"],
+      ...createColor(grey["600"]),
+    },
   },
 });
 
-const createContainedStyles = <T extends { variant?: string; color?: string }>(
+const createBoxColors = <T extends { color?: string | number | symbol }>(
+  ownerState: T
+) => {
+  if (ownerState.color) {
+    const color = paletteTheme.palette[
+      ownerState.color as keyof Palette
+    ] as PaletteColor;
+
+    if (typeof color === "object") {
+      return {
+        color: color.contrastText,
+        backgroundColor: color.original,
+      };
+    }
+  }
+
+  return null;
+};
+
+const createContainedStyles = <
+  T extends { variant?: string; color?: string | number | symbol },
+>(
   ownerState: T
 ) => {
   if (ownerState.variant === "contained" && ownerState.color) {
@@ -90,9 +145,46 @@ const theme = createTheme(
           },
         },
       },
+      MuiCard: {
+        styleOverrides: {
+          root: ({ ownerState }) => createBoxColors(ownerState),
+        },
+      },
+      MuiPaper: {
+        styleOverrides: {
+          root: ({ ownerState }) => createBoxColors(ownerState),
+        },
+      },
       MuiIconButton: {
         styleOverrides: {
           root: ({ ownerState }) => createContainedStyles(ownerState),
+        },
+      },
+      MuiDivider: {
+        styleOverrides: {
+          root: ({ ownerState }) => {
+            if (ownerState.gradient && ownerState.color) {
+              const color = paletteTheme.palette[
+                ownerState.color as keyof Palette
+              ] as PaletteColor;
+
+              const rgbColor = colorToRgba(color.dark, 0.5);
+              const rgbColorStop = colorToRgba(color.main, 0);
+              let gradientDegs = "0deg";
+
+              if (ownerState.orientation === "horizontal") {
+                gradientDegs = "90deg";
+              }
+
+              return {
+                background: `linear-gradient(${gradientDegs}, ${rgbColorStop} 0%, ${rgbColor} 35%, ${rgbColor} 65%, ${rgbColorStop} 100%)`,
+                border: "none",
+                height: "1px",
+              };
+            }
+
+            return null;
+          },
         },
       },
     },

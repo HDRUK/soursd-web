@@ -1,14 +1,7 @@
 "use client";
 
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import {
-  Box,
-  Divider,
-  Drawer,
-  DrawerProps,
-  IconButton,
-  useTheme,
-} from "@mui/material";
+import { Box, Divider, Drawer, DrawerProps, IconButton } from "@mui/material";
 
 import { ReactNode } from "react";
 
@@ -28,8 +21,6 @@ export default function HorizontalDrawer({
   variant = "temporary",
   ...restProps
 }: HorizontalDrawerProps) {
-  const theme = useTheme();
-
   return (
     <Drawer {...restProps} variant={variant} onClose={onClose} anchor={anchor}>
       {isDismissable && (
@@ -39,8 +30,8 @@ export default function HorizontalDrawer({
               display: "flex",
               justifyContent: anchor === "right" ? "flex-start" : "flex-end",
               transform: anchor === "right" ? "rotateY(180deg)" : "rotateY(0)",
-              px: theme.spacing(2),
-              py: theme.spacing(1),
+              px: 2,
+              py: 1,
             }}>
             <IconButton
               onClick={() => onClose({}, "escapeKeyDown")}

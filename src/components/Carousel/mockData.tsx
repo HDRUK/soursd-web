@@ -3,7 +3,7 @@ import { CarouselSlideProps } from "./CarouselSlide";
 
 export const mockedCarouselSlides: CarouselSlideProps[] = [
   {
-    title: "Feature 1",
+    heading: "Feature 1",
     description: "Feature 1 description",
     button: (
       <Button color="secondary" variant="contained" size="small">
@@ -13,7 +13,7 @@ export const mockedCarouselSlides: CarouselSlideProps[] = [
     backgroundImage: "/feature.banner.test.jpg",
   },
   {
-    title: "Feature 2",
+    heading: "Feature 2",
     description: "Feature 2 description",
     button: (
       <Button color="secondary" variant="contained" size="small">

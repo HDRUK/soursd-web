@@ -16,6 +16,7 @@ export interface CarouselProps {
   showArrows?: boolean;
   prevIcon?: ReactNode;
   nextIcon?: ReactNode;
+  variant?: "hero" | "default";
 }
 
 export default function Carousel({
@@ -24,6 +25,7 @@ export default function Carousel({
   prevIcon,
   nextIcon,
   settings,
+  variant = "default",
 }: CarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0 || settings?.initialSlide);
   const slideRef = useRef<Slider>(null);
@@ -49,7 +51,7 @@ export default function Carousel({
   };
 
   return (
-    <StyledCarousel>
+    <StyledCarousel variant={variant}>
       {showArrows && (
         <StyledIconButton
           onClick={handlePrevClick}

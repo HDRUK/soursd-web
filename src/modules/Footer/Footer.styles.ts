@@ -23,7 +23,7 @@ export const StyledFooter = styled(PageDecoration)(
 
 export const StyledFeatureArea = styled("div")(
   ({ theme }) => css`
-    background: ${theme.palette.backgroundPurple};
+    background: ${theme.palette.backgroundPurple.main};
     position: relative;
     padding: ${theme.spacing(3)} ${theme.spacing(8)};
     display: flex;
@@ -42,19 +42,19 @@ export const StyledFeatureArea = styled("div")(
 export const StyledLinks = styled("div")(
   ({ theme }) => css`
     width: 100%;
-    background: ${theme.palette.backgroundBlue};
+    background: ${theme.palette.backgroundBlue.main};
     position: relative;
     color: #fff;
     border-top: 1px solid ${theme.palette.grey["200"]};
     display: flex;
     gap: ${theme.spacing(5)};
     flex-direction: column;
-    padding: ${theme.spacing(8)};
+    padding: ${theme.spacing(3)} ${theme.spacing(8)};
 
-    ${theme.breakpoints.up("sm")} {
+    ${theme.breakpoints.up("md")} {
       gap: ${theme.spacing(15)};
       flex-direction: row;
-      padding: ${theme.spacing(10)} ${theme.spacing(20)};
+      padding: ${theme.spacing(5)} ${theme.spacing(20)};
     }
   `
 );
