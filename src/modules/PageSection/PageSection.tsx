@@ -1,9 +1,9 @@
 "use client";
 
-import { HTMLAttributes, PropsWithChildren } from "react";
+import { BoxProps } from "@mui/material";
 import { StyledPageContent } from "./PageSection.styles";
 
-type PageContentProps = PropsWithChildren<HTMLAttributes<HTMLDivElement>>;
+type PageContentProps = BoxProps;
 
 export default function PageLayout({
   children,

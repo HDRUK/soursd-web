@@ -46,7 +46,7 @@ export default function Header({ children, ...restProps }: HeaderProps) {
     : [];
 
   return (
-    <header style={{ paddingBottom: "110px" }}>
+    <header style={{ paddingBottom: "15px" }}>
       <StyledHeader {...restProps}>
         {children}
 
@@ -94,7 +94,7 @@ export default function Header({ children, ...restProps }: HeaderProps) {
                     variant="contained"
                     size="small"
                     sx={{
-                      ml: theme.spacing(4),
+                      ml: 4,
                     }}>
                     {t("Buttons.register")}
                   </Button>

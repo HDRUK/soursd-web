@@ -1,7 +1,9 @@
 import { Box, Theme, css, styled } from "@mui/material";
 import { purple } from "@mui/material/colors";
 
-export const StyledMask = styled(Box)(
+export const StyledMask = styled(Box, {
+  shouldForwardProp: (propName: string) => propName !== "outlined",
+})(
   ({
     theme,
     outlined,

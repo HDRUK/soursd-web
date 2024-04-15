@@ -5,7 +5,7 @@ import EmailIcon from "@mui/icons-material/Email";
 import MessageIcon from "@mui/icons-material/Message";
 import PersonIcon from "@mui/icons-material/Person";
 import SendIcon from "@mui/icons-material/Send";
-import { Box, Button, OutlinedInput, useTheme } from "@mui/material";
+import { Box, Button, OutlinedInput } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -29,7 +29,6 @@ interface ContactFormProps {
 
 export default function ContactForm({ onSubmit }: ContactFormProps) {
   const t = useTranslations("ContactForm");
-  const theme = useTheme();
 
   const {
     register,
@@ -64,7 +63,7 @@ export default function ContactForm({ onSubmit }: ContactFormProps) {
           aria-label="email"
         />
       </StyledFormPersonalDetails>
-      <Box sx={{ display: "flex", gap: theme.spacing(2) }}>
+      <Box sx={{ display: "flex", gap: 2 }}>
         <Box sx={{ flexGrow: 1 }}>
           <OutlinedInput
             {...register("message")}
