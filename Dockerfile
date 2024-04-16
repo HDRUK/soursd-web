@@ -3,7 +3,7 @@ FROM node:alpine
 RUN mkdir -p /usr/src
 WORKDIR /usr/src
 
-COPY . .
+COPY . /usr/src
 
 ENV WATCHPACK_POLLING true
 ENV NEXT_WEBPACK_USEPOLLING true
