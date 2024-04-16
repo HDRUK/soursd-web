@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: speedi-web
+spec:
+  containers:
+    - name: speedi-web
+      image: hdruk/speedi-web:latest
+      ports:
+        - containerPort: 3000
