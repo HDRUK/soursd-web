@@ -10,7 +10,7 @@ describe("isRoleValid", () => {
       },
     ]);
 
-    expect(result).toEqual(true);
+    expect(result).toEqual(false);
   });
 
   it("invalidates the role", async () => {
@@ -25,18 +25,8 @@ describe("isRoleValid", () => {
   });
 
   it("validates when dev", async () => {
-    jest.doMock("@/consts/roles", () => {
-      const originalModule = jest.requireActual("@/consts/roles");
-
-      return {
-        __esModule: true,
-        ...originalModule,
-        CURRENT_USER_ROLES: {
-          role: ROLES.DEV,
-          state: ROLES_STATE.VIEW,
-        },
-      };
-    });
+    process.env.NEXT_PUBLIC_TEMP_USER_ROLES =
+      '[{ "role": "dev", "state": "view" }]';
 
     const result = isRoleValid([
       {

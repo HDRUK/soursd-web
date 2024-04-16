@@ -1,7 +1,11 @@
-import { CURRENT_USER_ROLES, ROLES_STATE, ROLES } from "@/consts/roles";
+import { ROLES, ROLES_STATE } from "@/consts/roles";
 import { RolePermission } from "@/types/roles";
 
 const isRoleValid = (roles?: RolePermission | RolePermission[]) => {
+  const CURRENT_USER_ROLES = JSON.parse(
+    process.env.NEXT_PUBLIC_TEMP_USER_ROLES || "[]"
+  ) as RolePermission[];
+
   if (!roles || CURRENT_USER_ROLES.find(({ role }) => role === ROLES.DEV))
     return true;
 

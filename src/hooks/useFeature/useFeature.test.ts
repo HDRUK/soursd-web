@@ -6,7 +6,7 @@ describe("useFeature", () => {
     const { result } = renderHook(() => useFeature("Footer"));
 
     expect(result.current).toEqual({
-      isAllowed: true,
+      isAllowed: false,
       path: "@/modules/Footer",
     });
   });
