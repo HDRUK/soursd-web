@@ -1,5 +1,10 @@
 // Navigation at this point essentially unknown
-export const getMainNavigationLinks = (locale: string) => [
+
+import { RoleConfig } from "@/types/roles";
+
+export const getMainNavigationLinks = (
+  locale: string
+): ({ tKey: string; to: string } & RoleConfig)[] => [
   {
     tKey: "Navigation.home",
     to: `/${locale}`,

@@ -40,7 +40,11 @@ export default function StatsBox({
       color={color}
       aria-roledescription="statistic"
       {...restProps}
-      sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        flexBasis: "100%",
+      }}>
       <CardContent sx={{ display: "flex", flexGrow: 1, gap: 5 }}>
         {icon && <div>{icon}</div>}
         <Box sx={{ flexGrow: 1, textAlign: "right" }}>

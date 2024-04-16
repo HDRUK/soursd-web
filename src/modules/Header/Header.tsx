@@ -1,5 +1,7 @@
 "use client";
 
+import HorizontalDrawer from "@/components/HorizontalDrawer";
+import { isRoleValid } from "@/utils/roles";
 import { getMainNavigationLinks } from "@/utils/router";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
@@ -19,7 +21,6 @@ import {
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import { DetailedHTMLProps, HTMLAttributes, useEffect, useState } from "react";
-import HorizontalDrawer from "@/components/HorizontalDrawer";
 import { StyledHeader } from "./Header.styles";
 
 type HeaderProps = DetailedHTMLProps<
@@ -78,16 +79,18 @@ export default function Header({ children, ...restProps }: HeaderProps) {
                   [Registry logo]
                 </Typography>
                 <MenuList sx={{ display: "flex" }}>
-                  {navigationLinks.map(({ tKey, ...restProps }) => (
-                    <MenuItem key={tKey}>
-                      <Link
-                        {...restProps}
-                        underline="none"
-                        sx={{ color: "inherit" }}>
-                        {t(tKey)}
-                      </Link>
-                    </MenuItem>
-                  ))}
+                  {navigationLinks
+                    .filter(({ permissions }) => isRoleValid(permissions))
+                    .map(({ tKey, ...restProps }) => (
+                      <MenuItem key={tKey}>
+                        <Link
+                          {...restProps}
+                          underline="none"
+                          sx={{ color: "inherit" }}>
+                          {t(tKey)}
+                        </Link>
+                      </MenuItem>
+                    ))}
                 </MenuList>
                 <Box sx={{ borderLeft: "1px solid rgba(255,255,255, 0.1)" }}>
                   <Button

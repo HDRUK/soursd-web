@@ -1,6 +1,7 @@
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
 import { locales } from "@/config";
 import { Footer, PageLayout } from "@/modules";
+import Feature from "@/modules/Feature";
 import Header from "@/modules/Header/Header";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import type { Metadata } from "next";
@@ -37,7 +38,9 @@ export default function RootLayout({
               <PageLayout>
                 <Header />
                 {children}
-                <Footer />
+                <Feature id="Footer">
+                  <Footer />
+                </Feature>
               </PageLayout>
             </ThemeRegistry>
           </AppRouterCacheProvider>

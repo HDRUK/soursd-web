@@ -6,9 +6,9 @@ import {
   FeatureBoxInfo,
 } from "@/components/FeatureBox";
 import Quote from "@/components/Quote";
-import StatsBox from "@/components/StatsBox";
+import HomepageStats from "@/modules/HomepageStats";
 import PageSection from "@/modules/PageSection/PageSection";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 export default function Page() {
   return (
@@ -22,35 +22,9 @@ export default function Page() {
         ))}
       </Carousel>
       <PageSection sx={{ backgroundColor: "backgroundBlue.original" }}>
-        <Box sx={{ mx: "auto", maxWidth: "800px" }}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} md={4}>
-              <StatsBox
-                description="Data Access Requests Processed"
-                value="162,000"
-                color="highlight"
-                elevation={0}
-              />
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <StatsBox
-                description="Verififed Researchers"
-                value="36,000"
-                color="highlight"
-                elevation={0}
-              />
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <StatsBox
-                description="Researcher Endorsements Recorded"
-                value="1.3 m"
-                color="highlight"
-                elevation={0}
-              />
-            </Grid>
-          </Grid>
-        </Box>
+        <HomepageStats />
       </PageSection>
+
       <PageSection>Content</PageSection>
       <PageSection>
         <FeatureBox color="backgroundBlue">
