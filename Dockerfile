@@ -3,16 +3,12 @@ FROM node:alpine
 RUN mkdir -p /usr/src
 WORKDIR /usr/src
 
-COPY package*.json ./
+COPY . .
 
-ENV NODE_ENV production 
+ENV WATCHPACK_POLLING true
+ENV NEXT_WEBPACK_USEPOLLING true
 
 RUN npm install
 
-COPY . .
-
-RUN npm run build
-
 EXPOSE 3000
-
-CMD npm run start
+CMD npm run dev
