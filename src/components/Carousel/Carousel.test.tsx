@@ -7,7 +7,7 @@ const renderAtSlideIndex = (initialSlide: number) =>
   render(
     <Carousel settings={{ infinite: false, initialSlide }}>
       {mockedCarouselSlides.map(carouselSlideProps => (
-        <CarouselSlide {...carouselSlideProps} />
+        <CarouselSlide key={carouselSlideProps.title} {...carouselSlideProps} />
       ))}
     </Carousel>
   );

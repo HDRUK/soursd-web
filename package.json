@@ -9,7 +9,7 @@
     "lint": "next lint",
     "test": "jest",
     "test:watch": "TZ=UTC jest --watch",
-    "coverage": "jest --coverage",
+    "test:coverage": "jest --coverage",
     "pre-commit": "npx lint-staged",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
@@ -53,6 +53,7 @@
     "@storybook/test": "^8.0.5",
     "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/react": "^14.2.2",
+    "@types/css-mediaquery": "^0.1.4",
     "@types/jest": "^29.5.12",
     "@types/jest-axe": "^3.5.9",
     "@types/node": "^20",

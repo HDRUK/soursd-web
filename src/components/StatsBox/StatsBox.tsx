@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { ReactNode } from "react";
 
-export interface QuoteProps extends PaperProps {
+export interface StatsBoxProps extends PaperProps {
   footer?: string;
   footerProps?: TypographyProps;
   description?: string;
@@ -33,14 +33,18 @@ export default function StatsBox({
   color = "default",
   elevation = 3,
   ...restProps
-}: QuoteProps) {
+}: StatsBoxProps) {
   return (
     <Paper
       elevation={elevation}
       color={color}
       aria-roledescription="statistic"
       {...restProps}
-      sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        flexBasis: "100%",
+      }}>
       <CardContent sx={{ display: "flex", flexGrow: 1, gap: 5 }}>
         {icon && <div>{icon}</div>}
         <Box sx={{ flexGrow: 1, textAlign: "right" }}>
