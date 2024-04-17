@@ -5,7 +5,6 @@ const mockGet = jest.fn();
 
 jest.mock("next/headers", () => {
   return {
-    // <-- this object gets returned by `import('next/headers')`
     headers: () => {
       return {
         get: mockGet,
