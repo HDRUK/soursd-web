@@ -1,8 +1,8 @@
-import { AugmentedColorPaletteOptions } from "@/types/theme";
 import { Box, IconButton, Theme, css, styled } from "@mui/material";
+import { AugmentedColorPaletteOptions } from "@mui/material/styles/createPalette";
 
-export const StyledCarousel = styled("div")(
-  ({ variant }: { variant: "hero" | "default" }) => css`
+export const StyledCarousel = styled(Box)(
+  ({ variant }: { variant: "hero" | "basic" }) => css`
     position: relative;
 
     .slick-slider,

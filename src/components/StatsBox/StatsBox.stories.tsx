@@ -22,5 +22,7 @@ export const Basic: Story = {
     description: "Researchers Registered",
     icon: <Mail />,
     footer: "Last update 22/10/2024",
+    color: "default",
+    elevation: 3,
   },
 };

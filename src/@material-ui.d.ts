@@ -1,5 +1,9 @@
 import "@mui/material/styles/createPalette";
 
+type KeysMatching<T, V> = {
+  [K in keyof T]-?: T[K] extends V ? K : never;
+}[keyof T];
+
 declare module "@mui/material/styles/createPalette" {
   interface CustomSimplePaletteColorOptions {
     original?: string;
@@ -23,19 +27,24 @@ declare module "@mui/material/styles/createPalette" {
   interface Palette extends CustomPalette {}
   interface PaletteOptions extends CustomPalette {}
 
+  type AugmentedColorPaletteOptions = KeysMatching<
+    Palette,
+    SimplePaletteColorOptions | PaletteColor
+  >;
+
   interface IconButtonProps {}
 }
 
 declare module "@mui/material/Card" {
   interface CustomCardProps {
-    color?: keyof (PaletteColor | SimplePaletteColorOptions);
+    color?: AugmentedColorPaletteOptions;
   }
   interface CardOwnProps extends CustomCardProps {}
 }
 
 declare module "@mui/material/Paper" {
   interface CustomPaperProps {
-    color?: keyof (PaletteColor | SimplePaletteColorOptions);
+    color?: AugmentedColorPaletteOptions;
   }
   interface PaperOwnProps extends CustomPaperProps {}
 }
@@ -50,7 +59,7 @@ declare module "@mui/material/IconButton" {
 declare module "@mui/material/Divider" {
   interface CustomDividerProps {
     gradient?: boolean;
-    color?: keyof (PaletteColor | SimplePaletteColorOptions);
+    color?: AugmentedColorPaletteOptions;
   }
   interface DividerOwnProps extends CustomDividerProps {}
 }
