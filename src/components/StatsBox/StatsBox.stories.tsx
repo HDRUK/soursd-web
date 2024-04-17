@@ -1,11 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
+import { MUI_AUGMENTED_COLOR_OPTIONS_ARG_TYPES } from "@/consts/storybook";
 import { Mail } from "@mui/icons-material";
 import StatsBox from ".";
 
 const meta = {
   title: "components/StatsBox",
   component: StatsBox,
+  argTypes: { ...MUI_AUGMENTED_COLOR_OPTIONS_ARG_TYPES },
   parameters: {
     layout: "centered",
   },
