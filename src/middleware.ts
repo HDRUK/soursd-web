@@ -8,6 +8,9 @@ export function middleware(request: NextRequest) {
   });
 
   const response = handleI18nRouting(request);
+
+  response.headers.set("x-url", request.url);
+
   return response;
 }
 

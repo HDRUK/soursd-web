@@ -27,12 +27,19 @@ const customJestConfig = {
     "<rootDir>/coverage",
     "<rootDir>/dist",
     "<rootDir>/src/utils/testUtils.tsx",
+    "<rootDir>/src/consts",
+    "<rootDir>/src/config",
+    ".*mockData\\.ts(x)$",
+    ".*\\.styles\\.ts$",
   ],
   coveragePathIgnorePatterns: [
     "<rootDir>/src/utils/testUtils.tsx",
     "<rootDir>/node_modules",
     "<rootDir>/mocks",
+    "<rootDir>/src/consts",
     "<rootDir>/src/config",
+    ".*mockData\\.ts(x)$",
+    ".*\\.styles\\.ts$",
   ],
 };
 
