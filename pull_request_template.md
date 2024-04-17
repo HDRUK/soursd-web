@@ -7,7 +7,7 @@
 ## Checklist before requesting a review
 
 - [ ] I have performed a self-review of my code
-- [ ] I have added appropriate unit tests
+- [ ] I have added appropriate unit tests (where releveant)
 - [ ] I have created mocks and used miragejs for unit tests (where appropriate)
 - [ ] The interface is responsive (where ticket is relevant)
 - [ ] The interface is at least AA (where ticket is relevant)
