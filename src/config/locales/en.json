@@ -25,5 +25,17 @@
     "about": "About",
     "features": "Features",
     "contact": "Contact"
+  },
+  "RequestError": {
+    "404Heading": "Resource not found",
+    "404Description": "We tried to find the selected resource but it was unavailable, please contact us via the form in the footer.",
+    "401Heading": "Unauthorised",
+    "401Description": "We tried to query the selected resource but you do not have permission to access it, please contact us via the form in the footer.",
+    "400Heading": "Bad request",
+    "400Description": "There was something wrong with the issued request, please contact us via the form in the footer.",
+    "403Heading": "Forbidden",
+    "403Description": "We tried to query the selected resource but it is forbidden, please contact us via the form in the footer.",
+    "500Heading": "Unexpected error",
+    "500Description": "We tried to query the selected resource but there seems to be an issue on the server, please contact us via the form in the footer."
   }
 }

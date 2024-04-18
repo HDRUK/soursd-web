@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { Mail } from "@mui/icons-material";
 import StatsBox from ".";
+import { Box } from "@mui/material";
 
 const meta = {
   title: "components/StatsBox",
@@ -9,6 +10,13 @@ const meta = {
   parameters: {
     layout: "centered",
   },
+  decorators: [
+    Story => (
+      <Box px={2} maxWidth="300px">
+        <Story />
+      </Box>
+    ),
+  ],
   tags: ["autodocs"],
 } satisfies Meta<typeof StatsBox>;
 
