@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
+import { MUI_AUGMENTED_COLOR_OPTIONS_ARG_TYPES } from "@/consts/storybook";
 import { Box, Typography } from "@mui/material";
 import { FeatureBox, FeatureBoxContent, FeatureBoxInfo } from ".";
 import Quote from "../Quote";
@@ -7,6 +8,7 @@ import Quote from "../Quote";
 const meta = {
   title: "components/FeatureBox",
   component: FeatureBox,
+  argTypes: { ...MUI_AUGMENTED_COLOR_OPTIONS_ARG_TYPES },
   tags: ["autodocs"],
   decorators: [
     Story => (

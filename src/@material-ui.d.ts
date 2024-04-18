@@ -24,6 +24,7 @@ declare module "@mui/material/styles/createPalette" {
     highlight3: SimplePaletteColorOptions;
     default: SimplePaletteColorOptions;
   }
+
   interface Palette extends CustomPalette {}
   interface PaletteOptions extends CustomPalette {}
 
@@ -35,7 +36,24 @@ declare module "@mui/material/styles/createPalette" {
   interface IconButtonProps {}
 }
 
+declare module "@mui/material/CircularProgress" {
+  type AugmentedColorPaletteOptions =
+    import("@mui/material/styles/createPalette").AugmentedColorPaletteOptions;
+
+  interface CircularProgressPropsColorOverrides {
+    backgroundPurple: true;
+    backgroundBlue: true;
+    highlight: true;
+    highlight2: true;
+    highlight3: true;
+    default: true;
+  }
+}
+
 declare module "@mui/material/Card" {
+  type AugmentedColorPaletteOptions =
+    import("@mui/material/styles/createPalette").AugmentedColorPaletteOptions;
+
   interface CustomCardProps {
     color?: AugmentedColorPaletteOptions;
   }
@@ -43,6 +61,9 @@ declare module "@mui/material/Card" {
 }
 
 declare module "@mui/material/Paper" {
+  type AugmentedColorPaletteOptions =
+    import("@mui/material/styles/createPalette").AugmentedColorPaletteOptions;
+
   interface CustomPaperProps {
     color?: AugmentedColorPaletteOptions;
   }
@@ -57,6 +78,9 @@ declare module "@mui/material/IconButton" {
 }
 
 declare module "@mui/material/Divider" {
+  type AugmentedColorPaletteOptions =
+    import("@mui/material/styles/createPalette").AugmentedColorPaletteOptions;
+
   interface CustomDividerProps {
     gradient?: boolean;
     color?: AugmentedColorPaletteOptions;
