@@ -7,9 +7,6 @@ const meta = {
   title: "components/Quote",
   component: Quote,
   argTypes: { ...MUI_AUGMENTED_COLOR_OPTIONS_ARG_TYPES },
-  parameters: {
-    layout: "centered",
-  },
   tags: ["autodocs"],
 } satisfies Meta<typeof Quote>;
 

@@ -7,9 +7,13 @@ import { mockedCarouselSlides } from "./mockData";
 const meta = {
   title: "components/Carousel",
   component: Carousel,
-  parameters: {
-    layout: "centered",
-  },
+  decorators: [
+    Story => (
+      <Box px={2} minHeight="150px">
+        <Story />
+      </Box>
+    ),
+  ],
   tags: ["autodocs"],
 } satisfies Meta<typeof Carousel>;
 
@@ -22,21 +26,14 @@ export const Basic: Story = {
     children: [],
   },
   render: props => (
-    <Box
-      sx={{
-        height: "150px",
-        maxWidth: "900px",
-        width: "calc(100vw - 72px)",
-      }}>
-      <Carousel sx={{ height: "100%" }} {...props}>
-        <CarouselSlide backgroundTransparencyColor="primary">
-          Slide 1
-        </CarouselSlide>
-        <CarouselSlide backgroundTransparencyColor="secondary">
-          Slide 2
-        </CarouselSlide>
-      </Carousel>
-    </Box>
+    <Carousel sx={{ height: "150px" }} {...props}>
+      <CarouselSlide backgroundTransparencyColor="primary">
+        Slide 1
+      </CarouselSlide>
+      <CarouselSlide backgroundTransparencyColor="secondary">
+        Slide 2
+      </CarouselSlide>
+    </Carousel>
   ),
 };
 
@@ -46,17 +43,10 @@ export const Hero: Story = {
     variant: "hero",
   },
   render: props => (
-    <Box
-      sx={{
-        height: "300px",
-        width: "calc(100vw - 72px)",
-        maxWidth: "900px",
-      }}>
-      <Carousel {...props}>
-        {mockedCarouselSlides.map(carouselSlideProps => (
-          <CarouselSlide {...carouselSlideProps} />
-        ))}
-      </Carousel>
-    </Box>
+    <Carousel {...props}>
+      {mockedCarouselSlides.map(carouselSlideProps => (
+        <CarouselSlide {...carouselSlideProps} />
+      ))}
+    </Carousel>
   ),
 };

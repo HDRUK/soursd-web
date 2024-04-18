@@ -8,10 +8,11 @@ export type FeatureBoxProps = PaperProps;
 
 export default function FeatureBox({
   children,
+  elevation = 0,
   ...restProps
 }: FeatureBoxProps) {
   return (
-    <StyledFeatureBox elevation={0} {...restProps}>
+    <StyledFeatureBox elevation={elevation} {...restProps}>
       {Children.map<ReactNode, ReactNode>(children, child => {
         if (isValidElement(child)) {
           return cloneElement(child, {
