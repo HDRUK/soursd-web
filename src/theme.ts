@@ -1,10 +1,14 @@
 "use client";
 
 import {
+  blue,
   blueGrey,
   deepPurple,
+  green,
   grey,
   indigo,
+  orange,
+  red,
   yellow,
 } from "@mui/material/colors";
 import { Palette, PaletteColor, createTheme } from "@mui/material/styles";
@@ -46,6 +50,22 @@ const paletteTheme = createTheme({
       original: yellow["600"],
       ...createColor(yellow["600"]),
     },
+    warning: {
+      original: orange["300"],
+      ...createColor(orange["300"]),
+    },
+    info: {
+      original: blue["200"],
+      ...createColor(blue["200"]),
+    },
+    error: {
+      original: red["400"],
+      ...createColor(red["400"]),
+    },
+    success: {
+      original: green["600"],
+      ...createColor(green["600"]),
+    },
     highlight: {
       original: "#5F9EA0",
       ...createColor("#5F9EA0"),
@@ -59,8 +79,8 @@ const paletteTheme = createTheme({
       ...createColor("#152238"),
     },
     default: {
-      original: grey["600"],
-      ...createColor(grey["600"]),
+      original: grey["400"],
+      ...createColor(grey["400"]),
     },
   },
 });

@@ -25,6 +25,7 @@ export const Basic: Story = {
     <Box
       sx={{
         height: "150px",
+        maxWidth: "900px",
         width: "calc(100vw - 72px)",
       }}>
       <Carousel sx={{ height: "100%" }} {...props}>
@@ -49,6 +50,7 @@ export const Hero: Story = {
       sx={{
         height: "300px",
         width: "calc(100vw - 72px)",
+        maxWidth: "900px",
       }}>
       <Carousel {...props}>
         {mockedCarouselSlides.map(carouselSlideProps => (

@@ -21,7 +21,9 @@ export default function Quote({
 }: QuoteProps) {
   return (
     <Paper aria-roledescription="quote" elevation={elevation} {...restProps}>
-      <CardContent component="blockquote" sx={{ pb: 2, m: 0 }}>
+      <CardContent
+        component="blockquote"
+        sx={{ "&:last-child": { pb: 2 }, m: 0 }}>
         <Box
           sx={{
             display: "flex",
