@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { MUI_AUGMENTED_COLOR_OPTIONS_ARG_TYPES } from "@/consts/storybook";
-import { Mail } from "@mui/icons-material";
+import { Person } from "@mui/icons-material";
 import StatsBox from ".";
 
 const meta = {
@@ -22,7 +22,7 @@ export const Basic: Story = {
   args: {
     value: "162,000",
     description: "Researchers Registered",
-    icon: <Mail />,
+    icon: <Person />,
     footer: "Last update 22/10/2024",
     color: "default",
     elevation: 3,

@@ -51,7 +51,7 @@ export const StyledLoader = styled(Box)(({
       display: block;
       width: 4px;
       height: 4px;
-      background: ${theme.palette[color].main};
+      background: ${theme.palette[color].light};
       border-radius: 4px;
       box-shadow: 1px 1px 4px ${bondColor};
       animation: helix 1.25s ease-in-out infinite;
