@@ -1,15 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { Mail } from "@mui/icons-material";
-import StatsBox from ".";
 import { Box } from "@mui/material";
+import StatsBox from ".";
 
 const meta = {
   title: "components/StatsBox",
   component: StatsBox,
-  parameters: {
-    layout: "centered",
-  },
   decorators: [
     Story => (
       <Box px={2} maxWidth="300px">
@@ -30,5 +27,7 @@ export const Basic: Story = {
     description: "Researchers Registered",
     icon: <Mail />,
     footer: "Last update 22/10/2024",
+    color: "default",
+    elevation: 3,
   },
 };

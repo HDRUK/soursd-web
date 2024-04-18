@@ -4,19 +4,20 @@ import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
+import { BoxProps } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { ReactNode, useCallback, useRef, useState } from "react";
 import Slider, { Settings } from "react-slick";
 import { StyledCarousel, StyledIconButton } from "./Carousel.styles";
 
-export interface CarouselProps {
+export interface CarouselProps extends BoxProps {
   children: ReactNode[];
   height?: string;
   settings?: Settings;
   showArrows?: boolean;
   prevIcon?: ReactNode;
   nextIcon?: ReactNode;
-  variant?: "hero" | "default";
+  variant?: "hero" | "basic";
 }
 
 export default function Carousel({
@@ -25,7 +26,8 @@ export default function Carousel({
   prevIcon,
   nextIcon,
   settings,
-  variant = "default",
+  variant = "basic",
+  ...restProps
 }: CarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0 || settings?.initialSlide);
   const slideRef = useRef<Slider>(null);
@@ -51,7 +53,7 @@ export default function Carousel({
   };
 
   return (
-    <StyledCarousel variant={variant}>
+    <StyledCarousel variant={variant} {...restProps}>
       {showArrows && (
         <StyledIconButton
           onClick={handlePrevClick}

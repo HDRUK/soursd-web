@@ -1,16 +1,8 @@
-import {
-  Alert,
-  AlertProps,
-  AlertTitle,
-  Snackbar,
-  SnackbarProps,
-  Typography,
-} from "@mui/material";
+import { Alert, AlertProps, Snackbar, SnackbarProps } from "@mui/material";
 import { ReactNode } from "react";
 
 export interface MessageProps {
-  description?: ReactNode;
-  heading?: ReactNode;
+  children: ReactNode;
   variant?: "body" | "notification";
   onClose?: () => void;
   open?: boolean;
@@ -20,8 +12,7 @@ export interface MessageProps {
 }
 
 export default function Message({
-  heading,
-  description,
+  children,
   variant = "body",
   onClose,
   open = true,
@@ -31,9 +22,8 @@ export default function Message({
   if (variant === "notification") {
     return (
       <Snackbar open={open} {...snackbarProps}>
-        <Alert severity="error" onClose={onClose} {...alertProps}>
-          <AlertTitle>{heading}</AlertTitle>
-          <Typography>{description}</Typography>
+        <Alert onClose={onClose} {...alertProps}>
+          {children}
         </Alert>
       </Snackbar>
     );
@@ -41,9 +31,8 @@ export default function Message({
 
   return (
     open && (
-      <Alert severity="error" onClose={onClose} {...alertProps}>
-        <AlertTitle>{heading}</AlertTitle>
-        <Typography>{description}</Typography>
+      <Alert onClose={onClose} {...alertProps}>
+        {children}
       </Alert>
     )
   );
