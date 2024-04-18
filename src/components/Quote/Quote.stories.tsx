@@ -18,5 +18,6 @@ type Story = StoryObj<typeof meta>;
 export const Basic: Story = {
   args: {
     children: "Comments made by user go here",
+    elevation: 3,
   },
 };

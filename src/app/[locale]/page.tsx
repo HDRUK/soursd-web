@@ -15,10 +15,7 @@ export default function Page() {
     <Box sx={{ overflow: "hidden", position: "relative" }}>
       <Carousel variant="hero">
         {mockedCarouselSlides.map(carouselSlideProps => (
-          <CarouselSlide
-            backgroundTransparencyColor="backgroundBlue"
-            {...carouselSlideProps}
-          />
+          <CarouselSlide {...carouselSlideProps} />
         ))}
       </Carousel>
       <PageSection sx={{ backgroundColor: "backgroundBlue.original" }}>

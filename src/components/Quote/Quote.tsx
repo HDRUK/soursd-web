@@ -8,7 +8,7 @@ import { StyledName } from "./Quote.styles";
 export interface QuoteProps extends CardProps {
   profileImage?: string;
   name?: string;
-  description: string;
+  description?: string;
 }
 
 export default function Quote({
@@ -31,7 +31,7 @@ export default function Quote({
             fontSize="large"
             sx={{ transform: "rotateY(180deg)", marginTop: "-0.22em" }}
           />
-          <div>{children}</div>
+          <Box sx={{ py: "2px" }}>{children}</Box>
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <Mask height="40px" width="40px">
               <img src={profileImage || "/profile.picture.png"} alt="Profile" />

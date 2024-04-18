@@ -1,7 +1,7 @@
 "use client";
 
-import { AugmentedColorPaletteOptions } from "@/types/theme";
 import { Box, BoxProps, Typography, useTheme } from "@mui/material";
+import { AugmentedColorPaletteOptions } from "@mui/material/styles/createPalette";
 import { ReactNode } from "react";
 import { StyledBackgroundImage, StyledCarouselSlide } from "./Carousel.styles";
 

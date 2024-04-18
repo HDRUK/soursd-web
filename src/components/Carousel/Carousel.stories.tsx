@@ -24,8 +24,31 @@ export const Basic: Story = {
   render: props => (
     <Box
       sx={{
+        height: "150px",
+        width: "calc(100vw - 72px)",
+      }}>
+      <Carousel sx={{ height: "100%" }} {...props}>
+        <CarouselSlide backgroundTransparencyColor="primary">
+          Slide 1
+        </CarouselSlide>
+        <CarouselSlide backgroundTransparencyColor="secondary">
+          Slide 2
+        </CarouselSlide>
+      </Carousel>
+    </Box>
+  ),
+};
+
+export const Hero: Story = {
+  args: {
+    children: [],
+    variant: "hero",
+  },
+  render: props => (
+    <Box
+      sx={{
         height: "300px",
-        width: "calc(100vw - 32px)",
+        width: "calc(100vw - 72px)",
       }}>
       <Carousel {...props}>
         {mockedCarouselSlides.map(carouselSlideProps => (
