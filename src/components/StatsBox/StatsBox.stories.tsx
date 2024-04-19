@@ -30,6 +30,5 @@ export const Basic: Story = {
     icon: <Person />,
     footer: "Last update 22/10/2024",
     color: "default",
-    elevation: 3,
   },
 };

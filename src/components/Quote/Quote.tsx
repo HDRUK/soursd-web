@@ -14,7 +14,7 @@ export interface QuoteProps extends CardProps {
 export default function Quote({
   children,
   profileImage,
-  elevation = 3,
+  elevation = 1,
   name,
   description,
   ...restProps

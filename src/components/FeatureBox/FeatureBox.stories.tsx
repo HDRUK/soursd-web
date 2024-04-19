@@ -24,10 +24,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Basic: Story = {
-  args: {
-    elevation: 3,
-    color: "primary",
-  },
+  args: {},
   render: props => (
     <FeatureBox {...props}>
       <FeatureBoxInfo>

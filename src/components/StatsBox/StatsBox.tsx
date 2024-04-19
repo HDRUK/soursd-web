@@ -31,7 +31,7 @@ export default function StatsBox({
   valueProps,
   icon,
   color = "default",
-  elevation = 3,
+  elevation = 0,
   ...restProps
 }: StatsBoxProps) {
   return (

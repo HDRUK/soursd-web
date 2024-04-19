@@ -1,3 +1,4 @@
+import { getPaletteModeColors } from "@/utils/theme";
 import { Box, Theme, css, styled } from "@mui/material";
 import { purple } from "@mui/material/colors";
 
@@ -19,7 +20,7 @@ export const StyledMask = styled(Box, {
     `background: linear-gradient(
       to right,
       ${purple["200"]},
-      ${theme.palette.primary.light}
+      ${getPaletteModeColors(theme, "primary").mode}
     );`}
     padding: 2px;
     border-radius: 50%;

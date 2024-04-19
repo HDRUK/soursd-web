@@ -4,7 +4,7 @@ export const StyledPageDecoration = styled("div")(
   ({ theme }) => css`
     position: relative;
     color: #fff;
-    background: ${theme.palette.backgroundPurple.original};
+    background: ${theme.palette.background1.main};
     width: 100%;
 
     :before,
@@ -15,14 +15,14 @@ export const StyledPageDecoration = styled("div")(
     }
 
     :before {
-      background: ${theme.palette.backgroundBlue.original};
+      background: ${theme.palette.background2.main};
       height: 100px;
       width: 50%;
       max-width: 500px;
     }
 
     :after {
-      background: ${theme.palette.backgroundPurple.original};
+      background: ${theme.palette.background1.main};
       height: 32px;
       width: 100%;
     }

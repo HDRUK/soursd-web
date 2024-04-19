@@ -17,12 +17,13 @@ declare module "@mui/material/styles/createPalette" {
   interface PaletteColor extends CustomPaletteColor {}
 
   interface CustomPalette {
-    backgroundPurple: SimplePaletteColorOptions;
-    backgroundBlue: SimplePaletteColorOptions;
+    background1: SimplePaletteColorOptions;
+    background2: SimplePaletteColorOptions;
     highlight: SimplePaletteColorOptions;
     highlight2: SimplePaletteColorOptions;
     highlight3: SimplePaletteColorOptions;
     default: SimplePaletteColorOptions;
+    inactive: SimplePaletteColorOptions;
   }
 
   interface Palette extends CustomPalette {}
@@ -41,8 +42,8 @@ declare module "@mui/material/CircularProgress" {
     import("@mui/material/styles/createPalette").AugmentedColorPaletteOptions;
 
   interface CircularProgressPropsColorOverrides {
-    backgroundPurple: true;
-    backgroundBlue: true;
+    background1: true;
+    background2: true;
     highlight: true;
     highlight2: true;
     highlight3: true;
@@ -71,6 +72,18 @@ declare module "@mui/material/Paper" {
 }
 
 declare module "@mui/material/IconButton" {
+  type AugmentedColorPaletteOptions =
+    import("@mui/material/styles/createPalette").AugmentedColorPaletteOptions;
+
+  interface IconButtonPropsColorOverrides {
+    background1: true;
+    background2: true;
+    highlight: true;
+    highlight2: true;
+    highlight3: true;
+    default: true;
+  }
+
   interface CustomIconButtonProps {
     variant?: "contained" | "default";
   }
@@ -86,4 +99,15 @@ declare module "@mui/material/Divider" {
     color?: AugmentedColorPaletteOptions;
   }
   interface DividerOwnProps extends CustomDividerProps {}
+}
+
+declare module "@mui/material/Stepper" {
+  type AugmentedColorPaletteOptions =
+    import("@mui/material/styles/createPalette").AugmentedColorPaletteOptions;
+
+  interface CustomStepperProps {
+    color?: AugmentedColorPaletteOptions;
+  }
+
+  interface StepperOwnProps extends CustomStepperProps {}
 }
