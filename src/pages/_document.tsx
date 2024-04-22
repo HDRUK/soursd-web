@@ -1,5 +1,4 @@
 import { makeServer } from "@/mocks/server";
-import { GlobalStyles } from "@mui/material";
 
 import {
   DocumentHeadTags,
@@ -24,7 +23,6 @@ export default function Document(props: DocumentProps & DocumentHeadTagsProps) {
     <Html lang="en">
       <Head>
         <DocumentHeadTags {...props} />
-        <GlobalStyles styles={{ h3: { color: "grey" } }} />
       </Head>
       <body>
         <Main />

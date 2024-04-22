@@ -3,9 +3,9 @@
 import { Carousel } from "@/components/Carousel";
 import Quote from "@/components/Quote";
 import { Box, Button, Grid, Typography, useTheme } from "@mui/material";
+import { useTranslations } from "next-intl";
 import { FeaturesList } from "./components/FeaturesList";
 import { StyledContentLayout, StyledHeader, StyledPage } from "./page.styles";
-import { useTranslations } from "next-intl";
 
 export default function Page() {
   const theme = useTheme();
@@ -37,12 +37,11 @@ export default function Page() {
               alignItems: "center",
               display: "flex",
             }}>
-            <Box component="section" sx={{ px: 3 }}>
+            <Box component="section" sx={{ px: 3, mb: 5 }}>
               <Typography variant="h3" color="white">
                 What does the Researcher Registry do?
               </Typography>
-              <Box
-                component={FeaturesList}
+              <FeaturesList
                 features={[
                   {
                     text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam non",
@@ -65,8 +64,8 @@ export default function Page() {
           </Grid>
           <Grid item xs={12} md={7}>
             <Carousel arrowProps={{ color: "highlight3" }}>
-              <img src="/feature1.png" />
-              <img src="/feature1.png" />
+              <img src="/feature1.png" alt="Feature 1" />
+              <img src="/feature1.png" alt="Feature 2" />
             </Carousel>
           </Grid>
         </Grid>
