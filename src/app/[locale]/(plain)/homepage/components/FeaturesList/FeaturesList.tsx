@@ -1,11 +1,18 @@
 import { Check } from "@mui/icons-material";
-import { Button, List, ListItem, Typography } from "@mui/material";
+import {
+  Box,
+  BoxProps,
+  Button,
+  List,
+  ListItem,
+  Typography,
+} from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { useTranslations } from "next-intl";
 import { ReactNode } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-interface FeaturesListProps {
+interface FeaturesListProps extends BoxProps {
   features: {
     text: ReactNode;
   }[];
@@ -18,7 +25,7 @@ export default function FeaturesList({
   const t = useTranslations();
 
   return (
-    <div {...restProps}>
+    <Box {...restProps}>
       <List sx={{ mb: 2 }}>
         {features.map(({ text }) => (
           <ListItem sx={{ gap: 1 }} key={uuidv4()}>
@@ -32,6 +39,6 @@ export default function FeaturesList({
       <Button variant="contained" color="secondary">
         {t("Buttons.register")}
       </Button>
-    </div>
+    </Box>
   );
 }

@@ -59,6 +59,7 @@ export default function Page() {
                     text: "Amet, consectetur adipiscing. Nam non",
                   },
                 ]}
+                sx={{ mb: 5 }}
               />
             </Box>
           </Grid>
