@@ -1,9 +1,8 @@
 import { Box } from "@mui/material";
+import { PropsWithChildren } from "react";
 
-export default function Layout({ children }) {
-  return (
-    <Box sx={{ height: "100vh", width: "100vw", overflow: "hidden" }}>
-      {children}
-    </Box>
-  );
+type LayoutProps = PropsWithChildren<object>;
+
+export default function Layout({ children }: LayoutProps) {
+  return <Box sx={{ height: "100vh", width: "100vw" }}>{children}</Box>;
 }

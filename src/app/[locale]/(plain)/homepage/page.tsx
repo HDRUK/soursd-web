@@ -19,7 +19,7 @@ export default function Page() {
         <StyledHeader>
           <div>
             <Button variant="contained" color="secondary">
-              {t("Buttons.register")}
+              {t("Buttons.login")}
             </Button>
           </div>
         </StyledHeader>

@@ -3,7 +3,7 @@ import { css, styled } from "@mui/material";
 const StyledPage = styled("div")(
   ({ theme }) => css`
     width: 100%;
-    height: 100%;
+    min-height: 100vh;
     position: relative;
 
     :before {
@@ -47,7 +47,7 @@ const StyledContentLayout = styled("section")(
     display: flex;
     flex-direction: column;
     gap: ${theme.spacing(4)};
-    height: 100%;
+    min-height: 100vh;
     position: relative;
     z-index: 2;
   `

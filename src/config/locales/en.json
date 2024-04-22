@@ -1,6 +1,7 @@
 {
   "Buttons": {
-    "register": "Register"
+    "register": "Register",
+    "login": "Login"
   },
   "Carousel": {
     "next": "next slide",
