@@ -19,26 +19,18 @@ const createColor = (mainColor: string) => {
   return augmentColor({ color: { main: mainColor } });
 };
 
+const headingStyles = {
+  fontFamily: '"Signika", sans-serif',
+};
+
 export const PALETTE_THEME_PURPLE_BLUE = {
   typography: {
-    h1: {
-      fontFamily: '"Signika", sans-serif',
-    },
-    h2: {
-      fontFamily: '"Signika", sans-serif',
-    },
-    h3: {
-      fontFamily: '"Signika", sans-serif',
-    },
-    h4: {
-      fontFamily: '"Signika", sans-serif',
-    },
-    h5: {
-      fontFamily: '"Signika", sans-serif',
-    },
-    h6: {
-      fontFamily: '"Signika", sans-serif',
-    },
+    h1: headingStyles,
+    h2: headingStyles,
+    h3: headingStyles,
+    h4: headingStyles,
+    h5: headingStyles,
+    h6: headingStyles,
   },
   palette: {
     background1: createColor(deepPurple["300"]),
