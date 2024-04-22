@@ -20,6 +20,26 @@ const createColor = (mainColor: string) => {
 };
 
 export const PALETTE_THEME_PURPLE_BLUE = {
+  typography: {
+    h1: {
+      fontFamily: '"Signika", sans-serif',
+    },
+    h2: {
+      fontFamily: '"Signika", sans-serif',
+    },
+    h3: {
+      fontFamily: '"Signika", sans-serif',
+    },
+    h4: {
+      fontFamily: '"Signika", sans-serif',
+    },
+    h5: {
+      fontFamily: '"Signika", sans-serif',
+    },
+    h6: {
+      fontFamily: '"Signika", sans-serif',
+    },
+  },
   palette: {
     background1: createColor(deepPurple["300"]),
     background2: createColor(blueGrey["800"]),

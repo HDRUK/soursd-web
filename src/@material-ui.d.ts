@@ -5,17 +5,6 @@ type KeysMatching<T, V> = {
 }[keyof T];
 
 declare module "@mui/material/styles/createPalette" {
-  interface CustomSimplePaletteColorOptions {
-    original?: string;
-  }
-
-  interface CustomPaletteColor {
-    original?: string;
-  }
-
-  interface SimplePaletteColorOptions extends CustomSimplePaletteColorOptions {}
-  interface PaletteColor extends CustomPaletteColor {}
-
   interface CustomPalette {
     background1: SimplePaletteColorOptions;
     background2: SimplePaletteColorOptions;
@@ -48,6 +37,7 @@ declare module "@mui/material/CircularProgress" {
     highlight2: true;
     highlight3: true;
     default: true;
+    inactive: true;
   }
 }
 
@@ -82,6 +72,7 @@ declare module "@mui/material/IconButton" {
     highlight2: true;
     highlight3: true;
     default: true;
+    inactive: true;
   }
 
   interface CustomIconButtonProps {
