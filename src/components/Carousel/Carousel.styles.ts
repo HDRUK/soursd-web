@@ -74,6 +74,6 @@ export const StyledBackgroundImage = styled("div")(
     width: 100%;
     height: 100%;
     background-size: cover;
-    opacity: 0.2;
+    opacity: 0.7;
   `
 );

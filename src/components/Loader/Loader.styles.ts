@@ -1,4 +1,4 @@
-import { colorToRgba } from "@/utils/theme";
+import { colorToRgba, getPaletteModeColors } from "@/utils/theme";
 import {
   AugmentedColorPaletteOptions,
   Box,
@@ -14,7 +14,10 @@ export const StyledLoader = styled(Box)(({
   theme: Theme;
   color: AugmentedColorPaletteOptions;
 }) => {
-  const bondColor = colorToRgba(theme.palette[color].light || "#fff", 0.4);
+  const bondColor = colorToRgba(
+    getPaletteModeColors(theme, color).mode || "#fff",
+    0.4
+  );
 
   return css`
     position: relative;
@@ -51,7 +54,7 @@ export const StyledLoader = styled(Box)(({
       display: block;
       width: 4px;
       height: 4px;
-      background: ${theme.palette[color].light};
+      background: ${getPaletteModeColors(theme, color).mode};
       border-radius: 4px;
       box-shadow: 1px 1px 4px ${bondColor};
       animation: helix 1.25s ease-in-out infinite;

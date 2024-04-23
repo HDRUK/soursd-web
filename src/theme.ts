@@ -1,20 +1,11 @@
 "use client";
 
-import {
-  blue,
-  blueGrey,
-  deepPurple,
-  green,
-  grey,
-  indigo,
-  orange,
-  red,
-  yellow,
-} from "@mui/material/colors";
-import { Palette, PaletteColor, createTheme } from "@mui/material/styles";
+import { AugmentedColorPaletteOptions } from "@mui/material";
+import { createTheme } from "@mui/material/styles";
 import { createBreakpoints } from "@mui/system";
 import { Roboto } from "next/font/google";
-import { colorToRgba } from "./utils/theme";
+import { PALETTE_THEME_PURPLE_BLUE } from "./config/theme";
+import { colorToRgba, getPaletteModeColors } from "./utils/theme";
 
 const roboto = Roboto({
   weight: ["300", "400", "500", "700"],
@@ -24,79 +15,19 @@ const roboto = Roboto({
 
 const breakpoints = createBreakpoints({});
 
-const {
-  palette: { augmentColor },
-} = createTheme({});
+const paletteTheme = createTheme(PALETTE_THEME_PURPLE_BLUE);
 
-const createColor = (mainColor: string) => {
-  return augmentColor({ color: { main: mainColor } });
-};
-
-const paletteTheme = createTheme({
-  palette: {
-    backgroundPurple: {
-      original: deepPurple["300"],
-      ...createColor(deepPurple["300"]),
-    },
-    backgroundBlue: {
-      original: blueGrey["800"],
-      ...createColor(blueGrey["800"]),
-    },
-    primary: {
-      original: indigo["300"],
-      ...createColor(indigo["300"]),
-    },
-    secondary: {
-      original: yellow["600"],
-      ...createColor(yellow["600"]),
-    },
-    warning: {
-      original: orange["300"],
-      ...createColor(orange["300"]),
-    },
-    info: {
-      original: blue["200"],
-      ...createColor(blue["200"]),
-    },
-    error: {
-      original: red["400"],
-      ...createColor(red["400"]),
-    },
-    success: {
-      original: green["600"],
-      ...createColor(green["600"]),
-    },
-    highlight: {
-      original: "#5F9EA0",
-      ...createColor("#5F9EA0"),
-    },
-    highlight2: {
-      original: "#faebd7",
-      ...createColor("#faebd7"),
-    },
-    highlight3: {
-      original: "#152238",
-      ...createColor("#152238"),
-    },
-    default: {
-      original: grey["400"],
-      ...createColor(grey["400"]),
-    },
-  },
-});
-
-const createBoxColors = <T extends { color?: string | number | symbol }>(
+const createBoxStyles = <T extends { color?: AugmentedColorPaletteOptions }>(
   ownerState: T
 ) => {
   if (ownerState.color) {
-    const color = paletteTheme.palette[
-      ownerState.color as keyof Palette
-    ] as PaletteColor;
+    const color = paletteTheme.palette[ownerState.color];
 
     if (typeof color === "object") {
       return {
         color: color.contrastText,
-        backgroundColor: color.original,
+        backgroundColor: getPaletteModeColors(paletteTheme, ownerState.color)
+          .mode,
       };
     }
   }
@@ -104,29 +35,107 @@ const createBoxColors = <T extends { color?: string | number | symbol }>(
   return null;
 };
 
-const createContainedStyles = <
-  T extends { variant?: string; color?: string | number | symbol },
+const createStepperStyles = <
+  T extends { color?: AugmentedColorPaletteOptions },
 >(
   ownerState: T
 ) => {
-  if (ownerState.variant === "contained" && ownerState.color) {
-    let color;
+  if (ownerState.color) {
+    const colors = getPaletteModeColors(paletteTheme, ownerState.color);
+    const inactiveColors = getPaletteModeColors(paletteTheme, "inactive");
+
+    return {
+      ".MuiStepLabel-root .MuiStepIcon-root": {
+        color: inactiveColors.mode,
+        backgroundColor: inactiveColors.mode,
+        borderRadius: "50%",
+      },
+      ".MuiStepLabel-root .MuiStepIcon-root.Mui-active": {
+        color: colors.mode,
+        borderRadius: "50%",
+        boxShadow:
+          "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
+      },
+      ".MuiStepLabel-root .MuiStepIcon-root.Mui-completed": {
+        color: colors.main,
+        borderRadius: "50%",
+        backgroundColor: colors.contrastText,
+      },
+      ".MuiStepLabel-root .MuiStepIcon-root .MuiStepIcon-text": {
+        fill: "#fff",
+      },
+    };
+  }
+
+  return null;
+};
+
+const createContainedStyles = <
+  T extends {
+    variant?: string;
+    color?: AugmentedColorPaletteOptions | "inherit";
+  },
+>(
+  ownerState: T
+) => {
+  if (
+    ownerState.variant === "contained" &&
+    ownerState.color &&
+    ownerState.color !== "inherit"
+  ) {
+    let colors;
 
     if (ownerState.color === "default") {
-      color = createColor(paletteTheme.palette.grey["200"]) as PaletteColor;
+      colors = getPaletteModeColors(paletteTheme, "default");
     } else {
-      color = paletteTheme.palette[
-        ownerState.color as keyof Palette
-      ] as PaletteColor;
+      colors = getPaletteModeColors(paletteTheme, ownerState.color);
     }
 
     return {
-      color: color.contrastText,
-      backgroundColor: color.light,
+      color: colors.contrastText,
+      backgroundColor: colors.mode,
       "&:hover": {
-        backgroundColor: color.dark,
+        backgroundColor: colors.main,
       },
     };
+  }
+
+  return null;
+};
+
+const createDividerStyles = <
+  T extends {
+    gradient?: boolean;
+    orientation?: "horizontal" | "vertical";
+    color?: AugmentedColorPaletteOptions;
+  },
+>(
+  ownerState: T
+) => {
+  if (ownerState.color) {
+    const color = paletteTheme.palette[ownerState.color];
+    const rgbColor = colorToRgba(color.main, 0.8);
+    const rgbColorStop = colorToRgba(color.main, 0);
+    const initialStyles = {
+      border: "none",
+      height: "1px",
+      backgroundColor: rgbColor,
+    };
+
+    if (ownerState.gradient) {
+      let gradientDegs = "0deg";
+
+      if (ownerState.orientation === "horizontal") {
+        gradientDegs = "90deg";
+      }
+
+      return {
+        ...initialStyles,
+        background: `linear-gradient(${gradientDegs}, ${rgbColorStop} 0%, ${rgbColor} 35%, ${rgbColor} 65%, ${rgbColorStop} 100%)`,
+      };
+    }
+
+    return initialStyles;
   }
 
   return null;
@@ -150,7 +159,7 @@ const theme = createTheme(
       MuiToolbar: {
         styleOverrides: {
           root: {
-            backgroundColor: deepPurple["300"],
+            backgroundColor: paletteTheme.palette.background1.main,
             color: "#fff",
             [breakpoints.up("sm")]: {
               minHeight: "52px",
@@ -167,12 +176,12 @@ const theme = createTheme(
       },
       MuiCard: {
         styleOverrides: {
-          root: ({ ownerState }) => createBoxColors(ownerState),
+          root: ({ ownerState }) => createBoxStyles(ownerState),
         },
       },
       MuiPaper: {
         styleOverrides: {
-          root: ({ ownerState }) => createBoxColors(ownerState),
+          root: ({ ownerState }) => createBoxStyles(ownerState),
         },
       },
       MuiIconButton: {
@@ -180,31 +189,17 @@ const theme = createTheme(
           root: ({ ownerState }) => createContainedStyles(ownerState),
         },
       },
+      MuiStepper: {
+        defaultProps: {
+          color: "primary",
+        },
+        styleOverrides: {
+          root: ({ ownerState }) => createStepperStyles(ownerState),
+        },
+      },
       MuiDivider: {
         styleOverrides: {
-          root: ({ ownerState }) => {
-            if (ownerState.gradient && ownerState.color) {
-              const color = paletteTheme.palette[
-                ownerState.color as keyof Palette
-              ] as PaletteColor;
-
-              const rgbColor = colorToRgba(color.dark, 0.5);
-              const rgbColorStop = colorToRgba(color.main, 0);
-              let gradientDegs = "0deg";
-
-              if (ownerState.orientation === "horizontal") {
-                gradientDegs = "90deg";
-              }
-
-              return {
-                background: `linear-gradient(${gradientDegs}, ${rgbColorStop} 0%, ${rgbColor} 35%, ${rgbColor} 65%, ${rgbColorStop} 100%)`,
-                border: "none",
-                height: "1px",
-              };
-            }
-
-            return null;
-          },
+          root: ({ ownerState }) => createDividerStyles(ownerState),
         },
       },
     },

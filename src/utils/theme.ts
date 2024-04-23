@@ -1,4 +1,4 @@
-import { hexToRgb } from "@mui/material";
+import { AugmentedColorPaletteOptions, Theme, hexToRgb } from "@mui/material";
 
 function colorToRgba(color: string, alpha = 1) {
   let referenceColor = color;
@@ -8,4 +8,14 @@ function colorToRgba(color: string, alpha = 1) {
   return referenceColor.replace(/^rgb/, "rgba").replace(/\)$/, `, ${alpha})`);
 }
 
-export { colorToRgba };
+function getPaletteModeColors(
+  theme: Theme,
+  color: AugmentedColorPaletteOptions
+) {
+  return {
+    ...theme.palette[color],
+    mode: theme.palette[color][theme.palette.mode],
+  };
+}
+
+export { colorToRgba, getPaletteModeColors };

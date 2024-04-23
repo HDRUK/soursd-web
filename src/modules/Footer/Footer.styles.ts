@@ -23,7 +23,7 @@ export const StyledFooter = styled(PageDecoration)(
 
 export const StyledFeatureArea = styled("div")(
   ({ theme }) => css`
-    background: ${theme.palette.backgroundPurple.main};
+    background: ${theme.palette.background1.main};
     position: relative;
     padding: ${theme.spacing(3)} ${theme.spacing(8)};
     display: flex;
@@ -42,7 +42,7 @@ export const StyledFeatureArea = styled("div")(
 export const StyledLinks = styled("div")(
   ({ theme }) => css`
     width: 100%;
-    background: ${theme.palette.backgroundBlue.main};
+    background: ${theme.palette.background2.main};
     position: relative;
     color: #fff;
     border-top: 1px solid ${theme.palette.grey["200"]};

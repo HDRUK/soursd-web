@@ -11,7 +11,7 @@ export const mockedCarouselSlides: CarouselSlideProps[] = [
       </Button>
     ),
     backgroundImage: "/feature.banner.test.jpg",
-    backgroundTransparencyColor: "backgroundBlue",
+    backgroundTransparencyColor: "background2",
   },
   {
     heading: "Feature 2",
@@ -22,6 +22,6 @@ export const mockedCarouselSlides: CarouselSlideProps[] = [
       </Button>
     ),
     backgroundImage: "/feature.banner.test.jpg",
-    backgroundTransparencyColor: "backgroundBlue",
+    backgroundTransparencyColor: "background2",
   },
 ];

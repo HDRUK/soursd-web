@@ -18,13 +18,13 @@ export default function Page() {
           <CarouselSlide {...carouselSlideProps} />
         ))}
       </Carousel>
-      <PageSection sx={{ backgroundColor: "backgroundBlue.original" }}>
+      <PageSection sx={{ backgroundColor: "background2.main" }}>
         <HomepageStats />
       </PageSection>
 
       <PageSection>Content</PageSection>
       <PageSection>
-        <FeatureBox color="backgroundBlue">
+        <FeatureBox color="background2">
           <FeatureBoxInfo>
             <Typography variant="h5">Quotes title content</Typography>
             <Typography>This is some content</Typography>
