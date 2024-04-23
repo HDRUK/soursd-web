@@ -162,7 +162,6 @@ const theme = createTheme(
   {
     typography: {
       fontFamily: roboto.style.fontFamily,
-      fontSize: 11,
     },
     spacing: 4,
     components: {

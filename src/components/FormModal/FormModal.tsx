@@ -1,12 +1,28 @@
-import { Card, CardContent, Modal, ModalProps, useTheme } from "@mui/material";
+import { Close } from "@mui/icons-material";
+import {
+  Box,
+  Card,
+  CardContent,
+  IconButton,
+  Modal,
+  ModalProps,
+  useTheme,
+} from "@mui/material";
 
-interface FormModalProps extends ModalProps {}
+interface FormModalProps extends ModalProps {
+  isDismissable?: boolean;
+}
 
-export default function FormModal({ children, ...restProps }: FormModalProps) {
+export default function FormModal({
+  children,
+  isDismissable = true,
+  onClose = () => {},
+  ...restProps
+}: FormModalProps) {
   const theme = useTheme();
 
   return (
-    <Modal {...restProps}>
+    <Modal onClose={onClose} {...restProps}>
       <Card
         sx={{
           top: "50%",
@@ -17,7 +33,18 @@ export default function FormModal({ children, ...restProps }: FormModalProps) {
             width: `calc(100% - ${theme.spacing(4)})`,
           },
         }}>
-        <CardContent sx={{ p: 4 }}>{children}</CardContent>
+        <CardContent sx={{ p: 4 }}>
+          {isDismissable && (
+            <Box sx={{ position: "absolute", top: 5, right: 5 }}>
+              <span>
+                <IconButton onClick={e => onClose(e, "escapeKeyDown")}>
+                  <Close />
+                </IconButton>
+              </span>
+            </Box>
+          )}
+          {children}
+        </CardContent>
       </Card>
     </Modal>
   );
