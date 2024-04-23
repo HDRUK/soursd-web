@@ -5,34 +5,31 @@ import {
   BoxProps,
   useTheme,
 } from "@mui/material";
-import { StyledMask } from "./Mask.styles";
+import { StyledImageDecorator } from "./ImageDecorator.styles";
 
-export interface QuoteProps extends Omit<BoxProps, "outlined"> {
+export interface QuoteProps extends BoxProps {
   width?: string;
   height?: string;
-  outlined?: boolean;
   color?: AugmentedColorPaletteOptions;
 }
 
-export default function Mask({
+export default function ImageDecorator({
   children,
-  width = "80px",
-  height = "80px",
-  outlined = true,
+  width = "40px",
+  height = "40px",
   color = "primary",
   ...restProps
 }: QuoteProps) {
   const theme = useTheme();
 
   return (
-    <StyledMask
+    <StyledImageDecorator
       {...restProps}
+      color={color}
       width={width}
       height={height}
-      outlined={outlined}
-      color={color}
       theme={theme}>
-      <div>{children}</div>
-    </StyledMask>
+      {children}
+    </StyledImageDecorator>
   );
 }

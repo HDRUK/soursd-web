@@ -103,6 +103,23 @@ const createContainedStyles = <
   return null;
 };
 
+const createMuiModalStyles = <T extends { outline?: boolean }>(
+  ownerState: T
+) => {
+  if (!ownerState.outline) {
+    return `
+      outline: none;
+
+      &:focus,
+      > div {
+        outline: none;
+      };
+    `;
+  }
+
+  return null;
+};
+
 const createDividerStyles = <
   T extends {
     gradient?: boolean;
@@ -145,10 +162,23 @@ const theme = createTheme(
   {
     typography: {
       fontFamily: roboto.style.fontFamily,
-      fontSize: 12,
+      fontSize: 11,
     },
     spacing: 4,
     components: {
+      MuiModal: {
+        defaultProps: {
+          outline: false,
+        },
+        styleOverrides: {
+          root: ownerState => createMuiModalStyles(ownerState),
+        },
+      },
+      MuiCssBaseline: {
+        styleOverrides: {
+          fontSize: "11px",
+        },
+      },
       MuiButton: {
         styleOverrides: {
           root: {
@@ -164,6 +194,18 @@ const theme = createTheme(
             [breakpoints.up("sm")]: {
               minHeight: "52px",
             },
+          },
+        },
+      },
+      MuiInputBase: {
+        defaultProps: {
+          size: "small",
+        },
+      },
+      MuiInputLabel: {
+        styleOverrides: {
+          root: {
+            fontSize: "1em",
           },
         },
       },

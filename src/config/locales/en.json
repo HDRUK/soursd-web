@@ -1,4 +1,14 @@
 {
+  "FormValidation": {
+    "emailRequiredInvalid": "Email is a required field",
+    "emailFormatInvalid": "Email must be a valid address",
+    "passwordRequiredInvalid": "Password is a required field",
+    "passwordLengthInvalid": "Password should be {length} or more characters",
+    "passwordFormatInvalid": "Password should contain at least 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character",
+    "confirmPasswordRequiredInvalid": "Confirm password is a required field",
+    "confirmPasswordMatchInvalid": "The passwords do not match",
+    "tscsRequiredInvalid": "Terms and conditions must be accepted"
+  },
   "Buttons": {
     "register": "Register",
     "login": "Login"
@@ -20,6 +30,18 @@
     "emailPlaceholder": "Email",
     "messagePlaceholder": "Message",
     "sendButton": "Send"
+  },
+  "SignupForm": {
+    "emailPlaceholder": "Email",
+    "email": "Email",
+    "passwordPlaceholder": "Email",
+    "password": "Password",
+    "confirmPasswordPlaceholder": "Confirm password",
+    "confirmPassword": "Confirm password",
+    "signupButton": "Sign Up",
+    "togglePasswordAriaLabel": "Toggle password visibility",
+    "toggleConfirmPasswordAriaLabel": "Toggle confirm password visibility",
+    "agreeTermsAndConditions": "Accept terms and conditions"
   },
   "Navigation": {
     "home": "Home",

@@ -102,3 +102,11 @@ declare module "@mui/material/Stepper" {
 
   interface StepperOwnProps extends CustomStepperProps {}
 }
+
+declare module "@mui/material/Modal" {
+  interface CustomModalProps {
+    outline?: boolean;
+  }
+
+  interface ModalOwnProps extends CustomModalProps {}
+}

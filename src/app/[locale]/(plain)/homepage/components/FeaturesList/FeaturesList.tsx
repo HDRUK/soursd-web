@@ -3,9 +3,11 @@ import {
   Box,
   BoxProps,
   Button,
+  Link,
   List,
   ListItem,
   Typography,
+  useTheme,
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { useTranslations } from "next-intl";
@@ -24,6 +26,8 @@ export default function FeaturesList({
 }: FeaturesListProps) {
   const t = useTranslations();
 
+  const theme = useTheme();
+
   return (
     <Box {...restProps}>
       <List sx={{ mb: 2 }}>
@@ -37,7 +41,12 @@ export default function FeaturesList({
         ))}
       </List>
       <Button variant="contained" color="secondary">
-        {t("Buttons.register")}
+        <Link
+          href="signup"
+          underline="none"
+          sx={{ color: theme.palette.secondary.contrastText }}>
+          {t("Buttons.register")}
+        </Link>
       </Button>
     </Box>
   );

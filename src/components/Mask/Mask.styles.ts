@@ -1,5 +1,11 @@
 import { getPaletteModeColors } from "@/utils/theme";
-import { Box, Theme, css, styled } from "@mui/material";
+import {
+  AugmentedColorPaletteOptions,
+  Box,
+  Theme,
+  css,
+  styled,
+} from "@mui/material";
 import { purple } from "@mui/material/colors";
 
 export const StyledMask = styled(Box, {
@@ -10,7 +16,9 @@ export const StyledMask = styled(Box, {
     outlined,
     width,
     height,
+    color = "primary",
   }: {
+    color?: AugmentedColorPaletteOptions;
     theme: Theme;
     outlined: boolean;
     width: string;
@@ -20,9 +28,10 @@ export const StyledMask = styled(Box, {
     `background: linear-gradient(
       to right,
       ${purple["200"]},
-      ${getPaletteModeColors(theme, "primary").mode}
+      ${getPaletteModeColors(theme, color).mode}
     );`}
     padding: 2px;
+    box-sizing: border-box;
     border-radius: 50%;
 
     > div {
@@ -30,10 +39,13 @@ export const StyledMask = styled(Box, {
       height: calc(${height} - 4px);
       border-radius: calc((${width} - 4px) / 2);
       overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
       > * {
-        width: 100%;
-        height: 100%;
+        width: calc(${width} - 4px);
+        height: calc(${height} - 4px);
       }
     }
   `
