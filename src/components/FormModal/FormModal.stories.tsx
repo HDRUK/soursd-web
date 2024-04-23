@@ -2,9 +2,9 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { Button, Grid, Typography } from "@mui/material";
 import { useState } from "react";
+import { FormProvider, useForm } from "react-hook-form";
 import FormModal from ".";
 import PasswordTextField from "../PasswordTextField";
-import { FormProvider, useForm } from "react-hook-form";
 
 const meta = {
   title: "components/FormModal",
