@@ -1,7 +1,15 @@
-import { PropsWithChildren } from "react";
+"use client";
 
-type LayoutProps = PropsWithChildren<object>;
+import { HTMLAttributes } from "react";
+import { StyledLayout } from "./layout.styles";
+
+type LayoutProps = HTMLAttributes<HTMLDivElement>;
 
 export default function Layout({ children }: LayoutProps) {
-  return <div>{children}</div>;
+  return (
+    <StyledLayout>
+      <img src="/purple.wave.svg" alt="Page background" />
+      {children}
+    </StyledLayout>
+  );
 }
