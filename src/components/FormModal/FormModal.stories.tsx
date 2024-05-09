@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Button, Grid, Typography } from "@mui/material";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import FormModal from ".";
+import FormModal, { FormModalProps } from ".";
 import PasswordTextField from "../PasswordTextField";
 
 const meta = {
@@ -16,8 +16,8 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const BasicFormModal = () => {
-  const [showFormModal, setShowFormModal] = useState(false);
+const BasicFormModal = ({ open }: FormModalProps) => {
+  const [showFormModal, setShowFormModal] = useState(open);
   const methods = useForm();
 
   return showFormModal ? (
@@ -63,6 +63,6 @@ const BasicFormModal = () => {
 };
 
 export const Basic: Story = {
-  args: { open: true, children: <>Form here</> },
+  args: { open: false, children: <>Form here</> },
   render: props => <BasicFormModal {...props} />,
 };

@@ -124,15 +124,23 @@ const createDividerStyles = <
   T extends {
     gradient?: boolean;
     orientation?: "horizontal" | "vertical";
-    color?: AugmentedColorPaletteOptions;
+    color?: AugmentedColorPaletteOptions | string;
   },
 >(
   ownerState: T
 ) => {
   if (ownerState.color) {
-    const color = paletteTheme.palette[ownerState.color];
-    const rgbColor = colorToRgba(color.main, 0.8);
-    const rgbColorStop = colorToRgba(color.main, 0);
+    const isAugmentedColor = Object.keys(paletteTheme.palette).includes(
+      ownerState.color
+    );
+
+    const color = isAugmentedColor
+      ? paletteTheme.palette[ownerState.color as AugmentedColorPaletteOptions]
+          .main
+      : ownerState.color;
+
+    const rgbColor = colorToRgba(color, 0.8);
+    const rgbColorStop = colorToRgba(color, 0);
     const initialStyles = {
       border: "none",
       height: "1px",

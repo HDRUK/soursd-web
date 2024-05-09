@@ -11,7 +11,8 @@
   },
   "Buttons": {
     "register": "Register",
-    "login": "Login"
+    "login": "Login",
+    "contactUs": "Get in touch"
   },
   "Carousel": {
     "next": "next slide",

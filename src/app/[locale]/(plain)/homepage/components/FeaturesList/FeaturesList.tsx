@@ -40,14 +40,19 @@ export default function FeaturesList({
           </ListItem>
         ))}
       </List>
-      <Button variant="contained" color="secondary">
-        <Link
-          href="signup"
-          underline="none"
-          sx={{ color: theme.palette.secondary.contrastText }}>
-          {t("Buttons.register")}
-        </Link>
-      </Button>
+      <Box sx={{ display: "flex", gap: 1 }}>
+        <Button color="secondary" variant="outlined">
+          {t("Buttons.contactUs")}
+        </Button>
+        <Button variant="contained" color="secondary">
+          <Link
+            href="signup"
+            underline="none"
+            sx={{ color: theme.palette.secondary.contrastText }}>
+            {t("Buttons.register")}
+          </Link>
+        </Button>
+      </Box>
     </Box>
   );
 }

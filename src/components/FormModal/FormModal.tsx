@@ -9,7 +9,7 @@ import {
   useTheme,
 } from "@mui/material";
 
-interface FormModalProps extends ModalProps {
+export interface FormModalProps extends ModalProps {
   isDismissable?: boolean;
 }
 
