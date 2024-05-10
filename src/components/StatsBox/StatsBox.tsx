@@ -44,6 +44,7 @@ export default function StatsBox({
         display: "flex",
         flexDirection: "column",
         flexBasis: "100%",
+        ...restProps.sx,
       }}>
       <CardContent sx={{ display: "flex", flexGrow: 1, gap: 5 }}>
         {icon && <div>{icon}</div>}

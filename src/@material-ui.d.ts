@@ -87,7 +87,7 @@ declare module "@mui/material/Divider" {
 
   interface CustomDividerProps {
     gradient?: boolean;
-    color?: AugmentedColorPaletteOptions;
+    color?: AugmentedColorPaletteOptions | string;
   }
   interface DividerOwnProps extends CustomDividerProps {}
 }

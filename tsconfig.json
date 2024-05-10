@@ -26,6 +26,7 @@
     },
     "types": ["node", "jest", "@testing-library/jest-dom"]
   },
+  "files": ["node_modules/gsap/types/index.d.ts"],
   "include": [
     "next-env.d.ts",
     "**/*.ts",
