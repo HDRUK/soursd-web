@@ -1,8 +1,12 @@
 import { objectToQuerystring } from "@/utils/requests";
 
 function getHeadersWithAuthorisation(headers?: HeadersInit) {
+  const bearerToken = localStorage.getItem("bearerToken");
+
   return {
-    Authorization: `Bearer ${localStorage.getItem("token")}`,
+    ...(bearerToken && {
+      Authorization: `Bearer ${localStorage.getItem("bearerToken")}`,
+    }),
     "content-type": "application/json;charset=UTF-8",
     ...headers,
   };
