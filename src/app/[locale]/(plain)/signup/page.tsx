@@ -1,12 +1,15 @@
 import { HTMLAttributes } from "react";
 import SignupFormModal from "./components/SignupFormModal";
+import DecoratorPanel from "../components/DecoratorPanel";
 
 type PageProps = HTMLAttributes<HTMLDivElement>;
 
 export default function Page(props: PageProps) {
   return (
-    <div {...props}>
-      <SignupFormModal />
-    </div>
+    <DecoratorPanel>
+      <div {...props}>
+        <SignupFormModal />
+      </div>
+    </DecoratorPanel>
   );
 }

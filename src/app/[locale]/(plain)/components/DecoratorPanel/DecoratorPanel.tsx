@@ -2,15 +2,15 @@
 
 import { Box } from "@mui/material";
 import { HTMLAttributes } from "react";
-import { StyledLayout } from "./layout.styles";
+import { StyledDecoratorPanel } from "./DecoratorPanel.styles";
 
 type LayoutProps = HTMLAttributes<HTMLDivElement>;
 
-export default function Layout({ children }: LayoutProps) {
+export default function DecoratorPanel({ children }: LayoutProps) {
   return (
-    <StyledLayout>
+    <StyledDecoratorPanel>
       <img src="/purple.wave.svg" alt="Page background" />
       <Box sx={{ position: "relative", zIndex: 2 }}>{children}</Box>
-    </StyledLayout>
+    </StyledDecoratorPanel>
   );
 }

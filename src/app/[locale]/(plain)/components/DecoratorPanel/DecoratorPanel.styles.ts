@@ -1,6 +1,6 @@
 import { css, styled } from "@mui/material";
 
-const StyledLayout = styled("div")(
+const StyledDecoratorPanel = styled("div")(
   ({ theme }) => css`
     width: 100%;
     min-height: 100vh;
@@ -9,11 +9,12 @@ const StyledLayout = styled("div")(
     :before {
       content: "";
       background-color: ${theme.palette.background2.main};
-      position: fixed;
+      position: absolute;
       top: 0;
       bottom: 0;
       right: 0;
       left: 0;
+      z-index: 0;
     }
 
     > img {
@@ -29,10 +30,11 @@ const StyledLayout = styled("div")(
       top: 0;
       right: 0;
       bottom: 0;
-      width: 35%;
+      width: 36%;
       height: 100%;
+      z-index: 0;
     }
   `
 );
 
-export { StyledLayout };
+export { StyledDecoratorPanel };
