@@ -1,6 +1,3 @@
-const { NextRequest } = require("next/server");
-const { cookies } = require("next/headers");
-
 const withNextIntl = require("next-intl/plugin")();
 
 /** @type {import('next').NextConfig} */

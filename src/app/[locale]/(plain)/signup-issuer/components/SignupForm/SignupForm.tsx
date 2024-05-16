@@ -15,6 +15,7 @@ import HubIcon from "@mui/icons-material/Hub";
 import SendIcon from "@mui/icons-material/Send";
 import { LoadingButton } from "@mui/lab";
 import {
+  Alert,
   Box,
   Checkbox,
   FormControl,
@@ -136,6 +137,9 @@ export default function SignupForm({
           {tSignup("title")} {data?.name}
         </FormHeader>
         <FormBody>
+          {mutateState.isUpdateError && (
+            <Alert color="error">{tSignup("submitError")}</Alert>
+          )}
           <Grid container direction="column" spacing={2}>
             <Grid item>
               <FormControl

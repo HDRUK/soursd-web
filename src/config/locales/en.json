@@ -44,13 +44,19 @@
     "toggleConfirmPasswordAriaLabel": "Toggle confirm password visibility",
     "agreeTermsAndConditions": "Accept terms and conditions",
     "title": "Sign Up",
-    "submitError": "There has been an error signing up."
+    "submitError": "There has been an error signing up.",
+    "submitSuccess": "You have successfully signed up."
   },
   "SignupFormIssuer": {
     "noVerificationCode": "You need a verification code to signup. This should have been provided to you via an invitation link. Please contact us at ",
     "verificationExpired": "The verification code provided has expired. Please contact us at ",
     "getIssuerError": "There has been a problem getting your details. Please contact us at ",
     "noData": "Could not find any data for this verification code. Please contact us at "
+  },
+  "Pages": {
+    "ProfileIssuer": {
+      "title": "Profile"
+    }
   },
   "Navigation": {
     "home": "Home",
