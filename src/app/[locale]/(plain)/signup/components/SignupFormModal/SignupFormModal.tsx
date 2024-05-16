@@ -1,8 +1,8 @@
 "use client";
 
 import FormModal from "@/components/FormModal";
-import SignupForm from "@/modules/SignupForm/SignupForm";
 import { useRouter } from "next/navigation";
+import SignupForm from "../SignupForm";
 
 export default function Page() {
   const router = useRouter();

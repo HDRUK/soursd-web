@@ -21,7 +21,7 @@ export const StyledLoader = styled(Box)(({
 
   return css`
     position: relative;
-    display: flex;
+    display: inline-flex;
     justify-content: center;
     align-content: center;
     width: 40px;
