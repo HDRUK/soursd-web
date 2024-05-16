@@ -36,7 +36,7 @@ export interface SignupFormValues {
   tscs: boolean;
 }
 
-type SignupFormProps = {
+export type SignupFormProps = {
   onSubmit: (data: SignupFormValues) => void;
   data: IssuerDetailsResponse;
   mutateState: {

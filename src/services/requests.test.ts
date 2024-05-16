@@ -12,7 +12,7 @@ const mockResponse = {
 };
 
 const mockPayload = {
-  query: faker.string.sample(),
+  query: faker.string.alpha(),
 };
 
 const mockToken = faker.string.uuid();

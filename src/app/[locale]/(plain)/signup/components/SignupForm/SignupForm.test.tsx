@@ -17,7 +17,7 @@ describe("<SignupForm />", () => {
     render(<SignupForm onSubmit={mockSubmit} />);
 
     await act(() => {
-      fireEvent.submit(screen.getByText("Sign Up"));
+      fireEvent.submit(screen.getByRole("button", { name: /Sign Up/i }));
     });
 
     expect(mockSubmit).not.toHaveBeenCalled();
@@ -34,6 +34,7 @@ describe("<SignupForm />", () => {
     const tscs = screen
       .getByLabelText("Accept terms and conditions")
       .querySelector("input");
+    const recaptcha = screen.getByTestId("recaptcha");
 
     const emailValue = faker.internet.email();
     const passwordValue = "A!2sghjs";
@@ -55,8 +56,9 @@ describe("<SignupForm />", () => {
           target: { value: confirmPasswordValue },
         });
         fireEvent.click(tscs);
+        fireEvent.click(recaptcha);
 
-        fireEvent.submit(screen.getByText("Sign Up"));
+        fireEvent.submit(screen.getByRole("button", { name: /Sign Up/i }));
       });
 
       expect(mockSubmit).toHaveBeenCalled();
