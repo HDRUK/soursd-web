@@ -120,9 +120,6 @@ export default function SignupForm({ onSubmit }: SignupFormProps) {
         autoComplete="off"
         sx={{
           width: "auto",
-          [".MuiGrid-root .MuiGrid-item"]: {
-            maxWidth: "100%",
-          },
           [theme.breakpoints.up("md")]: { width: "350px" },
         }}>
         <FormHeader icon={<Person />}>{tSignup("title")}</FormHeader>

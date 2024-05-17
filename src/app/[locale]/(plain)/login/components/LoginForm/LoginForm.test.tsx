@@ -1,31 +1,20 @@
-import { mockedIssuer } from "@/services/issuers/mockedData";
 import { act, fireEvent, render, screen } from "@/utils/testUtils";
+import { faker } from "@faker-js/faker";
 import { axe } from "jest-axe";
-import SignupForm, { SignupFormProps } from "./SignupForm";
+import LoginForm from "./LoginForm";
 
 const mockSubmit = jest.fn();
 
-const renderSignupForm = (props?: Partial<SignupFormProps>) => {
-  return render(
-    <SignupForm
-      data={mockedIssuer()}
-      mutateState={{ isUpdateLoading: false, isUpdateError: false }}
-      onSubmit={mockSubmit}
-      {...props}
-    />
-  );
-};
-
 describe("<SignupForm />", () => {
   it("has no accessibility validations", async () => {
-    const { container } = renderSignupForm();
+    const { container } = render(<LoginForm onSubmit={mockSubmit} />);
 
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
 
-  it("does not submit values are not defined", async () => {
-    renderSignupForm();
+  it("displays error state when values are not defined", async () => {
+    render(<LoginForm onSubmit={mockSubmit} />);
 
     await act(() => {
       fireEvent.submit(screen.getByRole("button", { name: /Sign Up/i }));
@@ -34,26 +23,10 @@ describe("<SignupForm />", () => {
     expect(mockSubmit).not.toHaveBeenCalled();
   });
 
-  it("does not submit values are not defined", async () => {
-    renderSignupForm({
-      mutateState: {
-        isUpdateError: true,
-        isUpdateLoading: false,
-      },
-    });
-
-    await act(() => {
-      fireEvent.submit(screen.getByRole("button", { name: /Sign Up/i }));
-    });
-
-    expect(
-      screen.getByText("There has been an error signing up.")
-    ).toBeInTheDocument();
-  });
-
   it("submits when values are defined", async () => {
-    renderSignupForm();
+    render(<SignupForm onSubmit={mockSubmit} />);
 
+    const email = screen.getByLabelText("Email").querySelector("input");
     const password = screen.getByLabelText("Password").querySelector("input");
     const confirmPassword = screen
       .getByLabelText("Confirm password")
@@ -63,11 +36,17 @@ describe("<SignupForm />", () => {
       .querySelector("input");
     const recaptcha = screen.getByTestId("recaptcha");
 
+    const emailValue = faker.internet.email();
     const passwordValue = "A!2sghjs";
     const confirmPasswordValue = passwordValue;
 
-    if (password && confirmPassword && tscs) {
+    if (email && password && confirmPassword && tscs) {
       await act(() => {
+        fireEvent.change(email, {
+          target: {
+            value: emailValue,
+          },
+        });
         fireEvent.change(password, {
           target: {
             value: passwordValue,
@@ -84,7 +63,7 @@ describe("<SignupForm />", () => {
 
       expect(mockSubmit).toHaveBeenCalled();
     } else {
-      fail("Password, confirm password or tscs do not exist");
+      fail("Email, password, confirm password or tscs do not exist");
     }
   });
 });

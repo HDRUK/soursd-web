@@ -7,7 +7,7 @@ import { useApplicationData } from "@/context/ApplicationData";
 import {
   getIssuerByVerificationCode,
   postIssuerSignup,
-} from "@/services/endpoint";
+} from "@/services/issuers";
 import { isExpired } from "@/utils/date";
 import { Alert, CircularProgress } from "@mui/material";
 import { useTranslations } from "next-intl";

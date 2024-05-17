@@ -30,7 +30,7 @@ async function postRequest<T>(
   payload?: T,
   options?: Omit<RequestInit, "body">
 ) {
-  const response = await fetch(url, {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_V1_URL}${url}`, {
     ...options,
     method: "POST",
     headers: getHeadersWithAuthorisation(options?.headers),
@@ -45,7 +45,7 @@ async function patchRequest<T>(
   payload?: T,
   options?: Omit<RequestInit, "body">
 ) {
-  const response = await fetch(url, {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_V1_URL}${url}`, {
     ...options,
     method: "PATCH",
     headers: getHeadersWithAuthorisation(options?.headers),
@@ -60,7 +60,7 @@ async function putRequest<T>(
   payload?: T,
   options?: Omit<RequestInit, "body">
 ) {
-  const response = await fetch(url, {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_V1_URL}${url}`, {
     ...options,
     method: "PUT",
     headers: getHeadersWithAuthorisation(options?.headers),
@@ -71,7 +71,7 @@ async function putRequest<T>(
 }
 
 async function deleteRequest(url: string, options?: Omit<RequestInit, "body">) {
-  const response = await fetch(url, {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_V1_URL}${url}`, {
     ...options,
     method: "DELETE",
     headers: getHeadersWithAuthorisation(options?.headers),

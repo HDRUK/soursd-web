@@ -9,7 +9,7 @@ import {
   VALIDATION_PASSWORD_FORMAT,
   VALIDATION_PASSWORD_LENGTH,
 } from "@/consts/form";
-import { IssuerDetailsResponse } from "@/services/endpoint/types";
+import { IssuerDetailsResponse } from "@/services/issuers/types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import HubIcon from "@mui/icons-material/Hub";
 import SendIcon from "@mui/icons-material/Send";
@@ -128,9 +128,6 @@ export default function SignupForm({
         autoComplete="off"
         sx={{
           width: "auto",
-          [".MuiGrid-root .MuiGrid-item"]: {
-            maxWidth: "100%",
-          },
           [theme.breakpoints.up("md")]: { width: "350px" },
         }}>
         <FormHeader icon={<HubIcon />}>

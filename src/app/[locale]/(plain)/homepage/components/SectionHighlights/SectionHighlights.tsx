@@ -3,11 +3,13 @@
 import { Carousel } from "@/components/Carousel";
 import Quote from "@/components/Quote";
 import ScreenArrow from "@/components/ScreenArrow";
+import { useApplicationData } from "@/context/ApplicationData";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {
   Box,
   Button,
   Grid,
+  Link,
   Typography,
   useMediaQuery,
   useTheme,
@@ -21,13 +23,18 @@ export default function RegistryHighlights() {
   const theme = useTheme();
   const t = useTranslations();
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
+  const { routes } = useApplicationData();
 
   return (
     <DecoratorPanel>
       <StyledContentLayout>
         <StyledHeader>
           <div>
-            <Button variant="contained" color="secondary">
+            <Button
+              component={Link}
+              variant="contained"
+              color="secondary"
+              href={routes.login.path}>
               {t("Buttons.login")}
             </Button>
           </div>

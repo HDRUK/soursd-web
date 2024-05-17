@@ -33,6 +33,16 @@
     "messagePlaceholder": "Message",
     "sendButton": "Send"
   },
+  "LoginForm": {
+    "emailPlaceholder": "Email",
+    "email": "Email",
+    "passwordPlaceholder": "Email",
+    "password": "Password",
+    "loginButton": "Login",
+    "togglePasswordAriaLabel": "Toggle password visibility",
+    "title": "Login",
+    "loginError": "This user cannot be found. Please check your email, password and try again."
+  },
   "SignupForm": {
     "emailPlaceholder": "Email",
     "email": "Email",

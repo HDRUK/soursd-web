@@ -19,6 +19,14 @@ const ROUTES = {
     path: "/issuer/profile",
     key: "ProfileIssuer",
   },
+  profile: {
+    path: "/researcher/profile",
+    key: "Profile",
+  },
+  login: {
+    path: "/login",
+    key: "Login",
+  },
 };
 
 export { PROTECTED_ROUTES, ROUTES };

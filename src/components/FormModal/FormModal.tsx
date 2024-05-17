@@ -22,7 +22,14 @@ export default function FormModal({
   const theme = useTheme();
 
   return (
-    <Modal onClose={onClose} {...restProps}>
+    <Modal
+      onClose={onClose}
+      {...restProps}
+      sx={{
+        [".MuiGrid-root .MuiGrid-item"]: {
+          maxWidth: "100%",
+        },
+      }}>
       <Card
         sx={{
           top: "50%",

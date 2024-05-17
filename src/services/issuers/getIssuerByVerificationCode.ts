@@ -1,5 +1,5 @@
 import { mockedRequest } from "@/utils/requests";
-import { mockedIssuer } from "./getIssuerByVerificationCode.mock";
+import { mockedIssuer } from "./mockedData";
 
 export default (verificationCode: string) => {
   console.log("verificationCode", verificationCode);
