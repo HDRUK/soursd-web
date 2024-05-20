@@ -9,12 +9,12 @@ type RoleConfig = {
   permissions?: RolePermission[];
 };
 
-type FeatureIds = "Footer";
+type FeatureIds = "Footer" | "LoginOtp";
 
 type Features = Record<
   FeatureIds,
   {
-    path: string;
+    enabled?: boolean;
   } & RoleConfig
 >;
 

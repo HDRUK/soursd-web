@@ -4,12 +4,12 @@ import { isRoleValid } from "@/utils/roles";
 import { useEffect, useState } from "react";
 
 export default function useFeature(id: keyof Features) {
-  const { permissions, path } = FEATURES[id];
+  const { permissions, enabled } = FEATURES[id];
   const [isAllowed, setIsAllowed] = useState(false);
 
   useEffect(() => {
     setIsAllowed(isRoleValid(permissions));
   }, [id]);
 
-  return { isAllowed, path };
+  return { isAllowed, enabled };
 }

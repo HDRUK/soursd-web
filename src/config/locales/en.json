@@ -5,6 +5,8 @@
     "passwordRequiredInvalid": "Password is a required field",
     "passwordLengthInvalid": "Password should be {length} or more characters",
     "passwordFormatInvalid": "Password should contain at least 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character",
+    "otpPasscodeRequiredInvalid": "OTP passcode is a required field",
+    "otpPasscodeLengthInvalid": "OTP passcode should be {length} characters",
     "confirmPasswordRequiredInvalid": "Confirm password is a required field",
     "confirmPasswordMatchInvalid": "The passwords do not match",
     "tscsRequiredInvalid": "Terms and conditions must be accepted",
@@ -40,19 +42,45 @@
     "password": "Password",
     "confirmPasswordPlaceholder": "Confirm password",
     "confirmPassword": "Confirm password",
+    "otpPasscodePlaceholder": "OTP pascode",
+    "otpPasscode": "OTP passcode",
     "signupButton": "Sign Up",
+    "toggleOtpPasscodeAriaLabel": "Toggle passcode visibility",
     "togglePasswordAriaLabel": "Toggle password visibility",
     "toggleConfirmPasswordAriaLabel": "Toggle confirm password visibility",
     "agreeTermsAndConditions": "Accept terms and conditions",
     "title": "Sign Up",
     "submitError": "There has been an error signing up.",
-    "submitSuccess": "You have successfully signed up."
+    "submitSuccess": "You have successfully signed up.",
+    "signupOTPButton": "Email me an OTP",
+    "signupOTPTooltip": "This method will not require you to enter a password each time you login. Instead the system will send a secure One Time Password (OTP) to your email address which you can then use to logon for the duration the OTP is valid.",
+    "checkYourEmail": "We have emailed you a passcode. If you can't see it in your inbox, try checking your junk / spam folder. Altertively you can request another by clicking on the refresh button."
   },
   "SignupFormIssuer": {
     "noVerificationCode": "You need a verification code to signup. This should have been provided to you via an invitation link. Please contact us at ",
     "verificationExpired": "The verification code provided has expired. Please contact us at ",
     "getIssuerError": "There has been a problem getting your details. Please contact us at ",
     "noData": "Could not find any data for this verification code. Please contact us at "
+  },
+  "LoginForm": {
+    "email": "Email",
+    "emailPlaceholder": "Email",
+    "passwordPlaceholder": "Password",
+    "password": "Password",
+    "loginButton": "Login",
+    "toggleOtpPasscodeAriaLabel": "Toggle passcode visibility",
+    "togglePasswordAriaLabel": "Toggle password visibility",
+    "title": "Login",
+    "submitError": "There has been an error logging in."
+  },
+  "LoginOTPForm": {
+    "otp": "One time passcode",
+    "otpPlaceholder": "One time passcode",
+    "submitButton": "Submit",
+    "toggleOtpAriaLabel": "Toggle one time passcode visibility",
+    "submitError": "There has been an error logging in.",
+    "loginResendAriaLabel": "Send me another one time passcode",
+    "checkYourEmail": "We have emailed you a passcode. If you can't see it in your inbox, try checking your junk / spam folder. Altertively you can request another by clicking on the refresh button."
   },
   "Pages": {
     "ProfileIssuer": {

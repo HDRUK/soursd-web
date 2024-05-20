@@ -14,6 +14,7 @@ const FormRecaptcha = forwardRef<ReCAPTCHA, FormRecaptchaProps>(
           <ReCAPTCHA
             ref={ref}
             sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+            data-size="normal"
           />
           {!!error && <FormHelperText error={!!error}>{error}</FormHelperText>}
         </>

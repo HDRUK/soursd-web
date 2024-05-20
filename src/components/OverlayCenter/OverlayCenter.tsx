@@ -1,13 +1,13 @@
 import { Box } from "@mui/material";
 import { BoxProps } from "@mui/system";
 
-type FullscreenProps = BoxProps;
+export type OverlayCenterProps = BoxProps;
 
-export default function Fullscreen({
+export default function OverlayCenter({
   children,
   sx,
   ...restProps
-}: FullscreenProps) {
+}: OverlayCenterProps) {
   return (
     <Box
       {...restProps}

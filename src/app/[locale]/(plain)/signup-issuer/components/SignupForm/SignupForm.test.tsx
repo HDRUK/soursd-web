@@ -1,4 +1,3 @@
-import { mockedIssuer } from "@/services/endpoint/getIssuerByVerificationCode.mock";
 import { act, fireEvent, render, screen } from "@/utils/testUtils";
 import { axe } from "jest-axe";
 import SignupForm, { SignupFormProps } from "./SignupForm";
@@ -8,8 +7,7 @@ const mockSubmit = jest.fn();
 const renderSignupForm = (props?: Partial<SignupFormProps>) => {
   return render(
     <SignupForm
-      data={mockedIssuer()}
-      mutateState={{ isUpdateLoading: false, isUpdateError: false }}
+      mutateState={{ isLoading: false, isError: false }}
       onSubmit={mockSubmit}
       {...props}
     />
@@ -24,7 +22,7 @@ describe("<SignupForm />", () => {
     expect(results).toHaveNoViolations();
   });
 
-  it("does not submit values are not defined", async () => {
+  it("does not submit when values are not defined", async () => {
     renderSignupForm();
 
     await act(() => {
@@ -34,11 +32,11 @@ describe("<SignupForm />", () => {
     expect(mockSubmit).not.toHaveBeenCalled();
   });
 
-  it("does not submit values are not defined", async () => {
+  it("shows an error", async () => {
     renderSignupForm({
       mutateState: {
-        isUpdateError: true,
-        isUpdateLoading: false,
+        isError: true,
+        isLoading: false,
       },
     });
 

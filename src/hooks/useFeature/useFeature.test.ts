@@ -7,7 +7,6 @@ describe("useFeature", () => {
 
     expect(result.current).toEqual({
       isAllowed: false,
-      path: "@/modules/Footer",
     });
   });
 });

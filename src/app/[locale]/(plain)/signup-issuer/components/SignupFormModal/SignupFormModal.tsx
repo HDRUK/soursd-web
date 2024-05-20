@@ -1,7 +1,9 @@
 "use client";
 
 import FormModal from "@/components/FormModal";
+import FormModalHeader from "@/components/FormModalHeader";
 import OverlayCenter from "@/components/OverlayCenter";
+import OverlayCenterAlert from "@/components/OverlayCenterAlert";
 import { CONTACT_MAIL_ADDRESS } from "@/config/contacts";
 import { useApplicationData } from "@/context/ApplicationData";
 import {
@@ -9,23 +11,23 @@ import {
   postIssuerSignup,
 } from "@/services/endpoint";
 import { isExpired } from "@/utils/date";
-import { Alert, CircularProgress } from "@mui/material";
+import HubIcon from "@mui/icons-material/Hub";
+import { Box, CircularProgress } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { redirect, useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect } from "react";
 import { useMutation, useQuery } from "react-query";
 import SignupForm, { SignupFormValues } from "../SignupForm";
 
-const NAMESPACE_TRANSLATION = "SignupFormIssuer";
+const NAMESPACE_TRANSLATION_SIGNUP_ISSUER = "SignupFormIssuer";
+const NAMESPACE_TRANSLATION_SIGNUP = "SignupForm";
 
 export default function Page() {
   const router = useRouter();
   const params = useSearchParams();
   const verificationCode = params?.get("verificationCode");
-  const t = useTranslations(NAMESPACE_TRANSLATION);
+  const t = useTranslations(NAMESPACE_TRANSLATION_SIGNUP_ISSUER);
+  const tSignup = useTranslations(NAMESPACE_TRANSLATION_SIGNUP);
   const { routes } = useApplicationData();
-
-  const OVERLAY_MAX_WIDTH = "350px";
 
   const {
     isError: isGetIssuerError,
@@ -40,24 +42,18 @@ export default function Page() {
   );
 
   const {
-    mutate,
-    isError: isUpdateError,
-    isLoading: isUpdateLoading,
-    isSuccess: isUpdateSuccess,
-  } = useMutation(
-    ["postIssuerSignup"],
-    async ({ password }: SignupFormValues) => postIssuerSignup({ password })
+    mutateAsync: mutateSignupAsync,
+    isError: isSignupError,
+    isLoading: isSignupLoading,
+  } = useMutation(["postLoginOTP"], async (values: SignupFormValues) =>
+    postIssuerSignup(values)
   );
 
-  const handleSubmit = useCallback((values: SignupFormValues) => {
-    mutate(values);
-  }, []);
-
-  useEffect(() => {
-    if (isUpdateSuccess) {
+  const handleSignupSubmit = async (values: SignupFormValues) => {
+    mutateSignupAsync(values).then(() => {
       redirect(routes.profileIssuer.path);
-    }
-  }, [isUpdateSuccess]);
+    });
+  };
 
   const expired = isExpired(data?.verificationExpiry || "");
 
@@ -71,58 +67,49 @@ export default function Page() {
 
   if (!verificationCode) {
     return (
-      <OverlayCenter sx={{ maxWidth: OVERLAY_MAX_WIDTH }}>
-        <Alert color="error">
-          {t("noVerificationCode")}{" "}
-          <a href={`mailto:${CONTACT_MAIL_ADDRESS}`}>{CONTACT_MAIL_ADDRESS}</a>
-        </Alert>
-      </OverlayCenter>
+      <OverlayCenterAlert>
+        {t("noVerificationCode")}{" "}
+        <a href={`mailto:${CONTACT_MAIL_ADDRESS}`}>{CONTACT_MAIL_ADDRESS}</a>
+      </OverlayCenterAlert>
     );
   }
 
   if (verificationCode && data && expired) {
     return (
-      <OverlayCenter sx={{ maxWidth: OVERLAY_MAX_WIDTH }}>
-        <Alert color="error">
-          {t("verificationExpired")}
-          <a href={`mailto:${CONTACT_MAIL_ADDRESS}`}>{CONTACT_MAIL_ADDRESS}</a>
-        </Alert>
-      </OverlayCenter>
+      <OverlayCenterAlert>
+        {t("verificationExpired")}
+        <a href={`mailto:${CONTACT_MAIL_ADDRESS}`}>{CONTACT_MAIL_ADDRESS}</a>
+      </OverlayCenterAlert>
     );
   }
 
   if (isGetIssuerError) {
     return (
-      <OverlayCenter sx={{ maxWidth: OVERLAY_MAX_WIDTH }}>
-        <Alert color="error" sx={{ maxWidth: OVERLAY_MAX_WIDTH }}>
-          {t("getIssuerError")}
-          <a href={`mailto:${CONTACT_MAIL_ADDRESS}`}>{CONTACT_MAIL_ADDRESS}</a>
-        </Alert>
-      </OverlayCenter>
+      <OverlayCenterAlert>
+        {t("getIssuerError")}
+        <a href={`mailto:${CONTACT_MAIL_ADDRESS}`}>{CONTACT_MAIL_ADDRESS}</a>
+      </OverlayCenterAlert>
     );
   }
 
   if (!isGetIssuerLoading && !data) {
-    return (
-      <OverlayCenter sx={{ maxWidth: OVERLAY_MAX_WIDTH }}>
-        <Alert color="error">
-          {t("noData")}
-          <a href={`mailto:${CONTACT_MAIL_ADDRESS}`}>{CONTACT_MAIL_ADDRESS}</a>
-        </Alert>
-      </OverlayCenter>
-    );
+    return <OverlayCenterAlert>{t("noData")}</OverlayCenterAlert>;
   }
 
   return (
-    <FormModal open onClose={() => router.replace("homepage")} isDismissable>
-      <SignupForm
-        onSubmit={handleSubmit}
-        data={data}
-        mutateState={{
-          isUpdateError,
-          isUpdateLoading,
-        }}
-      />
+    <FormModal open isDismissable onClose={() => router.replace("homepage")}>
+      <Box sx={{ minWidth: "250px" }}>
+        <FormModalHeader icon={<HubIcon />}>
+          {tSignup("title")} {data?.name}
+        </FormModalHeader>
+        <SignupForm
+          onSubmit={handleSignupSubmit}
+          mutateState={{
+            isLoading: isSignupLoading,
+            isError: isSignupError,
+          }}
+        />
+      </Box>
     </FormModal>
   );
 }
