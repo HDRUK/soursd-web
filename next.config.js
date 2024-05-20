@@ -18,6 +18,14 @@ const nextConfig = withNextIntl({
       },
     ],
   },
+  async rewrites() {
+    return [
+      {
+        source: "/:locale",
+        destination: "/:locale/homepage",
+      },
+    ];
+  },
   webpack: (config, { isServer }) => {
     if (process.env.NEXT_WEBPACK_USEPOLLING) {
       config.watchOptions = {
@@ -35,15 +43,6 @@ const nextConfig = withNextIntl({
 
     return config;
   },
-  //   async redirects() {
-  //     return [
-  //       {
-  //         source: "/about/terms-and-conditions",
-  //         destination: "/terms-and-conditions",
-  //         permanent: true,
-  //       },
-  //     ];
-  //   },
   typescript: {
     // !! WARN !!
     // Dangerously allow production builds to successfully complete even if

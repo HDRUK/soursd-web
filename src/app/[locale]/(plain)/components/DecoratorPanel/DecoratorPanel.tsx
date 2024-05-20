@@ -1,5 +1,6 @@
 "use client";
 
+import { Box } from "@mui/material";
 import { HTMLAttributes } from "react";
 import { StyledDecoratorPanel } from "./DecoratorPanel.styles";
 
@@ -9,7 +10,7 @@ export default function DecoratorPanel({ children }: LayoutProps) {
   return (
     <StyledDecoratorPanel>
       <img src="/purple.wave.svg" alt="Page background" />
-      {children}
+      <Box sx={{ position: "relative", zIndex: 2 }}>{children}</Box>
     </StyledDecoratorPanel>
   );
 }

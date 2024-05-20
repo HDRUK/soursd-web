@@ -6,4 +6,12 @@ function objectToQuerystring(
     .join("&");
 }
 
-export { objectToQuerystring };
+function mockedRequest<T>(mockResponse: T, delay = 2000) {
+  return new Promise<T>(resolve => {
+    setTimeout(() => {
+      resolve(mockResponse);
+    }, delay);
+  });
+}
+
+export { objectToQuerystring, mockedRequest };

@@ -5,9 +5,12 @@ import type { Metadata } from "next";
 import { NextIntlClientProvider, useMessages } from "next-intl";
 import { Inter } from "next/font/google";
 import { notFound } from "next/navigation";
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, useMemo } from "react";
 
+import { ROUTES } from "@/consts/router";
+import { ApplicationDataProvider } from "@/context/ApplicationData";
 import "../global.css";
+import ReactQueryClientProvider from "./components/ReactQueryClientProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,12 +31,33 @@ export default function RootLayout({
 
   const messages = useMessages();
 
+  const routes = useMemo(() => {
+    const clonedRoutes = JSON.parse(JSON.stringify(ROUTES));
+
+    (Object.keys(clonedRoutes) as Array<keyof typeof clonedRoutes>).forEach(
+      key => {
+        clonedRoutes[key].path = `/${locale}${clonedRoutes[key].path}`;
+      }
+    );
+
+    return clonedRoutes;
+  }, [locale]);
+
   return (
     <html lang={locale}>
       <body className={inter.className}>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <AppRouterCacheProvider>
-            <ThemeRegistry>{children}</ThemeRegistry>
+            <ReactQueryClientProvider>
+              <ThemeRegistry>
+                <ApplicationDataProvider
+                  value={{
+                    routes,
+                  }}>
+                  {children}
+                </ApplicationDataProvider>
+              </ThemeRegistry>
+            </ReactQueryClientProvider>
           </AppRouterCacheProvider>
         </NextIntlClientProvider>
       </body>

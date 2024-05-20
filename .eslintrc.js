@@ -51,6 +51,7 @@ module.exports = {
     "@typescript-eslint/no-unused-vars": "error",
     "@typescript-eslint/no-explicit-any": "error",
     "@typescript-eslint/no-var-requires": "off",
+    "no-useless-computed-key": "off",
     "react/react-in-jsx-scope": "off",
     "react/jsx-filename-extension": [
       1,
@@ -90,6 +91,7 @@ module.exports = {
     ],
     "no-console": "off",
     "no-return-await": "off",
+    "no-param-reassign": "off",
     "prettier/prettier": [
       "error",
       {
