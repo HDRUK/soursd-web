@@ -8,7 +8,7 @@ import { postLogin, postLoginOTP } from "@/services/login";
 import HubIcon from "@mui/icons-material/Hub";
 import { Box } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 import { useMutation } from "react-query";
 import LoginForm from "../LoginForm";
@@ -45,7 +45,7 @@ export default function LoginFormModal() {
     postLoginOTP({ ...values, ...payload })
   );
 
-  const handleLoginSubmit = useCallback(async (values: LoginFormValues) => {
+  const handleLoginSubmit = (values: LoginFormValues) => {
     mutateLoginAsync(values).then(() => {
       if (otpEnabled) {
         setType("otpForm");
@@ -54,15 +54,15 @@ export default function LoginFormModal() {
           otp: "",
         });
       } else {
-        redirect(routes.profileIssuer.path);
+        router.push(routes.profileIssuer.path);
       }
     });
-  }, []);
+  };
 
   const handleLoginOTPSubmit = useCallback(
     async (values: LoginOTPFormValues) => {
       mutateLoginOTPAsync({ ...payload, ...values }).then(() => {
-        redirect(routes.profileIssuer.path);
+        router.push(routes.profileIssuer.path);
       });
     },
     [payload]

@@ -1,8 +1,8 @@
-import { act, fireEvent, render, screen, waitFor } from "@/utils/testUtils";
+import { VALIDATION_OTP_PASSCODE_LENGTH } from "@/consts/form";
+import { act, fireEvent, render, screen } from "@/utils/testUtils";
 import { faker } from "@faker-js/faker";
 import { axe } from "jest-axe";
 import LoginOTPForm, { LoginOTPFormProps } from "./LoginOTPForm";
-import { VALIDATION_OTP_PASSCODE_LENGTH } from "@/consts/form";
 
 const mockSubmit = jest.fn();
 const mockClickResend = jest.fn();

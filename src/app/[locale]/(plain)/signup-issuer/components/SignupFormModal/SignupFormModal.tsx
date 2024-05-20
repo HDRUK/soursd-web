@@ -14,7 +14,7 @@ import { isExpired } from "@/utils/date";
 import HubIcon from "@mui/icons-material/Hub";
 import { Box, CircularProgress } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { redirect, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useMutation, useQuery } from "react-query";
 import SignupForm, { SignupFormValues } from "../SignupForm";
 
@@ -51,7 +51,7 @@ export default function Page() {
 
   const handleSignupSubmit = async (values: SignupFormValues) => {
     mutateSignupAsync(values).then(() => {
-      redirect(routes.profileIssuer.path);
+      router.push(routes.login.path);
     });
   };
 
