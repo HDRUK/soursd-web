@@ -45,7 +45,7 @@ export default function LoginFormModal() {
     postLoginOTP({ ...values, ...payload })
   );
 
-  const handleLoginSubmit = (values: LoginFormValues) => {
+  const handleLoginSubmit = useCallback((values: LoginFormValues) => {
     mutateLoginAsync(values).then(() => {
       if (otpEnabled) {
         setType("otpForm");
@@ -57,10 +57,10 @@ export default function LoginFormModal() {
         router.push(routes.profileIssuer.path);
       }
     });
-  };
+  }, []);
 
   const handleLoginOTPSubmit = useCallback(
-    async (values: LoginOTPFormValues) => {
+    (values: LoginOTPFormValues) => {
       mutateLoginOTPAsync({ ...payload, ...values }).then(() => {
         router.push(routes.profileIssuer.path);
       });
