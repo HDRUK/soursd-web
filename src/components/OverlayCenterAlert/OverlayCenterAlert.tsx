@@ -1,6 +1,6 @@
+import { ScalingUp } from "@/consts/ui";
 import { Alert, AlertColor, AlertProps } from "@mui/material";
 import OverlayCenter, { OverlayCenterProps } from "../OverlayCenter";
-import { ScalingUp } from "@/consts/ui";
 
 interface OverlayCenterAlertProps extends OverlayCenterProps {
   color?: AlertColor;

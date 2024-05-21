@@ -4,4 +4,9 @@ interface RoutePermissions extends RoleConfig {
   path: string;
 }
 
-export type { RoutePermissions };
+interface RouteConfig {
+  path: string;
+  key: string;
+}
+
+export type { RoutePermissions, RouteConfig };

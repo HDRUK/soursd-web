@@ -61,7 +61,6 @@ export default function SignupForm({ onSubmit, mutateState }: LoginFormProps) {
   });
 
   const handleFormSubmit = (values: LoginFormValues) => {
-    console.log("VALUES", values);
     if (recaptchaRef.current && recaptchaRef.current.getValue()) {
       setRecaptchaError("");
       onSubmit(values);
@@ -91,7 +90,9 @@ export default function SignupForm({ onSubmit, mutateState }: LoginFormProps) {
         }}>
         <FormBody>
           {mutateState.isError && (
-            <Alert color="error">{tLogin("submitError")}</Alert>
+            <Alert color="error" sx={{ mb: 3 }}>
+              {mutateState.error || tLogin("submitError")}
+            </Alert>
           )}
           <Grid container direction="column" spacing={2}>
             <Grid item>

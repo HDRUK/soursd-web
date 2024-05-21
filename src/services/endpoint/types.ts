@@ -3,8 +3,4 @@ interface IssuerDetailsResponse {
   verificationExpiry: string;
 }
 
-interface IssuerSignupPayload {
-  password: string;
-}
-
-export type { IssuerDetailsResponse, IssuerSignupPayload };
+export type { IssuerDetailsResponse };

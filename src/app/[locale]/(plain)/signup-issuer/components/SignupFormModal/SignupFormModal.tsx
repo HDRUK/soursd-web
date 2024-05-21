@@ -6,10 +6,8 @@ import OverlayCenter from "@/components/OverlayCenter";
 import OverlayCenterAlert from "@/components/OverlayCenterAlert";
 import { CONTACT_MAIL_ADDRESS } from "@/config/contacts";
 import { useApplicationData } from "@/context/ApplicationData";
-import {
-  getIssuerByVerificationCode,
-  postIssuerSignup,
-} from "@/services/endpoint";
+import { getIssuerByVerificationCode } from "@/services/endpoint";
+import { postCreateUser } from "@/services/keycloak";
 import { isExpired } from "@/utils/date";
 import HubIcon from "@mui/icons-material/Hub";
 import { Box, CircularProgress } from "@mui/material";
@@ -45,8 +43,11 @@ export default function Page() {
     mutateAsync: mutateSignupAsync,
     isError: isSignupError,
     isLoading: isSignupLoading,
-  } = useMutation(["postLoginOTP"], async (values: SignupFormValues) =>
-    postIssuerSignup(values)
+  } = useMutation(["postCreateUser"], async (values: SignupFormValues) =>
+    postCreateUser({
+      ...values,
+      email: "",
+    })
   );
 
   const handleSignupSubmit = async (values: SignupFormValues) => {

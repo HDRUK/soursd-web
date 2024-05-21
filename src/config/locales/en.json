@@ -71,7 +71,8 @@
     "toggleOtpPasscodeAriaLabel": "Toggle passcode visibility",
     "togglePasswordAriaLabel": "Toggle password visibility",
     "title": "Login",
-    "submitError": "There has been an error logging in."
+    "loginDetailsIncorrect": "Your login details are incorrect, please check them and try again.",
+    "submitError": "There was a problem validating your user. Please try again or contact us at "
   },
   "LoginOTPForm": {
     "otp": "One time passcode",
