@@ -7,7 +7,7 @@ interface FormHeaderProps {
   children: ReactNode;
 }
 
-export default function FormHeader({ icon, children }: FormHeaderProps) {
+export default function FormModalHeader({ icon, children }: FormHeaderProps) {
   return (
     <>
       <Box sx={{ textAlign: "center", mb: 1 }}>

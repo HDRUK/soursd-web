@@ -1,4 +1,5 @@
-import { Close } from "@mui/icons-material";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import CloseIcon from "@mui/icons-material/Close";
 import {
   Box,
   Card,
@@ -11,12 +12,14 @@ import {
 
 export interface FormModalProps extends ModalProps {
   isDismissable?: boolean;
+  onBack?: () => void;
 }
 
 export default function FormModal({
   children,
   isDismissable = true,
-  onClose = () => {},
+  onBack,
+  onClose,
   ...restProps
 }: FormModalProps) {
   const theme = useTheme();
@@ -34,11 +37,20 @@ export default function FormModal({
           },
         }}>
         <CardContent sx={{ p: 4 }}>
-          {isDismissable && (
+          {onBack && (
+            <Box sx={{ position: "absolute", top: 5, left: 5 }}>
+              <span>
+                <IconButton onClick={onBack}>
+                  <ChevronLeftIcon />
+                </IconButton>
+              </span>
+            </Box>
+          )}
+          {isDismissable && onClose && (
             <Box sx={{ position: "absolute", top: 5, right: 5 }}>
               <span>
                 <IconButton onClick={e => onClose(e, "escapeKeyDown")}>
-                  <Close />
+                  <CloseIcon />
                 </IconButton>
               </span>
             </Box>

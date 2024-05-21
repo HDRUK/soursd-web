@@ -3,6 +3,10 @@ import { RoutePermissions } from "@/types/router";
 const PROTECTED_ROUTES: RoutePermissions[] = [];
 
 const ROUTES = {
+  login: {
+    path: "/login",
+    key: "Login",
+  },
   signup: {
     path: "/signup",
     key: "Signup",

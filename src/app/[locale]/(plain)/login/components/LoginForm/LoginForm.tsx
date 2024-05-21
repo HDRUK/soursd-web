@@ -1,0 +1,152 @@
+"use client";
+
+import FormActions from "@/components/FormActions";
+import FormBody from "@/components/FormBody";
+import FormRecaptcha from "@/components/FormRecaptcha";
+import PasswordTextField from "@/components/PasswordTextField";
+import { FormMutateState } from "@/types/form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import SendIcon from "@mui/icons-material/Send";
+import { LoadingButton } from "@mui/lab";
+import {
+  Alert,
+  Box,
+  FormControl,
+  FormHelperText,
+  Grid,
+  TextField,
+  useTheme,
+} from "@mui/material";
+import { useTranslations } from "next-intl";
+import { useMemo, useRef, useState } from "react";
+import ReCAPTCHA from "react-google-recaptcha";
+import { FormProvider, useForm } from "react-hook-form";
+import * as yup from "yup";
+
+export interface LoginFormValues {
+  email: string;
+  password: string;
+}
+
+export type LoginFormProps = {
+  onSubmit: (values: LoginFormValues) => void;
+  mutateState: FormMutateState;
+};
+
+const NAMESPACE_TRANSLATION_VALIDATION = "FormValidation";
+const NAMESPACE_TRANSLATION_SIGNUP = "LoginForm";
+
+export default function SignupForm({ onSubmit, mutateState }: LoginFormProps) {
+  const tValidation = useTranslations(NAMESPACE_TRANSLATION_VALIDATION);
+  const tLogin = useTranslations(NAMESPACE_TRANSLATION_SIGNUP);
+  const [recaptchaError, setRecaptchaError] = useState("");
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
+  const theme = useTheme();
+
+  const schema = useMemo(
+    () =>
+      yup.object().shape({
+        email: yup.string().required(tValidation("emailRequiredInvalid")),
+        password: yup.string().required(tValidation("passwordRequiredInvalid")),
+      }),
+    []
+  );
+
+  const methods = useForm<LoginFormValues>({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const handleFormSubmit = (values: LoginFormValues) => {
+    console.log("VALUES", values);
+    if (recaptchaRef.current && recaptchaRef.current.getValue()) {
+      setRecaptchaError("");
+      onSubmit(values);
+    } else {
+      setRecaptchaError(tValidation("recaptchaError"));
+    }
+  };
+
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = methods;
+
+  return (
+    <FormProvider {...methods}>
+      <Box
+        component="form"
+        onSubmit={handleSubmit(handleFormSubmit)}
+        autoComplete="off"
+        sx={{
+          width: "auto",
+          [".MuiGrid-root .MuiGrid-item"]: {
+            maxWidth: "100%",
+          },
+          [theme.breakpoints.up("md")]: { width: "350px" },
+        }}>
+        <FormBody>
+          {mutateState.isError && (
+            <Alert color="error">{tLogin("submitError")}</Alert>
+          )}
+          <Grid container direction="column" spacing={2}>
+            <Grid item>
+              <FormControl error={!!errors.email} variant="standard" fullWidth>
+                <TextField
+                  id="email"
+                  size="small"
+                  placeholder={tLogin("emailPlaceholder")}
+                  aria-label={tLogin("email")}
+                  label={<>{tLogin("email")} *</>}
+                  {...register("email")}
+                />
+                {errors.email && (
+                  <FormHelperText>{errors.email.message}</FormHelperText>
+                )}
+              </FormControl>
+            </Grid>
+            <Grid item>
+              <FormControl
+                error={!!errors.password}
+                variant="standard"
+                fullWidth>
+                <PasswordTextField
+                  id="password"
+                  size="small"
+                  placeholder={tLogin("passwordPlaceholder")}
+                  aria-label={tLogin("password")}
+                  label={<>{tLogin("password")} *</>}
+                  iconButtonProps={{
+                    "aria-label": tLogin("togglePasswordAriaLabel"),
+                  }}
+                  {...register("password")}
+                />
+                {errors.password && (
+                  <FormHelperText>{errors.password.message}</FormHelperText>
+                )}
+              </FormControl>
+            </Grid>
+            <Grid item>
+              <FormRecaptcha ref={recaptchaRef} error={recaptchaError} />
+            </Grid>
+          </Grid>
+        </FormBody>
+        <FormActions>
+          <LoadingButton
+            type="submit"
+            color="primary"
+            variant="contained"
+            endIcon={<SendIcon />}
+            fullWidth
+            loading={mutateState.isLoading}>
+            {tLogin("loginButton")}
+          </LoadingButton>
+        </FormActions>
+      </Box>
+    </FormProvider>
+  );
+}

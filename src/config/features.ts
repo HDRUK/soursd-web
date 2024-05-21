@@ -2,8 +2,10 @@ import { ROLES, ROLES_STATE } from "@/consts/roles";
 import { Features } from "@/types/roles";
 
 export const FEATURES: Features = {
+  LoginOtp: {
+    enabled: false,
+  },
   Footer: {
-    path: "@/modules/Footer",
     permissions: [
       {
         role: ROLES.USER,

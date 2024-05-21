@@ -2,7 +2,7 @@
 
 import FormActions from "@/components/FormActions";
 import FormBody from "@/components/FormBody";
-import FormHeader from "@/components/FormHeader";
+import FormHeader from "@/components/FormModalHeader";
 import FormRecaptcha from "@/components/FormRecaptcha";
 import PasswordTextField from "@/components/PasswordTextField";
 import {

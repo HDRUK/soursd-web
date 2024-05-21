@@ -2,16 +2,14 @@
 
 import FormActions from "@/components/FormActions";
 import FormBody from "@/components/FormBody";
-import FormHeader from "@/components/FormHeader";
 import FormRecaptcha from "@/components/FormRecaptcha";
 import PasswordTextField from "@/components/PasswordTextField";
 import {
   VALIDATION_PASSWORD_FORMAT,
   VALIDATION_PASSWORD_LENGTH,
 } from "@/consts/form";
-import { IssuerDetailsResponse } from "@/services/endpoint/types";
+import { FormMutateState } from "@/types/form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import HubIcon from "@mui/icons-material/Hub";
 import SendIcon from "@mui/icons-material/Send";
 import { LoadingButton } from "@mui/lab";
 import {
@@ -37,22 +35,14 @@ export interface SignupFormValues {
 }
 
 export type SignupFormProps = {
-  onSubmit: (data: SignupFormValues) => void;
-  data: IssuerDetailsResponse;
-  mutateState: {
-    isUpdateError: boolean;
-    isUpdateLoading: boolean;
-  };
+  mutateState: FormMutateState;
+  onSubmit: (values: SignupFormValues) => void;
 };
 
 const NAMESPACE_TRANSLATION_VALIDATION = "FormValidation";
 const NAMESPACE_TRANSLATION_SIGNUP = "SignupForm";
 
-export default function SignupForm({
-  onSubmit,
-  data,
-  mutateState,
-}: SignupFormProps) {
+export default function SignupForm({ onSubmit, mutateState }: SignupFormProps) {
   const tValidation = useTranslations(NAMESPACE_TRANSLATION_VALIDATION);
   const tSignup = useTranslations(NAMESPACE_TRANSLATION_SIGNUP);
   const [recaptchaError, setRecaptchaError] = useState("");
@@ -90,17 +80,6 @@ export default function SignupForm({
     []
   );
 
-  const handleFormSubmit = (data: SignupFormValues) => {
-    if (recaptchaRef.current) {
-      if (recaptchaRef.current.getValue()) {
-        setRecaptchaError("");
-        onSubmit(data);
-      } else {
-        setRecaptchaError(tValidation("recaptchaError"));
-      }
-    }
-  };
-
   const methods = useForm<SignupFormValues>({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -110,15 +89,20 @@ export default function SignupForm({
     },
   });
 
+  const handleFormSubmit = (values: SignupFormValues) => {
+    if (recaptchaRef.current && recaptchaRef.current.getValue()) {
+      setRecaptchaError("");
+      onSubmit(values);
+    } else {
+      setRecaptchaError(tValidation("recaptchaError"));
+    }
+  };
+
   const {
     formState: { errors },
     register,
     handleSubmit,
   } = methods;
-
-  const commonInputProps = {
-    disabled: mutateState.isUpdateLoading,
-  };
 
   return (
     <FormProvider {...methods}>
@@ -133,11 +117,8 @@ export default function SignupForm({
           },
           [theme.breakpoints.up("md")]: { width: "350px" },
         }}>
-        <FormHeader icon={<HubIcon />}>
-          {tSignup("title")} {data?.name}
-        </FormHeader>
         <FormBody>
-          {mutateState.isUpdateError && (
+          {mutateState.isError && (
             <Alert color="error">{tSignup("submitError")}</Alert>
           )}
           <Grid container direction="column" spacing={2}>
@@ -155,7 +136,6 @@ export default function SignupForm({
                   iconButtonProps={{
                     "aria-label": tSignup("togglePasswordAriaLabel"),
                   }}
-                  {...commonInputProps}
                 />
                 {errors.password && (
                   <FormHelperText>{errors.password.message}</FormHelperText>
@@ -176,7 +156,6 @@ export default function SignupForm({
                   iconButtonProps={{
                     "aria-label": tSignup("toggleConfirmPasswordAriaLabel"),
                   }}
-                  {...commonInputProps}
                 />
                 {errors.confirmPassword && (
                   <FormHelperText>
@@ -191,7 +170,6 @@ export default function SignupForm({
                   control={<Checkbox {...register("tscs")} />}
                   label="I agree to the Terms and Conditions"
                   aria-label={tSignup("agreeTermsAndConditions")}
-                  {...commonInputProps}
                 />
                 {errors.tscs && (
                   <FormHelperText>{errors.tscs.message}</FormHelperText>
@@ -210,7 +188,7 @@ export default function SignupForm({
             variant="contained"
             endIcon={<SendIcon />}
             fullWidth
-            loading={mutateState.isUpdateLoading}>
+            loading={mutateState.isLoading}>
             {tSignup("signupButton")}
           </LoadingButton>
         </FormActions>
