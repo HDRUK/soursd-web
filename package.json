@@ -39,7 +39,7 @@
     "keycloak-js": "^24.0.4",
     "next": "14.1.4",
     "next-intl": "^3.10.0",
-    "npm": "^10.5.0",
+    "npm": "^10.8.0",
     "react": "^18",
     "react-dom": "^18",
     "react-google-recaptcha": "^3.1.0",
