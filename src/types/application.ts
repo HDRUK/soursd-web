@@ -1,13 +1,13 @@
-import { RouteConfig } from "./router";
+import { ROUTES } from "@/consts/router";
 
 interface ApplicationDataState {
-  routes: {
-    login: RouteConfig;
-    signup: RouteConfig;
-    signupIssuer: RouteConfig;
-    homepage: RouteConfig;
-    profileIssuer: RouteConfig;
-  };
+  routes: Record<
+    keyof typeof ROUTES,
+    {
+      key: string;
+      path: string;
+    }
+  >;
 }
 
 export type { ApplicationDataState };

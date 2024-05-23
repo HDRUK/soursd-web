@@ -1,6 +1,6 @@
 import postLogin from "./postLogin";
 import postLoginOTP from "./postLoginOTP";
-import postCreateUser from "./postCreateUser";
+import postRegister from "./postRegister";
 import postResetPassword from "./postResetPassword";
 
-export { postLogin, postLoginOTP, postCreateUser, postResetPassword };
+export { postLogin, postLoginOTP, postRegister, postResetPassword };

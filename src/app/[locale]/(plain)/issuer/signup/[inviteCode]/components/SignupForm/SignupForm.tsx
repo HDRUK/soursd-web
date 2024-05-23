@@ -119,7 +119,9 @@ export default function SignupForm({ onSubmit, mutateState }: SignupFormProps) {
         }}>
         <FormBody>
           {mutateState.isError && (
-            <Alert color="error">{tSignup("submitError")}</Alert>
+            <Alert color="error" sx={{ mb: 3 }}>
+              {tSignup("submitError")}
+            </Alert>
           )}
           <Grid container direction="column" spacing={2}>
             <Grid item>

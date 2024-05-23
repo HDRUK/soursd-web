@@ -6,13 +6,14 @@ import OverlayCenter from "@/components/OverlayCenter";
 import OverlayCenterAlert from "@/components/OverlayCenterAlert";
 import { CONTACT_MAIL_ADDRESS } from "@/config/contacts";
 import { useApplicationData } from "@/context/ApplicationData";
-import { getIssuerByVerificationCode } from "@/services/endpoint";
-import { postCreateUser } from "@/services/keycloak";
+import { postRegister } from "@/services/auth";
+import { RegisterPayload } from "@/services/auth/types";
+import { getByInviteCode } from "@/services/issuer";
 import { isExpired } from "@/utils/date";
 import HubIcon from "@mui/icons-material/Hub";
 import { Box, CircularProgress } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useMutation, useQuery } from "react-query";
 import SignupForm, { SignupFormValues } from "../SignupForm";
 
@@ -21,8 +22,8 @@ const NAMESPACE_TRANSLATION_SIGNUP = "SignupForm";
 
 export default function Page() {
   const router = useRouter();
-  const params = useSearchParams();
-  const verificationCode = params?.get("verificationCode");
+  const params = useParams<{ inviteCode: string }>();
+  const inviteCode = params?.inviteCode;
   const t = useTranslations(NAMESPACE_TRANSLATION_SIGNUP_ISSUER);
   const tSignup = useTranslations(NAMESPACE_TRANSLATION_SIGNUP);
   const { routes } = useApplicationData();
@@ -30,12 +31,15 @@ export default function Page() {
   const {
     isError: isGetIssuerError,
     isLoading: isGetIssuerLoading,
-    data,
+    data: issuerData,
   } = useQuery(
-    ["getIssuerByVerificationCode", verificationCode || ""],
-    async () => getIssuerByVerificationCode(verificationCode || ""),
+    ["getByInviteCode", inviteCode || ""],
+    async () =>
+      getByInviteCode(inviteCode || "", {
+        error: { message: t("getIssuerError") },
+      }),
     {
-      enabled: !!verificationCode,
+      enabled: !!inviteCode,
     }
   );
 
@@ -43,20 +47,30 @@ export default function Page() {
     mutateAsync: mutateSignupAsync,
     isError: isSignupError,
     isLoading: isSignupLoading,
-  } = useMutation(["postCreateUser"], async (values: SignupFormValues) =>
-    postCreateUser({
-      ...values,
-      email: "",
-    })
-  );
+  } = useMutation(["postRegister"], async (payload: RegisterPayload) => {
+    return postRegister(payload, {
+      error: { message: tSignup("submitError") },
+    });
+  });
 
   const handleSignupSubmit = async (values: SignupFormValues) => {
-    mutateSignupAsync(values).then(() => {
-      router.push(routes.login.path);
-    });
+    const { password } = values;
+
+    if (issuerData) {
+      const payload = {
+        password,
+        first_name: "",
+        last_name: "",
+        email: issuerData.contact_email,
+      };
+
+      mutateSignupAsync(payload).then(() => {
+        router.push(routes.login.path);
+      });
+    }
   };
 
-  const expired = isExpired(data?.verificationExpiry || "");
+  const expired = isExpired(issuerData?.verificationExpiry || "");
 
   if (isGetIssuerLoading) {
     return (
@@ -66,7 +80,7 @@ export default function Page() {
     );
   }
 
-  if (!verificationCode) {
+  if (!inviteCode) {
     return (
       <OverlayCenterAlert>
         {t("noVerificationCode")}{" "}
@@ -75,7 +89,7 @@ export default function Page() {
     );
   }
 
-  if (verificationCode && data && expired) {
+  if (inviteCode && issuerData && expired) {
     return (
       <OverlayCenterAlert>
         {t("verificationExpired")}
@@ -93,7 +107,7 @@ export default function Page() {
     );
   }
 
-  if (!isGetIssuerLoading && !data) {
+  if (!isGetIssuerLoading && !issuerData) {
     return <OverlayCenterAlert>{t("noData")}</OverlayCenterAlert>;
   }
 
@@ -101,7 +115,7 @@ export default function Page() {
     <FormModal open isDismissable onClose={() => router.replace("homepage")}>
       <Box sx={{ minWidth: "250px" }}>
         <FormModalHeader icon={<HubIcon />}>
-          {tSignup("title")} {data?.name}
+          {tSignup("title")} {issuerData?.name}
         </FormModalHeader>
         <SignupForm
           onSubmit={handleSignupSubmit}

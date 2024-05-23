@@ -10,4 +10,13 @@ interface ResponseTranslations {
   error?: ResponseTranslation;
 }
 
-export type { ResponseTranslations, ResponseTranslation };
+interface ResponseJson<T> {
+  data: {
+    data: T;
+    message: string;
+  };
+  status: number;
+  ok: boolean;
+}
+
+export type { ResponseJson, ResponseTranslation, ResponseTranslations };

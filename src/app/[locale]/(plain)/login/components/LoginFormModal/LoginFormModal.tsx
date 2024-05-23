@@ -4,9 +4,9 @@ import FormModal from "@/components/FormModal";
 import FormModalHeader from "@/components/FormModalHeader";
 import { useApplicationData } from "@/context/ApplicationData";
 import useFeature from "@/hooks/useFeature";
-import { postLogin, postLoginOTP } from "@/services/keycloak";
-import { LoginResponse } from "@/services/keycloak/types";
-import { setItemFromJson } from "@/utils/storage";
+import { postLogin, postLoginOTP } from "@/services/auth";
+import { LoginResponse } from "@/services/auth/types";
+import { setAuthData } from "@/utils/auth";
 import HubIcon from "@mui/icons-material/Hub";
 import { Box } from "@mui/material";
 import { useTranslations } from "next-intl";
@@ -56,9 +56,7 @@ export default function LoginFormModal() {
   );
 
   const handleLoginSubmit = useCallback((values: LoginFormValues) => {
-    mutateLoginAsync(values).then(({ access_token }: LoginResponse) => {
-      setItemFromJson("auth", { access_token });
-
+    mutateLoginAsync(values).then((authDetails: LoginResponse) => {
       if (otpEnabled) {
         setType("otpForm");
         setPayload({
@@ -66,6 +64,8 @@ export default function LoginFormModal() {
           otp: "",
         });
       } else {
+        setAuthData(authDetails);
+
         router.push(routes.profileIssuer.path);
       }
     });

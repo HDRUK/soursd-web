@@ -20,7 +20,7 @@ interface ResetPasswordPayload {
   password: string;
 }
 
-interface IssuerSignupPayload {
+interface RegisterPayload {
   email: string;
   password: string;
   firstName?: string;
@@ -31,7 +31,7 @@ export type {
   LoginPayload,
   LoginRequest,
   LoginOTPPayload,
-  IssuerSignupPayload,
+  RegisterPayload,
   ResetPasswordPayload,
   LoginResponse,
 };

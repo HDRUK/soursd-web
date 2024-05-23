@@ -1,8 +1,11 @@
+"use client";
+
+import { withAuth } from "@/components/Auth";
 import PageSection from "@/modules/PageSection/PageSection";
 import { Box } from "@mui/material";
 import Content from "./components/Content/Content";
 
-export default function Page() {
+function Page() {
   return (
     <Box sx={{ overflow: "hidden", position: "relative" }}>
       <PageSection>
@@ -11,3 +14,5 @@ export default function Page() {
     </Box>
   );
 }
+
+export default withAuth(Page);
