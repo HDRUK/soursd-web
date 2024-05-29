@@ -1,5 +1,6 @@
 "use client";
 
+import ContactLink from "@/components/ContactLink";
 import FormActions from "@/components/FormActions";
 import FormBody from "@/components/FormBody";
 import FormRecaptcha from "@/components/FormRecaptcha";
@@ -34,11 +35,11 @@ export type LoginFormProps = {
 };
 
 const NAMESPACE_TRANSLATION_VALIDATION = "FormValidation";
-const NAMESPACE_TRANSLATION_SIGNUP = "LoginForm";
+const NAMESPACE_TRANSLATION_LOGIN_FORM = "LoginForm";
 
 export default function SignupForm({ onSubmit, mutateState }: LoginFormProps) {
   const tValidation = useTranslations(NAMESPACE_TRANSLATION_VALIDATION);
-  const tLogin = useTranslations(NAMESPACE_TRANSLATION_SIGNUP);
+  const tLogin = useTranslations(NAMESPACE_TRANSLATION_LOGIN_FORM);
   const [recaptchaError, setRecaptchaError] = useState("");
   const recaptchaRef = useRef<ReCAPTCHA>(null);
   const theme = useTheme();
@@ -91,7 +92,9 @@ export default function SignupForm({ onSubmit, mutateState }: LoginFormProps) {
         <FormBody>
           {mutateState.isError && (
             <Alert color="error" sx={{ mb: 3 }}>
-              {mutateState.error || tLogin("submitError")}
+              {tLogin.rich("submitError", {
+                contactLink: ContactLink,
+              })}
             </Alert>
           )}
           <Grid container direction="column" spacing={2}>

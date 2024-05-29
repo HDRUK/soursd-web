@@ -1,7 +1,9 @@
 interface IssuerDetailsResponse {
   name: string;
   contact_email: string;
-  verificationExpiry: string;
+  invite_sent_at: string;
+  invite_accepted_at: string;
+  enabled: number;
 }
 
 export type { IssuerDetailsResponse };

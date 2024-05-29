@@ -1,10 +1,10 @@
 "use client";
 
+import ContactLink from "@/components/ContactLink";
 import FormModal from "@/components/FormModal";
 import FormModalHeader from "@/components/FormModalHeader";
 import OverlayCenter from "@/components/OverlayCenter";
 import OverlayCenterAlert from "@/components/OverlayCenterAlert";
-import { CONTACT_MAIL_ADDRESS } from "@/config/contacts";
 import { useApplicationData } from "@/context/ApplicationData";
 import { postRegister } from "@/services/auth";
 import { RegisterPayload } from "@/services/auth/types";
@@ -12,6 +12,7 @@ import { getByInviteCode } from "@/services/issuer";
 import { isExpired } from "@/utils/date";
 import HubIcon from "@mui/icons-material/Hub";
 import { Box, CircularProgress } from "@mui/material";
+import dayjs from "dayjs";
 import { useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
 import { useMutation, useQuery } from "react-query";
@@ -47,6 +48,7 @@ export default function Page() {
     mutateAsync: mutateSignupAsync,
     isError: isSignupError,
     isLoading: isSignupLoading,
+    error: signupError,
   } = useMutation(["postRegister"], async (payload: RegisterPayload) => {
     return postRegister(payload, {
       error: { message: tSignup("submitError") },
@@ -70,7 +72,13 @@ export default function Page() {
     }
   };
 
-  const expired = isExpired(issuerData?.verificationExpiry || "");
+  const expired =
+    issuerData?.invite_sent_at &&
+    isExpired(
+      dayjs(issuerData.invite_sent_at)
+        .add(+(process.env.NEXT_PUBLIC_RECAPTCHA_SECRET_KEY || 1), "hour")
+        .format()
+    );
 
   if (isGetIssuerLoading) {
     return (
@@ -83,8 +91,9 @@ export default function Page() {
   if (!inviteCode) {
     return (
       <OverlayCenterAlert>
-        {t("noVerificationCode")}{" "}
-        <a href={`mailto:${CONTACT_MAIL_ADDRESS}`}>{CONTACT_MAIL_ADDRESS}</a>
+        {t.rich("noVerificationCode", {
+          contactLink: ContactLink,
+        })}
       </OverlayCenterAlert>
     );
   }
@@ -92,8 +101,9 @@ export default function Page() {
   if (inviteCode && issuerData && expired) {
     return (
       <OverlayCenterAlert>
-        {t("verificationExpired")}
-        <a href={`mailto:${CONTACT_MAIL_ADDRESS}`}>{CONTACT_MAIL_ADDRESS}</a>
+        {t.rich("verificationExpired", {
+          contactLink: ContactLink,
+        })}
       </OverlayCenterAlert>
     );
   }
@@ -101,14 +111,21 @@ export default function Page() {
   if (isGetIssuerError) {
     return (
       <OverlayCenterAlert>
-        {t("getIssuerError")}
-        <a href={`mailto:${CONTACT_MAIL_ADDRESS}`}>{CONTACT_MAIL_ADDRESS}</a>
+        {t.rich("getIssuerError", {
+          contactLink: ContactLink,
+        })}
       </OverlayCenterAlert>
     );
   }
 
   if (!isGetIssuerLoading && !issuerData) {
-    return <OverlayCenterAlert>{t("noData")}</OverlayCenterAlert>;
+    return (
+      <OverlayCenterAlert>
+        {t.rich("noData", {
+          contactLink: ContactLink,
+        })}
+      </OverlayCenterAlert>
+    );
   }
 
   return (
@@ -122,6 +139,7 @@ export default function Page() {
           mutateState={{
             isLoading: isSignupLoading,
             isError: isSignupError,
+            error: `${(signupError as Error)?.message}`,
           }}
         />
       </Box>

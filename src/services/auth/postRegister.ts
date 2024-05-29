@@ -17,3 +17,20 @@ export default async (
 
   return response.data;
 };
+
+// Sign up integration for researcher
+// - modification to form fields
+// - some error state management
+// - some api integration
+// - ammending tests
+
+// Filter, search, sort, api
+// Table, checkboxes
+
+// - common components
+
+// Actions / menu - assi9gn meta data
+
+// Viewing users details
+
+// 372, 288, 352, 343, 345, 347

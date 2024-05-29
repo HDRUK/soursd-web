@@ -1,5 +1,6 @@
 "use client";
 
+import ContactLink from "@/components/ContactLink";
 import FormActions from "@/components/FormActions";
 import FormBody from "@/components/FormBody";
 import FormRecaptcha from "@/components/FormRecaptcha";
@@ -120,7 +121,9 @@ export default function SignupForm({ onSubmit, mutateState }: SignupFormProps) {
         <FormBody>
           {mutateState.isError && (
             <Alert color="error" sx={{ mb: 3 }}>
-              {tSignup("submitError")}
+              {tSignup.rich("submitError", {
+                contactLink: ContactLink,
+              })}
             </Alert>
           )}
           <Grid container direction="column" spacing={2}>

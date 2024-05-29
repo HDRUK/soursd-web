@@ -39,10 +39,10 @@ export default function LoginFormModal() {
   } = useMutation(["postLogin"], async (values: LoginFormValues) =>
     postLogin(values, {
       401: {
-        message: t("loginDetailsIncorrect"),
+        message: "loginDetailsIncorrect",
       },
       error: {
-        message: t("submitError"),
+        message: "submitError",
       },
     })
   );

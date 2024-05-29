@@ -45,8 +45,10 @@ describe("<SignupForm />", () => {
     });
 
     expect(
-      screen.getByText("There has been an error signing up.")
-    ).toBeInTheDocument();
+      screen.getByRole("alert").querySelector(".MuiAlert-message")?.innerHTML
+    ).toEqual(
+      'There was a problem signing up. Please try again or contact us at <a href="mailto:contact@speedi.com">contact@speedi.com</a>'
+    );
   });
 
   it("submits when values are defined", async () => {
