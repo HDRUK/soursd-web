@@ -77,7 +77,7 @@ export default function Page() {
     issuerData?.invite_sent_at &&
     isExpired(
       dayjs(issuerData.invite_sent_at)
-        .add(+(process.env.NEXT_PUBLIC_RECAPTCHA_SECRET_KEY || 1), "hour")
+        .add(+(process.env.NEXT_PUBLIC_INVITE_TIME_HOURS || 1), "hour")
         .format()
     );
 
