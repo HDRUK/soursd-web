@@ -33,11 +33,12 @@ export default function Page() {
     isError: isGetIssuerError,
     isLoading: isGetIssuerLoading,
     data: issuerData,
+    error: issuerError,
   } = useQuery(
     ["getByInviteCode", inviteCode || ""],
     async () =>
       getByInviteCode(inviteCode || "", {
-        error: { message: t("getIssuerError") },
+        error: { message: "getIssuerError" },
       }),
     {
       enabled: !!inviteCode,
@@ -51,7 +52,7 @@ export default function Page() {
     error: signupError,
   } = useMutation(["postRegister"], async (payload: RegisterPayload) => {
     return postRegister(payload, {
-      error: { message: tSignup("submitError") },
+      error: { message: "submitError" },
     });
   });
 
@@ -111,7 +112,7 @@ export default function Page() {
   if (isGetIssuerError) {
     return (
       <OverlayCenterAlert>
-        {t.rich("getIssuerError", {
+        {t.rich((issuerError as Error)?.message, {
           contactLink: ContactLink,
         })}
       </OverlayCenterAlert>
