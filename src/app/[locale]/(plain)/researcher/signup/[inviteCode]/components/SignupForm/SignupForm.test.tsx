@@ -1,4 +1,5 @@
 import { act, fireEvent, render, screen } from "@/utils/testUtils";
+import { faker } from "@faker-js/faker";
 import { axe } from "jest-axe";
 import SignupForm, { SignupFormProps } from "./SignupForm";
 
@@ -26,7 +27,7 @@ describe("<SignupForm />", () => {
     expect(results).toHaveNoViolations();
   });
 
-  it("does not submit when values are not defined", async () => {
+  it("does not submit when there are errors", async () => {
     renderSignupForm();
 
     await act(() => {
@@ -59,6 +60,10 @@ describe("<SignupForm />", () => {
   it("submits when values are defined", async () => {
     renderSignupForm();
 
+    const firstName = screen
+      .getByLabelText("First name")
+      .querySelector("input");
+    const lastName = screen.getByLabelText("Last name").querySelector("input");
     const password = screen.getByLabelText("Password").querySelector("input");
     const confirmPassword = screen
       .getByLabelText("Confirm password")
@@ -68,11 +73,23 @@ describe("<SignupForm />", () => {
       .querySelector("input");
     const recaptcha = screen.getByTestId("recaptcha");
 
+    const firstNameValue = faker.person.firstName();
+    const lastNameValue = faker.person.lastName();
     const passwordValue = "A!2sghjs";
     const confirmPasswordValue = passwordValue;
 
-    if (password && confirmPassword && tscs) {
+    if (firstName && lastName && password && confirmPassword && tscs) {
       await act(() => {
+        fireEvent.change(firstName, {
+          target: {
+            value: firstNameValue,
+          },
+        });
+        fireEvent.change(lastName, {
+          target: {
+            value: lastNameValue,
+          },
+        });
         fireEvent.change(password, {
           target: {
             value: passwordValue,
@@ -89,7 +106,9 @@ describe("<SignupForm />", () => {
 
       expect(mockSubmit).toHaveBeenCalled();
     } else {
-      fail("Password, confirm password or tscs do not exist");
+      fail(
+        "First name, last name, password, confirm password or tscs do not exist"
+      );
     }
   });
 });
