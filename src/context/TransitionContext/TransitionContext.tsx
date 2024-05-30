@@ -2,7 +2,7 @@ import { ReactNode, createContext, useMemo, useState } from "react";
 
 const TransitionContext = createContext<{
   completed: boolean;
-  toggleCompleted?: (value: any) => void;
+  toggleCompleted?: (value: boolean) => void;
 }>({
   completed: false,
 });
@@ -14,7 +14,7 @@ export interface TransitionProviderProps {
 export const TransitionProvider = ({ children }: TransitionProviderProps) => {
   const [completed, setCompleted] = useState(false);
 
-  const toggleCompleted = (value: any) => {
+  const toggleCompleted = (value: boolean) => {
     setCompleted(value);
   };
 

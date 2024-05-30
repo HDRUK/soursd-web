@@ -50,17 +50,17 @@
     "toggleConfirmPasswordAriaLabel": "Toggle confirm password visibility",
     "agreeTermsAndConditions": "Accept terms and conditions",
     "title": "Sign Up",
-    "submitError": "There has been an error signing up.",
+    "submitError": "There was a problem signing up. Please try again or contact us at <contactLink></contactLink>",
     "submitSuccess": "You have successfully signed up.",
     "signupOTPButton": "Email me an OTP",
     "signupOTPTooltip": "This method will not require you to enter a password each time you login. Instead the system will send a secure One Time Password (OTP) to your email address which you can then use to logon for the duration the OTP is valid.",
     "checkYourEmail": "We have emailed you a passcode. If you can't see it in your inbox, try checking your junk / spam folder. Altertively you can request another by clicking on the refresh button."
   },
   "SignupFormIssuer": {
-    "noVerificationCode": "You need a verification code to signup. This should have been provided to you via an invitation link. Please contact us at ",
-    "verificationExpired": "The verification code provided has expired. Please contact us at ",
-    "getIssuerError": "There has been a problem getting your details. Please contact us at ",
-    "noData": "Could not find any data for this verification code. Please contact us at "
+    "noVerificationCode": "You need a verification code to signup. This should have been provided to you via an invitation link. Please contact us at <contactLink></contactLink>",
+    "verificationExpired": "The verification code provided has expired. Please contact us at <contactLink></contactLink>",
+    "getIssuerError": "There has been a problem getting your details. Please contact us at <contactLink></contactLink>",
+    "noData": "Could not find any data for this verification code. Please contact us at <contactLink></contactLink>"
   },
   "LoginForm": {
     "email": "Email",
@@ -71,7 +71,8 @@
     "toggleOtpPasscodeAriaLabel": "Toggle passcode visibility",
     "togglePasswordAriaLabel": "Toggle password visibility",
     "title": "Login",
-    "submitError": "There has been an error logging in."
+    "loginDetailsIncorrect": "Your login details are incorrect, please check them and try again.",
+    "submitError": "There was a problem validating your user. Please try again or contact us at <contactLink></contactLink>"
   },
   "LoginOTPForm": {
     "otp": "One time passcode",

@@ -38,6 +38,7 @@ describe("<LoginForm />", () => {
       mutateState: {
         isError: true,
         isLoading: false,
+        error: "submitError",
       },
     });
 
@@ -46,8 +47,10 @@ describe("<LoginForm />", () => {
     });
 
     expect(
-      screen.getByText("There has been an error logging in.")
-    ).toBeInTheDocument();
+      screen.getByRole("alert").querySelector(".MuiAlert-message")?.innerHTML
+    ).toEqual(
+      'There was a problem validating your user. Please try again or contact us at <a href="mailto:contact@speedi.com">contact@speedi.com</a>'
+    );
   });
 
   it("submits when values are defined", async () => {

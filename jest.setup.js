@@ -2,7 +2,6 @@ import { defineMatchMedia } from "@/utils/testUtils";
 import "@testing-library/jest-dom";
 import "jest-axe/extend-expect";
 import { forwardRef, useImperativeHandle } from "react";
-import { makeServer } from "./mocks/server";
 
 const nextRouterMock = require("next-router-mock");
 
@@ -32,8 +31,6 @@ jest.mock("react-google-recaptcha", () => {
   return RecaptchaV2;
 });
 
-const server = makeServer();
-
 global.matchMedia = () => {
   return {
     matches: false,
@@ -44,8 +41,4 @@ global.matchMedia = () => {
 
 beforeAll(() => {
   defineMatchMedia(1024);
-});
-
-afterAll(() => {
-  server.shutdown();
 });

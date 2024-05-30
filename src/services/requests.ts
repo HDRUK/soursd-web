@@ -1,3 +1,4 @@
+import { ResponseJson, ResponseTranslations } from "@/types/requests";
 import { objectToQuerystring } from "@/utils/requests";
 
 function getHeadersWithAuthorisation(headers?: HeadersInit) {
@@ -10,6 +11,21 @@ function getHeadersWithAuthorisation(headers?: HeadersInit) {
     "content-type": "application/json;charset=UTF-8",
     ...headers,
   };
+}
+
+function handleResponseError<T>(
+  response: ResponseJson<T>,
+  messages: ResponseTranslations
+) {
+  if (!response.ok) {
+    return new Error(
+      response.status === 401
+        ? messages["401"]?.message
+        : messages.error?.message
+    );
+  }
+
+  return null;
 }
 
 async function getRequest<T>(url: string, payload?: T, options?: RequestInit) {
@@ -30,10 +46,23 @@ async function postRequest<T>(
   payload?: T,
   options?: Omit<RequestInit, "body">
 ) {
+  console.log({
+    ...options,
+    method: "POST",
+    headers: {
+      ...getHeadersWithAuthorisation(options?.headers),
+      ...options?.headers,
+    },
+    body: JSON.stringify(payload),
+  });
+
   const response = await fetch(url, {
     ...options,
     method: "POST",
-    headers: getHeadersWithAuthorisation(options?.headers),
+    headers: {
+      ...getHeadersWithAuthorisation(options?.headers),
+      ...options?.headers,
+    },
     body: JSON.stringify(payload),
   });
 
@@ -80,4 +109,11 @@ async function deleteRequest(url: string, options?: Omit<RequestInit, "body">) {
   return response.json();
 }
 
-export { getRequest, postRequest, patchRequest, putRequest, deleteRequest };
+export {
+  getRequest,
+  postRequest,
+  patchRequest,
+  putRequest,
+  deleteRequest,
+  handleResponseError,
+};

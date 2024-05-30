@@ -91,7 +91,9 @@ export default function LoginOTPForm({
             {tLogin("checkYourEmail")}
           </Alert>
           {mutateState.isError && (
-            <Alert color="error">{tLogin("submitError")}</Alert>
+            <Alert color="error" sx={{ mb: 3 }}>
+              {tLogin("submitError")}
+            </Alert>
           )}
           <Grid container direction="column" spacing={2}>
             <Grid item>

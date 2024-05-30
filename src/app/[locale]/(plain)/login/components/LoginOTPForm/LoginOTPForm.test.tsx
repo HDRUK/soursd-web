@@ -1,5 +1,5 @@
 import { VALIDATION_OTP_PASSCODE_LENGTH } from "@/consts/form";
-import { act, fireEvent, render, screen } from "@/utils/testUtils";
+import { fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 import { faker } from "@faker-js/faker";
 import { axe } from "jest-axe";
 import LoginOTPForm, { LoginOTPFormProps } from "./LoginOTPForm";
@@ -18,7 +18,7 @@ const renderLoginForm = (props?: Partial<LoginOTPFormProps>) => {
   );
 };
 
-describe("<LoginForm />", () => {
+describe("<LoginOTPForm />", () => {
   it("has no accessibility validations", async () => {
     const { container } = renderLoginForm();
 
@@ -29,11 +29,9 @@ describe("<LoginForm />", () => {
   it("does not submit when values are not defined", async () => {
     renderLoginForm();
 
-    await act(() => {
-      fireEvent.submit(screen.getByRole("button", { name: /Submit/i }));
-    });
+    fireEvent.submit(screen.getByRole("button", { name: /Submit/i }));
 
-    expect(mockSubmit).not.toHaveBeenCalled();
+    await waitFor(() => expect(mockSubmit).not.toHaveBeenCalled());
   });
 
   it("shows an error", async () => {
@@ -44,27 +42,25 @@ describe("<LoginForm />", () => {
       },
     });
 
-    await act(() => {
-      fireEvent.submit(screen.getByRole("button", { name: /Submit/i }));
-    });
+    fireEvent.submit(screen.getByRole("button", { name: /Submit/i }));
 
-    expect(
-      screen.getByText("There has been an error logging in.")
-    ).toBeInTheDocument();
+    await waitFor(() =>
+      expect(
+        screen.getByText("There has been an error logging in.")
+      ).toBeInTheDocument()
+    );
   });
 
   it("requests a new validation code", async () => {
     renderLoginForm();
 
-    await act(() => {
-      fireEvent.click(
-        screen.getByRole("button", {
-          name: /Send me another one time passcode/i,
-        })
-      );
-    });
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: /Send me another one time passcode/i,
+      })
+    );
 
-    expect(mockClickResend).toHaveBeenCalled();
+    await waitFor(() => expect(mockClickResend).toHaveBeenCalled());
   });
 
   it("submits when values are defined", async () => {
@@ -77,15 +73,13 @@ describe("<LoginForm />", () => {
     const otpValue = faker.string.sample(VALIDATION_OTP_PASSCODE_LENGTH);
 
     if (otp) {
-      await act(() => {
-        fireEvent.change(otp, {
-          target: { value: otpValue },
-        });
-
-        fireEvent.submit(screen.getByRole("button", { name: /Submit/i }));
+      fireEvent.change(otp, {
+        target: { value: otpValue },
       });
 
-      expect(mockSubmit).toHaveBeenCalled();
+      fireEvent.submit(screen.getByRole("button", { name: /Submit/i }));
+
+      await waitFor(() => expect(mockSubmit).toHaveBeenCalled());
     } else {
       fail("OTP does not exist");
     }

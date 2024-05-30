@@ -4,7 +4,9 @@ import FormModal from "@/components/FormModal";
 import FormModalHeader from "@/components/FormModalHeader";
 import { useApplicationData } from "@/context/ApplicationData";
 import useFeature from "@/hooks/useFeature";
-import { postLogin, postLoginOTP } from "@/services/login";
+import { postLogin, postLoginOTP } from "@/services/auth";
+import { LoginResponse } from "@/services/auth/types";
+import { setAuthData } from "@/utils/auth";
 import HubIcon from "@mui/icons-material/Hub";
 import { Box } from "@mui/material";
 import { useTranslations } from "next-intl";
@@ -33,8 +35,16 @@ export default function LoginFormModal() {
     mutateAsync: mutateLoginAsync,
     isError: isLoginError,
     isLoading: isLoginLoading,
+    error: loginError,
   } = useMutation(["postLogin"], async (values: LoginFormValues) =>
-    postLogin(values)
+    postLogin(values, {
+      401: {
+        message: "loginDetailsIncorrect",
+      },
+      error: {
+        message: "submitError",
+      },
+    })
   );
 
   const {
@@ -46,7 +56,7 @@ export default function LoginFormModal() {
   );
 
   const handleLoginSubmit = useCallback((values: LoginFormValues) => {
-    mutateLoginAsync(values).then(() => {
+    mutateLoginAsync(values).then((authDetails: LoginResponse) => {
       if (otpEnabled) {
         setType("otpForm");
         setPayload({
@@ -54,6 +64,8 @@ export default function LoginFormModal() {
           otp: "",
         });
       } else {
+        setAuthData(authDetails);
+
         router.push(routes.profileIssuer.path);
       }
     });
@@ -78,6 +90,7 @@ export default function LoginFormModal() {
             mutateState={{
               isError: isLoginError,
               isLoading: isLoginLoading,
+              error: `${(loginError as Error)?.message}`,
             }}
           />
         )}
