@@ -156,7 +156,7 @@ export default function Page() {
       onClose={() => redirect(routes.homepage.path)}>
       <Box sx={{ minWidth: "250px" }}>
         <FormModalHeader icon={<PersonIcon />}>
-          {tResearcher("title")} {researcherData?.name}
+          {tResearcher("title")}
         </FormModalHeader>
         <SignupForm
           defaultOrganisation={researcherData?.organisation_id?.toString()}

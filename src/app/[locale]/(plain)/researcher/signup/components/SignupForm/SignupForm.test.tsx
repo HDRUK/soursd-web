@@ -5,6 +5,12 @@ import SignupForm, { SignupFormProps } from "./SignupForm";
 
 const mockSubmit = jest.fn();
 
+const mockedOrganisation = {
+  organisation_unique_id: faker.string.uuid(),
+  organisation_name: faker.company.name(),
+  id: faker.number.int(),
+};
+
 const renderSignupForm = (
   props: Partial<SignupFormProps> = {
     mutateState: { isLoading: false, isError: false },
@@ -12,6 +18,8 @@ const renderSignupForm = (
 ) => {
   return render(
     <SignupForm
+      defaultOrganisation={mockedOrganisation.id.toString()}
+      organisations={[mockedOrganisation]}
       mutateState={{ isLoading: false, isError: false }}
       onSubmit={mockSubmit}
       {...props}
@@ -79,7 +87,7 @@ describe("<SignupForm />", () => {
     const confirmPasswordValue = passwordValue;
 
     if (firstName && lastName && password && confirmPassword && tscs) {
-      await act(() => {
+      await act(async () => {
         fireEvent.change(firstName, {
           target: {
             value: firstNameValue,

@@ -69,10 +69,10 @@
     "getByInviteCodeError": "There has been a problem getting your details. Please contact us at <contactLink></contactLink>"
   },
   "SignupFormIssuer": {
-    "title": "Sign Up"
+    "title": "Issuer sign Up"
   },
   "SignupFormResearcher": {
-    "title": "Sign Up",
+    "title": "Researcher sign up",
     "noData": "There has been an issue getting some of the required information for the sign up process. Please contact us at <contactLink></contactLink>"
   },
   "LoginForm": {

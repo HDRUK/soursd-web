@@ -1,3 +1,4 @@
+import { useApplicationData } from "@/context/ApplicationData";
 import { Check } from "@mui/icons-material";
 import {
   Box,
@@ -25,6 +26,7 @@ export default function FeaturesList({
   ...restProps
 }: FeaturesListProps) {
   const t = useTranslations();
+  const { routes } = useApplicationData();
 
   const theme = useTheme();
 
@@ -46,7 +48,7 @@ export default function FeaturesList({
         </Button>
         <Button variant="contained" color="secondary">
           <Link
-            href="signup"
+            href={routes.signup.path}
             underline="none"
             sx={{ color: theme.palette.secondary.contrastText }}>
             {t("Buttons.register")}

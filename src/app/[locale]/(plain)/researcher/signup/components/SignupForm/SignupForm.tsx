@@ -162,8 +162,11 @@ export default function SignupForm({
                 <Select
                   {...register("organisation")}
                   size="small"
-                  aria-label={tSignup("organisation")}
-                  label={<>{tSignup("organisation")} *</>}>
+                  inputProps={{
+                    "aria-label": tSignup("organisation"),
+                  }}
+                  label={<>{tSignup("organisation")} *</>}
+                  disabled={!!defaultOrganisation}>
                   {organisations?.map(({ organisation_name, id }) => (
                     <MenuItem value={id}>{organisation_name}</MenuItem>
                   ))}
