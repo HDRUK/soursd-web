@@ -8,12 +8,13 @@ import OverlayCenterAlert from "@/components/OverlayCenterAlert";
 import { useApplicationData } from "@/context/ApplicationData";
 import { postRegister } from "@/services/auth";
 import { RegisterPayload } from "@/services/auth/types";
-import { getByInviteCode } from "@/services/issuer";
+import { getByInviteCode } from "@/services/users";
+import { getOrganisations } from "@/services/organisations";
 import { isExpiredInvite } from "@/utils/date";
 import PersonIcon from "@mui/icons-material/Person";
 import { Box, CircularProgress } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useParams, useRouter } from "next/navigation";
+import { redirect, useParams, useRouter } from "next/navigation";
 import { useMutation, useQuery } from "react-query";
 import SignupForm, { SignupFormValues } from "../SignupForm";
 
@@ -37,10 +38,26 @@ export default function Page() {
     ["getByInviteCode", inviteCode || ""],
     async () =>
       getByInviteCode(inviteCode || "", {
-        error: { message: "getIssuerError" },
+        error: { message: "getByInviteCodeError" },
       }),
     {
       enabled: !!inviteCode,
+    }
+  );
+
+  const {
+    isError: isGetOrganisationsError,
+    isLoading: isGetOrganisationsLoading,
+    data: organisationsData,
+    error: organisationsError,
+  } = useQuery(
+    ["getOrganisationsError"],
+    async () =>
+      getOrganisations({
+        error: { message: "noData" },
+      }),
+    {
+      enabled: !inviteCode,
     }
   );
 
@@ -74,21 +91,11 @@ export default function Page() {
 
   const expired = isExpiredInvite(researcherData?.invite_sent_at);
 
-  if (isGetResearcherLoading) {
+  if (isGetResearcherLoading || isGetOrganisationsLoading) {
     return (
       <OverlayCenter sx={{ color: "#fff" }}>
         <CircularProgress color="inherit" />
       </OverlayCenter>
-    );
-  }
-
-  if (!inviteCode) {
-    return (
-      <OverlayCenterAlert>
-        {t.rich("noVerificationCode", {
-          contactLink: ContactLink,
-        })}
-      </OverlayCenterAlert>
     );
   }
 
@@ -105,17 +112,37 @@ export default function Page() {
   if (isGetResearcherError) {
     return (
       <OverlayCenterAlert>
-        {t.rich((researcherError as Error)?.message, {
+        {tResearcher.rich((researcherError as Error)?.message, {
           contactLink: ContactLink,
         })}
       </OverlayCenterAlert>
     );
   }
 
-  if (!isGetResearcherLoading && !researcherData) {
+  if (isGetOrganisationsError) {
     return (
       <OverlayCenterAlert>
-        {t.rich("noData", {
+        {tResearcher.rich((organisationsError as Error)?.message, {
+          contactLink: ContactLink,
+        })}
+      </OverlayCenterAlert>
+    );
+  }
+
+  if (inviteCode && !isGetResearcherLoading && !researcherData) {
+    return (
+      <OverlayCenterAlert>
+        {t.rich("noDataVerification", {
+          contactLink: ContactLink,
+        })}
+      </OverlayCenterAlert>
+    );
+  }
+
+  if (!inviteCode && !isGetOrganisationsLoading && !organisationsData) {
+    return (
+      <OverlayCenterAlert>
+        {tResearcher.rich("noData", {
           contactLink: ContactLink,
         })}
       </OverlayCenterAlert>
@@ -123,12 +150,17 @@ export default function Page() {
   }
 
   return (
-    <FormModal open isDismissable onClose={() => router.replace("homepage")}>
+    <FormModal
+      open
+      isDismissable
+      onClose={() => redirect(routes.homepage.path)}>
       <Box sx={{ minWidth: "250px" }}>
         <FormModalHeader icon={<PersonIcon />}>
           {tResearcher("title")} {researcherData?.name}
         </FormModalHeader>
         <SignupForm
+          defaultOrganisation={researcherData?.organisation_id?.toString()}
+          organisations={organisationsData}
           onSubmit={handleSignupSubmit}
           mutateState={{
             isLoading: isSignupLoading,

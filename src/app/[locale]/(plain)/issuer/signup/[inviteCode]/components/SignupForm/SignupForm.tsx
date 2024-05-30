@@ -128,10 +128,7 @@ export default function SignupForm({ onSubmit, mutateState }: SignupFormProps) {
           )}
           <Grid container direction="column" spacing={2}>
             <Grid item>
-              <FormControl
-                error={!!errors.password}
-                variant="standard"
-                fullWidth>
+              <FormControl error={!!errors.password} size="small" fullWidth>
                 <PasswordTextField
                   id="password"
                   size="small"
@@ -150,7 +147,7 @@ export default function SignupForm({ onSubmit, mutateState }: SignupFormProps) {
             <Grid item>
               <FormControl
                 error={!!errors.confirmPassword}
-                variant="standard"
+                size="small"
                 fullWidth>
                 <PasswordTextField
                   id="confirmPassword"
@@ -170,7 +167,7 @@ export default function SignupForm({ onSubmit, mutateState }: SignupFormProps) {
               </FormControl>
             </Grid>
             <Grid item>
-              <FormControl error={!!errors.tscs} variant="standard" fullWidth>
+              <FormControl error={!!errors.tscs} size="small" fullWidth>
                 <FormControlLabel
                   control={<Checkbox {...register("tscs")} />}
                   label="I agree to the Terms and Conditions"

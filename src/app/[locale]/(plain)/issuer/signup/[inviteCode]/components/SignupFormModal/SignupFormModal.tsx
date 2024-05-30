@@ -8,12 +8,12 @@ import OverlayCenterAlert from "@/components/OverlayCenterAlert";
 import { useApplicationData } from "@/context/ApplicationData";
 import { postRegister } from "@/services/auth";
 import { RegisterPayload } from "@/services/auth/types";
-import { getByInviteCode } from "@/services/issuer";
+import { getByInviteCode } from "@/services/issuers";
 import { isExpiredInvite } from "@/utils/date";
 import HubIcon from "@mui/icons-material/Hub";
 import { Box, CircularProgress } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useParams, useRouter } from "next/navigation";
+import { redirect, useParams, useRouter } from "next/navigation";
 import { useMutation, useQuery } from "react-query";
 import SignupForm, { SignupFormValues } from "../SignupForm";
 
@@ -37,7 +37,7 @@ export default function Page() {
     ["getByInviteCode", inviteCode || ""],
     async () =>
       getByInviteCode(inviteCode || "", {
-        error: { message: "getIssuerError" },
+        error: { message: "getByInviteCodeError" },
       }),
     {
       enabled: !!inviteCode,
@@ -71,8 +71,6 @@ export default function Page() {
       });
     }
   };
-
-  console.log("isGetIssuerError", isGetIssuerError);
 
   const expired = isExpiredInvite(issuerData?.invite_sent_at);
 
@@ -125,7 +123,10 @@ export default function Page() {
   }
 
   return (
-    <FormModal open isDismissable onClose={() => router.replace("homepage")}>
+    <FormModal
+      open
+      isDismissable
+      onClose={() => redirect(routes.homepage.path)}>
       <Box sx={{ minWidth: "250px" }}>
         <FormModalHeader icon={<HubIcon />}>
           {t("title")} {issuerData?.name}

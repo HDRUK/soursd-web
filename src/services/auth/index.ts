@@ -4,3 +4,5 @@ import postRegister from "./postRegister";
 import postResetPassword from "./postResetPassword";
 
 export { postLogin, postLoginOTP, postRegister, postResetPassword };
+
+export type * from "./types";

@@ -10,7 +10,7 @@ import { setAuthData } from "@/utils/auth";
 import HubIcon from "@mui/icons-material/Hub";
 import { Box } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 import { useMutation } from "react-query";
 import LoginForm from "../LoginForm";
@@ -81,7 +81,10 @@ export default function LoginFormModal() {
   );
 
   return (
-    <FormModal open isDismissable onClose={() => router.replace("homepage")}>
+    <FormModal
+      open
+      isDismissable
+      onClose={() => redirect(routes.homepage.path)}>
       <Box sx={{ minWidth: "250px" }}>
         <FormModalHeader icon={<HubIcon />}>{t("title")}</FormModalHeader>
         {type === "passwordForm" && (

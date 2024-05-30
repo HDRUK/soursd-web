@@ -8,6 +8,7 @@ function mockedIssuer(): ResearcherInviteResponse {
     contact_email: faker.internet.email(),
     enabled: 1,
     invite_accepted_at: "2024-05-13T00:00:00Z",
+    organisation_id: parseInt(faker.string.numeric(), 10),
   };
 }
 

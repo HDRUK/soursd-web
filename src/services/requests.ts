@@ -17,7 +17,10 @@ function handleResponseError<T>(
   response: ResponseJson<T>,
   messages: ResponseTranslations
 ) {
-  if (!response.ok) {
+  if (
+    (response.ok !== undefined && !response.ok) ||
+    !(response.data && response.message === "success")
+  ) {
     return new Error(
       response.status === 401
         ? messages["401"]?.message

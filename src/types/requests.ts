@@ -11,10 +11,8 @@ interface ResponseTranslations {
 }
 
 interface ResponseJson<T> {
-  data: {
-    data: T;
-    message: string;
-  };
+  data: T;
+  message: string;
   status: number;
   ok: boolean;
 }

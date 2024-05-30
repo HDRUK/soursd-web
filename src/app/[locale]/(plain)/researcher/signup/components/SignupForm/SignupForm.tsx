@@ -9,6 +9,7 @@ import {
   VALIDATION_PASSWORD_FORMAT,
   VALIDATION_PASSWORD_LENGTH,
 } from "@/consts/form";
+import { Organisation, OrganisationsResponse } from "@/services/organisations";
 import { FormMutateState } from "@/types/form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import SendIcon from "@mui/icons-material/Send";
@@ -21,6 +22,9 @@ import {
   FormControlLabel,
   FormHelperText,
   Grid,
+  InputLabel,
+  MenuItem,
+  Select,
   TextField,
   useTheme,
 } from "@mui/material";
@@ -33,6 +37,7 @@ import * as yup from "yup";
 export interface SignupFormValues {
   firstName: string;
   lastName: string;
+  organisation: string;
   password: string;
   confirmPassword: string;
   tscs: boolean;
@@ -41,12 +46,19 @@ export interface SignupFormValues {
 export interface SignupFormProps {
   mutateState: FormMutateState;
   onSubmit: (data: SignupFormValues) => void;
+  organisations?: Organisation[];
+  defaultOrganisation?: string;
 }
 
 const NAMESPACE_TRANSLATION_VALIDATION = "FormValidation";
 const NAMESPACE_TRANSLATION_SIGNUP = "SignupForm";
 
-export default function SignupForm({ onSubmit, mutateState }: SignupFormProps) {
+export default function SignupForm({
+  onSubmit,
+  mutateState,
+  organisations,
+  defaultOrganisation,
+}: SignupFormProps) {
   const tValidation = useTranslations(NAMESPACE_TRANSLATION_VALIDATION);
   const tSignup = useTranslations(NAMESPACE_TRANSLATION_SIGNUP);
   const theme = useTheme();
@@ -60,6 +72,9 @@ export default function SignupForm({ onSubmit, mutateState }: SignupFormProps) {
           .string()
           .required(tValidation("firstNameRequiredInvalid")),
         lastName: yup.string().required(tValidation("lastNameRequiredInvalid")),
+        organisation: yup
+          .string()
+          .required(tValidation("organisationRequiredInvalid")),
         password: yup
           .string()
           .required(tValidation("passwordRequiredInvalid"))
@@ -104,6 +119,7 @@ export default function SignupForm({ onSubmit, mutateState }: SignupFormProps) {
     defaultValues: {
       firstName: "",
       lastName: "",
+      organisation: defaultOrganisation,
       password: "",
       confirmPassword: "",
       tscs: false,
@@ -139,10 +155,26 @@ export default function SignupForm({ onSubmit, mutateState }: SignupFormProps) {
           )}
           <Grid container direction="column" spacing={2}>
             <Grid item>
-              <FormControl
-                error={!!errors.firstName}
-                variant="standard"
-                fullWidth>
+              <FormControl error={!!errors.organisation} size="small" fullWidth>
+                <InputLabel id="organisation">
+                  {tSignup("organisation")} *
+                </InputLabel>
+                <Select
+                  {...register("organisation")}
+                  size="small"
+                  aria-label={tSignup("organisation")}
+                  label={<>{tSignup("organisation")} *</>}>
+                  {organisations?.map(({ organisation_name, id }) => (
+                    <MenuItem value={id}>{organisation_name}</MenuItem>
+                  ))}
+                </Select>
+                {errors.organisation && (
+                  <FormHelperText>{errors.organisation.message}</FormHelperText>
+                )}
+              </FormControl>
+            </Grid>
+            <Grid item>
+              <FormControl error={!!errors.firstName} size="small" fullWidth>
                 <TextField
                   {...register("firstName")}
                   size="small"
@@ -156,10 +188,7 @@ export default function SignupForm({ onSubmit, mutateState }: SignupFormProps) {
               </FormControl>
             </Grid>
             <Grid item>
-              <FormControl
-                error={!!errors.lastName}
-                variant="standard"
-                fullWidth>
+              <FormControl error={!!errors.lastName} size="small" fullWidth>
                 <TextField
                   {...register("lastName")}
                   size="small"
@@ -173,10 +202,7 @@ export default function SignupForm({ onSubmit, mutateState }: SignupFormProps) {
               </FormControl>
             </Grid>
             <Grid item>
-              <FormControl
-                error={!!errors.password}
-                variant="standard"
-                fullWidth>
+              <FormControl error={!!errors.password} size="small" fullWidth>
                 <PasswordTextField
                   id="password"
                   size="small"
@@ -195,7 +221,7 @@ export default function SignupForm({ onSubmit, mutateState }: SignupFormProps) {
             <Grid item>
               <FormControl
                 error={!!errors.confirmPassword}
-                variant="standard"
+                size="small"
                 fullWidth>
                 <PasswordTextField
                   id="confirmPassword"
@@ -215,7 +241,7 @@ export default function SignupForm({ onSubmit, mutateState }: SignupFormProps) {
               </FormControl>
             </Grid>
             <Grid item>
-              <FormControl error={!!errors.tscs} variant="standard" fullWidth>
+              <FormControl error={!!errors.tscs} size="small" fullWidth>
                 <FormControlLabel
                   control={<Checkbox {...register("tscs")} />}
                   label="I agree to the Terms and Conditions"
