@@ -12,7 +12,7 @@ import {
 import { useParams } from "next/navigation";
 import { useQuery } from "react-query";
 
-export default function MetadataList() {
+export default function PermissionsList() {
   const params = useParams<{ researcherId: string }>();
   const researcherId = params?.researcherId;
 
@@ -22,9 +22,9 @@ export default function MetadataList() {
     data: metadataData,
     error: metadataError,
   } = useQuery(
-    ["getMetadata", researcherId],
+    ["getPermissions", researcherId],
     async () =>
-      getMetadata(researcherId || "", {
+      getApprovals(researcherId || "", {
         error: { message: "getMetadata" },
       }),
     {
