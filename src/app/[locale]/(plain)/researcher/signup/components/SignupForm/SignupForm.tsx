@@ -9,7 +9,7 @@ import {
   VALIDATION_PASSWORD_FORMAT,
   VALIDATION_PASSWORD_LENGTH,
 } from "@/consts/form";
-import { Organisation, OrganisationsResponse } from "@/services/organisations";
+import { Organisation } from "@/services/organisations";
 import { FormMutateState } from "@/types/form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import SendIcon from "@mui/icons-material/Send";
