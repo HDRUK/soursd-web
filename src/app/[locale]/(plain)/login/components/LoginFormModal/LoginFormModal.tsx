@@ -65,9 +65,11 @@ export default function LoginFormModal() {
       } else {
         setAuthData(authDetails.data);
 
-        if (authDetails.data.is_issuer) {
+        const userGroup = authDetails.data.user.user_group;
+
+        if (userGroup === "ISSUERS") {
           router.push(routes.profileIssuer.path);
-        } else if (authDetails.data.is_organisation) {
+        } else if (userGroup === "ORGANISATIONS") {
           router.push(routes.profileOrganisation.path);
         } else {
           router.push(routes.profileResearcher.path);

@@ -76,7 +76,8 @@
     "noData": "There has been an issue getting some of the required information for the sign up process. Please contact us at <contactLink></contactLink>"
   },
   "Cv": {
-    "maxSize": "10(Mb) Max size"
+    "maxSize": "10(Mb) Max size",
+    "download": "Download CV"
   },
   "Profile": {
     "title": "Profile",
