@@ -46,7 +46,7 @@
     "lastName": "Last name",
     "emailPlaceholder": "Email",
     "email": "Email",
-    "passwordPlaceholder": "Email",
+    "passwordPlaceholder": "Password",
     "password": "Password",
     "confirmPasswordPlaceholder": "Confirm password",
     "confirmPassword": "Confirm password",
@@ -74,6 +74,14 @@
   "SignupFormResearcher": {
     "title": "Researcher sign up",
     "noData": "There has been an issue getting some of the required information for the sign up process. Please contact us at <contactLink></contactLink>"
+  },
+  "Cv": {
+    "maxSize": "10(Mb) Max size"
+  },
+  "Profile": {
+    "title": "Profile",
+    "download": "Download CV",
+    "personalDetails": "Personal details"
   },
   "LoginForm": {
     "email": "Email",

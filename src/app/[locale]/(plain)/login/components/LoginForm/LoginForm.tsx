@@ -92,7 +92,7 @@ export default function SignupForm({ onSubmit, mutateState }: LoginFormProps) {
         <FormBody>
           {mutateState.isError && (
             <Alert color="error" sx={{ mb: 3 }}>
-              {tLogin.rich("submitError", {
+              {tLogin.rich(mutateState.error, {
                 contactLink: ContactLink,
               })}
             </Alert>

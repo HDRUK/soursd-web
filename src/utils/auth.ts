@@ -1,8 +1,14 @@
-import { LoginResponse } from "@/services/auth/types";
-import Cookies from "js-cookie";
+"use server";
 
-export async function setAuthData(authData: LoginResponse) {
-  Cookies.set("auth", JSON.stringify(authData), {
-    expires: 60 * 60 * 24 * 7,
-  });
+import { LoginResponse } from "@/services/auth/types";
+import { cookies } from "next/headers";
+
+async function setAuthData(authData: LoginResponse) {
+  cookies().set("auth", JSON.stringify(authData));
 }
+
+async function getAuthData(): Promise<LoginResponse> {
+  return JSON.parse(cookies().get("auth")?.value || "{}");
+}
+
+export { getAuthData, setAuthData };

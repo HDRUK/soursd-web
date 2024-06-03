@@ -27,6 +27,10 @@ const ROUTES = {
     path: "/researcher/profile",
     key: "Profile",
   },
+  profileOrganisation: {
+    path: "/organisation/profile",
+    key: "Profile",
+  },
 };
 
 export { PROTECTED_ROUTES, ROUTES };

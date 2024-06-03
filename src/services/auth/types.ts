@@ -7,6 +7,9 @@ type LoginRequest = Record<string, string>;
 
 interface LoginResponse {
   access_token: string;
+  is_issuer?: boolean;
+  is_organisation?: boolean;
+  is_researcher?: boolean;
 }
 
 interface LoginOTPPayload {

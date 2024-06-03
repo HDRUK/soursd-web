@@ -1,5 +1,5 @@
 import { render, screen } from "@/utils/testUtils";
-
+import * as auth from "@/utils/auth";
 import { mockedUserAuth } from "@/mocks/data/auth";
 import withAuth from "./withAuth";
 
@@ -9,22 +9,41 @@ jest.mock("next/navigation", () => ({
   redirect: (route: string) => mockRedirect(route),
 }));
 
-const RouteContent = withAuth(() => <div>Route loaded</div>);
+jest.mock("next/headers", () => {
+  return {
+    cookies: () => {
+      return {
+        get: () => {},
+      };
+    },
+  };
+});
+
+jest.mock("@/utils/language", () => ({
+  getLocale: () => "en",
+}));
+
+const component = withAuth(() => <div>Route loaded</div>);
 
 describe("withAuth", () => {
   it("doesn't show the route", async () => {
-    render(<RouteContent />);
+    jest.mock("@/utils/auth", () => ({
+      getAuthData: () => ({}),
+    }));
 
-    expect(mockRedirect).toHaveBeenCalledWith("/login");
+    //@ts-ignore
+    render(await component());
+
+    expect(mockRedirect).toHaveBeenCalledWith("/en/login");
   });
 
   it("shows the route", async () => {
-    Object.defineProperty(window.document, "cookie", {
-      writable: true,
-      value: mockedUserAuth(),
-    });
+    jest.mock("@/utils/auth", () => ({
+      getAuthData: () => mockedUserAuth(),
+    }));
 
-    render(<RouteContent />);
+    //@ts-ignore
+    render(await component());
 
     expect(screen.getByText("Route loaded")).toBeInTheDocument();
   });

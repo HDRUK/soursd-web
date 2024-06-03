@@ -5,12 +5,11 @@ import FormModalHeader from "@/components/FormModalHeader";
 import { useApplicationData } from "@/context/ApplicationData";
 import useFeature from "@/hooks/useFeature";
 import { postLogin, postLoginOTP } from "@/services/auth";
-import { LoginResponse } from "@/services/auth/types";
 import { setAuthData } from "@/utils/auth";
 import HubIcon from "@mui/icons-material/Hub";
 import { Box } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 import { useMutation } from "react-query";
 import LoginForm from "../LoginForm";
@@ -56,7 +55,7 @@ export default function LoginFormModal() {
   );
 
   const handleLoginSubmit = useCallback((values: LoginFormValues) => {
-    mutateLoginAsync(values).then((authDetails: LoginResponse) => {
+    mutateLoginAsync(values).then(authDetails => {
       if (otpEnabled) {
         setType("otpForm");
         setPayload({
@@ -64,9 +63,15 @@ export default function LoginFormModal() {
           otp: "",
         });
       } else {
-        setAuthData(authDetails);
+        setAuthData(authDetails.data);
 
-        router.push(routes.profileIssuer.path);
+        if (authDetails.data.is_issuer) {
+          router.push(routes.profileIssuer.path);
+        } else if (authDetails.data.is_organisation) {
+          router.push(routes.profileOrganisation.path);
+        } else {
+          router.push(routes.profileResearcher.path);
+        }
       }
     });
   }, []);
@@ -80,11 +85,13 @@ export default function LoginFormModal() {
     [payload]
   );
 
+  console.log(`${(loginError as Error)?.message}`);
+
   return (
     <FormModal
       open
       isDismissable
-      onClose={() => redirect(routes.homepage.path)}>
+      onClose={() => router.push(routes.homepage.path)}>
       <Box sx={{ minWidth: "250px" }}>
         <FormModalHeader icon={<HubIcon />}>{t("title")}</FormModalHeader>
         {type === "passwordForm" && (

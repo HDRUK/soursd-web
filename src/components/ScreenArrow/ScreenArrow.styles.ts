@@ -6,7 +6,6 @@ export const StyledScreenArrow = styled(Box)<{
   alignment: "top" | "right" | "bottom" | "left";
   relativeTo: "screen" | "container";
 }>(({ theme, color, alignment, relativeTo }) => {
-  console.log("Color", color);
   const { mode, contrastText } = getPaletteModeColors(theme, color);
   let positionStyles = "";
 

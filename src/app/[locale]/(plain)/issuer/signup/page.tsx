@@ -2,7 +2,7 @@ import ContactLink from "@/components/ContactLink";
 import OverlayCenterAlert from "@/components/OverlayCenterAlert";
 import { useTranslations } from "next-intl";
 import { HTMLAttributes } from "react";
-import DecoratorPanel from "../../components/DecoratorPanel";
+import DecoratorPanel from "@/modules/DecoratorPanel";
 
 type PageProps = HTMLAttributes<HTMLDivElement>;
 

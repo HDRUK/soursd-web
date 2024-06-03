@@ -68,6 +68,7 @@ describe("<SignupForm />", () => {
   it("submits when values are defined", async () => {
     renderSignupForm();
 
+    const email = screen.getByLabelText("Email").querySelector("input");
     const firstName = screen
       .getByLabelText("First name")
       .querySelector("input");
@@ -81,13 +82,19 @@ describe("<SignupForm />", () => {
       .querySelector("input");
     const recaptcha = screen.getByTestId("recaptcha");
 
+    const emailValue = faker.internet.email();
     const firstNameValue = faker.person.firstName();
     const lastNameValue = faker.person.lastName();
     const passwordValue = "A!2sghjs";
     const confirmPasswordValue = passwordValue;
 
-    if (firstName && lastName && password && confirmPassword && tscs) {
+    if (email && firstName && lastName && password && confirmPassword && tscs) {
       await act(async () => {
+        fireEvent.change(email, {
+          target: {
+            value: emailValue,
+          },
+        });
         fireEvent.change(firstName, {
           target: {
             value: firstNameValue,

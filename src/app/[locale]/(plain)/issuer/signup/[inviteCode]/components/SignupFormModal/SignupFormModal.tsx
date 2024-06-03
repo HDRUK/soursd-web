@@ -6,14 +6,14 @@ import FormModalHeader from "@/components/FormModalHeader";
 import OverlayCenter from "@/components/OverlayCenter";
 import OverlayCenterAlert from "@/components/OverlayCenterAlert";
 import { useApplicationData } from "@/context/ApplicationData";
-import { postRegister } from "@/services/auth";
+import postRegisterIssuer from "@/services/auth/postRegisterIssuer";
 import { RegisterPayload } from "@/services/auth/types";
 import { getByInviteCode } from "@/services/issuers";
 import { isExpiredInvite } from "@/utils/date";
 import HubIcon from "@mui/icons-material/Hub";
 import { Box, CircularProgress } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { redirect, useParams, useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useMutation, useQuery } from "react-query";
 import SignupForm, { SignupFormValues } from "../SignupForm";
 
@@ -49,8 +49,8 @@ export default function Page() {
     isError: isSignupError,
     isLoading: isSignupLoading,
     error: signupError,
-  } = useMutation(["postRegister"], async (payload: RegisterPayload) => {
-    return postRegister(payload, {
+  } = useMutation(["postRegisterIssuer"], async (payload: RegisterPayload) => {
+    return postRegisterIssuer(payload, {
       error: { message: "submitError" },
     });
   });
@@ -63,7 +63,7 @@ export default function Page() {
         password,
         first_name: "",
         last_name: "",
-        email: issuerData.contact_email,
+        email: issuerData?.data.contact_email,
       };
 
       mutateSignupAsync(payload).then(() => {
@@ -72,7 +72,7 @@ export default function Page() {
     }
   };
 
-  const expired = isExpiredInvite(issuerData?.invite_sent_at);
+  const expired = isExpiredInvite(issuerData?.data.invite_sent_at);
 
   if (isGetIssuerLoading) {
     return (
@@ -126,10 +126,10 @@ export default function Page() {
     <FormModal
       open
       isDismissable
-      onClose={() => redirect(routes.homepage.path)}>
+      onClose={() => router.push(routes.homepage.path)}>
       <Box sx={{ minWidth: "250px" }}>
         <FormModalHeader icon={<HubIcon />}>
-          {t("title")} {issuerData?.name}
+          {t("title")} {issuerData?.data.name}
         </FormModalHeader>
         <SignupForm
           onSubmit={handleSignupSubmit}

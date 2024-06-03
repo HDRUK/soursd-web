@@ -6,15 +6,15 @@ import FormModalHeader from "@/components/FormModalHeader";
 import OverlayCenter from "@/components/OverlayCenter";
 import OverlayCenterAlert from "@/components/OverlayCenterAlert";
 import { useApplicationData } from "@/context/ApplicationData";
-import { postRegister } from "@/services/auth";
+import postRegisterResearcher from "@/services/auth/postRegisterResearcher";
 import { RegisterPayload } from "@/services/auth/types";
-import { getByInviteCode } from "@/services/users";
 import { getOrganisations } from "@/services/organisations";
+import { getByInviteCode } from "@/services/users";
 import { isExpiredInvite } from "@/utils/date";
 import PersonIcon from "@mui/icons-material/Person";
 import { Box, CircularProgress } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { redirect, useParams, useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useMutation, useQuery } from "react-query";
 import SignupForm, { SignupFormValues } from "../SignupForm";
 
@@ -66,30 +66,40 @@ export default function Page() {
     isError: isSignupError,
     isLoading: isSignupLoading,
     error: signupError,
-  } = useMutation(["postRegister"], async (payload: RegisterPayload) => {
-    return postRegister(payload, {
-      error: { message: "submitError" },
-    });
-  });
-
-  const handleSignupSubmit = async (values: SignupFormValues) => {
-    const { firstName: first_name, lastName: last_name, password } = values;
-
-    if (researcherData) {
-      const payload = {
-        password,
-        first_name,
-        last_name,
-        email: researcherData.contact_email,
-      };
-
-      mutateSignupAsync(payload).then(() => {
-        router.push(routes.login.path);
+  } = useMutation(
+    ["postRegisterResearcher"],
+    async (payload: RegisterPayload) => {
+      return postRegisterResearcher(payload, {
+        error: { message: "submitError" },
       });
     }
+  );
+
+  const handleSignupSubmit = async (values: SignupFormValues) => {
+    const {
+      firstName: first_name,
+      lastName: last_name,
+      password,
+      email,
+      organisation,
+    } = values;
+
+    const payload = {
+      password,
+      first_name,
+      last_name,
+      email,
+      organisation_id: parseInt(organisation, 10),
+    };
+
+    console.log("payload", payload);
+
+    mutateSignupAsync(payload).then(() => {
+      router.push(routes.login.path);
+    });
   };
 
-  const expired = isExpiredInvite(researcherData?.invite_sent_at);
+  const expired = isExpiredInvite(researcherData?.data.invite_sent_at);
 
   if (isGetResearcherLoading || isGetOrganisationsLoading) {
     return (
@@ -153,14 +163,15 @@ export default function Page() {
     <FormModal
       open
       isDismissable
-      onClose={() => redirect(routes.homepage.path)}>
+      onClose={() => router.push(routes.homepage.path)}>
       <Box sx={{ minWidth: "250px" }}>
         <FormModalHeader icon={<PersonIcon />}>
           {tResearcher("title")}
         </FormModalHeader>
         <SignupForm
-          defaultOrganisation={researcherData?.organisation_id?.toString()}
-          organisations={organisationsData}
+          defaultEmail={researcherData?.data.contact_email}
+          defaultOrganisation={researcherData?.data.organisation_id?.toString()}
+          organisations={organisationsData?.data || []}
           onSubmit={handleSignupSubmit}
           mutateState={{
             isLoading: isSignupLoading,

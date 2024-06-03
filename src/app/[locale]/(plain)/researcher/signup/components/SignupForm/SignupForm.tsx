@@ -35,6 +35,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import * as yup from "yup";
 
 export interface SignupFormValues {
+  email: string;
   firstName: string;
   lastName: string;
   organisation: string;
@@ -48,6 +49,7 @@ export interface SignupFormProps {
   onSubmit: (data: SignupFormValues) => void;
   organisations?: Organisation[];
   defaultOrganisation?: string;
+  defaultEmail?: string;
 }
 
 const NAMESPACE_TRANSLATION_VALIDATION = "FormValidation";
@@ -58,6 +60,7 @@ export default function SignupForm({
   mutateState,
   organisations,
   defaultOrganisation,
+  defaultEmail,
 }: SignupFormProps) {
   const tValidation = useTranslations(NAMESPACE_TRANSLATION_VALIDATION);
   const tSignup = useTranslations(NAMESPACE_TRANSLATION_SIGNUP);
@@ -75,6 +78,10 @@ export default function SignupForm({
         organisation: yup
           .string()
           .required(tValidation("organisationRequiredInvalid")),
+        email: yup
+          .string()
+          .required(tValidation("emailRequiredInvalid"))
+          .email(tValidation("emailFormatInvalid")),
         password: yup
           .string()
           .required(tValidation("passwordRequiredInvalid"))
@@ -120,6 +127,7 @@ export default function SignupForm({
       firstName: "",
       lastName: "",
       organisation: defaultOrganisation,
+      email: defaultEmail,
       password: "",
       confirmPassword: "",
       tscs: false,
@@ -168,7 +176,9 @@ export default function SignupForm({
                   label={<>{tSignup("organisation")} *</>}
                   disabled={!!defaultOrganisation}>
                   {organisations?.map(({ organisation_name, id }) => (
-                    <MenuItem value={id}>{organisation_name}</MenuItem>
+                    <MenuItem value={id} key={id}>
+                      {organisation_name}
+                    </MenuItem>
                   ))}
                 </Select>
                 {errors.organisation && (
@@ -176,6 +186,22 @@ export default function SignupForm({
                 )}
               </FormControl>
             </Grid>
+            {!defaultEmail && (
+              <Grid item>
+                <FormControl error={!!errors.email} size="small" fullWidth>
+                  <TextField
+                    {...register("email")}
+                    size="small"
+                    placeholder={tSignup("emailPlaceholder")}
+                    aria-label={tSignup("email")}
+                    label={<>{tSignup("email")} *</>}
+                  />
+                  {errors.email && (
+                    <FormHelperText>{errors.email.message}</FormHelperText>
+                  )}
+                </FormControl>
+              </Grid>
+            )}
             <Grid item>
               <FormControl error={!!errors.firstName} size="small" fullWidth>
                 <TextField
