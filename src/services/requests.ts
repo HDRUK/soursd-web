@@ -1,4 +1,4 @@
-import { ResponseJson, ResponseTranslations } from "@/types/requests";
+import { ResponseTranslations } from "@/types/requests";
 import { objectToQuerystring } from "@/utils/requests";
 
 function getHeadersWithAuthorisation(headers?: HeadersInit) {
@@ -13,8 +13,8 @@ function getHeadersWithAuthorisation(headers?: HeadersInit) {
   };
 }
 
-function handleResponseError<T>(
-  response: ResponseJson<T>,
+function handleResponseError(
+  response: Response,
   messages: ResponseTranslations
 ) {
   if (!response.ok) {
@@ -38,7 +38,7 @@ async function getRequest<T>(url: string, payload?: T, options?: RequestInit) {
     }
   );
 
-  return response.json();
+  return response;
 }
 
 async function postRequest<T>(
@@ -46,16 +46,6 @@ async function postRequest<T>(
   payload?: T,
   options?: Omit<RequestInit, "body">
 ) {
-  console.log({
-    ...options,
-    method: "POST",
-    headers: {
-      ...getHeadersWithAuthorisation(options?.headers),
-      ...options?.headers,
-    },
-    body: JSON.stringify(payload),
-  });
-
   const response = await fetch(url, {
     ...options,
     method: "POST",
@@ -66,7 +56,7 @@ async function postRequest<T>(
     body: JSON.stringify(payload),
   });
 
-  return response.json();
+  return response;
 }
 
 async function patchRequest<T>(
@@ -81,7 +71,7 @@ async function patchRequest<T>(
     body: JSON.stringify(payload),
   });
 
-  return response.json();
+  return response;
 }
 
 async function putRequest<T>(
@@ -96,7 +86,7 @@ async function putRequest<T>(
     body: JSON.stringify(payload),
   });
 
-  return response.json();
+  return response;
 }
 
 async function deleteRequest(url: string, options?: Omit<RequestInit, "body">) {
@@ -106,14 +96,14 @@ async function deleteRequest(url: string, options?: Omit<RequestInit, "body">) {
     headers: getHeadersWithAuthorisation(options?.headers),
   });
 
-  return response.json();
+  return response;
 }
 
 export {
-  getRequest,
-  postRequest,
-  patchRequest,
-  putRequest,
   deleteRequest,
+  getRequest,
   handleResponseError,
+  patchRequest,
+  postRequest,
+  putRequest,
 };

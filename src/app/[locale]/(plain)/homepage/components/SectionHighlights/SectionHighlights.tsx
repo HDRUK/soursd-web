@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import DecoratorPanel from "../../../components/DecoratorPanel";
+import DecoratorPanel from "@/modules/DecoratorPanel";
 import { FeaturesList } from "../FeaturesList";
 import { StyledContentLayout, StyledHeader } from "./SectionHighlights.styles";
 

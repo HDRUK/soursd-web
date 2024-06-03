@@ -8,11 +8,11 @@ const ROUTES = {
     key: "Login",
   },
   signup: {
-    path: "/signup",
+    path: "/researcher/signup",
     key: "Signup",
   },
   signupIssuer: {
-    path: "/signup-issuer",
+    path: "/issuer/signup",
     key: "SignupIssuer",
   },
   homepage: {
@@ -22,6 +22,14 @@ const ROUTES = {
   profileIssuer: {
     path: "/issuer/profile",
     key: "ProfileIssuer",
+  },
+  profileResearcher: {
+    path: "/researcher/profile",
+    key: "Profile",
+  },
+  profileOrganisation: {
+    path: "/organisation/profile",
+    key: "Profile",
   },
 };
 

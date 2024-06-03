@@ -1,5 +1,3 @@
-import { makeServer } from "@/mocks/server";
-
 import {
   DocumentHeadTags,
   DocumentHeadTagsProps,
@@ -13,10 +11,6 @@ import {
   Main,
   NextScript,
 } from "next/document";
-
-if (process.env.NEXT_PUBLIC_MOCK_DEV_SERVER === "true") {
-  makeServer({ environment: "development" });
-}
 
 export default function Document(props: DocumentProps & DocumentHeadTagsProps) {
   return (

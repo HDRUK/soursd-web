@@ -1,6 +1,6 @@
+import DecoratorPanel from "@/modules/DecoratorPanel";
 import { HTMLAttributes } from "react";
 import SignupFormModal from "./components/SignupFormModal";
-import DecoratorPanel from "../../../components/DecoratorPanel";
 
 type PageProps = HTMLAttributes<HTMLDivElement>;
 

@@ -1,4 +1,4 @@
-interface IssuerDetailsResponse {
+interface IssuerInviteResponse {
   name: string;
   contact_email: string;
   invite_sent_at: string;
@@ -6,4 +6,4 @@ interface IssuerDetailsResponse {
   enabled: number;
 }
 
-export type { IssuerDetailsResponse };
+export type { IssuerInviteResponse };

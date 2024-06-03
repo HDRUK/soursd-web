@@ -196,7 +196,7 @@ const theme = createTheme(
       MuiToolbar: {
         styleOverrides: {
           root: {
-            backgroundColor: paletteTheme.palette.background1.main,
+            backgroundColor: paletteTheme.palette.primary.dark,
             color: "#fff",
             [breakpoints.up("sm")]: {
               minHeight: "52px",

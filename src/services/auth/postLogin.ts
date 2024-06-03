@@ -1,11 +1,11 @@
-import { ResponseTranslations } from "@/types/requests";
+import { ResponseJson, ResponseTranslations } from "@/types/requests";
 import { handleResponseError, postRequest } from "../requests";
-import { LoginPayload } from "./types";
+import { LoginPayload, LoginResponse } from "./types";
 
 export default async (
   { email, password }: LoginPayload,
   messages: ResponseTranslations
-) => {
+): Promise<ResponseJson<LoginResponse>> => {
   const response = await postRequest(
     `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
     {
@@ -18,5 +18,5 @@ export default async (
 
   if (error) return Promise.reject(error);
 
-  return response.data.response;
+  return response.json();
 };

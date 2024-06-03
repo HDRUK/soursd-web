@@ -32,6 +32,7 @@ global.fetch = jest.fn(() =>
 describe("Requests utils", () => {
   it("getRequest", async () => {
     const response = await getRequest("/url", mockPayload);
+    const responseJson = await response.json();
 
     expect(global.fetch).toHaveBeenCalledWith(
       `/url?query=${mockPayload.query}`,
@@ -42,11 +43,13 @@ describe("Requests utils", () => {
         },
       }
     );
-    expect(response).toEqual(mockResponse);
+
+    expect(responseJson).toEqual(mockResponse);
   });
 
   it("postRequest", async () => {
     const response = await postRequest("/url", mockPayload);
+    const responseJson = await response.json();
 
     expect(global.fetch).toHaveBeenCalledWith(`/url`, {
       method: "POST",
@@ -56,11 +59,12 @@ describe("Requests utils", () => {
       },
       body: `{"query":"${mockPayload.query}"}`,
     });
-    expect(response).toEqual(mockResponse);
+    expect(responseJson).toEqual(mockResponse);
   });
 
   it("putRequest", async () => {
     const response = await putRequest("/url", mockPayload);
+    const responseJson = await response.json();
 
     expect(global.fetch).toHaveBeenCalledWith(`/url`, {
       method: "PUT",
@@ -70,11 +74,12 @@ describe("Requests utils", () => {
       },
       body: `{"query":"${mockPayload.query}"}`,
     });
-    expect(response).toEqual(mockResponse);
+    expect(responseJson).toEqual(mockResponse);
   });
 
   it("patchRequest", async () => {
     const response = await patchRequest("/url", mockPayload);
+    const responseJson = await response.json();
 
     expect(global.fetch).toHaveBeenCalledWith(`/url`, {
       method: "PATCH",
@@ -84,11 +89,12 @@ describe("Requests utils", () => {
       },
       body: `{"query":"${mockPayload.query}"}`,
     });
-    expect(response).toEqual(mockResponse);
+    expect(responseJson).toEqual(mockResponse);
   });
 
   it("patchRequest", async () => {
     const response = await deleteRequest("/url");
+    const responseJson = await response.json();
 
     expect(global.fetch).toHaveBeenCalledWith(`/url`, {
       method: "DELETE",
@@ -97,6 +103,6 @@ describe("Requests utils", () => {
         "content-type": "application/json;charset=UTF-8",
       },
     });
-    expect(response).toEqual(mockResponse);
+    expect(responseJson).toEqual(mockResponse);
   });
 });

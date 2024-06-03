@@ -6,13 +6,12 @@ import FormModalHeader from "@/components/FormModalHeader";
 import OverlayCenter from "@/components/OverlayCenter";
 import OverlayCenterAlert from "@/components/OverlayCenterAlert";
 import { useApplicationData } from "@/context/ApplicationData";
-import { postRegister } from "@/services/auth";
+import postRegisterIssuer from "@/services/auth/postRegisterIssuer";
 import { RegisterPayload } from "@/services/auth/types";
-import { getByInviteCode } from "@/services/issuer";
-import { isExpired } from "@/utils/date";
+import { getByInviteCode } from "@/services/issuers";
+import { isExpiredInvite } from "@/utils/date";
 import HubIcon from "@mui/icons-material/Hub";
 import { Box, CircularProgress } from "@mui/material";
-import dayjs from "dayjs";
 import { useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
 import { useMutation, useQuery } from "react-query";
@@ -38,7 +37,7 @@ export default function Page() {
     ["getByInviteCode", inviteCode || ""],
     async () =>
       getByInviteCode(inviteCode || "", {
-        error: { message: "getIssuerError" },
+        error: { message: "getByInviteCodeError" },
       }),
     {
       enabled: !!inviteCode,
@@ -50,8 +49,8 @@ export default function Page() {
     isError: isSignupError,
     isLoading: isSignupLoading,
     error: signupError,
-  } = useMutation(["postRegister"], async (payload: RegisterPayload) => {
-    return postRegister(payload, {
+  } = useMutation(["postRegisterIssuer"], async (payload: RegisterPayload) => {
+    return postRegisterIssuer(payload, {
       error: { message: "submitError" },
     });
   });
@@ -64,7 +63,7 @@ export default function Page() {
         password,
         first_name: "",
         last_name: "",
-        email: issuerData.contact_email,
+        email: issuerData?.data.contact_email,
       };
 
       mutateSignupAsync(payload).then(() => {
@@ -73,13 +72,7 @@ export default function Page() {
     }
   };
 
-  const expired =
-    issuerData?.invite_sent_at &&
-    isExpired(
-      dayjs(issuerData.invite_sent_at)
-        .add(+(process.env.NEXT_PUBLIC_INVITE_TIME_HOURS || 1), "hour")
-        .format()
-    );
+  const expired = isExpiredInvite(issuerData?.data.invite_sent_at);
 
   if (isGetIssuerLoading) {
     return (
@@ -92,7 +85,7 @@ export default function Page() {
   if (!inviteCode) {
     return (
       <OverlayCenterAlert>
-        {t.rich("noVerificationCode", {
+        {tSignup.rich("noVerificationCode", {
           contactLink: ContactLink,
         })}
       </OverlayCenterAlert>
@@ -102,7 +95,7 @@ export default function Page() {
   if (inviteCode && issuerData && expired) {
     return (
       <OverlayCenterAlert>
-        {t.rich("verificationExpired", {
+        {tSignup.rich("verificationExpired", {
           contactLink: ContactLink,
         })}
       </OverlayCenterAlert>
@@ -112,7 +105,7 @@ export default function Page() {
   if (isGetIssuerError) {
     return (
       <OverlayCenterAlert>
-        {t.rich((issuerError as Error)?.message, {
+        {tSignup.rich((issuerError as Error)?.message, {
           contactLink: ContactLink,
         })}
       </OverlayCenterAlert>
@@ -122,7 +115,7 @@ export default function Page() {
   if (!isGetIssuerLoading && !issuerData) {
     return (
       <OverlayCenterAlert>
-        {t.rich("noData", {
+        {tSignup.rich("noData", {
           contactLink: ContactLink,
         })}
       </OverlayCenterAlert>
@@ -130,10 +123,13 @@ export default function Page() {
   }
 
   return (
-    <FormModal open isDismissable onClose={() => router.replace("homepage")}>
+    <FormModal
+      open
+      isDismissable
+      onClose={() => router.push(routes.homepage.path)}>
       <Box sx={{ minWidth: "250px" }}>
         <FormModalHeader icon={<HubIcon />}>
-          {tSignup("title")} {issuerData?.name}
+          {t("title")} {issuerData?.data.name}
         </FormModalHeader>
         <SignupForm
           onSubmit={handleSignupSubmit}

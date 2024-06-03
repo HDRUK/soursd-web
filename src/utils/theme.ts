@@ -20,4 +20,11 @@ function getPaletteModeColors(
   };
 }
 
-export { colorToRgba, getPaletteModeColors };
+function isAugmentedColor(
+  theme: Theme,
+  color: AugmentedColorPaletteOptions | string
+) {
+  return Object.keys(theme.palette).includes(color);
+}
+
+export { colorToRgba, getPaletteModeColors, isAugmentedColor };

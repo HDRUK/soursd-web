@@ -4,7 +4,11 @@ import SignupForm, { SignupFormProps } from "./SignupForm";
 
 const mockSubmit = jest.fn();
 
-const renderSignupForm = (props?: Partial<SignupFormProps>) => {
+const renderSignupForm = (
+  props: Partial<SignupFormProps> = {
+    mutateState: { isLoading: false, isError: false },
+  }
+) => {
   return render(
     <SignupForm
       mutateState={{ isLoading: false, isError: false }}
@@ -37,6 +41,7 @@ describe("<SignupForm />", () => {
       mutateState: {
         isError: true,
         isLoading: false,
+        error: "submitError",
       },
     });
 

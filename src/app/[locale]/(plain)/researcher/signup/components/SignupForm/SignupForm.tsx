@@ -1,18 +1,20 @@
 "use client";
 
+import ContactLink from "@/components/ContactLink";
 import FormActions from "@/components/FormActions";
 import FormBody from "@/components/FormBody";
-import FormHeader from "@/components/FormModalHeader";
 import FormRecaptcha from "@/components/FormRecaptcha";
 import PasswordTextField from "@/components/PasswordTextField";
 import {
   VALIDATION_PASSWORD_FORMAT,
   VALIDATION_PASSWORD_LENGTH,
 } from "@/consts/form";
+import { Organisation } from "@/services/organisations";
+import { FormMutateState } from "@/types/form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Person } from "@mui/icons-material";
 import SendIcon from "@mui/icons-material/Send";
 import {
+  Alert,
   Box,
   Button,
   Checkbox,
@@ -20,6 +22,9 @@ import {
   FormControlLabel,
   FormHelperText,
   Grid,
+  InputLabel,
+  MenuItem,
+  Select,
   TextField,
   useTheme,
 } from "@mui/material";
@@ -31,19 +36,32 @@ import * as yup from "yup";
 
 export interface SignupFormValues {
   email: string;
+  firstName: string;
+  lastName: string;
+  organisation: string;
   password: string;
   confirmPassword: string;
   tscs: boolean;
 }
 
-interface SignupFormProps {
+export interface SignupFormProps {
+  mutateState: FormMutateState;
   onSubmit: (data: SignupFormValues) => void;
+  organisations?: Organisation[];
+  defaultOrganisation?: string;
+  defaultEmail?: string;
 }
 
 const NAMESPACE_TRANSLATION_VALIDATION = "FormValidation";
 const NAMESPACE_TRANSLATION_SIGNUP = "SignupForm";
 
-export default function SignupForm({ onSubmit }: SignupFormProps) {
+export default function SignupForm({
+  onSubmit,
+  mutateState,
+  organisations,
+  defaultOrganisation,
+  defaultEmail,
+}: SignupFormProps) {
   const tValidation = useTranslations(NAMESPACE_TRANSLATION_VALIDATION);
   const tSignup = useTranslations(NAMESPACE_TRANSLATION_SIGNUP);
   const theme = useTheme();
@@ -53,6 +71,13 @@ export default function SignupForm({ onSubmit }: SignupFormProps) {
   const schema = useMemo(
     () =>
       yup.object().shape({
+        firstName: yup
+          .string()
+          .required(tValidation("firstNameRequiredInvalid")),
+        lastName: yup.string().required(tValidation("lastNameRequiredInvalid")),
+        organisation: yup
+          .string()
+          .required(tValidation("organisationRequiredInvalid")),
         email: yup
           .string()
           .required(tValidation("emailRequiredInvalid"))
@@ -99,7 +124,10 @@ export default function SignupForm({ onSubmit }: SignupFormProps) {
   const methods = useForm<SignupFormValues>({
     resolver: yupResolver(schema),
     defaultValues: {
-      email: "",
+      firstName: "",
+      lastName: "",
+      organisation: defaultOrganisation,
+      email: defaultEmail,
       password: "",
       confirmPassword: "",
       tscs: false,
@@ -125,28 +153,85 @@ export default function SignupForm({ onSubmit }: SignupFormProps) {
           },
           [theme.breakpoints.up("md")]: { width: "350px" },
         }}>
-        <FormHeader icon={<Person />}>{tSignup("title")}</FormHeader>
         <FormBody>
+          {mutateState.isError && (
+            <Alert color="error" sx={{ mb: 3 }}>
+              {tSignup.rich(mutateState.error, {
+                contactLink: ContactLink,
+              })}
+            </Alert>
+          )}
           <Grid container direction="column" spacing={2}>
             <Grid item>
-              <FormControl error={!!errors.email} variant="standard" fullWidth>
-                <TextField
-                  {...register("email")}
+              <FormControl error={!!errors.organisation} size="small" fullWidth>
+                <InputLabel id="organisation">
+                  {tSignup("organisation")} *
+                </InputLabel>
+                <Select
+                  {...register("organisation")}
                   size="small"
-                  placeholder={tSignup("emailPlaceholder")}
-                  aria-label={tSignup("email")}
-                  label={<>{tSignup("email")} *</>}
+                  inputProps={{
+                    "aria-label": tSignup("organisation"),
+                  }}
+                  label={<>{tSignup("organisation")} *</>}
+                  disabled={!!defaultOrganisation}>
+                  {organisations?.map(({ organisation_name, id }) => (
+                    <MenuItem value={id} key={id}>
+                      {organisation_name}
+                    </MenuItem>
+                  ))}
+                </Select>
+                {errors.organisation && (
+                  <FormHelperText>{errors.organisation.message}</FormHelperText>
+                )}
+              </FormControl>
+            </Grid>
+            {!defaultEmail && (
+              <Grid item>
+                <FormControl error={!!errors.email} size="small" fullWidth>
+                  <TextField
+                    {...register("email")}
+                    size="small"
+                    placeholder={tSignup("emailPlaceholder")}
+                    aria-label={tSignup("email")}
+                    label={<>{tSignup("email")} *</>}
+                  />
+                  {errors.email && (
+                    <FormHelperText>{errors.email.message}</FormHelperText>
+                  )}
+                </FormControl>
+              </Grid>
+            )}
+            <Grid item>
+              <FormControl error={!!errors.firstName} size="small" fullWidth>
+                <TextField
+                  {...register("firstName")}
+                  size="small"
+                  placeholder={tSignup("firstNamePlaceholder")}
+                  aria-label={tSignup("firstName")}
+                  label={<>{tSignup("firstName")} *</>}
                 />
-                {errors.email && (
-                  <FormHelperText>{errors.email.message}</FormHelperText>
+                {errors.firstName && (
+                  <FormHelperText>{errors.firstName.message}</FormHelperText>
                 )}
               </FormControl>
             </Grid>
             <Grid item>
-              <FormControl
-                error={!!errors.password}
-                variant="standard"
-                fullWidth>
+              <FormControl error={!!errors.lastName} size="small" fullWidth>
+                <TextField
+                  {...register("lastName")}
+                  size="small"
+                  placeholder={tSignup("lastNamePlaceholder")}
+                  aria-label={tSignup("lastName")}
+                  label={<>{tSignup("lastName")} *</>}
+                />
+                {errors.lastName && (
+                  <FormHelperText>{errors.lastName.message}</FormHelperText>
+                )}
+              </FormControl>
+            </Grid>
+            <Grid item>
+              <FormControl error={!!errors.password} size="small" fullWidth>
                 <PasswordTextField
                   id="password"
                   size="small"
@@ -165,7 +250,7 @@ export default function SignupForm({ onSubmit }: SignupFormProps) {
             <Grid item>
               <FormControl
                 error={!!errors.confirmPassword}
-                variant="standard"
+                size="small"
                 fullWidth>
                 <PasswordTextField
                   id="confirmPassword"
@@ -185,7 +270,7 @@ export default function SignupForm({ onSubmit }: SignupFormProps) {
               </FormControl>
             </Grid>
             <Grid item>
-              <FormControl error={!!errors.tscs} variant="standard" fullWidth>
+              <FormControl error={!!errors.tscs} size="small" fullWidth>
                 <FormControlLabel
                   control={<Checkbox {...register("tscs")} />}
                   label="I agree to the Terms and Conditions"

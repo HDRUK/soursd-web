@@ -92,14 +92,14 @@ export default function SignupForm({ onSubmit, mutateState }: LoginFormProps) {
         <FormBody>
           {mutateState.isError && (
             <Alert color="error" sx={{ mb: 3 }}>
-              {tLogin.rich("submitError", {
+              {tLogin.rich(mutateState.error, {
                 contactLink: ContactLink,
               })}
             </Alert>
           )}
           <Grid container direction="column" spacing={2}>
             <Grid item>
-              <FormControl error={!!errors.email} variant="standard" fullWidth>
+              <FormControl error={!!errors.email} size="small" fullWidth>
                 <TextField
                   id="email"
                   size="small"
@@ -114,10 +114,7 @@ export default function SignupForm({ onSubmit, mutateState }: LoginFormProps) {
               </FormControl>
             </Grid>
             <Grid item>
-              <FormControl
-                error={!!errors.password}
-                variant="standard"
-                fullWidth>
+              <FormControl error={!!errors.password} size="small" fullWidth>
                 <PasswordTextField
                   id="password"
                   size="small"

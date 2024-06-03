@@ -1,16 +1,17 @@
-import { useApplicationData } from "@/context/ApplicationData";
-import Cookies from "js-cookie";
+import { ROUTES } from "@/consts/router";
+import { getAuthData } from "@/utils/auth";
+import { getLocale } from "@/utils/language";
 import { redirect } from "next/navigation";
 
 export default function withAuth<T extends JSX.IntrinsicAttributes>(
   WrappedComponent: React.ComponentType<T>
 ) {
-  return (props: T) => {
-    const token = JSON.parse(Cookies.get("auth") || "{}")?.access_token;
-    const { routes } = useApplicationData();
+  return async (props: T) => {
+    const authData = await getAuthData();
+    const locale = await getLocale();
 
-    if (!token) {
-      redirect(routes.login.path);
+    if (!authData.access_token) {
+      redirect(`/${locale || "en"}${ROUTES.login.path}`);
     }
 
     return <WrappedComponent {...(props as T)} />;

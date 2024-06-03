@@ -4,6 +4,17 @@ type KeysMatching<T, V> = {
   [K in keyof T]-?: T[K] extends V ? K : never;
 }[keyof T];
 
+interface ColorOverrides {
+  background1: true;
+  background2: true;
+  highlight: true;
+  highlight2: true;
+  highlight3: true;
+  default: true;
+  inactive: true;
+  caption: true;
+}
+
 declare module "@mui/material/styles/createPalette" {
   interface CustomPalette {
     background1: SimplePaletteColorOptions;
@@ -13,6 +24,7 @@ declare module "@mui/material/styles/createPalette" {
     highlight3: SimplePaletteColorOptions;
     default: SimplePaletteColorOptions;
     inactive: SimplePaletteColorOptions;
+    caption: SimplePaletteColorOptions;
   }
 
   interface Palette extends CustomPalette {}
@@ -30,15 +42,7 @@ declare module "@mui/material/CircularProgress" {
   type AugmentedColorPaletteOptions =
     import("@mui/material/styles/createPalette").AugmentedColorPaletteOptions;
 
-  interface CircularProgressPropsColorOverrides {
-    background1: true;
-    background2: true;
-    highlight: true;
-    highlight2: true;
-    highlight3: true;
-    default: true;
-    inactive: true;
-  }
+  interface CircularProgressPropsColorOverrides extends ColorOverrides {}
 }
 
 declare module "@mui/material/Card" {
@@ -65,15 +69,7 @@ declare module "@mui/material/IconButton" {
   type AugmentedColorPaletteOptions =
     import("@mui/material/styles/createPalette").AugmentedColorPaletteOptions;
 
-  interface IconButtonPropsColorOverrides {
-    background1: true;
-    background2: true;
-    highlight: true;
-    highlight2: true;
-    highlight3: true;
-    default: true;
-    inactive: true;
-  }
+  interface IconButtonPropsColorOverrides extends ColorOverrides {}
 
   interface CustomIconButtonProps {
     variant?: "contained" | "default";

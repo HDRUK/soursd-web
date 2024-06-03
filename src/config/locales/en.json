@@ -1,5 +1,8 @@
 {
   "FormValidation": {
+    "organisationRequiredInvalid": "Organisation is a required field",
+    "firstNameRequiredInvalid": "First name is a required field",
+    "lastNameRequiredInvalid": "Last name is a required field",
     "emailRequiredInvalid": "Email is a required field",
     "emailFormatInvalid": "Email must be a valid address",
     "passwordRequiredInvalid": "Password is a required field",
@@ -36,9 +39,14 @@
     "sendButton": "Send"
   },
   "SignupForm": {
+    "organisation": "Organisation name",
+    "firstNamePlaceholder": "First name",
+    "firstName": "First name",
+    "lastNamePlaceholder": "Last name",
+    "lastName": "Last name",
     "emailPlaceholder": "Email",
     "email": "Email",
-    "passwordPlaceholder": "Email",
+    "passwordPlaceholder": "Password",
     "password": "Password",
     "confirmPasswordPlaceholder": "Confirm password",
     "confirmPassword": "Confirm password",
@@ -54,13 +62,27 @@
     "submitSuccess": "You have successfully signed up.",
     "signupOTPButton": "Email me an OTP",
     "signupOTPTooltip": "This method will not require you to enter a password each time you login. Instead the system will send a secure One Time Password (OTP) to your email address which you can then use to logon for the duration the OTP is valid.",
-    "checkYourEmail": "We have emailed you a passcode. If you can't see it in your inbox, try checking your junk / spam folder. Altertively you can request another by clicking on the refresh button."
-  },
-  "SignupFormIssuer": {
+    "checkYourEmail": "We have emailed you a passcode. If you can't see it in your inbox, try checking your junk / spam folder. Altertively you can request another by clicking on the refresh button.",
     "noVerificationCode": "You need a verification code to signup. This should have been provided to you via an invitation link. Please contact us at <contactLink></contactLink>",
     "verificationExpired": "The verification code provided has expired. Please contact us at <contactLink></contactLink>",
-    "getIssuerError": "There has been a problem getting your details. Please contact us at <contactLink></contactLink>",
-    "noData": "Could not find any data for this verification code. Please contact us at <contactLink></contactLink>"
+    "noDataVerification": "Could not find any data for this verification code. Please contact us at <contactLink></contactLink>",
+    "getByInviteCodeError": "There has been a problem getting your details. Please contact us at <contactLink></contactLink>"
+  },
+  "SignupFormIssuer": {
+    "title": "Issuer sign Up"
+  },
+  "SignupFormResearcher": {
+    "title": "Researcher sign up",
+    "noData": "There has been an issue getting some of the required information for the sign up process. Please contact us at <contactLink></contactLink>"
+  },
+  "Cv": {
+    "maxSize": "10(Mb) Max size",
+    "download": "Download CV"
+  },
+  "Profile": {
+    "title": "Profile",
+    "download": "Download CV",
+    "personalDetails": "Personal details"
   },
   "LoginForm": {
     "email": "Email",
