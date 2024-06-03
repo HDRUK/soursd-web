@@ -13,6 +13,7 @@ export default function CVUpload() {
       fileName="sample.file.doc"
       maxSize={t("maxSize")}
       linkProps={{ title: t("download"), href: "/" }}
+      onUpload={() => {}}
     />
   );
 }

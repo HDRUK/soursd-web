@@ -6,11 +6,11 @@ import EditIcon from "@mui/icons-material/Edit";
 import { Box, IconButton, Link, LinkProps, Typography } from "@mui/material";
 
 interface UploadLinkProps {
-  fileName: string;
-  fileNamePlaceholder: string;
   maxSize: string;
   linkProps: LinkProps;
   onUpload: () => void;
+  fileName?: string;
+  fileNamePlaceholder?: string;
 }
 
 export default function UploadLink({
