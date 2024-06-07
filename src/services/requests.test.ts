@@ -31,10 +31,6 @@ jest.mock("js-cookie", () => ({
 }));
 
 describe("Requests utils", () => {
-  afterEach(() => {
-    // jest.resetAllMocks();
-  });
-
   it("getRequest", async () => {
     const response = await getRequest("/url", mockPayload, {
       headers: {

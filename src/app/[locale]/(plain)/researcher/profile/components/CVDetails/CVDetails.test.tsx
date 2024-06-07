@@ -15,7 +15,7 @@ jest.mock("react", () => ({
   }),
 }));
 
-const renderLoginForm = (props?: Partial<CVDetailsProps>) => {
+const renderCVDetails = (props?: Partial<CVDetailsProps>) => {
   return render(
     <CVDetails
       mutateState={{ isLoading: false, isError: false }}
@@ -27,14 +27,14 @@ const renderLoginForm = (props?: Partial<CVDetailsProps>) => {
 
 describe("<CVDetails />", () => {
   it("has no accessibility validations", async () => {
-    const { container } = renderLoginForm();
+    const { container } = renderCVDetails();
 
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
 
   it("shows the correct filename", async () => {
-    renderLoginForm({
+    renderCVDetails({
       fileName: "sample.doc",
     });
 
@@ -42,7 +42,7 @@ describe("<CVDetails />", () => {
   });
 
   it("calls file input", async () => {
-    renderLoginForm();
+    renderCVDetails();
 
     await act(() => {
       fireEvent.click(screen.getByRole("button"));
@@ -52,7 +52,7 @@ describe("<CVDetails />", () => {
   });
 
   it("uploads a file", async () => {
-    renderLoginForm();
+    renderCVDetails();
 
     await act(() => {
       fireEvent.change(screen.getByLabelText("CV file input"));
@@ -62,7 +62,7 @@ describe("<CVDetails />", () => {
   });
 
   it("show a loader", async () => {
-    renderLoginForm({
+    renderCVDetails({
       mutateState: {
         isLoading: true,
         isError: false,
