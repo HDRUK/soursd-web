@@ -1,0 +1,3 @@
+const MAX_UPLOAD_SIZE_BYTES = 15000;
+
+export { MAX_UPLOAD_SIZE_BYTES };

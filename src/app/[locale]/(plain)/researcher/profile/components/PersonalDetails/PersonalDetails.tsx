@@ -2,6 +2,7 @@
 
 import ContactLink from "@/components/ContactLink";
 import Mask from "@/components/Mask";
+import { MAX_UPLOAD_SIZE_BYTES } from "@/consts/files";
 import { User } from "@/services/auth";
 import postFile from "@/services/files/postFile";
 import { FilePayload } from "@/services/files/types";
@@ -23,7 +24,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { ChangeEvent, useCallback, useMemo } from "react";
+import { ChangeEvent, useCallback, useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import * as yup from "yup";
@@ -55,6 +56,7 @@ export default function PersonalDetails({
   const tPersonalDetails = useTranslations(
     NAMESPACE_TRANSLATION_PERSONAL_DETAILS
   );
+  const [isFileSizeTooBig, setIsFileSizeTooBig] = useState(false);
 
   const {
     mutateAsync: mutateFileAsync,
@@ -69,16 +71,22 @@ export default function PersonalDetails({
 
   const handleFileChange = useCallback(
     ({ target: { files } }: ChangeEvent<HTMLInputElement>) => {
+      setIsFileSizeTooBig(false);
+
       if (files) {
-        mutateFileAsync(() => {
-          const file = new FormData();
+        if (files[0].size <= MAX_UPLOAD_SIZE_BYTES) {
+          mutateFileAsync(() => {
+            const file = new FormData();
 
-          file.append("file", files[0]);
-          file.append("file_type", FileType.CV);
-          file.append("entity_type", EntityType.researchers);
+            file.append("file", files[0]);
+            file.append("file_type", FileType.CV);
+            file.append("entity_type", EntityType.researcher);
 
-          return file;
-        });
+            return file;
+          });
+        } else {
+          setIsFileSizeTooBig(true);
+        }
       }
     },
     []
@@ -220,6 +228,7 @@ export default function PersonalDetails({
             <Grid item md={12}>
               <CVDetails
                 fileName="CV"
+                isFileSizeTooBig={isFileSizeTooBig}
                 onFileChange={handleFileChange}
                 mutateState={{
                   isLoading: isFileLoading,

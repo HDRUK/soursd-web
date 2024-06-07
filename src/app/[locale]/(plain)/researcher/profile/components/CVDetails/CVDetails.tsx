@@ -1,9 +1,13 @@
 "use client";
 
-import UploadLink from "@/components/UploadLink";
+import FileLink from "@/components/FileLink";
+import { MessageInline } from "@/components/Message";
+import { MAX_UPLOAD_SIZE_BYTES } from "@/consts/files";
 import { FormMutateState } from "@/types/form";
+import { Box } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { ChangeEventHandler, useCallback, useRef } from "react";
+import prettyBytes from "pretty-bytes";
+import { ChangeEventHandler } from "react";
 
 const NAMESPACE_TRANSLATION_CV = "Cv";
 
@@ -11,43 +15,46 @@ export interface CVDetailsProps {
   mutateState: FormMutateState;
   fileName: string;
   onFileChange: ChangeEventHandler<HTMLInputElement>;
+  isFileSizeTooBig?: boolean;
 }
 
 export default function CVDetails({
   onFileChange,
   mutateState,
   fileName,
+  isFileSizeTooBig,
 }: CVDetailsProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_CV);
-  const ref = useRef<HTMLInputElement>(null);
-
-  const handleFileSelectorOpen = useCallback(() => {
-    ref.current?.click();
-  }, []);
 
   return (
-    <>
-      <UploadLink
+    <Box sx={{ display: "flex", gap: 2 }}>
+      <FileLink
         isLoading={mutateState.isLoading}
         fileName={fileName}
-        maxSize={t("maxSize")}
+        href={`${process.env.NEXT_PUBLIC_FILE_DOWNLOAD_URL}/1717757687_Fake%20cv.docx`}
+        maxSizeLabel={t("maxSize", {
+          size: prettyBytes(MAX_UPLOAD_SIZE_BYTES),
+        })}
         linkProps={{
           title: t("download"),
-          href: `${process.env.NEXT_PUBLIC_FILE_DOWNLOAD_URL}/1717757687_Fake%20cv.docx`,
         }}
         iconButtonProps={{
           "aria-label": t("uploadButtonLabel"),
         }}
-        onFileSelectorOpen={handleFileSelectorOpen}
+        inputProps={{
+          "aria-label": t("fileInputLabel"),
+        }}
+        onFileChange={onFileChange}
       />
-      <input
-        aria-label={t("fileInputLabel")}
-        id="cvFileInput"
-        type="file"
-        style={{ display: "none" }}
-        ref={ref}
-        onChange={onFileChange}
-      />
-    </>
+      {isFileSizeTooBig && (
+        <div>
+          <MessageInline color="error">
+            {t("sizeError", {
+              size: prettyBytes(MAX_UPLOAD_SIZE_BYTES),
+            })}
+          </MessageInline>
+        </div>
+      )}
+    </Box>
   );
 }

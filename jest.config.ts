@@ -41,6 +41,9 @@ const customJestConfig = {
     ".*mockData\\.ts(x)$",
     ".*\\.styles\\.ts$",
   ],
+  transform: {
+    "^.+\\.js$": "babel-jest",
+  },
 };
 
 module.exports = createJestConfig(customJestConfig);

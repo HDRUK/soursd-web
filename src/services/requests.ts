@@ -9,8 +9,6 @@ import cookies from "js-cookie";
 function getHeadersWithAuthorisation(headers?: HeadersInit) {
   const auth = JSON.parse(cookies.get("auth") || "{}");
 
-  console.log("**** AUTH", auth);
-
   return {
     ...(auth.access_token && {
       Authorization: `Bearer ${auth.access_token}`,

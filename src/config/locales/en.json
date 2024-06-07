@@ -76,10 +76,11 @@
     "noData": "There has been an issue getting some of the required information for the sign up process. Please contact us at <contactLink></contactLink>"
   },
   "Cv": {
-    "maxSize": "10(Mb) Max size",
+    "maxSize": "{size} Max size",
     "download": "Download CV",
     "uploadButtonLabel": "Upload CV",
-    "fileInputLabel": "CV file input"
+    "fileInputLabel": "CV file input",
+    "sizeError": "Your CV must be under {size}"
   },
   "Profile": {
     "title": "Profile"
