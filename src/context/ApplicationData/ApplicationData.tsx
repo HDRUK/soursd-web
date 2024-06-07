@@ -2,7 +2,9 @@
 
 import { ROUTES } from "@/consts/router";
 import { useStore } from "@/data/store";
+import getUser from "@/services/users/getUser";
 import { ApplicationDataState } from "@/types/application";
+import { getAuthData } from "@/utils/auth";
 import { usePathname } from "next/navigation";
 import { ReactNode, createContext, useContext, useEffect } from "react";
 
@@ -22,7 +24,22 @@ const ApplicationDataProvider = ({
   value,
 }: ApplicationDataProviderProps) => {
   const addUrlToHistory = useStore(store => store.addUrlToHistory);
+  const setUser = useStore(store => store.setUser);
   const path = usePathname();
+
+  useEffect(() => {
+    const initUserFetch = async () => {
+      const authDetails = await getAuthData();
+
+      if (authDetails?.user?.id) {
+        const userDetails = await getUser(authDetails.user.id, {});
+
+        setUser(userDetails.data);
+      }
+    };
+
+    initUserFetch();
+  }, []);
 
   useEffect(() => {
     if (path) addUrlToHistory(path);

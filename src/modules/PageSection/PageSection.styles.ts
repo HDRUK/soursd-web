@@ -5,6 +5,5 @@ export const StyledPageContent = styled(Box)(
     position: relative;
     z-index: 1;
     padding: ${theme.spacing(2)} ${theme.spacing(5)};
-    flex-grow: 1;
   `
 );

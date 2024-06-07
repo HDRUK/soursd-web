@@ -1,3 +1,4 @@
+import ReactQueryClientProvider from "@/app/[locale]/components/ReactQueryClientProvider";
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
 import messages from "@/config/locales/en.json";
 import { AppCacheProvider } from "@mui/material-nextjs/v14-pagesRouter";
@@ -28,7 +29,9 @@ const Wrapper = ({ children }: { children: ReactNode }) => {
   return (
     <NextIntlClientProvider locale="en" messages={messages}>
       <AppCacheProvider>
-        <ThemeRegistry>{children}</ThemeRegistry>
+        <ReactQueryClientProvider>
+          <ThemeRegistry>{children}</ThemeRegistry>
+        </ReactQueryClientProvider>
       </AppCacheProvider>
     </NextIntlClientProvider>
   );

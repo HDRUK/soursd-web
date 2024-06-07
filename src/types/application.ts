@@ -1,4 +1,5 @@
 import { ROUTES } from "@/consts/router";
+import { User } from "@/services/auth/types";
 
 interface ApplicationDataState {
   routes: Record<
@@ -8,6 +9,7 @@ interface ApplicationDataState {
       path: string;
     }
   >;
+  user?: User;
 }
 
 export type { ApplicationDataState };

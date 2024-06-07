@@ -1,13 +1,13 @@
 import { ResponseJson, ResponseTranslations } from "@/types/requests";
 import { getRequest, handleResponseError } from "../requests";
-import { OrganisationsResponse } from "./types";
+import { UserResponse } from "./types";
 
 export default async (
+  id: number,
   messages: ResponseTranslations
-): Promise<ResponseJson<OrganisationsResponse>> => {
+): Promise<ResponseJson<UserResponse>> => {
   const response = await getRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/organisations`,
-    undefined,
+    `${process.env.NEXT_PUBLIC_API_V1_URL}/users/${id}`,
     {
       headers: {
         "content-type": "application/json;charset=UTF-8",

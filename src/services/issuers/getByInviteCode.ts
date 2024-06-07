@@ -7,7 +7,13 @@ export default async (
   messages: ResponseTranslations
 ): Promise<ResponseJson<IssuerInviteResponse>> => {
   const response = await getRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/issuers/identifier/${inviteCode}`
+    `${process.env.NEXT_PUBLIC_API_V1_URL}/issuers/identifier/${inviteCode}`,
+    undefined,
+    {
+      headers: {
+        "content-type": "application/json;charset=UTF-8",
+      },
+    }
   );
 
   const error = handleResponseError(response, messages);

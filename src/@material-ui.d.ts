@@ -82,6 +82,7 @@ declare module "@mui/material/Divider" {
     import("@mui/material/styles/createPalette").AugmentedColorPaletteOptions;
 
   interface CustomDividerProps {
+    orientation?: "vertical" | "horizontal";
     gradient?: boolean;
     color?: AugmentedColorPaletteOptions | string;
   }

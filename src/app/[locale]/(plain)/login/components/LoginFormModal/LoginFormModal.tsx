@@ -3,8 +3,10 @@
 import FormModal from "@/components/FormModal";
 import FormModalHeader from "@/components/FormModalHeader";
 import { useApplicationData } from "@/context/ApplicationData";
+import { useStore } from "@/data/store";
 import useFeature from "@/hooks/useFeature";
 import { postLogin, postLoginOTP } from "@/services/auth";
+import getUser from "@/services/users/getUser";
 import { setAuthData } from "@/utils/auth";
 import HubIcon from "@mui/icons-material/Hub";
 import { Box } from "@mui/material";
@@ -20,8 +22,9 @@ const NAMESPACE_TRANSLATION_LOGIN = "LoginForm";
 
 export default function LoginFormModal() {
   const router = useRouter();
-  const [type, setType] = useState("passwordForm");
-  const [payload, setPayload] = useState({
+  const setUserData = useStore(state => state.setUser);
+  const [type] = useState("passwordForm");
+  const [payload] = useState({
     email: "",
     password: "",
     otp: "",
@@ -47,6 +50,19 @@ export default function LoginFormModal() {
   );
 
   const {
+    mutateAsync: mutateUserAsync,
+    isError: isUserError,
+    isLoading: isUserLoading,
+    error: userError,
+  } = useMutation(["getUser"], async (id: number) =>
+    getUser(id, {
+      error: {
+        message: "submitError",
+      },
+    })
+  );
+
+  const {
     mutateAsync: mutateLoginOTPAsync,
     isError: isLoginOTPError,
     isLoading: isLoginOTPLoading,
@@ -54,28 +70,22 @@ export default function LoginFormModal() {
     postLoginOTP({ ...values, ...payload })
   );
 
-  const handleLoginSubmit = useCallback((values: LoginFormValues) => {
-    mutateLoginAsync(values).then(authDetails => {
-      if (otpEnabled) {
-        setType("otpForm");
-        setPayload({
-          ...values,
-          otp: "",
-        });
-      } else {
-        setAuthData(authDetails.data);
+  const handleLoginSubmit = useCallback(async (values: LoginFormValues) => {
+    const authDetails = await mutateLoginAsync(values);
+    const userDetails = await mutateUserAsync(authDetails.data.user.id);
 
-        const userGroup = authDetails.data.user.user_group;
+    setUserData(userDetails.data);
+    setAuthData(authDetails.data);
 
-        if (userGroup === "ISSUERS") {
-          router.push(routes.profileIssuer.path);
-        } else if (userGroup === "ORGANISATIONS") {
-          router.push(routes.profileOrganisation.path);
-        } else {
-          router.push(routes.profileResearcher.path);
-        }
-      }
-    });
+    const userGroup = authDetails.data.user.user_group;
+
+    if (userGroup === "ISSUERS") {
+      router.push(routes.profileIssuer.path);
+    } else if (userGroup === "ORGANISATIONS") {
+      router.push(routes.profileOrganisation.path);
+    } else {
+      router.push(routes.profileResearcher.path);
+    }
   }, []);
 
   const handleLoginOTPSubmit = useCallback(
@@ -87,7 +97,7 @@ export default function LoginFormModal() {
     [payload]
   );
 
-  console.log(`${(loginError as Error)?.message}`);
+  const error = `${(loginError as Error) || (userError as Error)?.message}`;
 
   return (
     <FormModal
@@ -100,9 +110,9 @@ export default function LoginFormModal() {
           <LoginForm
             onSubmit={handleLoginSubmit}
             mutateState={{
-              isError: isLoginError,
-              isLoading: isLoginLoading,
-              error: `${(loginError as Error)?.message}`,
+              isError: isLoginError || isUserError,
+              isLoading: isLoginLoading || isUserLoading,
+              error,
             }}
           />
         )}

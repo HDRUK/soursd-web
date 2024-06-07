@@ -144,8 +144,14 @@ const createDividerStyles = <
     const initialStyles = {
       border: "none",
       height: "1px",
+      width: "auto",
       backgroundColor: rgbColor,
     };
+
+    if (ownerState.orientation === "vertical") {
+      initialStyles.height = "auto";
+      initialStyles.width = "1px";
+    }
 
     if (ownerState.gradient) {
       let gradientDegs = "0deg";
@@ -247,6 +253,10 @@ const theme = createTheme(
         },
       },
       MuiDivider: {
+        defaultProps: {
+          color: "default",
+          orientation: "horizontal",
+        },
         styleOverrides: {
           root: ({ ownerState }) => createDividerStyles(ownerState),
         },

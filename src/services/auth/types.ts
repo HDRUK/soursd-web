@@ -5,17 +5,25 @@ interface LoginPayload {
 
 type LoginRequest = Record<string, string>;
 
-interface LoginResponse {
+interface User {
+  id: number;
+  first_name: string;
+  last_name: string;
+  email: string;
+  user_group: "RESEARCHERS" | "ORGANISATIONS" | "ISSUERS";
+}
+
+interface AuthDetails {
   access_token: string;
   is_issuer?: boolean;
   is_organisation?: boolean;
   is_researcher?: boolean;
-  user: {
-    id: number;
-    name: string;
-    email: string;
-    user_group: "RESEARCHERS" | "ORGANISATIONS" | "ISSUERS";
-  };
+  expires: number;
+  refresh_expires_in: number;
+}
+
+interface LoginResponse extends AuthDetails {
+  user: User;
 }
 
 interface LoginOTPPayload {
@@ -37,6 +45,8 @@ interface RegisterPayload {
 }
 
 export type {
+  AuthDetails,
+  User,
   LoginPayload,
   LoginRequest,
   LoginOTPPayload,

@@ -17,21 +17,30 @@ const mockPayload = {
 
 const mockToken = faker.string.uuid();
 
-Object.defineProperty(window, "localStorage", {
-  value: {
-    getItem: jest.fn().mockReturnValue(mockToken),
-  },
-});
-
 global.fetch = jest.fn(() =>
   Promise.resolve({
     json: () => Promise.resolve(mockResponse),
   })
 ) as jest.Mock;
 
+jest.mock("js-cookie", () => ({
+  get: () =>
+    JSON.stringify({
+      access_token: mockToken,
+    }),
+}));
+
 describe("Requests utils", () => {
+  afterEach(() => {
+    // jest.resetAllMocks();
+  });
+
   it("getRequest", async () => {
-    const response = await getRequest("/url", mockPayload);
+    const response = await getRequest("/url", mockPayload, {
+      headers: {
+        "content-type": "application/json;charset=UTF-8",
+      },
+    });
     const responseJson = await response.json();
 
     expect(global.fetch).toHaveBeenCalledWith(
@@ -48,7 +57,11 @@ describe("Requests utils", () => {
   });
 
   it("postRequest", async () => {
-    const response = await postRequest("/url", mockPayload);
+    const response = await postRequest("/url", mockPayload, {
+      headers: {
+        "content-type": "application/json;charset=UTF-8",
+      },
+    });
     const responseJson = await response.json();
 
     expect(global.fetch).toHaveBeenCalledWith(`/url`, {
@@ -63,7 +76,11 @@ describe("Requests utils", () => {
   });
 
   it("putRequest", async () => {
-    const response = await putRequest("/url", mockPayload);
+    const response = await putRequest("/url", mockPayload, {
+      headers: {
+        "content-type": "application/json;charset=UTF-8",
+      },
+    });
     const responseJson = await response.json();
 
     expect(global.fetch).toHaveBeenCalledWith(`/url`, {
@@ -78,7 +95,11 @@ describe("Requests utils", () => {
   });
 
   it("patchRequest", async () => {
-    const response = await patchRequest("/url", mockPayload);
+    const response = await patchRequest("/url", mockPayload, {
+      headers: {
+        "content-type": "application/json;charset=UTF-8",
+      },
+    });
     const responseJson = await response.json();
 
     expect(global.fetch).toHaveBeenCalledWith(`/url`, {
@@ -92,8 +113,12 @@ describe("Requests utils", () => {
     expect(responseJson).toEqual(mockResponse);
   });
 
-  it("patchRequest", async () => {
-    const response = await deleteRequest("/url");
+  it("deleteRequest", async () => {
+    const response = await deleteRequest("/url", {
+      headers: {
+        "content-type": "application/json;charset=UTF-8",
+      },
+    });
     const responseJson = await response.json();
 
     expect(global.fetch).toHaveBeenCalledWith(`/url`, {

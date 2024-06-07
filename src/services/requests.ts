@@ -1,14 +1,20 @@
-import { ResponseTranslations } from "@/types/requests";
+import {
+  QueryOptions,
+  QueryPayload,
+  ResponseTranslations,
+} from "@/types/requests";
 import { objectToQuerystring } from "@/utils/requests";
+import cookies from "js-cookie";
 
 function getHeadersWithAuthorisation(headers?: HeadersInit) {
-  const bearerToken = localStorage.getItem("bearerToken");
+  const auth = JSON.parse(cookies.get("auth") || "{}");
+
+  console.log("**** AUTH", auth);
 
   return {
-    ...(bearerToken && {
-      Authorization: `Bearer ${localStorage.getItem("bearerToken")}`,
+    ...(auth.access_token && {
+      Authorization: `Bearer ${auth.access_token}`,
     }),
-    "content-type": "application/json;charset=UTF-8",
     ...headers,
   };
 }
@@ -43,8 +49,8 @@ async function getRequest<T>(url: string, payload?: T, options?: RequestInit) {
 
 async function postRequest<T>(
   url: string,
-  payload?: T,
-  options?: Omit<RequestInit, "body">
+  payload?: QueryPayload<T>,
+  options?: QueryOptions
 ) {
   const response = await fetch(url, {
     ...options,
@@ -53,7 +59,7 @@ async function postRequest<T>(
       ...getHeadersWithAuthorisation(options?.headers),
       ...options?.headers,
     },
-    body: JSON.stringify(payload),
+    body: payload instanceof Function ? payload() : JSON.stringify(payload),
   });
 
   return response;
@@ -61,14 +67,14 @@ async function postRequest<T>(
 
 async function patchRequest<T>(
   url: string,
-  payload?: T,
+  payload?: QueryPayload<T>,
   options?: Omit<RequestInit, "body">
 ) {
   const response = await fetch(url, {
     ...options,
     method: "PATCH",
     headers: getHeadersWithAuthorisation(options?.headers),
-    body: JSON.stringify(payload),
+    body: payload instanceof Function ? payload() : JSON.stringify(payload),
   });
 
   return response;
@@ -76,20 +82,20 @@ async function patchRequest<T>(
 
 async function putRequest<T>(
   url: string,
-  payload?: T,
-  options?: Omit<RequestInit, "body">
+  payload?: QueryPayload<T>,
+  options?: QueryOptions
 ) {
   const response = await fetch(url, {
     ...options,
     method: "PUT",
     headers: getHeadersWithAuthorisation(options?.headers),
-    body: JSON.stringify(payload),
+    body: payload instanceof Function ? payload() : JSON.stringify(payload),
   });
 
   return response;
 }
 
-async function deleteRequest(url: string, options?: Omit<RequestInit, "body">) {
+async function deleteRequest(url: string, options?: QueryOptions) {
   const response = await fetch(url, {
     ...options,
     method: "DELETE",

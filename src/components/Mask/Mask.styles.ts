@@ -33,6 +33,8 @@ export const StyledMask = styled(Box, {
     padding: 2px;
     box-sizing: border-box;
     border-radius: 50%;
+    font-size: 26px;
+    color: #fff;
 
     > div {
       width: calc(${width} - 4px);

@@ -15,4 +15,13 @@ type ResponseJson<T> = Response & {
   message: string;
 };
 
-export type { ResponseJson, ResponseTranslation, ResponseTranslations };
+type QueryOptions = Omit<RequestInit, "body">;
+type QueryPayload<T> = T | (() => BodyInit & T);
+
+export type {
+  ResponseJson,
+  ResponseTranslation,
+  ResponseTranslations,
+  QueryOptions,
+  QueryPayload,
+};

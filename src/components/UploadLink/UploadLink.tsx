@@ -3,14 +3,24 @@
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import DownloadIcon from "@mui/icons-material/Download";
 import EditIcon from "@mui/icons-material/Edit";
-import { Box, IconButton, Link, LinkProps, Typography } from "@mui/material";
+import {
+  Box,
+  CircularProgress,
+  IconButton,
+  IconButtonProps,
+  Link,
+  LinkProps,
+  Typography,
+} from "@mui/material";
 
 interface UploadLinkProps {
   maxSize: string;
   linkProps: LinkProps;
-  onUpload: () => void;
+  onFileSelectorOpen: () => void;
+  isLoading: boolean;
   fileName?: string;
   fileNamePlaceholder?: string;
+  iconButtonProps: IconButtonProps;
 }
 
 export default function UploadLink({
@@ -18,15 +28,28 @@ export default function UploadLink({
   fileNamePlaceholder,
   maxSize,
   linkProps,
-  onUpload,
+  iconButtonProps,
+  isLoading,
+  onFileSelectorOpen,
 }: UploadLinkProps) {
+  let buttonIcon = <UploadFileIcon />;
+
+  if (isLoading) {
+    buttonIcon = (
+      <CircularProgress size="24px" data-testid="UploadLink-loader" />
+    );
+  } else if (fileName) {
+    buttonIcon = <EditIcon />;
+  }
+
   return (
     <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
       <IconButton
         variant="contained"
-        onClick={onUpload}
-        title={fileNamePlaceholder}>
-        {fileName ? <EditIcon /> : <UploadFileIcon />}
+        onClick={onFileSelectorOpen}
+        title={fileNamePlaceholder}
+        {...iconButtonProps}>
+        {buttonIcon}
       </IconButton>
       <div>
         <Typography>

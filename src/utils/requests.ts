@@ -14,4 +14,17 @@ function mockedRequest<T>(mockResponse: T, delay = 2000) {
   });
 }
 
-export { objectToQuerystring, mockedRequest };
+function createFetchInterceptor() {
+  const { fetch: originalFetch } = window;
+
+  window.fetch = async (...args) => {
+    const [resource, config] = args;
+
+    //Renew token here
+    //If not renewable, redirect to login
+
+    return await originalFetch(resource, config);
+  };
+}
+
+export { objectToQuerystring, mockedRequest, createFetchInterceptor };
