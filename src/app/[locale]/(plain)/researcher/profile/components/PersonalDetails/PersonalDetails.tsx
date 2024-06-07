@@ -22,6 +22,7 @@ import {
   Grid,
   TextField,
   Typography,
+  useTheme,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { ChangeEvent, useCallback, useMemo, useState } from "react";
@@ -57,6 +58,7 @@ export default function PersonalDetails({
     NAMESPACE_TRANSLATION_PERSONAL_DETAILS
   );
   const [isFileSizeTooBig, setIsFileSizeTooBig] = useState(false);
+  const theme = useTheme();
 
   const {
     mutateAsync: mutateFileAsync,
@@ -125,7 +127,15 @@ export default function PersonalDetails({
   const fileErrorMessage = (fileError as Error)?.message;
 
   return (
-    <Box sx={{ display: "flex", gap: 5 }}>
+    <Box
+      sx={{
+        display: "flex",
+        gap: 5,
+        [theme.breakpoints.down("md")]: {
+          flexDirection: "column",
+          gap: 2,
+        },
+      }}>
       <Box
         sx={{ display: "flex", alignItems: "center", flexDirection: "column" }}>
         <Mask width="160px" height="160px">
@@ -138,7 +148,14 @@ export default function PersonalDetails({
           <Typography>{user.email}</Typography>
         </Box>
       </Box>
-      <Divider orientation="vertical" />
+      <Divider
+        orientation="vertical"
+        sx={{
+          [theme.breakpoints.down("md")]: {
+            display: "none",
+          },
+        }}
+      />
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Grid container rowSpacing={3} md={8}>
