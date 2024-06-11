@@ -8,7 +8,12 @@ export default async (
 ) => {
   const response = await postRequest(
     `${process.env.NEXT_PUBLIC_API_URL}/auth/register/issuer`,
-    { ...payload, is_issuer: true }
+    { ...payload, is_issuer: true },
+    {
+      headers: {
+        "content-type": "application/json;charset=UTF-8",
+      },
+    }
   );
 
   const error = handleResponseError(response, messages);

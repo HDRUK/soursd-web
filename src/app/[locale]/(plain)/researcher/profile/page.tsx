@@ -3,7 +3,7 @@ import DecoratorPage from "@/modules/DecoratorPage";
 import PageSection from "@/modules/PageSection/PageSection";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-import PersonalDetails from "./components/PersonalDetails";
+import Sections from "./components/Sections/Sections";
 
 const NAMESPACE_TRANSLATIONS_PROFILE = "Profile";
 
@@ -13,15 +13,10 @@ function Page() {
   return (
     <DecoratorPage>
       <PageSection>
-        <Typography variant="h4" sx={{ mt: 2 }}>
-          {t("title")}
-        </Typography>
+        <Typography variant="h4">{t("title")}</Typography>
       </PageSection>
       <PageSection>
-        <Typography variant="h6" sx={{ mb: 1 }}>
-          {t("personalDetails")}
-        </Typography>
-        <PersonalDetails />
+        <Sections />
       </PageSection>
     </DecoratorPage>
   );

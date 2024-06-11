@@ -1,3 +1,5 @@
+import { User } from "../auth/types";
+
 interface ResearcherInviteResponse {
   name: string;
   contact_email: string;
@@ -7,4 +9,26 @@ interface ResearcherInviteResponse {
   organisation_id: number;
 }
 
-export type { ResearcherInviteResponse };
+interface UpdateUserPayload {
+  first_name?: string;
+  last_name?: string;
+  email?: string;
+  password?: string;
+}
+
+interface UpdateUserResponse {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  email_verified_at: string;
+}
+
+type UserResponse = User;
+
+export type {
+  ResearcherInviteResponse,
+  UpdateUserPayload,
+  UpdateUserResponse,
+  UserResponse,
+};

@@ -92,8 +92,6 @@ export default function Page() {
       organisation_id: parseInt(organisation, 10),
     };
 
-    console.log("payload", payload);
-
     mutateSignupAsync(payload).then(() => {
       router.push(routes.login.path);
     });

@@ -1,6 +1,7 @@
 "use client";
 
 import { ROUTES } from "@/consts/router";
+import { User } from "@/services/auth/types";
 import { RouteConfig } from "@/types/router";
 import { produce } from "immer";
 import { create } from "zustand";
@@ -19,7 +20,9 @@ interface StoreState {
       history: string[];
       entries: StoreRoutesEntries;
     };
+    user?: User;
   };
+  setUser: (user: User) => void;
   setRoutes: (routes: StoreRoutesEntries) => void;
   getPreviousUrl: () => string | null;
   addUrlToHistory: (url: string) => void;
@@ -45,6 +48,12 @@ const useStore = create<StoreState>((set, get) => ({
         state.config.entries = routes;
       })
     ),
+  setUser: (user: User) =>
+    set(
+      produce(state => {
+        state.config.user = user;
+      })
+    ),
   addUrlToHistory: (url: string) =>
     set(
       produce(state => {
@@ -54,7 +63,8 @@ const useStore = create<StoreState>((set, get) => ({
 }));
 
 const useStoreHelpers = () => {
-  const helpers = useStore(({ setRoutes, addUrlToHistory }) => ({
+  const helpers = useStore(({ setUser, setRoutes, addUrlToHistory }) => ({
+    setUser,
     setRoutes,
     addUrlToHistory,
   }));

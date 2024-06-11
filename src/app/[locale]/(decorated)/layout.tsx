@@ -1,4 +1,4 @@
-import useAuth from "@/hooks/useAuth";
+import useAuth from "@/hooks/useUser";
 import { Footer, PageLayout } from "@/modules";
 import Feature from "@/modules/Feature";
 import Header from "@/modules/Header/Header";
