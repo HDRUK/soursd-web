@@ -126,6 +126,9 @@
       "title": "Profile"
     }
   },
+  "Administration": {
+    "title": "Administration"
+  },
   "Navigation": {
     "home": "Home",
     "about": "About",
