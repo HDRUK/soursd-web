@@ -40,7 +40,6 @@ export default function Sections() {
     },
     {
       onSuccess: ({ data }: ResponseJson<User>) => {
-        console.log("NEW DATA", data);
         setUser(data);
       },
       enabled: !!userDetails?.id,
