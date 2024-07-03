@@ -4,6 +4,8 @@ interface Organisation {
   id: number;
 }
 
-type OrganisationsResponse = Organisation[];
+interface OrganisationsResponse {
+  data: Organisation[];
+}
 
 export type { OrganisationsResponse, Organisation };

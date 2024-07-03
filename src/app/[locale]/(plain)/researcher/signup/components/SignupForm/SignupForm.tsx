@@ -13,10 +13,10 @@ import { Organisation } from "@/services/organisations";
 import { FormMutateState } from "@/types/form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import SendIcon from "@mui/icons-material/Send";
+import { LoadingButton } from "@mui/lab";
 import {
   Alert,
   Box,
-  Button,
   Checkbox,
   FormControl,
   FormControlLabel,
@@ -287,14 +287,15 @@ export default function SignupForm({
           </Grid>
         </FormBody>
         <FormActions>
-          <Button
+          <LoadingButton
             type="submit"
             color="primary"
             variant="contained"
             endIcon={<SendIcon />}
-            fullWidth>
+            fullWidth
+            loading={mutateState.isLoading}>
             {tSignup("signupButton")}
-          </Button>
+          </LoadingButton>
         </FormActions>
       </Box>
     </FormProvider>

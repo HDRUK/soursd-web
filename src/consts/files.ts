@@ -1,3 +1,13 @@
 const MAX_UPLOAD_SIZE_BYTES = 10000000;
 
-export { MAX_UPLOAD_SIZE_BYTES };
+enum FileStatus {
+  PENDING = "PENDING",
+  PROCESSED = "PROCESSED",
+  FAILED = "FAILED",
+}
+
+enum FileType {
+  CV = "CV",
+}
+
+export { MAX_UPLOAD_SIZE_BYTES, FileStatus, FileType };

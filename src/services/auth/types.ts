@@ -1,3 +1,6 @@
+import { UserGroup } from "@/consts/user";
+import { FileResponse } from "../files/types";
+
 interface LoginPayload {
   email: string;
   password: string;
@@ -10,7 +13,10 @@ interface User {
   first_name: string;
   last_name: string;
   email: string;
-  user_group: "RESEARCHERS" | "ORGANISATIONS" | "ISSUERS";
+  user_group: keyof typeof UserGroup;
+  registry: {
+    files: FileResponse[];
+  };
 }
 
 interface AuthDetails {

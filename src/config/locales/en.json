@@ -76,11 +76,15 @@
     "noData": "There has been an issue getting some of the required information for the sign up process. Please contact us at <contactLink></contactLink>"
   },
   "Cv": {
-    "maxSize": "{size} Max size",
-    "download": "Download CV",
-    "uploadButtonLabel": "Upload CV",
+    "fileMaxSize": "{size} Max size",
+    "fileDownload": "Download CV",
+    "fileButtonUpload": "Upload CV",
     "fileInputLabel": "CV file input",
-    "sizeError": "Your CV must be under {size}"
+    "fileMaxSizeError": "Your CV must be under {size}",
+    "fileScanning": "Scanning CV...",
+    "fileScanOk": "CV was sucessfully scanned",
+    "fileScanError": "Your CV may have a virus",
+    "fileNamePlaceholder": "No CV uploaded"
   },
   "Profile": {
     "title": "Profile"
@@ -110,7 +114,8 @@
     "togglePasswordAriaLabel": "Toggle password visibility",
     "title": "Login",
     "loginDetailsIncorrect": "Your login details are incorrect, please check them and try again.",
-    "submitError": "There was a problem validating your user. Please try again or contact us at <contactLink></contactLink>"
+    "submitError": "There was a problem validating your user. Please try again or contact us at <contactLink></contactLink>",
+    "successfulRegister": "You have successfully registered for the Researcher Registry."
   },
   "LoginOTPForm": {
     "otp": "One time passcode",

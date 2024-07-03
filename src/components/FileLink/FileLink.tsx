@@ -12,18 +12,27 @@ import {
   LinkProps,
   Typography,
 } from "@mui/material";
-import { ChangeEventHandler, HTMLAttributes, useCallback, useRef } from "react";
+import {
+  ChangeEventHandler,
+  HTMLAttributes,
+  ReactNode,
+  useCallback,
+  useRef,
+} from "react";
 
 export interface FileLinkProps {
   maxSizeLabel: string;
   onFileChange: ChangeEventHandler<HTMLInputElement>;
+  disabledDownload?: boolean;
+  actions?: ReactNode;
   isLoading?: boolean;
   href?: string;
-  fileName?: string;
+  fileName?: ReactNode;
   fileNamePlaceholder?: string;
   inputProps?: HTMLAttributes<HTMLInputElement>;
   iconButtonProps?: IconButtonProps;
   linkProps?: LinkProps;
+  statusIcons?: ReactNode;
 }
 
 export default function FileLink({
@@ -35,6 +44,9 @@ export default function FileLink({
   iconButtonProps,
   inputProps,
   isLoading,
+  actions,
+  statusIcons,
+  disabledDownload,
   onFileChange,
 }: FileLinkProps) {
   const ref = useRef<HTMLInputElement>(null);
@@ -62,23 +74,34 @@ export default function FileLink({
         {buttonIcon}
       </IconButton>
       <div>
-        <Typography>
+        <Typography sx={{ display: "flex" }}>
           {fileName || fileNamePlaceholder}
-          <Typography
-            variant="caption"
-            color="caption.main"
-            sx={{ display: "block" }}>
-            {maxSizeLabel}
-          </Typography>
+          {statusIcons && (
+            <Box
+              sx={{
+                display: "inline-flex",
+                alignItems: "center",
+                ml: 0.5,
+              }}>
+              {statusIcons}
+            </Box>
+          )}
+        </Typography>
+        <Typography
+          variant="caption"
+          color="caption.main"
+          sx={{ display: "block" }}>
+          {maxSizeLabel}
         </Typography>
       </div>
-      {fileName && (
-        <div>
+      <Box sx={{ display: "flex", gap: 1, height: "1.5rem" }}>
+        {fileName && !isLoading && disabledDownload && (
           <Link sx={{ color: "#000" }} href={href} {...linkProps}>
             <DownloadIcon />
           </Link>
-        </div>
-      )}
+        )}
+        {actions}
+      </Box>
       <input
         aria-label="File upload input"
         id="fileInput"

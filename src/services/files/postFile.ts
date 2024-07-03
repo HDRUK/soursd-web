@@ -15,5 +15,7 @@ export default async (
 
   if (error) return Promise.reject(error);
 
-  return response.json();
+  const data = await response.json();
+
+  return data;
 };

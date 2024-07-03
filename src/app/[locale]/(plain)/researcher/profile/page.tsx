@@ -15,7 +15,7 @@ function Page() {
       <PageSection>
         <Typography variant="h4">{t("title")}</Typography>
       </PageSection>
-      <PageSection>
+      <PageSection sx={{ flexGrow: 1 }}>
         <Sections />
       </PageSection>
     </DecoratorPage>
