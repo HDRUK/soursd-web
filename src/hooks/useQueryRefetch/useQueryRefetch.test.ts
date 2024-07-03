@@ -1,11 +1,11 @@
 import { act, renderHook, waitFor } from "@/utils/testUtils";
-import { faker } from "@faker-js/faker";
 import useQueryRefetch, { UseQueryRefetchProps } from "./useQueryRefetch";
 
 const mockRefetchQueries = jest.fn(() => Promise.resolve());
-const mockOnComplete = jest.fn();
+const mockCancelQueries = jest.fn(() => Promise.resolve());
 
 interface CurrentRefetch {
+  cancel: () => void;
   refetch: () => void;
   isLoading: boolean;
 }
@@ -14,33 +14,26 @@ jest.mock("react-query", () => ({
   ...jest.requireActual("react-query"),
   useQueryClient: () => ({
     refetchQueries: mockRefetchQueries,
+    cancelQueries: mockCancelQueries,
   }),
 }));
 
 jest.useFakeTimers();
-// jest.spyOn(global, "setTimeout");
 
 const mockedOptions = {
   queryKey: ["getQuery", "123"],
 };
 
-const mockedValue = faker.string.sample();
-
-const setupUseRefetchQuery = (props?: Partial<UseQueryRefetchProps<string>>) =>
+const setupUseRefetchQuery = (props?: Partial<UseQueryRefetchProps>) =>
   renderHook(() =>
-    useQueryRefetch(
-      {
-        delay: 1000,
-        cancel: () => false,
-        onComplete: mockOnComplete,
-        options: {
-          ...mockedOptions,
-          ...props?.options,
-        },
-        ...props,
+    useQueryRefetch({
+      delay: 1000,
+      options: {
+        ...mockedOptions,
+        ...props?.options,
       },
-      mockedValue
-    )
+      ...props,
+    })
   );
 
 describe("useQueryRefetch", () => {
@@ -49,42 +42,33 @@ describe("useQueryRefetch", () => {
   });
 
   it("refetches", async () => {
-    const {
-      result: { current },
-    } = setupUseRefetchQuery();
+    const { result } = setupUseRefetchQuery();
 
     act(() => {
-      (current as CurrentRefetch).refetch();
+      (result.current as CurrentRefetch).refetch();
     });
 
-    jest.runAllTimers();
-
-    await Promise.resolve();
-
-    jest.runAllTimers();
+    jest.advanceTimersByTime(5000);
 
     await waitFor(() => {
-      expect((current as CurrentRefetch).isLoading).toEqual(true);
-      expect(mockRefetchQueries).toHaveBeenCalledTimes(2);
+      expect((result.current as CurrentRefetch).isLoading).toEqual(true);
       expect(mockRefetchQueries).toHaveBeenCalledWith(mockedOptions);
     });
   });
 
-  it("doesnt fetch", async () => {
-    const {
-      result: { current },
-    } = setupUseRefetchQuery({
-      cancel: (value: string) => value === mockedValue,
-    });
+  it("cancels", async () => {
+    const { result } = setupUseRefetchQuery();
+    const current = result.current as CurrentRefetch;
 
     act(() => {
-      (current as CurrentRefetch).refetch();
+      current.refetch();
+      current.cancel();
     });
 
-    jest.runAllTimers();
+    expect((result.current as CurrentRefetch).isLoading).toEqual(false);
 
     await waitFor(() => {
-      expect(mockRefetchQueries).toHaveBeenCalledTimes(0);
+      expect(mockCancelQueries).toHaveBeenCalled();
     });
   });
 });

@@ -2,7 +2,7 @@
 
 import ContactLink from "@/components/ContactLink";
 import Mask from "@/components/Mask";
-import { FileStatus, MAX_UPLOAD_SIZE_BYTES } from "@/consts/files";
+import { MAX_UPLOAD_SIZE_BYTES } from "@/consts/files";
 import useFileScanned from "@/hooks/useFileScanned/useFileScanned";
 import useQueryRefetch from "@/hooks/useQueryRefetch";
 import { User } from "@/services/auth";
@@ -66,15 +66,17 @@ export default function PersonalDetails({
 
   const { isNotInfected, isScanning } = useFileScanned(latestCV);
 
-  const { refetch: refetchUser } = useQueryRefetch(
-    {
-      cancel: (data: string) => {
-        return data !== FileStatus.PENDING;
-      },
-      options: { queryKey: ["getUser", user.id] },
-    },
-    latestCV?.status
-  );
+  const { refetch: refetchUser, cancel: refetchCancel } = useQueryRefetch({
+    options: { queryKey: ["getUser", user.id] },
+  });
+
+  useEffect(() => {
+    if (isFileScanning(latestCV)) {
+      refetchUser();
+    } else {
+      refetchCancel();
+    }
+  }, [JSON.stringify(latestCV)]);
 
   const {
     mutateAsync: mutateFileAsync,
@@ -130,10 +132,6 @@ export default function PersonalDetails({
       lastName: user.last_name,
     },
   });
-
-  useEffect(() => {
-    if (isFileScanning(latestCV)) refetchUser();
-  }, [latestCV?.status]);
 
   const {
     formState: { errors },

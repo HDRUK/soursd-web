@@ -1,18 +1,11 @@
-import { FileStatus, FileType } from "@/consts/files";
+import { FileStatus } from "@/consts/files";
+import { mockedFile } from "@/mocks/data/file";
 import { FileResponse } from "@/services/files/types";
 import { renderHook } from "@/utils/testUtils";
-import { faker } from "@faker-js/faker";
 import useFileScanned from "./useFileScanned";
 
 const setupUseFileScanned = (file?: Partial<FileResponse | undefined>) =>
-  renderHook(() =>
-    useFileScanned({
-      name: faker.system.fileName(),
-      status: FileStatus.PENDING,
-      type: FileType.CV,
-      ...file,
-    })
-  );
+  renderHook(() => useFileScanned(mockedFile(file)));
 
 describe("useFileScanned", () => {
   it("scans", async () => {

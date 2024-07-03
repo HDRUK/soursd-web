@@ -25,18 +25,19 @@ const VirusScanning = () => {
     }
 
     const File = ({ data }) => {
-      const { isNotInfected, isScanning } = useFileScanned(data);
+      const { isNotInfected, isScanning } = useFileScanned(latestCV);
 
-      const { refetch: refetchUser } = useQueryRefetch(
-        {
-          // Must be used or it will continue to poll
-          cancel: (value: string) => {
-            return value !== FileStatus.PENDING;
-          },
-          options: { queryKey: ["getUser", "123"] },
-        },
-        data.status
-      );
+      const { refetch: refetchUser, cancel: refetchCancel } = useQueryRefetch({
+        options: { queryKey: ["getUser", user.id] },
+      });
+
+      useEffect(() => {
+        if (isFileScanning(latestCV)) {
+          refetchUser();
+        } else {
+          refetchCancel();
+        }
+      }, [JSON.stringify(latestCV)]);
   }
   `;
 

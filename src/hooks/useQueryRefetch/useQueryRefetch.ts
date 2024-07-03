@@ -1,55 +1,41 @@
-import { useEffect, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { RefetchQueryFilters, useQueryClient } from "react-query";
 
-type IterationValue = string | undefined;
-
-interface UseQueryRefetchProps<T> {
+interface UseQueryRefetchProps {
   delay?: number;
-  cancel?(value: T): boolean;
-  onComplete?(): void;
   options: RefetchQueryFilters;
 }
 
-export default function useQueryRefetch<T>(
-  { delay = 2000, cancel, onComplete, options }: UseQueryRefetchProps<T>,
-  value: T
-) {
+export default function useQueryRefetch({
+  delay = 2000,
+  options,
+}: UseQueryRefetchProps) {
   const queryClient = useQueryClient();
   const [isLoading, setIsLoading] = useState(false);
-  const [shouldRefetch, setShouldRefetch] = useState(false);
+  const pollInterval = useRef<NodeJS.Timeout>();
 
-  const handleRefetch = () => setShouldRefetch(true);
+  const cancelQueries = useCallback(() => {
+    queryClient.cancelQueries(options);
+    clearTimeout(pollInterval.current);
+  }, []);
 
-  const cancelRefetch = () => setShouldRefetch(false);
+  const cancelRefetch = useCallback(() => {
+    cancelQueries();
+    setIsLoading(false);
+  }, []);
 
-  useEffect(() => {
+  const refetchQueries = async () => {
+    return queryClient.refetchQueries(options);
+  };
+
+  const handleRefetch = useCallback(() => {
+    cancelQueries();
     setIsLoading(true);
 
-    let timeout: NodeJS.Timeout;
-
-    const doQuery = () => {
-      timeout = setTimeout(async () => {
-        queryClient.refetchQueries(options).then(() => {
-          if (cancel?.(value)) {
-            clearTimeout(timeout);
-            setIsLoading(false);
-
-            onComplete?.();
-          } else {
-            doQuery();
-          }
-        });
-      }, delay);
-    };
-
-    if (shouldRefetch && !cancel?.(value)) {
-      doQuery();
-    }
-
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [value, shouldRefetch]);
+    pollInterval.current = setInterval(async () => {
+      await refetchQueries();
+    }, delay);
+  }, []);
 
   return {
     refetch: handleRefetch,
@@ -58,4 +44,4 @@ export default function useQueryRefetch<T>(
   };
 }
 
-export type { IterationValue, UseQueryRefetchProps };
+export type { UseQueryRefetchProps };
