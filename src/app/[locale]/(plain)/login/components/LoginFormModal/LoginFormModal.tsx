@@ -9,7 +9,7 @@ import { postLogin, postLoginOTP } from "@/services/auth";
 import getUser from "@/services/users/getUser";
 import { setAuthData } from "@/utils/auth";
 import HubIcon from "@mui/icons-material/Hub";
-import { Box } from "@mui/material";
+import { Alert, Box, Grid, useTheme } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
@@ -24,12 +24,14 @@ export default function LoginFormModal() {
   const router = useRouter();
   const setUserData = useStore(state => state.setUser);
   const [type] = useState("passwordForm");
+  const theme = useTheme();
   const [payload] = useState({
     email: "",
     password: "",
     otp: "",
   });
   const { routes } = useApplicationData();
+  const getPreviousUrl = useStore(state => state.getPreviousUrl);
   const t = useTranslations(NAMESPACE_TRANSLATION_LOGIN);
   const { enabled: otpEnabled } = useFeature("LoginOtp");
 
@@ -98,6 +100,11 @@ export default function LoginFormModal() {
   );
 
   const error = `${(loginError as Error) || (userError as Error)?.message}`;
+  const previousUrl = getPreviousUrl();
+
+  const isFromRegister = [routes.signup.path, routes.signupIssuer.path].find(
+    url => url === previousUrl
+  );
 
   return (
     <FormModal
@@ -106,6 +113,19 @@ export default function LoginFormModal() {
       onClose={() => router.push(routes.homepage.path)}>
       <Box sx={{ minWidth: "250px" }}>
         <FormModalHeader icon={<HubIcon />}>{t("title")}</FormModalHeader>
+        {isFromRegister && (
+          <Alert
+            color="success"
+            sx={{
+              mb: 3,
+              width: "auto",
+              [theme.breakpoints.up("md")]: {
+                width: "350px",
+              },
+            }}>
+            {t("successfulRegister")}
+          </Alert>
+        )}
         {type === "passwordForm" && (
           <LoginForm
             onSubmit={handleLoginSubmit}

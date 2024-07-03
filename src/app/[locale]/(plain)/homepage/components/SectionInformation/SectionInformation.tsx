@@ -17,10 +17,13 @@ import {
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { mockCardData } from "./mockData";
+import { useStore } from "@/data/store";
+import { useApplicationData } from "@/context/ApplicationData";
 
 export default function SectionInformation() {
   const theme = useTheme();
   const t = useTranslations();
+  const { routes } = useApplicationData();
 
   return (
     <Box
@@ -88,7 +91,7 @@ export default function SectionInformation() {
               color="secondary"
               startIcon={<AppRegistrationIcon />}>
               <Link
-                href="signup"
+                href={routes.signup.path}
                 underline="none"
                 sx={{ color: theme.palette.secondary.contrastText }}>
                 {t("Buttons.register")}

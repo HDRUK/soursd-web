@@ -1,0 +1,7 @@
+enum UserGroup {
+  RESEARCHERS = "RESEARCHERS",
+  ORGANISATIONS = "ORGANISATIONS",
+  ISSUERS = "ISSUERS",
+}
+
+export { UserGroup };

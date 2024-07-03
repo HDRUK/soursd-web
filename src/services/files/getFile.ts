@@ -1,13 +1,13 @@
 import { ResponseJson, ResponseTranslations } from "@/types/requests";
 import { getRequest, handleResponseError } from "../requests";
-import { ResearcherInviteResponse } from "./types";
+import { FileResponse } from "./types";
 
 export default async (
-  inviteCode: string,
+  id: number,
   messages: ResponseTranslations
-): Promise<ResponseJson<ResearcherInviteResponse>> => {
+): Promise<ResponseJson<FileResponse>> => {
   const response = await getRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/users/identifier/${inviteCode}`,
+    `${process.env.NEXT_PUBLIC_API_V1_URL}/files/${id}`,
     undefined,
     {
       headers: {
@@ -20,7 +20,5 @@ export default async (
 
   if (error) return Promise.reject(error);
 
-  const data = await response.json();
-
-  return data;
+  return response.json();
 };

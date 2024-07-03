@@ -6,6 +6,8 @@ import PersonalDetails, { PersonalDetailsProps } from "./PersonalDetails";
 const mockSubmit = jest.fn();
 const user = mockedUser();
 
+jest.mock("pretty-bytes", () => (value: number) => value);
+
 const renderPersonalDetailsForm = (props?: Partial<PersonalDetailsProps>) => {
   return render(
     <PersonalDetails
@@ -36,9 +38,9 @@ describe("<PersonalDetails />", () => {
       fireEvent.submit(screen.getByRole("button", { name: /Save/i }));
     });
 
-    const { first_name: firstName, last_name: lastName, email } = user;
+    const { first_name: firstName, last_name: lastName } = user;
 
-    expect(mockSubmit.mock.calls[0][0]).toEqual({ firstName, lastName, email });
+    expect(mockSubmit.mock.calls[0][0]).toEqual({ firstName, lastName });
   });
 
   it("shows an error", async () => {

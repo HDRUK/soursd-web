@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import UploadLink from ".";
+import FileLink from ".";
 
 const meta = {
-  title: "components/UploadLink",
-  component: UploadLink,
+  title: "components/FileLink",
+  component: FileLink,
   tags: ["autodocs"],
-} satisfies Meta<typeof UploadLink>;
+} satisfies Meta<typeof FileLink>;
 
 export default meta;
 
@@ -14,10 +14,10 @@ type Story = StoryObj<typeof meta>;
 
 export const NotUploaded: Story = {
   args: {
-    onUpload: () => {},
+    onFileChange: () => {},
     fileName: "",
     fileNamePlaceholder: "[Upload CV]",
-    maxSize: "10(Mb) max",
+    maxSizeLabel: "10(Mb) max",
     linkProps: {
       href: "/",
       title: "Download cv",
@@ -27,10 +27,10 @@ export const NotUploaded: Story = {
 
 export const Uploaded: Story = {
   args: {
-    onUpload: () => {},
+    onFileChange: () => {},
     fileName: "sample.cv.doc",
     fileNamePlaceholder: "",
-    maxSize: "10(Mb) max",
+    maxSizeLabel: "10(Mb) max",
     linkProps: {
       href: "/",
       title: "Download cv",

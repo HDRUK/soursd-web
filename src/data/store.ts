@@ -63,11 +63,14 @@ const useStore = create<StoreState>((set, get) => ({
 }));
 
 const useStoreHelpers = () => {
-  const helpers = useStore(({ setUser, setRoutes, addUrlToHistory }) => ({
-    setUser,
-    setRoutes,
-    addUrlToHistory,
-  }));
+  const helpers = useStore(
+    ({ setUser, setRoutes, getPreviousUrl, addUrlToHistory }) => ({
+      setUser,
+      getPreviousUrl,
+      setRoutes,
+      addUrlToHistory,
+    })
+  );
 
   return helpers;
 };

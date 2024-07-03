@@ -63,7 +63,7 @@ export default function Page() {
         password,
         first_name: "",
         last_name: "",
-        email: issuerData?.data.contact_email,
+        email: issuerData?.contact_email,
       };
 
       mutateSignupAsync(payload).then(() => {

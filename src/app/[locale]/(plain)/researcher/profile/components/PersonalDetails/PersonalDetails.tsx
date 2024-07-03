@@ -3,11 +3,14 @@
 import ContactLink from "@/components/ContactLink";
 import Mask from "@/components/Mask";
 import { MAX_UPLOAD_SIZE_BYTES } from "@/consts/files";
+import useFileScanned from "@/hooks/useFileScanned/useFileScanned";
+import useQueryRefetch from "@/hooks/useQueryRefetch";
 import { User } from "@/services/auth";
 import postFile from "@/services/files/postFile";
 import { FilePayload } from "@/services/files/types";
 import { EntityType, FileType } from "@/types/api";
 import { FormMutateState } from "@/types/form";
+import { getLatestCV, isFileScanning } from "@/utils/file";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Check, Replay } from "@mui/icons-material";
 import SaveIcon from "@mui/icons-material/Save";
@@ -25,7 +28,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { ChangeEvent, useCallback, useMemo, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import * as yup from "yup";
@@ -34,7 +37,6 @@ import CVDetails from "../CVDetails";
 export interface PersonalDetailsFormValues {
   firstName: string;
   lastName: string;
-  email: string;
 }
 
 export interface PersonalDetailsProps {
@@ -60,6 +62,22 @@ export default function PersonalDetails({
   const [isFileSizeTooBig, setIsFileSizeTooBig] = useState(false);
   const theme = useTheme();
 
+  const latestCV = getLatestCV(user.registry.files);
+
+  const { isNotInfected, isScanning } = useFileScanned(latestCV);
+
+  const { refetch: refetchUser, cancel: refetchCancel } = useQueryRefetch({
+    options: { queryKey: ["getUser", user.id] },
+  });
+
+  useEffect(() => {
+    if (isFileScanning(latestCV)) {
+      refetchUser();
+    } else {
+      refetchCancel();
+    }
+  }, [JSON.stringify(latestCV)]);
+
   const {
     mutateAsync: mutateFileAsync,
     isError: isFileError,
@@ -72,12 +90,12 @@ export default function PersonalDetails({
   });
 
   const handleFileChange = useCallback(
-    ({ target: { files } }: ChangeEvent<HTMLInputElement>) => {
+    async ({ target: { files } }: ChangeEvent<HTMLInputElement>) => {
       setIsFileSizeTooBig(false);
 
       if (files) {
         if (files[0].size <= MAX_UPLOAD_SIZE_BYTES) {
-          mutateFileAsync(() => {
+          await mutateFileAsync(() => {
             const file = new FormData();
 
             file.append("file", files[0]);
@@ -86,6 +104,8 @@ export default function PersonalDetails({
 
             return file;
           });
+
+          refetchUser();
         } else {
           setIsFileSizeTooBig(true);
         }
@@ -97,10 +117,6 @@ export default function PersonalDetails({
   const schema = useMemo(
     () =>
       yup.object().shape({
-        email: yup
-          .string()
-          .required(tValidation("emailRequiredInvalid"))
-          .email(tValidation("emailFormatInvalid")),
         firstName: yup
           .string()
           .required(tValidation("firstNameRequiredInvalid")),
@@ -114,7 +130,6 @@ export default function PersonalDetails({
     defaultValues: {
       firstName: user.first_name,
       lastName: user.last_name,
-      email: user.email,
     },
   });
 
@@ -203,22 +218,6 @@ export default function PersonalDetails({
                 )}
               </FormControl>
             </Grid>
-            <Grid item xs={12}>
-              <Box sx={{ display: "flex", gap: 1 }}>
-                <FormControl error={!!errors.email} size="small" fullWidth>
-                  <TextField
-                    {...register("email")}
-                    size="small"
-                    placeholder={tPersonalDetails("emailPlaceholder")}
-                    aria-label={tPersonalDetails("email")}
-                    label={<>{tPersonalDetails("email")} *</>}
-                  />
-                  {errors.email && (
-                    <FormHelperText>{errors.email.message}</FormHelperText>
-                  )}
-                </FormControl>
-              </Box>
-            </Grid>
             <Grid
               item
               xs={12}
@@ -244,13 +243,12 @@ export default function PersonalDetails({
             </Grid>
             <Grid item md={12}>
               <CVDetails
-                fileName="CV"
+                fileName={latestCV?.name || tPersonalDetails("noCvUploaded")}
                 isFileSizeTooBig={isFileSizeTooBig}
+                isFileScanning={isScanning}
+                isFileOk={isNotInfected}
+                isFileUploading={isFileLoading}
                 onFileChange={handleFileChange}
-                mutateState={{
-                  isLoading: isFileLoading,
-                  isError: isFileError,
-                }}
               />
             </Grid>
           </Grid>
