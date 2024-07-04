@@ -2,17 +2,16 @@
 
 import OverlayCenter from "@/components/OverlayCenter";
 import { useStore } from "@/data/store";
-import { UpdateUserPayload } from "@/services/users";
-import getUser from "@/services/users/getUser";
+import { User } from "@/services/auth";
+import { UpdateUserPayload, getUser } from "@/services/users";
 import patchUser from "@/services/users/patchUser";
+import { ResponseJson } from "@/types/requests";
 import { CircularProgress, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { useMutation, useQuery } from "react-query";
 import PersonalDetails from "../PersonalDetails";
 import { PersonalDetailsFormValues } from "../PersonalDetails/PersonalDetails";
-import { User } from "@/services/auth";
-import { ResponseJson } from "@/types/requests";
 
 const NAMESPACE_TRANSLATIONS_PROFILE = "PersonalDetails";
 

@@ -2,7 +2,7 @@
 
 import { ROUTES } from "@/consts/router";
 import { useStore } from "@/data/store";
-import getUser from "@/services/users/getUser";
+import { getUser } from "@/services/users";
 import { ApplicationDataState } from "@/types/application";
 import { getAuthData } from "@/utils/auth";
 import { usePathname } from "next/navigation";

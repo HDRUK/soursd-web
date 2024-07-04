@@ -1,6 +1,7 @@
 "use client";
 
-import { getPaletteModeColors } from "@/utils/theme";
+import { useApplicationData } from "@/context/ApplicationData";
+import { getAugmentedColor } from "@/utils/theme";
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 import MailIcon from "@mui/icons-material/Mail";
 import {
@@ -17,8 +18,6 @@ import {
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { mockCardData } from "./mockData";
-import { useStore } from "@/data/store";
-import { useApplicationData } from "@/context/ApplicationData";
 
 export default function SectionInformation() {
   const theme = useTheme();
@@ -37,7 +36,7 @@ export default function SectionInformation() {
         sx={{
           flexGrow: 1,
           p: 6,
-          backgroundColor: getPaletteModeColors(theme, "highlight").mode,
+          backgroundColor: getAugmentedColor(theme, "highlight").main,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",

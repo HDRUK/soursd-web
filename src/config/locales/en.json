@@ -89,6 +89,9 @@
   "Profile": {
     "title": "Profile"
   },
+  "Permissions": {
+    "title": "Permissions"
+  },
   "PersonalDetails": {
     "title": "Personal details",
     "download": "Download CV",
