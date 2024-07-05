@@ -3,6 +3,7 @@
 import AssignOptions, {
   AssignOptionsFormValues,
 } from "@/components/AssignOptions";
+import ContactLink from "@/components/ContactLink";
 import MaskLabel from "@/components/MaskLabel";
 import OverlayCenter from "@/components/OverlayCenter";
 import PageSection from "@/modules/PageSection";
@@ -14,13 +15,15 @@ import {
 } from "@/services/users";
 import { convertStringsToNumbers } from "@/utils/array";
 import { getInitialsFromUser } from "@/utils/user";
-import { CircularProgress, Typography } from "@mui/material";
+import { Alert, CircularProgress, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useCallback } from "react";
 import { useMutation, useQuery } from "react-query";
 
 const NAMESPACE_TRANSLATIONS_PERMISSIONS = "Permissions";
+const NAMESPACE_TRANSLATIONS_USERS = "Users";
 
+// This will come from the store when issuer is logged on
 const ISSUER_ID = 1;
 
 interface SectionsProps {
@@ -28,30 +31,36 @@ interface SectionsProps {
 }
 
 export default function Sections({ userId }: SectionsProps) {
-  const t = useTranslations(NAMESPACE_TRANSLATIONS_PERMISSIONS);
+  const tPermissions = useTranslations(NAMESPACE_TRANSLATIONS_PERMISSIONS);
+  const tUsers = useTranslations(NAMESPACE_TRANSLATIONS_USERS);
 
-  const { data: permissionsData, isLoading: isPermissionsLoading } = useQuery(
-    ["getPermissions", ISSUER_ID],
-    async () =>
-      getPermissions({
-        error: {
-          message: "submitError",
-        },
-      })
+  const {
+    data: permissionsData,
+    isLoading: isPermissionsLoading,
+    isError: isPermissionsError,
+    error: permissionsError,
+  } = useQuery(["getPermissions", ISSUER_ID], async () =>
+    getPermissions({
+      error: {
+        message: "getPermissionsError",
+      },
+    })
   );
 
-  const { data: userData, isLoading: isUserLoading } = useQuery(
-    ["getUser", userId],
-    async ({ queryKey }) => {
-      const [, id] = queryKey;
+  const {
+    data: userData,
+    isLoading: isUserLoading,
+    isError: isUserError,
+    error: userError,
+  } = useQuery(["getUser", userId], async ({ queryKey }) => {
+    const [, id] = queryKey;
 
-      return getUser(id, {
-        error: {
-          message: "submitError",
-        },
-      });
-    }
-  );
+    return getUser(id, {
+      error: {
+        message: "getUserError",
+      },
+    });
+  });
 
   const {
     mutateAsync: mutatePermissionsAsync,
@@ -59,7 +68,7 @@ export default function Sections({ userId }: SectionsProps) {
     isLoading: isUpdateLoading,
     error: updateError,
   } = useMutation(
-    ["postPermissions"],
+    ["updatePermissionsError"],
     async (payload: UpdatePermissonsPayload) => {
       return postPermissions(payload, {
         error: { message: "updateFailed" },
@@ -83,7 +92,7 @@ export default function Sections({ userId }: SectionsProps) {
   return (
     <>
       <PageSection sx={{ display: "flex" }}>
-        <Typography variant="h4">{t("title")}</Typography>
+        <Typography variant="h4">{tPermissions("title")}</Typography>
         {!isPermissionsLoading && !isUserLoading && userData?.data && (
           <MaskLabel
             initials={getInitialsFromUser(userData?.data)}
@@ -97,6 +106,18 @@ export default function Sections({ userId }: SectionsProps) {
             <CircularProgress />
           </OverlayCenter>
         )}
+        {(isUserError || isPermissionsError) && (
+          <Alert color="error" sx={{ mb: 3 }}>
+            {isUserError &&
+              tUsers.rich(`${(userError as Error)?.message}`, {
+                contactLink: ContactLink,
+              })}
+            {isPermissionsError &&
+              tPermissions.rich(`${(permissionsError as Error)?.message}`, {
+                contactLink: ContactLink,
+              })}
+          </Alert>
+        )}
         {!isPermissionsLoading &&
           !isUserLoading &&
           permissionsData &&
@@ -105,7 +126,7 @@ export default function Sections({ userId }: SectionsProps) {
               mutateState={{
                 isLoading: isUpdateLoading,
                 isError: isUpdateError,
-                error: `${(updateError as Error)?.message}`,
+                error: tPermissions(`${(updateError as Error)?.message}`),
               }}
               onSubmit={handleSubmit}
               parentData={permissionsData?.data?.data}

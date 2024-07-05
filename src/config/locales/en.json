@@ -90,7 +90,12 @@
     "title": "Profile"
   },
   "Permissions": {
-    "title": "Permissions"
+    "title": "Permissions",
+    "getPermissionsError": "Could not get a list of all permissions",
+    "updatePermissionsError": "Could not update the permissions"
+  },
+  "Users": {
+    "getUserError": "Could not get the relevant user"
   },
   "PersonalDetails": {
     "title": "Personal details",
