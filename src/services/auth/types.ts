@@ -1,5 +1,6 @@
 import { UserGroup } from "@/consts/user";
 import { FileResponse } from "../files/types";
+import { Permission } from "../permissions/types";
 
 interface LoginPayload {
   email: string;
@@ -14,6 +15,7 @@ interface User {
   last_name: string;
   email: string;
   user_group: keyof typeof UserGroup;
+  permissions: Permission[];
   registry: {
     files: FileResponse[];
   };

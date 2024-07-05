@@ -1,4 +1,4 @@
-import { getPaletteModeColors } from "@/utils/theme";
+import { getAugmentedColor } from "@/utils/theme";
 import { AugmentedColorPaletteOptions, Box, css, styled } from "@mui/material";
 
 export const StyledScreenArrow = styled(Box)<{
@@ -6,7 +6,7 @@ export const StyledScreenArrow = styled(Box)<{
   alignment: "top" | "right" | "bottom" | "left";
   relativeTo: "screen" | "container";
 }>(({ theme, color, alignment, relativeTo }) => {
-  const { mode, contrastText } = getPaletteModeColors(theme, color);
+  const { main, contrastText } = getAugmentedColor(theme, color);
   let positionStyles = "";
 
   if (alignment === "left") {
@@ -47,7 +47,7 @@ export const StyledScreenArrow = styled(Box)<{
     ${positionStyles};
     width: 200px;
     z-index: 2;
-    background-color: ${mode};
+    background-color: ${main};
     text-align: center;
     color: ${contrastText};
     opacity: 0.9;

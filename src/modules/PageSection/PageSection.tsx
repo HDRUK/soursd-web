@@ -1,13 +1,13 @@
 "use client";
 
 import { BoxProps } from "@mui/material";
-import { StyledPageContent } from "./PageSection.styles";
+import { StyledPageSection } from "./PageSection.styles";
 
 type PageContentProps = BoxProps;
 
-export default function PageLayout({
+export default function PageSection({
   children,
   ...restProps
 }: PageContentProps) {
-  return <StyledPageContent {...restProps}>{children}</StyledPageContent>;
+  return <StyledPageSection {...restProps}>{children}</StyledPageSection>;
 }

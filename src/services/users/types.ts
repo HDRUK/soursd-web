@@ -16,6 +16,12 @@ interface UpdateUserPayload {
   password?: string;
 }
 
+interface UpdatePermissonsPayload {
+  user_id: number;
+  issuer_id: number;
+  permissions: number[];
+}
+
 interface UpdateUserResponse {
   id: number;
   firstName: string;
@@ -31,4 +37,5 @@ export type {
   UpdateUserPayload,
   UpdateUserResponse,
   UserResponse,
+  UpdatePermissonsPayload,
 };

@@ -89,6 +89,16 @@ declare module "@mui/material/Divider" {
   interface DividerOwnProps extends CustomDividerProps {}
 }
 
+declare module "@mui/material/Switch" {
+  type AugmentedColorPaletteOptions =
+    import("@mui/material/styles/createPalette").AugmentedColorPaletteOptions;
+
+  interface CustomSwitchProps {
+    color?: AugmentedColorPaletteOptions;
+  }
+  interface SwitchOwnProps extends CustomSwitchProps {}
+}
+
 declare module "@mui/material/Stepper" {
   type AugmentedColorPaletteOptions =
     import("@mui/material/styles/createPalette").AugmentedColorPaletteOptions;

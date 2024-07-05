@@ -1,4 +1,4 @@
-import { getPaletteModeColors } from "@/utils/theme";
+import { getAugmentedColor } from "@/utils/theme";
 import {
   AugmentedColorPaletteOptions,
   Box,
@@ -21,7 +21,7 @@ export const StyledImageDecorator = styled(Box)(
   }) => css`
     width: ${width};
     height: ${height};
-    background-color: ${getPaletteModeColors(theme, color).mode};
+    background-color: ${getAugmentedColor(theme, color).main};
     color: ${theme.palette[color].contrastText};
     border-radius: 50%;
     padding: ${theme.spacing(1)};

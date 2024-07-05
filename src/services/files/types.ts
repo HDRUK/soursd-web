@@ -1,6 +1,6 @@
 import { FileStatus, FileType } from "@/consts/files";
 
-interface FileResponse {
+interface File {
   id: number;
   name: string;
   status: keyof typeof FileStatus;
@@ -9,6 +9,8 @@ interface FileResponse {
   updated_at: string;
 }
 
+type FileResponse = File;
+
 type FilePayload = any;
 
-export type { FileResponse, FilePayload };
+export type { FileResponse, FilePayload, File };

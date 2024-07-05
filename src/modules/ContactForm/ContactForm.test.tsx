@@ -6,7 +6,7 @@ import ContactForm from "./ContactForm";
 const mockSubmit = jest.fn();
 
 describe("<ContactForm />", () => {
-  it("has no accessibility validations", async () => {
+  it("has no accessibility violations", async () => {
     const { container } = render(<ContactForm onSubmit={mockSubmit} />);
 
     const results = await axe(container);

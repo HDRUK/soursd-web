@@ -1,11 +1,11 @@
 "use client";
 
 import { AugmentedColorPaletteOptions } from "@mui/material";
-import { createTheme } from "@mui/material/styles";
+import { createTheme, darken } from "@mui/material/styles";
 import { createBreakpoints } from "@mui/system";
 import { Roboto } from "next/font/google";
 import { PALETTE_THEME_PURPLE_BLUE } from "./config/theme";
-import { colorToRgba, getPaletteModeColors } from "./utils/theme";
+import { colorToRgba, getAugmentedColor } from "./utils/theme";
 
 const roboto = Roboto({
   weight: ["300", "400", "500", "700"],
@@ -21,13 +21,12 @@ const createBoxStyles = <T extends { color?: AugmentedColorPaletteOptions }>(
   ownerState: T
 ) => {
   if (ownerState.color) {
-    const color = paletteTheme.palette[ownerState.color];
+    const color = getAugmentedColor(paletteTheme, ownerState.color);
 
     if (typeof color === "object") {
       return {
         color: color.contrastText,
-        backgroundColor: getPaletteModeColors(paletteTheme, ownerState.color)
-          .mode,
+        backgroundColor: color.main,
       };
     }
   }
@@ -41,25 +40,25 @@ const createStepperStyles = <
   ownerState: T
 ) => {
   if (ownerState.color) {
-    const colors = getPaletteModeColors(paletteTheme, ownerState.color);
-    const inactiveColors = getPaletteModeColors(paletteTheme, "inactive");
+    const color = getAugmentedColor(paletteTheme, ownerState.color);
+    const inactiveColor = getAugmentedColor(paletteTheme, "inactive");
 
     return {
       ".MuiStepLabel-root .MuiStepIcon-root": {
-        color: inactiveColors.mode,
-        backgroundColor: inactiveColors.mode,
+        color: inactiveColor.contrastText,
+        backgroundColor: inactiveColor.main,
         borderRadius: "50%",
       },
       ".MuiStepLabel-root .MuiStepIcon-root.Mui-active": {
-        color: colors.mode,
+        color,
         borderRadius: "50%",
         boxShadow:
           "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
       },
       ".MuiStepLabel-root .MuiStepIcon-root.Mui-completed": {
-        color: colors.main,
+        color,
         borderRadius: "50%",
-        backgroundColor: colors.contrastText,
+        backgroundColor: color.contrastText,
       },
       ".MuiStepLabel-root .MuiStepIcon-root .MuiStepIcon-text": {
         fill: "#fff",
@@ -83,19 +82,13 @@ const createContainedStyles = <
     ownerState.color &&
     ownerState.color !== "inherit"
   ) {
-    let colors;
-
-    if (ownerState.color === "default") {
-      colors = getPaletteModeColors(paletteTheme, "default");
-    } else {
-      colors = getPaletteModeColors(paletteTheme, ownerState.color);
-    }
+    const color = getAugmentedColor(paletteTheme, ownerState.color);
 
     return {
-      color: colors.contrastText,
-      backgroundColor: colors.mode,
+      color: color.contrastText,
+      backgroundColor: color.main,
       "&:hover": {
-        backgroundColor: colors.main,
+        backgroundColor: darken(color.main, 0.125),
       },
     };
   }
@@ -120,6 +113,17 @@ const createMuiModalStyles = <T extends { outline?: boolean }>(
   return null;
 };
 
+const createSwitchStyles = () => {
+  return {
+    ".MuiSwitch-switchBase.Mui-checked": {
+      color: "#fff",
+    },
+    ".MuiSwitch-switchBase.Mui-checked+.MuiSwitch-track": {
+      opacity: "initial",
+    },
+  };
+};
+
 const createDividerStyles = <
   T extends {
     gradient?: boolean;
@@ -130,17 +134,10 @@ const createDividerStyles = <
   ownerState: T
 ) => {
   if (ownerState.color) {
-    const isAugmentedColor = Object.keys(paletteTheme.palette).includes(
-      ownerState.color
-    );
+    const color = getAugmentedColor(paletteTheme, ownerState.color);
 
-    const color = isAugmentedColor
-      ? paletteTheme.palette[ownerState.color as AugmentedColorPaletteOptions]
-          .main
-      : ownerState.color;
-
-    const rgbColor = colorToRgba(color, 0.8);
-    const rgbColorStop = colorToRgba(color, 0);
+    const rgbColor = colorToRgba(color.main, 0.8);
+    const rgbColorStop = colorToRgba(color.main, 0);
     const initialStyles = {
       border: "none",
       height: "1px",
@@ -232,6 +229,11 @@ const theme = createTheme(
       MuiCard: {
         styleOverrides: {
           root: ({ ownerState }) => createBoxStyles(ownerState),
+        },
+      },
+      MuiSwitch: {
+        styleOverrides: {
+          root: () => createSwitchStyles(),
         },
       },
       MuiPaper: {

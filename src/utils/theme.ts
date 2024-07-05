@@ -10,16 +10,6 @@ function colorToRgba(color: string, alpha = 1) {
   return referenceColor.replace(/^rgb/, "rgba").replace(/\)$/, `, ${alpha})`);
 }
 
-function getPaletteModeColors(
-  theme: Theme,
-  color: AugmentedColorPaletteOptions
-) {
-  return {
-    ...theme.palette[color],
-    mode: theme.palette[color][theme.palette.mode],
-  };
-}
-
 function isAugmentedColor(
   theme: Theme,
   color: AugmentedColorPaletteOptions | string
@@ -27,4 +17,10 @@ function isAugmentedColor(
   return Object.keys(theme.palette).includes(color);
 }
 
-export { colorToRgba, getPaletteModeColors, isAugmentedColor };
+function getAugmentedColor(theme: Theme, color: string) {
+  return isAugmentedColor(theme, color)
+    ? theme.palette[color as AugmentedColorPaletteOptions]
+    : { main: color, contrastText: "inherit" };
+}
+
+export { colorToRgba, isAugmentedColor, getAugmentedColor };

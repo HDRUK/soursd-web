@@ -1,4 +1,4 @@
-import { getPaletteModeColors } from "@/utils/theme";
+import { getAugmentedColor } from "@/utils/theme";
 import {
   AugmentedColorPaletteOptions,
   Box,
@@ -28,7 +28,7 @@ export const StyledMask = styled(Box, {
     `background: linear-gradient(
       to right,
       ${purple["200"]},
-      ${getPaletteModeColors(theme, color).mode}
+      ${getAugmentedColor(theme, color).main}
     );`}
     padding: 2px;
     box-sizing: border-box;
