@@ -44,7 +44,6 @@ export const StyledMask = styled(Box, {
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 60%;
 
       > * {
         width: calc(${width} - 4px);

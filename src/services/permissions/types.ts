@@ -3,7 +3,7 @@ interface Permission {
   created_at: string;
   updated_at: string;
   name: string;
-  enabled: boolean;
+  enabled: number;
   pivot: {
     organisation_id: number;
     permission_id: number;

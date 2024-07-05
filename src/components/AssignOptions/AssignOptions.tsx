@@ -6,33 +6,33 @@ import { FormMutateState } from "@/types/form";
 import { getCheckboxFormValuesFromIntersection } from "@/utils/form";
 import SaveIcon from "@mui/icons-material/Save";
 import { LoadingButton } from "@mui/lab";
-import { Switch } from "@mui/material";
+import { Alert, Switch } from "@mui/material";
 import { FormProvider, useForm } from "react-hook-form";
 
-export type PermissionsFormValues = Record<string, boolean>;
+export type AssignOptionsFormValues = Record<string, boolean>;
 
-interface PermissionsSectionProps {
+export interface AssignOptionsProps {
   mutateState: FormMutateState;
-  organisationPermissions: Permission[];
-  researcherPermissions: Permission[];
-  onSubmit(values: PermissionsFormValues): void;
+  parentData: Permission[];
+  subsetData: Permission[];
+  onSubmit(values: AssignOptionsFormValues): void;
 }
 
 export default function PermissionsSection({
   mutateState,
-  organisationPermissions,
-  researcherPermissions,
+  parentData,
+  subsetData,
   onSubmit,
-}: PermissionsSectionProps) {
-  const checkboxData = organisationPermissions.map(({ name: label, id }) => ({
+}: AssignOptionsProps) {
+  const checkboxData = parentData.map(({ name: label, id }) => ({
     label,
     id: id.toString(),
   }));
 
-  const methods = useForm<PermissionsFormValues>({
+  const methods = useForm<AssignOptionsFormValues>({
     defaultValues: getCheckboxFormValuesFromIntersection(
       checkboxData,
-      researcherPermissions
+      subsetData
     ),
   });
 
@@ -41,6 +41,11 @@ export default function PermissionsSection({
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
+        {mutateState.isError && (
+          <Alert color="error" sx={{ mb: 3 }}>
+            {mutateState.error}
+          </Alert>
+        )}
         <ActionList sx={{ listStyleType: "none", p: 0, m: 0, mb: 2 }}>
           {checkboxData.map(({ label, id }) => (
             <ActionListItem
@@ -50,6 +55,9 @@ export default function PermissionsSection({
                   {...register(id)}
                   checked={methods.watch(id)}
                   color="success"
+                  inputProps={{
+                    "aria-label": label,
+                  }}
                 />
               }
             />
@@ -68,4 +76,6 @@ export default function PermissionsSection({
   );
 }
 
-//
+// List striped story
+// Tests for permissions sections checkboxes
+// Util tests

@@ -7,7 +7,7 @@ function getCheckboxFormValuesFromIntersection(
 
     return {
       ...accumulator,
-      [id]: subset.find(
+      [id]: !!subset.find(
         ({ id: subsetId }) => subsetId.toString() === id.toString()
       ),
     };

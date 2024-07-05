@@ -1,9 +1,12 @@
 "use client";
 
-import Mask from "@/components/Mask";
+import AssignOptions, {
+  AssignOptionsFormValues,
+} from "@/components/AssignOptions";
+import MaskLabel from "@/components/MaskLabel";
 import OverlayCenter from "@/components/OverlayCenter";
 import PageSection from "@/modules/PageSection";
-import { getOrganisation } from "@/services/organisations";
+import { getIssuer } from "@/services/issuers";
 import {
   UpdatePermissonsPayload,
   getUser,
@@ -11,13 +14,10 @@ import {
 } from "@/services/users";
 import { convertStringsToNumbers } from "@/utils/array";
 import { getInitialsFromUser } from "@/utils/user";
-import { Box, CircularProgress, Typography } from "@mui/material";
+import { CircularProgress, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useCallback } from "react";
 import { useMutation, useQuery } from "react-query";
-import PermissionsSection, {
-  PermissionsFormValues,
-} from "../PermissionsSection";
 
 const NAMESPACE_TRANSLATIONS_PERMISSIONS = "Permissions";
 
@@ -30,12 +30,12 @@ interface SectionsProps {
 export default function Sections({ userId }: SectionsProps) {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_PERMISSIONS);
 
-  const { data: organisationData, isLoading: isOrganisationLoading } = useQuery(
-    ["getOrganisation", ISSUER_ID],
+  const { data: issuerData, isLoading: isIssuerLoading } = useQuery(
+    ["getIssuer", ISSUER_ID],
     async ({ queryKey }) => {
       const [, id] = queryKey;
 
-      return getOrganisation(id, {
+      return getIssuer(id, {
         error: {
           message: "submitError",
         },
@@ -65,13 +65,13 @@ export default function Sections({ userId }: SectionsProps) {
     ["postPermissions"],
     async (payload: UpdatePermissonsPayload) => {
       return postPermissions(payload, {
-        error: { message: "cvUploadFailed" },
+        error: { message: "updateFailed" },
       });
     }
   );
 
   const handleSubmit = useCallback(
-    (values: PermissionsFormValues) => {
+    (values: AssignOptionsFormValues) => {
       mutatePermissionsAsync({
         user_id: userId,
         issuer_id: ISSUER_ID,
@@ -87,42 +87,32 @@ export default function Sections({ userId }: SectionsProps) {
     <>
       <PageSection sx={{ display: "flex" }}>
         <Typography variant="h4">{t("title")}</Typography>
-        {!isOrganisationLoading && !isUserLoading && userData?.data && (
-          <Box
-            sx={{
-              display: "flex",
-              mb: 2,
-              gap: 1,
-              alignItems: "center",
-              flexGrow: 1,
-              justifyContent: "flex-end",
-            }}>
-            <Mask width="40px" height="40px">
-              {getInitialsFromUser(userData?.data)}
-            </Mask>
-            <Typography>{userData?.data.email}</Typography>
-          </Box>
+        {!isIssuerLoading && !isUserLoading && userData?.data && (
+          <MaskLabel
+            initials={getInitialsFromUser(userData?.data)}
+            label={userData?.data.email}
+          />
         )}
       </PageSection>
       <PageSection sx={{ flexGrow: 1 }}>
-        {(isOrganisationLoading || isUserLoading) && (
+        {(isIssuerLoading || isUserLoading) && (
           <OverlayCenter>
             <CircularProgress />
           </OverlayCenter>
         )}
-        {!isOrganisationLoading &&
+        {!isIssuerLoading &&
           !isUserLoading &&
-          organisationData?.data &&
+          issuerData?.data &&
           userData?.data && (
-            <PermissionsSection
+            <AssignOptions
               mutateState={{
                 isLoading: isPermissionsLoading,
                 isError: isPermissionsError,
                 error: `${(permissionsError as Error)?.message}`,
               }}
               onSubmit={handleSubmit}
-              organisationPermissions={organisationData?.data.permissions}
-              researcherPermissions={userData?.data.permissions}
+              parentData={issuerData?.data.permissions}
+              subsetData={userData?.data.permissions}
             />
           )}
       </PageSection>

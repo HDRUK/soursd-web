@@ -17,8 +17,8 @@ export default function ActionListItem({
       component="li"
       sx={{
         width: "100%",
-        p: 0.5,
-        pl: 2,
+        py: 0.5,
+        px: 1,
         display: "flex",
         alignItems: "center",
         borderRadius: 1,
