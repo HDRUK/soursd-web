@@ -12,6 +12,8 @@ interface Permission {
 
 type PermissionResponse = Permission;
 
-type PermissionsResponse = Permission[];
+interface PermissionsResponse {
+  data: Permission[];
+}
 
 export type { PermissionsResponse, PermissionResponse, Permission };

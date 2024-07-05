@@ -10,6 +10,8 @@ interface Organisation {
 
 type OrganisationResponse = Organisation;
 
-type OrganisationsResponse = Organisation[];
+interface OrganisationsResponse {
+  data: Organisation[];
+}
 
 export type { OrganisationsResponse, OrganisationResponse, Organisation };

@@ -6,7 +6,7 @@ import AssignOptions, {
 import MaskLabel from "@/components/MaskLabel";
 import OverlayCenter from "@/components/OverlayCenter";
 import PageSection from "@/modules/PageSection";
-import { getIssuer } from "@/services/issuers";
+import { getPermissions } from "@/services/permissions";
 import {
   UpdatePermissonsPayload,
   getUser,
@@ -30,17 +30,14 @@ interface SectionsProps {
 export default function Sections({ userId }: SectionsProps) {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_PERMISSIONS);
 
-  const { data: issuerData, isLoading: isIssuerLoading } = useQuery(
-    ["getIssuer", ISSUER_ID],
-    async ({ queryKey }) => {
-      const [, id] = queryKey;
-
-      return getIssuer(id, {
+  const { data: permissionsData, isLoading: isPermissionsLoading } = useQuery(
+    ["getPermissions", ISSUER_ID],
+    async () =>
+      getPermissions({
         error: {
           message: "submitError",
         },
-      });
-    }
+      })
   );
 
   const { data: userData, isLoading: isUserLoading } = useQuery(
@@ -58,9 +55,9 @@ export default function Sections({ userId }: SectionsProps) {
 
   const {
     mutateAsync: mutatePermissionsAsync,
-    isError: isPermissionsError,
-    isLoading: isPermissionsLoading,
-    error: permissionsError,
+    isError: isUpdateError,
+    isLoading: isUpdateLoading,
+    error: updateError,
   } = useMutation(
     ["postPermissions"],
     async (payload: UpdatePermissonsPayload) => {
@@ -87,7 +84,7 @@ export default function Sections({ userId }: SectionsProps) {
     <>
       <PageSection sx={{ display: "flex" }}>
         <Typography variant="h4">{t("title")}</Typography>
-        {!isIssuerLoading && !isUserLoading && userData?.data && (
+        {!isPermissionsLoading && !isUserLoading && userData?.data && (
           <MaskLabel
             initials={getInitialsFromUser(userData?.data)}
             label={userData?.data.email}
@@ -95,23 +92,23 @@ export default function Sections({ userId }: SectionsProps) {
         )}
       </PageSection>
       <PageSection sx={{ flexGrow: 1 }}>
-        {(isIssuerLoading || isUserLoading) && (
+        {(isPermissionsLoading || isUserLoading) && (
           <OverlayCenter>
             <CircularProgress />
           </OverlayCenter>
         )}
-        {!isIssuerLoading &&
+        {!isPermissionsLoading &&
           !isUserLoading &&
-          issuerData?.data &&
-          userData?.data && (
+          permissionsData &&
+          userData && (
             <AssignOptions
               mutateState={{
-                isLoading: isPermissionsLoading,
-                isError: isPermissionsError,
-                error: `${(permissionsError as Error)?.message}`,
+                isLoading: isUpdateLoading,
+                isError: isUpdateError,
+                error: `${(updateError as Error)?.message}`,
               }}
               onSubmit={handleSubmit}
-              parentData={issuerData?.data.permissions}
+              parentData={permissionsData?.data?.data}
               subsetData={userData?.data.permissions}
             />
           )}

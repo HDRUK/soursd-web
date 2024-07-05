@@ -169,7 +169,7 @@ export default function Page() {
         <SignupForm
           defaultEmail={researcherData?.data.contact_email}
           defaultOrganisation={researcherData?.data.organisation_id?.toString()}
-          organisations={organisationsData?.data || []}
+          organisations={organisationsData?.data.data || []}
           onSubmit={handleSignupSubmit}
           mutateState={{
             isLoading: isSignupLoading,
