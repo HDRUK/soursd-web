@@ -31,14 +31,12 @@ export default function Page() {
   const tSignup = useTranslations(NAMESPACE_TRANSLATION_SIGNUP);
   const { routes } = useApplicationData();
 
-  const queryKeyInvite = ["getByInviteCode", inviteCode || ""];
-
   const {
     isLoading: isGetIssuerLoading,
     data: issuerData,
     error: issuerError,
   } = useQuery(
-    queryKeyInvite,
+    ["getByInviteCode", inviteCode || ""],
     async () =>
       getByInviteCode(inviteCode || "", {
         error: { message: "getByInviteCodeError" },
@@ -47,10 +45,6 @@ export default function Page() {
       enabled: !!inviteCode,
     }
   );
-
-  useEffect(() => {
-    add(NotificationsTypes.ERROR, "TEST", "FAULT");
-  }, []);
 
   const {
     mutateAsync: mutateSignupAsync,

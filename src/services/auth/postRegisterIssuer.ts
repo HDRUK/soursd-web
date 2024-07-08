@@ -7,7 +7,7 @@ export default async (
   messages: ResponseTranslations
 ) => {
   const response = await postRequest(
-    `${process.env.NEXT_PUBLIC_API_URL}/auth/regisdter/issuer`,
+    `${process.env.NEXT_PUBLIC_API_URL}/auth/register/issuer`,
     { ...payload, is_issuer: true },
     {
       headers: {
