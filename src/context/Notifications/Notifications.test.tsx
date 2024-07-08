@@ -1,4 +1,4 @@
-import { act, fireEvent, render, screen, waitFor } from "@/utils/testUtils";
+import { act, fireEvent, render, screen } from "@/utils/testUtils";
 import { NotificationsTypes, useNotifications } from "./Notifications";
 
 const TestComponent = () => {
