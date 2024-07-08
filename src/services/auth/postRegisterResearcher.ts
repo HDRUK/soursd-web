@@ -1,5 +1,5 @@
 import { ResponseTranslations } from "@/types/requests";
-import { handleResponseError, postRequest } from "../requests";
+import { handleJsonResponse, postRequest } from "../requests";
 import { RegisterPayload } from "./types";
 
 export default async (
@@ -16,11 +16,5 @@ export default async (
     }
   );
 
-  const error = handleResponseError(response, messages);
-
-  if (error) return Promise.reject(error);
-
-  const data = await response.json();
-
-  return data;
+  return handleJsonResponse(response, messages);
 };

@@ -120,7 +120,7 @@ export default function Page() {
   if (isGetResearcherError) {
     return (
       <OverlayCenterAlert>
-        {tResearcher.rich((researcherError as Error)?.message, {
+        {tResearcher.rich(researcherError, {
           contactLink: ContactLink,
         })}
       </OverlayCenterAlert>
@@ -130,7 +130,7 @@ export default function Page() {
   if (isGetOrganisationsError) {
     return (
       <OverlayCenterAlert>
-        {tResearcher.rich((organisationsError as Error)?.message, {
+        {tResearcher.rich(organisationsError, {
           contactLink: ContactLink,
         })}
       </OverlayCenterAlert>
@@ -174,7 +174,7 @@ export default function Page() {
           mutateState={{
             isLoading: isSignupLoading,
             isError: isSignupError,
-            error: `${(signupError as Error)?.message}`,
+            error: signupError,
           }}
         />
       </Box>

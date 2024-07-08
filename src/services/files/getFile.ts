@@ -1,5 +1,5 @@
 import { ResponseJson, ResponseTranslations } from "@/types/requests";
-import { getRequest, handleResponseError } from "../requests";
+import { getRequest, handleJsonResponse } from "../requests";
 import { FileResponse } from "./types";
 
 export default async (
@@ -16,9 +16,5 @@ export default async (
     }
   );
 
-  const error = handleResponseError(response, messages);
-
-  if (error) return Promise.reject(error);
-
-  return response.json();
+  return handleJsonResponse(response, messages);
 };

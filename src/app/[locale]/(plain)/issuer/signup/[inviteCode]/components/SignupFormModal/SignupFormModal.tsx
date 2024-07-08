@@ -29,7 +29,6 @@ export default function Page() {
   const { routes } = useApplicationData();
 
   const {
-    isError: isGetIssuerError,
     isLoading: isGetIssuerLoading,
     data: issuerData,
     error: issuerError,
@@ -102,10 +101,10 @@ export default function Page() {
     );
   }
 
-  if (isGetIssuerError) {
+  if (issuerError) {
     return (
       <OverlayCenterAlert>
-        {tSignup.rich((issuerError as Error)?.message, {
+        {tSignup.rich(issuerError, {
           contactLink: ContactLink,
         })}
       </OverlayCenterAlert>
@@ -136,7 +135,7 @@ export default function Page() {
           mutateState={{
             isLoading: isSignupLoading,
             isError: isSignupError,
-            error: `${(signupError as Error)?.message}`,
+            error: signupError,
           }}
         />
       </Box>

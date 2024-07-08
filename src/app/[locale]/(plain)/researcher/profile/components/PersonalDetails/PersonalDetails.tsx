@@ -139,8 +139,6 @@ export default function PersonalDetails({
     handleSubmit,
   } = methods;
 
-  const fileErrorMessage = (fileError as Error)?.message;
-
   return (
     <Box
       sx={{
@@ -184,7 +182,7 @@ export default function PersonalDetails({
               )}
               {isFileError && (
                 <Alert color="error" sx={{ mb: 3 }}>
-                  {tPersonalDetails.rich(fileErrorMessage, {
+                  {tPersonalDetails.rich(fileError, {
                     contactLink: ContactLink,
                   })}
                 </Alert>

@@ -99,7 +99,7 @@ export default function LoginFormModal() {
     [payload]
   );
 
-  const error = `${(loginError as Error) || (userError as Error)?.message}`;
+  const error = loginError || userError;
   const previousUrl = getPreviousUrl();
 
   const isFromRegister = [routes.signup.path, routes.signupIssuer.path].find(
