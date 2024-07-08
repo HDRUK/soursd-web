@@ -1,5 +1,5 @@
 import { ResponseJson, ResponseTranslations } from "@/types/requests";
-import { getRequest, handleResponseError } from "../requests";
+import { getRequest, handleJsonResponse } from "../requests";
 import { ResearcherInviteResponse } from "./types";
 
 export default async (
@@ -16,11 +16,5 @@ export default async (
     }
   );
 
-  const error = handleResponseError(response, messages);
-
-  if (error) return Promise.reject(error);
-
-  const data = await response.json();
-
-  return data;
+  return handleJsonResponse(response, messages);
 };

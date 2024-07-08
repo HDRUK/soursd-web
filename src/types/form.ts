@@ -1,7 +1,7 @@
 interface FormMutateState {
   isLoading: boolean;
   isError: boolean;
-  error?: string | null;
+  error?: unknown | string | null;
 }
 
 export type { FormMutateState };

@@ -9,6 +9,7 @@ import { PropsWithChildren, useMemo } from "react";
 
 import { ROUTES } from "@/consts/router";
 import { ApplicationDataProvider } from "@/context/ApplicationData";
+import { NotificationsProvider } from "@/context/Notifications";
 import "../global.css";
 import ReactQueryClientProvider from "./components/ReactQueryClientProvider";
 
@@ -48,16 +49,18 @@ export default function RootLayout({
       <body className={inter.className}>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <AppRouterCacheProvider>
-            <ReactQueryClientProvider>
-              <ThemeRegistry>
-                <ApplicationDataProvider
-                  value={{
-                    routes,
-                  }}>
-                  {children}
-                </ApplicationDataProvider>
-              </ThemeRegistry>
-            </ReactQueryClientProvider>
+            <NotificationsProvider>
+              <ReactQueryClientProvider>
+                <ThemeRegistry>
+                  <ApplicationDataProvider
+                    value={{
+                      routes,
+                    }}>
+                    {children}
+                  </ApplicationDataProvider>
+                </ThemeRegistry>
+              </ReactQueryClientProvider>
+            </NotificationsProvider>
           </AppRouterCacheProvider>
         </NextIntlClientProvider>
       </body>

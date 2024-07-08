@@ -6,6 +6,7 @@ import FormModalHeader from "@/components/FormModalHeader";
 import OverlayCenter from "@/components/OverlayCenter";
 import OverlayCenterAlert from "@/components/OverlayCenterAlert";
 import { useApplicationData } from "@/context/ApplicationData";
+import { NotificationsTypes, useNotifications } from "@/context/Notifications";
 import postRegisterIssuer from "@/services/auth/postRegisterIssuer";
 import { RegisterPayload } from "@/services/auth/types";
 import { getByInviteCode } from "@/services/issuers";
@@ -14,6 +15,7 @@ import HubIcon from "@mui/icons-material/Hub";
 import { Box, CircularProgress } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { useMutation, useQuery } from "react-query";
 import SignupForm, { SignupFormValues } from "../SignupForm";
 
@@ -21,6 +23,7 @@ const NAMESPACE_TRANSLATION_SIGNUP_ISSUER = "SignupFormIssuer";
 const NAMESPACE_TRANSLATION_SIGNUP = "SignupForm";
 
 export default function Page() {
+  const { add } = useNotifications();
   const router = useRouter();
   const params = useParams<{ inviteCode: string }>();
   const inviteCode = params?.inviteCode;
@@ -28,13 +31,14 @@ export default function Page() {
   const tSignup = useTranslations(NAMESPACE_TRANSLATION_SIGNUP);
   const { routes } = useApplicationData();
 
+  const queryKeyInvite = ["getByInviteCode", inviteCode || ""];
+
   const {
-    isError: isGetIssuerError,
     isLoading: isGetIssuerLoading,
     data: issuerData,
     error: issuerError,
   } = useQuery(
-    ["getByInviteCode", inviteCode || ""],
+    queryKeyInvite,
     async () =>
       getByInviteCode(inviteCode || "", {
         error: { message: "getByInviteCodeError" },
@@ -43,6 +47,10 @@ export default function Page() {
       enabled: !!inviteCode,
     }
   );
+
+  useEffect(() => {
+    add(NotificationsTypes.ERROR, "TEST", "FAULT");
+  }, []);
 
   const {
     mutateAsync: mutateSignupAsync,
@@ -63,7 +71,7 @@ export default function Page() {
         password,
         first_name: "",
         last_name: "",
-        email: issuerData?.contact_email,
+        email: issuerData?.data.contact_email,
       };
 
       mutateSignupAsync(payload).then(() => {
@@ -102,10 +110,10 @@ export default function Page() {
     );
   }
 
-  if (isGetIssuerError) {
+  if (issuerError) {
     return (
       <OverlayCenterAlert>
-        {tSignup.rich((issuerError as Error)?.message, {
+        {tSignup.rich(issuerError, {
           contactLink: ContactLink,
         })}
       </OverlayCenterAlert>
@@ -136,7 +144,7 @@ export default function Page() {
           mutateState={{
             isLoading: isSignupLoading,
             isError: isSignupError,
-            error: `${(signupError as Error)?.message}`,
+            error: signupError,
           }}
         />
       </Box>

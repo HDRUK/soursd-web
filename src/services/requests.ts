@@ -1,6 +1,7 @@
 import {
   QueryOptions,
   QueryPayload,
+  ResponseJson,
   ResponseTranslations,
 } from "@/types/requests";
 import { objectToQuerystring } from "@/utils/requests";
@@ -26,10 +27,38 @@ function handleResponseError(
       response.status === 401
         ? messages["401"]?.message
         : messages.error?.message
-    );
+    ).message;
   }
 
   return null;
+}
+
+function handleDataError<T>(
+  data: ResponseJson<T>,
+  messages: ResponseTranslations
+) {
+  if (data.message !== "success") {
+    return new Error(messages.error?.message);
+  }
+
+  return null;
+}
+
+async function handleJsonResponse(
+  response: Response,
+  messages: ResponseTranslations
+) {
+  const responseError = handleResponseError(response, messages);
+
+  if (responseError) return Promise.reject(responseError);
+
+  const data = await response.json();
+
+  const dataError = handleDataError(data, messages);
+
+  if (dataError) return Promise.reject(dataError);
+
+  return Promise.resolve(data);
 }
 
 async function getRequest<T>(url: string, payload?: T, options?: RequestInit) {
@@ -110,4 +139,5 @@ export {
   patchRequest,
   postRequest,
   putRequest,
+  handleJsonResponse,
 };

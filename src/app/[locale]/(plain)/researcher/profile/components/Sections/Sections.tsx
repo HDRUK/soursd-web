@@ -94,7 +94,7 @@ export default function Sections() {
           mutateState={{
             isLoading: isUpdateLoading,
             isError: isUpdateError || isGetError,
-            error: `${(updateError as Error)?.message || (getError as Error)?.message}`,
+            error: updateError || getError,
           }}
           onSubmit={handlePersonalDetailsSubmit}
         />

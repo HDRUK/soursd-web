@@ -9,7 +9,7 @@ import { postLogin, postLoginOTP } from "@/services/auth";
 import getUser from "@/services/users/getUser";
 import { setAuthData } from "@/utils/auth";
 import HubIcon from "@mui/icons-material/Hub";
-import { Alert, Box, Grid, useTheme } from "@mui/material";
+import { Alert, Box, useTheme } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
@@ -99,7 +99,7 @@ export default function LoginFormModal() {
     [payload]
   );
 
-  const error = `${(loginError as Error) || (userError as Error)?.message}`;
+  const error = loginError || userError;
   const previousUrl = getPreviousUrl();
 
   const isFromRegister = [routes.signup.path, routes.signupIssuer.path].find(
