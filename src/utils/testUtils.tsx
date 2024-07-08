@@ -1,6 +1,7 @@
 import ReactQueryClientProvider from "@/app/[locale]/components/ReactQueryClientProvider";
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
 import messages from "@/config/locales/en.json";
+import { NotificationsProvider } from "@/context/Notifications";
 import { AppCacheProvider } from "@mui/material-nextjs/v14-pagesRouter";
 import {
   RenderHookOptions,
@@ -29,9 +30,11 @@ const Wrapper = ({ children }: { children: ReactNode }) => {
   return (
     <NextIntlClientProvider locale="en" messages={messages}>
       <AppCacheProvider>
-        <ReactQueryClientProvider>
-          <ThemeRegistry>{children}</ThemeRegistry>
-        </ReactQueryClientProvider>
+        <NotificationsProvider>
+          <ReactQueryClientProvider>
+            <ThemeRegistry>{children}</ThemeRegistry>
+          </ReactQueryClientProvider>
+        </NotificationsProvider>
       </AppCacheProvider>
     </NextIntlClientProvider>
   );
