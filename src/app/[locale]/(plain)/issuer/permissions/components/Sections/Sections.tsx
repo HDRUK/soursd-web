@@ -21,7 +21,7 @@ const NAMESPACE_TRANSLATIONS_USERS = "Users";
 // This will come from the store when issuer is logged on
 const ISSUER_ID = 1;
 
-interface SectionsProps {
+export interface SectionsProps {
   userId: number;
   type: EntityType;
 }
@@ -76,7 +76,7 @@ export default function Sections({ userId, type }: SectionsProps) {
       <PageSection sx={{ flexGrow: 1 }}>
         {(isPermissionsLoading || isUserLoading) && (
           <OverlayCenter>
-            <CircularProgress />
+            <CircularProgress aria-label={tPermissions("loading")} />
           </OverlayCenter>
         )}
         {(isUserError || isPermissionsError) && (

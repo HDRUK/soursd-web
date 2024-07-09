@@ -1,3 +1,4 @@
+import { ResponseMessageType } from "@/consts/requests";
 import { faker } from "@faker-js/faker";
 import {
   deleteRequest,
@@ -8,7 +9,8 @@ import {
 } from "./requests";
 
 const mockResponse = {
-  name: faker.person.fullName(),
+  data: null,
+  message: ResponseMessageType.SUCCESS,
 };
 
 const mockPayload = {
@@ -16,12 +18,6 @@ const mockPayload = {
 };
 
 const mockToken = faker.string.uuid();
-
-global.fetch = jest.fn(() =>
-  Promise.resolve({
-    json: () => Promise.resolve(mockResponse),
-  })
-) as jest.Mock;
 
 jest.mock("js-cookie", () => ({
   get: () =>
@@ -32,7 +28,7 @@ jest.mock("js-cookie", () => ({
 
 describe("Requests utils", () => {
   it("getRequest", async () => {
-    const response = await getRequest("/url", mockPayload, {
+    const response = await getRequest("/test", mockPayload, {
       headers: {
         "content-type": "application/json;charset=UTF-8",
       },
@@ -40,7 +36,7 @@ describe("Requests utils", () => {
     const responseJson = await response.json();
 
     expect(global.fetch).toHaveBeenCalledWith(
-      `/url?query=${mockPayload.query}`,
+      `/test?query=${mockPayload.query}`,
       {
         headers: {
           Authorization: `Bearer ${mockToken}`,
@@ -53,14 +49,14 @@ describe("Requests utils", () => {
   });
 
   it("postRequest", async () => {
-    const response = await postRequest("/url", mockPayload, {
+    const response = await postRequest("/test", mockPayload, {
       headers: {
         "content-type": "application/json;charset=UTF-8",
       },
     });
     const responseJson = await response.json();
 
-    expect(global.fetch).toHaveBeenCalledWith(`/url`, {
+    expect(global.fetch).toHaveBeenCalledWith(`/test`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${mockToken}`,
@@ -72,14 +68,14 @@ describe("Requests utils", () => {
   });
 
   it("putRequest", async () => {
-    const response = await putRequest("/url", mockPayload, {
+    const response = await putRequest("/test", mockPayload, {
       headers: {
         "content-type": "application/json;charset=UTF-8",
       },
     });
     const responseJson = await response.json();
 
-    expect(global.fetch).toHaveBeenCalledWith(`/url`, {
+    expect(global.fetch).toHaveBeenCalledWith(`/test`, {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${mockToken}`,
@@ -91,14 +87,14 @@ describe("Requests utils", () => {
   });
 
   it("patchRequest", async () => {
-    const response = await patchRequest("/url", mockPayload, {
+    const response = await patchRequest("/test", mockPayload, {
       headers: {
         "content-type": "application/json;charset=UTF-8",
       },
     });
     const responseJson = await response.json();
 
-    expect(global.fetch).toHaveBeenCalledWith(`/url`, {
+    expect(global.fetch).toHaveBeenCalledWith(`/test`, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${mockToken}`,
@@ -110,14 +106,14 @@ describe("Requests utils", () => {
   });
 
   it("deleteRequest", async () => {
-    const response = await deleteRequest("/url", {
+    const response = await deleteRequest("/test", {
       headers: {
         "content-type": "application/json;charset=UTF-8",
       },
     });
     const responseJson = await response.json();
 
-    expect(global.fetch).toHaveBeenCalledWith(`/url`, {
+    expect(global.fetch).toHaveBeenCalledWith(`/test`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${mockToken}`,

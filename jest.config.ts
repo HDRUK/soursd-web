@@ -44,6 +44,9 @@ const customJestConfig = {
   transform: {
     "^.+\\.js$": "babel-jest",
   },
+  globals: {
+    fetch: global.fetch,
+  },
 };
 
 module.exports = createJestConfig(customJestConfig);

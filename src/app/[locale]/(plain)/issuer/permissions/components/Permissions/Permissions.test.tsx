@@ -5,14 +5,6 @@ import { faker } from "@faker-js/faker";
 import { axe } from "jest-axe";
 import Permissions, { PermissionsProps } from ".";
 
-global.fetch = jest.fn().mockResolvedValue({
-  ok: true,
-  json: async () =>
-    Promise.resolve({
-      message: "success",
-    }),
-});
-
 const mockedProps = {
   userId: faker.number.int(),
   issuerId: faker.number.int(),
