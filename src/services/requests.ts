@@ -1,3 +1,4 @@
+import { ResponseMessageType } from "@/consts/requests";
 import {
   QueryOptions,
   QueryPayload,
@@ -22,9 +23,9 @@ function handleResponseError(
   response: Response,
   messages: ResponseTranslations
 ) {
-  if (!response.ok) {
+  if (!response?.ok) {
     return new Error(
-      response.status === 401
+      response?.status === 401
         ? messages["401"]?.message
         : messages.error?.message
     ).message;
@@ -37,7 +38,7 @@ function handleDataError<T>(
   data: ResponseJson<T>,
   messages: ResponseTranslations
 ) {
-  if (data.message !== "success") {
+  if (data.message !== ResponseMessageType.SUCCESS) {
     return new Error(messages.error?.message);
   }
 

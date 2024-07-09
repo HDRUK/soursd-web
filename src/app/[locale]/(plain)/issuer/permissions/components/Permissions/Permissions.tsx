@@ -12,7 +12,7 @@ import { useMutatePermissions } from "../../hooks";
 
 const NAMESPACE_TRANSLATIONS_PERMISSIONS = "Permissions";
 
-interface SectionsProps {
+export interface PermissionsProps {
   userId: number;
   type: EntityType;
   issuerId: number;
@@ -20,13 +20,13 @@ interface SectionsProps {
   userPermissions: Permission[];
 }
 
-export default function Sections({
+export default function Permissions({
   userId,
   issuerId,
   permissions,
   userPermissions,
   type,
-}: SectionsProps) {
+}: PermissionsProps) {
   const tPermissions = useTranslations(NAMESPACE_TRANSLATIONS_PERMISSIONS);
 
   const {
