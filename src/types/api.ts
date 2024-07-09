@@ -4,6 +4,7 @@ enum FileType {
 
 enum EntityType {
   researcher = "RESEARCHER",
+  organisation = "ORGAGNISATION",
 }
 
 export { FileType, EntityType };

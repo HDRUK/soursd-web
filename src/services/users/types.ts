@@ -32,10 +32,13 @@ interface UpdateUserResponse {
 
 type UserResponse = User;
 
+type UsersResponse = User[];
+
 export type {
   ResearcherInviteResponse,
   UpdateUserPayload,
   UpdateUserResponse,
   UserResponse,
   UpdatePermissonsPayload,
+  UsersResponse,
 };
