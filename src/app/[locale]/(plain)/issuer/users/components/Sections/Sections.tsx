@@ -29,11 +29,13 @@ export default function Sections() {
     })
   );
 
+  console.log("************** organisationsData", organisationsData);
+
   return (
     <>
       {isOrganisationsLoading && (
         <OverlayCenter variant="contained">
-          <CircularProgress />
+          <CircularProgress aria-label={tUsersList("loadingAriaLabel")} />
         </OverlayCenter>
       )}
       <PageSection sx={{ display: "flex" }}>

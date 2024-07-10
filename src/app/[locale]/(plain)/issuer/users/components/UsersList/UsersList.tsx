@@ -45,6 +45,7 @@ export default function UsersList({ organisations }: UsersListProps) {
                 icon={<BusinessIcon />}
                 actions={
                   <ActionMenu
+                    aria-label={`${organisation_name} actions`}
                     items={[
                       <Button
                         size="small"
@@ -78,36 +79,39 @@ export default function UsersList({ organisations }: UsersListProps) {
                 </TableHead>
                 <TableBody>
                   {registries.map(
-                    ({ user: { email, first_name, last_name, id } }) => (
-                      <TableRow>
-                        <TableCell>
-                          <Text
-                            endIcon={
-                              <NewReleasesIcon
-                                color="warning"
-                                titleAccess="Not approved"
-                              />
-                            }>
-                            {email}
-                          </Text>
-                        </TableCell>
-                        <TableCell>{first_name}</TableCell>
-                        <TableCell>{last_name}</TableCell>
-                        <TableCell sx={{ pr: 0 }}>
-                          <ActionMenu
-                            items={[
-                              <Button
-                                size="small"
-                                component={Link}
-                                href={`${routes.permissionsResearcherIssuer.path}/${id}`}>
-                                Permissions
-                              </Button>,
-                              <Button size="small">Approve</Button>,
-                            ]}
-                          />
-                        </TableCell>
-                      </TableRow>
-                    )
+                    ({ user: { email, first_name, last_name, id } }) => {
+                      return (
+                        <TableRow>
+                          <TableCell>
+                            <Text
+                              endIcon={
+                                <NewReleasesIcon
+                                  color="warning"
+                                  titleAccess="Not approved"
+                                />
+                              }>
+                              {email}
+                            </Text>
+                          </TableCell>
+                          <TableCell>{first_name}</TableCell>
+                          <TableCell>{last_name}</TableCell>
+                          <TableCell sx={{ pr: 0 }}>
+                            <ActionMenu
+                              aria-label={`${email} actions`}
+                              items={[
+                                <Button
+                                  size="small"
+                                  component={Link}
+                                  href={`${routes.permissionsResearcherIssuer.path}/${id}`}>
+                                  Permissions
+                                </Button>,
+                                <Button size="small">Approve</Button>,
+                              ]}
+                            />
+                          </TableCell>
+                        </TableRow>
+                      );
+                    }
                   )}
                 </TableBody>
               </Table>

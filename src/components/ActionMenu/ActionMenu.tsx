@@ -6,9 +6,9 @@ import {
   MenuItem,
   MenuList,
 } from "@mui/material";
-import { ReactNode, useState } from "react";
+import { HTMLAttributes, ReactNode, useState } from "react";
 
-interface ActionMenuProps {
+interface ActionMenuProps extends HTMLAttributes<HTMLSpanElement> {
   items: ReactNode[];
   onOpen?(): void;
   onClose?(): void;
@@ -18,8 +18,11 @@ export default function ActionMenu({
   items,
   onOpen,
   onClose,
+  ...restProps
 }: ActionMenuProps) {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+
+  const { ["aria-label"]: ariaLabel, ...additionalProps } = restProps;
 
   const handleOpen = ({ currentTarget }: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(currentTarget);
@@ -32,8 +35,8 @@ export default function ActionMenu({
   };
 
   return (
-    <span>
-      <IconButton size="small" onClick={handleOpen}>
+    <span {...additionalProps}>
+      <IconButton size="small" onClick={handleOpen} aria-label={ariaLabel}>
         <MoreVertIcon />
       </IconButton>
       <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={handleClose}>

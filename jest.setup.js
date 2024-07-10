@@ -57,6 +57,27 @@ async function mockFetch(url) {
         }),
       };
     }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/organisations`: {
+      return {
+        ok: true,
+        status: 200,
+        json: async () => ({
+          message: ResponseMessageType.SUCCESS,
+          data: {
+            data: [
+              mockedOrganisation({
+                organisation_name: "Organisation 1",
+                id: 1,
+              }),
+              mockedOrganisation({
+                organisation_name: "Organisation 2",
+                id: 2,
+              }),
+            ],
+          },
+        }),
+      };
+    }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/users/permissions`: {
       return {
         ok: true,
