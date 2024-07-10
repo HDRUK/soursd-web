@@ -22,13 +22,17 @@ import {
   TableRow,
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
+import { useTranslations } from "next-intl";
 
 interface UsersListProps {
   organisations: Organisation[];
 }
 
+const NAMESPACE_TRANSLATIONS_USERS_LIST = "UsersList";
+
 export default function UsersList({ organisations }: UsersListProps) {
   const { routes } = useApplicationData();
+  const t = useTranslations(NAMESPACE_TRANSLATIONS_USERS_LIST);
 
   return (
     <>
@@ -50,9 +54,9 @@ export default function UsersList({ organisations }: UsersListProps) {
                       <Button
                         size="small"
                         href={`${routes.permissionsOrganisationIssuer.path}/${id}`}>
-                        Permissions
+                        {t("permissions")}
                       </Button>,
-                      <Button size="small">Approve</Button>,
+                      <Button size="small"> {t("approve")}</Button>,
                     ]}
                   />
                 }>
@@ -71,9 +75,9 @@ export default function UsersList({ organisations }: UsersListProps) {
                 aria-label="simple table">
                 <TableHead sx={{ background: grey["300"] }}>
                   <TableRow>
-                    <TableCell>Email</TableCell>
-                    <TableCell>First name</TableCell>
-                    <TableCell>Last name</TableCell>
+                    <TableCell>{t("emailHeading")}</TableCell>
+                    <TableCell>{t("firstNameHeading")}</TableCell>
+                    <TableCell>{t("lastNameHeading")}</TableCell>
                     <TableCell sx={{ width: "40px" }} />
                   </TableRow>
                 </TableHead>
@@ -103,9 +107,9 @@ export default function UsersList({ organisations }: UsersListProps) {
                                   size="small"
                                   component={Link}
                                   href={`${routes.permissionsResearcherIssuer.path}/${id}`}>
-                                  Permissions
+                                  {t("permissions")}
                                 </Button>,
-                                <Button size="small">Approve</Button>,
+                                <Button size="small"> {t("approve")}</Button>,
                               ]}
                             />
                           </TableCell>

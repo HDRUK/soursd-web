@@ -103,7 +103,12 @@
   },
   "UsersList": {
     "title": "Users",
-    "loadingAriaLabel": "Loading page"
+    "loadingAriaLabel": "Loading page",
+    "approve": "Approve",
+    "permissions": "Permissions",
+    "emailHeading": "Email",
+    "firstNameHeading": "First name",
+    "lastNameHeading": "Last name"
   },
   "PersonalDetails": {
     "title": "Personal details",
