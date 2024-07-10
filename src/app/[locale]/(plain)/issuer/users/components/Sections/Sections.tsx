@@ -29,8 +29,6 @@ export default function Sections() {
     })
   );
 
-  console.log("************** organisationsData", organisationsData);
-
   return (
     <>
       {isOrganisationsLoading && (
