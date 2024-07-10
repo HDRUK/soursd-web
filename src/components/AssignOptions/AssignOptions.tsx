@@ -43,7 +43,7 @@ export default function PermissionsSection({
       <form onSubmit={handleSubmit(onSubmit)}>
         {mutateState.isError && (
           <Alert color="error" sx={{ mb: 3 }}>
-            {mutateState.error}
+            {`${mutateState.error}`}
           </Alert>
         )}
         <ActionList sx={{ listStyleType: "none", p: 0, m: 0, mb: 2 }}>

@@ -3,9 +3,7 @@ import { getAuthData } from "@/utils/auth";
 import { getLocale } from "@/utils/language";
 import { redirect } from "next/navigation";
 
-export default function withAuth<T extends JSX.IntrinsicAttributes>(
-  WrappedComponent: React.ComponentType<T>
-) {
+export default function withAuth<T>(WrappedComponent: React.ComponentType<T>) {
   return async (props: T) => {
     const authData = await getAuthData();
     const locale = await getLocale();
@@ -14,6 +12,6 @@ export default function withAuth<T extends JSX.IntrinsicAttributes>(
       redirect(`/${locale || "en"}${ROUTES.login.path}`);
     }
 
-    return <WrappedComponent {...(props as T)} />;
+    return <WrappedComponent {...(props as T & JSX.IntrinsicAttributes)} />;
   };
 }

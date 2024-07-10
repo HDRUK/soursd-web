@@ -23,6 +23,14 @@ const ROUTES = {
     path: "/issuer/profile",
     key: "ProfileIssuer",
   },
+  permissionsResearcherIssuer: {
+    path: "/issuer/permissions/user/",
+    key: "PermissionsResearcherIssuer",
+  },
+  permissionsOrganisationIssuer: {
+    path: "/issuer/permissions/organisation/",
+    key: "PermissionsOrganisationIssuer",
+  },
   profileResearcher: {
     path: "/researcher/profile",
     key: "Profile",

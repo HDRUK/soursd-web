@@ -91,6 +91,11 @@ export default function Sections({ userId }: SectionsProps) {
 
   return (
     <>
+      {(isPermissionsLoading || isUserLoading) && (
+        <OverlayCenter variant="contained">
+          <CircularProgress />
+        </OverlayCenter>
+      )}
       <PageSection sx={{ display: "flex" }}>
         <Typography variant="h4">{tPermissions("title")}</Typography>
         {!isPermissionsLoading && !isUserLoading && userData?.data && (
@@ -101,11 +106,6 @@ export default function Sections({ userId }: SectionsProps) {
         )}
       </PageSection>
       <PageSection sx={{ flexGrow: 1 }}>
-        {(isPermissionsLoading || isUserLoading) && (
-          <OverlayCenter>
-            <CircularProgress />
-          </OverlayCenter>
-        )}
         {(isUserError || isPermissionsError) && (
           <Alert color="error" sx={{ mb: 3 }}>
             {isUserError &&

@@ -78,14 +78,14 @@ export default function Sections() {
 
   return (
     <>
-      <Typography variant="h6" sx={{ mb: 2 }}>
-        {t("title")}
-      </Typography>
       {!userDetails && isGetLoading && (
-        <OverlayCenter>
+        <OverlayCenter variant="contained">
           <CircularProgress />
         </OverlayCenter>
       )}
+      <Typography variant="h6" sx={{ mb: 2 }}>
+        {t("title")}
+      </Typography>
       {userDetails && (
         <PersonalDetails
           emailVerified={false}

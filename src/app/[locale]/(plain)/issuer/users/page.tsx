@@ -2,16 +2,13 @@ import { withAuth } from "@/components/Auth";
 import DecoratorPage from "@/modules/DecoratorPage";
 import Sections from "./components/Sections";
 
-interface PageProps {
-  params: { userId: string };
-}
-
-function Page({ params }: PageProps) {
+function Page() {
   return (
     <DecoratorPage>
-      <Sections userId={+params.userId} />
+      <Sections />
     </DecoratorPage>
   );
 }
 
-export default withAuth(Page);
+// export default withAuth(Page);
+export default Page;

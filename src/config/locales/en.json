@@ -97,6 +97,9 @@
   "Users": {
     "getUserError": "Could not get the relevant user"
   },
+  "UsersList": {
+    "title": "Users"
+  },
   "PersonalDetails": {
     "title": "Personal details",
     "download": "Download CV",

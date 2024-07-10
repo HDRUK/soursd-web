@@ -1,9 +1,12 @@
 import { Box } from "@mui/material";
 import { BoxProps } from "@mui/system";
 
-export type OverlayCenterProps = BoxProps;
+export interface OverlayCenterProps extends BoxProps {
+  variant?: "screen" | "contained";
+}
 
 export default function OverlayCenter({
+  variant = "screen",
   children,
   sx,
   ...restProps
@@ -12,7 +15,7 @@ export default function OverlayCenter({
     <Box
       {...restProps}
       sx={{
-        position: "fixed",
+        position: variant === "screen" ? "fixed" : "absolute",
         top: "50%",
         left: "50%",
         transform: "translate(-50%, -50%)",
