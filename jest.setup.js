@@ -2,6 +2,10 @@ import { defineMatchMedia } from "@/utils/testUtils";
 import "@testing-library/jest-dom";
 import "jest-axe/extend-expect";
 import { forwardRef, useImperativeHandle } from "react";
+import { ResponseMessageType } from "./src/consts/requests";
+import { mockedPermission } from "./mocks/data/permission";
+import { mockedUser } from "./mocks/data/user";
+import { mockedOrganisation } from "./mocks/data/organisation";
 
 const nextRouterMock = require("next-router-mock");
 
@@ -39,6 +43,75 @@ global.matchMedia = () => {
   };
 };
 
+async function mockFetch(url) {
+  switch (url) {
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/users/1`: {
+      return {
+        ok: true,
+        status: 200,
+        json: async () => ({
+          message: ResponseMessageType.SUCCESS,
+          data: mockedUser({
+            id: 1,
+          }),
+        }),
+      };
+    }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/users/permissions`: {
+      return {
+        ok: true,
+        status: 200,
+        json: async () => ({
+          message: ResponseMessageType.SUCCESS,
+          data: [
+            mockedPermission({
+              id: 1,
+            }),
+            mockedPermission({
+              id: 2,
+            }),
+          ],
+        }),
+      };
+    }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/organisations/permissions`: {
+      return {
+        ok: true,
+        status: 200,
+        json: async () => ({
+          message: ResponseMessageType.SUCCESS,
+          data: [
+            mockedOrganisation({
+              id: 1,
+            }),
+            mockedOrganisation({
+              id: 2,
+            }),
+          ],
+        }),
+      };
+    }
+    default: {
+      if (url.includes("/test")) {
+        return {
+          ok: true,
+          status: 200,
+          json: async () => ({
+            message: ResponseMessageType.SUCCESS,
+            data: null,
+          }),
+        };
+      }
+
+      throw new Error(`Unhandled request: ${url}`);
+    }
+  }
+}
+
 beforeAll(() => {
   defineMatchMedia(1024);
+
+  global.fetch = jest.fn();
 });
+
+beforeEach(() => global.fetch.mockImplementation(mockFetch));

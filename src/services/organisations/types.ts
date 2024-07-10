@@ -14,4 +14,24 @@ interface OrganisationsResponse {
   data: Organisation[];
 }
 
-export type { OrganisationsResponse, OrganisationResponse, Organisation };
+interface UpdateOrganisationPermissionsResponse {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  email_verified_at: string;
+}
+
+interface UpdateOrganisationPermissonsPayload {
+  organisation_id: number;
+  issuer_id: number;
+  permissions: number[];
+}
+
+export type {
+  OrganisationsResponse,
+  OrganisationResponse,
+  Organisation,
+  UpdateOrganisationPermissionsResponse,
+  UpdateOrganisationPermissonsPayload,
+};
