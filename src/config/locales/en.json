@@ -91,8 +91,12 @@
   },
   "Permissions": {
     "title": "Permissions",
+    "getOrganisationError": "Could not get the organisation",
+    "getUserError": "Could not get the user",
     "getPermissionsError": "Could not get a list of all permissions",
-    "updatePermissionsError": "Could not update the permissions"
+    "updatePermissionsError": "Could not update the permissions",
+    "updateOrganisationPermissionsError": "Could not update the orgnisations permissions",
+    "loading": "Loading page"
   },
   "Users": {
     "getUserError": "Could not get the relevant user"

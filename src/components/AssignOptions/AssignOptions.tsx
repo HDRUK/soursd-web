@@ -49,6 +49,7 @@ export default function PermissionsSection({
         <ActionList sx={{ listStyleType: "none", p: 0, m: 0, mb: 2 }}>
           {checkboxData.map(({ label, id }) => (
             <ActionListItem
+              key={id}
               primaryText={label}
               primaryAction={
                 <Switch

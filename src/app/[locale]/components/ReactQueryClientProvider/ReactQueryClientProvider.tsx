@@ -43,7 +43,6 @@ export default function ReactQueryClientProvider({
       _z,
       { options: { mutationKey } }: Mutation<unknown, unknown, unknown, unknown>
     ) => {
-      console.log("failure", mutationKey);
       if (mutationKey) remove(NotificationsTypes.ERROR, mutationKey);
     },
   });
