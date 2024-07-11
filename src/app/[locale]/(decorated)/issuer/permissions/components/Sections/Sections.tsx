@@ -69,16 +69,16 @@ export default function Sections({ userId, type }: SectionsProps) {
 
   return (
     <>
+      {(isPermissionsLoading || isUserLoading) && (
+        <OverlayCenter variant="contained">
+          <CircularProgress aria-label={tPermissions("loading")} />
+        </OverlayCenter>
+      )}
       <PageSection sx={{ display: "flex" }}>
         <Typography variant="h4">{tPermissions("title")}</Typography>
         {maskProps && <MaskLabel {...maskProps} />}
       </PageSection>
       <PageSection sx={{ flexGrow: 1 }}>
-        {(isPermissionsLoading || isUserLoading) && (
-          <OverlayCenter>
-            <CircularProgress aria-label={tPermissions("loading")} />
-          </OverlayCenter>
-        )}
         {(isUserError || isPermissionsError) && (
           <Alert color="error" sx={{ mb: 3 }}>
             {isUserError &&

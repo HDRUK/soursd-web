@@ -1,6 +1,7 @@
 import { withAuth } from "@/components/Auth";
 import DecoratorPage from "@/modules/DecoratorPage";
-import Sections from "./components/Sections";
+import { EntityType } from "@/types/api";
+import Sections from "../../components/Sections";
 
 interface PageProps {
   params: { userId: string };
@@ -9,7 +10,7 @@ interface PageProps {
 function Page({ params }: PageProps) {
   return (
     <DecoratorPage>
-      <Sections userId={+params.userId} />
+      <Sections userId={+params.userId} type={EntityType.RESEARCHER} />
     </DecoratorPage>
   );
 }

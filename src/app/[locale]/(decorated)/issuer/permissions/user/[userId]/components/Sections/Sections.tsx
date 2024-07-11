@@ -109,11 +109,11 @@ export default function Sections({ userId }: SectionsProps) {
         {(isUserError || isPermissionsError) && (
           <Alert color="error" sx={{ mb: 3 }}>
             {isUserError &&
-              tUsers.rich(`${(userError as Error)?.message}`, {
+              tUsers.rich(`${userError}`, {
                 contactLink: ContactLink,
               })}
             {isPermissionsError &&
-              tPermissions.rich(`${(permissionsError as Error)?.message}`, {
+              tPermissions.rich(`${permissionsError}`, {
                 contactLink: ContactLink,
               })}
           </Alert>
