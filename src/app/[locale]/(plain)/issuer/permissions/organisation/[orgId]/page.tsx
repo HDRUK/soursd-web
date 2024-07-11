@@ -10,7 +10,7 @@ interface PageProps {
 function Page({ params }: PageProps) {
   return (
     <DecoratorPage>
-      <Sections userId={+params.orgId} type={EntityType.organisation} />
+      <Sections userId={+params.orgId} type={EntityType.ORGANISATION} />
     </DecoratorPage>
   );
 }

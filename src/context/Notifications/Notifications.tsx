@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import {
   ReactNode,
   createContext,
@@ -9,6 +10,7 @@ import {
   useState,
 } from "react";
 import { MutationKey, QueryKey } from "react-query";
+import { toast } from "react-toastify";
 
 enum NotificationsTypes {
   SUCCESS = "success",
@@ -20,9 +22,19 @@ enum NotificationsTypes {
 type NotificationsType = NotificationsTypes;
 
 type NotificationsState = Record<NotificationsType, Record<string, string>>;
+
+interface NotificationsOptions {
+  immediate?: boolean;
+  tKey: string;
+}
+
 interface NotificationsHelpers {
   add: (type: NotificationsType, queryKey: QueryKey, message: string) => void;
   remove: (type: NotificationsType, queryKey: QueryKey) => void;
+}
+
+interface NotificationProviderProps {
+  children: ReactNode;
 }
 
 const NotificationContext = createContext<
@@ -59,28 +71,52 @@ const getTypeByQueryKey = (
   return filteredData;
 };
 
-const useNotifications = (queryKeys?: (QueryKey | MutationKey | string)[]) => {
+const useNotifications = (
+  queryKeys?: (QueryKey | MutationKey | string)[],
+  options?: NotificationsOptions
+) => {
+  const t = useTranslations(options?.tKey);
   const { error, success, info, warning, add, remove } =
     useContext(NotificationContext);
+
+  const filteredError = getTypeByQueryKey(queryKeys || [], error);
+  const filteredSuccess = getTypeByQueryKey(queryKeys || [], success);
+  const filteredInfo = getTypeByQueryKey(queryKeys || [], info);
+  const filteredWarning = getTypeByQueryKey(queryKeys || [], warning);
+
+  const showToastNotifications = (
+    messages: Record<string, string>,
+    type: NotificationsTypes
+  ) => {
+    Object.entries(messages).forEach(([queryKey, value]) => {
+      toast[type](t(value), {
+        toastId: queryKey,
+        onClose: () => remove(type, queryKey),
+      });
+    });
+  };
+
+  if (options?.immediate) {
+    showToastNotifications(filteredError, NotificationsTypes.ERROR);
+    showToastNotifications(filteredSuccess, NotificationsTypes.SUCCESS);
+    showToastNotifications(filteredInfo, NotificationsTypes.INFO);
+    showToastNotifications(filteredWarning, NotificationsTypes.WARNING);
+  }
 
   const params = useMemo(
     () => ({
       add,
       remove,
-      error: getTypeByQueryKey(queryKeys || [], error),
-      success: getTypeByQueryKey(queryKeys || [], success),
-      info: getTypeByQueryKey(queryKeys || [], info),
-      warning: getTypeByQueryKey(queryKeys || [], warning),
+      error: filteredError,
+      success: filteredSuccess,
+      info: filteredInfo,
+      warning: filteredWarning,
     }),
     [error, success, info, warning, queryKeys]
   );
 
   return params;
 };
-
-interface NotificationProviderProps {
-  children: ReactNode;
-}
 
 const NotificationsProvider = ({ children }: NotificationProviderProps) => {
   const ref = useRef<NotificationsState>({
@@ -139,6 +175,6 @@ const NotificationsProvider = ({ children }: NotificationProviderProps) => {
   );
 };
 
-export { NotificationsProvider, useNotifications, NotificationsTypes };
+export { NotificationsProvider, NotificationsTypes, useNotifications };
 
 export type { NotificationsType };

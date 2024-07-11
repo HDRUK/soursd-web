@@ -12,7 +12,7 @@ export default function useMutatePermissions(type: EntityType, userId: number) {
     async (
       payload: UpdatePermissonsPayload | UpdateOrganisationPermissonsPayload
     ) => {
-      if (type === EntityType.organisation) {
+      if (type === EntityType.ORGANISATION) {
         return postOrganisationPermissions(
           payload as UpdateOrganisationPermissonsPayload,
           {
@@ -35,7 +35,7 @@ export default function useMutatePermissions(type: EntityType, userId: number) {
       "issuer_id" | "permissions"
     >
   ) => {
-    if (type === EntityType.organisation) {
+    if (type === EntityType.ORGANISATION) {
       return mutation.mutateAsync({
         ...payload,
         organisation_id: userId,

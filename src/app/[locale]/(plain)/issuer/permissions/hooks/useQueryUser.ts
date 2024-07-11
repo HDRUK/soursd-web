@@ -7,7 +7,7 @@ export default function useQueryUser(type: EntityType, userId: number) {
   return useQuery(["getUser", userId], async ({ queryKey }) => {
     const [, id] = queryKey;
 
-    if (type === EntityType.organisation) {
+    if (type === EntityType.ORGANISATION) {
       return getOrganisation(id, {
         error: {
           message: "getOrganisationError",

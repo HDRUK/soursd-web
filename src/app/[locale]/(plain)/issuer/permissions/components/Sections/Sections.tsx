@@ -54,7 +54,7 @@ export default function Sections({ userId, type }: SectionsProps) {
 
   if (!isPermissionsLoading && !isUserLoading && userData?.data) {
     maskProps =
-      type === EntityType.researcher
+      type === EntityType.RESEARCHER
         ? {
             initials: getInitialsFromUser(userData?.data as User),
             label: (userData?.data as User).email,

@@ -14,7 +14,7 @@ const mockedProps = {
     mockedPermission({ id: 3 }),
   ],
   userPermissions: [mockedPermission({ id: 1 }), mockedPermission({ id: 3 })],
-  type: EntityType.researcher,
+  type: EntityType.RESEARCHER,
 };
 
 const renderPermissions = (props?: Partial<PermissionsProps>) =>
@@ -30,7 +30,7 @@ describe("<Permissions />", () => {
 
   it("calls the correct methods for an organisation", async () => {
     renderPermissions({
-      type: EntityType.organisation,
+      type: EntityType.ORGANISATION,
     });
 
     const button = screen.getByRole("button");

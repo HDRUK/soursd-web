@@ -6,7 +6,7 @@ import Sections, { SectionsProps } from ".";
 
 const mockedProps = {
   userId: faker.number.int(),
-  type: EntityType.researcher,
+  type: EntityType.RESEARCHER,
 };
 
 const renderSections = (props?: Partial<SectionsProps>) =>

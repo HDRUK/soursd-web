@@ -4,16 +4,22 @@ import AccordionTitle from "@/components/AccordionTitle";
 import ActionMenu from "@/components/ActionMenu/ActionMenu";
 import Text from "@/components/Text";
 import { useApplicationData } from "@/context/ApplicationData";
+import { PostApprovalsPayloadWithEntity } from "@/services/approvals";
 import { Organisation } from "@/services/organisations";
+import { EntityType } from "@/types/api";
+import { FormMutateState } from "@/types/form";
+import { Error } from "@mui/icons-material";
 import BusinessIcon from "@mui/icons-material/Business";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import VerifiedIcon from "@mui/icons-material/Verified";
 import NewReleasesIcon from "@mui/icons-material/NewReleases";
+import VerifiedIcon from "@mui/icons-material/Verified";
+import { LoadingButton } from "@mui/lab";
 import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
   Button,
+  CircularProgress,
   Link,
   Table,
   TableBody,
@@ -26,17 +32,34 @@ import { useTranslations } from "next-intl";
 
 interface UsersListProps {
   organisations: Organisation[];
+  onApprove(payload: PostApprovalsPayloadWithEntity): void;
+  mutateState: FormMutateState;
 }
 
 const NAMESPACE_TRANSLATIONS_USERS_LIST = "UsersList";
 
-export default function UsersList({ organisations }: UsersListProps) {
+const ISSUER_ID = 1;
+
+export default function UsersList({
+  organisations,
+  onApprove,
+  mutateState,
+}: UsersListProps) {
   const { routes } = useApplicationData();
   const t = useTranslations(NAMESPACE_TRANSLATIONS_USERS_LIST);
 
+  const handleApproveClick = (payload: PostApprovalsPayloadWithEntity) => {
+    onApprove(payload);
+  };
+
+  const filteredOrganisations = organisations.map(organisation => ({
+    ...organisation,
+    registries: organisation.registries.filter(({ user }) => user),
+  }));
+
   return (
     <>
-      {organisations.map(({ organisation_name, registries, id }) => {
+      {filteredOrganisations.map(({ organisation_name, registries, id }) => {
         const ariaId = organisation_name.replace(/[^\w]*/g, "");
 
         return (
@@ -52,11 +75,27 @@ export default function UsersList({ organisations }: UsersListProps) {
                     aria-label={`${organisation_name} actions`}
                     items={[
                       <Button
+                        fullWidth
+                        variant="outlined"
                         size="small"
                         href={`${routes.permissionsOrganisationIssuer.path}/${id}`}>
                         {t("permissions")}
                       </Button>,
-                      <Button size="small"> {t("approve")}</Button>,
+                      <LoadingButton
+                        fullWidth
+                        loading={mutateState.isLoading}
+                        variant="outlined"
+                        color="success"
+                        size="small"
+                        onClick={() =>
+                          handleApproveClick({
+                            type: EntityType.ORGANISATION,
+                            organisation_id: id,
+                            issuer_id: ISSUER_ID,
+                          })
+                        }>
+                        {t("approve")}
+                      </LoadingButton>,
                     ]}
                   />
                 }>
@@ -70,15 +109,15 @@ export default function UsersList({ organisations }: UsersListProps) {
             </AccordionSummary>
             <AccordionDetails>
               <Table
-                sx={{ minWidth: 650 }}
+                sx={{ tableLayout: "fixed" }}
                 size="small"
-                aria-label="simple table">
+                aria-label={t("tableSummary")}>
                 <TableHead sx={{ background: grey["300"] }}>
                   <TableRow>
                     <TableCell>{t("emailHeading")}</TableCell>
                     <TableCell>{t("firstNameHeading")}</TableCell>
                     <TableCell>{t("lastNameHeading")}</TableCell>
-                    <TableCell sx={{ width: "40px" }} />
+                    <TableCell sx={{ width: "50px" }} />
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -86,7 +125,7 @@ export default function UsersList({ organisations }: UsersListProps) {
                     ({ user: { email, first_name, last_name, id } }) => {
                       return (
                         <TableRow>
-                          <TableCell>
+                          <TableCell sx={{ wordBreak: "break-word" }}>
                             <Text
                               endIcon={
                                 <NewReleasesIcon
@@ -97,19 +136,38 @@ export default function UsersList({ organisations }: UsersListProps) {
                               {email}
                             </Text>
                           </TableCell>
-                          <TableCell>{first_name}</TableCell>
-                          <TableCell>{last_name}</TableCell>
+                          <TableCell sx={{ wordBreak: "break-word" }}>
+                            {first_name}
+                          </TableCell>
+                          <TableCell sx={{ wordBreak: "break-word" }}>
+                            {last_name}
+                          </TableCell>
                           <TableCell sx={{ pr: 0 }}>
                             <ActionMenu
                               aria-label={`${email} actions`}
                               items={[
                                 <Button
+                                  fullWidth
+                                  variant="outlined"
                                   size="small"
-                                  component={Link}
                                   href={`${routes.permissionsResearcherIssuer.path}/${id}`}>
                                   {t("permissions")}
                                 </Button>,
-                                <Button size="small"> {t("approve")}</Button>,
+                                <LoadingButton
+                                  fullWidth
+                                  loading={mutateState.isLoading}
+                                  variant="outlined"
+                                  color="success"
+                                  size="small"
+                                  onClick={() =>
+                                    handleApproveClick({
+                                      type: EntityType.RESEARCHER,
+                                      organisation_id: id,
+                                      issuer_id: ISSUER_ID,
+                                    })
+                                  }>
+                                  {t("approve")}
+                                </LoadingButton>,
                               ]}
                             />
                           </TableCell>

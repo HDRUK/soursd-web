@@ -8,6 +8,15 @@ import { Alert, CircularProgress, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useQuery } from "react-query";
 import UsersList from "../UsersList";
+import { useCallback } from "react";
+import {
+  PostApprovalsPayload,
+  PostApprovalsPayloadWithEntity,
+} from "@/services/approvals";
+import postApprovals from "@/services/approvals/postApprovals";
+import { useMutationApprovals } from "../../hooks";
+import { EntityType } from "@/types/api";
+import { useNotifications } from "@/context/Notifications";
 
 const NAMESPACE_TRANSLATIONS_USERS_LIST = "UsersList";
 const NAMESPACE_TRANSLATIONS_USERS = "Users";
@@ -29,6 +38,20 @@ export default function Sections() {
     })
   );
 
+  const { mutateAsync, isLoading, isError, error } = useMutationApprovals();
+
+  useNotifications(["postApprovals"], {
+    immediate: true,
+    tKey: NAMESPACE_TRANSLATIONS_USERS_LIST,
+  });
+
+  const handleUpdateApproval = useCallback(
+    (payload: PostApprovalsPayloadWithEntity) => {
+      mutateAsync(payload);
+    },
+    []
+  );
+
   return (
     <>
       {isOrganisationsLoading && (
@@ -48,7 +71,15 @@ export default function Sections() {
           </Alert>
         )}
         {!isOrganisationsLoading && organisationsData?.data.data && (
-          <UsersList organisations={organisationsData?.data.data} />
+          <UsersList
+            onApprove={handleUpdateApproval}
+            organisations={organisationsData?.data.data}
+            mutateState={{
+              isError,
+              isLoading,
+              error,
+            }}
+          />
         )}
       </PageSection>
     </>

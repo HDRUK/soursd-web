@@ -108,7 +108,10 @@
     "permissions": "Permissions",
     "emailHeading": "Email",
     "firstNameHeading": "First name",
-    "lastNameHeading": "Last name"
+    "lastNameHeading": "Last name",
+    "tableSummary": "Table of users",
+    "updateOrganisationApprovalError": "Couldn't update the organisations approval settings",
+    "updateApprovalError": "Couldn't update the researchers approval settings"
   },
   "PersonalDetails": {
     "title": "Personal details",
@@ -123,7 +126,8 @@
     "submitError": "There was a problem updating your details. Please try again or contact us at <contactLink></contactLink>",
     "pending": "Pending",
     "verified": "Verified",
-    "cvUploadFailed": "There was a problem uploading your CV. Please check the file size and try again or alternativley contact us at <contactLink></contactLink>"
+    "cvUploadFailed": "There was a problem uploading your CV. Please check the file size and try again or alternativley contact us at <contactLink></contactLink>",
+    "noCvUploaded": "No CV uploaded"
   },
   "LoginForm": {
     "email": "Email",

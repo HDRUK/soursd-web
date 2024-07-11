@@ -100,7 +100,7 @@ export default function PersonalDetails({
 
             file.append("file", files[0]);
             file.append("file_type", FileType.CV);
-            file.append("entity_type", EntityType.researcher);
+            file.append("entity_type", EntityType.RESEARCHER);
 
             return file;
           });
