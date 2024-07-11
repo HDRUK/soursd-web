@@ -3,6 +3,7 @@
 import DownloadIcon from "@mui/icons-material/Download";
 import EditIcon from "@mui/icons-material/Edit";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
+import Text from "@/components/Text";
 import {
   Box,
   CircularProgress,
@@ -74,19 +75,7 @@ export default function FileLink({
         {buttonIcon}
       </IconButton>
       <div>
-        <Typography sx={{ display: "flex" }}>
-          {fileName || fileNamePlaceholder}
-          {statusIcons && (
-            <Box
-              sx={{
-                display: "inline-flex",
-                alignItems: "center",
-                ml: 0.5,
-              }}>
-              {statusIcons}
-            </Box>
-          )}
-        </Typography>
+        <Text endIcon={statusIcons}>{fileName || fileNamePlaceholder}</Text>
         <Typography
           variant="caption"
           color="caption.main"

@@ -22,6 +22,7 @@ export default function ActionListItem({
         display: "flex",
         alignItems: "center",
         borderRadius: 1,
+        minHeight: "46px",
         ...sx,
       }}
       {...restProps}>

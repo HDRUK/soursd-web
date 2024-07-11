@@ -1,3 +1,4 @@
+import { User } from "../auth";
 import { Permission } from "../permissions/types";
 
 interface Organisation {
@@ -6,6 +7,9 @@ interface Organisation {
   id: number;
   permissions: Permission[];
   lead_applicant_email: string;
+  registries: {
+    user: User;
+  }[];
 }
 
 type OrganisationResponse = Organisation;

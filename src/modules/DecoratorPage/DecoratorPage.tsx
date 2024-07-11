@@ -32,6 +32,7 @@ function DecoratorPage({ children }: DecoratorPageProps) {
               width: "100%",
               m: "auto",
               flexGrow: 1,
+              position: "relative",
               [theme.breakpoints.up("lg")]: {
                 width: "1200px",
               },

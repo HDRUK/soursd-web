@@ -101,6 +101,15 @@
   "Users": {
     "getUserError": "Could not get the relevant user"
   },
+  "UsersList": {
+    "title": "Users",
+    "loadingAriaLabel": "Loading page",
+    "approve": "Approve",
+    "permissions": "Permissions",
+    "emailHeading": "Email",
+    "firstNameHeading": "First name",
+    "lastNameHeading": "Last name"
+  },
   "PersonalDetails": {
     "title": "Personal details",
     "download": "Download CV",
