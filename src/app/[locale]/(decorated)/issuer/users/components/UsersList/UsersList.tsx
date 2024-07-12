@@ -29,6 +29,7 @@ import {
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { useTranslations } from "next-intl";
+import { useQueryClient } from "react-query";
 
 interface UsersListProps {
   organisations: Organisation[];
@@ -59,128 +60,158 @@ export default function UsersList({
 
   return (
     <>
-      {filteredOrganisations.map(({ organisation_name, registries, id }) => {
-        const ariaId = organisation_name.replace(/[^\w]*/g, "");
+      {filteredOrganisations.map(
+        ({ organisation_name, registries, id, approvals }) => {
+          const ariaId = organisation_name.replace(/[^\w]*/g, "");
 
-        return (
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls={`${ariaId}-content`}
-              id={`${ariaId}-header`}>
-              <AccordionTitle
-                icon={<BusinessIcon />}
-                actions={
-                  <ActionMenu
-                    aria-label={`${organisation_name} actions`}
-                    items={[
-                      <Button
-                        fullWidth
-                        variant="outlined"
-                        size="small"
-                        href={`${routes.permissionsOrganisationIssuer.path}/${id}`}>
-                        {t("permissions")}
-                      </Button>,
-                      <LoadingButton
-                        fullWidth
-                        loading={mutateState.isLoading}
-                        variant="outlined"
-                        color="success"
-                        size="small"
-                        onClick={() =>
-                          handleApproveClick({
-                            type: EntityType.ORGANISATION,
-                            organisation_id: id,
-                            issuer_id: ISSUER_ID,
-                          })
-                        }>
-                        {t("approve")}
-                      </LoadingButton>,
-                    ]}
-                  />
-                }>
-                <Text
-                  endIcon={
-                    <VerifiedIcon color="success" titleAccess="Approved" />
+          const isOrganisationApproved = approvals.find(
+            ({ id: issuerId }) => issuerId === ISSUER_ID
+          );
+
+          return (
+            <Accordion>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls={`${ariaId}-content`}
+                id={`${ariaId}-header`}>
+                <AccordionTitle
+                  icon={<BusinessIcon />}
+                  actions={
+                    <ActionMenu
+                      aria-label={`${organisation_name} actions`}
+                      items={[
+                        <Button
+                          fullWidth
+                          variant="outlined"
+                          size="small"
+                          href={`${routes.permissionsOrganisationIssuer.path}/${id}`}>
+                          {t("permissions")}
+                        </Button>,
+                        <LoadingButton
+                          fullWidth
+                          loading={mutateState.isLoading}
+                          variant={
+                            isOrganisationApproved ? "contained" : "outlined"
+                          }
+                          color="success"
+                          size="small"
+                          onClick={() =>
+                            handleApproveClick({
+                              type: EntityType.ORGANISATION,
+                              organisation_id: id,
+                              issuer_id: ISSUER_ID,
+                            })
+                          }>
+                          {isOrganisationApproved ? "Approved" : t("approve")}
+                        </LoadingButton>,
+                      ]}
+                    />
                   }>
-                  {organisation_name}
-                </Text>
-              </AccordionTitle>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Table
-                sx={{ tableLayout: "fixed" }}
-                size="small"
-                aria-label={t("tableSummary")}>
-                <TableHead sx={{ background: grey["300"] }}>
-                  <TableRow>
-                    <TableCell>{t("emailHeading")}</TableCell>
-                    <TableCell>{t("firstNameHeading")}</TableCell>
-                    <TableCell>{t("lastNameHeading")}</TableCell>
-                    <TableCell sx={{ width: "50px" }} />
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {registries.map(
-                    ({ user: { email, first_name, last_name, id } }) => {
-                      return (
-                        <TableRow>
-                          <TableCell sx={{ wordBreak: "break-word" }}>
-                            <Text
-                              endIcon={
-                                <NewReleasesIcon
-                                  color="warning"
-                                  titleAccess="Not approved"
-                                />
-                              }>
-                              {email}
-                            </Text>
-                          </TableCell>
-                          <TableCell sx={{ wordBreak: "break-word" }}>
-                            {first_name}
-                          </TableCell>
-                          <TableCell sx={{ wordBreak: "break-word" }}>
-                            {last_name}
-                          </TableCell>
-                          <TableCell sx={{ pr: 0 }}>
-                            <ActionMenu
-                              aria-label={`${email} actions`}
-                              items={[
-                                <Button
-                                  fullWidth
-                                  variant="outlined"
-                                  size="small"
-                                  href={`${routes.permissionsResearcherIssuer.path}/${id}`}>
-                                  {t("permissions")}
-                                </Button>,
-                                <LoadingButton
-                                  fullWidth
-                                  loading={mutateState.isLoading}
-                                  variant="outlined"
-                                  color="success"
-                                  size="small"
-                                  onClick={() =>
-                                    handleApproveClick({
-                                      type: EntityType.RESEARCHER,
-                                      organisation_id: id,
-                                      issuer_id: ISSUER_ID,
-                                    })
-                                  }>
-                                  {t("approve")}
-                                </LoadingButton>,
-                              ]}
-                            />
-                          </TableCell>
-                        </TableRow>
-                      );
-                    }
-                  )}
-                </TableBody>
-              </Table>
-            </AccordionDetails>
-          </Accordion>
-        );
-      })}
+                  <Text
+                    endIcon={
+                      isOrganisationApproved ? (
+                        <VerifiedIcon color="success" titleAccess="Approved" />
+                      ) : (
+                        <NewReleasesIcon
+                          color="warning"
+                          titleAccess="Not approved"
+                        />
+                      )
+                    }>
+                    {organisation_name}
+                  </Text>
+                </AccordionTitle>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Table
+                  sx={{ tableLayout: "fixed" }}
+                  size="small"
+                  aria-label={t("tableSummary")}>
+                  <TableHead sx={{ background: grey["300"] }}>
+                    <TableRow>
+                      <TableCell>{t("emailHeading")}</TableCell>
+                      <TableCell>{t("firstNameHeading")}</TableCell>
+                      <TableCell>{t("lastNameHeading")}</TableCell>
+                      <TableCell sx={{ width: "50px" }} />
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {registries.map(
+                      ({
+                        user: { email, first_name, last_name, id, approvals },
+                      }) => {
+                        const isApproved = approvals.find(
+                          ({ id: issuerId }) => issuerId === ISSUER_ID
+                        );
+
+                        return (
+                          <TableRow>
+                            <TableCell sx={{ wordBreak: "break-word" }}>
+                              <Text
+                                endIcon={
+                                  isApproved ? (
+                                    <VerifiedIcon
+                                      color="success"
+                                      titleAccess="Approved"
+                                    />
+                                  ) : (
+                                    <NewReleasesIcon
+                                      color="warning"
+                                      titleAccess="Not approved"
+                                    />
+                                  )
+                                }>
+                                {email}
+                              </Text>
+                            </TableCell>
+                            <TableCell sx={{ wordBreak: "break-word" }}>
+                              {first_name}
+                            </TableCell>
+                            <TableCell sx={{ wordBreak: "break-word" }}>
+                              {last_name}
+                            </TableCell>
+                            <TableCell sx={{ pr: 0 }}>
+                              <ActionMenu
+                                aria-label={`${email} actions`}
+                                items={[
+                                  <Button
+                                    fullWidth
+                                    variant="outlined"
+                                    size="small"
+                                    href={`${routes.permissionsResearcherIssuer.path}/${id}`}>
+                                    {t("permissions")}
+                                  </Button>,
+                                  <LoadingButton
+                                    fullWidth
+                                    loading={mutateState.isLoading}
+                                    variant={
+                                      isApproved ? "contained" : "outlined"
+                                    }
+                                    color="success"
+                                    size="small"
+                                    onClick={() =>
+                                      handleApproveClick({
+                                        type: EntityType.RESEARCHER,
+                                        user_id: id,
+                                        issuer_id: ISSUER_ID,
+                                      })
+                                    }>
+                                    {isApproved ? "Approved" : t("approve")}
+                                  </LoadingButton>,
+                                ]}
+                              />
+                            </TableCell>
+                          </TableRow>
+                        );
+                      }
+                    )}
+                  </TableBody>
+                </Table>
+              </AccordionDetails>
+            </Accordion>
+          );
+        }
+      )}
     </>
   );
 }

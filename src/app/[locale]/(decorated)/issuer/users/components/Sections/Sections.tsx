@@ -6,7 +6,7 @@ import PageSection from "@/modules/PageSection";
 import { getOrganisations } from "@/services/organisations";
 import { Alert, CircularProgress, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import UsersList from "../UsersList";
 import { useCallback } from "react";
 import {
@@ -22,6 +22,7 @@ const NAMESPACE_TRANSLATIONS_USERS_LIST = "UsersList";
 const NAMESPACE_TRANSLATIONS_USERS = "Users";
 
 export default function Sections() {
+  const queryClient = useQueryClient();
   const tUsersList = useTranslations(NAMESPACE_TRANSLATIONS_USERS_LIST);
   const tUsers = useTranslations(NAMESPACE_TRANSLATIONS_USERS);
 
@@ -46,8 +47,10 @@ export default function Sections() {
   });
 
   const handleUpdateApproval = useCallback(
-    (payload: PostApprovalsPayloadWithEntity) => {
-      mutateAsync(payload);
+    async (payload: PostApprovalsPayloadWithEntity) => {
+      await mutateAsync(payload);
+
+      queryClient.refetchQueries(["getOrganisations"]);
     },
     []
   );
