@@ -33,7 +33,7 @@ export type LoginOTPFormProps = {
   mutateState: FormMutateState;
 };
 
-const NAMESPACE_TRANSLATION_VALIDATION = "FormValidation";
+const NAMESPACE_TRANSLATION_VALIDATION = "Form";
 const NAMESPACE_TRANSLATION_LOGIN = "LoginOTPForm";
 
 export default function LoginOTPForm({

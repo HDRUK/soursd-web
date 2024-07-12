@@ -46,7 +46,7 @@ export interface PersonalDetailsProps {
   onSubmit: (data: PersonalDetailsFormValues) => void;
 }
 
-const NAMESPACE_TRANSLATION_VALIDATION = "FormValidation";
+const NAMESPACE_TRANSLATION_VALIDATION = "Form";
 const NAMESPACE_TRANSLATION_PERSONAL_DETAILS = "PersonalDetails";
 
 export default function PersonalDetails({

@@ -40,7 +40,7 @@ export type SignupFormProps = {
   onSubmit: (values: SignupFormValues) => void;
 };
 
-const NAMESPACE_TRANSLATION_VALIDATION = "FormValidation";
+const NAMESPACE_TRANSLATION_VALIDATION = "Form";
 const NAMESPACE_TRANSLATION_SIGNUP = "SignupForm";
 
 export default function SignupForm({ onSubmit, mutateState }: SignupFormProps) {
@@ -170,8 +170,8 @@ export default function SignupForm({ onSubmit, mutateState }: SignupFormProps) {
               <FormControl error={!!errors.tscs} size="small" fullWidth>
                 <FormControlLabel
                   control={<Checkbox {...register("tscs")} />}
-                  label="I agree to the Terms and Conditions"
-                  aria-label={tSignup("agreeTermsAndConditions")}
+                  label={tSignup("agreeTermsAndConditions")}
+                  aria-label={tSignup("agreeTermsAndConditionsAriaLabel")}
                 />
                 {errors.tscs && (
                   <FormHelperText>{errors.tscs.message}</FormHelperText>
