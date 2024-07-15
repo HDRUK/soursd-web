@@ -18,10 +18,10 @@ import { FormProvider, useForm } from "react-hook-form";
 import * as yup from "yup";
 
 export interface SignupFormContactsValues {
-  dpoName: string;
-  dpoEmail: string;
-  hrName: string;
-  hrEmail: string;
+  dpo_name: string;
+  dpo_email: string;
+  hr_name: string;
+  hr_email: string;
 }
 
 export interface SignupFormContactsProps {
@@ -45,13 +45,13 @@ export default function SignupFormContacts({
   const schema = useMemo(
     () =>
       yup.object().shape({
-        dpoName: yup.string().required(tValidation("dpoNameRequiredInvalid")),
-        dpoEmail: yup
+        dpo_name: yup.string().required(tValidation("dpoNameRequiredInvalid")),
+        dpo_email: yup
           .string()
           .required(tValidation("dpoEmailRequiredInvalid"))
           .email(tValidation("dpoEmailFormatInvalid")),
-        hrName: yup.string().required(tValidation("hroNameRequiredInvalid")),
-        hrEmail: yup
+        hr_name: yup.string().required(tValidation("hroNameRequiredInvalid")),
+        hr_email: yup
           .string()
           .required(tValidation("hrEmailRequiredInvalid"))
           .email(tValidation("hrEmailFormatInvalid")),
@@ -62,10 +62,10 @@ export default function SignupFormContacts({
   const methods = useForm<SignupFormContactsValues>({
     resolver: yupResolver(schema),
     defaultValues: defaultValues || {
-      dpoName: "",
-      dpoEmail: "",
-      hrName: "",
-      hrEmail: "",
+      dpo_name: "",
+      dpo_email: "",
+      hr_name: "",
+      hr_email: "",
     },
   });
 
@@ -92,58 +92,58 @@ export default function SignupFormContacts({
         <FormBody>
           <Grid container direction="column" spacing={2}>
             <Grid item>
-              <FormControl error={!!errors.hrName} size="small" fullWidth>
+              <FormControl error={!!errors.hr_name} size="small" fullWidth>
                 <TextField
-                  {...register("hrName")}
+                  {...register("hr_name")}
                   size="small"
                   placeholder={tSignup("hrNamePlaceholder")}
                   aria-label={tSignup("hrName")}
                   label={<>{tSignup("hrName")} *</>}
                 />
-                {errors.hrName && (
-                  <FormHelperText>{errors.hrName.message}</FormHelperText>
+                {errors.hr_name && (
+                  <FormHelperText>{errors.hr_name.message}</FormHelperText>
                 )}
               </FormControl>
             </Grid>
             <Grid item>
-              <FormControl error={!!errors.hrEmail} size="small" fullWidth>
+              <FormControl error={!!errors.hr_email} size="small" fullWidth>
                 <TextField
-                  {...register("hrEmail")}
+                  {...register("hr_email")}
                   size="small"
                   placeholder={tSignup("hrEmailPlaceholder")}
                   aria-label={tSignup("hrEmail")}
                   label={<>{tSignup("hrEmail")} *</>}
                 />
-                {errors.hrEmail && (
-                  <FormHelperText>{errors.hrEmail.message}</FormHelperText>
+                {errors.hr_email && (
+                  <FormHelperText>{errors.hr_email.message}</FormHelperText>
                 )}
               </FormControl>
             </Grid>
             <Grid item>
-              <FormControl error={!!errors.dpoName} size="small" fullWidth>
+              <FormControl error={!!errors.dpo_name} size="small" fullWidth>
                 <TextField
-                  {...register("dpoName")}
+                  {...register("dpo_name")}
                   size="small"
                   placeholder={tSignup("dpoNamePlaceholder")}
                   aria-label={tSignup("dpoName")}
                   label={<>{tSignup("dpoName")} *</>}
                 />
-                {errors.dpoName && (
-                  <FormHelperText>{errors.dpoName.message}</FormHelperText>
+                {errors.dpo_name && (
+                  <FormHelperText>{errors.dpo_name.message}</FormHelperText>
                 )}
               </FormControl>
             </Grid>
             <Grid item>
-              <FormControl error={!!errors.dpoEmail} size="small" fullWidth>
+              <FormControl error={!!errors.dpo_email} size="small" fullWidth>
                 <TextField
-                  {...register("dpoEmail")}
+                  {...register("dpo_email")}
                   size="small"
                   placeholder={tSignup("dpoEmailPlaceholder")}
                   aria-label={tSignup("dpoEmail")}
                   label={<>{tSignup("dpoEmail")} *</>}
                 />
-                {errors.hrEmail && (
-                  <FormHelperText>{errors.hrEmail.message}</FormHelperText>
+                {errors.hr_email && (
+                  <FormHelperText>{errors.hr_email.message}</FormHelperText>
                 )}
               </FormControl>
             </Grid>

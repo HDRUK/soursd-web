@@ -1,6 +1,7 @@
 {
   "Form": {
-    "organisationRequiredInvalid": "Organisation is a required field",
+    "nameRequiredInvalid": "Lead applicant name is a required field",
+    "organisationNameRequiredInvalid": "Organisation is a required field",
     "firstNameRequiredInvalid": "First name is a required field",
     "lastNameRequiredInvalid": "Last name is a required field",
     "emailRequiredInvalid": "Email is a required field",
@@ -79,7 +80,7 @@
   },
   "SignupFormOrganisation": {
     "titleDetails": "Organisation sign Up",
-    "titleOtherDetails": "Organisation details",
+    "titleOtherDetails": "Other details",
     "titleContacts": "Additional contacts"
   },
   "SignupFormResearcher": {
@@ -128,16 +129,37 @@
   },
   "SignupFormOtherDetails": {
     "title": "Company details",
-    "companyNumberPlaceholder": "Company number",
-    "companyNumber": "Company number",
     "postcodePlaceholder": "Postcode",
     "postcode": "Postcode",
     "address1Placeholder": "Address 1",
     "address1": "Address 1",
+    "address2Placeholder": "Address 2",
+    "address2": "Address 2",
+    "townPlaceholder": "Town",
+    "town": "Town",
+    "countyPlaceholder": "County",
+    "county": "County",
+    "countryPlaceholder": "Country",
+    "country": "Country",
+    "digitalToolkitCodePlaceholder": "Dsptk ods code",
+    "digitalToolkitCode": "Dsptk ods code",
+    "iso27001CertifiedAriaLabel": "ISO27001 certfied",
+    "iso27001Certified": "ISO27001 certfied",
+    "ceCertifiedAriaLabel": "CE certfied",
+    "ceCertified": "CE certfied",
+    "ceCertificationNumberPlaceholder": "CE certification number",
+    "ceCertificationNumber": "CE certification number",
+    "whatIsDpstkOdsCode": "The Data Security and Protection Toolkit is an online self-assessment tool that all organisations must use if they have access to NHS patient data and systems.",
     "nextButton": "Next",
     "previousButton": "Previous"
   },
   "SignupFormDetails": {
+    "companyNumberPlaceholder": "Company number",
+    "companyNumber": "Company number",
+    "passwordPlaceholder": "Password",
+    "password": "Password",
+    "confirmPasswordPlaceholder": "Confirm password",
+    "confirmPassword": "Confirm password",
     "organisationNamePlaceholder": "Organisation name",
     "organisationName": "Organisation name",
     "applicantNamePlaceholder": "Applicant name",
@@ -146,6 +168,9 @@
     "email": "Applicant email",
     "agreeTermsAndConditions": "I accept the terms and conditions",
     "agreeTermsAndConditionsAriaLabel": "Accept terms and conditions",
+    "togglePasswordAriaLabel": "Toggle password visibility",
+    "toggleConfirmPasswordAriaLabel": "Toggle confirm password visibility",
+
     "nextButton": "Next"
   },
   "PersonalDetails": {

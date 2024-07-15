@@ -1,23 +1,16 @@
 "use client";
 
-import ContactLink from "@/components/ContactLink";
 import FormModal from "@/components/FormModal";
 import FormModalHeader from "@/components/FormModalHeader";
-import OverlayCenter from "@/components/OverlayCenter";
-import OverlayCenterAlert from "@/components/OverlayCenterAlert";
 import { useApplicationData } from "@/context/ApplicationData";
-import { RegisterPayload } from "@/services/auth/types";
-import {
-  getByInviteCode,
-  postRegisterOrganisation,
-} from "@/services/organisations";
-import { isExpiredInvite } from "@/utils/date";
+import { PostRegisterOrganisationPayload } from "@/services/auth/types";
+import { postRegisterOrganisation } from "@/services/auth";
 import BusinessIcon from "@mui/icons-material/Business";
-import { Box, CircularProgress } from "@mui/material";
+import { Box } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
-import { useMutation, useQuery } from "react-query";
+import { useMutation } from "react-query";
 import SignupFormContacts, {
   SignupFormContactsValues,
 } from "../SignupFormContacts";
@@ -28,7 +21,6 @@ import SignupFormOtherDetails, {
   SignupFormOtherDetailsValues,
 } from "../SignupFormOtherDetails";
 
-const NAMESPACE_TRANSLATION_SIGNUP = "SignupForm";
 const NAMESPACE_TRANSLATION_SIGNUP_ORGANISATION = "SignupFormOrganisation";
 
 enum SignupFormPanels {
@@ -39,37 +31,42 @@ enum SignupFormPanels {
 
 export default function Page() {
   const router = useRouter();
-  const params = useParams<{ inviteCode: string }>();
-  const inviteCode = params?.inviteCode;
-  const t = useTranslations(NAMESPACE_TRANSLATION_SIGNUP);
   const tOrganisation = useTranslations(
     NAMESPACE_TRANSLATION_SIGNUP_ORGANISATION
   );
   const { routes } = useApplicationData();
   const [formDetailsValues, setFormDetailsValues] =
-    useState<SignupFormDetailsValues>();
+    useState<SignupFormDetailsValues>({
+      organisation_name: "",
+      lead_applicant_organisation_email: "",
+      lead_applicant_organisation_name: "",
+      password: "",
+      confirm_password: "",
+      tscs: false,
+      companies_house_no: "",
+    });
   const [formContactsValues, setFormContactsValues] =
-    useState<SignupFormContactsValues>();
+    useState<SignupFormContactsValues>({
+      dpo_name: "",
+      dpo_email: "",
+      hr_name: "",
+      hr_email: "",
+    });
   const [formOtherDetailsValues, setFormOtherDetailsValues] =
-    useState<SignupFormOtherDetailsValues>();
+    useState<SignupFormOtherDetailsValues>({
+      address_1: "",
+      address_2: "",
+      town: "",
+      county: "",
+      country: "",
+      postcode: "",
+      dsptk_ods_code: "",
+      iso_27001_certified: false,
+      ce_certified: false,
+      ce_certification_num: "",
+    });
   const [activeForm, setActiveForm] = useState<SignupFormPanels>(
     SignupFormPanels.DETAILS
-  );
-
-  const {
-    isError: isGetOrganisationError,
-    isLoading: isGetOrganisationLoading,
-    data: organisationData,
-    error: organisationError,
-  } = useQuery(
-    ["getByInviteCode", inviteCode || ""],
-    async () =>
-      getByInviteCode(inviteCode || "", {
-        error: { message: "getByInviteCodeError" },
-      }),
-    {
-      enabled: !!inviteCode,
-    }
   );
 
   const {
@@ -79,7 +76,7 @@ export default function Page() {
     error: signupError,
   } = useMutation(
     ["postRegisterOrgnisation"],
-    async (payload: RegisterPayload) => {
+    async (payload: PostRegisterOrganisationPayload) => {
       return postRegisterOrganisation(payload, {
         error: { message: "submitError" },
       });
@@ -117,7 +114,7 @@ export default function Page() {
 
     const payload = {
       ...formDetailsValues,
-      ...formContactsValues,
+      ...formOtherDetailsValues,
       ...values,
     };
 
@@ -125,46 +122,6 @@ export default function Page() {
       router.push(routes.login.path);
     });
   };
-
-  const expired = isExpiredInvite(organisationData?.data.invite_sent_at);
-
-  if (isGetOrganisationLoading) {
-    return (
-      <OverlayCenter sx={{ color: "#fff" }}>
-        <CircularProgress color="inherit" />
-      </OverlayCenter>
-    );
-  }
-
-  if (inviteCode && organisationData && expired) {
-    return (
-      <OverlayCenterAlert>
-        {t.rich("verificationExpired", {
-          contactLink: ContactLink,
-        })}
-      </OverlayCenterAlert>
-    );
-  }
-
-  if (isGetOrganisationError) {
-    return (
-      <OverlayCenterAlert>
-        {tOrganisation.rich(organisationError, {
-          contactLink: ContactLink,
-        })}
-      </OverlayCenterAlert>
-    );
-  }
-
-  if (inviteCode && !isGetOrganisationLoading && !organisationData) {
-    return (
-      <OverlayCenterAlert>
-        {t.rich("noDataVerification", {
-          contactLink: ContactLink,
-        })}
-      </OverlayCenterAlert>
-    );
-  }
 
   return (
     <FormModal
@@ -183,7 +140,6 @@ export default function Page() {
         {activeForm === SignupFormPanels.DETAILS && (
           <SignupFormDetails
             defaultValues={formDetailsValues}
-            defaultEmail={organisationData?.data.contact_email}
             onSubmit={handleSignupFormDetailsSubmit}
           />
         )}

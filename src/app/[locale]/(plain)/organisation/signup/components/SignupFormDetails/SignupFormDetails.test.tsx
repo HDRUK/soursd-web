@@ -1,7 +1,7 @@
 import { act, fireEvent, render, screen } from "@/utils/testUtils";
 import { faker } from "@faker-js/faker";
 import { axe } from "jest-axe";
-import SignupForm, { SignupFormProps } from "./SignupForm";
+import SignupFormDetails, { SignupFormDetailsProps } from "./SignupFormDetails";
 
 const mockSubmit = jest.fn();
 
@@ -11,13 +11,9 @@ const mockedOrganisation = {
   id: faker.number.int(),
 };
 
-const renderSignupForm = (
-  props: Partial<SignupFormProps> = {
-    mutateState: { isLoading: false, isError: false },
-  }
-) => {
+const renderSignupForm = (props: Partial<SignupFormDetailsProps>) => {
   return render(
-    <SignupForm
+    <SignupFormDetails
       defaultOrganisation={mockedOrganisation.id.toString()}
       organisations={[mockedOrganisation]}
       mutateState={{ isLoading: false, isError: false }}

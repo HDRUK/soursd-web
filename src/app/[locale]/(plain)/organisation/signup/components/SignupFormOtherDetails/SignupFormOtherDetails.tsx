@@ -2,11 +2,9 @@
 
 import FormActions from "@/components/FormActions";
 import FormBody from "@/components/FormBody";
-import {
-  VALIDATION_COMPANY_NUMBER,
-  VALIDATION_POSTCODE_FORMAT,
-} from "@/consts/form";
+import { VALIDATION_POSTCODE_FORMAT } from "@/consts/form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import InfoIcon from "@mui/icons-material/Info";
 import {
   Box,
   Button,
@@ -16,6 +14,7 @@ import {
   FormHelperText,
   Grid,
   TextField,
+  Tooltip,
   useTheme,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
@@ -24,13 +23,16 @@ import { FormProvider, useForm } from "react-hook-form";
 import * as yup from "yup";
 
 export interface SignupFormOtherDetailsValues {
-  address1: string;
+  address_1: string;
+  address_2: string;
+  town: string;
+  county: string;
+  country: string;
   postcode: string;
-  companyNumber: string;
-  digitalToolkitCode: string;
-  iso27001: boolean;
-  ceCertified: boolean;
-  ceCertificationNumber: string;
+  dsptk_ods_code: string;
+  iso_27001_certified: boolean;
+  ce_certified: boolean;
+  ce_certification_num: string;
 }
 
 export interface SignupFormOtherDetailsProps {
@@ -54,7 +56,13 @@ export default function SignupFormOtherDetails({
   const schema = useMemo(
     () =>
       yup.object().shape({
-        address1: yup.string().required(tValidation("address1RequiredInvalid")),
+        address_1: yup
+          .string()
+          .required(tValidation("address1RequiredInvalid")),
+        address_2: yup.string(),
+        town: yup.string(),
+        county: yup.string(),
+        country: yup.string(),
         postcode: yup
           .string()
           .required(tValidation("postcodeRequiredInvalid"))
@@ -62,25 +70,18 @@ export default function SignupFormOtherDetails({
             VALIDATION_POSTCODE_FORMAT,
             tValidation("postcodeFormatInvalid")
           ),
-        companyNumber: yup
-          .string()
-          .required(tValidation("companyNumberRequiredInvalid"))
-          .matches(
-            VALIDATION_COMPANY_NUMBER,
-            tValidation("companyNumberFormatInvalid")
-          ),
-        digitalToolkitCode: yup
+        dsptk_ods_code: yup
           .string()
           .matches(
             VALIDATION_POSTCODE_FORMAT,
             tValidation("digitalToolkitCodeFormatInvalid")
           ),
-        iso27001: yup
+        iso_27001_certified: yup
           .bool()
           .oneOf([true], tValidation("iso27001RequiredInvalid"))
           .required(tValidation("iso27001RequiredInvalid")),
-        ceCertified: yup.bool(),
-        ceCertificationNumber: yup
+        ce_certified: yup.bool(),
+        ce_certification_num: yup
           .string()
           .matches(
             VALIDATION_POSTCODE_FORMAT,
@@ -92,15 +93,7 @@ export default function SignupFormOtherDetails({
 
   const methods = useForm<SignupFormOtherDetailsValues>({
     resolver: yupResolver(schema),
-    defaultValues: defaultValues || {
-      address1: "",
-      postcode: "",
-      companyNumber: "",
-      digitalToolkitCode: "",
-      iso27001: false,
-      ceCertified: false,
-      ceCertificationNumber: "",
-    },
+    defaultValues,
   });
 
   const {
@@ -126,110 +119,159 @@ export default function SignupFormOtherDetails({
         <FormBody>
           <Grid container direction="column" spacing={2}>
             <Grid item>
-              <FormControl error={!!errors.address1} size="small" fullWidth>
+              <FormControl error={!!errors.address_1} size="small" fullWidth>
                 <TextField
-                  {...register("address1")}
+                  {...register("address_1")}
                   size="small"
                   placeholder={tSignup("address1Placeholder")}
                   aria-label={tSignup("address1")}
                   label={<>{tSignup("address1")} *</>}
                 />
-                {errors.address1 && (
-                  <FormHelperText>{errors.address1.message}</FormHelperText>
+                {errors.address_1 && (
+                  <FormHelperText>{errors.address_1.message}</FormHelperText>
                 )}
               </FormControl>
             </Grid>
             <Grid item>
-              <FormControl error={!!errors.postcode} size="small" fullWidth>
+              <FormControl error={!!errors.address_2} size="small" fullWidth>
                 <TextField
-                  {...register("postcode")}
+                  {...register("address_2")}
                   size="small"
-                  placeholder={tSignup("postcodePlaceholder")}
-                  aria-label={tSignup("postcode")}
-                  label={<>{tSignup("postcode")} *</>}
+                  placeholder={tSignup("address2Placeholder")}
+                  aria-label={tSignup("address2")}
+                  label={<>{tSignup("address2")} *</>}
                 />
-                {errors.postcode && (
-                  <FormHelperText>{errors.postcode.message}</FormHelperText>
+                {errors.address_2 && (
+                  <FormHelperText>{errors.address_2.message}</FormHelperText>
+                )}
+              </FormControl>
+            </Grid>
+            <Grid item>
+              <FormControl error={!!errors.town} size="small" fullWidth>
+                <TextField
+                  {...register("town")}
+                  size="small"
+                  placeholder={tSignup("townPlaceholder")}
+                  aria-label={tSignup("town")}
+                  label={<>{tSignup("town")} *</>}
+                />
+                {errors.town && (
+                  <FormHelperText>{errors.town.message}</FormHelperText>
+                )}
+              </FormControl>
+            </Grid>
+            <Grid item>
+              <Grid container spacing={2}>
+                <Grid item md={6}>
+                  <FormControl error={!!errors.county} size="small" fullWidth>
+                    <TextField
+                      {...register("county")}
+                      size="small"
+                      placeholder={tSignup("countyPlaceholder")}
+                      aria-label={tSignup("county")}
+                      label={<>{tSignup("county")} *</>}
+                    />
+                    {errors.county && (
+                      <FormHelperText>{errors.county.message}</FormHelperText>
+                    )}
+                  </FormControl>
+                </Grid>
+                <Grid item md={6}>
+                  <FormControl error={!!errors.postcode} size="small" fullWidth>
+                    <TextField
+                      {...register("postcode")}
+                      size="small"
+                      placeholder={tSignup("postcodePlaceholder")}
+                      aria-label={tSignup("postcode")}
+                      label={<>{tSignup("postcode")} *</>}
+                    />
+                    {errors.postcode && (
+                      <FormHelperText>{errors.postcode.message}</FormHelperText>
+                    )}
+                  </FormControl>
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item>
+              <FormControl error={!!errors.country} size="small" fullWidth>
+                <TextField
+                  {...register("country")}
+                  size="small"
+                  placeholder={tSignup("countryPlaceholder")}
+                  aria-label={tSignup("country")}
+                  label={<>{tSignup("country")} *</>}
+                />
+                {errors.country && (
+                  <FormHelperText>{errors.country.message}</FormHelperText>
                 )}
               </FormControl>
             </Grid>
             <Grid item>
               <FormControl
-                error={!!errors.companyNumber}
+                error={!!errors.dsptk_ods_code}
                 size="small"
                 fullWidth>
-                <TextField
-                  {...register("companyNumber")}
-                  size="small"
-                  placeholder={tSignup("companyNumberPlaceholder")}
-                  aria-label={tSignup("companyNumber")}
-                  label={<>{tSignup("companyNumber")} *</>}
-                />
-                {errors.companyNumber && (
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                  <TextField
+                    {...register("dsptk_ods_code")}
+                    size="small"
+                    placeholder={tSignup("digitalToolkitCodePlaceholder")}
+                    aria-label={tSignup("digitalToolkitCode")}
+                    label={<>{tSignup("digitalToolkitCode")} *</>}
+                  />
+                  <Tooltip title={tSignup("whatIsDpstkOdsCode")}>
+                    <InfoIcon color="info" />
+                  </Tooltip>
+                </Box>
+                {errors.dsptk_ods_code && (
                   <FormHelperText>
-                    {errors.companyNumber.message}
+                    {errors.dsptk_ods_code.message}
                   </FormHelperText>
                 )}
               </FormControl>
             </Grid>
             <Grid item>
               <FormControl
-                error={!!errors.digitalToolkitCode}
+                error={!!errors.iso_27001_certified}
                 size="small"
                 fullWidth>
-                <TextField
-                  {...register("digitalToolkitCode")}
-                  size="small"
-                  placeholder={tSignup("digitalToolkitCodePlaceholder")}
-                  aria-label={tSignup("digitalToolkitCode")}
-                  label={<>{tSignup("digitalToolkitCode")} *</>}
+                <FormControlLabel
+                  control={<Checkbox {...register("iso_27001_certified")} />}
+                  label={tSignup("iso27001Certified")}
+                  aria-label={tSignup("iso27001CertifiedAriaLabel")}
                 />
-                {errors.digitalToolkitCode && (
+                {errors.iso_27001_certified && (
                   <FormHelperText>
-                    {errors.digitalToolkitCode.message}
+                    {errors.iso_27001_certified.message}
                   </FormHelperText>
                 )}
               </FormControl>
-            </Grid>
-            <Grid item>
-              <FormControl error={!!errors.iso27001} size="small" fullWidth>
+              <FormControl error={!!errors.ce_certified} size="small" fullWidth>
                 <FormControlLabel
-                  control={<Checkbox {...register("iso27001")} />}
-                  label={tSignup("iso27001")}
-                  aria-label={tSignup("iso27001AriaLabel")}
-                />
-                {errors.iso27001 && (
-                  <FormHelperText>{errors.iso27001.message}</FormHelperText>
-                )}
-              </FormControl>
-            </Grid>
-            <Grid item>
-              <FormControl error={!!errors.ceCertified} size="small" fullWidth>
-                <FormControlLabel
-                  control={<Checkbox {...register("ceCertified")} />}
+                  control={<Checkbox {...register("ce_certified")} />}
                   label={tSignup("ceCertified")}
                   aria-label={tSignup("ceCertifiedAriaLabel")}
                 />
-                {errors.ceCertified && (
-                  <FormHelperText>{errors.ceCertified.message}</FormHelperText>
+                {errors.ce_certified && (
+                  <FormHelperText>{errors.ce_certified.message}</FormHelperText>
                 )}
               </FormControl>
             </Grid>
             <Grid item>
               <FormControl
-                error={!!errors.ceCertificationNumber}
+                error={!!errors.ce_certification_num}
                 size="small"
                 fullWidth>
                 <TextField
-                  {...register("ceCertificationNumber")}
+                  {...register("ce_certification_num")}
                   size="small"
                   placeholder={tSignup("ceCertificationNumberPlaceholder")}
                   aria-label={tSignup("ceCertificationNumber")}
                   label={<>{tSignup("ceCertificationNumber")} *</>}
                 />
-                {errors.ceCertificationNumber && (
+                {errors.ce_certification_num && (
                   <FormHelperText>
-                    {errors.ceCertificationNumber.message}
+                    {errors.ce_certification_num.message}
                   </FormHelperText>
                 )}
               </FormControl>

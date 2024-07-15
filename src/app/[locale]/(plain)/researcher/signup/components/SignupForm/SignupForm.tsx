@@ -77,7 +77,7 @@ export default function SignupForm({
         lastName: yup.string().required(tValidation("lastNameRequiredInvalid")),
         organisation: yup
           .string()
-          .required(tValidation("organisationRequiredInvalid")),
+          .required(tValidation("organisationNameRequiredInvalid")),
         email: yup
           .string()
           .required(tValidation("emailRequiredInvalid"))

@@ -5,6 +5,7 @@ import FormBody from "@/components/FormBody";
 import FormRecaptcha from "@/components/FormRecaptcha";
 import PasswordTextField from "@/components/PasswordTextField";
 import {
+  VALIDATION_COMPANY_NUMBER,
   VALIDATION_PASSWORD_FORMAT,
   VALIDATION_PASSWORD_LENGTH,
 } from "@/consts/form";
@@ -31,24 +32,23 @@ export interface SignupFormDetailsValues {
   lead_applicant_organisation_email: string;
   lead_applicant_organisation_name: string;
   password: string;
-  confirmPassword: string;
+  confirm_password: string;
   tscs: boolean;
+  companies_house_no: string;
 }
 
-export interface SignupFormProps {
+export interface SignupFormDetailsProps {
   onSubmit: (data: SignupFormDetailsValues) => void;
-  defaultEmail?: string;
   defaultValues?: SignupFormDetailsValues;
 }
 
 const NAMESPACE_TRANSLATION_VALIDATION = "Form";
 const NAMESPACE_TRANSLATION_SIGNUP = "SignupFormDetails";
 
-export default function SignupForm({
+export default function SignupFormDetails({
   onSubmit,
-  defaultEmail,
   defaultValues,
-}: SignupFormProps) {
+}: SignupFormDetailsProps) {
   const tValidation = useTranslations(NAMESPACE_TRANSLATION_VALIDATION);
   const tSignup = useTranslations(NAMESPACE_TRANSLATION_SIGNUP);
   const theme = useTheme();
@@ -62,12 +62,19 @@ export default function SignupForm({
           .string()
           .required(tValidation("emailRequiredInvalid"))
           .email(tValidation("emailFormatInvalid")),
+        companies_house_no: yup
+          .string()
+          .required(tValidation("companyNumberRequiredInvalid"))
+          .matches(
+            VALIDATION_COMPANY_NUMBER,
+            tValidation("companyNumberFormatInvalid")
+          ),
         organisation_name: yup
           .string()
-          .required(tValidation("applicantNameRequiredInvalid")),
+          .required(tValidation("organisationNameRequiredInvalid")),
         lead_applicant_organisation_name: yup
           .string()
-          .required(tValidation("applicantNameRequiredInvalid")),
+          .required(tValidation("nameRequiredInvalid")),
         password: yup
           .string()
           .required(tValidation("passwordRequiredInvalid"))
@@ -81,7 +88,7 @@ export default function SignupForm({
             VALIDATION_PASSWORD_FORMAT,
             tValidation("passwordFormatInvalid")
           ),
-        confirmPassword: yup
+        confirm_password: yup
           .string()
           .required(tValidation("confirmPasswordRequiredInvalid"))
           .oneOf(
@@ -109,14 +116,7 @@ export default function SignupForm({
 
   const methods = useForm<SignupFormDetailsValues>({
     resolver: yupResolver(schema),
-    defaultValues: defaultValues || {
-      organisation_name: "",
-      lead_applicant_organisation_email: defaultEmail,
-      lead_applicant_organisation_name: "",
-      password: "",
-      confirmPassword: "",
-      tscs: false,
-    },
+    defaultValues,
   });
 
   const {
@@ -159,27 +159,44 @@ export default function SignupForm({
                 )}
               </FormControl>
             </Grid>
-            {!defaultEmail && (
-              <Grid item>
-                <FormControl
-                  error={!!errors.lead_applicant_organisation_email}
+            <Grid item>
+              <FormControl
+                error={!!errors.companies_house_no}
+                size="small"
+                fullWidth>
+                <TextField
+                  {...register("companies_house_no")}
                   size="small"
-                  fullWidth>
-                  <TextField
-                    {...register("lead_applicant_organisation_email")}
-                    size="small"
-                    placeholder={tSignup("emailPlaceholder")}
-                    aria-label={tSignup("email")}
-                    label={<>{tSignup("email")} *</>}
-                  />
-                  {errors.lead_applicant_organisation_email && (
-                    <FormHelperText>
-                      {errors.lead_applicant_organisation_email.message}
-                    </FormHelperText>
-                  )}
-                </FormControl>
-              </Grid>
-            )}
+                  placeholder={tSignup("companyNumberPlaceholder")}
+                  aria-label={tSignup("companyNumber")}
+                  label={<>{tSignup("companyNumber")} *</>}
+                />
+                {errors.companies_house_no && (
+                  <FormHelperText>
+                    {errors.companies_house_no.message}
+                  </FormHelperText>
+                )}
+              </FormControl>
+            </Grid>
+            <Grid item>
+              <FormControl
+                error={!!errors.lead_applicant_organisation_email}
+                size="small"
+                fullWidth>
+                <TextField
+                  {...register("lead_applicant_organisation_email")}
+                  size="small"
+                  placeholder={tSignup("emailPlaceholder")}
+                  aria-label={tSignup("email")}
+                  label={<>{tSignup("email")} *</>}
+                />
+                {errors.lead_applicant_organisation_email && (
+                  <FormHelperText>
+                    {errors.lead_applicant_organisation_email.message}
+                  </FormHelperText>
+                )}
+              </FormControl>
+            </Grid>
             <Grid item>
               <FormControl
                 error={!!errors.lead_applicant_organisation_name}
@@ -204,11 +221,11 @@ export default function SignupForm({
                 <PasswordTextField
                   id="password"
                   size="small"
-                  placeholder={tValidation("passwordPlaceholder")}
-                  aria-label={tValidation("password")}
-                  label={<>{tValidation("password")} *</>}
+                  placeholder={tSignup("passwordPlaceholder")}
+                  aria-label={tSignup("password")}
+                  label={<>{tSignup("password")} *</>}
                   iconButtonProps={{
-                    "aria-label": tValidation("togglePasswordAriaLabel"),
+                    "aria-label": tSignup("togglePasswordAriaLabel"),
                   }}
                 />
                 {errors.password && (
@@ -218,22 +235,22 @@ export default function SignupForm({
             </Grid>
             <Grid item>
               <FormControl
-                error={!!errors.confirmPassword}
+                error={!!errors.confirm_password}
                 size="small"
                 fullWidth>
                 <PasswordTextField
-                  id="confirmPassword"
+                  id="confirm_password"
                   size="small"
-                  placeholder={tValidation("confirmPasswordPlaceholder")}
-                  aria-label={tValidation("confirmPassword")}
-                  label={<>{tValidation("confirmPassword")} *</>}
+                  placeholder={tSignup("confirmPasswordPlaceholder")}
+                  aria-label={tSignup("confirmPassword")}
+                  label={<>{tSignup("confirmPassword")} *</>}
                   iconButtonProps={{
-                    "aria-label": tValidation("toggleConfirmPasswordAriaLabel"),
+                    "aria-label": tSignup("toggleConfirmPasswordAriaLabel"),
                   }}
                 />
-                {errors.confirmPassword && (
+                {errors.confirm_password && (
                   <FormHelperText>
-                    {errors.confirmPassword.message}
+                    {errors.confirm_password.message}
                   </FormHelperText>
                 )}
               </FormControl>

@@ -3,7 +3,7 @@ import { handleJsonResponse, postRequest } from "../requests";
 import { RegisterPayload } from "./types";
 
 export default async (
-  payload: RegisterPayload,
+  payload: PostRegisterOrganisationPayload,
   messages: ResponseTranslations
 ) => {
   const response = await postRequest(
