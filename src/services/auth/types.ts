@@ -1,6 +1,6 @@
 import { Organisation, User } from "@/types/application";
 
-interface LoginPayload {
+interface PostLoginPayload {
   email: string;
   password: string;
 }
@@ -31,25 +31,31 @@ interface ResetPasswordPayload {
   password: string;
 }
 
-type PostRegisterOrganisationPayload = Pick<
-  Organisation,
-  | "dpo_name"
-  | "dpo_email"
-  | "hr_name"
-  | "hr_email"
-  | "organisation_name"
-  | "lead_applicant_organisation_email"
-  | "lead_applicant_organisation_name"
-  | "password"
->;
+type PostRegisterOrganisationPayload = Organisation;
+interface PostRegisterIssuerPayload {
+  email: string;
+  password: string;
+  first_name?: string;
+  last_name?: string;
+}
+
+interface PostRegisterResearcherPayload {
+  email: string;
+  password: string;
+  organisation_id: number;
+  first_name: string;
+  last_name: string;
+  consent_scrape: number;
+}
 
 export type {
   AuthDetails,
-  User,
-  LoginPayload,
+  PostLoginPayload,
   LoginRequest,
   LoginOTPPayload,
   PostRegisterOrganisationPayload,
+  PostRegisterIssuerPayload,
+  PostRegisterResearcherPayload,
   ResetPasswordPayload,
   LoginResponse,
 };

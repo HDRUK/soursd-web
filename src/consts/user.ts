@@ -4,4 +4,9 @@ enum UserGroup {
   ISSUERS = "ISSUERS",
 }
 
-export { UserGroup };
+enum UserProvider {
+  SIT = "sit",
+  KEYCLOAK = "keycloak",
+}
+
+export { UserGroup, UserProvider };

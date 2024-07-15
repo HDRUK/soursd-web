@@ -42,6 +42,7 @@ export interface SignupFormValues {
   password: string;
   confirmPassword: string;
   tscs: boolean;
+  consentScrape: boolean;
 }
 
 export interface SignupFormProps {
@@ -106,6 +107,7 @@ export default function SignupForm({
           .bool()
           .oneOf([true], tValidation("tscsRequiredInvalid"))
           .required(tValidation("tscsRequiredInvalid")),
+        consentScrape: yup.bool(),
       }),
     []
   );
@@ -131,6 +133,7 @@ export default function SignupForm({
       password: "",
       confirmPassword: "",
       tscs: false,
+      consentScrape: false,
     },
   });
 
@@ -275,6 +278,18 @@ export default function SignupForm({
                   control={<Checkbox {...register("tscs")} />}
                   label={tSignup("agreeTermsAndConditions")}
                   aria-label={tSignup("agreeTermsAndConditionsAriaLabel")}
+                />
+                {errors.tscs && (
+                  <FormHelperText>{errors.tscs.message}</FormHelperText>
+                )}
+              </FormControl>
+            </Grid>
+            <Grid item>
+              <FormControl error={!!errors.tscs} size="small" fullWidth>
+                <FormControlLabel
+                  control={<Checkbox {...register("consentScrape")} />}
+                  label={tSignup("consentScrape")}
+                  aria-label={tSignup("consentScrapeAriaLabel")}
                 />
                 {errors.tscs && (
                   <FormHelperText>{errors.tscs.message}</FormHelperText>

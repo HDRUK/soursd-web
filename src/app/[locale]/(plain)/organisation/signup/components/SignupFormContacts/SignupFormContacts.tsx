@@ -1,9 +1,13 @@
 "use client";
 
+import ContactLink from "@/components/ContactLink";
 import FormActions from "@/components/FormActions";
 import FormBody from "@/components/FormBody";
+import { FormMutateState } from "@/types/form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { LoadingButton } from "@mui/lab";
 import {
+  Alert,
   Box,
   Button,
   FormControl,
@@ -25,6 +29,7 @@ export interface SignupFormContactsValues {
 }
 
 export interface SignupFormContactsProps {
+  mutateState: FormMutateState;
   onSubmit: (data: SignupFormContactsValues) => void;
   onPrevious: (data: SignupFormContactsValues) => void;
   defaultValues?: SignupFormContactsValues;
@@ -37,6 +42,7 @@ export default function SignupFormContacts({
   onSubmit,
   onPrevious,
   defaultValues,
+  mutateState,
 }: SignupFormContactsProps) {
   const tValidation = useTranslations(NAMESPACE_TRANSLATION_VALIDATION);
   const tSignup = useTranslations(NAMESPACE_TRANSLATION_SIGNUP);
@@ -90,6 +96,13 @@ export default function SignupFormContacts({
           [theme.breakpoints.up("md")]: { width: "350px" },
         }}>
         <FormBody>
+          {mutateState.isError && (
+            <Alert color="error" sx={{ mb: 3 }}>
+              {tSignup.rich(mutateState.error, {
+                contactLink: ContactLink,
+              })}
+            </Alert>
+          )}
           <Grid container direction="column" spacing={2}>
             <Grid item>
               <FormControl error={!!errors.hr_name} size="small" fullWidth>
@@ -158,9 +171,13 @@ export default function SignupFormContacts({
             sx={{ mb: 1 }}>
             {tSignup("previousButton")}
           </Button>
-          <Button type="submit" variant="contained" fullWidth>
+          <LoadingButton
+            loading={mutateState.isLoading}
+            type="submit"
+            variant="contained"
+            fullWidth>
             {tSignup("signupButton")}
-          </Button>
+          </LoadingButton>
         </FormActions>
       </Box>
     </FormProvider>

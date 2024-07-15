@@ -6,7 +6,7 @@ import { NextIntlClientProvider, useMessages } from "next-intl";
 import { Inter } from "next/font/google";
 import { notFound } from "next/navigation";
 import { PropsWithChildren, useMemo } from "react";
-
+import GlobalStyles from "@mui/material/GlobalStyles";
 import { ROUTES } from "@/consts/router";
 import { ApplicationDataProvider } from "@/context/ApplicationData";
 import { NotificationsProvider } from "@/context/Notifications";
@@ -52,6 +52,13 @@ export default function RootLayout({
             <NotificationsProvider>
               <ReactQueryClientProvider>
                 <ThemeRegistry>
+                  <GlobalStyles
+                    styles={{
+                      [".MuiGrid-item .MuiGrid-container"]: {
+                        maxWidth: "initial",
+                      },
+                    }}
+                  />
                   <ApplicationDataProvider
                     value={{
                       routes,

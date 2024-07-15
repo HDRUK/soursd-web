@@ -1,11 +1,11 @@
 import { ResponseJson, ResponseTranslations } from "@/types/requests";
 import { getRequest, handleJsonResponse } from "../requests";
-import { IssuerInviteResponse } from "./types";
+import { GetIssuerInviteResponse } from "./types";
 
 export default async (
   inviteCode: string,
   messages: ResponseTranslations
-): Promise<ResponseJson<IssuerInviteResponse>> => {
+): Promise<ResponseJson<GetIssuerInviteResponse>> => {
   const response = await getRequest(
     `${process.env.NEXT_PUBLIC_API_V1_URL}/issuers/identifier/${inviteCode}`,
     undefined,

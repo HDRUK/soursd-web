@@ -7,7 +7,7 @@ import OverlayCenter from "@/components/OverlayCenter";
 import OverlayCenterAlert from "@/components/OverlayCenterAlert";
 import { useApplicationData } from "@/context/ApplicationData";
 import postRegisterResearcher from "@/services/auth/postRegisterResearcher";
-import { RegisterPayload } from "@/services/auth/types";
+import { PostRegisterResearcherPayload } from "@/services/auth/types";
 import { getOrganisations } from "@/services/organisations";
 import { getByInviteCode } from "@/services/users";
 import { isExpiredInvite } from "@/utils/date";
@@ -17,6 +17,7 @@ import { useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
 import { useMutation, useQuery } from "react-query";
 import SignupForm, { SignupFormValues } from "../SignupForm";
+import { useMutationRegister } from "../../hooks";
 
 const NAMESPACE_TRANSLATION_SIGNUP = "SignupForm";
 const NAMESPACE_TRANSLATION_SIGNUP_RESEARCHER = "SignupFormResearcher";
@@ -66,14 +67,7 @@ export default function Page() {
     isError: isSignupError,
     isLoading: isSignupLoading,
     error: signupError,
-  } = useMutation(
-    ["postRegisterResearcher"],
-    async (payload: RegisterPayload) => {
-      return postRegisterResearcher(payload, {
-        error: { message: "submitError" },
-      });
-    }
-  );
+  } = useMutationRegister(researcherData?.data);
 
   const handleSignupSubmit = async (values: SignupFormValues) => {
     const {
@@ -82,12 +76,14 @@ export default function Page() {
       password,
       email,
       organisation,
+      consentScrape,
     } = values;
 
     const payload = {
       password,
       first_name,
       last_name,
+      consent_scrape: consentScrape,
       email,
       organisation_id: parseInt(organisation, 10),
     };

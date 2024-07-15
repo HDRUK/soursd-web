@@ -2,7 +2,10 @@
 
 import FormActions from "@/components/FormActions";
 import FormBody from "@/components/FormBody";
-import { VALIDATION_POSTCODE_FORMAT } from "@/consts/form";
+import {
+  VALIDATION_CE_CERTIFICATION_NUMBER,
+  VALIDATION_POSTCODE_FORMAT,
+} from "@/consts/form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import InfoIcon from "@mui/icons-material/Info";
 import {
@@ -51,6 +54,7 @@ export default function SignupFormOtherDetails({
 }: SignupFormOtherDetailsProps) {
   const tValidation = useTranslations(NAMESPACE_TRANSLATION_VALIDATION);
   const tSignup = useTranslations(NAMESPACE_TRANSLATION_SIGNUP);
+
   const theme = useTheme();
 
   const schema = useMemo(
@@ -59,10 +63,10 @@ export default function SignupFormOtherDetails({
         address_1: yup
           .string()
           .required(tValidation("address1RequiredInvalid")),
-        address_2: yup.string(),
-        town: yup.string(),
-        county: yup.string(),
-        country: yup.string(),
+        address_2: yup.string().notRequired(),
+        town: yup.string().notRequired(),
+        county: yup.string().notRequired(),
+        country: yup.string().notRequired(),
         postcode: yup
           .string()
           .required(tValidation("postcodeRequiredInvalid"))
@@ -72,21 +76,26 @@ export default function SignupFormOtherDetails({
           ),
         dsptk_ods_code: yup
           .string()
+          .nullable()
+          .transform(value => (value === "" ? null : value))
           .matches(
             VALIDATION_POSTCODE_FORMAT,
             tValidation("digitalToolkitCodeFormatInvalid")
-          ),
-        iso_27001_certified: yup
-          .bool()
-          .oneOf([true], tValidation("iso27001RequiredInvalid"))
-          .required(tValidation("iso27001RequiredInvalid")),
+          )
+          .default(() => ""),
+        iso_27001_certified: yup.bool().notRequired(),
         ce_certified: yup.bool(),
-        ce_certification_num: yup
-          .string()
-          .matches(
-            VALIDATION_POSTCODE_FORMAT,
-            tValidation("ceCertificationNumberFormatInvalid")
-          ),
+        ce_certification_num: yup.string().when("ce_certified", {
+          is: true,
+          then: () =>
+            yup
+              .string()
+              .required(tValidation("ceCertificationNumberRequiredInvalid"))
+              .matches(
+                VALIDATION_CE_CERTIFICATION_NUMBER,
+                tValidation("ceCertificationNumberFormatInvalid")
+              ),
+        }),
       }),
     []
   );
@@ -97,11 +106,14 @@ export default function SignupFormOtherDetails({
   });
 
   const {
+    watch,
     formState: { errors },
     register,
     getValues,
     handleSubmit,
   } = methods;
+
+  const ceCertifiedValue = watch("ce_certified");
 
   return (
     <FormProvider {...methods}>
@@ -139,7 +151,7 @@ export default function SignupFormOtherDetails({
                   size="small"
                   placeholder={tSignup("address2Placeholder")}
                   aria-label={tSignup("address2")}
-                  label={<>{tSignup("address2")} *</>}
+                  label={<>{tSignup("address2")}</>}
                 />
                 {errors.address_2 && (
                   <FormHelperText>{errors.address_2.message}</FormHelperText>
@@ -153,30 +165,30 @@ export default function SignupFormOtherDetails({
                   size="small"
                   placeholder={tSignup("townPlaceholder")}
                   aria-label={tSignup("town")}
-                  label={<>{tSignup("town")} *</>}
+                  label={<>{tSignup("town")}</>}
                 />
                 {errors.town && (
                   <FormHelperText>{errors.town.message}</FormHelperText>
                 )}
               </FormControl>
             </Grid>
-            <Grid item>
-              <Grid container spacing={2}>
-                <Grid item md={6}>
+            <Grid item xs={12}>
+              <Grid container spacing={2} xs={12}>
+                <Grid item xs={12} md={6}>
                   <FormControl error={!!errors.county} size="small" fullWidth>
                     <TextField
                       {...register("county")}
                       size="small"
                       placeholder={tSignup("countyPlaceholder")}
                       aria-label={tSignup("county")}
-                      label={<>{tSignup("county")} *</>}
+                      label={<>{tSignup("county")}</>}
                     />
                     {errors.county && (
                       <FormHelperText>{errors.county.message}</FormHelperText>
                     )}
                   </FormControl>
                 </Grid>
-                <Grid item md={6}>
+                <Grid item xs={12} md={6}>
                   <FormControl error={!!errors.postcode} size="small" fullWidth>
                     <TextField
                       {...register("postcode")}
@@ -200,6 +212,7 @@ export default function SignupFormOtherDetails({
                   placeholder={tSignup("countryPlaceholder")}
                   aria-label={tSignup("country")}
                   label={<>{tSignup("country")} *</>}
+                  disabled
                 />
                 {errors.country && (
                   <FormHelperText>{errors.country.message}</FormHelperText>
@@ -217,7 +230,7 @@ export default function SignupFormOtherDetails({
                     size="small"
                     placeholder={tSignup("digitalToolkitCodePlaceholder")}
                     aria-label={tSignup("digitalToolkitCode")}
-                    label={<>{tSignup("digitalToolkitCode")} *</>}
+                    label={<>{tSignup("digitalToolkitCode")}</>}
                   />
                   <Tooltip title={tSignup("whatIsDpstkOdsCode")}>
                     <InfoIcon color="info" />
@@ -257,25 +270,27 @@ export default function SignupFormOtherDetails({
                 )}
               </FormControl>
             </Grid>
-            <Grid item>
-              <FormControl
-                error={!!errors.ce_certification_num}
-                size="small"
-                fullWidth>
-                <TextField
-                  {...register("ce_certification_num")}
+            {!!ceCertifiedValue && (
+              <Grid item>
+                <FormControl
+                  error={!!errors.ce_certification_num}
                   size="small"
-                  placeholder={tSignup("ceCertificationNumberPlaceholder")}
-                  aria-label={tSignup("ceCertificationNumber")}
-                  label={<>{tSignup("ceCertificationNumber")} *</>}
-                />
-                {errors.ce_certification_num && (
-                  <FormHelperText>
-                    {errors.ce_certification_num.message}
-                  </FormHelperText>
-                )}
-              </FormControl>
-            </Grid>
+                  fullWidth>
+                  <TextField
+                    {...register("ce_certification_num")}
+                    size="small"
+                    placeholder={tSignup("ceCertificationNumberPlaceholder")}
+                    aria-label={tSignup("ceCertificationNumber")}
+                    label={<>{tSignup("ceCertificationNumber")} *</>}
+                  />
+                  {errors.ce_certification_num && (
+                    <FormHelperText>
+                      {errors.ce_certification_num.message}
+                    </FormHelperText>
+                  )}
+                </FormControl>
+              </Grid>
+            )}
           </Grid>
         </FormBody>
         <FormActions>

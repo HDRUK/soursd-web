@@ -23,7 +23,9 @@
     "postcodeFormatInvalid": "The postcode is not valid",
     "companyNumberRequiredInvalid": "Company number is required",
     "companyNumberFormatInvalid": "Company number is not in the correct format",
-    "address1RequiredInvalid": "Line 1 of the address is required"
+    "address1RequiredInvalid": "Line 1 of the address is required",
+    "digitalToolkitCodeFormatInvalid": "Code is invalid",
+    "ceCertificationNumberRequiredInvalid": "Certification number is invalid"
   },
   "Buttons": {
     "register": "Register",
@@ -73,7 +75,13 @@
     "noVerificationCode": "You need a verification code to signup. This should have been provided to you via an invitation link. Please contact us at <contactLink></contactLink>",
     "verificationExpired": "The verification code provided has expired. Please contact us at <contactLink></contactLink>",
     "noDataVerification": "Could not find any data for this verification code. Please contact us at <contactLink></contactLink>",
-    "getByInviteCodeError": "There has been a problem getting your details. Please contact us at <contactLink></contactLink>"
+    "getByInviteCodeError": "There has been a problem getting your details. Please contact us at <contactLink></contactLink>",
+    "consentScrape": "I consent to the Registry using information I provide to gather my historical experience",
+    "consentScrapeAriaLabel": "Gather my historical experience as a Researcher",
+    "passwordPlaceholder": "Password",
+    "password": "Password",
+    "confirmPasswordPlaceholder": "Confirm password",
+    "confirmPassword": "Confirm password"
   },
   "SignupFormIssuer": {
     "title": "Issuer sign Up"
@@ -125,7 +133,16 @@
   "SignupFormContacts": {
     "title": "Additional contacts",
     "previousButton": "Previous",
-    "signupButton": "Sign Up"
+    "hrNamePlaceholder": "Name of HR contact",
+    "hrName": "Name of HR contact",
+    "hrEmailPlaceholder": "Email of HR contact",
+    "hrEmail": "Email of HR contact",
+    "dpoNamePlaceholder": "Name of data protection contact",
+    "dpoName": "Name of data protection contact",
+    "dpoEmailPlaceholder": "Email of data protection contact",
+    "dpoEmail": "Email of data protection contact",
+    "signupButton": "Sign Up",
+    "submitError": "There was a problem signing up. Please try again or contact us at <contactLink></contactLink>"
   },
   "SignupFormOtherDetails": {
     "title": "Company details",
@@ -186,7 +203,8 @@
     "submitError": "There was a problem updating your details. Please try again or contact us at <contactLink></contactLink>",
     "pending": "Pending",
     "verified": "Verified",
-    "cvUploadFailed": "There was a problem uploading your CV. Please check the file size and try again or alternativley contact us at <contactLink></contactLink>"
+    "cvUploadFailed": "There was a problem uploading your CV. Please check the file size and try again or alternativley contact us at <contactLink></contactLink>",
+    "noCvUploaded": "None uploaded"
   },
   "LoginForm": {
     "email": "Email",

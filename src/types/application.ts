@@ -23,6 +23,18 @@ interface Permission {
   };
 }
 
+interface Issuer {
+  id: number;
+  created_at: string;
+  updated_at: string;
+  name: string;
+  contact_email: string;
+  enabled: boolean;
+  invite_accepted_at: string | null;
+  invite_sent_at: string | null;
+  permissions: Permission[];
+}
+
 interface User {
   id: number;
   first_name: string;
@@ -67,4 +79,11 @@ interface ApplicationDataState {
   user?: User;
 }
 
-export type { ApplicationDataState, Organisation, User, Permission, File };
+export type {
+  ApplicationDataState,
+  Organisation,
+  User,
+  Permission,
+  File,
+  Issuer,
+};
