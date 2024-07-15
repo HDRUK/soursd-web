@@ -20,6 +20,7 @@ export default function FormModal({
   isDismissable = true,
   onBack,
   onClose,
+  sx,
   ...restProps
 }: FormModalProps) {
   const theme = useTheme();
@@ -32,9 +33,12 @@ export default function FormModal({
           left: "50%",
           transform: "translate(-50%, -50%)",
           position: "absolute",
+          overflowY: "scroll",
+          maxHeight: `calc(100vh - ${theme.spacing(4)})`,
           [theme.breakpoints.down("sm")]: {
             width: `calc(100% - ${theme.spacing(4)})`,
           },
+          ...sx,
         }}>
         <CardContent sx={{ p: 4 }}>
           {onBack && (

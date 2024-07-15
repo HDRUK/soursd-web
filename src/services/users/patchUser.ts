@@ -1,13 +1,13 @@
 import { ResponseJson, ResponseTranslations } from "@/types/requests";
 import { updateAuthUser } from "@/utils/auth";
 import { handleResponseError, patchRequest } from "../requests";
-import { UpdateUserPayload, UpdateUserResponse } from "./types";
+import { PatchUserPayload, PatchUserResponse } from "./types";
 
 export default async (
   id: number,
-  payload: UpdateUserPayload,
+  payload: PatchUserPayload,
   messages: ResponseTranslations
-): Promise<ResponseJson<UpdateUserResponse>> => {
+): Promise<ResponseJson<PatchUserResponse>> => {
   const response = await patchRequest(
     `${process.env.NEXT_PUBLIC_API_V1_URL}/users/${id}`,
     payload,

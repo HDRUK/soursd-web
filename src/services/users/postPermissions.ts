@@ -1,11 +1,11 @@
 import { ResponseJson, ResponseTranslations } from "@/types/requests";
 import { handleResponseError, postRequest } from "../requests";
-import { UpdatePermissonsPayload, UpdateUserResponse } from "./types";
+import { UpdatePermissonsPayload, PatchUserResponse } from "./types";
 
 export default async (
   payload: UpdatePermissonsPayload,
   messages: ResponseTranslations
-): Promise<ResponseJson<UpdateUserResponse>> => {
+): Promise<ResponseJson<PatchUserResponse>> => {
   const response = await postRequest(
     `${process.env.NEXT_PUBLIC_API_V1_URL}/users/permissions`,
     payload,

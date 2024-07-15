@@ -3,7 +3,7 @@
 import OverlayCenter from "@/components/OverlayCenter";
 import { useStore } from "@/data/store";
 import { User } from "@/services/auth";
-import { UpdateUserPayload, getUser } from "@/services/users";
+import { PatchUserPayload, getUser } from "@/services/users";
 import patchUser from "@/services/users/patchUser";
 import { ResponseJson } from "@/types/requests";
 import { CircularProgress, Typography } from "@mui/material";
@@ -50,7 +50,7 @@ export default function Sections() {
     isError: isUpdateError,
     isLoading: isUpdateLoading,
     error: updateError,
-  } = useMutation(["postLogin"], async (payload: UpdateUserPayload) =>
+  } = useMutation(["postLogin"], async (payload: PatchUserPayload) =>
     patchUser(userDetails?.id, payload, {
       error: {
         message: "submitError",
