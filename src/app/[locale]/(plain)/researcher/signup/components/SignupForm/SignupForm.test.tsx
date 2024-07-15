@@ -2,14 +2,11 @@ import { act, fireEvent, render, screen } from "@/utils/testUtils";
 import { faker } from "@faker-js/faker";
 import { axe } from "jest-axe";
 import SignupForm, { SignupFormProps } from "./SignupForm";
+import { mockedOrganisation } from "@/mocks/data/organisation";
 
 const mockSubmit = jest.fn();
 
-const mockedOrganisation = {
-  organisation_unique_id: faker.string.uuid(),
-  organisation_name: faker.company.name(),
-  id: faker.number.int(),
-};
+const defaultOrganisation = mockedOrganisation();
 
 const renderSignupForm = (
   props: Partial<SignupFormProps> = {
@@ -18,8 +15,8 @@ const renderSignupForm = (
 ) => {
   return render(
     <SignupForm
-      defaultOrganisation={mockedOrganisation.id.toString()}
-      organisations={[mockedOrganisation]}
+      defaultOrganisation={defaultOrganisation.id.toString()}
+      organisations={[defaultOrganisation]}
       mutateState={{ isLoading: false, isError: false }}
       onSubmit={mockSubmit}
       {...props}
@@ -80,6 +77,9 @@ describe("<SignupForm />", () => {
     const tscs = screen
       .getByLabelText("Accept terms and conditions")
       .querySelector("input");
+    const consentScrape = screen
+      .getByLabelText("Gather my historical experience as a Researcher")
+      .querySelector("input");
     const recaptcha = screen.getByTestId("recaptcha");
 
     const emailValue = faker.internet.email();
@@ -88,7 +88,15 @@ describe("<SignupForm />", () => {
     const passwordValue = "A!2sghjs";
     const confirmPasswordValue = passwordValue;
 
-    if (email && firstName && lastName && password && confirmPassword && tscs) {
+    if (
+      email &&
+      firstName &&
+      lastName &&
+      password &&
+      confirmPassword &&
+      tscs &&
+      consentScrape
+    ) {
       await act(async () => {
         fireEvent.change(email, {
           target: {
@@ -114,15 +122,25 @@ describe("<SignupForm />", () => {
           target: { value: confirmPasswordValue },
         });
         fireEvent.click(tscs);
+        fireEvent.click(consentScrape);
         fireEvent.click(recaptcha);
 
         fireEvent.submit(screen.getByRole("button", { name: /Sign Up/i }));
       });
 
-      expect(mockSubmit).toHaveBeenCalled();
+      expect(mockSubmit).toHaveBeenCalledWith({
+        confirmPassword: confirmPasswordValue,
+        consentScrape: true,
+        email: emailValue,
+        firstName: firstNameValue,
+        lastName: lastNameValue,
+        organisation: `${defaultOrganisation.id}`,
+        password: passwordValue,
+        tscs: true,
+      });
     } else {
       fail(
-        "First name, last name, password, confirm password or tscs do not exist"
+        "First name, last name, password, confirm password, tscs or consentScrape do not exist"
       );
     }
   });
