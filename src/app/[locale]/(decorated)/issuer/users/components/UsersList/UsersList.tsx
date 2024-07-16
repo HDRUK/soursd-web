@@ -110,7 +110,9 @@ export default function UsersList({
                               isOrganisationApproved
                             )
                           }>
-                          {isOrganisationApproved ? "Approved" : t("approve")}
+                          {isOrganisationApproved
+                            ? t("approved")
+                            : t("approve")}
                         </LoadingButton>,
                       ]}
                     />
@@ -207,7 +209,7 @@ export default function UsersList({
                                         isApproved
                                       )
                                     }>
-                                    {isApproved ? "Approved" : t("approve")}
+                                    {isApproved ? t("approved") : t("approve")}
                                   </LoadingButton>,
                                 ]}
                               />

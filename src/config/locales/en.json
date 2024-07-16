@@ -105,6 +105,7 @@
     "title": "Users",
     "loadingAriaLabel": "Loading page",
     "approve": "Approve",
+    "approved": "Approved",
     "permissions": "Permissions",
     "emailHeading": "Email",
     "firstNameHeading": "First name",

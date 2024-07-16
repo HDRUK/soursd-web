@@ -66,7 +66,6 @@ export default function Sections() {
 
   const handleUnapprove = useCallback(
     async (payload: DeleteApprovalPayloadWithEntity) => {
-      console.log("*************** unapprove", payload);
       await mutateDeleteAsync(payload);
 
       queryClient.refetchQueries(["getOrganisations"]);
