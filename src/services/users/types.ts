@@ -1,6 +1,8 @@
+import { UserProvider } from "@/consts/user";
 import { User } from "../auth/types";
 
 interface ResearcherInviteResponse {
+  id: number;
   name: string;
   contact_email: string;
   invite_sent_at: string;
@@ -9,11 +11,12 @@ interface ResearcherInviteResponse {
   organisation_id: number;
 }
 
-interface UpdateUserPayload {
+interface PatchUserPayload {
   first_name?: string;
   last_name?: string;
   email?: string;
   password?: string;
+  consent_scrape?: number;
 }
 
 interface UpdatePermissonsPayload {
@@ -22,7 +25,7 @@ interface UpdatePermissonsPayload {
   permissions: number[];
 }
 
-interface UpdateUserResponse {
+interface PatchUserResponse {
   id: number;
   firstName: string;
   lastName: string;
@@ -34,11 +37,28 @@ type UserResponse = User;
 
 type UsersResponse = User[];
 
+interface PostUserPayload {
+  first_name: string;
+  last_name: string;
+  email: string;
+  consent_scrape: boolean;
+  registry_id?: string;
+  provider?: UserProvider;
+  profile_steps_completed?: string;
+  profile_completed_at?: string;
+  is_researcher?: boolean;
+  is_organisation?: boolean;
+}
+
+type PostUserResponse = any;
+
 export type {
+  PostUserPayload,
+  PostUserResponse,
   ResearcherInviteResponse,
-  UpdateUserPayload,
-  UpdateUserResponse,
-  UserResponse,
   UpdatePermissonsPayload,
+  PatchUserPayload,
+  PatchUserResponse,
+  UserResponse,
   UsersResponse,
 };

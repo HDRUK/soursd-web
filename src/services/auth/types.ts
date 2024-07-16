@@ -47,11 +47,13 @@ interface ResetPasswordPayload {
   password: string;
 }
 
-interface RegisterPayload {
+interface PostRegisterResearcherPayload {
   email: string;
   password: string;
-  firstName?: string;
-  lastName?: string;
+  organisation_id: number;
+  first_name: string;
+  last_name: string;
+  consent_scrape: number;
 }
 
 export type {
@@ -60,7 +62,7 @@ export type {
   LoginPayload,
   LoginRequest,
   LoginResponse,
-  RegisterPayload,
+  PostRegisterResearcherPayload,
   ResetPasswordPayload,
   User,
 };

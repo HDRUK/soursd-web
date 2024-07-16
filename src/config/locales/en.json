@@ -66,7 +66,9 @@
     "noVerificationCode": "You need a verification code to signup. This should have been provided to you via an invitation link. Please contact us at <contactLink></contactLink>",
     "verificationExpired": "The verification code provided has expired. Please contact us at <contactLink></contactLink>",
     "noDataVerification": "Could not find any data for this verification code. Please contact us at <contactLink></contactLink>",
-    "getByInviteCodeError": "There has been a problem getting your details. Please contact us at <contactLink></contactLink>"
+    "getByInviteCodeError": "There has been a problem getting your details. Please contact us at <contactLink></contactLink>",
+    "consentScrape": "I consent to the Registry using information I provide to gather my historical experience",
+    "consentScrapeAriaLabel": "Gather my historical experience as a Researcher"
   },
   "SignupFormIssuer": {
     "title": "Issuer sign Up"

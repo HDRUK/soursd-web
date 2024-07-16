@@ -7,7 +7,7 @@ import OverlayCenter from "@/components/OverlayCenter";
 import OverlayCenterAlert from "@/components/OverlayCenterAlert";
 import { useApplicationData } from "@/context/ApplicationData";
 import postRegisterIssuer from "@/services/auth/postRegisterIssuer";
-import { RegisterPayload } from "@/services/auth/types";
+import { PostRegisterResearcherPayload } from "@/services/auth/types";
 import { getByInviteCode } from "@/services/issuers";
 import { isExpiredInvite } from "@/utils/date";
 import HubIcon from "@mui/icons-material/Hub";
@@ -48,11 +48,14 @@ export default function Page() {
     isError: isSignupError,
     isLoading: isSignupLoading,
     error: signupError,
-  } = useMutation(["postRegisterIssuer"], async (payload: RegisterPayload) => {
-    return postRegisterIssuer(payload, {
-      error: { message: "submitError" },
-    });
-  });
+  } = useMutation(
+    ["postRegisterIssuer"],
+    async (payload: PostRegisterResearcherPayload) => {
+      return postRegisterIssuer(payload, {
+        error: { message: "submitError" },
+      });
+    }
+  );
 
   const handleSignupSubmit = async (values: SignupFormValues) => {
     const { password } = values;

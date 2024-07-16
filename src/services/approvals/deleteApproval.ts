@@ -9,7 +9,7 @@ export default async (
   messages: ResponseTranslations
 ): Promise<ResponseJson<null>> => {
   const response = await deleteRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/approvals/${entityType}/${payload.issuer_id}/${payload.user_id}`
+    `${process.env.NEXT_PUBLIC_API_V1_URL}/approvals/${entityType}/${payload.user_id}/issuer/${payload.issuer_id}`
   );
 
   return handleJsonResponse(response, messages);

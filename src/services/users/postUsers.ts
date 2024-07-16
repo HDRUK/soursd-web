@@ -1,14 +1,14 @@
-import { ResponseTranslations } from "@/types/requests";
+import { ResponseJson, ResponseTranslations } from "@/types/requests";
 import { handleJsonResponse, postRequest } from "../requests";
-import { PostRegisterResearcherPayload } from "./types";
+import { PostUserResponse, PostUserPayload } from "./types";
 
 export default async (
-  payload: PostRegisterResearcherPayload,
+  payload: PostUserPayload,
   messages: ResponseTranslations
-) => {
+): Promise<ResponseJson<PostUserResponse>> => {
   const response = await postRequest(
-    `${process.env.NEXT_PUBLIC_API_URL}/auth/register/issuer`,
-    { ...payload, is_issuer: true },
+    `${process.env.NEXT_PUBLIC_API_V1_URL}/users`,
+    payload,
     {
       headers: {
         "content-type": "application/json;charset=UTF-8",

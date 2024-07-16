@@ -6,19 +6,33 @@ export default function useMutationApprovals() {
   return useMutation(
     ["postApproval"],
     async (payload: DeleteApprovalPayload & { type: EntityType }) => {
-      const { type, ...restPayload } = payload;
+      const { type, organisation_id, user_id, ...restPayload } = payload;
 
       if (type === EntityType.ORGANISATION) {
-        return deleteApproval(restPayload, EntityType.ORGANISATION, {
-          error: {
-            message: "updateOrganisationApprovalError",
+        return deleteApproval(
+          {
+            ...restPayload,
+            user_id: organisation_id,
           },
-        });
+          EntityType.ORGANISATION,
+          {
+            error: {
+              message: "updateOrganisationApprovalError",
+            },
+          }
+        );
       }
 
-      return deleteApproval(restPayload, EntityType.RESEARCHER, {
-        error: { message: "updateApprovalError" },
-      });
+      return deleteApproval(
+        {
+          ...restPayload,
+          user_id,
+        },
+        EntityType.RESEARCHER,
+        {
+          error: { message: "updateApprovalError" },
+        }
+      );
     }
   );
 }
