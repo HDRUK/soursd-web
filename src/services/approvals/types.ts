@@ -4,14 +4,30 @@ interface Approval {
   issuer_id: number;
 }
 
-interface PostApprovalsPayload {
+interface PostApprovalPayload {
   issuer_id: number;
   organisation_id?: number;
   user_id?: number;
 }
 
-interface PostApprovalsPayloadWithEntity extends PostApprovalsPayload {
+interface DeleteApprovalPayload {
+  issuer_id: number;
+  organisation_id?: number;
+  user_id?: number;
+}
+
+interface PostApprovalPayloadWithEntity extends PostApprovalPayload {
   type: EntityType;
 }
 
-export type { Approval, PostApprovalsPayload, PostApprovalsPayloadWithEntity };
+interface DeleteApprovalPayloadWithEntity extends DeleteApprovalPayload {
+  type: EntityType;
+}
+
+export type {
+  Approval,
+  PostApprovalPayload,
+  PostApprovalPayloadWithEntity,
+  DeleteApprovalPayload,
+  DeleteApprovalPayloadWithEntity,
+};

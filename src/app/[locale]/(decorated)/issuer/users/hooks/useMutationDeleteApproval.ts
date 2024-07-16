@@ -1,23 +1,22 @@
-import { PostApprovalsPayload } from "@/services/approvals";
-import postApprovals from "@/services/approvals/postApprovals";
+import { DeleteApprovalPayload, deleteApproval } from "@/services/approvals";
 import { EntityType } from "@/types/api";
 import { useMutation } from "react-query";
 
 export default function useMutationApprovals() {
   return useMutation(
-    ["postApprovals"],
-    async (payload: PostApprovalsPayload & { type: EntityType }) => {
+    ["postApproval"],
+    async (payload: DeleteApprovalPayload & { type: EntityType }) => {
       const { type, ...restPayload } = payload;
 
       if (type === EntityType.ORGANISATION) {
-        return postApprovals(restPayload, EntityType.ORGANISATION, {
+        return deleteApproval(restPayload, EntityType.ORGANISATION, {
           error: {
             message: "updateOrganisationApprovalError",
           },
         });
       }
 
-      return postApprovals(restPayload, EntityType.RESEARCHER, {
+      return deleteApproval(restPayload, EntityType.RESEARCHER, {
         error: { message: "updateApprovalError" },
       });
     }

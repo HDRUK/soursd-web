@@ -1,10 +1,10 @@
 import { EntityType } from "@/types/api";
 import { ResponseJson, ResponseTranslations } from "@/types/requests";
 import { handleJsonResponse, postRequest } from "../requests";
-import { PostApprovalsPayload } from "./types";
+import { PostApprovalPayload } from "./types";
 
 export default async (
-  payload: PostApprovalsPayload,
+  payload: PostApprovalPayload,
   entityType: EntityType,
   messages: ResponseTranslations
 ): Promise<ResponseJson<boolean>> => {

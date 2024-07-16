@@ -123,7 +123,11 @@ async function putRequest<T>(
   return response;
 }
 
-async function deleteRequest(url: string, options?: QueryOptions) {
+async function deleteRequest<T>(
+  url: string,
+  payload?: QueryPayload<T>,
+  options?: QueryOptions
+) {
   const response = await fetch(url, {
     ...options,
     method: "DELETE",

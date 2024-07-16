@@ -1,11 +1,26 @@
 import { ROUTES } from "@/consts/router";
-import { fireEvent, render, screen, waitFor } from "@/utils/testUtils";
+import { act, fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 import { axe } from "jest-axe";
 import Sections from ".";
+import { EntityType } from "@/types/api";
+import { PostApprovalPayloadWithEntity } from "@/services/approvals";
+
+const mockMutate = jest.fn();
+
+jest.mock("../../hooks/useMutationApproval", () => ({
+  ...jest.requireActual("../../hooks/useMutationApproval"),
+  __esModule: true,
+  default: jest.fn().mockReturnValue({
+    mutateAsync: (props: PostApprovalPayloadWithEntity) => mockMutate(props),
+    isError: false,
+    isLoading: false,
+    error: "",
+  }),
+}));
 
 const renderSections = () => render(<Sections />);
 
-const setupActionMenuPermissionsTest = async (label: string) => {
+const setupActionMenuTest = async (label: string, menuItem: string) => {
   renderSections();
 
   const menu = await screen.findAllByLabelText(label);
@@ -13,10 +28,14 @@ const setupActionMenuPermissionsTest = async (label: string) => {
 
   fireEvent.click(menuTrigger);
 
-  return screen.getByText("Permissions");
+  return screen.getByText(menuItem);
 };
 
 describe("<Sections />", () => {
+  beforeEach(() => {
+    mockMutate.mockReset();
+  });
+
   it("has no accessibility violations", async () => {
     const { container } = renderSections();
 
@@ -47,8 +66,9 @@ describe("<Sections />", () => {
   });
 
   it("has the organisations permissions link", async () => {
-    const permissions = await setupActionMenuPermissionsTest(
-      "Organisation 1 actions"
+    const permissions = await setupActionMenuTest(
+      "Organisation 1 actions",
+      "Permissions"
     );
 
     await waitFor(() => {
@@ -60,8 +80,9 @@ describe("<Sections />", () => {
   });
 
   it("has the researcher permissions link", async () => {
-    const permissions = await setupActionMenuPermissionsTest(
-      "john.smith@hdruk.ac.uk actions"
+    const permissions = await setupActionMenuTest(
+      "john.smith@hdruk.ac.uk actions",
+      "Permissions"
     );
 
     await waitFor(() => {
@@ -69,6 +90,44 @@ describe("<Sections />", () => {
         "href",
         `${ROUTES.permissionsResearcherIssuer.path}/1`
       );
+    });
+  });
+
+  it("approves a researcher", async () => {
+    const approval = await setupActionMenuTest(
+      "john.smith@hdruk.ac.uk actions",
+      "Approve"
+    );
+
+    act(() => {
+      fireEvent.click(approval);
+    });
+
+    await waitFor(() => {
+      expect(mockMutate).toHaveBeenCalledWith({
+        type: EntityType.RESEARCHER,
+        user_id: 1,
+        issuer_id: 1,
+      });
+    });
+  });
+
+  it("approves an organisation", async () => {
+    const approval = await setupActionMenuTest(
+      "Organisation 1 actions",
+      "Approve"
+    );
+
+    act(() => {
+      fireEvent.click(approval);
+    });
+
+    await waitFor(() => {
+      expect(mockMutate).toHaveBeenCalledWith({
+        type: EntityType.ORGANISATION,
+        organisation_id: 1,
+        issuer_id: 1,
+      });
     });
   });
 });

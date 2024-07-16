@@ -1,6 +1,6 @@
-import getFile from "./getFile";
-import postFile from "./postFile";
+import deleteApproval from "./deleteApproval";
+import postApproval from "./postApproval";
 
-export { getFile, postFile };
+export { postApproval, deleteApproval };
 
 export type * from "./types";

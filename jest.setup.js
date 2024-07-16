@@ -44,7 +44,9 @@ global.matchMedia = () => {
 };
 
 async function mockFetch(url) {
-  switch (url) {
+  const formattedUrl = url.toLowerCase();
+
+  switch (formattedUrl) {
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/users/1`: {
       return {
         ok: true,
@@ -92,6 +94,16 @@ async function mockFetch(url) {
               id: 2,
             }),
           ],
+        }),
+      };
+    }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/approvals/researcher`: {
+      return {
+        ok: true,
+        status: 200,
+        json: async () => ({
+          message: ResponseMessageType.SUCCESS,
+          data: true,
         }),
       };
     }

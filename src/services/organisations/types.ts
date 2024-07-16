@@ -1,3 +1,4 @@
+import { Approval } from "@/types/application";
 import { User } from "../auth";
 import { Permission } from "../permissions/types";
 
@@ -6,6 +7,7 @@ interface Organisation {
   organisation_unique_id: string;
   id: number;
   permissions: Permission[];
+  approvals: Approval[];
   lead_applicant_email: string;
   registries: {
     user: User;

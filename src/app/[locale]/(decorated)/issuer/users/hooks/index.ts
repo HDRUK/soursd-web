@@ -1,3 +1,4 @@
-import useMutationApprovals from "./useMutationApprovals";
+import useMutationApproval from "./useMutationApproval";
+import useMutationDeleteApproval from "./useMutationDeleteApproval";
 
-export { useMutationApprovals };
+export { useMutationApproval, useMutationDeleteApproval };

@@ -4,11 +4,10 @@ import AccordionTitle from "@/components/AccordionTitle";
 import ActionMenu from "@/components/ActionMenu/ActionMenu";
 import Text from "@/components/Text";
 import { useApplicationData } from "@/context/ApplicationData";
-import { PostApprovalsPayloadWithEntity } from "@/services/approvals";
+import { PostApprovalPayloadWithEntity } from "@/services/approvals";
 import { Organisation } from "@/services/organisations";
 import { EntityType } from "@/types/api";
 import { FormMutateState } from "@/types/form";
-import { Error } from "@mui/icons-material";
 import BusinessIcon from "@mui/icons-material/Business";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import NewReleasesIcon from "@mui/icons-material/NewReleases";
@@ -19,8 +18,6 @@ import {
   AccordionDetails,
   AccordionSummary,
   Button,
-  CircularProgress,
-  Link,
   Table,
   TableBody,
   TableCell,
@@ -29,11 +26,11 @@ import {
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { useTranslations } from "next-intl";
-import { useQueryClient } from "react-query";
 
 interface UsersListProps {
   organisations: Organisation[];
-  onApprove(payload: PostApprovalsPayloadWithEntity): void;
+  onApprove(payload: PostApprovalPayloadWithEntity): void;
+  onUnapprove(payload: PostApprovalPayloadWithEntity): void;
   mutateState: FormMutateState;
 }
 
@@ -44,13 +41,21 @@ const ISSUER_ID = 1;
 export default function UsersList({
   organisations,
   onApprove,
+  onUnapprove,
   mutateState,
 }: UsersListProps) {
   const { routes } = useApplicationData();
   const t = useTranslations(NAMESPACE_TRANSLATIONS_USERS_LIST);
 
-  const handleApproveClick = (payload: PostApprovalsPayloadWithEntity) => {
-    onApprove(payload);
+  const handleApproveClick = (
+    payload: PostApprovalPayloadWithEntity,
+    isApproved: boolean
+  ) => {
+    if (!isApproved) {
+      onApprove(payload);
+    } else {
+      onUnapprove(payload);
+    }
   };
 
   const filteredOrganisations = organisations.map(organisation => ({
@@ -64,12 +69,12 @@ export default function UsersList({
         ({ organisation_name, registries, id, approvals }) => {
           const ariaId = organisation_name.replace(/[^\w]*/g, "");
 
-          const isOrganisationApproved = approvals.find(
+          const isOrganisationApproved = !!approvals.find(
             ({ id: issuerId }) => issuerId === ISSUER_ID
           );
 
           return (
-            <Accordion>
+            <Accordion key={organisation_name}>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls={`${ariaId}-content`}
@@ -96,11 +101,14 @@ export default function UsersList({
                           color="success"
                           size="small"
                           onClick={() =>
-                            handleApproveClick({
-                              type: EntityType.ORGANISATION,
-                              organisation_id: id,
-                              issuer_id: ISSUER_ID,
-                            })
+                            handleApproveClick(
+                              {
+                                type: EntityType.ORGANISATION,
+                                organisation_id: id,
+                                issuer_id: ISSUER_ID,
+                              },
+                              isOrganisationApproved
+                            )
                           }>
                           {isOrganisationApproved ? "Approved" : t("approve")}
                         </LoadingButton>,
@@ -140,12 +148,12 @@ export default function UsersList({
                       ({
                         user: { email, first_name, last_name, id, approvals },
                       }) => {
-                        const isApproved = approvals.find(
+                        const isApproved = !!approvals.find(
                           ({ id: issuerId }) => issuerId === ISSUER_ID
                         );
 
                         return (
-                          <TableRow>
+                          <TableRow key={email}>
                             <TableCell sx={{ wordBreak: "break-word" }}>
                               <Text
                                 endIcon={
@@ -190,11 +198,14 @@ export default function UsersList({
                                     color="success"
                                     size="small"
                                     onClick={() =>
-                                      handleApproveClick({
-                                        type: EntityType.RESEARCHER,
-                                        user_id: id,
-                                        issuer_id: ISSUER_ID,
-                                      })
+                                      handleApproveClick(
+                                        {
+                                          type: EntityType.RESEARCHER,
+                                          user_id: id,
+                                          issuer_id: ISSUER_ID,
+                                        },
+                                        isApproved
+                                      )
                                     }>
                                     {isApproved ? "Approved" : t("approve")}
                                   </LoadingButton>,

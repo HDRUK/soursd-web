@@ -117,7 +117,6 @@ describe("Requests utils", () => {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${mockToken}`,
-        "content-type": "application/json;charset=UTF-8",
       },
     });
     expect(responseJson).toEqual(mockResponse);
