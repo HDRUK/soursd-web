@@ -28,7 +28,12 @@ describe("<SignupForm />", () => {
   it("has no accessibility validations", async () => {
     const { container } = renderSignupForm();
 
-    const results = await axe(container);
+    let results;
+
+    await act(async () => {
+      results = await axe(container);
+    });
+
     expect(results).toHaveNoViolations();
   });
 
@@ -51,7 +56,7 @@ describe("<SignupForm />", () => {
       },
     });
 
-    await act(() => {
+    act(() => {
       fireEvent.submit(screen.getByRole("button", { name: /Sign Up/i }));
     });
 
@@ -65,21 +70,15 @@ describe("<SignupForm />", () => {
   it("submits when values are defined", async () => {
     renderSignupForm();
 
-    const email = screen.getByLabelText("Email").querySelector("input");
-    const firstName = screen
-      .getByLabelText("First name")
-      .querySelector("input");
-    const lastName = screen.getByLabelText("Last name").querySelector("input");
-    const password = screen.getByLabelText("Password").querySelector("input");
-    const confirmPassword = screen
-      .getByLabelText("Confirm password")
-      .querySelector("input");
-    const tscs = screen
-      .getByLabelText("Accept terms and conditions")
-      .querySelector("input");
-    const consentScrape = screen
-      .getByLabelText("Gather my historical experience as a Researcher")
-      .querySelector("input");
+    const email = screen.getByLabelText(/Email/);
+    const firstName = screen.getByLabelText(/First name/);
+    const lastName = screen.getByLabelText(/Last name/);
+    const password = screen.getByLabelText(/Password/);
+    const confirmPassword = screen.getByLabelText(/Confirm password/);
+    const tscs = screen.getByLabelText("Accept terms and conditions");
+    const consentScrape = screen.getByLabelText(
+      "Gather my historical experience as a Researcher"
+    );
     const recaptcha = screen.getByTestId("recaptcha");
 
     const emailValue = faker.internet.email();

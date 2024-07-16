@@ -1,129 +1,126 @@
-import { act, fireEvent, render, screen } from "@/utils/testUtils";
+import { act, fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 import { faker } from "@faker-js/faker";
 import { axe } from "jest-axe";
-import SignupForm, { SignupFormProps } from "./SignupForm";
+import SignupFormOtherDetails, {
+  SignupFormOtherDetailsProps,
+} from "./SignupFormOtherDetails";
 
-const mockSubmit = jest.fn();
+const mockOnSubmit = jest.fn();
+const mockOnPrevious = jest.fn();
 
-const mockedOrganisation = {
-  organisation_unique_id: faker.string.uuid(),
-  organisation_name: faker.company.name(),
-  id: faker.number.int(),
+const DEFAULT_OTHER_DETAILS_VALUES = {
+  address_1: "",
+  address_2: "",
+  town: "",
+  county: "",
+  country: "United Kingdom",
+  postcode: "",
+  dsptk_ods_code: "",
+  iso_27001_certified: false,
+  ce_certified: false,
+  ce_certification_num: "",
 };
 
-const renderSignupForm = (
-  props: Partial<SignupFormProps> = {
-    mutateState: { isLoading: false, isError: false },
-  }
-) => {
+const renderSignupForm = (props?: Partial<SignupFormOtherDetailsProps>) => {
   return render(
-    <SignupForm
-      defaultOrganisation={mockedOrganisation.id.toString()}
-      organisations={[mockedOrganisation]}
-      mutateState={{ isLoading: false, isError: false }}
-      onSubmit={mockSubmit}
+    <SignupFormOtherDetails
+      onPrevious={mockOnPrevious}
+      defaultValues={DEFAULT_OTHER_DETAILS_VALUES}
+      onSubmit={mockOnSubmit}
       {...props}
     />
   );
 };
 
-describe("<SignupForm />", () => {
+describe("<SignupFormOtherDetails />", () => {
   it("has no accessibility validations", async () => {
     const { container } = renderSignupForm();
 
-    const results = await axe(container);
+    let results;
+
+    await act(async () => {
+      results = await axe(container);
+    });
+
     expect(results).toHaveNoViolations();
   });
 
   it("does not submit when there are errors", async () => {
     renderSignupForm();
 
-    await act(() => {
-      fireEvent.submit(screen.getByRole("button", { name: /Sign Up/i }));
+    act(() => {
+      fireEvent.submit(screen.getByRole("button", { name: /Next/i }));
     });
 
-    expect(mockSubmit).not.toHaveBeenCalled();
+    expect(mockOnSubmit).not.toHaveBeenCalled();
   });
 
   it("shows an error", async () => {
-    renderSignupForm({
-      mutateState: {
-        isError: true,
-        isLoading: false,
-        error: "submitError",
-      },
+    renderSignupForm();
+
+    act(() => {
+      fireEvent.submit(screen.getByRole("button", { name: /Next/i }));
     });
 
-    await act(() => {
-      fireEvent.submit(screen.getByRole("button", { name: /Sign Up/i }));
+    expect(mockOnSubmit).not.toHaveBeenCalled();
+  });
+
+  it("goes to previous panel", async () => {
+    renderSignupForm();
+
+    act(() => {
+      fireEvent.submit(screen.getByRole("button", { name: /Previous/i }));
     });
 
-    expect(
-      screen.getByRole("alert").querySelector(".MuiAlert-message")?.innerHTML
-    ).toEqual(
-      'There was a problem signing up. Please try again or contact us at <a href="mailto:contact@speedi.com">contact@speedi.com</a>'
-    );
+    waitFor(() => {
+      expect(mockOnPrevious).toHaveBeenCalledWith(DEFAULT_OTHER_DETAILS_VALUES);
+    });
   });
 
   it("submits when values are defined", async () => {
     renderSignupForm();
 
-    const email = screen.getByLabelText("Email").querySelector("input");
-    const firstName = screen
-      .getByLabelText("First name")
-      .querySelector("input");
-    const lastName = screen.getByLabelText("Last name").querySelector("input");
-    const password = screen.getByLabelText("Password").querySelector("input");
-    const confirmPassword = screen
-      .getByLabelText("Confirm password")
-      .querySelector("input");
-    const tscs = screen
-      .getByLabelText("Accept terms and conditions")
-      .querySelector("input");
-    const recaptcha = screen.getByTestId("recaptcha");
+    const address_1 = screen.getByLabelText(/Address 1/);
+    const town = screen.getByLabelText(/Town/);
+    const county = screen.getByLabelText(/County/);
+    const postcode = screen.getByLabelText(/Postcode/);
 
-    const emailValue = faker.internet.email();
-    const firstNameValue = faker.person.firstName();
-    const lastNameValue = faker.person.lastName();
-    const passwordValue = "A!2sghjs";
-    const confirmPasswordValue = passwordValue;
+    const address_1Value = faker.string.sample();
+    const townValue = faker.string.sample();
+    const countyValue = faker.string.sample();
+    const postcodeValue = "wc2h 9he";
 
-    if (email && firstName && lastName && password && confirmPassword && tscs) {
-      await act(async () => {
-        fireEvent.change(email, {
+    if (address_1 && town && county && postcode) {
+      act(() => {
+        fireEvent.change(address_1, {
           target: {
-            value: emailValue,
+            value: address_1Value,
           },
         });
-        fireEvent.change(firstName, {
+        fireEvent.change(town, {
           target: {
-            value: firstNameValue,
+            value: townValue,
           },
         });
-        fireEvent.change(lastName, {
+        fireEvent.change(county, {
           target: {
-            value: lastNameValue,
+            value: countyValue,
           },
         });
-        fireEvent.change(password, {
+        fireEvent.change(postcode, {
           target: {
-            value: passwordValue,
+            value: postcodeValue,
           },
         });
-        fireEvent.change(confirmPassword, {
-          target: { value: confirmPasswordValue },
-        });
-        fireEvent.click(tscs);
-        fireEvent.click(recaptcha);
 
-        fireEvent.submit(screen.getByRole("button", { name: /Sign Up/i }));
+        fireEvent.submit(screen.getByRole("button", { name: /Next/i }));
       });
 
-      expect(mockSubmit).toHaveBeenCalled();
+      waitFor(() => {
+        expect(mockOnSubmit).toHaveBeenCalled();
+      });
     } else {
-      fail(
-        "First name, last name, password, confirm password or tscs do not exist"
-      );
+      fail("Address 1, town, county or postcode do not exist");
     }
   });
 });

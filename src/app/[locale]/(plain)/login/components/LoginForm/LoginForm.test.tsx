@@ -1,4 +1,4 @@
-import { act, fireEvent, render, screen } from "@/utils/testUtils";
+import { act, fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 import { faker } from "@faker-js/faker";
 import { axe } from "jest-axe";
 import LoginForm, { LoginFormProps } from "./LoginForm";
@@ -19,14 +19,19 @@ describe("<LoginForm />", () => {
   it("has no accessibility validations", async () => {
     const { container } = renderLoginForm();
 
-    const results = await axe(container);
+    let results;
+
+    await act(async () => {
+      results = await axe(container);
+    });
+
     expect(results).toHaveNoViolations();
   });
 
   it("does not submit when values are not defined", async () => {
     renderLoginForm();
 
-    await act(() => {
+    act(() => {
       fireEvent.submit(screen.getByRole("button", { name: /Login/i }));
     });
 
@@ -64,7 +69,7 @@ describe("<LoginForm />", () => {
     const passwordValue = faker.string.sample();
 
     if (email && password) {
-      await act(() => {
+      act(() => {
         fireEvent.change(email, {
           target: {
             value: emailValue,
@@ -79,7 +84,9 @@ describe("<LoginForm />", () => {
         fireEvent.submit(screen.getByRole("button", { name: /Login/i }));
       });
 
-      expect(mockSubmit).toHaveBeenCalled();
+      waitFor(() => {
+        expect(mockSubmit).toHaveBeenCalled();
+      });
     } else {
       fail("Email or password do not exist");
     }

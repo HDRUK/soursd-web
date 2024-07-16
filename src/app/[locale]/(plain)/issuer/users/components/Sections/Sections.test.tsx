@@ -1,5 +1,5 @@
 import { ROUTES } from "@/consts/router";
-import { fireEvent, render, screen, waitFor } from "@/utils/testUtils";
+import { act, fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 import { axe } from "jest-axe";
 import Sections from ".";
 
@@ -20,7 +20,12 @@ describe("<Sections />", () => {
   it("has no accessibility violations", async () => {
     const { container } = renderSections();
 
-    const results = await axe(container);
+    let results;
+
+    await act(async () => {
+      results = await axe(container);
+    });
+
     expect(results).toHaveNoViolations();
   });
 

@@ -196,7 +196,6 @@ export default function SignupForm({
                     {...register("email")}
                     size="small"
                     placeholder={tSignup("emailPlaceholder")}
-                    aria-label={tSignup("email")}
                     label={<>{tSignup("email")} *</>}
                   />
                   {errors.email && (
@@ -211,7 +210,6 @@ export default function SignupForm({
                   {...register("firstName")}
                   size="small"
                   placeholder={tSignup("firstNamePlaceholder")}
-                  aria-label={tSignup("firstName")}
                   label={<>{tSignup("firstName")} *</>}
                 />
                 {errors.firstName && (
@@ -225,7 +223,6 @@ export default function SignupForm({
                   {...register("lastName")}
                   size="small"
                   placeholder={tSignup("lastNamePlaceholder")}
-                  aria-label={tSignup("lastName")}
                   label={<>{tSignup("lastName")} *</>}
                 />
                 {errors.lastName && (
@@ -239,7 +236,6 @@ export default function SignupForm({
                   id="password"
                   size="small"
                   placeholder={tSignup("passwordPlaceholder")}
-                  aria-label={tSignup("password")}
                   label={<>{tSignup("password")} *</>}
                   iconButtonProps={{
                     "aria-label": tSignup("togglePasswordAriaLabel"),
@@ -259,7 +255,6 @@ export default function SignupForm({
                   id="confirmPassword"
                   size="small"
                   placeholder={tSignup("confirmPasswordPlaceholder")}
-                  aria-label={tSignup("confirmPassword")}
                   label={<>{tSignup("confirmPassword")} *</>}
                   iconButtonProps={{
                     "aria-label": tSignup("toggleConfirmPasswordAriaLabel"),

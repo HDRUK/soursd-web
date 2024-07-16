@@ -1,5 +1,5 @@
 import { EntityType } from "@/types/api";
-import { render } from "@/utils/testUtils";
+import { act, render } from "@/utils/testUtils";
 import { faker } from "@faker-js/faker";
 import { axe } from "jest-axe";
 import Sections, { SectionsProps } from ".";
@@ -16,7 +16,12 @@ describe("<Sections />", () => {
   it("has no accessibility violations", async () => {
     const { container } = renderSections();
 
-    const results = await axe(container);
+    let results;
+
+    await act(async () => {
+      results = await axe(container);
+    });
+
     expect(results).toHaveNoViolations();
   });
 });

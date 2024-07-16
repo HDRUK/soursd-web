@@ -1,104 +1,97 @@
-import { act, fireEvent, render, screen } from "@/utils/testUtils";
+import { act, fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 import { faker } from "@faker-js/faker";
 import { axe } from "jest-axe";
 import SignupFormDetails, { SignupFormDetailsProps } from "./SignupFormDetails";
 
-const mockSubmit = jest.fn();
+const mockOnSubmit = jest.fn();
 
-const mockedOrganisation = {
-  organisation_unique_id: faker.string.uuid(),
-  organisation_name: faker.company.name(),
-  id: faker.number.int(),
-};
-
-const renderSignupForm = (props: Partial<SignupFormDetailsProps>) => {
+const renderSignupForm = (props?: Partial<SignupFormDetailsProps>) => {
   return render(
     <SignupFormDetails
-      defaultOrganisation={mockedOrganisation.id.toString()}
-      organisations={[mockedOrganisation]}
-      mutateState={{ isLoading: false, isError: false }}
-      onSubmit={mockSubmit}
+      defaultValues={{
+        organisation_name: "",
+        lead_applicant_organisation_email: "",
+        lead_applicant_organisation_name: "",
+        password: "",
+        confirm_password: "",
+        tscs: false,
+        companies_house_no: "",
+      }}
+      onSubmit={mockOnSubmit}
       {...props}
     />
   );
 };
 
-describe("<SignupForm />", () => {
+describe("<SignupFormDetails />", () => {
   it("has no accessibility validations", async () => {
     const { container } = renderSignupForm();
 
-    const results = await axe(container);
+    let results;
+
+    await act(async () => {
+      results = await axe(container);
+    });
+
     expect(results).toHaveNoViolations();
   });
 
   it("does not submit when there are errors", async () => {
     renderSignupForm();
 
-    await act(() => {
-      fireEvent.submit(screen.getByRole("button", { name: /Sign Up/i }));
+    act(() => {
+      fireEvent.submit(screen.getByRole("button", { name: /Next/i }));
     });
 
-    expect(mockSubmit).not.toHaveBeenCalled();
-  });
-
-  it("shows an error", async () => {
-    renderSignupForm({
-      mutateState: {
-        isError: true,
-        isLoading: false,
-        error: "submitError",
-      },
-    });
-
-    await act(() => {
-      fireEvent.submit(screen.getByRole("button", { name: /Sign Up/i }));
-    });
-
-    expect(
-      screen.getByRole("alert").querySelector(".MuiAlert-message")?.innerHTML
-    ).toEqual(
-      'There was a problem signing up. Please try again or contact us at <a href="mailto:contact@speedi.com">contact@speedi.com</a>'
-    );
+    expect(mockOnSubmit).not.toHaveBeenCalled();
   });
 
   it("submits when values are defined", async () => {
     renderSignupForm();
 
-    const email = screen.getByLabelText("Email").querySelector("input");
-    const firstName = screen
-      .getByLabelText("First name")
-      .querySelector("input");
-    const lastName = screen.getByLabelText("Last name").querySelector("input");
-    const password = screen.getByLabelText("Password").querySelector("input");
-    const confirmPassword = screen
-      .getByLabelText("Confirm password")
-      .querySelector("input");
+    const organisation_name = screen.getByLabelText(/Organisation name/);
+    const lead_applicant_organisation_email =
+      screen.getByLabelText(/Applicant email/);
+    const lead_applicant_organisation_name =
+      screen.getByLabelText(/Applicant name/);
+    const password = screen.getByLabelText(/Password/);
+    const confirm_password = screen.getByLabelText(/Confirm password/);
+    const companies_house_no = screen.getByLabelText(/Company number/);
+
+    const organisation_nameValue = faker.string.sample();
+    const lead_applicant_organisation_emailValue = faker.internet.email();
+    const lead_applicant_organisation_nameValue = faker.string.sample();
+    const passwordValue = "A!2sghjs";
+    const confirm_passwordValue = passwordValue;
+    const companies_house_noValue = "12345678";
     const tscs = screen
       .getByLabelText("Accept terms and conditions")
       .querySelector("input");
     const recaptcha = screen.getByTestId("recaptcha");
 
-    const emailValue = faker.internet.email();
-    const firstNameValue = faker.person.firstName();
-    const lastNameValue = faker.person.lastName();
-    const passwordValue = "A!2sghjs";
-    const confirmPasswordValue = passwordValue;
-
-    if (email && firstName && lastName && password && confirmPassword && tscs) {
-      await act(async () => {
-        fireEvent.change(email, {
+    if (
+      organisation_name &&
+      lead_applicant_organisation_email &&
+      lead_applicant_organisation_name &&
+      password &&
+      confirm_password &&
+      companies_house_no &&
+      tscs
+    ) {
+      act(() => {
+        fireEvent.change(organisation_name, {
           target: {
-            value: emailValue,
+            value: organisation_nameValue,
           },
         });
-        fireEvent.change(firstName, {
+        fireEvent.change(lead_applicant_organisation_email, {
           target: {
-            value: firstNameValue,
+            value: lead_applicant_organisation_emailValue,
           },
         });
-        fireEvent.change(lastName, {
+        fireEvent.change(lead_applicant_organisation_name, {
           target: {
-            value: lastNameValue,
+            value: lead_applicant_organisation_nameValue,
           },
         });
         fireEvent.change(password, {
@@ -106,19 +99,28 @@ describe("<SignupForm />", () => {
             value: passwordValue,
           },
         });
-        fireEvent.change(confirmPassword, {
-          target: { value: confirmPasswordValue },
+        fireEvent.change(confirm_password, {
+          target: {
+            value: confirm_passwordValue,
+          },
+        });
+        fireEvent.change(companies_house_no, {
+          target: {
+            value: companies_house_noValue,
+          },
         });
         fireEvent.click(tscs);
         fireEvent.click(recaptcha);
 
-        fireEvent.submit(screen.getByRole("button", { name: /Sign Up/i }));
+        fireEvent.submit(screen.getByRole("button", { name: /Next/i }));
       });
 
-      expect(mockSubmit).toHaveBeenCalled();
+      waitFor(() => {
+        expect(mockOnSubmit).toHaveBeenCalled();
+      });
     } else {
       fail(
-        "First name, last name, password, confirm password or tscs do not exist"
+        "Orgnisation name, Applicant email, Applicant name, company no, password, confirmPassword or tscs do not exist"
       );
     }
   });

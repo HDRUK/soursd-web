@@ -136,7 +136,6 @@ export default function SignupFormOtherDetails({
                   {...register("address_1")}
                   size="small"
                   placeholder={tSignup("address1Placeholder")}
-                  aria-label={tSignup("address1")}
                   label={<>{tSignup("address1")} *</>}
                 />
                 {errors.address_1 && (
@@ -150,7 +149,6 @@ export default function SignupFormOtherDetails({
                   {...register("address_2")}
                   size="small"
                   placeholder={tSignup("address2Placeholder")}
-                  aria-label={tSignup("address2")}
                   label={<>{tSignup("address2")}</>}
                 />
                 {errors.address_2 && (
@@ -164,7 +162,6 @@ export default function SignupFormOtherDetails({
                   {...register("town")}
                   size="small"
                   placeholder={tSignup("townPlaceholder")}
-                  aria-label={tSignup("town")}
                   label={<>{tSignup("town")}</>}
                 />
                 {errors.town && (
@@ -173,14 +170,13 @@ export default function SignupFormOtherDetails({
               </FormControl>
             </Grid>
             <Grid item xs={12}>
-              <Grid container spacing={2} xs={12}>
+              <Grid container spacing={2}>
                 <Grid item xs={12} md={6}>
                   <FormControl error={!!errors.county} size="small" fullWidth>
                     <TextField
                       {...register("county")}
                       size="small"
                       placeholder={tSignup("countyPlaceholder")}
-                      aria-label={tSignup("county")}
                       label={<>{tSignup("county")}</>}
                     />
                     {errors.county && (
@@ -194,7 +190,6 @@ export default function SignupFormOtherDetails({
                       {...register("postcode")}
                       size="small"
                       placeholder={tSignup("postcodePlaceholder")}
-                      aria-label={tSignup("postcode")}
                       label={<>{tSignup("postcode")} *</>}
                     />
                     {errors.postcode && (
@@ -210,7 +205,6 @@ export default function SignupFormOtherDetails({
                   {...register("country")}
                   size="small"
                   placeholder={tSignup("countryPlaceholder")}
-                  aria-label={tSignup("country")}
                   label={<>{tSignup("country")} *</>}
                   disabled
                 />
@@ -229,7 +223,6 @@ export default function SignupFormOtherDetails({
                     {...register("dsptk_ods_code")}
                     size="small"
                     placeholder={tSignup("digitalToolkitCodePlaceholder")}
-                    aria-label={tSignup("digitalToolkitCode")}
                     label={<>{tSignup("digitalToolkitCode")}</>}
                   />
                   <Tooltip title={tSignup("whatIsDpstkOdsCode")}>
@@ -251,7 +244,6 @@ export default function SignupFormOtherDetails({
                 <FormControlLabel
                   control={<Checkbox {...register("iso_27001_certified")} />}
                   label={tSignup("iso27001Certified")}
-                  aria-label={tSignup("iso27001CertifiedAriaLabel")}
                 />
                 {errors.iso_27001_certified && (
                   <FormHelperText>
@@ -263,7 +255,6 @@ export default function SignupFormOtherDetails({
                 <FormControlLabel
                   control={<Checkbox {...register("ce_certified")} />}
                   label={tSignup("ceCertified")}
-                  aria-label={tSignup("ceCertifiedAriaLabel")}
                 />
                 {errors.ce_certified && (
                   <FormHelperText>{errors.ce_certified.message}</FormHelperText>
@@ -280,7 +271,6 @@ export default function SignupFormOtherDetails({
                     {...register("ce_certification_num")}
                     size="small"
                     placeholder={tSignup("ceCertificationNumberPlaceholder")}
-                    aria-label={tSignup("ceCertificationNumber")}
                     label={<>{tSignup("ceCertificationNumber")} *</>}
                   />
                   {errors.ce_certification_num && (

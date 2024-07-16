@@ -110,7 +110,6 @@ export default function SignupFormContacts({
                   {...register("hr_name")}
                   size="small"
                   placeholder={tSignup("hrNamePlaceholder")}
-                  aria-label={tSignup("hrName")}
                   label={<>{tSignup("hrName")} *</>}
                 />
                 {errors.hr_name && (
@@ -124,7 +123,6 @@ export default function SignupFormContacts({
                   {...register("hr_email")}
                   size="small"
                   placeholder={tSignup("hrEmailPlaceholder")}
-                  aria-label={tSignup("hrEmail")}
                   label={<>{tSignup("hrEmail")} *</>}
                 />
                 {errors.hr_email && (
@@ -138,7 +136,6 @@ export default function SignupFormContacts({
                   {...register("dpo_name")}
                   size="small"
                   placeholder={tSignup("dpoNamePlaceholder")}
-                  aria-label={tSignup("dpoName")}
                   label={<>{tSignup("dpoName")} *</>}
                 />
                 {errors.dpo_name && (
@@ -152,7 +149,6 @@ export default function SignupFormContacts({
                   {...register("dpo_email")}
                   size="small"
                   placeholder={tSignup("dpoEmailPlaceholder")}
-                  aria-label={tSignup("dpoEmail")}
                   label={<>{tSignup("dpoEmail")} *</>}
                 />
                 {errors.hr_email && (

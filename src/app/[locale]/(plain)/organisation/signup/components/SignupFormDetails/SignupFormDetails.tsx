@@ -149,7 +149,6 @@ export default function SignupFormDetails({
                   {...register("organisation_name")}
                   size="small"
                   placeholder={tSignup("organisationNamePlaceholder")}
-                  aria-label={tSignup("organisationName")}
                   label={<>{tSignup("organisationName")} *</>}
                 />
                 {errors.organisation_name && (
@@ -168,7 +167,6 @@ export default function SignupFormDetails({
                   {...register("companies_house_no")}
                   size="small"
                   placeholder={tSignup("companyNumberPlaceholder")}
-                  aria-label={tSignup("companyNumber")}
                   label={<>{tSignup("companyNumber")} *</>}
                 />
                 {errors.companies_house_no && (
@@ -187,7 +185,6 @@ export default function SignupFormDetails({
                   {...register("lead_applicant_organisation_email")}
                   size="small"
                   placeholder={tSignup("emailPlaceholder")}
-                  aria-label={tSignup("email")}
                   label={<>{tSignup("email")} *</>}
                 />
                 {errors.lead_applicant_organisation_email && (
@@ -206,7 +203,6 @@ export default function SignupFormDetails({
                   {...register("lead_applicant_organisation_name")}
                   size="small"
                   placeholder={tSignup("applicantNamePlaceholder")}
-                  aria-label={tSignup("applicantName")}
                   label={<>{tSignup("applicantName")} *</>}
                 />
                 {errors.lead_applicant_organisation_name && (
@@ -222,7 +218,6 @@ export default function SignupFormDetails({
                   id="password"
                   size="small"
                   placeholder={tSignup("passwordPlaceholder")}
-                  aria-label={tSignup("password")}
                   label={<>{tSignup("password")} *</>}
                   iconButtonProps={{
                     "aria-label": tSignup("togglePasswordAriaLabel"),
@@ -242,7 +237,6 @@ export default function SignupFormDetails({
                   id="confirm_password"
                   size="small"
                   placeholder={tSignup("confirmPasswordPlaceholder")}
-                  aria-label={tSignup("confirmPassword")}
                   label={<>{tSignup("confirmPassword")} *</>}
                   iconButtonProps={{
                     "aria-label": tSignup("toggleConfirmPasswordAriaLabel"),
