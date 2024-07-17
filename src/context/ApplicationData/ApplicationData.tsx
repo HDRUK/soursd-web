@@ -8,11 +8,10 @@ import { ROUTES } from "@/consts/router";
 import { useStore } from "@/data/store";
 import DecoratorPanel from "@/modules/DecoratorPanel";
 import { getSystemConfig } from "@/services/system_config";
-import { GetSystemConfigResponse } from "@/services/system_config/types";
 import { getUser } from "@/services/users";
 import { ApplicationDataState } from "@/types/application";
+import { parseSystemConfig } from "@/utils/application";
 import { getAuthData } from "@/utils/auth";
-import { escapeAndParse } from "@/utils/json";
 import { CircularProgress } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
@@ -64,48 +63,28 @@ const ApplicationDataProvider = ({
     })
   );
 
-  console.log("systemConfigData", systemConfigData);
+  useEffect(() => {
+    const initUserFetch = async () => {
+      const authDetails = await getAuthData();
 
-  // useEffect(() => {
-  //   const initUserFetch = async () => {
-  //     const authDetails = await getAuthData();
+      if (authDetails?.user?.id) {
+        const userDetails = await getUser(authDetails.user.id, {});
 
-  //     if (authDetails?.user?.id) {
-  //       const userDetails = await getUser(authDetails.user.id, {});
+        setUser(userDetails.data);
+      }
+    };
 
-  //       setUser(userDetails.data);
-  //     }
-  //   };
-
-  //   initUserFetch();
-  // }, []);
+    initUserFetch();
+  }, []);
 
   useEffect(() => {
     if (path) addUrlToHistory(path);
   }, [path]);
 
   const systemConfig: Record<string, any> = useMemo(
-    () =>
-      systemConfigData?.data
-        ? systemConfigData.data.reduce(
-            (accumulator, { name, value, ...restProps }) =>
-              ({
-                ...accumulator,
-                [name]: {
-                  ...restProps,
-                  value:
-                    name === VALIDATION_SCHEMA_KEY
-                      ? escapeAndParse(value).validationSchema
-                      : value,
-                },
-              }) as Record<string, any>,
-            {}
-          )
-        : {},
+    () => parseSystemConfig(systemConfig?.data),
     [!!systemConfigData?.data]
   );
-
-  console.log("*********** systemConfig", systemConfig);
 
   return (
     <ApplicationDataContext.Provider
@@ -137,3 +116,5 @@ const ApplicationDataProvider = ({
 };
 
 export { ApplicationDataProvider, useApplicationData };
+
+export type { ApplicationSystemConfig };

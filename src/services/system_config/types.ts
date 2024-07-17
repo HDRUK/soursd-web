@@ -1,3 +1,3 @@
-type GetSystemConfigResponse = Record<string, string>[];
+type GetSystemConfigResponse = Record<string, any>[];
 
 export type { GetSystemConfigResponse };

@@ -3,6 +3,10 @@
     "getSystemConfigError": "There was a problem loading the application. Please try again or contact us at <contactLink></contactLink>"
   },
   "Form": {
+    "dpoNameRequiredInvalid": "Dpo name is required",
+    "dpoEmailRequiredInvalid": "Dpo email is required",
+    "hrNameRequiredInvalid": "Hr email is required",
+    "hrEmailRequiredInvalid": "Hr name is required",
     "nameRequiredInvalid": "Lead applicant name is a required field",
     "organisationNameRequiredInvalid": "Organisation is a required field",
     "firstNameRequiredInvalid": "First name is a required field",
