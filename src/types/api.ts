@@ -3,8 +3,8 @@ enum FileType {
 }
 
 enum EntityType {
-  researcher = "RESEARCHER",
-  organisation = "ORGANISATION",
+  RESEARCHER = "RESEARCHER",
+  ORGANISATION = "ORGANISATION",
 }
 
 export { FileType, EntityType };

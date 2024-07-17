@@ -43,85 +43,68 @@ global.matchMedia = () => {
   };
 };
 
+function mock200Json(data) {
+  return {
+    ok: true,
+    status: 200,
+    json: async () => ({
+      message: ResponseMessageType.SUCCESS,
+      data,
+    }),
+  };
+}
+
 async function mockFetch(url) {
-  switch (url) {
+  const formattedUrl = url.toLowerCase();
+
+  switch (formattedUrl) {
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/users/1`: {
-      return {
-        ok: true,
-        status: 200,
-        json: async () => ({
-          message: ResponseMessageType.SUCCESS,
-          data: mockedUser({
-            id: 1,
-          }),
-        }),
-      };
+      return mock200Json(
+        mockedUser({
+          id: 1,
+        })
+      );
     }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/organisations`: {
-      return {
-        ok: true,
-        status: 200,
-        json: async () => ({
-          message: ResponseMessageType.SUCCESS,
-          data: {
-            data: [
-              mockedOrganisation({
-                organisation_name: "Organisation 1",
-                id: 1,
-              }),
-              mockedOrganisation({
-                organisation_name: "Organisation 2",
-                id: 2,
-              }),
-            ],
-          },
-        }),
-      };
+      return mock200Json({
+        data: [
+          mockedOrganisation({
+            organisation_name: "Organisation 1",
+            id: 1,
+          }),
+          mockedOrganisation({
+            organisation_name: "Organisation 2",
+            id: 2,
+          }),
+        ],
+      });
     }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/users/permissions`: {
-      return {
-        ok: true,
-        status: 200,
-        json: async () => ({
-          message: ResponseMessageType.SUCCESS,
-          data: [
-            mockedPermission({
-              id: 1,
-            }),
-            mockedPermission({
-              id: 2,
-            }),
-          ],
+      return mock200Json([
+        mockedPermission({
+          id: 1,
         }),
-      };
+        mockedPermission({
+          id: 2,
+        }),
+      ]);
+    }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/approvals/researcher`: {
+      return mock200Json(true);
     }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/organisations/permissions`: {
-      return {
-        ok: true,
-        status: 200,
-        json: async () => ({
-          message: ResponseMessageType.SUCCESS,
-          data: [
-            mockedOrganisation({
-              id: 1,
-            }),
-            mockedOrganisation({
-              id: 2,
-            }),
-          ],
+      return mock200Json([
+        mockedOrganisation({
+          id: 1,
         }),
-      };
+        mockedOrganisation({
+          id: 2,
+        }),
+      ]);
     }
     default: {
       if (url.includes("/test")) {
-        return {
-          ok: true,
-          status: 200,
-          json: async () => ({
-            message: ResponseMessageType.SUCCESS,
-            data: null,
-          }),
-        };
+        return mock200Json(null);
       }
 
       throw new Error(`Unhandled request: ${url}`);

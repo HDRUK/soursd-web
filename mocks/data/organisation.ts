@@ -2,6 +2,7 @@ import { Organisation } from "@/services/organisations";
 import { faker } from "@faker-js/faker";
 import { mockedPermission } from "./permission";
 import { mockedUser } from "./user";
+import { mockedApproval } from "./approvals";
 
 const mockedOrganisation = (
   organisation?: Partial<Organisation>
@@ -11,6 +12,7 @@ const mockedOrganisation = (
   id: faker.number.int(),
   lead_applicant_email: faker.internet.email(),
   permissions: [mockedPermission()],
+  approvals: [mockedApproval()],
   registries: [
     {
       user: mockedUser({ email: "john.smith@hdruk.ac.uk", id: 1 }),

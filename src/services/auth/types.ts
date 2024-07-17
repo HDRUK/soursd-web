@@ -1,4 +1,5 @@
 import { UserGroup } from "@/consts/user";
+import { Approval } from "@/types/application";
 import { FileResponse } from "../files/types";
 import { Permission } from "../permissions/types";
 
@@ -16,6 +17,7 @@ interface User {
   email: string;
   user_group: keyof typeof UserGroup;
   permissions: Permission[];
+  approvals: Approval[];
   registry: {
     files: FileResponse[];
   };
@@ -45,13 +47,6 @@ interface ResetPasswordPayload {
   password: string;
 }
 
-interface RegisterIssuerPayload {
-  email: string;
-  password: string;
-  first_name?: string;
-  last_name?: string;
-}
-
 interface PostRegisterResearcherPayload {
   email: string;
   password: string;
@@ -63,12 +58,11 @@ interface PostRegisterResearcherPayload {
 
 export type {
   AuthDetails,
-  User,
+  LoginOTPPayload,
   LoginPayload,
   LoginRequest,
-  LoginOTPPayload,
-  RegisterIssuerPayload,
+  LoginResponse,
   PostRegisterResearcherPayload,
   ResetPasswordPayload,
-  LoginResponse,
+  User,
 };
