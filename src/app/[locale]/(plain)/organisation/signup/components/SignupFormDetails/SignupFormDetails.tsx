@@ -4,11 +4,9 @@ import FormActions from "@/components/FormActions";
 import FormBody from "@/components/FormBody";
 import FormRecaptcha from "@/components/FormRecaptcha";
 import PasswordTextField from "@/components/PasswordTextField";
-import {
-  VALIDATION_COMPANY_NUMBER,
-  VALIDATION_PASSWORD_FORMAT,
-  VALIDATION_PASSWORD_LENGTH,
-} from "@/consts/form";
+import yup from "@/config/yup";
+import { VALIDATION_COMPANY_NUMBER } from "@/consts/form";
+import { useApplicationData } from "@/context/ApplicationData";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
   Box,
@@ -25,12 +23,12 @@ import { useTranslations } from "next-intl";
 import { useMemo, useRef, useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { FormProvider, useForm } from "react-hook-form";
-import * as yup from "yup";
 
 export interface SignupFormDetailsValues {
   organisation_name: string;
   lead_applicant_organisation_email: string;
-  lead_applicant_organisation_name: string;
+  first_name: string;
+  last_name: string;
   password: string;
   confirm_password: string;
   tscs: boolean;
@@ -49,6 +47,9 @@ export default function SignupFormDetails({
   onSubmit,
   defaultValues,
 }: SignupFormDetailsProps) {
+  const {
+    validationSchema: { password },
+  } = useApplicationData();
   const tValidation = useTranslations(NAMESPACE_TRANSLATION_VALIDATION);
   const tSignup = useTranslations(NAMESPACE_TRANSLATION_SIGNUP);
   const theme = useTheme();
@@ -72,21 +73,21 @@ export default function SignupFormDetails({
         organisation_name: yup
           .string()
           .required(tValidation("organisationNameRequiredInvalid")),
-        lead_applicant_organisation_name: yup
+        first_name: yup
           .string()
-          .required(tValidation("nameRequiredInvalid")),
+          .required(tValidation("firstNameRequiredInvalid")),
+        last_name: yup
+          .string()
+          .required(tValidation("lastNameRequiredInvalid")),
         password: yup
           .string()
           .required(tValidation("passwordRequiredInvalid"))
-          .min(
-            VALIDATION_PASSWORD_LENGTH,
+          .testLengthBetween(
+            { minLength: password.minLength, maxLength: password.maxLength },
             tValidation("passwordLengthInvalid", {
-              length: VALIDATION_PASSWORD_LENGTH,
+              minLength: password.minLength,
+              maxLength: password.maxLength,
             })
-          )
-          .matches(
-            VALIDATION_PASSWORD_FORMAT,
-            tValidation("passwordFormatInvalid")
           ),
         confirm_password: yup
           .string()
@@ -195,22 +196,44 @@ export default function SignupFormDetails({
               </FormControl>
             </Grid>
             <Grid item>
-              <FormControl
-                error={!!errors.lead_applicant_organisation_name}
-                size="small"
-                fullWidth>
-                <TextField
-                  {...register("lead_applicant_organisation_name")}
-                  size="small"
-                  placeholder={tSignup("applicantNamePlaceholder")}
-                  label={<>{tSignup("applicantName")} *</>}
-                />
-                {errors.lead_applicant_organisation_name && (
-                  <FormHelperText>
-                    {errors.lead_applicant_organisation_name.message}
-                  </FormHelperText>
-                )}
-              </FormControl>
+              <Grid container spacing={2}>
+                <Grid item md={6}>
+                  <FormControl
+                    error={!!errors.first_name}
+                    size="small"
+                    fullWidth>
+                    <TextField
+                      {...register("first_name")}
+                      size="small"
+                      placeholder={tSignup("applicantFirstNamePlaceholder")}
+                      label={<>{tSignup("applicantFirstName")} *</>}
+                    />
+                    {errors.first_name && (
+                      <FormHelperText>
+                        {errors.first_name.message}
+                      </FormHelperText>
+                    )}
+                  </FormControl>
+                </Grid>
+                <Grid item md={6}>
+                  <FormControl
+                    error={!!errors.last_name}
+                    size="small"
+                    fullWidth>
+                    <TextField
+                      {...register("last_name")}
+                      size="small"
+                      placeholder={tSignup("applicantLastNamePlaceholder")}
+                      label={<>{tSignup("applicantLastName")} *</>}
+                    />
+                    {errors.last_name && (
+                      <FormHelperText>
+                        {errors.last_name.message}
+                      </FormHelperText>
+                    )}
+                  </FormControl>
+                </Grid>
+              </Grid>
             </Grid>
             <Grid item>
               <FormControl error={!!errors.password} size="small" fullWidth>

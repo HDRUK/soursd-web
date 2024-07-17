@@ -11,7 +11,8 @@ const renderSignupForm = (props?: Partial<SignupFormDetailsProps>) => {
       defaultValues={{
         organisation_name: "",
         lead_applicant_organisation_email: "",
-        lead_applicant_organisation_name: "",
+        first_name: "",
+        last_name: "",
         password: "",
         confirm_password: "",
         tscs: false,
@@ -52,15 +53,16 @@ describe("<SignupFormDetails />", () => {
     const organisation_name = screen.getByLabelText(/Organisation name/);
     const lead_applicant_organisation_email =
       screen.getByLabelText(/Applicant email/);
-    const lead_applicant_organisation_name =
-      screen.getByLabelText(/Applicant name/);
+    const first_name = screen.getByLabelText(/First name/);
+    const last_name = screen.getByLabelText(/Last name/);
     const password = screen.getByLabelText(/Password/);
     const confirm_password = screen.getByLabelText(/Confirm password/);
     const companies_house_no = screen.getByLabelText(/Company number/);
 
     const organisation_nameValue = faker.string.sample();
     const lead_applicant_organisation_emailValue = faker.internet.email();
-    const lead_applicant_organisation_nameValue = faker.string.sample();
+    const first_nameValue = faker.person.firstName();
+    const last_nameValue = faker.person.lastName();
     const passwordValue = "A!2sghjs";
     const confirm_passwordValue = passwordValue;
     const companies_house_noValue = "12345678";
@@ -72,7 +74,8 @@ describe("<SignupFormDetails />", () => {
     if (
       organisation_name &&
       lead_applicant_organisation_email &&
-      lead_applicant_organisation_name &&
+      first_name &&
+      last_name &&
       password &&
       confirm_password &&
       companies_house_no &&
@@ -89,9 +92,14 @@ describe("<SignupFormDetails />", () => {
             value: lead_applicant_organisation_emailValue,
           },
         });
-        fireEvent.change(lead_applicant_organisation_name, {
+        fireEvent.change(first_name, {
           target: {
-            value: lead_applicant_organisation_nameValue,
+            value: first_nameValue,
+          },
+        });
+        fireEvent.change(last_name, {
+          target: {
+            value: last_nameValue,
           },
         });
         fireEvent.change(password, {

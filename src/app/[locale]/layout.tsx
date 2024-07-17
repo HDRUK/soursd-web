@@ -62,6 +62,7 @@ export default function RootLayout({
                   <ApplicationDataProvider
                     value={{
                       routes,
+                      systemConfigData: {},
                     }}>
                     {children}
                   </ApplicationDataProvider>

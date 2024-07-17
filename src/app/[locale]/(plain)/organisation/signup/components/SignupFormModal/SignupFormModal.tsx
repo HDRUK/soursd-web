@@ -39,7 +39,8 @@ export default function Page() {
     useState<SignupFormDetailsValues>({
       organisation_name: "",
       lead_applicant_organisation_email: "",
-      lead_applicant_organisation_name: "",
+      first_name: "",
+      last_name: "",
       password: "",
       confirm_password: "",
       tscs: false,
@@ -116,6 +117,9 @@ export default function Page() {
       ...formDetailsValues,
       ...formOtherDetailsValues,
       ...values,
+      email: formDetailsValues.lead_applicant_organisation_email,
+      lead_applicant_organisation_name: `${formDetailsValues.first_name} ${formDetailsValues.last_name}`,
+      ce_certification_num: formOtherDetailsValues.ce_certification_num || "",
     };
 
     mutateSignupAsync(payload).then(() => {

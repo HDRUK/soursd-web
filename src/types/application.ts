@@ -76,6 +76,7 @@ interface ApplicationDataState {
       path: string;
     }
   >;
+  systemConfigData: Record<string, any>;
   user?: User;
 }
 

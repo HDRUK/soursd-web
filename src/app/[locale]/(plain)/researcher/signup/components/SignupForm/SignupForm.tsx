@@ -5,10 +5,8 @@ import FormActions from "@/components/FormActions";
 import FormBody from "@/components/FormBody";
 import FormRecaptcha from "@/components/FormRecaptcha";
 import PasswordTextField from "@/components/PasswordTextField";
-import {
-  VALIDATION_PASSWORD_FORMAT,
-  VALIDATION_PASSWORD_LENGTH,
-} from "@/consts/form";
+import yup from "@/config/yup";
+import { useApplicationData } from "@/context/ApplicationData";
 import { Organisation } from "@/services/organisations";
 import { FormMutateState } from "@/types/form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -32,7 +30,6 @@ import { useTranslations } from "next-intl";
 import { useMemo, useRef, useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { FormProvider, useForm } from "react-hook-form";
-import * as yup from "yup";
 
 export interface SignupFormValues {
   email: string;
@@ -63,6 +60,9 @@ export default function SignupForm({
   defaultOrganisation,
   defaultEmail,
 }: SignupFormProps) {
+  const {
+    validationSchema: { password },
+  } = useApplicationData();
   const tValidation = useTranslations(NAMESPACE_TRANSLATION_VALIDATION);
   const tSignup = useTranslations(NAMESPACE_TRANSLATION_SIGNUP);
   const theme = useTheme();
@@ -86,14 +86,15 @@ export default function SignupForm({
         password: yup
           .string()
           .required(tValidation("passwordRequiredInvalid"))
-          .min(
-            VALIDATION_PASSWORD_LENGTH,
+          .testLengthBetween(
+            { minLength: password.minLength, maxLength: password.maxLength },
             tValidation("passwordLengthInvalid", {
-              length: VALIDATION_PASSWORD_LENGTH,
+              minLength: password.minLength,
+              maxLength: password.maxLength,
             })
           )
           .matches(
-            VALIDATION_PASSWORD_FORMAT,
+            new RegExp(password.pattern),
             tValidation("passwordFormatInvalid")
           ),
         confirmPassword: yup

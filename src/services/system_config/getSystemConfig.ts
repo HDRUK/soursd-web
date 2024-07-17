@@ -1,13 +1,12 @@
 import { ResponseJson, ResponseTranslations } from "@/types/requests";
 import { getRequest, handleJsonResponse } from "../requests";
-import { OrganisationResponse } from "./types";
+import { GetSystemConfigResponse } from "./types";
 
 export default async (
-  id: string | number,
   messages: ResponseTranslations
-): Promise<ResponseJson<OrganisationResponse>> => {
+): Promise<ResponseJson<GetSystemConfigResponse>> => {
   const response = await getRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/organisations/${id}`,
+    `${process.env.NEXT_PUBLIC_API_V1_URL}/system_config`,
     undefined,
     {
       headers: {

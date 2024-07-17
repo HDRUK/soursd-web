@@ -3,6 +3,7 @@
 import ContactLink from "@/components/ContactLink";
 import FormActions from "@/components/FormActions";
 import FormBody from "@/components/FormBody";
+import yup from "@/config/yup";
 import { FormMutateState } from "@/types/form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoadingButton } from "@mui/lab";
@@ -19,7 +20,6 @@ import {
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import * as yup from "yup";
 
 export interface SignupFormContactsValues {
   dpo_name: string;
@@ -54,13 +54,13 @@ export default function SignupFormContacts({
         dpo_name: yup.string().required(tValidation("dpoNameRequiredInvalid")),
         dpo_email: yup
           .string()
-          .required(tValidation("dpoEmailRequiredInvalid"))
-          .email(tValidation("dpoEmailFormatInvalid")),
-        hr_name: yup.string().required(tValidation("hroNameRequiredInvalid")),
+          .required(tValidation("emailRequiredInvalid"))
+          .email(tValidation("emailFormatInvalid")),
+        hr_name: yup.string().required(tValidation("nameRequiredInvalid")),
         hr_email: yup
           .string()
-          .required(tValidation("hrEmailRequiredInvalid"))
-          .email(tValidation("hrEmailFormatInvalid")),
+          .required(tValidation("emailRequiredInvalid"))
+          .email(tValidation("emailFormatInvalid")),
       }),
     []
   );

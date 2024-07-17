@@ -1,4 +1,7 @@
 {
+  "Application": {
+    "getSystemConfigError": "There was a problem loading the application. Please try again or contact us at <contactLink></contactLink>"
+  },
   "Form": {
     "nameRequiredInvalid": "Lead applicant name is a required field",
     "organisationNameRequiredInvalid": "Organisation is a required field",
@@ -7,8 +10,8 @@
     "emailRequiredInvalid": "Email is a required field",
     "emailFormatInvalid": "Email must be a valid address",
     "passwordRequiredInvalid": "Password is a required field",
-    "passwordLengthInvalid": "Password should be {length} or more characters",
-    "passwordFormatInvalid": "Password should contain at least 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character",
+    "passwordLengthInvalid": "Password should be between {minLength} and {maxLength} characters",
+    "passwordFormatInvalid": "Password should contain at least 1 uppercase letter, 1 lowercase letter and 1 number",
     "otpPasscodeRequiredInvalid": "OTP passcode is a required field",
     "otpPasscodeLengthInvalid": "OTP passcode should be {length} characters",
     "confirmPasswordRequiredInvalid": "Confirm password is a required field",
@@ -179,8 +182,10 @@
     "confirmPassword": "Confirm password",
     "organisationNamePlaceholder": "Organisation name",
     "organisationName": "Organisation name",
-    "applicantNamePlaceholder": "Applicant name",
-    "applicantName": "Applicant name",
+    "applicantFirstNamePlaceholder": "First name",
+    "applicantFirstName": "First name",
+    "applicantLastNamePlaceholder": "Last name",
+    "applicantLastName": "Last name",
     "emailPlaceholder": "Applicant email",
     "email": "Applicant email",
     "agreeTermsAndConditions": "I accept the terms and conditions",

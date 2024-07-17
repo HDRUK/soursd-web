@@ -31,7 +31,15 @@ interface ResetPasswordPayload {
   password: string;
 }
 
-type PostRegisterOrganisationPayload = Organisation;
+interface PostRegisterOrganisationPayload
+  extends Omit<
+    Organisation,
+    "organisation_unique_id" | "permissions" | "id" | "registries"
+  > {
+  email: string;
+  first_name?: string;
+  last_name?: string;
+}
 interface PostRegisterIssuerPayload {
   email: string;
   password: string;

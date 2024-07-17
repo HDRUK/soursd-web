@@ -2,6 +2,7 @@
 
 import FormActions from "@/components/FormActions";
 import FormBody from "@/components/FormBody";
+import yup from "@/config/yup";
 import {
   VALIDATION_CE_CERTIFICATION_NUMBER,
   VALIDATION_POSTCODE_FORMAT,
@@ -23,7 +24,6 @@ import {
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import * as yup from "yup";
 
 export interface SignupFormOtherDetailsValues {
   address_1: string;
