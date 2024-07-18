@@ -10,6 +10,7 @@ import GlobalStyles from "@mui/material/GlobalStyles";
 import { ROUTES } from "@/consts/router";
 import { ApplicationDataProvider } from "@/context/ApplicationData";
 import { NotificationsProvider } from "@/context/Notifications";
+import ToastProvider from "@/context/ToastProvider";
 import "../global.css";
 import ReactQueryClientProvider from "./components/ReactQueryClientProvider";
 import { getRoutes } from "@/utils/router";
@@ -43,20 +44,22 @@ export default function RootLayout({
             <NotificationsProvider>
               <ReactQueryClientProvider>
                 <ThemeRegistry>
-                  <GlobalStyles
-                    styles={{
-                      [".MuiGrid-item .MuiGrid-container"]: {
-                        maxWidth: "initial",
-                      },
-                    }}
-                  />
-                  <ApplicationDataProvider
-                    value={{
-                      routes,
-                      systemConfigData: {},
-                    }}>
-                    {children}
-                  </ApplicationDataProvider>
+                  <ToastProvider>
+                    <GlobalStyles
+                      styles={{
+                        [".MuiGrid-item .MuiGrid-container"]: {
+                          maxWidth: "initial",
+                        },
+                      }}
+                    />
+                    <ApplicationDataProvider
+                      value={{
+                        routes,
+                        systemConfigData: {},
+                      }}>
+                      {children}
+                    </ApplicationDataProvider>
+                  </ToastProvider>
                 </ThemeRegistry>
               </ReactQueryClientProvider>
             </NotificationsProvider>

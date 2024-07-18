@@ -137,10 +137,14 @@
     "title": "Users",
     "loadingAriaLabel": "Loading page",
     "approve": "Approve",
+    "approved": "Approved",
     "permissions": "Permissions",
     "emailHeading": "Email",
     "firstNameHeading": "First name",
-    "lastNameHeading": "Last name"
+    "lastNameHeading": "Last name",
+    "tableSummary": "Table of users",
+    "updateOrganisationApprovalError": "Couldn't update the organisations approval settings",
+    "updateApprovalError": "Couldn't update the researchers approval settings"
   },
   "SignupFormContacts": {
     "title": "Additional contacts",
@@ -218,7 +222,7 @@
     "pending": "Pending",
     "verified": "Verified",
     "cvUploadFailed": "There was a problem uploading your CV. Please check the file size and try again or alternativley contact us at <contactLink></contactLink>",
-    "noCvUploaded": "None uploaded"
+    "noCvUploaded": "No CV uploaded"
   },
   "LoginForm": {
     "email": "Email",
