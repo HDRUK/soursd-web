@@ -1,8 +1,9 @@
 // Navigation at this point essentially unknown
 
+import { ROUTES } from "@/consts/router";
 import { RoleConfig } from "@/types/roles";
 
-export const getMainNavigationLinks = (
+const getMainNavigationLinks = (
   locale: string
 ): ({ tKey: string; to: string } & RoleConfig)[] => [
   {
@@ -22,3 +23,17 @@ export const getMainNavigationLinks = (
     to: `/${locale}`,
   },
 ];
+
+function getRoutes(routes: typeof ROUTES, locale: string) {
+  const clonedRoutes = JSON.parse(JSON.stringify(routes));
+
+  (Object.keys(clonedRoutes) as Array<keyof typeof clonedRoutes>).forEach(
+    key => {
+      clonedRoutes[key].path = `/${locale}${clonedRoutes[key].path}`;
+    }
+  );
+
+  return clonedRoutes;
+}
+
+export { getRoutes, getMainNavigationLinks };

@@ -2,7 +2,11 @@
   "Application": {
     "getSystemConfigError": "There was a problem loading the application. Please try again or contact us at <contactLink></contactLink>"
   },
+  "OrganisationProfile": {
+    "title": "Profile"
+  },
   "Form": {
+    "dpoOrHrRequiredInvalid": "At least one of these contacts is requured",
     "dpoNameRequiredInvalid": "Dpo name is required",
     "dpoEmailRequiredInvalid": "Dpo email is required",
     "hrNameRequiredInvalid": "Hr email is required",
@@ -31,6 +35,7 @@
     "companyNumberRequiredInvalid": "Company number is required",
     "companyNumberFormatInvalid": "Company number is not in the correct format",
     "address1RequiredInvalid": "Line 1 of the address is required",
+    "townRequiredInvalid": "Town if required",
     "digitalToolkitCodeFormatInvalid": "Code is invalid",
     "ceCertificationNumberRequiredInvalid": "Certification number is invalid"
   },
@@ -149,7 +154,8 @@
     "dpoEmailPlaceholder": "Email of data protection contact",
     "dpoEmail": "Email of data protection contact",
     "signupButton": "Sign Up",
-    "submitError": "There was a problem signing up. Please try again or contact us at <contactLink></contactLink>"
+    "submitError": "There was a problem signing up. Please try again or contact us at <contactLink></contactLink>",
+    "emptyFieldsError": "At least one of these contacts needs to be filled in."
   },
   "SignupFormOtherDetails": {
     "title": "Company details",

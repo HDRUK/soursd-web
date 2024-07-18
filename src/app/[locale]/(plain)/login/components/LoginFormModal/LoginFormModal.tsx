@@ -102,9 +102,11 @@ export default function LoginFormModal() {
   const error = loginError || userError;
   const previousUrl = getPreviousUrl();
 
-  const isFromRegister = [routes.signup.path, routes.signupIssuer.path].find(
-    url => url === previousUrl
-  );
+  const isFromRegister = [
+    routes.signup.path,
+    routes.signupIssuer.path,
+    routes.signupOrganistion.path,
+  ].find(url => url === previousUrl);
 
   return (
     <FormModal

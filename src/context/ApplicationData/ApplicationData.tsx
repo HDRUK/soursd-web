@@ -9,7 +9,10 @@ import { useStore } from "@/data/store";
 import DecoratorPanel from "@/modules/DecoratorPanel";
 import { getSystemConfig } from "@/services/system_config";
 import { getUser } from "@/services/users";
-import { ApplicationDataState } from "@/types/application";
+import {
+  ApplicationDataState,
+  ApplicationSystemConfig,
+} from "@/types/application";
 import { parseSystemConfig } from "@/utils/application";
 import { getAuthData } from "@/utils/auth";
 import { CircularProgress } from "@mui/material";
@@ -23,8 +26,6 @@ import {
   useMemo,
 } from "react";
 import { useQuery } from "react-query";
-
-type ApplicationSystemConfig = Record<string, any>;
 
 const ApplicationDataContext = createContext({
   routes: ROUTES,
@@ -82,7 +83,7 @@ const ApplicationDataProvider = ({
   }, [path]);
 
   const systemConfig: Record<string, any> = useMemo(
-    () => parseSystemConfig(systemConfig?.data),
+    () => parseSystemConfig(systemConfigData?.data),
     [!!systemConfigData?.data]
   );
 
@@ -102,7 +103,7 @@ const ApplicationDataProvider = ({
           )}
           {isError && (
             <OverlayCenterAlert>
-              {t.rich("getSystemConfigError", {
+              {t.rich(error, {
                 contactLink: ContactLink,
               })}
             </OverlayCenterAlert>

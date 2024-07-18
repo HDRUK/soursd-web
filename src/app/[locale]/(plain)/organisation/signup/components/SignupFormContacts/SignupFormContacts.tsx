@@ -18,7 +18,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 export interface SignupFormContactsValues {
@@ -47,23 +47,31 @@ export default function SignupFormContacts({
   const tValidation = useTranslations(NAMESPACE_TRANSLATION_VALIDATION);
   const tSignup = useTranslations(NAMESPACE_TRANSLATION_SIGNUP);
   const theme = useTheme();
+  const [emptyError, setEmptyError] = useState<string | null>(null);
 
   const schema = useMemo(
     () =>
       yup.object().shape({
-        dpo_name: yup.string().required(tValidation("dpoNameRequiredInvalid")),
-        dpo_email: yup
-          .string()
-          .required(tValidation("emailRequiredInvalid"))
-          .email(tValidation("emailFormatInvalid")),
-        hr_name: yup.string().required(tValidation("nameRequiredInvalid")),
-        hr_email: yup
-          .string()
-          .required(tValidation("emailRequiredInvalid"))
-          .email(tValidation("emailFormatInvalid")),
+        dpo_name: yup.string(),
+        dpo_email: yup.string().email(tValidation("emailFormatInvalid")),
+        hr_name: yup.string(),
+        hr_email: yup.string().email(tValidation("emailFormatInvalid")),
       }),
     []
   );
+
+  const validateSubmit = useCallback((values: SignupFormContactsValues) => {
+    if (
+      Object.keys(values).find(
+        (key: string) => !!values[key as keyof SignupFormContactsValues]
+      )
+    ) {
+      setEmptyError(null);
+      onSubmit(values);
+    } else {
+      setEmptyError(tSignup("emptyFieldsError"));
+    }
+  }, []);
 
   const methods = useForm<SignupFormContactsValues>({
     resolver: yupResolver(schema),
@@ -86,7 +94,7 @@ export default function SignupFormContacts({
     <FormProvider {...methods}>
       <Box
         component="form"
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(validateSubmit)}
         autoComplete="off"
         sx={{
           width: "auto",
@@ -103,6 +111,11 @@ export default function SignupFormContacts({
               })}
             </Alert>
           )}
+          {emptyError && (
+            <Alert color="error" sx={{ mb: 3 }}>
+              {emptyError}
+            </Alert>
+          )}
           <Grid container direction="column" spacing={2}>
             <Grid item>
               <FormControl error={!!errors.hr_name} size="small" fullWidth>
@@ -110,7 +123,7 @@ export default function SignupFormContacts({
                   {...register("hr_name")}
                   size="small"
                   placeholder={tSignup("hrNamePlaceholder")}
-                  label={<>{tSignup("hrName")} *</>}
+                  label={<>{tSignup("hrName")}</>}
                 />
                 {errors.hr_name && (
                   <FormHelperText>{errors.hr_name.message}</FormHelperText>
@@ -123,7 +136,7 @@ export default function SignupFormContacts({
                   {...register("hr_email")}
                   size="small"
                   placeholder={tSignup("hrEmailPlaceholder")}
-                  label={<>{tSignup("hrEmail")} *</>}
+                  label={<>{tSignup("hrEmail")}</>}
                 />
                 {errors.hr_email && (
                   <FormHelperText>{errors.hr_email.message}</FormHelperText>
@@ -136,7 +149,7 @@ export default function SignupFormContacts({
                   {...register("dpo_name")}
                   size="small"
                   placeholder={tSignup("dpoNamePlaceholder")}
-                  label={<>{tSignup("dpoName")} *</>}
+                  label={<>{tSignup("dpoName")}</>}
                 />
                 {errors.dpo_name && (
                   <FormHelperText>{errors.dpo_name.message}</FormHelperText>
@@ -149,7 +162,7 @@ export default function SignupFormContacts({
                   {...register("dpo_email")}
                   size="small"
                   placeholder={tSignup("dpoEmailPlaceholder")}
-                  label={<>{tSignup("dpoEmail")} *</>}
+                  label={<>{tSignup("dpoEmail")}</>}
                 />
                 {errors.hr_email && (
                   <FormHelperText>{errors.hr_email.message}</FormHelperText>

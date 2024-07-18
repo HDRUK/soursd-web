@@ -15,6 +15,10 @@ const ROUTES = {
     path: "/issuer/signup",
     key: "SignupIssuer",
   },
+  signupOrganistion: {
+    path: "/organisation/signup",
+    key: "SignupOrgnisation",
+  },
   homepage: {
     path: "/homepage",
     key: "Homepage",

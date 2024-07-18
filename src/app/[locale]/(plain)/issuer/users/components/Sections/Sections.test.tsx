@@ -59,7 +59,7 @@ describe("<Sections />", () => {
     await waitFor(() => {
       expect(permissions).toHaveAttribute(
         "href",
-        `${ROUTES.permissionsOrganisationIssuer.path}/1`
+        `/en${ROUTES.permissionsOrganisationIssuer.path}/1`
       );
     });
   });
@@ -72,7 +72,7 @@ describe("<Sections />", () => {
     await waitFor(() => {
       expect(permissions).toHaveAttribute(
         "href",
-        `${ROUTES.permissionsResearcherIssuer.path}/1`
+        `/en${ROUTES.permissionsResearcherIssuer.path}/1`
       );
     });
   });

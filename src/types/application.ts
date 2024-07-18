@@ -80,7 +80,10 @@ interface ApplicationDataState {
   user?: User;
 }
 
+type ApplicationSystemConfig = Record<string, any>;
+
 export type {
+  ApplicationSystemConfig,
   ApplicationDataState,
   Organisation,
   User,

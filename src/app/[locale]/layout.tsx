@@ -12,6 +12,7 @@ import { ApplicationDataProvider } from "@/context/ApplicationData";
 import { NotificationsProvider } from "@/context/Notifications";
 import "../global.css";
 import ReactQueryClientProvider from "./components/ReactQueryClientProvider";
+import { getRoutes } from "@/utils/router";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,17 +33,7 @@ export default function RootLayout({
 
   const messages = useMessages();
 
-  const routes = useMemo(() => {
-    const clonedRoutes = JSON.parse(JSON.stringify(ROUTES));
-
-    (Object.keys(clonedRoutes) as Array<keyof typeof clonedRoutes>).forEach(
-      key => {
-        clonedRoutes[key].path = `/${locale}${clonedRoutes[key].path}`;
-      }
-    );
-
-    return clonedRoutes;
-  }, [locale]);
+  const routes = useMemo(() => getRoutes(ROUTES, locale), [locale]);
 
   return (
     <html lang={locale}>

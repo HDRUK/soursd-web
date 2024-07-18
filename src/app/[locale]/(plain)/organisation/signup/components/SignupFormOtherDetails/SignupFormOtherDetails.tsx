@@ -64,7 +64,7 @@ export default function SignupFormOtherDetails({
           .string()
           .required(tValidation("address1RequiredInvalid")),
         address_2: yup.string().notRequired(),
-        town: yup.string().notRequired(),
+        town: yup.string().required("townRequiredInvalid"),
         county: yup.string().notRequired(),
         country: yup.string().notRequired(),
         postcode: yup

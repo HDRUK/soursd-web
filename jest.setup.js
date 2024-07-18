@@ -10,6 +10,8 @@ import {
   mockedSystemConfig,
   mockedValidationSchema,
 } from "./mocks/data/systemConfig";
+import { getRoutes } from "./src/utils/router";
+import { ROUTES } from "./src/consts/router";
 
 const nextRouterMock = require("next-router-mock");
 
@@ -18,6 +20,7 @@ jest.mock("./src/context/ApplicationData", () => ({
   ...jest.requireActual("./src/context/ApplicationData"),
   useApplicationData: () => ({
     validationSchema: mockedValidationSchema(),
+    routes: getRoutes(ROUTES, "en"),
   }),
 }));
 
