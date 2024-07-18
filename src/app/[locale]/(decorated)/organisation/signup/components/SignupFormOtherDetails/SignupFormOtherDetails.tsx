@@ -23,7 +23,7 @@ import {
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
-import { FormProvider, useForm } from "react-hook-form";
+import { Controller, FormProvider, useForm } from "react-hook-form";
 
 export interface SignupFormOtherDetailsValues {
   address_1: string;
@@ -64,9 +64,9 @@ export default function SignupFormOtherDetails({
           .string()
           .required(tValidation("address1RequiredInvalid")),
         address_2: yup.string().notRequired(),
-        town: yup.string().required("townRequiredInvalid"),
-        county: yup.string().notRequired(),
-        country: yup.string().notRequired(),
+        town: yup.string().required(tValidation("townRequiredInvalid")),
+        county: yup.string().required(tValidation("countyRequiredInvalid")),
+        country: yup.string().required(tValidation("countryRequiredInvalid")),
         postcode: yup
           .string()
           .required(tValidation("postcodeRequiredInvalid"))
@@ -242,7 +242,14 @@ export default function SignupFormOtherDetails({
                 size="small"
                 fullWidth>
                 <FormControlLabel
-                  control={<Checkbox {...register("iso_27001_certified")} />}
+                  control={
+                    <Controller
+                      name="iso_27001_certified"
+                      render={({ field }) => (
+                        <Checkbox {...field} checked={field.value} />
+                      )}
+                    />
+                  }
                   label={tSignup("iso27001Certified")}
                 />
                 {errors.iso_27001_certified && (
@@ -253,7 +260,14 @@ export default function SignupFormOtherDetails({
               </FormControl>
               <FormControl error={!!errors.ce_certified} size="small" fullWidth>
                 <FormControlLabel
-                  control={<Checkbox {...register("ce_certified")} />}
+                  control={
+                    <Controller
+                      name="ce_certified"
+                      render={({ field }) => (
+                        <Checkbox {...field} checked={field.value} />
+                      )}
+                    />
+                  }
                   label={tSignup("ceCertified")}
                 />
                 {errors.ce_certified && (

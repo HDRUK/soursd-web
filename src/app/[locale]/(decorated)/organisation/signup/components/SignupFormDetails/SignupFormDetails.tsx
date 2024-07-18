@@ -22,7 +22,7 @@ import {
 import { useTranslations } from "next-intl";
 import { useMemo, useRef, useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
-import { FormProvider, useForm } from "react-hook-form";
+import { Controller, FormProvider, useForm } from "react-hook-form";
 
 export interface SignupFormDetailsValues {
   organisation_name: string;
@@ -275,7 +275,14 @@ export default function SignupFormDetails({
             <Grid item>
               <FormControl error={!!errors.tscs} size="small" fullWidth>
                 <FormControlLabel
-                  control={<Checkbox {...register("tscs")} />}
+                  control={
+                    <Controller
+                      name="tscs"
+                      render={({ field }) => (
+                        <Checkbox {...field} checked={field.value} />
+                      )}
+                    />
+                  }
                   label={tSignup("agreeTermsAndConditions")}
                   aria-label={tSignup("agreeTermsAndConditionsAriaLabel")}
                 />
