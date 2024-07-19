@@ -1,5 +1,72 @@
+import { FileStatus, FileType } from "@/consts/files";
 import { ROUTES } from "@/consts/router";
-import { User } from "@/services/auth/types";
+import { UserGroup } from "@/consts/user";
+
+interface File {
+  id: number;
+  name: string;
+  status: keyof typeof FileStatus;
+  type: keyof typeof FileType;
+  created_at: string;
+  updated_at: string;
+}
+
+interface Permission {
+  id: number;
+  created_at: string;
+  updated_at: string;
+  name: string;
+  enabled: number;
+  pivot: {
+    organisation_id: number;
+    permission_id: number;
+  };
+}
+
+interface Issuer {
+  id: number;
+  created_at: string;
+  updated_at: string;
+  name: string;
+  contact_email: string;
+  enabled: boolean;
+  invite_accepted_at: string | null;
+  invite_sent_at: string | null;
+  permissions: Permission[];
+}
+
+interface User {
+  id: number;
+  first_name: string;
+  last_name: string;
+  email: string;
+  user_group: keyof typeof UserGroup;
+  permissions: Permission[];
+  registry: {
+    files: File[];
+  };
+}
+
+interface Organisation {
+  address_1: string;
+  address_2: string;
+  town: string;
+  county: string;
+  country: string;
+  postcode: string;
+  organisation_name: string;
+  organisation_unique_id: string;
+  dpo_name: string;
+  dpo_email: string;
+  hr_name: string;
+  hr_email: string;
+  id: number;
+  permissions: Permission[];
+  lead_applicant_organisation_email: string;
+  registries: {
+    user: User;
+  }[];
+}
 
 interface ApplicationDataState {
   routes: Record<
@@ -9,8 +76,11 @@ interface ApplicationDataState {
       path: string;
     }
   >;
+  systemConfigData: Record<string, any>;
   user?: User;
 }
+
+type ApplicationSystemConfig = Record<string, any>;
 
 type Approval = {
   id: number;
@@ -27,4 +97,10 @@ type Approval = {
   };
 };
 
-export type { ApplicationDataState, Approval };
+export type {
+  ApplicationDataState,
+  Approval,
+  ApplicationSystemConfig,
+  Issuer,
+  Organisation,
+};

@@ -10,6 +10,7 @@ interface StoreRoutesEntries {
   login: RouteConfig;
   signup: RouteConfig;
   signupIssuer: RouteConfig;
+  signupOrganistion: RouteConfig;
   permissionsIssuer: RouteConfig;
   homepage: RouteConfig;
   profileIssuer: RouteConfig;

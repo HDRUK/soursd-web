@@ -1,16 +1,7 @@
-import { FileStatus, FileType } from "@/consts/files";
-
-interface File {
-  id: number;
-  name: string;
-  status: keyof typeof FileStatus;
-  type: keyof typeof FileType;
-  created_at: string;
-  updated_at: string;
-}
+import { File } from "@/types/application";
 
 type FileResponse = File;
 
 type FilePayload = any;
 
-export type { FileResponse, FilePayload, File };
+export type { FileResponse, FilePayload };

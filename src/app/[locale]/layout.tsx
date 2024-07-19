@@ -6,13 +6,14 @@ import { NextIntlClientProvider, useMessages } from "next-intl";
 import { Inter } from "next/font/google";
 import { notFound } from "next/navigation";
 import { PropsWithChildren, useMemo } from "react";
-
+import GlobalStyles from "@mui/material/GlobalStyles";
 import { ROUTES } from "@/consts/router";
 import { ApplicationDataProvider } from "@/context/ApplicationData";
 import { NotificationsProvider } from "@/context/Notifications";
 import ToastProvider from "@/context/ToastProvider";
 import "../global.css";
 import ReactQueryClientProvider from "./components/ReactQueryClientProvider";
+import { getRoutes } from "@/utils/router";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -33,37 +34,35 @@ export default function RootLayout({
 
   const messages = useMessages();
 
-  const routes = useMemo(() => {
-    const clonedRoutes = JSON.parse(JSON.stringify(ROUTES));
-
-    (Object.keys(clonedRoutes) as Array<keyof typeof clonedRoutes>).forEach(
-      key => {
-        clonedRoutes[key].path = `/${locale}${clonedRoutes[key].path}`;
-      }
-    );
-
-    return clonedRoutes;
-  }, [locale]);
+  const routes = useMemo(() => getRoutes(ROUTES, locale), [locale]);
 
   return (
     <html lang={locale}>
       <body className={inter.className}>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <AppRouterCacheProvider>
-            <ThemeRegistry>
-              <ToastProvider>
-                <NotificationsProvider>
-                  <ReactQueryClientProvider>
+            <NotificationsProvider>
+              <ReactQueryClientProvider>
+                <ThemeRegistry>
+                  <ToastProvider>
+                    <GlobalStyles
+                      styles={{
+                        [".MuiGrid-item .MuiGrid-container"]: {
+                          maxWidth: "initial",
+                        },
+                      }}
+                    />
                     <ApplicationDataProvider
                       value={{
                         routes,
+                        systemConfigData: {},
                       }}>
                       {children}
                     </ApplicationDataProvider>
-                  </ReactQueryClientProvider>
-                </NotificationsProvider>
-              </ToastProvider>
-            </ThemeRegistry>
+                  </ToastProvider>
+                </ThemeRegistry>
+              </ReactQueryClientProvider>
+            </NotificationsProvider>
           </AppRouterCacheProvider>
         </NextIntlClientProvider>
       </body>

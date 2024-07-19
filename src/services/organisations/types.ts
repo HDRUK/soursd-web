@@ -1,18 +1,4 @@
-import { Approval } from "@/types/application";
-import { User } from "../auth";
-import { Permission } from "../permissions/types";
-
-interface Organisation {
-  organisation_name: string;
-  organisation_unique_id: string;
-  id: number;
-  permissions: Permission[];
-  approvals: Approval[];
-  lead_applicant_email: string;
-  registries: {
-    user: User;
-  }[];
-}
+import { Organisation } from "@/types/application";
 
 type OrganisationResponse = Organisation;
 
@@ -34,10 +20,13 @@ interface UpdateOrganisationPermissonsPayload {
   permissions: number[];
 }
 
+type GetOrganisationInviteResponse = Organisation;
+
 export type {
   OrganisationsResponse,
   OrganisationResponse,
   Organisation,
   UpdateOrganisationPermissionsResponse,
   UpdateOrganisationPermissonsPayload,
+  GetOrganisationInviteResponse,
 };

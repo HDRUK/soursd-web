@@ -1,14 +1,10 @@
-"use client";
-
 import ContactLink from "@/components/ContactLink";
 import FormActions from "@/components/FormActions";
 import FormBody from "@/components/FormBody";
 import FormRecaptcha from "@/components/FormRecaptcha";
 import PasswordTextField from "@/components/PasswordTextField";
-import {
-  VALIDATION_PASSWORD_FORMAT,
-  VALIDATION_PASSWORD_LENGTH,
-} from "@/consts/form";
+import yup from "@/config/yup";
+import { useApplicationData } from "@/context/ApplicationData";
 import { Organisation } from "@/services/organisations";
 import { FormMutateState } from "@/types/form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -32,7 +28,6 @@ import { useTranslations } from "next-intl";
 import { useMemo, useRef, useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { FormProvider, useForm } from "react-hook-form";
-import * as yup from "yup";
 
 export interface SignupFormValues {
   email: string;
@@ -53,7 +48,7 @@ export interface SignupFormProps {
   defaultEmail?: string;
 }
 
-const NAMESPACE_TRANSLATION_VALIDATION = "FormValidation";
+const NAMESPACE_TRANSLATION_VALIDATION = "Form";
 const NAMESPACE_TRANSLATION_SIGNUP = "SignupForm";
 
 export default function SignupForm({
@@ -63,6 +58,9 @@ export default function SignupForm({
   defaultOrganisation,
   defaultEmail,
 }: SignupFormProps) {
+  const {
+    validationSchema: { password },
+  } = useApplicationData();
   const tValidation = useTranslations(NAMESPACE_TRANSLATION_VALIDATION);
   const tSignup = useTranslations(NAMESPACE_TRANSLATION_SIGNUP);
   const theme = useTheme();
@@ -78,7 +76,7 @@ export default function SignupForm({
         lastName: yup.string().required(tValidation("lastNameRequiredInvalid")),
         organisation: yup
           .string()
-          .required(tValidation("organisationRequiredInvalid")),
+          .required(tValidation("organisationNameRequiredInvalid")),
         email: yup
           .string()
           .required(tValidation("emailRequiredInvalid"))
@@ -86,14 +84,15 @@ export default function SignupForm({
         password: yup
           .string()
           .required(tValidation("passwordRequiredInvalid"))
-          .min(
-            VALIDATION_PASSWORD_LENGTH,
+          .testLengthBetween(
+            { minLength: password.minLength, maxLength: password.maxLength },
             tValidation("passwordLengthInvalid", {
-              length: VALIDATION_PASSWORD_LENGTH,
+              minLength: password.minLength,
+              maxLength: password.maxLength,
             })
           )
           .matches(
-            VALIDATION_PASSWORD_FORMAT,
+            new RegExp(password.pattern),
             tValidation("passwordFormatInvalid")
           ),
         confirmPassword: yup
@@ -196,7 +195,6 @@ export default function SignupForm({
                     {...register("email")}
                     size="small"
                     placeholder={tSignup("emailPlaceholder")}
-                    aria-label={tSignup("email")}
                     label={<>{tSignup("email")} *</>}
                   />
                   {errors.email && (
@@ -211,7 +209,6 @@ export default function SignupForm({
                   {...register("firstName")}
                   size="small"
                   placeholder={tSignup("firstNamePlaceholder")}
-                  aria-label={tSignup("firstName")}
                   label={<>{tSignup("firstName")} *</>}
                 />
                 {errors.firstName && (
@@ -225,7 +222,6 @@ export default function SignupForm({
                   {...register("lastName")}
                   size="small"
                   placeholder={tSignup("lastNamePlaceholder")}
-                  aria-label={tSignup("lastName")}
                   label={<>{tSignup("lastName")} *</>}
                 />
                 {errors.lastName && (
@@ -239,7 +235,6 @@ export default function SignupForm({
                   id="password"
                   size="small"
                   placeholder={tSignup("passwordPlaceholder")}
-                  aria-label={tSignup("password")}
                   label={<>{tSignup("password")} *</>}
                   iconButtonProps={{
                     "aria-label": tSignup("togglePasswordAriaLabel"),
@@ -259,7 +254,6 @@ export default function SignupForm({
                   id="confirmPassword"
                   size="small"
                   placeholder={tSignup("confirmPasswordPlaceholder")}
-                  aria-label={tSignup("confirmPassword")}
                   label={<>{tSignup("confirmPassword")} *</>}
                   iconButtonProps={{
                     "aria-label": tSignup("toggleConfirmPasswordAriaLabel"),
@@ -276,8 +270,8 @@ export default function SignupForm({
               <FormControl error={!!errors.tscs} size="small" fullWidth>
                 <FormControlLabel
                   control={<Checkbox {...register("tscs")} />}
-                  label="I agree to the Terms and Conditions"
-                  aria-label={tSignup("agreeTermsAndConditions")}
+                  label={tSignup("agreeTermsAndConditions")}
+                  aria-label={tSignup("agreeTermsAndConditionsAriaLabel")}
                 />
                 {errors.tscs && (
                   <FormHelperText>{errors.tscs.message}</FormHelperText>

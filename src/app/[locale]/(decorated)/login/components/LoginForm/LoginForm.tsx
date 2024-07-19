@@ -34,7 +34,7 @@ export type LoginFormProps = {
   mutateState: FormMutateState;
 };
 
-const NAMESPACE_TRANSLATION_VALIDATION = "FormValidation";
+const NAMESPACE_TRANSLATION_VALIDATION = "Form";
 const NAMESPACE_TRANSLATION_LOGIN_FORM = "LoginForm";
 
 export default function SignupForm({ onSubmit, mutateState }: LoginFormProps) {

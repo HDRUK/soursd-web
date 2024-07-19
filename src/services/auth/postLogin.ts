@@ -1,9 +1,9 @@
 import { ResponseJson, ResponseTranslations } from "@/types/requests";
 import { handleJsonResponse, postRequest } from "../requests";
-import { LoginPayload, LoginResponse } from "./types";
+import { PostLoginPayload, LoginResponse } from "./types";
 
 export default async (
-  { email, password }: LoginPayload,
+  { email, password }: PostLoginPayload,
   messages: ResponseTranslations
 ): Promise<ResponseJson<LoginResponse>> => {
   const response = await postRequest(

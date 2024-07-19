@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
-import { IssuerInviteResponse } from "./types";
+import { GetIssuerInviteResponse } from "./types";
 
-function mockedIssuer(): IssuerInviteResponse {
+function mockedIssuer(): GetIssuerInviteResponse {
   return {
     name: faker.internet.userName(),
     invite_sent_at: "2024-05-13T00:00:00Z",

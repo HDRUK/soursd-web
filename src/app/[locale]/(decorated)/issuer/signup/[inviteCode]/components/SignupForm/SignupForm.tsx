@@ -5,10 +5,8 @@ import FormActions from "@/components/FormActions";
 import FormBody from "@/components/FormBody";
 import FormRecaptcha from "@/components/FormRecaptcha";
 import PasswordTextField from "@/components/PasswordTextField";
-import {
-  VALIDATION_PASSWORD_FORMAT,
-  VALIDATION_PASSWORD_LENGTH,
-} from "@/consts/form";
+import yup from "@/config/yup";
+import { useApplicationData } from "@/context/ApplicationData";
 import { FormMutateState } from "@/types/form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import SendIcon from "@mui/icons-material/Send";
@@ -27,7 +25,6 @@ import { useTranslations } from "next-intl";
 import { useMemo, useRef, useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { FormProvider, useForm } from "react-hook-form";
-import * as yup from "yup";
 
 export interface SignupFormValues {
   password: string;
@@ -40,10 +37,13 @@ export type SignupFormProps = {
   onSubmit: (values: SignupFormValues) => void;
 };
 
-const NAMESPACE_TRANSLATION_VALIDATION = "FormValidation";
+const NAMESPACE_TRANSLATION_VALIDATION = "Form";
 const NAMESPACE_TRANSLATION_SIGNUP = "SignupForm";
 
 export default function SignupForm({ onSubmit, mutateState }: SignupFormProps) {
+  const {
+    validationSchema: { password },
+  } = useApplicationData();
   const tValidation = useTranslations(NAMESPACE_TRANSLATION_VALIDATION);
   const tSignup = useTranslations(NAMESPACE_TRANSLATION_SIGNUP);
   const [recaptchaError, setRecaptchaError] = useState("");
@@ -56,15 +56,12 @@ export default function SignupForm({ onSubmit, mutateState }: SignupFormProps) {
         password: yup
           .string()
           .required(tValidation("passwordRequiredInvalid"))
-          .min(
-            VALIDATION_PASSWORD_LENGTH,
+          .testLengthBetween(
+            { minLength: password.minLength, maxLength: password.maxLength },
             tValidation("passwordLengthInvalid", {
-              length: VALIDATION_PASSWORD_LENGTH,
+              minLength: password.minLength,
+              maxLength: password.maxLength,
             })
-          )
-          .matches(
-            VALIDATION_PASSWORD_FORMAT,
-            tValidation("passwordFormatInvalid")
           ),
         confirmPassword: yup
           .string()
@@ -170,8 +167,8 @@ export default function SignupForm({ onSubmit, mutateState }: SignupFormProps) {
               <FormControl error={!!errors.tscs} size="small" fullWidth>
                 <FormControlLabel
                   control={<Checkbox {...register("tscs")} />}
-                  label="I agree to the Terms and Conditions"
-                  aria-label={tSignup("agreeTermsAndConditions")}
+                  label={tSignup("agreeTermsAndConditions")}
+                  aria-label={tSignup("agreeTermsAndConditionsAriaLabel")}
                 />
                 {errors.tscs && (
                   <FormHelperText>{errors.tscs.message}</FormHelperText>

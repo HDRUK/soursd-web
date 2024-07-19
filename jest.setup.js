@@ -6,10 +6,23 @@ import { ResponseMessageType } from "./src/consts/requests";
 import { mockedPermission } from "./mocks/data/permission";
 import { mockedUser } from "./mocks/data/user";
 import { mockedOrganisation } from "./mocks/data/organisation";
+import {
+  mockedSystemConfig,
+  mockedValidationSchema,
+} from "./mocks/data/systemConfig";
+import { getRoutes } from "./src/utils/router";
+import { ROUTES } from "./src/consts/router";
 
 const nextRouterMock = require("next-router-mock");
 
 jest.mock("next/router", () => nextRouterMock);
+jest.mock("./src/context/ApplicationData", () => ({
+  ...jest.requireActual("./src/context/ApplicationData"),
+  useApplicationData: () => ({
+    validationSchema: mockedValidationSchema(),
+    routes: getRoutes(ROUTES, "en"),
+  }),
+}));
 
 jest.mock("react-google-recaptcha", () => {
   const RecaptchaV2 = forwardRef((props, ref) => {
@@ -102,6 +115,15 @@ async function mockFetch(url) {
         }),
       ]);
     }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/system_config`:
+      return {
+        ok: true,
+        status: 200,
+        json: async () => ({
+          message: ResponseMessageType.SUCCESS,
+          data: mockedSystemConfig(),
+        }),
+      };
     default: {
       if (url.includes("/test")) {
         return mock200Json(null);

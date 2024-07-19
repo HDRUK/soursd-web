@@ -1,9 +1,9 @@
 import { ResponseTranslations } from "@/types/requests";
 import { handleJsonResponse, postRequest } from "../requests";
-import { PostRegisterResearcherPayload } from "./types";
+import { PostRegisterIssuerPayload } from "./types";
 
 export default async (
-  payload: PostRegisterResearcherPayload,
+  payload: PostRegisterIssuerPayload,
   messages: ResponseTranslations
 ) => {
   const response = await postRequest(

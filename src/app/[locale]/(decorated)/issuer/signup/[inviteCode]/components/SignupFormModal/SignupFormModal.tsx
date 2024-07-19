@@ -7,7 +7,7 @@ import OverlayCenter from "@/components/OverlayCenter";
 import OverlayCenterAlert from "@/components/OverlayCenterAlert";
 import { useApplicationData } from "@/context/ApplicationData";
 import postRegisterIssuer from "@/services/auth/postRegisterIssuer";
-import { PostRegisterResearcherPayload } from "@/services/auth/types";
+import { PostRegisterIssuerPayload } from "@/services/auth/types";
 import { getByInviteCode } from "@/services/issuers";
 import { isExpiredInvite } from "@/utils/date";
 import HubIcon from "@mui/icons-material/Hub";
@@ -50,7 +50,7 @@ export default function Page() {
     error: signupError,
   } = useMutation(
     ["postRegisterIssuer"],
-    async (payload: PostRegisterResearcherPayload) => {
+    async (payload: PostRegisterIssuerPayload) => {
       return postRegisterIssuer(payload, {
         error: { message: "submitError" },
       });

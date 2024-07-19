@@ -1,27 +1,11 @@
-import { UserGroup } from "@/consts/user";
-import { Approval } from "@/types/application";
-import { FileResponse } from "../files/types";
-import { Permission } from "../permissions/types";
+import { Organisation, User } from "@/types/application";
 
-interface LoginPayload {
+interface PostLoginPayload {
   email: string;
   password: string;
 }
 
 type LoginRequest = Record<string, string>;
-
-interface User {
-  id: number;
-  first_name: string;
-  last_name: string;
-  email: string;
-  user_group: keyof typeof UserGroup;
-  permissions: Permission[];
-  approvals: Approval[];
-  registry: {
-    files: FileResponse[];
-  };
-}
 
 interface AuthDetails {
   access_token: string;
@@ -47,6 +31,22 @@ interface ResetPasswordPayload {
   password: string;
 }
 
+interface PostRegisterOrganisationPayload
+  extends Omit<
+    Organisation,
+    "organisation_unique_id" | "permissions" | "id" | "registries"
+  > {
+  email: string;
+  first_name?: string;
+  last_name?: string;
+}
+interface PostRegisterIssuerPayload {
+  email: string;
+  password: string;
+  first_name?: string;
+  last_name?: string;
+}
+
 interface PostRegisterResearcherPayload {
   email: string;
   password: string;
@@ -58,11 +58,12 @@ interface PostRegisterResearcherPayload {
 
 export type {
   AuthDetails,
-  LoginOTPPayload,
-  LoginPayload,
+  PostLoginPayload,
   LoginRequest,
-  LoginResponse,
+  LoginOTPPayload,
+  PostRegisterOrganisationPayload,
+  PostRegisterIssuerPayload,
   PostRegisterResearcherPayload,
   ResetPasswordPayload,
-  User,
+  LoginResponse,
 };
