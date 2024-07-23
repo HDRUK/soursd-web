@@ -4,7 +4,7 @@ import ContactLink from "@/components/ContactLink";
 import MaskLabel from "@/components/MaskLabel";
 import OverlayCenter from "@/components/OverlayCenter";
 import PageSection from "@/modules/PageSection";
-import { User } from "@/services/auth";
+import { User } from "@/types/application";
 import { Organisation } from "@/services/organisations";
 import { getPermissions } from "@/services/permissions";
 import { EntityType } from "@/types/api";

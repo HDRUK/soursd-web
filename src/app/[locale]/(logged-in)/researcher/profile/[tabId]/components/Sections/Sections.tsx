@@ -16,6 +16,8 @@ export default function Sections({ children }: SectionsProps) {
   const getUser = useStore(state => state.getUser);
   const user = getUser();
 
+  console.log("USER", user);
+
   return (
     <Box
       sx={{

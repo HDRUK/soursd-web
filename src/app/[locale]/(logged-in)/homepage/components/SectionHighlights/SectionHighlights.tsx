@@ -18,24 +18,39 @@ import Link from "next/link";
 import DecoratorPanel from "@/modules/DecoratorPanel";
 import { FeaturesList } from "../FeaturesList";
 import { StyledContentLayout, StyledHeader } from "./SectionHighlights.styles";
+import { useStore } from "@/data/store";
 
 export default function RegistryHighlights() {
   const theme = useTheme();
   const t = useTranslations();
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
   const { routes } = useApplicationData();
+  const getUser = useStore(state => state.getUser);
+  const user = getUser();
+
   return (
     <DecoratorPanel>
       <StyledContentLayout>
         <StyledHeader>
           <div>
-            <Button
-              component={Link}
-              variant="contained"
-              color="secondary"
-              href={routes.login.path}>
-              {t("Buttons.login")}
-            </Button>
+            {!user && (
+              <Button
+                component={Link}
+                variant="contained"
+                color="secondary"
+                href={routes.login.path}>
+                {t("Buttons.login")}
+              </Button>
+            )}
+            {user && (
+              <Button
+                component={Link}
+                variant="contained"
+                color="secondary"
+                href={routes.logout.path}>
+                {t("Buttons.logout")}
+              </Button>
+            )}
           </div>
         </StyledHeader>
 

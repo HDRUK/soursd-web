@@ -1,3 +1,4 @@
+import { ActionMenu, ActionMenuItem } from "@/components/ActionMenu";
 import { useApplicationData } from "@/context/ApplicationData";
 import { Check } from "@mui/icons-material";
 import {
@@ -8,7 +9,6 @@ import {
   List,
   ListItem,
   Typography,
-  useTheme,
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { useTranslations } from "next-intl";
@@ -28,8 +28,6 @@ export default function FeaturesList({
   const t = useTranslations();
   const { routes } = useApplicationData();
 
-  const theme = useTheme();
-
   return (
     <Box {...restProps}>
       <List sx={{ mb: 2 }}>
@@ -46,14 +44,22 @@ export default function FeaturesList({
         <Button color="secondary" variant="outlined">
           {t("Buttons.contactUs")}
         </Button>
-        <Button variant="contained" color="secondary">
-          <Link
-            href={routes.signup.path}
-            underline="none"
-            sx={{ color: theme.palette.secondary.contrastText }}>
-            {t("Buttons.register")}
-          </Link>
-        </Button>
+
+        <ActionMenu
+          trigger={
+            <Button variant="contained" color="secondary">
+              {t("Buttons.register")}
+            </Button>
+          }>
+          <ActionMenuItem>
+            <Link href={routes.signup.path}>{t("Application.researcher")}</Link>
+          </ActionMenuItem>
+          <ActionMenuItem>
+            <Link href={routes.signupOrganistion.path}>
+              {t("Application.organisation")}
+            </Link>
+          </ActionMenuItem>
+        </ActionMenu>
       </Box>
     </Box>
   );

@@ -2,50 +2,53 @@
 
 import { useApplicationData } from "@/context/ApplicationData";
 import { Box, Tab, Tabs } from "@mui/material";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { PageTabs } from "../../consts/tabs";
-import { useStore } from "@/data/store";
+
+const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
 export default function TabsSections() {
   const { routes } = useApplicationData();
   const params = useParams();
+  const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
   return (
     <Box sx={{ borderBottom: 1, borderColor: "divider", width: "100%", mb: 2 }}>
       <Tabs
         value={params?.tabId || PageTabs.DETAILS}
-        aria-label="nav tabs example"
+        aria-label={t("navigationAriaLabel")}
         role="navigation"
         indicatorColor="secondary"
         textColor="inherit">
         <Tab
-          label="Details"
+          label={t("details")}
           href={routes.profileResearcherDetails.path}
           component={Link}
           value={PageTabs.DETAILS}
         />
         <Tab
-          label={"Identity"}
+          label={t("identity")}
           href={routes.profileResearcherIdentity.path}
           component={Link}
           value={PageTabs.IDENTITY}
           iconPosition="start"
         />
         <Tab
-          label="Experience"
+          label={t("experience")}
           href={routes.profileResearcherExperience.path}
           component={Link}
           value={PageTabs.EXPERIENCE}
         />
         <Tab
-          label="Training"
+          label={t("training")}
           href={routes.profileResearcherTraining.path}
           component={Link}
           value={PageTabs.TRAINING}
         />
         <Tab
-          label="Affiliations"
+          label={t("affiliations")}
           href={routes.profileResearcherAffiliations.path}
           component={Link}
           value={PageTabs.AFFILIATIONS}
