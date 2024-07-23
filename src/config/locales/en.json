@@ -1,6 +1,10 @@
 {
   "Application": {
-    "getSystemConfigError": "There was a problem loading the application. Please try again or contact us at <contactLink></contactLink>"
+    "getSystemConfigError": "There was a problem loading the application. Please try again or contact us at <contactLink></contactLink>",
+    "submitError": "Unable to load some of the application. Please try again or contact us at <contactLink></contactLink>"
+  },
+  "IssuerProfile": {
+    "title": "Profile"
   },
   "OrganisationProfile": {
     "title": "Profile"

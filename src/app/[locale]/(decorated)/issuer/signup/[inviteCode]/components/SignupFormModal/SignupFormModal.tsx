@@ -63,8 +63,8 @@ export default function Page() {
     if (issuerData) {
       const payload = {
         password,
-        first_name: "",
-        last_name: "",
+        first_name: "John",
+        last_name: "Smith",
         email: issuerData?.data.contact_email,
       };
 

@@ -14,7 +14,7 @@ import {
   ApplicationSystemConfig,
 } from "@/types/application";
 import { parseSystemConfig } from "@/utils/application";
-import { getAuthData } from "@/utils/auth";
+import { getAuthData, updateAuthUser } from "@/utils/auth";
 import { CircularProgress } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
@@ -25,7 +25,7 @@ import {
   useEffect,
   useMemo,
 } from "react";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 
 const ApplicationDataContext = createContext({
   routes: ROUTES,
@@ -48,7 +48,7 @@ const ApplicationDataProvider = ({
 }: ApplicationDataProviderProps) => {
   const t = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
   const addUrlToHistory = useStore(store => store.addUrlToHistory);
-  const setUser = useStore(store => store.setUser);
+  const setAuth = useStore(store => store.setAuth);
   const path = usePathname();
 
   const {
@@ -64,19 +64,45 @@ const ApplicationDataProvider = ({
     })
   );
 
+  const {
+    data: userData,
+    mutateAsync: mutateUserAsync,
+    isError: isUserError,
+    isLoading: isUserLoading,
+    error: userError,
+  } = useMutation(["getUser"], async (id: number) =>
+    getUser(id, {
+      error: {
+        message: "submitError",
+      },
+    })
+  );
+
+  const isLoggedOutPage =
+    path?.includes(ROUTES.login.path) ||
+    path?.includes(ROUTES.signup.path) ||
+    path?.includes(ROUTES.signupOrganistion.path) ||
+    path?.includes(ROUTES.signupIssuer.path);
+
   useEffect(() => {
     const initUserFetch = async () => {
       const authDetails = await getAuthData();
 
       if (authDetails?.user?.id) {
-        const userDetails = await getUser(authDetails.user.id, {});
+        const user = await mutateUserAsync(authDetails.user.id);
 
-        setUser(userDetails.data);
+        setAuth({
+          ...authDetails,
+          user: {
+            ...authDetails.user,
+            ...user.data,
+          },
+        });
       }
     };
 
-    initUserFetch();
-  }, []);
+    if (!isLoggedOutPage) initUserFetch();
+  }, [isLoggedOutPage]);
 
   useEffect(() => {
     if (path) addUrlToHistory(path);
@@ -96,14 +122,14 @@ const ApplicationDataProvider = ({
       }}>
       {(isError || isLoading) && (
         <DecoratorPanel>
-          {isLoading && (
+          {(isLoading || isUserLoading) && (
             <OverlayCenter>
               <CircularProgress sx={{ color: "#fff" }} />
             </OverlayCenter>
           )}
-          {isError && (
+          {(isError || isUserError) && (
             <OverlayCenterAlert>
-              {t.rich(error, {
+              {t.rich(error || userError, {
                 contactLink: ContactLink,
               })}
             </OverlayCenterAlert>
@@ -111,7 +137,10 @@ const ApplicationDataProvider = ({
         </DecoratorPanel>
       )}
 
-      {!isLoading && systemConfigData?.data && children}
+      {!isLoading &&
+        systemConfigData?.data &&
+        (isLoggedOutPage || userData?.data) &&
+        children}
     </ApplicationDataContext.Provider>
   );
 };

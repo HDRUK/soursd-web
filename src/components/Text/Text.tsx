@@ -1,7 +1,7 @@
-import { Box, BoxProps } from "@mui/material";
+import { Typography, TypographyProps } from "@mui/material";
 import { ReactNode } from "react";
 
-interface TextProps extends BoxProps {
+interface TextProps extends TypographyProps {
   children: ReactNode;
   startIcon?: ReactNode;
   endIcon?: ReactNode;
@@ -12,13 +12,15 @@ export default function Text({
   startIcon,
   endIcon,
   sx,
+  variant,
   ...restProps
 }: TextProps) {
   return (
-    <Box
+    <Typography
       {...restProps}
+      variant={variant}
       sx={{
-        display: "inline-flex",
+        display: variant === "caption" ? "inline-flex" : "flex",
         alignItems: "center",
         gap: 0.5,
         ["> svg"]: {
@@ -29,6 +31,6 @@ export default function Text({
       {startIcon}
       {children}
       {endIcon}
-    </Box>
+    </Typography>
   );
 }

@@ -1,17 +1,21 @@
-"use client";
-
 import { withAuth } from "@/components/Auth";
-import PageSection from "@/modules/PageSection/PageSection";
-import { Box } from "@mui/material";
-import Content from "./components/Content/Content";
+import DecoratorPage from "@/modules/DecoratorPage";
+import PageSection from "@/modules/PageSection";
+import { Typography } from "@mui/material";
+import { useTranslations } from "next-intl";
+
+const NAMESPACE_TRANSLATIONS_PROFILE = "IssuerProfile";
 
 function Page() {
+  const t = useTranslations(NAMESPACE_TRANSLATIONS_PROFILE);
+
   return (
-    <Box sx={{ overflow: "hidden", position: "relative" }}>
+    <DecoratorPage>
       <PageSection>
-        <Content />
+        <Typography variant="h4">{t("title")}</Typography>
       </PageSection>
-    </Box>
+      <PageSection sx={{ flexGrow: 1 }}>Content</PageSection>
+    </DecoratorPage>
   );
 }
 

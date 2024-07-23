@@ -2,6 +2,7 @@
 
 import AccordionTitle from "@/components/AccordionTitle";
 import ActionMenu from "@/components/ActionMenu/ActionMenu";
+import ActionMenuItem from "@/components/ActionMenu/ActionMenuItem";
 import Text from "@/components/Text";
 import { useApplicationData } from "@/context/ApplicationData";
 import { PostApprovalPayloadWithEntity } from "@/services/approvals";
@@ -82,16 +83,17 @@ export default function UsersList({
                 <AccordionTitle
                   icon={<BusinessIcon />}
                   actions={
-                    <ActionMenu
-                      aria-label={`${organisation_name} actions`}
-                      items={[
+                    <ActionMenu aria-label={`${organisation_name} actions`}>
+                      <ActionMenuItem>
                         <Button
                           fullWidth
                           variant="outlined"
                           size="small"
                           href={`${routes.permissionsOrganisationIssuer.path}/${id}`}>
                           {t("permissions")}
-                        </Button>,
+                        </Button>
+                      </ActionMenuItem>
+                      <ActionMenuItem>
                         <LoadingButton
                           fullWidth
                           loading={mutateState.isLoading}
@@ -113,9 +115,9 @@ export default function UsersList({
                           {isOrganisationApproved
                             ? t("approved")
                             : t("approve")}
-                        </LoadingButton>,
-                      ]}
-                    />
+                        </LoadingButton>
+                      </ActionMenuItem>
+                    </ActionMenu>
                   }>
                   <Text
                     endIcon={
@@ -181,16 +183,17 @@ export default function UsersList({
                               {last_name}
                             </TableCell>
                             <TableCell sx={{ pr: 0 }}>
-                              <ActionMenu
-                                aria-label={`${email} actions`}
-                                items={[
+                              <ActionMenu aria-label={`${email} actions`}>
+                                <ActionMenuItem>
                                   <Button
                                     fullWidth
                                     variant="outlined"
                                     size="small"
                                     href={`${routes.permissionsResearcherIssuer.path}/${id}`}>
                                     {t("permissions")}
-                                  </Button>,
+                                  </Button>
+                                </ActionMenuItem>
+                                <ActionMenuItem>
                                   <LoadingButton
                                     fullWidth
                                     loading={mutateState.isLoading}
@@ -210,9 +213,9 @@ export default function UsersList({
                                       )
                                     }>
                                     {isApproved ? t("approved") : t("approve")}
-                                  </LoadingButton>,
-                                ]}
-                              />
+                                  </LoadingButton>
+                                </ActionMenuItem>
+                              </ActionMenu>
                             </TableCell>
                           </TableRow>
                         );

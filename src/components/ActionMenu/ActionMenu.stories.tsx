@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { Link } from "@mui/material";
 import ActionMenu from "./ActionMenu";
+import ActionMenuItem from "./ActionMenuItem";
 
 const meta = {
   title: "components/ActionMenu",
@@ -15,6 +16,10 @@ type Story = StoryObj<typeof meta>;
 
 export const Basic: Story = {
   args: {
-    items: [<Link href="./">Permissions</Link>],
+    children: (
+      <ActionMenuItem>
+        <Link href="./">Permissions</Link>
+      </ActionMenuItem>
+    ),
   },
 };

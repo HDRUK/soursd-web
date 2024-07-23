@@ -2,8 +2,8 @@ import { MAX_UPLOAD_SIZE_BYTES } from "@/consts/files";
 import { act, fireEvent, render, screen } from "@/utils/testUtils";
 import { faker } from "@faker-js/faker";
 import { axe } from "jest-axe";
-import CVDetails from ".";
-import { CVDetailsProps } from "./CVDetails";
+import DetailsCV from ".";
+import { DetailsCVProps } from "./DetailsCV";
 
 const mockOnFileChange = jest.fn();
 const mockUploadClick = jest.fn();
@@ -19,9 +19,9 @@ jest.mock("react", () => ({
   }),
 }));
 
-const renderCVDetails = (props?: Partial<CVDetailsProps>) => {
+const renderDetailsCV = (props?: Partial<DetailsCVProps>) => {
   return render(
-    <CVDetails
+    <DetailsCV
       fileName={faker.system.fileName()}
       onFileChange={mockOnFileChange}
       {...props}
@@ -29,16 +29,16 @@ const renderCVDetails = (props?: Partial<CVDetailsProps>) => {
   );
 };
 
-describe("<CVDetails />", () => {
+describe("<DetailsCV />", () => {
   it("has no accessibility validations", async () => {
-    const { container } = renderCVDetails();
+    const { container } = renderDetailsCV();
 
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
 
   it("shows the correct filename", async () => {
-    renderCVDetails({
+    renderDetailsCV({
       fileName: "sample.doc",
     });
 
@@ -46,7 +46,7 @@ describe("<CVDetails />", () => {
   });
 
   it("calls file input", async () => {
-    renderCVDetails();
+    renderDetailsCV();
 
     await act(() => {
       fireEvent.click(screen.getByRole("button"));
@@ -56,7 +56,7 @@ describe("<CVDetails />", () => {
   });
 
   it("uploads a file", async () => {
-    renderCVDetails({
+    renderDetailsCV({
       isFileUploading: true,
     });
 
@@ -68,7 +68,7 @@ describe("<CVDetails />", () => {
   });
 
   it("show a loader", async () => {
-    renderCVDetails({
+    renderDetailsCV({
       isFileUploading: true,
     });
 
@@ -76,7 +76,7 @@ describe("<CVDetails />", () => {
   });
 
   it("show a file size error", async () => {
-    renderCVDetails({
+    renderDetailsCV({
       isFileSizeTooBig: true,
     });
 
@@ -86,7 +86,7 @@ describe("<CVDetails />", () => {
   });
 
   it("show a file infected status", async () => {
-    renderCVDetails({
+    renderDetailsCV({
       isFileOk: false,
     });
 
@@ -94,7 +94,7 @@ describe("<CVDetails />", () => {
   });
 
   it("show a file ok status", async () => {
-    renderCVDetails({
+    renderDetailsCV({
       isFileOk: true,
     });
 
@@ -102,7 +102,7 @@ describe("<CVDetails />", () => {
   });
 
   it("show a file ok status", async () => {
-    renderCVDetails({
+    renderDetailsCV({
       isFileScanning: true,
     });
 

@@ -1,3 +1,4 @@
+import { withAuth } from "@/components/Auth";
 import DecoratorPage from "@/modules/DecoratorPage";
 import PageSection from "@/modules/PageSection";
 import { Typography } from "@mui/material";
@@ -5,7 +6,7 @@ import { useTranslations } from "next-intl";
 
 const NAMESPACE_TRANSLATIONS_PROFILE = "OrganisationProfile";
 
-export default function Page() {
+function Page() {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_PROFILE);
 
   return (
@@ -17,3 +18,5 @@ export default function Page() {
     </DecoratorPage>
   );
 }
+
+export default withAuth(Page);

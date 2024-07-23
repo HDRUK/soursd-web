@@ -1,8 +1,8 @@
-import { RoutePermissions } from "@/types/router";
+import { RoutePermissions, Routes } from "@/types/router";
 
 const PROTECTED_ROUTES: RoutePermissions[] = [];
 
-const ROUTES = {
+const ROUTES: Routes = {
   login: {
     path: "/login",
     key: "Login",
@@ -34,6 +34,26 @@ const ROUTES = {
   permissionsOrganisationIssuer: {
     path: "/issuer/permissions/organisation",
     key: "PermissionsOrganisationIssuer",
+  },
+  profileResearcherExperience: {
+    path: "/researcher/profile/experience",
+    key: "ProfileExperience",
+  },
+  profileResearcherDetails: {
+    path: "/researcher/profile/details",
+    key: "ProfileDetails",
+  },
+  profileResearcherIdentity: {
+    path: "/researcher/profile/identity",
+    key: "ProfileIdentity",
+  },
+  profileResearcherTraining: {
+    path: "/researcher/profile/training",
+    key: "ProfileTraining",
+  },
+  profileResearcherAffiliations: {
+    path: "/researcher/profile/affiliations",
+    key: "ProfileAffiliations",
   },
   profileResearcher: {
     path: "/researcher/profile",

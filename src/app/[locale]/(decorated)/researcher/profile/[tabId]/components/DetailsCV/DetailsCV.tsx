@@ -9,7 +9,7 @@ import { getFileHref } from "@/utils/file";
 
 const NAMESPACE_TRANSLATION_CV = "Cv";
 
-export interface CVDetailsProps {
+export interface DetailsCVProps {
   fileName: string;
   onFileChange: ChangeEventHandler<HTMLInputElement>;
   isFileUploading?: boolean;
@@ -18,14 +18,14 @@ export interface CVDetailsProps {
   isFileOk?: boolean;
 }
 
-export default function CVDetails({
+export default function DetailsCV({
   fileName,
   onFileChange,
   isFileUploading,
   isFileSizeTooBig,
   isFileScanning,
   isFileOk,
-}: CVDetailsProps) {
+}: DetailsCVProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_CV);
   const translationsMaxSize = {
     size: prettyBytes(MAX_UPLOAD_SIZE_BYTES),

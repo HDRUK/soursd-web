@@ -42,6 +42,9 @@ interface User {
   email: string;
   user_group: keyof typeof UserGroup;
   permissions: Permission[];
+  profile_completed_at: string | null;
+  profile_steps_completed: string | null;
+  approvals: Approval[];
   registry: {
     files: File[];
   };
@@ -68,6 +71,13 @@ interface Organisation {
   }[];
 }
 
+interface Auth {
+  access_token: string;
+  refresh_token: string;
+  user: User;
+  expires: number;
+}
+
 interface ApplicationDataState {
   routes: Record<
     keyof typeof ROUTES,
@@ -77,7 +87,7 @@ interface ApplicationDataState {
     }
   >;
   systemConfigData: Record<string, any>;
-  user?: User;
+  auth?: Auth;
 }
 
 type ApplicationSystemConfig = Record<string, any>;
@@ -103,4 +113,6 @@ export type {
   ApplicationSystemConfig,
   Issuer,
   Organisation,
+  User,
+  Auth,
 };

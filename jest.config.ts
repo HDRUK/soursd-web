@@ -19,6 +19,7 @@ const customJestConfig = {
     "^@/modules/(.*)$": "<rootDir>/src/modules/$1",
     "^@/components/(.*)$": "<rootDir>/src/components/$1",
     "^@/providers/(.*)$": "<rootDir>/src/providers/$1",
+    "^@/data/(.*)$": "<rootDir>/src/data/$1",
     "^@/utils/(.*)$": "<rootDir>/src/utils/$1",
   },
   testPathIgnorePatterns: [
@@ -38,6 +39,8 @@ const customJestConfig = {
     "<rootDir>/mocks",
     "<rootDir>/src/consts",
     "<rootDir>/src/config",
+    "<rootDir>/src/data",
+    "<rootDir>/src/types",
     ".*mockData\\.ts(x)$",
     ".*\\.styles\\.ts$",
   ],

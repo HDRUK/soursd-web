@@ -1,4 +1,4 @@
-import { Organisation, User } from "@/types/application";
+import { Auth, Organisation, User } from "@/types/application";
 
 interface PostLoginPayload {
   email: string;
@@ -7,18 +7,7 @@ interface PostLoginPayload {
 
 type LoginRequest = Record<string, string>;
 
-interface AuthDetails {
-  access_token: string;
-  is_issuer?: boolean;
-  is_organisation?: boolean;
-  is_researcher?: boolean;
-  expires: number;
-  refresh_expires_in: number;
-}
-
-interface LoginResponse extends AuthDetails {
-  user: User;
-}
+type LoginResponse = Auth;
 
 interface LoginOTPPayload {
   email: string;
@@ -57,7 +46,6 @@ interface PostRegisterResearcherPayload {
 }
 
 export type {
-  AuthDetails,
   PostLoginPayload,
   LoginRequest,
   LoginOTPPayload,
