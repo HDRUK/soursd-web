@@ -134,12 +134,11 @@ const ApplicationDataProvider = ({
       }}>
       {(isUserLoading || isLoading || isError || isUserError) && (
         <DecoratorPanel>
-          {isUserLoading ||
-            (isLoading && (
-              <OverlayCenter>
-                <CircularProgress sx={{ color: "#fff" }} />
-              </OverlayCenter>
-            ))}
+          {(isUserLoading || isLoading) && (
+            <OverlayCenter>
+              <CircularProgress sx={{ color: "#fff" }} />
+            </OverlayCenter>
+          )}
           {(isError || isUserError) && (
             <OverlayCenterAlert>
               {t.rich(error || userError, {
