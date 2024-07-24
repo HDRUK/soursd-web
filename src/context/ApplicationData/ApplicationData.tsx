@@ -108,8 +108,7 @@ const ApplicationDataProvider = ({
   }, [prefetchUser]);
 
   useEffect(() => {
-    if (prefetchUser && auth && userData?.data) {
-    } else if (!prefetchUser) {
+    if (!prefetchUser) {
       setAuthFetched(true);
     }
   }, [auth, prefetchUser, userData?.data]);
