@@ -1,5 +1,9 @@
 import { RoleConfig } from "./roles";
 
+interface RouteParams<T> {
+  params: T;
+}
+
 interface RoutePermissions extends RoleConfig {
   path: string;
 }
@@ -9,4 +13,22 @@ interface RouteConfig {
   key: string;
 }
 
-export type { RoutePermissions, RouteConfig };
+interface Routes {
+  login: RouteConfig;
+  signup: RouteConfig;
+  signupIssuer: RouteConfig;
+  signupOrganistion: RouteConfig;
+  permissionsResearcherIssuer: RouteConfig;
+  permissionsOrganisationIssuer: RouteConfig;
+  homepage: RouteConfig;
+  profileIssuer: RouteConfig;
+  profileResearcher: RouteConfig;
+  profileResearcherDetails: RouteConfig;
+  profileResearcherTraining: RouteConfig;
+  profileResearcherExperience: RouteConfig;
+  profileResearcherIdentity: RouteConfig;
+  profileResearcherAffiliations: RouteConfig;
+  profileOrganisation: RouteConfig;
+}
+
+export type { RoutePermissions, RouteConfig, Routes, RouteParams };

@@ -9,13 +9,13 @@ import {
 import { HTMLAttributes, ReactNode, useState } from "react";
 
 interface ActionMenuProps extends HTMLAttributes<HTMLSpanElement> {
-  items: ReactNode[];
+  children: ReactNode;
   onOpen?(): void;
   onClose?(): void;
 }
 
 export default function ActionMenu({
-  items,
+  children,
   onOpen,
   onClose,
   ...restProps
@@ -40,13 +40,7 @@ export default function ActionMenu({
         <MoreVertIcon />
       </IconButton>
       <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={handleClose}>
-        <MenuList dense>
-          {items.map(item => (
-            <MenuItem>
-              <ListItemText>{item}</ListItemText>
-            </MenuItem>
-          ))}
-        </MenuList>
+        <MenuList dense>{children}</MenuList>
       </Menu>
     </span>
   );

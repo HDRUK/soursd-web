@@ -1,31 +1,23 @@
 "use client";
 
 import { ROUTES } from "@/consts/router";
-import { User } from "@/services/auth/types";
-import { RouteConfig } from "@/types/router";
+import { Auth, User } from "@/types/application";
+import { Routes } from "@/types/router";
 import { produce } from "immer";
 import { create } from "zustand";
-
-interface StoreRoutesEntries {
-  login: RouteConfig;
-  signup: RouteConfig;
-  signupIssuer: RouteConfig;
-  signupOrganistion: RouteConfig;
-  permissionsIssuer: RouteConfig;
-  homepage: RouteConfig;
-  profileIssuer: RouteConfig;
-}
 
 interface StoreState {
   config: {
     router: {
       history: string[];
-      entries: StoreRoutesEntries;
+      entries: Routes;
     };
-    user?: User;
+    auth?: Auth;
   };
+  setAuth: (auth: Auth) => void;
+  setRoutes: (routes: Routes) => void;
+  getUser: () => User | undefined;
   setUser: (user: User) => void;
-  setRoutes: (routes: StoreRoutesEntries) => void;
   getPreviousUrl: () => string | null;
   addUrlToHistory: (url: string) => void;
 }
@@ -44,18 +36,30 @@ const useStore = create<StoreState>((set, get) => ({
 
     return history.length > 1 ? history[history.length - 2] : null;
   },
-  setRoutes: (routes: StoreRoutesEntries) =>
+  setRoutes: (routes: Routes) =>
     set(
       produce(state => {
         state.config.entries = routes;
       })
     ),
+  setAuth: (auth: Auth) =>
+    set(
+      produce(state => {
+        state.config.auth = auth;
+      })
+    ),
   setUser: (user: User) =>
     set(
       produce(state => {
-        state.config.user = user;
+        state.config.auth = {
+          ...state.config.auth,
+          user,
+        };
       })
     ),
+  getUser: () => {
+    return get().config.auth?.user;
+  },
   addUrlToHistory: (url: string) =>
     set(
       produce(state => {
@@ -66,8 +70,8 @@ const useStore = create<StoreState>((set, get) => ({
 
 const useStoreHelpers = () => {
   const helpers = useStore(
-    ({ setUser, setRoutes, getPreviousUrl, addUrlToHistory }) => ({
-      setUser,
+    ({ setAuth, setRoutes, getPreviousUrl, addUrlToHistory }) => ({
+      setAuth,
       getPreviousUrl,
       setRoutes,
       addUrlToHistory,

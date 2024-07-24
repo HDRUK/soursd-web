@@ -1,13 +1,13 @@
-import { User } from "@/services/auth/types";
+import { User } from "@/application/types";
 import { getAuthData } from "@/utils/auth";
 import { useEffect, useState } from "react";
 
 export default function useUser() {
-  const [user, setUser] = useState<User | undefined>();
+  const [user, setAuth] = useState<User | undefined>();
 
   useEffect(() => {
     getAuthData().then(auth => {
-      setUser(auth.user);
+      setAuth(auth.user);
     });
   }, []);
 

@@ -1,19 +1,16 @@
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
 import { locales } from "@/config";
+import { NotificationsProvider } from "@/context/Notifications";
+import ToastProvider from "@/context/ToastProvider";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
+import GlobalStyles from "@mui/material/GlobalStyles";
 import type { Metadata } from "next";
 import { NextIntlClientProvider, useMessages } from "next-intl";
 import { Inter } from "next/font/google";
 import { notFound } from "next/navigation";
-import { PropsWithChildren, useMemo } from "react";
-import GlobalStyles from "@mui/material/GlobalStyles";
-import { ROUTES } from "@/consts/router";
-import { ApplicationDataProvider } from "@/context/ApplicationData";
-import { NotificationsProvider } from "@/context/Notifications";
-import ToastProvider from "@/context/ToastProvider";
+import { PropsWithChildren } from "react";
 import "../global.css";
 import ReactQueryClientProvider from "./components/ReactQueryClientProvider";
-import { getRoutes } from "@/utils/router";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -34,8 +31,6 @@ export default function RootLayout({
 
   const messages = useMessages();
 
-  const routes = useMemo(() => getRoutes(ROUTES, locale), [locale]);
-
   return (
     <html lang={locale}>
       <body className={inter.className}>
@@ -52,13 +47,7 @@ export default function RootLayout({
                         },
                       }}
                     />
-                    <ApplicationDataProvider
-                      value={{
-                        routes,
-                        systemConfigData: {},
-                      }}>
-                      {children}
-                    </ApplicationDataProvider>
+                    {children}
                   </ToastProvider>
                 </ThemeRegistry>
               </ReactQueryClientProvider>

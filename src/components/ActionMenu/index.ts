@@ -1,3 +1,4 @@
 import ActionMenu from "./ActionMenu";
+import ActionMenuItem from "./ActionMenuItem";
 
-export default ActionMenu;
+export { ActionMenu, ActionMenuItem };

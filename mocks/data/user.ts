@@ -1,5 +1,5 @@
 import { UserGroup } from "@/consts/user";
-import { User } from "@/services/auth";
+import { User } from "@/types/application";
 import { faker } from "@faker-js/faker";
 import { mockedFile } from "./file";
 import { mockedPermission } from "./permission";

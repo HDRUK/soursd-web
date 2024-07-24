@@ -1,12 +1,19 @@
 import { ROUTES } from "@/consts/router";
+import { Routes } from "@/types/router";
+import { useLocale } from "next-intl";
 import { useMemo } from "react";
-import { getLocale } from "next-intl/server";
+
+export interface ConfigProps {
+  config: {
+    routes: Routes;
+  };
+}
 
 export default function withConfig<T>(
   WrappedComponent: React.ComponentType<T>
 ) {
   return (props: T) => {
-    const locale = getLocale();
+    const locale = useLocale();
 
     const routes = useMemo(() => {
       const clonedRoutes = JSON.parse(JSON.stringify(ROUTES));
