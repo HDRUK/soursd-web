@@ -64,7 +64,7 @@ export default function LoginFormModal() {
     routes.signup.path,
     routes.signupIssuer.path,
     routes.signupOrganistion.path,
-  ].find(url => url === previousUrl);
+  ].find(url => previousUrl?.includes(url || ""));
 
   return (
     <FormModal

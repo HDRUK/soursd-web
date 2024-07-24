@@ -15,6 +15,7 @@ interface RouteConfig {
 
 interface Routes {
   login: RouteConfig;
+  logout: RouteConfig;
   signup: RouteConfig;
   signupIssuer: RouteConfig;
   signupOrganistion: RouteConfig;

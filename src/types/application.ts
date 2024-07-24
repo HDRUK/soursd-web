@@ -65,6 +65,7 @@ interface Organisation {
   hr_email: string;
   id: number;
   permissions: Permission[];
+  approvals: Approval[];
   lead_applicant_organisation_email: string;
   registries: {
     user: User;

@@ -7,6 +7,10 @@ const ROUTES: Routes = {
     path: "/login",
     key: "Login",
   },
+  logout: {
+    path: "/logout",
+    key: "Logout",
+  },
   signup: {
     path: "/researcher/signup",
     key: "Signup",

@@ -21,6 +21,10 @@ const nextConfig = withNextIntl({
   async rewrites() {
     return [
       {
+        source: "/:locale/researcher/profile",
+        destination: `/:locale/researcher/profile/details`,
+      },
+      {
         source: "/:locale",
         destination: "/:locale/homepage",
       },
