@@ -27,15 +27,15 @@ import { Controller, FormProvider, useForm } from "react-hook-form";
 
 export interface SignupFormOtherDetailsValues {
   address_1: string;
-  address_2: string;
+  address_2?: string | undefined;
   town: string;
   county: string;
   country: string;
   postcode: string;
-  dsptk_ods_code: string;
-  iso_27001_certified: boolean;
-  ce_certified: boolean;
-  ce_certification_num: string;
+  dsptk_ods_code: string | null;
+  iso_27001_certified?: boolean | undefined;
+  ce_certified?: boolean | undefined;
+  ce_certification_num?: string | undefined;
 }
 
 export interface SignupFormOtherDetailsProps {

@@ -40,11 +40,11 @@ describe("<SignupFormDetails />", () => {
   it("does not submit when there are errors", async () => {
     renderSignupForm();
 
-    act(() => {
-      fireEvent.submit(screen.getByRole("button", { name: /Next/i }));
-    });
+    fireEvent.submit(screen.getByRole("button", { name: /Next/i }));
 
-    expect(mockOnSubmit).not.toHaveBeenCalled();
+    await waitFor(() => {
+      expect(mockOnSubmit).not.toHaveBeenCalled();
+    });
   });
 
   it("submits when values are defined", async () => {
@@ -81,49 +81,47 @@ describe("<SignupFormDetails />", () => {
       companies_house_no &&
       tscs
     ) {
-      act(() => {
-        fireEvent.change(organisation_name, {
-          target: {
-            value: organisation_nameValue,
-          },
-        });
-        fireEvent.change(lead_applicant_organisation_email, {
-          target: {
-            value: lead_applicant_organisation_emailValue,
-          },
-        });
-        fireEvent.change(first_name, {
-          target: {
-            value: first_nameValue,
-          },
-        });
-        fireEvent.change(last_name, {
-          target: {
-            value: last_nameValue,
-          },
-        });
-        fireEvent.change(password, {
-          target: {
-            value: passwordValue,
-          },
-        });
-        fireEvent.change(confirm_password, {
-          target: {
-            value: confirm_passwordValue,
-          },
-        });
-        fireEvent.change(companies_house_no, {
-          target: {
-            value: companies_house_noValue,
-          },
-        });
-        fireEvent.click(tscs);
-        fireEvent.click(recaptcha);
-
-        fireEvent.submit(screen.getByRole("button", { name: /Next/i }));
+      fireEvent.change(organisation_name, {
+        target: {
+          value: organisation_nameValue,
+        },
       });
+      fireEvent.change(lead_applicant_organisation_email, {
+        target: {
+          value: lead_applicant_organisation_emailValue,
+        },
+      });
+      fireEvent.change(first_name, {
+        target: {
+          value: first_nameValue,
+        },
+      });
+      fireEvent.change(last_name, {
+        target: {
+          value: last_nameValue,
+        },
+      });
+      fireEvent.change(password, {
+        target: {
+          value: passwordValue,
+        },
+      });
+      fireEvent.change(confirm_password, {
+        target: {
+          value: confirm_passwordValue,
+        },
+      });
+      fireEvent.change(companies_house_no, {
+        target: {
+          value: companies_house_noValue,
+        },
+      });
+      fireEvent.click(tscs);
+      fireEvent.click(recaptcha);
 
-      waitFor(() => {
+      fireEvent.submit(screen.getByRole("button", { name: /Next/i }));
+
+      await waitFor(() => {
         expect(mockOnSubmit).toHaveBeenCalled();
       });
     } else {

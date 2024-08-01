@@ -21,7 +21,7 @@ import {
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import * as yup from "yup";
+import yup from "@/config/yup";
 
 export interface LoginOTPFormValues {
   otp: string;

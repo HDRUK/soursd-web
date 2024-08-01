@@ -288,5 +288,8 @@
     "403Description": "We tried to query the selected resource but it is forbidden, please contact us via the form in the footer.",
     "500Heading": "Unexpected error",
     "500Description": "We tried to query the selected resource but there seems to be an issue on the server, please contact us via the form in the footer."
+  },
+  "Auth": {
+    "notAllowed": "You are not allowed to access thie page. If you think this is incorrect please contacts us at <contactLink></contactLink>"
   }
 }

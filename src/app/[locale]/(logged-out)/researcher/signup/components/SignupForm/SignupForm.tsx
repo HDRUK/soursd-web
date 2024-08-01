@@ -34,10 +34,10 @@ export interface SignupFormValues {
   firstName: string;
   lastName: string;
   organisation: string;
-  password: string;
+  password?: string | undefined;
   confirmPassword: string;
-  tscs: boolean;
-  consentScrape: boolean;
+  tscs: NonNullable<boolean | undefined>;
+  consentScrape?: boolean | undefined;
 }
 
 export interface SignupFormProps {
@@ -170,6 +170,7 @@ export default function SignupForm({
                   {tSignup("organisation")} *
                 </InputLabel>
                 <Select
+                  defaultValue=""
                   {...register("organisation")}
                   size="small"
                   inputProps={{

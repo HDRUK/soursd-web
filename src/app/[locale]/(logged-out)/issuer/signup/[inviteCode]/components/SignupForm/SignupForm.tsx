@@ -27,9 +27,9 @@ import ReCAPTCHA from "react-google-recaptcha";
 import { FormProvider, useForm } from "react-hook-form";
 
 export interface SignupFormValues {
-  password: string;
+  password?: string | undefined;
   confirmPassword: string;
-  tscs: boolean;
+  tscs: NonNullable<boolean | undefined>;
 }
 
 export type SignupFormProps = {

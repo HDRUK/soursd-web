@@ -1,7 +1,11 @@
-const mockedUserAuth = () => ({
+import { UserGroup } from "@/consts/user";
+import { Auth } from "@/types/application";
+import { mockedUser } from "./user";
+
+const mockedUserAuth = (auth?: Partial<Auth>) => ({
   access_token:
     "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJlc3RlVnhBcktnT3FUNldub05CUm9KZVNyN3FNN21qMVktTWh3R0dxYzU4In0.eyJleHAiOjE3MTc0MTE0MjgsImlhdCI6MTcxNzQxMTEyOCwianRpIjoiMzA2M2ViZjMtMWFkZC00MTYxLThhZGUtOTkzOTM2YWI1MmI1IiwiaXNzIjoiaHR0cHM6Ly9rZXljbG9hay5kZXYuaGRydWsuY2xvdWQvcmVhbG1zL1NQZWVESS1SZWdpc3RyeSIsImF1ZCI6ImFjY291bnQiLCJzdWIiOiJjZWZmYzMyMi05YzI5LTQyOTMtYWFkNi1hZmRiZjI4MmU2MmMiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJzcGVlZGktcmVnaXN0cnktYXBwIiwic2Vzc2lvbl9zdGF0ZSI6ImE2ZGQxYjBmLTg2MjAtNDVhZi05OWM1LWM1MjNlYzZiODVlNSIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiLyoiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIm9mZmxpbmVfYWNjZXNzIiwiZGVmYXVsdC1yb2xlcy1yZWdpc3RyeSIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJwcm9maWxlIGVtYWlsIiwic2lkIjoiYTZkZDFiMGYtODYyMC00NWFmLTk5YzUtYzUyM2VjNmI4NWU1IiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5hbWUiOiJQZXRlciBIYW1tYW5zIiwicHJlZmVycmVkX3VzZXJuYW1lIjoicGV0ZXIuaGFtbWFuc0BoZHJ1ay5hYy51ayIsImdpdmVuX25hbWUiOiJQZXRlciIsImZhbWlseV9uYW1lIjoiSGFtbWFucyIsImVtYWlsIjoicGV0ZXIuaGFtbWFuc0BoZHJ1ay5hYy51ayJ9.tV9DN59PEKNIf8WyCaqJ1B4Vq2bpMf-FB-1mTr9I6UKk5D1AVy-zr6P7qujQYV6kAayPbjEDKlx8HtXe0fAG1ZkGQh4eQck6Bkws-pP2S3brwQN_DUMnDN43mWA6DsAO0_PC3gMrHpPa-r8IVXu7dRIxpdMVlrU5EEs7q1o-VepLJrNUuHHlEmxXPlZKkj62P2q0qQxVmimFqE-A9X4JfRG_u8GNHLcdYdoRRhV_eng-zwphY16poH2AnGZFBNAxSkWdw4dzgw2PTrHG_sUpe2qOLBZmB2IIzFLVessr5-BkGuoz5EIcglG-BiNsZv7oDJfu8XArPdCjB_HAk9swUA",
-  expires_in: 300,
+  expires: 300,
   refresh_expires_in: 1800,
   refresh_token:
     "eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIzYjZkOTViZi1lODIzLTQ3YWUtOGI4NC01MWI1ZmU1MWViZTkifQ.eyJleHAiOjE3MTc0MTI5MjgsImlhdCI6MTcxNzQxMTEyOCwianRpIjoiYjBkMzVmYmEtNzk5NS00MzM0LWEyYmMtNWMyN2VlN2FiYmVkIiwiaXNzIjoiaHR0cHM6Ly9rZXljbG9hay5kZXYuaGRydWsuY2xvdWQvcmVhbG1zL1NQZWVESS1SZWdpc3RyeSIsImF1ZCI6Imh0dHBzOi8va2V5Y2xvYWsuZGV2LmhkcnVrLmNsb3VkL3JlYWxtcy9TUGVlREktUmVnaXN0cnkiLCJzdWIiOiJjZWZmYzMyMi05YzI5LTQyOTMtYWFkNi1hZmRiZjI4MmU2MmMiLCJ0eXAiOiJSZWZyZXNoIiwiYXpwIjoic3BlZWRpLXJlZ2lzdHJ5LWFwcCIsInNlc3Npb25fc3RhdGUiOiJhNmRkMWIwZi04NjIwLTQ1YWYtOTljNS1jNTIzZWM2Yjg1ZTUiLCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiJhNmRkMWIwZi04NjIwLTQ1YWYtOTljNS1jNTIzZWM2Yjg1ZTUifQ.ocZYxtfXlRuAhseyWoWbE6xZFOOYtFMaTF9BiwkvQgY",
@@ -9,18 +13,15 @@ const mockedUserAuth = () => ({
   "not-before-policy": 0,
   session_state: "a6dd1b0f-8620-45af-99c5-c523ec6b85e5",
   scope: "profile email",
-  user: {
+  user: mockedUser({
     id: 2,
-    name: "Peter Hammans",
+    first_name: "Peter",
+    last_name: "Hammans",
     email: "peter.hammans@hdruk.ac.uk",
-    password: null,
-    registry_id: null,
-    keycloak_id: "ceffc322-9c29-4293-aad6-afdbf282e62c",
-    created_at: "2024-06-03T10:38:00.000000Z",
-    updated_at: "2024-06-03T10:38:00.000000Z",
-    otp: null,
-    user_group: "RESEARCHERS",
-  },
+    user_group: UserGroup.RESEARCHERS,
+    ...auth?.user,
+  }),
+  ...auth,
 });
 
 export { mockedUserAuth };

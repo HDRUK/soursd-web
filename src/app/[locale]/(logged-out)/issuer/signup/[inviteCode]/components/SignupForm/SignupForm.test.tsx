@@ -1,4 +1,4 @@
-import { act, fireEvent, render, screen } from "@/utils/testUtils";
+import { act, fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 import { axe } from "jest-axe";
 import SignupForm, { SignupFormProps } from "./SignupForm";
 
@@ -33,7 +33,9 @@ describe("<SignupForm />", () => {
       fireEvent.submit(screen.getByRole("button", { name: /Sign Up/i }));
     });
 
-    expect(mockSubmit).not.toHaveBeenCalled();
+    await waitFor(() => {
+      expect(mockSubmit).not.toHaveBeenCalled();
+    });
   });
 
   it("shows an error", async () => {
@@ -45,15 +47,15 @@ describe("<SignupForm />", () => {
       },
     });
 
-    await act(() => {
-      fireEvent.submit(screen.getByRole("button", { name: /Sign Up/i }));
-    });
+    fireEvent.submit(screen.getByRole("button", { name: /Sign Up/i }));
 
-    expect(
-      screen.getByRole("alert").querySelector(".MuiAlert-message")?.innerHTML
-    ).toEqual(
-      'There was a problem signing up. Please try again or contact us at <a href="mailto:contact@speedi.com">contact@speedi.com</a>'
-    );
+    await waitFor(() => {
+      expect(
+        screen.getByRole("alert").querySelector(".MuiAlert-message")?.innerHTML
+      ).toEqual(
+        'There was a problem signing up. Please try again or contact us at <a href="mailto:contact@speedi.com">contact@speedi.com</a>'
+      );
+    });
   });
 
   it("submits when values are defined", async () => {
@@ -72,22 +74,22 @@ describe("<SignupForm />", () => {
     const confirmPasswordValue = passwordValue;
 
     if (password && confirmPassword && tscs) {
-      await act(() => {
-        fireEvent.change(password, {
-          target: {
-            value: passwordValue,
-          },
-        });
-        fireEvent.change(confirmPassword, {
-          target: { value: confirmPasswordValue },
-        });
-        fireEvent.click(tscs);
-        fireEvent.click(recaptcha);
-
-        fireEvent.submit(screen.getByRole("button", { name: /Sign Up/i }));
+      fireEvent.change(password, {
+        target: {
+          value: passwordValue,
+        },
       });
+      fireEvent.change(confirmPassword, {
+        target: { value: confirmPasswordValue },
+      });
+      fireEvent.click(tscs);
+      fireEvent.click(recaptcha);
 
-      expect(mockSubmit).toHaveBeenCalled();
+      fireEvent.submit(screen.getByRole("button", { name: /Sign Up/i }));
+
+      await waitFor(() => {
+        expect(mockSubmit).toHaveBeenCalled();
+      });
     } else {
       fail("Password, confirm password or tscs do not exist");
     }

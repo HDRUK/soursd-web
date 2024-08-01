@@ -31,11 +31,11 @@ describe("<LoginForm />", () => {
   it("does not submit when values are not defined", async () => {
     renderLoginForm();
 
-    act(() => {
-      fireEvent.submit(screen.getByRole("button", { name: /Login/i }));
-    });
+    fireEvent.submit(screen.getByRole("button", { name: /Login/i }));
 
-    expect(mockSubmit).not.toHaveBeenCalled();
+    await waitFor(() => {
+      expect(mockSubmit).not.toHaveBeenCalled();
+    });
   });
 
   it("shows an error", async () => {
@@ -47,15 +47,15 @@ describe("<LoginForm />", () => {
       },
     });
 
-    await act(() => {
-      fireEvent.submit(screen.getByRole("button", { name: /Login/i }));
-    });
+    fireEvent.submit(screen.getByRole("button", { name: /Login/i }));
 
-    expect(
-      screen.getByRole("alert").querySelector(".MuiAlert-message")?.innerHTML
-    ).toEqual(
-      'There was a problem validating your user. Please try again or contact us at <a href="mailto:contact@speedi.com">contact@speedi.com</a>'
-    );
+    await waitFor(() => {
+      expect(
+        screen.getByRole("alert").querySelector(".MuiAlert-message")?.innerHTML
+      ).toEqual(
+        'There was a problem validating your user. Please try again or contact us at <a href="mailto:contact@speedi.com">contact@speedi.com</a>'
+      );
+    });
   });
 
   it("submits when values are defined", async () => {
@@ -69,22 +69,20 @@ describe("<LoginForm />", () => {
     const passwordValue = faker.string.sample();
 
     if (email && password) {
-      act(() => {
-        fireEvent.change(email, {
-          target: {
-            value: emailValue,
-          },
-        });
-        fireEvent.change(password, {
-          target: { value: passwordValue },
-        });
-
-        fireEvent.click(recaptcha);
-
-        fireEvent.submit(screen.getByRole("button", { name: /Login/i }));
+      fireEvent.change(email, {
+        target: {
+          value: emailValue,
+        },
+      });
+      fireEvent.change(password, {
+        target: { value: passwordValue },
       });
 
-      waitFor(() => {
+      fireEvent.click(recaptcha);
+
+      fireEvent.submit(screen.getByRole("button", { name: /Login/i }));
+
+      await waitFor(() => {
         expect(mockSubmit).toHaveBeenCalled();
       });
     } else {

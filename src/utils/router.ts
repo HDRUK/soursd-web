@@ -1,7 +1,8 @@
 // Navigation at this point essentially unknown
 
-import { ROUTES } from "@/consts/router";
+import { Auth } from "@/types/application";
 import { RoleConfig } from "@/types/roles";
+import { RouteConfig, Routes } from "@/types/router";
 
 const getMainNavigationLinks = (
   locale: string
@@ -24,7 +25,7 @@ const getMainNavigationLinks = (
   },
 ];
 
-function getRoutes(routes: typeof ROUTES, locale: string) {
+function getRoutes(routes: Partial<Routes>, locale: string) {
   const clonedRoutes = JSON.parse(JSON.stringify(routes));
 
   (Object.keys(clonedRoutes) as Array<keyof typeof clonedRoutes>).forEach(
@@ -36,4 +37,14 @@ function getRoutes(routes: typeof ROUTES, locale: string) {
   return clonedRoutes;
 }
 
-export { getRoutes, getMainNavigationLinks };
+function isRouteAllowed(pathname: string | null, routes: Routes, auth: Auth) {
+  const currentRoute = Object.values(routes).find((route: RouteConfig) => {
+    return route.path === pathname;
+  });
+
+  return currentRoute?.permissions
+    ? currentRoute.permissions.includes(auth?.user?.user_group)
+    : true;
+}
+
+export { getMainNavigationLinks, getRoutes, isRouteAllowed };

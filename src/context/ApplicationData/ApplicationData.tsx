@@ -51,7 +51,7 @@ const ApplicationDataProvider = ({
 }: ApplicationDataProviderProps) => {
   const t = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
   const addUrlToHistory = useStore(store => store.addUrlToHistory);
-  const [auth, setAuth] = useStore(store => [store.config.auth, store.setAuth]);
+  const setAuth = useStore(store => store.setAuth);
   const [authFetched, setAuthFetched] = useState(!prefetchUser);
 
   const path = usePathname();
@@ -70,7 +70,6 @@ const ApplicationDataProvider = ({
   );
 
   const {
-    data: userData,
     mutateAsync: mutateUserAsync,
     isError: isUserError,
     isLoading: isUserLoading,
@@ -105,33 +104,27 @@ const ApplicationDataProvider = ({
     };
 
     initUserFetch();
-  }, [prefetchUser]);
-
-  useEffect(() => {
-    if (!prefetchUser) {
-      setAuthFetched(true);
-    }
-  }, [auth, prefetchUser, userData?.data]);
+  }, []);
 
   useEffect(() => {
     if (path) addUrlToHistory(path);
   }, [path]);
 
-  const systemConfig: Record<string, any> = useMemo(
-    () => parseSystemConfig(systemConfigData?.data),
-    [!!systemConfigData?.data]
-  );
+  const providerValue = useMemo(() => {
+    const systemConfig = parseSystemConfig(systemConfigData?.data);
+
+    return {
+      ...value,
+      systemConfig,
+      validationSchema: systemConfig[VALIDATION_SCHEMA_KEY]?.value,
+    };
+  }, [!!systemConfigData?.data, value]);
 
   const isFinishedLoading =
     !isLoading && !isError && systemConfigData?.data && authFetched;
 
   return (
-    <ApplicationDataContext.Provider
-      value={{
-        ...value,
-        systemConfig,
-        validationSchema: systemConfig[VALIDATION_SCHEMA_KEY]?.value,
-      }}>
+    <ApplicationDataContext.Provider value={providerValue}>
       {(isUserLoading || isLoading || isError || isUserError) && (
         <DecoratorPanel>
           {(isUserLoading || isLoading) && (
