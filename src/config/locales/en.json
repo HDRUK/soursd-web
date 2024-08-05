@@ -1,7 +1,10 @@
 {
   "Application": {
     "getSystemConfigError": "There was a problem loading the application. Please try again or contact us at <contactLink></contactLink>",
-    "submitError": "Unable to load some of the application. Please try again or contact us at <contactLink></contactLink>"
+    "getUserError": "Unable to load your user details. Please try again or contact us at <contactLink></contactLink>",
+    "researcher": "Researcher",
+    "organisation": "Organisation",
+    "issuer": "Issuer"
   },
   "IssuerProfile": {
     "title": "Profile"
@@ -48,7 +51,8 @@
   "Buttons": {
     "register": "Register",
     "login": "Login",
-    "contactUs": "Get in touch"
+    "contactUs": "Get in touch",
+    "logout": "Logout"
   },
   "Carousel": {
     "next": "next slide",
@@ -125,7 +129,17 @@
     "fileNamePlaceholder": "No CV uploaded"
   },
   "Profile": {
-    "title": "Profile"
+    "title": "Profile",
+    "profileComplete": "Profile complete",
+    "uniqueIdPopup": "Your unique id is used by issuers to identify who you are.",
+    "profileNotComplete": "Profile not complete",
+    "profileNotCompletePopup": "Your user profile is not \"complete\". This will be visible to issuers and your organisation. Depending on their policies it may prevent you from accessing available research data.",
+    "details": "Details",
+    "identity": "Identity",
+    "affiliations": "Affiliations",
+    "experience": "Experience",
+    "training": "Training",
+    "navigationAriaLabel": "Profile sections"
   },
   "Permissions": {
     "title": "Permissions",
@@ -274,5 +288,8 @@
     "403Description": "We tried to query the selected resource but it is forbidden, please contact us via the form in the footer.",
     "500Heading": "Unexpected error",
     "500Description": "We tried to query the selected resource but there seems to be an issue on the server, please contact us via the form in the footer."
+  },
+  "Auth": {
+    "notAllowed": "You are not allowed to access thie page. If you think this is incorrect please contacts us at <contactLink></contactLink>"
   }
 }

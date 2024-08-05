@@ -22,10 +22,10 @@ import { useCallback, useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 export interface SignupFormContactsValues {
-  dpo_name: string;
-  dpo_email: string;
-  hr_name: string;
-  hr_email: string;
+  dpo_name?: string;
+  dpo_email?: string;
+  hr_name?: string;
+  hr_email?: string;
 }
 
 export interface SignupFormContactsProps {

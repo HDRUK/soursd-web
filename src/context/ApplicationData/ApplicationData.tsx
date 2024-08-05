@@ -14,7 +14,7 @@ import {
   ApplicationSystemConfig,
 } from "@/types/application";
 import { parseSystemConfig } from "@/utils/application";
-import { getAuthData, updateAuthUser } from "@/utils/auth";
+import { getAuthData } from "@/utils/auth";
 import { CircularProgress } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
@@ -24,6 +24,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useState,
 } from "react";
 import { useMutation, useQuery } from "react-query";
 
@@ -38,17 +39,21 @@ const useApplicationData = () => useContext(ApplicationDataContext);
 interface ApplicationDataProviderProps {
   children: ReactNode;
   value: ApplicationDataState;
+  prefetchUser?: boolean;
 }
 
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
 
 const ApplicationDataProvider = ({
+  prefetchUser,
   children,
   value,
 }: ApplicationDataProviderProps) => {
   const t = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
   const addUrlToHistory = useStore(store => store.addUrlToHistory);
   const setAuth = useStore(store => store.setAuth);
+  const [authFetched, setAuthFetched] = useState(!prefetchUser);
+
   const path = usePathname();
 
   const {
@@ -65,7 +70,6 @@ const ApplicationDataProvider = ({
   );
 
   const {
-    data: userData,
     mutateAsync: mutateUserAsync,
     isError: isUserError,
     isLoading: isUserLoading,
@@ -73,20 +77,16 @@ const ApplicationDataProvider = ({
   } = useMutation(["getUser"], async (id: number) =>
     getUser(id, {
       error: {
-        message: "submitError",
+        message: "getUserError",
       },
     })
   );
 
-  const isLoggedOutPage =
-    path?.includes(ROUTES.login.path) ||
-    path?.includes(ROUTES.signup.path) ||
-    path?.includes(ROUTES.signupOrganistion.path) ||
-    path?.includes(ROUTES.signupIssuer.path);
-
   useEffect(() => {
     const initUserFetch = async () => {
       const authDetails = await getAuthData();
+
+      setAuth(authDetails);
 
       if (authDetails?.user?.id) {
         const user = await mutateUserAsync(authDetails.user.id);
@@ -99,30 +99,35 @@ const ApplicationDataProvider = ({
           },
         });
       }
+
+      setAuthFetched(true);
     };
 
-    if (!isLoggedOutPage) initUserFetch();
-  }, [isLoggedOutPage]);
+    initUserFetch();
+  }, []);
 
   useEffect(() => {
     if (path) addUrlToHistory(path);
   }, [path]);
 
-  const systemConfig: Record<string, any> = useMemo(
-    () => parseSystemConfig(systemConfigData?.data),
-    [!!systemConfigData?.data]
-  );
+  const providerValue = useMemo(() => {
+    const systemConfig = parseSystemConfig(systemConfigData?.data);
+
+    return {
+      ...value,
+      systemConfig,
+      validationSchema: systemConfig[VALIDATION_SCHEMA_KEY]?.value,
+    };
+  }, [!!systemConfigData?.data, value]);
+
+  const isFinishedLoading =
+    !isLoading && !isError && systemConfigData?.data && authFetched;
 
   return (
-    <ApplicationDataContext.Provider
-      value={{
-        ...value,
-        systemConfig,
-        validationSchema: systemConfig[VALIDATION_SCHEMA_KEY]?.value,
-      }}>
-      {(isError || isLoading) && (
+    <ApplicationDataContext.Provider value={providerValue}>
+      {(isUserLoading || isLoading || isError || isUserError) && (
         <DecoratorPanel>
-          {(isLoading || isUserLoading) && (
+          {(isUserLoading || isLoading) && (
             <OverlayCenter>
               <CircularProgress sx={{ color: "#fff" }} />
             </OverlayCenter>
@@ -137,10 +142,7 @@ const ApplicationDataProvider = ({
         </DecoratorPanel>
       )}
 
-      {!isLoading &&
-        systemConfigData?.data &&
-        (isLoggedOutPage || userData?.data) &&
-        children}
+      {isFinishedLoading && children}
     </ApplicationDataContext.Provider>
   );
 };

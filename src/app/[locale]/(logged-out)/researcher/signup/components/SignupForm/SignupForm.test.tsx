@@ -1,8 +1,8 @@
-import { act, fireEvent, render, screen } from "@/utils/testUtils";
+import { mockedOrganisation } from "@/mocks/data/organisation";
+import { act, fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 import { faker } from "@faker-js/faker";
 import { axe } from "jest-axe";
 import SignupForm, { SignupFormProps } from "./SignupForm";
-import { mockedOrganisation } from "@/mocks/data/organisation";
 
 const mockSubmit = jest.fn();
 
@@ -40,11 +40,11 @@ describe("<SignupForm />", () => {
   it("does not submit when there are errors", async () => {
     renderSignupForm();
 
-    await act(() => {
+    act(() => {
       fireEvent.submit(screen.getByRole("button", { name: /Sign Up/i }));
     });
 
-    expect(mockSubmit).not.toHaveBeenCalled();
+    await waitFor(() => expect(mockSubmit).not.toHaveBeenCalled());
   });
 
   it("shows an error", async () => {
@@ -60,11 +60,13 @@ describe("<SignupForm />", () => {
       fireEvent.submit(screen.getByRole("button", { name: /Sign Up/i }));
     });
 
-    expect(
-      screen.getByRole("alert").querySelector(".MuiAlert-message")?.innerHTML
-    ).toEqual(
-      'There was a problem signing up. Please try again or contact us at <a href="mailto:contact@speedi.com">contact@speedi.com</a>'
-    );
+    await waitFor(() => {
+      expect(
+        screen.getByRole("alert").querySelector(".MuiAlert-message")?.innerHTML
+      ).toEqual(
+        'There was a problem signing up. Please try again or contact us at <a href="mailto:contact@speedi.com">contact@speedi.com</a>'
+      );
+    });
   });
 
   it("submits when values are defined", async () => {
@@ -96,7 +98,7 @@ describe("<SignupForm />", () => {
       tscs &&
       consentScrape
     ) {
-      await act(async () => {
+      act(() => {
         fireEvent.change(email, {
           target: {
             value: emailValue,
@@ -127,15 +129,17 @@ describe("<SignupForm />", () => {
         fireEvent.submit(screen.getByRole("button", { name: /Sign Up/i }));
       });
 
-      expect(mockSubmit).toHaveBeenCalledWith({
-        confirmPassword: confirmPasswordValue,
-        consentScrape: true,
-        email: emailValue,
-        firstName: firstNameValue,
-        lastName: lastNameValue,
-        organisation: `${defaultOrganisation.id}`,
-        password: passwordValue,
-        tscs: true,
+      await waitFor(() => {
+        expect(mockSubmit).toHaveBeenCalledWith({
+          confirmPassword: confirmPasswordValue,
+          consentScrape: true,
+          email: emailValue,
+          firstName: firstNameValue,
+          lastName: lastNameValue,
+          organisation: `${defaultOrganisation.id}`,
+          password: passwordValue,
+          tscs: true,
+        });
       });
     } else {
       fail(

@@ -13,7 +13,7 @@ async function setAuthData(authData: Auth) {
 async function getAuthData(): Promise<Auth> {
   const authCookie = cookies().get("auth")?.value;
 
-  return !!authCookie ? JSON.parse(decodeURI(authCookie)) : {};
+  return authCookie ? JSON.parse(decodeURI(authCookie)) : {};
 }
 
 async function updateAuthUser(userData: User) {

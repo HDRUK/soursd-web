@@ -29,9 +29,9 @@ export interface SignupFormDetailsValues {
   lead_applicant_organisation_email: string;
   first_name: string;
   last_name: string;
-  password: string;
+  password?: string | undefined;
   confirm_password: string;
-  tscs: boolean;
+  tscs: NonNullable<boolean | undefined>;
   companies_house_no: string;
 }
 

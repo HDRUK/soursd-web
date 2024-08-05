@@ -12,7 +12,7 @@ export default function Layout({ children, params: { locale } }: LayoutProps) {
 
   return (
     <ApplicationDataProvider
-      loggedIn
+      prefetchUser
       value={{
         routes,
         systemConfigData: {},

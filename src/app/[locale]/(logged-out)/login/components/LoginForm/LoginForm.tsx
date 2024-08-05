@@ -22,7 +22,7 @@ import { useTranslations } from "next-intl";
 import { useMemo, useRef, useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { FormProvider, useForm } from "react-hook-form";
-import * as yup from "yup";
+import yup from "@/config/yup";
 
 export interface LoginFormValues {
   email: string;

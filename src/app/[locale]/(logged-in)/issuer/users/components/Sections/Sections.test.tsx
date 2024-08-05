@@ -1,9 +1,9 @@
 import { ROUTES } from "@/consts/router";
+import { PostApprovalPayloadWithEntity } from "@/services/approvals";
+import { EntityType } from "@/types/api";
 import { act, fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 import { axe } from "jest-axe";
 import Sections from ".";
-import { EntityType } from "@/types/api";
-import { PostApprovalPayloadWithEntity } from "@/services/approvals";
 
 const mockMutate = jest.fn();
 
@@ -28,7 +28,7 @@ const setupActionMenuTest = async (label: string, menuItem: string) => {
 
   fireEvent.click(menuTrigger);
 
-  return screen.getByText(menuItem);
+  return screen.findByText(menuItem);
 };
 
 describe("<Sections />", () => {
@@ -39,7 +39,12 @@ describe("<Sections />", () => {
   it("has no accessibility violations", async () => {
     const { container } = renderSections();
 
-    const results = await axe(container);
+    let results;
+
+    await act(async () => {
+      results = await axe(container);
+    });
+
     expect(results).toHaveNoViolations();
   });
 
@@ -99,9 +104,7 @@ describe("<Sections />", () => {
       "Approve"
     );
 
-    act(() => {
-      fireEvent.click(approval);
-    });
+    fireEvent.click(approval);
 
     await waitFor(() => {
       expect(mockMutate).toHaveBeenCalledWith({
@@ -118,9 +121,7 @@ describe("<Sections />", () => {
       "Approve"
     );
 
-    act(() => {
-      fireEvent.click(approval);
-    });
+    fireEvent.click(approval);
 
     await waitFor(() => {
       expect(mockMutate).toHaveBeenCalledWith({

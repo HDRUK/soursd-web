@@ -2,13 +2,8 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import BusinessIcon from "@mui/icons-material/Business";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Link,
-} from "@mui/material";
-import ActionMenu from "../ActionMenu";
+import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
+import { ActionMenu, ActionMenuItem } from "../ActionMenu";
 import AccordionTitle, { AccordionTitleProps } from "./AccordionTitle";
 
 const meta = {
@@ -34,7 +29,11 @@ export const Basic: Story = {
   args: {
     icon: [<BusinessIcon />],
     children: "Orgnisation 1",
-    actions: <ActionMenu items={[<Link>Permissions</Link>]} />,
+    actions: (
+      <ActionMenu>
+        <ActionMenuItem>Permissions</ActionMenuItem>
+      </ActionMenu>
+    ),
   },
   render: props => <BasicStoryComponent {...props} />,
 };

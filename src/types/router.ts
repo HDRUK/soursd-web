@@ -1,3 +1,4 @@
+import { UserGroup } from "@/consts/user";
 import { RoleConfig } from "./roles";
 
 interface RouteParams<T> {
@@ -11,10 +12,12 @@ interface RoutePermissions extends RoleConfig {
 interface RouteConfig {
   path: string;
   key: string;
+  permissions?: UserGroup[];
 }
 
 interface Routes {
   login: RouteConfig;
+  logout: RouteConfig;
   signup: RouteConfig;
   signupIssuer: RouteConfig;
   signupOrganistion: RouteConfig;

@@ -1,9 +1,13 @@
 import { fireEvent, render, screen } from "@/utils/testUtils";
 import { axe } from "jest-axe";
-import ActionMenu from ".";
+import { ActionMenu, ActionMenuItem } from ".";
 
 const renderSections = () =>
-  render(<ActionMenu aria-label="Actions menu" items={["Permissions"]} />);
+  render(
+    <ActionMenu aria-label="Actions menu">
+      <ActionMenuItem>Permissions</ActionMenuItem>
+    </ActionMenu>
+  );
 
 describe("<ActionMenu />", () => {
   it("has no accessibility violations", async () => {

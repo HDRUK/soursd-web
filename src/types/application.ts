@@ -35,12 +35,27 @@ interface Issuer {
   permissions: Permission[];
 }
 
+type Approval = {
+  id: number;
+  created_at: string;
+  updated_at: string;
+  name: string;
+  contact_email: string;
+  enabled: boolean;
+  invite_accepted_at: string | null;
+  invite_sent_at: string | null;
+  pivot: {
+    organisation_id: number;
+    issuer_id: number;
+  };
+};
+
 interface User {
   id: number;
   first_name: string;
   last_name: string;
   email: string;
-  user_group: keyof typeof UserGroup;
+  user_group: UserGroup;
   permissions: Permission[];
   profile_completed_at: string | null;
   profile_steps_completed: string | null;
@@ -65,6 +80,7 @@ interface Organisation {
   hr_email: string;
   id: number;
   permissions: Permission[];
+  approvals: Approval[];
   lead_applicant_organisation_email: string;
   registries: {
     user: User;
@@ -92,27 +108,12 @@ interface ApplicationDataState {
 
 type ApplicationSystemConfig = Record<string, any>;
 
-type Approval = {
-  id: number;
-  created_at: string;
-  updated_at: string;
-  name: string;
-  contact_email: string;
-  enabled: boolean;
-  invite_accepted_at: string | null;
-  invite_sent_at: string | null;
-  pivot: {
-    organisation_id: number;
-    issuer_id: number;
-  };
-};
-
 export type {
   ApplicationDataState,
-  Approval,
   ApplicationSystemConfig,
+  Approval,
+  Auth,
   Issuer,
   Organisation,
   User,
-  Auth,
 };

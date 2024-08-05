@@ -48,31 +48,29 @@ describe("<SignupFormOtherDetails />", () => {
   it("does not submit when there are errors", async () => {
     renderSignupForm();
 
-    act(() => {
-      fireEvent.submit(screen.getByRole("button", { name: /Next/i }));
-    });
+    fireEvent.submit(screen.getByRole("button", { name: /Next/i }));
 
-    expect(mockOnSubmit).not.toHaveBeenCalled();
+    await waitFor(() => {
+      expect(mockOnSubmit).not.toHaveBeenCalled();
+    });
   });
 
   it("shows an error", async () => {
     renderSignupForm();
 
-    act(() => {
-      fireEvent.submit(screen.getByRole("button", { name: /Next/i }));
-    });
+    fireEvent.submit(screen.getByRole("button", { name: /Next/i }));
 
-    expect(mockOnSubmit).not.toHaveBeenCalled();
+    await waitFor(() => {
+      expect(mockOnSubmit).not.toHaveBeenCalled();
+    });
   });
 
   it("goes to previous panel", async () => {
     renderSignupForm();
 
-    act(() => {
-      fireEvent.submit(screen.getByRole("button", { name: /Previous/i }));
-    });
+    fireEvent.click(screen.getByRole("button", { name: /Previous/i }));
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(mockOnPrevious).toHaveBeenCalledWith(DEFAULT_OTHER_DETAILS_VALUES);
     });
   });
@@ -88,35 +86,33 @@ describe("<SignupFormOtherDetails />", () => {
     const address_1Value = faker.string.sample();
     const townValue = faker.string.sample();
     const countyValue = faker.string.sample();
-    const postcodeValue = "wc2h 9he";
+    const postcodeValue = "NR10 0PL";
 
     if (address_1 && town && county && postcode) {
-      act(() => {
-        fireEvent.change(address_1, {
-          target: {
-            value: address_1Value,
-          },
-        });
-        fireEvent.change(town, {
-          target: {
-            value: townValue,
-          },
-        });
-        fireEvent.change(county, {
-          target: {
-            value: countyValue,
-          },
-        });
-        fireEvent.change(postcode, {
-          target: {
-            value: postcodeValue,
-          },
-        });
-
-        fireEvent.submit(screen.getByRole("button", { name: /Next/i }));
+      fireEvent.change(address_1, {
+        target: {
+          value: address_1Value,
+        },
+      });
+      fireEvent.change(town, {
+        target: {
+          value: townValue,
+        },
+      });
+      fireEvent.change(county, {
+        target: {
+          value: countyValue,
+        },
+      });
+      fireEvent.change(postcode, {
+        target: {
+          value: postcodeValue,
+        },
       });
 
-      waitFor(() => {
+      fireEvent.submit(screen.getByRole("button", { name: /Next/i }));
+
+      await waitFor(() => {
         expect(mockOnSubmit).toHaveBeenCalled();
       });
     } else {

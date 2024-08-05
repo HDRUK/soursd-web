@@ -1,6 +1,7 @@
 "use client";
 
 import ContactLink from "@/components/ContactLink";
+import yup from "@/config/yup";
 import { MAX_UPLOAD_SIZE_BYTES } from "@/consts/files";
 import { useStore } from "@/data/store";
 import useFileScanned from "@/hooks/useFileScanned/useFileScanned";
@@ -28,7 +29,6 @@ import { useTranslations } from "next-intl";
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useMutation } from "react-query";
-import * as yup from "yup";
 import DetailsCV from "../DetailsCV";
 
 export interface DetailsFormValues {

@@ -47,11 +47,9 @@ describe("<SignupFormContacts />", () => {
   it("does not submit when there are errors", async () => {
     renderSignupForm();
 
-    act(() => {
-      fireEvent.submit(screen.getByRole("button", { name: /Sign up/i }));
-    });
+    fireEvent.submit(screen.getByRole("button", { name: /Sign up/i }));
 
-    expect(mockOnSubmit).not.toHaveBeenCalled();
+    await waitFor(() => expect(mockOnSubmit).not.toHaveBeenCalled());
   });
 
   it("submits when values are defined", async () => {
@@ -68,34 +66,30 @@ describe("<SignupFormContacts />", () => {
     const dpo_emailValue = faker.internet.email();
 
     if (hr_nameValue && hr_emailValue && dpo_nameValue && dpo_emailValue) {
-      act(() => {
-        fireEvent.change(hr_name, {
-          target: {
-            value: hr_nameValue,
-          },
-        });
-        fireEvent.change(hr_email, {
-          target: {
-            value: hr_emailValue,
-          },
-        });
-        fireEvent.change(dpo_name, {
-          target: {
-            value: dpo_nameValue,
-          },
-        });
-        fireEvent.change(dpo_email, {
-          target: {
-            value: dpo_emailValue,
-          },
-        });
-
-        fireEvent.submit(screen.getByRole("button", { name: /Sign up/i }));
+      fireEvent.change(hr_name, {
+        target: {
+          value: hr_nameValue,
+        },
+      });
+      fireEvent.change(hr_email, {
+        target: {
+          value: hr_emailValue,
+        },
+      });
+      fireEvent.change(dpo_name, {
+        target: {
+          value: dpo_nameValue,
+        },
+      });
+      fireEvent.change(dpo_email, {
+        target: {
+          value: dpo_emailValue,
+        },
       });
 
-      waitFor(() => {
-        expect(mockOnSubmit).toHaveBeenCalled();
-      });
+      fireEvent.submit(screen.getByRole("button", { name: /Sign up/i }));
+
+      await waitFor(() => expect(mockOnSubmit).toHaveBeenCalled());
     } else {
       fail(
         "Orgnisation name, Applicant email, Applicant name, company no, password, confirmPassword or tscs do not exist"
