@@ -52,6 +52,8 @@ export default function LoginFormModal() {
       router.push(routes.profileResearcherDetails.path);
     } else if (userGroup === UserGroup.ORGANISATIONS) {
       router.push(routes.profileOrganisation.path);
+    } else if (userGroup === UserGroup.ADMINS) {
+      router.push(routes.admin.path);
     } else {
       router.push(routes.profileIssuer.path);
     }

@@ -32,6 +32,7 @@ interface Routes {
   profileResearcherIdentity: RouteConfig;
   profileResearcherAffiliations: RouteConfig;
   profileOrganisation: RouteConfig;
+  admin: RouteConfig;
 }
 
 export type { RoutePermissions, RouteConfig, Routes, RouteParams };

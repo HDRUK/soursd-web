@@ -291,5 +291,15 @@
   },
   "Auth": {
     "notAllowed": "You are not allowed to access thie page. If you think this is incorrect please contacts us at <contactLink></contactLink>"
+  },
+  "Administration": {
+    "title": "Administration",
+    "IssuerInviteTitle": "Issuer Invitation",
+    "IssuerInviteBody": "Invite Issuers to use the SPeeDI-AS System",
+    "IssuerInviteSubtitle": "Issuers are typically Data Custodian's, such as Trusted Research Environment (TRE) and Secure Data Environments (SDEs)",
+    "SystemConfigTitle": "System Configuration",
+    "IssuerInviteButton": "Send Invite",
+    "SystemConfigBody": "Update or add new System Configuration Parameters",
+    "SystemConfigSubtitle": "Parameters are in the form of NameValue pairs"
   }
 }

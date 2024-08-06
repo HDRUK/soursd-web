@@ -8,6 +8,24 @@ interface GetIssuerInviteResponse {
   enabled: number;
 }
 
-type GetIssuerResponse = Issuer;
+interface SendIssuerInvitePayload {
+  to: number,
+  type: string,
+  identifier: string,
+}
 
-export type { GetIssuerInviteResponse, GetIssuerResponse };
+interface SendIssuerInviteResponse {
+  message: string,
+  data: object,
+}
+
+type GetIssuerResponse = Issuer;
+type GetIssuersResponse = Issuer[];
+
+export type { 
+  GetIssuerInviteResponse,
+  GetIssuerResponse,
+  GetIssuersResponse,
+  SendIssuerInvitePayload,
+  SendIssuerInviteResponse,
+};
