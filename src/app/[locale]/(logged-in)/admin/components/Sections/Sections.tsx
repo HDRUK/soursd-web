@@ -1,7 +1,7 @@
 "use client";
 
 // import * as yup from "yup";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import sendInvite from "@/services/issuers/sendInvite";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -15,18 +15,29 @@ import {
     Typography,
     Box,
     Select,
-    Button
+    Button,
+    CircularProgress
 } from "@mui/material";
 import { Issuer } from "@/types/application";
 import { SendIssuerInvitePayload } from "@/services/issuers/types";
 import { FormProvider, useForm } from "react-hook-form";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { useTranslations } from "next-intl";
+import { EmailTypes } from "../../consts/emailTypes";
+import { EmailTemplates } from "../../consts/emailTemplates";
+import yup from "@/config/yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import getIssuers from "@/services/issuers/getIssuers";
+import OverlayCenterAlert from "@/components/OverlayCenterAlert";
+import ContactLink from "@/components/ContactLink";
+import OverlayCenter from "@/components/OverlayCenter";
 
+const NAMESPACE_TRANSLATION_VALIDATION = "Form";
 const NAMESPACE_TRANSLATIONS_ADMINISTRATION = "Administration";
 
 export default function Sections () {
     const t = useTranslations(NAMESPACE_TRANSLATIONS_ADMINISTRATION);
+    const tValidation = useTranslations(NAMESPACE_TRANSLATION_VALIDATION);
     const [ data, setData ] = useState<Issuer[]>([]);
     const [ isLoading, setIsLoading ] = useState(false);
 
@@ -37,41 +48,77 @@ export default function Sections () {
         error: inviteError,
     } = useMutation(
         ["sendInvite"],
-        async ( payload: SendIssuerInvitePayload ) => {
+        async ( payload: any ) => {
             return sendInvite(payload, {
                     error: { message: "sendInviteError" },
             });
         }
-    )
+    );
+
+    const schema = useMemo(
+        () => 
+            yup.object().shape({
+                to: yup
+                    .number().positive()
+                    .required(tValidation("issuerRequiredInvalid"))
+                    .min(1),
+            }),
+        []
+    );
 
     const methods = useForm<SendIssuerInvitePayload>({
+        resolver: yupResolver(schema),
         defaultValues: {
             to: 0,
-            type: 'issuer',
-            identifier: 'issuer_invite',
         },
     });
 
     const handleSendInvite = useCallback(
         async (payload: SendIssuerInvitePayload) => {
-            mutateInviteAsync(payload);
+            mutateInviteAsync({
+                to: payload.to,
+                type: EmailTypes.ISSUER,
+                identifier: EmailTemplates.ISSUER_INVITE
+            });
         },
     []);
 
-    useEffect(() => {
-        fetch(`${process.env.NEXT_PUBLIC_API_V1_URL}/issuers`)
-            .then((res) => res.json())
-            .then((data) => {
-                setData(data.data.data);
-                setIsLoading(false);
-            });
-    }, []);
+    const {
+        isError: isGetIssuersError,
+        isLoading: isGetIssuersLoading,
+        data: issuersData,
+        error: issuersError,
+    } = useQuery(
+        ["getIssuers"],
+        async () => 
+            getIssuers({
+                error: { message: "noDataIssuers" },
+            }),
+    );
 
     const {
         formState: { errors },
         register,
         handleSubmit,
     } = methods;
+
+    if (isGetIssuersLoading) {
+        return (
+            <OverlayCenter sx={{ color: "#fff" }}>
+                <CircularProgress color="inherit" />
+            </OverlayCenter>
+        );
+    }
+
+    if (isGetIssuersError) {
+        return (
+            <OverlayCenterAlert>
+                {t.rich("noDataIssuers", {
+                    contactLink: ContactLink,
+                })}
+            </OverlayCenterAlert>
+        )
+    }
 
     return (
         <>
@@ -81,11 +128,11 @@ export default function Sections () {
                     aria-controls="issuer-invite-content"
                     expandIcon={<ArrowDropDownIcon />}
                 >
-                    <Typography>{t("IssuerInviteTitle")}</Typography>
+                    <Typography>{t("issuerInviteTitle")}</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                    <Typography>{t("IssuerInviteBody")}</Typography>
-                    <Typography variant="subtitle2">{t("IssuerInviteSubtitle")}</Typography>
+                    <Typography>{t("issuerInviteBody")}</Typography>
+                    <Typography variant="subtitle2">{t("issuerInviteSubtitle")}</Typography>
                     <FormProvider {...methods}>
                         <form onSubmit={handleSubmit(handleSendInvite)}>
                             <Box display="flex" alignItems="center" gap={2}>
@@ -98,8 +145,8 @@ export default function Sections () {
                                         inputProps={{
                                             "aria-label": "issuers",
                                         }}
-                                        label="Issuers">
-                                        {data?.map(({id, name }) => (
+                                        label="Select Issuer...">
+                                        {issuersData?.data.data.map(({id, name }) => (
                                             <MenuItem value={id} key={id}>
                                                 {name}
                                             </MenuItem>
@@ -111,7 +158,7 @@ export default function Sections () {
                                         type="submit"
                                         color="secondary"
                                         variant="contained">
-                                        {t("IssuerInviteButton")}
+                                        {t("issuerInviteButton")}
                                     </Button>
                                 </FormControl>
                             </Box>
@@ -126,11 +173,11 @@ export default function Sections () {
                     aria-controls="system-config-content"
                     expandIcon={<ArrowDropDownIcon />}
                 >
-                    <Typography>{t("SystemConfigTitle")}</Typography>
+                    <Typography>{t("systemConfigTitle")}</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                    <Typography>{t("SystemConfigBody")}</Typography>
-                    <Typography variant="subtitle2">{t("SystemConfigSubtitle")}</Typography>
+                    <Typography>{t("systemConfigBody")}</Typography>
+                    <Typography variant="subtitle2">{t("systemConfigSubtitle")}</Typography>
                 </AccordionDetails>
             </Accordion>
         </>

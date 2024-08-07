@@ -10,8 +10,6 @@ interface GetIssuerInviteResponse {
 
 interface SendIssuerInvitePayload {
   to: number,
-  type: string,
-  identifier: string,
 }
 
 interface SendIssuerInviteResponse {
@@ -20,7 +18,9 @@ interface SendIssuerInviteResponse {
 }
 
 type GetIssuerResponse = Issuer;
-type GetIssuersResponse = Issuer[];
+type GetIssuersResponse {
+  data: Issuer[];
+}
 
 export type { 
   GetIssuerInviteResponse,

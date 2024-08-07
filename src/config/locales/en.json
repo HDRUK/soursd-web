@@ -46,7 +46,8 @@
     "digitalToolkitCodeFormatInvalid": "Code is invalid",
     "ceCertificationNumberRequiredInvalid": "Certification number is invalid",
     "countyRequiredInvalid": "County is required",
-    "countryRequiredInvalid": "Country is required"
+    "countryRequiredInvalid": "Country is required",
+    "issuerRequiredInvalid": "Issuer is required"
   },
   "Buttons": {
     "register": "Register",
@@ -294,12 +295,13 @@
   },
   "Administration": {
     "title": "Administration",
-    "IssuerInviteTitle": "Issuer Invitation",
-    "IssuerInviteBody": "Invite Issuers to use the SPeeDI-AS System",
-    "IssuerInviteSubtitle": "Issuers are typically Data Custodian's, such as Trusted Research Environment (TRE) and Secure Data Environments (SDEs)",
-    "SystemConfigTitle": "System Configuration",
-    "IssuerInviteButton": "Send Invite",
-    "SystemConfigBody": "Update or add new System Configuration Parameters",
-    "SystemConfigSubtitle": "Parameters are in the form of NameValue pairs"
+    "issuerInviteTitle": "Issuer Invitation",
+    "issuerInviteBody": "Invite Issuers to use the SPeeDI-AS System",
+    "issuerInviteSubtitle": "Issuers are typically Data Custodian's, such as Trusted Research Environment (TRE) and Secure Data Environments (SDEs)",
+    "systemConfigTitle": "System Configuration",
+    "issuerInviteButton": "Send Invite",
+    "systemConfigBody": "Update or add new System Configuration Parameters",
+    "systemConfigSubtitle": "Parameters are in the form of NameValue pairs",
+    "noDataIssuers": "Unable to retrieve known Issuers. Please contact us at <contactLink></contactLink>"
   }
 }
