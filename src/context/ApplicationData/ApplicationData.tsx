@@ -5,7 +5,9 @@ import OverlayCenter from "@/components/OverlayCenter";
 import OverlayCenterAlert from "@/components/OverlayCenterAlert";
 import { VALIDATION_SCHEMA_KEY } from "@/consts/application";
 import { ROUTES } from "@/consts/router";
+import { UserGroup } from "@/consts/user";
 import { useStore } from "@/data/store";
+import { mockedOrganisation } from "@/mocks/data/organisation";
 import DecoratorPanel from "@/modules/DecoratorPanel";
 import { getSystemConfig } from "@/services/system_config";
 import { getUser } from "@/services/users";
@@ -39,20 +41,21 @@ const useApplicationData = () => useContext(ApplicationDataContext);
 interface ApplicationDataProviderProps {
   children: ReactNode;
   value: ApplicationDataState;
-  prefetchUser?: boolean;
+  prefetchAuth?: boolean;
 }
 
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
 
 const ApplicationDataProvider = ({
-  prefetchUser,
+  prefetchAuth,
   children,
   value,
 }: ApplicationDataProviderProps) => {
   const t = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
   const addUrlToHistory = useStore(store => store.addUrlToHistory);
   const setAuth = useStore(store => store.setAuth);
-  const [authFetched, setAuthFetched] = useState(!prefetchUser);
+  const setOrganisation = useStore(store => store.setOrganisation);
+  const [authFetched, setAuthFetched] = useState(!prefetchAuth);
 
   const path = usePathname();
 
@@ -98,6 +101,13 @@ const ApplicationDataProvider = ({
             ...user.data,
           },
         });
+
+        if (user.data?.user_group === UserGroup.ORGANISATIONS)
+          setOrganisation(
+            mockedOrganisation({
+              idvt_result: null,
+            })
+          );
       }
 
       setAuthFetched(true);

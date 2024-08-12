@@ -22,6 +22,7 @@ import { useTranslations } from "next-intl";
 import { useMemo } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import yup from "@/config/yup";
+import { Message } from "@/components/Message";
 
 export interface LoginOTPFormValues {
   otp: string;
@@ -87,13 +88,13 @@ export default function LoginOTPForm({
           [theme.breakpoints.up("md")]: { width: "350px" },
         }}>
         <FormBody>
-          <Alert color="info" sx={{ mb: 3 }}>
+          <Message severity="info" sx={{ mb: 3 }}>
             {tLogin("checkYourEmail")}
-          </Alert>
+          </Message>
           {mutateState.isError && (
-            <Alert color="error" sx={{ mb: 3 }}>
+            <Message severity="error" sx={{ mb: 3 }}>
               {tLogin("submitError")}
-            </Alert>
+            </Message>
           )}
           <Grid container direction="column" spacing={2}>
             <Grid item>

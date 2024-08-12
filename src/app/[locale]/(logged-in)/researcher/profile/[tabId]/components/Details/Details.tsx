@@ -1,6 +1,7 @@
 "use client";
 
 import ContactLink from "@/components/ContactLink";
+import { Message } from "@/components/Message";
 import yup from "@/config/yup";
 import { MAX_UPLOAD_SIZE_BYTES } from "@/consts/files";
 import { useStore } from "@/data/store";
@@ -17,7 +18,6 @@ import { Check, Replay } from "@mui/icons-material";
 import SaveIcon from "@mui/icons-material/Save";
 import { LoadingButton } from "@mui/lab";
 import {
-  Alert,
   Button,
   FormControl,
   FormHelperText,
@@ -167,18 +167,18 @@ export default function Details({ emailVerified }: DetailsProps) {
         <Grid container rowSpacing={3} md={8}>
           <Grid item xs={12}>
             {isUpdateError && (
-              <Alert color="error" sx={{ mb: 3 }}>
+              <Message severity="error" sx={{ mb: 3 }}>
                 {tPersonalDetails.rich(updateError, {
                   contactLink: ContactLink,
                 })}
-              </Alert>
+              </Message>
             )}
             {isFileError && (
-              <Alert color="error" sx={{ mb: 3 }}>
+              <Message severity="error" sx={{ mb: 3 }}>
                 {tPersonalDetails.rich(fileError, {
                   contactLink: ContactLink,
                 })}
-              </Alert>
+              </Message>
             )}
           </Grid>
           <Grid item xs={12}>

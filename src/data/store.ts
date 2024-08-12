@@ -1,7 +1,7 @@
 "use client";
 
 import { ROUTES } from "@/consts/router";
-import { Auth, User } from "@/types/application";
+import { Auth, Organisation, User } from "@/types/application";
 import { Routes } from "@/types/router";
 import { produce } from "immer";
 import { create } from "zustand";
@@ -13,11 +13,14 @@ interface StoreState {
       entries: Routes;
     };
     auth?: Auth;
+    organisation?: Organisation;
   };
   setAuth: (auth: Auth) => void;
   setRoutes: (routes: Routes) => void;
   getUser: () => User | undefined;
   setUser: (user: User) => void;
+  getOrganisation: () => Organisation | undefined;
+  setOrganisation: (organisation: Organisation) => void;
   getPreviousUrl: () => string | null;
   addUrlToHistory: (url: string) => void;
 }
@@ -51,14 +54,20 @@ const useStore = create<StoreState>((set, get) => ({
   setUser: (user: User) =>
     set(
       produce(state => {
-        state.config.auth = {
-          ...state.config.auth,
-          user,
-        };
+        state.config.auth.user = user;
       })
     ),
   getUser: () => {
     return get().config.auth?.user;
+  },
+  setOrganisation: (organisation: Organisation) =>
+    set(
+      produce(state => {
+        state.config.organisation = organisation;
+      })
+    ),
+  getOrganisation: () => {
+    return get().config.organisation;
   },
   addUrlToHistory: (url: string) =>
     set(

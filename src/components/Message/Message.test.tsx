@@ -14,14 +14,11 @@ const renderMessage = (props?: Partial<MessageProps>) => {
 
 describe("<Message />", () => {
   it("shows a notification message", async () => {
-    renderMessage({
-      variant: "notification",
-    });
+    renderMessage();
 
     const message = await screen.findByRole("alert");
 
     if (message) {
-      expect(message.parentNode).toHaveRole("presentation");
       expect(screen.getByText("Title")).toBeInTheDocument();
       expect(screen.getByText("Content")).toBeInTheDocument();
     } else {

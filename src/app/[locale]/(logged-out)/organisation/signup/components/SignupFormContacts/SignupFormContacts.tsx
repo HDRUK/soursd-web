@@ -3,6 +3,7 @@
 import ContactLink from "@/components/ContactLink";
 import FormActions from "@/components/FormActions";
 import FormBody from "@/components/FormBody";
+import { Message } from "@/components/Message";
 import yup from "@/config/yup";
 import { FormMutateState } from "@/types/form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -105,16 +106,16 @@ export default function SignupFormContacts({
         }}>
         <FormBody>
           {mutateState.isError && (
-            <Alert color="error" sx={{ mb: 3 }}>
+            <Message severity="error" sx={{ mb: 3 }}>
               {tSignup.rich(mutateState.error, {
                 contactLink: ContactLink,
               })}
-            </Alert>
+            </Message>
           )}
           {emptyError && (
-            <Alert color="error" sx={{ mb: 3 }}>
+            <Message severity="error" sx={{ mb: 3 }}>
               {emptyError}
-            </Alert>
+            </Message>
           )}
           <Grid container direction="column" spacing={2}>
             <Grid item>

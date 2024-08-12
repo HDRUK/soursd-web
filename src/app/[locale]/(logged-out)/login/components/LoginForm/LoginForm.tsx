@@ -23,6 +23,7 @@ import { useMemo, useRef, useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { FormProvider, useForm } from "react-hook-form";
 import yup from "@/config/yup";
+import { Message } from "@/components/Message";
 
 export interface LoginFormValues {
   email: string;
@@ -91,11 +92,11 @@ export default function SignupForm({ onSubmit, mutateState }: LoginFormProps) {
         }}>
         <FormBody>
           {mutateState.isError && (
-            <Alert color="error" sx={{ mb: 3 }}>
+            <Message severity="error" sx={{ mb: 3 }}>
               {tLogin.rich(mutateState.error, {
                 contactLink: ContactLink,
               })}
-            </Alert>
+            </Message>
           )}
           <Grid container direction="column" spacing={2}>
             <Grid item>

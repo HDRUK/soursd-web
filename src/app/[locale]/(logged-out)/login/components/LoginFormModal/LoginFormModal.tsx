@@ -16,6 +16,7 @@ import { useCallback } from "react";
 import { useMutation } from "react-query";
 import LoginForm from "../LoginForm";
 import { LoginFormValues } from "../LoginForm/LoginForm";
+import { Message } from "@/components/Message";
 
 const NAMESPACE_TRANSLATION_LOGIN = "LoginForm";
 
@@ -74,8 +75,8 @@ export default function LoginFormModal() {
       <Box sx={{ minWidth: "250px" }}>
         <FormModalHeader icon={<HubIcon />}>{t("title")}</FormModalHeader>
         {isFromRegister && (
-          <Alert
-            color="success"
+          <Message
+            severity="success"
             sx={{
               mb: 3,
               width: "auto",
@@ -84,7 +85,7 @@ export default function LoginFormModal() {
               },
             }}>
             {t("successfulRegister")}
-          </Alert>
+          </Message>
         )}
         <LoginForm
           onSubmit={handleLoginSubmit}

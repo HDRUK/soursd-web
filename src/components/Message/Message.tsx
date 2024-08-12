@@ -1,28 +1,40 @@
-import { Alert, AlertProps, Snackbar, SnackbarProps } from "@mui/material";
-import { ReactNode } from "react";
+"use client";
 
-export interface MessageProps {
+import { Alert, AlertProps, Snackbar, SnackbarProps } from "@mui/material";
+import { ReactNode, useCallback, useState } from "react";
+
+export interface MessageProps extends AlertProps {
   children: ReactNode;
-  variant?: "body" | "notification";
-  onClose?: () => void;
-  open?: boolean;
-  severity?: Pick<AlertProps, "severity">;
-  alertProps?: Omit<AlertProps, "severity">;
+  position?: "body" | "notification";
+  isDismissable?: boolean;
   snackbarProps?: SnackbarProps;
 }
 
 export default function Message({
   children,
-  variant = "body",
-  onClose,
-  open = true,
-  alertProps,
+  position = "body",
+  isDismissable,
   snackbarProps,
+  ...restProps
 }: MessageProps) {
-  if (variant === "notification") {
+  const [open, setOpen] = useState(true);
+
+  const handleClose = useCallback(() => {
+    setOpen(false);
+  }, []);
+
+  let dismissableProps = {};
+
+  if (isDismissable) {
+    dismissableProps = {
+      onClose: handleClose,
+    };
+  }
+
+  if (position === "notification") {
     return (
       <Snackbar open={open} {...snackbarProps}>
-        <Alert onClose={onClose} {...alertProps}>
+        <Alert {...dismissableProps} {...restProps}>
           {children}
         </Alert>
       </Snackbar>
@@ -31,7 +43,7 @@ export default function Message({
 
   return (
     open && (
-      <Alert onClose={onClose} {...alertProps}>
+      <Alert {...dismissableProps} {...restProps}>
         {children}
       </Alert>
     )

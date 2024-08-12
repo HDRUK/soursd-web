@@ -9,8 +9,20 @@
   "IssuerProfile": {
     "title": "Profile"
   },
-  "OrganisationProfile": {
-    "title": "Profile"
+  "ProfileOrganisation": {
+    "title": "Profile",
+    "companyValid": "Organisation validated",
+    "companyNotValidPopup": "Your organisation has not been validated. This could be related to the information you've entered (i.e. company number). If you believe this message to be in error please contact us at  <contactLink></contactLink>",
+    "companyNotValid": "Organisation not validated",
+    "companyValidatingPopup": "Your organisation is currently being checked against records held by Companies House",
+    "companyValidating": "Organisation is being validated",
+    "details": "Details",
+    "user": "User",
+    "approvals": "Approvals",
+    "contacts": "Contacts",
+    "organisationNotFound": "Organisation was not found",
+    "getOrganisationStatusError": "Unable to determine validation status",
+    "navigationAriaLabel": "Profile tabs"
   },
   "Form": {
     "dpoOrHrRequiredInvalid": "At least one of these contacts is requured",
@@ -290,6 +302,6 @@
     "500Description": "We tried to query the selected resource but there seems to be an issue on the server, please contact us via the form in the footer."
   },
   "Auth": {
-    "notAllowed": "You are not allowed to access thie page. If you think this is incorrect please contacts us at <contactLink></contactLink>"
+    "notAllowed": "You are not allowed to access this page. If you think this is incorrect please contacts us at <contactLink></contactLink>"
   }
 }

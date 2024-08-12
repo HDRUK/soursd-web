@@ -263,6 +263,15 @@ const theme = createTheme(
           root: ({ ownerState }) => createDividerStyles(ownerState),
         },
       },
+      MuiTooltip: {
+        styleOverrides: {
+          tooltip: {
+            a: {
+              color: "#fff",
+            },
+          },
+        },
+      },
     },
   },
   paletteTheme

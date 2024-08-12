@@ -1,9 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Box, Button } from "@mui/material";
-import { useState } from "react";
-import { Message, MessageProps, MessageTitle } from ".";
-import MessageContent from "./MessageContent";
+import { Box } from "@mui/material";
+import { Message, MessageTitle, MessageContent } from ".";
 
 const meta = {
   title: "components/Message",
@@ -22,21 +20,6 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const ClosableMessage = ({
-  children,
-  ...restProps
-}: Omit<MessageProps, "open">) => {
-  const [open, setOpen] = useState(true);
-
-  return open ? (
-    <Message open={open} {...restProps} onClose={() => setOpen(false)}>
-      {children}
-    </Message>
-  ) : (
-    <Button onClick={() => setOpen(true)}>Open</Button>
-  );
-};
-
 export const Basic: Story = {
   args: {
     children: (
@@ -48,18 +31,4 @@ export const Basic: Story = {
       </>
     ),
   },
-};
-
-export const Closable: Story = {
-  args: {
-    children: (
-      <>
-        <MessageTitle>Title of message</MessageTitle>
-        <MessageContent>
-          Lorem ipsum dolor sit amet ipsum dolor sit amet ipsum dolor sit amet
-        </MessageContent>
-      </>
-    ),
-  },
-  render: props => <ClosableMessage {...props} />,
 };

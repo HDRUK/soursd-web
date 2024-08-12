@@ -8,6 +8,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import { LoadingButton } from "@mui/lab";
 import { Alert, Switch } from "@mui/material";
 import { FormProvider, useForm } from "react-hook-form";
+import { Message } from "../Message";
 
 export type AssignOptionsFormValues = Record<string, boolean>;
 
@@ -42,9 +43,9 @@ export default function PermissionsSection({
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
         {mutateState.isError && (
-          <Alert color="error" sx={{ mb: 3 }}>
+          <Message severity="error" sx={{ mb: 3 }}>
             {`${mutateState.error}`}
-          </Alert>
+          </Message>
         )}
         <ActionList sx={{ listStyleType: "none", p: 0, m: 0, mb: 2 }}>
           {checkboxData.map(({ label, id }) => (
