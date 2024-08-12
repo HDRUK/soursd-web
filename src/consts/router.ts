@@ -82,6 +82,11 @@ const ROUTES: Routes = {
     path: "/organisation/profile/approvals",
     permissions: [UserGroup.ORGANISATIONS],
   },
+  admin: {
+    path: "/admin",
+    key: "Admin",
+    permissions: [UserGroup.ADMINS],
+  },
 };
 
 export { PROTECTED_ROUTES, ROUTES };

@@ -36,6 +36,7 @@ interface Routes {
   profileOrganisationDetails: RouteConfig;
   profileOrganisationContacts: RouteConfig;
   profileOrganisationApprovals: RouteConfig;
+  admin: RouteConfig;
 }
 
 export type { RoutePermissions, RouteConfig, Routes, RouteParams };
