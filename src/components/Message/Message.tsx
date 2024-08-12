@@ -1,7 +1,7 @@
 "use client";
 
 import { Alert, AlertProps, Snackbar, SnackbarProps } from "@mui/material";
-import { ReactNode, useCallback, useState } from "react";
+import { ReactNode, useState } from "react";
 
 export interface MessageProps extends AlertProps {
   children: ReactNode;
@@ -19,9 +19,9 @@ export default function Message({
 }: MessageProps) {
   const [open, setOpen] = useState(true);
 
-  const handleClose = useCallback(() => {
+  const handleClose = () => {
     setOpen(false);
-  }, []);
+  };
 
   let dismissableProps = {};
 
