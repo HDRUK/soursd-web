@@ -2,6 +2,7 @@
 
 import FormModal from "@/components/FormModal";
 import FormModalHeader from "@/components/FormModalHeader";
+import { Message } from "@/components/Message";
 import { UserGroup } from "@/consts/user";
 import { useApplicationData } from "@/context/ApplicationData";
 import { useStore } from "@/data/store";
@@ -9,14 +10,13 @@ import { postLogin } from "@/services/auth";
 import theme from "@/theme";
 import { setAuthData } from "@/utils/auth";
 import HubIcon from "@mui/icons-material/Hub";
-import { Alert, Box } from "@mui/material";
+import { Box } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
 import { useMutation } from "react-query";
 import LoginForm from "../LoginForm";
 import { LoginFormValues } from "../LoginForm/LoginForm";
-import { Message } from "@/components/Message";
 
 const NAMESPACE_TRANSLATION_LOGIN = "LoginForm";
 

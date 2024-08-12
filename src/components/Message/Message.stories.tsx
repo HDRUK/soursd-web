@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { Box } from "@mui/material";
-import { Message, MessageTitle, MessageContent } from ".";
+import { Message, MessageContent, MessageTitle } from ".";
 
 const meta = {
   title: "components/Message",

@@ -6,7 +6,7 @@ import { FormMutateState } from "@/types/form";
 import { getCheckboxFormValuesFromIntersection } from "@/utils/form";
 import SaveIcon from "@mui/icons-material/Save";
 import { LoadingButton } from "@mui/lab";
-import { Alert, Switch } from "@mui/material";
+import { Switch } from "@mui/material";
 import { FormProvider, useForm } from "react-hook-form";
 import { Message } from "../Message";
 

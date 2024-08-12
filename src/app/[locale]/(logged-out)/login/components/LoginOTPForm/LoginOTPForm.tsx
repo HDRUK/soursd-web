@@ -2,7 +2,9 @@
 
 import FormActions from "@/components/FormActions";
 import FormBody from "@/components/FormBody";
+import { Message } from "@/components/Message";
 import PasswordTextField from "@/components/PasswordTextField";
+import yup from "@/config/yup";
 import { VALIDATION_OTP_PASSCODE_LENGTH } from "@/consts/form";
 import { FormMutateState } from "@/types/form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -10,7 +12,6 @@ import { Refresh } from "@mui/icons-material";
 import SendIcon from "@mui/icons-material/Send";
 import { LoadingButton } from "@mui/lab";
 import {
-  Alert,
   Box,
   FormControl,
   FormHelperText,
@@ -21,8 +22,6 @@ import {
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import yup from "@/config/yup";
-import { Message } from "@/components/Message";
 
 export interface LoginOTPFormValues {
   otp: string;
