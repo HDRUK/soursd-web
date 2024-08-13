@@ -1,31 +1,32 @@
 import { ScalingUp } from "@/consts/ui";
-import { Alert, AlertColor, AlertProps } from "@mui/material";
+import { AlertColor } from "@mui/material";
+import { Message, MessageProps } from "../Message";
 import OverlayCenter, { OverlayCenterProps } from "../OverlayCenter";
 
 interface OverlayCenterAlertProps extends OverlayCenterProps {
   color?: AlertColor;
-  alertProps?: AlertProps;
+  messageProps?: MessageProps;
 }
 
 export default function OverlayCenterAlert({
   children,
   maxWidth = "350px",
   color = "error",
-  alertProps,
+  messageProps,
   ...restProps
 }: OverlayCenterAlertProps) {
   return (
     <OverlayCenter {...restProps}>
-      <Alert
-        {...alertProps}
+      <Message
+        {...messageProps}
         color={color}
         sx={{
           maxWidth,
           transform: `scale(${ScalingUp.medium})`,
-          ...alertProps?.sx,
+          ...messageProps?.sx,
         }}>
         {children}
-      </Alert>
+      </Message>
     </OverlayCenter>
   );
 }

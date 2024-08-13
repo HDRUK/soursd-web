@@ -1,5 +1,4 @@
-import { User } from "@/services/auth";
-import { Organisation } from "@/services/organisations";
+import { Organisation, User } from "@/types/application";
 
 function getInitialsFromUser({ first_name, last_name }: User) {
   const fullName = `${first_name} ${last_name}`;
@@ -8,7 +7,7 @@ function getInitialsFromUser({ first_name, last_name }: User) {
 }
 
 function getInitialsFromOrganisation({ organisation_name }: Organisation) {
-  return organisation_name.charAt(0).toUpperCase();
+  return organisation_name?.charAt(0).toUpperCase();
 }
 
 export { getInitialsFromUser, getInitialsFromOrganisation };

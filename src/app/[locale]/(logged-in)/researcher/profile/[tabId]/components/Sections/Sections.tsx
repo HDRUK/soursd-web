@@ -2,8 +2,13 @@
 
 import Mask from "@/components/Mask";
 import { useStore } from "@/data/store";
+import {
+  PageColumnLayout,
+  PageColumnLayoutLeft,
+  PageColumnLayoutRight,
+} from "@/modules/PageColumnLayout";
 import { getInitialsFromUser } from "@/utils/user";
-import { Box, Divider, Typography, useTheme } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { ReactNode } from "react";
 import ProfileCompleteStatus from "../ProfileCompleteStatus";
 
@@ -12,22 +17,12 @@ interface SectionsProps {
 }
 
 export default function Sections({ children }: SectionsProps) {
-  const theme = useTheme();
   const getUser = useStore(state => state.getUser);
   const user = getUser();
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        gap: 5,
-        [theme.breakpoints.down("md")]: {
-          flexDirection: "column",
-          gap: 2,
-        },
-      }}>
-      <Box
-        sx={{ display: "flex", alignItems: "center", flexDirection: "column" }}>
+    <PageColumnLayout>
+      <PageColumnLayoutLeft>
         <Mask width="160px" height="160px">
           {getInitialsFromUser(user)}
         </Mask>
@@ -38,16 +33,8 @@ export default function Sections({ children }: SectionsProps) {
           <Typography sx={{ mb: 2 }}>{user?.email}</Typography>
           <ProfileCompleteStatus user={user} />
         </Box>
-      </Box>
-      <Divider
-        orientation="vertical"
-        sx={{
-          [theme.breakpoints.down("md")]: {
-            display: "none",
-          },
-        }}
-      />
-      <Box sx={{ flexGrow: 1 }}>{children}</Box>
-    </Box>
+      </PageColumnLayoutLeft>
+      <PageColumnLayoutRight>{children}</PageColumnLayoutRight>
+    </PageColumnLayout>
   );
 }

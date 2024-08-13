@@ -11,7 +11,6 @@ interface RoutePermissions extends RoleConfig {
 
 interface RouteConfig {
   path: string;
-  key: string;
   permissions?: UserGroup[];
 }
 
@@ -24,6 +23,7 @@ interface Routes {
   permissionsResearcherIssuer: RouteConfig;
   permissionsOrganisationIssuer: RouteConfig;
   homepage: RouteConfig;
+  usersIssuer: RouteConfig;
   profileIssuer: RouteConfig;
   profileResearcher: RouteConfig;
   profileResearcherDetails: RouteConfig;
@@ -32,6 +32,10 @@ interface Routes {
   profileResearcherIdentity: RouteConfig;
   profileResearcherAffiliations: RouteConfig;
   profileOrganisation: RouteConfig;
+  profileOrganisationUser: RouteConfig;
+  profileOrganisationDetails: RouteConfig;
+  profileOrganisationContacts: RouteConfig;
+  profileOrganisationApprovals: RouteConfig;
   admin: RouteConfig;
 }
 

@@ -26,7 +26,7 @@ export default function ProfileCompleteStatus({
         <>
           <Text
             startIcon={<CheckCircleIcon color="success" />}
-            sx={{ mb: 2, justifyContent: "center" }}>
+            sx={{ justifyContent: "center" }}>
             {t("profileComplete")}
           </Text>
           <Text

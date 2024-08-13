@@ -65,7 +65,15 @@ interface User {
   };
 }
 
-interface Organisation {
+interface OrganisationIdvt {
+  idvt_result: boolean | null;
+  idvt_completed_at: string;
+  idvt_result_perc: number;
+  idvt_errors: string;
+}
+
+interface Organisation extends OrganisationIdvt {
+  companies_house_no: string;
   address_1: string;
   address_2: string;
   town: string;
@@ -115,5 +123,6 @@ export type {
   Auth,
   Issuer,
   Organisation,
+  OrganisationIdvt,
   User,
 };

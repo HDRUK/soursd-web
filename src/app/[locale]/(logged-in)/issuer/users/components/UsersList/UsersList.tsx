@@ -3,6 +3,7 @@
 import AccordionTitle from "@/components/AccordionTitle";
 import ActionMenu from "@/components/ActionMenu/ActionMenu";
 import ActionMenuItem from "@/components/ActionMenu/ActionMenuItem";
+import ApprovalStatus from "@/components/ApprovalStatus";
 import Text from "@/components/Text";
 import { useApplicationData } from "@/context/ApplicationData";
 import { PostApprovalPayloadWithEntity } from "@/services/approvals";
@@ -119,19 +120,9 @@ export default function UsersList({
                       </ActionMenuItem>
                     </ActionMenu>
                   }>
-                  <Text
-                    endIcon={
-                      isOrganisationApproved ? (
-                        <VerifiedIcon color="success" titleAccess="Approved" />
-                      ) : (
-                        <NewReleasesIcon
-                          color="warning"
-                          titleAccess="Not approved"
-                        />
-                      )
-                    }>
+                  <ApprovalStatus isApproved={isOrganisationApproved}>
                     {organisation_name}
-                  </Text>
+                  </ApprovalStatus>
                 </AccordionTitle>
               </AccordionSummary>
               <AccordionDetails>
@@ -159,22 +150,9 @@ export default function UsersList({
                         return (
                           <TableRow key={email}>
                             <TableCell sx={{ wordBreak: "break-word" }}>
-                              <Text
-                                endIcon={
-                                  isApproved ? (
-                                    <VerifiedIcon
-                                      color="success"
-                                      titleAccess="Approved"
-                                    />
-                                  ) : (
-                                    <NewReleasesIcon
-                                      color="warning"
-                                      titleAccess="Not approved"
-                                    />
-                                  )
-                                }>
+                              <ApprovalStatus isApproved={isApproved}>
                                 {email}
-                              </Text>
+                              </ApprovalStatus>
                             </TableCell>
                             <TableCell sx={{ wordBreak: "break-word" }}>
                               {first_name}

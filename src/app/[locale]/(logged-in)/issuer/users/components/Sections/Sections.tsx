@@ -1,15 +1,16 @@
 "use client";
 
 import ContactLink from "@/components/ContactLink";
+import { Message } from "@/components/Message";
 import OverlayCenter from "@/components/OverlayCenter";
 import { useNotifications } from "@/context/Notifications";
 import PageSection from "@/modules/PageSection";
 import {
-  PostApprovalPayloadWithEntity,
   DeleteApprovalPayloadWithEntity,
+  PostApprovalPayloadWithEntity,
 } from "@/services/approvals";
 import { getOrganisations } from "@/services/organisations";
-import { Alert, CircularProgress, Typography } from "@mui/material";
+import { CircularProgress, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useCallback } from "react";
 import { useQuery, useQueryClient } from "react-query";
@@ -85,11 +86,11 @@ export default function Sections() {
       </PageSection>
       <PageSection sx={{ flexGrow: 1 }}>
         {isOrganisationsError && (
-          <Alert color="error" sx={{ mb: 3 }}>
+          <Message severity="error" sx={{ mb: 3 }}>
             {tUsers.rich(`${orgainsationsError}`, {
               contactLink: ContactLink,
             })}
-          </Alert>
+          </Message>
         )}
         {!isOrganisationsLoading && organisationsData?.data.data && (
           <UsersList

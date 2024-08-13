@@ -1,9 +1,13 @@
-import { Organisation } from "@/types/application";
+import { Organisation, OrganisationIdvt } from "@/types/application";
 
 type OrganisationResponse = Organisation;
 
 interface OrganisationsResponse {
   data: Organisation[];
+}
+
+interface OrganisationsIdvtResponse {
+  data: OrganisationIdvt;
 }
 
 interface UpdateOrganisationPermissionsResponse {
@@ -25,6 +29,7 @@ type GetOrganisationInviteResponse = Organisation;
 export type {
   OrganisationsResponse,
   OrganisationResponse,
+  OrganisationsIdvtResponse,
   Organisation,
   UpdateOrganisationPermissionsResponse,
   UpdateOrganisationPermissonsPayload,

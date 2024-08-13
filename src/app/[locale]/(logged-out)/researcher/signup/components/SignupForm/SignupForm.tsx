@@ -2,6 +2,7 @@ import ContactLink from "@/components/ContactLink";
 import FormActions from "@/components/FormActions";
 import FormBody from "@/components/FormBody";
 import FormRecaptcha from "@/components/FormRecaptcha";
+import { Message } from "@/components/Message";
 import PasswordTextField from "@/components/PasswordTextField";
 import yup from "@/config/yup";
 import { useApplicationData } from "@/context/ApplicationData";
@@ -11,7 +12,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import SendIcon from "@mui/icons-material/Send";
 import { LoadingButton } from "@mui/lab";
 import {
-  Alert,
   Box,
   Checkbox,
   FormControl,
@@ -157,11 +157,11 @@ export default function SignupForm({
         }}>
         <FormBody>
           {mutateState.isError && (
-            <Alert color="error" sx={{ mb: 3 }}>
+            <Message severity="error" sx={{ mb: 3 }}>
               {tSignup.rich(mutateState.error, {
                 contactLink: ContactLink,
               })}
-            </Alert>
+            </Message>
           )}
           <Grid container direction="column" spacing={2}>
             <Grid item>

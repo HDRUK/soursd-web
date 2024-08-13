@@ -4,13 +4,14 @@ import ContactLink from "@/components/ContactLink";
 import FormActions from "@/components/FormActions";
 import FormBody from "@/components/FormBody";
 import FormRecaptcha from "@/components/FormRecaptcha";
+import { Message } from "@/components/Message";
 import PasswordTextField from "@/components/PasswordTextField";
+import yup from "@/config/yup";
 import { FormMutateState } from "@/types/form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import SendIcon from "@mui/icons-material/Send";
 import { LoadingButton } from "@mui/lab";
 import {
-  Alert,
   Box,
   FormControl,
   FormHelperText,
@@ -22,7 +23,6 @@ import { useTranslations } from "next-intl";
 import { useMemo, useRef, useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { FormProvider, useForm } from "react-hook-form";
-import yup from "@/config/yup";
 
 export interface LoginFormValues {
   email: string;
@@ -91,11 +91,11 @@ export default function SignupForm({ onSubmit, mutateState }: LoginFormProps) {
         }}>
         <FormBody>
           {mutateState.isError && (
-            <Alert color="error" sx={{ mb: 3 }}>
+            <Message severity="error" sx={{ mb: 3 }}>
               {tLogin.rich(mutateState.error, {
                 contactLink: ContactLink,
               })}
-            </Alert>
+            </Message>
           )}
           <Grid container direction="column" spacing={2}>
             <Grid item>

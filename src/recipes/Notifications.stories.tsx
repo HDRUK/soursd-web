@@ -17,7 +17,7 @@ const Notifications = () => {
 
       return (
         <div>
-          {error.TEST && <Alert color="error">{error.TEST}</Alert>}
+          {error.TEST && <Message severity="error">{error.TEST}</Message>}
           <button type="button" onClick={handleAdd}>
             Add
           </button>

@@ -5,6 +5,7 @@ import AssignOptions, {
 } from "@/components/AssignOptions";
 import ContactLink from "@/components/ContactLink";
 import MaskLabel from "@/components/MaskLabel";
+import { Message } from "@/components/Message";
 import OverlayCenter from "@/components/OverlayCenter";
 import PageSection from "@/modules/PageSection";
 import { getPermissions } from "@/services/permissions";
@@ -15,7 +16,7 @@ import {
 } from "@/services/users";
 import { convertStringsToNumbers } from "@/utils/array";
 import { getInitialsFromUser } from "@/utils/user";
-import { Alert, CircularProgress, Typography } from "@mui/material";
+import { CircularProgress, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useCallback } from "react";
 import { useMutation, useQuery } from "react-query";
@@ -107,7 +108,7 @@ export default function Sections({ userId }: SectionsProps) {
       </PageSection>
       <PageSection sx={{ flexGrow: 1 }}>
         {(isUserError || isPermissionsError) && (
-          <Alert color="error" sx={{ mb: 3 }}>
+          <Message severity="error" sx={{ mb: 3 }}>
             {isUserError &&
               tUsers.rich(`${userError}`, {
                 contactLink: ContactLink,
@@ -116,7 +117,7 @@ export default function Sections({ userId }: SectionsProps) {
               tPermissions.rich(`${permissionsError}`, {
                 contactLink: ContactLink,
               })}
-          </Alert>
+          </Message>
         )}
         {!isPermissionsLoading &&
           !isUserLoading &&

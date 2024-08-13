@@ -2,14 +2,15 @@
 
 import ContactLink from "@/components/ContactLink";
 import MaskLabel from "@/components/MaskLabel";
+import { Message } from "@/components/Message";
 import OverlayCenter from "@/components/OverlayCenter";
 import PageSection from "@/modules/PageSection";
-import { User } from "@/types/application";
 import { Organisation } from "@/services/organisations";
 import { getPermissions } from "@/services/permissions";
 import { EntityType } from "@/types/api";
+import { User } from "@/types/application";
 import { getInitialsFromOrganisation, getInitialsFromUser } from "@/utils/user";
-import { Alert, CircularProgress, Typography } from "@mui/material";
+import { CircularProgress, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useQuery } from "react-query";
 import { useQueryUser } from "../../hooks";
@@ -80,7 +81,7 @@ export default function Sections({ userId, type }: SectionsProps) {
       </PageSection>
       <PageSection sx={{ flexGrow: 1 }}>
         {(isUserError || isPermissionsError) && (
-          <Alert color="error" sx={{ mb: 3 }}>
+          <Message severity="error" sx={{ mb: 3 }}>
             {isUserError &&
               tUsers.rich(userError, {
                 contactLink: ContactLink,
@@ -89,7 +90,7 @@ export default function Sections({ userId, type }: SectionsProps) {
               tPermissions.rich(permissionsError, {
                 contactLink: ContactLink,
               })}
-          </Alert>
+          </Message>
         )}
         {!isPermissionsLoading &&
           !isUserLoading &&
