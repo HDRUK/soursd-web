@@ -116,7 +116,7 @@ const ApplicationDataProvider = ({
           },
         });
 
-        if (user.data?.organisation_id !== undefined) {
+        if (user.data?.organisation_id) {
           const { data } = await mutateOrganisationAsync(
             user.data?.organisation_id
           );
