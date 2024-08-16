@@ -39,10 +39,5 @@ describe("useQueryRefetch", () => {
         })
       );
     });
-
-    // await waitFor(() => {
-    //   expect((result.current as CurrentRefetch).isLoading).toEqual(true);
-    //   expect(mockRefetchQueries).toHaveBeenCalledWith(mockedOptions);
-    // });
   });
 });

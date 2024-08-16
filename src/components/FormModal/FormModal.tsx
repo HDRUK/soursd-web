@@ -31,9 +31,14 @@ export default function FormModal({
   ...restProps
 }: FormModalProps) {
   const theme = useTheme();
+  const mobileMediaQuery = theme.breakpoints.down("sm");
 
   return (
-    <Modal data-testid="form-modal" onClose={onClose} {...restProps}>
+    <Modal
+      data-testid="form-modal"
+      onClose={onClose}
+      sx={{ p: 1 }}
+      {...restProps}>
       <Card
         sx={{
           top: "50%",
@@ -43,12 +48,19 @@ export default function FormModal({
           overflowY: "scroll",
           maxHeight: `calc(100vh - ${theme.spacing(4)})`,
           minWidth: variant === "form" ? "250px" : "600px",
-          [theme.breakpoints.down("sm")]: {
-            width: `calc(100% - ${theme.spacing(4)})`,
+          [mobileMediaQuery]: {
+            width: `calc(100% - ${theme.spacing(2)})`,
+            minWidth: "auto",
           },
           ...sx,
         }}>
-        <CardContent sx={{ p: 4 }}>
+        <CardContent
+          sx={{
+            p: 4,
+            [mobileMediaQuery]: {
+              px: 2,
+            },
+          }}>
           {onBack && (
             <Box sx={{ position: "absolute", top: 5, left: 5 }}>
               <span>
