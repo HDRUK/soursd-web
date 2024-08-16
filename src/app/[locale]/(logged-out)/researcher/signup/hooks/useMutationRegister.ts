@@ -4,14 +4,14 @@ import {
 } from "@/services/auth";
 import { ResearcherInviteResponse } from "@/services/users";
 import patchUser from "@/services/users/patchUser";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 
 export default function useMutationRegister(
   user: ResearcherInviteResponse | undefined
 ) {
-  return useMutation(
-    ["postRegisterResearcher"],
-    async (payload: PostRegisterResearcherPayload) => {
+  return useMutation({
+    mutationKey: ["postRegisterResearcher"],
+    mutationFn: async (payload: PostRegisterResearcherPayload) => {
       const { consent_scrape, ...restPayload } = payload;
 
       const contentScrape = {
@@ -33,6 +33,6 @@ export default function useMutationRegister(
           error: { message: "submitError" },
         }
       );
-    }
-  );
+    },
+  });
 }

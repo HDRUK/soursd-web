@@ -1,24 +1,27 @@
 import { getOrganisation } from "@/services/organisations";
 import { getUser } from "@/services/users";
 import { EntityType } from "@/types/api";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 
 export default function useQueryUser(type: EntityType, userId: number) {
-  return useQuery(["getUser", userId], async ({ queryKey }) => {
-    const [, id] = queryKey;
+  return useQuery({
+    queryKey: ["getUser", userId],
+    queryFn: ({ queryKey }) => {
+      const [, id] = queryKey;
 
-    if (type === EntityType.ORGANISATION) {
-      return getOrganisation(id, {
+      if (type === EntityType.ORGANISATION) {
+        return getOrganisation(id, {
+          error: {
+            message: "getOrganisationError",
+          },
+        });
+      }
+
+      return getUser(id, {
         error: {
-          message: "getOrganisationError",
+          message: "getUserError",
         },
       });
-    }
-
-    return getUser(id, {
-      error: {
-        message: "getUserError",
-      },
-    });
+    },
   });
 }

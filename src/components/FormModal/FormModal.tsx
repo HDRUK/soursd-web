@@ -4,13 +4,18 @@ import {
   Box,
   Card,
   CardContent,
+  CircularProgress,
   IconButton,
   Modal,
   ModalProps,
   useTheme,
 } from "@mui/material";
+import { ReactNode } from "react";
 
-export interface FormModalProps extends ModalProps {
+export interface FormModalProps extends Omit<ModalProps, "children"> {
+  children: ReactNode;
+  variant?: "form" | "content";
+  isLoading?: boolean;
   isDismissable?: boolean;
   onBack?: () => void;
 }
@@ -18,6 +23,8 @@ export interface FormModalProps extends ModalProps {
 export default function FormModal({
   children,
   isDismissable = true,
+  isLoading,
+  variant = "form",
   onBack,
   onClose,
   sx,
@@ -35,6 +42,7 @@ export default function FormModal({
           position: "absolute",
           overflowY: "scroll",
           maxHeight: `calc(100vh - ${theme.spacing(4)})`,
+          minWidth: variant === "form" ? "250px" : "600px",
           [theme.breakpoints.down("sm")]: {
             width: `calc(100% - ${theme.spacing(4)})`,
           },
@@ -57,6 +65,16 @@ export default function FormModal({
                   <CloseIcon />
                 </IconButton>
               </span>
+            </Box>
+          )}
+          {isLoading && (
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}>
+              <CircularProgress />
             </Box>
           )}
           {children}

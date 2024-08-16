@@ -4,7 +4,12 @@
     "getUserError": "Unable to load your user details. Please try again or contact us at <contactLink></contactLink>",
     "researcher": "Researcher",
     "organisation": "Organisation",
-    "issuer": "Issuer"
+    "issuer": "Issuer",
+    "accreditations": "Accreditations",
+    "employment": "Employments",
+    "education": "Education",
+    "projects": "Projects",
+    "training": "Training"
   },
   "IssuerProfile": {
     "title": "Profile"
@@ -143,16 +148,23 @@
   },
   "Profile": {
     "title": "Profile",
-    "profileComplete": "Profile complete",
-    "uniqueIdPopup": "Your unique id is used by issuers to identify who you are.",
-    "profileNotComplete": "Profile not complete",
-    "profileNotCompletePopup": "Your user profile is not \"complete\". This will be visible to issuers and your organisation. Depending on their policies it may prevent you from accessing available research data.",
     "details": "Details",
     "identity": "Identity",
     "affiliations": "Affiliations",
     "experience": "Experience",
     "training": "Training",
     "navigationAriaLabel": "Profile sections"
+  },
+  "ProfileCompleteStatus": {
+    "profileComplete": "Profile complete",
+    "uniqueIdPopup": "Your unique id is used by issuers to identify who you are.",
+    "profileNotComplete": "Profile not complete",
+    "profileNotCompletePopup": "Your user profile is not \"complete\". This will be visible to issuers and your organisation. Depending on their policies it may prevent you from accessing available research data."
+  },
+  "UserCompleteStatus": {
+    "profileComplete": "Profile complete",
+    "profileNotComplete": "Profile not complete",
+    "profileNotCompletePopup": "This user's profile is not \"complete\". They may not have provided some required by your policies. Please check the information below."
   },
   "Permissions": {
     "title": "Permissions",

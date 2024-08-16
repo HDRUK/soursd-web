@@ -4,12 +4,12 @@ import {
 } from "@/services/organisations";
 import { UpdatePermissonsPayload, postPermissions } from "@/services/users";
 import { EntityType } from "@/types/api";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 
 export default function useMutatePermissions(type: EntityType, userId: number) {
-  const mutation = useMutation(
-    ["postPermissions"],
-    async (
+  const mutation = useMutation({
+    mutationKey: ["postPermissions"],
+    mutationFn: (
       payload: UpdatePermissonsPayload | UpdateOrganisationPermissonsPayload
     ) => {
       if (type === EntityType.ORGANISATION) {
@@ -26,8 +26,8 @@ export default function useMutatePermissions(type: EntityType, userId: number) {
       return postPermissions(payload as UpdatePermissonsPayload, {
         error: { message: "updatePermissionsError" },
       });
-    }
-  );
+    },
+  });
 
   const sendRequest = (
     payload: Pick<

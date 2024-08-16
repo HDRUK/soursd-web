@@ -10,8 +10,8 @@ interface CurrentRefetch {
   isLoading: boolean;
 }
 
-jest.mock("react-query", () => ({
-  ...jest.requireActual("react-query"),
+jest.mock("@tanstack/react-query", () => ({
+  ...jest.requireActual("@tanstack/react-query"),
   useQueryClient: () => ({
     refetchQueries: mockRefetchQueries,
     cancelQueries: mockCancelQueries,
