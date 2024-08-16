@@ -20,8 +20,6 @@ export default function Approvals() {
 
   const t = useTranslations(NAMESPACE_TRANSLATIONS_USERS_LIST);
 
-  console.log("filteredUsers", filteredUsers);
-
   return (
     <Table
       sx={{ tableLayout: "fixed" }}
