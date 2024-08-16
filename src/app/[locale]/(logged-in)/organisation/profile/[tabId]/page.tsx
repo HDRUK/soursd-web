@@ -7,6 +7,7 @@ import Sections from "./components/Sections";
 import TabsSections from "./components/TabsSections";
 import { PageTabs } from "./consts/tabs";
 import { withAuth } from "@/components/Auth";
+import Approvals from "./components/Approvals";
 
 interface PageProps extends ConfigProps {
   params: {
@@ -30,7 +31,7 @@ function Page({ params: { tabId } }: PageProps) {
           {tabId === PageTabs.USER && "User"}
           {tabId === PageTabs.DETAILS && "Details"}
           {tabId === PageTabs.CONTACTS && "Contacts"}
-          {tabId === PageTabs.APPROVALS && "Approval"}
+          {tabId === PageTabs.APPROVALS && <Approvals />}
         </Sections>
       </PageSection>
     </DecoratorPage>
