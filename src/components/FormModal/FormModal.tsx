@@ -33,7 +33,7 @@ export default function FormModal({
   const theme = useTheme();
 
   return (
-    <Modal onClose={onClose} {...restProps}>
+    <Modal data-testid="form-modal" onClose={onClose} {...restProps}>
       <Card
         sx={{
           top: "50%",

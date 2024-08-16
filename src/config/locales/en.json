@@ -166,6 +166,13 @@
     "profileNotComplete": "Profile not complete",
     "profileNotCompletePopup": "This user's profile is not \"complete\". They may not have provided some required by your policies. Please check the information below."
   },
+  "ResearcherHistories": {
+    "noAccreditationsFound": "Could not find any accreditation history",
+    "noEducationsFound": "Could not find any education history",
+    "noEmploymentsFound": "Could not find any employment history",
+    "noProjectsFound": "Could not find any project history",
+    "noTrainingsFound": "Could not find any training history"
+  },
   "Permissions": {
     "title": "Permissions",
     "getOrganisationError": "Could not get the organisation",
@@ -189,7 +196,8 @@
     "lastNameHeading": "Last name",
     "tableSummary": "Table of users",
     "updateOrganisationApprovalError": "Couldn't update the organisations approval settings",
-    "updateApprovalError": "Couldn't update the researchers approval settings"
+    "updateApprovalError": "Couldn't update the researchers approval settings",
+    "viewDetails": "View details"
   },
   "SignupFormContacts": {
     "title": "Additional contacts",

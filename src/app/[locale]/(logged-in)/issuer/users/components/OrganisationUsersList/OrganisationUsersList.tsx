@@ -111,7 +111,7 @@ export default function OrganisationUsersList({
                               organisation,
                             })
                           }>
-                          View profile
+                          {t("viewDetails")}
                         </Button>
                       </ActionMenuItem>
                       <ActionMenuItem>

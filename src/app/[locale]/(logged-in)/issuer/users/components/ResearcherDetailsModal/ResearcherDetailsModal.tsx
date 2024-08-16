@@ -38,6 +38,7 @@ export default function ResearcherDetailsModal({
 
   return (
     <FormModal
+      aria-label={`${user.first_name} ${user.last_name} details`}
       variant="content"
       isLoading={isUserLoading || isHistoriesLoading}
       open={open}

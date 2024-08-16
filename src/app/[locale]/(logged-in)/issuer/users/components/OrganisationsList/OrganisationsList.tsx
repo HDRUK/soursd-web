@@ -105,7 +105,7 @@ export default function UsersList({
                           onClick={() =>
                             handleViewResearcher({ organisation, isApproved })
                           }>
-                          View profile
+                          {t("viewDetails")}
                         </Button>
                       </ActionMenuItem>
                       <ActionMenuItem>

@@ -16,7 +16,7 @@ export default function OrganisationDetailsModal({
   open = true,
   onClose,
 }: OrganisationDetailsModalProps) {
-  const { data: user, isLoading } = useQuery({
+  const { data: organisationData, isLoading } = useQuery({
     queryKey: ["getOrganisationDetailsForIssuer", organisation?.id],
     queryFn: ({ queryKey }) => {
       const [, id] = queryKey;
@@ -31,12 +31,16 @@ export default function OrganisationDetailsModal({
 
   return (
     <FormModal
+      aria-label={`${organisation.organisation_name} details`}
       variant="content"
       isLoading={isLoading}
       open={open}
       onClose={onClose}>
-      {!isLoading && user?.data && (
-        <OrganisationDetails isApproved={isApproved} data={user?.data} />
+      {!isLoading && organisationData?.data && (
+        <OrganisationDetails
+          isApproved={isApproved}
+          data={organisationData?.data}
+        />
       )}
     </FormModal>
   );
