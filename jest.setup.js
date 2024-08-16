@@ -4,7 +4,14 @@ import "jest-axe/extend-expect";
 import { forwardRef, useImperativeHandle } from "react";
 import { ResponseMessageType } from "./src/consts/requests";
 import { mockedPermission } from "./mocks/data/permission";
-import { mockedUser } from "./mocks/data/user";
+import {
+  mockedEducation,
+  mockedTraining,
+  mockedUser,
+  mockedAccreditation,
+  mockedEmployment,
+  mockedProject,
+} from "./mocks/data/user";
 import { mockedOrganisation } from "./mocks/data/organisation";
 import {
   mockedSystemConfig,
@@ -67,6 +74,13 @@ function mock200Json(data) {
   };
 }
 
+function mockPagedResults(data) {
+  return {
+    current_page: 1,
+    data,
+  };
+}
+
 async function mockFetch(url) {
   const formattedUrl = url.toLowerCase();
 
@@ -76,6 +90,60 @@ async function mockFetch(url) {
         mockedUser({
           id: 1,
         })
+      );
+    }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/educations/1`: {
+      return mock200Json([
+        mockedEducation({
+          id: 1,
+        }),
+        mockedEducation({
+          id: 2,
+        }),
+      ]);
+    }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/training/1`: {
+      return mock200Json([
+        mockedTraining({
+          id: 1,
+        }),
+        mockedTraining({
+          id: 2,
+        }),
+      ]);
+    }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/accreditations/1`: {
+      return mock200Json(
+        mockPagedResults([
+          mockedAccreditation({
+            id: 1,
+          }),
+          mockedAccreditation({
+            id: 2,
+          }),
+        ])
+      );
+    }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/employments/1`: {
+      return mock200Json([
+        mockedEmployment({
+          id: 1,
+        }),
+        mockedEmployment({
+          id: 2,
+        }),
+      ]);
+    }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/projects/1`: {
+      return mock200Json(
+        mockPagedResults([
+          mockedProject({
+            id: 1,
+          }),
+          mockedProject({
+            id: 2,
+          }),
+        ])
       );
     }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/organisations`: {
