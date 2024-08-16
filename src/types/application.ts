@@ -60,6 +60,7 @@ interface User {
   profile_completed_at: string | null;
   profile_steps_completed: string | null;
   approvals: Approval[];
+  organisation_id: number | null;
   registry: {
     files: File[];
   };

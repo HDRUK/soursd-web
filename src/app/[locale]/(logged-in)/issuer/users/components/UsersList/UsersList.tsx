@@ -4,7 +4,6 @@ import AccordionTitle from "@/components/AccordionTitle";
 import ActionMenu from "@/components/ActionMenu/ActionMenu";
 import ActionMenuItem from "@/components/ActionMenu/ActionMenuItem";
 import ApprovalStatus from "@/components/ApprovalStatus";
-import Text from "@/components/Text";
 import { useApplicationData } from "@/context/ApplicationData";
 import { PostApprovalPayloadWithEntity } from "@/services/approvals";
 import { Organisation } from "@/services/organisations";
@@ -12,8 +11,6 @@ import { EntityType } from "@/types/api";
 import { FormMutateState } from "@/types/form";
 import BusinessIcon from "@mui/icons-material/Business";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import NewReleasesIcon from "@mui/icons-material/NewReleases";
-import VerifiedIcon from "@mui/icons-material/Verified";
 import { LoadingButton } from "@mui/lab";
 import {
   Accordion,
