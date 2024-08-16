@@ -145,21 +145,25 @@ const ApplicationDataProvider = ({
     };
   }, [!!systemConfigData?.data, value]);
 
+  const isAnyLoading = isUserLoading || isLoading || isOrganisationLoading;
+  const isAnyError = isError || isUserError || isOrganisationError;
+  const errorMessage = error || userError || organisationError;
+
   const isFinishedLoading =
-    !isLoading && !isError && systemConfigData?.data && authFetched;
+    !isAnyLoading && !isAnyError && systemConfigData?.data && authFetched;
 
   return (
     <ApplicationDataContext.Provider value={providerValue}>
-      {(isUserLoading || isLoading || isError || isUserError) && (
+      {(isAnyLoading || isAnyError) && (
         <DecoratorPanel>
-          {(isUserLoading || isLoading || isOrganisationLoading) && (
+          {isAnyLoading && (
             <OverlayCenter>
               <CircularProgress sx={{ color: "#fff" }} />
             </OverlayCenter>
           )}
-          {(isError || isUserError || isOrganisationError) && (
+          {isAnyError && (
             <OverlayCenterAlert>
-              {t.rich(error || userError || organisationError, {
+              {t.rich(errorMessage, {
                 contactLink: ContactLink,
               })}
             </OverlayCenterAlert>
