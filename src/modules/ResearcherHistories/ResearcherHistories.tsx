@@ -13,14 +13,12 @@ interface ResearcherHistoriesProps {
   data: HistoryCombinedData;
 }
 
-const NAMESPACE_TRANSLATION_APPLICATION = "Application";
 const NAMESPACE_TRANSLATION_HISTORIES = "ResearcherHistories";
 
 export default function ResearcherHistories({
   data,
 }: ResearcherHistoriesProps) {
-  const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
-  const tHistories = useTranslations(NAMESPACE_TRANSLATION_HISTORIES);
+  const t = useTranslations(NAMESPACE_TRANSLATION_HISTORIES);
 
   return (
     <>
@@ -29,16 +27,14 @@ export default function ResearcherHistories({
           aria-controls="accreditations-content"
           id="accreditations-header"
           expandIcon={<ExpandMoreIcon />}>
-          {tApplication("accreditations")}
+          {t("accreditations")}
         </AccordionSummary>
         <AccordionDetails>
           {data.getAccreditations?.data?.data.map(accreditation => (
             <ResearcherAccreditationEntry data={accreditation} />
           ))}
           {!data.getAccreditations?.data?.data.length && (
-            <Message severity="warning">
-              {tHistories("noAccreditationsFound")}
-            </Message>
+            <Message severity="warning">{t("noAccreditationsFound")}</Message>
           )}
         </AccordionDetails>
       </Accordion>
@@ -47,16 +43,14 @@ export default function ResearcherHistories({
           aria-controls="educations-content"
           id="educations-header"
           expandIcon={<ExpandMoreIcon />}>
-          {tApplication("education")}
+          {t("education")}
         </AccordionSummary>
         <AccordionDetails>
           {data.getEducations?.data.map(education => (
             <ResearcherEducationEntry data={education} />
           ))}
           {!data.getEducations?.data.length && (
-            <Message severity="warning">
-              {tHistories("noEducationsFound")}
-            </Message>
+            <Message severity="warning">{t("noEducationsFound")}</Message>
           )}
         </AccordionDetails>
       </Accordion>
@@ -65,16 +59,14 @@ export default function ResearcherHistories({
           aria-controls="employments-content"
           id="employments-header"
           expandIcon={<ExpandMoreIcon />}>
-          {tApplication("employment")}
+          {t("employment")}
         </AccordionSummary>
         <AccordionDetails>
           {data.getEmployments?.data.map(employment => (
             <ResearcherEmploymentEntry data={employment} />
           ))}
           {!data.getEmployments?.data.length && (
-            <Message severity="warning">
-              {tHistories("noEmploymentsFound")}
-            </Message>
+            <Message severity="warning">{t("noEmploymentsFound")}</Message>
           )}
         </AccordionDetails>
       </Accordion>
@@ -83,16 +75,14 @@ export default function ResearcherHistories({
           aria-controls="projects-content"
           id="projects-header"
           expandIcon={<ExpandMoreIcon />}>
-          {tApplication("projects")}
+          {t("projects")}
         </AccordionSummary>
         <AccordionDetails>
           {data.getProjects?.data?.data.map(project => (
             <ResearcherProjectEntry data={project} />
           ))}
           {!data.getProjects?.data?.data.length && (
-            <Message severity="warning">
-              {tHistories("noProjectsFound")}
-            </Message>
+            <Message severity="warning">{t("noProjectsFound")}</Message>
           )}
         </AccordionDetails>
       </Accordion>
@@ -101,16 +91,14 @@ export default function ResearcherHistories({
           aria-controls="training-content"
           id="training-header"
           expandIcon={<ExpandMoreIcon />}>
-          {tApplication("training")}
+          {t("training")}
         </AccordionSummary>
         <AccordionDetails>
           {data.getTrainings?.data.map(training => (
             <ResearcherTrainingEntry data={training} />
           ))}
           {!data.getTrainings?.data.length && (
-            <Message severity="warning">
-              {tHistories("noTrainingsFound")}
-            </Message>
+            <Message severity="warning">{t("noTrainingsFound")}</Message>
           )}
         </AccordionDetails>
       </Accordion>

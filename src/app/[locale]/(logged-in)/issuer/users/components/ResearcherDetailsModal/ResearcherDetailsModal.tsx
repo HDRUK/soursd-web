@@ -1,9 +1,11 @@
 import FormModal from "@/components/FormModal";
+import { Message } from "@/components/Message";
+import ResearcherDetails from "@/modules/ResearcherDetails";
 import useQueriesHistories from "@/queries/useQueriesHistories";
 import { getUser } from "@/services/users";
 import { Organisation, User } from "@/types/application";
 import { useQuery } from "@tanstack/react-query";
-import ResearcherDetails from "@/modules/ResearcherDetails";
+import { useTranslations } from "next-intl";
 
 interface UserDetailsModalProps {
   isApproved: boolean;
@@ -13,6 +15,8 @@ interface UserDetailsModalProps {
   onClose(): void;
 }
 
+const NAMESPACE_TRANSLATIONS_DETAILS = "ResearcherDetails";
+
 export default function ResearcherDetailsModal({
   isApproved,
   user,
@@ -20,7 +24,13 @@ export default function ResearcherDetailsModal({
   open = true,
   onClose,
 }: UserDetailsModalProps) {
-  const { data: userDetails, isLoading: isUserLoading } = useQuery({
+  const t = useTranslations(NAMESPACE_TRANSLATIONS_DETAILS);
+
+  const {
+    data: userDetails,
+    isLoading: isUserLoading,
+    error: userError,
+  } = useQuery({
     queryKey: ["getUserDetailsForIssuer", user?.id],
     queryFn: ({ queryKey }) => {
       const [, id] = queryKey;
@@ -43,6 +53,7 @@ export default function ResearcherDetailsModal({
       isLoading={isUserLoading || isHistoriesLoading}
       open={open}
       onClose={onClose}>
+      {userError && <Message severity="error">{t(userError)}</Message>}
       {!isUserLoading &&
         !isHistoriesLoading &&
         userDetails?.data &&

@@ -5,11 +5,6 @@
     "researcher": "Researcher",
     "organisation": "Organisation",
     "issuer": "Issuer",
-    "accreditations": "Accreditations",
-    "employment": "Employments",
-    "education": "Education",
-    "projects": "Projects",
-    "training": "Training",
     "companyNumberAbbr": "CRN"
   },
   "IssuerProfile": {
@@ -172,7 +167,23 @@
     "noEducationsFound": "Could not find any education history",
     "noEmploymentsFound": "Could not find any employment history",
     "noProjectsFound": "Could not find any project history",
-    "noTrainingsFound": "Could not find any training history"
+    "noTrainingsFound": "Could not find any training history",
+    "expiresAt": "Expires at",
+    "provider": "Provider",
+    "awardingBody": "Awarding body",
+    "awardedAt": "Awarded at",
+    "expiresOn": "Expires on",
+    "accreditations": "Accreditations",
+    "employment": "Employments",
+    "education": "Education",
+    "projects": "Projects",
+    "training": "Training"
+  },
+  "ResearcherDetails": {
+    "getUserDetailsForIssuerError": "Couldn't get the user's details"
+  },
+  "OrganisationDetails": {
+    "getOrganisationDetailsForIssuerError": "Couldn't get the organisation's details"
   },
   "Permissions": {
     "title": "Permissions",
