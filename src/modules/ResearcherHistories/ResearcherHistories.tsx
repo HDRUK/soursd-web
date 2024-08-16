@@ -19,6 +19,11 @@ export default function ResearcherHistories({
   data,
 }: ResearcherHistoriesProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_HISTORIES);
+  const accreditations = data.getAccreditations?.data?.data;
+  const employments = data.getEmployments?.data;
+  const educations = data.getEducations?.data;
+  const projects = data.getProjects?.data?.data;
+  const trainings = data.getTrainings?.data;
 
   return (
     <>
@@ -30,10 +35,11 @@ export default function ResearcherHistories({
           {t("accreditations")}
         </AccordionSummary>
         <AccordionDetails>
-          {data.getAccreditations?.data?.data.map(accreditation => (
-            <ResearcherAccreditationEntry data={accreditation} />
-          ))}
-          {!data.getAccreditations?.data?.data.length && (
+          {accreditations?.length ? (
+            accreditations.map(accreditation => (
+              <ResearcherAccreditationEntry data={accreditation} />
+            ))
+          ) : (
             <Message severity="warning">{t("noAccreditationsFound")}</Message>
           )}
         </AccordionDetails>
@@ -46,10 +52,11 @@ export default function ResearcherHistories({
           {t("education")}
         </AccordionSummary>
         <AccordionDetails>
-          {data.getEducations?.data.map(education => (
-            <ResearcherEducationEntry data={education} />
-          ))}
-          {!data.getEducations?.data.length && (
+          {educations?.length ? (
+            educations.map(education => (
+              <ResearcherEducationEntry data={education} />
+            ))
+          ) : (
             <Message severity="warning">{t("noEducationsFound")}</Message>
           )}
         </AccordionDetails>
@@ -62,10 +69,11 @@ export default function ResearcherHistories({
           {t("employment")}
         </AccordionSummary>
         <AccordionDetails>
-          {data.getEmployments?.data.map(employment => (
-            <ResearcherEmploymentEntry data={employment} />
-          ))}
-          {!data.getEmployments?.data.length && (
+          {employments?.length ? (
+            employments.map(employment => (
+              <ResearcherEmploymentEntry data={employment} />
+            ))
+          ) : (
             <Message severity="warning">{t("noEmploymentsFound")}</Message>
           )}
         </AccordionDetails>
@@ -78,10 +86,9 @@ export default function ResearcherHistories({
           {t("projects")}
         </AccordionSummary>
         <AccordionDetails>
-          {data.getProjects?.data?.data.map(project => (
-            <ResearcherProjectEntry data={project} />
-          ))}
-          {!data.getProjects?.data?.data.length && (
+          {projects?.length ? (
+            projects.map(project => <ResearcherProjectEntry data={project} />)
+          ) : (
             <Message severity="warning">{t("noProjectsFound")}</Message>
           )}
         </AccordionDetails>
@@ -94,10 +101,11 @@ export default function ResearcherHistories({
           {t("training")}
         </AccordionSummary>
         <AccordionDetails>
-          {data.getTrainings?.data.map(training => (
-            <ResearcherTrainingEntry data={training} />
-          ))}
-          {!data.getTrainings?.data.length && (
+          {trainings?.length ? (
+            trainings.map(training => (
+              <ResearcherTrainingEntry data={training} />
+            ))
+          ) : (
             <Message severity="warning">{t("noTrainingsFound")}</Message>
           )}
         </AccordionDetails>
