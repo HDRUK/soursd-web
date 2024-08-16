@@ -6,23 +6,30 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import BusinessIcon from "@mui/icons-material/Business";
 import { Box, Link, Typography } from "@mui/material";
 import { filterFalsy } from "@/utils/array";
+import { useTranslations } from "next-intl";
 
 interface OrganisationDetailsProps {
   isApproved: boolean;
   data: Organisation;
 }
 
+const NAMESPACE_TRANSLATION_APPLICATION = "Application";
+
 export default function OrganisationDetails({
   isApproved,
   data,
 }: OrganisationDetailsProps) {
+  const t = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
   const { address_1, address_2, town, county, country, postcode } = data;
+
   return (
     <div>
       <ApprovalStatus isApproved={isApproved}>
         <Typography variant="h6">{data.organisation_name}</Typography>
       </ApprovalStatus>
-      <Text startIcon={<BusinessIcon />}>CRN: {data.companies_house_no}</Text>
+      <Text startIcon={<BusinessIcon />}>
+        {t("companyNumberAbbr")}: {data.companies_house_no}
+      </Text>
       <Text startIcon={<MailIcon />}>
         <Link href={`mailto: ${data.lead_applicant_email}`}>
           {data.lead_applicant_email}

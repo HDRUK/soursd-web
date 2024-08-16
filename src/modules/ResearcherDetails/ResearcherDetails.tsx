@@ -21,7 +21,6 @@ export default function ResearcherDetails({
   organisation,
   histories,
 }: ResearcherDetailsProps) {
-  console.log("histories", histories);
   return (
     <div>
       <ApprovalStatus isApproved={isApproved}>

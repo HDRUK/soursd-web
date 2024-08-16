@@ -9,7 +9,8 @@
     "employment": "Employments",
     "education": "Education",
     "projects": "Projects",
-    "training": "Training"
+    "training": "Training",
+    "companyNumberAbbr": "CRN"
   },
   "IssuerProfile": {
     "title": "Profile"

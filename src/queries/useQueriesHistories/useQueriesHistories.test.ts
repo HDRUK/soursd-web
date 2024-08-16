@@ -12,7 +12,13 @@ describe("useQueryRefetch", () => {
         expect.objectContaining({
           isError: false,
           isLoading: false,
-          error: [null, null, null, null, null],
+          error: {
+            getAccreditations: null,
+            getProjects: null,
+            getEducations: null,
+            getEmployments: null,
+            getTrainings: null,
+          },
           data: {
             getAccreditations: expect.objectContaining({
               message: "success",

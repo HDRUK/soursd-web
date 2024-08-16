@@ -1,5 +1,5 @@
-import useQueriesHistory from "./useQueriesHistories";
+import useQueriesHistories from "./useQueriesHistories";
 
-export default useQueriesHistory;
+export default useQueriesHistories;
 
 export * from "./useQueriesHistories";

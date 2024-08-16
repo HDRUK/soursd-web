@@ -3,7 +3,7 @@ import { UseQueryOptions, useQueries } from "@tanstack/react-query";
 interface CombinedResults<T = unknown> {
   isLoading: boolean;
   isError: boolean;
-  error: (Error | null)[];
+  error: Record<string, Error | null>;
   data: T;
 }
 
@@ -13,16 +13,18 @@ export default function useQueriesCombined<T>(queries: UseQueryOptions[]) {
     combine: results => {
       const isError = results.some(result => result.isError);
       const isLoading = results.some(result => result.isLoading);
-      const error = results.map(result => result.error);
 
-      const data = results
+      const error: Record<string, Error | null> = {};
+      const data: Record<string, unknown> = {};
+
+      results
         .map(result => result)
-        .reduce((accumulator, currentValue, index) => {
-          return {
-            ...accumulator,
-            [(queries[index].queryKey as string[])[0]]: currentValue.data,
-          };
-        }, {}) as Record<string, unknown>;
+        .forEach((result, index) => {
+          const queryKey = (queries[index].queryKey as string[])[0];
+
+          error[queryKey] = result.error;
+          data[queryKey] = result.data;
+        });
 
       return {
         isLoading,
