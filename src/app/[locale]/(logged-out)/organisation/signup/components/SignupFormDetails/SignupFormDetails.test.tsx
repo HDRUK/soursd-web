@@ -10,7 +10,7 @@ const renderSignupForm = (props?: Partial<SignupFormDetailsProps>) => {
     <SignupFormDetails
       defaultValues={{
         organisation_name: "",
-        lead_applicant_organisation_email: "",
+        lead_applicant_email: "",
         first_name: "",
         last_name: "",
         password: "",
@@ -51,8 +51,7 @@ describe("<SignupFormDetails />", () => {
     renderSignupForm();
 
     const organisation_name = screen.getByLabelText(/Organisation name/);
-    const lead_applicant_organisation_email =
-      screen.getByLabelText(/Applicant email/);
+    const lead_applicant_email = screen.getByLabelText(/Applicant email/);
     const first_name = screen.getByLabelText(/First name/);
     const last_name = screen.getByLabelText(/Last name/);
     const password = screen.getByLabelText(/Password/);
@@ -60,7 +59,7 @@ describe("<SignupFormDetails />", () => {
     const companies_house_no = screen.getByLabelText(/Company number/);
 
     const organisation_nameValue = faker.string.sample();
-    const lead_applicant_organisation_emailValue = faker.internet.email();
+    const lead_applicant_emailValue = faker.internet.email();
     const first_nameValue = faker.person.firstName();
     const last_nameValue = faker.person.lastName();
     const passwordValue = "A!2sghjs";
@@ -73,7 +72,7 @@ describe("<SignupFormDetails />", () => {
 
     if (
       organisation_name &&
-      lead_applicant_organisation_email &&
+      lead_applicant_email &&
       first_name &&
       last_name &&
       password &&
@@ -86,9 +85,9 @@ describe("<SignupFormDetails />", () => {
           value: organisation_nameValue,
         },
       });
-      fireEvent.change(lead_applicant_organisation_email, {
+      fireEvent.change(lead_applicant_email, {
         target: {
-          value: lead_applicant_organisation_emailValue,
+          value: lead_applicant_emailValue,
         },
       });
       fireEvent.change(first_name, {

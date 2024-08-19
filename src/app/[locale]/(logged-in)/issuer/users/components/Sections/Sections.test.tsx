@@ -115,6 +115,21 @@ describe("<Sections />", () => {
     });
   });
 
+  it("shows a researchers details", async () => {
+    const viewDetails = await setupActionMenuTest(
+      "john.smith@hdruk.ac.uk actions",
+      "View details"
+    );
+
+    fireEvent.click(viewDetails);
+
+    await waitFor(() => {
+      const modal = screen.getByLabelText("John Smith details");
+
+      expect(modal).toBeInTheDocument();
+    });
+  });
+
   it("approves an organisation", async () => {
     const approval = await setupActionMenuTest(
       "Organisation 1 actions",
@@ -129,6 +144,21 @@ describe("<Sections />", () => {
         organisation_id: 1,
         issuer_id: 1,
       });
+    });
+  });
+
+  it("shows an organisations details", async () => {
+    const viewDetails = await setupActionMenuTest(
+      "Organisation 1 actions",
+      "View details"
+    );
+
+    fireEvent.click(viewDetails);
+
+    await waitFor(() => {
+      const modals = screen.getAllByLabelText("Organisation 1 details");
+
+      expect(modals[modals.length - 1]).toBeInTheDocument();
     });
   });
 });

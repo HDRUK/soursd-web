@@ -8,7 +8,7 @@ import {
   QueryCache,
   QueryClient,
   QueryClientProvider,
-} from "react-query";
+} from "@tanstack/react-query";
 
 interface ReactQueryClientProviderProps {
   children: ReactNode;
@@ -52,6 +52,12 @@ export default function ReactQueryClientProvider({
       new QueryClient({
         queryCache,
         mutationCache,
+        defaultOptions: {
+          queries: {
+            refetchOnWindowFocus: false,
+            retry: false,
+          },
+        },
       })
   );
 

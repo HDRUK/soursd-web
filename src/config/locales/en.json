@@ -4,7 +4,8 @@
     "getUserError": "Unable to load your user details. Please try again or contact us at <contactLink></contactLink>",
     "researcher": "Researcher",
     "organisation": "Organisation",
-    "issuer": "Issuer"
+    "issuer": "Issuer",
+    "companyNumberAbbr": "CRN"
   },
   "IssuerProfile": {
     "title": "Profile"
@@ -143,16 +144,46 @@
   },
   "Profile": {
     "title": "Profile",
-    "profileComplete": "Profile complete",
-    "uniqueIdPopup": "Your unique id is used by issuers to identify who you are.",
-    "profileNotComplete": "Profile not complete",
-    "profileNotCompletePopup": "Your user profile is not \"complete\". This will be visible to issuers and your organisation. Depending on their policies it may prevent you from accessing available research data.",
     "details": "Details",
     "identity": "Identity",
     "affiliations": "Affiliations",
     "experience": "Experience",
     "training": "Training",
     "navigationAriaLabel": "Profile sections"
+  },
+  "ProfileCompleteStatus": {
+    "profileComplete": "Profile complete",
+    "uniqueIdPopup": "Your unique id is used by issuers to identify who you are.",
+    "profileNotComplete": "Profile not complete",
+    "profileNotCompletePopup": "Your user profile is not \"complete\". This will be visible to issuers and your organisation. Depending on their policies it may prevent you from accessing available research data."
+  },
+  "UserCompleteStatus": {
+    "profileComplete": "Profile complete",
+    "profileNotComplete": "Profile not complete",
+    "profileNotCompletePopup": "This user's profile is not \"complete\". They may not have provided some required by your policies. Please check the information below."
+  },
+  "ResearcherHistories": {
+    "noAccreditationsFound": "Could not find any accreditation history",
+    "noEducationsFound": "Could not find any education history",
+    "noEmploymentsFound": "Could not find any employment history",
+    "noProjectsFound": "Could not find any project history",
+    "noTrainingsFound": "Could not find any training history",
+    "expiresAt": "Expires at",
+    "provider": "Provider",
+    "awardingBody": "Awarding body",
+    "awardedAt": "Awarded at",
+    "expiresOn": "Expires on",
+    "accreditations": "Accreditations",
+    "employment": "Employments",
+    "education": "Education",
+    "projects": "Projects",
+    "training": "Training"
+  },
+  "ResearcherDetails": {
+    "getUserDetailsForIssuerError": "Couldn't get the user's details"
+  },
+  "OrganisationDetails": {
+    "getOrganisationDetailsForIssuerError": "Couldn't get the organisation's details"
   },
   "Permissions": {
     "title": "Permissions",
@@ -177,7 +208,8 @@
     "lastNameHeading": "Last name",
     "tableSummary": "Table of users",
     "updateOrganisationApprovalError": "Couldn't update the organisations approval settings",
-    "updateApprovalError": "Couldn't update the researchers approval settings"
+    "updateApprovalError": "Couldn't update the researchers approval settings",
+    "viewDetails": "View details"
   },
   "SignupFormContacts": {
     "title": "Additional contacts",

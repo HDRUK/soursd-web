@@ -1,11 +1,11 @@
 import { DeleteApprovalPayload, deleteApproval } from "@/services/approvals";
 import { EntityType } from "@/types/api";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 
 export default function useMutationApprovals() {
-  return useMutation(
-    ["postApproval"],
-    async (payload: DeleteApprovalPayload & { type: EntityType }) => {
+  return useMutation({
+    mutationKey: ["postApproval"],
+    mutationFn: (payload: DeleteApprovalPayload & { type: EntityType }) => {
       const { type, organisation_id, user_id, ...restPayload } = payload;
 
       if (type === EntityType.ORGANISATION) {
@@ -33,6 +33,6 @@ export default function useMutationApprovals() {
           error: { message: "updateApprovalError" },
         }
       );
-    }
-  );
+    },
+  });
 }

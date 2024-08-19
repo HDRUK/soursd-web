@@ -28,7 +28,7 @@ import {
   useMemo,
   useState,
 } from "react";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 const ApplicationDataContext = createContext({
   routes: ROUTES,
@@ -64,34 +64,36 @@ const ApplicationDataProvider = ({
     isLoading,
     isError,
     error,
-  } = useQuery(["getSystemConfig"], () =>
-    getSystemConfig({
-      error: {
-        message: "getSystemConfigError",
-      },
-    })
-  );
+  } = useQuery({
+    queryKey: ["getSystemConfig"],
+    queryFn: () =>
+      getSystemConfig({
+        error: {
+          message: "getSystemConfigError",
+        },
+      }),
+  });
 
   const {
     mutateAsync: mutateUserAsync,
     isError: isUserError,
-    isLoading: isUserLoading,
+    isPending: isUserLoading,
     error: userError,
-  } = useMutation(["getUser"], async (id: number) =>
-    getUser(id, {
-      error: {
-        message: "getUserError",
-      },
-    })
-  );
+  } = useMutation({
+    mutationKey: ["getUser"],
+    mutationFn: (id: number) =>
+      getUser(id, {
+        error: {
+          message: "getUserError",
+        },
+      }),
+  });
 
   useEffect(() => {
     const initUserFetch = async () => {
       const authDetails = await getAuthData();
 
-      setAuth(authDetails);
-
-      if (authDetails?.user?.id) {
+      if (prefetchAuth && authDetails?.user?.id) {
         const user = await mutateUserAsync(authDetails.user.id);
 
         setAuth({
@@ -102,12 +104,13 @@ const ApplicationDataProvider = ({
           },
         });
 
-        if (user.data?.user_group === UserGroup.ORGANISATIONS)
+        if (user.data?.user_group === UserGroup.ORGANISATIONS) {
           setOrganisation(
             mockedOrganisation({
               idvt_result: null,
             })
           );
+        }
       }
 
       setAuthFetched(true);
@@ -131,7 +134,12 @@ const ApplicationDataProvider = ({
   }, [!!systemConfigData?.data, value]);
 
   const isFinishedLoading =
-    !isLoading && !isError && systemConfigData?.data && authFetched;
+    !isUserLoading &&
+    !isLoading &&
+    !isError &&
+    !isUserError &&
+    systemConfigData?.data &&
+    authFetched;
 
   return (
     <ApplicationDataContext.Provider value={providerValue}>

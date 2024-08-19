@@ -11,6 +11,7 @@ const customJestConfig = {
   testEnvironment: "jest-environment-jsdom",
   moduleNameMapper: {
     "^@/mocks/(.*)$": "<rootDir>/mocks/$1",
+    "^@/queries/(.*)$": "<rootDir>/src/queries/$1",
     "^@/services/(.*)$": "<rootDir>/src/services/$1",
     "^@/images/(.*)$": "<rootDir>/src/images/$1",
     "^@/hooks/(.*)$": "<rootDir>/src/hooks/$1",

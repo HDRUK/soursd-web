@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from "react";
-import { RefetchQueryFilters, useQueryClient } from "react-query";
+import { RefetchQueryFilters, useQueryClient } from "@tanstack/react-query";
 
 interface UseQueryRefetchProps {
   delay?: number;

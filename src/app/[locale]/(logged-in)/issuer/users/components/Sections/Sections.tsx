@@ -13,9 +13,9 @@ import { getOrganisations } from "@/services/organisations";
 import { CircularProgress, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useCallback } from "react";
-import { useQuery, useQueryClient } from "react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useMutationApproval, useMutationDeleteApproval } from "../../hooks";
-import UsersList from "../UsersList";
+import OrganisationsList from "../OrganisationsList";
 
 const NAMESPACE_TRANSLATIONS_USERS_LIST = "UsersList";
 const NAMESPACE_TRANSLATIONS_USERS = "Users";
@@ -30,23 +30,26 @@ export default function Sections() {
     isLoading: isOrganisationsLoading,
     isError: isOrganisationsError,
     error: orgainsationsError,
-  } = useQuery(["getOrganisations"], async () =>
-    getOrganisations({
-      error: {
-        message: "getOrganisations",
-      },
-    })
-  );
+  } = useQuery({
+    queryKey: ["getOrganisations"],
+    queryFn: () =>
+      getOrganisations({
+        error: {
+          message: "getOrganisations",
+        },
+      }),
+  });
 
   const {
     mutateAsync: mutateUpdateAsync,
-    isLoading: isUpdateLoading,
+    isPending: isUpdateLoading,
     isError: isUpdateError,
     error: errorUpdate,
   } = useMutationApproval();
+
   const {
     mutateAsync: mutateDeleteAsync,
-    isLoading: isDeleteLoading,
+    isPending: isDeleteLoading,
     isError: isDeleteError,
     error: errorDelete,
   } = useMutationDeleteApproval();
@@ -60,7 +63,9 @@ export default function Sections() {
     async (payload: PostApprovalPayloadWithEntity) => {
       await mutateUpdateAsync(payload);
 
-      queryClient.refetchQueries(["getOrganisations"]);
+      queryClient.refetchQueries({
+        queryKey: ["getOrganisations"],
+      });
     },
     []
   );
@@ -69,7 +74,9 @@ export default function Sections() {
     async (payload: DeleteApprovalPayloadWithEntity) => {
       await mutateDeleteAsync(payload);
 
-      queryClient.refetchQueries(["getOrganisations"]);
+      queryClient.refetchQueries({
+        queryKey: ["getOrganisations"],
+      });
     },
     []
   );
@@ -93,7 +100,7 @@ export default function Sections() {
           </Message>
         )}
         {!isOrganisationsLoading && organisationsData?.data.data && (
-          <UsersList
+          <OrganisationsList
             onApprove={handleApprove}
             onUnapprove={handleUnapprove}
             organisations={organisationsData?.data.data}

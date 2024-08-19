@@ -15,7 +15,7 @@ import { getInitialsFromOrganisation } from "@/utils/user";
 import { Box, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { ReactNode, useEffect } from "react";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import CompanyValidatedStatus from "../CompanyValidatedStatus";
 
 interface SectionsProps {
@@ -32,13 +32,15 @@ export default function Sections({ children }: SectionsProps) {
     data: organisationData,
     error: organisationStatusError,
     isError: isOrganisationStatusError,
-  } = useQuery(["getOrganisationIdvt", 1], async () =>
-    getOrganisationIdvt(1, {
-      error: {
-        message: "getOrganisationIdvtError",
-      },
-    })
-  );
+  } = useQuery({
+    queryKey: ["getOrganisationIdvt", 1],
+    queryFn: () =>
+      getOrganisationIdvt(1, {
+        error: {
+          message: "getOrganisationIdvtError",
+        },
+      }),
+  });
 
   const idvtResult = organisationData?.data.idvt_result;
 
