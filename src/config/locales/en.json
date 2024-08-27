@@ -59,7 +59,9 @@
     "ceCertificationNumberRequiredInvalid": "Certification number is invalid",
     "countyRequiredInvalid": "County is required",
     "countryRequiredInvalid": "Country is required",
-    "issuerRequiredInvalid": "Issuer is required"
+    "issuerRequiredInvalid": "Issuer is required",
+    "orcIdRequiredInvalid": "Orc id is required",
+    "orcIdFormatInvalid": "Orc id should follow the format 0000-0000-0000-000[n] where the last digit is either 0,9 or X"
   },
   "Buttons": {
     "register": "Register",
@@ -91,6 +93,9 @@
     "firstName": "First name",
     "lastNamePlaceholder": "Last name",
     "lastName": "Last name",
+    "orcIdPlaceholder": "ORCiD",
+    "orcId": "ORCiD",
+    "whatIsTheOrcId": "Your ORCiD is a value which identifies you to issuers (although in general anyone) and provides information to them such as your research outputs and activities. If you don't have one of these you can signup at https://orcid.org/register. Although it is recommended to provide this, it is not required for the registry, however it is required for the content scrape.",
     "emailPlaceholder": "Email",
     "email": "Email",
     "otpPasscodePlaceholder": "OTP pascode",

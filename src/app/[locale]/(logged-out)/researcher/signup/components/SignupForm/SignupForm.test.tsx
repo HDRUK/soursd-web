@@ -75,6 +75,7 @@ describe("<SignupForm />", () => {
     const email = screen.getByLabelText(/Email/);
     const firstName = screen.getByLabelText(/First name/);
     const lastName = screen.getByLabelText(/Last name/);
+    const orcId = screen.getAllByLabelText(/ORCiD/)[0];
     const password = screen.getByLabelText(/Password/);
     const confirmPassword = screen.getByLabelText(/Confirm password/);
     const tscs = screen.getByLabelText("Accept terms and conditions");
@@ -86,6 +87,7 @@ describe("<SignupForm />", () => {
     const emailValue = faker.internet.email();
     const firstNameValue = faker.person.firstName();
     const lastNameValue = faker.person.lastName();
+    const orcIdValue = "0000-0000-0000-0000";
     const passwordValue = "A!2sghjs";
     const confirmPasswordValue = passwordValue;
 
@@ -96,7 +98,8 @@ describe("<SignupForm />", () => {
       password &&
       confirmPassword &&
       tscs &&
-      consentScrape
+      consentScrape &&
+      orcIdValue
     ) {
       act(() => {
         fireEvent.change(email, {
@@ -112,6 +115,11 @@ describe("<SignupForm />", () => {
         fireEvent.change(lastName, {
           target: {
             value: lastNameValue,
+          },
+        });
+        fireEvent.change(orcId, {
+          target: {
+            value: orcIdValue,
           },
         });
         fireEvent.change(password, {
@@ -134,8 +142,9 @@ describe("<SignupForm />", () => {
           confirmPassword: confirmPasswordValue,
           consentScrape: true,
           email: emailValue,
-          firstName: firstNameValue,
-          lastName: lastNameValue,
+          first_name: firstNameValue,
+          last_name: lastNameValue,
+          orc_id: orcIdValue,
           organisation: `${defaultOrganisation.id}`,
           password: passwordValue,
           tscs: true,
@@ -143,7 +152,7 @@ describe("<SignupForm />", () => {
       });
     } else {
       fail(
-        "First name, last name, password, confirm password, tscs or consentScrape do not exist"
+        "First name, last name, orcId, password, confirm password, tscs or consentScrape do not exist"
       );
     }
   });
