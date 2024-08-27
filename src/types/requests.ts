@@ -15,10 +15,17 @@ type ResponseJson<T> = Response & {
   message: string;
 };
 
+interface Paged<T> {
+  data: {
+    current_page: number;
+  } & T;
+}
+
 type QueryOptions = Omit<RequestInit, "body">;
 type QueryPayload<T> = T | (() => BodyInit & T);
 
 export type {
+  Paged,
   ResponseJson,
   ResponseTranslation,
   ResponseTranslations,

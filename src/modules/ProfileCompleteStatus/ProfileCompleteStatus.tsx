@@ -13,7 +13,7 @@ interface ProfileCompleteStatusProps {
   user: User | undefined;
 }
 
-const NAMESPACE_TRANSLATION_PROFILE = "Profile";
+const NAMESPACE_TRANSLATION_PROFILE = "ProfileCompleteStatus";
 
 export default function ProfileCompleteStatus({
   user,
@@ -53,6 +53,7 @@ export default function ProfileCompleteStatus({
       )}
       {!user?.profile_completed_at && (
         <Text
+          fontStyle="italic"
           startIcon={
             <Tooltip title={t("profileNotCompletePopup")}>
               <ErrorIcon color="error" />

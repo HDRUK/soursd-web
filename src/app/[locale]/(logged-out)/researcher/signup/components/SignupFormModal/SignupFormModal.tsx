@@ -10,10 +10,10 @@ import { getOrganisations } from "@/services/organisations";
 import { getByInviteCode } from "@/services/users";
 import { isExpiredInvite } from "@/utils/date";
 import PersonIcon from "@mui/icons-material/Person";
-import { Box, CircularProgress } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useMutationRegister } from "../../hooks";
 import SignupForm, { SignupFormValues } from "../SignupForm";
 
@@ -33,44 +33,42 @@ export default function Page() {
     isLoading: isGetResearcherLoading,
     data: researcherData,
     error: researcherError,
-  } = useQuery(
-    ["getByInviteCode", inviteCode || ""],
-    async () =>
+  } = useQuery({
+    queryKey: ["getByInviteCode", inviteCode || ""],
+    queryFn: () =>
       getByInviteCode(inviteCode || "", {
         error: { message: "getByInviteCodeError" },
       }),
-    {
-      enabled: !!inviteCode,
-    }
-  );
+
+    enabled: !!inviteCode,
+  });
 
   const {
     isError: isGetOrganisationsError,
     isLoading: isGetOrganisationsLoading,
     data: organisationsData,
     error: organisationsError,
-  } = useQuery(
-    ["getOrganisationsError"],
-    async () =>
+  } = useQuery({
+    queryKey: ["getOrganisationsError"],
+    queryFn: () =>
       getOrganisations({
         error: { message: "noData" },
       }),
-    {
-      enabled: !inviteCode,
-    }
-  );
+
+    enabled: !inviteCode,
+  });
 
   const {
     mutateAsync: mutateSignupAsync,
     isError: isSignupError,
-    isLoading: isSignupLoading,
+    isPending: isSignupLoading,
     error: signupError,
   } = useMutationRegister(researcherData?.data);
 
   const handleSignupSubmit = async (values: SignupFormValues) => {
     const {
-      firstName: first_name,
-      lastName: last_name,
+      first_name,
+      last_name,
       password,
       email,
       organisation,
@@ -156,22 +154,20 @@ export default function Page() {
       open
       isDismissable
       onClose={() => router.push(routes.homepage.path)}>
-      <Box sx={{ minWidth: "250px" }}>
-        <FormModalHeader icon={<PersonIcon />}>
-          {tResearcher("title")}
-        </FormModalHeader>
-        <SignupForm
-          defaultEmail={researcherData?.data.contact_email}
-          defaultOrganisation={researcherData?.data.organisation_id?.toString()}
-          organisations={organisationsData?.data.data || []}
-          onSubmit={handleSignupSubmit}
-          mutateState={{
-            isLoading: isSignupLoading,
-            isError: isSignupError,
-            error: signupError,
-          }}
-        />
-      </Box>
+      <FormModalHeader icon={<PersonIcon />}>
+        {tResearcher("title")}
+      </FormModalHeader>
+      <SignupForm
+        defaultEmail={researcherData?.data.contact_email}
+        defaultOrganisation={researcherData?.data.organisation_id?.toString()}
+        organisations={organisationsData?.data.data || []}
+        onSubmit={handleSignupSubmit}
+        mutateState={{
+          isLoading: isSignupLoading,
+          isError: isSignupError,
+          error: signupError,
+        }}
+      />
     </FormModal>
   );
 }

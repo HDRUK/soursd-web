@@ -29,7 +29,7 @@ import {
   useMemo,
   useState,
 } from "react";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 const ApplicationDataContext = createContext({
   routes: ROUTES,
@@ -65,47 +65,51 @@ const ApplicationDataProvider = ({
     isLoading,
     isError,
     error,
-  } = useQuery(["getSystemConfig"], () =>
-    getSystemConfig({
-      error: {
-        message: "getSystemConfigError",
-      },
-    })
-  );
+  } = useQuery({
+    queryKey: ["getSystemConfig"],
+    queryFn: () =>
+      getSystemConfig({
+        error: {
+          message: "getSystemConfigError",
+        },
+      }),
+  });
 
   const {
     mutateAsync: mutateUserAsync,
     isError: isUserError,
-    isLoading: isUserLoading,
+    isPending: isUserLoading,
     error: userError,
-  } = useMutation(["getUser"], async (id: number) =>
-    getUser(id, {
-      error: {
-        message: "getUserError",
-      },
-    })
-  );
+  } = useMutation({
+    mutationKey: ["getUser"],
+    mutationFn: (id: number) =>
+      getUser(id, {
+        error: {
+          message: "getUserError",
+        },
+      }),
+  });
 
   const {
     mutateAsync: mutateOrganisationAsync,
     isError: isOrganisationError,
     isLoading: isOrganisationLoading,
     error: organisationError,
-  } = useMutation(["getOrganisation"], async (id: number) =>
-    getOrganisation(id, {
-      error: {
-        message: "getOrganisationError",
-      },
-    })
-  );
+  } = useMutation({
+    mutationKey: ["getOrganisation"],
+    mutationFn: (id: number) =>
+      getOrganisation(id, {
+        error: {
+          message: "getOrganisationError",
+        },
+      }),
+  });
 
   useEffect(() => {
     const initUserFetch = async () => {
       const authDetails = await getAuthData();
 
-      setAuth(authDetails);
-
-      if (authDetails?.user?.id) {
+      if (prefetchAuth && authDetails?.user?.id) {
         const user = await mutateUserAsync(authDetails.user.id);
 
         setAuth({

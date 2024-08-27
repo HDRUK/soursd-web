@@ -5,12 +5,14 @@ import FormRecaptcha from "@/components/FormRecaptcha";
 import { Message } from "@/components/Message";
 import PasswordTextField from "@/components/PasswordTextField";
 import yup from "@/config/yup";
+import { VALIDATION_ORC_ID } from "@/consts/form";
 import { useApplicationData } from "@/context/ApplicationData";
 import { Organisation } from "@/services/organisations";
 import { FormMutateState } from "@/types/form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import SendIcon from "@mui/icons-material/Send";
 import { LoadingButton } from "@mui/lab";
+import InfoIcon from "@mui/icons-material/Info";
 import {
   Box,
   Checkbox,
@@ -22,6 +24,7 @@ import {
   MenuItem,
   Select,
   TextField,
+  Tooltip,
   useTheme,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
@@ -31,13 +34,14 @@ import { FormProvider, useForm } from "react-hook-form";
 
 export interface SignupFormValues {
   email: string;
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   organisation: string;
   password?: string | undefined;
   confirmPassword: string;
   tscs: NonNullable<boolean | undefined>;
   consentScrape?: boolean | undefined;
+  orc_id: string;
 }
 
 export interface SignupFormProps {
@@ -67,13 +71,17 @@ export default function SignupForm({
   const [recaptchaError, setRecaptchaError] = useState("");
   const recaptchaRef = useRef<ReCAPTCHA>(null);
 
+  console.log("regex", `(${VALIDATION_ORC_ID.source})|^$`);
+
   const schema = useMemo(
     () =>
       yup.object().shape({
-        firstName: yup
+        first_name: yup
           .string()
           .required(tValidation("firstNameRequiredInvalid")),
-        lastName: yup.string().required(tValidation("lastNameRequiredInvalid")),
+        last_name: yup
+          .string()
+          .required(tValidation("lastNameRequiredInvalid")),
         organisation: yup
           .string()
           .required(tValidation("organisationNameRequiredInvalid")),
@@ -107,6 +115,20 @@ export default function SignupForm({
           .oneOf([true], tValidation("tscsRequiredInvalid"))
           .required(tValidation("tscsRequiredInvalid")),
         consentScrape: yup.bool(),
+        orc_id: yup
+          .string()
+          .matches(
+            new RegExp(`(${VALIDATION_ORC_ID.source})|^$`),
+            tValidation("orcIdFormatInvalid")
+          )
+          .when("consentScrape", {
+            is: true,
+            then: () =>
+              yup
+                .string()
+                .required(tValidation("orcIdRequiredInvalid"))
+                .matches(VALIDATION_ORC_ID, tValidation("orcIdFormatInvalid")),
+          }),
       }),
     []
   );
@@ -125,8 +147,8 @@ export default function SignupForm({
   const methods = useForm<SignupFormValues>({
     resolver: yupResolver(schema),
     defaultValues: {
-      firstName: "",
-      lastName: "",
+      first_name: "",
+      last_name: "",
       organisation: defaultOrganisation,
       email: defaultEmail,
       password: "",
@@ -205,28 +227,54 @@ export default function SignupForm({
               </Grid>
             )}
             <Grid item>
-              <FormControl error={!!errors.firstName} size="small" fullWidth>
+              <FormControl error={!!errors.first_name} size="small" fullWidth>
                 <TextField
-                  {...register("firstName")}
+                  {...register("first_name")}
                   size="small"
                   placeholder={tSignup("firstNamePlaceholder")}
                   label={<>{tSignup("firstName")} *</>}
                 />
-                {errors.firstName && (
-                  <FormHelperText>{errors.firstName.message}</FormHelperText>
+                {errors.first_name && (
+                  <FormHelperText>{errors.first_name.message}</FormHelperText>
                 )}
               </FormControl>
             </Grid>
             <Grid item>
-              <FormControl error={!!errors.lastName} size="small" fullWidth>
+              <FormControl error={!!errors.last_name} size="small" fullWidth>
                 <TextField
-                  {...register("lastName")}
+                  {...register("last_name")}
                   size="small"
                   placeholder={tSignup("lastNamePlaceholder")}
                   label={<>{tSignup("lastName")} *</>}
                 />
-                {errors.lastName && (
-                  <FormHelperText>{errors.lastName.message}</FormHelperText>
+                {errors.last_name && (
+                  <FormHelperText>{errors.last_name.message}</FormHelperText>
+                )}
+              </FormControl>
+            </Grid>
+            <Grid item>
+              <FormControl error={!!errors.orc_id} size="small" fullWidth>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 1,
+                    width: "100%",
+                  }}>
+                  <TextField
+                    {...register("orc_id")}
+                    size="small"
+                    placeholder={tSignup("orcIdPlaceholder")}
+                    label={<>{tSignup("orcId")} *</>}
+                    fullWidth
+                  />
+                  <Tooltip title={tSignup("whatIsTheOrcId")}>
+                    <InfoIcon color="info" />
+                  </Tooltip>
+                </Box>
+
+                {errors.orc_id && (
+                  <FormHelperText>{errors.orc_id.message}</FormHelperText>
                 )}
               </FormControl>
             </Grid>

@@ -12,7 +12,7 @@ import { User } from "@/types/application";
 import { getInitialsFromOrganisation, getInitialsFromUser } from "@/utils/user";
 import { CircularProgress, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useQueryUser } from "../../hooks";
 import Permissions from "../Permissions";
 
@@ -36,13 +36,15 @@ export default function Sections({ userId, type }: SectionsProps) {
     isLoading: isPermissionsLoading,
     isError: isPermissionsError,
     error: permissionsError,
-  } = useQuery(["getPermissions", ISSUER_ID], async () =>
-    getPermissions({
-      error: {
-        message: "getPermissionsError",
-      },
-    })
-  );
+  } = useQuery({
+    queryKey: ["getPermissions", ISSUER_ID],
+    queryFn: () =>
+      getPermissions({
+        error: {
+          message: "getPermissionsError",
+        },
+      }),
+  });
 
   const {
     data: userData,

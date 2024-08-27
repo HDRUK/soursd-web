@@ -4,13 +4,18 @@ import {
   Box,
   Card,
   CardContent,
+  CircularProgress,
   IconButton,
   Modal,
   ModalProps,
   useTheme,
 } from "@mui/material";
+import { ReactNode } from "react";
 
-export interface FormModalProps extends ModalProps {
+export interface FormModalProps extends Omit<ModalProps, "children"> {
+  children: ReactNode;
+  variant?: "form" | "content";
+  isLoading?: boolean;
   isDismissable?: boolean;
   onBack?: () => void;
 }
@@ -18,15 +23,22 @@ export interface FormModalProps extends ModalProps {
 export default function FormModal({
   children,
   isDismissable = true,
+  isLoading,
+  variant = "form",
   onBack,
   onClose,
   sx,
   ...restProps
 }: FormModalProps) {
   const theme = useTheme();
+  const mobileMediaQuery = theme.breakpoints.down("sm");
 
   return (
-    <Modal onClose={onClose} {...restProps}>
+    <Modal
+      data-testid="form-modal"
+      onClose={onClose}
+      sx={{ p: 1 }}
+      {...restProps}>
       <Card
         sx={{
           top: "50%",
@@ -35,12 +47,20 @@ export default function FormModal({
           position: "absolute",
           overflowY: "scroll",
           maxHeight: `calc(100vh - ${theme.spacing(4)})`,
-          [theme.breakpoints.down("sm")]: {
-            width: `calc(100% - ${theme.spacing(4)})`,
+          minWidth: variant === "form" ? "250px" : "600px",
+          [mobileMediaQuery]: {
+            width: `calc(100% - ${theme.spacing(2)})`,
+            minWidth: "auto",
           },
           ...sx,
         }}>
-        <CardContent sx={{ p: 4 }}>
+        <CardContent
+          sx={{
+            p: 4,
+            [mobileMediaQuery]: {
+              px: 2,
+            },
+          }}>
           {onBack && (
             <Box sx={{ position: "absolute", top: 5, left: 5 }}>
               <span>
@@ -57,6 +77,16 @@ export default function FormModal({
                   <CloseIcon />
                 </IconButton>
               </span>
+            </Box>
+          )}
+          {isLoading && (
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}>
+              <CircularProgress />
             </Box>
           )}
           {children}

@@ -50,7 +50,6 @@ async function handleJsonResponse(
   messages: ResponseTranslations
 ) {
   const responseError = handleResponseError(response, messages);
-
   if (responseError) return Promise.reject(responseError);
 
   const data = await response.json();

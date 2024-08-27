@@ -19,7 +19,7 @@ import { getInitialsFromUser } from "@/utils/user";
 import { CircularProgress, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useCallback } from "react";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 const NAMESPACE_TRANSLATIONS_PERMISSIONS = "Permissions";
 const NAMESPACE_TRANSLATIONS_USERS = "Users";
@@ -40,42 +40,47 @@ export default function Sections({ userId }: SectionsProps) {
     isLoading: isPermissionsLoading,
     isError: isPermissionsError,
     error: permissionsError,
-  } = useQuery(["getPermissions", ISSUER_ID], async () =>
-    getPermissions({
-      error: {
-        message: "getPermissionsError",
-      },
-    })
-  );
+  } = useQuery({
+    queryKey: ["getPermissions", ISSUER_ID],
+    queryFn: () =>
+      getPermissions({
+        error: {
+          message: "getPermissionsError",
+        },
+      }),
+  });
 
   const {
     data: userData,
     isLoading: isUserLoading,
     isError: isUserError,
     error: userError,
-  } = useQuery(["getUser", userId], async ({ queryKey }) => {
-    const [, id] = queryKey;
+  } = useQuery({
+    queryKey: ["getUser", userId],
+    queryFn: ({ queryKey }) => {
+      const [, id] = queryKey;
 
-    return getUser(id, {
-      error: {
-        message: "getUserError",
-      },
-    });
+      return getUser(id, {
+        error: {
+          message: "getUserError",
+        },
+      });
+    },
   });
 
   const {
     mutateAsync: mutatePermissionsAsync,
     isError: isUpdateError,
-    isLoading: isUpdateLoading,
+    isPending: isUpdateLoading,
     error: updateError,
-  } = useMutation(
-    ["updatePermissionsError"],
-    async (payload: UpdatePermissonsPayload) => {
+  } = useMutation({
+    mutationKey: ["updatePermissionsError"],
+    mutationFn: (payload: UpdatePermissonsPayload) => {
       return postPermissions(payload, {
         error: { message: "updateFailed" },
       });
-    }
-  );
+    },
+  });
 
   const handleSubmit = useCallback(
     (values: AssignOptionsFormValues) => {

@@ -10,7 +10,7 @@ import {
 import { getInitialsFromUser } from "@/utils/user";
 import { Box, Typography } from "@mui/material";
 import { ReactNode } from "react";
-import ProfileCompleteStatus from "../ProfileCompleteStatus";
+import ProfileCompleteStatus from "@/modules/ProfileCompleteStatus";
 
 interface SectionsProps {
   children: ReactNode;
@@ -23,9 +23,11 @@ export default function Sections({ children }: SectionsProps) {
   return (
     <PageColumnLayout>
       <PageColumnLayoutLeft>
-        <Mask width="160px" height="160px">
-          {getInitialsFromUser(user)}
-        </Mask>
+        {user && (
+          <Mask width="160px" height="160px">
+            {getInitialsFromUser(user)}
+          </Mask>
+        )}
         <Box sx={{ textAlign: "center", mt: 2 }}>
           <Typography fontWeight="bold">
             {user?.last_name}, {user?.first_name}

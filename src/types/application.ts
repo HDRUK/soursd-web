@@ -52,6 +52,7 @@ type Approval = {
 
 interface User {
   id: number;
+  registry_id: number;
   first_name: string;
   last_name: string;
   email: string;
@@ -63,6 +64,7 @@ interface User {
   organisation_id: number | null;
   registry: {
     files: File[];
+    organisations: Organisation[];
   };
 }
 
@@ -90,10 +92,65 @@ interface Organisation extends OrganisationIdvt {
   id: number;
   permissions: Permission[];
   approvals: Approval[];
-  lead_applicant_organisation_email: string;
+  lead_applicant_email: string;
   registries: {
     user: User;
   }[];
+}
+
+interface ResearcherEducation {
+  institute_name: string;
+  institute_address: string;
+  from: string;
+  to: string;
+  title: string;
+  institute_indentifier: string;
+  source: string;
+}
+
+interface ResearcherAccreditation {
+  awarded_at: string;
+  awarding_body_name: string;
+  awarding_body_ror: string;
+  expires_at: string;
+  title: string;
+  awarded_locale: string;
+}
+
+interface ResearcherTraining {
+  awarded_at: string;
+  provider: string;
+  awarding_body_ror: string;
+  expires_at: string;
+  training_name: string;
+  expires_in_years: boolean;
+}
+
+interface ResearcherEmployment {
+  department: string;
+  role: string;
+  is_current: boolean;
+  from: string;
+  to: string;
+  employer_name: string;
+  ror: string;
+}
+
+interface ResearcherEndorsement {
+  comment: string;
+  raised_against: number;
+  reported_by: number;
+}
+
+interface ResearcherProject {
+  title: string;
+  lay_summary: string;
+  public_benefit: string;
+  technical_summary: string;
+  start_date: string;
+  end_date: string;
+  request_category_type: string;
+  other_approval_committees: string;
 }
 
 interface Auth {
@@ -126,4 +183,10 @@ export type {
   Organisation,
   OrganisationIdvt,
   User,
+  ResearcherEducation,
+  ResearcherAccreditation,
+  ResearcherEmployment,
+  ResearcherEndorsement,
+  ResearcherTraining,
+  ResearcherProject,
 };

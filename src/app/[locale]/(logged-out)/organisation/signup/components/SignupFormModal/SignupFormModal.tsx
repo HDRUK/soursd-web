@@ -6,11 +6,10 @@ import { useApplicationData } from "@/context/ApplicationData";
 import { postRegisterOrganisation } from "@/services/auth";
 import { PostRegisterOrganisationPayload } from "@/services/auth/types";
 import BusinessIcon from "@mui/icons-material/Business";
-import { Box } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import SignupFormContacts, {
   SignupFormContactsValues,
 } from "../SignupFormContacts";
@@ -38,7 +37,7 @@ export default function Page() {
   const [formDetailsValues, setFormDetailsValues] =
     useState<SignupFormDetailsValues>({
       organisation_name: "",
-      lead_applicant_organisation_email: "",
+      lead_applicant_email: "",
       first_name: "",
       last_name: "",
       password: "",
@@ -73,16 +72,16 @@ export default function Page() {
   const {
     mutateAsync: mutateSignupAsync,
     isError: isSignupError,
-    isLoading: isSignupLoading,
+    isPending: isSignupLoading,
     error: signupError,
-  } = useMutation(
-    ["postRegisterOrgnisation"],
-    async (payload: PostRegisterOrganisationPayload) => {
+  } = useMutation({
+    mutationKey: ["postRegisterOrgnisation"],
+    mutationFn: (payload: PostRegisterOrganisationPayload) => {
       return postRegisterOrganisation(payload, {
         error: { message: "submitError" },
       });
-    }
-  );
+    },
+  });
 
   const handleSignupFormDetailsSubmit = (values: SignupFormDetailsValues) => {
     setActiveForm(SignupFormPanels.OTHER_DETAILS);
@@ -117,7 +116,7 @@ export default function Page() {
       ...formDetailsValues,
       ...formOtherDetailsValues,
       ...values,
-      email: formDetailsValues.lead_applicant_organisation_email,
+      email: formDetailsValues.lead_applicant_email,
       lead_applicant_organisation_name: `${formDetailsValues.first_name} ${formDetailsValues.last_name}`,
       ce_certification_num: formOtherDetailsValues.ce_certification_num || "",
     };
@@ -132,41 +131,39 @@ export default function Page() {
       open
       isDismissable
       onClose={() => router.push(routes.homepage.path)}>
-      <Box sx={{ minWidth: "250px" }}>
-        <FormModalHeader icon={<BusinessIcon />}>
-          {activeForm === SignupFormPanels.DETAILS &&
-            tOrganisation("titleDetails")}
-          {activeForm === SignupFormPanels.OTHER_DETAILS &&
-            tOrganisation("titleOtherDetails")}
-          {activeForm === SignupFormPanels.CONTACTS &&
-            tOrganisation("titleContacts")}
-        </FormModalHeader>
-        {activeForm === SignupFormPanels.DETAILS && (
-          <SignupFormDetails
-            defaultValues={formDetailsValues}
-            onSubmit={handleSignupFormDetailsSubmit}
-          />
-        )}
-        {activeForm === SignupFormPanels.OTHER_DETAILS && (
-          <SignupFormOtherDetails
-            defaultValues={formOtherDetailsValues}
-            onSubmit={handleSignupFormOtherDetailsSubmit}
-            onPrevious={handleSignupFormOtherDetailsPrevious}
-          />
-        )}
-        {activeForm === SignupFormPanels.CONTACTS && (
-          <SignupFormContacts
-            defaultValues={formContactsValues}
-            onSubmit={handleSignupFormContactsSubmit}
-            onPrevious={handleSignupFormContactsPrevious}
-            mutateState={{
-              isError: isSignupError,
-              isLoading: isSignupLoading,
-              error: signupError,
-            }}
-          />
-        )}
-      </Box>
+      <FormModalHeader icon={<BusinessIcon />}>
+        {activeForm === SignupFormPanels.DETAILS &&
+          tOrganisation("titleDetails")}
+        {activeForm === SignupFormPanels.OTHER_DETAILS &&
+          tOrganisation("titleOtherDetails")}
+        {activeForm === SignupFormPanels.CONTACTS &&
+          tOrganisation("titleContacts")}
+      </FormModalHeader>
+      {activeForm === SignupFormPanels.DETAILS && (
+        <SignupFormDetails
+          defaultValues={formDetailsValues}
+          onSubmit={handleSignupFormDetailsSubmit}
+        />
+      )}
+      {activeForm === SignupFormPanels.OTHER_DETAILS && (
+        <SignupFormOtherDetails
+          defaultValues={formOtherDetailsValues}
+          onSubmit={handleSignupFormOtherDetailsSubmit}
+          onPrevious={handleSignupFormOtherDetailsPrevious}
+        />
+      )}
+      {activeForm === SignupFormPanels.CONTACTS && (
+        <SignupFormContacts
+          defaultValues={formContactsValues}
+          onSubmit={handleSignupFormContactsSubmit}
+          onPrevious={handleSignupFormContactsPrevious}
+          mutateState={{
+            isError: isSignupError,
+            isLoading: isSignupLoading,
+            error: signupError,
+          }}
+        />
+      )}
     </FormModal>
   );
 }

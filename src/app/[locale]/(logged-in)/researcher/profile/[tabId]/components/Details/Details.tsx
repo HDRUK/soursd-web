@@ -28,7 +28,7 @@ import {
 import { useTranslations } from "next-intl";
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import DetailsCV from "../DetailsCV";
 
 export interface DetailsFormValues {
@@ -50,15 +50,17 @@ export default function Details({ emailVerified }: DetailsProps) {
   const {
     mutateAsync: mutateUpdateAsync,
     isError: isUpdateError,
-    isLoading: isUpdateLoading,
+    isPending: isUpdateLoading,
     error: updateError,
-  } = useMutation(["postLogin"], async (payload: PatchUserPayload) =>
-    patchUser(user?.id, payload, {
-      error: {
-        message: "submitError",
-      },
-    })
-  );
+  } = useMutation({
+    mutationKey: ["patchUser"],
+    mutationFn: (payload: PatchUserPayload) =>
+      patchUser(user?.id, payload, {
+        error: {
+          message: "submitError",
+        },
+      }),
+  });
 
   const tValidation = useTranslations(NAMESPACE_TRANSLATION_VALIDATION);
   const tPersonalDetails = useTranslations(
@@ -85,12 +87,15 @@ export default function Details({ emailVerified }: DetailsProps) {
   const {
     mutateAsync: mutateFileAsync,
     isError: isFileError,
-    isLoading: isFileLoading,
+    isPending: isFileLoading,
     error: fileError,
-  } = useMutation(["postFile"], async (payload: () => FilePayload) => {
-    return postFile(payload, {
-      error: { message: "cvUploadFailed" },
-    });
+  } = useMutation({
+    mutationKey: ["postFile"],
+    mutationFn: (payload: () => FilePayload) => {
+      return postFile(payload, {
+        error: { message: "cvUploadFailed" },
+      });
+    },
   });
 
   const handleFileChange = useCallback(

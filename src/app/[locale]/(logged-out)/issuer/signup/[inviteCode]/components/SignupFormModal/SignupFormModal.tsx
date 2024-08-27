@@ -11,10 +11,10 @@ import { PostRegisterIssuerPayload } from "@/services/auth/types";
 import { getByInviteCode } from "@/services/issuers";
 import { isExpiredInvite } from "@/utils/date";
 import HubIcon from "@mui/icons-material/Hub";
-import { Box, CircularProgress } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import SignupForm, { SignupFormValues } from "../SignupForm";
 
 const NAMESPACE_TRANSLATION_SIGNUP_ISSUER = "SignupFormIssuer";
@@ -32,30 +32,28 @@ export default function Page() {
     isLoading: isGetIssuerLoading,
     data: issuerData,
     error: issuerError,
-  } = useQuery(
-    ["getByInviteCode", inviteCode || ""],
-    async () =>
+  } = useQuery({
+    queryKey: ["getByInviteCode", inviteCode || ""],
+    queryFn: () =>
       getByInviteCode(inviteCode || "", {
         error: { message: "getByInviteCodeError" },
       }),
-    {
-      enabled: !!inviteCode,
-    }
-  );
+    enabled: !!inviteCode,
+  });
 
   const {
     mutateAsync: mutateSignupAsync,
     isError: isSignupError,
-    isLoading: isSignupLoading,
+    isPending: isSignupLoading,
     error: signupError,
-  } = useMutation(
-    ["postRegisterIssuer"],
-    async (payload: PostRegisterIssuerPayload) => {
+  } = useMutation({
+    mutationKey: ["postRegisterIssuer"],
+    mutationFn: (payload: PostRegisterIssuerPayload) => {
       return postRegisterIssuer(payload, {
         error: { message: "submitError" },
       });
-    }
-  );
+    },
+  });
 
   const handleSignupSubmit = async (values: SignupFormValues) => {
     const { password } = values;
@@ -129,19 +127,17 @@ export default function Page() {
       open
       isDismissable
       onClose={() => router.push(routes.homepage.path)}>
-      <Box sx={{ minWidth: "250px" }}>
-        <FormModalHeader icon={<HubIcon />}>
-          {t("title")} {issuerData?.data.name}
-        </FormModalHeader>
-        <SignupForm
-          onSubmit={handleSignupSubmit}
-          mutateState={{
-            isLoading: isSignupLoading,
-            isError: isSignupError,
-            error: signupError,
-          }}
-        />
-      </Box>
+      <FormModalHeader icon={<HubIcon />}>
+        {t("title")} {issuerData?.data.name}
+      </FormModalHeader>
+      <SignupForm
+        onSubmit={handleSignupSubmit}
+        mutateState={{
+          isLoading: isSignupLoading,
+          isError: isSignupError,
+          error: signupError,
+        }}
+      />
     </FormModal>
   );
 }

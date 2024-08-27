@@ -9,7 +9,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { MutationKey, QueryKey } from "react-query";
+import { MutationKey, QueryKey } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 
 enum NotificationsTypes {

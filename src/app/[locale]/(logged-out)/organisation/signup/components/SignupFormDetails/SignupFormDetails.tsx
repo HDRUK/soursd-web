@@ -26,7 +26,7 @@ import { Controller, FormProvider, useForm } from "react-hook-form";
 
 export interface SignupFormDetailsValues {
   organisation_name: string;
-  lead_applicant_organisation_email: string;
+  lead_applicant_email: string;
   first_name: string;
   last_name: string;
   password?: string | undefined;
@@ -59,7 +59,7 @@ export default function SignupFormDetails({
   const schema = useMemo(
     () =>
       yup.object().shape({
-        lead_applicant_organisation_email: yup
+        lead_applicant_email: yup
           .string()
           .required(tValidation("emailRequiredInvalid"))
           .email(tValidation("emailFormatInvalid")),
@@ -179,18 +179,18 @@ export default function SignupFormDetails({
             </Grid>
             <Grid item>
               <FormControl
-                error={!!errors.lead_applicant_organisation_email}
+                error={!!errors.lead_applicant_email}
                 size="small"
                 fullWidth>
                 <TextField
-                  {...register("lead_applicant_organisation_email")}
+                  {...register("lead_applicant_email")}
                   size="small"
                   placeholder={tSignup("emailPlaceholder")}
                   label={<>{tSignup("email")} *</>}
                 />
-                {errors.lead_applicant_organisation_email && (
+                {errors.lead_applicant_email && (
                   <FormHelperText>
-                    {errors.lead_applicant_organisation_email.message}
+                    {errors.lead_applicant_email.message}
                   </FormHelperText>
                 )}
               </FormControl>
