@@ -67,8 +67,8 @@ export default function Page() {
 
   const handleSignupSubmit = async (values: SignupFormValues) => {
     const {
-      firstName: first_name,
-      lastName: last_name,
+      first_name,
+      last_name,
       password,
       email,
       organisation,
