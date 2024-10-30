@@ -3,13 +3,13 @@ run-name: ${{ github.actor }} triggered quality check pipeline
 on:
   push:
     branches:
-      - dev
+      - develop
       - staging
       - main
   pull_request:
     branches:
       - main
-      - dev
+      - develop
 
 env:
   SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK_URL}}'

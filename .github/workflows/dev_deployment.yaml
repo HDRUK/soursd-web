@@ -24,7 +24,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          ref: "dev"
+          ref: "develop"
 
       - name: Read VERSION file
         id: getversion
