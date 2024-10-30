@@ -21,8 +21,8 @@ jobs:
     runs-on: ubuntu-latest    
     environment: |-
       ${{
-         github.ref_name == 'dev' && 'dev'
-      || github.base_ref == 'dev' && 'dev'
+         github.ref_name == 'develop' && 'develop'
+      || github.base_ref == 'develop' && 'develop'
       ||                             'release'
       }}
 
