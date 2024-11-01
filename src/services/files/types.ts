@@ -2,6 +2,6 @@ import { File } from "@/types/application";
 
 type FileResponse = File;
 
-type FilePayload = any;
+type FilePayload = FormData;
 
-export type { FileResponse, FilePayload };
+export type { FilePayload, FileResponse };

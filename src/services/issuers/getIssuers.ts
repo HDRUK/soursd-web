@@ -1,5 +1,5 @@
 import { ResponseJson, ResponseTranslations } from "@/types/requests";
-import { getRequest, handleJsonResponse, handleResponseError } from "../requests";
+import { getRequest, handleJsonResponse } from "../requests";
 import { GetIssuersResponse } from "./types";
 
 export default async (

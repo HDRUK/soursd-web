@@ -4,6 +4,8 @@ import { Carousel } from "@/components/Carousel";
 import Quote from "@/components/Quote";
 import ScreenArrow from "@/components/ScreenArrow";
 import { useApplicationData } from "@/context/ApplicationData";
+import { useStore } from "@/data/store";
+import DecoratorPanel from "@/modules/DecoratorPanel";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {
   Box,
@@ -15,10 +17,8 @@ import {
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import DecoratorPanel from "@/modules/DecoratorPanel";
 import { FeaturesList } from "../FeaturesList";
 import { StyledContentLayout, StyledHeader } from "./SectionHighlights.styles";
-import { useStore } from "@/data/store";
 
 export default function RegistryHighlights() {
   const theme = useTheme();

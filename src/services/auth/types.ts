@@ -1,4 +1,4 @@
-import { Auth, Organisation, User } from "@/types/application";
+import { Auth, Organisation } from "@/types/application";
 
 interface PostLoginPayload {
   email: string;
@@ -46,12 +46,12 @@ interface PostRegisterResearcherPayload {
 }
 
 export type {
-  PostLoginPayload,
-  LoginRequest,
   LoginOTPPayload,
-  PostRegisterOrganisationPayload,
+  LoginRequest,
+  LoginResponse,
+  PostLoginPayload,
   PostRegisterIssuerPayload,
+  PostRegisterOrganisationPayload,
   PostRegisterResearcherPayload,
   ResetPasswordPayload,
-  LoginResponse,
 };

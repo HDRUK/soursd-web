@@ -13,6 +13,10 @@ export default function AccordionTitle({
   actions,
   children,
 }: AccordionTitleProps) {
+  const handleStopPropagation = (e: React.KeyboardEvent | React.MouseEvent) => {
+    e.stopPropagation();
+  };
+
   return (
     <Box
       sx={{
@@ -24,7 +28,12 @@ export default function AccordionTitle({
       <Text startIcon={icon} sx={{ flexGrow: 1 }}>
         {children}
       </Text>
-      <div onClick={e => e.stopPropagation()}>{actions}</div>
+      <div
+        role="presentation"
+        onClick={handleStopPropagation}
+        onKeyDown={handleStopPropagation}>
+        {actions}
+      </div>
     </Box>
   );
 }

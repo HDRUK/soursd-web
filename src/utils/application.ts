@@ -15,6 +15,7 @@ function parseSystemConfig(data: GetSystemConfigResponse | undefined) {
                   ? escapeAndParse(value).validationSchema
                   : value,
             },
+            /* eslint-disable  @typescript-eslint/no-explicit-any */
           }) as Record<string, any>,
         {}
       )

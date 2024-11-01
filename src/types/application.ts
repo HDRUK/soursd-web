@@ -167,10 +167,12 @@ interface ApplicationDataState {
       path: string;
     }
   >;
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
   systemConfigData: Record<string, any>;
   auth?: Auth;
 }
 
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 type ApplicationSystemConfig = Record<string, any>;
 
 export type {
@@ -188,4 +190,6 @@ export type {
   ResearcherEndorsement,
   ResearcherTraining,
   ResearcherProject,
+  File,
+  Permission,
 };
