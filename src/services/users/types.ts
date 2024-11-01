@@ -1,5 +1,5 @@
 import { UserProvider } from "@/consts/user";
-import { User } from "../auth/types";
+import { User } from "@/types/application";
 
 interface ResearcherInviteResponse {
   id: number;
@@ -50,6 +50,7 @@ interface PostUserPayload {
   is_organisation?: boolean;
 }
 
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 type PostUserResponse = any;
 
 export type {

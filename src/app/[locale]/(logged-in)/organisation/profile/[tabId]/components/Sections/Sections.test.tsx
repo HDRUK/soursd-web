@@ -1,9 +1,9 @@
 import { useStore } from "@/data/store";
+import { mockedOrganisation } from "@/mocks/data/organisation";
 import { mockedUser } from "@/mocks/data/user";
 import { act, render, screen } from "@/utils/testUtils";
 import { axe } from "jest-axe";
 import Sections from "./Sections";
-import { mockedOrganisation } from "@/mocks/data/organisation";
 
 jest.mock("@/data/store");
 

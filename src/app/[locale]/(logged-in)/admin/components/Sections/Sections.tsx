@@ -5,7 +5,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo } from "react";
 
 import ContactLink from "@/components/ContactLink";
 import OverlayCenter from "@/components/OverlayCenter";
@@ -13,7 +13,6 @@ import OverlayCenterAlert from "@/components/OverlayCenterAlert";
 import yup from "@/config/yup";
 import getIssuers from "@/services/issuers/getIssuers";
 import { SendIssuerInvitePayload } from "@/services/issuers/types";
-import { Issuer } from "@/types/application";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
   Box,
@@ -25,9 +24,9 @@ import {
   Select,
   Typography,
 } from "@mui/material";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { FormProvider, useForm } from "react-hook-form";
-import { useMutation, useQuery } from "@tanstack/react-query";
 import { EmailTemplates } from "../../consts/emailTemplates";
 import { EmailTypes } from "../../consts/emailTypes";
 
@@ -38,13 +37,9 @@ export default function Sections() {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_ADMINISTRATION);
   const tValidation = useTranslations(NAMESPACE_TRANSLATION_VALIDATION);
 
-  const {
-    mutateAsync: mutateInviteAsync,
-    isError: isInviteError,
-    isPending: isInviteLoading,
-    error: inviteError,
-  } = useMutation({
+  const { mutateAsync: mutateInviteAsync } = useMutation({
     mutationKey: ["sendInvite"],
+    /* eslint-disable  @typescript-eslint/no-explicit-any */
     mutationFn: (payload: any) => {
       return sendInvite(payload, {
         error: { message: "sendInviteError" },
@@ -86,7 +81,6 @@ export default function Sections() {
     isError: isGetIssuersError,
     isLoading: isGetIssuersLoading,
     data: issuersData,
-    error: issuersError,
   } = useQuery({
     queryKey: ["getIssuers"],
     queryFn: () =>
@@ -95,11 +89,7 @@ export default function Sections() {
       }),
   });
 
-  const {
-    formState: { errors },
-    register,
-    handleSubmit,
-  } = methods;
+  const { register, handleSubmit } = methods;
 
   if (isGetIssuersLoading) {
     return (

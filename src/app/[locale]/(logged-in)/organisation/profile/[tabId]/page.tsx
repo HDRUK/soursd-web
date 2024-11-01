@@ -1,3 +1,4 @@
+import { withAuth } from "@/components/Auth";
 import { ConfigProps } from "@/components/Config";
 import DecoratorPage from "@/modules/DecoratorPage";
 import PageSection from "@/modules/PageSection";
@@ -6,7 +7,6 @@ import { useTranslations } from "next-intl";
 import Sections from "./components/Sections";
 import TabsSections from "./components/TabsSections";
 import { PageTabs } from "./consts/tabs";
-import { withAuth } from "@/components/Auth";
 
 interface PageProps extends ConfigProps {
   params: {
