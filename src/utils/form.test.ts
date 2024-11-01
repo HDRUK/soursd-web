@@ -1,4 +1,3 @@
-import { mockedUser } from "@/mocks/data/user";
 import { getCheckboxFormValuesFromIntersection } from "./form";
 
 describe("getCheckboxFormValuesFromIntersection", () => {
