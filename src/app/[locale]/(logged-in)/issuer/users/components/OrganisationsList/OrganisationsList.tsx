@@ -56,10 +56,8 @@ export default function UsersList({
     isApproved: boolean
   ) => {
     if (!isApproved) {
-      console.log("************* Approving", payload);
       onApprove(payload);
     } else {
-      console.log("************* Unapproving", payload);
       onUnapprove(payload);
     }
   };
