@@ -1,0 +1,32 @@
+/* SourcdLogo.css */
+
+/* Container styling */
+  .sourcd-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+  }
+  
+  /* Image styling */
+  .sourcd-logo img {
+    max-width: 100%;
+    height: auto;
+    width: auto;
+  }
+  
+  /* Heading styling */
+  .sourcd-logo .heading {
+    font-size: 2rem;
+    color: #333;
+    margin-top: 0;
+    letter-spacing: 6px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    height: auto;
+    width: auto;
+    text-align: center;
+    margin-right: -6px;
+  }
+  
