@@ -1,8 +1,6 @@
 import { createTheme } from "@mui/material";
 import {
   blue,
-  blueGrey,
-  deepPurple,
   green,
   grey,
   indigo,

@@ -5,8 +5,7 @@ type KeysMatching<T, V> = {
 }[keyof T];
 
 interface ColorOverrides {
-  background1: true;
-  background2: true;
+  background: true;
   highlight: true;
   highlight2: true;
   highlight3: true;
@@ -17,8 +16,7 @@ interface ColorOverrides {
 
 declare module "@mui/material/styles/createPalette" {
   interface CustomPalette {
-    background1: SimplePaletteColorOptions;
-    background2: SimplePaletteColorOptions;
+    background: SimplePaletteColorOptions;
     highlight: SimplePaletteColorOptions;
     highlight2: SimplePaletteColorOptions;
     highlight3: SimplePaletteColorOptions;

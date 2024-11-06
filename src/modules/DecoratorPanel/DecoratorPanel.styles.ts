@@ -8,7 +8,7 @@ const StyledDecoratorPanel = styled("div")(
 
     :before {
       content: "";
-      background-color: ${theme.palette.background2.main};
+      background-color: ${theme.palette.background.default};
       position: absolute;
       top: 0;
       bottom: 0;
@@ -26,7 +26,7 @@ const StyledDecoratorPanel = styled("div")(
     :after {
       position: absolute;
       content: "";
-      background-color: ${theme.palette.background1.main};
+      background-color: ${theme.palette.background.default};
       top: 0;
       right: 0;
       bottom: 0;
