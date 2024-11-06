@@ -5,9 +5,7 @@ import OverlayCenter from "@/components/OverlayCenter";
 import OverlayCenterAlert from "@/components/OverlayCenterAlert";
 import { VALIDATION_SCHEMA_KEY } from "@/consts/application";
 import { ROUTES } from "@/consts/router";
-import { UserGroup } from "@/consts/user";
 import { useStore } from "@/data/store";
-import { mockedOrganisation } from "@/mocks/data/organisation";
 import DecoratorPanel from "@/modules/DecoratorPanel";
 import { getOrganisation } from "@/services/organisations";
 import { getSystemConfig } from "@/services/system_config";
@@ -19,6 +17,7 @@ import {
 import { parseSystemConfig } from "@/utils/application";
 import { getAuthData } from "@/utils/auth";
 import { CircularProgress } from "@mui/material";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import {
@@ -29,7 +28,6 @@ import {
   useMemo,
   useState,
 } from "react";
-import { useMutation, useQuery } from "@tanstack/react-query";
 
 const ApplicationDataContext = createContext({
   routes: ROUTES,

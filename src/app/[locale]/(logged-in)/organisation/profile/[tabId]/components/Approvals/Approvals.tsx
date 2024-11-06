@@ -35,7 +35,7 @@ export default function Approvals() {
       <TableBody>
         {filteredUsers?.map(
           ({ user: { email, first_name, last_name, approvals } }) => {
-            const isApproved = !!approvals.find(
+            const isApproved = approvals.some(
               ({ id: issuerId }) => issuerId === 1
             );
 
