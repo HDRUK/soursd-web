@@ -33,15 +33,15 @@ export const PALETTE_THEME_PURPLE_BLUE = {
     h6: headingStyles,
   },
   palette: {
-    //new themes
-    buttonPrimary: createColor('#E3E3E3'),
-    buttonSecondary: createColor('#CC51B4'),
-    
-    //old themes
+    // new themes
+    buttonPrimary: createColor("#E3E3E3"),
+    buttonSecondary: createColor("#CC51B4"),
+
+    // old themes
     background1: createColor(deepPurple["300"]),
     background2: createColor(blueGrey["800"]),
     primary: createColor(indigo["300"]),
-    secondary: createColor('#CC51B4'),
+    secondary: createColor("#CC51B4"),
     warning: createColor(orange["300"]),
     info: createColor(blue["200"]),
     error: createColor(red["400"]),
