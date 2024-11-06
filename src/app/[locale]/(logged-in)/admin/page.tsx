@@ -6,19 +6,19 @@ import Sections from "./components/Sections/Sections";
 
 const NAMESPACE_TRANSLATIONS_ADMINISTRATION = "Administration";
 
-function Page () {
-    const t = useTranslations(NAMESPACE_TRANSLATIONS_ADMINISTRATION);
+function Page() {
+  const t = useTranslations(NAMESPACE_TRANSLATIONS_ADMINISTRATION);
 
-    return (
-        <DecoratorPage>
-            <PageSection>
-                <Typography variant="h4">{t("title")}</Typography>
-            </PageSection>
-            <PageSection>
-                <Sections />
-            </PageSection>
-        </DecoratorPage>
-    )
-};
+  return (
+    <DecoratorPage>
+      <PageSection>
+        <Typography variant="h4">{t("title")}</Typography>
+      </PageSection>
+      <PageSection>
+        <Sections />
+      </PageSection>
+    </DecoratorPage>
+  );
+}
 
 export default Page;

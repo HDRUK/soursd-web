@@ -1,3 +1,4 @@
+import { withAuth } from "@/components/Auth";
 import { ConfigProps } from "@/components/Config";
 import DecoratorPage from "@/modules/DecoratorPage";
 import PageSection from "@/modules/PageSection";

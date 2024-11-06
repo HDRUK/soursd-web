@@ -19,6 +19,7 @@ import {
 import { parseSystemConfig } from "@/utils/application";
 import { getAuthData } from "@/utils/auth";
 import { CircularProgress } from "@mui/material";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import {
@@ -29,7 +30,6 @@ import {
   useMemo,
   useState,
 } from "react";
-import { useMutation, useQuery } from "@tanstack/react-query";
 
 const ApplicationDataContext = createContext({
   routes: ROUTES,

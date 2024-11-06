@@ -1,0 +1,54 @@
+name: Run quality checks
+run-name: ${{ github.actor }} triggered quality check pipeline
+on:
+  push:
+    branches:
+      - develop
+      - staging
+      - main
+  pull_request:
+    branches:
+      - main
+      - develop
+
+env:
+  SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK_URL}}'
+  SLACK_CHANNEL: '${{ secrets.GITHUBACTIONS_SLACK_CHANNEL }}'
+
+jobs:
+  test:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest    
+    environment: |-
+      ${{
+         github.ref_name == 'develop' && 'develop'
+      || github.base_ref == 'develop' && 'develop'
+      ||                             'release'
+      }}
+
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+
+      - name: NPM install
+        id: npminstall
+        run: "npm install"
+
+      - name: Run lint
+        id: runlint
+        run: "npm run lint"
+
+      - name: Run unit tests
+        id: unittests
+        run: "npm run test"
+
+      - name: Run Notification
+        id: runnotificationsent
+        uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+          channel: ${{ env.SLACK_CHANNEL }}
+          message: Running CI tests on {{ env.GITHUB_REF_NAME }} branch ${{ job.status }}
+        if: always()
