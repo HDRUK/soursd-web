@@ -11,7 +11,7 @@ describe("SourcdLogo Component", () => {
     const { getByAltText, getByText } = render(
       <SourcdLogo {...defaultProps} />
     );
-    const logoImage = getByAltText("image");
+    const logoImage = getByAltText("SOURCD");
     const heading = getByText("SOURCD");
 
     expect(logoImage).toBeInTheDocument();
