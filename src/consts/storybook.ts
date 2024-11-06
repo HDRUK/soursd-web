@@ -13,6 +13,8 @@ const MUI_AUGMENTED_COLOR_OPTIONS_ARG_TYPES = {
       "background2",
       "background1",
       "default",
+      "buttonPrimary",
+      "buttonSecondary",
     ],
     control: { type: "radio" },
   },

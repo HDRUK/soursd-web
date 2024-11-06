@@ -13,6 +13,8 @@ interface ColorOverrides {
   default: true;
   inactive: true;
   caption: true;
+  buttonPrimary: true;
+  buttonSecondary: true;
 }
 
 declare module "@mui/material/styles/createPalette" {
@@ -25,6 +27,8 @@ declare module "@mui/material/styles/createPalette" {
     default: SimplePaletteColorOptions;
     inactive: SimplePaletteColorOptions;
     caption: SimplePaletteColorOptions;
+    buttonPrimary: SimplePaletteColorOptions;
+    buttonSecondary: SimplePaletteColorOptions;
   }
 
   interface Palette extends CustomPalette {}
