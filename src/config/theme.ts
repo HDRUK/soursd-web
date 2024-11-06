@@ -33,6 +33,22 @@ export const PALETTE_THEME_PURPLE_BLUE = {
     h6: headingStyles,
   },
   palette: {
+    green: '#86C664',
+    blue: '#7A89C2',
+    salmon: '#D76E6E',
+    black: '#000',
+    grey: '#636B61',
+    darkerGrey: '#5A5A5A',
+    pink: '#CC51B4',
+    white: "#fff",
+    gradient:
+      {
+        grey: 'linear-gradient(to down, #727272, #1E1E1E)',
+        pink: 'linear-gradient(to down, #BF82D4, #D8C3DC)'
+      },
+
+    // At some point the code will need to be updated with the new palette themes from above and the ones below to be revisited.  
+    
     background1: createColor(deepPurple["300"]),
     background2: createColor(blueGrey["800"]),
     primary: createColor(indigo["300"]),
@@ -46,7 +62,6 @@ export const PALETTE_THEME_PURPLE_BLUE = {
     highlight3: createColor("#152238"),
     default: createColor(grey["300"]),
     inactive: createColor(grey["300"]),
-    caption: createColor(grey["500"]),
-    white: "#fff",
+    caption: createColor(grey["500"])
   },
 };
