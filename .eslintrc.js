@@ -52,6 +52,7 @@ module.exports = {
     "@typescript-eslint/no-explicit-any": "error",
     "@typescript-eslint/no-var-requires": "off",
     "no-useless-computed-key": "off",
+    "no-use-before-define": "off",
     "react/react-in-jsx-scope": "off",
     "react/jsx-filename-extension": [
       1,

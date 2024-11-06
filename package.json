@@ -37,6 +37,7 @@
     "cookie": "^0.6.0",
     "cookies-next": "^4.2.1",
     "dayjs": "^1.11.11",
+    "@faker-js/faker": "^8.4.1",
     "gsap": "^3.12.5",
     "i": "^0.3.7",
     "immer": "^10.1.1",
@@ -60,7 +61,6 @@
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^1.2.25",
-    "@faker-js/faker": "^8.4.1",
     "@storybook/addon-essentials": "^8.0.5",
     "@storybook/addon-interactions": "^8.0.5",
     "@storybook/addon-links": "^8.0.5",
