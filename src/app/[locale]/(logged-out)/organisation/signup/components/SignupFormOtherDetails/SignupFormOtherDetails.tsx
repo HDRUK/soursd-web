@@ -131,7 +131,7 @@ export default function SignupFormOtherDetails({
                   {...register("address_1")}
                   size="small"
                   placeholder={tForm("address1Placeholder")}
-                  label={<>{tForm("address1")} *</>}
+                  label={<>{tForm("address1")}</>}
                 />
                 {errors.address_1 && (
                   <FormHelperText>{errors.address_1.message}</FormHelperText>
@@ -185,7 +185,7 @@ export default function SignupFormOtherDetails({
                       {...register("postcode")}
                       size="small"
                       placeholder={tForm("postcodePlaceholder")}
-                      label={<>{tForm("postcode")} *</>}
+                      label={<>{tForm("postcode")}</>}
                     />
                     {errors.postcode && (
                       <FormHelperText>{errors.postcode.message}</FormHelperText>
@@ -200,7 +200,7 @@ export default function SignupFormOtherDetails({
                   {...register("country")}
                   size="small"
                   placeholder={tForm("countryPlaceholder")}
-                  label={<>{tForm("country")} *</>}
+                  label={<>{tForm("country")}</>}
                   disabled
                 />
                 {errors.country && (
@@ -280,7 +280,7 @@ export default function SignupFormOtherDetails({
                     {...register("ce_certification_num")}
                     size="small"
                     placeholder={tForm("ceCertificationNumberPlaceholder")}
-                    label={<>{tForm("ceCertificationNumber")} *</>}
+                    label={<>{tForm("ceCertificationNumber")}</>}
                   />
                   {errors.ce_certification_num && (
                     <FormHelperText>

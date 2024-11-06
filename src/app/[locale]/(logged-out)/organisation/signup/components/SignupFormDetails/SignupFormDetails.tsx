@@ -131,7 +131,7 @@ export default function SignupFormDetails({
                   {...register("organisation_name")}
                   size="small"
                   placeholder={tForm("organisationNamePlaceholder")}
-                  label={<>{tForm("organisationName")} *</>}
+                  label={<>{tForm("organisationName")}</>}
                 />
                 {errors.organisation_name && (
                   <FormHelperText>
@@ -149,7 +149,7 @@ export default function SignupFormDetails({
                   {...register("companies_house_no")}
                   size="small"
                   placeholder={tForm("companyNumberPlaceholder")}
-                  label={<>{tForm("companyNumber")} *</>}
+                  label={<>{tForm("companyNumber")}</>}
                 />
                 {errors.companies_house_no && (
                   <FormHelperText>
@@ -166,8 +166,8 @@ export default function SignupFormDetails({
                 <TextField
                   {...register("lead_applicant_email")}
                   size="small"
-                  placeholder={tForm("emailPlaceholder")}
-                  label={<>{tForm("email")} *</>}
+                  placeholder={tSignup("emailPlaceholder")}
+                  label={<>{tSignup("email")}</>}
                 />
                 {errors.lead_applicant_email && (
                   <FormHelperText>
@@ -186,8 +186,8 @@ export default function SignupFormDetails({
                     <TextField
                       {...register("first_name")}
                       size="small"
-                      placeholder={tForm("applicantFirstNamePlaceholder")}
-                      label={<>{tForm("applicantFirstName")} *</>}
+                      placeholder={tSignup("applicantFirstNamePlaceholder")}
+                      label={<>{tSignup("applicantFirstName")}</>}
                     />
                     {errors.first_name && (
                       <FormHelperText>
@@ -204,8 +204,8 @@ export default function SignupFormDetails({
                     <TextField
                       {...register("last_name")}
                       size="small"
-                      placeholder={tForm("applicantLastNamePlaceholder")}
-                      label={<>{tForm("applicantLastName")} *</>}
+                      placeholder={tSignup("applicantLastNamePlaceholder")}
+                      label={<>{tSignup("applicantLastName")}</>}
                     />
                     {errors.last_name && (
                       <FormHelperText>
@@ -222,7 +222,7 @@ export default function SignupFormDetails({
                   id="password"
                   size="small"
                   placeholder={tForm("passwordPlaceholder")}
-                  label={<>{tForm("password")} *</>}
+                  label={<>{tForm("password")}</>}
                   iconButtonProps={{
                     "aria-label": tForm("togglePasswordAriaLabel"),
                   }}
@@ -241,7 +241,7 @@ export default function SignupFormDetails({
                   id="confirm_password"
                   size="small"
                   placeholder={tForm("confirmPasswordPlaceholder")}
-                  label={<>{tForm("confirmPassword")} *</>}
+                  label={<>{tForm("confirmPassword")}</>}
                   iconButtonProps={{
                     "aria-label": tForm("toggleConfirmPasswordAriaLabel"),
                   }}

@@ -153,6 +153,7 @@ export default function Details({ emailVerified }: DetailsProps) {
 
   const handleDetailsSubmit = useCallback(
     async (payload: DetailsFormValues) => {
+      console.log("******* USER", user);
       if (user?.id) {
         const request = {
           ...user,
@@ -164,14 +165,14 @@ export default function Details({ emailVerified }: DetailsProps) {
         setUser(request);
       }
     },
-    []
+    [user]
   );
 
   const schema = useMemo(
     () =>
       yup.object().shape({
         first_name: yup.string().required(tForm("firstNameRequiredInvalid")),
-        lastName: yup.string().required(tForm("lastNameRequiredInvalid")),
+        last_name: yup.string().required(tForm("lastNameRequiredInvalid")),
         organisation_id: yup
           .string()
           .required(tForm("organisationNameRequiredInvalid")),
@@ -188,7 +189,8 @@ export default function Details({ emailVerified }: DetailsProps) {
                 .string()
                 .required(tForm("orcIdRequiredInvalid"))
                 .matches(VALIDATION_ORC_ID, tForm("orcIdFormatInvalid")),
-          }),
+          })
+          .nullable(),
         consent_scrape: yup.bool(),
       }),
     []
@@ -221,7 +223,7 @@ export default function Details({ emailVerified }: DetailsProps) {
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(handleDetailsSubmit)}>
+      <form onSubmit={handleSubmit(handleDetailsSubmit)} autoComplete="off">
         <Grid container rowSpacing={3} md={8}>
           <Grid item xs={12}>
             {isGetOrganisationsError && (
@@ -252,16 +254,16 @@ export default function Details({ emailVerified }: DetailsProps) {
               size="small"
               fullWidth>
               <InputLabel id="organisation_id">
-                {tForm("organisation")}
+                {tForm("organisationName")}
               </InputLabel>
               <Select
                 defaultValue=""
                 {...register("organisation_id")}
                 size="small"
                 inputProps={{
-                  "aria-label": tForm("organisation"),
+                  "aria-label": tForm("organisationNameAriaLabel"),
                 }}
-                label={<>{tForm("organisation")} *</>}>
+                label={<>{tForm("organisationName")}</>}>
                 {organisationsData?.data?.data.map(
                   ({ organisation_name, id }) => (
                     <MenuItem value={id} key={id}>
@@ -284,7 +286,7 @@ export default function Details({ emailVerified }: DetailsProps) {
                 size="small"
                 placeholder={tForm("firstNamePlaceholder")}
                 aria-label={tForm("firstName")}
-                label={<>{tForm("firstName")} *</>}
+                label={<>{tForm("firstName")}</>}
               />
               {errors.first_name && (
                 <FormHelperText>{errors.first_name.message}</FormHelperText>
@@ -298,7 +300,7 @@ export default function Details({ emailVerified }: DetailsProps) {
                 size="small"
                 placeholder={tForm("lastNamePlaceholder")}
                 aria-label={tForm("lastName")}
-                label={<>{tForm("lastName")} *</>}
+                label={<>{tForm("lastName")}</>}
               />
               {errors.last_name && (
                 <FormHelperText>{errors.last_name.message}</FormHelperText>
@@ -318,7 +320,7 @@ export default function Details({ emailVerified }: DetailsProps) {
                   {...register("orc_id")}
                   size="small"
                   placeholder={tForm("orcIdPlaceholder")}
-                  label={<>{tForm("orcId")} *</>}
+                  label={<>{tForm("orcId")}</>}
                   fullWidth
                 />
                 <Tooltip title={tForm("whatIsTheOrcId")}>

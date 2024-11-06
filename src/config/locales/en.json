@@ -75,6 +75,7 @@
     "companyNumber": "Company number",
     "organisationNamePlaceholder": "Organisation name",
     "organisationName": "Organisation name",
+    "organisationNameAriaLabel": "Select organisation",
     "toggleOtpPasscodeAriaLabel": "Toggle passcode visibility",
     "togglePasswordAriaLabel": "Toggle password visibility",
     "toggleConfirmPasswordAriaLabel": "Toggle confirm password visibility",
@@ -257,6 +258,12 @@
     "previousButton": "Previous"
   },
   "SignupFormDetails": {
+    "applicantFirstNamePlaceholder": "First name",
+    "applicantFirstName": "First name",
+    "applicantLastNamePlaceholder": "Last name",
+    "applicantLastName": "Last name",
+    "emailPlaceholder": "Applicant email",
+    "email": "Applicant email",
     "nextButton": "Next"
   },
   "PersonalDetails": {
