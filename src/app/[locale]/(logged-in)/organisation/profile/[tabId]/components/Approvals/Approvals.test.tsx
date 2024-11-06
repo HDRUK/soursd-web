@@ -1,5 +1,5 @@
 import { mockedOrganisation } from "@/mocks/data/organisation";
-import { act, render, screen, waitFor } from "@/utils/testUtils";
+import { act, render, screen } from "@/utils/testUtils";
 import { axe } from "jest-axe";
 import Approvals from ".";
 

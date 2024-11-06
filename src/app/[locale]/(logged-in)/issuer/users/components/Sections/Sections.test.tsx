@@ -109,7 +109,7 @@ describe("<Sections />", () => {
     });
   });
 
-  it("approves a researcher", async () => {
+  it("deletes the approval of a researcher", async () => {
     const approval = await setupActionMenuTest(
       "john.smith@hdruk.ac.uk actions",
       "Approved"

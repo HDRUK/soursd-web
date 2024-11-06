@@ -4,11 +4,10 @@ import DecoratorPage from "@/modules/DecoratorPage";
 import PageSection from "@/modules/PageSection";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
+import Approvals from "./components/Approvals";
 import Sections from "./components/Sections";
 import TabsSections from "./components/TabsSections";
 import { PageTabs } from "./consts/tabs";
-import { withAuth } from "@/components/Auth";
-import Approvals from "./components/Approvals";
 
 interface PageProps extends ConfigProps {
   params: {
