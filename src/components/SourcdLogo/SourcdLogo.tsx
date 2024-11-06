@@ -9,7 +9,7 @@ export interface SourcdLogoProps {
 export default function SourcdLogo({ className }: SourcdLogoProps) {
   return (
     <div className={`sourcd-logo ${className}`}>
-      <Image src={image} alt="image" width={200} />
+      <Image src={image} alt="sourcd_logo" width={100} height={100}/>
       <h1 className="heading">SOURCD</h1>
     </div>
   );
