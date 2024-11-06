@@ -153,7 +153,6 @@ export default function Details({ emailVerified }: DetailsProps) {
 
   const handleDetailsSubmit = useCallback(
     async (payload: DetailsFormValues) => {
-      console.log("******* USER", user);
       if (user?.id) {
         const request = {
           ...user,
