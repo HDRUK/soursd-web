@@ -2,45 +2,60 @@
 
 import ContactLink from "@/components/ContactLink";
 import { Message } from "@/components/Message";
+import OverlayCenter from "@/components/OverlayCenter";
 import yup from "@/config/yup";
 import { MAX_UPLOAD_SIZE_BYTES } from "@/consts/files";
+import { VALIDATION_ORC_ID } from "@/consts/form";
 import { useStore } from "@/data/store";
 import useFileScanned from "@/hooks/useFileScanned/useFileScanned";
 import useQueryRefetch from "@/hooks/useQueryRefetch";
 import postFile from "@/services/files/postFile";
 import { FilePayload } from "@/services/files/types";
+import { getOrganisations } from "@/services/organisations";
 import { PatchUserPayload } from "@/services/users";
 import patchUser from "@/services/users/patchUser";
 import { EntityType, FileType } from "@/types/api";
 import { getLatestCV, isFileScanning } from "@/utils/file";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Check, Replay } from "@mui/icons-material";
+import InfoIcon from "@mui/icons-material/Info";
 import SaveIcon from "@mui/icons-material/Save";
 import { LoadingButton } from "@mui/lab";
 import {
+  Box,
   Button,
+  Checkbox,
+  CircularProgress,
   FormControl,
+  FormControlLabel,
   FormHelperText,
   Grid,
+  InputLabel,
+  MenuItem,
+  Select,
   TextField,
+  Tooltip,
   Typography,
 } from "@mui/material";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { useMutation } from "@tanstack/react-query";
 import DetailsCV from "../DetailsCV";
 
 export interface DetailsFormValues {
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
+  orc_id: number | null;
+  organisation_id: number;
+  consent_scrape: boolean;
 }
 
 export interface DetailsProps {
   emailVerified?: boolean;
 }
 
-const NAMESPACE_TRANSLATION_VALIDATION = "Form";
+const NAMESPACE_TRANSLATION_FORM = "Form";
 const NAMESPACE_TRANSLATION_PERSONAL_DETAILS = "PersonalDetails";
 
 export default function Details({ emailVerified }: DetailsProps) {
@@ -62,7 +77,7 @@ export default function Details({ emailVerified }: DetailsProps) {
       }),
   });
 
-  const tValidation = useTranslations(NAMESPACE_TRANSLATION_VALIDATION);
+  const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const tPersonalDetails = useTranslations(
     NAMESPACE_TRANSLATION_PERSONAL_DETAILS
   );
@@ -98,6 +113,19 @@ export default function Details({ emailVerified }: DetailsProps) {
     },
   });
 
+  const {
+    isError: isGetOrganisationsError,
+    isLoading: isGetOrganisationsLoading,
+    data: organisationsData,
+    error: organisationsError,
+  } = useQuery({
+    queryKey: ["getOrganisationsError"],
+    queryFn: () =>
+      getOrganisations({
+        error: { message: "noData" },
+      }),
+  });
+
   const handleFileChange = useCallback(
     async ({ target: { files } }: ChangeEvent<HTMLInputElement>) => {
       setIsFileSizeTooBig(false);
@@ -126,11 +154,9 @@ export default function Details({ emailVerified }: DetailsProps) {
   const handleDetailsSubmit = useCallback(
     async (payload: DetailsFormValues) => {
       if (user?.id) {
-        const { firstName, lastName } = payload;
         const request = {
           ...user,
-          first_name: firstName,
-          last_name: lastName,
+          ...payload,
         };
 
         await mutateUpdateAsync(request);
@@ -144,10 +170,26 @@ export default function Details({ emailVerified }: DetailsProps) {
   const schema = useMemo(
     () =>
       yup.object().shape({
-        firstName: yup
+        first_name: yup.string().required(tForm("firstNameRequiredInvalid")),
+        lastName: yup.string().required(tForm("lastNameRequiredInvalid")),
+        organisation_id: yup
           .string()
-          .required(tValidation("firstNameRequiredInvalid")),
-        lastName: yup.string().required(tValidation("lastNameRequiredInvalid")),
+          .required(tForm("organisationNameRequiredInvalid")),
+        orc_id: yup
+          .string()
+          .matches(
+            new RegExp(`(${VALIDATION_ORC_ID.source})|^$`),
+            tForm("orcIdFormatInvalid")
+          )
+          .when("consent_scrape", {
+            is: true,
+            then: () =>
+              yup
+                .string()
+                .required(tForm("orcIdRequiredInvalid"))
+                .matches(VALIDATION_ORC_ID, tForm("orcIdFormatInvalid")),
+          }),
+        consent_scrape: yup.bool(),
       }),
     []
   );
@@ -155,8 +197,11 @@ export default function Details({ emailVerified }: DetailsProps) {
   const methods = useForm<DetailsFormValues>({
     resolver: yupResolver(schema),
     defaultValues: {
-      firstName: user?.first_name,
-      lastName: user?.last_name,
+      first_name: user?.first_name,
+      last_name: user?.last_name,
+      orc_id: user?.orc_id,
+      organisation_id: user?.organisation_id,
+      consent_scrape: user?.consent_scrape,
     },
   });
 
@@ -166,11 +211,26 @@ export default function Details({ emailVerified }: DetailsProps) {
     handleSubmit,
   } = methods;
 
+  if (isGetOrganisationsLoading) {
+    return (
+      <OverlayCenter sx={{ color: "#fff" }}>
+        <CircularProgress color="inherit" />
+      </OverlayCenter>
+    );
+  }
+
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(handleDetailsSubmit)}>
         <Grid container rowSpacing={3} md={8}>
           <Grid item xs={12}>
+            {isGetOrganisationsError && (
+              <Message severity="error" sx={{ mb: 3 }}>
+                {tPersonalDetails.rich(organisationsError, {
+                  contactLink: ContactLink,
+                })}
+              </Message>
+            )}
             {isUpdateError && (
               <Message severity="error" sx={{ mb: 3 }}>
                 {tPersonalDetails.rich(updateError, {
@@ -187,30 +247,99 @@ export default function Details({ emailVerified }: DetailsProps) {
             )}
           </Grid>
           <Grid item xs={12}>
-            <FormControl error={!!errors.firstName} size="small" fullWidth>
-              <TextField
-                {...register("firstName")}
+            <FormControl
+              error={!!errors.organisation_id}
+              size="small"
+              fullWidth>
+              <InputLabel id="organisation_id">
+                {tForm("organisation")}
+              </InputLabel>
+              <Select
+                defaultValue=""
+                {...register("organisation_id")}
                 size="small"
-                placeholder={tPersonalDetails("firstNamePlaceholder")}
-                aria-label={tPersonalDetails("firstName")}
-                label={<>{tPersonalDetails("firstName")} *</>}
-              />
-              {errors.firstName && (
-                <FormHelperText>{errors.firstName.message}</FormHelperText>
+                inputProps={{
+                  "aria-label": tForm("organisation"),
+                }}
+                label={<>{tForm("organisation")} *</>}>
+                {organisationsData?.data?.data.map(
+                  ({ organisation_name, id }) => (
+                    <MenuItem value={id} key={id}>
+                      {organisation_name}
+                    </MenuItem>
+                  )
+                )}
+              </Select>
+              {errors.organisation_id && (
+                <FormHelperText>
+                  {errors.organisation_id.message}
+                </FormHelperText>
               )}
             </FormControl>
           </Grid>
           <Grid item xs={12}>
-            <FormControl error={!!errors.lastName} size="small" fullWidth>
+            <FormControl error={!!errors.first_name} size="small" fullWidth>
               <TextField
-                {...register("lastName")}
+                {...register("first_name")}
                 size="small"
-                placeholder={tPersonalDetails("lastNamePlaceholder")}
-                aria-label={tPersonalDetails("lastName")}
-                label={<>{tPersonalDetails("lastName")} *</>}
+                placeholder={tForm("firstNamePlaceholder")}
+                aria-label={tForm("firstName")}
+                label={<>{tForm("firstName")} *</>}
               />
-              {errors.lastName && (
-                <FormHelperText>{errors.lastName.message}</FormHelperText>
+              {errors.first_name && (
+                <FormHelperText>{errors.first_name.message}</FormHelperText>
+              )}
+            </FormControl>
+          </Grid>
+          <Grid item xs={12}>
+            <FormControl error={!!errors.last_name} size="small" fullWidth>
+              <TextField
+                {...register("last_name")}
+                size="small"
+                placeholder={tForm("lastNamePlaceholder")}
+                aria-label={tForm("lastName")}
+                label={<>{tForm("lastName")} *</>}
+              />
+              {errors.last_name && (
+                <FormHelperText>{errors.last_name.message}</FormHelperText>
+              )}
+            </FormControl>
+          </Grid>
+          <Grid item>
+            <FormControl error={!!errors.orc_id} size="small" fullWidth>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                  width: "100%",
+                }}>
+                <TextField
+                  {...register("orc_id")}
+                  size="small"
+                  placeholder={tForm("orcIdPlaceholder")}
+                  label={<>{tForm("orcId")} *</>}
+                  fullWidth
+                />
+                <Tooltip title={tForm("whatIsTheOrcId")}>
+                  <InfoIcon color="info" />
+                </Tooltip>
+              </Box>
+
+              {errors.orc_id && (
+                <FormHelperText>{errors.orc_id.message}</FormHelperText>
+              )}
+            </FormControl>
+          </Grid>
+          <Grid item>
+            <FormControl error={!!errors.consent_scrape} size="small" fullWidth>
+              <FormControlLabel
+                control={<Checkbox {...register("consent_scrape")} />}
+                label={tPersonalDetails("consentScrape")}
+                aria-label={tPersonalDetails("consentScrapeAriaLabel")}
+              />
+              {errors.consent_scrape && (
+                <FormHelperText>{errors.consent_scrape.message}</FormHelperText>
               )}
             </FormControl>
           </Grid>

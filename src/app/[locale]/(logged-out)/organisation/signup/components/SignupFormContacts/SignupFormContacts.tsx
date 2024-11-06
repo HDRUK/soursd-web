@@ -35,7 +35,7 @@ export interface SignupFormContactsProps {
   defaultValues?: SignupFormContactsValues;
 }
 
-const NAMESPACE_TRANSLATION_VALIDATION = "Form";
+const NAMESPACE_TRANSLATION_FORM = "Form";
 const NAMESPACE_TRANSLATION_SIGNUP = "SignupFormContacts";
 
 export default function SignupFormContacts({
@@ -44,7 +44,7 @@ export default function SignupFormContacts({
   defaultValues,
   mutateState,
 }: SignupFormContactsProps) {
-  const tValidation = useTranslations(NAMESPACE_TRANSLATION_VALIDATION);
+  const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const tSignup = useTranslations(NAMESPACE_TRANSLATION_SIGNUP);
   const theme = useTheme();
   const [emptyError, setEmptyError] = useState<string | null>(null);
@@ -53,9 +53,9 @@ export default function SignupFormContacts({
     () =>
       yup.object().shape({
         dpo_name: yup.string(),
-        dpo_email: yup.string().email(tValidation("emailFormatInvalid")),
+        dpo_email: yup.string().email(tForm("emailFormatInvalid")),
         hr_name: yup.string(),
-        hr_email: yup.string().email(tValidation("emailFormatInvalid")),
+        hr_email: yup.string().email(tForm("emailFormatInvalid")),
       }),
     []
   );
@@ -122,8 +122,8 @@ export default function SignupFormContacts({
                 <TextField
                   {...register("hr_name")}
                   size="small"
-                  placeholder={tSignup("hrNamePlaceholder")}
-                  label={<>{tSignup("hrName")}</>}
+                  placeholder={tForm("hrNamePlaceholder")}
+                  label={<>{tForm("hrName")}</>}
                 />
                 {errors.hr_name && (
                   <FormHelperText>{errors.hr_name.message}</FormHelperText>
@@ -135,8 +135,8 @@ export default function SignupFormContacts({
                 <TextField
                   {...register("hr_email")}
                   size="small"
-                  placeholder={tSignup("hrEmailPlaceholder")}
-                  label={<>{tSignup("hrEmail")}</>}
+                  placeholder={tForm("hrEmailPlaceholder")}
+                  label={<>{tForm("hrEmail")}</>}
                 />
                 {errors.hr_email && (
                   <FormHelperText>{errors.hr_email.message}</FormHelperText>
@@ -148,8 +148,8 @@ export default function SignupFormContacts({
                 <TextField
                   {...register("dpo_name")}
                   size="small"
-                  placeholder={tSignup("dpoNamePlaceholder")}
-                  label={<>{tSignup("dpoName")}</>}
+                  placeholder={tForm("dpoNamePlaceholder")}
+                  label={<>{tForm("dpoName")}</>}
                 />
                 {errors.dpo_name && (
                   <FormHelperText>{errors.dpo_name.message}</FormHelperText>
@@ -161,8 +161,8 @@ export default function SignupFormContacts({
                 <TextField
                   {...register("dpo_email")}
                   size="small"
-                  placeholder={tSignup("dpoEmailPlaceholder")}
-                  label={<>{tSignup("dpoEmail")}</>}
+                  placeholder={tForm("dpoEmailPlaceholder")}
+                  label={<>{tForm("dpoEmail")}</>}
                 />
                 {errors.hr_email && (
                   <FormHelperText>{errors.hr_email.message}</FormHelperText>

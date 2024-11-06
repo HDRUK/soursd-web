@@ -1,18 +1,14 @@
 import ContactLink from "@/components/ContactLink";
 import FormActions from "@/components/FormActions";
 import FormBody from "@/components/FormBody";
-import FormRecaptcha from "@/components/FormRecaptcha";
 import { Message } from "@/components/Message";
 import PasswordTextField from "@/components/PasswordTextField";
 import yup from "@/config/yup";
-import { VALIDATION_ORC_ID } from "@/consts/form";
 import { useApplicationData } from "@/context/ApplicationData";
-import { Organisation } from "@/services/organisations";
 import { FormMutateState } from "@/types/form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import SendIcon from "@mui/icons-material/Send";
 import { LoadingButton } from "@mui/lab";
-import InfoIcon from "@mui/icons-material/Info";
 import {
   Box,
   Checkbox,
@@ -20,141 +16,85 @@ import {
   FormControlLabel,
   FormHelperText,
   Grid,
-  InputLabel,
-  MenuItem,
-  Select,
   TextField,
-  Tooltip,
   useTheme,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useMemo, useRef, useState } from "react";
-import ReCAPTCHA from "react-google-recaptcha";
+import { useMemo } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 export interface SignupFormValues {
-  email: string;
   first_name: string;
   last_name: string;
-  organisation: string;
-  password?: string | undefined;
-  confirmPassword: string;
-  tscs: NonNullable<boolean | undefined>;
-  consentScrape?: boolean | undefined;
-  orc_id: string;
+  email: string;
+  password: string;
+  tscs: boolean;
 }
 
 export interface SignupFormProps {
   mutateState: FormMutateState;
   onSubmit: (data: SignupFormValues) => void;
-  organisations?: Organisation[];
-  defaultOrganisation?: string;
   defaultEmail?: string;
+  defaultFirstname?: string;
+  defaultLastname?: string;
 }
 
-const NAMESPACE_TRANSLATION_VALIDATION = "Form";
+const NAMESPACE_TRANSLATION_FORM = "Form";
 const NAMESPACE_TRANSLATION_SIGNUP = "SignupForm";
 
 export default function SignupForm({
   onSubmit,
   mutateState,
-  organisations,
-  defaultOrganisation,
   defaultEmail,
+  defaultFirstname,
+  defaultLastname,
 }: SignupFormProps) {
   const {
     validationSchema: { password },
   } = useApplicationData();
-  const tValidation = useTranslations(NAMESPACE_TRANSLATION_VALIDATION);
+  const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const tSignup = useTranslations(NAMESPACE_TRANSLATION_SIGNUP);
   const theme = useTheme();
-  const [recaptchaError, setRecaptchaError] = useState("");
-  const recaptchaRef = useRef<ReCAPTCHA>(null);
-
-  console.log("regex", `(${VALIDATION_ORC_ID.source})|^$`);
 
   const schema = useMemo(
     () =>
       yup.object().shape({
-        first_name: yup
-          .string()
-          .required(tValidation("firstNameRequiredInvalid")),
-        last_name: yup
-          .string()
-          .required(tValidation("lastNameRequiredInvalid")),
-        organisation: yup
-          .string()
-          .required(tValidation("organisationNameRequiredInvalid")),
+        first_name: yup.string().required(tForm("firstNameRequiredInvalid")),
+        last_name: yup.string().required(tForm("lastNameRequiredInvalid")),
         email: yup
           .string()
-          .required(tValidation("emailRequiredInvalid"))
-          .email(tValidation("emailFormatInvalid")),
+          .required(tForm("emailRequiredInvalid"))
+          .email(tForm("emailFormatInvalid")),
         password: yup
           .string()
-          .required(tValidation("passwordRequiredInvalid"))
+          .required(tForm("passwordRequiredInvalid"))
           .testLengthBetween(
             { minLength: password.minLength, maxLength: password.maxLength },
-            tValidation("passwordLengthInvalid", {
+            tForm("passwordLengthInvalid", {
               minLength: password.minLength,
               maxLength: password.maxLength,
             })
           )
           .matches(
             new RegExp(password.pattern),
-            tValidation("passwordFormatInvalid")
-          ),
-        confirmPassword: yup
-          .string()
-          .required(tValidation("confirmPasswordRequiredInvalid"))
-          .oneOf(
-            [yup.ref("password"), ""],
-            tValidation("confirmPasswordMatchInvalid")
+            tForm("passwordFormatInvalid")
           ),
         tscs: yup
           .bool()
-          .oneOf([true], tValidation("tscsRequiredInvalid"))
-          .required(tValidation("tscsRequiredInvalid")),
-        consentScrape: yup.bool(),
-        orc_id: yup
-          .string()
-          .matches(
-            new RegExp(`(${VALIDATION_ORC_ID.source})|^$`),
-            tValidation("orcIdFormatInvalid")
-          )
-          .when("consentScrape", {
-            is: true,
-            then: () =>
-              yup
-                .string()
-                .required(tValidation("orcIdRequiredInvalid"))
-                .matches(VALIDATION_ORC_ID, tValidation("orcIdFormatInvalid")),
-          }),
+          .oneOf([true], tForm("tscsRequiredInvalid"))
+          .required(tForm("tscsRequiredInvalid")),
       }),
     []
   );
 
-  const handleFormSubmit = (data: SignupFormValues) => {
-    if (recaptchaRef.current) {
-      if (recaptchaRef.current.getValue()) {
-        setRecaptchaError("");
-        onSubmit(data);
-      } else {
-        setRecaptchaError(tValidation("recaptchaError"));
-      }
-    }
-  };
-
   const methods = useForm<SignupFormValues>({
     resolver: yupResolver(schema),
     defaultValues: {
-      first_name: "",
-      last_name: "",
-      organisation: defaultOrganisation,
+      first_name: defaultFirstname,
+      last_name: defaultLastname,
       email: defaultEmail,
       password: "",
-      confirmPassword: "",
       tscs: false,
-      consentScrape: false,
     },
   });
 
@@ -168,7 +108,7 @@ export default function SignupForm({
     <FormProvider {...methods}>
       <Box
         component="form"
-        onSubmit={handleSubmit(handleFormSubmit)}
+        onSubmit={handleSubmit(onSubmit)}
         autoComplete="off"
         sx={{
           width: "auto",
@@ -186,28 +126,29 @@ export default function SignupForm({
             </Message>
           )}
           <Grid container direction="column" spacing={2}>
-            <Grid item>
-              <FormControl error={!!errors.organisation} size="small" fullWidth>
-                <InputLabel id="organisation">
-                  {tSignup("organisation")} *
-                </InputLabel>
-                <Select
-                  defaultValue=""
-                  {...register("organisation")}
+            <Grid item spacing={2}>
+              <FormControl error={!!errors.first_name} size="small" fullWidth>
+                <TextField
+                  {...register("first_name")}
                   size="small"
-                  inputProps={{
-                    "aria-label": tSignup("organisation"),
-                  }}
-                  label={<>{tSignup("organisation")} *</>}
-                  disabled={!!defaultOrganisation}>
-                  {organisations?.map(({ organisation_name, id }) => (
-                    <MenuItem value={id} key={id}>
-                      {organisation_name}
-                    </MenuItem>
-                  ))}
-                </Select>
-                {errors.organisation && (
-                  <FormHelperText>{errors.organisation.message}</FormHelperText>
+                  placeholder={tForm("firstNamePlaceholder")}
+                  label={<>{tForm("firstName")}</>}
+                />
+                {errors.first_name && (
+                  <FormHelperText>{errors.first_name.message}</FormHelperText>
+                )}
+              </FormControl>
+            </Grid>
+            <Grid item spacing={2}>
+              <FormControl error={!!errors.last_name} size="small" fullWidth>
+                <TextField
+                  {...register("last_name")}
+                  size="small"
+                  placeholder={tForm("lastNamePlaceholder")}
+                  label={<>{tForm("lastName")}</>}
+                />
+                {errors.last_name && (
+                  <FormHelperText>{errors.last_name.message}</FormHelperText>
                 )}
               </FormControl>
             </Grid>
@@ -217,8 +158,9 @@ export default function SignupForm({
                   <TextField
                     {...register("email")}
                     size="small"
-                    placeholder={tSignup("emailPlaceholder")}
-                    label={<>{tSignup("email")} *</>}
+                    placeholder={tForm("emailPlaceholder")}
+                    label={<>{tForm("email")}</>}
+                    disabled={!!defaultEmail}
                   />
                   {errors.email && (
                     <FormHelperText>{errors.email.message}</FormHelperText>
@@ -227,66 +169,14 @@ export default function SignupForm({
               </Grid>
             )}
             <Grid item>
-              <FormControl error={!!errors.first_name} size="small" fullWidth>
-                <TextField
-                  {...register("first_name")}
-                  size="small"
-                  placeholder={tSignup("firstNamePlaceholder")}
-                  label={<>{tSignup("firstName")} *</>}
-                />
-                {errors.first_name && (
-                  <FormHelperText>{errors.first_name.message}</FormHelperText>
-                )}
-              </FormControl>
-            </Grid>
-            <Grid item>
-              <FormControl error={!!errors.last_name} size="small" fullWidth>
-                <TextField
-                  {...register("last_name")}
-                  size="small"
-                  placeholder={tSignup("lastNamePlaceholder")}
-                  label={<>{tSignup("lastName")} *</>}
-                />
-                {errors.last_name && (
-                  <FormHelperText>{errors.last_name.message}</FormHelperText>
-                )}
-              </FormControl>
-            </Grid>
-            <Grid item>
-              <FormControl error={!!errors.orc_id} size="small" fullWidth>
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 1,
-                    width: "100%",
-                  }}>
-                  <TextField
-                    {...register("orc_id")}
-                    size="small"
-                    placeholder={tSignup("orcIdPlaceholder")}
-                    label={<>{tSignup("orcId")} *</>}
-                    fullWidth
-                  />
-                  <Tooltip title={tSignup("whatIsTheOrcId")}>
-                    <InfoIcon color="info" />
-                  </Tooltip>
-                </Box>
-
-                {errors.orc_id && (
-                  <FormHelperText>{errors.orc_id.message}</FormHelperText>
-                )}
-              </FormControl>
-            </Grid>
-            <Grid item>
               <FormControl error={!!errors.password} size="small" fullWidth>
                 <PasswordTextField
                   id="password"
                   size="small"
-                  placeholder={tSignup("passwordPlaceholder")}
-                  label={<>{tSignup("password")} *</>}
+                  placeholder={tForm("passwordPlaceholder")}
+                  label={<>{tForm("password")}</>}
                   iconButtonProps={{
-                    "aria-label": tSignup("togglePasswordAriaLabel"),
+                    "aria-label": tForm("togglePasswordAriaLabel"),
                   }}
                 />
                 {errors.password && (
@@ -295,52 +185,16 @@ export default function SignupForm({
               </FormControl>
             </Grid>
             <Grid item>
-              <FormControl
-                error={!!errors.confirmPassword}
-                size="small"
-                fullWidth>
-                <PasswordTextField
-                  id="confirmPassword"
-                  size="small"
-                  placeholder={tSignup("confirmPasswordPlaceholder")}
-                  label={<>{tSignup("confirmPassword")} *</>}
-                  iconButtonProps={{
-                    "aria-label": tSignup("toggleConfirmPasswordAriaLabel"),
-                  }}
-                />
-                {errors.confirmPassword && (
-                  <FormHelperText>
-                    {errors.confirmPassword.message}
-                  </FormHelperText>
-                )}
-              </FormControl>
-            </Grid>
-            <Grid item>
               <FormControl error={!!errors.tscs} size="small" fullWidth>
                 <FormControlLabel
                   control={<Checkbox {...register("tscs")} />}
-                  label={tSignup("agreeTermsAndConditions")}
-                  aria-label={tSignup("agreeTermsAndConditionsAriaLabel")}
+                  label={tForm("agreeTermsAndConditions")}
+                  aria-label={tForm("agreeTermsAndConditionsAriaLabel")}
                 />
                 {errors.tscs && (
                   <FormHelperText>{errors.tscs.message}</FormHelperText>
                 )}
               </FormControl>
-            </Grid>
-            <Grid item>
-              <FormControl error={!!errors.tscs} size="small" fullWidth>
-                <FormControlLabel
-                  control={<Checkbox {...register("consentScrape")} />}
-                  label={tSignup("consentScrape")}
-                  aria-label={tSignup("consentScrapeAriaLabel")}
-                />
-                {errors.tscs && (
-                  <FormHelperText>{errors.tscs.message}</FormHelperText>
-                )}
-              </FormControl>
-            </Grid>
-            <Grid item>
-              <FormRecaptcha ref={recaptchaRef} error={recaptchaError} />
             </Grid>
           </Grid>
         </FormBody>

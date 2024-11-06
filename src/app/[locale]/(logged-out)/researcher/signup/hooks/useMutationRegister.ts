@@ -12,27 +12,15 @@ export default function useMutationRegister(
   return useMutation({
     mutationKey: ["postRegisterResearcher"],
     mutationFn: async (payload: PostRegisterResearcherPayload) => {
-      const { consent_scrape, ...restPayload } = payload;
-
-      const contentScrape = {
-        consent_scrape: consent_scrape ? 1 : 0,
-      };
-
       if (user) {
-        await patchUser(user.id, contentScrape, {
+        await patchUser(user.id, payload, {
           error: { message: "submitError" },
         });
       }
 
-      return postRegisterResearcher(
-        {
-          ...restPayload,
-          ...contentScrape,
-        },
-        {
-          error: { message: "submitError" },
-        }
-      );
+      return postRegisterResearcher(payload, {
+        error: { message: "submitError" },
+      });
     },
   });
 }

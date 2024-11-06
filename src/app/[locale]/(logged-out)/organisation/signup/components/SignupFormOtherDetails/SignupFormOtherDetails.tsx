@@ -44,7 +44,7 @@ export interface SignupFormOtherDetailsProps {
   defaultValues?: SignupFormOtherDetailsValues;
 }
 
-const NAMESPACE_TRANSLATION_VALIDATION = "Form";
+const NAMESPACE_TRANSLATION_FORM = "Form";
 const NAMESPACE_TRANSLATION_SIGNUP = "SignupFormOtherDetails";
 
 export default function SignupFormOtherDetails({
@@ -52,7 +52,7 @@ export default function SignupFormOtherDetails({
   onPrevious,
   defaultValues,
 }: SignupFormOtherDetailsProps) {
-  const tValidation = useTranslations(NAMESPACE_TRANSLATION_VALIDATION);
+  const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const tSignup = useTranslations(NAMESPACE_TRANSLATION_SIGNUP);
 
   const theme = useTheme();
@@ -60,27 +60,22 @@ export default function SignupFormOtherDetails({
   const schema = useMemo(
     () =>
       yup.object().shape({
-        address_1: yup
-          .string()
-          .required(tValidation("address1RequiredInvalid")),
+        address_1: yup.string().required(tForm("address1RequiredInvalid")),
         address_2: yup.string().notRequired(),
-        town: yup.string().required(tValidation("townRequiredInvalid")),
-        county: yup.string().required(tValidation("countyRequiredInvalid")),
-        country: yup.string().required(tValidation("countryRequiredInvalid")),
+        town: yup.string().required(tForm("townRequiredInvalid")),
+        county: yup.string().required(tForm("countyRequiredInvalid")),
+        country: yup.string().required(tForm("countryRequiredInvalid")),
         postcode: yup
           .string()
-          .required(tValidation("postcodeRequiredInvalid"))
-          .matches(
-            VALIDATION_POSTCODE_FORMAT,
-            tValidation("postcodeFormatInvalid")
-          ),
+          .required(tForm("postcodeRequiredInvalid"))
+          .matches(VALIDATION_POSTCODE_FORMAT, tForm("postcodeFormatInvalid")),
         dsptk_ods_code: yup
           .string()
           .nullable()
           .transform(value => (value === "" ? null : value))
           .matches(
             VALIDATION_POSTCODE_FORMAT,
-            tValidation("digitalToolkitCodeFormatInvalid")
+            tForm("digitalToolkitCodeFormatInvalid")
           )
           .default(() => ""),
         iso_27001_certified: yup.bool().notRequired(),
@@ -90,10 +85,10 @@ export default function SignupFormOtherDetails({
           then: () =>
             yup
               .string()
-              .required(tValidation("ceCertificationNumberRequiredInvalid"))
+              .required(tForm("ceCertificationNumberRequiredInvalid"))
               .matches(
                 VALIDATION_CE_CERTIFICATION_NUMBER,
-                tValidation("ceCertificationNumberFormatInvalid")
+                tForm("ceCertificationNumberFormatInvalid")
               ),
         }),
       }),
@@ -135,8 +130,8 @@ export default function SignupFormOtherDetails({
                 <TextField
                   {...register("address_1")}
                   size="small"
-                  placeholder={tSignup("address1Placeholder")}
-                  label={<>{tSignup("address1")} *</>}
+                  placeholder={tForm("address1Placeholder")}
+                  label={<>{tForm("address1")} *</>}
                 />
                 {errors.address_1 && (
                   <FormHelperText>{errors.address_1.message}</FormHelperText>
@@ -148,8 +143,8 @@ export default function SignupFormOtherDetails({
                 <TextField
                   {...register("address_2")}
                   size="small"
-                  placeholder={tSignup("address2Placeholder")}
-                  label={<>{tSignup("address2")}</>}
+                  placeholder={tForm("address2Placeholder")}
+                  label={<>{tForm("address2")}</>}
                 />
                 {errors.address_2 && (
                   <FormHelperText>{errors.address_2.message}</FormHelperText>
@@ -161,8 +156,8 @@ export default function SignupFormOtherDetails({
                 <TextField
                   {...register("town")}
                   size="small"
-                  placeholder={tSignup("townPlaceholder")}
-                  label={<>{tSignup("town")}</>}
+                  placeholder={tForm("townPlaceholder")}
+                  label={<>{tForm("town")}</>}
                 />
                 {errors.town && (
                   <FormHelperText>{errors.town.message}</FormHelperText>
@@ -176,8 +171,8 @@ export default function SignupFormOtherDetails({
                     <TextField
                       {...register("county")}
                       size="small"
-                      placeholder={tSignup("countyPlaceholder")}
-                      label={<>{tSignup("county")}</>}
+                      placeholder={tForm("countyPlaceholder")}
+                      label={<>{tForm("county")}</>}
                     />
                     {errors.county && (
                       <FormHelperText>{errors.county.message}</FormHelperText>
@@ -189,8 +184,8 @@ export default function SignupFormOtherDetails({
                     <TextField
                       {...register("postcode")}
                       size="small"
-                      placeholder={tSignup("postcodePlaceholder")}
-                      label={<>{tSignup("postcode")} *</>}
+                      placeholder={tForm("postcodePlaceholder")}
+                      label={<>{tForm("postcode")} *</>}
                     />
                     {errors.postcode && (
                       <FormHelperText>{errors.postcode.message}</FormHelperText>
@@ -204,8 +199,8 @@ export default function SignupFormOtherDetails({
                 <TextField
                   {...register("country")}
                   size="small"
-                  placeholder={tSignup("countryPlaceholder")}
-                  label={<>{tSignup("country")} *</>}
+                  placeholder={tForm("countryPlaceholder")}
+                  label={<>{tForm("country")} *</>}
                   disabled
                 />
                 {errors.country && (
@@ -222,10 +217,10 @@ export default function SignupFormOtherDetails({
                   <TextField
                     {...register("dsptk_ods_code")}
                     size="small"
-                    placeholder={tSignup("digitalToolkitCodePlaceholder")}
-                    label={<>{tSignup("digitalToolkitCode")}</>}
+                    placeholder={tForm("digitalToolkitCodePlaceholder")}
+                    label={<>{tForm("digitalToolkitCode")}</>}
                   />
-                  <Tooltip title={tSignup("whatIsDpstkOdsCode")}>
+                  <Tooltip title={tForm("whatIsDpstkOdsCode")}>
                     <InfoIcon color="info" />
                   </Tooltip>
                 </Box>
@@ -250,7 +245,7 @@ export default function SignupFormOtherDetails({
                       )}
                     />
                   }
-                  label={tSignup("iso27001Certified")}
+                  label={tForm("iso27001Certified")}
                 />
                 {errors.iso_27001_certified && (
                   <FormHelperText>
@@ -268,7 +263,7 @@ export default function SignupFormOtherDetails({
                       )}
                     />
                   }
-                  label={tSignup("ceCertified")}
+                  label={tForm("ceCertified")}
                 />
                 {errors.ce_certified && (
                   <FormHelperText>{errors.ce_certified.message}</FormHelperText>
@@ -284,8 +279,8 @@ export default function SignupFormOtherDetails({
                   <TextField
                     {...register("ce_certification_num")}
                     size="small"
-                    placeholder={tSignup("ceCertificationNumberPlaceholder")}
-                    label={<>{tSignup("ceCertificationNumber")} *</>}
+                    placeholder={tForm("ceCertificationNumberPlaceholder")}
+                    label={<>{tForm("ceCertificationNumber")} *</>}
                   />
                   {errors.ce_certification_num && (
                     <FormHelperText>

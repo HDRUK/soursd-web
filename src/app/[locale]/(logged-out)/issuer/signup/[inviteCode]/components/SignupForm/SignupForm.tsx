@@ -3,7 +3,6 @@
 import ContactLink from "@/components/ContactLink";
 import FormActions from "@/components/FormActions";
 import FormBody from "@/components/FormBody";
-import FormRecaptcha from "@/components/FormRecaptcha";
 import { Message } from "@/components/Message";
 import PasswordTextField from "@/components/PasswordTextField";
 import yup from "@/config/yup";
@@ -37,17 +36,15 @@ export type SignupFormProps = {
   onSubmit: (values: SignupFormValues) => void;
 };
 
-const NAMESPACE_TRANSLATION_VALIDATION = "Form";
+const NAMESPACE_TRANSLATION_FORM = "Form";
 const NAMESPACE_TRANSLATION_SIGNUP = "SignupForm";
 
 export default function SignupForm({ onSubmit, mutateState }: SignupFormProps) {
   const {
     validationSchema: { password },
   } = useApplicationData();
-  const tValidation = useTranslations(NAMESPACE_TRANSLATION_VALIDATION);
+  const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const tSignup = useTranslations(NAMESPACE_TRANSLATION_SIGNUP);
-  const [recaptchaError, setRecaptchaError] = useState("");
-  const recaptchaRef = useRef<ReCAPTCHA>(null);
   const theme = useTheme();
 
   const schema = useMemo(
@@ -55,25 +52,25 @@ export default function SignupForm({ onSubmit, mutateState }: SignupFormProps) {
       yup.object().shape({
         password: yup
           .string()
-          .required(tValidation("passwordRequiredInvalid"))
+          .required(tForm("passwordRequiredInvalid"))
           .testLengthBetween(
             { minLength: password.minLength, maxLength: password.maxLength },
-            tValidation("passwordLengthInvalid", {
+            tForm("passwordLengthInvalid", {
               minLength: password.minLength,
               maxLength: password.maxLength,
             })
           ),
         confirmPassword: yup
           .string()
-          .required(tValidation("confirmPasswordRequiredInvalid"))
+          .required(tForm("confirmPasswordRequiredInvalid"))
           .oneOf(
             [yup.ref("password"), ""],
-            tValidation("confirmPasswordMatchInvalid")
+            tForm("confirmPasswordMatchInvalid")
           ),
         tscs: yup
           .bool()
-          .oneOf([true], tValidation("tscsRequiredInvalid"))
-          .required(tValidation("tscsRequiredInvalid")),
+          .oneOf([true], tForm("tscsRequiredInvalid"))
+          .required(tForm("tscsRequiredInvalid")),
       }),
     []
   );
@@ -87,15 +84,6 @@ export default function SignupForm({ onSubmit, mutateState }: SignupFormProps) {
     },
   });
 
-  const handleFormSubmit = (values: SignupFormValues) => {
-    if (recaptchaRef.current && recaptchaRef.current.getValue()) {
-      setRecaptchaError("");
-      onSubmit(values);
-    } else {
-      setRecaptchaError(tValidation("recaptchaError"));
-    }
-  };
-
   const {
     formState: { errors },
     register,
@@ -106,7 +94,7 @@ export default function SignupForm({ onSubmit, mutateState }: SignupFormProps) {
     <FormProvider {...methods}>
       <Box
         component="form"
-        onSubmit={handleSubmit(handleFormSubmit)}
+        onSubmit={handleSubmit(onSubmit)}
         autoComplete="off"
         sx={{
           width: "auto",
@@ -129,11 +117,11 @@ export default function SignupForm({ onSubmit, mutateState }: SignupFormProps) {
                 <PasswordTextField
                   id="password"
                   size="small"
-                  placeholder={tSignup("passwordPlaceholder")}
-                  aria-label={tSignup("password")}
-                  label={<>{tSignup("password")} *</>}
+                  placeholder={tForm("passwordPlaceholder")}
+                  aria-label={tForm("password")}
+                  label={<>{tForm("password")} *</>}
                   iconButtonProps={{
-                    "aria-label": tSignup("togglePasswordAriaLabel"),
+                    "aria-label": tForm("togglePasswordAriaLabel"),
                   }}
                 />
                 {errors.password && (
@@ -149,11 +137,11 @@ export default function SignupForm({ onSubmit, mutateState }: SignupFormProps) {
                 <PasswordTextField
                   id="confirmPassword"
                   size="small"
-                  placeholder={tSignup("confirmPasswordPlaceholder")}
-                  aria-label={tSignup("confirmPassword")}
-                  label={<>{tSignup("confirmPassword")} *</>}
+                  placeholder={tForm("confirmPasswordPlaceholder")}
+                  aria-label={tForm("confirmPassword")}
+                  label={<>{tForm("confirmPassword")} *</>}
                   iconButtonProps={{
-                    "aria-label": tSignup("toggleConfirmPasswordAriaLabel"),
+                    "aria-label": tForm("toggleConfirmPasswordAriaLabel"),
                   }}
                 />
                 {errors.confirmPassword && (
@@ -167,16 +155,13 @@ export default function SignupForm({ onSubmit, mutateState }: SignupFormProps) {
               <FormControl error={!!errors.tscs} size="small" fullWidth>
                 <FormControlLabel
                   control={<Checkbox {...register("tscs")} />}
-                  label={tSignup("agreeTermsAndConditions")}
-                  aria-label={tSignup("agreeTermsAndConditionsAriaLabel")}
+                  label={tForm("agreeTermsAndConditions")}
+                  aria-label={tForm("agreeTermsAndConditionsAriaLabel")}
                 />
                 {errors.tscs && (
                   <FormHelperText>{errors.tscs.message}</FormHelperText>
                 )}
               </FormControl>
-            </Grid>
-            <Grid item>
-              <FormRecaptcha ref={recaptchaRef} error={recaptchaError} />
             </Grid>
           </Grid>
         </FormBody>

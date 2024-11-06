@@ -2,7 +2,6 @@
 
 import FormActions from "@/components/FormActions";
 import FormBody from "@/components/FormBody";
-import FormRecaptcha from "@/components/FormRecaptcha";
 import PasswordTextField from "@/components/PasswordTextField";
 import yup from "@/config/yup";
 import { VALIDATION_COMPANY_NUMBER } from "@/consts/form";
@@ -20,8 +19,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useMemo, useRef, useState } from "react";
-import ReCAPTCHA from "react-google-recaptcha";
+import { useMemo } from "react";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 
 export interface SignupFormDetailsValues {
@@ -40,7 +38,7 @@ export interface SignupFormDetailsProps {
   defaultValues?: SignupFormDetailsValues;
 }
 
-const NAMESPACE_TRANSLATION_VALIDATION = "Form";
+const NAMESPACE_TRANSLATION_FORM = "Form";
 const NAMESPACE_TRANSLATION_SIGNUP = "SignupFormDetails";
 
 export default function SignupFormDetails({
@@ -50,70 +48,53 @@ export default function SignupFormDetails({
   const {
     validationSchema: { password },
   } = useApplicationData();
-  const tValidation = useTranslations(NAMESPACE_TRANSLATION_VALIDATION);
+  const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const tSignup = useTranslations(NAMESPACE_TRANSLATION_SIGNUP);
   const theme = useTheme();
-  const [recaptchaError, setRecaptchaError] = useState("");
-  const recaptchaRef = useRef<ReCAPTCHA>(null);
 
   const schema = useMemo(
     () =>
       yup.object().shape({
         lead_applicant_email: yup
           .string()
-          .required(tValidation("emailRequiredInvalid"))
-          .email(tValidation("emailFormatInvalid")),
+          .required(tForm("emailRequiredInvalid"))
+          .email(tForm("emailFormatInvalid")),
         companies_house_no: yup
           .string()
-          .required(tValidation("companyNumberRequiredInvalid"))
+          .required(tForm("companyNumberRequiredInvalid"))
           .matches(
             VALIDATION_COMPANY_NUMBER,
-            tValidation("companyNumberFormatInvalid")
+            tForm("companyNumberFormatInvalid")
           ),
         organisation_name: yup
           .string()
-          .required(tValidation("organisationNameRequiredInvalid")),
-        first_name: yup
-          .string()
-          .required(tValidation("firstNameRequiredInvalid")),
-        last_name: yup
-          .string()
-          .required(tValidation("lastNameRequiredInvalid")),
+          .required(tForm("organisationNameRequiredInvalid")),
+        first_name: yup.string().required(tForm("firstNameRequiredInvalid")),
+        last_name: yup.string().required(tForm("lastNameRequiredInvalid")),
         password: yup
           .string()
-          .required(tValidation("passwordRequiredInvalid"))
+          .required(tForm("passwordRequiredInvalid"))
           .testLengthBetween(
             { minLength: password.minLength, maxLength: password.maxLength },
-            tValidation("passwordLengthInvalid", {
+            tForm("passwordLengthInvalid", {
               minLength: password.minLength,
               maxLength: password.maxLength,
             })
           ),
         confirm_password: yup
           .string()
-          .required(tValidation("confirmPasswordRequiredInvalid"))
+          .required(tForm("confirmPasswordRequiredInvalid"))
           .oneOf(
             [yup.ref("password"), ""],
-            tValidation("confirmPasswordMatchInvalid")
+            tForm("confirmPasswordMatchInvalid")
           ),
         tscs: yup
           .bool()
-          .oneOf([true], tValidation("tscsRequiredInvalid"))
-          .required(tValidation("tscsRequiredInvalid")),
+          .oneOf([true], tForm("tscsRequiredInvalid"))
+          .required(tForm("tscsRequiredInvalid")),
       }),
     []
   );
-
-  const handleFormSubmit = (data: SignupFormDetailsValues) => {
-    if (recaptchaRef.current) {
-      if (recaptchaRef.current.getValue()) {
-        setRecaptchaError("");
-        onSubmit(data);
-      } else {
-        setRecaptchaError(tValidation("recaptchaError"));
-      }
-    }
-  };
 
   const methods = useForm<SignupFormDetailsValues>({
     resolver: yupResolver(schema),
@@ -130,7 +111,7 @@ export default function SignupFormDetails({
     <FormProvider {...methods}>
       <Box
         component="form"
-        onSubmit={handleSubmit(handleFormSubmit)}
+        onSubmit={handleSubmit(onSubmit)}
         autoComplete="off"
         sx={{
           width: "auto",
@@ -149,8 +130,8 @@ export default function SignupFormDetails({
                 <TextField
                   {...register("organisation_name")}
                   size="small"
-                  placeholder={tSignup("organisationNamePlaceholder")}
-                  label={<>{tSignup("organisationName")} *</>}
+                  placeholder={tForm("organisationNamePlaceholder")}
+                  label={<>{tForm("organisationName")} *</>}
                 />
                 {errors.organisation_name && (
                   <FormHelperText>
@@ -167,8 +148,8 @@ export default function SignupFormDetails({
                 <TextField
                   {...register("companies_house_no")}
                   size="small"
-                  placeholder={tSignup("companyNumberPlaceholder")}
-                  label={<>{tSignup("companyNumber")} *</>}
+                  placeholder={tForm("companyNumberPlaceholder")}
+                  label={<>{tForm("companyNumber")} *</>}
                 />
                 {errors.companies_house_no && (
                   <FormHelperText>
@@ -185,8 +166,8 @@ export default function SignupFormDetails({
                 <TextField
                   {...register("lead_applicant_email")}
                   size="small"
-                  placeholder={tSignup("emailPlaceholder")}
-                  label={<>{tSignup("email")} *</>}
+                  placeholder={tForm("emailPlaceholder")}
+                  label={<>{tForm("email")} *</>}
                 />
                 {errors.lead_applicant_email && (
                   <FormHelperText>
@@ -205,8 +186,8 @@ export default function SignupFormDetails({
                     <TextField
                       {...register("first_name")}
                       size="small"
-                      placeholder={tSignup("applicantFirstNamePlaceholder")}
-                      label={<>{tSignup("applicantFirstName")} *</>}
+                      placeholder={tForm("applicantFirstNamePlaceholder")}
+                      label={<>{tForm("applicantFirstName")} *</>}
                     />
                     {errors.first_name && (
                       <FormHelperText>
@@ -223,8 +204,8 @@ export default function SignupFormDetails({
                     <TextField
                       {...register("last_name")}
                       size="small"
-                      placeholder={tSignup("applicantLastNamePlaceholder")}
-                      label={<>{tSignup("applicantLastName")} *</>}
+                      placeholder={tForm("applicantLastNamePlaceholder")}
+                      label={<>{tForm("applicantLastName")} *</>}
                     />
                     {errors.last_name && (
                       <FormHelperText>
@@ -240,10 +221,10 @@ export default function SignupFormDetails({
                 <PasswordTextField
                   id="password"
                   size="small"
-                  placeholder={tSignup("passwordPlaceholder")}
-                  label={<>{tSignup("password")} *</>}
+                  placeholder={tForm("passwordPlaceholder")}
+                  label={<>{tForm("password")} *</>}
                   iconButtonProps={{
-                    "aria-label": tSignup("togglePasswordAriaLabel"),
+                    "aria-label": tForm("togglePasswordAriaLabel"),
                   }}
                 />
                 {errors.password && (
@@ -259,10 +240,10 @@ export default function SignupFormDetails({
                 <PasswordTextField
                   id="confirm_password"
                   size="small"
-                  placeholder={tSignup("confirmPasswordPlaceholder")}
-                  label={<>{tSignup("confirmPassword")} *</>}
+                  placeholder={tForm("confirmPasswordPlaceholder")}
+                  label={<>{tForm("confirmPassword")} *</>}
                   iconButtonProps={{
-                    "aria-label": tSignup("toggleConfirmPasswordAriaLabel"),
+                    "aria-label": tForm("toggleConfirmPasswordAriaLabel"),
                   }}
                 />
                 {errors.confirm_password && (
@@ -283,16 +264,13 @@ export default function SignupFormDetails({
                       )}
                     />
                   }
-                  label={tSignup("agreeTermsAndConditions")}
-                  aria-label={tSignup("agreeTermsAndConditionsAriaLabel")}
+                  label={tForm("agreeTermsAndConditions")}
+                  aria-label={tForm("agreeTermsAndConditionsAriaLabel")}
                 />
                 {errors.tscs && (
                   <FormHelperText>{errors.tscs.message}</FormHelperText>
                 )}
               </FormControl>
-            </Grid>
-            <Grid item>
-              <FormRecaptcha ref={recaptchaRef} error={recaptchaError} />
             </Grid>
           </Grid>
         </FormBody>
