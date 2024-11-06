@@ -68,7 +68,7 @@ export default function UsersList({
         ({ organisation_name, registries, id, approvals }) => {
           const ariaId = organisation_name.replace(/[^\w]*/g, "");
 
-          const isOrganisationApproved = !!approvals.find(
+          const isOrganisationApproved = approvals.some(
             ({ id: issuerId }) => issuerId === ISSUER_ID
           );
 
@@ -140,7 +140,7 @@ export default function UsersList({
                       ({
                         user: { email, first_name, last_name, id, approvals },
                       }) => {
-                        const isApproved = !!approvals.find(
+                        const isApproved = approvals.some(
                           ({ id: issuerId }) => issuerId === ISSUER_ID
                         );
 
