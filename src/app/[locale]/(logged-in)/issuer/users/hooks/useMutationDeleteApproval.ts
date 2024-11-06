@@ -4,7 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 
 export default function useMutationApprovals() {
   return useMutation({
-    mutationKey: ["postApproval"],
+    mutationKey: ["deleteApproval"],
     mutationFn: (payload: DeleteApprovalPayload & { type: EntityType }) => {
       const { type, organisation_id, user_id, ...restPayload } = payload;
 

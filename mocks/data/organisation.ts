@@ -35,6 +35,22 @@ const mockedOrganisation = (
         last_name: "Smith",
         email: "john.smith@hdruk.ac.uk",
         id: 1,
+        approvals: [
+          {
+            id: 1,
+            created_at: "2024-01-01T01:00:00z",
+            updated_at: "2024-01-01T01:00:00z",
+            name: "",
+            contact_email: "",
+            enabled: true,
+            invite_accepted_at: "2024-01-02T00:00:00z",
+            invite_sent_at: "2024-01-01T00:00:00z",
+            pivot: {
+              issuer_id: 1,
+              organisation_id: 1,
+            },
+          },
+        ],
       }),
     },
     {

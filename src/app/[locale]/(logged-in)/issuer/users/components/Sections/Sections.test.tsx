@@ -18,6 +18,17 @@ jest.mock("../../hooks/useMutationApproval", () => ({
   }),
 }));
 
+jest.mock("../../hooks/useMutationDeleteApproval", () => ({
+  ...jest.requireActual("../../hooks/useMutationDeleteApproval"),
+  __esModule: true,
+  default: jest.fn().mockReturnValue({
+    mutateAsync: (props: PostApprovalPayloadWithEntity) => mockMutate(props),
+    isError: false,
+    isLoading: false,
+    error: "",
+  }),
+}));
+
 const renderSections = () => render(<Sections />);
 
 const setupActionMenuTest = async (label: string, menuItem: string) => {
@@ -28,7 +39,7 @@ const setupActionMenuTest = async (label: string, menuItem: string) => {
 
   fireEvent.click(menuTrigger);
 
-  return screen.findByText(menuItem);
+  return screen.findAllByText(menuItem);
 };
 
 describe("<Sections />", () => {
@@ -77,7 +88,7 @@ describe("<Sections />", () => {
     );
 
     await waitFor(() => {
-      expect(permissions).toHaveAttribute(
+      expect(permissions[0]).toHaveAttribute(
         "href",
         `/en${ROUTES.permissionsOrganisationIssuer.path}/1`
       );
@@ -91,7 +102,7 @@ describe("<Sections />", () => {
     );
 
     await waitFor(() => {
-      expect(permissions).toHaveAttribute(
+      expect(permissions[0]).toHaveAttribute(
         "href",
         `/en${ROUTES.permissionsResearcherIssuer.path}/1`
       );
@@ -101,10 +112,10 @@ describe("<Sections />", () => {
   it("approves a researcher", async () => {
     const approval = await setupActionMenuTest(
       "john.smith@hdruk.ac.uk actions",
-      "Approve"
+      "Approved"
     );
 
-    fireEvent.click(approval);
+    fireEvent.click(approval[2]);
 
     await waitFor(() => {
       expect(mockMutate).toHaveBeenCalledWith({
@@ -121,7 +132,7 @@ describe("<Sections />", () => {
       "View details"
     );
 
-    fireEvent.click(viewDetails);
+    fireEvent.click(viewDetails[0]);
 
     await waitFor(() => {
       const modal = screen.getByLabelText("John Smith details");
@@ -136,7 +147,7 @@ describe("<Sections />", () => {
       "Approve"
     );
 
-    fireEvent.click(approval);
+    fireEvent.click(approval[0]);
 
     await waitFor(() => {
       expect(mockMutate).toHaveBeenCalledWith({
@@ -153,7 +164,7 @@ describe("<Sections />", () => {
       "View details"
     );
 
-    fireEvent.click(viewDetails);
+    fireEvent.click(viewDetails[0]);
 
     await waitFor(() => {
       const modals = screen.getAllByLabelText("Organisation 1 details");

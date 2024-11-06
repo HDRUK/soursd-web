@@ -71,8 +71,6 @@ export default function SignupForm({
   const [recaptchaError, setRecaptchaError] = useState("");
   const recaptchaRef = useRef<ReCAPTCHA>(null);
 
-  console.log("regex", `(${VALIDATION_ORC_ID.source})|^$`);
-
   const schema = useMemo(
     () =>
       yup.object().shape({

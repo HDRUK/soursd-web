@@ -80,7 +80,7 @@ export default function OrganisationUsersList({
               user: { email, first_name, last_name, id, approvals },
               user,
             }) => {
-              const isApproved = !!approvals.find(
+              const isApproved = approvals.some(
                 ({ id: issuerId }) => issuerId === ISSUER_ID
               );
 

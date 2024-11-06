@@ -56,8 +56,10 @@ export default function UsersList({
     isApproved: boolean
   ) => {
     if (!isApproved) {
+      console.log("************* Approving", payload);
       onApprove(payload);
     } else {
+      console.log("************* Unapproving", payload);
       onUnapprove(payload);
     }
   };
@@ -82,7 +84,7 @@ export default function UsersList({
 
         const ariaId = organisation_name.replace(/[^\w]*/g, "");
 
-        const isApproved = !!approvals.find(
+        const isApproved = approvals.some(
           ({ id: issuerId }) => issuerId === ISSUER_ID
         );
 
