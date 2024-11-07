@@ -48,5 +48,6 @@ export const PALETTE_THEME_PURPLE_BLUE = {
     inactive: createColor(grey["300"]),
     caption: createColor(grey["500"]),
     white: "#fff",
+    footer: createColor("#72788D"),
   },
 };

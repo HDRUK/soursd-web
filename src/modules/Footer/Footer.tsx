@@ -1,46 +1,39 @@
 "use client";
 
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Link } from "@mui/material";
 import { HTMLAttributes } from "react";
-import { StyledLinks } from "./Footer.styles";
+import { useTranslations } from "next-intl";
+import { StyledFooter, StyledLink } from "./Footer.styles";
 
 type FooterProps = HTMLAttributes<HTMLDivElement>;
 
+const NAMESPACE_TRANSLATIONS_FOOTER = "Footer";
+
 export default function Footer(props: FooterProps) {
+  const t = useTranslations(NAMESPACE_TRANSLATIONS_FOOTER);
   return (
-    <Box {...props} component="footer" sx={{ backgroundColor: "primary.dark" }}>
-      <StyledLinks>
+    <Box {...props} component="footer" sx={{ backgroundColor: "footer.main" }}>
+      <StyledFooter>
         <div>
-          <Typography variant="subtitle2" color="white">
-            Address
+          <Typography variant="h6" color="white" sx={{ marginBottom: "5px" }}>
+            {t("contactFormTitle")}
           </Typography>
-          <Typography variant="body2" color="white">
-            123 Gower St
-            <br />
-            London
-            <br />
-            WC2H 6SE
+          <Box sx={{ display: "flex", flexDirection: "column" }}>
+            <StyledLink color="white">{t("privacyPolicyLink")}</StyledLink>
+            <StyledLink color="white">{t("termsAndConditionsLink")}</StyledLink>
+          </Box>
+        </div>
+        <div>
+          <Typography variant="h6" color="white" sx={{ marginBottom: "5px" }}>
+            {t("fundedByTitle")}
           </Typography>
         </div>
         <div>
-          <Typography variant="subtitle2" color="white">
-            Phone
-          </Typography>
-          <Typography variant="body2" color="white">
-            +44 207 333 7777
-            <br />
-            +44 300 222 666
+          <Typography variant="h6" color="white" sx={{ marginBottom: "5px" }}>
+            {t("partnershipTitle")}
           </Typography>
         </div>
-        <div>
-          <Typography variant="subtitle2" color="white">
-            Support
-          </Typography>
-          <Typography variant="body2" color="white">
-            email@domain.com
-          </Typography>
-        </div>
-      </StyledLinks>
+      </StyledFooter>
     </Box>
   );
 }
