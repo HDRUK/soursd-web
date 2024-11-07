@@ -5,10 +5,8 @@ import {
   deepPurple,
   green,
   grey,
-  indigo,
   orange,
   red,
-  yellow,
 } from "@mui/material/colors";
 
 const {
