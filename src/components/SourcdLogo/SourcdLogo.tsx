@@ -1,5 +1,4 @@
 import Image from "next/image";
-import "./SourcdLogo.css";
 import image from "public/soursd_logo.svg";
 import { useTranslations } from "next-intl";
 import { StyledLogoContainer, StyledLogoTitle } from "./SourcdLogo.styles";

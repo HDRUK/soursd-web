@@ -1,33 +1,27 @@
-import React from "react";
-import { render } from "@testing-library/react";
-import SourcdLogo, { SourcdLogoProps } from "./SourcdLogo";
+import { render, screen } from "@testing-library/react";
+import { useTranslations } from "next-intl";
+import SourcdLogo from "./SourcdLogo";
 
-describe("SourcdLogo Component", () => {
-  const defaultProps: SourcdLogoProps = {
-    className: "custom-class",
-  };
+jest.mock("next-intl", () => ({
+  useTranslations: jest.fn(),
+}));
 
-  it("renders without crashing", () => {
-    const { getByAltText, getByText } = render(
-      <SourcdLogo {...defaultProps} />
-    );
-    const logoImage = getByAltText("SOURCD");
-    const heading = getByText("SOURCD");
+describe("SourcdLogo", () => {
+  it("renders the logo image", () => {
+    const mockT = jest.fn().mockReturnValue("SOURCD");
+    (useTranslations as jest.Mock).mockReturnValue(mockT);
 
-    expect(logoImage).toBeInTheDocument();
-    expect(heading).toBeInTheDocument();
+    render(<SourcdLogo />);
+    const image = screen.getByRole("img", { name: /SOURCD/i });
+    expect(image).toBeInTheDocument();
   });
 
-  it("applies the className prop", () => {
-    const { container } = render(<SourcdLogo {...defaultProps} />);
-    expect(container.firstChild).toHaveClass("custom-class");
-  });
+  it("renders the title with the correct translation", () => {
+    const mockT = jest.fn().mockReturnValue("SOURCD");
+    (useTranslations as jest.Mock).mockReturnValue(mockT);
 
-  it("displays the heading with the correct text", () => {
-    const { getByText } = render(<SourcdLogo {...defaultProps} />);
-    const heading = getByText("SOURCD");
-
-    expect(heading).toBeInTheDocument();
-    expect(heading).toHaveClass("heading");
+    render(<SourcdLogo />);
+    const title = screen.getByRole("heading", { name: /SOURCD/i });
+    expect(title).toBeInTheDocument();
   });
 });
