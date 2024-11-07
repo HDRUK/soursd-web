@@ -1,16 +1,18 @@
 import Image from "next/image";
 import "./SourcdLogo.css";
 import image from "public/soursd_logo.svg";
+import { useTranslations } from "next-intl";
+import { StyledLogoContainer, StyledLogoTitle } from "./SourcdLogo.styles";
 
-export interface SourcdLogoProps {
-  className?: string;
-}
+const NAMESPACE_TRANSLATIONS_SOURCD_LOGO = "SourcdLogo";
 
-export default function SourcdLogo({ className }: SourcdLogoProps) {
+export default function SourcdLogo() {
+  const t = useTranslations(NAMESPACE_TRANSLATIONS_SOURCD_LOGO);
+
   return (
-    <div className={`sourcd-logo ${className}`}>
+    <StyledLogoContainer>
       <Image src={image} alt="SOURCD" width={100} height={100} />
-      <h1 className="heading">SOURCD</h1>
-    </div>
+      <StyledLogoTitle variant="h1">{t("logoTitle")}</StyledLogoTitle>
+    </StyledLogoContainer>
   );
 }

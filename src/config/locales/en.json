@@ -352,5 +352,8 @@
     "systemConfigBody": "Update or add new System Configuration Parameters",
     "systemConfigSubtitle": "Parameters are in the form of NameValue pairs",
     "noDataIssuers": "Unable to retrieve known Issuers. Please contact us at <contactLink></contactLink>"
+  },
+  "SourcdLogo": {
+    "logoTitle": "SOURCD"
   }
 }

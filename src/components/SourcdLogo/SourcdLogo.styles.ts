@@ -1,0 +1,27 @@
+import { css, styled, Typography } from "@mui/material";
+
+export const StyledLogoContainer = styled("div")(
+  () => css`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    padding: 4px;
+  `
+);
+
+export const StyledLogoTitle = styled(Typography)(
+  () => css`
+    font-size: 2rem;
+    color: #333;
+    margin-top: 0;
+    letter-spacing: 6px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    height: auto;
+    width: auto;
+    text-align: center;
+    margin-right: -6px;
+  `
+);
