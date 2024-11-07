@@ -21,8 +21,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useMemo, useRef, useState } from "react";
-import ReCAPTCHA from "react-google-recaptcha";
+import { useMemo } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 export interface SignupFormValues {
