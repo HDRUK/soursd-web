@@ -53,10 +53,6 @@ export default function LoginFormModal() {
     const userGroup = authResponse.data.user.user_group;
 
     if (userGroup === UserGroup.RESEARCHERS) {
-      console.log(
-        "**** profileResearcherDetails",
-        routes.profileResearcherDetails.path
-      );
       router.push(routes.profileResearcherDetails.path);
     } else if (userGroup === UserGroup.ORGANISATIONS) {
       router.push(routes.profileOrganisation.path);
