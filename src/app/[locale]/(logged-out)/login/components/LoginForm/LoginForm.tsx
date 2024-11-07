@@ -91,7 +91,6 @@ export default function SignupForm({ onSubmit, mutateState }: LoginFormProps) {
                   id="email"
                   size="small"
                   placeholder={tForm("emailPlaceholder")}
-                  aria-label={tForm("email")}
                   label={<>{tForm("email")}</>}
                   {...register("email")}
                 />
@@ -106,7 +105,6 @@ export default function SignupForm({ onSubmit, mutateState }: LoginFormProps) {
                   id="password"
                   size="small"
                   placeholder={tForm("passwordPlaceholder")}
-                  aria-label={tForm("password")}
                   label={<>{tForm("password")}</>}
                   iconButtonProps={{
                     "aria-label": tForm("togglePasswordAriaLabel"),

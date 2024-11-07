@@ -284,7 +284,6 @@ export default function Details({ emailVerified }: DetailsProps) {
                 {...register("first_name")}
                 size="small"
                 placeholder={tForm("firstNamePlaceholder")}
-                aria-label={tForm("firstName")}
                 label={<>{tForm("firstName")}</>}
               />
               {errors.first_name && (
@@ -298,7 +297,6 @@ export default function Details({ emailVerified }: DetailsProps) {
                 {...register("last_name")}
                 size="small"
                 placeholder={tForm("lastNamePlaceholder")}
-                aria-label={tForm("lastName")}
                 label={<>{tForm("lastName")}</>}
               />
               {errors.last_name && (
