@@ -5,10 +5,9 @@ import OverlayCenter from "@/components/OverlayCenter";
 import OverlayCenterAlert from "@/components/OverlayCenterAlert";
 import { VALIDATION_SCHEMA_KEY } from "@/consts/application";
 import { ROUTES } from "@/consts/router";
-import { UserGroup } from "@/consts/user";
 import { useStore } from "@/data/store";
-import { mockedOrganisation } from "@/mocks/data/organisation";
 import DecoratorPanel from "@/modules/DecoratorPanel";
+import { getOrganisation } from "@/services/organisations";
 import { getSystemConfig } from "@/services/system_config";
 import { getUser } from "@/services/users";
 import {
@@ -89,6 +88,21 @@ const ApplicationDataProvider = ({
       }),
   });
 
+  const {
+    mutateAsync: mutateOrganisationAsync,
+    isError: isOrganisationError,
+    isLoading: isOrganisationLoading,
+    error: organisationError,
+  } = useMutation({
+    mutationKey: ["getOrganisation"],
+    mutationFn: (id: number) =>
+      getOrganisation(id, {
+        error: {
+          message: "getOrganisationError",
+        },
+      }),
+  });
+
   useEffect(() => {
     const initUserFetch = async () => {
       const authDetails = await getAuthData();
@@ -104,12 +118,12 @@ const ApplicationDataProvider = ({
           },
         });
 
-        if (user.data?.user_group === UserGroup.ORGANISATIONS) {
-          setOrganisation(
-            mockedOrganisation({
-              idvt_result: null,
-            })
+        if (user.data?.organisation_id) {
+          const { data } = await mutateOrganisationAsync(
+            user.data?.organisation_id
           );
+
+          setOrganisation(data);
         }
       }
 
@@ -133,26 +147,25 @@ const ApplicationDataProvider = ({
     };
   }, [!!systemConfigData?.data, value]);
 
+  const isAnyLoading = isUserLoading || isLoading || isOrganisationLoading;
+  const isAnyError = isError || isUserError || isOrganisationError;
+  const errorMessage = error || userError || organisationError;
+
   const isFinishedLoading =
-    !isUserLoading &&
-    !isLoading &&
-    !isError &&
-    !isUserError &&
-    systemConfigData?.data &&
-    authFetched;
+    !isAnyLoading && !isAnyError && systemConfigData?.data && authFetched;
 
   return (
     <ApplicationDataContext.Provider value={providerValue}>
-      {(isUserLoading || isLoading || isError || isUserError) && (
+      {(isAnyLoading || isAnyError) && (
         <DecoratorPanel>
-          {(isUserLoading || isLoading) && (
+          {isAnyLoading && (
             <OverlayCenter>
               <CircularProgress sx={{ color: "#fff" }} />
             </OverlayCenter>
           )}
-          {(isError || isUserError) && (
+          {isAnyError && (
             <OverlayCenterAlert>
-              {t.rich(error || userError, {
+              {t.rich(errorMessage, {
                 contactLink: ContactLink,
               })}
             </OverlayCenterAlert>
