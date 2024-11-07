@@ -118,7 +118,6 @@ export default function SignupForm({ onSubmit, mutateState }: SignupFormProps) {
                   id="password"
                   size="small"
                   placeholder={tForm("passwordPlaceholder")}
-                  aria-label={tForm("password")}
                   label={<>{tForm("password")}</>}
                   iconButtonProps={{
                     "aria-label": tForm("togglePasswordAriaLabel"),
@@ -138,7 +137,6 @@ export default function SignupForm({ onSubmit, mutateState }: SignupFormProps) {
                   id="confirmPassword"
                   size="small"
                   placeholder={tForm("confirmPasswordPlaceholder")}
-                  aria-label={tForm("confirmPassword")}
                   label={<>{tForm("confirmPassword")}</>}
                   iconButtonProps={{
                     "aria-label": tForm("toggleConfirmPasswordAriaLabel"),
