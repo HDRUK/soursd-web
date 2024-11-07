@@ -173,6 +173,9 @@ async function mockFetch(url) {
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/approvals/researcher`: {
       return mock200Json(true);
     }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/approvals/researcher/1/issuer/1`: {
+      return mock200Json(true);
+    }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/organisation/1`: {
       return mock200Json(mockedOrganisation());
     }

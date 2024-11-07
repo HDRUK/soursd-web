@@ -82,7 +82,7 @@ export default function UsersList({
 
         const ariaId = organisation_name.replace(/[^\w]*/g, "");
 
-        const isApproved = !!approvals.find(
+        const isApproved = approvals.some(
           ({ id: issuerId }) => issuerId === ISSUER_ID
         );
 
