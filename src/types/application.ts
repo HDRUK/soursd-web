@@ -61,7 +61,9 @@ interface User {
   profile_completed_at: string | null;
   profile_steps_completed: string | null;
   approvals: Approval[];
-  organisation_id: number | null;
+  organisation_id: number;
+  consent_scrape: boolean;
+  orc_id: number | null;
   registry: {
     files: File[];
     organisations: Organisation[];

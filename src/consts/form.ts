@@ -11,7 +11,7 @@ const VALIDATION_COMPANY_NUMBER =
 
 const VALIDATION_CE_CERTIFICATION_NUMBER = /^[\w]{4}$/;
 
-const VALIDATION_ORC_ID = /^[\d]{4}-[\d]{4}-[\d]{4}-[\d]{3}(0|9|X)$/;
+const VALIDATION_ORC_ID = /^[\d]{4}-[\d]{4}-[\d]{4}-[\d]{4}$/;
 
 export {
   VALIDATION_PASSWORD_FORMAT,

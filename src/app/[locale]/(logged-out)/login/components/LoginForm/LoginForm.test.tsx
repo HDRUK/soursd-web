@@ -61,9 +61,8 @@ describe("<LoginForm />", () => {
   it("submits when values are defined", async () => {
     renderLoginForm();
 
-    const password = screen.getByLabelText("Password").querySelector("input");
-    const email = screen.getByLabelText("Email").querySelector("input");
-    const recaptcha = screen.getByTestId("recaptcha");
+    const password = screen.getByLabelText("Password");
+    const email = screen.getByLabelText("Email");
 
     const emailValue = faker.internet.email();
     const passwordValue = faker.string.sample();
@@ -77,8 +76,6 @@ describe("<LoginForm />", () => {
       fireEvent.change(password, {
         target: { value: passwordValue },
       });
-
-      fireEvent.click(recaptcha);
 
       fireEvent.submit(screen.getByRole("button", { name: /Login/i }));
 

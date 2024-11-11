@@ -68,7 +68,6 @@ describe("<SignupFormDetails />", () => {
     const tscs = screen
       .getByLabelText("Accept terms and conditions")
       .querySelector("input");
-    const recaptcha = screen.getByTestId("recaptcha");
 
     if (
       organisation_name &&
@@ -116,7 +115,6 @@ describe("<SignupFormDetails />", () => {
         },
       });
       fireEvent.click(tscs);
-      fireEvent.click(recaptcha);
 
       fireEvent.submit(screen.getByRole("button", { name: /Next/i }));
 
