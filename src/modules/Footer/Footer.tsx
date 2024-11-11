@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Typography, Link } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { HTMLAttributes } from "react";
 import { useTranslations } from "next-intl";
 import { StyledFooter, StyledLink } from "./Footer.styles";
