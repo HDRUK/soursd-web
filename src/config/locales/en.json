@@ -80,7 +80,11 @@
   },
   "Footer": {
     "contactFormTitle": "Contact Us",
-    "contactFormSubtitle": "Some subtitle here"
+    "contactFormSubtitle": "Some subtitle here",
+    "fundedByTitle": "Funded by",
+    "partnershipTitle": "In partnership with",
+    "privacyPolicyLink": "Privacy policy",
+    "termsAndConditionsLink": "Terms and Conditions"
   },
   "ContactForm": {
     "namePlaceholder": "Name",

@@ -1,13 +1,14 @@
-import { css, styled } from "@mui/material";
+import { css, Link, styled } from "@mui/material";
 
-export const StyledLinks = styled("div")(
+export const StyledFooter = styled("div")(
   ({ theme }) => css`
     width: 100%;
     position: relative;
     color: #fff;
-    display: flex;
+    display: grid;
     gap: ${theme.spacing(5)};
-    flex-direction: column;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-auto-flow: row;
     padding: ${theme.spacing(3)} ${theme.spacing(8)};
 
     ${theme.breakpoints.up("md")} {
@@ -15,5 +16,12 @@ export const StyledLinks = styled("div")(
       flex-direction: row;
       padding: ${theme.spacing(5)} ${theme.spacing(20)};
     }
+  `
+);
+
+export const StyledLink = styled(Link)(
+  () => css`
+    cursor: pointer;
+    padding-top: 5px;
   `
 );
