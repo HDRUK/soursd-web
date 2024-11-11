@@ -5,10 +5,8 @@ import {
   deepPurple,
   green,
   grey,
-  indigo,
   orange,
   red,
-  yellow,
 } from "@mui/material/colors";
 
 const {
@@ -35,8 +33,8 @@ export const PALETTE_THEME_PURPLE_BLUE = {
   palette: {
     background1: createColor(deepPurple["300"]),
     background2: createColor(blueGrey["800"]),
-    primary: createColor(indigo["300"]),
-    secondary: createColor(yellow["600"]),
+    primary: createColor("#CC51B4"),
+    secondary: createColor("#E3E3E3"),
     warning: createColor(orange["300"]),
     info: createColor(blue["200"]),
     error: createColor(red["400"]),
