@@ -1,6 +1,7 @@
 "use client";
 
 import ContactLink from "@/components/ContactLink";
+import Guidance from "@/components/Guidance";
 import { Message } from "@/components/Message";
 import yup from "@/config/yup";
 import { MAX_UPLOAD_SIZE_BYTES } from "@/consts/files";
@@ -25,10 +26,10 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { useMutation } from "@tanstack/react-query";
 import DetailsCV from "../DetailsCV";
 
 export interface DetailsFormValues {
@@ -167,97 +168,99 @@ export default function Details({ emailVerified }: DetailsProps) {
   } = methods;
 
   return (
-    <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(handleDetailsSubmit)}>
-        <Grid container rowSpacing={3} md={8}>
-          <Grid item xs={12}>
-            {isUpdateError && (
-              <Message severity="error" sx={{ mb: 3 }}>
-                {tPersonalDetails.rich(updateError, {
-                  contactLink: ContactLink,
-                })}
-              </Message>
-            )}
-            {isFileError && (
-              <Message severity="error" sx={{ mb: 3 }}>
-                {tPersonalDetails.rich(fileError, {
-                  contactLink: ContactLink,
-                })}
-              </Message>
-            )}
-          </Grid>
-          <Grid item xs={12}>
-            <FormControl error={!!errors.firstName} size="small" fullWidth>
-              <TextField
-                {...register("firstName")}
-                size="small"
-                placeholder={tPersonalDetails("firstNamePlaceholder")}
-                aria-label={tPersonalDetails("firstName")}
-                label={<>{tPersonalDetails("firstName")} *</>}
-              />
-              {errors.firstName && (
-                <FormHelperText>{errors.firstName.message}</FormHelperText>
+    <Guidance info="Sample guidance">
+      <FormProvider {...methods}>
+        <form onSubmit={handleSubmit(handleDetailsSubmit)}>
+          <Grid container rowSpacing={3} md={8}>
+            <Grid item xs={12}>
+              {isUpdateError && (
+                <Message severity="error" sx={{ mb: 3 }}>
+                  {tPersonalDetails.rich(updateError, {
+                    contactLink: ContactLink,
+                  })}
+                </Message>
               )}
-            </FormControl>
-          </Grid>
-          <Grid item xs={12}>
-            <FormControl error={!!errors.lastName} size="small" fullWidth>
-              <TextField
-                {...register("lastName")}
-                size="small"
-                placeholder={tPersonalDetails("lastNamePlaceholder")}
-                aria-label={tPersonalDetails("lastName")}
-                label={<>{tPersonalDetails("lastName")} *</>}
-              />
-              {errors.lastName && (
-                <FormHelperText>{errors.lastName.message}</FormHelperText>
+              {isFileError && (
+                <Message severity="error" sx={{ mb: 3 }}>
+                  {tPersonalDetails.rich(fileError, {
+                    contactLink: ContactLink,
+                  })}
+                </Message>
               )}
-            </FormControl>
+            </Grid>
+            <Grid item xs={12}>
+              <FormControl error={!!errors.firstName} size="small" fullWidth>
+                <TextField
+                  {...register("firstName")}
+                  size="small"
+                  placeholder={tPersonalDetails("firstNamePlaceholder")}
+                  aria-label={tPersonalDetails("firstName")}
+                  label={<>{tPersonalDetails("firstName")} *</>}
+                />
+                {errors.firstName && (
+                  <FormHelperText>{errors.firstName.message}</FormHelperText>
+                )}
+              </FormControl>
+            </Grid>
+            <Grid item xs={12}>
+              <FormControl error={!!errors.lastName} size="small" fullWidth>
+                <TextField
+                  {...register("lastName")}
+                  size="small"
+                  placeholder={tPersonalDetails("lastNamePlaceholder")}
+                  aria-label={tPersonalDetails("lastName")}
+                  label={<>{tPersonalDetails("lastName")} *</>}
+                />
+                {errors.lastName && (
+                  <FormHelperText>{errors.lastName.message}</FormHelperText>
+                )}
+              </FormControl>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              sx={{ display: "flex", gap: 2, alignItems: "center" }}>
+              Email verification:{" "}
+              {emailVerified && (
+                <Typography
+                  color="success.main"
+                  component="span"
+                  sx={{ display: "inline-flex", alignItems: "center", gap: 1 }}>
+                  {tPersonalDetails("verified")} <Check />
+                </Typography>
+              )}
+              {!emailVerified && (
+                <Button
+                  endIcon={<Replay />}
+                  color="error"
+                  variant="contained"
+                  size="small">
+                  {tPersonalDetails("pending")}
+                </Button>
+              )}
+            </Grid>
+            <Grid item md={12}>
+              <DetailsCV
+                fileName={latestCV?.name || tPersonalDetails("noCvUploaded")}
+                isFileSizeTooBig={isFileSizeTooBig}
+                isFileScanning={isScanning}
+                isFileOk={isNotInfected}
+                isFileUploading={isFileLoading}
+                onFileChange={handleFileChange}
+              />
+            </Grid>
           </Grid>
-          <Grid
-            item
-            xs={12}
-            sx={{ display: "flex", gap: 2, alignItems: "center" }}>
-            Email verification:{" "}
-            {emailVerified && (
-              <Typography
-                color="success.main"
-                component="span"
-                sx={{ display: "inline-flex", alignItems: "center", gap: 1 }}>
-                {tPersonalDetails("verified")} <Check />
-              </Typography>
-            )}
-            {!emailVerified && (
-              <Button
-                endIcon={<Replay />}
-                color="error"
-                variant="contained"
-                size="small">
-                {tPersonalDetails("pending")}
-              </Button>
-            )}
-          </Grid>
-          <Grid item md={12}>
-            <DetailsCV
-              fileName={latestCV?.name || tPersonalDetails("noCvUploaded")}
-              isFileSizeTooBig={isFileSizeTooBig}
-              isFileScanning={isScanning}
-              isFileOk={isNotInfected}
-              isFileUploading={isFileLoading}
-              onFileChange={handleFileChange}
-            />
-          </Grid>
-        </Grid>
-        <LoadingButton
-          type="submit"
-          color="primary"
-          variant="contained"
-          endIcon={<SaveIcon />}
-          loading={isUpdateLoading}
-          sx={{ mt: 5 }}>
-          {tPersonalDetails("submitButton")}
-        </LoadingButton>
-      </form>
-    </FormProvider>
+          <LoadingButton
+            type="submit"
+            color="primary"
+            variant="contained"
+            endIcon={<SaveIcon />}
+            loading={isUpdateLoading}
+            sx={{ mt: 5 }}>
+            {tPersonalDetails("submitButton")}
+          </LoadingButton>
+        </form>
+      </FormProvider>
+    </Guidance>
   );
 }
