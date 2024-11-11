@@ -42,7 +42,7 @@ export const PALETTE_THEME_PURPLE_BLUE = {
     highlight: createColor("#5F9EA0"),
     highlight2: createColor("#faebd7"),
     highlight3: createColor("#152238"),
-    default: createColor(grey["300"]),
+    default: createColor("#7A89C2"),
     inactive: createColor(grey["300"]),
     caption: createColor(grey["500"]),
     white: "#fff",
