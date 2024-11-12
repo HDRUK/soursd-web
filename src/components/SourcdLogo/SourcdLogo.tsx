@@ -10,7 +10,7 @@ export default function SourcdLogo() {
 
   return (
     <StyledLogoContainer>
-      <Image src={image} alt="SOURCD" width={100} height={100} />
+      <Image src={image} alt="SOURCD" width={90} height={90} />
       <StyledLogoTitle variant="h1">{t("logoTitle")}</StyledLogoTitle>
     </StyledLogoContainer>
   );

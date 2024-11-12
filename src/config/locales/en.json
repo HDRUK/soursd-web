@@ -328,5 +328,14 @@
   },
   "SourcdLogo": {
     "logoTitle": "SOURCD"
+  },
+  "NavBar": {
+    "homeButton": "Home",
+    "aboutButton": "About",
+    "featuresButton": "Features",
+    "supportButton": "Support",
+    "contactButton": "Contact",
+    "signInButton": "Sign In",
+    "registerButton": "Register"
   }
 }
