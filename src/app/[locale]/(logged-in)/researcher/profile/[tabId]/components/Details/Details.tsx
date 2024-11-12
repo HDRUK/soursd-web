@@ -168,7 +168,7 @@ export default function Details({ emailVerified }: DetailsProps) {
   } = methods;
 
   return (
-    <Guidance info="Sample guidance">
+    <Guidance infoTitle="Guidance" info="Sample guidance">
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(handleDetailsSubmit)}>
           <Grid container rowSpacing={3} md={8}>

@@ -1,5 +1,4 @@
 import { MODE } from "@/config/theme";
-import { Position } from "@/consts/ui";
 import { colorToRgba } from "@/utils/theme";
 import { css, IconButton, styled } from "@mui/material";
 
@@ -17,6 +16,7 @@ export const StyledInfo = styled("div")<{ positionBottom: boolean }>(
     position: relative;
     display: flex;
     flex-direction: column;
+    height: 100%;
 
     ${positionBottom
       ? `

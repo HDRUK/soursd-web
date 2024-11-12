@@ -16,8 +16,9 @@ import {
   StyledInfo,
   StyledShowTrigger,
 } from "./Guidance.styles";
+import { useTranslations } from "next-intl";
 
-interface GuidanceProps {
+export interface GuidanceProps {
   children: ReactNode;
   info: ReactNode;
   infoTitle: ReactNode;
@@ -25,6 +26,8 @@ interface GuidanceProps {
   infoTitleIcon?: ReactNode;
   defaultExpanded?: boolean;
 }
+
+const NAMESPACE_TRANSLATION = "Guidance";
 
 export default function Guidance({
   children,
@@ -37,6 +40,7 @@ export default function Guidance({
   const theme = useTheme();
   const [expanded, setExpanded] = useState(defaultExpanded);
   const isMdDown = useMediaQuery(theme.breakpoints.down("md"));
+  const t = useTranslations(NAMESPACE_TRANSLATION);
 
   const positionBottom =
     infoPosition !== undefined ? isPositionBottom(infoPosition) : isMdDown;
@@ -45,6 +49,8 @@ export default function Guidance({
     <StyledGuidance positionBottom={positionBottom}>
       <Box sx={{ p: 4, flexGrow: 1 }}>{children}</Box>
       <Collapse
+        id="info"
+        component="section"
         key={`mdDown_${isMdDown}`}
         in={expanded}
         collapsedSize="45px"
@@ -54,6 +60,9 @@ export default function Guidance({
         }}>
         <StyledInfo positionBottom={isMdDown}>
           <StyledShowTrigger
+            aria-controls="info"
+            aria-label={t("togglePanel")}
+            aria-expanded={expanded}
             positionBottom={positionBottom}
             color="info"
             variant="contained"

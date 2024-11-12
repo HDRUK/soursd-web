@@ -320,6 +320,9 @@
     "loginResendAriaLabel": "Send me another one time passcode",
     "checkYourEmail": "We have emailed you a passcode. If you can't see it in your inbox, try checking your junk / spam folder. Altertively you can request another by clicking on the refresh button."
   },
+  "Guidance": {
+    "togglePanel": "Toggle guidance panel"
+  },
   "Pages": {
     "ProfileIssuer": {
       "title": "Profile"
