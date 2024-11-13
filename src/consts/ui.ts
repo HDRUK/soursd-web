@@ -5,8 +5,11 @@ enum ScalingUp {
 }
 
 enum Position {
+  TOP = "top",
   BOTTOM = "bottom",
+  LEFT = "left",
   RIGHT = "right",
+  NONE = "none",
 }
 
 export { ScalingUp, Position };

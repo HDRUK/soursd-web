@@ -1,16 +1,20 @@
 import { MODE } from "@/config/theme";
 import { colorToRgba } from "@/utils/theme";
-import { css, IconButton, styled } from "@mui/material";
+import { css, styled } from "@mui/material";
 
-export const StyledGuidance = styled("div")<{ positionBottom: boolean }>(
-  ({ positionBottom }) => css`
+export const StyledGuidance = styled("div")<{ positionVertical: boolean }>(
+  ({ positionVertical }) => css`
     display: flex;
-    flex-direction: ${positionBottom ? "column" : "row"};
+    flex-direction: ${positionVertical ? "column" : "row"};
+    position: relative;
   `
 );
 
-export const StyledInfo = styled("div")<{ positionBottom: boolean }>(
-  ({ theme, positionBottom }) => css`
+export const StyledInfo = styled("div")<{
+  positionVertical: boolean;
+  infoWidth: number | string;
+}>(
+  ({ theme, positionVertical, infoWidth }) => css`
     padding: ${theme.spacing(4)} ${theme.spacing(6)};
     color: ${theme.palette.primary.contrastText};
     position: relative;
@@ -18,7 +22,7 @@ export const StyledInfo = styled("div")<{ positionBottom: boolean }>(
     flex-direction: column;
     height: 100%;
 
-    ${positionBottom
+    ${positionVertical
       ? `
         width: 100%;
         max-height: 300px;
@@ -28,9 +32,10 @@ export const StyledInfo = styled("div")<{ positionBottom: boolean }>(
           0deg,
           #fff 0,
           ${colorToRgba(theme.palette.background1[MODE], 0.9)} 90px,
-          ${theme.palette.primary[MODE]} 100%
+          ${theme.palette.background1[MODE]} 100%
         );
-        max-width: 400px;
+
+        width: ${infoWidth || "auto"};
         padding-bottom: 90px;
       `}
 
@@ -43,16 +48,5 @@ export const StyledInfo = styled("div")<{ positionBottom: boolean }>(
       font-weight: bold;
       font-size: 1rem;
     }
-  `
-);
-
-export const StyledShowTrigger = styled(IconButton)<{
-  positionBottom: boolean;
-}>(
-  ({ positionBottom }) => css`
-    position: absolute;
-    left: ${positionBottom ? "50%" : 0};
-    top: ${positionBottom ? 0 : "50%"};
-    transform: translate(-50%, -50%);
   `
 );

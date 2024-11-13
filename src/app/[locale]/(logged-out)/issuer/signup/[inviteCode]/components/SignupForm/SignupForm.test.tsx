@@ -61,14 +61,11 @@ describe("<SignupForm />", () => {
   it("submits when values are defined", async () => {
     renderSignupForm();
 
-    const password = screen.getByLabelText("Password").querySelector("input");
-    const confirmPassword = screen
-      .getByLabelText("Confirm password")
-      .querySelector("input");
+    const password = screen.getByLabelText("Password");
+    const confirmPassword = screen.getByLabelText("Confirm password");
     const tscs = screen
       .getByLabelText("Accept terms and conditions")
       .querySelector("input");
-    const recaptcha = screen.getByTestId("recaptcha");
 
     const passwordValue = "A!2sghjs";
     const confirmPasswordValue = passwordValue;
@@ -83,7 +80,6 @@ describe("<SignupForm />", () => {
         target: { value: confirmPasswordValue },
       });
       fireEvent.click(tscs);
-      fireEvent.click(recaptcha);
 
       fireEvent.submit(screen.getByRole("button", { name: /Sign Up/i }));
 

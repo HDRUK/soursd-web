@@ -6,14 +6,13 @@ import FormModalHeader from "@/components/FormModalHeader";
 import OverlayCenter from "@/components/OverlayCenter";
 import OverlayCenterAlert from "@/components/OverlayCenterAlert";
 import { useApplicationData } from "@/context/ApplicationData";
-import { getOrganisations } from "@/services/organisations";
 import { getByInviteCode } from "@/services/users";
 import { isExpiredInvite } from "@/utils/date";
 import PersonIcon from "@mui/icons-material/Person";
 import { CircularProgress } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
 import { useMutationRegister } from "../../hooks";
 import SignupForm, { SignupFormValues } from "../SignupForm";
 
@@ -44,21 +43,6 @@ export default function Page() {
   });
 
   const {
-    isError: isGetOrganisationsError,
-    isLoading: isGetOrganisationsLoading,
-    data: organisationsData,
-    error: organisationsError,
-  } = useQuery({
-    queryKey: ["getOrganisationsError"],
-    queryFn: () =>
-      getOrganisations({
-        error: { message: "noData" },
-      }),
-
-    enabled: !inviteCode,
-  });
-
-  const {
     mutateAsync: mutateSignupAsync,
     isError: isSignupError,
     isPending: isSignupLoading,
@@ -66,32 +50,16 @@ export default function Page() {
   } = useMutationRegister(researcherData?.data);
 
   const handleSignupSubmit = async (values: SignupFormValues) => {
-    const {
-      first_name,
-      last_name,
-      password,
-      email,
-      organisation,
-      consentScrape,
-    } = values;
+    const { email, password, first_name, last_name } = values;
 
-    const payload = {
-      password,
-      first_name,
-      last_name,
-      consent_scrape: consentScrape,
-      email,
-      organisation_id: parseInt(organisation, 10),
-    };
-
-    mutateSignupAsync(payload).then(() => {
+    mutateSignupAsync({ email, password, first_name, last_name }).then(() => {
       router.push(routes.login.path);
     });
   };
 
   const expired = isExpiredInvite(researcherData?.data.invite_sent_at);
 
-  if (isGetResearcherLoading || isGetOrganisationsLoading) {
+  if (isGetResearcherLoading) {
     return (
       <OverlayCenter sx={{ color: "#fff" }}>
         <CircularProgress color="inherit" />
@@ -119,16 +87,6 @@ export default function Page() {
     );
   }
 
-  if (isGetOrganisationsError) {
-    return (
-      <OverlayCenterAlert>
-        {tResearcher.rich(organisationsError, {
-          contactLink: ContactLink,
-        })}
-      </OverlayCenterAlert>
-    );
-  }
-
   if (inviteCode && !isGetResearcherLoading && !researcherData) {
     return (
       <OverlayCenterAlert>
@@ -139,15 +97,7 @@ export default function Page() {
     );
   }
 
-  if (!inviteCode && !isGetOrganisationsLoading && !organisationsData) {
-    return (
-      <OverlayCenterAlert>
-        {tResearcher.rich("noData", {
-          contactLink: ContactLink,
-        })}
-      </OverlayCenterAlert>
-    );
-  }
+  const names = researcherData?.data.name.split(" ");
 
   return (
     <FormModal
@@ -158,9 +108,9 @@ export default function Page() {
         {tResearcher("title")}
       </FormModalHeader>
       <SignupForm
+        defaultFirstname={names?.[0]}
+        defaultLastname={names?.[1]}
         defaultEmail={researcherData?.data.contact_email}
-        defaultOrganisation={researcherData?.data.organisation_id?.toString()}
-        organisations={organisationsData?.data.data || []}
         onSubmit={handleSignupSubmit}
         mutateState={{
           isLoading: isSignupLoading,

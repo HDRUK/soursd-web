@@ -11,13 +11,7 @@ interface ResearcherInviteResponse {
   organisation_id: number;
 }
 
-interface PatchUserPayload {
-  first_name?: string;
-  last_name?: string;
-  email?: string;
-  password?: string;
-  consent_scrape?: number;
-}
+type PatchUserPayload = Partial<User>;
 
 interface UpdatePermissonsPayload {
   user_id: number;

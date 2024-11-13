@@ -42,8 +42,6 @@ export default function UsersList({ organisations }: UsersListProps) {
           ({ user }) => !!user
         );
 
-        console.log("**** filteredRegistriesByUser", filteredRegistriesByUser);
-
         return (
           <Accordion>
             <AccordionSummary

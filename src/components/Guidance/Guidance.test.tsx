@@ -57,7 +57,7 @@ describe("<Guidance />", () => {
   });
 
   it("closes the guidance", async () => {
-    const { container } = renderClosedGuidance();
+    renderClosedGuidance();
 
     await waitFor(() => {
       const trigger = screen.getByRole("button", {
@@ -69,7 +69,7 @@ describe("<Guidance />", () => {
   });
 
   it("opens the guidance", async () => {
-    const { container } = renderClosedGuidance();
+    renderClosedGuidance();
 
     let trigger = screen.getByRole("button", {
       expanded: false,

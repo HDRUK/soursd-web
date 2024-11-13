@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
-import Guidance from ".";
+import GuidanceDrawer from ".";
 
 const meta = {
-  title: "components/Guidance",
-  component: Guidance,
+  title: "components/GuidanceDrawer",
+  component: GuidanceDrawer,
   tags: ["autodocs"],
-} satisfies Meta<typeof Guidance>;
+} satisfies Meta<typeof GuidanceDrawer>;
 
 export default meta;
 

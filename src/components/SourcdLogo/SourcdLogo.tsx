@@ -18,7 +18,7 @@ export default function SourcdLogo({
 
   return (
     <StyledLogoContainer {...restProps}>
-      <Image src={image} alt="SOURCD" width={100} height={100} />
+      <Image src={image} alt="SOURCD" width={90} height={90} />
       {variant === "titled" && (
         <StyledLogoTitle variant="h1">{t("logoTitle")}</StyledLogoTitle>
       )}

@@ -39,10 +39,8 @@ interface PostRegisterIssuerPayload {
 interface PostRegisterResearcherPayload {
   email: string;
   password: string;
-  organisation_id: number;
   first_name: string;
   last_name: string;
-  consent_scrape: number;
 }
 
 export type {

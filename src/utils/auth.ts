@@ -16,7 +16,7 @@ async function getAuthData(): Promise<Auth> {
   return authCookie ? JSON.parse(decodeURI(authCookie)) : {};
 }
 
-async function updateAuthUser(userData: User) {
+async function updateAuthUser(userData: Partial<User>) {
   const cookieAuthData = await getAuthData();
 
   await setAuthData({

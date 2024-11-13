@@ -1,7 +1,7 @@
 import { Typography, TypographyProps } from "@mui/material";
 import { ReactNode } from "react";
 
-interface TextProps extends TypographyProps {
+export interface TextProps extends TypographyProps {
   children: ReactNode;
   startIcon?: ReactNode;
   endIcon?: ReactNode;
