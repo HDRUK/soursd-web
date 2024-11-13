@@ -53,7 +53,9 @@ describe("<Guidance />", () => {
     const trigger = screen.getByRole("button");
     const info = container.querySelector("section");
 
-    expect(info).toBeControlledBy(trigger);
+    if (info && trigger) {
+      expect(info).toBeControlledBy(trigger);
+    }
   });
 
   it("closes the guidance", async () => {

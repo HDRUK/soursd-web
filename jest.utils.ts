@@ -1,5 +1,8 @@
 expect.extend({
-  toBeControlledBy(area: HTMLElement, trigger: HTMLElement) {
+  toBeControlledBy(
+    area: HTMLElement,
+    trigger: HTMLElement
+  ): jest.CustomMatcherResult {
     const areaId = area?.getAttribute("id");
     const triggerControls = trigger?.getAttribute("aria-controls");
 

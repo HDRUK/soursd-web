@@ -4,7 +4,8 @@ expect.extend({
     const triggerControls = trigger?.getAttribute("aria-controls");
 
     return {
-      message: () => "Test failure",
+      message: () =>
+        "Trigger does not have the correct associated aria attributes with the area",
       pass:
         Boolean(areaId) &&
         Boolean(triggerControls) &&

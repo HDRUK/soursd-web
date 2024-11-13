@@ -1,5 +1,8 @@
+interface CustomMatchers<R = unknown> {
+  toBeControlledBy: (trigger: HTMLElement) => R;
+}
+
 declare namespace jest {
-  interface Expect {
-    toBeControlledBy: (area: HTMLElement, trigger: HTMLElement) => boolean;
-  }
+  interface Expect extends CustomMatchers {}
+  interface Matchers<R> extends CustomMatchers<R> {}
 }
