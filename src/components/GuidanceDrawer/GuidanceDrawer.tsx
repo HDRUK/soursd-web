@@ -1,14 +1,13 @@
 "use client";
 
 import { Position } from "@/consts/ui";
+import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import { DrawerProps } from "@mui/material";
 import { Box, useMediaQuery, useTheme } from "@mui/system";
 import { ReactNode, useState } from "react";
 import GuidanceTitle from "../Guidance/GuidanceTitle";
 import GuidanceTrigger from "../Guidance/GuidanceTrigger";
 import { StyledDrawerInfo } from "./Guidance.styles";
-import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
-import { isPositionVertical } from "@/utils/styles";
 
 export interface GuidanceDrawerProps extends DrawerProps {
   children: ReactNode;
