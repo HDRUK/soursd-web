@@ -19,30 +19,31 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { FeaturesList } from "../FeaturesList";
 import { StyledContentLayout, StyledHeader } from "./SectionHighlights.styles";
+import { useAuth } from "@/hooks/useAuth/useAuth";
 
 export default function RegistryHighlights() {
   const theme = useTheme();
   const t = useTranslations();
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
   const { routes } = useApplicationData();
-  const getUser = useStore(state => state.getUser);
-  const user = getUser();
+  const { isAuthenticated, login, logout, user } = useAuth();
+  console.log(isAuthenticated);
 
   return (
     <DecoratorPanel>
       <StyledContentLayout>
         <StyledHeader>
           <div>
-            {!user && (
+            {!isAuthenticated && (
               <Button
-                component={Link}
+                component={Button}
                 variant="contained"
                 color="secondary"
-                href={routes.login.path}>
+                onClick={() => login()}>
                 {t("Buttons.login")}
               </Button>
             )}
-            {user && (
+            {isAuthenticated && (
               <Button
                 component={Link}
                 variant="contained"
