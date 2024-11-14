@@ -1,6 +1,7 @@
 import { css, styled, Typography } from "@mui/material";
+import { Box } from "@mui/system";
 
-export const StyledLogoContainer = styled("div")(
+export const StyledLogoContainer = styled(Box)(
   () => css`
     display: flex;
     flex-direction: column;
@@ -13,10 +14,10 @@ export const StyledLogoContainer = styled("div")(
 
 export const StyledLogoTitle = styled(Typography)(
   () => css`
-    font-size: 2rem;
+    font-size: 1.5rem;
     color: #333;
     margin-top: 0;
-    letter-spacing: 6px;
+    letter-spacing: 5px;
     font-weight: 600;
     margin-bottom: 10px;
     height: auto;
