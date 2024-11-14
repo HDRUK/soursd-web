@@ -1,6 +1,7 @@
 "use client";
 
 import ContactLink from "@/components/ContactLink";
+import Guidance from "@/components/Guidance";
 import { Message } from "@/components/Message";
 import OverlayCenter from "@/components/OverlayCenter";
 import yup from "@/config/yup";
@@ -9,6 +10,7 @@ import { VALIDATION_ORC_ID } from "@/consts/form";
 import { useStore } from "@/data/store";
 import useFileScanned from "@/hooks/useFileScanned/useFileScanned";
 import useQueryRefetch from "@/hooks/useQueryRefetch";
+import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
 import postFile from "@/services/files/postFile";
 import { FilePayload } from "@/services/files/types";
 import { getOrganisations } from "@/services/organisations";
@@ -42,8 +44,6 @@ import { useTranslations } from "next-intl";
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import DetailsCV from "../DetailsCV";
-import Guidance from "@/components/Guidance";
-import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
 
 export interface DetailsFormValues {
   first_name: string;
