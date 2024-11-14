@@ -3,58 +3,19 @@
 import { Carousel } from "@/components/Carousel";
 import Quote from "@/components/Quote";
 import ScreenArrow from "@/components/ScreenArrow";
-import { useApplicationData } from "@/context/ApplicationData";
-import { useStore } from "@/data/store";
 import DecoratorPanel from "@/modules/DecoratorPanel";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import {
-  Box,
-  Button,
-  Grid,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
-import { useTranslations } from "next-intl";
-import Link from "next/link";
+import { Box, Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { FeaturesList } from "../FeaturesList";
-import { StyledContentLayout, StyledHeader } from "./SectionHighlights.styles";
-import { useAuth } from "@/hooks/useAuth/useAuth";
+import { StyledContentLayout } from "./SectionHighlights.styles";
 
 export default function RegistryHighlights() {
   const theme = useTheme();
-  const t = useTranslations();
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
-  const { routes } = useApplicationData();
-  const { isAuthenticated, login, logout, user } = useAuth();
-  console.log(isAuthenticated);
 
   return (
     <DecoratorPanel>
       <StyledContentLayout>
-        <StyledHeader>
-          <div>
-            {!isAuthenticated && (
-              <Button
-                component={Button}
-                variant="contained"
-                color="secondary"
-                onClick={() => login()}>
-                {t("Buttons.login")}
-              </Button>
-            )}
-            {isAuthenticated && (
-              <Button
-                component={Link}
-                variant="contained"
-                color="secondary"
-                href={routes.logout.path}>
-                {t("Buttons.logout")}
-              </Button>
-            )}
-          </div>
-        </StyledHeader>
-
         <Grid
           container
           spacing={{

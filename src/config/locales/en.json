@@ -339,6 +339,7 @@
     "supportButton": "Support",
     "contactButton": "Contact",
     "signInButton": "Sign In",
+    "signOutButton": "Sign Out",
     "registerButton": "Register"
   }
 }

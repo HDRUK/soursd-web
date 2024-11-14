@@ -28,10 +28,6 @@ const nextConfig = withNextIntl({
         source: "/:locale/organisation/profile",
         destination: `/:locale/organisation/profile/user`,
       },
-      {
-        source: "/:locale",
-        destination: "/:locale/homepage",
-      },
     ];
   },
   webpack: (config, { isServer }) => {
