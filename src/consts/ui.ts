@@ -4,4 +4,12 @@ enum ScalingUp {
   large = 1.3,
 }
 
-export { ScalingUp };
+enum Position {
+  TOP = "top",
+  BOTTOM = "bottom",
+  LEFT = "left",
+  RIGHT = "right",
+  NONE = "none",
+}
+
+export { ScalingUp, Position };

@@ -1,13 +1,7 @@
 import { createTheme } from "@mui/material";
-import {
-  blue,
-  blueGrey,
-  deepPurple,
-  green,
-  grey,
-  orange,
-  red,
-} from "@mui/material/colors";
+import { blue, blueGrey, green, grey, orange, red } from "@mui/material/colors";
+
+const MODE = "light";
 
 const {
   palette: { augmentColor },
@@ -21,7 +15,7 @@ const headingStyles = {
   fontFamily: '"Signika", sans-serif',
 };
 
-export const PALETTE_THEME_PURPLE_BLUE = {
+const PALETTE_THEME_PURPLE_BLUE = {
   typography: {
     h1: headingStyles,
     h2: headingStyles,
@@ -31,7 +25,12 @@ export const PALETTE_THEME_PURPLE_BLUE = {
     h6: headingStyles,
   },
   palette: {
-    background1: createColor(deepPurple["300"]),
+    background1: {
+      light: "#bf82d4",
+      dark: "#1e1e1e",
+      main: "#1e1e1e",
+      contrastText: "#fff",
+    },
     background2: createColor(blueGrey["800"]),
     primary: createColor("#CC51B4"),
     secondary: createColor("#E3E3E3"),
@@ -49,3 +48,5 @@ export const PALETTE_THEME_PURPLE_BLUE = {
     footer: createColor("#72788D"),
   },
 };
+
+export { MODE, PALETTE_THEME_PURPLE_BLUE };

@@ -1,6 +1,7 @@
 import { defineMatchMedia } from "@/utils/testUtils";
 import "@testing-library/jest-dom";
 import "jest-axe/extend-expect";
+import "./jest.utils";
 import { forwardRef, useImperativeHandle } from "react";
 import { ResponseMessageType } from "./src/consts/requests";
 import { mockedPermission } from "./mocks/data/permission";

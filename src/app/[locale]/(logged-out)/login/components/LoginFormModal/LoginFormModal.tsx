@@ -46,8 +46,6 @@ export default function LoginFormModal() {
   const handleLoginSubmit = useCallback(async (values: LoginFormValues) => {
     const authResponse = await mutateLoginAsync(values);
 
-    console.log("**** authResponse", authResponse);
-
     setAuthData(authResponse?.data);
 
     const userGroup = authResponse.data.user.user_group;

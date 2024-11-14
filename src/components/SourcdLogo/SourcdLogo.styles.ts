@@ -1,6 +1,7 @@
 import { css, styled, Typography } from "@mui/material";
+import { Box } from "@mui/system";
 
-export const StyledLogoContainer = styled("div")(
+export const StyledLogoContainer = styled(Box)(
   () => css`
     display: flex;
     flex-direction: column;
