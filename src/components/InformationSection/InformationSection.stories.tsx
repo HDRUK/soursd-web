@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { mockedIssuerIdvtInfoContent } from "@/mocks/data/cms";
-import { Box, Switch } from "@mui/material";
+import { Switch } from "@mui/material";
 import InformationSection from ".";
 
 const meta = {

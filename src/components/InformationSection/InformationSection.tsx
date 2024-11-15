@@ -18,7 +18,6 @@ export interface InformationSectionProps extends BoxProps {
   variant?: "popup" | "collapse";
   heading?: ReactNode;
   description?: ReactNode;
-  popoverIcon?: ReactNode;
   buttonIcon?: ReactNode;
   buttonProps?: IconButtonProps;
   onOpen?: () => void;
@@ -32,7 +31,6 @@ export default function InformationSection({
   children,
   heading,
   description,
-  popoverIcon,
   buttonIcon,
   variant = "popup",
   id = "info",
@@ -69,7 +67,7 @@ export default function InformationSection({
         sx={{
           display: "flex",
           gap: 4,
-          width: "max-content",
+          maxWidth: "max-content",
         }}>
         <Box sx={{ flexGrow: 1 }}>
           <Typography role="heading" aria-level={7} fontWeight="bold">
