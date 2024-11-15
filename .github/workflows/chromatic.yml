@@ -6,6 +6,12 @@ jobs:
   chromatic:
     name: Run Chromatic
     runs-on: ubuntu-latest
+    environment: |-
+      ${{
+         github.ref_name == 'develop' && 'develop'
+      || github.base_ref == 'develop' && 'develop'
+      ||                             'release'
+      }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
