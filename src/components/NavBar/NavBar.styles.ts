@@ -5,7 +5,7 @@ const StyledContainer = styled("div")`
 `;
 
 const StyledHeader = styled("header")`
-  padding: 10px 20px 0 20px;
+  padding: 10px 20px 0px 20px;
   justify-content: space-between;
   align-items: center;
   display: flex;

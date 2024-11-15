@@ -1,3 +1,5 @@
+"use client";
+
 import { Box, Divider } from "@mui/material";
 import { useTranslations } from "next-intl";
 import SourcdLogo from "../SourcdLogo";
@@ -28,7 +30,7 @@ export default function NavBar() {
   return (
     <StyledContainer>
       <StyledHeader>
-        <SourcdLogo />
+        <SourcdLogo variant="titled" />
         <Box>
           {buttons.map(button => (
             <StyledButton color={button.color} variant={button.variant}>
@@ -37,7 +39,7 @@ export default function NavBar() {
           ))}
         </Box>
       </StyledHeader>
-      <Divider sx={{ height: "8px", padding: "0" }} />
+      <Divider sx={{ height: "6px", padding: "0" }} />
     </StyledContainer>
   );
 }
