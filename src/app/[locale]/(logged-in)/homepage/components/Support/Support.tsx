@@ -11,7 +11,7 @@ export default function Support() {
           Support
         </Typography>
         <StyledGrid>
-          <Button variant="contained" color="default">
+          <Button variant="contained" color="secondary">
             Individuals
           </Button>
           <Button variant="contained">Organisations</Button>
