@@ -26,6 +26,7 @@ const PALETTE_THEME_PURPLE_BLUE = {
   },
   palette: {
     background1: {
+      extraLight: "#e4caed",
       light: "#bf82d4",
       dark: "#1e1e1e",
       main: "#1e1e1e",
