@@ -1,6 +1,7 @@
 import { styled } from "@mui/material";
+import { motion } from "motion/react";
 
-const StyledContent = styled("div")`
+const StyledContent = styled(motion.div)`
   justify-content: center;
   align-items: center;
   text-align: center;

@@ -5,7 +5,6 @@ import { StyledWrapper } from "./homepage.styles";
 import SoursdUsages from "./components/SoursdUsages";
 import KeyFeatures from "./components/KeyFeatures";
 import Support from "./components/Support";
-import HomepageImages from "./components/HomepageImages";
 
 export default function Page() {
   return (
@@ -23,9 +22,6 @@ export default function Page() {
         </section>
         <section>
           <Support />
-        </section>
-        <section>
-          <HomepageImages />
         </section>
       </StyledWrapper>
       <Footer />

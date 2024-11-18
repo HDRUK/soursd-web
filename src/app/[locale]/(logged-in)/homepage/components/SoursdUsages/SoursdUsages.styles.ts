@@ -1,4 +1,5 @@
 import { Box, styled } from "@mui/material";
+import { motion } from "motion/react";
 
 const StyledContainer = styled(Box)`
   border-radius: 40px;
@@ -29,7 +30,7 @@ const StyledGrid = styled("div")`
   padding: 20px;
 `;
 
-const StyledBox = styled(Box)`
+const StyledBox = styled(motion.div)`
   padding-top: 24px;
   display: flex;
 `;
