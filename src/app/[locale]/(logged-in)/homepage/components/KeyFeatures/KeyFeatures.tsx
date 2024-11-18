@@ -34,7 +34,7 @@ export default function KeyFeatures() {
         <StyledCarouselItem>
           <AssignmentIndOutlinedIcon sx={{ fontSize: "100px" }} />
           <Typography variant="h4" sx={{ marginBottom: "20px" }}>
-            User & Organisation Registers
+            User &amp; Organisation Registers
           </Typography>
           <Typography variant="body1">
             A centralised ‘Know Your User and Organisation’ system for
