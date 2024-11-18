@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Typography } from "@mui/material";
+import { Box, Divider, Typography } from "@mui/material";
 import { HTMLAttributes } from "react";
 import { useTranslations } from "next-intl";
 import { StyledFooter, StyledLink } from "./Footer.styles";
@@ -13,6 +13,7 @@ export default function Footer(props: FooterProps) {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_FOOTER);
   return (
     <Box {...props} component="footer" sx={{ backgroundColor: "footer.main" }}>
+      <Divider sx={{ height: "6px" }} />
       <StyledFooter>
         <div>
           <Typography variant="h6" color="white" sx={{ marginBottom: "5px" }}>
