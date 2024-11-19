@@ -44,3 +44,27 @@ export const mockedIssuerIdvtInfoContent = (
     </Typography>
   </>
 );
+export const mockedSoursdHomepageInfo = {
+  infoTitle: "SoursdInfo",
+  info: (
+    <>
+      <Typography variant="h1" mb={3}>
+        Safe Organisation and User Registry for Sensitive Data (SOURSD)
+      </Typography>
+      <Typography variant="h5" fontWeight="light" sx={{ mt: "30px" }}>
+        A centralised tool to enable Safe People decision making
+      </Typography>
+    </>
+  ),
+};
+
+export const mockedSoursdHomepageUsages = {
+  infoTitle: "SoursdUsages",
+  infoHeader: (
+    <>
+      <Typography variant="h4" mb={3}>
+        With SOURSD you can...
+      </Typography>
+    </>
+  ),
+};
