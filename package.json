@@ -28,7 +28,7 @@
     "@hookform/resolvers": "^3.3.4",
     "@mui/icons-material": "^5.15.14",
     "@mui/lab": "^5.0.0-alpha.170",
-    "@mui/material": "^5.15.14",
+    "@mui/material": "^6.1.7",
     "@mui/material-nextjs": "5.15.11",
     "@mui/system": "^5.15.14",
     "@mui/x-charts": "^7.1.1",
