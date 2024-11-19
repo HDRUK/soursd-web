@@ -1,0 +1,43 @@
+name: "Chromatic"
+
+on: push
+
+jobs:
+  chromatic:
+    name: Run Chromatic
+    runs-on: ubuntu-latest
+    environment: |-
+      ${{
+         github.ref_name == 'develop' && 'develop'
+      || github.base_ref == 'develop' && 'develop'
+      ||                             'release'
+      }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 21.7.1
+      - name: Install dependencies
+        # ⚠️ See your package manager's documentation for the correct command to install dependencies in a CI environment.
+        run: npm install
+      - name: Run Chromatic
+        id: chromatic
+        uses: chromaui/action@latest
+        with:
+          # ⚠️ Make sure to configure a `CHROMATIC_PROJECT_TOKEN` repository secret
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+      - name: Notify Slack
+        if: always()  # Ensures the step runs even if Chromatic fails
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          # Extract the Chromatic build URL from the previous step's output
+          BUILD_URL=$(echo "${{ steps.chromatic.outputs.url }}" | grep -o 'https://www.chromatic.com/build[^ ]*')
+          # Post the URL to Slack
+          curl -X POST -H 'Content-type: application/json' \
+          --data "{
+            \"text\": \"Chromatic Build URL: <$BUILD_URL|View Build>\"
+          }" $SLACK_WEBHOOK_URL
