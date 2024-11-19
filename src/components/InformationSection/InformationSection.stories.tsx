@@ -23,7 +23,7 @@ export const Basic: Story = {
       </>
     ),
     description:
-      "This is handled by a third party Identity Document Verification Technology (IDVT)",
+      "This is handled by a third party Identification Document Verification Technology (IDVT)",
     children: mockedIssuerIdvtInfoContent,
   },
 };
