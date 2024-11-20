@@ -10,6 +10,7 @@ import { Inter } from "next/font/google";
 import { notFound } from "next/navigation";
 import { PropsWithChildren } from "react";
 import "../global.css";
+import { CookieProvider } from "@/context/CookieContext/CookieContext";
 import ReactQueryClientProvider from "./components/ReactQueryClientProvider";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -34,26 +35,28 @@ export default function RootLayout({
   return (
     <html lang={locale}>
       <body className={inter.className}>
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <AppRouterCacheProvider>
-            <NotificationsProvider>
-              <ReactQueryClientProvider>
-                <ThemeRegistry>
-                  <ToastProvider>
-                    <GlobalStyles
-                      styles={{
-                        [".MuiGrid-item .MuiGrid-container"]: {
-                          maxWidth: "initial",
-                        },
-                      }}
-                    />
-                    {children}
-                  </ToastProvider>
-                </ThemeRegistry>
-              </ReactQueryClientProvider>
-            </NotificationsProvider>
-          </AppRouterCacheProvider>
-        </NextIntlClientProvider>
+        <CookieProvider>
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            <AppRouterCacheProvider>
+              <NotificationsProvider>
+                <ReactQueryClientProvider>
+                  <ThemeRegistry>
+                    <ToastProvider>
+                      <GlobalStyles
+                        styles={{
+                          [".MuiGrid-item .MuiGrid-container"]: {
+                            maxWidth: "initial",
+                          },
+                        }}
+                      />
+                      {children}
+                    </ToastProvider>
+                  </ThemeRegistry>
+                </ReactQueryClientProvider>
+              </NotificationsProvider>
+            </AppRouterCacheProvider>
+          </NextIntlClientProvider>
+        </CookieProvider>
       </body>
     </html>
   );

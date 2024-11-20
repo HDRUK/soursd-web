@@ -2,9 +2,10 @@
 
 import { Box, Divider } from "@mui/material";
 import { useTranslations } from "next-intl";
-import keycloak from "@/config/keycloak";
-import SourcdLogo from "../SourcdLogo";
+import { handleLogin, handleLogout } from "@/utils/keycloak";
+import { useCookies } from "@/context/CookieContext/CookieContext";
 import { StyledContainer, StyledHeader, StyledButton } from "./NavBar.styles";
+import SourcdLogo from "../SourcdLogo";
 
 const NAMESPACE_TRANSLATIONS_NAVBAR = "NavBar";
 
@@ -13,38 +14,60 @@ type ButtonVariant = "contained" | "text" | undefined;
 
 export default function NavBar() {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_NAVBAR);
+  const { getCookie } = useCookies();
+  const isAuthenticated = !!getCookie("access_token");
 
   const buttons: {
     color: ButtonColor;
     variant: ButtonVariant;
     text: string;
     isSign?: boolean;
+    onClick?: () => void | undefined;
   }[] = [
-    { color: "inherit", variant: "text", text: t("homeButton") },
-    { color: "inherit", variant: "text", text: t("aboutButton") },
-    { color: "inherit", variant: "text", text: t("featuresButton") },
-    { color: "inherit", variant: "text", text: t("supportButton") },
-    { color: "inherit", variant: "text", text: t("contactButton") },
+    {
+      color: "inherit",
+      variant: "text",
+      text: t("homeButton"),
+      onClick: undefined,
+    },
+    {
+      color: "inherit",
+      variant: "text",
+      text: t("aboutButton"),
+      onClick: undefined,
+    },
+    {
+      color: "inherit",
+      variant: "text",
+      text: t("featuresButton"),
+      onClick: undefined,
+    },
+    {
+      color: "inherit",
+      variant: "text",
+      text: t("supportButton"),
+      onClick: undefined,
+    },
+    {
+      color: "inherit",
+      variant: "text",
+      text: t("contactButton"),
+      onClick: undefined,
+    },
     {
       color: "secondary",
       variant: "contained",
-      text: t("signInButton"),
-      isSign: true,
+      text: isAuthenticated ? t("signOutButton") : t("signInButton"),
+      onClick: isAuthenticated ? handleLogout : handleLogin,
     },
-    { color: "primary", variant: "contained", text: t("registerButton") },
+    {
+      color: "primary",
+      variant: "contained",
+      text: t("registerButton"),
+      // TODO: Change to registerUser once ready to
+      onClick: undefined,
+    },
   ];
-
-  const handleLogin = () => {
-    const authUrl = `${keycloak.authServerUrl}/realms/${keycloak.realm}/protocol/openid-connect/auth`;
-    const params = new URLSearchParams({
-      client_id: keycloak.clientId,
-      response_type: "code",
-      redirect_uri: keycloak.redirectUri,
-      scope: "openid profile email",
-    });
-
-    window.location.href = `${authUrl}?${params.toString()}`;
-  };
 
   return (
     <StyledContainer>
@@ -55,7 +78,7 @@ export default function NavBar() {
             <StyledButton
               color={button.color}
               variant={button.variant}
-              onClick={handleLogin}>
+              onClick={button.onClick}>
               {button.text}
             </StyledButton>
           ))}
