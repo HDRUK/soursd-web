@@ -26,6 +26,24 @@ export const mockedPersonalDetailsGuidanceProps = {
   ),
 };
 
+export const mockedIssuerIdvtInfoContent = (
+  <>
+    <Typography>
+      IDVT tests an individual against the following criteria;
+    </Typography>
+    <ol>
+      <li>Valid government issued identification. (Fraud)</li>
+      <li>Likeness check against ID. (Identity)</li>
+      <li>Liveness check. (Identity)</li>
+      <li>Sanctions. (AML)</li>
+    </ol>
+    <Typography>
+      This feature is supplied as part of SOURSD and is entirely up to you, as a
+      Data Custodian, whether you want these additional security checks carried
+      out, above and beyond what an employer would do.
+    </Typography>
+  </>
+);
 export const mockedSoursdHomepageInfo = {
   infoTitle: "SoursdInfo",
   info: (
@@ -33,7 +51,7 @@ export const mockedSoursdHomepageInfo = {
       <Typography variant="h1" mb={3}>
         Safe Organisation and User Registry for Sensitive Data (SOURSD)
       </Typography>
-      <Typography variant="h5" fontWeight="light" sx={{ mt: '30px' }}>
+      <Typography variant="h5" fontWeight="light" sx={{ mt: "30px" }}>
         A centralised tool to enable Safe People decision making
       </Typography>
     </>
