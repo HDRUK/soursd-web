@@ -22,6 +22,7 @@ const customJestConfig = {
     "^@/providers/(.*)$": "<rootDir>/src/providers/$1",
     "^@/data/(.*)$": "<rootDir>/src/data/$1",
     "^@/utils/(.*)$": "<rootDir>/src/utils/$1",
+    "^@/context/(.*)$": "<rootDir>/src/context/$1",
   },
   testPathIgnorePatterns: [
     "<rootDir>/.next/",
