@@ -5,7 +5,7 @@ import MessageTitle from "./MessageTitle";
 
 export { Message, MessageInline, MessageContent, MessageTitle };
 
-export * from "./Message";
-export * from "./MessageInline";
-export * from "./MessageContent";
-export * from "./MessageTitle";
+export type * from "./Message";
+export type * from "./MessageInline";
+export type * from "./MessageContent";
+export type * from "./MessageTitle";

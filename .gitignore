@@ -2,6 +2,9 @@
 
 .env
 
+#code analysis
+storybook-static
+
 # dependencies
 /node_modules
 /.pnp

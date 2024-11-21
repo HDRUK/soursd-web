@@ -1,4 +1,8 @@
 {
+  "Aria": {
+    "show": "Show {name}",
+    "hide": "Hide {name}"
+  },
   "Application": {
     "getSystemConfigError": "There was a problem loading the application. Please try again or contact us at <contactLink></contactLink>",
     "getUserError": "Unable to load your user details. Please try again or contact us at <contactLink></contactLink>",
@@ -8,7 +12,9 @@
     "companyNumberAbbr": "CRN"
   },
   "IssuerProfile": {
-    "title": "Profile"
+    "title": "Profile",
+    "idvtHeading": "Do you require identification validation?",
+    "ivtDescription": "This is handled by a third party Identification Document Verification Technology (IDVT) service."
   },
   "ProfileOrganisation": {
     "title": "Profile",
