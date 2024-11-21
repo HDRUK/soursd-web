@@ -17,24 +17,30 @@ jest.mock("@/utils/keycloak", () => ({
   handleLogout: jest.fn(),
 }));
 
+const translations = {
+  homeButton: "Home",
+  aboutButton: "About",
+  featuresButton: "Features",
+  supportButton: "Support",
+  contactButton: "Contact",
+  signInButton: "Sign In",
+  registerButton: "Register",
+};
+
 describe("NavBar Component", () => {
   beforeEach(() => {
-    // Reset mocks before each test
     jest.clearAllMocks();
   });
 
   it("renders the NavBar with buttons", () => {
-    // Mock translation function
     (useTranslations as jest.Mock).mockReturnValue((key: string) => key);
 
-    // Mock cookies (if the user is not authenticated)
     (useCookies as jest.Mock).mockReturnValue({
       getCookie: jest.fn(() => undefined),
     });
 
     render(<NavBar />);
 
-    // Check if buttons are rendered
     expect(screen.getByText("homeButton")).toBeInTheDocument();
     expect(screen.getByText("aboutButton")).toBeInTheDocument();
     expect(screen.getByText("featuresButton")).toBeInTheDocument();
@@ -52,10 +58,8 @@ describe("NavBar Component", () => {
 
     render(<NavBar />);
 
-    // Click the Sign In button
     fireEvent.click(screen.getByText("signInButton"));
 
-    // Ensure handleLogin is called
     expect(handleLogin).toHaveBeenCalled();
   });
 
@@ -67,10 +71,8 @@ describe("NavBar Component", () => {
 
     render(<NavBar />);
 
-    // Click the Sign Out button
     fireEvent.click(screen.getByText("signOutButton"));
 
-    // Ensure handleLogout is called
     expect(handleLogout).toHaveBeenCalled();
   });
 
@@ -82,7 +84,6 @@ describe("NavBar Component", () => {
 
     render(<NavBar />);
 
-    // Check if the 'signOutButton' is displayed
     expect(screen.getByText("signOutButton")).toBeInTheDocument();
   });
 
@@ -94,33 +95,20 @@ describe("NavBar Component", () => {
 
     render(<NavBar />);
 
-    // Check if the 'signInButton' is displayed
     expect(screen.getByText("signInButton")).toBeInTheDocument();
   });
 
-  it("displays all the buttons with correct translations", () => {
-    const translations = {
-      homeButton: "Home",
-      aboutButton: "About",
-      featuresButton: "Features",
-      supportButton: "Support",
-      contactButton: "Contact",
-      signInButton: "Sign In",
-      registerButton: "Register",
-    };
+  it.each(Object.keys(translations))(
+    "displays all the buttons with correct translations",
+    value => {
+      (useTranslations as jest.Mock).mockReturnValue((key: string) => key);
 
-    (useTranslations as jest.Mock).mockReturnValue(
-      (key: string) => translations[key]
-    );
-    (useCookies as jest.Mock).mockReturnValue({
-      getCookie: jest.fn(() => undefined),
-    });
+      (useCookies as jest.Mock).mockReturnValue({
+        getCookie: jest.fn(() => undefined),
+      });
 
-    render(<NavBar />);
-
-    // Check if the buttons render the correct translation
-    Object.values(translations).forEach(text => {
-      expect(screen.getByText(text)).toBeInTheDocument();
-    });
-  });
+      render(<NavBar />);
+      expect(screen.getByText(value)).toBeInTheDocument();
+    }
+  );
 });

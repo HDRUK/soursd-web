@@ -49,7 +49,6 @@ export async function GET(req: Request) {
 
     return NextResponse.redirect(encodeURI("http://localhost:3000"));
   } catch (error) {
-    console.error("Token exchange failed", error);
     return NextResponse.json(
       { error: "Failed to exchange authorization code for tokens" },
       { status: 500 }

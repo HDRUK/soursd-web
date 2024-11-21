@@ -28,31 +28,26 @@ export default function NavBar() {
       color: "inherit",
       variant: "text",
       text: t("homeButton"),
-      onClick: undefined,
     },
     {
       color: "inherit",
       variant: "text",
       text: t("aboutButton"),
-      onClick: undefined,
     },
     {
       color: "inherit",
       variant: "text",
       text: t("featuresButton"),
-      onClick: undefined,
     },
     {
       color: "inherit",
       variant: "text",
       text: t("supportButton"),
-      onClick: undefined,
     },
     {
       color: "inherit",
       variant: "text",
       text: t("contactButton"),
-      onClick: undefined,
     },
     {
       color: "secondary",
@@ -65,7 +60,6 @@ export default function NavBar() {
       variant: "contained",
       text: t("registerButton"),
       // TODO: Change to registerUser once ready to
-      onClick: undefined,
     },
   ];
 
