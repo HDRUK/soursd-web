@@ -1,7 +1,7 @@
-import React from 'react';
-import { Autocomplete, TextField } from '@mui/material';
+import React from "react";
+import { Autocomplete, TextField } from "@mui/material";
 
-interface AutocompleteInputProps {
+export interface AutocompleteInputProps {
   options: { label: string; value: string }[];
   label: string;
   value: string | null;
@@ -19,11 +19,16 @@ const AutocompleteInput: React.FC<AutocompleteInputProps> = ({
   return (
     <Autocomplete
       options={options}
-      getOptionLabel={(option) => option.label}
-      value={options.find((opt) => opt.value === value) || null}
+      getOptionLabel={option => option.label}
+      value={options.find(opt => opt.value === value) || null}
       onChange={(event, newValue) => onChange(newValue ? newValue.value : null)}
-      renderInput={(params) => (
-        <TextField {...params} label={label} placeholder={placeholder} variant="outlined" />
+      renderInput={params => (
+        <TextField
+          {...params}
+          label={label}
+          placeholder={placeholder}
+          variant="outlined"
+        />
       )}
       fullWidth
     />

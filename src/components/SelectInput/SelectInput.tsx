@@ -1,23 +1,27 @@
-import React from 'react';
-import { MenuItem, Select, FormControl, InputLabel } from '@mui/material';
+import React from "react";
+import { MenuItem, Select, FormControl, InputLabel } from "@mui/material";
 
-interface SelectInputProps {
+export interface SelectInputProps {
   options: { label: string; value: string }[];
   label: string;
-  value: string;
+  value: string | null;
   onChange: (value: string) => void;
 }
 
-const SelectInput: React.FC<SelectInputProps> = ({ options, label, value, onChange }) => {
+const SelectInput: React.FC<SelectInputProps> = ({
+  options,
+  label,
+  value,
+  onChange,
+}) => {
   return (
     <FormControl fullWidth variant="outlined">
       <InputLabel>{label}</InputLabel>
       <Select
         value={value}
-        onChange={(event) => onChange(event.target.value)}
-        label={label}
-      >
-        {options.map((option) => (
+        onChange={event => onChange(event.target.value)}
+        label={label}>
+        {options.map(option => (
           <MenuItem key={option.value} value={option.value}>
             {option.label}
           </MenuItem>
