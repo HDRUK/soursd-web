@@ -13,6 +13,7 @@ interface ColorOverrides {
   default: true;
   inactive: true;
   caption: true;
+  inverseSurface: true;
 }
 
 declare module "@mui/material/styles/createPalette" {
@@ -25,6 +26,7 @@ declare module "@mui/material/styles/createPalette" {
     default: SimplePaletteColorOptions;
     inactive: SimplePaletteColorOptions;
     caption: SimplePaletteColorOptions;
+    inverseSurface: SimplePaletteColorOptions;
   }
 
   interface Palette extends CustomPalette {}

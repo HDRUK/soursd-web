@@ -282,6 +282,15 @@ const theme = createTheme(
           },
         },
       },
+      MuiPopover: {
+        defaultProps: {
+          slotProps: {
+            paper: {
+              sx: { p: 1, maxWidth: "500px" },
+            },
+          },
+        },
+      },
     },
   },
   paletteTheme

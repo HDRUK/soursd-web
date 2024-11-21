@@ -44,9 +44,10 @@ const PALETTE_THEME_PURPLE_BLUE = {
     highlight3: createColor("#152238"),
     default: createColor("#7A89C2"),
     inactive: createColor(grey["300"]),
-    caption: createColor(grey["500"]),
+    caption: createColor("#757575"),
     white: "#fff",
     footer: createColor("#72788D"),
+    inverseSurface: createColor("#322e36"),
   },
 };
 
