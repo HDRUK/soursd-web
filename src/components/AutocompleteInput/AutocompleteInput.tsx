@@ -28,6 +28,7 @@ const AutocompleteInput: React.FC<AutocompleteInputProps> = ({
           label={label}
           placeholder={placeholder}
           variant="outlined"
+          size="small"
         />
       )}
       fullWidth

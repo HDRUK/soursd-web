@@ -15,10 +15,11 @@ const SelectInput: React.FC<SelectInputProps> = ({
   onChange,
 }) => {
   return (
-    <FormControl fullWidth variant="outlined">
+    <FormControl fullWidth variant="outlined" size="small">
       <InputLabel>{label}</InputLabel>
       <Select
         value={value}
+        size="small"
         onChange={event => onChange(event.target.value)}
         label={label}>
         {options.map(option => (
