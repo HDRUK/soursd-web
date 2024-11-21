@@ -1,52 +1,37 @@
 import { handleLogin, handleLogout } from "@/utils/keycloak";
 
-jest.mock("@/config/keycloak", () => ({
-  authServerUrl: "https://keycloak.example.com",
-  realm: "my-realm",
-  clientId: "my-client-id",
-  redirectUriLogin: "https://test.com/login-success",
-  redirectUriLogout: "https://test.com/logout-success",
-}));
-
-describe("Keycloak Utils", () => {
-  let originalLocation: Location;
-  let mockLocation: Pick<Location, "href">;
-
+describe("Auth functions", () => {
+  const originalEnv = process.env;
   beforeEach(() => {
-    // Save the original location object
-    originalLocation = window.location;
+    jest.resetModules();
 
-    // Create a mock location object
-    mockLocation = {
-      href: "",
-    };
-
-    // Replace window.location with the mock
     Object.defineProperty(window, "location", {
-      configurable: true,
-      value: mockLocation,
+      value: { href: "", assign: jest.fn(), replace: jest.fn() },
+      writable: true,
     });
   });
 
   afterEach(() => {
-    // Restore the original location object
-    Object.defineProperty(window, "location", {
-      configurable: true,
-      value: originalLocation,
-    });
+    process.env = originalEnv;
   });
 
-  it("should redirect to the correct URL on handleLogin", () => {
+  it("should generate the correct URL and update window.location.href on login", () => {
     handleLogin();
 
-    const expectedUrl = `https://keycloak.example.com/realms/my-realm/protocol/openid-connect/auth?client_id=my-client-id&response_type=code&redirect_uri=https%3A%2F%2Ftest.com%2Flogin-success&scope=openid+profile+email`;
-    expect(mockLocation.href).toBe(expectedUrl);
+    // Construct expected auth URL and query parameters
+    const expectedUrl = `${process.env.NEXT_PUBLIC_KEYCLOAK_BASE_URL}/realms/${process.env.NEXT_PUBLIC_KEYCLOAK_REALM}/protocol/openid-connect/auth?client_id=${process.env.NEXT_PUBLIC_KEYCLOAK_CLIENT_ID}&response_type=code&redirect_uri=https%3A%2F%2Fexample.com%2Flogin-callback&scope=openid+profile+email`;
+
+    // Verify that window.location.href is set correctly
+    expect(window.location.href).toBe(expectedUrl);
   });
 
-  it("should redirect to the correct URL on handleLogout", () => {
+  it("should generate the correct URL and update window.location.href on logout", () => {
     handleLogout();
 
-    const expectedUrl = `https://keycloak.example.com/realms/my-realm/protocol/openid-connect/logout?client_id=my-client-id&post_logout_redirect_uri=https%3A%2F%2Ftest.com%2Flogout-success`;
-    expect(mockLocation.href).toBe(expectedUrl);
+    // Construct expected logout URL and query parameters
+    const expectedUrl = `${process.env.NEXT_PUBLIC_KEYCLOAK_BASE_URL}/realms/${process.env.NEXT_PUBLIC_KEYCLOAK_REALM}/protocol/openid-connect/logout?client_id=${process.env.NEXT_PUBLIC_KEYCLOAK_CLIENT_ID}&post_logout_redirect_uri=https%3A%2F%2Fexample.com%2Flogout-callback`;
+
+    // Verify that window.location.href is set correctly
+    expect(window.location.href).toBe(expectedUrl);
   });
 });
