@@ -1,5 +1,7 @@
 "use client";
 
+import { useCookies } from "@/context/CookieContext/CookieContext";
+import { handleLogin, handleLogout } from "@/utils/keycloak";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
   Box,
@@ -23,6 +25,9 @@ type ButtonVariant = "contained" | "text" | undefined;
 
 export default function NavBar() {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_NAVBAR);
+  const { getCookie } = useCookies();
+
+  const isAuthenticated = !!getCookie("access_token");
 
   const theme = useTheme();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -39,14 +44,46 @@ export default function NavBar() {
     color: ButtonColor;
     variant: ButtonVariant;
     text: string;
+    isSign?: boolean;
+    onClick?: () => void | undefined;
   }[] = [
-    { color: "inherit", variant: "text", text: t("homeButton") },
-    { color: "inherit", variant: "text", text: t("aboutButton") },
-    { color: "inherit", variant: "text", text: t("featuresButton") },
-    { color: "inherit", variant: "text", text: t("supportButton") },
-    { color: "inherit", variant: "text", text: t("contactButton") },
-    { color: "secondary", variant: "contained", text: t("signInButton") },
-    { color: "primary", variant: "contained", text: t("registerButton") },
+    {
+      color: "inherit",
+      variant: "text",
+      text: t("homeButton"),
+    },
+    {
+      color: "inherit",
+      variant: "text",
+      text: t("aboutButton"),
+    },
+    {
+      color: "inherit",
+      variant: "text",
+      text: t("featuresButton"),
+    },
+    {
+      color: "inherit",
+      variant: "text",
+      text: t("supportButton"),
+    },
+    {
+      color: "inherit",
+      variant: "text",
+      text: t("contactButton"),
+    },
+    {
+      color: "secondary",
+      variant: "contained",
+      text: isAuthenticated ? t("signOutButton") : t("signInButton"),
+      onClick: isAuthenticated ? handleLogout : handleLogin,
+    },
+    {
+      color: "primary",
+      variant: "contained",
+      text: t("registerButton"),
+      // TODO: Change to registerUser once ready to
+    },
   ];
 
   return (
@@ -62,8 +99,8 @@ export default function NavBar() {
         <StyledHeader>
           <SourcdLogo variant="titled" />
           <Box sx={{ display: "flex" }}>
-            {buttons.map(({ text, variant, color }) => (
-              <StyledButton color={color} variant={variant} key={text}>
+            {buttons.map(({ text, ...restProps }) => (
+              <StyledButton {...restProps} key={text}>
                 {text}
               </StyledButton>
             ))}

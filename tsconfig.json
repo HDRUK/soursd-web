@@ -22,7 +22,7 @@
     "baseUrl": ".",
     "paths": {
       "@/mocks/*": ["./mocks/*"],
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
     },
     "types": ["node", "jest", "@testing-library/jest-dom"]
   },

@@ -359,6 +359,7 @@
     "signInButton": "Sign In",
     "registerButton": "Register",
     "ariaOpenMobileMenu": "open mobile menu",
-    "ariaCloseMobileMenu": "close mobile menu"
+    "ariaCloseMobileMenu": "close mobile menu",
+    "signOutButton": "Sign Out"
   }
 }

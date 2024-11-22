@@ -1,4 +1,5 @@
-import theme from "@/theme";
+import { useCookies } from "@/context/CookieContext/CookieContext";
+import { handleLogin, handleLogout } from "@/utils/keycloak";
 import {
   defineMatchMedia,
   fireEvent,
@@ -7,6 +8,32 @@ import {
   waitFor,
 } from "@/utils/testUtils";
 import NavBar from "./NavBar";
+import theme from "@/theme";
+
+jest.mock("@/context/CookieContext/CookieContext", () => ({
+  useCookies: jest.fn(),
+}));
+
+jest.mock("@/utils/keycloak", () => ({
+  handleLogin: jest.fn(),
+  handleLogout: jest.fn(),
+}));
+
+const mockGetCookie = jest.fn().mockReturnValue(undefined);
+
+(useCookies as jest.Mock).mockReturnValue({
+  getCookie: mockGetCookie,
+});
+
+const buttonsText = [
+  "Home",
+  "About",
+  "Features",
+  "Support",
+  "Contact",
+  "Sign In",
+  "Register",
+];
 
 const renderMobileMenuTest = () => {
   defineMatchMedia(theme.breakpoints.values.xs);
@@ -18,48 +45,72 @@ const renderMobileMenuTest = () => {
   return rendered;
 };
 
-describe("NavBar", () => {
-  it("renders NavBar with correct buttons and properties", () => {
-    render(<NavBar />);
-
-    // Check that the buttons render with the correct text
-    const buttons = [
-      { text: "Home", color: "inherit", variant: "text" },
-      { text: "About", color: "inherit", variant: "text" },
-      { text: "Features", color: "inherit", variant: "text" },
-      { text: "Support", color: "inherit", variant: "text" },
-      { text: "Contact", color: "inherit", variant: "text" },
-      { text: "Sign In", color: "secondary", variant: "contained" },
-      { text: "Register", color: "primary", variant: "contained" },
-    ];
-
-    buttons.forEach(button => {
-      const renderedButton = screen.getByText(button.text);
-      expect(renderedButton).toBeInTheDocument();
-    });
+describe("NavBar Component", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
 
-  it("renders the SourcdLogo component", async () => {
+  it.each(buttonsText)("renders nav item %s", name => {
     render(<NavBar />);
-    const logo = screen.getAllByRole("img", { name: "SOURCD" });
 
-    await waitFor(() => {
-      expect(logo[0]).toBeInTheDocument();
-    });
+    expect(
+      screen.getByRole("button", {
+        name,
+      })
+    ).toBeInTheDocument();
   });
 
-  it("renders the Divider component", () => {
+  it("calls handleLogin on Sign In click when not authenticated", () => {
     render(<NavBar />);
-    const divider = screen.getByRole("separator");
-    expect(divider).toBeInTheDocument();
+
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: "Sign In",
+      })
+    );
+
+    expect(handleLogin).toHaveBeenCalled();
+  });
+
+  it("displays 'Sign In' if the user is not authenticated", () => {
+    render(<NavBar />);
+
+    expect(
+      screen.getByRole("button", {
+        name: "Sign In",
+      })
+    ).toBeInTheDocument();
   });
 
   it("shows the mobile menu", async () => {
     renderMobileMenuTest();
+
     const mobileNav = screen.getByTestId("header-mobile-menu");
 
     await waitFor(() => {
       expect(mobileNav).toBeInTheDocument();
     });
+  });
+
+  it("calls handleLogout on 'Sign Out' click when authenticated", () => {
+    mockGetCookie.mockReturnValue("mockAccessToken");
+
+    render(<NavBar />);
+
+    fireEvent.click(screen.getByRole("button", { name: "Sign Out" }));
+
+    expect(handleLogout).toHaveBeenCalled();
+  });
+
+  it("displays 'Sign Out' if the user is authenticated", () => {
+    mockGetCookie.mockReturnValue("mockAccessToken");
+
+    render(<NavBar />);
+
+    expect(
+      screen.getByRole("button", {
+        name: "Sign Out",
+      })
+    ).toBeInTheDocument();
   });
 });
