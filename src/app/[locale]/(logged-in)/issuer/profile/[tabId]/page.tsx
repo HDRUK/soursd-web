@@ -1,3 +1,4 @@
+import { withAuth } from "@/components/Auth";
 import { ConfigProps, withConfig } from "@/components/Config";
 import { PageContainer, PageSection, PageTitle } from "@/modules";
 import { Typography } from "@mui/material";
@@ -6,7 +7,6 @@ import { redirect } from "next/navigation";
 import TabsContents from "./components/TabsContents";
 import TabsSections from "./components/TabsSections";
 import { PageTabs } from "./consts/tabs";
-import { withAuth } from "@/components/Auth";
 
 const NAMESPACE_TRANSLATIONS_PROFILE = "IssuerProfile";
 

@@ -1,4 +1,5 @@
 import { useCookies } from "@/context/CookieContext/CookieContext";
+import theme from "@/theme";
 import { handleLogin, handleLogout } from "@/utils/keycloak";
 import {
   defineMatchMedia,
@@ -8,7 +9,6 @@ import {
   waitFor,
 } from "@/utils/testUtils";
 import NavBar from "./NavBar";
-import theme from "@/theme";
 
 jest.mock("@/context/CookieContext/CookieContext", () => ({
   useCookies: jest.fn(),

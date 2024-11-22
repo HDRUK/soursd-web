@@ -1,4 +1,3 @@
-import NavBar from "@/components/NavBar";
 import { Box } from "@mui/material";
 import { ReactNode } from "react";
 import Footer from "../Footer";

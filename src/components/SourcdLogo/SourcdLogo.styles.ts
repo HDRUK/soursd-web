@@ -1,6 +1,6 @@
 import { css, styled, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { SourcdLogoProps } from "./SourcdLogo";
+import type { SourcdLogoProps } from ".";
 
 export const StyledLogoContainer = styled(Box)<SourcdLogoProps>(
   ({ variant }) => css`

@@ -1,7 +1,7 @@
 "use client";
 
 import { AugmentedColorPaletteOptions, Theme } from "@mui/material";
-import { createTheme, darken, lighten } from "@mui/material/styles";
+import { createTheme, darken } from "@mui/material/styles";
 import { createBreakpoints } from "@mui/system";
 import { Roboto } from "next/font/google";
 import { PALETTE_THEME_PURPLE_BLUE } from "./config/theme";

@@ -1,12 +1,12 @@
 import { withAuth } from "@/components/Auth";
-import DecoratorPage from "@/modules/DecoratorPage";
+import PageContainer from "@/modules/PageContainer";
 import Sections from "./components/Sections";
 
 function Page() {
   return (
-    <DecoratorPage>
+    <PageContainer>
       <Sections />
-    </DecoratorPage>
+    </PageContainer>
   );
 }
 
