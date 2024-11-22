@@ -1,12 +1,11 @@
 import theme from "@/theme";
 import {
+  defineMatchMedia,
   fireEvent,
   render,
   screen,
   waitFor,
-  defineMatchMedia,
 } from "@/utils/testUtils";
-import { useTranslations } from "next-intl";
 import NavBar from "./NavBar";
 
 const renderMobileMenuTest = () => {

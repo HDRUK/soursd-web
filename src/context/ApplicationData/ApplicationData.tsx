@@ -170,9 +170,11 @@ const ApplicationDataProvider = ({
     };
   }, [!!systemConfigData?.data, value]);
 
-  const isAnyLoading = isUserLoading || isLoading || isOrganisationLoading;
-  const isAnyError = isError || isUserError || isOrganisationError;
-  const errorMessage = error || userError || organisationError;
+  const isAnyLoading =
+    isUserLoading || isLoading || isOrganisationLoading || isIssuerLoading;
+  const isAnyError =
+    isError || isUserError || isOrganisationError || isIssuerError;
+  const errorMessage = error || userError || organisationError || issuerError;
 
   const isFinishedLoading =
     !isAnyLoading && !isAnyError && systemConfigData?.data && authFetched;

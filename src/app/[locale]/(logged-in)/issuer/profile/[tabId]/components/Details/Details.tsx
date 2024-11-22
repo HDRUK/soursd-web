@@ -21,7 +21,7 @@ import IdvtSection from "../IdvtSection";
 
 export interface DetailsFormValues {
   name: string;
-  email: string;
+  contact_email: string;
   idvt_required: boolean;
 }
 
@@ -35,7 +35,7 @@ const NAMESPACE_TRANSLATION_PROFILE = "IssuerProfile";
 export default function Details({ issuer }: DetailsProps) {
   const queryClient = useQueryClient();
   const theme = useTheme();
-  const [getUser, setUser] = useStore(state => [state.getUser, state.setUser]);
+  const [getUser] = useStore(state => [state.getUser, state.setUser]);
   const user = getUser();
 
   const mdBreakpoint = theme.breakpoints.down("md");
@@ -60,27 +60,11 @@ export default function Details({ issuer }: DetailsProps) {
 
   const handleDetailsSubmit = useCallback(
     async (payload: DetailsFormValues) => {
-      const { name, email } = payload;
-      const names = name.split(/: (.+)?/, 2);
+      await mutateUpdateAsync(payload);
 
-      if (user?.id) {
-        const request = {
-          ...user,
-          first_name: names[0],
-          last_name: names[1],
-          email,
-        };
-
-        await mutateUpdateAsync(request);
-
-        setUser(request);
-
-        queryClient.refetchQueries({
-          queryKey: ["getIssuer"],
-        });
-
-        // Update issuer here
-      }
+      queryClient.refetchQueries({
+        queryKey: ["getIssuer"],
+      });
     },
     []
   );
@@ -89,7 +73,7 @@ export default function Details({ issuer }: DetailsProps) {
     () =>
       yup.object().shape({
         name: yup.string().required(tForm("nameRequiredInvalid")),
-        email: yup
+        contact_email: yup
           .string()
           .required(tForm("contactEmailRequiredInvalid"))
           .email(tForm("contactEmailFormatInvalid")),
@@ -101,8 +85,8 @@ export default function Details({ issuer }: DetailsProps) {
   const methods = useForm<DetailsFormValues>({
     resolver: yupResolver(schema),
     defaultValues: {
-      name: `${user?.first_name} ${user?.last_name}`,
-      email: user?.email,
+      name: issuer.name,
+      contact_email: issuer.contact_email,
       idvt_required: issuer.idvt_required,
     },
   });
@@ -114,7 +98,7 @@ export default function Details({ issuer }: DetailsProps) {
   } = methods;
 
   const nameProps = register("name");
-  const emailProps = register("email");
+  const contactEmailProps = register("contact_email");
 
   return (
     <>
@@ -160,10 +144,10 @@ export default function Details({ issuer }: DetailsProps) {
             <Grid item xs={12}>
               <FormControlHorizontal
                 label={tForm("contactEmail")}
-                error={errors.email}
-                id="email">
+                error={errors.contact_email}
+                id="contact_email">
                 <TextField
-                  {...emailProps}
+                  {...contactEmailProps}
                   size="small"
                   placeholder={tForm("contactEmailPlaceholder")}
                   sx={{

@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import TabsContents from "./components/TabsContents";
 import TabsSections from "./components/TabsSections";
 import { PageTabs } from "./consts/tabs";
+import { withAuth } from "@/components/Auth";
 
 const NAMESPACE_TRANSLATIONS_PROFILE = "IssuerProfile";
 
@@ -35,4 +36,4 @@ function Page({ params: { tabId }, config }: PageProps) {
   );
 }
 
-export default withConfig(Page);
+export default withConfig(withAuth(Page));
