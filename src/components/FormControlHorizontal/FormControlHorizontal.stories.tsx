@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
+import { TextField } from "@mui/material";
 import { FormProvider, useForm } from "react-hook-form";
 import FormControlHorizontal, { FormControlHorizontalProps } from ".";
-import { TextField } from "@mui/material";
 
 const meta = {
   title: "components/FormControlHorizontal",
