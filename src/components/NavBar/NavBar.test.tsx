@@ -1,28 +1,25 @@
-import { render, screen } from "@testing-library/react";
+import theme from "@/theme";
+import {
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  defineMatchMedia,
+} from "@/utils/testUtils";
 import { useTranslations } from "next-intl";
 import NavBar from "./NavBar";
 
-// Mock the useTranslations hook
-jest.mock("next-intl", () => ({
-  useTranslations: jest.fn(),
-}));
+const renderMobileMenuTest = () => {
+  defineMatchMedia(theme.breakpoints.values.xs);
+
+  const rendered = render(<NavBar />);
+
+  fireEvent.click(screen.getByLabelText("open mobile menu"));
+
+  return rendered;
+};
 
 describe("NavBar", () => {
-  beforeEach(() => {
-    (useTranslations as jest.Mock).mockReturnValue((key: string) => {
-      const translations: Record<string, string> = {
-        homeButton: "Home",
-        aboutButton: "About",
-        featuresButton: "Features",
-        supportButton: "Support",
-        contactButton: "Contact",
-        signInButton: "Sign In",
-        registerButton: "Register",
-      };
-      return translations[key] || key;
-    });
-  });
-
   it("renders NavBar with correct buttons and properties", () => {
     render(<NavBar />);
 
@@ -43,15 +40,27 @@ describe("NavBar", () => {
     });
   });
 
-  it("renders the SourcdLogo component", () => {
+  it("renders the SourcdLogo component", async () => {
     render(<NavBar />);
-    const logo = screen.getByRole("img", { name: "SOURCD" });
-    expect(logo).toBeInTheDocument();
+    const logo = screen.getAllByRole("img", { name: "SOURCD" });
+
+    await waitFor(() => {
+      expect(logo[0]).toBeInTheDocument();
+    });
   });
 
   it("renders the Divider component", () => {
     render(<NavBar />);
     const divider = screen.getByRole("separator");
     expect(divider).toBeInTheDocument();
+  });
+
+  it("shows the mobile menu", async () => {
+    renderMobileMenuTest();
+    const mobileNav = screen.getByTestId("header-mobile-menu");
+
+    await waitFor(() => {
+      expect(mobileNav).toBeInTheDocument();
+    });
   });
 });

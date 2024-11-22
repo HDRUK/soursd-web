@@ -1,11 +1,11 @@
 "use client";
 
-import { AugmentedColorPaletteOptions } from "@mui/material";
-import { createTheme, darken } from "@mui/material/styles";
+import { AugmentedColorPaletteOptions, Theme } from "@mui/material";
+import { createTheme, darken, lighten } from "@mui/material/styles";
 import { createBreakpoints } from "@mui/system";
 import { Roboto } from "next/font/google";
 import { PALETTE_THEME_PURPLE_BLUE } from "./config/theme";
-import { colorToRgba, getAugmentedColor } from "./utils/theme";
+import { colorToRgba, getAugmentedColor, isLightMode } from "./utils/theme";
 
 const roboto = Roboto({
   weight: ["300", "400", "500", "700"],
@@ -16,6 +16,10 @@ const roboto = Roboto({
 const breakpoints = createBreakpoints({});
 
 const paletteTheme = createTheme(PALETTE_THEME_PURPLE_BLUE);
+
+const getHoverColor = (theme: Theme) => {
+  return isLightMode(theme) ? "rgba(0,0,0,0.17)" : "rgba(255,255,255,0.17)";
+};
 
 const createBoxStyles = <T extends { color?: AugmentedColorPaletteOptions }>(
   ownerState: T
@@ -29,6 +33,36 @@ const createBoxStyles = <T extends { color?: AugmentedColorPaletteOptions }>(
         backgroundColor: color.main,
       };
     }
+  }
+
+  return null;
+};
+
+const createTabStyles = () => {
+  return {
+    padding: "4px 8px",
+    minHeight: "36px",
+    flexGrow: 1,
+    "&:hover": {
+      backgroundColor: getHoverColor(paletteTheme),
+    },
+  };
+};
+
+const createTabsStyles = <T extends { color?: AugmentedColorPaletteOptions }>(
+  ownerState: T
+) => {
+  if (ownerState.color) {
+    const color = getAugmentedColor(paletteTheme, ownerState.color);
+
+    return {
+      backgroundColor: color[paletteTheme.palette.mode],
+      color: color.contrastText,
+      minHeight: "36px",
+      ".MuiTabs-indicator": {
+        backgroundColor: paletteTheme.palette.primary.main,
+      },
+    };
   }
 
   return null;
@@ -270,6 +304,19 @@ const theme = createTheme(
               color: "#fff",
             },
           },
+        },
+      },
+      MuiTab: {
+        styleOverrides: {
+          root: createTabStyles,
+        },
+      },
+      MuiTabs: {
+        defaultProps: {
+          color: "greyLight",
+        },
+        styleOverrides: {
+          root: ({ ownerState }) => createTabsStyles(ownerState),
         },
       },
       MuiLink: {

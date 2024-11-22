@@ -1,15 +1,14 @@
-import NavBar from "@/components/NavBar";
-import { Footer } from "@/modules";
-import SoursdInfo from "./components/SoursdInfo";
-import { StyledWrapper } from "./homepage.styles";
-import SoursdUsages from "./components/SoursdUsages";
+import { Footer, Header } from "@/modules";
 import KeyFeatures from "./components/KeyFeatures";
+import SoursdInfo from "./components/SoursdInfo";
+import SoursdUsages from "./components/SoursdUsages";
 import Support from "./components/Support";
+import { StyledWrapper } from "./homepage.styles";
 
 export default function Page() {
   return (
     <>
-      <NavBar />
+      <Header />
       <StyledWrapper>
         <section>
           <SoursdInfo />

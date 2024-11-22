@@ -1,6 +1,6 @@
 import { withAuth } from "@/components/Auth";
 import { ConfigProps, withConfig } from "@/components/Config";
-import DecoratorPage from "@/modules/DecoratorPage";
+import PageContainer from "@/modules/PageContainer";
 import PageSection from "@/modules/PageSection";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
@@ -27,7 +27,7 @@ function Page({ params: { tabId }, config }: PageProps) {
   }
 
   return (
-    <DecoratorPage>
+    <PageContainer>
       <PageSection>
         <Typography variant="h4">{t("title")}</Typography>
       </PageSection>
@@ -41,7 +41,7 @@ function Page({ params: { tabId }, config }: PageProps) {
           {tabId === PageTabs.TRAINING && "Training"}
         </Sections>
       </PageSection>
-    </DecoratorPage>
+    </PageContainer>
   );
 }
 

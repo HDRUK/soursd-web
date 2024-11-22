@@ -6,7 +6,7 @@ import OverlayCenterAlert from "@/components/OverlayCenterAlert";
 import { VALIDATION_SCHEMA_KEY } from "@/consts/application";
 import { ROUTES } from "@/consts/router";
 import { useStore } from "@/data/store";
-import DecoratorPanel from "@/modules/DecoratorPanel";
+import PageContainer from "@/modules/PageContainer";
 import { getOrganisation } from "@/services/organisations";
 import { getSystemConfig } from "@/services/system_config";
 import { getUser } from "@/services/users";
@@ -91,7 +91,7 @@ const ApplicationDataProvider = ({
   const {
     mutateAsync: mutateOrganisationAsync,
     isError: isOrganisationError,
-    isLoading: isOrganisationLoading,
+    isPending: isOrganisationLoading,
     error: organisationError,
   } = useMutation({
     mutationKey: ["getOrganisation"],
@@ -157,7 +157,7 @@ const ApplicationDataProvider = ({
   return (
     <ApplicationDataContext.Provider value={providerValue}>
       {(isAnyLoading || isAnyError) && (
-        <DecoratorPanel>
+        <PageContainer>
           {isAnyLoading && (
             <OverlayCenter>
               <CircularProgress sx={{ color: "#fff" }} />
@@ -170,7 +170,7 @@ const ApplicationDataProvider = ({
               })}
             </OverlayCenterAlert>
           )}
-        </DecoratorPanel>
+        </PageContainer>
       )}
 
       {isFinishedLoading && children}

@@ -70,7 +70,9 @@ export default function InformationSection({
           maxWidth: "max-content",
         }}>
         <Box sx={{ flexGrow: 1 }}>
-          <Typography role="heading" aria-level={7} fontWeight="bold">
+          <Typography
+            variant="h3"
+            sx={{ fontSize: "1rem", fontWeight: "bold" }}>
             {heading}
           </Typography>
           <Typography color="caption.main">{description}</Typography>

@@ -6,19 +6,23 @@ import { StyledLogoContainer, StyledLogoTitle } from "./SourcdLogo.styles";
 
 const NAMESPACE_TRANSLATIONS_SOURCD_LOGO = "SourcdLogo";
 
-interface SourcdLogoProps extends BoxProps {
+export interface SourcdLogoProps extends BoxProps {
   variant?: "basic" | "titled";
+  width?: number;
+  height?: number;
 }
 
 export default function SourcdLogo({
   variant = "basic",
+  width = 90,
+  height = 90,
   ...restProps
 }: SourcdLogoProps) {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_SOURCD_LOGO);
 
   return (
-    <StyledLogoContainer {...restProps}>
-      <Image src={image} alt="SOURCD" width={90} height={90} />
+    <StyledLogoContainer variant={variant} {...restProps}>
+      <Image src={image} alt="SOURCD" width={width} height={height} />
       {variant === "titled" && (
         <StyledLogoTitle variant="h1">{t("logoTitle")}</StyledLogoTitle>
       )}

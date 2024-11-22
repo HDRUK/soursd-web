@@ -2,7 +2,7 @@ import ContactLink from "@/components/ContactLink";
 import OverlayCenterAlert from "@/components/OverlayCenterAlert";
 import { useTranslations } from "next-intl";
 import { HTMLAttributes } from "react";
-import DecoratorPanel from "@/modules/DecoratorPanel";
+import PageContainer from "@/modules/PageContainer";
 
 type PageProps = HTMLAttributes<HTMLDivElement>;
 
@@ -12,7 +12,7 @@ export default function Page(props: PageProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_SIGNUP);
 
   return (
-    <DecoratorPanel>
+    <PageContainer>
       <div {...props}>
         <OverlayCenterAlert>
           {t.rich("noVerificationCode", {
@@ -20,6 +20,6 @@ export default function Page(props: PageProps) {
           })}
         </OverlayCenterAlert>
       </div>
-    </DecoratorPanel>
+    </PageContainer>
   );
 }

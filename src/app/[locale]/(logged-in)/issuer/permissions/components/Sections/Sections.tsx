@@ -15,12 +15,10 @@ import { useTranslations } from "next-intl";
 import { useQuery } from "@tanstack/react-query";
 import { useQueryUser } from "../../hooks";
 import Permissions from "../Permissions";
+import { ISSUER_ID } from "@/consts/application";
 
 const NAMESPACE_TRANSLATIONS_PERMISSIONS = "Permissions";
 const NAMESPACE_TRANSLATIONS_USERS = "Users";
-
-// This will come from the store when issuer is logged on
-const ISSUER_ID = 1;
 
 export interface SectionsProps {
   userId: number;

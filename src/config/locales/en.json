@@ -12,9 +12,17 @@
     "companyNumberAbbr": "CRN"
   },
   "IssuerProfile": {
-    "title": "Profile",
+    "uniqueIdentifierTitle": "SOURSD Identifier",
+    "uniqueIdentifierCaption": "This ‘key’ represents you as a Data Custodian within SOURSD. This is unique to you! Any time SOURSD sends information to you, or activates a callback, this identifier will be sent along with the payload. Meaning you can always trust the source of information.",
+    "details": "Profile",
+    "users": "Users",
+    "configuration": "Configuration",
+    "keycards": "Keycards",
+    "navigationAriaLabel": "Profile sections",
+    "loadingAriaLabel": "Loading issuer data",
     "idvtHeading": "Do you require identification validation?",
-    "ivtDescription": "This is handled by a third party Identification Document Verification Technology (IDVT) service."
+    "idvtDescription": "This is handled by a third party Identification Document Verification Technology (IDVT) service.",
+    "submitButton": "Save"
   },
   "ProfileOrganisation": {
     "title": "Profile",
@@ -32,6 +40,10 @@
     "navigationAriaLabel": "Profile tabs"
   },
   "Form": {
+    "contactEmailPlaceholder": "Contact email",
+    "name": "Name",
+    "namePlaceholder": "Name",
+    "whatIsDpstkOdsCode": "The Data Security and Protection Toolkit is an online self-assessment tool that all organisations must use if they have access to NHS patient data and systems.",
     "dpoOrHrRequiredInvalid": "At least one of these contacts is requured",
     "dpoNameRequiredInvalid": "Dpo name is required",
     "dpoEmailRequiredInvalid": "Dpo email is required",
@@ -43,6 +55,9 @@
     "lastNameRequiredInvalid": "Last name is a required field",
     "emailRequiredInvalid": "Email is a required field",
     "emailFormatInvalid": "Email must be a valid address",
+    "contactEmail": "Contact email",
+    "contactEmailRequiredInvalid": "Contact email is a required field",
+    "contactEmailFormatInvalid": "Contact email must be a valid address",
     "passwordRequiredInvalid": "Password is a required field",
     "passwordLengthInvalid": "Password should be between {minLength} and {maxLength} characters",
     "passwordFormatInvalid": "Password should contain at least 1 uppercase letter, 1 lowercase letter and 1 number",
@@ -128,10 +143,6 @@
   "Carousel": {
     "next": "next slide",
     "previous": "previous slide"
-  },
-  "Header": {
-    "ariaOpenMobileMenu": "open mobile menu",
-    "ariaCloseMobileMenu": "close mobile menu"
   },
   "Footer": {
     "contactFormTitle": "Contact Us",
@@ -263,7 +274,6 @@
   },
   "SignupFormOtherDetails": {
     "title": "Company details",
-    "whatIsDpstkOdsCode": "The Data Security and Protection Toolkit is an online self-assessment tool that all organisations must use if they have access to NHS patient data and systems.",
     "nextButton": "Next",
     "previousButton": "Previous"
   },
@@ -345,6 +355,8 @@
     "supportButton": "Support",
     "contactButton": "Contact",
     "signInButton": "Sign In",
-    "registerButton": "Register"
+    "registerButton": "Register",
+    "ariaOpenMobileMenu": "open mobile menu",
+    "ariaCloseMobileMenu": "close mobile menu"
   }
 }

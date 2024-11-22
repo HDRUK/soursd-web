@@ -20,12 +20,10 @@ import { CircularProgress, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useCallback } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { ISSUER_ID } from "@/consts/application";
 
 const NAMESPACE_TRANSLATIONS_PERMISSIONS = "Permissions";
 const NAMESPACE_TRANSLATIONS_USERS = "Users";
-
-// This will come from the store when issuer is logged on
-const ISSUER_ID = 1;
 
 interface SectionsProps {
   userId: number;

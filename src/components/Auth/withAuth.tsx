@@ -1,5 +1,5 @@
 import { ROUTES } from "@/consts/router";
-import DecoratorPanel from "@/modules/DecoratorPanel";
+import PageContainer from "@/modules/PageContainer";
 import { getAuthData } from "@/utils/auth";
 import { getLocale } from "@/utils/language";
 import { getRoutes, isRouteAllowed } from "@/utils/router";
@@ -26,13 +26,13 @@ export default function withAuth<T>(WrappedComponent: React.ComponentType<T>) {
 
     if (!isAllowed) {
       return (
-        <DecoratorPanel>
+        <PageContainer>
           <OverlayCenterAlert>
             {t.rich("notAllowed", {
               contactLink: ContactLink,
             })}
           </OverlayCenterAlert>
-        </DecoratorPanel>
+        </PageContainer>
       );
     }
 

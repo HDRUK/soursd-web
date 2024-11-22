@@ -25,6 +25,10 @@ interface Routes {
   homepage: RouteConfig;
   usersIssuer: RouteConfig;
   profileIssuer: RouteConfig;
+  profileIssuerDetails: RouteConfig;
+  profileIssuerConfiguration: RouteConfig;
+  profileIssuerKeycards: RouteConfig;
+  profileIssuerUsers: RouteConfig;
   profileResearcher: RouteConfig;
   profileResearcherDetails: RouteConfig;
   profileResearcherTraining: RouteConfig;

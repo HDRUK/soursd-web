@@ -1,9 +1,20 @@
 "use client";
 
-import { Box, Divider } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import {
+  Box,
+  Divider,
+  IconButton,
+  MenuItem,
+  MenuList,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import { useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
+import HorizontalDrawer from "../HorizontalDrawer";
 import SourcdLogo from "../SourcdLogo";
-import { StyledContainer, StyledHeader, StyledButton } from "./NavBar.styles";
+import { StyledButton, StyledContainer, StyledHeader } from "./NavBar.styles";
 
 const NAMESPACE_TRANSLATIONS_NAVBAR = "NavBar";
 
@@ -12,6 +23,17 @@ type ButtonVariant = "contained" | "text" | undefined;
 
 export default function NavBar() {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_NAVBAR);
+
+  const theme = useTheme();
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
+
+  useEffect(() => {
+    if (isDesktop && isDrawerOpen) {
+      setIsDrawerOpen(false);
+    }
+  }, [isDesktop, isDrawerOpen]);
 
   const buttons: {
     color: ButtonColor;
@@ -29,16 +51,74 @@ export default function NavBar() {
 
   return (
     <StyledContainer>
-      <StyledHeader>
-        <SourcdLogo variant="titled" />
-        <Box>
-          {buttons.map(button => (
-            <StyledButton color={button.color} variant={button.variant}>
-              {button.text}
-            </StyledButton>
-          ))}
+      <Box
+        sx={{
+          display: {
+            xs: "none",
+            md: "block",
+          },
+        }}
+        data-testid="header-desktop-menu">
+        <StyledHeader>
+          <SourcdLogo variant="titled" />
+          <Box sx={{ display: "flex" }}>
+            {buttons.map(({ text, variant, color }) => (
+              <StyledButton color={color} variant={variant} key={text}>
+                {text}
+              </StyledButton>
+            ))}
+          </Box>
+        </StyledHeader>
+      </Box>
+      <Box
+        sx={{
+          display: {
+            xs: "block",
+            md: "none",
+          },
+        }}>
+        <Box sx={{ display: "flex", minHeight: 46, alignItems: "center" }}>
+          <div>
+            <IconButton
+              color="inherit"
+              aria-label={t("ariaOpenMobileMenu")}
+              edge="start"
+              onClick={() => setIsDrawerOpen(!isDrawerOpen)}
+              sx={{ mx: 0 }}>
+              <MenuIcon />
+            </IconButton>
+          </div>
+          <Box
+            sx={{ flexGrow: 1, justifyContent: "flex-end", display: "flex" }}>
+            <SourcdLogo height={40} width={40} />
+          </Box>
         </Box>
-      </StyledHeader>
+        <HorizontalDrawer
+          data-testid="header-mobile-menu"
+          component="nav"
+          sx={{
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
+              minWidth: "200px",
+            },
+          }}
+          open={isDrawerOpen}
+          onClose={() => setIsDrawerOpen(false)}
+          dismissAriaLabel={t("ariaCloseMobileMenu")}
+          isDismissable>
+          <MenuList>
+            {buttons.map(({ text, ...restProps }) => (
+              <MenuItem
+                key={text}
+                sx={{ "&:hover": { backgroundColor: "transparent" } }}>
+                <StyledButton fullWidth {...restProps}>
+                  {text}
+                </StyledButton>
+              </MenuItem>
+            ))}
+          </MenuList>
+        </HorizontalDrawer>
+      </Box>
       <Divider sx={{ height: "6px", padding: "0" }} />
     </StyledContainer>
   );

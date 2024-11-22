@@ -1,9 +1,10 @@
 import { css, styled, Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import { SourcdLogoProps } from "./SourcdLogo";
 
-export const StyledLogoContainer = styled(Box)(
-  () => css`
-    display: flex;
+export const StyledLogoContainer = styled(Box)<SourcdLogoProps>(
+  ({ variant }) => css`
+    display: ${variant === "titled" ? "flex" : "inherit"};
     flex-direction: column;
     align-items: center;
     justify-content: center;
