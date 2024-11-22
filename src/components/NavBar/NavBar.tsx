@@ -2,8 +2,10 @@
 
 import { Box, Divider } from "@mui/material";
 import { useTranslations } from "next-intl";
-import SourcdLogo from "../SourcdLogo";
+import { handleLogin, handleLogout } from "@/utils/keycloak";
+import { useCookies } from "@/context/CookieContext/CookieContext";
 import { StyledContainer, StyledHeader, StyledButton } from "./NavBar.styles";
+import SourcdLogo from "../SourcdLogo";
 
 const NAMESPACE_TRANSLATIONS_NAVBAR = "NavBar";
 
@@ -12,19 +14,53 @@ type ButtonVariant = "contained" | "text" | undefined;
 
 export default function NavBar() {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_NAVBAR);
+  const { getCookie } = useCookies();
+  const isAuthenticated = !!getCookie("access_token");
 
   const buttons: {
     color: ButtonColor;
     variant: ButtonVariant;
     text: string;
+    isSign?: boolean;
+    onClick?: () => void | undefined;
   }[] = [
-    { color: "inherit", variant: "text", text: t("homeButton") },
-    { color: "inherit", variant: "text", text: t("aboutButton") },
-    { color: "inherit", variant: "text", text: t("featuresButton") },
-    { color: "inherit", variant: "text", text: t("supportButton") },
-    { color: "inherit", variant: "text", text: t("contactButton") },
-    { color: "secondary", variant: "contained", text: t("signInButton") },
-    { color: "primary", variant: "contained", text: t("registerButton") },
+    {
+      color: "inherit",
+      variant: "text",
+      text: t("homeButton"),
+    },
+    {
+      color: "inherit",
+      variant: "text",
+      text: t("aboutButton"),
+    },
+    {
+      color: "inherit",
+      variant: "text",
+      text: t("featuresButton"),
+    },
+    {
+      color: "inherit",
+      variant: "text",
+      text: t("supportButton"),
+    },
+    {
+      color: "inherit",
+      variant: "text",
+      text: t("contactButton"),
+    },
+    {
+      color: "secondary",
+      variant: "contained",
+      text: isAuthenticated ? t("signOutButton") : t("signInButton"),
+      onClick: isAuthenticated ? handleLogout : handleLogin,
+    },
+    {
+      color: "primary",
+      variant: "contained",
+      text: t("registerButton"),
+      // TODO: Change to registerUser once ready to
+    },
   ];
 
   return (
@@ -33,7 +69,10 @@ export default function NavBar() {
         <SourcdLogo variant="titled" />
         <Box>
           {buttons.map(button => (
-            <StyledButton color={button.color} variant={button.variant}>
+            <StyledButton
+              color={button.color}
+              variant={button.variant}
+              onClick={button.onClick}>
               {button.text}
             </StyledButton>
           ))}

@@ -1,57 +1,114 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import { useTranslations } from "next-intl";
+import { useCookies } from "@/context/CookieContext/CookieContext";
+import { handleLogin, handleLogout } from "@/utils/keycloak";
 import NavBar from "./NavBar";
 
-// Mock the useTranslations hook
 jest.mock("next-intl", () => ({
   useTranslations: jest.fn(),
 }));
 
-describe("NavBar", () => {
+jest.mock("@/context/CookieContext/CookieContext", () => ({
+  useCookies: jest.fn(),
+}));
+
+jest.mock("@/utils/keycloak", () => ({
+  handleLogin: jest.fn(),
+  handleLogout: jest.fn(),
+}));
+
+const translations = {
+  homeButton: "Home",
+  aboutButton: "About",
+  featuresButton: "Features",
+  supportButton: "Support",
+  contactButton: "Contact",
+  signInButton: "Sign In",
+  registerButton: "Register",
+};
+
+describe("NavBar Component", () => {
   beforeEach(() => {
-    (useTranslations as jest.Mock).mockReturnValue((key: string) => {
-      const translations: Record<string, string> = {
-        homeButton: "Home",
-        aboutButton: "About",
-        featuresButton: "Features",
-        supportButton: "Support",
-        contactButton: "Contact",
-        signInButton: "Sign In",
-        registerButton: "Register",
-      };
-      return translations[key] || key;
+    jest.clearAllMocks();
+  });
+
+  it("renders the NavBar with buttons", () => {
+    (useTranslations as jest.Mock).mockReturnValue((key: string) => key);
+
+    (useCookies as jest.Mock).mockReturnValue({
+      getCookie: jest.fn(() => undefined),
     });
-  });
 
-  it("renders NavBar with correct buttons and properties", () => {
     render(<NavBar />);
 
-    // Check that the buttons render with the correct text
-    const buttons = [
-      { text: "Home", color: "inherit", variant: "text" },
-      { text: "About", color: "inherit", variant: "text" },
-      { text: "Features", color: "inherit", variant: "text" },
-      { text: "Support", color: "inherit", variant: "text" },
-      { text: "Contact", color: "inherit", variant: "text" },
-      { text: "Sign In", color: "secondary", variant: "contained" },
-      { text: "Register", color: "primary", variant: "contained" },
-    ];
+    expect(screen.getByText("homeButton")).toBeInTheDocument();
+    expect(screen.getByText("aboutButton")).toBeInTheDocument();
+    expect(screen.getByText("featuresButton")).toBeInTheDocument();
+    expect(screen.getByText("supportButton")).toBeInTheDocument();
+    expect(screen.getByText("contactButton")).toBeInTheDocument();
+    expect(screen.getByText("signInButton")).toBeInTheDocument();
+    expect(screen.getByText("registerButton")).toBeInTheDocument();
+  });
 
-    buttons.forEach(button => {
-      const renderedButton = screen.getByText(button.text);
-      expect(renderedButton).toBeInTheDocument();
+  it("calls handleLogin on signInButton click when not authenticated", () => {
+    (useTranslations as jest.Mock).mockReturnValue((key: string) => key);
+    (useCookies as jest.Mock).mockReturnValue({
+      getCookie: jest.fn(() => undefined),
     });
+
+    render(<NavBar />);
+
+    fireEvent.click(screen.getByText("signInButton"));
+
+    expect(handleLogin).toHaveBeenCalled();
   });
 
-  it("renders the SourcdLogo component", () => {
+  it("calls handleLogout on signOutButton click when authenticated", () => {
+    (useTranslations as jest.Mock).mockReturnValue((key: string) => key);
+    (useCookies as jest.Mock).mockReturnValue({
+      getCookie: jest.fn(() => "mockAccessToken"),
+    });
+
     render(<NavBar />);
-    const logo = screen.getByRole("img", { name: "SOURCD" });
-    expect(logo).toBeInTheDocument();
+
+    fireEvent.click(screen.getByText("signOutButton"));
+
+    expect(handleLogout).toHaveBeenCalled();
   });
 
-  it("renders the Divider component", () => {
+  it("displays 'signOutButton' if the user is authenticated", () => {
+    (useTranslations as jest.Mock).mockReturnValue((key: string) => key);
+    (useCookies as jest.Mock).mockReturnValue({
+      getCookie: jest.fn(() => "mockAccessToken"),
+    });
+
     render(<NavBar />);
-    const divider = screen.getByRole("separator");
-    expect(divider).toBeInTheDocument();
+
+    expect(screen.getByText("signOutButton")).toBeInTheDocument();
   });
+
+  it("displays 'signInButton' if the user is not authenticated", () => {
+    (useTranslations as jest.Mock).mockReturnValue((key: string) => key);
+    (useCookies as jest.Mock).mockReturnValue({
+      getCookie: jest.fn(() => undefined),
+    });
+
+    render(<NavBar />);
+
+    expect(screen.getByText("signInButton")).toBeInTheDocument();
+  });
+
+  it.each(Object.keys(translations))(
+    "displays all the buttons with correct translations",
+    value => {
+      (useTranslations as jest.Mock).mockReturnValue((key: string) => key);
+
+      (useCookies as jest.Mock).mockReturnValue({
+        getCookie: jest.fn(() => undefined),
+      });
+
+      render(<NavBar />);
+      expect(screen.getByText(value)).toBeInTheDocument();
+    }
+  );
 });

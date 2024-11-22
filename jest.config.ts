@@ -2,6 +2,15 @@ const nextJest = require("next/jest");
 
 process.env.TZ = "UTC";
 
+process.env = Object.assign(process.env, {
+  NEXT_PUBLIC_KEYCLOAK_REALM: "my-realm",
+  NEXT_PUBLIC_KEYCLOAK_CLIENT_ID: "my-client-id",
+  NEXT_PUBLIC_KEYCLOAK_CLIENT_SECRET: "my-client-secret",
+  NEXT_PUBLIC_KEYCLOAK_BASE_URL: "https://example.com",
+  NEXT_PUBLIC_KEYCLOAK_REDIRECT_URL_LOGIN: "https://example.com/login-callback",
+  NEXT_PUBLIC_KEYCLOAK_REDIRECT_URL_LOGOUT: "https://example.com/logout-callback",
+});
+
 const createJestConfig = nextJest({
   dir: "./",
 });
@@ -22,6 +31,7 @@ const customJestConfig = {
     "^@/providers/(.*)$": "<rootDir>/src/providers/$1",
     "^@/data/(.*)$": "<rootDir>/src/data/$1",
     "^@/utils/(.*)$": "<rootDir>/src/utils/$1",
+    "^@/context/(.*)$": "<rootDir>/src/context/$1",
   },
   testPathIgnorePatterns: [
     "<rootDir>/.next/",
