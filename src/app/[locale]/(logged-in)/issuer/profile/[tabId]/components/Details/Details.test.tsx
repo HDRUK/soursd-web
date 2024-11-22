@@ -39,10 +39,8 @@ describe("<Details />", () => {
     const email = screen.getByLabelText("Contact email");
 
     await waitFor(() => {
-      expect(name).toHaveValue(
-        `${defaultUser.first_name} ${defaultUser.last_name}`
-      );
-      expect(email).toHaveValue(defaultUser.email);
+      expect(name).toHaveValue(defaultIssuer.name);
+      expect(email).toHaveValue(defaultIssuer.contact_email);
     });
   });
 });
