@@ -147,7 +147,8 @@ export default function Details({ issuer }: DetailsProps) {
               <FormControlHorizontal
                 label={tForm("name")}
                 error={errors.name}
-                id="name">
+                id="name"
+                disabled>
                 <TextField
                   {...nameProps}
                   size="small"

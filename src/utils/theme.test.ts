@@ -1,4 +1,5 @@
-import { colorToRgba } from "./theme";
+import theme from "@/theme";
+import { colorToRgba, isLightMode } from "./theme";
 
 describe("colorToRgba", () => {
   it("converts hex to rgba", () => {
@@ -11,5 +12,11 @@ describe("colorToRgba", () => {
     const result = colorToRgba("rgb(255, 255, 255)", 0.5);
 
     expect(result).toEqual("rgba(255, 255, 255, 0.5)");
+  });
+});
+
+describe("isLightMode", () => {
+  it("is light mode", () => {
+    expect(isLightMode(theme)).toBe(true);
   });
 });

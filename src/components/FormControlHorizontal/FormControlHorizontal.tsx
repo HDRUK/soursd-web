@@ -27,6 +27,7 @@ export default function FormControlHorizontal({
   label,
   error,
   id,
+  disabled,
   labelProps,
   ...restProps
 }: FormControlHorizontalProps) {
@@ -35,7 +36,12 @@ export default function FormControlHorizontal({
   const mdBreakpoint = theme.breakpoints.down("md");
 
   return (
-    <FormControl error={!!error} size="small" fullWidth {...restProps}>
+    <FormControl
+      error={!!error}
+      disabled={disabled}
+      size="small"
+      fullWidth
+      {...restProps}>
       <Box
         sx={{
           display: "flex",
@@ -75,6 +81,7 @@ export default function FormControlHorizontal({
 
             return React.cloneElement<TextFieldProps>(child, {
               id,
+              disabled,
             });
           })}
           {!!error && <FormHelperText>{error.message}</FormHelperText>}

@@ -3,10 +3,11 @@
 import ContactLink from "@/components/ContactLink";
 import OverlayCenter from "@/components/OverlayCenter";
 import OverlayCenterAlert from "@/components/OverlayCenterAlert";
-import { VALIDATION_SCHEMA_KEY } from "@/consts/application";
+import { ISSUER_ID, VALIDATION_SCHEMA_KEY } from "@/consts/application";
 import { ROUTES } from "@/consts/router";
 import { useStore } from "@/data/store";
 import PageContainer from "@/modules/PageContainer";
+import { getIssuer } from "@/services/issuers";
 import { getOrganisation } from "@/services/organisations";
 import { getSystemConfig } from "@/services/system_config";
 import { getUser } from "@/services/users";
@@ -54,6 +55,7 @@ const ApplicationDataProvider = ({
   const addUrlToHistory = useStore(store => store.addUrlToHistory);
   const setAuth = useStore(store => store.setAuth);
   const setOrganisation = useStore(store => store.setOrganisation);
+  const setIssuer = useStore(store => store.setIssuer);
   const [authFetched, setAuthFetched] = useState(!prefetchAuth);
 
   const path = usePathname();
@@ -103,6 +105,21 @@ const ApplicationDataProvider = ({
       }),
   });
 
+  const {
+    mutateAsync: mutateIssuerAsync,
+    isError: isIssuerError,
+    isPending: isIssuerLoading,
+    error: issuerError,
+  } = useMutation({
+    mutationKey: ["getIssuer"],
+    mutationFn: (id: number) =>
+      getIssuer(id, {
+        error: {
+          message: "getIssuerError",
+        },
+      }),
+  });
+
   useEffect(() => {
     const initUserFetch = async () => {
       const authDetails = await getAuthData();
@@ -124,6 +141,12 @@ const ApplicationDataProvider = ({
           );
 
           setOrganisation(data);
+        }
+
+        if (ISSUER_ID) {
+          const { data } = await mutateIssuerAsync(ISSUER_ID);
+
+          setIssuer(data);
         }
       }
 
