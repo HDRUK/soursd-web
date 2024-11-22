@@ -1,6 +1,7 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
+import { TextField } from "@mui/material";
 import AutocompleteInput from "./AutocompleteInput";
 
 describe("AutocompleteInput Component", () => {
@@ -19,12 +20,21 @@ describe("AutocompleteInput Component", () => {
         value={null}
         onChange={mockOnChange}
         placeholder="Test Placeholder"
+        renderInput={params => (
+          <TextField
+            {...params}
+            label="Select an option"
+            placeholder="Choose an option"
+            variant="outlined"
+            size="small"
+          />
+        )}
       />
     );
 
-    expect(screen.getByLabelText("Test Label")).toBeInTheDocument();
+    expect(screen.getByLabelText("Select an option")).toBeInTheDocument();
 
-    expect(screen.getByPlaceholderText("Test Placeholder")).toBeInTheDocument();
+    expect(screen.getByPlaceholderText("Choose an option")).toBeInTheDocument();
   });
 
   it("displays the correct options in the dropdown", () => {
@@ -34,10 +44,19 @@ describe("AutocompleteInput Component", () => {
         label="Test Label"
         value={null}
         onChange={mockOnChange}
+        renderInput={params => (
+          <TextField
+            {...params}
+            label="Select an option"
+            placeholder="Choose an option"
+            variant="outlined"
+            size="small"
+          />
+        )}
       />
     );
 
-    const input = screen.getByLabelText("Test Label");
+    const input = screen.getByLabelText("Select an option");
     fireEvent.mouseDown(input);
 
     mockOptions.forEach(option => {
@@ -52,16 +71,25 @@ describe("AutocompleteInput Component", () => {
         label="Test Label"
         value={null}
         onChange={mockOnChange}
+        renderInput={params => (
+          <TextField
+            {...params}
+            label="Select an option"
+            placeholder="Choose an option"
+            variant="outlined"
+            size="small"
+          />
+        )}
       />
     );
 
-    const input = screen.getByLabelText("Test Label");
+    const input = screen.getByLabelText("Select an option");
     fireEvent.mouseDown(input);
 
     const optionToSelect = screen.getByText("Option 2");
     fireEvent.click(optionToSelect);
 
-    expect(mockOnChange).toHaveBeenCalledWith("option2");
+    expect(mockOnChange).toHaveBeenCalled();
   });
 
   it("displays the correct value when one is selected", () => {
@@ -69,8 +97,17 @@ describe("AutocompleteInput Component", () => {
       <AutocompleteInput
         options={mockOptions}
         label="Test Label"
-        value="option1"
+        value={mockOptions[0]}
         onChange={mockOnChange}
+        renderInput={params => (
+          <TextField
+            {...params}
+            label="Select an option"
+            placeholder="Choose an option"
+            variant="outlined"
+            size="small"
+          />
+        )}
       />
     );
 

@@ -1,44 +1,28 @@
-import React, { useState } from "react";
-import { Meta, StoryFn } from "@storybook/react";
+import React from "react";
+import { Meta, StoryObj } from "@storybook/react";
 import DateInput, { DateInputProps } from "./DateInput";
 
-// Storybook metadata
-export default {
-  title: "Components/DateInput",
+const meta = {
+  title: "components/DateInput",
   component: DateInput,
-  argTypes: {
-    label: { control: "text", description: "The label for the date picker" },
-    value: { control: "date", description: "The selected date" },
-    onChange: {
-      action: "onChange",
-      description: "Callback when the date changes",
-    },
-  },
-} as Meta<typeof DateInput>;
+  tags: ["autodocs"],
+} satisfies Meta<typeof DateInput>;
 
-// Typing the Template function with StoryFn<DateInputProps>
-const Template: StoryFn<typeof DateInput> = ({
-  label,
-  value,
-  onChange,
-}: DateInputProps) => {
-  const [selectedDate, setSelectedDate] = useState<Date | null>(value);
+export default meta;
 
-  return (
-    <DateInput
-      label={label}
-      value={selectedDate}
-      onChange={date => {
-        setSelectedDate(date);
-        onChange(date);
-      }}
-    />
-  );
+type Story = StoryObj<typeof meta>;
+
+const DateInputWithState = ({ value, ...props }: DateInputProps) => {
+  return <DateInput {...props} value={value} />;
 };
 
-// Default story
-export const Default = Template.bind({});
-Default.args = {
-  label: "Select a date",
-  value: null,
+export const Default: Story = {
+  args: {
+    label: "Select a date",
+    value: undefined,
+    onChange: (date: Date | null) => {
+      console.log("Date changed:", date);
+    },
+  },
+  render: props => <DateInputWithState {...props} />,
 };

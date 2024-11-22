@@ -1,15 +1,13 @@
 import React from "react";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { DatePicker, DatePickerProps } from "@mui/x-date-pickers/DatePicker";
 
-export interface DateInputProps {
-  label: string;
-  value: Date | null;
-  onChange: (date: Date | null) => void;
+export interface DateInputProps extends DatePickerProps<Date> {
+  label?: string;
 }
 
-const DateInput: React.FC<DateInputProps> = ({ label, value, onChange }) => {
+const DateInput = ({ label, value, onChange, ...rest }: DateInputProps) => {
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <DatePicker
@@ -17,8 +15,9 @@ const DateInput: React.FC<DateInputProps> = ({ label, value, onChange }) => {
         value={value}
         onChange={onChange}
         slotProps={{
-          textField: { fullWidth: true, variant: "outlined" },
+          textField: { fullWidth: true, variant: "outlined", size: "small" },
         }}
+        {...rest}
       />
     </LocalizationProvider>
   );

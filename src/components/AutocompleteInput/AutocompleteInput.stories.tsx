@@ -1,56 +1,52 @@
-import React, { useState } from "react";
-import { Meta, StoryFn } from "@storybook/react";
+import React from "react";
+import { Meta, StoryObj } from "@storybook/react";
+import { useForm, FormProvider } from "react-hook-form";
+import { AutocompleteRenderInputParams, TextField } from "@mui/material";
 import AutocompleteInput, { AutocompleteInputProps } from "./AutocompleteInput";
 
-export default {
-  title: "Components/AutocompleteInput",
+const meta = {
+  title: "components/AutocompleteInput",
   component: AutocompleteInput,
-  argTypes: {
-    options: { control: "object" },
-    label: { control: "text" },
-    placeholder: { control: "text" },
-    value: { control: "text" },
-    onChange: { action: "changed" },
-  },
-} as Meta<typeof AutocompleteInput>;
+  tags: ["autodocs"],
+} satisfies Meta<typeof AutocompleteInput>;
 
-const Template: StoryFn<typeof AutocompleteInput> = ({
-  options,
-  label,
-  placeholder,
-  value: initialValue,
-  onChange,
-}: AutocompleteInputProps) => {
-  const [value, setValue] = useState<string | null>(initialValue || null);
+export default meta;
+
+type Story = StoryObj<typeof meta>;
+
+const AutocompleteInputWithProvider = (props: AutocompleteInputProps) => {
+  const methods = useForm();
 
   return (
-    <AutocompleteInput
-      options={options}
-      label={label}
-      placeholder={placeholder}
-      value={value}
-      onChange={newValue => {
-        setValue(newValue);
-        onChange(newValue);
-      }}
-    />
+    <FormProvider {...methods}>
+      <AutocompleteInput
+        label="AutocompleteInput"
+        aria-label="AutocompleteInput"
+        placeholder="AutocompleteInput"
+        {...props}
+      />
+    </FormProvider>
   );
 };
 
-export const Default = Template.bind({});
-Default.args = {
-  options: [
-    { label: "Option 1", value: "option1" },
-    { label: "Option 2", value: "option2" },
-    { label: "Option 3", value: "option3" },
-  ],
-  label: "Select an option",
-  value: null,
-  placeholder: "Type to search...",
-};
-
-export const PreSelected = Template.bind({});
-PreSelected.args = {
-  ...Default.args,
-  value: "option2",
+export const Basic: Story = {
+  args: {
+    options: [
+      { label: "test1", value: "test1" },
+      { label: "test2", value: "test2" },
+    ],
+    label: "Choose an option",
+    placeholder: "Start typing...",
+    value: null,
+    renderInput: (params: AutocompleteRenderInputParams) => (
+      <TextField
+        {...params}
+        label="Choose an option"
+        placeholder="Start typing..."
+        variant="outlined"
+        size="small"
+      />
+    ),
+  },
+  render: props => <AutocompleteInputWithProvider {...props} />,
 };

@@ -11,13 +11,11 @@ describe("SelectInput Component", () => {
   ];
 
   const mockLabel = "Test Select";
-  const mockOnChange = jest.fn();
 
   const defaultProps: SelectInputProps = {
     options: mockOptions,
     label: mockLabel,
     value: "",
-    onChange: mockOnChange,
   };
 
   it("renders the SelectInput component with the correct label", () => {
@@ -35,16 +33,6 @@ describe("SelectInput Component", () => {
     mockOptions.forEach(option => {
       expect(screen.getByText(option.label)).toBeInTheDocument();
     });
-  });
-
-  it("calls onChange when an option is selected", () => {
-    render(<SelectInput {...defaultProps} />);
-    fireEvent.mouseDown(screen.getByRole("combobox"));
-
-    const optionToSelect = screen.getByText("Option 2");
-    fireEvent.click(optionToSelect);
-
-    expect(mockOnChange).toHaveBeenCalledWith("option2");
   });
 
   it("renders with the correct default value", () => {

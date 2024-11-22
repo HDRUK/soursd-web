@@ -1,37 +1,31 @@
 import React from "react";
-import { Autocomplete, TextField } from "@mui/material";
+import { Autocomplete, AutocompleteProps } from "@mui/material";
 
-export interface AutocompleteInputProps {
-  options: { label: string; value: string }[];
+// Define the shape of the option used in Autocomplete
+interface Option {
   label: string;
-  value: string | null;
-  onChange: (value: string | null) => void;
-  placeholder?: string;
+  value: string;
 }
 
-const AutocompleteInput: React.FC<AutocompleteInputProps> = ({
+export interface AutocompleteInputProps
+  extends AutocompleteProps<Option, false, false, false> {
+  placeholder?: string;
+}
+const AutocompleteInput = ({
   options,
-  label,
   value,
   onChange,
-  placeholder,
-}) => {
+  ...rest
+}: AutocompleteInputProps) => {
   return (
     <Autocomplete
       options={options}
       getOptionLabel={option => option.label}
-      value={options.find(opt => opt.value === value) || null}
-      onChange={(event, newValue) => onChange(newValue ? newValue.value : null)}
-      renderInput={params => (
-        <TextField
-          {...params}
-          label={label}
-          placeholder={placeholder}
-          variant="outlined"
-          size="small"
-        />
-      )}
+      value={options.find(opt => opt === value) || null}
+      onChange={onChange}
+      clearOnBlur={false}
       fullWidth
+      {...rest}
     />
   );
 };

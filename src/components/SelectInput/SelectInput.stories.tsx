@@ -1,59 +1,43 @@
-import React, { useState } from "react";
-import { Meta, StoryFn } from "@storybook/react";
+import React from "react";
+import { Meta, StoryObj } from "@storybook/react";
+import { useForm, FormProvider } from "react-hook-form";
 import SelectInput, { SelectInputProps } from "./SelectInput";
 
-export default {
-  title: "Components/SelectInput",
+const meta = {
+  title: "components/SelectInput",
   component: SelectInput,
-  argTypes: {
-    label: { control: "text" },
-    value: { control: "text" },
-    options: { control: "object" },
-    onChange: { action: "changed" },
-  },
-} as Meta<typeof SelectInput>;
+  tags: ["autodocs"],
+} satisfies Meta<typeof SelectInput>;
 
-const Template: StoryFn<typeof SelectInput> = ({
-  label,
-  value: initialValue,
-  options,
-  onChange,
-}: SelectInputProps) => {
-  const [value, setValue] = useState<string | null>(initialValue || null);
+export default meta;
 
-  const handleChange = (newValue: string) => {
-    setValue(newValue);
-    onChange(newValue);
-  };
+type Story = StoryObj<typeof meta>;
+
+const SelectInputWithProvider = (props: SelectInputProps) => {
+  const methods = useForm();
 
   return (
-    <SelectInput
-      options={options}
-      label={label}
-      value={value}
-      onChange={handleChange}
-    />
+    <FormProvider {...methods}>
+      <SelectInput
+        label="Select an option"
+        aria-label="Select an option"
+        placeholder="Choose..."
+        {...props}
+      />
+    </FormProvider>
   );
 };
 
-export const Default = Template.bind({});
-Default.args = {
-  label: "Select an option",
-  value: "",
-  options: [
-    { label: "Option 1", value: "option1" },
-    { label: "Option 2", value: "option2" },
-    { label: "Option 3", value: "option3" },
-  ],
-};
-
-export const WithDefaultValue = Template.bind({});
-WithDefaultValue.args = {
-  label: "Select an option",
-  value: "option2",
-  options: [
-    { label: "Option 1", value: "option1" },
-    { label: "Option 2", value: "option2" },
-    { label: "Option 3", value: "option3" },
-  ],
+export const Basic: Story = {
+  args: {
+    options: [
+      { label: "Option 1", value: "option1" },
+      { label: "Option 2", value: "option2" },
+    ],
+    label: "Choose an option",
+    placeholder: "Start typing...",
+    value: "option1", // Set the default value
+    onChange: event => console.log(event.target.value), // Example of handling value change
+  },
+  render: props => <SelectInputWithProvider {...props} />,
 };
