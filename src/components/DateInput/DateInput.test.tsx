@@ -8,13 +8,12 @@ describe("DateInput Component", () => {
     label: "Select a date",
     value: null,
     onChange: jest.fn(),
-    dataTestId: "date-input",
   };
 
   it("renders the component with a label", () => {
     render(<DateInput {...defaultProps} />);
     // Check if the label is rendered
-    expect(screen.queryAllByText("Select a date")[0]).toBeInTheDocument();
+    expect(screen.getByLabelText("Select a date")).toBeInTheDocument();
   });
 
   it("renders the DatePicker inside the LocalizationProvider", () => {
