@@ -2,6 +2,7 @@ import ReactQueryClientProvider from "@/app/[locale]/components/ReactQueryClient
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
 import messages from "@/config/locales/en.json";
 import { NotificationsProvider } from "@/context/Notifications";
+import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AppCacheProvider } from "@mui/material-nextjs/v14-pagesRouter";
 import {
   RenderHookOptions,
@@ -31,9 +32,11 @@ const Wrapper = ({ children }: { children: ReactNode }) => {
     <NextIntlClientProvider locale="en" messages={messages}>
       <AppCacheProvider>
         <NotificationsProvider>
-          <ReactQueryClientProvider>
-            <ThemeRegistry>{children}</ThemeRegistry>
-          </ReactQueryClientProvider>
+          <LocalizationProvider>
+            <ReactQueryClientProvider>
+              <ThemeRegistry>{children}</ThemeRegistry>
+            </ReactQueryClientProvider>
+          </LocalizationProvider>
         </NotificationsProvider>
       </AppCacheProvider>
     </NextIntlClientProvider>
