@@ -122,10 +122,6 @@ const ApplicationDataProvider = ({
 
   useEffect(() => {
     const initUserFetch = async () => {
-      const { data } = await mutateIssuerAsync(ISSUER_ID);
-
-      setIssuer(data);
-
       const authDetails = await getAuthData();
 
       if (prefetchAuth && authDetails?.user?.id) {
