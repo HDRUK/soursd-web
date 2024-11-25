@@ -1,7 +1,7 @@
 import { act, fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 import { axe } from "jest-axe";
-import IdvtSection, { IdvtSectionProps } from "./IdvtSection";
 import { FormProvider, useForm } from "react-hook-form";
+import IdvtSection, { IdvtSectionProps } from "./IdvtSection";
 
 const TestComponent = (props?: Partial<IdvtSectionProps>) => {
   const methods = useForm<{ idvt: boolean }>({
