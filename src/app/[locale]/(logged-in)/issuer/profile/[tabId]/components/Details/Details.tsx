@@ -5,9 +5,7 @@ import FormControlHorizontal from "@/components/FormControlHorizontal";
 import { Message } from "@/components/Message";
 import Postit from "@/components/Postit";
 import yup from "@/config/yup";
-import { useStore } from "@/data/store";
-import { PatchUserPayload } from "@/services/users";
-import patchUser from "@/services/users/patchUser";
+import { patchIssuer, PatchIssuerPayload } from "@/services/issuers";
 import { Issuer } from "@/types/application";
 import { yupResolver } from "@hookform/resolvers/yup";
 import SaveIcon from "@mui/icons-material/Save";
@@ -35,8 +33,6 @@ const NAMESPACE_TRANSLATION_PROFILE = "IssuerProfile";
 export default function Details({ issuer }: DetailsProps) {
   const queryClient = useQueryClient();
   const theme = useTheme();
-  const [getUser] = useStore(state => [state.getUser, state.setUser]);
-  const user = getUser();
 
   const mdBreakpoint = theme.breakpoints.down("md");
 
@@ -46,9 +42,9 @@ export default function Details({ issuer }: DetailsProps) {
     isPending: isUpdateLoading,
     error: updateError,
   } = useMutation({
-    mutationKey: ["patchUser"],
-    mutationFn: (payload: PatchUserPayload) =>
-      patchUser(user?.id, payload, {
+    mutationKey: ["patchIssuer", issuer.id],
+    mutationFn: (payload: PatchIssuerPayload) =>
+      patchIssuer(issuer.id, payload, {
         error: {
           message: "submitError",
         },
@@ -60,10 +56,13 @@ export default function Details({ issuer }: DetailsProps) {
 
   const handleDetailsSubmit = useCallback(
     async (payload: DetailsFormValues) => {
-      await mutateUpdateAsync(payload);
+      await mutateUpdateAsync({
+        ...issuer,
+        ...payload,
+      });
 
       queryClient.refetchQueries({
-        queryKey: ["getIssuer"],
+        queryKey: ["getIssuer", issuer.id],
       });
     },
     []
