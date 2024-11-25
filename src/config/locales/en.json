@@ -8,13 +8,23 @@
     "getUserError": "Unable to load your user details. Please try again or contact us at <contactLink></contactLink>",
     "researcher": "Researcher",
     "organisation": "Organisation",
-    "issuer": "Issuer",
-    "companyNumberAbbr": "CRN"
+    "issuer": "Data Custodian",
+    "companyNumberAbbr": "CRN",
+    "getOrganisationError": "There was a problem loading your organisation. Please try again or contact us at <contactLink></contactLink>",
+    "getIssuerError": "There was a problem loading your Data Custodian. Please try again or contact us at <contactLink></contactLink>"
   },
   "IssuerProfile": {
-    "title": "Profile",
+    "uniqueIdentifierTitle": "SOURSD Identifier",
+    "uniqueIdentifierCaption": "This ‘key’ represents you as a Data Custodian within SOURSD. This is unique to you! Any time SOURSD sends information to you, or activates a callback, this identifier will be sent along with the payload. Meaning you can always trust the source of information.",
+    "details": "Profile",
+    "users": "Users",
+    "configuration": "Configuration",
+    "keycards": "Keycards",
+    "navigationAriaLabel": "Profile sections",
+    "loadingAriaLabel": "Loading Data Custodian data",
     "idvtHeading": "Do you require identification validation?",
-    "ivtDescription": "This is handled by a third party Identification Document Verification Technology (IDVT) service."
+    "idvtDescription": "This is handled by a third party Identification Document Verification Technology (IDVT) service.",
+    "submitButton": "Save"
   },
   "ProfileOrganisation": {
     "title": "Profile",
@@ -32,6 +42,10 @@
     "navigationAriaLabel": "Profile tabs"
   },
   "Form": {
+    "contactEmailPlaceholder": "Contact email",
+    "name": "Name",
+    "namePlaceholder": "Name",
+    "whatIsDpstkOdsCode": "The Data Security and Protection Toolkit is an online self-assessment tool that all organisations must use if they have access to NHS patient data and systems.",
     "dpoOrHrRequiredInvalid": "At least one of these contacts is requured",
     "dpoNameRequiredInvalid": "Dpo name is required",
     "dpoEmailRequiredInvalid": "Dpo email is required",
@@ -43,6 +57,9 @@
     "lastNameRequiredInvalid": "Last name is a required field",
     "emailRequiredInvalid": "Email is a required field",
     "emailFormatInvalid": "Email must be a valid address",
+    "contactEmail": "Contact email",
+    "contactEmailRequiredInvalid": "Contact email is a required field",
+    "contactEmailFormatInvalid": "Contact email must be a valid address",
     "passwordRequiredInvalid": "Password is a required field",
     "passwordLengthInvalid": "Password should be between {minLength} and {maxLength} characters",
     "passwordFormatInvalid": "Password should contain at least 1 uppercase letter, 1 lowercase letter and 1 number",
@@ -66,7 +83,7 @@
     "ceCertificationNumberRequiredInvalid": "Certification number is invalid",
     "countyRequiredInvalid": "County is required",
     "countryRequiredInvalid": "Country is required",
-    "issuerRequiredInvalid": "Issuer is required",
+    "issuerRequiredInvalid": "Data Custodian is required",
     "orcIdRequiredInvalid": "Orc id is required",
     "orcIdFormatInvalid": "Orc id should follow the format 0000-0000-0000-0000",
     "emailPlaceholder": "Email",
@@ -117,7 +134,7 @@
     "ceCertified": "CE certfied",
     "ceCertificationNumberPlaceholder": "CE certification number",
     "ceCertificationNumber": "CE certification number",
-    "whatIsTheOrcId": "Your ORCiD is a value which identifies you to issuers (although in general anyone) and provides information to them such as your research outputs and activities. If you don't have one of these you can signup at https://orcid.org/register. Although it is recommended to provide this, it is not required for the registry, however it is required for the content scrape."
+    "whatIsTheOrcId": "Your ORCiD is a value which identifies you to Data Custodians (although in general anyone) and provides information to them such as your research outputs and activities. If you don't have one of these you can signup at https://orcid.org/register. Although it is recommended to provide this, it is not required for the registry, however it is required for the content scrape."
   },
   "Buttons": {
     "register": "Register",
@@ -128,10 +145,6 @@
   "Carousel": {
     "next": "next slide",
     "previous": "previous slide"
-  },
-  "Header": {
-    "ariaOpenMobileMenu": "open mobile menu",
-    "ariaCloseMobileMenu": "close mobile menu"
   },
   "Footer": {
     "contactFormTitle": "Contact Us",
@@ -162,7 +175,7 @@
     "getByInviteCodeError": "There has been a problem getting your details. Please contact us at <contactLink></contactLink>"
   },
   "SignupFormIssuer": {
-    "title": "Issuer sign Up"
+    "title": "Data Custodian sign Up"
   },
   "SignupFormOrganisation": {
     "titleDetails": "Organisation sign Up",
@@ -195,9 +208,9 @@
   },
   "ProfileCompleteStatus": {
     "profileComplete": "Profile complete",
-    "uniqueIdPopup": "Your unique id is used by issuers to identify who you are.",
+    "uniqueIdPopup": "Your unique id is used by Data Custodians to identify who you are.",
     "profileNotComplete": "Profile not complete",
-    "profileNotCompletePopup": "Your user profile is not \"complete\". This will be visible to issuers and your organisation. Depending on their policies it may prevent you from accessing available research data."
+    "profileNotCompletePopup": "Your user profile is not \"complete\". This will be visible to Data Custodians and your organisation. Depending on their policies it may prevent you from accessing available research data."
   },
   "UserCompleteStatus": {
     "profileComplete": "Profile complete",
@@ -263,7 +276,6 @@
   },
   "SignupFormOtherDetails": {
     "title": "Company details",
-    "whatIsDpstkOdsCode": "The Data Security and Protection Toolkit is an online self-assessment tool that all organisations must use if they have access to NHS patient data and systems.",
     "nextButton": "Next",
     "previousButton": "Previous"
   },
@@ -326,14 +338,14 @@
   },
   "Administration": {
     "title": "Administration",
-    "issuerInviteTitle": "Issuer Invitation",
-    "issuerInviteBody": "Invite Issuers to use the SPeeDI-AS System",
-    "issuerInviteSubtitle": "Issuers are typically Data Custodian's, such as Trusted Research Environment (TRE) and Secure Data Environments (SDEs)",
+    "issuerInviteTitle": "Data Custodian Invitation",
+    "issuerInviteBody": "Invite Data Custodians to use the SOURSD System",
+    "issuerInviteSubtitle": "Data Custodian's are entitys such as Trusted Research Environment (TRE) and Secure Data Environments (SDEs)",
     "systemConfigTitle": "System Configuration",
     "issuerInviteButton": "Send Invite",
     "systemConfigBody": "Update or add new System Configuration Parameters",
     "systemConfigSubtitle": "Parameters are in the form of NameValue pairs",
-    "noDataIssuers": "Unable to retrieve known Issuers. Please contact us at <contactLink></contactLink>"
+    "noDataIssuers": "Unable to retrieve known Data Custodians. Please contact us at <contactLink></contactLink>"
   },
   "SourcdLogo": {
     "logoTitle": "SOURCD"
@@ -345,7 +357,9 @@
     "supportButton": "Support",
     "contactButton": "Contact",
     "signInButton": "Sign In",
-    "signOutButton": "Sign Out",
-    "registerButton": "Register"
+    "registerButton": "Register",
+    "ariaOpenMobileMenu": "open mobile menu",
+    "ariaCloseMobileMenu": "close mobile menu",
+    "signOutButton": "Sign Out"
   }
 }

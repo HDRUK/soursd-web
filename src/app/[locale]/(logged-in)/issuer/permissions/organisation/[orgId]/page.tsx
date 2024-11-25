@@ -1,5 +1,5 @@
 import { withAuth } from "@/components/Auth";
-import DecoratorPage from "@/modules/DecoratorPage";
+import PageContainer from "@/modules/PageContainer";
 import { EntityType } from "@/types/api";
 import Sections from "../../components/Sections";
 
@@ -9,9 +9,9 @@ interface PageProps {
 
 function Page({ params }: PageProps) {
   return (
-    <DecoratorPage>
+    <PageContainer>
       <Sections userId={+params.orgId} type={EntityType.ORGANISATION} />
-    </DecoratorPage>
+    </PageContainer>
   );
 }
 

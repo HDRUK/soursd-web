@@ -33,6 +33,8 @@ interface Issuer {
   invite_accepted_at: string | null;
   invite_sent_at: string | null;
   permissions: Permission[];
+  unique_identifier: string;
+  idvt_required: boolean;
 }
 
 type Approval = {

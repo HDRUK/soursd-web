@@ -15,6 +15,7 @@ import {
 import mediaQuery from "css-mediaquery";
 import { NextIntlClientProvider } from "next-intl";
 import React, { ReactNode } from "react";
+import { CookieProvider } from "@/context/CookieContext/CookieContext";
 
 const defineMatchMedia = (width: number) => {
   Object.defineProperty(window, "matchMedia", {
@@ -34,7 +35,9 @@ const Wrapper = ({ children }: { children: ReactNode }) => {
         <NotificationsProvider>
           <LocalizationProvider>
             <ReactQueryClientProvider>
-              <ThemeRegistry>{children}</ThemeRegistry>
+              <ThemeRegistry>
+                <CookieProvider>{children}</CookieProvider>
+              </ThemeRegistry>
             </ReactQueryClientProvider>
           </LocalizationProvider>
         </NotificationsProvider>

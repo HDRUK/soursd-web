@@ -1,6 +1,6 @@
 import { withAuth } from "@/components/Auth";
 import { ConfigProps } from "@/components/Config";
-import DecoratorPage from "@/modules/DecoratorPage";
+import PageContainer from "@/modules/PageContainer";
 import PageSection from "@/modules/PageSection";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
@@ -21,7 +21,7 @@ function Page({ params: { tabId } }: PageProps) {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_PROFILE);
 
   return (
-    <DecoratorPage>
+    <PageContainer>
       <PageSection>
         <Typography variant="h4">{t("title")}</Typography>
       </PageSection>
@@ -34,7 +34,7 @@ function Page({ params: { tabId } }: PageProps) {
           {tabId === PageTabs.APPROVALS && <Approvals />}
         </Sections>
       </PageSection>
-    </DecoratorPage>
+    </PageContainer>
   );
 }
 

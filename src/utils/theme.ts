@@ -23,4 +23,8 @@ function getAugmentedColor(theme: Theme, color: string) {
     : { main: color, contrastText: "inherit" };
 }
 
-export { colorToRgba, isAugmentedColor, getAugmentedColor };
+function isLightMode(theme: Theme) {
+  return theme.palette.mode === "light";
+}
+
+export { colorToRgba, isAugmentedColor, getAugmentedColor, isLightMode };

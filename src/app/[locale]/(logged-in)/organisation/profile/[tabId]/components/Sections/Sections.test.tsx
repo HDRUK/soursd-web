@@ -9,7 +9,7 @@ jest.mock("@/data/store");
 
 const defaultUser = mockedUser();
 
-(useStore as unknown as jest.Mock).mockReturnValue(() => defaultUser);
+(useStore as unknown as jest.Mock).mockReturnValue(() => [defaultUser, null]);
 
 const renderSections = () => {
   return render(<Sections>Child</Sections>);

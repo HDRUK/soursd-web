@@ -4,6 +4,7 @@ import ContactLink from "@/components/ContactLink";
 import MaskLabel from "@/components/MaskLabel";
 import { Message } from "@/components/Message";
 import OverlayCenter from "@/components/OverlayCenter";
+import { ISSUER_ID } from "@/consts/application";
 import PageSection from "@/modules/PageSection";
 import { Organisation } from "@/services/organisations";
 import { getPermissions } from "@/services/permissions";
@@ -11,16 +12,13 @@ import { EntityType } from "@/types/api";
 import { User } from "@/types/application";
 import { getInitialsFromOrganisation, getInitialsFromUser } from "@/utils/user";
 import { CircularProgress, Typography } from "@mui/material";
-import { useTranslations } from "next-intl";
 import { useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { useQueryUser } from "../../hooks";
 import Permissions from "../Permissions";
 
 const NAMESPACE_TRANSLATIONS_PERMISSIONS = "Permissions";
 const NAMESPACE_TRANSLATIONS_USERS = "Users";
-
-// This will come from the store when issuer is logged on
-const ISSUER_ID = 1;
 
 export interface SectionsProps {
   userId: number;

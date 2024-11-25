@@ -12,17 +12,35 @@ const createColor = (mainColor: string) => {
 };
 
 const headingStyles = {
-  fontFamily: '"Signika", sans-serif',
+  fontWeight: 700,
 };
 
 const PALETTE_THEME_PURPLE_BLUE = {
   typography: {
-    h1: headingStyles,
-    h2: headingStyles,
-    h3: headingStyles,
-    h4: headingStyles,
-    h5: headingStyles,
-    h6: headingStyles,
+    h1: {
+      ...headingStyles,
+      fontSize: "2.985rem",
+    },
+    h2: {
+      ...headingStyles,
+      fontSize: "2.488rem",
+    },
+    h3: {
+      ...headingStyles,
+      fontSize: "2.074rem",
+    },
+    h4: {
+      ...headingStyles,
+      fontSize: "1.728rem",
+    },
+    h5: {
+      ...headingStyles,
+      fontSize: "1.4rem",
+    },
+    h6: {
+      ...headingStyles,
+      fontSize: "1.2rem",
+    },
   },
   palette: {
     background1: {
@@ -31,6 +49,12 @@ const PALETTE_THEME_PURPLE_BLUE = {
       dark: "#1e1e1e",
       main: "#1e1e1e",
       contrastText: "#fff",
+    },
+    greyLight: {
+      light: "#fef7ff",
+      dark: "#fef7ff",
+      main: "#fef7ff",
+      contrastText: "#000",
     },
     background2: createColor(blueGrey["800"]),
     primary: createColor("#CC51B4"),
@@ -48,6 +72,12 @@ const PALETTE_THEME_PURPLE_BLUE = {
     white: "#fff",
     footer: createColor("#72788D"),
     inverseSurface: createColor("#322e36"),
+    postitYellow: {
+      light: "#faf3e2",
+      dark: "#faf3e2",
+      main: "#faf3e2",
+      contrastText: "#000",
+    },
   },
 };
 

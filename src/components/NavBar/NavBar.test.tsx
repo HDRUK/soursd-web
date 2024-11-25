@@ -1,12 +1,14 @@
-import { render, screen, fireEvent } from "@testing-library/react";
-import { useTranslations } from "next-intl";
 import { useCookies } from "@/context/CookieContext/CookieContext";
+import theme from "@/theme";
 import { handleLogin, handleLogout } from "@/utils/keycloak";
+import {
+  defineMatchMedia,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from "@/utils/testUtils";
 import NavBar from "./NavBar";
-
-jest.mock("next-intl", () => ({
-  useTranslations: jest.fn(),
-}));
 
 jest.mock("@/context/CookieContext/CookieContext", () => ({
   useCookies: jest.fn(),
@@ -17,14 +19,30 @@ jest.mock("@/utils/keycloak", () => ({
   handleLogout: jest.fn(),
 }));
 
-const translations = {
-  homeButton: "Home",
-  aboutButton: "About",
-  featuresButton: "Features",
-  supportButton: "Support",
-  contactButton: "Contact",
-  signInButton: "Sign In",
-  registerButton: "Register",
+const mockGetCookie = jest.fn().mockReturnValue(undefined);
+
+(useCookies as jest.Mock).mockReturnValue({
+  getCookie: mockGetCookie,
+});
+
+const buttonsText = [
+  "Home",
+  "About",
+  "Features",
+  "Support",
+  "Contact",
+  "Sign In",
+  "Register",
+];
+
+const renderMobileMenuTest = () => {
+  defineMatchMedia(theme.breakpoints.values.xs);
+
+  const rendered = render(<NavBar />);
+
+  fireEvent.click(screen.getByLabelText("open mobile menu"));
+
+  return rendered;
 };
 
 describe("NavBar Component", () => {
@@ -32,83 +50,67 @@ describe("NavBar Component", () => {
     jest.clearAllMocks();
   });
 
-  it("renders the NavBar with buttons", () => {
-    (useTranslations as jest.Mock).mockReturnValue((key: string) => key);
-
-    (useCookies as jest.Mock).mockReturnValue({
-      getCookie: jest.fn(() => undefined),
-    });
-
+  it.each(buttonsText)("renders nav item %s", name => {
     render(<NavBar />);
 
-    expect(screen.getByText("homeButton")).toBeInTheDocument();
-    expect(screen.getByText("aboutButton")).toBeInTheDocument();
-    expect(screen.getByText("featuresButton")).toBeInTheDocument();
-    expect(screen.getByText("supportButton")).toBeInTheDocument();
-    expect(screen.getByText("contactButton")).toBeInTheDocument();
-    expect(screen.getByText("signInButton")).toBeInTheDocument();
-    expect(screen.getByText("registerButton")).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", {
+        name,
+      })
+    ).toBeInTheDocument();
   });
 
-  it("calls handleLogin on signInButton click when not authenticated", () => {
-    (useTranslations as jest.Mock).mockReturnValue((key: string) => key);
-    (useCookies as jest.Mock).mockReturnValue({
-      getCookie: jest.fn(() => undefined),
-    });
-
+  it("calls handleLogin on Sign In click when not authenticated", () => {
     render(<NavBar />);
 
-    fireEvent.click(screen.getByText("signInButton"));
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: "Sign In",
+      })
+    );
 
     expect(handleLogin).toHaveBeenCalled();
   });
 
-  it("calls handleLogout on signOutButton click when authenticated", () => {
-    (useTranslations as jest.Mock).mockReturnValue((key: string) => key);
-    (useCookies as jest.Mock).mockReturnValue({
-      getCookie: jest.fn(() => "mockAccessToken"),
+  it("displays 'Sign In' if the user is not authenticated", () => {
+    render(<NavBar />);
+
+    expect(
+      screen.getByRole("button", {
+        name: "Sign In",
+      })
+    ).toBeInTheDocument();
+  });
+
+  it("shows the mobile menu", async () => {
+    renderMobileMenuTest();
+
+    const mobileNav = screen.getByTestId("header-mobile-menu");
+
+    await waitFor(() => {
+      expect(mobileNav).toBeInTheDocument();
     });
+  });
+
+  it("calls handleLogout on 'Sign Out' click when authenticated", () => {
+    mockGetCookie.mockReturnValue("mockAccessToken");
 
     render(<NavBar />);
 
-    fireEvent.click(screen.getByText("signOutButton"));
+    fireEvent.click(screen.getByRole("button", { name: "Sign Out" }));
 
     expect(handleLogout).toHaveBeenCalled();
   });
 
-  it("displays 'signOutButton' if the user is authenticated", () => {
-    (useTranslations as jest.Mock).mockReturnValue((key: string) => key);
-    (useCookies as jest.Mock).mockReturnValue({
-      getCookie: jest.fn(() => "mockAccessToken"),
-    });
+  it("displays 'Sign Out' if the user is authenticated", () => {
+    mockGetCookie.mockReturnValue("mockAccessToken");
 
     render(<NavBar />);
 
-    expect(screen.getByText("signOutButton")).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", {
+        name: "Sign Out",
+      })
+    ).toBeInTheDocument();
   });
-
-  it("displays 'signInButton' if the user is not authenticated", () => {
-    (useTranslations as jest.Mock).mockReturnValue((key: string) => key);
-    (useCookies as jest.Mock).mockReturnValue({
-      getCookie: jest.fn(() => undefined),
-    });
-
-    render(<NavBar />);
-
-    expect(screen.getByText("signInButton")).toBeInTheDocument();
-  });
-
-  it.each(Object.keys(translations))(
-    "displays all the buttons with correct translations",
-    value => {
-      (useTranslations as jest.Mock).mockReturnValue((key: string) => key);
-
-      (useCookies as jest.Mock).mockReturnValue({
-        getCookie: jest.fn(() => undefined),
-      });
-
-      render(<NavBar />);
-      expect(screen.getByText(value)).toBeInTheDocument();
-    }
-  );
 });

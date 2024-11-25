@@ -1,4 +1,7 @@
-import Footer from "./Footer/Footer";
-import PageLayout from "./PageLayout/PageLayout";
+import Footer from "./Footer";
+import Header from "./Header";
+import PageContainer from "./PageContainer";
+import PageTitle from "./PageTitle";
+import PageSection from "./PageSection";
 
-export { Footer, PageLayout };
+export { Footer, PageContainer, Header, PageTitle, PageSection };

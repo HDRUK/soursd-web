@@ -38,6 +38,22 @@ const ROUTES: Routes = {
     path: "/issuer/permissions/organisation",
     permissions: [UserGroup.ISSUERS],
   },
+  profileIssuerDetails: {
+    path: "/issuer/profile/details",
+    permissions: [UserGroup.ISSUERS],
+  },
+  profileIssuerConfiguration: {
+    path: "/issuer/profile/configuration",
+    permissions: [UserGroup.ISSUERS],
+  },
+  profileIssuerUsers: {
+    path: "/issuer/profile/users",
+    permissions: [UserGroup.ISSUERS],
+  },
+  profileIssuerKeycards: {
+    path: "/issuer/profile/keycards",
+    permissions: [UserGroup.ISSUERS],
+  },
   profileResearcherExperience: {
     path: "/researcher/profile/experience",
     permissions: [UserGroup.RESEARCHERS],
@@ -84,7 +100,6 @@ const ROUTES: Routes = {
   },
   admin: {
     path: "/admin",
-    key: "Admin",
     permissions: [UserGroup.ADMINS],
   },
 };

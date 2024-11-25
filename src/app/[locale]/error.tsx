@@ -1,7 +1,7 @@
 "use client";
 
 import OverlayCenterAlert from "@/components/OverlayCenterAlert";
-import DecoratorPanel from "@/modules/DecoratorPanel";
+import PageContainer from "@/modules/PageContainer";
 
 interface ErrorProps {
   error: Error;
@@ -9,8 +9,8 @@ interface ErrorProps {
 
 export default function Error({ error }: ErrorProps) {
   return (
-    <DecoratorPanel>
+    <PageContainer>
       <OverlayCenterAlert>{error.message}</OverlayCenterAlert>
-    </DecoratorPanel>
+    </PageContainer>
   );
 }

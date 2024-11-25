@@ -3,10 +3,11 @@
 import ContactLink from "@/components/ContactLink";
 import OverlayCenter from "@/components/OverlayCenter";
 import OverlayCenterAlert from "@/components/OverlayCenterAlert";
-import { VALIDATION_SCHEMA_KEY } from "@/consts/application";
+import { ISSUER_ID, VALIDATION_SCHEMA_KEY } from "@/consts/application";
 import { ROUTES } from "@/consts/router";
 import { useStore } from "@/data/store";
-import DecoratorPanel from "@/modules/DecoratorPanel";
+import PageContainer from "@/modules/PageContainer";
+import { getIssuer } from "@/services/issuers";
 import { getOrganisation } from "@/services/organisations";
 import { getSystemConfig } from "@/services/system_config";
 import { getUser } from "@/services/users";
@@ -54,6 +55,7 @@ const ApplicationDataProvider = ({
   const addUrlToHistory = useStore(store => store.addUrlToHistory);
   const setAuth = useStore(store => store.setAuth);
   const setOrganisation = useStore(store => store.setOrganisation);
+  const setIssuer = useStore(store => store.setIssuer);
   const [authFetched, setAuthFetched] = useState(!prefetchAuth);
 
   const path = usePathname();
@@ -91,7 +93,7 @@ const ApplicationDataProvider = ({
   const {
     mutateAsync: mutateOrganisationAsync,
     isError: isOrganisationError,
-    isLoading: isOrganisationLoading,
+    isPending: isOrganisationLoading,
     error: organisationError,
   } = useMutation({
     mutationKey: ["getOrganisation"],
@@ -99,6 +101,21 @@ const ApplicationDataProvider = ({
       getOrganisation(id, {
         error: {
           message: "getOrganisationError",
+        },
+      }),
+  });
+
+  const {
+    mutateAsync: mutateIssuerAsync,
+    isError: isIssuerError,
+    isPending: isIssuerLoading,
+    error: issuerError,
+  } = useMutation({
+    mutationKey: ["getIssuer"],
+    mutationFn: (id: number) =>
+      getIssuer(id, {
+        error: {
+          message: "getIssuerError",
         },
       }),
   });
@@ -125,6 +142,12 @@ const ApplicationDataProvider = ({
 
           setOrganisation(data);
         }
+
+        if (ISSUER_ID) {
+          const { data } = await mutateIssuerAsync(ISSUER_ID);
+
+          setIssuer(data);
+        }
       }
 
       setAuthFetched(true);
@@ -147,9 +170,11 @@ const ApplicationDataProvider = ({
     };
   }, [!!systemConfigData?.data, value]);
 
-  const isAnyLoading = isUserLoading || isLoading || isOrganisationLoading;
-  const isAnyError = isError || isUserError || isOrganisationError;
-  const errorMessage = error || userError || organisationError;
+  const isAnyLoading =
+    isUserLoading || isLoading || isOrganisationLoading || isIssuerLoading;
+  const isAnyError =
+    isError || isUserError || isOrganisationError || isIssuerError;
+  const errorMessage = error || userError || organisationError || issuerError;
 
   const isFinishedLoading =
     !isAnyLoading && !isAnyError && systemConfigData?.data && authFetched;
@@ -157,7 +182,7 @@ const ApplicationDataProvider = ({
   return (
     <ApplicationDataContext.Provider value={providerValue}>
       {(isAnyLoading || isAnyError) && (
-        <DecoratorPanel>
+        <PageContainer>
           {isAnyLoading && (
             <OverlayCenter>
               <CircularProgress sx={{ color: "#fff" }} />
@@ -170,7 +195,7 @@ const ApplicationDataProvider = ({
               })}
             </OverlayCenterAlert>
           )}
-        </DecoratorPanel>
+        </PageContainer>
       )}
 
       {isFinishedLoading && children}

@@ -1,4 +1,4 @@
-import DecoratorPage from "@/modules/DecoratorPage";
+import PageContainer from "@/modules/PageContainer";
 import PageSection from "@/modules/PageSection";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
@@ -10,14 +10,14 @@ function Page() {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_ADMINISTRATION);
 
   return (
-    <DecoratorPage>
+    <PageContainer>
       <PageSection>
         <Typography variant="h4">{t("title")}</Typography>
       </PageSection>
       <PageSection>
         <Sections />
       </PageSection>
-    </DecoratorPage>
+    </PageContainer>
   );
 }
 
