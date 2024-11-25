@@ -72,7 +72,7 @@ describe("<Details />", () => {
           {
             ...defaultIssuer,
             contact_email: emailValue,
-            idvt_required: false,
+            idvt_required: true,
           },
           { error: { message: "submitError" } }
         );

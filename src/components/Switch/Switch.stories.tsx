@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { MUI_AUGMENTED_COLOR_OPTIONS_ARG_TYPES } from "@/consts/storybook";
-import Switch, { SwitchProps } from "./Switch";
 import { FormProvider, useForm } from "react-hook-form";
+import Switch, { SwitchProps } from "./Switch";
 
 const meta = {
   title: "Components/Switch",

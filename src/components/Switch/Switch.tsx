@@ -1,11 +1,11 @@
 import {
   FormControlLabel,
   FormControlLabelProps,
-  Switch as MuiSwitch,
   SwitchProps as MuiSwitchProps,
+  Switch as MuiSwitch,
 } from "@mui/material";
 import { ReactNode } from "react";
-import { useForm, useWatch } from "react-hook-form";
+import { Controller } from "react-hook-form";
 
 export interface SwitchProps extends Omit<MuiSwitchProps, "name"> {
   name: string;
@@ -21,15 +21,18 @@ export default function Switch({
   formControlLabelProps,
   ...restProps
 }: SwitchProps) {
-  const checked = useWatch({ name });
-
   return (
-    <FormControlLabel
-      label={label}
-      control={<MuiSwitch checked={checked} {...restProps} />}
-      labelPlacement={labelPlacement}
-      sx={{ marginLeft: 0 }}
-      {...formControlLabelProps}
+    <Controller
+      name={name}
+      render={({ field: { value, ...restField } }) => (
+        <FormControlLabel
+          control={<MuiSwitch {...restProps} checked={value} {...restField} />}
+          label={label}
+          labelPlacement={labelPlacement}
+          sx={{ ml: 0 }}
+          {...formControlLabelProps}
+        />
+      )}
     />
   );
 }
