@@ -14,10 +14,10 @@ import {
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useEffect, useState, useMemo } from "react";
+import { useRouter } from "next/navigation";
 import HorizontalDrawer from "../HorizontalDrawer";
 import SoursdLogo from "../SoursdLogo";
 import { StyledButton, StyledContainer, StyledHeader } from "./NavBar.styles";
-import { useRouter } from "next/navigation";
 
 const NAMESPACE_TRANSLATIONS_NAVBAR = "NavBar";
 
@@ -29,7 +29,10 @@ export default function NavBar() {
   const { getCookie } = useCookies();
   const router = useRouter();
 
-  const isAuthenticated = useMemo(() => !!getCookie("access_token"), [getCookie]);
+  const isAuthenticated = useMemo(
+    () => !!getCookie("access_token"),
+    [getCookie]
+  );
 
   const theme = useTheme();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);

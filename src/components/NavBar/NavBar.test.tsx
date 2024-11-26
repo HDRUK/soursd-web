@@ -19,6 +19,12 @@ jest.mock("@/utils/keycloak", () => ({
   handleLogout: jest.fn(),
 }));
 
+jest.mock("next/navigation", () => ({
+  useRouter: jest.fn(() => ({
+    push: jest.fn(),
+  })),
+}));
+
 const mockGetCookie = jest.fn().mockReturnValue(undefined);
 
 (useCookies as jest.Mock).mockReturnValue({

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { ROUTES } from "@/consts/router";
 import { ApplicationDataProvider } from "@/context/ApplicationData";

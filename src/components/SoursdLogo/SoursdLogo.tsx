@@ -18,12 +18,12 @@ export default function SoursdLogo({
   height = 90,
   ...restProps
 }: SoursdLogoProps) {
-  console.log('here')
+  console.log("here");
   const t = useTranslations(NAMESPACE_TRANSLATIONS_SOURSD_LOGO);
 
   return (
     <StyledLogoContainer variant={variant} {...restProps}>
-      <Image src={image} alt="SOURSD" width={width} height={height} priority/>
+      <Image src={image} alt="SOURSD" width={width} height={height} priority />
       {variant === "titled" && (
         <StyledLogoTitle variant="h1">{t("logoTitle")}</StyledLogoTitle>
       )}

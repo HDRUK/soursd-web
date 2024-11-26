@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
 import { ROUTES } from "@/consts/router";
 import { ApplicationDataProvider } from "@/context/ApplicationData";
 import { handleLogin } from "@/utils/keycloak";
 import { getRoutes } from "@/utils/router";
 import Cookies from "js-cookie";
-import { useRouter, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { PropsWithChildren, useEffect, useState } from "react";
 import Loading from "../loading";
 
@@ -17,16 +17,14 @@ async function validateAccessToken(pathname: string | null): Promise<boolean> {
   const accessToken = Cookies.get("access_token");
 
   if (!accessToken) {
-    Cookies.set('redirectPath', pathname ?? '/', { path: '/' });   
+    Cookies.set("redirectPath", pathname ?? "/", { path: "/" });
     handleLogin();
     return false;
-  } else {
-    return true;
   }
+  return true;
 }
 
 export default function Layout({ children, params: { locale } }: LayoutProps) {
-  const router = useRouter();
   const routes = getRoutes(ROUTES, locale);
   const pathname = usePathname();
   const [isAuthorized, setIsAuthorized] = useState<boolean>(false);
@@ -39,9 +37,9 @@ export default function Layout({ children, params: { locale } }: LayoutProps) {
 
     performAuthCheck();
   }, [pathname]);
-  
+
   if (!isAuthorized) {
-    return <Loading />
+    return <Loading />;
   }
 
   return (
@@ -50,8 +48,7 @@ export default function Layout({ children, params: { locale } }: LayoutProps) {
       value={{
         routes,
         systemConfigData: {},
-      }}
-    >
+      }}>
       {children}
     </ApplicationDataProvider>
   );

@@ -9,7 +9,7 @@ import { objectToQuerystring } from "@/utils/requests";
 import cookies from "js-cookie";
 
 function getHeadersWithAuthorisation(headers?: HeadersInit) {
-  const accessToken = cookies.get("access_token") || ""
+  const accessToken = cookies.get("access_token") || "";
 
   return {
     ...(accessToken && {

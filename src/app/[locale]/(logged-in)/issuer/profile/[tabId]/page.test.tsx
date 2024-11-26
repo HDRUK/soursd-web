@@ -7,6 +7,13 @@ import Page from "./page";
 
 jest.mock("@/data/store");
 
+jest.mock("next/navigation", () => ({
+  useParams: jest.fn(),
+  useRouter: jest.fn(() => ({
+    push: jest.fn(),
+  })),
+}));
+
 const defaultIssuer = mockedIssuer();
 
 (useStore as unknown as jest.Mock).mockImplementation(() => [
