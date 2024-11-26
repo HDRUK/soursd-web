@@ -18,8 +18,6 @@ const defaultUser = mockedUser();
   null,
 ]);
 
-(patchIssuer as unknown as jest.Mock).mockImplementation(() => null);
-
 const renderDetails = (props?: Partial<DetailsProps>) => {
   return render(<Details issuer={defaultIssuer} {...props} />);
 };
