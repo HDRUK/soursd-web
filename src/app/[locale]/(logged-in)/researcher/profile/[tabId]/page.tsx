@@ -1,4 +1,3 @@
-import { withAuth } from "@/components/Auth";
 import { ConfigProps, withConfig } from "@/components/Config";
 import PageContainer from "@/modules/PageContainer";
 import PageSection from "@/modules/PageSection";
@@ -45,4 +44,4 @@ function Page({ params: { tabId }, config }: PageProps) {
   );
 }
 
-export default withConfig(withAuth(Page));
+export default withConfig(Page);

@@ -6,9 +6,6 @@ import { PageTabs } from "./consts/tabs";
 import Page from "./page";
 
 jest.mock("@/data/store");
-jest.mock("@/components/Auth", () => ({
-  withAuth: (child: JSX.Element) => child,
-}));
 
 const defaultIssuer = mockedIssuer();
 
