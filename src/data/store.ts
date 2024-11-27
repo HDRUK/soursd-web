@@ -21,9 +21,9 @@ interface StoreState {
   getUser: () => User | undefined;
   setUser: (user: User) => void;
   getOrganisation: () => Organisation | undefined;
-  setOrganisation: (organisation: Organisation) => void;
+  setOrganisation: (organisation: Organisation | undefined) => void;
   getIssuer: () => Issuer | undefined;
-  setIssuer: (organisation: Issuer) => void;
+  setIssuer: (organisation: Issuer | undefined) => void;
   getPreviousUrl: () => string | null;
   addUrlToHistory: (url: string) => void;
 }
@@ -63,7 +63,7 @@ const useStore = create<StoreState>((set, get) => ({
   getUser: () => {
     return get().config.auth?.user;
   },
-  setOrganisation: (organisation: Organisation) =>
+  setOrganisation: (organisation: Organisation | undefined) =>
     set(
       produce(state => {
         state.config.organisation = organisation;
@@ -72,7 +72,7 @@ const useStore = create<StoreState>((set, get) => ({
   getOrganisation: () => {
     return get().config.organisation;
   },
-  setIssuer: (issuer: Issuer) =>
+  setIssuer: (issuer: Issuer | undefined) =>
     set(
       produce(state => {
         state.config.issuer = issuer;

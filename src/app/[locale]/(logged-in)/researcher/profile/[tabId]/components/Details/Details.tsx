@@ -48,7 +48,7 @@ import DetailsCV from "../DetailsCV";
 export interface DetailsFormValues {
   first_name: string;
   last_name: string;
-  orc_id: number | null;
+  orc_id: string | null;
   organisation_id: number;
   consent_scrape: boolean;
 }
@@ -85,7 +85,7 @@ export default function Details({ emailVerified }: DetailsProps) {
   );
   const [isFileSizeTooBig, setIsFileSizeTooBig] = useState(false);
 
-  const latestCV = getLatestCV(user?.registry.files);
+  const latestCV = getLatestCV(user?.registry?.files || []);
 
   const { isNotInfected, isScanning } = useFileScanned(latestCV);
 
@@ -99,6 +99,8 @@ export default function Details({ emailVerified }: DetailsProps) {
     } else {
       refetchCancel();
     }
+
+    return () => refetchCancel();
   }, [JSON.stringify(latestCV)]);
 
   const {

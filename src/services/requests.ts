@@ -21,9 +21,13 @@ function getHeadersWithAuthorisation(headers?: HeadersInit) {
 
 function handleResponseError(
   response: Response,
-  messages: ResponseTranslations
+  messages?: ResponseTranslations
 ) {
   if (!response?.ok) {
+    if (!messages) {
+      return new Error(`${response?.status}Error`).message;
+    }
+
     return new Error(
       response?.status === 401
         ? messages["401"]?.message
@@ -36,10 +40,10 @@ function handleResponseError(
 
 function handleDataError<T>(
   data: ResponseJson<T>,
-  messages: ResponseTranslations
+  messages?: ResponseTranslations
 ) {
   if (data.message !== ResponseMessageType.SUCCESS) {
-    return new Error(messages.error?.message);
+    return new Error(messages?.error?.message || "responseError");
   }
 
   return null;
@@ -47,7 +51,7 @@ function handleDataError<T>(
 
 async function handleJsonResponse(
   response: Response,
-  messages: ResponseTranslations
+  messages?: ResponseTranslations
 ) {
   const responseError = handleResponseError(response, messages);
   if (responseError) return Promise.reject(responseError);

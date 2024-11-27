@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 import HorizontalDrawer from "../HorizontalDrawer";
 import SourcdLogo from "../SourcdLogo";
 import { StyledButton, StyledContainer, StyledHeader } from "./NavBar.styles";
+import NotificationsMenu from "../NotificationsMenu";
 
 const NAMESPACE_TRANSLATIONS_NAVBAR = "NavBar";
 
@@ -26,7 +27,6 @@ type ButtonVariant = "contained" | "text" | undefined;
 export default function NavBar() {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_NAVBAR);
   const { getCookie } = useCookies();
-
   const isAuthenticated = !!getCookie("access_token");
 
   const theme = useTheme();
@@ -88,6 +88,7 @@ export default function NavBar() {
 
   return (
     <StyledContainer>
+      <NotificationsMenu />
       <Box
         sx={{
           display: {

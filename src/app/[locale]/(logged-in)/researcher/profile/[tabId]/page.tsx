@@ -1,15 +1,12 @@
 import { withAuth } from "@/components/Auth";
 import { ConfigProps, withConfig } from "@/components/Config";
-import PageContainer from "@/modules/PageContainer";
-import PageSection from "@/modules/PageSection";
+import { PageContainer, PageSection, PageTitle } from "@/modules";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { redirect } from "next/navigation";
-import Affiliations from "./components/Affiliations";
-import Details from "./components/Details";
-import Sections from "./components/Sections";
-import { PageTabs } from "./consts/tabs";
+import TabsContents from "./components/TabsContents";
 import TabsSections from "./components/TabsSections";
+import { PageTabs } from "./consts/tabs";
 
 const NAMESPACE_TRANSLATIONS_PROFILE = "Profile";
 
@@ -28,21 +25,15 @@ function Page({ params: { tabId }, config }: PageProps) {
 
   return (
     <PageContainer>
-      <PageSection>
-        <Typography variant="h4">{t("title")}</Typography>
-      </PageSection>
+      <TabsSections />
+      <PageTitle>
+        <Typography variant="h3">{t(tabId)}</Typography>
+      </PageTitle>
       <PageSection sx={{ flexGrow: 1 }}>
-        <Sections>
-          <TabsSections />
-          {tabId === PageTabs.DETAILS && <Details />}
-          {tabId === PageTabs.EXPERIENCE && "Experience"}
-          {tabId === PageTabs.AFFILIATIONS && <Affiliations />}
-          {tabId === PageTabs.IDENTITY && "Identity"}
-          {tabId === PageTabs.TRAINING && "Training"}
-        </Sections>
+        <TabsContents tabId={tabId} />
       </PageSection>
     </PageContainer>
   );
 }
 
-export default withConfig(withAuth(Page));
+export default withConfig(Page);

@@ -10,4 +10,17 @@ function getInitialsFromOrganisation({ organisation_name }: Organisation) {
   return organisation_name?.charAt(0).toUpperCase();
 }
 
-export { getInitialsFromUser, getInitialsFromOrganisation };
+function isOrcIdScanning(user: User | undefined) {
+  return !!user?.orcid_scanning;
+}
+
+function isOrcIdCompleted(user: User | undefined) {
+  return !!user.orcid_scanning_completed_at;
+}
+
+export {
+  getInitialsFromUser,
+  getInitialsFromOrganisation,
+  isOrcIdScanning,
+  isOrcIdCompleted,
+};

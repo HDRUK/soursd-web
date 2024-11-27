@@ -1,0 +1,63 @@
+"use client";
+
+import { useCookies } from "@/context/CookieContext/CookieContext";
+import { useStore } from "@/data/store";
+import useQueryRefetch from "@/hooks/useQueryRefetch";
+import { getUser } from "@/services/users";
+import { isOrcIdCompleted, isOrcIdScanning } from "@/utils/user";
+import { useQuery } from "@tanstack/react-query";
+import dayjs from "dayjs";
+import { useTranslations } from "next-intl";
+import { useEffect } from "react";
+import Swal from "sweetalert2";
+
+const NAMESPACE_TRANSLATIONS = "NotificationsMenu";
+
+export default function NotificationsMenu() {
+  const t = useTranslations(NAMESPACE_TRANSLATIONS);
+  const { getCookie, setCookie } = useCookies();
+  const user = useStore(store => store.config.auth?.user);
+
+  const messages = JSON.parse(getCookie("messages") || "{}");
+
+  const { data: userData } = useQuery({
+    queryKey: ["getUserOrcIdStatus", user?.id],
+    queryFn: ({ queryKey }) => getUser(queryKey[1]),
+    enabled: !messages.orcIdCompleted && !!user?.id,
+  });
+
+  const { refetch: refetchUser, cancel: refetchCancel } = useQueryRefetch({
+    options: { queryKey: ["getUserOrcIdStatus", user?.id] },
+  });
+
+  useEffect(() => {
+    if (userData?.data) {
+      if (isOrcIdScanning(userData.data)) {
+        refetchUser();
+      } else {
+        refetchCancel();
+
+        if (isOrcIdCompleted(userData.data) && !messages.orcIdCompleted) {
+          Swal.fire({
+            title: t("orcIdSuccessTitle"),
+            text: t("orcIdSuccessDescription"),
+            icon: "success",
+          });
+
+          setCookie(
+            "messages",
+            JSON.stringify({
+              ...messages,
+              orcIdCompleted: dayjs().toISOString(),
+            })
+          );
+        }
+      }
+    }
+
+    return () => refetchCancel();
+  }, [messages, userData?.data]);
+
+  //In the absence of design, alerts will temporarily be fired (swal)
+  return null;
+}
