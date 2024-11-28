@@ -1,6 +1,5 @@
 "use client";
 
-import ApprovalStatus from "@/components/ApprovalStatus";
 import { useStore } from "@/data/store";
 import {
   Table,
@@ -14,7 +13,7 @@ import { useTranslations } from "next-intl";
 
 const NAMESPACE_TRANSLATIONS_USERS_LIST = "UsersList";
 
-export default function Approvals() {
+export default function Users() {
   const organisation = useStore(store => store.config.organisation);
   const filteredUsers = organisation?.registries.filter(({ user }) => !!user);
 
@@ -33,29 +32,19 @@ export default function Approvals() {
         </TableRow>
       </TableHead>
       <TableBody>
-        {filteredUsers?.map(
-          ({ user: { email, first_name, last_name, approvals } }) => {
-            const isApproved = approvals.some(
-              ({ id: issuerId }) => issuerId === 1
-            );
-
-            return (
-              <TableRow key={email}>
-                <TableCell sx={{ wordBreak: "break-word" }}>
-                  <ApprovalStatus isApproved={isApproved}>
-                    {email}
-                  </ApprovalStatus>
-                </TableCell>
-                <TableCell sx={{ wordBreak: "break-word" }}>
-                  {first_name}
-                </TableCell>
-                <TableCell sx={{ wordBreak: "break-word" }}>
-                  {last_name}
-                </TableCell>
-              </TableRow>
-            );
-          }
-        )}
+        {filteredUsers?.map(({ user: { email, first_name, last_name } }) => {
+          return (
+            <TableRow key={email}>
+              <TableCell sx={{ wordBreak: "break-word" }}>{email}</TableCell>
+              <TableCell sx={{ wordBreak: "break-word" }}>
+                {first_name}
+              </TableCell>
+              <TableCell sx={{ wordBreak: "break-word" }}>
+                {last_name}
+              </TableCell>
+            </TableRow>
+          );
+        })}
       </TableBody>
     </Table>
   );

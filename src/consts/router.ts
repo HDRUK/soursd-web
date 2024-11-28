@@ -94,7 +94,7 @@ const ROUTES: Routes = {
     path: "/organisation/profile/contacts",
     permissions: [UserGroup.ORGANISATIONS],
   },
-  profileOrganisationApprovals: {
+  profileOrganisationUsers: {
     path: "/organisation/profile/approvals",
     permissions: [UserGroup.ORGANISATIONS],
   },

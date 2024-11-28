@@ -35,7 +35,7 @@
     "companyValidating": "Organisation is being validated",
     "details": "Details",
     "user": "User",
-    "approvals": "Approvals",
+    "users": "Users",
     "contacts": "Contacts",
     "organisationNotFound": "Organisation was not found",
     "getOrganisationStatusError": "Unable to determine validation status",

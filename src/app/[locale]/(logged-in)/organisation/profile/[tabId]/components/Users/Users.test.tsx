@@ -1,22 +1,17 @@
 import { mockedOrganisation } from "@/mocks/data/organisation";
 import { act, render, screen } from "@/utils/testUtils";
 import { axe } from "jest-axe";
-import Approvals from ".";
+import Users from ".";
 
-const mockMutate = jest.fn();
 const mockedStoreOrganisation = mockedOrganisation();
 
 jest.mock("@/data/store", () => ({
   useStore: () => mockedStoreOrganisation,
 }));
 
-const renderSections = () => render(<Approvals />);
+const renderSections = () => render(<Users />);
 
-describe("<Approvals />", () => {
-  beforeEach(() => {
-    mockMutate.mockReset();
-  });
-
+describe("<Users />", () => {
   it("has no accessibility violations", async () => {
     const { container } = renderSections();
 
@@ -34,19 +29,8 @@ describe("<Approvals />", () => {
 
     const { user } = mockedStoreOrganisation.registries[0];
 
+    expect(screen.getByText(user.email)).toBeInTheDocument();
     expect(screen.getByText(user.first_name)).toBeInTheDocument();
     expect(screen.getByText(user.last_name)).toBeInTheDocument();
-  });
-
-  it("displays the verified status", () => {
-    renderSections();
-
-    expect(screen.getByTitle("Approved")).toBeInTheDocument();
-  });
-
-  it("displays the not verified status", () => {
-    renderSections();
-
-    expect(screen.getByTitle("Not approved")).toBeInTheDocument();
   });
 });

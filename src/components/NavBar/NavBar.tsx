@@ -17,7 +17,6 @@ import { useEffect, useState } from "react";
 import HorizontalDrawer from "../HorizontalDrawer";
 import SourcdLogo from "../SourcdLogo";
 import { StyledButton, StyledContainer, StyledHeader } from "./NavBar.styles";
-import NotificationsMenu from "../NotificationsMenu";
 
 const NAMESPACE_TRANSLATIONS_NAVBAR = "NavBar";
 
@@ -88,7 +87,6 @@ export default function NavBar() {
 
   return (
     <StyledContainer>
-      <NotificationsMenu />
       <Box
         sx={{
           display: {

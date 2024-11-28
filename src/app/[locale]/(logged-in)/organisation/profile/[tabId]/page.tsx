@@ -1,13 +1,14 @@
 import { withAuth } from "@/components/Auth";
-import { ConfigProps } from "@/components/Config";
-import PageContainer from "@/modules/PageContainer";
-import PageSection from "@/modules/PageSection";
+import { ConfigProps, withConfig } from "@/components/Config";
+import { PageContainer, PageSection, PageTitle } from "@/modules";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-import Approvals from "./components/Approvals";
-import Sections from "./components/Sections";
+import { redirect } from "next/navigation";
+import TabsContents from "./components/TabsContents";
 import TabsSections from "./components/TabsSections";
 import { PageTabs } from "./consts/tabs";
+
+const NAMESPACE_TRANSLATIONS_PROFILE = "ProfileOrganisation";
 
 interface PageProps extends ConfigProps {
   params: {
@@ -15,27 +16,24 @@ interface PageProps extends ConfigProps {
   };
 }
 
-const NAMESPACE_TRANSLATIONS_PROFILE = "ProfileOrganisation";
-
-function Page({ params: { tabId } }: PageProps) {
+function Page({ params: { tabId }, config }: PageProps) {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_PROFILE);
+
+  if (!Object.values(PageTabs).includes(tabId)) {
+    redirect(config.routes.profileOrganisationDetails.path);
+  }
 
   return (
     <PageContainer>
-      <PageSection>
-        <Typography variant="h4">{t("title")}</Typography>
-      </PageSection>
+      <TabsSections />
+      <PageTitle>
+        <Typography variant="h3">{t(tabId)}</Typography>
+      </PageTitle>
       <PageSection sx={{ flexGrow: 1 }}>
-        <Sections>
-          <TabsSections />
-          {tabId === PageTabs.USER && "User"}
-          {tabId === PageTabs.DETAILS && "Details"}
-          {tabId === PageTabs.CONTACTS && "Contacts"}
-          {tabId === PageTabs.APPROVALS && <Approvals />}
-        </Sections>
+        <TabsContents tabId={tabId} />
       </PageSection>
     </PageContainer>
   );
 }
 
-export default withAuth(Page);
+export default withConfig(Page);
