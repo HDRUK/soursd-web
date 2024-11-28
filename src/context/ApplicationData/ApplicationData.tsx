@@ -37,7 +37,6 @@ const useApplicationData = () => useContext(ApplicationDataContext);
 interface ApplicationDataProviderProps {
   children: ReactNode;
   value: ApplicationDataState;
-  isLoggedIn?: boolean;
 }
 
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";

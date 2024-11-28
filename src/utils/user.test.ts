@@ -1,6 +1,6 @@
 import { mockedUser } from "@/mocks/data/user";
-import { getInitialsFromUser, isOrcIdCompleted, isOrcIdScanning } from "./user";
 import { faker } from "@faker-js/faker";
+import { getInitialsFromUser, isOrcIdCompleted, isOrcIdScanning } from "./user";
 
 describe("getInitialsFromUser", () => {
   it("gets the correct initials", () => {

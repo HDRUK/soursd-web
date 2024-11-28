@@ -1,17 +1,9 @@
 import { useCookies } from "@/context/CookieContext/CookieContext";
-import theme from "@/theme";
-import { handleLogin, handleLogout } from "@/utils/keycloak";
-import {
-  defineMatchMedia,
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-} from "@/utils/testUtils";
-import NotificationsMenu from "./NotificationsMenu";
-import { mockedUser } from "@/mocks/data/user";
 import { useStore } from "@/data/store";
 import useQueryRefetch from "@/hooks/useQueryRefetch";
+import { mockedUser } from "@/mocks/data/user";
+import { render, waitFor } from "@/utils/testUtils";
+import NotificationsMenu from "./NotificationsMenu";
 
 const defaultUser = mockedUser({
   id: 1,
@@ -45,7 +37,7 @@ describe("<NotificationsMenu />", () => {
     jest.clearAllMocks();
   });
 
-  it("renders nav item %s", async () => {
+  it("cancels a refetch", async () => {
     render(<NotificationsMenu />);
 
     await waitFor(() => {
@@ -53,7 +45,7 @@ describe("<NotificationsMenu />", () => {
     });
   });
 
-  it("renders nav item %s", async () => {
+  it("triggers a refetch", async () => {
     render(<NotificationsMenu />);
 
     (useStore as unknown as jest.Mock).mockReturnValue({

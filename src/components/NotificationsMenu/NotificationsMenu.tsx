@@ -59,6 +59,6 @@ export default function NotificationsMenu() {
     return () => refetchCancel();
   }, [messages, userData?.data]);
 
-  //In the absence of design, alerts will temporarily be fired (swal)
+  // In the absence of design, alerts will temporarily be fired (swal)
   return null;
 }
