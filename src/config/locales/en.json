@@ -347,8 +347,8 @@
     "systemConfigSubtitle": "Parameters are in the form of NameValue pairs",
     "noDataIssuers": "Unable to retrieve known Data Custodians. Please contact us at <contactLink></contactLink>"
   },
-  "SourcdLogo": {
-    "logoTitle": "SOURCD"
+  "SoursdLogo": {
+    "logoTitle": "SOURSD"
   },
   "NavBar": {
     "homeButton": "Home",

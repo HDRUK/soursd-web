@@ -1,7 +1,6 @@
 "use client";
 
 import ContactLink from "@/components/ContactLink";
-import OverlayCenter from "@/components/OverlayCenter";
 import OverlayCenterAlert from "@/components/OverlayCenterAlert";
 import { ISSUER_ID, VALIDATION_SCHEMA_KEY } from "@/consts/application";
 import { ROUTES } from "@/consts/router";
@@ -17,7 +16,6 @@ import {
 } from "@/types/application";
 import { parseSystemConfig } from "@/utils/application";
 import { getAuthData } from "@/utils/auth";
-import { CircularProgress } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
@@ -29,6 +27,7 @@ import {
   useMemo,
   useState,
 } from "react";
+import LoadingWrapper from "@/components/LoadingWrapper";
 
 const ApplicationDataContext = createContext({
   routes: ROUTES,
@@ -42,11 +41,13 @@ interface ApplicationDataProviderProps {
   children: ReactNode;
   value: ApplicationDataState;
   prefetchAuth?: boolean;
+  isLoggedIn?: boolean;
 }
 
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
 
 const ApplicationDataProvider = ({
+  isLoggedIn,
   prefetchAuth,
   children,
   value,
@@ -180,26 +181,23 @@ const ApplicationDataProvider = ({
     !isAnyLoading && !isAnyError && systemConfigData?.data && authFetched;
 
   return (
-    <ApplicationDataContext.Provider value={providerValue}>
-      {(isAnyLoading || isAnyError) && (
-        <PageContainer>
-          {isAnyLoading && (
-            <OverlayCenter>
-              <CircularProgress sx={{ color: "#fff" }} />
-            </OverlayCenter>
-          )}
-          {isAnyError && (
-            <OverlayCenterAlert>
-              {t.rich(errorMessage, {
-                contactLink: ContactLink,
-              })}
-            </OverlayCenterAlert>
-          )}
-        </PageContainer>
-      )}
+    <LoadingWrapper loading={isAnyLoading}>
+      <ApplicationDataContext.Provider value={providerValue}>
+        {isAnyError && (
+          <PageContainer>
+            {isAnyError && (
+              <OverlayCenterAlert>
+                {t.rich(errorMessage, {
+                  contactLink: ContactLink,
+                })}
+              </OverlayCenterAlert>
+            )}
+          </PageContainer>
+        )}
 
-      {isFinishedLoading && children}
-    </ApplicationDataContext.Provider>
+        {isFinishedLoading && (isLoggedIn || !prefetchAuth) && children}
+      </ApplicationDataContext.Provider>
+    </LoadingWrapper>
   );
 };
 
