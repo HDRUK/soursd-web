@@ -14,7 +14,7 @@ export default function LoadingWrapper({
   if (loading) {
     return (
       <Box
-        style={{
+        sx={{
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
