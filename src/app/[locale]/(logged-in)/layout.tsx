@@ -15,7 +15,6 @@ export default async function Layout({
 
   return (
     <ApplicationDataAuth
-      prefetchAuth
       value={{
         routes,
         systemConfigData: {},

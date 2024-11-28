@@ -6,10 +6,7 @@ import { ApplicationDataProviderQueries } from "./ApplicationData";
 interface ApplicationDataAuthProps {
   children: ReactNode;
   value: ApplicationDataState;
-  prefetchAuth?: boolean;
 }
-
-const NAMESPACE_TRANSLATION_APPLICATION = "Application";
 
 const ApplicationDataAuth = async (props: ApplicationDataAuthProps) => {
   const authData = await getAuthData();

@@ -36,4 +36,4 @@ function Page({ params: { tabId }, config }: PageProps) {
   );
 }
 
-export default withConfig(Page);
+export default withConfig(withAuth(Page));

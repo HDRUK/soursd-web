@@ -40,7 +40,6 @@ const useApplicationData = () => useContext(ApplicationDataContext);
 interface ApplicationDataProviderProps {
   children: ReactNode;
   value: ApplicationDataState;
-  prefetchAuth?: boolean;
 }
 
 interface ApplicationDataProviderQueriesProps
@@ -51,7 +50,6 @@ interface ApplicationDataProviderQueriesProps
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
 
 const ApplicationDataProviderQueries = ({
-  prefetchAuth,
   children,
   value,
   auth,
@@ -66,10 +64,7 @@ const ApplicationDataProviderQueries = ({
     store.config.organisation,
     store.setOrganisation,
   ]);
-  const [issuer, setIssuer] = useStore(store => [
-    store.config.issuer,
-    store.setIssuer,
-  ]);
+  const setIssuer = useStore(store => store.setIssuer);
 
   const path = usePathname();
 
