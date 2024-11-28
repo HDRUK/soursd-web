@@ -13,9 +13,10 @@ import {
   useTheme,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
+import { useRouter } from "next/navigation";
 import HorizontalDrawer from "../HorizontalDrawer";
-import SourcdLogo from "../SourcdLogo";
+import SoursdLogo from "../SoursdLogo";
 import { StyledButton, StyledContainer, StyledHeader } from "./NavBar.styles";
 import NotificationsMenu from "../NotificationsMenu";
 
@@ -27,7 +28,12 @@ type ButtonVariant = "contained" | "text" | undefined;
 export default function NavBar() {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_NAVBAR);
   const { getCookie } = useCookies();
-  const isAuthenticated = !!getCookie("access_token");
+  const router = useRouter();
+
+  const isAuthenticated = useMemo(
+    () => !!getCookie("access_token"),
+    [getCookie]
+  );
 
   const theme = useTheme();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -51,6 +57,7 @@ export default function NavBar() {
       color: "inherit",
       variant: "text",
       text: t("homeButton"),
+      onClick: () => router.push("/"),
     },
     {
       color: "inherit",
@@ -98,7 +105,7 @@ export default function NavBar() {
         }}
         data-testid="header-desktop-menu">
         <StyledHeader>
-          <SourcdLogo variant="titled" />
+          <SoursdLogo variant="titled" />
           <Box sx={{ display: "flex" }}>
             {buttons.map(({ text, ...restProps }) => (
               <StyledButton {...restProps} key={text}>
@@ -128,7 +135,7 @@ export default function NavBar() {
           </div>
           <Box
             sx={{ flexGrow: 1, justifyContent: "flex-end", display: "flex" }}>
-            <SourcdLogo height={40} width={40} />
+            <SoursdLogo height={40} width={40} />
           </Box>
         </Box>
         <HorizontalDrawer

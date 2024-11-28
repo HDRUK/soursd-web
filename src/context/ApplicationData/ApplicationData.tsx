@@ -1,7 +1,6 @@
 "use client";
 
 import ContactLink from "@/components/ContactLink";
-import OverlayCenter from "@/components/OverlayCenter";
 import OverlayCenterAlert from "@/components/OverlayCenterAlert";
 import { ISSUER_ID, VALIDATION_SCHEMA_KEY } from "@/consts/application";
 import { ROUTES } from "@/consts/router";
@@ -14,10 +13,8 @@ import { getUser } from "@/services/users";
 import {
   ApplicationDataState,
   ApplicationSystemConfig,
-  Auth,
 } from "@/types/application";
 import { parseSystemConfig } from "@/utils/application";
-import { CircularProgress } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
@@ -40,36 +37,26 @@ const useApplicationData = () => useContext(ApplicationDataContext);
 interface ApplicationDataProviderProps {
   children: ReactNode;
   value: ApplicationDataState;
-  prefetchAuth?: boolean;
-}
-
-interface ApplicationDataProviderQueriesProps
-  extends ApplicationDataProviderProps {
-  auth?: Auth;
+  isLoggedIn?: boolean;
 }
 
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
 
-const ApplicationDataProviderQueries = ({
-  prefetchAuth,
+const ApplicationDataProvider = ({
   children,
   value,
-  auth,
-}: ApplicationDataProviderQueriesProps) => {
+}: ApplicationDataProviderProps) => {
   const t = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
   const addUrlToHistory = useStore(store => store.addUrlToHistory);
-  const [user, setAuth] = useStore(store => [
-    store.config.auth?.user,
-    store.setAuth,
-  ]);
+
+  const [user, setUser] = useStore(store => [store.getUser(), store.setUser]);
+
   const [organisation, setOrganisation] = useStore(store => [
     store.config.organisation,
     store.setOrganisation,
   ]);
-  const [issuer, setIssuer] = useStore(store => [
-    store.config.issuer,
-    store.setIssuer,
-  ]);
+
+  const setIssuer = useStore(store => store.setIssuer);
 
   const path = usePathname();
 
@@ -92,14 +79,14 @@ const ApplicationDataProviderQueries = ({
     isError: isUserError,
     error: userError,
   } = useQuery({
-    queryKey: ["getUser", 8],
+    queryKey: ["getUser", user?.id],
     queryFn: ({ queryKey }) =>
       getUser(queryKey[1], {
         error: {
           message: "getUserError",
         },
       }),
-    // enabled: !!auth?.user?.id,
+    enabled: !!user?.id,
   });
 
   const {
@@ -107,14 +94,14 @@ const ApplicationDataProviderQueries = ({
     isError: isOrganisationError,
     error: organisationError,
   } = useQuery({
-    queryKey: ["getOrganisation", auth?.user?.organisation_id],
+    queryKey: ["getOrganisation", user?.organisation_id],
     queryFn: ({ queryKey }) =>
       getOrganisation(queryKey[1], {
         error: {
           message: "getOrganisationError",
         },
       }),
-    enabled: !!auth?.user?.organisation_id,
+    enabled: !!user?.organisation_id,
   });
 
   const {
@@ -134,16 +121,10 @@ const ApplicationDataProviderQueries = ({
   });
 
   useEffect(() => {
-    if (userData?.data && auth) {
-      setAuth({
-        ...auth,
-        user: {
-          ...auth?.user,
-          ...userData.data,
-        },
-      });
+    if (userData?.data) {
+      setUser(userData.data);
     }
-  }, [auth, userData?.data]);
+  }, [userData?.data]);
 
   useEffect(() => {
     setOrganisation(organisationData?.data);
@@ -172,21 +153,15 @@ const ApplicationDataProviderQueries = ({
   const errorMessage = error || userError || organisationError || issuerError;
 
   const isFinishedLoading =
-    ((auth?.user.id && user) || !auth?.user.id) &&
-    ((auth?.user.organisation_id && organisation) ||
-      !auth?.user.organisation_id) &&
+    ((user?.id && user) || !user?.id) &&
+    ((user?.organisation_id && organisation) || !user?.organisation_id) &&
     !!systemConfigData?.data &&
     !isIssuerLoading;
 
   return (
     <ApplicationDataContext.Provider value={providerValue}>
-      {(!isFinishedLoading || isAnyError) && (
+      {isAnyError && (
         <PageContainer>
-          {!isFinishedLoading && (
-            <OverlayCenter>
-              <CircularProgress />
-            </OverlayCenter>
-          )}
           {isAnyError && (
             <OverlayCenterAlert>
               {t.rich(errorMessage, {
@@ -201,6 +176,6 @@ const ApplicationDataProviderQueries = ({
   );
 };
 
-export { ApplicationDataProviderQueries, useApplicationData };
+export { ApplicationDataProvider, useApplicationData };
 
 export type { ApplicationSystemConfig };

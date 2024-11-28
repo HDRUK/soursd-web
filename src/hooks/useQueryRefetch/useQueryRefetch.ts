@@ -33,7 +33,6 @@ export default function useQueryRefetch({
     setIsLoading(true);
 
     pollInterval.current = setInterval(async () => {
-      console.log("Querying", options);
       await refetchQueries();
     }, delay);
   }, []);

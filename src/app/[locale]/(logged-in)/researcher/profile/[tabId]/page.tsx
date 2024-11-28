@@ -1,4 +1,3 @@
-import { withAuth } from "@/components/Auth";
 import { ConfigProps, withConfig } from "@/components/Config";
 import { PageContainer, PageSection, PageTitle } from "@/modules";
 import { Typography } from "@mui/material";

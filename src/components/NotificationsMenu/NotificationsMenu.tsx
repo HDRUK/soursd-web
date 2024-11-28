@@ -4,6 +4,7 @@ import { useCookies } from "@/context/CookieContext/CookieContext";
 import { useStore } from "@/data/store";
 import useQueryRefetch from "@/hooks/useQueryRefetch";
 import { getUser } from "@/services/users";
+import { parseValidJSON } from "@/utils/json";
 import { isOrcIdCompleted, isOrcIdScanning } from "@/utils/user";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
@@ -16,9 +17,9 @@ const NAMESPACE_TRANSLATIONS = "NotificationsMenu";
 export default function NotificationsMenu() {
   const t = useTranslations(NAMESPACE_TRANSLATIONS);
   const { getCookie, setCookie } = useCookies();
-  const user = useStore(store => store.config.auth?.user);
+  const user = useStore(store => store.getUser());
 
-  const messages = JSON.parse(getCookie("messages") || "{}");
+  const messages = parseValidJSON(getCookie("messages") || "{}");
 
   const { data: userData } = useQuery({
     queryKey: ["getUserOrcIdStatus", user?.id],

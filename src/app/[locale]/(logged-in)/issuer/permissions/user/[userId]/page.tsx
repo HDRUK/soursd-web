@@ -1,4 +1,3 @@
-import { withAuth } from "@/components/Auth";
 import PageContainer from "@/modules/PageContainer";
 import { EntityType } from "@/types/api";
 import Sections from "../../components/Sections";
@@ -15,4 +14,4 @@ function Page({ params }: PageProps) {
   );
 }
 
-export default withAuth(Page);
+export default Page;

@@ -25,6 +25,14 @@ const nextConfig = withNextIntl({
         destination: `/:locale/researcher/profile/details`,
       },
       {
+        source: "/:locale/issuer/profile",
+        destination: `/:locale/researcher/issuer/details`,
+      },
+      {
+        source: "/:locale/organisation/profile",
+        destination: `/:locale/researcher/organisation/details`,
+      },
+      {
         source: "/:locale/organisation/profile",
         destination: `/:locale/organisation/profile/user`,
       },
