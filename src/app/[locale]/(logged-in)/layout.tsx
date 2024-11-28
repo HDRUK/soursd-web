@@ -7,7 +7,6 @@ import { getRoutes } from "@/utils/router";
 import Cookies from "js-cookie";
 import { usePathname } from "next/navigation";
 import { PropsWithChildren, useEffect, useState } from "react";
-import Loading from "../loading";
 
 type LayoutProps = PropsWithChildren<{
   params: { locale: string };
@@ -27,23 +26,20 @@ async function validateAccessToken(pathname: string | null): Promise<boolean> {
 export default function Layout({ children, params: { locale } }: LayoutProps) {
   const routes = getRoutes(ROUTES, locale);
   const pathname = usePathname();
-  const [isAuthorized, setIsAuthorized] = useState<boolean>(false);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   useEffect(() => {
     const performAuthCheck = async () => {
       const isAuth = await validateAccessToken(pathname);
-      setIsAuthorized(isAuth);
+      setIsLoggedIn(isAuth);
     };
 
     performAuthCheck();
   }, [pathname]);
 
-  if (!isAuthorized) {
-    return <Loading />;
-  }
-
   return (
     <ApplicationDataProvider
+      isLoggedIn={isLoggedIn}
       prefetchAuth
       value={{
         routes,
