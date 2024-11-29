@@ -45,10 +45,10 @@ export default function TabsSections() {
           value={PageTabs.CONTACTS}
         />
         <Tab
-          label={t("approvals")}
-          href={routes.profileOrganisationApprovals.path}
+          label={t("users")}
+          href={routes.profileOrganisationUsers.path}
           component={Link}
-          value={PageTabs.APPROVALS}
+          value={PageTabs.USERS}
         />
       </Tabs>
     </Box>
