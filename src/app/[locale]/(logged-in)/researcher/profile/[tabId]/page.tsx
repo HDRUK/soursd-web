@@ -35,4 +35,4 @@ function Page({ params: { tabId }, config }: PageProps) {
   );
 }
 
-export default withConfig(withAuth(Page));
+export default withConfig(Page);
