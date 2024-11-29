@@ -53,20 +53,9 @@ export async function GET(req: Request) {
     return NextResponse.redirect(
       encodeURI(`${process.env.NEXT_PUBLIC_LOCAL_ENV}${redirectPath.value}`)
     );
-  } catch (error) {
+  } catch (_) {
     return NextResponse.json(
-      {
-        message: "Failed to exchange authorization code for tokens",
-        response: error.response?.data || null,
-        details: {
-          url: tokenUrl,
-          grant_type: "authorization_code",
-          client_id: keycloak.clientId,
-          client_secret: keycloak.clientSecret,
-          code,
-          redirect_uri: keycloak.redirectUriLogin,
-        },
-      },
+      { error: "Failed to exchange authorization code for tokens" },
       { status: 500 }
     );
   }
