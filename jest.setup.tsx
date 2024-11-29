@@ -93,6 +93,14 @@ async function mockFetch(url) {
         })
       );
     }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/users/2`: {
+      return mock200Json(
+        mockedUser({
+          id: 2,
+          orcid_scanning: true,
+        })
+      );
+    }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/educations/1`: {
       return mock200Json([
         mockedEducation({

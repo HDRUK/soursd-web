@@ -65,7 +65,9 @@ interface User {
   approvals: Approval[];
   organisation_id: number;
   consent_scrape: boolean;
-  orc_id: number | null;
+  orc_id: string | null;
+  orcid_scanning: boolean;
+  orcid_scanning_completed_at: string | null;
   registry: {
     files: File[];
     organisations: Organisation[];

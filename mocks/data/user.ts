@@ -23,6 +23,8 @@ const mockedUser = (user?: Partial<User>): User => ({
   permissions: [mockedPermission()],
   approvals: [mockedApproval()],
   organisations: [],
+  orcid_scanning: false,
+  orcid_scanning_completed_at: null,
   registry: {
     files: [mockedFile()],
   },

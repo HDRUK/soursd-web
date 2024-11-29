@@ -18,6 +18,7 @@ import { useRouter } from "next/navigation";
 import HorizontalDrawer from "../HorizontalDrawer";
 import SoursdLogo from "../SoursdLogo";
 import { StyledButton, StyledContainer, StyledHeader } from "./NavBar.styles";
+import NotificationsMenu from "../NotificationsMenu";
 
 const NAMESPACE_TRANSLATIONS_NAVBAR = "NavBar";
 
@@ -94,6 +95,7 @@ export default function NavBar() {
 
   return (
     <StyledContainer>
+      <NotificationsMenu />
       <Box
         sx={{
           display: {

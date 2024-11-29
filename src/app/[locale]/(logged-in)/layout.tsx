@@ -63,14 +63,14 @@ export default function Layout({ children, params: { locale } }: LayoutProps) {
   }, [pathname]);
 
   return (
-    <ApplicationDataProvider
-      isLoggedIn={isLoggedIn}
-      prefetchAuth
-      value={{
-        routes,
-        systemConfigData: {},
-      }}>
-      {children}
-    </ApplicationDataProvider>
+    isChecked && (
+      <ApplicationDataProvider
+        value={{
+          routes,
+          systemConfigData: {},
+        }}>
+        {children}
+      </ApplicationDataProvider>
+    )
   );
 }

@@ -18,7 +18,6 @@ export default function SoursdLogo({
   height = 90,
   ...restProps
 }: SoursdLogoProps) {
-  console.log("here");
   const t = useTranslations(NAMESPACE_TRANSLATIONS_SOURSD_LOGO);
 
   return (
