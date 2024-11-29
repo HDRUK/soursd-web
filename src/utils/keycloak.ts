@@ -23,7 +23,7 @@ const handleLogout = () => {
 };
 
 const handleRegister = () => {
-  const registerUrl = `${keycloakConfig.authServerUrl}/realms/${keycloakConfig.realm}/protocol/openid-connect/registrations`
+  const registerUrl = `${keycloakConfig.authServerUrl}/realms/${keycloakConfig.realm}/protocol/openid-connect/registrations`;
   const params = new URLSearchParams({
     client_id: keycloakConfig.clientId,
     scope: "openid profile email",

@@ -88,7 +88,7 @@ export default function NavBar() {
       color: "primary",
       variant: "contained",
       text: t("registerButton"),
-      onClick: handleRegister
+      onClick: handleRegister,
     },
   ];
 
