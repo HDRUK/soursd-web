@@ -43,6 +43,7 @@ const NAMESPACE_TRANSLATION_APPLICATION = "Application";
 
 const ApplicationDataProvider = ({
   children,
+  userId,
   value,
 }: ApplicationDataProviderProps) => {
   const t = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
@@ -84,7 +85,7 @@ const ApplicationDataProvider = ({
           message: "getUserError",
         },
       }),
-    enabled: !!user?.id,
+    enabled: userId, //! !user?.id,
   });
 
   const {
