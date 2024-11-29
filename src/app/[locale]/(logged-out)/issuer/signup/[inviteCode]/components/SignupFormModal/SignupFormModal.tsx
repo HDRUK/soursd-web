@@ -6,15 +6,13 @@ import FormModalHeader from "@/components/FormModalHeader";
 import OverlayCenter from "@/components/OverlayCenter";
 import OverlayCenterAlert from "@/components/OverlayCenterAlert";
 import { useApplicationData } from "@/context/ApplicationData";
-import postRegisterIssuer from "@/services/auth/postRegisterIssuer";
-import { PostRegisterIssuerPayload } from "@/services/auth/types";
 import { getByInviteCode } from "@/services/issuers";
 import { isExpiredInvite } from "@/utils/date";
 import HubIcon from "@mui/icons-material/Hub";
 import { CircularProgress } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import SignupForm, { SignupFormValues } from "../SignupForm";
 
 const NAMESPACE_TRANSLATION_SIGNUP_ISSUER = "SignupFormIssuer";
@@ -41,20 +39,6 @@ export default function Page() {
     enabled: !!inviteCode,
   });
 
-  const {
-    mutateAsync: mutateSignupAsync,
-    isError: isSignupError,
-    isPending: isSignupLoading,
-    error: signupError,
-  } = useMutation({
-    mutationKey: ["postRegisterIssuer"],
-    mutationFn: (payload: PostRegisterIssuerPayload) => {
-      return postRegisterIssuer(payload, {
-        error: { message: "submitError" },
-      });
-    },
-  });
-
   const handleSignupSubmit = async (values: SignupFormValues) => {
     const { password } = values;
 
@@ -65,10 +49,8 @@ export default function Page() {
         last_name: "Smith",
         email: issuerData?.data.contact_email,
       };
-
-      mutateSignupAsync(payload).then(() => {
-        router.push(routes.login.path);
-      });
+      console.log(payload);
+      // removed
     }
   };
 
@@ -133,9 +115,9 @@ export default function Page() {
       <SignupForm
         onSubmit={handleSignupSubmit}
         mutateState={{
-          isLoading: isSignupLoading,
-          isError: isSignupError,
-          error: signupError,
+          isLoading: true,
+          isError: true,
+          error: "",
         }}
       />
     </FormModal>
