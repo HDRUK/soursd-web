@@ -7,9 +7,11 @@ import OverlayCenter from "@/components/OverlayCenter";
 import yup from "@/config/yup";
 import { MAX_UPLOAD_SIZE_BYTES } from "@/consts/files";
 import { VALIDATION_ORC_ID } from "@/consts/form";
+import { UserProfileCompletionCategories } from "@/consts/user";
 import { useStore } from "@/data/store";
 import useFileScanned from "@/hooks/useFileScanned/useFileScanned";
 import useQueryRefetch from "@/hooks/useQueryRefetch";
+import useUserProfileCompletion from "@/hooks/useUserProfileCompletion";
 import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
 import postFile from "@/services/files/postFile";
 import { FilePayload } from "@/services/files/types";
@@ -19,13 +21,11 @@ import patchUser from "@/services/users/patchUser";
 import { EntityType, FileType } from "@/types/api";
 import { getLatestCV, isFileScanning } from "@/utils/file";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Check, Replay } from "@mui/icons-material";
 import InfoIcon from "@mui/icons-material/Info";
 import SaveIcon from "@mui/icons-material/Save";
 import { LoadingButton } from "@mui/lab";
 import {
   Box,
-  Button,
   Checkbox,
   CircularProgress,
   FormControl,
@@ -37,7 +37,6 @@ import {
   Select,
   TextField,
   Tooltip,
-  Typography,
 } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
@@ -53,16 +52,12 @@ export interface DetailsFormValues {
   consent_scrape: boolean;
 }
 
-export interface DetailsProps {
-  emailVerified?: boolean;
-}
-
 const NAMESPACE_TRANSLATION_FORM = "Form";
 const NAMESPACE_TRANSLATION_PERSONAL_DETAILS = "PersonalDetails";
 
-export default function Details({ emailVerified }: DetailsProps) {
-  const [getUser, setUser] = useStore(state => [state.getUser, state.setUser]);
-  const user = getUser();
+export default function Details() {
+  const { update: setCompletion } = useUserProfileCompletion();
+  const user = useStore(state => state.getUser());
 
   const {
     mutateAsync: mutateUpdateAsync,
@@ -156,16 +151,20 @@ export default function Details({ emailVerified }: DetailsProps) {
   );
 
   const handleDetailsSubmit = useCallback(
-    async (payload: DetailsFormValues) => {
+    async (fields: DetailsFormValues) => {
       if (user?.id) {
         const request = {
           ...user,
-          ...payload,
+          ...fields,
         };
 
         await mutateUpdateAsync(request);
 
-        setUser(request);
+        setCompletion(
+          fields,
+          UserProfileCompletionCategories.IDENTITY,
+          request
+        );
       }
     },
     [user]
@@ -351,29 +350,6 @@ export default function Details({ emailVerified }: DetailsProps) {
                   </FormHelperText>
                 )}
               </FormControl>
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              sx={{ display: "flex", gap: 2, alignItems: "center" }}>
-              Email verification:{" "}
-              {emailVerified && (
-                <Typography
-                  color="success.main"
-                  component="span"
-                  sx={{ display: "inline-flex", alignItems: "center", gap: 1 }}>
-                  {tPersonalDetails("verified")} <Check />
-                </Typography>
-              )}
-              {!emailVerified && (
-                <Button
-                  endIcon={<Replay />}
-                  color="error"
-                  variant="contained"
-                  size="small">
-                  {tPersonalDetails("pending")}
-                </Button>
-              )}
             </Grid>
             <Grid item md={12}>
               <DetailsCV

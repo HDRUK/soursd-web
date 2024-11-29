@@ -1,6 +1,6 @@
 import { FileStatus, FileType } from "@/consts/files";
 import { ROUTES } from "@/consts/router";
-import { UserGroup } from "@/consts/user";
+import { ProfileCompletionCategories, UserGroup } from "@/consts/user";
 
 interface File {
   id: number;
@@ -52,6 +52,16 @@ type Approval = {
   };
 };
 
+type UserProfileCompletionSchema = Record<
+  ProfileCompletionCategories,
+  {
+    fields: {
+      name: string;
+      required?: boolean;
+    }[]
+  }
+>;
+
 interface User {
   id: number;
   registry_id: number;
@@ -61,7 +71,7 @@ interface User {
   user_group: UserGroup;
   permissions: Permission[];
   profile_completed_at: string | null;
-  profile_steps_completed: string | null;
+  profile_steps_completed: Record;
   approvals: Approval[];
   organisation_id: number;
   consent_scrape: boolean;
@@ -192,11 +202,12 @@ export type {
   OrganisationIdvt,
   User,
   ResearcherEducation,
-  ResearcherAccreditation,
+  ResearcherAccreditation,v
   ResearcherEmployment,
   ResearcherEndorsement,
   ResearcherTraining,
   ResearcherProject,
   File,
   Permission,
+  UserProfileCompletionSchema,
 };
