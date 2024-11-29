@@ -7,7 +7,6 @@ export async function GET(req: Request) {
   const cookieStore = cookies();
   const { searchParams } = new URL(req.url);
   const code = searchParams.get("code");
-  const redirectPath = "https://localhost:3000/en/account/type";
 
   cookieStore.delete("redirectPath");
 
@@ -48,7 +47,7 @@ export async function GET(req: Request) {
     });
 
     return NextResponse.redirect(
-      encodeURI(`${process.env.NEXT_PUBLIC_LOCAL_ENV}${redirectPath}`)
+      encodeURI(`${process.env.NEXT_PUBLIC_LOCAL_ENV}/en/register`)
     );
   } catch (error) {
     return NextResponse.json({ error }, { status: 500 });

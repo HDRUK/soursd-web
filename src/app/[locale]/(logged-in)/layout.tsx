@@ -32,7 +32,7 @@ async function validateAccessToken(
   }
 
   if (response.status === 404) {
-    router.push("/account/type");
+    router.push("/en/register");
     return false;
   }
 
