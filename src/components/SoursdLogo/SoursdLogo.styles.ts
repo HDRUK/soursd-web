@@ -1,8 +1,8 @@
 import { css, styled, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import type { SourcdLogoProps } from ".";
+import type { SoursdLogoProps } from ".";
 
-export const StyledLogoContainer = styled(Box)<SourcdLogoProps>(
+export const StyledLogoContainer = styled(Box)<SoursdLogoProps>(
   ({ variant }) => css`
     display: ${variant === "titled" ? "flex" : "inherit"};
     flex-direction: column;

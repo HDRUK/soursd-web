@@ -20,10 +20,7 @@ const mockPayload = {
 const mockToken = faker.string.uuid();
 
 jest.mock("js-cookie", () => ({
-  get: () =>
-    JSON.stringify({
-      access_token: mockToken,
-    }),
+  get: () => mockToken,
 }));
 
 describe("Requests utils", () => {

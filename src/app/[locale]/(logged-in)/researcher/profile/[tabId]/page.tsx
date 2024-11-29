@@ -1,4 +1,3 @@
-import { withAuth } from "@/components/Auth";
 import { ConfigProps, withConfig } from "@/components/Config";
 import { PageContainer, PageSection, PageTitle } from "@/modules";
 import { Typography } from "@mui/material";
@@ -36,4 +35,4 @@ function Page({ params: { tabId }, config }: PageProps) {
   );
 }
 
-export default withConfig(withAuth(Page));
+export default withConfig(Page);

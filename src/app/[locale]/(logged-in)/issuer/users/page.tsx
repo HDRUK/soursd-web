@@ -1,4 +1,3 @@
-import { withAuth } from "@/components/Auth";
 import PageContainer from "@/modules/PageContainer";
 import Sections from "./components/Sections";
 
@@ -10,4 +9,4 @@ function Page() {
   );
 }
 
-export default withAuth(Page);
+export default Page;

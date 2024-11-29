@@ -2,7 +2,7 @@
 
 import { Paper, PaperProps } from "@mui/material";
 
-export interface PostitProps extends PaperProps {}
+export type PostitProps = PaperProps;
 
 export default function Postit({
   children,
