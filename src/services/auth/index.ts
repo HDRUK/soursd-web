@@ -1,15 +1,5 @@
-import postLogin from "./postLogin";
-import postLoginOTP from "./postLoginOTP";
-import postRegisterIssuer from "./postRegisterIssuer";
-import postRegisterResearcher from "./postRegisterResearcher";
-import postRegisterOrganisation from "./postRegisterOrganisation";
+import postRegister from "./postRegister";
 
-export {
-  postLogin,
-  postLoginOTP,
-  postRegisterIssuer,
-  postRegisterResearcher,
-  postRegisterOrganisation,
-};
+export { postRegister };
 
 export type * from "./types";
