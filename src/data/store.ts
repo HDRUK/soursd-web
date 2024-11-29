@@ -12,7 +12,7 @@ interface StoreState {
       history: string[];
       entries: Routes;
     };
-    auth?: Auth;
+    user?: User;
     organisation?: Organisation;
     issuer?: Issuer;
   };
@@ -57,11 +57,11 @@ const useStore = create<StoreState>((set, get) => ({
   setUser: (user: User) =>
     set(
       produce(state => {
-        state.config.auth.user = user;
+        state.config.user = user;
       })
     ),
   getUser: () => {
-    return get().config.auth?.user;
+    return get().config.user;
   },
   setOrganisation: (organisation: Organisation | undefined) =>
     set(

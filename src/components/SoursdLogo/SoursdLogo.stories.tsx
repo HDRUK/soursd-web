@@ -1,9 +1,9 @@
 import { Meta, StoryObj } from "@storybook/react";
-import SourcdLogo from "./SourcdLogo";
+import SoursdLogo from "./SoursdLogo";
 
-const meta: Meta<typeof SourcdLogo> = {
-  title: "Components/SourcdLogo",
-  component: SourcdLogo,
+const meta: Meta<typeof SoursdLogo> = {
+  title: "Components/SoursdLogo",
+  component: SoursdLogo,
   argTypes: {
     className: { control: "text" },
   },
@@ -11,7 +11,7 @@ const meta: Meta<typeof SourcdLogo> = {
 
 export default meta;
 
-type Story = StoryObj<typeof SourcdLogo>;
+type Story = StoryObj<typeof SoursdLogo>;
 
 export const Default: Story = {
   args: {

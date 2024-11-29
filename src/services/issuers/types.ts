@@ -23,10 +23,16 @@ type GetIssuersResponse = {
   data: Issuer[];
 };
 
+type PatchIssuerPayload = Partial<Issuer>;
+
+type PatchIssuerResponse = Issuer;
+
 export type {
   GetIssuerInviteResponse,
   GetIssuerResponse,
   GetIssuersResponse,
   SendIssuerInvitePayload,
   SendIssuerInviteResponse,
+  PatchIssuerPayload,
+  PatchIssuerResponse,
 };

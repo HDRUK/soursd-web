@@ -15,7 +15,7 @@ function isOrcIdScanning(user: User | undefined) {
 }
 
 function isOrcIdCompleted(user: User | undefined) {
-  return !!user.orcid_scanning_completed_at;
+  return !!user?.orcid_scanning_completed_at;
 }
 
 export {

@@ -1,6 +1,6 @@
 import { Typography, TypographyProps } from "@mui/material";
 
-export interface MessageDescriptionProps extends TypographyProps {}
+export type MessageDescriptionProps = TypographyProps;
 
 export default function MessageDescription({
   children,

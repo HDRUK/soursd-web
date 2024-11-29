@@ -7,6 +7,9 @@ export async function GET(req: Request) {
   const cookieStore = cookies();
   const { searchParams } = new URL(req.url);
   const code = searchParams.get("code");
+  const redirectPath = cookieStore.get("redirectPath") ?? { value: "/" };
+
+  cookieStore.delete("redirectPath");
 
   if (!code) {
     return NextResponse.json(
@@ -47,8 +50,10 @@ export async function GET(req: Request) {
       path: "/",
     });
 
-    return NextResponse.redirect(encodeURI("http://localhost:3000"));
-  } catch (error) {
+    return NextResponse.redirect(
+      encodeURI(`${process.env.NEXT_PUBLIC_LOCAL_ENV}${redirectPath.value}`)
+    );
+  } catch (_) {
     return NextResponse.json(
       { error: "Failed to exchange authorization code for tokens" },
       { status: 500 }

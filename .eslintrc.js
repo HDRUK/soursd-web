@@ -54,10 +54,20 @@ module.exports = {
     "no-useless-computed-key": "off",
     "no-use-before-define": "off",
     "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/no-empty-object-type": "off",
+    "@typescript-eslint/no-require-imports": "off",
     "react/jsx-filename-extension": [
       1,
       {
         extensions: [".ts", ".tsx", ".js", ".jsx"],
+      },
+    ],
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        argsIgnorePattern: "^_",
+        varsIgnorePattern: "^_",
+        caughtErrorsIgnorePattern: "^_",
       },
     ],
     "react/jsx-props-no-spreading": "off",

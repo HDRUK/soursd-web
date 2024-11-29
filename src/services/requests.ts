@@ -9,11 +9,11 @@ import { objectToQuerystring } from "@/utils/requests";
 import cookies from "js-cookie";
 
 function getHeadersWithAuthorisation(headers?: HeadersInit) {
-  const auth = JSON.parse(cookies.get("auth") || "{}");
+  const accessToken = cookies.get("access_token") || "";
 
   return {
-    ...(auth.access_token && {
-      Authorization: `Bearer ${auth.access_token}`,
+    ...(accessToken && {
+      Authorization: `Bearer ${accessToken}`,
     }),
     ...headers,
   };

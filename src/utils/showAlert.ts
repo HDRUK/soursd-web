@@ -65,7 +65,7 @@ export const showLoadingAlertWithPromise = async <T>(
     });
 
     return result;
-  } catch (error) {
+  } catch (_) {
     // Show error message
     Swal.fire({
       icon: "error",

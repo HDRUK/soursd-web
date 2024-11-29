@@ -1,3 +1,5 @@
+"use client";
+
 import { ROUTES } from "@/consts/router";
 import { ApplicationDataProvider } from "@/context/ApplicationData";
 import { getRoutes } from "@/utils/router";
@@ -9,9 +11,9 @@ type LayoutProps = PropsWithChildren<{
 
 export default function Layout({ children, params: { locale } }: LayoutProps) {
   const routes = getRoutes(ROUTES, locale);
-
   return (
     <ApplicationDataProvider
+      prefetchAuth={false}
       value={{
         routes,
         systemConfigData: {},

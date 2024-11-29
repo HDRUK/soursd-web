@@ -16,6 +16,7 @@ import mediaQuery from "css-mediaquery";
 import { NextIntlClientProvider } from "next-intl";
 import React, { ReactNode } from "react";
 import { CookieProvider } from "@/context/CookieContext/CookieContext";
+import userEvent, { UserEvent } from "@testing-library/user-event";
 
 const defineMatchMedia = (width: number) => {
   Object.defineProperty(window, "matchMedia", {
@@ -55,19 +56,26 @@ interface OptionProps
   wrapperProps: Record<string, unknown>;
 }
 
+interface UserRenderResults extends RenderResult {
+  user: UserEvent;
+}
+
 const customRender = (
   ui: React.ReactElement<
     unknown,
     string | React.JSXElementConstructor<unknown>
   >,
   options?: OptionProps
-): RenderResult => {
+): UserRenderResults => {
   const { wrapperProps, ...rest } = options || {};
 
-  return render(ui, {
-    wrapper: props => <Wrapper {...props} {...wrapperProps} />,
-    ...rest,
-  });
+  return {
+    ...render(ui, {
+      wrapper: props => <Wrapper {...props} {...wrapperProps} />,
+      ...rest,
+    }),
+    user: userEvent.setup(),
+  };
 };
 
 interface OptionHookProps
@@ -92,6 +100,7 @@ const customRenderHook = (
 };
 
 export * from "@testing-library/react";
+export * from "@testing-library/user-event";
 
 export {
   defineMatchMedia,

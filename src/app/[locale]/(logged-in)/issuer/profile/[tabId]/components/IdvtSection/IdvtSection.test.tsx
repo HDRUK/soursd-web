@@ -1,23 +1,30 @@
-import { act, render } from "@/utils/testUtils";
+import { act, fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 import { axe } from "jest-axe";
+import { FormProvider, useForm } from "react-hook-form";
 import IdvtSection, { IdvtSectionProps } from "./IdvtSection";
 
-const mockOnChange = jest.fn();
+const TestComponent = (props?: Partial<IdvtSectionProps>) => {
+  const methods = useForm<{ idvt: boolean }>({
+    defaultValues: {
+      idvt: false,
+    },
+  });
 
-const renderIdvtSection = (props?: Partial<IdvtSectionProps>) => {
-  return render(
-    <IdvtSection
-      switchProps={{
-        onChange: mockOnChange,
-      }}
-      {...props}
-    />
+  return (
+    <FormProvider {...methods}>
+      <IdvtSection
+        switchProps={{
+          name: "idvt",
+        }}
+        {...props}
+      />
+    </FormProvider>
   );
 };
 
 describe("<Details />", () => {
   it("has no accessibility validations", async () => {
-    const { container } = renderIdvtSection();
+    const { container } = render(<TestComponent />);
 
     let results;
 
@@ -26,5 +33,17 @@ describe("<Details />", () => {
     });
 
     expect(results).toHaveNoViolations();
+  });
+
+  it("changes the idvt value", async () => {
+    render(<TestComponent />);
+
+    const idvtRequired = screen.getByRole("checkbox");
+
+    fireEvent.click(idvtRequired);
+
+    await waitFor(() => {
+      expect((idvtRequired as HTMLInputElement).checked).toBe(true);
+    });
   });
 });
