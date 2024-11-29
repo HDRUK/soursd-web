@@ -2,7 +2,7 @@ enum PageTabs {
   USER = "user",
   DETAILS = "details",
   CONTACTS = "contacts",
-  APPROVALS = "approvals",
+  USERS = "users",
 }
 
 export { PageTabs };

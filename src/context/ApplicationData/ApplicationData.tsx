@@ -54,7 +54,6 @@ const ApplicationDataProvider = ({
     store.config.organisation,
     store.setOrganisation,
   ]);
-
   const setIssuer = useStore(store => store.setIssuer);
 
   const path = usePathname();
