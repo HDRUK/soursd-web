@@ -51,12 +51,17 @@ export default function Layout({ children, params: { locale } }: LayoutProps) {
   const routes = getRoutes(ROUTES, locale);
   const pathname = usePathname();
   const router = useRouter();
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [isChecked, setIsChecked] = useState<boolean>(false);
 
   useEffect(() => {
     const performAuthCheck = async () => {
       const isAuth = await validateAccessToken(pathname, router);
-      setIsLoggedIn(isAuth);
+
+      if (!isAuth) {
+        throw new Error("Unauthorised 401");
+      }
+
+      setIsChecked(isAuth);
     };
 
     performAuthCheck();
