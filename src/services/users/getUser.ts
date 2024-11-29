@@ -4,7 +4,7 @@ import { UserResponse } from "./types";
 
 export default async (
   id: string | number,
-  messages: ResponseTranslations
+  messages?: ResponseTranslations
 ): Promise<ResponseJson<UserResponse>> => {
   const response = await getRequest(
     `${process.env.NEXT_PUBLIC_API_V1_URL}/users/${id}`,
