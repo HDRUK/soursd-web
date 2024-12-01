@@ -208,6 +208,8 @@
     "affiliations": "Affiliations",
     "experience": "Experience",
     "training": "Training",
+    "profile": "Profile",
+    "completion": "Profile",
     "navigationAriaLabel": "Profile sections"
   },
   "ProfileCompleteStatus": {

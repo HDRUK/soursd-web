@@ -31,7 +31,7 @@ export default function Guidance({
 
   return (
     <StyledGuidance positionVertical={isMdDown}>
-      <Box sx={{ p: 4, flexGrow: 1 }}>{children}</Box>
+      <Box sx={{ pr: 4, flexGrow: 1 }}>{children}</Box>
       <Box
         sx={{
           width: `${isMdDown ? "100%" : "auto"}`,

@@ -26,31 +26,30 @@ async function validateAccessToken(pathname: string | null): Promise<boolean> {
 export default function Layout({ children, params: { locale } }: LayoutProps) {
   const routes = getRoutes(ROUTES, locale);
   const pathname = usePathname();
-  const [isChecked, setIsChecked] = useState<boolean>(false);
+  // const [isChecked, setIsChecked] = useState<boolean>(false);
 
-  useEffect(() => {
-    const performAuthCheck = async () => {
-      const isAuth = await validateAccessToken(pathname);
+  // useEffect(() => {
+  //   const performAuthCheck = async () => {
+  //     const isAuth = await validateAccessToken(pathname);
 
-      if (!isAuth) {
-        throw new Error("Unauthorised 401");
-      }
+  //     if (!isAuth) {
+  //       throw new Error("Unauthorised 401");
+  //     }
 
-      setIsChecked(isAuth);
-    };
+  //     setIsChecked(isAuth);
+  //   };
 
-    performAuthCheck();
-  }, [pathname]);
+  //   performAuthCheck();
+  // }, [pathname]);
 
   return (
-    isChecked && (
-      <ApplicationDataProvider
-        value={{
-          routes,
-          systemConfigData: {},
-        }}>
-        {children}
-      </ApplicationDataProvider>
-    )
+    <ApplicationDataProvider
+      value={{
+        routes,
+        systemConfigData: {},
+      }}
+      userId={8}>
+      {children}
+    </ApplicationDataProvider>
   );
 }

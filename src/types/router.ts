@@ -30,7 +30,7 @@ interface Routes {
   profileIssuerKeycards: RouteConfig;
   profileIssuerUsers: RouteConfig;
   profileResearcher: RouteConfig;
-  profileResearcherDetails: RouteConfig;
+  profileResearcherCompletion: RouteConfig;
   profileResearcherTraining: RouteConfig;
   profileResearcherExperience: RouteConfig;
   profileResearcherIdentity: RouteConfig;

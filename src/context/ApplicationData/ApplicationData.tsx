@@ -37,6 +37,7 @@ const useApplicationData = () => useContext(ApplicationDataContext);
 interface ApplicationDataProviderProps {
   children: ReactNode;
   value: ApplicationDataState;
+  userId: number;
 }
 
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
@@ -44,6 +45,7 @@ const NAMESPACE_TRANSLATION_APPLICATION = "Application";
 const ApplicationDataProvider = ({
   children,
   value,
+  userId,
 }: ApplicationDataProviderProps) => {
   const t = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
   const addUrlToHistory = useStore(store => store.addUrlToHistory);
@@ -78,14 +80,14 @@ const ApplicationDataProvider = ({
     isError: isUserError,
     error: userError,
   } = useQuery({
-    queryKey: ["getUser", user?.id],
+    queryKey: ["getUser", userId],
     queryFn: ({ queryKey }) =>
       getUser(queryKey[1], {
         error: {
           message: "getUserError",
         },
       }),
-    enabled: !!user?.id,
+    enabled: !!userId,
   });
 
   const {
@@ -152,7 +154,7 @@ const ApplicationDataProvider = ({
   const errorMessage = error || userError || organisationError || issuerError;
 
   const isFinishedLoading =
-    ((user?.id && user) || !user?.id) &&
+    ((userId && user) || !userId) &&
     ((user?.organisation_id && organisation) || !user?.organisation_id) &&
     !!systemConfigData?.data &&
     !isIssuerLoading;
@@ -161,13 +163,11 @@ const ApplicationDataProvider = ({
     <ApplicationDataContext.Provider value={providerValue}>
       {isAnyError && (
         <PageContainer>
-          {isAnyError && (
-            <OverlayCenterAlert>
-              {t.rich(errorMessage, {
-                contactLink: ContactLink,
-              })}
-            </OverlayCenterAlert>
-          )}
+          <OverlayCenterAlert>
+            {t.rich(errorMessage, {
+              contactLink: ContactLink,
+            })}
+          </OverlayCenterAlert>
         </PageContainer>
       )}
       {isFinishedLoading && children}

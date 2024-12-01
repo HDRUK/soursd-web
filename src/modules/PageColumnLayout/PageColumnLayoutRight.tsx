@@ -1,29 +1,17 @@
-"use client";
-
-import { Box, BoxProps, Divider, useTheme } from "@mui/material";
+import { GridProps, Grid } from "@mui/material";
 import { ReactNode } from "react";
 
-interface PageColumnLayoutRightProps extends BoxProps {
+interface PageColumnLayoutRightProps extends GridProps {
   children: ReactNode;
 }
 
 export default function PageColumnLayoutRight({
   children,
-  sx,
+  ...restProps
 }: PageColumnLayoutRightProps) {
-  const theme = useTheme();
-
   return (
-    <>
-      <Divider
-        orientation="vertical"
-        sx={{
-          [theme.breakpoints.down("md")]: {
-            display: "none",
-          },
-        }}
-      />
-      <Box sx={{ flexGrow: 1, ...sx }}>{children}</Box>
-    </>
+    <Grid item md={3} {...restProps}>
+      {children}
+    </Grid>
   );
 }

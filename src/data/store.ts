@@ -16,7 +16,6 @@ interface StoreState {
     organisation?: Organisation;
     issuer?: Issuer;
   };
-  setAuth: (auth: Auth) => void;
   setRoutes: (routes: Routes) => void;
   getUser: () => User | undefined;
   setUser: (user: User) => void;
@@ -46,12 +45,6 @@ const useStore = create<StoreState>((set, get) => ({
     set(
       produce(state => {
         state.config.entries = routes;
-      })
-    ),
-  setAuth: (auth: Auth) =>
-    set(
-      produce(state => {
-        state.config.auth = auth;
       })
     ),
   setUser: (user: User) =>
@@ -91,8 +84,7 @@ const useStore = create<StoreState>((set, get) => ({
 
 const useStoreHelpers = () => {
   const helpers = useStore(
-    ({ setAuth, setRoutes, getPreviousUrl, addUrlToHistory }) => ({
-      setAuth,
+    ({ setRoutes, getPreviousUrl, addUrlToHistory }) => ({
       getPreviousUrl,
       setRoutes,
       addUrlToHistory,

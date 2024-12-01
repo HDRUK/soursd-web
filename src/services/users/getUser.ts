@@ -16,5 +16,7 @@ export default async (
     }
   );
 
+  console.log("response", response);
+
   return handleJsonResponse(response, messages);
 };
