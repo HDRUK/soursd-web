@@ -11,7 +11,7 @@ export interface LegendProps {
 
 export default function Legend({ items }: LegendProps) {
   return (
-    <Box sx={{ display: "flex", gap: 2 }}>
+    <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
       {items.map(({ icon, text }) => (
         <Text iconSize="40px" startIcon={icon}>
           {text}
