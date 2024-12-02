@@ -22,7 +22,7 @@ export default function TabsSections() {
   return (
     <Box sx={{ borderBottom: 1, borderColor: "divider", width: "100%" }}>
       <Tabs
-        value={params?.tabId}
+        value={params?.tabId || PageTabs.DETAILS}
         aria-label={t("navigationAriaLabel")}
         role="navigation"
         indicatorColor="secondary"
@@ -31,7 +31,7 @@ export default function TabsSections() {
           label={<Text>{t("details")}</Text>}
           href={routes.profileResearcherDetails.path}
           component={Link}
-          value={PageTabs.AFFILIATIONS}
+          value={PageTabs.DETAILS}
         />
         <Tab
           label={

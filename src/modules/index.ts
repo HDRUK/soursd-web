@@ -6,4 +6,12 @@ import PageSection from "./PageSection";
 import PageContent from "./PageContent";
 import PageGuidance from "./PageGuidance";
 
-export { Footer, PageContainer, Header, PageTitle, PageSection, PageContent };
+export {
+  Footer,
+  PageContainer,
+  Header,
+  PageTitle,
+  PageSection,
+  PageContent,
+  PageGuidance,
+};

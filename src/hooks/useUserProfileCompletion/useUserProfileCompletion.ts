@@ -55,7 +55,7 @@ export default function useProfileCompletion() {
   });
 
   const isCategoryCompleted = (category: UserProfileCompletionCategories) => {
-    let currentState = JSON.parse(user?.profile_steps_completed || "{}");
+    const currentState = JSON.parse(user?.profile_steps_completed || "{}");
 
     return (
       !Object.keys(currentState[category] || {}).some((key: string) => {
@@ -65,7 +65,7 @@ export default function useProfileCompletion() {
   };
 
   const update = useCallback(
-    async <T,>(
+    async <T>(
       formFields: T,
       category: UserProfileCompletionCategories,
       userData?: User

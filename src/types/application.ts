@@ -1,6 +1,6 @@
 import { FileStatus, FileType } from "@/consts/files";
 import { ROUTES } from "@/consts/router";
-import { ProfileCompletionCategories, UserGroup } from "@/consts/user";
+import { UserProfileCompletionCategories, UserGroup } from "@/consts/user";
 
 interface File {
   id: number;
@@ -53,12 +53,12 @@ type Approval = {
 };
 
 type UserProfileCompletionSchema = Record<
-  ProfileCompletionCategories,
+  UserProfileCompletionCategories,
   {
     fields: {
       name: string;
       required?: boolean;
-    }[]
+    }[];
   }
 >;
 
@@ -202,7 +202,7 @@ export type {
   OrganisationIdvt,
   User,
   ResearcherEducation,
-  ResearcherAccreditation,v
+  ResearcherAccreditation,
   ResearcherEmployment,
   ResearcherEndorsement,
   ResearcherTraining,

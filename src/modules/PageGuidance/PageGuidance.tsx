@@ -1,7 +1,9 @@
 import Guidance, { GuidanceProps } from "@/components/Guidance";
-import { ReactNode } from "react";
-import { PageContent, PageTitle, PageSection } from "@/modules";
 import { Typography } from "@mui/material";
+import { ReactNode } from "react";
+import PageContent from "../PageContent";
+import PageSection from "../PageSection";
+import PageTitle from "../PageTitle";
 
 interface PageGuidanceProps extends GuidanceProps {
   title: ReactNode;

@@ -1,7 +1,7 @@
 "use client";
 
 import { ROUTES } from "@/consts/router";
-import { Auth, Issuer, Organisation, User } from "@/types/application";
+import { Issuer, Organisation, User } from "@/types/application";
 import { Routes } from "@/types/router";
 import { produce } from "immer";
 import { create } from "zustand";

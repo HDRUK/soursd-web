@@ -1,7 +1,5 @@
-import { useStore } from "@/data/store";
 import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
-import PageGuidance from "@/modules/PageGuidance";
-import { useTheme } from "@mui/material";
+import { PageGuidance } from "@/modules";
 import { useTranslations } from "next-intl";
 import Completion from "../Completion";
 import UserInfo from "../UserInfo";

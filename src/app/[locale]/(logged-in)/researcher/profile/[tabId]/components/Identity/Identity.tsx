@@ -11,6 +11,8 @@ import { useStore } from "@/data/store";
 import useFileScanned from "@/hooks/useFileScanned/useFileScanned";
 import useQueryRefetch from "@/hooks/useQueryRefetch";
 import useUserProfileCompletion from "@/hooks/useUserProfileCompletion";
+import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
+import { PageGuidance } from "@/modules";
 import postFile from "@/services/files/postFile";
 import { FilePayload } from "@/services/files/types";
 import { getOrganisations } from "@/services/organisations";
@@ -39,8 +41,6 @@ import { useTranslations } from "next-intl";
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import DetailsCV from "../DetailsCV";
-import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
-import PageGuidance from "@/modules/PageGuidance";
 
 export interface IdentityFormValues {
   first_name: string;

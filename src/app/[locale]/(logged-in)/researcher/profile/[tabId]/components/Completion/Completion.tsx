@@ -64,7 +64,7 @@ export default function Completion() {
         </Button>
       ),
     },
-  ].filter(({ category }) => !!category);
+  ];
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
@@ -74,7 +74,9 @@ export default function Completion() {
             <Box sx={{ flexGrow: 1 }}>{title}</Box>
             <Box>
               <Box component="span" sx={{ mr: 3 }}>
-                {category?.score}% complete
+                {t("completedScore", {
+                  score: category?.score || 0,
+                })}
               </Box>{" "}
               {action}
             </Box>

@@ -11,7 +11,6 @@ import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { useTranslations } from "next-intl";
 import { useEffect } from "react";
-import Swal from "sweetalert2";
 
 const NAMESPACE_TRANSLATIONS = "NotificationsMenu";
 

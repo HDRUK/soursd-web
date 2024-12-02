@@ -1,5 +1,5 @@
 import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
-import PageGuidance from "@/modules/PageGuidance";
+import { PageGuidance } from "@/modules";
 import { useTranslations } from "next-intl";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
