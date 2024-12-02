@@ -42,6 +42,14 @@ const ROUTES: Routes = {
     path: "/issuer/profile/details",
     permissions: [UserGroup.ISSUERS],
   },
+  profileIssuerProjects: {
+    path: "/issuer/profile/projects",
+    permissions: [UserGroup.ISSUERS],
+  },
+  profileIssuerOrganisations: {
+    path: "/issuer/profile/organisations",
+    permissions: [UserGroup.ISSUERS],
+  },
   profileIssuerConfiguration: {
     path: "/issuer/profile/configuration",
     permissions: [UserGroup.ISSUERS],

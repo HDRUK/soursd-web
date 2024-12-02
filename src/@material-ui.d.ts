@@ -16,6 +16,7 @@ interface ColorOverrides {
   inverseSurface: true;
   greyLight: true;
   postitYellow: true;
+  mint: true;
 }
 
 declare module "@mui/material/styles/createPalette" {
@@ -31,6 +32,7 @@ declare module "@mui/material/styles/createPalette" {
     inverseSurface: SimplePaletteColorOptions;
     greyLight: SimplePaletteColorOptions;
     postitYellow: SimplePaletteColorOptions;
+    mint: SimplePaletteColorOptions;
   }
 
   interface Palette extends CustomPalette {}
@@ -81,6 +83,16 @@ declare module "@mui/material/IconButton" {
     variant?: "contained" | "default";
   }
   interface IconButtonOwnProps extends CustomIconButtonProps {}
+}
+
+declare module "@mui/material/SvgIcon" {
+  type AugmentedColorPaletteOptions =
+    import("@mui/material/styles/createPalette").AugmentedColorPaletteOptions;
+
+  interface CustomSvgIconProps {
+    color?: AugmentedColorPaletteOptions | string;
+  }
+  interface SvgIconOwnProps extends CustomIconProps {}
 }
 
 declare module "@mui/material/Divider" {

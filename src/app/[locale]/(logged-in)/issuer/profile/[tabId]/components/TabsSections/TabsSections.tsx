@@ -9,6 +9,8 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined";
 import CreditCardOutlinedIcon from "@mui/icons-material/CreditCardOutlined";
 import EditNoteOutlinedIcon from "@mui/icons-material/EditNoteOutlined";
+import ContentPasteIcon from "@mui/icons-material/ContentPaste";
+import LanguageIcon from "@mui/icons-material/Language";
 import { PageTabs } from "../../consts/tabs";
 
 const NAMESPACE_TRANSLATION_PROFILE = "IssuerProfile";
@@ -34,6 +36,22 @@ export default function TabsSections() {
           href={routes.profileIssuerDetails.path}
           component={Link}
           value={PageTabs.DETAILS}
+          iconPosition="start"
+        />
+        <Tab
+          icon={<LanguageIcon />}
+          label={t("projects")}
+          href={routes.profileIssuerProjects.path}
+          component={Link}
+          value={PageTabs.PROJECTS}
+          iconPosition="start"
+        />
+        <Tab
+          icon={<EditNoteOutlinedIcon />}
+          label={t("organisations")}
+          href={routes.profileIssuerOrganisations.path}
+          component={Link}
+          value={PageTabs.ORGANISATIONS}
           iconPosition="start"
         />
         <Tab

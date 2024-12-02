@@ -5,7 +5,7 @@ export interface TextProps extends TypographyProps {
   children: ReactNode;
   startIcon?: ReactNode;
   endIcon?: ReactNode;
-  iconSize?: "none";
+  iconSize?: string;
 }
 
 export default function Text({
@@ -14,6 +14,7 @@ export default function Text({
   endIcon,
   sx,
   variant,
+  iconSize,
   ...restProps
 }: TextProps) {
   return (
@@ -25,9 +26,9 @@ export default function Text({
         alignItems: "center",
         gap: 0.5,
         ["> svg, img"]: {
-          fontSize: "1.25em",
-          height: "1.25em",
-          width: "1.25em",
+          fontSize: iconSize,
+          height: iconSize,
+          width: iconSize,
         },
         ...sx,
       }}>

@@ -204,6 +204,8 @@
     "orcIdSuccessDescription": "Employment, educaton and qualifications has been gathered from your ORCiD profile. You will need to reload the page to see the updates."
   },
   "Profile": {
+    "projects": "Projects",
+    "orgnisations": "Organisations",
     "completedScore": "{score}% complete",
     "title": "Profile",
     "details": "Details",
