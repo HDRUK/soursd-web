@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import Legend from ".";
 import {
-  IdentityVerifiedIcon,
-  ApprovedUserIcon,
-  ApprovedTrainingIcon,
   ApprovedIcon,
+  ApprovedTrainingIcon,
+  ApprovedUserIcon,
+  IdentityVerifiedIcon,
   PendingIcon,
 } from "@/consts/icons";
+import Legend from ".";
 
 const meta = {
   title: "components/Legend",

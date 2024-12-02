@@ -1,16 +1,15 @@
 "use client";
 
 import { useApplicationData } from "@/context/ApplicationData";
+import CreditCardOutlinedIcon from "@mui/icons-material/CreditCardOutlined";
+import EditNoteOutlinedIcon from "@mui/icons-material/EditNoteOutlined";
+import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined";
+import LanguageIcon from "@mui/icons-material/Language";
+import SettingsIcon from "@mui/icons-material/Settings";
 import { Box, Tab, Tabs } from "@mui/material";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import SettingsIcon from "@mui/icons-material/Settings";
-import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined";
-import CreditCardOutlinedIcon from "@mui/icons-material/CreditCardOutlined";
-import EditNoteOutlinedIcon from "@mui/icons-material/EditNoteOutlined";
-import ContentPasteIcon from "@mui/icons-material/ContentPaste";
-import LanguageIcon from "@mui/icons-material/Language";
 import { PageTabs } from "../../consts/tabs";
 
 const NAMESPACE_TRANSLATION_PROFILE = "IssuerProfile";
