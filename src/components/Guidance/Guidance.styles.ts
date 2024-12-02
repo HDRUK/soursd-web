@@ -6,6 +6,7 @@ export const StyledGuidance = styled("div")<{ positionVertical: boolean }>(
   ({ positionVertical }) => css`
     display: flex;
     flex-direction: ${positionVertical ? "column" : "row"};
+    flex-grow: 1;
     position: relative;
   `
 );

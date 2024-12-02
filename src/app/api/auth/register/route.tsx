@@ -31,7 +31,7 @@ export async function GET(req: Request) {
       }),
       { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
     );
-    console.log("here");
+
     const { access_token, refresh_token } = response.data;
 
     cookieStore.set("access_token", access_token, {

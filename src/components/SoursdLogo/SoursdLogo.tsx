@@ -8,21 +8,19 @@ const NAMESPACE_TRANSLATIONS_SOURSD_LOGO = "SoursdLogo";
 
 export interface SoursdLogoProps extends BoxProps {
   variant?: "basic" | "titled";
-  width?: number;
-  height?: number;
+  size?: number;
 }
 
 export default function SoursdLogo({
   variant = "basic",
-  width = 90,
-  height = 90,
+  size = 90,
   ...restProps
 }: SoursdLogoProps) {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_SOURSD_LOGO);
 
   return (
     <StyledLogoContainer variant={variant} {...restProps}>
-      <Image src={image} alt="SOURSD" width={width} height={height} priority />
+      <Image src={image} alt="SOURSD" width={size} height={size} priority />
       {variant === "titled" && (
         <StyledLogoTitle variant="h1">{t("logoTitle")}</StyledLogoTitle>
       )}

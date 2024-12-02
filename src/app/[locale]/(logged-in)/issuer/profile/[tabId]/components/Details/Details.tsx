@@ -102,13 +102,14 @@ export default function Details({ issuer }: DetailsProps) {
   return (
     <>
       <Postit sx={{ mx: "auto", mb: 7 }}>
-        <Typography variant="h4">
+        <Typography variant="h4" sx={{ mb: 1 }}>
           {tProfile("uniqueIdentifierTitle")}
         </Typography>
         <Typography
           sx={{
             fontSize: theme.typography.h4.fontSize,
             fontWeight: 500,
+            mb: 1,
           }}>
           {issuer.unique_identifier}
         </Typography>

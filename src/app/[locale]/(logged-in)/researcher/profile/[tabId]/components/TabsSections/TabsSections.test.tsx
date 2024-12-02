@@ -1,4 +1,4 @@
-import { act, render, screen } from "@/utils/testUtils";
+import { act, render, screen, waitFor } from "@/utils/testUtils";
 import { axe } from "jest-axe";
 import { useParams } from "next/navigation";
 import TabsSections from "./TabsSections";
@@ -24,12 +24,14 @@ describe("<TabsSections />", () => {
     expect(results).toHaveNoViolations();
   });
 
-  it("shows default tab is selected", () => {
+  it("shows default tab is selected", async () => {
     renderTabs();
 
-    expect(screen.getByRole("tab", { selected: true }).textContent).toEqual(
-      "Details"
-    );
+    await waitFor(() => {
+      expect(screen.getByRole("tab", { selected: true }).textContent).toEqual(
+        "Details"
+      );
+    });
   });
 
   it("shows profile is complete", () => {
