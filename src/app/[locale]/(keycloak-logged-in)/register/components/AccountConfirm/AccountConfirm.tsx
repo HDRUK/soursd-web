@@ -21,7 +21,7 @@ import {
 import { useRouter } from "next/navigation";
 import { useApplicationData } from "@/context/ApplicationData";
 import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
-import AccountOption from "./AccountOption";
+import AccountOption from "../AccountOption";
 
 const NAMESPACE_TRANSLATIONS_PROFILE = "Register";
 
@@ -82,7 +82,7 @@ export default function AccountConfirm() {
           <AccountOption
             icon={PeopleIcon}
             label={t("repOrgButton")}
-            handleClick={handleSelect}
+            onClick={handleSelect}
             name={AccountType.ORGANISATION}
             selected={selected}
           />
@@ -90,7 +90,7 @@ export default function AccountConfirm() {
           <AccountOption
             icon={PersonIcon}
             label={t("repMyselfButton")}
-            handleClick={handleSelect}
+            onClick={handleSelect}
             name={AccountType.USER}
             selected={selected}
           />

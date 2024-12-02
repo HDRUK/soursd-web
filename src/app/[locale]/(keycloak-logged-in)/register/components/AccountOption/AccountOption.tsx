@@ -7,7 +7,7 @@ import { AccountType } from "@/types/accounts";
 interface AccountOptionProps {
   icon: React.ElementType;
   label: string;
-  handleClick: (name: AccountType) => void;
+  onClick: (name: AccountType) => void;
   name: AccountType;
   selected: AccountType | null;
 }
@@ -15,7 +15,7 @@ interface AccountOptionProps {
 const AccountOption: React.FC<AccountOptionProps> = ({
   icon,
   label,
-  handleClick,
+  onClick,
   name,
   selected,
 }) => {
@@ -23,7 +23,7 @@ const AccountOption: React.FC<AccountOptionProps> = ({
   return (
     <Button
       variant={selected === name ? "contained" : "outlined"}
-      onClick={() => handleClick(name)}
+      onClick={() => onClick(name)}
       sx={{
         borderRadius: 2,
         border: 2,

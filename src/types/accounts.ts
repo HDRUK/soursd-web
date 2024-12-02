@@ -1,7 +1,7 @@
 enum AccountType {
   USER = "user",
   ORGANISATION = "organisation",
-  custodian = "custodian",
+  CUSTODIAN = "custodian",
 }
 
 export { AccountType };
