@@ -70,7 +70,13 @@ export default function Completion() {
     <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
       {sections.map(({ title, category, action }) => {
         return (
-          <Box sx={{ display: "flex" }}>
+          <Box
+            sx={{
+              display: {
+                xs: "static",
+                md: "flex",
+              },
+            }}>
             <Box sx={{ flexGrow: 1 }}>{title}</Box>
             <Box>
               <Box component="span" sx={{ mr: 3 }}>
