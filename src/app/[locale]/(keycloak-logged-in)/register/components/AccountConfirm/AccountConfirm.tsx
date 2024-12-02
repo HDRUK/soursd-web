@@ -51,7 +51,7 @@ export default function AccountConfirm() {
     if (!selected) return;
     mutateAsync({ account_type: selected }).then(() => {
       // temp
-      router.push(`/en/${routes.homepage.path}`);
+      router.push(routes.homepage.path);
     });
   };
 
