@@ -18,57 +18,29 @@ export default function Completion() {
     {
       title: t(PageTabs.IDENTITY),
       category: profileCompletedAt[UserProfileCompletionCategories.IDENTITY],
-      action: (
-        <Button
-          component="a"
-          href={routes.profileResearcherIdentity.path}
-          variant="contained">
-          Continue
-        </Button>
-      ),
+      href: routes.profileResearcherIdentity.path,
     },
     {
       title: t(PageTabs.AFFILIATIONS),
       category:
         profileCompletedAt[UserProfileCompletionCategories.AFFILIATIONS],
-      action: (
-        <Button
-          component="a"
-          href={routes.profileResearcherAffiliations.path}
-          variant="contained">
-          Continue
-        </Button>
-      ),
+      href: routes.profileResearcherAffiliations.path,
     },
     {
       title: t(PageTabs.EXPERIENCE),
       catgeory: profileCompletedAt[UserProfileCompletionCategories.EXPERIENCE],
-      action: (
-        <Button
-          component="a"
-          href={routes.profileResearcherExperience.path}
-          variant="contained">
-          Continue
-        </Button>
-      ),
+      href: routes.profileResearcherExperience.path,
     },
     {
       title: t(PageTabs.TRAINING),
       category: profileCompletedAt[UserProfileCompletionCategories.TRAINING],
-      action: (
-        <Button
-          component="a"
-          href={routes.profileResearcherTraining.path}
-          variant="contained">
-          Continue
-        </Button>
-      ),
+      href: routes.profileResearcherTraining.path,
     },
   ];
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-      {sections.map(({ title, category, action }) => {
+      {sections.map(({ title, category, href }) => {
         return (
           <Box
             sx={{
@@ -84,7 +56,9 @@ export default function Completion() {
                   score: category?.score || 0,
                 })}
               </Box>{" "}
-              {action}
+              <Button component="a" href={href} variant="contained">
+                {t("continueLinkText")}
+              </Button>
             </Box>
           </Box>
         );

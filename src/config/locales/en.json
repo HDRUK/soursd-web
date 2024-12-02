@@ -221,7 +221,8 @@
     "cvUploadFailed": "There was a problem uploading your CV. Please check the file size and try again or alternativley contact us at <contactLink></contactLink>",
     "noCvUploaded": "No CV uploaded",
     "profileCompletedTitle": "Your profile has been completed",
-    "profileCompletedDescription": "You have completed all the mandatory fields required for your profile to be considered 'complete'. This will be flagged to Data Custodians when they view your user details."
+    "profileCompletedDescription": "You have completed all the mandatory fields required for your profile to be considered 'complete'. This will be flagged to Data Custodians when they view your user details.",
+    "continueLinkText": "Continue"
   },
   "ProfileCompleteStatus": {
     "profileComplete": "Profile complete",
