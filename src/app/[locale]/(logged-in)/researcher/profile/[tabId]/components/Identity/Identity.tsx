@@ -116,7 +116,7 @@ export default function Identity() {
     async ({ target: { files } }: ChangeEvent<HTMLInputElement>) => {
       setIsFileSizeTooBig(false);
 
-      if (files) {
+      if (files?.[0]) {
         if (files[0].size <= MAX_UPLOAD_SIZE_BYTES) {
           await mutateFileAsync(() => {
             const file = new FormData();
