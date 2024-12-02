@@ -1,7 +1,9 @@
-import { Issuer } from "@/types/application";
+import { DataCustodian } from "@/types/application";
 import { faker } from "@faker-js/faker";
 
-const mockedIssuer = (issuer?: Partial<Issuer>): Issuer => ({
+const mockedDataCustodian = (
+  dataCustodian?: Partial<DataCustodian>
+): DataCustodian => ({
   id: 1,
   contact_email: faker.internet.email(),
   idvt_required: false,
@@ -13,7 +15,7 @@ const mockedIssuer = (issuer?: Partial<Issuer>): Issuer => ({
   created_at: faker.date.past().toISOString(),
   updated_at: faker.date.recent().toISOString(),
   name: faker.company.name(),
-  ...issuer,
+  ...dataCustodian,
 });
 
-export { mockedIssuer };
+export { mockedDataCustodian };

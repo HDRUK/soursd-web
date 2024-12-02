@@ -30,13 +30,13 @@ describe("Route utils", () => {
     it("is allowed", async () => {
       const auth = mockedUserAuth({
         user: mockedUser({
-          user_group: UserGroup.RESEARCHERS,
+          user_group: UserGroup.USERS,
         }),
       });
 
-      expect(
-        isRouteAllowed("/researcher/profile/details", ROUTES, auth)
-      ).toEqual(true);
+      expect(isRouteAllowed("/user/profile/details", ROUTES, auth)).toEqual(
+        true
+      );
     });
 
     it("is allowed", async () => {
@@ -46,9 +46,9 @@ describe("Route utils", () => {
         }),
       });
 
-      expect(
-        isRouteAllowed("/researcher/profile/details", ROUTES, auth)
-      ).toEqual(false);
+      expect(isRouteAllowed("/user/profile/details", ROUTES, auth)).toEqual(
+        false
+      );
     });
   });
 });

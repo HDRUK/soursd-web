@@ -6,14 +6,14 @@
   "Application": {
     "getSystemConfigError": "There was a problem loading the application. Please try again or contact us at <contactLink></contactLink>",
     "getUserError": "Unable to load your user details. Please try again or contact us at <contactLink></contactLink>",
-    "researcher": "Researcher",
+    "user": "User",
     "organisation": "Organisation",
-    "issuer": "Data Custodian",
+    "dataCustodian": "Data Custodian",
     "companyNumberAbbr": "CRN",
     "getOrganisationError": "There was a problem loading your organisation. Please try again or contact us at <contactLink></contactLink>",
-    "getIssuerError": "There was a problem loading your Data Custodian. Please try again or contact us at <contactLink></contactLink>"
+    "getDataCustodianError": "There was a problem loading your Data Custodian. Please try again or contact us at <contactLink></contactLink>"
   },
-  "IssuerProfile": {
+  "DataCustodianProfile": {
     "uniqueIdentifierTitle": "SOURSD Identifier",
     "uniqueIdentifierCaption": "This ‘key’ represents you as a Data Custodian within SOURSD. This is unique to you! Any time SOURSD sends information to you, or activates a callback, this identifier will be sent along with the payload. Meaning you can always trust the source of information.",
     "details": "Profile",
@@ -83,7 +83,7 @@
     "ceCertificationNumberRequiredInvalid": "Certification number is invalid",
     "countyRequiredInvalid": "County is required",
     "countryRequiredInvalid": "Country is required",
-    "issuerRequiredInvalid": "Data Custodian is required",
+    "dataCustodianRequiredInvalid": "Data Custodian is required",
     "orcIdRequiredInvalid": "Orc id is required",
     "orcIdFormatInvalid": "Orc id should follow the format 0000-0000-0000-0000",
     "emailPlaceholder": "Email",
@@ -174,18 +174,6 @@
     "noDataVerification": "Could not find any data for this verification code. Please contact us at <contactLink></contactLink>",
     "getByInviteCodeError": "There has been a problem getting your details. Please contact us at <contactLink></contactLink>"
   },
-  "SignupFormIssuer": {
-    "title": "Data Custodian sign Up"
-  },
-  "SignupFormOrganisation": {
-    "titleDetails": "Organisation sign Up",
-    "titleOtherDetails": "Other details",
-    "titleContacts": "Additional contacts"
-  },
-  "SignupFormResearcher": {
-    "title": "Researcher sign up",
-    "noData": "There has been an issue getting some of the required information for the sign up process. Please contact us at <contactLink></contactLink>"
-  },
   "Cv": {
     "fileMaxSize": "{size} Max size",
     "fileDownload": "Download CV",
@@ -238,11 +226,11 @@
     "projects": "Projects",
     "training": "Training"
   },
-  "ResearcherDetails": {
-    "getUserDetailsForIssuerError": "Couldn't get the user's details"
+  "UserDetails": {
+    "getUserDetailsForDataCustodianError": "Couldn't get the user's details"
   },
   "OrganisationDetails": {
-    "getOrganisationDetailsForIssuerError": "Couldn't get the organisation's details"
+    "getOrganisationDetailsForDataCustodianError": "Couldn't get the organisation's details"
   },
   "Permissions": {
     "title": "Permissions",
@@ -315,7 +303,7 @@
     "togglePanel": "Toggle guidance panel"
   },
   "Pages": {
-    "ProfileIssuer": {
+    "ProfileDataCustodian": {
       "title": "Profile"
     }
   },
@@ -349,7 +337,7 @@
     "issuerInviteButton": "Send Invite",
     "systemConfigBody": "Update or add new System Configuration Parameters",
     "systemConfigSubtitle": "Parameters are in the form of NameValue pairs",
-    "noDataIssuers": "Unable to retrieve known Data Custodians. Please contact us at <contactLink></contactLink>"
+    "noDataCustodians": "Unable to retrieve known Data Custodians. Please contact us at <contactLink></contactLink>"
   },
   "SoursdLogo": {
     "logoTitle": "SOURSD"

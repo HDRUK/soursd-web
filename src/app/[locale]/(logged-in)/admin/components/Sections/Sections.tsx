@@ -1,6 +1,6 @@
 "use client";
 
-import sendInvite from "@/services/issuers/sendInvite";
+import sendInvite from "@/services/dataCustodians/sendInvite";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
@@ -11,8 +11,7 @@ import ContactLink from "@/components/ContactLink";
 import OverlayCenter from "@/components/OverlayCenter";
 import OverlayCenterAlert from "@/components/OverlayCenterAlert";
 import yup from "@/config/yup";
-import getIssuers from "@/services/issuers/getIssuers";
-import { SendIssuerInvitePayload } from "@/services/issuers/types";
+import { SendIssuerInvitePayload } from "@/services/dataCustodians/types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
   Box,
@@ -27,6 +26,7 @@ import {
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { FormProvider, useForm } from "react-hook-form";
+import getDataCustodians from "@/services/dataCustodians/getDataCustodians";
 import { EmailTemplates } from "../../consts/emailTemplates";
 import { EmailTypes } from "../../consts/emailTypes";
 
@@ -70,7 +70,7 @@ export default function Sections() {
     async (payload: SendIssuerInvitePayload) => {
       mutateInviteAsync({
         to: payload.to,
-        type: EmailTypes.ISSUER,
+        type: EmailTypes.DATA_CUSTODIAN,
         identifier: EmailTemplates.ISSUER_INVITE,
       });
     },
@@ -78,20 +78,20 @@ export default function Sections() {
   );
 
   const {
-    isError: isGetIssuersError,
-    isLoading: isGetIssuersLoading,
-    data: issuersData,
+    isError: isGetDataCustodiansError,
+    isLoading: isGetDataCustodiansLoading,
+    data: dataCustodianData,
   } = useQuery({
-    queryKey: ["getIssuers"],
+    queryKey: ["getDataCustodians"],
     queryFn: () =>
-      getIssuers({
-        error: { message: "noDataIssuers" },
+      getDataCustodians({
+        error: { message: "noDataCustodians" },
       }),
   });
 
   const { register, handleSubmit } = methods;
 
-  if (isGetIssuersLoading) {
+  if (isGetDataCustodiansLoading) {
     return (
       <OverlayCenter sx={{ color: "#fff" }}>
         <CircularProgress color="inherit" />
@@ -99,10 +99,10 @@ export default function Sections() {
     );
   }
 
-  if (isGetIssuersError) {
+  if (isGetDataCustodiansError) {
     return (
       <OverlayCenterAlert>
-        {t.rich("noDataIssuers", {
+        {t.rich("noDataCustodians", {
           contactLink: ContactLink,
         })}
       </OverlayCenterAlert>
@@ -135,10 +135,10 @@ export default function Sections() {
                     id="issuer-invite-select"
                     labelId="issuer-select-label"
                     inputProps={{
-                      "aria-label": "issuers",
+                      "aria-label": "data-custodians",
                     }}
                     label="Select Issuer...">
-                    {issuersData?.data.data.map(({ id, name }) => (
+                    {dataCustodianData?.data.data.map(({ id, name }) => (
                       <MenuItem value={id} key={id}>
                         {name}
                       </MenuItem>

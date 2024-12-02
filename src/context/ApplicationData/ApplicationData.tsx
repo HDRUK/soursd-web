@@ -6,7 +6,7 @@ import { ISSUER_ID, VALIDATION_SCHEMA_KEY } from "@/consts/application";
 import { ROUTES } from "@/consts/router";
 import { useStore } from "@/data/store";
 import PageContainer from "@/modules/PageContainer";
-import { getIssuer } from "@/services/issuers";
+import { getIssuer } from "@/services/dataCustodians";
 import { getOrganisation } from "@/services/organisations";
 import { getSystemConfig } from "@/services/system_config";
 import { getUser } from "@/services/users";

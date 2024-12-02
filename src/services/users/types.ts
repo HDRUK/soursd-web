@@ -1,16 +1,6 @@
 import { UserProvider } from "@/consts/user";
 import { User } from "@/types/application";
 
-interface ResearcherInviteResponse {
-  id: number;
-  name: string;
-  contact_email: string;
-  invite_sent_at: string;
-  invite_accepted_at: string;
-  enabled: number;
-  organisation_id: number;
-}
-
 type PatchUserPayload = Partial<User>;
 
 interface UpdatePermissonsPayload {
@@ -50,7 +40,6 @@ type PostUserResponse = any;
 export type {
   PostUserPayload,
   PostUserResponse,
-  ResearcherInviteResponse,
   UpdatePermissonsPayload,
   PatchUserPayload,
   PatchUserResponse,

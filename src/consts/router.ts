@@ -10,73 +10,67 @@ const ROUTES: Routes = {
   logout: {
     path: "/logout",
   },
-  signup: {
-    path: "/researcher/signup",
-  },
-  signupIssuer: {
-    path: "/issuer/signup",
-  },
-  signupOrganistion: {
-    path: "/organisation/signup",
+  register: {
+    path: "/register",
   },
   homepage: {
     path: "/homepage",
   },
-  profileIssuer: {
-    path: "/issuer/profile",
-    permissions: [UserGroup.ISSUERS],
+  profileDataCustodian: {
+    path: "/data-custodian/profile",
+    permissions: [UserGroup.DATA_CUSTODIAN],
   },
-  usersIssuer: {
-    path: "/issuer/users",
-    permissions: [UserGroup.ISSUERS],
+  usersDataCustodian: {
+    path: "/data-custodian/users",
+    permissions: [UserGroup.DATA_CUSTODIAN],
   },
-  permissionsResearcherIssuer: {
-    path: "/issuer/permissions/user",
-    permissions: [UserGroup.ISSUERS],
+  permissionsUserDataCustodian: {
+    path: "/data-custodian/permissions/user",
+    permissions: [UserGroup.DATA_CUSTODIAN],
   },
-  permissionsOrganisationIssuer: {
-    path: "/issuer/permissions/organisation",
-    permissions: [UserGroup.ISSUERS],
+  permissionsOrganisationDataCustodian: {
+    path: "/data-custodian/permissions/organisation",
+    permissions: [UserGroup.DATA_CUSTODIAN],
   },
-  profileIssuerDetails: {
-    path: "/issuer/profile/details",
-    permissions: [UserGroup.ISSUERS],
+  profileDataCustodianDetails: {
+    path: "/data-custodian/profile/details",
+    permissions: [UserGroup.DATA_CUSTODIAN],
   },
-  profileIssuerConfiguration: {
-    path: "/issuer/profile/configuration",
-    permissions: [UserGroup.ISSUERS],
+  profileDataCustodianConfiguration: {
+    path: "/data-custodian/profile/configuration",
+    permissions: [UserGroup.DATA_CUSTODIAN],
   },
-  profileIssuerUsers: {
-    path: "/issuer/profile/users",
-    permissions: [UserGroup.ISSUERS],
+  profileDataCustodianUsers: {
+    path: "/data-custodian/profile/users",
+    permissions: [UserGroup.DATA_CUSTODIAN],
   },
-  profileIssuerKeycards: {
-    path: "/issuer/profile/keycards",
-    permissions: [UserGroup.ISSUERS],
+  profileDataCustodianKeycards: {
+    path: "/data-custodian/profile/keycards",
+    permissions: [UserGroup.DATA_CUSTODIAN],
   },
-  profileResearcherExperience: {
-    path: "/researcher/profile/experience",
-    permissions: [UserGroup.RESEARCHERS],
+  profileUserExperience: {
+    path: "/user/profile/experience",
+    permissions: [UserGroup.USERS],
   },
-  profileResearcherDetails: {
-    path: "/researcher/profile/details",
-    permissions: [UserGroup.RESEARCHERS],
+  profileUserDetails: {
+    path: "/user/profile/details",
+    permissions: [UserGroup.USERS],
   },
-  profileResearcherIdentity: {
-    path: "/researcher/profile/identity",
-    permissions: [UserGroup.RESEARCHERS],
+  profileUserIdentity: {
+    path: "/user/profile/identity",
+    permissions: [UserGroup.USERS],
   },
-  profileResearcherTraining: {
-    path: "/researcher/profile/training",
-    permissions: [UserGroup.RESEARCHERS],
+  profileUserTraining: {
+    path: "/user/profile/training",
+    permissions: [UserGroup.USERS],
   },
-  profileResearcherAffiliations: {
-    path: "/researcher/profile/affiliations",
-    permissions: [UserGroup.RESEARCHERS],
+  profileUserAffiliations: {
+    path: "/user/profile/affiliations",
+    permissions: [UserGroup.USERS],
   },
-  profileResearcher: {
-    path: "/researcher/profile",
-    permissions: [UserGroup.RESEARCHERS],
+  profileUser: {
+    path: "/user/profile",
+    permissions: [UserGroup.USERS],
   },
   profileOrganisation: {
     path: "/organisation/profile",

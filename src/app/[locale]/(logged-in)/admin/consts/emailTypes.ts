@@ -1,6 +1,6 @@
 enum EmailTypes {
-  ISSUER = "issuer",
-  RESEARCHER = "researcher",
+  DATA_CUSTODIAN = "data-custodian",
+  USER = "user",
   ORGANISATION = "organisation",
 }
 

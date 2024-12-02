@@ -23,7 +23,7 @@ interface Permission {
   };
 }
 
-interface Issuer {
+interface DataCustodian {
   id: number;
   created_at: string;
   updated_at: string;
@@ -104,7 +104,7 @@ interface Organisation extends OrganisationIdvt {
   }[];
 }
 
-interface ResearcherEducation {
+interface UserEducation {
   institute_name: string;
   institute_address: string;
   from: string;
@@ -114,7 +114,7 @@ interface ResearcherEducation {
   source: string;
 }
 
-interface ResearcherAccreditation {
+interface UserAccreditation {
   awarded_at: string;
   awarding_body_name: string;
   awarding_body_ror: string;
@@ -123,7 +123,7 @@ interface ResearcherAccreditation {
   awarded_locale: string;
 }
 
-interface ResearcherTraining {
+interface UserTraining {
   awarded_at: string;
   provider: string;
   awarding_body_ror: string;
@@ -132,7 +132,7 @@ interface ResearcherTraining {
   expires_in_years: boolean;
 }
 
-interface ResearcherEmployment {
+interface UserEmployment {
   department: string;
   role: string;
   is_current: boolean;
@@ -142,13 +142,13 @@ interface ResearcherEmployment {
   ror: string;
 }
 
-interface ResearcherEndorsement {
+interface UserEndorsement {
   comment: string;
   raised_against: number;
   reported_by: number;
 }
 
-interface ResearcherProject {
+interface UserProject {
   title: string;
   lay_summary: string;
   public_benefit: string;
@@ -187,16 +187,16 @@ export type {
   ApplicationSystemConfig,
   Approval,
   Auth,
-  Issuer,
+  DataCustodian,
   Organisation,
   OrganisationIdvt,
   User,
-  ResearcherEducation,
-  ResearcherAccreditation,
-  ResearcherEmployment,
-  ResearcherEndorsement,
-  ResearcherTraining,
-  ResearcherProject,
+  UserEducation,
+  UserAccreditation,
+  UserEmployment,
+  UserEndorsement,
+  UserTraining,
+  UserProject,
   File,
   Permission,
 };
