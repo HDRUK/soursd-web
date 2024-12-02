@@ -43,9 +43,9 @@ describe("<Completion />", () => {
   it("has the correct values", async () => {
     render(<Completion />);
 
-    const link = screen.getByRole("link", {
+    const link = screen.getAllByRole("link", {
       name: "Continue",
-    });
+    })[0];
 
     await waitFor(() => {
       expect(link).toHaveAttribute(
