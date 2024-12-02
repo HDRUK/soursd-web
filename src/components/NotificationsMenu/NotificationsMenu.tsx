@@ -5,6 +5,7 @@ import { useStore } from "@/data/store";
 import useQueryRefetch from "@/hooks/useQueryRefetch";
 import { getUser } from "@/services/users";
 import { parseValidJSON } from "@/utils/json";
+import { showAlert } from "@/utils/showAlert";
 import { isOrcIdCompleted, isOrcIdScanning } from "@/utils/user";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
@@ -39,11 +40,11 @@ export default function NotificationsMenu() {
         refetchCancel();
 
         if (isOrcIdCompleted(userData.data) && !messages.orcIdCompleted) {
-          Swal.fire({
-            title: t("orcIdSuccessTitle"),
-            text: t("orcIdSuccessDescription"),
-            icon: "success",
-          });
+          showAlert(
+            "success",
+            t("orcIdSuccessDescription"),
+            t("orcIdSuccessTitle")
+          );
 
           setCookie(
             "messages",

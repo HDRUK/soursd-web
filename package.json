@@ -36,7 +36,6 @@
     "@next/bundle-analyzer": "^15.0.3",
     "@react-keycloak/web": "^3.4.0",
     "@tanstack/react-query": "^5.51.23",
-    "@testing-library/user-event": "^14.5.2",
     "axios": "^1.7.7",
     "babel-jest": "^29.7.0",
     "cookie": "^0.6.0",
@@ -49,7 +48,7 @@
     "js-cookie": "^3.0.5",
     "keycloak-js": "^24.0.5",
     "motion": "^11.11.17",
-    "next": "14.1.4",
+    "next": "^14.2.18",
     "next-intl": "^3.10.0",
     "npm": "^10.5.0",
     "pretty-bytes": "^6.1.1",
@@ -79,6 +78,7 @@
     "@storybook/test": "^8.0.5",
     "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/react": "^16.0.0",
+    "@testing-library/user-event": "^14.5.2",
     "@types/css-mediaquery": "^0.1.4",
     "@types/gsap": "^3.0.0",
     "@types/jest": "^29.5.12",
@@ -90,7 +90,7 @@
     "@types/react-google-recaptcha": "^2.1.9",
     "@types/react-slick": "^0.23.13",
     "@types/react-syntax-highlighter": "^15.5.13",
-    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/eslint-plugin": "^8.16.0",
     "autoprefixer": "^10.0.1",
     "chromatic": "^11.18.0",
     "css-mediaquery": "^0.1.2",
@@ -99,7 +99,7 @@
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-next": "14.1.4",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-jest": "^27.9.0",
+    "eslint-plugin-jest": "^28.9.0",
     "eslint-plugin-prettier": "^5.1.3",
     "eslint-plugin-security": "^2.1.1",
     "eslint-plugin-simple-import-sort": "^10.0.0",
@@ -116,11 +116,13 @@
     "next-router-mock": "^0.9.12",
     "prettier": "^3.2.5",
     "react-syntax-highlighter": "^15.5.0",
-    "react-testing-library": "^8.0.1",
     "storybook": "^8.0.5",
     "ts-node": "^10.9.2",
     "typescript": "^5",
     "typescript-eslint": "^7.4.0",
     "url": "^0.11.3"
+  },
+  "resolutions": {
+    "@typescript-eslint/typescript-estree": "^8.16.0"
   }
 }

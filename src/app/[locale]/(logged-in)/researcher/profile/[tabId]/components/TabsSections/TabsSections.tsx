@@ -28,6 +28,12 @@ export default function TabsSections() {
         indicatorColor="secondary"
         textColor="inherit">
         <Tab
+          label={<Text>{t("details")}</Text>}
+          href={routes.profileResearcherDetails.path}
+          component={Link}
+          value={PageTabs.AFFILIATIONS}
+        />
+        <Tab
           label={
             <Text
               startIcon={

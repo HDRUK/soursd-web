@@ -37,7 +37,6 @@ const useApplicationData = () => useContext(ApplicationDataContext);
 interface ApplicationDataProviderProps {
   children: ReactNode;
   value: ApplicationDataState;
-  userId: number;
 }
 
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
@@ -45,7 +44,6 @@ const NAMESPACE_TRANSLATION_APPLICATION = "Application";
 const ApplicationDataProvider = ({
   children,
   value,
-  userId,
 }: ApplicationDataProviderProps) => {
   const t = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
   const addUrlToHistory = useStore(store => store.addUrlToHistory);
@@ -56,7 +54,6 @@ const ApplicationDataProvider = ({
     store.config.organisation,
     store.setOrganisation,
   ]);
-
   const setIssuer = useStore(store => store.setIssuer);
 
   const path = usePathname();
@@ -80,14 +77,14 @@ const ApplicationDataProvider = ({
     isError: isUserError,
     error: userError,
   } = useQuery({
-    queryKey: ["getUser", userId],
+    queryKey: ["getUser", user?.id],
     queryFn: ({ queryKey }) =>
       getUser(queryKey[1], {
         error: {
           message: "getUserError",
         },
       }),
-    enabled: !!userId,
+    enabled: !!user?.id,
   });
 
   const {
@@ -154,7 +151,7 @@ const ApplicationDataProvider = ({
   const errorMessage = error || userError || organisationError || issuerError;
 
   const isFinishedLoading =
-    ((userId && user) || !userId) &&
+    ((user?.id && user) || !user?.id) &&
     ((user?.organisation_id && organisation) || !user?.organisation_id) &&
     !!systemConfigData?.data &&
     !isIssuerLoading;
@@ -163,11 +160,13 @@ const ApplicationDataProvider = ({
     <ApplicationDataContext.Provider value={providerValue}>
       {isAnyError && (
         <PageContainer>
-          <OverlayCenterAlert>
-            {t.rich(errorMessage, {
-              contactLink: ContactLink,
-            })}
-          </OverlayCenterAlert>
+          {isAnyError && (
+            <OverlayCenterAlert>
+              {t.rich(errorMessage, {
+                contactLink: ContactLink,
+              })}
+            </OverlayCenterAlert>
+          )}
         </PageContainer>
       )}
       {isFinishedLoading && children}

@@ -2,54 +2,80 @@
 
 import { ROUTES } from "@/consts/router";
 import { ApplicationDataProvider } from "@/context/ApplicationData";
+import { getRequest } from "@/services/requests";
 import { handleLogin } from "@/utils/keycloak";
 import { getRoutes } from "@/utils/router";
 import Cookies from "js-cookie";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { PropsWithChildren, useEffect, useState } from "react";
 
 type LayoutProps = PropsWithChildren<{
   params: { locale: string };
 }>;
 
-async function validateAccessToken(pathname: string | null): Promise<boolean> {
-  const accessToken = Cookies.get("access_token");
+async function validateAccessToken(
+  pathname: string | null,
+  router: ReturnType<typeof useRouter>
+): Promise<boolean> {
+  const response = await getRequest(
+    `${process.env.NEXT_PUBLIC_API_URL}/auth/me`,
+    undefined,
+    {
+      headers: {
+        "content-type": "application/json;charset=UTF-8",
+      },
+    }
+  );
 
-  if (!accessToken) {
-    Cookies.set("redirectPath", pathname ?? "/", { path: "/" });
-    handleLogin();
+  if (response.ok) {
+    return true;
+  }
+
+  if (response.status === 404) {
+    router.push("/en/register");
     return false;
   }
-  return true;
+
+  if (response.status === 500) {
+    const accessToken = Cookies.get("access_token");
+    if (!accessToken) {
+      Cookies.set("redirectPath", pathname ?? "/", { path: "/" });
+      handleLogin();
+    }
+    return false;
+  }
+  return false;
 }
 
 export default function Layout({ children, params: { locale } }: LayoutProps) {
   const routes = getRoutes(ROUTES, locale);
   const pathname = usePathname();
-  // const [isChecked, setIsChecked] = useState<boolean>(false);
+  const router = useRouter();
+  const [isChecked, setIsChecked] = useState<boolean>(false);
 
-  // useEffect(() => {
-  //   const performAuthCheck = async () => {
-  //     const isAuth = await validateAccessToken(pathname);
+  useEffect(() => {
+    const performAuthCheck = async () => {
+      const isAuth = await validateAccessToken(pathname, router);
 
-  //     if (!isAuth) {
-  //       throw new Error("Unauthorised 401");
-  //     }
+      if (!isAuth) {
+        throw new Error("Unauthorised 401");
+      }
 
-  //     setIsChecked(isAuth);
-  //   };
+      setIsChecked(isAuth);
+    };
 
-  //   performAuthCheck();
-  // }, [pathname]);
+    performAuthCheck();
+  }, [pathname]);
 
   return (
-    <ApplicationDataProvider
-      value={{
-        routes,
-        systemConfigData: {},
-      }}
-      userId={8}>
-      {children}
-    </ApplicationDataProvider>
+    isChecked && (
+      <ApplicationDataProvider
+        value={{
+          routes,
+          systemConfigData: {},
+        }}>
+        {children}
+      </ApplicationDataProvider>
+    )
   );
 }

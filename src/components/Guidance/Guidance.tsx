@@ -15,6 +15,7 @@ export interface GuidanceProps {
   infoWidth?: number | string;
   infoTitleIcon?: ReactNode;
   defaultExpanded?: boolean;
+  hasGuidance?: boolean;
 }
 
 export default function Guidance({
@@ -24,6 +25,7 @@ export default function Guidance({
   infoWidth = "400px",
   defaultExpanded = true,
   infoTitle,
+  hasGuidance = true,
 }: GuidanceProps) {
   const theme = useTheme();
   const [expanded, setExpanded] = useState(defaultExpanded);
@@ -31,37 +33,39 @@ export default function Guidance({
 
   return (
     <StyledGuidance positionVertical={isMdDown}>
-      <Box sx={{ pr: 4, flexGrow: 1 }}>{children}</Box>
-      <Box
-        sx={{
-          width: `${isMdDown ? "100%" : "auto"}`,
-        }}>
-        <Collapse
-          id="info"
-          component="section"
-          key={`mdDown_${isMdDown}`}
-          in={expanded}
-          collapsedSize="45px"
-          orientation={isMdDown ? "vertical" : "horizontal"}
+      <Box sx={{ pr: hasGuidance ? 4 : 0, flexGrow: 1 }}>{children}</Box>
+      {hasGuidance && (
+        <Box
           sx={{
-            p: isMdDown ? "20px 0 0 0" : "0 0 0 20px",
-            height: "100%",
+            width: `${isMdDown ? "100%" : "auto"}`,
           }}>
-          <StyledInfo positionVertical={isMdDown} infoWidth={infoWidth}>
-            <GuidanceTrigger
-              aria-controls="info"
-              onClick={() => setExpanded(!expanded)}
-              expanded={expanded}
-              position={isMdDown ? Position.BOTTOM : Position.RIGHT}
-            />
+          <Collapse
+            id="info"
+            component="section"
+            key={`mdDown_${isMdDown}`}
+            in={expanded}
+            collapsedSize="45px"
+            orientation={isMdDown ? "vertical" : "horizontal"}
+            sx={{
+              p: isMdDown ? "20px 0 0 0" : "0 0 0 20px",
+              height: "100%",
+            }}>
+            <StyledInfo positionVertical={isMdDown} infoWidth={infoWidth}>
+              <GuidanceTrigger
+                aria-controls="info"
+                onClick={() => setExpanded(!expanded)}
+                expanded={expanded}
+                position={isMdDown ? Position.BOTTOM : Position.RIGHT}
+              />
 
-            <GuidanceTitle infoTitleIcon={infoTitleIcon}>
-              {infoTitle}
-            </GuidanceTitle>
-            <Box sx={{ overflowY: "auto" }}>{info}</Box>
-          </StyledInfo>
-        </Collapse>
-      </Box>
+              <GuidanceTitle infoTitleIcon={infoTitleIcon}>
+                {infoTitle}
+              </GuidanceTitle>
+              <Box sx={{ overflowY: "auto" }}>{info}</Box>
+            </StyledInfo>
+          </Collapse>
+        </Box>
+      )}
     </StyledGuidance>
   );
 }

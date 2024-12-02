@@ -1,7 +1,7 @@
 "use client";
 
 import { useCookies } from "@/context/CookieContext/CookieContext";
-import { handleLogin, handleLogout } from "@/utils/keycloak";
+import { handleLogin, handleLogout, handleRegister } from "@/utils/keycloak";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
   Box,
@@ -89,7 +89,7 @@ export default function NavBar() {
       color: "primary",
       variant: "contained",
       text: t("registerButton"),
-      // TODO: Change to registerUser once ready to
+      onClick: handleRegister,
     },
   ];
 
@@ -135,7 +135,7 @@ export default function NavBar() {
           </div>
           <Box
             sx={{ flexGrow: 1, justifyContent: "flex-end", display: "flex" }}>
-            <SoursdLogo height={40} width={40} />
+            <SoursdLogo size={40} />
           </Box>
         </Box>
         <HorizontalDrawer

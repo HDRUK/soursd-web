@@ -1,6 +1,10 @@
+import { useStore } from "@/data/store";
 import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
 import PageGuidance from "@/modules/PageGuidance";
+import { useTheme } from "@mui/material";
 import { useTranslations } from "next-intl";
+import Completion from "../Completion";
+import UserInfo from "../UserInfo";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
@@ -9,9 +13,10 @@ export default function Experience() {
 
   return (
     <PageGuidance
-      title={tProfile("experience")}
+      title={tProfile("profile")}
       {...mockedPersonalDetailsGuidanceProps}>
-      [Content]
+      <UserInfo />
+      <Completion />
     </PageGuidance>
   );
 }

@@ -35,11 +35,12 @@ interface Routes {
   profileResearcherExperience: RouteConfig;
   profileResearcherIdentity: RouteConfig;
   profileResearcherAffiliations: RouteConfig;
+  profileResearcherDetails: RouteConfig;
   profileOrganisation: RouteConfig;
   profileOrganisationUser: RouteConfig;
   profileOrganisationDetails: RouteConfig;
   profileOrganisationContacts: RouteConfig;
-  profileOrganisationApprovals: RouteConfig;
+  profileOrganisationUsers: RouteConfig;
   admin: RouteConfig;
 }
 

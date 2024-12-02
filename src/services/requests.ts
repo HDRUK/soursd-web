@@ -58,8 +58,6 @@ async function handleJsonResponse(
 
   const data = await response.json();
 
-  console.log("data", data);
-
   const dataError = handleDataError(data, messages);
 
   if (dataError) return Promise.reject(dataError);

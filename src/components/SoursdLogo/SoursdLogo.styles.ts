@@ -8,7 +8,6 @@ export const StyledLogoContainer = styled(Box)<SoursdLogoProps>(
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: white;
     padding: 4px;
   `
 );

@@ -78,6 +78,10 @@ const ROUTES: Routes = {
     path: "/researcher/profile",
     permissions: [UserGroup.RESEARCHERS],
   },
+  profileResearcherDetails: {
+    path: "/researcher/profile/details",
+    permissions: [UserGroup.RESEARCHERS],
+  },
   profileOrganisation: {
     path: "/organisation/profile",
     permissions: [UserGroup.ORGANISATIONS],
@@ -94,7 +98,7 @@ const ROUTES: Routes = {
     path: "/organisation/profile/contacts",
     permissions: [UserGroup.ORGANISATIONS],
   },
-  profileOrganisationApprovals: {
+  profileOrganisationUsers: {
     path: "/organisation/profile/approvals",
     permissions: [UserGroup.ORGANISATIONS],
   },

@@ -21,9 +21,17 @@ const handleLogout = () => {
 
   window.location.href = `${logoutUrl}?${params.toString()}`;
 };
-// TODO: Register user functionality is a WIP and needs to be done once the appropriate page has been implemented
-// const registerUser = () => {
-//   console.log("test");
-// };
 
-export { handleLogin, handleLogout };
+const handleRegister = () => {
+  const registerUrl = `${keycloakConfig.authServerUrl}/realms/${keycloakConfig.realm}/protocol/openid-connect/registrations`;
+  const params = new URLSearchParams({
+    client_id: keycloakConfig.clientId,
+    scope: "openid profile email",
+    redirect_uri: keycloakConfig.redirectUriRegister,
+    response_type: "code",
+  });
+
+  window.location.href = `${registerUrl}?${params.toString()}`;
+};
+
+export { handleLogin, handleLogout, handleRegister };

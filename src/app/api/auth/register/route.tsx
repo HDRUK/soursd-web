@@ -7,7 +7,6 @@ export async function GET(req: Request) {
   const cookieStore = cookies();
   const { searchParams } = new URL(req.url);
   const code = searchParams.get("code");
-  const redirectPath = cookieStore.get("redirectPath") ?? { value: "/" };
 
   cookieStore.delete("redirectPath");
 
@@ -28,16 +27,13 @@ export async function GET(req: Request) {
         client_id: keycloak.clientId,
         client_secret: keycloak.clientSecret,
         code,
-        redirect_uri: keycloak.redirectUriLogin,
+        redirect_uri: keycloak.redirectUriRegister,
       }),
       { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
     );
 
     const { access_token, refresh_token } = response.data;
 
-    // TODO: Here we need to send the access token to the BE for extra validation, this is a WIP
-
-    // Set cookies for access and refresh tokens
     cookieStore.set("access_token", access_token, {
       httpOnly: false,
       secure: process.env.NODE_ENV === "production",
@@ -51,12 +47,9 @@ export async function GET(req: Request) {
     });
 
     return NextResponse.redirect(
-      encodeURI(`${process.env.NEXT_PUBLIC_LOCAL_ENV}${redirectPath.value}`)
+      encodeURI(`${process.env.NEXT_PUBLIC_LOCAL_ENV}/en/register`)
     );
-  } catch (_) {
-    return NextResponse.json(
-      { error: "Failed to exchange authorization code for tokens" },
-      { status: 500 }
-    );
+  } catch (error) {
+    return NextResponse.json({ error }, { status: 500 });
   }
 }

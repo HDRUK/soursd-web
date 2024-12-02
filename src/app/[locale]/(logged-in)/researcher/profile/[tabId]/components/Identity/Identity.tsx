@@ -1,7 +1,6 @@
 "use client";
 
 import ContactLink from "@/components/ContactLink";
-import Guidance from "@/components/Guidance";
 import { Message } from "@/components/Message";
 import OverlayCenter from "@/components/OverlayCenter";
 import yup from "@/config/yup";
@@ -12,12 +11,9 @@ import { useStore } from "@/data/store";
 import useFileScanned from "@/hooks/useFileScanned/useFileScanned";
 import useQueryRefetch from "@/hooks/useQueryRefetch";
 import useUserProfileCompletion from "@/hooks/useUserProfileCompletion";
-import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
 import postFile from "@/services/files/postFile";
 import { FilePayload } from "@/services/files/types";
 import { getOrganisations } from "@/services/organisations";
-import { PatchUserPayload } from "@/services/users";
-import patchUser from "@/services/users/patchUser";
 import { EntityType, FileType } from "@/types/api";
 import { getLatestCV, isFileScanning } from "@/utils/file";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -43,6 +39,8 @@ import { useTranslations } from "next-intl";
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import DetailsCV from "../DetailsCV";
+import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
+import PageGuidance from "@/modules/PageGuidance";
 
 export interface IdentityFormValues {
   first_name: string;
@@ -53,7 +51,7 @@ export interface IdentityFormValues {
 }
 
 const NAMESPACE_TRANSLATION_FORM = "Form";
-const NAMESPACE_TRANSLATION_PERSONAL_DETAILS = "PersonalDetails";
+const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
 export default function Identity() {
   const {
@@ -66,9 +64,7 @@ export default function Identity() {
   const user = useStore(state => state.getUser());
 
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
-  const tPersonalDetails = useTranslations(
-    NAMESPACE_TRANSLATION_PERSONAL_DETAILS
-  );
+  const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const [isFileSizeTooBig, setIsFileSizeTooBig] = useState(false);
 
   const latestCV = getLatestCV(user?.registry?.files || []);
@@ -213,28 +209,30 @@ export default function Identity() {
   }
 
   return (
-    <Guidance {...mockedPersonalDetailsGuidanceProps}>
+    <PageGuidance
+      title={tProfile("identity")}
+      {...mockedPersonalDetailsGuidanceProps}>
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(handleDetailsSubmit)} autoComplete="off">
           <Grid container rowSpacing={3} md={8}>
             <Grid item xs={12}>
               {isGetOrganisationsError && (
                 <Message severity="error" sx={{ mb: 3 }}>
-                  {tPersonalDetails.rich(organisationsError, {
+                  {tProfile.rich(organisationsError, {
                     contactLink: ContactLink,
                   })}
                 </Message>
               )}
               {isUpdateError && (
                 <Message severity="error" sx={{ mb: 3 }}>
-                  {tPersonalDetails.rich(updateError, {
+                  {tProfile.rich(updateError, {
                     contactLink: ContactLink,
                   })}
                 </Message>
               )}
               {isFileError && (
                 <Message severity="error" sx={{ mb: 3 }}>
-                  {tPersonalDetails.rich(fileError, {
+                  {tProfile.rich(fileError, {
                     contactLink: ContactLink,
                   })}
                 </Message>
@@ -330,8 +328,8 @@ export default function Identity() {
                 fullWidth>
                 <FormControlLabel
                   control={<Checkbox {...register("consent_scrape")} />}
-                  label={tPersonalDetails("consentScrape")}
-                  aria-label={tPersonalDetails("consentScrapeAriaLabel")}
+                  label={tProfile("consentScrape")}
+                  aria-label={tProfile("consentScrapeAriaLabel")}
                 />
                 {errors.consent_scrape && (
                   <FormHelperText>
@@ -342,7 +340,7 @@ export default function Identity() {
             </Grid>
             <Grid item md={12}>
               <DetailsCV
-                fileName={latestCV?.name || tPersonalDetails("noCvUploaded")}
+                fileName={latestCV?.name || tProfile("noCvUploaded")}
                 isFileSizeTooBig={isFileSizeTooBig}
                 isFileScanning={isScanning}
                 isFileOk={isNotInfected}
@@ -358,10 +356,10 @@ export default function Identity() {
             endIcon={<SaveIcon />}
             loading={isUpdateLoading}
             sx={{ mt: 5 }}>
-            {tPersonalDetails("submitButton")}
+            {tProfile("submitButton")}
           </LoadingButton>
         </form>
       </FormProvider>
-    </Guidance>
+    </PageGuidance>
   );
 }

@@ -5,7 +5,7 @@ function escapeAndParse(value: string) {
 function parseValidJSON(value: string) {
   try {
     return JSON.parse(value);
-  } catch (_) {
+  } catch (_e) {
     return value;
   }
 }

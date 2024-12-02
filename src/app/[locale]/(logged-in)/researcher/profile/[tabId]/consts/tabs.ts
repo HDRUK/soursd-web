@@ -3,7 +3,7 @@ enum PageTabs {
   AFFILIATIONS = "affiliations",
   IDENTITY = "identity",
   TRAINING = "training",
-  COMPLETION = "completion",
+  DETAILS = "details",
 }
 
 export { PageTabs };

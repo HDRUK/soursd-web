@@ -22,22 +22,13 @@ function Page({ params: { tabId }, config }: PageProps) {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_PROFILE);
 
   if (!Object.values(PageTabs).includes(tabId)) {
-    redirect(config.routes.profileResearcherCompletion.path);
+    redirect(config.routes.profileResearcherDetails.path);
   }
 
   return (
     <PageContainer>
       <TabsSections />
-      <Guidance {...mockedPersonalDetailsGuidanceProps}>
-        <PageContent>
-          <PageTitle>
-            <Typography variant="h3">{t(tabId)}</Typography>
-          </PageTitle>
-          <PageSection sx={{ flexGrow: 1 }}>
-            <TabsContents tabId={tabId} />
-          </PageSection>
-        </PageContent>
-      </Guidance>
+      <TabsContents tabId={tabId} />
     </PageContainer>
   );
 }

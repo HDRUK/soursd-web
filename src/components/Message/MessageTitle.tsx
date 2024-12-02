@@ -1,6 +1,6 @@
 import { AlertTitle, AlertTitleProps } from "@mui/material";
 
-export interface MessageTitleProps extends AlertTitleProps {}
+export type MessageTitleProps = AlertTitleProps;
 
 export default function MessageTitle({
   children,

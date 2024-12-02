@@ -1,8 +1,6 @@
-import Guidance from "@/components/Guidance";
 import { UserProfileCompletionCategories } from "@/consts/user";
 import { useApplicationData } from "@/context/ApplicationData";
 import useUserProfileCompletion from "@/hooks/useUserProfileCompletion";
-import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
 import { Box, Button } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { PageTabs } from "../../consts/tabs";
@@ -19,9 +17,7 @@ export default function Completion() {
   const sections = [
     {
       title: t(PageTabs.IDENTITY),
-      score:
-        profileCompletedAt[UserProfileCompletionCategories.IDENTITY]?.score ||
-        0,
+      category: profileCompletedAt[UserProfileCompletionCategories.IDENTITY],
       action: (
         <Button
           component="a"
@@ -33,9 +29,8 @@ export default function Completion() {
     },
     {
       title: t(PageTabs.AFFILIATIONS),
-      score:
-        profileCompletedAt[UserProfileCompletionCategories.AFFILIATIONS]
-          ?.score || 0,
+      category:
+        profileCompletedAt[UserProfileCompletionCategories.AFFILIATIONS],
       action: (
         <Button
           component="a"
@@ -47,9 +42,7 @@ export default function Completion() {
     },
     {
       title: t(PageTabs.EXPERIENCE),
-      score:
-        profileCompletedAt[UserProfileCompletionCategories.EXPERIENCE]?.score ||
-        0,
+      catgeory: profileCompletedAt[UserProfileCompletionCategories.EXPERIENCE],
       action: (
         <Button
           component="a"
@@ -61,9 +54,7 @@ export default function Completion() {
     },
     {
       title: t(PageTabs.TRAINING),
-      score:
-        profileCompletedAt[UserProfileCompletionCategories.TRAINING]?.score ||
-        0,
+      category: profileCompletedAt[UserProfileCompletionCategories.TRAINING],
       action: (
         <Button
           component="a"
@@ -73,17 +64,17 @@ export default function Completion() {
         </Button>
       ),
     },
-  ];
+  ].filter(({ category }) => !!category);
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-      {sections.map(({ title, score, action }) => {
+      {sections.map(({ title, category, action }) => {
         return (
           <Box sx={{ display: "flex" }}>
             <Box sx={{ flexGrow: 1 }}>{title}</Box>
             <Box>
               <Box component="span" sx={{ mr: 3 }}>
-                {score}% complete
+                {category?.score}% complete
               </Box>{" "}
               {action}
             </Box>
