@@ -54,6 +54,9 @@ const ROUTES: Routes = {
   },
   profileResearcherDetails: {
     path: "/user/profile/details",
+  },
+  profileResearcherCompletion: {
+    path: "/user/profile/completion",
     permissions: [UserGroup.RESEARCHERS],
   },
   profileResearcherIdentity: {

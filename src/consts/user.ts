@@ -10,4 +10,11 @@ enum UserProvider {
   KEYCLOAK = "keycloak",
 }
 
-export { UserGroup, UserProvider };
+enum UserProfileCompletionCategories {
+  IDENTITY = "identity",
+  AFFILIATIONS = "affiliations",
+  EXPERIENCE = "experience",
+  TRAINING = "training",
+}
+
+export { UserGroup, UserProvider, UserProfileCompletionCategories };

@@ -1,3 +1,3 @@
-import Indentity from "./Identity";
+import Identity from "./Identity";
 
-export default Indentity;
+export default Identity;

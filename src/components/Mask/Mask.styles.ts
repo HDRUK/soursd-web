@@ -33,7 +33,7 @@ export const StyledMask = styled(Box, {
     padding: 2px;
     box-sizing: border-box;
     border-radius: 50%;
-    font-size: 26px;
+    font-size: 1cqi;
     color: #fff;
 
     > div {
