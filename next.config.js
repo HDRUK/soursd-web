@@ -21,16 +21,16 @@ const nextConfig = withNextIntl({
   async rewrites() {
     return [
       {
-        source: "/:locale/researcher/profile",
-        destination: `/:locale/researcher/profile/details`,
+        source: "/:locale/user/profile",
+        destination: `/:locale/user/profile/details`,
       },
       {
-        source: "/:locale/issuer/profile",
-        destination: `/:locale/researcher/issuer/details`,
+        source: "/:locale/data-custodian/profile",
+        destination: `/:locale/user/data-custodian/details`,
       },
       {
         source: "/:locale/organisation/profile",
-        destination: `/:locale/researcher/organisation/details`,
+        destination: `/:locale/user/organisation/details`,
       },
       {
         source: "/:locale/organisation/profile",
