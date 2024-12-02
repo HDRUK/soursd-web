@@ -34,9 +34,9 @@ describe("Route utils", () => {
         }),
       });
 
-      expect(
-        isRouteAllowed("/researcher/profile/details", ROUTES, auth)
-      ).toEqual(true);
+      expect(isRouteAllowed("/user/profile/details", ROUTES, auth)).toEqual(
+        true
+      );
     });
 
     it("is allowed", async () => {
@@ -46,9 +46,9 @@ describe("Route utils", () => {
         }),
       });
 
-      expect(
-        isRouteAllowed("/researcher/profile/details", ROUTES, auth)
-      ).toEqual(false);
+      expect(isRouteAllowed("/user/profile/details", ROUTES, auth)).toEqual(
+        false
+      );
     });
   });
 });
