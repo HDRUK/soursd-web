@@ -198,6 +198,7 @@ export default function Identity() {
     formState: { errors },
     register,
     handleSubmit,
+    watch,
   } = methods;
 
   if (isGetOrganisationsLoading) {
@@ -247,7 +248,7 @@ export default function Identity() {
                   {tForm("organisationName")}
                 </InputLabel>
                 <Select
-                  defaultValue=""
+                  defaultValue={watch("organisation_id")}
                   {...register("organisation_id")}
                   size="small"
                   inputProps={{
