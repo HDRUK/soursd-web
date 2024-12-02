@@ -1,16 +1,9 @@
 "use client";
 
-import { ROUTES } from "@/consts/router";
-import { ApplicationDataProvider } from "@/context/ApplicationData";
 import { handleLogin } from "@/utils/keycloak";
-import { getRoutes } from "@/utils/router";
 import Cookies from "js-cookie";
 import { usePathname } from "next/navigation";
 import { PropsWithChildren, useEffect, useState } from "react";
-
-type LayoutProps = PropsWithChildren<{
-  params: { locale: string };
-}>;
 
 async function validateAccessToken(pathname: string | null): Promise<boolean> {
   const accessToken = Cookies.get("access_token");
@@ -23,19 +16,19 @@ async function validateAccessToken(pathname: string | null): Promise<boolean> {
   return true;
 }
 
-export default function Layout({ children, params: { locale } }: LayoutProps) {
-  const routes = getRoutes(ROUTES, locale);
+export default function Layout({ children }: PropsWithChildren) {
+  // temporary layout for if someone is keycloak-logged-in and needs to create an account
   const pathname = usePathname();
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [hasAccessToken, setHasAccessToken] = useState<boolean>(false);
 
   useEffect(() => {
     const performAuthCheck = async () => {
       const isAuth = await validateAccessToken(pathname);
-      setIsLoggedIn(isAuth);
+      setHasAccessToken(isAuth);
     };
 
     performAuthCheck();
   }, [pathname]);
 
-  return <>{children}</>;
+  return hasAccessToken && children;
 }
