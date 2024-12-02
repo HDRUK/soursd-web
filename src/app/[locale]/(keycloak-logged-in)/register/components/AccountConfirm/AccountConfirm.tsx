@@ -21,7 +21,7 @@ import {
 import { useRouter } from "next/navigation";
 import { useApplicationData } from "@/context/ApplicationData";
 import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
-import AccountOption from "./AccountOption";
+import AccountOption from "../AccountOption";
 
 const NAMESPACE_TRANSLATIONS_PROFILE = "Register";
 
