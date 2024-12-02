@@ -9,7 +9,7 @@ function PageTitle({ children }: PageTitleProps) {
   return (
     <Box
       sx={{
-        px: 4,
+        mb: 2,
       }}>
       {children}
     </Box>

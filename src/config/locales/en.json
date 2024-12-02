@@ -204,13 +204,27 @@
     "orcIdSuccessDescription": "Employment, educaton and qualifications has been gathered from your ORCiD profile. You will need to reload the page to see the updates."
   },
   "Profile": {
+    "completedScore": "{score}% complete",
     "title": "Profile",
     "details": "Details",
     "identity": "Identity",
     "affiliations": "Affiliations",
     "experience": "Experience",
     "training": "Training",
-    "navigationAriaLabel": "Profile sections"
+    "profile": "Profile",
+    "navigationAriaLabel": "Profile sections",
+    "consentScrape": "I consent to the Registry using information I provide to gather my historical experience",
+    "consentScrapeAriaLabel": "Gather my historical experience as a Researcher",
+    "download": "Download CV",
+    "submitButton": "Save",
+    "submitError": "There was a problem updating your details. Please try again or contact us at <contactLink></contactLink>",
+    "pending": "Pending",
+    "verified": "Verified",
+    "cvUploadFailed": "There was a problem uploading your CV. Please check the file size and try again or alternativley contact us at <contactLink></contactLink>",
+    "noCvUploaded": "No CV uploaded",
+    "profileCompletedTitle": "Your profile has been completed",
+    "profileCompletedDescription": "You have completed all the mandatory fields required for your profile to be considered 'complete'. This will be flagged to Data Custodians when they view your user details.",
+    "continueLinkText": "Continue"
   },
   "ProfileCompleteStatus": {
     "profileComplete": "Profile complete",
@@ -293,18 +307,6 @@
     "emailPlaceholder": "Applicant email",
     "email": "Applicant email",
     "nextButton": "Next"
-  },
-  "PersonalDetails": {
-    "title": "Personal details",
-    "consentScrape": "I consent to the Registry using information I provide to gather my historical experience",
-    "consentScrapeAriaLabel": "Gather my historical experience as a Researcher",
-    "download": "Download CV",
-    "submitButton": "Save",
-    "submitError": "There was a problem updating your details. Please try again or contact us at <contactLink></contactLink>",
-    "pending": "Pending",
-    "verified": "Verified",
-    "cvUploadFailed": "There was a problem uploading your CV. Please check the file size and try again or alternativley contact us at <contactLink></contactLink>",
-    "noCvUploaded": "No CV uploaded"
   },
   "LoginForm": {
     "loginButton": "Login",

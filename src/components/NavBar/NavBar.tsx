@@ -135,7 +135,7 @@ export default function NavBar() {
           </div>
           <Box
             sx={{ flexGrow: 1, justifyContent: "flex-end", display: "flex" }}>
-            <SoursdLogo height={40} width={40} />
+            <SoursdLogo size={40} />
           </Box>
         </Box>
         <HorizontalDrawer

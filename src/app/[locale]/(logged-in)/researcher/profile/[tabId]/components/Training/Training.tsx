@@ -4,12 +4,12 @@ import { useTranslations } from "next-intl";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
-export default function Experience() {
+export default function Affiliations() {
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
   return (
     <PageGuidance
-      title={tProfile("experience")}
+      title={tProfile("training")}
       {...mockedPersonalDetailsGuidanceProps}>
       [Content]
     </PageGuidance>

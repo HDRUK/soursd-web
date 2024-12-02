@@ -1,5 +1,5 @@
 import { ConfigProps, withConfig } from "@/components/Config";
-import { PageContainer, PageSection, PageTitle } from "@/modules";
+import { PageContainer, PageContent, PageSection, PageTitle } from "@/modules";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { redirect } from "next/navigation";
@@ -25,12 +25,14 @@ function Page({ params: { tabId }, config }: PageProps) {
   return (
     <PageContainer>
       <TabsSections />
-      <PageTitle>
-        <Typography variant="h3">{t(tabId)}</Typography>
-      </PageTitle>
-      <PageSection sx={{ flexGrow: 1 }}>
-        <TabsContents tabId={tabId} />
-      </PageSection>
+      <PageContent>
+        <PageTitle>
+          <Typography variant="h3">{t(tabId)}</Typography>
+        </PageTitle>
+        <PageSection sx={{ flexGrow: 1 }}>
+          <TabsContents tabId={tabId} />
+        </PageSection>
+      </PageContent>
     </PageContainer>
   );
 }
