@@ -21,10 +21,9 @@ export default function TabsContents({ tabId }: TabsContentsProps) {
       {tabId === PageTabs.DETAILS && <Details issuer={issuer} />}
       {tabId === PageTabs.PROJECTS && <Projects />}
       {tabId === PageTabs.ORGANISATIONS && <Organisations />}
-      {tabId === PageTabs.DETAILS && <Details issuer={issuer} />}
       {tabId === PageTabs.USERS && "Users"}
-      {tabId === PageTabs.CONFIGURATION && "Configuration"}
       {tabId === PageTabs.KEYCARDS && "Keycards"}
+      {tabId === PageTabs.CONFIGURATION && "Configuration"}
     </>
   );
 }

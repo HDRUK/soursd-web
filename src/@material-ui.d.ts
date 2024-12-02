@@ -85,16 +85,6 @@ declare module "@mui/material/IconButton" {
   interface IconButtonOwnProps extends CustomIconButtonProps {}
 }
 
-declare module "@mui/material/SvgIcon" {
-  type AugmentedColorPaletteOptions =
-    import("@mui/material/styles/createPalette").AugmentedColorPaletteOptions;
-
-  interface CustomSvgIconProps {
-    color?: AugmentedColorPaletteOptions | string;
-  }
-  interface SvgIconOwnProps extends CustomIconProps {}
-}
-
 declare module "@mui/material/Divider" {
   type AugmentedColorPaletteOptions =
     import("@mui/material/styles/createPalette").AugmentedColorPaletteOptions;

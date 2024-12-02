@@ -5,23 +5,28 @@ import {
   IdentityVerifiedIcon,
   PendingIcon,
 } from "@/consts/icons";
+import { useTranslations } from "next-intl";
 
-export default function OrganisationsLegend() {
+const NAMESPACE_TRANSLATION_PROFILE = "IssuerProfile";
+
+export default function ProjectsLegend() {
+  const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
+
   const items = [
     {
-      text: "User approved to access SDE/TRE",
+      text: t("approvedUserSDETREProject"),
       icon: <IdentityVerifiedIcon />,
     },
     {
-      text: "Approved User for this Project",
+      text: t("approvedUserProject"),
       icon: <ApprovedUserIcon />,
     },
     {
-      text: "Approved Project",
+      text: t("approvedProject"),
       icon: <ApprovedIcon />,
     },
     {
-      text: "Pending Project",
+      text: t("pendingProject"),
       icon: <PendingIcon />,
     },
   ];
