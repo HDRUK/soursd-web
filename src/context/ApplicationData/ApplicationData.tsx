@@ -5,7 +5,7 @@ import OverlayCenterAlert from "@/components/OverlayCenterAlert";
 import { ISSUER_ID, VALIDATION_SCHEMA_KEY } from "@/consts/application";
 import { ROUTES } from "@/consts/router";
 import { useStore } from "@/data/store";
-import useUser from "@/hooks/useUser";
+import useMe from "@/hooks/useMe";
 import PageContainer from "@/modules/PageContainer";
 import { getIssuer } from "@/services/issuers";
 import { getOrganisation } from "@/services/organisations";
@@ -48,7 +48,7 @@ const ApplicationDataProvider = ({
 }: ApplicationDataProviderProps) => {
   const t = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
   const addUrlToHistory = useStore(store => store.addUrlToHistory);
-  const user = useUser();
+  const user = useMe();
   console.log(user);
 
   // const [user, setUser] = useStore(store => [store.getUser(), store.setUser]);
