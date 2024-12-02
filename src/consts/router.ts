@@ -10,72 +10,66 @@ const ROUTES: Routes = {
   logout: {
     path: "/logout",
   },
-  signup: {
-    path: "/researcher/signup",
-  },
-  signupIssuer: {
-    path: "/issuer/signup",
-  },
-  signupOrganistion: {
-    path: "/organisation/signup",
+  register: {
+    path: "/register",
   },
   homepage: {
     path: "/homepage",
   },
   profileIssuer: {
-    path: "/issuer/profile",
+    path: "/data-custodian/profile",
     permissions: [UserGroup.ISSUERS],
   },
   usersIssuer: {
-    path: "/issuer/users",
+    path: "/data-custodian/users",
     permissions: [UserGroup.ISSUERS],
   },
   permissionsResearcherIssuer: {
-    path: "/issuer/permissions/user",
+    path: "/data-custodian/permissions/user",
     permissions: [UserGroup.ISSUERS],
   },
   permissionsOrganisationIssuer: {
-    path: "/issuer/permissions/organisation",
+    path: "/data-custodian/permissions/organisation",
     permissions: [UserGroup.ISSUERS],
   },
   profileIssuerDetails: {
-    path: "/issuer/profile/details",
+    path: "/data-custodian/profile/details",
     permissions: [UserGroup.ISSUERS],
   },
   profileIssuerConfiguration: {
-    path: "/issuer/profile/configuration",
+    path: "/data-custodian/profile/configuration",
     permissions: [UserGroup.ISSUERS],
   },
   profileIssuerUsers: {
-    path: "/issuer/profile/users",
+    path: "/data-custodian/profile/users",
     permissions: [UserGroup.ISSUERS],
   },
   profileIssuerKeycards: {
-    path: "/issuer/profile/keycards",
+    path: "/data-custodian/profile/keycards",
     permissions: [UserGroup.ISSUERS],
   },
   profileResearcherExperience: {
-    path: "/researcher/profile/experience",
+    path: "/user/profile/experience",
     permissions: [UserGroup.RESEARCHERS],
   },
   profileResearcherDetails: {
-    path: "/researcher/profile/details",
+    path: "/user/profile/details",
     permissions: [UserGroup.RESEARCHERS],
   },
   profileResearcherIdentity: {
-    path: "/researcher/profile/identity",
+    path: "/user/profile/identity",
     permissions: [UserGroup.RESEARCHERS],
   },
   profileResearcherTraining: {
-    path: "/researcher/profile/training",
+    path: "/user/profile/training",
     permissions: [UserGroup.RESEARCHERS],
   },
   profileResearcherAffiliations: {
-    path: "/researcher/profile/affiliations",
+    path: "/user/profile/affiliations",
     permissions: [UserGroup.RESEARCHERS],
   },
   profileResearcher: {
-    path: "/researcher/profile",
+    path: "/user/profile",
     permissions: [UserGroup.RESEARCHERS],
   },
   profileOrganisation: {
