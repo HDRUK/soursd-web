@@ -214,6 +214,7 @@ export default function Details({ emailVerified }: DetailsProps) {
     formState: { errors },
     register,
     handleSubmit,
+    watch,
   } = methods;
 
   if (isGetOrganisationsLoading) {
@@ -261,7 +262,7 @@ export default function Details({ emailVerified }: DetailsProps) {
                   {tForm("organisationName")}
                 </InputLabel>
                 <Select
-                  defaultValue=""
+                  defaultValue={watch("organisation_id")}
                   {...register("organisation_id")}
                   size="small"
                   inputProps={{

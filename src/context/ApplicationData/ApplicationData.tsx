@@ -24,6 +24,7 @@ import {
   createContext,
   useContext,
   useEffect,
+  useState,
   useMemo,
 } from "react";
 
@@ -48,10 +49,8 @@ const ApplicationDataProvider = ({
 }: ApplicationDataProviderProps) => {
   const t = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
   const addUrlToHistory = useStore(store => store.addUrlToHistory);
-  const user = useMe();
-  console.log(user);
-
-  // const [user, setUser] = useStore(store => [store.getUser(), store.setUser]);
+  const me = useMe();
+  const [user, setUser] = useStore(store => [store.getUser(), store.setUser]);
 
   const [organisation, setOrganisation] = useStore(store => [
     store.config.organisation,
@@ -77,17 +76,18 @@ const ApplicationDataProvider = ({
 
   const {
     data: userData,
+    isLoading: isUserLoading,
     isError: isUserError,
     error: userError,
   } = useQuery({
-    queryKey: ["getUser", user?.id],
+    queryKey: ["getUser", me?.id],
     queryFn: ({ queryKey }) =>
       getUser(queryKey[1], {
         error: {
           message: "getUserError",
         },
       }),
-    enabled: !!user?.id,
+    enabled: !!me?.id,
   });
 
   const {
@@ -95,14 +95,14 @@ const ApplicationDataProvider = ({
     isError: isOrganisationError,
     error: organisationError,
   } = useQuery({
-    queryKey: ["getOrganisation", user?.organisation_id],
+    queryKey: ["getOrganisation", me?.organisation_id],
     queryFn: ({ queryKey }) =>
       getOrganisation(queryKey[1], {
         error: {
           message: "getOrganisationError",
         },
       }),
-    enabled: !!user?.organisation_id,
+    enabled: !!me?.organisation_id,
   });
 
   const {
@@ -120,6 +120,12 @@ const ApplicationDataProvider = ({
       }),
     enabled: !!ISSUER_ID,
   });
+
+  useEffect(() => {
+    if (userData?.data) {
+      setUser(userData.data);
+    }
+  }, [userData?.data]);
 
   useEffect(() => {
     setOrganisation(organisationData?.data);
@@ -148,10 +154,12 @@ const ApplicationDataProvider = ({
   const errorMessage = error || userError || organisationError || issuerError;
 
   const isFinishedLoading =
-    ((user?.id && user) || !user?.id) &&
-    ((user?.organisation_id && organisation) || !user?.organisation_id) &&
+    ((me?.id && me) || !me?.id) &&
+    ((me?.organisation_id && organisation) || !me?.organisation_id) &&
     !!systemConfigData?.data &&
-    !isIssuerLoading;
+    !isIssuerLoading &&
+    !isUserLoading &&
+    user;
 
   return (
     <ApplicationDataContext.Provider value={providerValue}>

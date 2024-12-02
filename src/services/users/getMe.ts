@@ -6,7 +6,7 @@ export default async (
   messages: ResponseTranslations
 ): Promise<ResponseJson<UsersResponse>> => {
   const response = await getRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/auth/me`,
+    `${process.env.NEXT_PUBLIC_API_URL}/auth/me`,
     undefined,
     {
       headers: {

@@ -11,8 +11,7 @@ interface TabsContentsProps {
 }
 
 export default function TabsContents({ tabId }: TabsContentsProps) {
-  const user = useStore(state => state.config.auth);
-
+  const user = useStore(state => state.getUser());
   if (!user) notFound();
 
   return (
