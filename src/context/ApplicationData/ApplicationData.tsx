@@ -5,6 +5,7 @@ import OverlayCenterAlert from "@/components/OverlayCenterAlert";
 import { ISSUER_ID, VALIDATION_SCHEMA_KEY } from "@/consts/application";
 import { ROUTES } from "@/consts/router";
 import { useStore } from "@/data/store";
+import useUser from "@/hooks/useUser";
 import PageContainer from "@/modules/PageContainer";
 import { getIssuer } from "@/services/issuers";
 import { getOrganisation } from "@/services/organisations";
@@ -43,13 +44,14 @@ const NAMESPACE_TRANSLATION_APPLICATION = "Application";
 
 const ApplicationDataProvider = ({
   children,
-  userId,
   value,
 }: ApplicationDataProviderProps) => {
   const t = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
   const addUrlToHistory = useStore(store => store.addUrlToHistory);
+  const user = useUser();
+  console.log(user);
 
-  const [user, setUser] = useStore(store => [store.getUser(), store.setUser]);
+  // const [user, setUser] = useStore(store => [store.getUser(), store.setUser]);
 
   const [organisation, setOrganisation] = useStore(store => [
     store.config.organisation,
@@ -85,7 +87,7 @@ const ApplicationDataProvider = ({
           message: "getUserError",
         },
       }),
-    enabled: userId, //! !user?.id,
+    enabled: !!user?.id,
   });
 
   const {
@@ -118,12 +120,6 @@ const ApplicationDataProvider = ({
       }),
     enabled: !!ISSUER_ID,
   });
-
-  useEffect(() => {
-    if (userData?.data) {
-      setUser(userData.data);
-    }
-  }, [userData?.data]);
 
   useEffect(() => {
     setOrganisation(organisationData?.data);
