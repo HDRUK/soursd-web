@@ -39,7 +39,9 @@
     "contacts": "Contacts",
     "organisationNotFound": "Organisation was not found",
     "getOrganisationStatusError": "Unable to determine validation status",
-    "navigationAriaLabel": "Profile tabs"
+    "navigationAriaLabel": "Profile tabs",
+    "patchUserError": "There was a problem updating your user details. Please try again or contact us at <contactLink></contactLink>",
+    "updateUserButton": "Save"
   },
   "Form": {
     "contactEmailPlaceholder": "Contact email",
