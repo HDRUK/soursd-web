@@ -82,7 +82,7 @@ export default function AccountConfirm() {
           <AccountOption
             icon={PeopleIcon}
             label={t("repOrgButton")}
-            handleClick={handleSelect}
+            onClick={handleSelect}
             name={AccountType.ORGANISATION}
             selected={selected}
           />
@@ -90,7 +90,7 @@ export default function AccountConfirm() {
           <AccountOption
             icon={PersonIcon}
             label={t("repMyselfButton")}
-            handleClick={handleSelect}
+            onClick={handleSelect}
             name={AccountType.USER}
             selected={selected}
           />
