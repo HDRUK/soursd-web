@@ -14,7 +14,7 @@ export default function Text({
   endIcon,
   sx,
   variant,
-  iconSize,
+  iconSize = "1.25em",
   ...restProps
 }: TextProps) {
   return (
