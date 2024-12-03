@@ -104,7 +104,7 @@ export default function Sections() {
             onApprove={handleApprove}
             onUnapprove={handleUnapprove}
             organisations={organisationsData?.data.data}
-            loadingState={{
+            queryState={{
               isError: isDeleteError || isUpdateError,
               isLoading: isDeleteLoading || isUpdateLoading,
               error: errorDelete || errorUpdate,

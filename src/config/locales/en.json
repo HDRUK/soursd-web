@@ -24,7 +24,9 @@
     "loadingAriaLabel": "Loading Data Custodian data",
     "idvtHeading": "Do you require identification validation?",
     "idvtDescription": "This is handled by a third party Identification Document Verification Technology (IDVT) service.",
-    "submitButton": "Save"
+    "submitButton": "Save",
+    "getError": "Unable to get the list of users",
+    "noResults": "There were no users found"
   },
   "ProfileOrganisation": {
     "title": "Profile",

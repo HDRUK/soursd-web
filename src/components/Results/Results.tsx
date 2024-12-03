@@ -1,32 +1,39 @@
-import { LoadingState } from "@/types/form";
-import { Box } from "@mui/material";
+import { QueryState } from "@/types/form";
+import { Box, BoxProps } from "@mui/material";
 import { ReactNode } from "react";
 import LoadingWrapper from "../LoadingWrapper";
 import { Message } from "../Message";
 
-interface ResultsProps {
-  loadingState: LoadingState;
+interface ResultsProps extends BoxProps {
+  queryState: QueryState;
   noResultsMessage: ReactNode;
   errorMessage: ReactNode;
-  children: ReactNode;
 }
 
 export default function Results({
-  loadingState,
+  queryState,
   noResultsMessage,
   errorMessage,
   children,
+  ...restProps
 }: ResultsProps) {
-  const { isLoading, isError } = loadingState;
+  const { isLoading, isError } = queryState;
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
+    <Box
+      {...restProps}
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 3,
+        ...restProps.sx,
+      }}>
       {isLoading && <Message severity="info">{noResultsMessage}</Message>}
       {isError && !isLoading && (
         <Message severity="error">{errorMessage}</Message>
       )}
       <LoadingWrapper variant="basic" loading={isLoading && !isError}>
-        {children}
+        <div role="list">{children}</div>
       </LoadingWrapper>
     </Box>
   );

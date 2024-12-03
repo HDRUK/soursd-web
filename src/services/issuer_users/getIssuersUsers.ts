@@ -3,7 +3,7 @@ import { getRequest, handleResponseError } from "../requests";
 import { GetIssuersUsersResponse } from "./types";
 
 export default async (
-  messages: ResponseTranslations
+  messages?: ResponseTranslations
 ): Promise<ResponseJson<GetIssuersUsersResponse>> => {
   const response = await getRequest(
     `${process.env.NEXT_PUBLIC_API_V1_URL}/issuer_users`,

@@ -21,7 +21,7 @@ const mockedPermission4 = mockedPermission({ id: 4 });
 export const Basic: Story = {
   args: {
     onSubmit: () => {},
-    loadingState: {
+    queryState: {
       isLoading: false,
       isError: false,
       error: "",
