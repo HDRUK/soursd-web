@@ -1,9 +1,14 @@
+import { FORMAT_SHORT_DATE } from "@/consts/date";
 import dayjs from "dayjs";
 
 function isExpired(date: string) {
   const expirationTime = dayjs(date);
 
   return expirationTime.isAfter(dayjs());
+}
+
+function formatShortDate(date?: string) {
+  return dayjs(date).format(FORMAT_SHORT_DATE);
 }
 
 function isExpiredInvite(invite_sent_at?: string) {
@@ -17,4 +22,4 @@ function isExpiredInvite(invite_sent_at?: string) {
   );
 }
 
-export { isExpired, isExpiredInvite };
+export { isExpired, isExpiredInvite, formatShortDate };

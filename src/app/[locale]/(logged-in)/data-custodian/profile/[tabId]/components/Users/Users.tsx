@@ -2,6 +2,7 @@ import Icon from "@/components/Icon";
 import Results from "@/components/Results";
 import { FORMAT_SHORT_DATE } from "@/consts/date";
 import { getIssuersUsers } from "@/services/issuer_users";
+import { formatShortDate } from "@/utils/date";
 import { Search } from "@mui/icons-material";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
@@ -107,10 +108,10 @@ export default function Users() {
                       },
                     }}>
                     <Typography color="caption.main">
-                      Added on: {dayjs(created_at).format(FORMAT_SHORT_DATE)}
+                      Added on: {formatShortDate(created_at)}
                     </Typography>
                     <Typography color="caption.main">
-                      Last logged in: {dayjs().format(FORMAT_SHORT_DATE)}
+                      Last logged in: {formatShortDate()}
                     </Typography>
                   </Box>
                   <Box>
