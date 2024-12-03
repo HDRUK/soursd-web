@@ -1,6 +1,5 @@
 import Icon from "@/components/Icon";
 import Results from "@/components/Results";
-import { FORMAT_SHORT_DATE } from "@/consts/date";
 import { getIssuersUsers } from "@/services/issuer_users";
 import { formatShortDate } from "@/utils/date";
 import { Search } from "@mui/icons-material";
@@ -19,8 +18,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
-import dayjs from "dayjs";
-import { useTranslations } from "use-intl";
+import { useTranslations } from "next-intl";
 
 const NAMESPACE_TRANSLATION_PROFILE = "IssuerProfile";
 
@@ -28,7 +26,6 @@ export default function Users() {
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
   const {
-    error: errorMessage,
     isError: isGetIssuersError,
     isLoading: isGetIssuersLoading,
     data: issuersData,
@@ -58,7 +55,7 @@ export default function Users() {
           />
         </form>
         <Button endIcon={<AddCircleOutlineOutlinedIcon />} variant="contained">
-          Add New
+          {t("addNewUser")}
         </Button>
       </Box>
 
@@ -97,6 +94,7 @@ export default function Users() {
                       <Typography variant="h6">
                         {first_name} {last_name}
                       </Typography>
+                      {/* Will be read from db */}
                       <Typography>Administrator</Typography>
                     </div>
                   </Box>
@@ -108,10 +106,14 @@ export default function Users() {
                       },
                     }}>
                     <Typography color="caption.main">
-                      Added on: {formatShortDate(created_at)}
+                      {t("addedOn", {
+                        date: formatShortDate(created_at),
+                      })}
                     </Typography>
                     <Typography color="caption.main">
-                      Last logged in: {formatShortDate()}
+                      {t("lastLoggedIn", {
+                        date: formatShortDate(),
+                      })}
                     </Typography>
                   </Box>
                   <Box>

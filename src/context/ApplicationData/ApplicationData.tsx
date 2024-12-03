@@ -108,7 +108,6 @@ const ApplicationDataProvider = ({
   const {
     data: issuerData,
     isError: isIssuerError,
-    isLoading: isIssuerLoading,
     error: issuerError,
   } = useQuery({
     queryKey: ["getIssuer", ISSUER_ID],

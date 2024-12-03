@@ -1,4 +1,4 @@
-import { Box, BoxProps } from "@mui/material";
+import { BoxProps } from "@mui/material";
 import React from "react";
 
 const SIZES = {

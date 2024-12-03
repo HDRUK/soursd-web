@@ -35,7 +35,10 @@
     "idvtDescription": "This is handled by a third party Identification Document Verification Technology (IDVT) service.",
     "submitButton": "Save",
     "getError": "Unable to get the list of users",
-    "noResults": "There were no users found"
+    "noResults": "There were no users found",
+    "lastLoggedIn": "Last logged in: {date}",
+    "addedOn": "Added on: {date}",
+    "addNewUser": "Add New"
   },
   "ProfileOrganisation": {
     "title": "Profile",

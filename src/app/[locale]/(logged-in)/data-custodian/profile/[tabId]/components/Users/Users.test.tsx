@@ -1,5 +1,4 @@
 import { useStore } from "@/data/store";
-import { mockedIssuer } from "@/mocks/data/issuer";
 import { mockedUser } from "@/mocks/data/user";
 import { act, render, screen, waitFor } from "@/utils/testUtils";
 import { axe } from "jest-axe";
@@ -8,7 +7,6 @@ import Users from "./Users";
 jest.mock("@/services/issuers");
 jest.mock("@/data/store");
 
-const defaultIssuer = mockedIssuer();
 const defaultUser = mockedUser();
 
 (useStore as unknown as jest.Mock).mockImplementation(() => [

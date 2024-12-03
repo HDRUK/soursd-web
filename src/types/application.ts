@@ -61,7 +61,6 @@ interface DataCustodianUser {
   email: string;
   issuer_id: number;
 }
-}
 
 type UserProfileCompletionSchema = Record<
   UserProfileCompletionCategories,
@@ -221,5 +220,5 @@ export type {
   File,
   Permission,
   UserProfileCompletionSchema,
-  DataCustodianUser
+  DataCustodianUser,
 };
