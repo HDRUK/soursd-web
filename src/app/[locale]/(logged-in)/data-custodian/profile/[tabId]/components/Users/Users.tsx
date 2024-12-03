@@ -46,7 +46,7 @@ export default function Users() {
             InputProps={{
               endAdornment: (
                 <InputAdornment position="start">
-                  <IconButton aria-label="description for action">
+                  <IconButton aria-label={t("searchIssuerUsers")}>
                     <Search />
                   </IconButton>
                 </InputAdornment>

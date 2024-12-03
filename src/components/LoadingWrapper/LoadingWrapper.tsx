@@ -13,14 +13,16 @@ export default function LoadingWrapper({
   children,
   variant = "rich",
 }: LoadingWrapperProps) {
-  let additionalProps: BoxProps["sx"] = {
-    height: "100vh",
-    background: `linear-gradient(90deg, ${theme.palette.background1.light} 0%, ${theme.palette.background1.extraLight} 35%, #fff 100%)`,
-  };
+  let additionalProps: BoxProps["sx"] = {};
 
   if (variant === "basic") {
     additionalProps = {
       py: 5,
+    };
+  } else {
+    additionalProps = {
+      height: "100vh",
+      background: `linear-gradient(90deg, ${theme.palette.background1.light} 0%, ${theme.palette.background1.extraLight} 35%, #fff 100%)`,
     };
   }
 

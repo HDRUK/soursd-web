@@ -38,7 +38,8 @@
     "noResults": "There were no users found",
     "lastLoggedIn": "Last logged in: {date}",
     "addedOn": "Added on: {date}",
-    "addNewUser": "Add New"
+    "addNewUser": "Add New",
+    "searchIssuerUsers": "Search"
   },
   "ProfileOrganisation": {
     "title": "Profile",
