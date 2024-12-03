@@ -24,6 +24,8 @@ interface Routes {
   usersIssuer: RouteConfig;
   profileIssuer: RouteConfig;
   profileIssuerDetails: RouteConfig;
+  profileIssuerProjects: RouteConfig;
+  profileIssuerOrganisations: RouteConfig;
   profileIssuerConfiguration: RouteConfig;
   profileIssuerKeycards: RouteConfig;
   profileIssuerUsers: RouteConfig;

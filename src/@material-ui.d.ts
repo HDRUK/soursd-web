@@ -16,6 +16,7 @@ interface ColorOverrides {
   inverseSurface: true;
   greyLight: true;
   postitYellow: true;
+  mint: true;
 }
 
 declare module "@mui/material/styles/createPalette" {
@@ -31,6 +32,7 @@ declare module "@mui/material/styles/createPalette" {
     inverseSurface: SimplePaletteColorOptions;
     greyLight: SimplePaletteColorOptions;
     postitYellow: SimplePaletteColorOptions;
+    mint: SimplePaletteColorOptions;
   }
 
   interface Palette extends CustomPalette {}

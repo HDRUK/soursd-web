@@ -20,7 +20,7 @@ import {
 import { grey } from "@mui/material/colors";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import ResearcherDetailsModal from "../ResearcherDetailsModal";
+import { UserDetailsModal } from "@/modules";
 
 interface UsersListProps {
   organisation: Organisation;
@@ -152,7 +152,7 @@ export default function OrganisationUsersList({
         </TableBody>
       </Table>
       {activeUserData && (
-        <ResearcherDetailsModal
+        <UserDetailsModal
           isApproved={activeUserData.isApproved}
           user={activeUserData.user}
           organisation={activeUserData.organisation}
