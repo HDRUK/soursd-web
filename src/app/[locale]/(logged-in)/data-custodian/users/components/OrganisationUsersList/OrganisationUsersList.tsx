@@ -7,7 +7,7 @@ import { useApplicationData } from "@/context/ApplicationData";
 import { PostApprovalPayloadWithEntity } from "@/services/approvals";
 import { EntityType } from "@/types/api";
 import { Organisation, User } from "@/types/application";
-import { FormMutateState } from "@/types/form";
+import { LoadingState } from "@/types/form";
 import { LoadingButton } from "@mui/lab";
 import {
   Button,
@@ -28,7 +28,7 @@ interface UsersListProps {
     payload: PostApprovalPayloadWithEntity,
     isApproved: boolean
   ): void;
-  mutateState: FormMutateState;
+  loadingState: LoadingState;
 }
 
 interface ActiveUserData {
@@ -44,7 +44,7 @@ const ISSUER_ID = 1;
 export default function OrganisationUsersList({
   organisation,
   onApproveToggle,
-  mutateState,
+  loadingState,
 }: UsersListProps) {
   const { routes } = useApplicationData();
   const t = useTranslations(NAMESPACE_TRANSLATIONS_USERS_LIST);
@@ -126,7 +126,7 @@ export default function OrganisationUsersList({
                       <ActionMenuItem>
                         <LoadingButton
                           fullWidth
-                          loading={mutateState.isLoading}
+                          loading={loadingState.isLoading}
                           variant={isApproved ? "contained" : "outlined"}
                           color="success"
                           size="small"

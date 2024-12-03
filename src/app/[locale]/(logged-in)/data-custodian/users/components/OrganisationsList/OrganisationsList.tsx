@@ -8,7 +8,7 @@ import { useApplicationData } from "@/context/ApplicationData";
 import { PostApprovalPayloadWithEntity } from "@/services/approvals";
 import { Organisation } from "@/services/organisations";
 import { EntityType } from "@/types/api";
-import { FormMutateState } from "@/types/form";
+import { LoadingState } from "@/types/form";
 import BusinessIcon from "@mui/icons-material/Business";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { LoadingButton } from "@mui/lab";
@@ -27,7 +27,7 @@ interface UsersListProps {
   organisations: Organisation[];
   onApprove(payload: PostApprovalPayloadWithEntity): void;
   onUnapprove(payload: PostApprovalPayloadWithEntity): void;
-  mutateState: FormMutateState;
+  loadingState: LoadingState;
 }
 
 interface ActiveOrganisationData {
@@ -43,7 +43,7 @@ export default function UsersList({
   organisations,
   onApprove,
   onUnapprove,
-  mutateState,
+  loadingState,
 }: UsersListProps) {
   const { routes } = useApplicationData();
   const t = useTranslations(NAMESPACE_TRANSLATIONS_USERS_LIST);
@@ -120,7 +120,7 @@ export default function UsersList({
                       <ActionMenuItem>
                         <LoadingButton
                           fullWidth
-                          loading={mutateState.isLoading}
+                          loading={loadingState.isLoading}
                           variant={isApproved ? "contained" : "outlined"}
                           color="success"
                           size="small"
@@ -146,7 +146,7 @@ export default function UsersList({
               </AccordionSummary>
               <AccordionDetails>
                 <OrganisationUsersList
-                  mutateState={mutateState}
+                  loadingState={loadingState}
                   organisation={organisation}
                   onApproveToggle={handleApproveClick}
                 />

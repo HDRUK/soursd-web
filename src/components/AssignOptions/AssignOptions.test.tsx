@@ -12,7 +12,7 @@ const mockProps = {
     mockedPermission({ id: 3, name: "ACCESS_WEBSITE" }),
   ],
   subsetData: [mockedPermission({ id: 2 })],
-  mutateState: {
+  loadingState: {
     isLoading: false,
     isError: false,
     error: "",
@@ -36,7 +36,7 @@ describe("<AssignOptions />", () => {
 
   it("show a loader", async () => {
     renderAssignOptions({
-      mutateState: {
+      loadingState: {
         isLoading: true,
         isError: false,
         error: "",
@@ -52,7 +52,7 @@ describe("<AssignOptions />", () => {
 
   it("shows an error", async () => {
     renderAssignOptions({
-      mutateState: {
+      loadingState: {
         isLoading: false,
         isError: true,
         error: "There has been an error",

@@ -2,7 +2,7 @@
 
 import { ActionList, ActionListItem } from "@/components/ActionList";
 import { Permission } from "@/services/permissions/types";
-import { FormMutateState } from "@/types/form";
+import { LoadingState } from "@/types/form";
 import { getCheckboxFormValuesFromIntersection } from "@/utils/form";
 import SaveIcon from "@mui/icons-material/Save";
 import { LoadingButton } from "@mui/lab";
@@ -13,14 +13,14 @@ import { Message } from "../Message";
 export type AssignOptionsFormValues = Record<string, boolean>;
 
 export interface AssignOptionsProps {
-  mutateState: FormMutateState;
+  loadingState: LoadingState;
   parentData: Permission[];
   subsetData: Permission[];
   onSubmit(values: AssignOptionsFormValues): void;
 }
 
 export default function PermissionsSection({
-  mutateState,
+  loadingState,
   parentData,
   subsetData,
   onSubmit,
@@ -42,9 +42,9 @@ export default function PermissionsSection({
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        {mutateState.isError && (
+        {loadingState.isError && (
           <Message severity="error" sx={{ mb: 3 }}>
-            {`${mutateState.error}`}
+            {`${loadingState.error}`}
           </Message>
         )}
         <ActionList sx={{ listStyleType: "none", p: 0, m: 0, mb: 2 }}>
@@ -70,7 +70,7 @@ export default function PermissionsSection({
           color="primary"
           variant="contained"
           endIcon={<SaveIcon />}
-          loading={mutateState.isLoading}>
+          loading={loadingState.isLoading}>
           Save
         </LoadingButton>
       </form>

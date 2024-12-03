@@ -1,7 +1,7 @@
-interface FormMutateState {
+interface LoadingState {
   isLoading: boolean;
   isError: boolean;
   error?: unknown | string | null;
 }
 
-export type { FormMutateState };
+export type { LoadingState };

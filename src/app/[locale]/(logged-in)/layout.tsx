@@ -2,7 +2,9 @@
 
 import { ROUTES } from "@/consts/router";
 import { ApplicationDataProvider } from "@/context/ApplicationData";
+import { useStore } from "@/data/store";
 import { getRequest } from "@/services/requests";
+import { User } from "@/types/application";
 import { handleLogin } from "@/utils/keycloak";
 import { getRoutes } from "@/utils/router";
 import Cookies from "js-cookie";
@@ -16,7 +18,7 @@ type LayoutProps = PropsWithChildren<{
 async function validateAccessToken(
   pathname: string | null,
   router: ReturnType<typeof useRouter>
-): Promise<boolean> {
+): Promise<User | undefined> {
   const response = await getRequest(
     `${process.env.NEXT_PUBLIC_API_URL}/auth/me`,
     undefined,
@@ -28,47 +30,45 @@ async function validateAccessToken(
   );
 
   if (response.ok) {
-    return true;
+    return response.json();
   }
 
   if (response.status === 404) {
     router.push("/en/register");
-    return false;
   }
 
   if (response.status === 500) {
     const accessToken = Cookies.get("access_token");
+
     if (!accessToken) {
       Cookies.set("redirectPath", pathname ?? "/", { path: "/" });
       handleLogin();
     }
-    return false;
   }
-  return false;
 }
 
 export default function Layout({ children, params: { locale } }: LayoutProps) {
   const routes = getRoutes(ROUTES, locale);
   const pathname = usePathname();
   const router = useRouter();
-  const [isChecked, setIsChecked] = useState<boolean>(false);
+  const [user, setUser] = useStore(state => [state.getUser(), state.setUser]);
 
   useEffect(() => {
     const performAuthCheck = async () => {
-      const isAuth = await validateAccessToken(pathname, router);
+      const response = await validateAccessToken(pathname, router);
 
-      if (!isAuth) {
+      if (!response?.data) {
         throw new Error("Unauthorised 401");
       }
 
-      setIsChecked(isAuth);
+      setUser(response.data);
     };
 
     performAuthCheck();
   }, [pathname]);
 
   return (
-    isChecked && (
+    user?.id && (
       <ApplicationDataProvider
         value={{
           routes,
