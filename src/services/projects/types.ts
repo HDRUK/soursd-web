@@ -1,5 +1,4 @@
-import { ResearcherProject } from "@/types/application";
-import { ProjectUser } from "@/types/application";
+import { ResearcherProject, ProjectUser } from "@/types/application";
 
 type ProjectsResponse = ResearcherProject[];
 
