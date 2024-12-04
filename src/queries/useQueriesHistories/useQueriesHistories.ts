@@ -39,7 +39,7 @@ export default function useQueriesHistory(registryId: number) {
     {
       queryKey: ["getProjects", registryId],
       queryFn: () =>
-        getProjects(registryId, {
+        getProjects({
           error: { message: "getProjectsError" },
         }),
     },
