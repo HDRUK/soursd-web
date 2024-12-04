@@ -22,8 +22,16 @@ import NotificationsMenu from "../NotificationsMenu";
 
 const NAMESPACE_TRANSLATIONS_NAVBAR = "NavBar";
 
-type ButtonColor = "primary" | "secondary" | "inherit" | undefined;
-type ButtonVariant = "contained" | "text" | undefined;
+export enum ButtonColor {
+  Primary = "primary",
+  Secondary = "secondary",
+  Inherit = "inherit",
+}
+
+export enum ButtonVariant {
+  Contained = "contained",
+  Text = "text",
+}
 
 export default function NavBar() {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_NAVBAR);
@@ -54,43 +62,48 @@ export default function NavBar() {
     onClick?: () => void | undefined;
   }[] = [
     {
-      color: "inherit",
-      variant: "text",
+      color: ButtonColor.Inherit,
+      variant: ButtonVariant.Text,
       text: t("homeButton"),
       onClick: () => router.push("/"),
     },
     {
-      color: "inherit",
-      variant: "text",
+      color: ButtonColor.Inherit,
+      variant: ButtonVariant.Text,
       text: t("aboutButton"),
     },
     {
-      color: "inherit",
-      variant: "text",
+      color: ButtonColor.Inherit,
+      variant: ButtonVariant.Text,
       text: t("featuresButton"),
     },
     {
-      color: "inherit",
-      variant: "text",
+      color: ButtonColor.Inherit,
+      variant: ButtonVariant.Text,
       text: t("supportButton"),
     },
     {
-      color: "inherit",
-      variant: "text",
+      color: ButtonColor.Inherit,
+      variant: ButtonVariant.Text,
       text: t("contactButton"),
     },
     {
-      color: "secondary",
-      variant: "contained",
+      color: ButtonColor.Secondary,
+      variant: ButtonVariant.Contained,
       text: isAuthenticated ? t("signOutButton") : t("signInButton"),
       onClick: isAuthenticated ? handleLogout : handleLogin,
     },
-    {
-      color: "primary",
-      variant: "contained",
-      text: t("registerButton"),
-      onClick: handleRegister,
-    },
+    // Conditionally render the register button only when not authenticated
+    ...(isAuthenticated
+      ? []
+      : [
+          {
+            color: ButtonColor.Primary,
+            variant: ButtonVariant.Contained,
+            text: t("registerButton"),
+            onClick: handleRegister,
+          },
+        ]),
   ];
 
   return (
@@ -125,7 +138,7 @@ export default function NavBar() {
         <Box sx={{ display: "flex", minHeight: 46, alignItems: "center" }}>
           <div>
             <IconButton
-              color="inherit"
+              color={ButtonColor.Inherit}
               aria-label={t("ariaOpenMobileMenu")}
               edge="start"
               onClick={() => setIsDrawerOpen(!isDrawerOpen)}
