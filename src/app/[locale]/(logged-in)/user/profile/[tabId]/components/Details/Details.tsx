@@ -6,7 +6,7 @@ import UserInfo from "../UserInfo";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
-export default function Experience() {
+export default function Details() {
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
   return (
