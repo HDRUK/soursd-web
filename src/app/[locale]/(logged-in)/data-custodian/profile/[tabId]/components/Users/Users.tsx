@@ -1,6 +1,8 @@
 import Icon from "@/components/Icon";
 import Results from "@/components/Results";
-import { getIssuersUsers } from "@/services/issuer_users";
+import { useStore } from "@/data/store";
+import { deleteIssuerUser, getIssuerUsers } from "@/services/issuer_users";
+import { DataCustodianUser } from "@/types/application";
 import { formatShortDate } from "@/utils/date";
 import { Search } from "@mui/icons-material";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
@@ -17,32 +19,74 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
+import { useCallback, useState } from "react";
+import UserModal from "../UserModal";
+import { showAlert, showLoadingAlertWithPromise } from "@/utils/showAlert";
 
 const NAMESPACE_TRANSLATION_PROFILE = "IssuerProfile";
 
 export default function Users() {
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
+  const queryClient = useQueryClient();
+  const [modalProps, setModalProps] = useState<{
+    open: Boolean;
+    user?: Partial<DataCustodianUser>;
+  } | null>();
+  const issuer = useStore(state => state.getIssuer());
 
   const {
     isError: isGetIssuersError,
     isLoading: isGetIssuersLoading,
     data: issuersData,
   } = useQuery({
-    queryKey: ["getIssuers"],
-    queryFn: () => getIssuersUsers(),
+    queryKey: ["getIssuerUsers", issuer?.id],
+    queryFn: () => getIssuerUsers(),
   });
+
+  const { mutateAsync: deleteIssuerUserAsync } = useMutation({
+    mutationKey: ["deleteIssuerUser"],
+    mutationFn: (id: number) => {
+      return deleteIssuerUser(id, {
+        error: { message: "deleteUserError" },
+      });
+    },
+  });
+
+  const handleDelete = async (userId: number) => {
+    showAlert("warning", {
+      text: t("deleteWarningDescription"),
+      title: t("deleteWarningTitle"),
+      confirmButtonText: "Delete user",
+      cancelButtonText: "Cancel",
+      closeOnConfirm: true,
+      closeOnCancel: true,
+      preConfirm: () => {
+        showLoadingAlertWithPromise(deleteIssuerUserAsync(userId), {
+          onSuccess: () => {
+            queryClient.refetchQueries({
+              queryKey: ["getIssuerUsers", issuer?.id],
+            });
+          },
+        });
+      },
+    });
+  };
+
+  const handleCloseModal = useCallback(() => {
+    setModalProps(null);
+  }, []);
 
   return (
     <Box>
       <Box sx={{ display: "flex", gap: 1, mb: 3 }}>
-        <form role="search">
+        <Box component="form" role="search" sx={{ flexGrow: 1 }}>
           <TextField
+            fullWidth
             hiddenLabel
             label="Search"
             size="small"
-            sx={{ flexGrow: 1 }}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="start">
@@ -53,8 +97,23 @@ export default function Users() {
               ),
             }}
           />
-        </form>
-        <Button endIcon={<AddCircleOutlineOutlinedIcon />} variant="contained">
+        </Box>
+        <Button
+          endIcon={<AddCircleOutlineOutlinedIcon />}
+          variant="contained"
+          onClick={() => {
+            if (issuer?.id) {
+              setModalProps({
+                open: true,
+                user: {
+                  first_name: "",
+                  last_name: "",
+                  email: "",
+                  issuer_id: issuer?.id,
+                },
+              });
+            }
+          }}>
           {t("addNewUser")}
         </Button>
       </Box>
@@ -66,8 +125,10 @@ export default function Users() {
           isLoading: isGetIssuersLoading,
           isError: isGetIssuersError,
         }}>
-        {issuersData?.data.map(
-          ({ first_name, last_name, created_at, email }) => (
+        {issuersData?.data.map(issuerUser => {
+          const { first_name, last_name, created_at, email } = issuerUser;
+
+          return (
             <Card sx={{ mb: 1 }} role="listitem" key={email}>
               <CardContent>
                 <Box
@@ -117,19 +178,33 @@ export default function Users() {
                     </Typography>
                   </Box>
                   <Box>
-                    <IconButton size="small" aria-label="Edit user">
+                    <IconButton
+                      size="small"
+                      aria-label="Edit user"
+                      onClick={() =>
+                        setModalProps({
+                          open: true,
+                          user: issuerUser,
+                        })
+                      }>
                       <CreateOutlinedIcon sx={{ color: "default.main" }} />
                     </IconButton>
-                    <IconButton size="small" aria-label="Delete user">
+                    <IconButton
+                      size="small"
+                      aria-label="Delete user"
+                      onClick={() => handleDelete(issuerUser?.id)}>
                       <DeleteForeverOutlinedIcon sx={{ color: "error.main" }} />
                     </IconButton>
                   </Box>
                 </Box>
               </CardContent>
             </Card>
-          )
-        )}
+          );
+        })}
       </Results>
+      {modalProps?.user && (
+        <UserModal {...modalProps} onClose={handleCloseModal} />
+      )}
     </Box>
   );
 }

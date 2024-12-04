@@ -39,15 +39,16 @@ const Error = () => {
         t.rich("message", { contact: ContactLink }) ?? t("message")
       );
 
-      showAlert(
-        "error",
-        errorMessage,
-        hasTitle ? title : undefined,
-        getButtonAction(type),
-        t("primaryButton"),
-        hasNavigateButton ? navigateButton : undefined,
-        hasNavigateButton ? () => router.push(t("navigatePath")) : undefined
-      );
+      showAlert("error", {
+        text: errorMessage,
+        title,
+        preConfirm: getButtonAction(type),
+        confirmButtonText: t("primaryButton"),
+        cancelButtonText: hasNavigateButton ? navigateButton : undefined,
+        preDeny: hasNavigateButton
+          ? () => router.push(t("navigatePath"))
+          : undefined,
+      });
     }
   }, [type, t, router]);
 

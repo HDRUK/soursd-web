@@ -14,7 +14,9 @@ describe("Alert Utils", () => {
 
   describe("showAlert", () => {
     it('should display an alert with the correct default title for "error"', () => {
-      showAlert("error", "This is an error message.");
+      showAlert("error", {
+        text: "This is an error message.",
+      });
 
       expect(Swal.fire).toHaveBeenCalledWith({
         icon: "error",
@@ -32,7 +34,10 @@ describe("Alert Utils", () => {
     });
 
     it("should override the default title when a custom title is provided", () => {
-      showAlert("success", "Operation completed successfully!", "Custom Title");
+      showAlert("success", {
+        text: "Operation completed successfully!",
+        title: "Custom Title",
+      });
 
       expect(Swal.fire).toHaveBeenCalledWith({
         icon: "success",
@@ -50,14 +55,11 @@ describe("Alert Utils", () => {
     });
 
     it("should display cancel and confirm buttons when cancelButtonText is provided", () => {
-      showAlert(
-        "question",
-        "Do you want to proceed?",
-        undefined,
-        undefined,
-        "Yes",
-        "No"
-      );
+      showAlert("question", {
+        text: "Do you want to proceed?",
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+      });
 
       expect(Swal.fire).toHaveBeenCalledWith({
         icon: "question",

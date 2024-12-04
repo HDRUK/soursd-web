@@ -37,7 +37,7 @@ export default function Sections() {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_ADMINISTRATION);
   const tValidation = useTranslations(NAMESPACE_TRANSLATION_VALIDATION);
 
-  const { mutateAsync: mutateInviteAsync } = useMutation({
+  const { mutateAsync: mutateInviteAsync, isPending } = useMutation({
     mutationKey: ["sendInvite"],
     /* eslint-disable  @typescript-eslint/no-explicit-any */
     mutationFn: (payload: any) => {
@@ -64,6 +64,7 @@ export default function Sections() {
     defaultValues: {
       to: 0,
     },
+    disabled: isPending,
   });
 
   const handleSendInvite = useCallback(

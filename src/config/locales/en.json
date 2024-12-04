@@ -39,7 +39,17 @@
     "lastLoggedIn": "Last logged in: {date}",
     "addedOn": "Added on: {date}",
     "addNewUser": "Add New",
-    "searchIssuerUsers": "Search"
+    "searchIssuerUsers": "Search",
+    "createUserError": "There was a problem creating this user. Please try again or contact us at <contactLink></contactLink>",
+    "updateUserError": "There was a problem updating this users details. Please try again or contact us at <contactLink></contactLink>",
+    "roleAdministratorDescription": "Can do everything on the system",
+    "roleApproverDescription": "Can only approve Organisations and/or Researchers",
+    "updateSuccessfulTitle": "User updated",
+    "updateSuccessfulDescription": "The user has been successfully updated.",
+    "createSuccessfulTitle": "User created",
+    "createSuccessfulDescription": "The user has been successfully created.",
+    "projects": "Projects",
+    "organisations": "Organisations"
   },
   "ProfileOrganisation": {
     "title": "Profile",
@@ -151,7 +161,9 @@
     "ceCertified": "CE certfied",
     "ceCertificationNumberPlaceholder": "CE certification number",
     "ceCertificationNumber": "CE certification number",
-    "whatIsTheOrcId": "Your ORCiD is a value which identifies you to Data Custodians (although in general anyone) and provides information to them such as your research outputs and activities. If you don't have one of these you can signup at https://orcid.org/register. Although it is recommended to provide this, it is not required for the registry, however it is required for the content scrape."
+    "whatIsTheOrcId": "Your ORCiD is a value which identifies you to Data Custodians (although in general anyone) and provides information to them such as your research outputs and activities. If you don't have one of these you can signup at https://orcid.org/register. Although it is recommended to provide this, it is not required for the registry, however it is required for the content scrape.",
+    "roleAdministrator": "Administrator",
+    "roleApprover": "Approver"
   },
   "Buttons": {
     "register": "Register",

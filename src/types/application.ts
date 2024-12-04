@@ -60,6 +60,7 @@ interface DataCustodianUser {
   last_name: string;
   email: string;
   issuer_id: number;
+  role: string;
 }
 
 type UserProfileCompletionSchema = Record<
