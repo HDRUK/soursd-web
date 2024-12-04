@@ -1,0 +1,3 @@
+const FORMAT_SHORT_DATE = "DD/MM/YYYY";
+
+export { FORMAT_SHORT_DATE };

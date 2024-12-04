@@ -36,6 +36,14 @@ const ROUTES: Routes = {
     path: "/data-custodian/profile/details",
     permissions: [UserGroup.ISSUERS],
   },
+  profileIssuerProjects: {
+    path: "/issuer/profile/projects",
+    permissions: [UserGroup.ISSUERS],
+  },
+  profileIssuerOrganisations: {
+    path: "/issuer/profile/organisations",
+    permissions: [UserGroup.ISSUERS],
+  },
   profileIssuerConfiguration: {
     path: "/data-custodian/profile/configuration",
     permissions: [UserGroup.ISSUERS],
