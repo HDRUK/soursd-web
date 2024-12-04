@@ -1,27 +1,27 @@
-import { showAlert, showLoadingAlertWithPromise } from './showAlert'
-import Swal from 'sweetalert2';
-import theme from '@/theme';
+import Swal from "sweetalert2";
+import theme from "@/theme";
+import { showAlert, showLoadingAlertWithPromise } from "./showAlert";
 
-jest.mock('sweetalert2', () => ({
+jest.mock("sweetalert2", () => ({
   fire: jest.fn(),
   showLoading: jest.fn(),
 }));
 
-describe('Alert Utils', () => {
+describe("Alert Utils", () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
 
-  describe('showAlert', () => {
+  describe("showAlert", () => {
     it('should display an alert with the correct default title for "error"', () => {
-      showAlert('error', 'This is an error message.');
+      showAlert("error", "This is an error message.");
 
       expect(Swal.fire).toHaveBeenCalledWith({
-        icon: 'error',
-        title: ['Oh no! Something went wrong'],
-        html: 'This is an error message.',
+        icon: "error",
+        title: ["Oh no! Something went wrong"],
+        html: "This is an error message.",
         confirmButtonColor: theme.palette.primary.main,
-        confirmButtonText: 'OK',
+        confirmButtonText: "OK",
         denyButtonColor: theme.palette.default.main,
         denyButtonText: undefined,
         showDenyButton: false,
@@ -31,15 +31,15 @@ describe('Alert Utils', () => {
       });
     });
 
-    it('should override the default title when a custom title is provided', () => {
-      showAlert('success', 'Operation completed successfully!', 'Custom Title');
+    it("should override the default title when a custom title is provided", () => {
+      showAlert("success", "Operation completed successfully!", "Custom Title");
 
       expect(Swal.fire).toHaveBeenCalledWith({
-        icon: 'success',
-        title: 'Custom Title',
-        html: 'Operation completed successfully!',
+        icon: "success",
+        title: "Custom Title",
+        html: "Operation completed successfully!",
         confirmButtonColor: theme.palette.primary.main,
-        confirmButtonText: 'OK',
+        confirmButtonText: "OK",
         denyButtonColor: theme.palette.default.main,
         denyButtonText: undefined,
         showDenyButton: false,
@@ -49,24 +49,24 @@ describe('Alert Utils', () => {
       });
     });
 
-    it('should display cancel and confirm buttons when cancelButtonText is provided', () => {
+    it("should display cancel and confirm buttons when cancelButtonText is provided", () => {
       showAlert(
-        'question',
-        'Do you want to proceed?',
+        "question",
+        "Do you want to proceed?",
         undefined,
         undefined,
-        'Yes',
-        'No'
+        "Yes",
+        "No"
       );
 
       expect(Swal.fire).toHaveBeenCalledWith({
-        icon: 'question',
-        title: ['Are you sure?'],
-        html: 'Do you want to proceed?',
+        icon: "question",
+        title: ["Are you sure?"],
+        html: "Do you want to proceed?",
         confirmButtonColor: theme.palette.primary.main,
-        confirmButtonText: 'Yes',
+        confirmButtonText: "Yes",
         denyButtonColor: theme.palette.default.main,
-        denyButtonText: 'No',
+        denyButtonText: "No",
         showDenyButton: true,
         preConfirm: undefined,
         preDeny: undefined,
@@ -75,52 +75,52 @@ describe('Alert Utils', () => {
     });
   });
 
-  describe('showLoadingAlertWithPromise', () => {
-    it('should display a loading alert and resolve with the promise result', async () => {
-      const mockPromise = Promise.resolve('Success');
+  describe("showLoadingAlertWithPromise", () => {
+    it("should display a loading alert and resolve with the promise result", async () => {
+      const mockPromise = Promise.resolve("Success");
       const result = await showLoadingAlertWithPromise(
         mockPromise,
-        'Loading data...',
-        'Data loaded successfully!',
-        'Failed to load data.'
+        "Loading data...",
+        "Data loaded successfully!",
+        "Failed to load data."
       );
 
       expect(Swal.fire).toHaveBeenCalledWith({
-        title: 'Loading data...',
+        title: "Loading data...",
         allowOutsideClick: false,
         didOpen: expect.any(Function),
       });
 
       expect(Swal.fire).toHaveBeenCalledWith({
-        icon: 'success',
-        title: 'Success',
-        text: 'Data loaded successfully!',
-        confirmButtonColor: '#7A89C2',
+        icon: "success",
+        title: "Success",
+        text: "Data loaded successfully!",
+        confirmButtonColor: "#7A89C2",
       });
 
-      expect(result).toBe('Success');
+      expect(result).toBe("Success");
     });
 
-    it('should display an error alert when the promise rejects', async () => {
+    it("should display an error alert when the promise rejects", async () => {
       const mockPromise = Promise.reject();
       const result = await showLoadingAlertWithPromise(
         mockPromise,
-        'Processing request...',
-        'Request completed successfully!',
-        'Failed to process request.'
+        "Processing request...",
+        "Request completed successfully!",
+        "Failed to process request."
       );
 
       expect(Swal.fire).toHaveBeenCalledWith({
-        title: 'Processing request...',
+        title: "Processing request...",
         allowOutsideClick: false,
         didOpen: expect.any(Function),
       });
 
       expect(Swal.fire).toHaveBeenCalledWith({
-        icon: 'error',
-        title: 'Error',
-        text: 'Failed to process request.',
-        confirmButtonColor: '#7A89C2',
+        icon: "error",
+        title: "Error",
+        text: "Failed to process request.",
+        confirmButtonColor: "#7A89C2",
       });
 
       expect(result).toBeUndefined();
