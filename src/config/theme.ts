@@ -12,7 +12,7 @@ const createColor = (mainColor: string) => {
 };
 
 const headingStyles = {
-  fontWeight: 700,
+  fontWeight: 500,
 };
 
 const PALETTE_THEME_PURPLE_BLUE = {
@@ -72,6 +72,7 @@ const PALETTE_THEME_PURPLE_BLUE = {
     white: "#fff",
     footer: createColor("#72788D"),
     inverseSurface: createColor("#322e36"),
+    mint: createColor("#00c7be"),
     postitYellow: {
       light: "#faf3e2",
       dark: "#faf3e2",

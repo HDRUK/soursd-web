@@ -7,7 +7,7 @@ import { useApplicationData } from "@/context/ApplicationData";
 import { PostApprovalPayloadWithEntity } from "@/services/approvals";
 import { EntityType } from "@/types/api";
 import { Organisation, User } from "@/types/application";
-import { FormMutateState } from "@/types/form";
+import { QueryState } from "@/types/form";
 import { LoadingButton } from "@mui/lab";
 import {
   Button,
@@ -20,7 +20,7 @@ import {
 import { grey } from "@mui/material/colors";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import ResearcherDetailsModal from "../ResearcherDetailsModal";
+import { UserDetailsModal } from "@/modules";
 
 interface UsersListProps {
   organisation: Organisation;
@@ -28,7 +28,7 @@ interface UsersListProps {
     payload: PostApprovalPayloadWithEntity,
     isApproved: boolean
   ): void;
-  mutateState: FormMutateState;
+  queryState: QueryState;
 }
 
 interface ActiveUserData {
@@ -44,7 +44,7 @@ const ISSUER_ID = 1;
 export default function OrganisationUsersList({
   organisation,
   onApproveToggle,
-  mutateState,
+  queryState,
 }: UsersListProps) {
   const { routes } = useApplicationData();
   const t = useTranslations(NAMESPACE_TRANSLATIONS_USERS_LIST);
@@ -126,7 +126,7 @@ export default function OrganisationUsersList({
                       <ActionMenuItem>
                         <LoadingButton
                           fullWidth
-                          loading={mutateState.isLoading}
+                          loading={queryState.isLoading}
                           variant={isApproved ? "contained" : "outlined"}
                           color="success"
                           size="small"
@@ -152,7 +152,7 @@ export default function OrganisationUsersList({
         </TableBody>
       </Table>
       {activeUserData && (
-        <ResearcherDetailsModal
+        <UserDetailsModal
           isApproved={activeUserData.isApproved}
           user={activeUserData.user}
           organisation={activeUserData.organisation}

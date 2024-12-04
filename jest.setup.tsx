@@ -20,6 +20,7 @@ import {
 } from "./mocks/data/systemConfig";
 import { getRoutes } from "./src/utils/router";
 import { ROUTES } from "./src/consts/router";
+import { mockedIssuerUser } from "./mocks/data/issuer";
 
 const nextRouterMock = require("next-router-mock");
 
@@ -64,7 +65,7 @@ global.matchMedia = () => {
   };
 };
 
-function mock200Json(data) {
+function mock200Json<T>(data: T) {
   return {
     ok: true,
     status: 200,
@@ -75,17 +76,30 @@ function mock200Json(data) {
   };
 }
 
-function mockPagedResults(data) {
+function mockPagedResults<T>(data: T) {
   return {
     current_page: 1,
     data,
   };
 }
 
-async function mockFetch(url) {
+async function mockFetch(url: string) {
   const formattedUrl = url.toLowerCase();
 
   switch (formattedUrl) {
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/issuer_users`: {
+      return mock200Json([
+        mockedIssuerUser({
+          id: 1,
+          created_at: "2024-01-01T00:00:00.000",
+          first_name: "John",
+          last_name: "Smith",
+        }),
+        mockedIssuerUser({
+          id: 2,
+        }),
+      ]);
+    }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/users/1`: {
       return mock200Json(
         mockedUser({
