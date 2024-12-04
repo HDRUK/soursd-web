@@ -377,5 +377,19 @@
     "repMyselfButton": "I represent myself as an individual",
     "termsLabel": "I confirm I have and agree to SOURSD <bold> Terms and Conditions </bold>",
     "continueButton": "Continue"
+  },
+  "Error": {
+    "login": {
+      "message": "It looks like we had a problem signing you in. Please try again or contact us on <contact></contact>",
+      "primaryButton": "Try Again",
+      "navigateButton": "Back to homepage",
+      "navigatePath": "/"
+    },
+    "register": {
+      "message": "It looks like we had a problem registering you. Please try again or contact us on <contact></contact>",
+      "primaryButton": "Try Again",
+      "navigateButton": "Back to homepage",
+      "navigatePath": "/"
+    }
   }
 }

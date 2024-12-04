@@ -8,7 +8,6 @@ const handleLogin = () => {
     redirect_uri: keycloakConfig.redirectUriLogin,
     scope: "openid profile email",
   });
-
   window.location.href = `${authUrl}?${params.toString()}`;
 };
 

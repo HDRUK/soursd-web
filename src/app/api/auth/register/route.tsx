@@ -49,7 +49,12 @@ export async function GET(req: Request) {
     return NextResponse.redirect(
       encodeURI(`${process.env.NEXT_PUBLIC_LOCAL_ENV}/en/register`)
     );
-  } catch (error) {
-    return NextResponse.json({ error }, { status: 500 });
+  } catch (_) {
+    const errorType = encodeURIComponent("register");
+    return NextResponse.redirect(
+      encodeURI(
+        `${process.env.NEXT_PUBLIC_LOCAL_ENV}/en/error?type=${errorType}`
+      )
+    );
   }
 }

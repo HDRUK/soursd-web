@@ -54,9 +54,11 @@ export async function GET(req: Request) {
       encodeURI(`${process.env.NEXT_PUBLIC_LOCAL_ENV}${redirectPath.value}`)
     );
   } catch (_) {
-    return NextResponse.json(
-      { error: "Failed to exchange authorization code for tokens" },
-      { status: 500 }
+    const errorType = encodeURIComponent("login");
+    return NextResponse.redirect(
+      encodeURI(
+        `${process.env.NEXT_PUBLIC_LOCAL_ENV}/en/error?type=${errorType}`
+      )
     );
   }
 }
