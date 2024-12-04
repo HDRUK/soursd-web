@@ -179,6 +179,32 @@ interface ResearcherProject {
   other_approval_committees: string;
 }
 
+interface Registry {
+  id: number;
+  created_at: string;
+  updated_at: string;
+  deleted_at: string | null;
+  verified: boolean;
+  user: User;
+  organisations: Organisation[];
+  employment: any | null;
+}
+
+interface Role {
+  id: number;
+  created_at: string;
+  updated_at: string;
+  name: string;
+}
+
+interface ProjectUser {
+  project_id: number;
+  user_digital_ident: string;
+  project_role_id: number;
+  registry: Registry;
+  role: Role;
+}
+
 interface Auth {
   access_token: string;
   refresh_token: string;
@@ -217,6 +243,7 @@ export type {
   ResearcherEndorsement,
   ResearcherTraining,
   ResearcherProject,
+  ProjectUser,
   File,
   Permission,
   UserProfileCompletionSchema,

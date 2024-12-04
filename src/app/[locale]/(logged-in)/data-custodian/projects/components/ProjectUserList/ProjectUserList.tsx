@@ -10,20 +10,28 @@ import { Organisation, User } from "@/types/application";
 import { FormMutateState } from "@/types/form";
 import { LoadingButton } from "@mui/lab";
 import {
+  Card,
+  CardContent,
+  Box,
   Button,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableRow,
+  Typography,
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { getProjectUsers } from "@/services/projects";
+import ProjectUserCard from "../ProjectUserCard";
+
 import ResearcherDetailsModal from "../ResearcherDetailsModal";
 
 interface UsersListProps {
-  organisation: Organisation;
+  project: Organisation;
   onApproveToggle(
     payload: PostApprovalPayloadWithEntity,
     isApproved: boolean
@@ -36,19 +44,50 @@ interface ActiveUserData {
   organisation: Organisation;
   isApproved: boolean;
 }
-
 const NAMESPACE_TRANSLATIONS_USERS_LIST = "UsersList";
 
 const ISSUER_ID = 1;
 
-export default function OrganisationUsersList({
-  organisation,
+export default function ProjectUserList({
+  project,
   onApproveToggle,
   mutateState,
 }: UsersListProps) {
   const { routes } = useApplicationData();
   const t = useTranslations(NAMESPACE_TRANSLATIONS_USERS_LIST);
   const [activeUserData, setActiveUserData] = useState<ActiveUserData | null>();
+
+  const { id: projectId, title: projectTitle } = project;
+
+  const {
+    data: projectUsers,
+    isLoading: projectUsersIsLoading,
+    error: projectUsersError,
+  } = useQuery({
+    queryKey: ["getProjectUsers", projectId],
+    queryFn: ({ queryKey }) => {
+      const [, id] = queryKey;
+
+      return getProjectUsers(id, {
+        error: {
+          message: "getProjectUsersError",
+        },
+      });
+    },
+    enabled: !!projectId,
+  });
+
+  const users = projectUsers?.data?.project_users;
+
+  return (
+    <>
+      {users?.map(user => (
+        <ProjectUserCard projectUser={user} projectTitle={projectTitle} />
+      ))}
+    </>
+  );
+
+  return <b> {project?.title} </b>;
 
   const { registries } = organisation;
 

@@ -25,7 +25,7 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import OrganisationDetailsModal from "../OrganisationDetailsModal";
-import OrganisationUsersList from "../OrganisationUsersList";
+import ProjectUserList from "../ProjectUserList";
 
 interface ProjectListProps {
   projects: any[];
@@ -41,7 +41,7 @@ interface ActiveOrganisationData {
 
 const NAMESPACE_TRANSLATIONS_USERS_LIST = "UsersList";
 
-const ProjectAccordion = ({ project, first }) => {
+const ProjectAccordion = ({ project, mutateState, first }) => {
   const { routes } = useApplicationData();
 
   const t = useTranslations(NAMESPACE_TRANSLATIONS_USERS_LIST);
@@ -118,7 +118,7 @@ const ProjectAccordion = ({ project, first }) => {
                 <ActionMenuItem>
                   <LoadingButton
                     fullWidth
-                    loading={false /* mutateState.isLoading */}
+                    loading={mutateState.isLoading}
                     variant={isApproved ? "contained" : "outlined"}
                     color="success"
                     size="small"
@@ -144,12 +144,11 @@ const ProjectAccordion = ({ project, first }) => {
           </AccordionTitle>
         </AccordionSummary>
         <AccordionDetails>
-          {/* <OrganisationUsersList
+          <ProjectUserList
             mutateState={mutateState}
-            organisation={organisation}
-            onApproveToggle={handleApproveClick}
-          /> */}
-          <> hi </>
+            project={project}
+            onApproveToggle={() => {} /*handleApproveClick*/}
+          />
         </AccordionDetails>
       </Accordion>
       {/* activeData && (
@@ -198,7 +197,11 @@ export default function ProjectList({
   return (
     <>
       {projects.map((project, i) => (
-        <ProjectAccordion project={project} first={i === 0} />
+        <ProjectAccordion
+          project={project}
+          mutateState={mutateState}
+          first={i === 0}
+        />
       ))}
     </>
   );
