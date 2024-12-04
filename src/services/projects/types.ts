@@ -1,5 +1,8 @@
 import { ResearcherProject } from "@/types/application";
+import { ProjectUser } from "@/types/application";
 
 type ProjectsResponse = ResearcherProject[];
 
-export type { ProjectsResponse };
+type ProjectUsersResponse = ProjectUser[];
+
+export type { ProjectsResponse, ProjectUsersResponse };

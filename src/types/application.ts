@@ -168,7 +168,13 @@ interface ResearcherEndorsement {
   reported_by: number;
 }
 
+interface ResearcherProjectApproval {
+  project_id: number;
+  issuer_id: number;
+}
+
 interface ResearcherProject {
+  id: number;
   title: string;
   lay_summary: string;
   public_benefit: string;
@@ -177,6 +183,9 @@ interface ResearcherProject {
   end_date: string;
   request_category_type: string;
   other_approval_committees: string;
+  affiliate_id: number;
+  unique_id: string;
+  approvals: ResearcherProjectApproval[];
 }
 
 interface Registry {

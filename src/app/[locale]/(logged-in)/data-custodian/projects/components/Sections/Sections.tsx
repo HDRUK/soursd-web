@@ -3,29 +3,19 @@
 import ContactLink from "@/components/ContactLink";
 import { Message } from "@/components/Message";
 import OverlayCenter from "@/components/OverlayCenter";
-import { useNotifications } from "@/context/Notifications";
 import PageSection from "@/modules/PageSection";
-import {
-  DeleteApprovalPayloadWithEntity,
-  PostApprovalPayloadWithEntity,
-} from "@/services/approvals";
 import { getIssuerProjects } from "@/services/projects";
 import { CircularProgress, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useCallback } from "react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useStore } from "@/data/store";
+import { useQuery } from "@tanstack/react-query";
 import { ISSUER_ID } from "@/consts/application";
-import { useMutationApproval, useMutationDeleteApproval } from "../../hooks";
 import ProjectList from "../ProjectList";
+import StatusIndicator from "@/components/StatusIndicator";
 
-const NAMESPACE_TRANSLATIONS_USERS_LIST = "UsersList";
-const NAMESPACE_TRANSLATIONS_USERS = "Users";
+const NAMESPACE_TRANSLATIONS_PROJECT_LIST = "ProjectList";
 
 export default function Sections() {
-  const queryClient = useQueryClient();
-  const tUsersList = useTranslations(NAMESPACE_TRANSLATIONS_USERS_LIST);
-  const tUsers = useTranslations(NAMESPACE_TRANSLATIONS_USERS);
+  const t = useTranslations(NAMESPACE_TRANSLATIONS_PROJECT_LIST);
 
   const {
     data: projectsData,
@@ -42,97 +32,50 @@ export default function Sections() {
       }),
   });
 
-  /*
-  const {
-    mutateAsync: mutateUpdateAsync,
-    isPending: isUpdateLoading,
-    isError: isUpdateError,
-    error: errorUpdate,
-  } = useMutationApproval();
-
-  const {
-    mutateAsync: mutateDeleteAsync,
-    isPending: isDeleteLoading,
-    isError: isDeleteError,
-    error: errorDelete,
-  } = useMutationDeleteApproval();
-
-  useNotifications(["postApproval", "deleteApproval"], {
-    immediate: true,
-    tKey: NAMESPACE_TRANSLATIONS_USERS_LIST,
-  });
-
-  const handleApprove = useCallback(
-    async (payload: PostApprovalPayloadWithEntity) => {
-      await mutateUpdateAsync(payload);
-
-      queryClient.refetchQueries({
-        queryKey: ["getOrganisations"],
-      });
-    },
-    []
-  );
-
-  const handleUnapprove = useCallback(
-    async (payload: DeleteApprovalPayloadWithEntity) => {
-      await mutateDeleteAsync(payload);
-
-      queryClient.refetchQueries({
-        queryKey: ["getOrganisations"],
-      });
-    },
-    []
-  );
-  */
-  const handleApprove = () => {};
-  const handleUnapprove = () => {};
-
   return (
     <>
       {isProjectsLoading && (
         <OverlayCenter variant="contained">
-          <CircularProgress aria-label={tUsersList("loadingAriaLabel")} />
+          <CircularProgress aria-label={t("loadingAriaLabel")} />
         </OverlayCenter>
       )}
       <PageSection sx={{ display: "flex" }}>
-        <Typography variant="h4">{tUsersList("title")}</Typography>
+        <Typography variant="h4">{t("title")}</Typography>
+      </PageSection>
+      <PageSection
+        sx={{
+          display: "flex",
+          gap: 2,
+        }}>
+        <PageSection sx={{ display: "flex", flex: 1 }}>
+          {" "}
+          Search bar to go here...{" "}
+        </PageSection>
+        <PageSection sx={{ display: "flex", flex: 1, gap: 2 }}>
+          <StatusIndicator
+            variant="success"
+            size="large"
+            label={t("approvedKey")}
+          />
+          <StatusIndicator
+            variant="error"
+            size="large"
+            label={t("unapprovedKey")}
+          />
+        </PageSection>
       </PageSection>
       <PageSection sx={{ flexGrow: 1 }}>
         {isProjectsError && (
           <Message severity="error" sx={{ mb: 3 }}>
-            {tUsers.rich(`${projectsError}`, {
+            {t.rich(`${projectsError}`, {
               contactLink: ContactLink,
             })}
           </Message>
         )}
         {!isProjectsLoading && projectsData?.data.data && (
-          <ProjectList
-            onApprove={handleApprove}
-            onUnapprove={handleUnapprove}
-            projects={projectsData?.data.data}
-            mutateState={
-              {
-                // isError: isDeleteError || isUpdateError,
-                // isLoading: isDeleteLoading || isUpdateLoading,
-                // error: errorDelete || errorUpdate,
-              }
-            }
-          />
+          <ProjectList projects={projectsData?.data.data} />
         )}
       </PageSection>
     </>
   );
-
-  {
-    /* <OrganisationsList
-            onApprove={handleApprove}
-            onUnapprove={handleUnapprove}
-            organisations={projectsData?.data.data}
-            mutateState={{
-              isError: isDeleteError || isUpdateError,
-              isLoading: isDeleteLoading || isUpdateLoading,
-              error: errorDelete || errorUpdate,
-            }}
-          /> */
-  }
 }
