@@ -3,11 +3,10 @@ import { getRequest, handleJsonResponse } from "../requests";
 import { ProjectsResponse } from "./types";
 
 export default async (
-  id: number,
   messages: ResponseTranslations
 ): Promise<ResponseJson<Paged<ProjectsResponse>>> => {
   const response = await getRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/accreditations/${id}`,
+    `${process.env.NEXT_PUBLIC_API_V1_URL}/projects`,
     undefined,
     {
       headers: {

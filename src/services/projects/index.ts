@@ -1,3 +1,4 @@
 import getProjects from "./getProjects";
+import getIssuerProjects from "./getIssuerProjects";
 
-export { getProjects };
+export { getProjects, getIssuerProjects };

@@ -15,7 +15,6 @@ export default function TabsContents({ tabId }: TabsContentsProps) {
     state.getUser(),
     state.getOrganisation(),
   ]);
-
   if (!organisation || !user) notFound();
 
   return (
