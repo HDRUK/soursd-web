@@ -1,16 +1,31 @@
 import theme from "@/theme";
-import { Box, CircularProgress } from "@mui/material";
+import { Box, BoxProps, CircularProgress } from "@mui/material";
 import React from "react";
 
 type LoadingWrapperProps = {
   loading: boolean;
   children: React.ReactNode;
+  variant: "rich" | "basic";
 };
 
 export default function LoadingWrapper({
   loading,
   children,
+  variant = "rich",
 }: LoadingWrapperProps) {
+  let additionalProps: BoxProps["sx"] = {};
+
+  if (variant === "basic") {
+    additionalProps = {
+      py: 5,
+    };
+  } else {
+    additionalProps = {
+      height: "100vh",
+      background: `linear-gradient(90deg, ${theme.palette.background1.light} 0%, ${theme.palette.background1.extraLight} 35%, #fff 100%)`,
+    };
+  }
+
   if (loading) {
     return (
       <Box
@@ -19,11 +34,10 @@ export default function LoadingWrapper({
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          height: "100vh",
-          background: `linear-gradient(90deg, ${theme.palette.background1.light} 0%, ${theme.palette.background1.extraLight} 35%, #fff 100%)`,
+          ...additionalProps,
         }}>
-        <h2>Loading...</h2>
-        <CircularProgress />
+        {variant === "rich" && <h2>Loading...</h2>}
+        <CircularProgress title="Loading data" />
       </Box>
     );
   }

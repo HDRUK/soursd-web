@@ -47,7 +47,7 @@ export default function Permissions({
 
   return (
     <AssignOptions
-      mutateState={{
+      queryState={{
         isLoading: isUpdateLoading,
         isError: isUpdateError,
         error: updateError && tPermissions(updateError),

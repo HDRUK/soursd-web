@@ -54,7 +54,10 @@ const ApplicationDataProvider = ({
     store.config.organisation,
     store.setOrganisation,
   ]);
-  const setIssuer = useStore(store => store.setIssuer);
+  const [issuer, setIssuer] = useStore(store => [
+    store.getIssuer(),
+    store.setIssuer,
+  ]);
 
   const path = usePathname();
 
@@ -105,7 +108,6 @@ const ApplicationDataProvider = ({
   const {
     data: issuerData,
     isError: isIssuerError,
-    isLoading: isIssuerLoading,
     error: issuerError,
   } = useQuery({
     queryKey: ["getIssuer", ISSUER_ID],
@@ -153,8 +155,8 @@ const ApplicationDataProvider = ({
   const isFinishedLoading =
     ((user?.id && user) || !user?.id) &&
     ((user?.organisation_id && organisation) || !user?.organisation_id) &&
-    !!systemConfigData?.data &&
-    !isIssuerLoading;
+    issuer &&
+    !!systemConfigData?.data;
 
   return (
     <ApplicationDataContext.Provider value={providerValue}>

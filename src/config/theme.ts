@@ -12,7 +12,7 @@ const createColor = (mainColor: string) => {
 };
 
 const headingStyles = {
-  fontWeight: 700,
+  fontWeight: 500,
 };
 
 const PALETTE_THEME_PURPLE_BLUE = {

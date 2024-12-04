@@ -127,7 +127,7 @@ export default function Sections({ userId }: SectionsProps) {
           permissionsData &&
           userData && (
             <AssignOptions
-              mutateState={{
+              queryState={{
                 isLoading: isUpdateLoading,
                 isError: isUpdateError,
                 error: tPermissions(`${(updateError as Error)?.message}`),
