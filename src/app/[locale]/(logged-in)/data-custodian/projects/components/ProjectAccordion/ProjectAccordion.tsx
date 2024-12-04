@@ -4,6 +4,7 @@ import AccordionTitle from "@/components/AccordionTitle";
 import { getOrganisation } from "@/services/organisations";
 
 import { PALETTE_THEME_PURPLE_BLUE } from "@/config/theme";
+import { ResearcherProject } from "@/types/application";
 
 import FolderOpenIcon from "@mui/icons-material/FolderOpen";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -12,14 +13,11 @@ import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 
 import { useQuery } from "@tanstack/react-query";
 import ProjectUserList from "../ProjectUserList";
-import { ResearcherProject } from "@/types/application";
 
 interface ProjectAccordionProps {
   project: ResearcherProject;
   first: boolean;
 }
-
-const NAMESPACE_TRANSLATIONS_USERS_LIST = "ProjectAccordion";
 
 const ProjectAccordion = ({ project, first }: ProjectAccordionProps) => {
   const {
@@ -54,22 +52,20 @@ const ProjectAccordion = ({ project, first }: ProjectAccordionProps) => {
     : PALETTE_THEME_PURPLE_BLUE.palette.error.light;
 
   return (
-    <>
-      <Accordion key={organisation_name} defaultExpanded={first}>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          sx={{ backgroundColor: accordianColor, color: "white" }}
-          aria-controls={`${ariaId}-content`}
-          id={`${ariaId}-header`}>
-          <AccordionTitle icon={<FolderOpenIcon />} actions={[]}>
-            {projectTitle} [{projectUniqueId}]
-          </AccordionTitle>
-        </AccordionSummary>
-        <AccordionDetails>
-          <ProjectUserList project={project} />
-        </AccordionDetails>
-      </Accordion>
-    </>
+    <Accordion key={organisation_name} defaultExpanded={first}>
+      <AccordionSummary
+        expandIcon={<ExpandMoreIcon />}
+        sx={{ backgroundColor: accordianColor, color: "white" }}
+        aria-controls={`${ariaId}-content`}
+        id={`${ariaId}-header`}>
+        <AccordionTitle icon={<FolderOpenIcon />} actions={[]}>
+          {projectTitle} [{projectUniqueId}]
+        </AccordionTitle>
+      </AccordionSummary>
+      <AccordionDetails>
+        <ProjectUserList project={project} />
+      </AccordionDetails>
+    </Accordion>
   );
 };
 

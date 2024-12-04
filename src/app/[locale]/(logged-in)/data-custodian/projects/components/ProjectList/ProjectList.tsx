@@ -1,6 +1,8 @@
 "use client";
-import ProjectAccordion from "../ProjectAccordion";
+
 import { ResearcherProject } from "@/types/application";
+import ProjectAccordion from "../ProjectAccordion";
+
 interface ProjectListProps {
   projects: ResearcherProject[];
 }

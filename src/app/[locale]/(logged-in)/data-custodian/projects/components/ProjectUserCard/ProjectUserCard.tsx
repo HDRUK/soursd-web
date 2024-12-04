@@ -1,10 +1,8 @@
 "use client";
 
 import { ProjectUser } from "@/types/application";
-
 import { Card, CardContent, Box, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-
 import {
   useQuery,
   QueryFunctionContext,
@@ -89,21 +87,14 @@ export default function ProjectUserCard({
 
               <Typography variant="caption" color="grey">
                 {role.name}
+                {userProjectTitles && " | "}
                 {userProjectTitles &&
-                  " | " +
-                    t("alsoApprovedOn", {
-                      projects: userProjectTitles,
-                    })}
+                  t("alsoApprovedOn", {
+                    projects: userProjectTitles,
+                  })}
               </Typography>
             </div>
           </Box>
-          <Box
-            sx={{
-              flexGrow: 1,
-              textAlign: {
-                md: "right",
-              },
-            }}></Box>
           <Box>
             {/*
             Buttons to go here... 

@@ -9,8 +9,8 @@ import { CircularProgress, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useQuery } from "@tanstack/react-query";
 import { ISSUER_ID } from "@/consts/application";
-import ProjectList from "../ProjectList";
 import StatusIndicator from "@/components/StatusIndicator";
+import ProjectList from "../ProjectList";
 
 const NAMESPACE_TRANSLATIONS_PROJECT_LIST = "ProjectList";
 
