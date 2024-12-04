@@ -406,5 +406,19 @@
     "title": "Projects",
     "approvedKey": "Approved Project",
     "unapprovedKey": "Project Pending Approval"
+  },
+  "Error": {
+    "login": {
+      "message": "It looks like we had a problem signing you in. Please try again or contact us on <contact></contact>",
+      "primaryButton": "Try Again",
+      "navigateButton": "Back to homepage",
+      "navigatePath": "/"
+    },
+    "register": {
+      "message": "It looks like we had a problem registering you. Please try again or contact us on <contact></contact>",
+      "primaryButton": "Try Again",
+      "navigateButton": "Back to homepage",
+      "navigatePath": "/"
+    }
   }
 }

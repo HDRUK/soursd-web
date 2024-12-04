@@ -1,3 +1,4 @@
+import theme from "@/theme";
 import Swal, { SweetAlertIcon } from "sweetalert2";
 
 const notificationValues = [
@@ -15,8 +16,12 @@ const notificationValues = [
  */
 export const showAlert = (
   type: SweetAlertIcon,
-  message: string,
-  titleOverride?: string | undefined
+  message: string | HTMLElement,
+  titleOverride?: string | undefined,
+  preConfirm?: () => void | undefined,
+  confirmButtonText?: string | undefined,
+  cancelButtonText?: string | undefined,
+  preDeny?: () => void | undefined
 ) => {
   Swal.fire({
     icon: type,
@@ -25,8 +30,15 @@ export const showAlert = (
       notificationValues
         .filter(item => item.type === type)
         .map(item => item.title),
-    text: message,
-    confirmButtonColor: "#7A89C2",
+    html: message,
+    confirmButtonColor: theme.palette.primary.main,
+    confirmButtonText: confirmButtonText ?? "OK",
+    denyButtonColor: theme.palette.default.main,
+    denyButtonText: cancelButtonText,
+    showDenyButton: !!cancelButtonText,
+    preConfirm,
+    preDeny,
+    allowOutsideClick: false,
   });
 };
 
