@@ -28,7 +28,7 @@ export default function Completion() {
     },
     {
       title: t(PageTabs.EXPERIENCE),
-      catgeory: profileCompletedAt[UserProfileCompletionCategories.EXPERIENCE],
+      category: profileCompletedAt[UserProfileCompletionCategories.EXPERIENCE],
       href: routes.profileResearcherExperience.path,
     },
     {
@@ -53,7 +53,7 @@ export default function Completion() {
             <Box>
               <Box component="span" sx={{ mr: 3 }}>
                 {t("completedScore", {
-                  score: category?.score || 0,
+                  score: category.score,
                 })}
               </Box>{" "}
               <Button component="a" href={href} variant="contained">

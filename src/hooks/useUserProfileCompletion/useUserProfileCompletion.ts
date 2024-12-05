@@ -1,14 +1,18 @@
 import { UserProfileCompletionCategories } from "@/consts/user";
-import { User, UserProfileCompletionSchema } from "@/types/application";
+import {
+  User,
+  UserProfileCompletionJson,
+  UserProfileCompletionSchema,
+} from "@/types/application";
 
 import { useStore } from "@/data/store";
 import { PatchUserPayload } from "@/services/users";
-import { useMutation } from "@tanstack/react-query";
 import patchUser from "@/services/users/patchUser";
-import dayjs from "dayjs";
-import { useCallback } from "react";
-import { showAlert } from "@/utils/showAlert";
+import { formatNowDBDate } from "@/utils/date";
+import { useMutation } from "@tanstack/react-query";
+import mergeWith from "lodash.mergewith";
 import { useTranslations } from "next-intl";
+import { useCallback, useEffect } from "react";
 
 const schema: UserProfileCompletionSchema = {
   [UserProfileCompletionCategories.IDENTITY]: {
@@ -23,7 +27,7 @@ const schema: UserProfileCompletionSchema = {
       },
       {
         name: "dob",
-        required: true,
+        required: false,
       },
     ],
   },
@@ -64,84 +68,133 @@ export default function useProfileCompletion() {
     );
   };
 
-  const update = useCallback(
-    async <T>(
-      formFields: T,
-      category: UserProfileCompletionCategories,
-      userData?: User
-    ) => {
-      let currentState = JSON.parse(user?.profile_steps_completed || "{}");
-      let isCompleted = true;
+  const getCurrentState = () => {
+    return JSON.parse(
+      user?.profile_steps_completed || "{}"
+    ) as UserProfileCompletionJson;
+  };
 
-      Object.keys(schema).forEach(
-        (currentCategory: UserProfileCompletionCategories) => {
-          const { fields } = schema[currentCategory];
-          let score = 0;
+  const updateFieldsFromSchema = () => {
+    return mergeWith(
+      {},
+      schema,
+      getCurrentState(),
+      (schemaValue, completedStepsValue) => {
+        if (Array.isArray(schemaValue)) {
+          return schemaValue.map(({ name: schemaFieldName, required }) => {
+            const matchingField = (completedStepsValue || []).find(
+              ({ name: completedStepsFieldName }) =>
+                completedStepsFieldName === schemaFieldName
+            );
 
-          fields.forEach(({ name, required }, i) => {
-            if (currentCategory === category) {
-              const valueCompleted = !!(
-                formFields as Record<string, string | boolean | number>
-              )[name];
-
-              if (required && valueCompleted) {
-                score = Math.round(((i + 1) / fields.length) * 100);
-              }
-
-              currentState = {
-                ...currentState,
-                [category]: {
-                  ...currentState[category],
-                  score,
-                  [name]: required && valueCompleted,
-                },
+            if (matchingField) {
+              return {
+                ...matchingField,
+                required,
               };
-
-              if (!valueCompleted) isCompleted = false;
-            } else {
-              const valueCompleted =
-                currentState[currentCategory][name] || !required;
-
-              currentState = {
-                ...currentState,
-                [currentCategory]: {
-                  ...currentState[currentCategory],
-                  [name]: valueCompleted,
-                },
-              };
-
-              if (!valueCompleted) isCompleted = false;
             }
+
+            return {
+              name: schemaFieldName,
+              required,
+            };
           });
         }
-      );
-
-      if (user) {
-        const updatedUser = {
-          ...user,
-          ...userData,
-          profile_steps_completed: JSON.stringify(currentState),
-          profile_completed_at: isCompleted ? dayjs().toISOString() : null,
-        };
-
-        await mutateAsync(updatedUser);
-        setUser(updatedUser);
-
-        if (isCompleted) {
-          showAlert(
-            "success",
-            t("profileCompletedDescription"),
-            t("profileCompletedTitle")
-          );
-        }
       }
-    },
-    [user]
-  );
+    );
+  };
+
+  const updateScores = (currentState: UserProfileCompletionJson) => {
+    let isCompleted = true;
+
+    Object.keys(currentState).forEach(
+      (currentCategory: UserProfileCompletionCategories) => {
+        const fields = currentState[currentCategory]?.fields || [];
+        const isRequired = [];
+        const isValue = [];
+
+        fields.forEach(({ hasValue, required, name }) => {
+          if (required) {
+            isRequired.push(name);
+
+            if (hasValue) {
+              isValue.push(name);
+            }
+          }
+        });
+
+        const score = !isRequired.length
+          ? 100
+          : Math.round((isValue.length / isRequired.length) * 100);
+
+        currentState[currentCategory].score = score;
+
+        if (score < 100) isCompleted = false;
+      }
+    );
+
+    return {
+      updatedState: currentState,
+      isCompleted,
+    };
+  };
+
+  const updateToApi = async (
+    user: User,
+    isCompleted: boolean,
+    updatedState: UserProfileCompletionJson
+  ) => {
+    const updatedUser = {
+      ...user,
+      profile_steps_completed: JSON.stringify(updatedState),
+      profile_completed_at: isCompleted ? formatNowDBDate() : null,
+    };
+
+    // await mutateAsync(updatedUser);
+    // setUser(updatedUser);
+  };
+
+  const updateInitialSchema = async () => {
+    const { updatedState, isCompleted } = updateScores(
+      updateFieldsFromSchema()
+    );
+
+    updateToApi(user, isCompleted, updatedState);
+  };
 
   const getJSON = (): UserProfileCompletionSchema => {
     return JSON.parse(user?.profile_steps_completed || "{}");
   };
+
+  const update = useCallback(
+    async (
+      formFields: { [key: string]: string | number | boolean },
+      category: UserProfileCompletionCategories
+    ) => {
+      const currentState = getJSON();
+
+      currentState[category].fields = currentState[category].fields.map(
+        field => {
+          const { name } = field;
+          const value = formFields[name];
+
+          return {
+            ...field,
+            hasValue: !(value === undefined || value === null || value === ""),
+          };
+        }
+      );
+
+      const { isCompleted, updatedState } = updateScores(currentState);
+
+      updateToApi(user, isCompleted, updatedState);
+    },
+    [user]
+  );
+
+  useEffect(() => {
+    updateInitialSchema();
+  }, []);
 
   return {
     update,

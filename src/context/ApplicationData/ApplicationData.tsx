@@ -10,7 +10,6 @@ import PageContainer from "@/modules/PageContainer";
 import { getIssuer } from "@/services/issuers";
 import { getOrganisation } from "@/services/organisations";
 import { getSystemConfig } from "@/services/system_config";
-import { getUser } from "@/services/users";
 import {
   ApplicationDataState,
   ApplicationSystemConfig,
@@ -48,8 +47,14 @@ const ApplicationDataProvider = ({
 }: ApplicationDataProviderProps) => {
   const t = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
   const addUrlToHistory = useStore(store => store.addUrlToHistory);
-  const me = useMe();
+  const {
+    data: userData,
+    isLoading: isUserLoading,
+    isError: isUserError,
+    error: userError,
+  } = useMe();
   const [user, setUser] = useStore(store => [store.getUser(), store.setUser]);
+  const meData = userData?.data;
 
   const [organisation, setOrganisation] = useStore(store => [
     store.config.organisation,
@@ -77,34 +82,18 @@ const ApplicationDataProvider = ({
   });
 
   const {
-    data: userData,
-    isLoading: isUserLoading,
-    isError: isUserError,
-    error: userError,
-  } = useQuery({
-    queryKey: ["getUser", me?.id],
-    queryFn: ({ queryKey }) =>
-      getUser(queryKey[1], {
-        error: {
-          message: "getUserError",
-        },
-      }),
-    enabled: !!me?.id,
-  });
-
-  const {
     data: organisationData,
     isError: isOrganisationError,
     error: organisationError,
   } = useQuery({
-    queryKey: ["getOrganisation", me?.organisation_id],
+    queryKey: ["getOrganisation", meData?.organisation_id],
     queryFn: ({ queryKey }) =>
       getOrganisation(queryKey[1], {
         error: {
           message: "getOrganisationError",
         },
       }),
-    enabled: !!me?.organisation_id,
+    enabled: !!meData?.organisation_id,
   });
 
   const {
@@ -124,10 +113,10 @@ const ApplicationDataProvider = ({
   });
 
   useEffect(() => {
-    if (userData?.data) {
-      setUser(userData.data);
+    if (meData) {
+      setUser(meData);
     }
-  }, [userData?.data]);
+  }, [meData]);
 
   useEffect(() => {
     setOrganisation(organisationData?.data);
@@ -156,8 +145,8 @@ const ApplicationDataProvider = ({
   const errorMessage = error || userError || organisationError || issuerError;
 
   const isFinishedLoading =
-    ((me?.id && me) || !me?.id) &&
-    ((me?.organisation_id && organisation) || !me?.organisation_id) &&
+    ((meData?.id && user) || !meData?.id) &&
+    ((meData?.organisation_id && organisation) || !meData?.organisation_id) &&
     !!systemConfigData?.data &&
     !isIssuerLoading &&
     issuer &&

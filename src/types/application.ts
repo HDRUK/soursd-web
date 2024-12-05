@@ -72,6 +72,18 @@ type UserProfileCompletionSchema = Record<
   }
 >;
 
+type UserProfileCompletionJson = Record<
+  UserProfileCompletionCategories,
+  {
+    score: number;
+    fields: {
+      name: string;
+      required?: boolean;
+      hasValue: boolean;
+    }[];
+  }
+>;
+
 interface User {
   id: number;
   registry_id: number;
@@ -81,7 +93,7 @@ interface User {
   user_group: UserGroup;
   permissions: Permission[];
   profile_completed_at: string | null;
-  profile_steps_completed: Record;
+  profile_steps_completed: string;
   approvals: Approval[];
   organisation_id: number;
   consent_scrape: boolean;
@@ -262,4 +274,5 @@ export type {
   Permission,
   UserProfileCompletionSchema,
   DataCustodianUser,
+  UserProfileCompletionJson,
 };
