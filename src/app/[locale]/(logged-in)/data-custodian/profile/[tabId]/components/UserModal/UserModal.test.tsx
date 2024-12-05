@@ -12,7 +12,7 @@ const defaultUser = mockedDataCustodianUser();
 
 const renderUserModalDetails = (props?: Partial<UserModalProps>) => {
   return render(
-    <UserModal user={defaultUser} onClose={mockOnClose} openß {...props} />
+    <UserModal user={defaultUser} onClose={mockOnClose} open {...props} />
   );
 };
 

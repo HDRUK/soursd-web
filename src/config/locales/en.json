@@ -52,6 +52,8 @@
     "createUserTitle": "Add new user",
     "updateUserDescription": "Update the data below to change the selected users details",
     "createUserDescription": "Complete the form below to add a new user to your SOURSD profile",
+    "deleteWarningTitle": "Are you sure you want to delete this user?",
+    "deleteWarningDescription": "Deleting this user is permanent and will result in them no longer being able to act on your behalf",
     "projects": "Projects",
     "organisations": "Organisations"
   },
