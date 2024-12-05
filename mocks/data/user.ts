@@ -3,7 +3,6 @@ import {
   ResearcherAccreditation,
   ResearcherEducation,
   ResearcherEmployment,
-  ResearcherProject,
   ResearcherTraining,
   User,
 } from "@/types/application";
@@ -81,25 +80,10 @@ const mockedEducation = (
   ...education,
 });
 
-const mockedProject = (
-  project?: Partial<ResearcherProject>
-): ResearcherProject => ({
-  title: faker.string.sample(),
-  lay_summary: faker.string.sample(),
-  public_benefit: faker.string.sample(),
-  technical_summary: faker.string.sample(),
-  start_date: faker.date.past().toDateString(),
-  end_date: faker.date.future().toDateString(),
-  request_category_type: faker.string.sample(),
-  other_approval_committees: faker.string.sample(),
-  ...project,
-});
-
 export {
   mockedAccreditation,
   mockedUser,
   mockedTraining,
   mockedEmployment,
   mockedEducation,
-  mockedProject,
 };

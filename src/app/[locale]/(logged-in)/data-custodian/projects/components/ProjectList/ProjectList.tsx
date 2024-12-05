@@ -13,7 +13,11 @@ export default function ProjectList({ projects }: ProjectListProps) {
   return (
     <>
       {projects.map((project, i) => (
-        <ProjectAccordion project={project} first={i === 0} />
+        <ProjectAccordion
+          key={`project_accordion_${project.id}`}
+          project={project}
+          first={i === 0}
+        />
       ))}
     </>
   );

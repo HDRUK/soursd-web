@@ -46,7 +46,7 @@ const ProjectAccordion = ({ project, first }: ProjectAccordionProps) => {
   const ariaId = organisation_name?.replace(/[^\w]*/g, "");
 
   const isApproved =
-    approvals.filter(a => a.issuer_id === affiliate_id).length > 0;
+    approvals?.filter(a => a.issuer_id === affiliate_id).length > 0;
   const accordianColor = isApproved
     ? PALETTE_THEME_PURPLE_BLUE.palette.success.light
     : PALETTE_THEME_PURPLE_BLUE.palette.error.light;

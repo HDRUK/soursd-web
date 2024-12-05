@@ -403,6 +403,8 @@
     "alsoApprovedOn": "Also Approved On: {projects} "
   },
   "ProjectList": {
+    "getIssuerProjectsError": "No projects found",
+    "loadingAriaLabel": "Loading project data",
     "title": "Projects",
     "approvedKey": "Approved Project",
     "unapprovedKey": "Project Pending Approval"

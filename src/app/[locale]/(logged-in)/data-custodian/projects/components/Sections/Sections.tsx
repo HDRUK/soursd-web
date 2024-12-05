@@ -1,6 +1,5 @@
 "use client";
 
-import ContactLink from "@/components/ContactLink";
 import { Message } from "@/components/Message";
 import OverlayCenter from "@/components/OverlayCenter";
 import PageSection from "@/modules/PageSection";
@@ -21,11 +20,11 @@ export default function Sections() {
     data: projectsData,
     isLoading: isProjectsLoading,
     isError: isProjectsError,
-    error: projectsError,
   } = useQuery({
     queryKey: ["getIssuerProjects"],
     queryFn: () =>
       getIssuerProjects(ISSUER_ID, {
+        // note: ISSUER_ID - need to update this as hard coded as 1!
         error: {
           message: "getIssuerProjects",
         },
@@ -67,9 +66,7 @@ export default function Sections() {
       <PageSection sx={{ flexGrow: 1 }}>
         {isProjectsError && (
           <Message severity="error" sx={{ mb: 3 }}>
-            {t.rich(`${projectsError}`, {
-              contactLink: ContactLink,
-            })}
+            {t("getIssuerProjectsError")}
           </Message>
         )}
         {!isProjectsLoading && projectsData?.data.data && (
