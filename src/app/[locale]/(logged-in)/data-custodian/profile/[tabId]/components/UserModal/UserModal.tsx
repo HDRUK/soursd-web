@@ -10,18 +10,18 @@ import UserModalDetails, {
   DataCustodianUserFields,
 } from "../UsersModalDetails";
 
-interface UsersModalProps extends Omit<FormModalProps, "children"> {
+export interface UserModalProps extends Omit<FormModalProps, "children"> {
   user: Partial<DataCustodianUser>;
   onClose: () => void;
 }
 
 const NAMESPACE_TRANSLATION_PROFILE = "IssuerProfile";
 
-export default function UsersModal({ user, ...restProps }: UsersModalProps) {
+export default function UsersModal({ user, ...restProps }: UserModalProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const queryClient = useQueryClient();
 
-  const { mutateAsync, isPending, isError, error, data } = useMutation({
+  const { mutateAsync, isPending, isError, error } = useMutation({
     mutationKey: ["updateIssuerUser"],
     mutationFn: (
       payload: Omit<DataCustodianUser, "created_at" | "updated_at">

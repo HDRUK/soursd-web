@@ -26,7 +26,7 @@ export const mockedPersonalDetailsGuidanceProps = {
   ),
 };
 
-export const mockedIssuerIdvtInfoContent = (
+export const mockedDataCustodianIdvtInfoContent = (
   <>
     <Typography>
       IDVT tests an individual against the following criteria;

@@ -63,6 +63,9 @@ export const closeAlert = () => {
 export const showLoadingAlertWithPromise = async <T>(
   promise: Promise<T>,
   options: {
+    loadingMessage?: string;
+    successMessage?: string;
+    errorMessage?: string;
     onSuccess?: () => void;
     onError?: () => void;
   }
@@ -93,7 +96,7 @@ export const showLoadingAlertWithPromise = async <T>(
       title: "Success",
       text: messages.successMessage,
       confirmButtonColor: "#7A89C2",
-      willClose: () => options?.onSuccess(),
+      willClose: () => options?.onSuccess?.(),
     });
 
     return result;
@@ -104,7 +107,7 @@ export const showLoadingAlertWithPromise = async <T>(
       title: "Error",
       text: messages.errorMessage,
       confirmButtonColor: "#7A89C2", // Customize button color (optional)
-      willClose: () => options?.onError(),
+      willClose: () => options?.onError?.(),
     });
     return undefined;
   }

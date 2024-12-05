@@ -22,7 +22,7 @@ export interface DataCustodianUserFields {
   approver: boolean;
 }
 
-interface UserModalDetailsProps {
+export interface UserModalDetailsProps {
   user: Partial<DataCustodianUser>;
   queryState: QueryState;
   onSubmit: (payload: DataCustodianUserFields) => void;
@@ -88,10 +88,10 @@ export default function UserModalDetails({
       <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
         <FormModalHeader>
           <Typography variant="h4" sx={{ mb: 1 }}>
-            Add new year
+            {user?.id ? t("updateUserTitle") : t("createUserTitle")}
           </Typography>
           <Typography>
-            Complete the form below to add a new user to your SOURSD profile
+            {user?.id ? t("updateUserDescription") : t("createUserDescription")}
           </Typography>
         </FormModalHeader>
         <FormModalBody>

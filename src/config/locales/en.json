@@ -48,6 +48,10 @@
     "updateSuccessfulDescription": "The user has been successfully updated.",
     "createSuccessfulTitle": "User created",
     "createSuccessfulDescription": "The user has been successfully created.",
+    "updateUserTitle": "Edit user",
+    "createUserTitle": "Add new user",
+    "updateUserDescription": "Update the data below to change the selected users details",
+    "createUserDescription": "Complete the form below to add a new user to your SOURSD profile",
     "projects": "Projects",
     "organisations": "Organisations"
   },
