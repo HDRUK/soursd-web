@@ -12,7 +12,8 @@ import CustomPrevious from "./CustomPrevious";
 interface PaginationProps extends MuiPaginationProps {
   isLoading?: boolean;
 }
-const Pagination = (props: PaginationProps) => {
+const Pagination = ({ isLoading = false, ...rest }: PaginationProps) => {
+  if (isLoading) return null;
   return (
     <StyledPagination>
       <MuiPagination
@@ -25,7 +26,7 @@ const Pagination = (props: PaginationProps) => {
             {...item}
           />
         )}
-        {...props}
+        {...rest}
       />
     </StyledPagination>
   );
