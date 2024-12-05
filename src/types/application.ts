@@ -168,7 +168,13 @@ interface ResearcherEndorsement {
   reported_by: number;
 }
 
+interface ResearcherProjectApproval {
+  project_id: number;
+  issuer_id: number;
+}
+
 interface ResearcherProject {
+  id: number;
   title: string;
   lay_summary: string;
   public_benefit: string;
@@ -177,6 +183,40 @@ interface ResearcherProject {
   end_date: string;
   request_category_type: string;
   other_approval_committees: string;
+  affiliate_id: number;
+  unique_id: string;
+  approvals: ResearcherProjectApproval[];
+}
+
+// to be filled when working
+interface Employment {
+  id: number;
+}
+
+interface Registry {
+  id: number;
+  created_at: string;
+  updated_at: string;
+  deleted_at: string | null;
+  verified: boolean;
+  user: User;
+  organisations: Organisation[];
+  employment?: Employment;
+}
+
+interface Role {
+  id: number;
+  created_at: string;
+  updated_at: string;
+  name: string;
+}
+
+interface ProjectUser {
+  project_id: number;
+  user_digital_ident: string;
+  project_role_id: number;
+  registry: Registry;
+  role: Role;
 }
 
 interface Auth {
@@ -217,6 +257,7 @@ export type {
   ResearcherEndorsement,
   ResearcherTraining,
   ResearcherProject,
+  ProjectUser,
   File,
   Permission,
   UserProfileCompletionSchema,

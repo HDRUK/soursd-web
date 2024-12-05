@@ -395,6 +395,20 @@
     "termsLabel": "I confirm I have and agree to SOURSD <bold> Terms and Conditions </bold>",
     "continueButton": "Continue"
   },
+  "ProjectUserCard": {
+    "notFound": {
+      "employment": "No current employment found",
+      "organisation": "No organisation available"
+    },
+    "alsoApprovedOn": "Also Approved On: {projects} "
+  },
+  "ProjectList": {
+    "getIssuerProjectsError": "No projects found",
+    "loadingAriaLabel": "Loading project data",
+    "title": "Projects",
+    "approvedKey": "Approved Project",
+    "unapprovedKey": "Project Pending Approval"
+  },
   "Error": {
     "login": {
       "message": "It looks like we had a problem signing you in. Please try again or contact us on <contact></contact>",

@@ -110,6 +110,7 @@ const ApplicationDataProvider = ({
   const {
     data: issuerData,
     isError: isIssuerError,
+    isLoading: isIssuerLoading,
     error: issuerError,
   } = useQuery({
     queryKey: ["getIssuer", ISSUER_ID],
@@ -158,6 +159,7 @@ const ApplicationDataProvider = ({
     ((me?.id && me) || !me?.id) &&
     ((me?.organisation_id && organisation) || !me?.organisation_id) &&
     !!systemConfigData?.data &&
+    !isIssuerLoading &&
     issuer &&
     !isUserLoading &&
     user;

@@ -11,8 +11,8 @@ import {
   mockedUser,
   mockedAccreditation,
   mockedEmployment,
-  mockedProject,
 } from "./mocks/data/user";
+import { mockedProject, mockedProjects } from "./mocks/data/project";
 import { mockedOrganisation } from "./mocks/data/organisation";
 import {
   mockedSystemConfig,
@@ -156,6 +156,12 @@ async function mockFetch(url: string) {
           id: 2,
         }),
       ]);
+    }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/projects`: {
+      return mock200Json(mockPagedResults(mockedProjects(10)));
+    }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/issuers/1/projects`: {
+      return mock200Json(mockPagedResults(mockedProjects(10)));
     }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/projects/1`: {
       return mock200Json(
