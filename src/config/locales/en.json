@@ -422,5 +422,9 @@
       "navigateButton": "Back to homepage",
       "navigatePath": "/"
     }
+  },
+  "Pagination": {
+    "nextButtonLabel": "Next",
+    "previousButtonLabel": "Previous"
   }
 }

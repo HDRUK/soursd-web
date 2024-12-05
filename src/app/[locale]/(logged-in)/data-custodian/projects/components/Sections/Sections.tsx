@@ -6,7 +6,8 @@ import PageSection from "@/modules/PageSection";
 import { getIssuerProjects } from "@/services/projects";
 import { CircularProgress, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
+import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import { ISSUER_ID } from "@/consts/application";
 import StatusIndicator from "@/components/StatusIndicator";
 import ProjectList from "../ProjectList";
@@ -15,15 +16,17 @@ const NAMESPACE_TRANSLATIONS_PROJECT_LIST = "ProjectList";
 
 export default function Sections() {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_PROJECT_LIST);
+  const [page, setPage] = useState(1); // Current page
 
   const {
     data: projectsData,
     isLoading: isProjectsLoading,
     isError: isProjectsError,
   } = useQuery({
-    queryKey: ["getIssuerProjects"],
+    placeholderData: keepPreviousData,
+    queryKey: ["getIssuerProjects", page],
     queryFn: () =>
-      getIssuerProjects(ISSUER_ID, {
+      getIssuerProjects(ISSUER_ID, page, {
         // note: ISSUER_ID - need to update this as hard coded as 1!
         error: {
           message: "getIssuerProjects",
