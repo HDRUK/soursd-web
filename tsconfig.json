@@ -24,7 +24,7 @@
       "@/mocks/*": ["./mocks/*"],
       "@/*": ["./src/*"],
     },
-    "types": ["node", "jest", "@testing-library/jest-dom"]
+    "types": ["node", "jest", "@testing-library/jest-dom", "google.maps"]
   },
   "files": ["node_modules/gsap/types/index.d.ts"],
   "include": [
