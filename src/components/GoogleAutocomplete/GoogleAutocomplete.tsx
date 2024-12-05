@@ -13,7 +13,7 @@ export interface AddressFields {
 export interface GoogleAutocompleteProps {
   onAddressSelected: (fields: AddressFields) => void;
   label: string;
-  fullWidth?: boolean; // Optional prop for full width
+  fullWidth?: boolean;
 }
 
 const GoogleAutocomplete: React.FC<GoogleAutocompleteProps> = ({
@@ -26,7 +26,6 @@ const GoogleAutocomplete: React.FC<GoogleAutocompleteProps> = ({
   const [options, setOptions] = useState<string[]>([]);
   const [googleLoaded, setGoogleLoaded] = useState(false);
 
-  // Dynamically load Google Maps script
   const loadGoogleMapsScript = () => {
     if (
       typeof window !== "undefined" &&
