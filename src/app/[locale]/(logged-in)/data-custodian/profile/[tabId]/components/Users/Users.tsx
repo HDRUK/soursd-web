@@ -4,6 +4,7 @@ import { useStore } from "@/data/store";
 import { deleteIssuerUser, getIssuerUsers } from "@/services/issuer_users";
 import { DataCustodianUser } from "@/types/application";
 import { formatShortDate } from "@/utils/date";
+import { showAlert, showLoadingAlertWithPromise } from "@/utils/showAlert";
 import { Search } from "@mui/icons-material";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
@@ -23,7 +24,6 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
 import UserModal from "../UserModal";
-import { showAlert, showLoadingAlertWithPromise } from "@/utils/showAlert";
 
 const NAMESPACE_TRANSLATION_PROFILE = "IssuerProfile";
 
@@ -31,7 +31,7 @@ export default function Users() {
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const queryClient = useQueryClient();
   const [modalProps, setModalProps] = useState<{
-    open: Boolean;
+    open: boolean;
     user?: Partial<DataCustodianUser>;
   } | null>();
   const issuer = useStore(state => state.getIssuer());

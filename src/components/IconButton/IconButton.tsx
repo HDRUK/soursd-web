@@ -14,6 +14,8 @@ export default function IconButton({
   ...restProps
 }: IconButtonProps) {
   return (
-    <MuiIconButton>{loading ? <CircularProgress /> : children}</MuiIconButton>
+    <MuiIconButton {...restProps}>
+      {loading ? <CircularProgress /> : children}
+    </MuiIconButton>
   );
 }

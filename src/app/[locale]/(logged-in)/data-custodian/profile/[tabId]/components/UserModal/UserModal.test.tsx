@@ -1,10 +1,8 @@
-// import { useStore } from "@/data/store";
 import { mockedDataCustodianUser } from "@/mocks/data/issuer";
+import { patchIssuerUser, postIssuerUser } from "@/services/issuer_users";
 import { act, fireEvent, render, screen, waitFor } from "@/utils/testUtils";
-import { faker } from "@faker-js/faker";
 import { axe } from "jest-axe";
 import UserModal, { UserModalProps } from "./UserModal";
-import { patchIssuerUser, postIssuerUser } from "@/services/issuer_users";
 
 jest.mock("@/services/issuer_users");
 
@@ -14,12 +12,7 @@ const defaultUser = mockedDataCustodianUser();
 
 const renderUserModalDetails = (props?: Partial<UserModalProps>) => {
   return render(
-    <UserModal
-      user={defaultUser}
-      onClose={mockOnClose}
-      open={true}
-      {...props}
-    />
+    <UserModal user={defaultUser} onClose={mockOnClose} openß {...props} />
   );
 };
 

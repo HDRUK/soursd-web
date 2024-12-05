@@ -1,10 +1,4 @@
-import { useStore } from "@/data/store";
-import {
-  mockedDataCustodian,
-  mockedDataCustodianUser,
-} from "@/mocks/data/issuer";
-import { mockedUser } from "@/mocks/data/user";
-import { patchIssuer } from "@/services/issuers";
+import { mockedDataCustodianUser } from "@/mocks/data/issuer";
 import { act, fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 import { faker } from "@faker-js/faker";
 import { axe } from "jest-axe";
@@ -15,11 +9,6 @@ jest.mock("@/data/store");
 
 const mockOnSubmit = jest.fn();
 const defaultUser = mockedDataCustodianUser();
-
-(useStore as unknown as jest.Mock).mockImplementation(() => [
-  () => defaultUser,
-  null,
-]);
 
 const renderUserModalDetails = (props?: Partial<UserModalDetailsProps>) => {
   return render(

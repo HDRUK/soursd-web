@@ -70,7 +70,7 @@ export const showLoadingAlertWithPromise = async <T>(
     onError?: () => void;
   }
 ): Promise<T | void> => {
-  const messages = {
+  const optionsWithDefaults = {
     loadingMessage: "Loading...",
     successMessage: "Operation completed successfully!",
     errorMessage: "Something went wrong. Please try again.",
@@ -79,7 +79,7 @@ export const showLoadingAlertWithPromise = async <T>(
 
   // Show loading spinner
   Swal.fire({
-    title: messages.loadingMessage,
+    title: optionsWithDefaults.loadingMessage,
     allowOutsideClick: false,
     didOpen: () => {
       Swal.showLoading();
@@ -94,7 +94,7 @@ export const showLoadingAlertWithPromise = async <T>(
     Swal.fire({
       icon: "success",
       title: "Success",
-      text: messages.successMessage,
+      text: optionsWithDefaults.successMessage,
       confirmButtonColor: "#7A89C2",
       willClose: () => options?.onSuccess?.(),
     });
@@ -105,7 +105,7 @@ export const showLoadingAlertWithPromise = async <T>(
     Swal.fire({
       icon: "error",
       title: "Error",
-      text: messages.errorMessage,
+      text: optionsWithDefaults.errorMessage,
       confirmButtonColor: "#7A89C2", // Customize button color (optional)
       willClose: () => options?.onError?.(),
     });

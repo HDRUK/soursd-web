@@ -31,7 +31,6 @@ const Error = () => {
     if (type) {
       const title = t("title");
       const navigateButton = t("navigateButton");
-      const hasTitle = title !== `Error.${type}.title`;
       const hasNavigateButton =
         navigateButton !== `Error.${type}.navigateButton`;
 
