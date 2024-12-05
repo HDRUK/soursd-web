@@ -18,6 +18,12 @@ type ResponseJson<T> = Response & {
 interface Paged<T> {
   data: {
     current_page: number;
+    last_page: number;
+    total: number;
+    per_page: number;
+    next_page_url: string;
+    from: number;
+    to: number;
   } & T;
 }
 

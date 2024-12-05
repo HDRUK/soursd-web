@@ -10,6 +10,7 @@ import { useState } from "react";
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import { ISSUER_ID } from "@/consts/application";
 import StatusIndicator from "@/components/StatusIndicator";
+import Pagination from "@/components/Pagination";
 import ProjectList from "../ProjectList";
 
 const NAMESPACE_TRANSLATIONS_PROJECT_LIST = "ProjectList";
@@ -33,6 +34,8 @@ export default function Sections() {
         },
       }),
   });
+
+  const { last_page } = projectsData?.data || {};
 
   return (
     <>
@@ -75,6 +78,21 @@ export default function Sections() {
         {!isProjectsLoading && projectsData?.data.data && (
           <ProjectList projects={projectsData?.data.data} />
         )}
+      </PageSection>
+      <PageSection
+        sx={{
+          flexGrow: 1,
+          display: "flex",
+          justifyContent: "center",
+        }}>
+        <Pagination
+          isLoading={isProjectsLoading}
+          page={page}
+          count={last_page}
+          onChange={(e: React.ChangeEvent<unknown>, page: number) =>
+            setPage(page)
+          }
+        />
       </PageSection>
     </>
   );
