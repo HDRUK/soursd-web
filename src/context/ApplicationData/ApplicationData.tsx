@@ -38,7 +38,6 @@ const useApplicationData = () => useContext(ApplicationDataContext);
 interface ApplicationDataProviderProps {
   children: ReactNode;
   value: ApplicationDataState;
-  locale: string;
 }
 
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
