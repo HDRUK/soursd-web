@@ -14,7 +14,9 @@ describe("Alert Utils", () => {
 
   describe("showAlert", () => {
     it('should display an alert with the correct default title for "error"', () => {
-      showAlert("error", "This is an error message.");
+      showAlert("error", {
+        text: "This is an error message.",
+      });
 
       expect(Swal.fire).toHaveBeenCalledWith({
         icon: "error",
@@ -32,7 +34,10 @@ describe("Alert Utils", () => {
     });
 
     it("should override the default title when a custom title is provided", () => {
-      showAlert("success", "Operation completed successfully!", "Custom Title");
+      showAlert("success", {
+        text: "Operation completed successfully!",
+        title: "Custom Title",
+      });
 
       expect(Swal.fire).toHaveBeenCalledWith({
         icon: "success",
@@ -50,14 +55,11 @@ describe("Alert Utils", () => {
     });
 
     it("should display cancel and confirm buttons when cancelButtonText is provided", () => {
-      showAlert(
-        "question",
-        "Do you want to proceed?",
-        undefined,
-        undefined,
-        "Yes",
-        "No"
-      );
+      showAlert("question", {
+        text: "Do you want to proceed?",
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+      });
 
       expect(Swal.fire).toHaveBeenCalledWith({
         icon: "question",
@@ -78,12 +80,11 @@ describe("Alert Utils", () => {
   describe("showLoadingAlertWithPromise", () => {
     it("should display a loading alert and resolve with the promise result", async () => {
       const mockPromise = Promise.resolve("Success");
-      const result = await showLoadingAlertWithPromise(
-        mockPromise,
-        "Loading data...",
-        "Data loaded successfully!",
-        "Failed to load data."
-      );
+      const result = await showLoadingAlertWithPromise(mockPromise, {
+        loadingMessage: "Loading data...",
+        successMessage: "Data loaded successfully!",
+        errorMessage: "Failed to load data.",
+      });
 
       expect(Swal.fire).toHaveBeenCalledWith({
         title: "Loading data...",
@@ -96,6 +97,7 @@ describe("Alert Utils", () => {
         title: "Success",
         text: "Data loaded successfully!",
         confirmButtonColor: "#7A89C2",
+        willClose: expect.any(Function),
       });
 
       expect(result).toBe("Success");
@@ -103,12 +105,11 @@ describe("Alert Utils", () => {
 
     it("should display an error alert when the promise rejects", async () => {
       const mockPromise = Promise.reject();
-      const result = await showLoadingAlertWithPromise(
-        mockPromise,
-        "Processing request...",
-        "Request completed successfully!",
-        "Failed to process request."
-      );
+      const result = await showLoadingAlertWithPromise(mockPromise, {
+        loadingMessage: "Processing request...",
+        successMessage: "Request completed successfully!",
+        errorMessage: "Failed to process request.",
+      });
 
       expect(Swal.fire).toHaveBeenCalledWith({
         title: "Processing request...",
@@ -121,6 +122,7 @@ describe("Alert Utils", () => {
         title: "Error",
         text: "Failed to process request.",
         confirmButtonColor: "#7A89C2",
+        willClose: expect.any(Function),
       });
 
       expect(result).toBeUndefined();

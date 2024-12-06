@@ -2,10 +2,10 @@ import theme from "@/theme";
 import { Box, BoxProps, CircularProgress } from "@mui/material";
 import React from "react";
 
-type LoadingWrapperProps = {
+export type LoadingWrapperProps = {
   loading: boolean;
   children: React.ReactNode;
-  variant: "rich" | "basic";
+  variant?: "rich" | "basic";
 };
 
 export default function LoadingWrapper({

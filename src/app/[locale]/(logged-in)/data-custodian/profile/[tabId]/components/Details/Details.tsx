@@ -34,8 +34,6 @@ export default function Details({ issuer }: DetailsProps) {
   const queryClient = useQueryClient();
   const theme = useTheme();
 
-  const mdBreakpoint = theme.breakpoints.down("md");
-
   const {
     mutateAsync: mutateUpdateAsync,
     isError: isUpdateError,
@@ -88,6 +86,7 @@ export default function Details({ issuer }: DetailsProps) {
       contact_email: issuer.contact_email,
       idvt_required: issuer.idvt_required,
     },
+    disabled: isUpdateLoading,
   });
 
   const {
@@ -117,7 +116,7 @@ export default function Details({ issuer }: DetailsProps) {
       </Postit>
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(handleDetailsSubmit)} autoComplete="off">
-          <Grid container rowSpacing={3}>
+          <Grid container rowSpacing={3} sx={{ maxWidth: "800px" }}>
             {isUpdateError && (
               <Grid item xs={12}>
                 <Message severity="error" sx={{ mb: 3 }}>
@@ -137,7 +136,6 @@ export default function Details({ issuer }: DetailsProps) {
                   {...nameProps}
                   size="small"
                   placeholder={tForm("namePlaceholder")}
-                  sx={{ width: "500px" }}
                 />
               </FormControlHorizontal>
             </Grid>
@@ -150,24 +148,13 @@ export default function Details({ issuer }: DetailsProps) {
                   {...contactEmailProps}
                   size="small"
                   placeholder={tForm("contactEmailPlaceholder")}
-                  sx={{
-                    width: "500px",
-                  }}
                 />
               </FormControlHorizontal>
             </Grid>
             <Grid item xs={12}>
-              <IdvtSection
-                switchProps={register("idvt_required")}
-                sx={{
-                  ml: "215px",
-                  maxWidth: "600px",
-                  [mdBreakpoint]: {
-                    ml: 0,
-                    maxWidth: "initial",
-                  },
-                }}
-              />
+              <FormControlHorizontal>
+                <IdvtSection switchProps={register("idvt_required")} />
+              </FormControlHorizontal>
             </Grid>
           </Grid>
           <LoadingButton

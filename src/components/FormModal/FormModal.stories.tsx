@@ -1,10 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Button, Grid, Typography } from "@mui/material";
+import { Button, Grid, TextField, Typography } from "@mui/material";
 import { useState } from "react";
-import { FormProvider, useForm } from "react-hook-form";
 import FormModal, { FormModalProps } from ".";
-import PasswordTextField from "../PasswordTextField";
+import FormControlHorizontal from "../FormControlHorizontal";
+import FormModalBody from "../FormModalBody";
+import FormModalHeader from "../FormModalHeader";
 
 const meta = {
   title: "components/FormModal",
@@ -18,44 +19,38 @@ type Story = StoryObj<typeof meta>;
 
 const BasicFormModal = ({ open }: FormModalProps) => {
   const [showFormModal, setShowFormModal] = useState(open);
-  const methods = useForm();
 
   return showFormModal ? (
-    <FormModal open={showFormModal} onClose={() => setShowFormModal(false)}>
-      <FormProvider {...methods}>
-        <form>
-          <Typography variant="h5" textAlign="center" sx={{ mb: 3 }}>
-            Sign up
-          </Typography>
-          <Grid container direction="column" spacing={2}>
-            <Grid item>
-              <PasswordTextField
-                label="Password"
-                iconButtonProps={{ "aria-label": "password" }}
-                fullWidth
-                size="small"
-                variant="outlined"
-                id="password"
-              />
-            </Grid>
-            <Grid item>
-              <PasswordTextField
-                label="Confirm password"
-                iconButtonProps={{ "aria-label": "confirm password" }}
-                fullWidth
-                size="small"
-                variant="outlined"
-                id="confirmPassword"
-              />
-            </Grid>
-            <Grid item>
-              <Button variant="contained" fullWidth>
-                Submit
-              </Button>
-            </Grid>
+    <FormModal
+      open={showFormModal}
+      onClose={() => setShowFormModal(false)}
+      sx={{ width: "600px" }}>
+      <FormModalHeader>
+        <Typography variant="h4">Profile</Typography>
+        <Typography>
+          This is where you fill in or edit your users details.
+        </Typography>
+      </FormModalHeader>
+      <FormModalBody>
+        <Grid container rowSpacing={2}>
+          <Grid item xs={12}>
+            <FormControlHorizontal label="First name">
+              <TextField id="firstName" />
+            </FormControlHorizontal>
           </Grid>
-        </form>
-      </FormProvider>
+          <Grid item xs={12}>
+            <FormControlHorizontal label="Last name">
+              <TextField id="lastName" />
+            </FormControlHorizontal>
+          </Grid>
+          <Grid item xs={12}>
+            <FormControlHorizontal label="Email">
+              <TextField id="Email" />
+            </FormControlHorizontal>
+          </Grid>
+        </Grid>
+      </FormModalBody>
+      <Button variant="contained">Save</Button>
     </FormModal>
   ) : (
     <Button onClick={() => setShowFormModal(true)}>Open modal</Button>
