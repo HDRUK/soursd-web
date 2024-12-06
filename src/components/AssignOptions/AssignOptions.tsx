@@ -35,6 +35,7 @@ export default function PermissionsSection({
       checkboxData,
       subsetData
     ),
+    disabled: queryState.isLoading,
   });
 
   const { register, handleSubmit } = methods;

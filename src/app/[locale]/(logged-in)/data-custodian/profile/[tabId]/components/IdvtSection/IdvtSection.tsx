@@ -1,6 +1,6 @@
 import InformationSection from "@/components/InformationSection";
 import Switch, { SwitchProps } from "@/components/Switch";
-import { mockedIssuerIdvtInfoContent } from "@/mocks/data/cms";
+import { mockedDataCustodianIdvtInfoContent } from "@/mocks/data/cms";
 import { BoxProps } from "@mui/material";
 import { useTranslations } from "next-intl";
 
@@ -21,7 +21,7 @@ export default function IdvtSection({
       heading={<Switch label={t("idvtHeading")} {...switchProps} />}
       description={t("idvtDescription")}
       {...restProps}>
-      {mockedIssuerIdvtInfoContent}
+      {mockedDataCustodianIdvtInfoContent}
     </InformationSection>
   );
 }

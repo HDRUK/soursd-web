@@ -1,16 +1,16 @@
 import { Box, BoxProps } from "@mui/material";
 import { ReactNode } from "react";
 
-interface FormHeaderProps extends BoxProps {
+interface FormModalBodyProps extends BoxProps {
   children: ReactNode;
 }
 
-export default function FormModalHeader({
+export default function FormModalBody({
   children,
   ...restProps
-}: FormHeaderProps) {
+}: FormModalBodyProps) {
   return (
-    <Box {...restProps} sx={{ mb: 4, ...restProps.sx }}>
+    <Box {...restProps} sx={{ px: 4, mb: 3, ...restProps.sx }}>
       {children}
     </Box>
   );
