@@ -249,6 +249,7 @@ interface ApplicationDataState {
   /* eslint-disable  @typescript-eslint/no-explicit-any */
   systemConfigData: Record<string, any>;
   auth?: Auth;
+  locale: string;
 }
 
 /* eslint-disable  @typescript-eslint/no-explicit-any */

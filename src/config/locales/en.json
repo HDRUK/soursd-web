@@ -4,14 +4,14 @@
     "hide": "Hide {name}"
   },
   "Application": {
-    "getSystemConfigError": "There was a problem loading the application. Please try again or contact us at <contactLink></contactLink>",
-    "getUserError": "Unable to load your user details. Please try again or contact us at <contactLink></contactLink>",
+    "getSystemConfigError": "There was a problem loading the application. Please try again or contact us at <applicationLink></applicationLink>",
+    "getUserError": "Unable to load your user details. Please try again or contact us at <applicationLink></applicationLink>",
     "researcher": "Researcher",
     "organisation": "Organisation",
     "issuer": "Data Custodian",
     "companyNumberAbbr": "CRN",
-    "getOrganisationError": "There was a problem loading your organisation. Please try again or contact us at <contactLink></contactLink>",
-    "getIssuerError": "There was a problem loading your Data Custodian. Please try again or contact us at <contactLink></contactLink>"
+    "getOrganisationError": "There was a problem loading your organisation. Please try again or contact us at <applicationLink></applicationLink>",
+    "getIssuerError": "There was a problem loading your Data Custodian. Please try again or contact us at <applicationLink></applicationLink>"
   },
   "IssuerProfile": {
     "uniqueIdentifierTitle": "SOURSD Identifier",
@@ -44,7 +44,7 @@
   "ProfileOrganisation": {
     "title": "Profile",
     "companyValid": "Organisation validated",
-    "companyNotValidPopup": "Your organisation has not been validated. This could be related to the information you've entered (i.e. company number). If you believe this message to be in error please contact us at  <contactLink></contactLink>",
+    "companyNotValidPopup": "Your organisation has not been validated. This could be related to the information you've entered (i.e. company number). If you believe this message to be in error please contact us at  <applicationLink></applicationLink>",
     "companyNotValid": "Organisation not validated",
     "companyValidatingPopup": "Your organisation is currently being checked against records held by Companies House",
     "companyValidating": "Organisation is being validated",
@@ -55,7 +55,7 @@
     "organisationNotFound": "Organisation was not found",
     "getOrganisationStatusError": "Unable to determine validation status",
     "navigationAriaLabel": "Profile tabs",
-    "patchUserError": "There was a problem updating your user details. Please try again or contact us at <contactLink></contactLink>",
+    "patchUserError": "There was a problem updating your user details. Please try again or contact us at <applicationLink></applicationLink>",
     "updateUserButton": "Save"
   },
   "Form": {
@@ -181,15 +181,15 @@
     "organisation": "Organisation name",
     "signupButton": "Sign Up",
     "title": "Sign Up",
-    "submitError": "There was a problem signing up. Please try again or contact us at <contactLink></contactLink>",
+    "submitError": "There was a problem signing up. Please try again or contact us at <applicationLink></applicationLink>",
     "submitSuccess": "You have successfully signed up.",
     "signupOTPButton": "Email me an OTP",
     "signupOTPTooltip": "This method will not require you to enter a password each time you login. Instead the system will send a secure One Time Password (OTP) to your email address which you can then use to logon for the duration the OTP is valid.",
     "checkYourEmail": "We have emailed you a passcode. If you can't see it in your inbox, try checking your junk / spam folder. Altertively you can request another by clicking on the refresh button.",
-    "noVerificationCode": "You need a verification code to signup. This should have been provided to you via an invitation link. Please contact us at <contactLink></contactLink>",
-    "verificationExpired": "The verification code provided has expired. Please contact us at <contactLink></contactLink>",
-    "noDataVerification": "Could not find any data for this verification code. Please contact us at <contactLink></contactLink>",
-    "getByInviteCodeError": "There has been a problem getting your details. Please contact us at <contactLink></contactLink>"
+    "noVerificationCode": "You need a verification code to signup. This should have been provided to you via an invitation link. Please contact us at <applicationLink></applicationLink>",
+    "verificationExpired": "The verification code provided has expired. Please contact us at <applicationLink></applicationLink>",
+    "noDataVerification": "Could not find any data for this verification code. Please contact us at <applicationLink></applicationLink>",
+    "getByInviteCodeError": "There has been a problem getting your details. Please contact us at <applicationLink></applicationLink>"
   },
   "SignupFormIssuer": {
     "title": "Data Custodian sign Up"
@@ -201,7 +201,7 @@
   },
   "SignupFormResearcher": {
     "title": "Researcher sign up",
-    "noData": "There has been an issue getting some of the required information for the sign up process. Please contact us at <contactLink></contactLink>"
+    "noData": "There has been an issue getting some of the required information for the sign up process. Please contact us at <applicationLink></applicationLink>"
   },
   "Cv": {
     "fileMaxSize": "{size} Max size",
@@ -234,14 +234,15 @@
     "consentScrapeAriaLabel": "Gather my historical experience as a Researcher",
     "download": "Download CV",
     "submitButton": "Save",
-    "submitError": "There was a problem updating your details. Please try again or contact us at <contactLink></contactLink>",
+    "submitError": "There was a problem updating your details. Please try again or contact us at <applicationLink></applicationLink>",
     "pending": "Pending",
     "verified": "Verified",
-    "cvUploadFailed": "There was a problem uploading your CV. Please check the file size and try again or alternativley contact us at <contactLink></contactLink>",
+    "cvUploadFailed": "There was a problem uploading your CV. Please check the file size and try again or alternativley contact us at <applicationLink></applicationLink>",
     "noCvUploaded": "No CV uploaded",
     "profileCompletedTitle": "Your profile has been completed",
     "profileCompletedDescription": "You have completed all the mandatory fields required for your profile to be considered 'complete'. This will be flagged to Data Custodians when they view your user details.",
-    "continueLinkText": "Continue"
+    "continueLinkText": "Continue",
+    "profileCompleteWarningMessage": "You have not yet completed your profile. This may mean that some data custodians will not grant access to you. It is advised that you complete this process. Please navigate to your profile"
   },
   "ProfileCompleteStatus": {
     "profileComplete": "Profile complete",
@@ -308,7 +309,7 @@
     "previousButton": "Previous",
 
     "signupButton": "Sign Up",
-    "submitError": "There was a problem signing up. Please try again or contact us at <contactLink></contactLink>",
+    "submitError": "There was a problem signing up. Please try again or contact us at <applicationLink></applicationLink>",
     "emptyFieldsError": "At least one of these contacts needs to be filled in."
   },
   "SignupFormOtherDetails": {
@@ -329,7 +330,7 @@
     "loginButton": "Login",
     "title": "Login",
     "loginDetailsIncorrect": "Your login details are incorrect, please check them and try again.",
-    "submitError": "There was a problem validating your user. Please try again or contact us at <contactLink></contactLink>",
+    "submitError": "There was a problem validating your user. Please try again or contact us at <applicationLink></applicationLink>",
     "successfulRegister": "You have successfully registered for the Researcher Registry."
   },
   "Guidance": {
@@ -359,7 +360,7 @@
     "500Description": "We tried to query the selected resource but there seems to be an issue on the server, please contact us via the form in the footer."
   },
   "Auth": {
-    "notAllowed": "You are not allowed to access thie page. If you think this is incorrect please contacts us at <contactLink></contactLink>"
+    "notAllowed": "You are not allowed to access thie page. If you think this is incorrect please contacts us at <applicationLink></applicationLink>"
   },
   "Administration": {
     "title": "Administration",
@@ -370,7 +371,7 @@
     "issuerInviteButton": "Send Invite",
     "systemConfigBody": "Update or add new System Configuration Parameters",
     "systemConfigSubtitle": "Parameters are in the form of NameValue pairs",
-    "noDataIssuers": "Unable to retrieve known Data Custodians. Please contact us at <contactLink></contactLink>"
+    "noDataIssuers": "Unable to retrieve known Data Custodians. Please contact us at <applicationLink></applicationLink>"
   },
   "SoursdLogo": {
     "logoTitle": "SOURSD"

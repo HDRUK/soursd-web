@@ -18,7 +18,7 @@ const mockedUser = (user?: Partial<User>): User => ({
   first_name: faker.person.firstName(),
   last_name: faker.person.lastName(),
   email: faker.internet.email(),
-  user_group: UserGroup.RESEARCHERS,
+  user_group: UserGroup.USERS,
   permissions: [mockedPermission()],
   approvals: [mockedApproval()],
   organisations: [],

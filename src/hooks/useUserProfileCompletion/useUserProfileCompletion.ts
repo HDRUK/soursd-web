@@ -11,7 +11,6 @@ import patchUser from "@/services/users/patchUser";
 import { formatNowDBDate } from "@/utils/date";
 import { useMutation } from "@tanstack/react-query";
 import mergeWith from "lodash.mergewith";
-import { useTranslations } from "next-intl";
 import { useCallback, useEffect } from "react";
 
 const schema: UserProfileCompletionSchema = {
@@ -24,10 +23,6 @@ const schema: UserProfileCompletionSchema = {
       {
         name: "last_name",
         required: true,
-      },
-      {
-        name: "dob",
-        required: false,
       },
     ],
   },
@@ -42,11 +37,8 @@ const schema: UserProfileCompletionSchema = {
   },
 };
 
-const NAMESPACE_TRANSLATION_PROFILE = "Profile";
-
 export default function useProfileCompletion() {
   const [user, setUser] = useStore(store => [store.getUser(), store.setUser]);
-  const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
   const { mutateAsync, isError, isPending, error } = useMutation({
     mutationKey: ["patchUser"],
@@ -58,20 +50,28 @@ export default function useProfileCompletion() {
       }),
   });
 
-  const isCategoryCompleted = (category: UserProfileCompletionCategories) => {
-    const currentState = JSON.parse(user?.profile_steps_completed || "{}");
-
-    return (
-      !Object.keys(currentState[category] || {}).some((key: string) => {
-        return !currentState[category][key];
-      }) || currentState[category]?.score === 100
-    );
-  };
-
   const getCurrentState = () => {
     return JSON.parse(
       user?.profile_steps_completed || "{}"
     ) as UserProfileCompletionJson;
+  };
+
+  const isCategoryCompleted = (category: UserProfileCompletionCategories) => {
+    const currentState = getCurrentState();
+
+    return currentState[category]?.score === 100;
+  };
+
+  const pruneFields = (
+    completedStepsFields: UserProfileCompletionJson[UserProfileCompletionCategories]["fields"],
+    schemaFields: UserProfileCompletionJson[UserProfileCompletionCategories]["fields"]
+  ) => {
+    return completedStepsFields.filter(({ name: completedStepsFieldName }) =>
+      schemaFields.find(
+        ({ name: schemaFieldName }) =>
+          completedStepsFieldName === schemaFieldName
+      )
+    );
   };
 
   const updateFieldsFromSchema = () => {
@@ -81,22 +81,31 @@ export default function useProfileCompletion() {
       getCurrentState(),
       (schemaValue, completedStepsValue) => {
         if (Array.isArray(schemaValue)) {
+          const prunedCompletedSteps = pruneFields(
+            completedStepsValue,
+            schemaValue
+          );
+
           return schemaValue.map(({ name: schemaFieldName, required }) => {
-            const matchingField = (completedStepsValue || []).find(
+            const matchingField = prunedCompletedSteps.find(
               ({ name: completedStepsFieldName }) =>
                 completedStepsFieldName === schemaFieldName
             );
+
+            const completedValue = user?.[schemaFieldName];
 
             if (matchingField) {
               return {
                 ...matchingField,
                 required,
+                hasValue: !!completedValue,
               };
             }
 
             return {
               name: schemaFieldName,
               required,
+              hasValue: !!completedValue,
             };
           });
         }
@@ -150,8 +159,8 @@ export default function useProfileCompletion() {
       profile_completed_at: isCompleted ? formatNowDBDate() : null,
     };
 
-    // await mutateAsync(updatedUser);
-    // setUser(updatedUser);
+    setUser(updatedUser);
+    await mutateAsync(updatedUser);
   };
 
   const updateInitialSchema = async () => {

@@ -1,6 +1,6 @@
 "use client";
 
-import ContactLink from "@/components/ContactLink";
+import ApplicationLink from "@/components/ApplicationLink";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
 import { Message } from "@/components/Message";
 import Postit from "@/components/Postit";
@@ -122,7 +122,7 @@ export default function Details({ issuer }: DetailsProps) {
               <Grid item xs={12}>
                 <Message severity="error" sx={{ mb: 3 }}>
                   {tProfile.rich(updateError, {
-                    contactLink: ContactLink,
+                    applicationLink: ApplicationLink,
                   })}
                 </Message>
               </Grid>

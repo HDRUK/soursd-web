@@ -71,6 +71,7 @@ export default function Layout({ children, params: { locale } }: LayoutProps) {
     isChecked && (
       <ApplicationDataProvider
         value={{
+          locale,
           routes,
           systemConfigData: {},
         }}>

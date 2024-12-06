@@ -1,6 +1,6 @@
 "use client";
 
-import ContactLink from "@/components/ContactLink";
+import ApplicationLink from "@/components/ApplicationLink";
 import OverlayCenterAlert from "@/components/OverlayCenterAlert";
 import { ISSUER_ID, VALIDATION_SCHEMA_KEY } from "@/consts/application";
 import { ROUTES } from "@/consts/router";
@@ -15,6 +15,7 @@ import {
   ApplicationSystemConfig,
 } from "@/types/application";
 import { parseSystemConfig } from "@/utils/application";
+import { showAlert } from "@/utils/showAlert";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
@@ -25,6 +26,7 @@ import {
   useEffect,
   useMemo,
 } from "react";
+import { renderToString } from "react-dom/server";
 
 const ApplicationDataContext = createContext({
   routes: ROUTES,
@@ -37,15 +39,18 @@ const useApplicationData = () => useContext(ApplicationDataContext);
 interface ApplicationDataProviderProps {
   children: ReactNode;
   value: ApplicationDataState;
+  locale: string;
 }
 
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
+const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
 const ApplicationDataProvider = ({
   children,
   value,
 }: ApplicationDataProviderProps) => {
   const t = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
+  const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const addUrlToHistory = useStore(store => store.addUrlToHistory);
   const {
     data: userData,
@@ -114,6 +119,10 @@ const ApplicationDataProvider = ({
 
   useEffect(() => {
     if (meData) {
+      if (!meData?.profile_completed_at) {
+        showAlert("warning", tProfile("profileCompleteWarningMessage"));
+      }
+
       setUser(meData);
     }
   }, [meData]);
@@ -160,7 +169,7 @@ const ApplicationDataProvider = ({
           {isAnyError && (
             <OverlayCenterAlert>
               {t.rich(errorMessage, {
-                contactLink: ContactLink,
+                applicationLink: ApplicationLink,
               })}
             </OverlayCenterAlert>
           )}

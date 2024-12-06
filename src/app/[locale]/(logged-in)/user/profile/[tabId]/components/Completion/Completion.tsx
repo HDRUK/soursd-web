@@ -53,7 +53,7 @@ export default function Completion() {
             <Box>
               <Box component="span" sx={{ mr: 3 }}>
                 {t("completedScore", {
-                  score: category.score,
+                  score: category?.score,
                 })}
               </Box>{" "}
               <Button component="a" href={href} variant="contained">

@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { handleLogin, handleRegister } from "@/utils/keycloak";
-import ContactLink from "@/components/ContactLink";
+import ApplicationLink from "@/components/ApplicationLink";
 import ReactDOMServer from "react-dom/server";
 
 const Error = () => {
@@ -36,7 +36,7 @@ const Error = () => {
         navigateButton !== `Error.${type}.navigateButton`;
 
       const errorMessage = ReactDOMServer.renderToString(
-        t.rich("message", { contact: ContactLink }) ?? t("message")
+        t.rich("message", { contact: ApplicationLink }) ?? t("message")
       );
 
       showAlert(

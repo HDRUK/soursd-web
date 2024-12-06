@@ -18,7 +18,7 @@ const mockedUserAuth = (auth?: Partial<Auth>) => ({
     first_name: "Peter",
     last_name: "Hammans",
     email: "peter.hammans@hdruk.ac.uk",
-    user_group: UserGroup.RESEARCHERS,
+    user_group: UserGroup.USERS,
     ...auth?.user,
   }),
   ...auth,

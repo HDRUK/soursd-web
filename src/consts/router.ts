@@ -58,31 +58,31 @@ const ROUTES: Routes = {
   },
   profileResearcherExperience: {
     path: "/user/profile/experience",
-    permissions: [UserGroup.RESEARCHERS],
+    permissions: [UserGroup.USERS],
   },
   profileResearcherDetails: {
     path: "/user/profile/details",
-    permissions: [UserGroup.RESEARCHERS],
+    permissions: [UserGroup.USERS],
   },
   profileResearcherCompletion: {
     path: "/user/profile/completion",
-    permissions: [UserGroup.RESEARCHERS],
+    permissions: [UserGroup.USERS],
   },
   profileResearcherIdentity: {
     path: "/user/profile/identity",
-    permissions: [UserGroup.RESEARCHERS],
+    permissions: [UserGroup.USERS],
   },
   profileResearcherTraining: {
     path: "/user/profile/training",
-    permissions: [UserGroup.RESEARCHERS],
+    permissions: [UserGroup.USERS],
   },
   profileResearcherAffiliations: {
     path: "/user/profile/affiliations",
-    permissions: [UserGroup.RESEARCHERS],
+    permissions: [UserGroup.USERS],
   },
   profileResearcher: {
     path: "/user/profile",
-    permissions: [UserGroup.RESEARCHERS],
+    permissions: [UserGroup.USERS],
   },
   profileOrganisation: {
     path: "/organisation/profile",

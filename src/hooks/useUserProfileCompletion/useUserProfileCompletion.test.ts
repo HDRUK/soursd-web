@@ -2,7 +2,7 @@ import { UserProfileCompletionCategories } from "@/consts/user";
 import { useStore } from "@/data/store";
 import { mockedUser } from "@/mocks/data/user";
 import { User } from "@/types/application";
-import { act, renderHook, waitFor, screen } from "@/utils/testUtils";
+import { act, renderHook, waitFor } from "@/utils/testUtils";
 import { faker } from "@faker-js/faker";
 import { useMutation } from "@tanstack/react-query";
 import useUserProfileCompletion from "./useUserProfileCompletion";
@@ -14,9 +14,12 @@ const mockSetUser = jest.fn();
 const mockMutateAsync = jest.fn();
 
 const defaultUser = mockedUser({
-  profile_steps_completed: `{"identity":{"dob":false,"score":67,"last_name":true,"first_name":true}}`,
+  profile_steps_completed: "",
   profile_completed_at: null,
 });
+
+const defaultStepsCompleted =
+  '{"identity":{"fields":[{"name":"first_name","required":true},{"name":"last_name","required":true},{"name":"dob","required":true}],"score":0},"affiliations":{"fields":[],"score":100},"experience":{"fields":[],"score":100},"training":{"fields":[],"score":100}}';
 
 const mockedFormFields = {
   first_name: faker.person.firstName(),
@@ -24,7 +27,13 @@ const mockedFormFields = {
   dob: "",
 };
 
-(useStore as unknown as jest.Mock).mockReturnValue([defaultUser, mockSetUser]);
+(useStore as unknown as jest.Mock).mockReturnValue([
+  {
+    ...defaultUser,
+    profile_steps_completed: defaultStepsCompleted,
+  },
+  mockSetUser,
+]);
 (useMutation as unknown as jest.Mock).mockReturnValue({
   mutateAsync: mockMutateAsync,
   isError: false,
@@ -47,8 +56,7 @@ const renderTest = () =>
 
 describe("useUserProfileCompletion", () => {
   beforeEach(() => {
-    mockMutateAsync.mockReset();
-
+    jest.clearAllMocks();
     jest.useFakeTimers().setSystemTime(new Date("2024-01-01"));
   });
 
@@ -63,50 +71,46 @@ describe("useUserProfileCompletion", () => {
     });
 
     await waitFor(() => {
-      expect(mockMutateAsync).toHaveBeenCalledWith(defaultUser);
+      expect(mockMutateAsync).toHaveBeenLastCalledWith({
+        ...defaultUser,
+        profile_completed_at: null,
+        profile_steps_completed:
+          '{"identity":{"fields":[{"name":"first_name","required":true,"hasValue":true},{"name":"last_name","required":true,"hasValue":true},{"name":"dob","required":true,"hasValue":false}],"score":67},"affiliations":{"fields":[],"score":100},"experience":{"fields":[],"score":100},"training":{"fields":[],"score":100}}',
+      });
     });
   });
 
-  it("updates the score when a field is changed", async () => {
+  it("updates the payload on load", async () => {
+    renderTest();
+
+    await waitFor(() => {
+      expect(mockMutateAsync).toHaveBeenCalledWith({
+        ...defaultUser,
+        profile_completed_at: null,
+        profile_completed_at: "2024-01-01 12:00:00",
+        profile_steps_completed:
+          '{"identity":{"fields":[{"name":"first_name","required":true,"hasValue":true},{"name":"last_name","required":true,"hasValue":true}],"score":100},"affiliations":{"fields":[],"score":100},"experience":{"fields":[],"score":100},"training":{"fields":[],"score":100}}',
+      });
+    });
+  });
+
+  it("completes the user payload", async () => {
     const { result } = renderTest();
 
     act(() => {
       result.current.update(
-        { ...mockedFormFields, last_name: "" },
+        { ...mockedFormFields, dob: "1980-04-11" },
         UserProfileCompletionCategories.IDENTITY
       );
     });
 
     await waitFor(() => {
-      expect(mockMutateAsync).toHaveBeenCalledWith({
+      expect(mockMutateAsync).toHaveBeenLastCalledWith({
         ...defaultUser,
-        profile_steps_completed: `{"identity":{"dob":false,"score":33,"last_name":false,"first_name":true}}`,
+        profile_completed_at: "2024-01-01 12:00:00",
+        profile_steps_completed:
+          '{"identity":{"fields":[{"name":"first_name","required":true,"hasValue":true},{"name":"last_name","required":true,"hasValue":true},{"name":"dob","required":true,"hasValue":true}],"score":100},"affiliations":{"fields":[],"score":100},"experience":{"fields":[],"score":100},"training":{"fields":[],"score":100}}',
       });
-    });
-  });
-
-  it("show an alert when the profile is completed", async () => {
-    const { result } = renderTest();
-
-    act(() => {
-      result.current.update(
-        { ...mockedFormFields, dob: "2000-01-01" },
-        UserProfileCompletionCategories.IDENTITY
-      );
-    });
-
-    await waitFor(() => {
-      expect(mockMutateAsync).toHaveBeenCalledWith({
-        ...defaultUser,
-        profile_steps_completed: `{"identity":{"dob":true,"score":100,"last_name":true,"first_name":true}}`,
-        profile_completed_at: "2024-01-01T00:00:00.000Z",
-      });
-    });
-
-    await waitFor(() => {
-      expect(
-        screen.getByText("Your profile has been completed")
-      ).toBeInTheDocument();
     });
   });
 });
