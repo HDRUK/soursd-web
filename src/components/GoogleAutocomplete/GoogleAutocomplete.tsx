@@ -1,5 +1,9 @@
 import React, { useState } from "react";
-import { Autocomplete as MUIAutocomplete, TextField } from "@mui/material";
+import {
+  CircularProgress,
+  Autocomplete as MUIAutocomplete,
+  TextField,
+} from "@mui/material";
 import fetchPredictions from "./actions";
 
 export interface AddressFields {
@@ -25,11 +29,12 @@ const GoogleAutocomplete: React.FC<GoogleAutocompleteProps> = ({
 }) => {
   const [inputValue, setInputValue] = useState("");
   const [options, setOptions] = useState<string[]>([]);
+  const [loading, setLoading] = useState<boolean>();
 
   const handleInputChange = async (_, value) => {
     setInputValue(value);
     if (value.length < 3) return;
-    // Skip short inputssetLoading(true);
+    setLoading(true);
     try {
       // Fetch predictions using the server-side function
       const predictions = await fetchPredictions(value);
@@ -38,6 +43,7 @@ const GoogleAutocomplete: React.FC<GoogleAutocompleteProps> = ({
     } catch (error) {
       console.error("Error fetching address predictions:", error);
     }
+    setLoading(false);
   };
 
   return (
@@ -53,6 +59,18 @@ const GoogleAutocomplete: React.FC<GoogleAutocompleteProps> = ({
           fullWidth={fullWidth}
           {...rest}
           size="small"
+          InputProps={{
+            ...params.InputProps,
+            endAdornment: (
+              <>
+                {" "}
+                {loading ? (
+                  <CircularProgress color="inherit" size={20} />
+                ) : null}{" "}
+                {params.InputProps.endAdornment}{" "}
+              </>
+            ),
+          }}
         />
       )}
     />
