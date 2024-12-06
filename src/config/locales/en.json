@@ -39,7 +39,23 @@
     "lastLoggedIn": "Last logged in: {date}",
     "addedOn": "Added on: {date}",
     "addNewUser": "Add New",
-    "searchIssuerUsers": "Search"
+    "searchIssuerUsers": "Search",
+    "createUserError": "There was a problem creating this user. Please try again or contact us at <contactLink></contactLink>",
+    "updateUserError": "There was a problem updating this users details. Please try again or contact us at <contactLink></contactLink>",
+    "roleAdministratorDescription": "Can do everything on the system",
+    "roleApproverDescription": "Can only approve Organisations and/or Researchers",
+    "updateSuccessfulTitle": "User updated",
+    "updateSuccessfulDescription": "The user has been successfully updated.",
+    "createSuccessfulTitle": "User created",
+    "createSuccessfulDescription": "The user has been successfully created.",
+    "updateUserTitle": "Edit user",
+    "createUserTitle": "Add new user",
+    "updateUserDescription": "Update the data below to change the selected users details",
+    "createUserDescription": "Complete the form below to add a new user to your SOURSD profile",
+    "deleteWarningTitle": "Are you sure you want to delete this user?",
+    "deleteWarningDescription": "Deleting this user is permanent and will result in them no longer being able to act on your behalf",
+    "projects": "Projects",
+    "organisations": "Organisations"
   },
   "ProfileOrganisation": {
     "title": "Profile",
@@ -151,7 +167,9 @@
     "ceCertified": "CE certfied",
     "ceCertificationNumberPlaceholder": "CE certification number",
     "ceCertificationNumber": "CE certification number",
-    "whatIsTheOrcId": "Your ORCiD is a value which identifies you to Data Custodians (although in general anyone) and provides information to them such as your research outputs and activities. If you don't have one of these you can signup at https://orcid.org/register. Although it is recommended to provide this, it is not required for the registry, however it is required for the content scrape."
+    "whatIsTheOrcId": "Your ORCiD is a value which identifies you to Data Custodians (although in general anyone) and provides information to them such as your research outputs and activities. If you don't have one of these you can signup at https://orcid.org/register. Although it is recommended to provide this, it is not required for the registry, however it is required for the content scrape.",
+    "roleAdministrator": "Administrator",
+    "roleApprover": "Approver"
   },
   "Buttons": {
     "register": "Register",
@@ -176,32 +194,6 @@
     "emailPlaceholder": "Email",
     "messagePlaceholder": "Message",
     "sendButton": "Send"
-  },
-  "SignupForm": {
-    "organisation": "Organisation name",
-    "signupButton": "Sign Up",
-    "title": "Sign Up",
-    "submitError": "There was a problem signing up. Please try again or contact us at <contactLink></contactLink>",
-    "submitSuccess": "You have successfully signed up.",
-    "signupOTPButton": "Email me an OTP",
-    "signupOTPTooltip": "This method will not require you to enter a password each time you login. Instead the system will send a secure One Time Password (OTP) to your email address which you can then use to logon for the duration the OTP is valid.",
-    "checkYourEmail": "We have emailed you a passcode. If you can't see it in your inbox, try checking your junk / spam folder. Altertively you can request another by clicking on the refresh button.",
-    "noVerificationCode": "You need a verification code to signup. This should have been provided to you via an invitation link. Please contact us at <contactLink></contactLink>",
-    "verificationExpired": "The verification code provided has expired. Please contact us at <contactLink></contactLink>",
-    "noDataVerification": "Could not find any data for this verification code. Please contact us at <contactLink></contactLink>",
-    "getByInviteCodeError": "There has been a problem getting your details. Please contact us at <contactLink></contactLink>"
-  },
-  "SignupFormIssuer": {
-    "title": "Data Custodian sign Up"
-  },
-  "SignupFormOrganisation": {
-    "titleDetails": "Organisation sign Up",
-    "titleOtherDetails": "Other details",
-    "titleContacts": "Additional contacts"
-  },
-  "SignupFormResearcher": {
-    "title": "Researcher sign up",
-    "noData": "There has been an issue getting some of the required information for the sign up process. Please contact us at <contactLink></contactLink>"
   },
   "Cv": {
     "fileMaxSize": "{size} Max size",
@@ -302,35 +294,6 @@
     "updateOrganisationApprovalError": "Couldn't update the organisations approval settings",
     "updateApprovalError": "Couldn't update the researchers approval settings",
     "viewDetails": "View details"
-  },
-  "SignupFormContacts": {
-    "title": "Additional contacts",
-    "previousButton": "Previous",
-
-    "signupButton": "Sign Up",
-    "submitError": "There was a problem signing up. Please try again or contact us at <contactLink></contactLink>",
-    "emptyFieldsError": "At least one of these contacts needs to be filled in."
-  },
-  "SignupFormOtherDetails": {
-    "title": "Company details",
-    "nextButton": "Next",
-    "previousButton": "Previous"
-  },
-  "SignupFormDetails": {
-    "applicantFirstNamePlaceholder": "First name",
-    "applicantFirstName": "First name",
-    "applicantLastNamePlaceholder": "Last name",
-    "applicantLastName": "Last name",
-    "emailPlaceholder": "Applicant email",
-    "email": "Applicant email",
-    "nextButton": "Next"
-  },
-  "LoginForm": {
-    "loginButton": "Login",
-    "title": "Login",
-    "loginDetailsIncorrect": "Your login details are incorrect, please check them and try again.",
-    "submitError": "There was a problem validating your user. Please try again or contact us at <contactLink></contactLink>",
-    "successfulRegister": "You have successfully registered for the Researcher Registry."
   },
   "Guidance": {
     "togglePanel": "Toggle guidance panel"

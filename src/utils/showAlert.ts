@@ -16,30 +16,41 @@ const notificationValues = [
  */
 export const showAlert = (
   type: SweetAlertIcon,
-  message: string | HTMLElement,
-  titleOverride?: string | undefined,
-  preConfirm?: () => void | undefined,
-  confirmButtonText?: string | undefined,
-  cancelButtonText?: string | undefined,
-  preDeny?: () => void | undefined
+  options: {
+    text: string;
+    title?: string | undefined;
+    confirmButtonText?: string | undefined;
+    cancelButtonText?: string | undefined;
+    closeOnConfirm?: boolean;
+    closeOnCancel?: boolean;
+    willClose?: () => void;
+    preConfirm?: () => void | undefined;
+    preDeny?: () => void | undefined;
+  }
 ) => {
+  const { cancelButtonText, confirmButtonText, text, title, ...restOptions } =
+    options;
+
   Swal.fire({
     icon: type,
     title:
-      titleOverride ??
+      title ??
       notificationValues
         .filter(item => item.type === type)
         .map(item => item.title),
-    html: message,
     confirmButtonColor: theme.palette.primary.main,
     confirmButtonText: confirmButtonText ?? "OK",
     denyButtonColor: theme.palette.default.main,
     denyButtonText: cancelButtonText,
     showDenyButton: !!cancelButtonText,
-    preConfirm,
-    preDeny,
     allowOutsideClick: false,
+    html: text,
+    ...restOptions,
   });
+};
+
+export const closeAlert = () => {
+  Swal.close();
 };
 
 /**
@@ -51,13 +62,24 @@ export const showAlert = (
  */
 export const showLoadingAlertWithPromise = async <T>(
   promise: Promise<T>,
-  loadingMessage: string = "Loading...",
-  successMessage: string = "Operation completed successfully!",
-  errorMessage: string = "Something went wrong. Please try again."
+  options: {
+    loadingMessage?: string;
+    successMessage?: string;
+    errorMessage?: string;
+    onSuccess?: () => void;
+    onError?: () => void;
+  }
 ): Promise<T | void> => {
+  const optionsWithDefaults = {
+    loadingMessage: "Loading...",
+    successMessage: "Operation completed successfully!",
+    errorMessage: "Something went wrong. Please try again.",
+    ...options,
+  };
+
   // Show loading spinner
   Swal.fire({
-    title: loadingMessage,
+    title: optionsWithDefaults.loadingMessage,
     allowOutsideClick: false,
     didOpen: () => {
       Swal.showLoading();
@@ -72,8 +94,9 @@ export const showLoadingAlertWithPromise = async <T>(
     Swal.fire({
       icon: "success",
       title: "Success",
-      text: successMessage,
+      text: optionsWithDefaults.successMessage,
       confirmButtonColor: "#7A89C2",
+      willClose: () => options?.onSuccess?.(),
     });
 
     return result;
@@ -82,8 +105,9 @@ export const showLoadingAlertWithPromise = async <T>(
     Swal.fire({
       icon: "error",
       title: "Error",
-      text: errorMessage,
+      text: optionsWithDefaults.errorMessage,
       confirmButtonColor: "#7A89C2", // Customize button color (optional)
+      willClose: () => options?.onError?.(),
     });
     return undefined;
   }

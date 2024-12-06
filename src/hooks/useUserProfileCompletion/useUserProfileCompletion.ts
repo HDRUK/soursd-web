@@ -128,11 +128,10 @@ export default function useProfileCompletion() {
         setUser(updatedUser);
 
         if (isCompleted) {
-          showAlert(
-            "success",
-            t("profileCompletedDescription"),
-            t("profileCompletedTitle")
-          );
+          showAlert("success", {
+            text: t("profileCompletedDescription"),
+            title: t("profileCompletedTitle"),
+          });
         }
       }
     },
