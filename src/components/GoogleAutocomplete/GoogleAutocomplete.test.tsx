@@ -1,121 +1,112 @@
 import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import GoogleAutocomplete from "./GoogleAutocomplete";
+import GoogleAutocomplete, {
+  GoogleAutocompleteProps,
+} from "./GoogleAutocomplete";
+import fetchPredictions from "./actions";
+
+jest.mock("./actions", () => jest.fn());
 
 describe("GoogleAutocomplete", () => {
+  const mockFetchPredictions = fetchPredictions as jest.Mock;
   const mockOnAddressSelected = jest.fn();
+
+  const setup = (props?: Partial<GoogleAutocompleteProps>) => {
+    render(
+      <GoogleAutocomplete
+        onAddressSelected={mockOnAddressSelected}
+        label="Address"
+        {...props}
+      />
+    );
+  };
 
   beforeEach(() => {
     jest.clearAllMocks();
+  });
 
-    global.google = {
-      maps: {
-        places: {
-          AutocompleteService: function PlacesServices() {
-            return {
-              getPlacePredictions: (
-                { input }: { input: string },
-                callback: (
-                  predictions: { description: string }[] | null,
-                  status: string
-                ) => void
-              ) => {
-                if (input) {
-                  callback([{ description: "123 Test St, Test City" }], "OK");
-                } else {
-                  callback(null, "ZERO_RESULTS");
-                }
-              },
-            };
-          },
-          PlacesService: function PlacesServices() {
-            return {
-              getDetails: (
-                { placeId }: { placeId: string },
-                callback: (
-                  place: {
-                    address_components: {
-                      long_name: string;
-                      types: string[];
-                    }[];
-                  } | null,
-                  status: string
-                ) => void
-              ) => {
-                if (placeId) {
-                  callback(
-                    {
-                      address_components: [
-                        { long_name: "123", types: ["street_number"] },
-                        { long_name: "Test St", types: ["route"] },
-                        { long_name: "Test City", types: ["postal_town"] },
-                        {
-                          long_name: "Test County",
-                          types: ["administrative_area_level_2"],
-                        },
-                        { long_name: "Test Country", types: ["country"] },
-                        { long_name: "12345", types: ["postal_code"] },
-                      ],
-                    },
-                    "OK"
-                  );
-                } else {
-                  callback(null, "NOT_FOUND");
-                }
-              },
-            };
-          },
-          PlacesServiceStatus: {
-            OK: "OK",
-          },
-        },
+  it("renders the component with a label", () => {
+    setup();
+    expect(screen.getByLabelText("Address")).toBeInTheDocument();
+  });
+
+  it("updates input value when typing", () => {
+    setup();
+    const input = screen.getByRole("combobox");
+
+    fireEvent.change(input, { target: { value: "123 Main St" } });
+
+    expect(input).toHaveValue("123 Main St");
+  });
+
+  it("fetches predictions when input length >= 3 and displays options", async () => {
+    mockFetchPredictions.mockResolvedValueOnce([
+      {
+        description: "123 Main St, Springfield",
+        addressFields: { postcode: "12345" },
       },
-    };
-  });
+      {
+        description: "123 Elm St, Springfield",
+        addressFields: { postcode: "67890" },
+      },
+    ]);
 
-  it("loads Google Maps script and renders input", async () => {
-    render(
-      <GoogleAutocomplete
-        label="Test Label"
-        onAddressSelected={mockOnAddressSelected}
-      />
-    );
+    setup();
 
     const input = screen.getByRole("combobox");
-    expect(input).toBeInTheDocument();
-  });
-
-  it("fetches predictions and displays them", async () => {
-    render(
-      <GoogleAutocomplete
-        label="Test Label"
-        onAddressSelected={mockOnAddressSelected}
-      />
-    );
-
-    const input = screen.getByRole("combobox");
-    fireEvent.change(input, { target: { value: "Test" } });
+    fireEvent.change(input, { target: { value: "123" } });
 
     await waitFor(() => {
-      const options = screen.getAllByRole("option");
-      expect(options.length).toBe(1);
-      expect(options[0]).toHaveTextContent("123 Test St, Test City");
+      expect(mockFetchPredictions).toHaveBeenCalledWith("123");
+      expect(screen.getByText("123 Main St, Springfield")).toBeInTheDocument();
+      expect(screen.getByText("123 Elm St, Springfield")).toBeInTheDocument();
     });
   });
 
-  it("handles empty input gracefully", async () => {
-    render(
-      <GoogleAutocomplete
-        label="Test Label"
-        onAddressSelected={mockOnAddressSelected}
-      />
-    );
-
+  it("does not fetch predictions for input length < 3", async () => {
+    setup();
     const input = screen.getByRole("combobox");
-    fireEvent.change(input, { target: { value: "" } });
+    fireEvent.change(input, { target: { value: "12" } });
 
     await waitFor(() => {
-      expect(screen.queryAllByRole("listitem")).toHaveLength(0);
+      expect(mockFetchPredictions).not.toHaveBeenCalled();
     });
+  });
+
+  it("calls onAddressSelected with the first prediction's addressFields", async () => {
+    mockFetchPredictions.mockResolvedValueOnce([
+      {
+        description: "123 Main St, Springfield",
+        addressFields: { postcode: "12345" },
+      },
+    ]);
+
+    setup({ onAddressSelected: mockOnAddressSelected });
+
+    const input = screen.getByRole("combobox");
+    fireEvent.change(input, { target: { value: "123" } });
+
+    await waitFor(() => {
+      expect(mockOnAddressSelected).toHaveBeenCalledWith({ postcode: "12345" });
+    });
+  });
+
+  it("handles fetch errors gracefully", async () => {
+    const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation();
+    mockFetchPredictions.mockRejectedValueOnce(new Error("Network error"));
+
+    setup();
+
+    const input = screen.getByRole("combobox");
+    fireEvent.change(input, { target: { value: "123" } });
+
+    await waitFor(() => {
+      expect(consoleErrorSpy).toHaveBeenCalledWith(
+        "Error fetching address predictions:",
+        expect.any(Error)
+      );
+    });
+
+    consoleErrorSpy.mockRestore();
   });
 });
