@@ -19,7 +19,7 @@ export default function OrganisationsLegend() {
       icon: <IdentityVerifiedIcon />,
     },
     {
-      text: t("approvedUserOrgnisation"),
+      text: t("approvedUserOrganisation"),
       icon: <ApprovedUserIcon />,
     },
     {

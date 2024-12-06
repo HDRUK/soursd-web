@@ -20,6 +20,8 @@
     "users": "Users",
     "configuration": "Configuration",
     "keycards": "Keycards",
+    "projects": "Projects",
+    "organisations": "Organisations",
     "approvedProject": "Approved Project",
     "pendingProject": "Pending Project",
     "approvedUserProject": "Approved User for this Project",

@@ -22,8 +22,9 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 import OrganisationDetailsModal from "../OrganisationDetailsModal";
 import OrganisationUsersList from "../OrganisationUsersList";
+import { mockedOrganisation } from "@/mocks/data/organisation";
 
-interface UsersListProps {
+interface OrganisationsListProps {
   organisations: Organisation[];
   onApprove(payload: PostApprovalPayloadWithEntity): void;
   onUnapprove(payload: PostApprovalPayloadWithEntity): void;
@@ -39,12 +40,12 @@ const NAMESPACE_TRANSLATIONS_USERS_LIST = "UsersList";
 
 const ISSUER_ID = 1;
 
-export default function UsersList({
+export default function OrganisationsList({
   organisations,
   onApprove,
   onUnapprove,
   queryState,
-}: UsersListProps) {
+}: OrganisationsListProps) {
   const { routes } = useApplicationData();
   const t = useTranslations(NAMESPACE_TRANSLATIONS_USERS_LIST);
   const [activeData, setActiveData] = useState<ActiveOrganisationData | null>(
@@ -147,7 +148,10 @@ export default function UsersList({
               <AccordionDetails>
                 <OrganisationUsersList
                   queryState={queryState}
-                  organisation={organisation}
+                  organisation={mockedOrganisation({
+                    organisation_name: "Organisation 1",
+                    id: 1,
+                  })}
                   onApproveToggle={handleApproveClick}
                 />
               </AccordionDetails>
