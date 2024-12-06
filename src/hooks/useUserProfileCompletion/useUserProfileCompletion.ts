@@ -1,6 +1,7 @@
 import { UserProfileCompletionCategories } from "@/consts/user";
 import {
   User,
+  UserProfileCompletionFields,
   UserProfileCompletionJson,
   UserProfileCompletionSchema,
 } from "@/types/application";
@@ -11,7 +12,7 @@ import patchUser from "@/services/users/patchUser";
 import { formatNowDBDate } from "@/utils/date";
 import { useMutation } from "@tanstack/react-query";
 import mergeWith from "lodash.mergewith";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 
 const schema: UserProfileCompletionSchema = {
   [UserProfileCompletionCategories.IDENTITY]: {
@@ -62,9 +63,10 @@ export default function useProfileCompletion() {
     return currentState[category]?.score === 100;
   };
 
+  // Prunes the fields of the user against the schema
   const pruneFields = (
-    completedStepsFields: UserProfileCompletionJson[UserProfileCompletionCategories]["fields"],
-    schemaFields: UserProfileCompletionJson[UserProfileCompletionCategories]["fields"]
+    completedStepsFields: UserProfileCompletionFields[],
+    schemaFields: UserProfileCompletionFields[]
   ) => {
     return completedStepsFields.filter(({ name: completedStepsFieldName }) =>
       schemaFields.find(
@@ -74,6 +76,36 @@ export default function useProfileCompletion() {
     );
   };
 
+  // Merges the base schema fields with those currently stored against the user
+  const mergeFields = (
+    schemaFields: UserProfileCompletionFields[],
+    completedStepsFields: UserProfileCompletionFields[]
+  ) => {
+    return schemaFields.map(({ name: schemaFieldName, required }) => {
+      const matchingField = completedStepsFields.find(
+        ({ name: completedStepsFieldName }) =>
+          completedStepsFieldName === schemaFieldName
+      );
+
+      const completedValue = user?.[schemaFieldName];
+
+      if (matchingField) {
+        return {
+          ...matchingField,
+          required,
+          hasValue: !!completedValue,
+        };
+      }
+
+      return {
+        name: schemaFieldName,
+        required,
+        hasValue: !!completedValue,
+      };
+    });
+  };
+
+  // Prunes and updates fields from schema
   const updateFieldsFromSchema = () => {
     return mergeWith(
       {},
@@ -86,33 +118,15 @@ export default function useProfileCompletion() {
             schemaValue
           );
 
-          return schemaValue.map(({ name: schemaFieldName, required }) => {
-            const matchingField = prunedCompletedSteps.find(
-              ({ name: completedStepsFieldName }) =>
-                completedStepsFieldName === schemaFieldName
-            );
-
-            const completedValue = user?.[schemaFieldName];
-
-            if (matchingField) {
-              return {
-                ...matchingField,
-                required,
-                hasValue: !!completedValue,
-              };
-            }
-
-            return {
-              name: schemaFieldName,
-              required,
-              hasValue: !!completedValue,
-            };
-          });
+          return mergeFields(schemaValue, prunedCompletedSteps);
         }
+
+        return undefined;
       }
     );
   };
 
+  // Updates scores based on the number of required fields vs the number not field
   const updateScores = (currentState: UserProfileCompletionJson) => {
     let isCompleted = true;
 
@@ -148,6 +162,7 @@ export default function useProfileCompletion() {
     };
   };
 
+  // Performs api and state updates
   const updateToApi = async (
     user: User,
     isCompleted: boolean,
@@ -201,17 +216,21 @@ export default function useProfileCompletion() {
     [user]
   );
 
+  // Updates the schema when the page first loads
   useEffect(() => {
     updateInitialSchema();
   }, []);
 
-  return {
-    update,
-    getJSON,
-    isCategoryCompleted,
-    isCompleted: !!user?.profile_completed_at,
-    isError,
-    isLoading: isPending,
-    error,
-  };
+  return useMemo(
+    () => ({
+      update,
+      getJSON,
+      isCategoryCompleted,
+      isCompleted: !!user?.profile_completed_at,
+      isError,
+      isLoading: isPending,
+      error,
+    }),
+    [user, isError, isPending, error]
+  );
 }

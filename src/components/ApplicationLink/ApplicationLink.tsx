@@ -1,6 +1,6 @@
 import { CONTACT_MAIL_ADDRESS } from "@/config/contacts";
-import { ConfigProps, withConfig } from "../Config";
 import { ReactNode } from "react";
+import { ConfigProps, withConfig } from "../Config";
 
 interface ApplicationLinkProps extends ConfigProps {
   variant?: "profile" | "contact";

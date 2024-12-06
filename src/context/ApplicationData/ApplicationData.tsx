@@ -26,7 +26,6 @@ import {
   useEffect,
   useMemo,
 } from "react";
-import { renderToString } from "react-dom/server";
 
 const ApplicationDataContext = createContext({
   routes: ROUTES,

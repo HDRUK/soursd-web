@@ -62,13 +62,15 @@ interface DataCustodianUser {
   issuer_id: number;
 }
 
+interface UserProfileCompletionFields {
+  name: string;
+  required?: boolean;
+}
+
 type UserProfileCompletionSchema = Record<
   UserProfileCompletionCategories,
   {
-    fields: {
-      name: string;
-      required?: boolean;
-    }[];
+    fields: UserProfileCompletionFields[];
   }
 >;
 
@@ -76,11 +78,10 @@ type UserProfileCompletionJson = Record<
   UserProfileCompletionCategories,
   {
     score: number;
-    fields: {
-      name: string;
-      required?: boolean;
-      hasValue: boolean;
-    }[];
+    fields: UserProfileCompletionFields &
+      {
+        hasValue: boolean;
+      }[];
   }
 >;
 
@@ -276,4 +277,5 @@ export type {
   UserProfileCompletionSchema,
   DataCustodianUser,
   UserProfileCompletionJson,
+  UserProfileCompletionFields,
 };

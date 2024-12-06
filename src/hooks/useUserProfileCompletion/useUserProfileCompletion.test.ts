@@ -86,7 +86,6 @@ describe("useUserProfileCompletion", () => {
     await waitFor(() => {
       expect(mockMutateAsync).toHaveBeenCalledWith({
         ...defaultUser,
-        profile_completed_at: null,
         profile_completed_at: "2024-01-01 12:00:00",
         profile_steps_completed:
           '{"identity":{"fields":[{"name":"first_name","required":true,"hasValue":true},{"name":"last_name","required":true,"hasValue":true}],"score":100},"affiliations":{"fields":[],"score":100},"experience":{"fields":[],"score":100},"training":{"fields":[],"score":100}}',
