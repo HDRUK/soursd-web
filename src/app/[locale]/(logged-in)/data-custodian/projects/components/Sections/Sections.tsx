@@ -11,22 +11,24 @@ import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import { ISSUER_ID } from "@/consts/application";
 import StatusIndicator from "@/components/StatusIndicator";
 import Pagination from "@/components/Pagination";
+import usePaginatedQuery from "@/hooks/usePaginatedQuery";
 import ProjectList from "../ProjectList";
 
 const NAMESPACE_TRANSLATIONS_PROJECT_LIST = "ProjectList";
 
 export default function Sections() {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_PROJECT_LIST);
-  const [page, setPage] = useState(1); // Current page
 
   const {
     data: projectsData,
     isLoading: isProjectsLoading,
     isError: isProjectsError,
-  } = useQuery({
-    placeholderData: keepPreviousData,
-    queryKey: ["getIssuerProjects", page],
-    queryFn: () =>
+    last_page,
+    page,
+    setPage,
+  } = usePaginatedQuery({
+    queryKeyBase: "getIssuerProjects",
+    queryFn: page =>
       getIssuerProjects(ISSUER_ID, page, {
         // note: ISSUER_ID - need to update this as hard coded as 1!
         error: {
@@ -34,8 +36,6 @@ export default function Sections() {
         },
       }),
   });
-
-  const { last_page } = projectsData?.data || {};
 
   return (
     <>
@@ -75,8 +75,8 @@ export default function Sections() {
             {t("getIssuerProjectsError")}
           </Message>
         )}
-        {!isProjectsLoading && projectsData?.data.data && (
-          <ProjectList projects={projectsData?.data.data} />
+        {!isProjectsLoading && projectsData && (
+          <ProjectList projects={projectsData} />
         )}
       </PageSection>
       <PageSection

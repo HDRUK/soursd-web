@@ -4,18 +4,19 @@ import {
   keepPreviousData,
   UseQueryResult,
 } from "@tanstack/react-query";
-import { Paged } from "@/types/requests";
+import { Paged, ResponseJson } from "@/types/requests";
 
 type PaginatedQueryProps<T> = {
   queryKeyBase: string;
-  queryFn: (page: number) => Promise<Paged<T>>;
+  queryFn: (page: number) => Promise<ResponseJson<Paged<T>>>;
   initialPage?: number;
 };
 
-type PaginatedQueryReturn<T> = UseQueryResult<Paged<T>> & {
-  page: number;
-  setPage: React.Dispatch<React.SetStateAction<number>>;
-};
+type PaginatedQueryReturn<T> = UseQueryResult<ResponseJson<Paged<T>>> &
+  Paged<T> & {
+    page: number;
+    setPage: React.Dispatch<React.SetStateAction<number>>;
+  };
 
 const usePaginatedQuery = <T,>({
   queryKeyBase,
@@ -30,11 +31,12 @@ const usePaginatedQuery = <T,>({
     placeholderData: keepPreviousData,
   });
 
-  const { data: queryData, ...rest } = queryResult;
+  const { data: queryData, ...restQueryResult } = queryResult;
+  const pagedData = queryData?.data || {};
 
   return {
-    ...rest,
-    ...(queryData ?? {}),
+    ...restQueryResult,
+    ...pagedData,
     page,
     setPage,
   } as PaginatedQueryReturn<T>;
