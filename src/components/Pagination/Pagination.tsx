@@ -6,8 +6,8 @@ import PaginationItem from "@mui/material/PaginationItem";
 
 import { StyledPagination } from "./Pagination.styles";
 
-import CustomNext from "./CustomNext";
-import CustomPrevious from "./CustomPrevious";
+import Next from "./Next";
+import Previous from "./Previous";
 
 interface PaginationProps extends MuiPaginationProps {
   isLoading?: boolean;
@@ -20,8 +20,8 @@ const Pagination = ({ isLoading = false, ...rest }: PaginationProps) => {
         renderItem={item => (
           <PaginationItem
             slots={{
-              previous: CustomPrevious,
-              next: CustomNext,
+              previous: Previous,
+              next: Next,
             }}
             {...item}
           />

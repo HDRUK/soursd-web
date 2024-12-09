@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 
 const NAMESPACE_TRANSLATIONS = "Pagination";
 
-const CustomNext = () => {
+const Next = () => {
   const t = useTranslations(NAMESPACE_TRANSLATIONS);
 
   return (
@@ -15,4 +15,4 @@ const CustomNext = () => {
   );
 };
 
-export default CustomNext;
+export default Next;

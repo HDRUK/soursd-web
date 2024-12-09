@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 
 const NAMESPACE_TRANSLATIONS = "Pagination";
 
-const CustomPrevious = () => {
+const Previous = () => {
   const t = useTranslations(NAMESPACE_TRANSLATIONS);
   return (
     <span style={{ display: "flex", alignItems: "center" }}>
@@ -14,4 +14,4 @@ const CustomPrevious = () => {
   );
 };
 
-export default CustomPrevious;
+export default Previous;
