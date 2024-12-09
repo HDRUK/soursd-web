@@ -10,6 +10,7 @@ import { ISSUER_ID } from "@/consts/application";
 import StatusIndicator from "@/components/StatusIndicator";
 import Pagination from "@/components/Pagination";
 import usePaginatedQuery from "@/hooks/usePaginatedQuery";
+import SearchBar from "@/components/SearchBar";
 import ProjectList from "../ProjectList";
 
 const NAMESPACE_TRANSLATIONS_PROJECT_LIST = "ProjectList";
@@ -51,8 +52,7 @@ export default function Sections() {
           gap: 2,
         }}>
         <PageSection sx={{ display: "flex", flex: 1 }}>
-          {" "}
-          Search bar to go here...{" "}
+          <SearchBar placeholder="Search Projects" />
         </PageSection>
         <PageSection sx={{ display: "flex", flex: 1, gap: 2 }}>
           <StatusIndicator

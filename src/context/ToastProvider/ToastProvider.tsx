@@ -12,7 +12,7 @@ interface ToastProviderProps {
 const StyledToastContainer = styled(ToastContainer)(
   ({ theme }) => `
   .Toastify__toast--default {
-    background: ${theme.palette.default.main};
+    background: ${theme.palette.background1.light};
     color: #aaa;
   }
 
