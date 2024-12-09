@@ -215,7 +215,7 @@ export default function Identity() {
       {...mockedPersonalDetailsGuidanceProps}>
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(handleDetailsSubmit)} autoComplete="off">
-          <Grid container rowSpacing={3} md={8}>
+          <Grid container rowSpacing={3}>
             <Grid item xs={12}>
               {isGetOrganisationsError && (
                 <Message severity="error" sx={{ mb: 3 }}>

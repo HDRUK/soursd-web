@@ -39,11 +39,10 @@ export default function NotificationsMenu() {
         refetchCancel();
 
         if (isOrcIdCompleted(userData.data) && !messages.orcIdCompleted) {
-          showAlert(
-            "success",
-            t("orcIdSuccessDescription"),
-            t("orcIdSuccessTitle")
-          );
+          showAlert("success", {
+            text: t("orcIdSuccessDescription"),
+            title: t("orcIdSuccessTitle"),
+          });
 
           setCookie(
             "messages",

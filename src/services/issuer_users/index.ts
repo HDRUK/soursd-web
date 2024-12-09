@@ -1,5 +1,8 @@
-import getIssuersUsers from "./getIssuersUsers";
+import getIssuerUsers from "./getIssuerUsers";
+import patchIssuerUser from "./patchIssuerUser";
+import postIssuerUser from "./postIssuerUser";
+import deleteIssuerUser from "./deleteIssuerUser";
 
-export { getIssuersUsers };
+export { getIssuerUsers, patchIssuerUser, postIssuerUser, deleteIssuerUser };
 
 export type * from "./types";
