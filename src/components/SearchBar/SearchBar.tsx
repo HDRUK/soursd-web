@@ -1,10 +1,9 @@
-import React from "react";
-import { useState, useEffect, ChangeEvent } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import { InputAdornment } from "@mui/material";
 import useDebounce from "@/hooks/useDebounce";
 import SearchIcon from "@mui/icons-material/Search";
-import { StyledSearchBar, StyledInput } from "./SearchBar.styles";
 import { TextFieldProps } from "@mui/material/TextField";
+import { StyledSearchBar, StyledInput } from "./SearchBar.styles";
 
 type SearchBarProps = TextFieldProps & {
   onSearch: (query: string) => void;

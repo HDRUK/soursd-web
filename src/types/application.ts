@@ -213,6 +213,7 @@ interface Role {
 }
 
 interface ProjectUser {
+  id: number;
   project_id: number;
   user_digital_ident: string;
   project_role_id: number;

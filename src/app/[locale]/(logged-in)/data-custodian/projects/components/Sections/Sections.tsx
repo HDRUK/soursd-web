@@ -3,7 +3,7 @@
 import { Message } from "@/components/Message";
 import OverlayCenter from "@/components/OverlayCenter";
 import PageSection from "@/modules/PageSection";
-import { getIssuerProjects } from "@/services/projects";
+import { getOrganisationProjects } from "@/services/projects";
 import { CircularProgress, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { ISSUER_ID } from "@/consts/application";
@@ -11,9 +11,8 @@ import StatusIndicator from "@/components/StatusIndicator";
 import Pagination from "@/components/Pagination";
 import usePaginatedQuery from "@/hooks/usePaginatedQuery";
 import SearchBar from "@/components/SearchBar";
-import { useCallback, useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
-import { useRouter, usePathname } from "next/navigation";
+import { useCallback, useState } from "react";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import ProjectList from "../ProjectList";
 
 const NAMESPACE_TRANSLATIONS_PROJECT_LIST = "ProjectList";
@@ -47,14 +46,14 @@ export default function Sections() {
     page,
     setPage,
   } = usePaginatedQuery({
-    queryKeyBase: ["getIssuerProjects", queryParams],
+    queryKeyBase: ["getOrganisationProjects", queryParams],
     queryFn: page =>
-      getIssuerProjects(
+      getOrganisationProjects(
         ISSUER_ID, // note: ISSUER_ID - need to update this as hard coded as 1!
         { page, ...queryParams },
         {
           error: {
-            message: "getIssuerProjects",
+            message: "getOrganisationProjects",
           },
         }
       ),
@@ -111,7 +110,7 @@ export default function Sections() {
       <PageSection sx={{ flexGrow: 1 }}>
         {isProjectsError && (
           <Message severity="error" sx={{ mb: 3 }}>
-            {t("getIssuerProjectsError")}
+            {t("getOrganisationProjectsError")}
           </Message>
         )}
         {!isProjectsLoading && projectsData && (

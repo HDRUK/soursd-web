@@ -1,6 +1,4 @@
-import { getAugmentedColor } from "@/utils/theme";
-import { AugmentedColorPaletteOptions, Box, css, styled } from "@mui/material";
-import { TextField } from "@mui/material";
+import { Box, css, styled, TextField } from "@mui/material";
 
 export const StyledSearchBar = styled(Box)(
   ({ theme }) => css`
@@ -15,7 +13,7 @@ export const StyledSearchBar = styled(Box)(
 );
 
 export const StyledInput = styled(TextField)(
-  ({ theme }) => css`
+  () => css`
     flex-grow: 1;
 
     & .MuiInputBase-input {
