@@ -4,11 +4,17 @@ import { ProjectsResponse } from "./types";
 
 export default async (
   issuerId: number,
-  page: number,
+  searchParams: Record<string, string | number | undefined>,
   messages: ResponseTranslations
 ): Promise<ResponseJson<Paged<ProjectsResponse>>> => {
+  const params = new URLSearchParams(
+    Object.entries(searchParams)
+      .filter(([_, value]) => value !== undefined)
+      .map(([key, value]) => [key, String(value)])
+  );
+
   const response = await getRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/issuers/${issuerId}/projects?page=${page}`,
+    `${process.env.NEXT_PUBLIC_API_V1_URL}/issuers/${issuerId}/projects?${params.toString()}`,
     undefined,
     {
       headers: {

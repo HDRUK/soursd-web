@@ -370,7 +370,8 @@
     "loadingAriaLabel": "Loading project data",
     "title": "Projects",
     "approvedKey": "Approved Project",
-    "unapprovedKey": "Project Pending Approval"
+    "unapprovedKey": "Project Pending Approval",
+    "searchPlaceholder": "Search Projects"
   },
   "Error": {
     "login": {

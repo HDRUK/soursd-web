@@ -1,20 +1,26 @@
 import React from "react";
-import { useState } from "react";
-import { TextField, InputAdornment } from "@mui/material";
+import { useState, useEffect, ChangeEvent } from "react";
+import { InputAdornment } from "@mui/material";
+import useDebounce from "@/hooks/useDebounce";
 import SearchIcon from "@mui/icons-material/Search";
 import { StyledSearchBar, StyledInput } from "./SearchBar.styles";
-// Define the shape of the option used in Autocomplete
-interface Option {
-  label: string;
-  value: string;
-}
+import { TextFieldProps } from "@mui/material/TextField";
 
-const SearchBar = ({ placeholder, ...rest }) => {
+type SearchBarProps = TextFieldProps & {
+  onSearch: (query: string) => void;
+  placeholder?: string;
+};
+
+const SearchBar = ({ onSearch, placeholder, ...rest }: SearchBarProps) => {
   const [searchQuery, setSearchQuery] = useState("");
 
-  const handleSearchChange = event => {
+  const searchQueryDebounced = useDebounce(searchQuery, 500);
+  useEffect(() => {
+    onSearch(searchQueryDebounced);
+  }, [searchQueryDebounced]);
+
+  const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
-    console.log("Search Query:", event.target.value);
   };
 
   return (
@@ -32,6 +38,7 @@ const SearchBar = ({ placeholder, ...rest }) => {
             </InputAdornment>
           ),
         }}
+        {...rest}
       />
     </StyledSearchBar>
   );

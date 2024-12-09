@@ -11,12 +11,33 @@ import StatusIndicator from "@/components/StatusIndicator";
 import Pagination from "@/components/Pagination";
 import usePaginatedQuery from "@/hooks/usePaginatedQuery";
 import SearchBar from "@/components/SearchBar";
+import { useCallback, useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import ProjectList from "../ProjectList";
 
 const NAMESPACE_TRANSLATIONS_PROJECT_LIST = "ProjectList";
 
 export default function Sections() {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_PROJECT_LIST);
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const searchParams = useSearchParams();
+  const searchTitle = searchParams?.get("title");
+
+  const [queryParams, setQueryParams] = useState<{}>({
+    "title[]": searchTitle,
+  });
+
+  const updateQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams?.toString());
+      params.set(name, value);
+      return params.toString();
+    },
+    [searchParams]
+  );
 
   const {
     data: projectsData,
@@ -26,15 +47,32 @@ export default function Sections() {
     page,
     setPage,
   } = usePaginatedQuery({
-    queryKeyBase: "getIssuerProjects",
+    queryKeyBase: ["getIssuerProjects", queryParams],
     queryFn: page =>
-      getIssuerProjects(ISSUER_ID, page, {
-        // note: ISSUER_ID - need to update this as hard coded as 1!
-        error: {
-          message: "getIssuerProjects",
-        },
-      }),
+      getIssuerProjects(
+        ISSUER_ID, // note: ISSUER_ID - need to update this as hard coded as 1!
+        { page, ...queryParams },
+        {
+          error: {
+            message: "getIssuerProjects",
+          },
+        }
+      ),
   });
+
+  const updatePath = useCallback(
+    (key: string, value: string) => {
+      router.push(`${pathname}?${updateQueryString(key, value)}`, {
+        scroll: false,
+      });
+      setPage(1);
+      setQueryParams({
+        ...queryParams,
+        [`${key}[]`]: value,
+      });
+    },
+    [pathname, router, updateQueryString]
+  );
 
   return (
     <>
@@ -52,7 +90,10 @@ export default function Sections() {
           gap: 2,
         }}>
         <PageSection sx={{ display: "flex", flex: 1 }}>
-          <SearchBar placeholder="Search Projects" />
+          <SearchBar
+            onSearch={title => updatePath("title", title)}
+            placeholder={t("searchPlaceholder")}
+          />
         </PageSection>
         <PageSection sx={{ display: "flex", flex: 1, gap: 2 }}>
           <StatusIndicator

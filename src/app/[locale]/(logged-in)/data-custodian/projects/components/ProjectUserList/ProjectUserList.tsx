@@ -28,8 +28,12 @@ export default function ProjectUserList({ project }: ProjectUserListProps) {
 
   return (
     <div>
-      {projectUsers?.data.map(user => (
-        <ProjectUserCard projectUser={user} projectTitle={projectTitle} />
+      {projectUsers?.data.map((user, i) => (
+        <ProjectUserCard
+          key={`user_${i}`}
+          projectUser={user}
+          projectTitle={projectTitle}
+        />
       ))}
     </div>
   );

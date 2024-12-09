@@ -7,7 +7,7 @@ import {
 import { Paged, ResponseJson } from "@/types/requests";
 
 type PaginatedQueryProps<T> = {
-  queryKeyBase: string;
+  queryKeyBase: unknown[];
   queryFn: (page: number) => Promise<ResponseJson<Paged<T>>>;
   initialPage?: number;
 };
@@ -26,7 +26,7 @@ const usePaginatedQuery = <T,>({
   const [page, setPage] = useState<number>(initialPage);
 
   const queryResult = useQuery({
-    queryKey: [queryKeyBase, page],
+    queryKey: [...queryKeyBase, page],
     queryFn: () => queryFn(page),
     placeholderData: keepPreviousData,
   });
