@@ -6,8 +6,6 @@ import PageSection from "@/modules/PageSection";
 import { getIssuerProjects } from "@/services/projects";
 import { CircularProgress, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
-import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import { ISSUER_ID } from "@/consts/application";
 import StatusIndicator from "@/components/StatusIndicator";
 import Pagination from "@/components/Pagination";
