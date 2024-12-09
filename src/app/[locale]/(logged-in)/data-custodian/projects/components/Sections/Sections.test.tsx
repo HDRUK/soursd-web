@@ -2,7 +2,7 @@ import { useStore } from "@/data/store";
 import { act, fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 import { axe } from "jest-axe";
 import { mockedUser } from "@/mocks/data/user";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Sections from ".";
 
 jest.mock("@/data/store");

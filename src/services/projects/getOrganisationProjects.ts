@@ -3,7 +3,7 @@ import { getRequest, handleJsonResponse } from "../requests";
 import { ProjectsResponse } from "./types";
 
 export default async (
-  organisationId: number,
+  organisationId: number | undefined,
   searchParams: Record<string, string | number | undefined>,
   messages: ResponseTranslations
 ): Promise<ResponseJson<Paged<ProjectsResponse>>> => {

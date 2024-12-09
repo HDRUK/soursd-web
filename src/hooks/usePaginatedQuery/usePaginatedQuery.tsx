@@ -10,6 +10,7 @@ type PaginatedQueryProps<T> = {
   queryKeyBase: unknown[];
   queryFn: (page: number) => Promise<ResponseJson<Paged<T>>>;
   initialPage?: number;
+  enabled?: boolean;
 };
 
 type PaginatedQueryReturn<T> = UseQueryResult<ResponseJson<Paged<T>>> &
@@ -22,6 +23,7 @@ const usePaginatedQuery = <T,>({
   queryKeyBase,
   queryFn,
   initialPage = 1,
+  enabled = true,
 }: PaginatedQueryProps<T>): PaginatedQueryReturn<T> => {
   const [page, setPage] = useState<number>(initialPage);
 
@@ -29,6 +31,7 @@ const usePaginatedQuery = <T,>({
     queryKey: [...queryKeyBase, page],
     queryFn: () => queryFn(page),
     placeholderData: keepPreviousData,
+    enabled,
   });
 
   const { data: queryData, ...restQueryResult } = queryResult;
