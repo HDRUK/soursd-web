@@ -1,17 +1,13 @@
 import React from "react";
 import { ArrowLeft } from "@mui/icons-material";
 import { useTranslations } from "next-intl";
+import Text from "../Text";
 
 const NAMESPACE_TRANSLATIONS = "Pagination";
 
 const Previous = () => {
   const t = useTranslations(NAMESPACE_TRANSLATIONS);
-  return (
-    <span style={{ display: "flex", alignItems: "center" }}>
-      <ArrowLeft style={{ marginLeft: 4 }} />
-      {t("previousButtonLabel")}
-    </span>
-  );
-};
 
+  return <Text startIcon={<ArrowLeft />}>{t("previousButtonLabel")}</Text>;
+};
 export default Previous;
