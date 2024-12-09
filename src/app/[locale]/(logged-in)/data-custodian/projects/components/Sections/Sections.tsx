@@ -14,6 +14,7 @@ import { useCallback, useState } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { useStore } from "@/data/store";
 import ProjectList from "../ProjectList";
+import SortButton from "@/components/SortButton";
 
 const NAMESPACE_TRANSLATIONS_PROJECT_LIST = "ProjectList";
 
@@ -25,10 +26,11 @@ export default function Sections() {
   const { id: organisationId } = organisation || {};
 
   const searchParams = useSearchParams();
-  const searchTitle = searchParams?.get("title");
+  const searchTitle = searchParams?.get("title[]");
 
   const [queryParams, setQueryParams] = useState<{}>({
     "title[]": searchTitle,
+    sort: "title:desc",
   });
 
   const updateQueryString = useCallback(
@@ -67,14 +69,28 @@ export default function Sections() {
       router.push(`${pathname}?${updateQueryString(key, value)}`, {
         scroll: false,
       });
+      console.log(queryParams);
       setPage(1);
       setQueryParams({
         ...queryParams,
-        [`${key}[]`]: value,
+        [key]: value,
       });
     },
     [pathname, router, updateQueryString]
   );
+
+  const searchActions = [
+    {
+      label: "Alphabetical A-Z",
+      onClick: () => updatePath("sort", "title:asc"),
+    },
+    {
+      label: "Alphabetical Z-A",
+      onClick: () => updatePath("sort", "title:desc"),
+    },
+    { label: "Approved project" },
+    { label: "Project pending approval" },
+  ];
 
   return (
     <>
@@ -93,9 +109,10 @@ export default function Sections() {
         }}>
         <PageSection sx={{ display: "flex", flex: 1 }}>
           <SearchBar
-            onSearch={title => updatePath("title", title)}
+            onSearch={title => updatePath("title[]", title)}
             placeholder={t("searchPlaceholder")}
           />
+          <SortButton actions={searchActions} />
         </PageSection>
         <PageSection sx={{ display: "flex", flex: 1, gap: 2 }}>
           <StatusIndicator
