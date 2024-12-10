@@ -1,10 +1,10 @@
 import { ResponseJson, ResponseTranslations } from "@/types/requests";
 import { getRequest, handleJsonResponse } from "../requests";
-import { UsersResponse } from "./types";
+import { UserResponse } from "./types";
 
 export default async (
   messages: ResponseTranslations
-): Promise<ResponseJson<UsersResponse>> => {
+): Promise<ResponseJson<UserResponse>> => {
   const response = await getRequest(
     `${process.env.NEXT_PUBLIC_API_URL}/auth/me`,
     undefined,

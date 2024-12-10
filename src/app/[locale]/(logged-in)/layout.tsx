@@ -3,6 +3,8 @@
 import { ROUTES } from "@/consts/router";
 import { ApplicationDataProvider } from "@/context/ApplicationData";
 import { getRequest } from "@/services/requests";
+import { User } from "@/types/application";
+import { ResponseJson } from "@/types/requests";
 import { handleLogin } from "@/utils/keycloak";
 import { getRoutes } from "@/utils/router";
 import Cookies from "js-cookie";
@@ -16,8 +18,8 @@ type LayoutProps = PropsWithChildren<{
 async function validateAccessToken(
   pathname: string | null,
   router: ReturnType<typeof useRouter>
-): Promise<boolean> {
-  const response = await getRequest(
+): Promise<ResponseJson<User> | null> {
+  const response = await getRequest<User>(
     `${process.env.NEXT_PUBLIC_API_URL}/auth/me`,
     undefined,
     {
@@ -28,48 +30,47 @@ async function validateAccessToken(
   );
 
   if (response.ok) {
-    return true;
+    return response.json();
   }
 
   if (response.status === 404) {
     router.push("/en/register");
-    return false;
-  }
-
-  if (response.status === 500) {
+  } else if (response.status === 500) {
     const accessToken = Cookies.get("access_token");
+
     if (!accessToken) {
       Cookies.set("redirectPath", pathname ?? "/", { path: "/" });
       handleLogin();
     }
-    return false;
   }
-  return false;
+
+  return null;
 }
 
 export default function Layout({ children, params: { locale } }: LayoutProps) {
   const routes = getRoutes(ROUTES, locale);
   const pathname = usePathname();
   const router = useRouter();
-  const [isChecked, setIsChecked] = useState<boolean>(false);
+  const [me, setMe] = useState<User>();
 
   useEffect(() => {
     const performAuthCheck = async () => {
-      const isAuth = await validateAccessToken(pathname, router);
+      const user = await validateAccessToken(pathname, router);
 
-      if (!isAuth) {
+      if (!user?.data) {
         throw new Error("Unauthorised 401");
       }
 
-      setIsChecked(isAuth);
+      setMe(user?.data);
     };
 
     performAuthCheck();
   }, [pathname]);
 
   return (
-    isChecked && (
+    me && (
       <ApplicationDataProvider
+        me={me}
         value={{
           routes,
           systemConfigData: {},
