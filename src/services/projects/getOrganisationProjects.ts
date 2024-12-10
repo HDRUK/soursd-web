@@ -13,8 +13,6 @@ export default async (
       .map(([key, value]) => [key, String(value)])
   );
 
-  console.log(params.toString());
-
   const response = await getRequest(
     `${process.env.NEXT_PUBLIC_API_V1_URL}/organisations/${organisationId}/projects?${params.toString()}`,
     undefined,

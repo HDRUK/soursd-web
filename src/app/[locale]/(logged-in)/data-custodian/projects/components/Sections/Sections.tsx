@@ -13,8 +13,8 @@ import SearchBar from "@/components/SearchBar";
 import { useCallback, useState } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { useStore } from "@/data/store";
-import ProjectList from "../ProjectList";
 import SortButton from "@/components/SortButton";
+import ProjectList from "../ProjectList";
 
 const NAMESPACE_TRANSLATIONS_PROJECT_LIST = "ProjectList";
 
@@ -26,11 +26,11 @@ export default function Sections() {
   const { id: organisationId } = organisation || {};
 
   const searchParams = useSearchParams();
-  const searchTitle = searchParams?.get("title[]");
+  const searchTitle = searchParams?.get("title[]") || "";
 
   const [queryParams, setQueryParams] = useState<{}>({
     "title[]": searchTitle,
-    sort: "title:desc",
+    sort: "title:asc",
   });
 
   const updateQueryString = useCallback(
@@ -69,7 +69,6 @@ export default function Sections() {
       router.push(`${pathname}?${updateQueryString(key, value)}`, {
         scroll: false,
       });
-      console.log(queryParams);
       setPage(1);
       setQueryParams({
         ...queryParams,
@@ -79,17 +78,47 @@ export default function Sections() {
     [pathname, router, updateQueryString]
   );
 
+  const [sortTitleDirection, setSortTitleDirection] = useState<string | null>(
+    "asc"
+  );
+  const [approvalStatus, setApprovalStatus] = useState<boolean | null>(null);
+
+  const handleApprovalToggle = (status: boolean) => {
+    const newStatus = approvalStatus === status ? null : status;
+    setApprovalStatus(newStatus);
+    updatePath(
+      "approved",
+      newStatus === null ? "" : newStatus === true ? "1" : "0"
+    );
+  };
+
+  const handleSortToggle = (field: string, direction: string) => {
+    const newDirection = sortTitleDirection === direction ? null : direction;
+    setSortTitleDirection(newDirection);
+    updatePath("sort", newDirection === null ? "" : `${field}:${newDirection}`);
+  };
+
   const searchActions = [
     {
-      label: "Alphabetical A-Z",
-      onClick: () => updatePath("sort", "title:asc"),
+      label: "Sort Alphabetical A-Z",
+      onClick: () => handleSortToggle("title", "asc"),
+      checked: sortTitleDirection === "asc",
     },
     {
-      label: "Alphabetical Z-A",
-      onClick: () => updatePath("sort", "title:desc"),
+      label: "Sort Alphabetical Z-A",
+      onClick: () => handleSortToggle("title", "desc"),
+      checked: sortTitleDirection === "desc",
     },
-    { label: "Approved project" },
-    { label: "Project pending approval" },
+    {
+      label: "Approved project",
+      onClick: () => handleApprovalToggle(true),
+      checked: approvalStatus === true,
+    },
+    {
+      label: "Project pending approval",
+      onClick: () => handleApprovalToggle(false),
+      checked: approvalStatus === false,
+    },
   ];
 
   return (

@@ -1,12 +1,14 @@
-import React, { useState, useEffect, ChangeEvent } from "react";
+import React, { ReactNode } from "react";
 import { TextFieldProps } from "@mui/material/TextField";
-import SortByAlphaIcon from "@mui/icons-material/SortByAlpha";
-import { IconButton, Menu, MenuItem, Button } from "@mui/material";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import { Checkbox } from "@mui/material";
 import { ActionMenu, ActionMenuItem } from "../ActionMenu";
 
 interface Action {
   label: string;
+  icon?: ReactNode;
   onClick: () => void;
+  checked: boolean;
 }
 
 type SortButtonProps = TextFieldProps & {
@@ -15,10 +17,10 @@ type SortButtonProps = TextFieldProps & {
 
 const SortButton = ({ actions }: SortButtonProps) => {
   return (
-    <ActionMenu icon={<SortByAlphaIcon />} style={{ margin: "auto" }}>
+    <ActionMenu icon={<FilterAltIcon />} style={{ margin: "auto" }}>
       {actions?.map(action => (
-        <ActionMenuItem onClick={action.onClick}>
-          {action.label}{" "}
+        <ActionMenuItem key={action.label} onClick={action.onClick}>
+          <Checkbox checked={action.checked} /> {action?.icon} {action.label}
         </ActionMenuItem>
       ))}
     </ActionMenu>
