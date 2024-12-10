@@ -8,7 +8,11 @@ import {
   QueryFunctionContext,
   QueryKey,
 } from "@tanstack/react-query";
+import IconButton from "@/components/IconButton";
+import { CreateOutlined } from "@mui/icons-material";
 import { getUserApprovedProjects } from "@/services/projects";
+import { useState, useCallback } from "react";
+import UserModalDetails from "../UserModalDetails";
 
 interface ProjectUserCardProps {
   projectUser: ProjectUser;
@@ -50,6 +54,14 @@ export default function ProjectUserCard({
       ? `${titles.slice(0, 3).join(", ")} ...`
       : titles.join(", ");
   })();
+
+  const [modalProps, setModalProps] = useState<{
+    open: boolean;
+  } | null>();
+
+  const handleCloseModal = useCallback(() => {
+    setModalProps(null);
+  }, []);
 
   return (
     <Card
@@ -95,13 +107,23 @@ export default function ProjectUserCard({
               </Typography>
             </div>
           </Box>
+
           <Box>
-            {/*
-            Buttons to go here... 
-            */}
+            <IconButton
+              size="small"
+              aria-label="Edit user"
+              onClick={() =>
+                setModalProps({
+                  open: true,
+                })
+              }>
+              <CreateOutlined sx={{ color: "default.main" }} />
+            </IconButton>
           </Box>
         </Box>
       </CardContent>
+
+      <UserModalDetails {...modalProps} onClose={handleCloseModal} />
     </Card>
   );
 }
