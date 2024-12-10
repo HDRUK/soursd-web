@@ -17,10 +17,14 @@ type SortButtonProps = TextFieldProps & {
 
 const SortButton = ({ actions }: SortButtonProps) => {
   return (
-    <ActionMenu icon={<FilterAltIcon />} style={{ margin: "auto" }}>
+    <ActionMenu
+      icon={<FilterAltIcon />}
+      style={{ margin: "auto" }}
+      aria-label="sort-button">
       {actions?.map(action => (
         <ActionMenuItem key={action.label} onClick={action.onClick}>
-          <Checkbox checked={action.checked} /> {action?.icon} {action.label}
+          <Checkbox checked={action.checked} />
+          {action?.icon} {action.label}
         </ActionMenuItem>
       ))}
     </ActionMenu>

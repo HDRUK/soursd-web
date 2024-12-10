@@ -34,7 +34,7 @@ const SearchBar = ({ onSearch, placeholder, ...rest }: SearchBarProps) => {
         fullWidth
         variant="outlined"
         placeholder={placeholder}
-        value={searchQuery}
+        value={searchQuery || ""}
         onChange={handleSearchChange}
         InputProps={{
           endAdornment: (
