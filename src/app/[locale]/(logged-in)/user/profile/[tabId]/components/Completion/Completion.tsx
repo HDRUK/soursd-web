@@ -1,3 +1,4 @@
+import LoadingWrapper from "@/components/LoadingWrapper";
 import { UserProfileCompletionCategories } from "@/consts/user";
 import { useApplicationData } from "@/context/ApplicationData";
 import useUserProfileCompletion from "@/hooks/useUserProfileCompletion";
@@ -9,7 +10,7 @@ const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
 export default function Completion() {
   const { routes } = useApplicationData();
-  const { getJSON } = useUserProfileCompletion();
+  const { getJSON, isLoading } = useUserProfileCompletion();
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
   const profileCompletedAt = getJSON();
@@ -28,7 +29,7 @@ export default function Completion() {
     },
     {
       title: t(PageTabs.EXPERIENCE),
-      catgeory: profileCompletedAt[UserProfileCompletionCategories.EXPERIENCE],
+      category: profileCompletedAt[UserProfileCompletionCategories.EXPERIENCE],
       href: routes.profileResearcherExperience.path,
     },
     {
@@ -40,29 +41,31 @@ export default function Completion() {
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-      {sections.map(({ title, category, href }) => {
-        return (
-          <Box
-            sx={{
-              display: {
-                xs: "static",
-                md: "flex",
-              },
-            }}>
-            <Box sx={{ flexGrow: 1 }}>{title}</Box>
-            <Box>
-              <Box component="span" sx={{ mr: 3 }}>
-                {t("completedScore", {
-                  score: category?.score || 0,
-                })}
-              </Box>{" "}
-              <Button component="a" href={href} variant="contained">
-                {t("continueLinkText")}
-              </Button>
+      <LoadingWrapper variant="basic" loading={isLoading}>
+        {sections.map(({ title, category, href }) => {
+          return (
+            <Box
+              sx={{
+                display: {
+                  xs: "static",
+                  md: "flex",
+                },
+              }}>
+              <Box sx={{ flexGrow: 1 }}>{title}</Box>
+              <Box>
+                <Box component="span" sx={{ mr: 3 }}>
+                  {t("completedScore", {
+                    score: category?.score,
+                  })}
+                </Box>{" "}
+                <Button component="a" href={href} variant="contained">
+                  {t("continueLinkText")}
+                </Button>
+              </Box>
             </Box>
-          </Box>
-        );
-      })}
+          );
+        })}
+      </LoadingWrapper>
     </Box>
   );
 }

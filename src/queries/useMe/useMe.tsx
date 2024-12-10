@@ -2,7 +2,7 @@ import { getMe } from "@/services/users";
 import { useQuery } from "@tanstack/react-query";
 
 export default function useMe() {
-  const { data, isError } = useQuery({
+  const query = useQuery({
     queryKey: ["getMe"],
     queryFn: () => {
       return getMe({
@@ -12,7 +12,6 @@ export default function useMe() {
       });
     },
   });
-  const userData = !isError ? data?.data : null;
 
-  return userData;
+  return query;
 }

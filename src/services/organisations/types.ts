@@ -1,10 +1,9 @@
 import { Organisation, OrganisationIdvt } from "@/types/application";
+import { Paged } from "@/types/requests";
 
 type OrganisationResponse = Organisation;
 
-interface OrganisationsResponse {
-  data: Organisation[];
-}
+type OrganisationsResponse = Paged<Organisation[]>;
 
 interface OrganisationsIdvtResponse {
   data: OrganisationIdvt;

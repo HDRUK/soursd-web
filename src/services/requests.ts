@@ -42,7 +42,7 @@ function handleDataError<T>(
   data: ResponseJson<T>,
   messages?: ResponseTranslations
 ) {
-  if (data.message !== ResponseMessageType.SUCCESS) {
+  if (data.message && data.message !== ResponseMessageType.SUCCESS) {
     return new Error(messages?.error?.message || "responseError");
   }
 

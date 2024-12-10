@@ -1,6 +1,6 @@
 "use client";
 
-import ContactLink from "@/components/ContactLink";
+import ApplicationLink from "@/components/ApplicationLink";
 import MaskLabel from "@/components/MaskLabel";
 import { Message } from "@/components/Message";
 import OverlayCenter from "@/components/OverlayCenter";
@@ -84,11 +84,11 @@ export default function Sections({ userId, type }: SectionsProps) {
           <Message severity="error" sx={{ mb: 3 }}>
             {isUserError &&
               tUsers.rich(userError, {
-                contactLink: ContactLink,
+                applicationLink: ApplicationLink,
               })}
             {isPermissionsError &&
               tPermissions.rich(permissionsError, {
-                contactLink: ContactLink,
+                applicationLink: ApplicationLink,
               })}
           </Message>
         )}

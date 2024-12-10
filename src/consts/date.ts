@@ -1,3 +1,4 @@
 const FORMAT_SHORT_DATE = "DD/MM/YYYY";
+const FORMAT_DATE_DB = "YYYY-MM-DD hh:mm:ss";
 
-export { FORMAT_SHORT_DATE };
+export { FORMAT_SHORT_DATE, FORMAT_DATE_DB };
