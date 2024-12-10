@@ -63,13 +63,25 @@ interface DataCustodianUser {
   role: string;
 }
 
+interface UserProfileCompletionFields {
+  name: string;
+  required?: boolean;
+}
+
 type UserProfileCompletionSchema = Record<
   UserProfileCompletionCategories,
   {
-    fields: {
-      name: string;
-      required?: boolean;
-    }[];
+    fields: UserProfileCompletionFields[];
+  }
+>;
+
+type UserProfileCompletionJson = Record<
+  UserProfileCompletionCategories,
+  {
+    score: number;
+    fields: (UserProfileCompletionFields & {
+      hasValue: boolean;
+    })[];
   }
 >;
 
@@ -82,7 +94,7 @@ interface User {
   user_group: UserGroup;
   permissions: Permission[];
   profile_completed_at: string | null;
-  profile_steps_completed: Record;
+  profile_steps_completed: string;
   approvals: Approval[];
   organisation_id: number;
   consent_scrape: boolean;
@@ -237,7 +249,6 @@ interface ApplicationDataState {
   >;
   /* eslint-disable  @typescript-eslint/no-explicit-any */
   systemConfigData: Record<string, any>;
-  auth?: Auth;
 }
 
 /* eslint-disable  @typescript-eslint/no-explicit-any */
@@ -263,4 +274,6 @@ export type {
   Permission,
   UserProfileCompletionSchema,
   DataCustodianUser,
+  UserProfileCompletionJson,
+  UserProfileCompletionFields,
 };

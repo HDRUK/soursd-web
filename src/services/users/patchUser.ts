@@ -1,5 +1,4 @@
 import { ResponseJson, ResponseTranslations } from "@/types/requests";
-import { updateAuthUser } from "@/utils/auth";
 import { handleResponseError, patchRequest } from "../requests";
 import { PatchUserPayload, PatchUserResponse } from "./types";
 
@@ -23,8 +22,6 @@ export default async (
   if (error) {
     return Promise.reject(error);
   }
-
-  await updateAuthUser(payload);
 
   return response.json();
 };
