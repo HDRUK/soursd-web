@@ -79,10 +79,9 @@ type UserProfileCompletionJson = Record<
   UserProfileCompletionCategories,
   {
     score: number;
-    fields: UserProfileCompletionFields &
-      {
-        hasValue: boolean;
-      }[];
+    fields: (UserProfileCompletionFields & {
+      hasValue: boolean;
+    })[];
   }
 >;
 
@@ -250,7 +249,6 @@ interface ApplicationDataState {
   >;
   /* eslint-disable  @typescript-eslint/no-explicit-any */
   systemConfigData: Record<string, any>;
-  auth?: Auth;
 }
 
 /* eslint-disable  @typescript-eslint/no-explicit-any */

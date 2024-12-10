@@ -39,7 +39,7 @@ const schema: UserProfileCompletionSchema = {
 };
 
 export default function useProfileCompletion() {
-  const [user, setUser] = useStore(store => [store.getUser(), store.setUser]);
+  const [user, setUser] = useStore(store => [store.config.user, store.setUser]);
 
   const { mutateAsync, isError, isPending, error } = useMutation({
     mutationKey: ["patchUser"],
