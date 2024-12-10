@@ -166,6 +166,7 @@ interface ResearcherTraining {
 }
 
 interface ResearcherEmployment {
+  id: number | string;
   department: string;
   role: string;
   is_current: boolean;
@@ -201,11 +202,6 @@ interface ResearcherProject {
   approvals: ResearcherProjectApproval[];
 }
 
-// to be filled when working
-interface Employment {
-  id: number;
-}
-
 interface Registry {
   id: number;
   created_at: string;
@@ -214,7 +210,10 @@ interface Registry {
   verified: boolean;
   user: User;
   organisations: Organisation[];
-  employment?: Employment;
+  employment?: ResearcherEmployment;
+  education: ResearcherEducation[];
+  training: ResearcherTraining[];
+  accreditations: ResearcherAccreditation[];
 }
 
 interface Role {

@@ -9,7 +9,7 @@ import {
   QueryKey,
 } from "@tanstack/react-query";
 import IconButton from "@/components/IconButton";
-import { CreateOutlined } from "@mui/icons-material";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import { getUserApprovedProjects } from "@/services/projects";
 import { useState, useCallback } from "react";
 import UserModalDetails from "../UserModalDetails";
@@ -84,6 +84,7 @@ export default function ProjectUserCard({
             alignItems: {
               md: "center",
             },
+            justifyContent: "space-between",
           }}>
           <Box sx={{ display: "flex", gap: 2 }}>
             <div>
@@ -117,13 +118,17 @@ export default function ProjectUserCard({
                   open: true,
                 })
               }>
-              <CreateOutlined sx={{ color: "default.main" }} />
+              <VisibilityIcon sx={{ color: "default.main" }} />
             </IconButton>
           </Box>
         </Box>
       </CardContent>
 
-      <UserModalDetails {...modalProps} onClose={handleCloseModal} />
+      <UserModalDetails
+        {...modalProps}
+        projectUser={projectUser}
+        onClose={handleCloseModal}
+      />
     </Card>
   );
 }

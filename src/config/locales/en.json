@@ -392,5 +392,17 @@
   "Pagination": {
     "nextButtonLabel": "Next",
     "previousButtonLabel": "Previous"
+  },
+  "EmploymentDetails": {
+    "title": "Employment"
+  },
+  "EducationDetails": {
+    "title": "Employment"
+  },
+  "TrainingDetails": {
+    "title": "Training"
+  },
+  "AccreditationsDetails": {
+    "title": "Accreditations"
   }
 }
