@@ -11,6 +11,11 @@ interface File {
   updated_at: string;
 }
 
+interface Sector {
+  name: string;
+  id: string;
+}
+
 interface Permission {
   id: number;
   created_at: string;
@@ -132,6 +137,11 @@ interface Organisation extends OrganisationIdvt {
   permissions: Permission[];
   approvals: Approval[];
   lead_applicant_email: string;
+  sector_id: number;
+  charity_registration_id: string;
+  ror_id: string;
+  website: string;
+  smb_status: boolean;
   registries: {
     user: User;
   }[];
@@ -276,4 +286,5 @@ export type {
   DataCustodianUser,
   UserProfileCompletionJson,
   UserProfileCompletionFields,
+  Sector,
 };

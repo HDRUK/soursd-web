@@ -28,7 +28,7 @@ describe("<TabsSections />", () => {
     renderTabs();
 
     expect(screen.getByRole("tab", { selected: true }).textContent).toEqual(
-      "User"
+      "Profile"
     );
   });
 });

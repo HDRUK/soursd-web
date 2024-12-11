@@ -1,10 +1,12 @@
-import React, { useState } from "react";
 import {
   CircularProgress,
   Autocomplete as MUIAutocomplete,
   TextField,
+  TextFieldProps,
 } from "@mui/material";
+import React, { ReactNode, SyntheticEvent, useState } from "react";
 import fetchPredictions from "./actions";
+import HomeIcon from "@mui/icons-material/Home";
 
 export interface AddressFields {
   postcode?: string;
@@ -15,21 +17,39 @@ export interface AddressFields {
   country?: string;
 }
 
-export interface GoogleAutocompleteProps {
-  onAddressSelected: (fields: AddressFields) => void;
+export interface GoogleAutocompleteOption {
   label: string;
+  addressFields: AddressFields;
+}
+
+export interface GoogleAutocompleteProps {
+  textFieldProps?: TextFieldProps;
+  label?: string;
+  placeholder?: string;
+  onAddressSelected?: (fields: AddressFields) => void;
   fullWidth?: boolean;
+  onChange?: (e: SyntheticEvent<Element, Event>, data: AddressFields) => void;
 }
 
 const GoogleAutocomplete: React.FC<GoogleAutocompleteProps> = ({
   onAddressSelected,
   label,
   fullWidth = true,
-  ...rest
+  onChange,
+  placeholder,
+  textFieldProps,
+  ...restProps
 }) => {
   const [inputValue, setInputValue] = useState("");
-  const [options, setOptions] = useState<string[]>([]);
+  const [options, setOptions] = useState<[]>([]);
   const [loading, setLoading] = useState<boolean>();
+
+  const handleChange = (
+    e: SyntheticEvent<Element, Event>,
+    option: GoogleAutocompleteOption
+  ) => {
+    onChange?.(e, option.addressFields);
+  };
 
   const handleInputChange = async (_, value) => {
     setInputValue(value);
@@ -38,8 +58,17 @@ const GoogleAutocomplete: React.FC<GoogleAutocompleteProps> = ({
     try {
       // Fetch predictions using the server-side function
       const predictions = await fetchPredictions(value);
-      onAddressSelected(predictions[0].addressFields);
-      setOptions(predictions.map(place => place.description));
+      onAddressSelected?.(predictions[0].addressFields);
+      setOptions(
+        predictions.map(place => {
+          const { description, addressFields } = place;
+
+          return {
+            label: description,
+            addressFields,
+          };
+        })
+      );
     } catch (error) {
       console.error("Error fetching address predictions:", error);
     }
@@ -52,15 +81,27 @@ const GoogleAutocomplete: React.FC<GoogleAutocompleteProps> = ({
       options={options}
       inputValue={inputValue}
       onInputChange={handleInputChange}
+      onChange={handleChange}
       renderInput={params => (
         <TextField
           {...params}
           label={label}
           fullWidth={fullWidth}
-          {...rest}
           size="small"
+          {...textFieldProps}
+          sx={
+            !label
+              ? {
+                  ".MuiFilledInput-root.MuiInputBase-root": {
+                    p: "8.5px 14px",
+                  },
+                }
+              : {}
+          }
           InputProps={{
             ...params.InputProps,
+            placeholder,
+            startAdornment: <HomeIcon />,
             endAdornment: (
               <>
                 {" "}
@@ -73,6 +114,7 @@ const GoogleAutocomplete: React.FC<GoogleAutocompleteProps> = ({
           }}
         />
       )}
+      {...restProps}
     />
   );
 };

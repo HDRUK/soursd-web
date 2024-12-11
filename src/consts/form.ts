@@ -13,6 +13,27 @@ const VALIDATION_CE_CERTIFICATION_NUMBER = /^[\w]{4}$/;
 
 const VALIDATION_ORC_ID = /^[\d]{4}-[\d]{4}-[\d]{4}-[\d]{4}$/;
 
+const VALIDATION_ROR_ID = /^0[a-hj-km-np-tv-z|0-9]{6}[0-9]{2}$/;
+
+const VALIDATION_URL = /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w-]*)*$/;
+
+const VALIDATION_CHARITY_ID = /^[A-Za-z0-9]{8}/;
+
+const ORGANISATION_SIZE_OPTIONS = [
+  {
+    label: "Small enterprise: 10 to 49 employees",
+    value: "10 to 49 employees",
+  },
+  {
+    label: "Medium-sized enterprise: 50 to 249 employees",
+    value: "50 to 249 employees",
+  },
+  {
+    label: "Large enterprise: 250 or more employees",
+    value: "250 or more employees",
+  },
+];
+
 enum FormModes {
   CREATE = "create",
   EDIT = "edit",
@@ -27,4 +48,8 @@ export {
   VALIDATION_PASSWORD_FORMAT,
   VALIDATION_PASSWORD_LENGTH,
   VALIDATION_POSTCODE_FORMAT,
+  VALIDATION_ROR_ID,
+  VALIDATION_URL,
+  VALIDATION_CHARITY_ID,
+  ORGANISATION_SIZE_OPTIONS,
 };

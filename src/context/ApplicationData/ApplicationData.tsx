@@ -4,6 +4,7 @@ import ApplicationLink from "@/components/ApplicationLink";
 import OverlayCenterAlert from "@/components/OverlayCenterAlert";
 import { VALIDATION_SCHEMA_KEY } from "@/consts/application";
 import { ROUTES } from "@/consts/router";
+import { UserGroup } from "@/consts/user";
 import { useStore } from "@/data/store";
 import PageContainer from "@/modules/PageContainer";
 import useApplicationDependencies from "@/queries/useApplicationDependencies";
@@ -62,6 +63,11 @@ const ApplicationDataProvider = ({
     store.setIssuer,
   ]);
 
+  const [sectors, setSectors] = useStore(store => [
+    store.config.sectors,
+    store.setSectors,
+  ]);
+
   const path = usePathname();
 
   const {
@@ -76,11 +82,13 @@ const ApplicationDataProvider = ({
   const queriedUser = applicationData["getUser"];
   const queriedOrganisation = applicationData["getOrganisation"];
   const queriedIssuer = applicationData["getIssuer"];
-
-  console.log("queriedUser", queriedUser);
+  const queriedSectors = applicationData["getSectors"];
 
   useEffect(() => {
-    if (!queriedUser?.data.profile_completed_at) {
+    if (
+      !queriedUser?.data.profile_completed_at &&
+      queriedUser?.user_group === UserGroup.USERS
+    ) {
       showAlert("warning", {
         text: tProfile("profileCompleteWarningMessage"),
       });
@@ -98,6 +106,10 @@ const ApplicationDataProvider = ({
   }, [queriedIssuer?.data]);
 
   useEffect(() => {
+    setSectors(queriedSectors?.data?.data);
+  }, [queriedSectors?.data?.data]);
+
+  useEffect(() => {
     if (path) addUrlToHistory(path);
   }, [path]);
 
@@ -111,11 +123,10 @@ const ApplicationDataProvider = ({
     };
   }, [!!queriedSystemConfig?.data, value]);
 
+  console.log("sectors", sectors);
+
   const isFinishedLoading =
-    user &&
-    ((me.organisation_id && organisation) || !me.organisation_id) &&
-    !isApplicationLoading &&
-    issuer;
+    user && sectors && organisation && !isApplicationLoading && issuer;
 
   return (
     <ApplicationDataContext.Provider value={providerValue}>
