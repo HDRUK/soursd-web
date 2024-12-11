@@ -123,8 +123,6 @@ const ApplicationDataProvider = ({
     };
   }, [!!queriedSystemConfig?.data, value]);
 
-  console.log("sectors", sectors);
-
   const isFinishedLoading =
     user && sectors && organisation && !isApplicationLoading && issuer;
 

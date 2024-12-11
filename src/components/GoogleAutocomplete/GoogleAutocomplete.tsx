@@ -1,12 +1,12 @@
+import HomeIcon from "@mui/icons-material/Home";
 import {
   CircularProgress,
   Autocomplete as MUIAutocomplete,
   TextField,
   TextFieldProps,
 } from "@mui/material";
-import React, { ReactNode, SyntheticEvent, useState } from "react";
+import React, { SyntheticEvent, useState } from "react";
 import fetchPredictions from "./actions";
-import HomeIcon from "@mui/icons-material/Home";
 
 export interface AddressFields {
   postcode?: string;
