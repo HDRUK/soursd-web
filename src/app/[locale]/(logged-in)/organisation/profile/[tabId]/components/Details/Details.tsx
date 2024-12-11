@@ -1,15 +1,15 @@
 "use client";
 
+import { useStore } from "@/data/store";
 import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
 import { PageGuidance } from "@/modules";
-import { useTranslations } from "next-intl";
-import DetailsForm, { DetailsFormValues } from "../DetailsForm";
-import { useMutation } from "@tanstack/react-query";
-import { useStore } from "@/data/store";
 import {
   patchOrganisation,
   PatchOrganisationPayload,
 } from "@/services/organisations";
+import { useMutation } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
+import DetailsForm, { DetailsFormValues } from "../DetailsForm";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
