@@ -4,10 +4,11 @@ import { ProjectsResponse } from "./types";
 
 export default async (
   issuerId: number,
+  page: number,
   messages: ResponseTranslations
 ): Promise<ResponseJson<Paged<ProjectsResponse>>> => {
   const response = await getRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/issuers/${issuerId}/projects`,
+    `${process.env.NEXT_PUBLIC_API_V1_URL}/issuers/${issuerId}/projects?page=${page}`,
     undefined,
     {
       headers: {

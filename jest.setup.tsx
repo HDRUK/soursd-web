@@ -84,7 +84,7 @@ function mockPagedResults<T>(data: T) {
 }
 
 async function mockFetch(url: string) {
-  const formattedUrl = url.toLowerCase();
+  const formattedUrl = url.toLowerCase().split("?")[0]; //remove query params (for now)
 
   switch (formattedUrl) {
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/issuer_users/1`: {

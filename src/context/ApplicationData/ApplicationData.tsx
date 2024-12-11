@@ -78,50 +78,52 @@ const ApplicationDataProvider = ({
     user: me,
   });
 
-  const queriedSystemConfig = applicationData["getSystemConfig"];
-  const queriedUser = applicationData["getUser"];
-  const queriedOrganisation = applicationData["getOrganisation"];
-  const queriedIssuer = applicationData["getIssuer"];
-  const queriedSectors = applicationData["getSectors"];
+  const {
+    getSystemConfig: systemConfigData,
+    getUser: userData,
+    getOrganisation: organisationData,
+    getIssuer: issuerData,
+    getSectors: sectorsData,
+  } = applicationData;
 
   useEffect(() => {
     if (
-      !queriedUser?.data.profile_completed_at &&
-      queriedUser?.user_group === UserGroup.USERS
+      !userData?.data.profile_completed_at &&
+      userData?.data?.user_group === UserGroup.USERS
     ) {
       showAlert("warning", {
         text: tProfile("profileCompleteWarningMessage"),
       });
     }
 
-    setUser(queriedUser?.data);
-  }, [queriedUser?.data]);
+    setUser(userData?.data);
+  }, [userData?.data]);
 
   useEffect(() => {
-    setOrganisation(queriedOrganisation?.data);
-  }, [queriedOrganisation?.data]);
+    setOrganisation(organisationData?.data);
+  }, [organisationData?.data]);
 
   useEffect(() => {
-    setIssuer(queriedIssuer?.data);
-  }, [queriedIssuer?.data]);
+    setIssuer(issuerData?.data);
+  }, [issuerData?.data]);
 
   useEffect(() => {
-    setSectors(queriedSectors?.data?.data);
-  }, [queriedSectors?.data?.data]);
+    setSectors(sectorsData?.data?.data);
+  }, [sectorsData?.data?.data]);
 
   useEffect(() => {
     if (path) addUrlToHistory(path);
   }, [path]);
 
   const providerValue = useMemo(() => {
-    const systemConfig = parseSystemConfig(queriedSystemConfig?.data);
+    const systemConfig = parseSystemConfig(systemConfigData?.data);
 
     return {
       ...value,
       systemConfig,
       validationSchema: systemConfig[VALIDATION_SCHEMA_KEY]?.value,
     };
-  }, [!!queriedSystemConfig?.data, value]);
+  }, [!!systemConfigData?.data, value]);
 
   const isFinishedLoading =
     user && sectors && organisation && !isApplicationLoading && issuer;

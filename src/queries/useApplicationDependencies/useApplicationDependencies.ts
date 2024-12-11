@@ -3,9 +3,12 @@ import useQueriesCombined from "@/hooks/useQueriesCombined";
 import { getIssuer } from "@/services/issuers";
 import { getOrganisation } from "@/services/organisations";
 import { getSectors } from "@/services/sectors";
+import { SectorsResponse } from "@/services/sectors/types";
 import { getSystemConfig } from "@/services/system_config";
+import { GetSystemConfigResponse } from "@/services/system_config/types";
 import { getUser } from "@/services/users";
-import { User } from "@/types/application";
+import { Issuer, Organisation, User } from "@/types/application";
+import { Paged, ResponseJson } from "@/types/requests";
 
 interface UseApplicationDependenciesProps {
   user: User;
@@ -54,8 +57,8 @@ export default function useApplicationDependencies({
     },
     {
       queryKey: ["getSectors"],
-      queryFn: ({ queryKey }) =>
-        getSectors(queryKey[1], {
+      queryFn: () =>
+        getSectors({
           error: {
             message: "getSectorsError",
           },
@@ -63,5 +66,11 @@ export default function useApplicationDependencies({
     },
   ];
 
-  return useQueriesCombined(queries);
+  return useQueriesCombined<{
+    getSystemConfig: ResponseJson<GetSystemConfigResponse>;
+    getUser: ResponseJson<User>;
+    getOrganisation: ResponseJson<Organisation>;
+    getIssuer: ResponseJson<Issuer>;
+    getSectors: ResponseJson<Paged<SectorsResponse>>;
+  }>(queries);
 }
