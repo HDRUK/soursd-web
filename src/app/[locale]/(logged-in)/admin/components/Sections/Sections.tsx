@@ -7,7 +7,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import { useCallback, useMemo } from "react";
 
-import ContactLink from "@/components/ContactLink";
+import ApplicationLink from "@/components/ApplicationLink";
 import OverlayCenter from "@/components/OverlayCenter";
 import OverlayCenterAlert from "@/components/OverlayCenterAlert";
 import yup from "@/config/yup";
@@ -37,7 +37,7 @@ export default function Sections() {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_ADMINISTRATION);
   const tValidation = useTranslations(NAMESPACE_TRANSLATION_VALIDATION);
 
-  const { mutateAsync: mutateInviteAsync } = useMutation({
+  const { mutateAsync: mutateInviteAsync, isPending } = useMutation({
     mutationKey: ["sendInvite"],
     /* eslint-disable  @typescript-eslint/no-explicit-any */
     mutationFn: (payload: any) => {
@@ -64,6 +64,7 @@ export default function Sections() {
     defaultValues: {
       to: 0,
     },
+    disabled: isPending,
   });
 
   const handleSendInvite = useCallback(
@@ -103,7 +104,7 @@ export default function Sections() {
     return (
       <OverlayCenterAlert>
         {t.rich("noDataIssuers", {
-          contactLink: ContactLink,
+          applicationLink: ApplicationLink,
         })}
       </OverlayCenterAlert>
     );

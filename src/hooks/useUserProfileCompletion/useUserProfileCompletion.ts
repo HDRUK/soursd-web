@@ -1,14 +1,18 @@
 import { UserProfileCompletionCategories } from "@/consts/user";
-import { User, UserProfileCompletionSchema } from "@/types/application";
+import {
+  User,
+  UserProfileCompletionFields,
+  UserProfileCompletionJson,
+  UserProfileCompletionSchema,
+} from "@/types/application";
 
 import { useStore } from "@/data/store";
 import { PatchUserPayload } from "@/services/users";
-import { useMutation } from "@tanstack/react-query";
 import patchUser from "@/services/users/patchUser";
-import dayjs from "dayjs";
-import { useCallback } from "react";
-import { showAlert } from "@/utils/showAlert";
-import { useTranslations } from "next-intl";
+import { formatNowDBDate } from "@/utils/date";
+import { useMutation } from "@tanstack/react-query";
+import mergeWith from "lodash.mergewith";
+import { useCallback, useEffect, useMemo } from "react";
 
 const schema: UserProfileCompletionSchema = {
   [UserProfileCompletionCategories.IDENTITY]: {
@@ -19,10 +23,6 @@ const schema: UserProfileCompletionSchema = {
       },
       {
         name: "last_name",
-        required: true,
-      },
-      {
-        name: "dob",
         required: true,
       },
     ],
@@ -38,11 +38,8 @@ const schema: UserProfileCompletionSchema = {
   },
 };
 
-const NAMESPACE_TRANSLATION_PROFILE = "Profile";
-
 export default function useProfileCompletion() {
-  const [user, setUser] = useStore(store => [store.getUser(), store.setUser]);
-  const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
+  const [user, setUser] = useStore(store => [store.config.user, store.setUser]);
 
   const { mutateAsync, isError, isPending, error } = useMutation({
     mutationKey: ["patchUser"],
@@ -54,102 +51,186 @@ export default function useProfileCompletion() {
       }),
   });
 
-  const isCategoryCompleted = (category: UserProfileCompletionCategories) => {
-    const currentState = JSON.parse(user?.profile_steps_completed || "{}");
+  const getCurrentState = () => {
+    return JSON.parse(
+      user?.profile_steps_completed || "{}"
+    ) as UserProfileCompletionJson;
+  };
 
-    return (
-      !Object.keys(currentState[category] || {}).some((key: string) => {
-        return !currentState[category][key];
-      }) || currentState[category]?.score === 100
+  const isCategoryCompleted = (category: UserProfileCompletionCategories) => {
+    const currentState = getCurrentState();
+
+    return currentState[category]?.score === 100;
+  };
+
+  // Prunes the fields of the user against the schema
+  const pruneFields = (
+    completedStepsFields: UserProfileCompletionFields[],
+    schemaFields: UserProfileCompletionFields[]
+  ) => {
+    return completedStepsFields.filter(({ name: completedStepsFieldName }) =>
+      schemaFields.find(
+        ({ name: schemaFieldName }) =>
+          completedStepsFieldName === schemaFieldName
+      )
     );
   };
 
-  const update = useCallback(
-    async <T>(
-      formFields: T,
-      category: UserProfileCompletionCategories,
-      userData?: User
-    ) => {
-      let currentState = JSON.parse(user?.profile_steps_completed || "{}");
-      let isCompleted = true;
-
-      Object.keys(schema).forEach(
-        (currentCategory: UserProfileCompletionCategories) => {
-          const { fields } = schema[currentCategory];
-          let score = 0;
-
-          fields.forEach(({ name, required }, i) => {
-            if (currentCategory === category) {
-              const valueCompleted = !!(
-                formFields as Record<string, string | boolean | number>
-              )[name];
-
-              if (required && valueCompleted) {
-                score = Math.round(((i + 1) / fields.length) * 100);
-              }
-
-              currentState = {
-                ...currentState,
-                [category]: {
-                  ...currentState[category],
-                  score,
-                  [name]: required && valueCompleted,
-                },
-              };
-
-              if (!valueCompleted) isCompleted = false;
-            } else {
-              const valueCompleted =
-                currentState[currentCategory][name] || !required;
-
-              currentState = {
-                ...currentState,
-                [currentCategory]: {
-                  ...currentState[currentCategory],
-                  [name]: valueCompleted,
-                },
-              };
-
-              if (!valueCompleted) isCompleted = false;
-            }
-          });
-        }
+  // Merges the base schema fields with those currently stored against the user
+  const mergeFields = (
+    schemaFields: UserProfileCompletionFields[],
+    completedStepsFields: UserProfileCompletionFields[]
+  ) => {
+    return schemaFields.map(({ name: schemaFieldName, required }) => {
+      const matchingField = completedStepsFields.find(
+        ({ name: completedStepsFieldName }) =>
+          completedStepsFieldName === schemaFieldName
       );
 
-      if (user) {
-        const updatedUser = {
-          ...user,
-          ...userData,
-          profile_steps_completed: JSON.stringify(currentState),
-          profile_completed_at: isCompleted ? dayjs().toISOString() : null,
+      const completedValue = user?.[schemaFieldName];
+
+      if (matchingField) {
+        return {
+          ...matchingField,
+          required,
+          hasValue: !!completedValue,
         };
-
-        await mutateAsync(updatedUser);
-        setUser(updatedUser);
-
-        if (isCompleted) {
-          showAlert(
-            "success",
-            t("profileCompletedDescription"),
-            t("profileCompletedTitle")
-          );
-        }
       }
-    },
-    [user]
-  );
+
+      return {
+        name: schemaFieldName,
+        required,
+        hasValue: !!completedValue,
+      };
+    });
+  };
+
+  // Prunes and updates fields from schema
+  const updateFieldsFromSchema = () => {
+    return mergeWith(
+      {},
+      schema,
+      getCurrentState(),
+      (schemaValue, completedStepsValue) => {
+        if (Array.isArray(schemaValue)) {
+          const prunedCompletedSteps = pruneFields(
+            completedStepsValue,
+            schemaValue
+          );
+
+          return mergeFields(schemaValue, prunedCompletedSteps);
+        }
+
+        return undefined;
+      }
+    );
+  };
+
+  // Updates scores based on the number of required fields vs the number not field
+  const updateScores = (currentState: UserProfileCompletionJson) => {
+    let isCompleted = true;
+
+    Object.keys(currentState).forEach(
+      (currentCategory: UserProfileCompletionCategories) => {
+        const fields = currentState[currentCategory]?.fields || [];
+        const isRequired = [];
+        const isValue = [];
+
+        fields.forEach(({ hasValue, required, name }) => {
+          if (required) {
+            isRequired.push(name);
+
+            if (hasValue) {
+              isValue.push(name);
+            }
+          }
+        });
+
+        const score = !isRequired.length
+          ? 100
+          : Math.round((isValue.length / isRequired.length) * 100);
+
+        currentState[currentCategory].score = score;
+
+        if (score < 100) isCompleted = false;
+      }
+    );
+
+    return {
+      updatedState: currentState,
+      isCompleted,
+    };
+  };
+
+  // Performs api and state updates
+  const updateToApi = async (
+    user: User,
+    isCompleted: boolean,
+    updatedState: UserProfileCompletionJson
+  ) => {
+    const updatedUser = {
+      ...user,
+      profile_steps_completed: JSON.stringify(updatedState),
+      profile_completed_at: isCompleted ? formatNowDBDate() : null,
+    };
+
+    setUser(updatedUser);
+    await mutateAsync(updatedUser);
+  };
+
+  const updateInitialSchema = async () => {
+    const { updatedState, isCompleted } = updateScores(
+      updateFieldsFromSchema()
+    );
+
+    updateToApi(user, isCompleted, updatedState);
+  };
 
   const getJSON = (): UserProfileCompletionSchema => {
     return JSON.parse(user?.profile_steps_completed || "{}");
   };
 
-  return {
-    update,
-    getJSON,
-    isCategoryCompleted,
-    isCompleted: !!user?.profile_completed_at,
-    isError,
-    isLoading: isPending,
-    error,
-  };
+  const update = useCallback(
+    async (
+      formFields: { [key: string]: string | number | boolean },
+      category: UserProfileCompletionCategories
+    ) => {
+      const currentState = getJSON();
+
+      currentState[category].fields = currentState[category].fields.map(
+        field => {
+          const { name } = field;
+          const value = formFields[name];
+
+          return {
+            ...field,
+            hasValue: !(value === undefined || value === null || value === ""),
+          };
+        }
+      );
+
+      const { isCompleted, updatedState } = updateScores(currentState);
+
+      updateToApi(user, isCompleted, updatedState);
+    },
+    [user]
+  );
+
+  // Updates the schema when the page first loads
+  useEffect(() => {
+    updateInitialSchema();
+  }, []);
+
+  return useMemo(
+    () => ({
+      update,
+      getJSON,
+      isCategoryCompleted,
+      isCompleted: !!user?.profile_completed_at,
+      isError,
+      isLoading: isPending,
+      error,
+    }),
+    [user, isError, isPending, error]
+  );
 }

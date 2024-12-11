@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { handleLogin, handleRegister } from "@/utils/keycloak";
-import ContactLink from "@/components/ContactLink";
+import ApplicationLink from "@/components/ApplicationLink";
 import ReactDOMServer from "react-dom/server";
 
 const Error = () => {
@@ -31,23 +31,23 @@ const Error = () => {
     if (type) {
       const title = t("title");
       const navigateButton = t("navigateButton");
-      const hasTitle = title !== `Error.${type}.title`;
       const hasNavigateButton =
         navigateButton !== `Error.${type}.navigateButton`;
 
       const errorMessage = ReactDOMServer.renderToString(
-        t.rich("message", { contact: ContactLink }) ?? t("message")
+        t.rich("message", { contact: ApplicationLink }) ?? t("message")
       );
 
-      showAlert(
-        "error",
-        errorMessage,
-        hasTitle ? title : undefined,
-        getButtonAction(type),
-        t("primaryButton"),
-        hasNavigateButton ? navigateButton : undefined,
-        hasNavigateButton ? () => router.push(t("navigatePath")) : undefined
-      );
+      showAlert("error", {
+        text: errorMessage,
+        title,
+        preConfirm: getButtonAction(type),
+        confirmButtonText: t("primaryButton"),
+        cancelButtonText: hasNavigateButton ? navigateButton : undefined,
+        preDeny: hasNavigateButton
+          ? () => router.push(t("navigatePath"))
+          : undefined,
+      });
     }
   }, [type, t, router]);
 

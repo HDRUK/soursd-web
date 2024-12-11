@@ -20,7 +20,7 @@ import {
 } from "./mocks/data/systemConfig";
 import { getRoutes } from "./src/utils/router";
 import { ROUTES } from "./src/consts/router";
-import { mockedIssuerUser } from "./mocks/data/issuer";
+import { mockedDataCustodianUser } from "./mocks/data/issuer";
 
 const nextRouterMock = require("next-router-mock");
 
@@ -84,18 +84,25 @@ function mockPagedResults<T>(data: T) {
 }
 
 async function mockFetch(url: string) {
-  const formattedUrl = url.toLowerCase();
+  const formattedUrl = url.toLowerCase().split("?")[0]; //remove query params (for now)
 
   switch (formattedUrl) {
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/issuer_users/1`: {
+      return mock200Json(
+        mockedDataCustodianUser({
+          id: 1,
+        })
+      );
+    }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/issuer_users`: {
       return mock200Json([
-        mockedIssuerUser({
+        mockedDataCustodianUser({
           id: 1,
           created_at: "2024-01-01T00:00:00.000",
           first_name: "John",
           last_name: "Smith",
         }),
-        mockedIssuerUser({
+        mockedDataCustodianUser({
           id: 2,
         }),
       ]);

@@ -1,6 +1,6 @@
 "use client";
 
-import ContactLink from "@/components/ContactLink";
+import ApplicationLink from "@/components/ApplicationLink";
 import { Message } from "@/components/Message";
 import OverlayCenter from "@/components/OverlayCenter";
 import { useNotifications } from "@/context/Notifications";
@@ -92,7 +92,7 @@ export default function Sections() {
       {isOrganisationsError && (
         <Message severity="error" sx={{ mb: 3 }}>
           {tUsers.rich(`${orgainsationsError}`, {
-            contactLink: ContactLink,
+            applicationLink: ApplicationLink,
           })}
         </Message>
       )}

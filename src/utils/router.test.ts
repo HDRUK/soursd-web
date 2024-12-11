@@ -30,7 +30,7 @@ describe("Route utils", () => {
     it("is allowed", async () => {
       const auth = mockedUserAuth({
         user: mockedUser({
-          user_group: UserGroup.RESEARCHERS,
+          user_group: UserGroup.USERS,
         }),
       });
 

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { mockedIssuerIdvtInfoContent } from "@/mocks/data/cms";
+import { mockedDataCustodianIdvtInfoContent } from "@/mocks/data/cms";
 import { Switch } from "@mui/material";
 import InformationSection from ".";
 
@@ -24,6 +24,6 @@ export const Basic: Story = {
     ),
     description:
       "This is handled by a third party Identification Document Verification Technology (IDVT)",
-    children: mockedIssuerIdvtInfoContent,
+    children: mockedDataCustodianIdvtInfoContent,
   },
 };

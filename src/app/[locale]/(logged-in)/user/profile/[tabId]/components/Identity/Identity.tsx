@@ -1,6 +1,6 @@
 "use client";
 
-import ContactLink from "@/components/ContactLink";
+import ApplicationLink from "@/components/ApplicationLink";
 import { Message } from "@/components/Message";
 import OverlayCenter from "@/components/OverlayCenter";
 import yup from "@/config/yup";
@@ -215,26 +215,26 @@ export default function Identity() {
       {...mockedPersonalDetailsGuidanceProps}>
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(handleDetailsSubmit)} autoComplete="off">
-          <Grid container rowSpacing={3} md={8}>
+          <Grid container rowSpacing={3}>
             <Grid item xs={12}>
               {isGetOrganisationsError && (
                 <Message severity="error" sx={{ mb: 3 }}>
                   {tProfile.rich(organisationsError, {
-                    contactLink: ContactLink,
+                    applicationLink: ApplicationLink,
                   })}
                 </Message>
               )}
               {isUpdateError && (
                 <Message severity="error" sx={{ mb: 3 }}>
                   {tProfile.rich(updateError, {
-                    contactLink: ContactLink,
+                    applicationLink: ApplicationLink,
                   })}
                 </Message>
               )}
               {isFileError && (
                 <Message severity="error" sx={{ mb: 3 }}>
                   {tProfile.rich(fileError, {
-                    contactLink: ContactLink,
+                    applicationLink: ApplicationLink,
                   })}
                 </Message>
               )}

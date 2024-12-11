@@ -1,21 +1,17 @@
-import { Box, Typography } from "@mui/material";
+import { Box, BoxProps } from "@mui/material";
 import { ReactNode } from "react";
-import ImageDecorator from "../ImageDecorator";
 
-interface FormHeaderProps {
-  icon: ReactNode;
+interface FormHeaderProps extends BoxProps {
   children: ReactNode;
 }
 
-export default function FormModalHeader({ icon, children }: FormHeaderProps) {
+export default function FormModalHeader({
+  children,
+  ...restProps
+}: FormHeaderProps) {
   return (
-    <>
-      <Box sx={{ textAlign: "center", mb: 1 }}>
-        <ImageDecorator>{icon}</ImageDecorator>
-      </Box>
-      <Typography variant="h5" sx={{ mb: 3, textAlign: "center" }}>
-        {children}
-      </Typography>
-    </>
+    <Box {...restProps} sx={{ mb: 4, ...restProps.sx }}>
+      {children}
+    </Box>
   );
 }

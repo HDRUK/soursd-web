@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { GetIssuerInviteResponse } from "./types";
 
-function mockedIssuer(): GetIssuerInviteResponse {
+function mockedDataCustodian(): GetIssuerInviteResponse {
   return {
     name: faker.internet.userName(),
     invite_sent_at: "2024-05-13T00:00:00Z",
@@ -11,4 +11,4 @@ function mockedIssuer(): GetIssuerInviteResponse {
   };
 }
 
-export { mockedIssuer };
+export { mockedDataCustodian };
