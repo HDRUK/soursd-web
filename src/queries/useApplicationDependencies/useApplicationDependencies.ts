@@ -4,8 +4,10 @@ import { getIssuer } from "@/services/issuers";
 import { getOrganisation } from "@/services/organisations";
 import { getSectors } from "@/services/sectors";
 import { getSystemConfig } from "@/services/system_config";
+import { GetSystemConfigResponse } from "@/services/system_config/types";
 import { getUser } from "@/services/users";
-import { User } from "@/types/application";
+import { Issuer, Organisation, User } from "@/types/application";
+import { ResponseJson } from "@/types/requests";
 
 interface UseApplicationDependenciesProps {
   user: User;
@@ -63,5 +65,10 @@ export default function useApplicationDependencies({
     },
   ];
 
-  return useQueriesCombined(queries);
+  return useQueriesCombined<{
+    getSystemConfig: ResponseJson<GetSystemConfigResponse>;
+    getUser: ResponseJson<User>;
+    getOrganisation: ResponseJson<Organisation>;
+    getIssuer: ResponseJson<Issuer>;
+  }>(queries);
 }

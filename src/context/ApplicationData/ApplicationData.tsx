@@ -78,15 +78,16 @@ const ApplicationDataProvider = ({
     user: me,
   });
 
-  const queriedSystemConfig = applicationData["getSystemConfig"];
-  const queriedUser = applicationData["getUser"];
-  const queriedOrganisation = applicationData["getOrganisation"];
-  const queriedIssuer = applicationData["getIssuer"];
-  const queriedSectors = applicationData["getSectors"];
+  const {
+    getSystemConfig: systemConfigData,
+    getUser: userData,
+    getOrganisation: organisationData,
+    getIssuer: issuerData,
+  } = applicationData;
 
   useEffect(() => {
     if (
-      !queriedUser?.data.profile_completed_at &&
+      !userData?.data.profile_completed_at &&
       queriedUser?.user_group === UserGroup.USERS
     ) {
       showAlert("warning", {
@@ -94,16 +95,16 @@ const ApplicationDataProvider = ({
       });
     }
 
-    setUser(queriedUser?.data);
-  }, [queriedUser?.data]);
+    setUser(userData?.data);
+  }, [userData?.data]);
 
   useEffect(() => {
-    setOrganisation(queriedOrganisation?.data);
-  }, [queriedOrganisation?.data]);
+    setOrganisation(organisationData?.data);
+  }, [organisationData?.data]);
 
   useEffect(() => {
-    setIssuer(queriedIssuer?.data);
-  }, [queriedIssuer?.data]);
+    setIssuer(issuerData?.data);
+  }, [issuerData?.data]);
 
   useEffect(() => {
     setSectors(queriedSectors?.data?.data);
@@ -114,14 +115,14 @@ const ApplicationDataProvider = ({
   }, [path]);
 
   const providerValue = useMemo(() => {
-    const systemConfig = parseSystemConfig(queriedSystemConfig?.data);
+    const systemConfig = parseSystemConfig(systemConfigData?.data);
 
     return {
       ...value,
       systemConfig,
       validationSchema: systemConfig[VALIDATION_SCHEMA_KEY]?.value,
     };
-  }, [!!queriedSystemConfig?.data, value]);
+  }, [!!systemConfigData?.data, value]);
 
   const isFinishedLoading =
     user && sectors && organisation && !isApplicationLoading && issuer;

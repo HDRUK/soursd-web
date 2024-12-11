@@ -6,9 +6,10 @@ import PageSection from "@/modules/PageSection";
 import { getIssuerProjects } from "@/services/projects";
 import { CircularProgress, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useQuery } from "@tanstack/react-query";
 import { ISSUER_ID } from "@/consts/application";
 import StatusIndicator from "@/components/StatusIndicator";
+import Pagination from "@/components/Pagination";
+import usePaginatedQuery from "@/hooks/usePaginatedQuery";
 import ProjectList from "../ProjectList";
 
 const NAMESPACE_TRANSLATIONS_PROJECT_LIST = "ProjectList";
@@ -20,10 +21,13 @@ export default function Sections() {
     data: projectsData,
     isLoading: isProjectsLoading,
     isError: isProjectsError,
-  } = useQuery({
-    queryKey: ["getIssuerProjects"],
-    queryFn: () =>
-      getIssuerProjects(ISSUER_ID, {
+    last_page,
+    page,
+    setPage,
+  } = usePaginatedQuery({
+    queryKeyBase: "getIssuerProjects",
+    queryFn: page =>
+      getIssuerProjects(ISSUER_ID, page, {
         // note: ISSUER_ID - need to update this as hard coded as 1!
         error: {
           message: "getIssuerProjects",
@@ -69,9 +73,24 @@ export default function Sections() {
             {t("getIssuerProjectsError")}
           </Message>
         )}
-        {!isProjectsLoading && projectsData?.data.data && (
-          <ProjectList projects={projectsData?.data.data} />
+        {!isProjectsLoading && projectsData && (
+          <ProjectList projects={projectsData} />
         )}
+      </PageSection>
+      <PageSection
+        sx={{
+          flexGrow: 1,
+          display: "flex",
+          justifyContent: "center",
+        }}>
+        <Pagination
+          isLoading={isProjectsLoading}
+          page={page}
+          count={last_page}
+          onChange={(e: React.ChangeEvent<unknown>, page: number) =>
+            setPage(page)
+          }
+        />
       </PageSection>
     </>
   );
