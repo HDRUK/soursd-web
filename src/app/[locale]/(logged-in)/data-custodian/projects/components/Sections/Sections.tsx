@@ -6,41 +6,21 @@ import PageSection from "@/modules/PageSection";
 import { getOrganisationProjects } from "@/services/projects";
 import { CircularProgress, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
+import { useStore } from "@/data/store";
 import StatusIndicator from "@/components/StatusIndicator";
 import Pagination from "@/components/Pagination";
 import usePaginatedQuery from "@/hooks/usePaginatedQuery";
-import SearchBar from "@/components/SearchBar";
-import { useCallback, useState } from "react";
-import { useSearchParams, useRouter, usePathname } from "next/navigation";
-import { useStore } from "@/data/store";
-import SortButton from "@/components/SortButton";
+import SearchBar from "@/modules/SearchBar";
+import SearchActionMenu from "@/modules/SearchActionMenu";
 import ProjectList from "../ProjectList";
 
 const NAMESPACE_TRANSLATIONS_PROJECT_LIST = "ProjectList";
 
 export default function Sections() {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_PROJECT_LIST);
-  const router = useRouter();
-  const pathname = usePathname();
+
   const organisation = useStore(store => store.getOrganisation());
   const { id: organisationId } = organisation || {};
-
-  const searchParams = useSearchParams();
-  const searchTitle = searchParams?.get("title[]") || "";
-
-  const [queryParams, setQueryParams] = useState<{}>({
-    "title[]": searchTitle,
-    sort: "title:asc",
-  });
-
-  const updateQueryString = useCallback(
-    (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams?.toString());
-      params.set(name, value);
-      return params.toString();
-    },
-    [searchParams]
-  );
 
   const {
     data: projectsData,
@@ -49,75 +29,47 @@ export default function Sections() {
     last_page,
     page,
     setPage,
+    updateQueryParam,
+    handleSortToggle,
+    handleFieldToggle,
+    queryParams,
   } = usePaginatedQuery({
-    queryKeyBase: ["getOrganisationProjects", queryParams],
-    queryFn: page =>
-      getOrganisationProjects(
-        organisationId,
-        { page, ...queryParams },
-        {
-          error: {
-            message: "getOrganisationProjects",
-          },
-        }
-      ),
+    queryKeyBase: "getOrganisationProjects",
+    defaultQueryParams: {
+      sort: "title:asc",
+    },
+    queryFn: queryParams =>
+      getOrganisationProjects(organisationId, queryParams, {
+        error: {
+          message: "getOrganisationProjects",
+        },
+      }),
     enabled: !!organisationId,
   });
 
-  const updatePath = useCallback(
-    (key: string, value: string) => {
-      router.push(`${pathname}?${updateQueryString(key, value)}`, {
-        scroll: false,
-      });
-      setPage(1);
-      setQueryParams({
-        ...queryParams,
-        [key]: value,
-      });
-    },
-    [pathname, router, updateQueryString]
-  );
-
-  const [sortTitleDirection, setSortTitleDirection] = useState<string | null>(
-    "asc"
-  );
-  const [approvalStatus, setApprovalStatus] = useState<boolean | null>(null);
-
-  const handleApprovalToggle = (status: boolean) => {
-    const newStatus = approvalStatus === status ? null : status;
-    setApprovalStatus(newStatus);
-    updatePath(
-      "approved",
-      newStatus === null ? "" : newStatus === true ? "1" : "0"
-    );
-  };
-
-  const handleSortToggle = (field: string, direction: string) => {
-    const newDirection = sortTitleDirection === direction ? null : direction;
-    setSortTitleDirection(newDirection);
-    updatePath("sort", newDirection === null ? "" : `${field}:${newDirection}`);
-  };
+  const sortDirection =
+    typeof queryParams?.sort === "string" && queryParams?.sort.split(":")[1];
 
   const searchActions = [
     {
       label: "Sort Alphabetical A-Z",
       onClick: () => handleSortToggle("title", "asc"),
-      checked: sortTitleDirection === "asc",
+      checked: sortDirection === "asc",
     },
     {
       label: "Sort Alphabetical Z-A",
       onClick: () => handleSortToggle("title", "desc"),
-      checked: sortTitleDirection === "desc",
+      checked: sortDirection === "desc",
     },
     {
       label: "Approved project",
-      onClick: () => handleApprovalToggle(true),
-      checked: approvalStatus === true,
+      onClick: () => handleFieldToggle("approved", ["1", ""]),
+      checked: queryParams.approved === "1",
     },
     {
       label: "Project pending approval",
-      onClick: () => handleApprovalToggle(false),
-      checked: approvalStatus === false,
+      onClick: () => handleFieldToggle("approved", ["0", ""]),
+      checked: queryParams.approved === "0",
     },
   ];
 
@@ -138,10 +90,10 @@ export default function Sections() {
         }}>
         <PageSection sx={{ display: "flex", flex: 1 }}>
           <SearchBar
-            onSearch={title => updatePath("title[]", title)}
+            onSearch={text => updateQueryParam("title[]", text)}
             placeholder={t("searchPlaceholder")}
           />
-          <SortButton actions={searchActions} />
+          <SearchActionMenu actions={searchActions} />
         </PageSection>
         <PageSection sx={{ display: "flex", flex: 1, gap: 2 }}>
           <StatusIndicator

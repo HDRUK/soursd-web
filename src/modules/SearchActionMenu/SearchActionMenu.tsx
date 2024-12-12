@@ -2,7 +2,7 @@ import React, { ReactNode } from "react";
 import { TextFieldProps } from "@mui/material/TextField";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { Checkbox } from "@mui/material";
-import { ActionMenu, ActionMenuItem } from "../ActionMenu";
+import { ActionMenu, ActionMenuItem } from "../../components/ActionMenu";
 
 interface Action {
   label: string;
@@ -15,12 +15,12 @@ type SortButtonProps = TextFieldProps & {
   actions: Action[];
 };
 
-const SortButton = ({ actions }: SortButtonProps) => {
+const SearchActionMenu = ({ actions }: SortButtonProps) => {
   return (
     <ActionMenu
       icon={<FilterAltIcon />}
       style={{ margin: "auto" }}
-      aria-label="sort-button">
+      aria-label="search-action-menu">
       {actions?.map(action => (
         <ActionMenuItem key={action.label} onClick={action.onClick}>
           <Checkbox checked={action.checked} />
@@ -30,4 +30,4 @@ const SortButton = ({ actions }: SortButtonProps) => {
     </ActionMenu>
   );
 };
-export default SortButton;
+export default SearchActionMenu;

@@ -5,7 +5,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import ClearIcon from "@mui/icons-material/Clear";
 import { TextFieldProps } from "@mui/material/TextField";
 import { StyledSearchBar, StyledInput } from "./SearchBar.styles";
-import IconButton from "../IconButton";
+import IconButton from "../../components/IconButton";
 
 type SearchBarProps = TextFieldProps & {
   onSearch: (query: string) => void;
