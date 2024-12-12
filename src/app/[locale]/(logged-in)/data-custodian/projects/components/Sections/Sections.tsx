@@ -10,8 +10,6 @@ import StatusIndicator from "@/components/StatusIndicator";
 import Pagination from "@/components/Pagination";
 import usePaginatedQuery from "@/hooks/usePaginatedQuery";
 import SearchBar from "@/components/SearchBar";
-import { useCallback, useState } from "react";
-import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { useStore } from "@/data/store";
 import ProjectList from "../ProjectList";
 
@@ -19,26 +17,9 @@ const NAMESPACE_TRANSLATIONS_PROJECT_LIST = "ProjectList";
 
 export default function Sections() {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_PROJECT_LIST);
-  const router = useRouter();
-  const pathname = usePathname();
+
   const organisation = useStore(store => store.getOrganisation());
   const { id: organisationId } = organisation || {};
-
-  const searchParams = useSearchParams();
-  const searchTitle = searchParams?.get("title");
-
-  const [queryParams, setQueryParams] = useState<{}>({
-    "title[]": searchTitle,
-  });
-
-  const updateQueryString = useCallback(
-    (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams?.toString());
-      params.set(name, value);
-      return params.toString();
-    },
-    [searchParams]
-  );
 
   const {
     data: projectsData,
@@ -47,34 +28,17 @@ export default function Sections() {
     last_page,
     page,
     setPage,
+    onSearch,
   } = usePaginatedQuery({
-    queryKeyBase: ["getOrganisationProjects", queryParams],
-    queryFn: page =>
-      getOrganisationProjects(
-        organisationId,
-        { page, ...queryParams },
-        {
-          error: {
-            message: "getOrganisationProjects",
-          },
-        }
-      ),
+    queryKeyBase: "getOrganisationProjects",
+    queryFn: queryParams =>
+      getOrganisationProjects(organisationId, queryParams, {
+        error: {
+          message: "getOrganisationProjects",
+        },
+      }),
     enabled: !!organisationId,
   });
-
-  const updatePath = useCallback(
-    (key: string, value: string) => {
-      router.push(`${pathname}?${updateQueryString(key, value)}`, {
-        scroll: false,
-      });
-      setPage(1);
-      setQueryParams({
-        ...queryParams,
-        [`${key}[]`]: value,
-      });
-    },
-    [pathname, router, updateQueryString]
-  );
 
   return (
     <>
@@ -93,7 +57,7 @@ export default function Sections() {
         }}>
         <PageSection sx={{ display: "flex", flex: 1 }}>
           <SearchBar
-            onSearch={title => updatePath("title", title)}
+            onSearch={text => onSearch("title", text)}
             placeholder={t("searchPlaceholder")}
           />
         </PageSection>
