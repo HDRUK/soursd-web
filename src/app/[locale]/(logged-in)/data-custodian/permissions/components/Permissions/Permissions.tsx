@@ -15,14 +15,14 @@ const NAMESPACE_TRANSLATIONS_PERMISSIONS = "Permissions";
 export interface PermissionsProps {
   userId: number;
   type: EntityType;
-  issuerId: number;
+  custodianId: number;
   permissions: Permission[];
   userPermissions: Permission[];
 }
 
 export default function Permissions({
   userId,
-  issuerId,
+  custodianId,
   permissions,
   userPermissions,
   type,
@@ -38,7 +38,7 @@ export default function Permissions({
 
   const handleSubmit = useCallback((values: AssignOptionsFormValues) => {
     sendRequest({
-      issuer_id: issuerId,
+      custodian_id: custodianId,
       permissions: convertStringsToNumbers(
         Object.keys(values).filter((key: string) => values[key])
       ),

@@ -1,5 +1,5 @@
 enum EmailTemplates {
-  ISSUER_INVITE = "issuer_invite",
+  CUSTODIAN_INVITE = "custodian_invite",
 }
 
 export { EmailTemplates };

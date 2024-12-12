@@ -39,7 +39,7 @@ interface ActiveOrganisationData {
 
 const NAMESPACE_TRANSLATIONS_USERS_LIST = "UsersList";
 
-const ISSUER_ID = 1;
+const CUSTODIAN_ID = 1;
 
 export default function OrganisationsList({
   organisations,
@@ -85,7 +85,7 @@ export default function OrganisationsList({
         const ariaId = organisation_name.replace(/[^\w]*/g, "");
 
         const isApproved = approvals.some(
-          ({ id: issuerId }) => issuerId === ISSUER_ID
+          ({ id: custodianId }) => custodianId === CUSTODIAN_ID
         );
 
         return (
@@ -115,7 +115,7 @@ export default function OrganisationsList({
                           fullWidth
                           variant="outlined"
                           size="small"
-                          href={`${routes.permissionsOrganisationIssuer.path}/${id}`}>
+                          href={`${routes.permissionsOrganisationCustodian.path}/${id}`}>
                           {t("permissions")}
                         </Button>
                       </ActionMenuItem>
@@ -131,7 +131,7 @@ export default function OrganisationsList({
                               {
                                 type: EntityType.ORGANISATION,
                                 organisation_id: id,
-                                issuer_id: ISSUER_ID,
+                                custodian_id: CUSTODIAN_ID,
                               },
                               isApproved
                             )

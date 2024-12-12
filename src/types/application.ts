@@ -23,7 +23,7 @@ interface Permission {
   };
 }
 
-interface Issuer {
+interface Custodian {
   id: number;
   created_at: string;
   updated_at: string;
@@ -48,18 +48,18 @@ type Approval = {
   invite_sent_at: string | null;
   pivot: {
     organisation_id: number;
-    issuer_id: number;
+    custodian_id: number;
   };
 };
 
-interface DataCustodianUser {
+interface CustodianUser {
   id: number;
   created_at: string;
   updated_at: string;
   first_name: string;
   last_name: string;
   email: string;
-  issuer_id: number;
+  custodian_id: number;
   role: string;
 }
 
@@ -184,7 +184,7 @@ interface ResearcherEndorsement {
 
 interface ResearcherProjectApproval {
   project_id: number;
-  issuer_id: number;
+  custodian_id: number;
 }
 
 interface ResearcherProject {
@@ -260,7 +260,7 @@ export type {
   ApplicationSystemConfig,
   Approval,
   Auth,
-  Issuer,
+  Custodian,
   Organisation,
   OrganisationIdvt,
   User,
@@ -274,7 +274,7 @@ export type {
   File,
   Permission,
   UserProfileCompletionSchema,
-  DataCustodianUser,
+  CustodianUser,
   UserProfileCompletionJson,
   UserProfileCompletionFields,
 };

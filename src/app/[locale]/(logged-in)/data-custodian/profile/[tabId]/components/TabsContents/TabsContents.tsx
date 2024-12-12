@@ -13,13 +13,13 @@ interface TabsContentsProps {
 }
 
 export default function TabsContents({ tabId }: TabsContentsProps) {
-  const issuer = useStore(state => state.getIssuer());
+  const custodian = useStore(state => state.getCustodian());
 
-  if (!issuer) notFound();
+  if (!custodian) notFound();
 
   return (
     <>
-      {tabId === PageTabs.DETAILS && <Details issuer={issuer} />}
+      {tabId === PageTabs.DETAILS && <Details custodian={custodian} />}
       {tabId === PageTabs.PROJECTS && <Projects />}
       {tabId === PageTabs.ORGANISATIONS && <Organisations />}
       {tabId === PageTabs.USERS && <Users />}

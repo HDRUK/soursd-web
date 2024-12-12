@@ -19,7 +19,7 @@ interface UpdateOrganisationPermissionsResponse {
 
 interface UpdateOrganisationPermissonsPayload {
   organisation_id: number;
-  issuer_id: number;
+  custodian_id: number;
   permissions: number[];
 }
 

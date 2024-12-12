@@ -1,8 +1,11 @@
 import Icon from "@/components/Icon";
 import Results from "@/components/Results";
 import { useStore } from "@/data/store";
-import { deleteIssuerUser, getIssuerUsers } from "@/services/issuer_users";
-import { DataCustodianUser } from "@/types/application";
+import {
+  deleteCustodianUser,
+  getCustodianUsers,
+} from "@/services/custodian_users";
+import { CustodianUser } from "@/types/application";
 import { formatShortDate } from "@/utils/date";
 import { showAlert, showLoadingAlertWithPromise } from "@/utils/showAlert";
 import { Search } from "@mui/icons-material";
@@ -25,30 +28,30 @@ import { useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
 import UserModal from "../UserModal";
 
-const NAMESPACE_TRANSLATION_PROFILE = "IssuerProfile";
+const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 
 export default function Users() {
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const queryClient = useQueryClient();
   const [modalProps, setModalProps] = useState<{
     open: boolean;
-    user?: Partial<DataCustodianUser>;
+    user?: Partial<CustodianUser>;
   } | null>();
-  const issuer = useStore(state => state.getIssuer());
+  const custodian = useStore(state => state.getCustodian());
 
   const {
-    isError: isGetIssuersError,
-    isLoading: isGetIssuersLoading,
-    data: issuersData,
+    isError: isGetCustodiansError,
+    isLoading: isGetCustodiansLoading,
+    data: custodiansData,
   } = useQuery({
-    queryKey: ["getIssuerUsers", issuer?.id],
-    queryFn: () => getIssuerUsers(),
+    queryKey: ["getCustodianUsers", custodian?.id],
+    queryFn: () => getCustodianUsers(),
   });
 
-  const { mutateAsync: deleteIssuerUserAsync } = useMutation({
-    mutationKey: ["deleteIssuerUser"],
+  const { mutateAsync: deleteCustodianUserAsync } = useMutation({
+    mutationKey: ["deleteCustodianUser"],
     mutationFn: (id: number) => {
-      return deleteIssuerUser(id, {
+      return deleteCustodianUser(id, {
         error: { message: "deleteUserError" },
       });
     },
@@ -63,10 +66,10 @@ export default function Users() {
       closeOnConfirm: true,
       closeOnCancel: true,
       preConfirm: () => {
-        showLoadingAlertWithPromise(deleteIssuerUserAsync(userId), {
+        showLoadingAlertWithPromise(deleteCustodianUserAsync(userId), {
           onSuccess: () => {
             queryClient.refetchQueries({
-              queryKey: ["getIssuerUsers", issuer?.id],
+              queryKey: ["getCustodianUsers", custodian?.id],
             });
           },
         });
@@ -90,7 +93,7 @@ export default function Users() {
             InputProps={{
               endAdornment: (
                 <InputAdornment position="start">
-                  <IconButton aria-label={t("searchIssuerUsers")}>
+                  <IconButton aria-label={t("searchCustodianUsers")}>
                     <Search />
                   </IconButton>
                 </InputAdornment>
@@ -102,14 +105,14 @@ export default function Users() {
           endIcon={<AddCircleOutlineOutlinedIcon />}
           variant="contained"
           onClick={() => {
-            if (issuer?.id) {
+            if (custodian?.id) {
               setModalProps({
                 open: true,
                 user: {
                   first_name: "",
                   last_name: "",
                   email: "",
-                  issuer_id: issuer?.id,
+                  custodian_id: custodian?.id,
                 },
               });
             }
@@ -122,11 +125,11 @@ export default function Users() {
         noResultsMessage={t("noResults")}
         errorMessage={t("getError")}
         queryState={{
-          isLoading: isGetIssuersLoading,
-          isError: isGetIssuersError,
+          isLoading: isGetCustodiansLoading,
+          isError: isGetCustodiansError,
         }}>
-        {issuersData?.data.map(issuerUser => {
-          const { first_name, last_name, created_at, email } = issuerUser;
+        {custodiansData?.data.map(custodianUser => {
+          const { first_name, last_name, created_at, email } = custodianUser;
 
           return (
             <Card sx={{ mb: 1 }} role="listitem" key={email}>
@@ -184,7 +187,7 @@ export default function Users() {
                       onClick={() =>
                         setModalProps({
                           open: true,
-                          user: issuerUser,
+                          user: custodianUser,
                         })
                       }>
                       <CreateOutlinedIcon sx={{ color: "default.main" }} />
@@ -192,7 +195,7 @@ export default function Users() {
                     <IconButton
                       size="small"
                       aria-label="Delete user"
-                      onClick={() => handleDelete(issuerUser?.id)}>
+                      onClick={() => handleDelete(custodianUser?.id)}>
                       <DeleteForeverOutlinedIcon sx={{ color: "error.main" }} />
                     </IconButton>
                   </Box>

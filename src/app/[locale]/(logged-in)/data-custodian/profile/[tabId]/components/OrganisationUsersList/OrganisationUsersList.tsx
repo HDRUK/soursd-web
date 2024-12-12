@@ -44,7 +44,7 @@ interface ActiveUserData {
 
 const NAMESPACE_TRANSLATIONS_USERS_LIST = "UsersList";
 
-const ISSUER_ID = 1;
+const CUSTODIAN_ID = 1;
 
 export default function OrganisationUsersList({
   organisation,
@@ -103,7 +103,7 @@ export default function OrganisationUsersList({
               user,
             }) => {
               const isApproved = approvals.some(
-                ({ id: issuerId }) => issuerId === ISSUER_ID
+                ({ id: custodianId }) => custodianId === CUSTODIAN_ID
               );
               const userIcons = getUserIcons(user);
               return (
@@ -146,7 +146,7 @@ export default function OrganisationUsersList({
                           fullWidth
                           variant="outlined"
                           size="small"
-                          href={`${routes.permissionsResearcherIssuer.path}/${id}`}>
+                          href={`${routes.permissionsResearcherCustodian.path}/${id}`}>
                           {t("permissions")}
                         </Button>
                       </ActionMenuItem>
@@ -162,7 +162,7 @@ export default function OrganisationUsersList({
                               {
                                 type: EntityType.RESEARCHER,
                                 user_id: id,
-                                issuer_id: ISSUER_ID,
+                                custodian_id: CUSTODIAN_ID,
                               },
                               isApproved
                             )

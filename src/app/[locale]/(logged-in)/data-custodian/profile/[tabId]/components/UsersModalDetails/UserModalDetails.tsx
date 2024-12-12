@@ -3,8 +3,8 @@ import FormControlHorizontal from "@/components/FormControlHorizontal";
 import FormModalBody from "@/components/FormModalBody";
 import FormModalHeader from "@/components/FormModalHeader";
 import yup from "@/config/yup";
-import { DataCustodianUserRoles } from "@/consts/dataCustodian";
-import { DataCustodianUser } from "@/types/application";
+import { CustodianUserRoles } from "@/consts/custodian";
+import { CustodianUser } from "@/types/application";
 import { QueryState } from "@/types/form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import CheckIcon from "@mui/icons-material/Check";
@@ -14,7 +14,7 @@ import { useTranslations } from "next-intl";
 import { ChangeEvent, useMemo } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
-export interface DataCustodianUserFields {
+export interface CustodianUserFields {
   first_name: string;
   last_name: string;
   email: string;
@@ -23,12 +23,12 @@ export interface DataCustodianUserFields {
 }
 
 export interface UserModalDetailsProps {
-  user: Partial<DataCustodianUser>;
+  user: Partial<CustodianUser>;
   queryState: QueryState;
-  onSubmit: (payload: DataCustodianUserFields) => void;
+  onSubmit: (payload: CustodianUserFields) => void;
 }
 
-const NAMESPACE_TRANSLATION_PROFILE = "IssuerProfile";
+const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 const NAMESPACE_TRANSLATION_FORM = "Form";
 
 export default function UserModalDetails({
@@ -49,20 +49,20 @@ export default function UserModalDetails({
     []
   );
 
-  const methods = useForm<DataCustodianUserFields>({
+  const methods = useForm<CustodianUserFields>({
     resolver: yupResolver(schema),
     defaultValues: {
       first_name: user?.first_name,
       last_name: user?.last_name,
       email: user?.email,
-      administrator: user?.role === DataCustodianUserRoles.ADMINISTRATOR,
-      approver: user?.role === DataCustodianUserRoles.APPROVER,
+      administrator: user?.role === CustodianUserRoles.ADMINISTRATOR,
+      approver: user?.role === CustodianUserRoles.APPROVER,
     },
     disabled: queryState.isLoading,
   });
 
   const handleCheckRole = (e: ChangeEvent<HTMLInputElement>) => {
-    Object.values(DataCustodianUserRoles).forEach(role => {
+    Object.values(CustodianUserRoles).forEach(role => {
       setValue(role, false);
     });
 
