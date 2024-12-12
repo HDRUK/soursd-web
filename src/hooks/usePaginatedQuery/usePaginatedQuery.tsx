@@ -7,6 +7,8 @@ import {
 import { Paged, ResponseJson } from "@/types/requests";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
+const API_SORT_KEY = "sort";
+
 type PaginatedQueryProps<T> = {
   queryKeyBase: string;
   queryFn: (
@@ -14,19 +16,24 @@ type PaginatedQueryProps<T> = {
   ) => Promise<ResponseJson<Paged<T>>>;
   initialPage?: number;
   enabled?: boolean;
+  defaultQueryParams?: Record<string, string | number | undefined>;
 };
 
 type PaginatedQueryReturn<T> = UseQueryResult<ResponseJson<Paged<T>>> &
   Paged<T> & {
     page: number;
     setPage: React.Dispatch<React.SetStateAction<number>>;
-    onSearch: (key: string, value: string) => void;
+    updateQueryParam: (key: string, value: string) => void;
+    handleSortToggle: (field: string, direction: string) => void;
+    handleFieldToggle: (field: string, options: [string, string]) => void;
+    queryParams: Record<string, string | number | undefined>;
   };
 
 const usePaginatedQuery = <T,>({
   queryKeyBase,
   queryFn,
   initialPage = 1,
+  defaultQueryParams = {},
   enabled = true,
 }: PaginatedQueryProps<T>): PaginatedQueryReturn<T> => {
   const router = useRouter();
@@ -34,8 +41,11 @@ const usePaginatedQuery = <T,>({
   const searchParams = useSearchParams();
   const [page, setPage] = useState<number>(initialPage);
 
-  const [queryParams, setQueryParams] = useState<{}>({
+  const [queryParams, setQueryParams] = useState<
+    Record<string, string | number | undefined>
+  >({
     page,
+    ...defaultQueryParams,
   });
 
   const queryResult = useQuery({
@@ -57,7 +67,7 @@ const usePaginatedQuery = <T,>({
     [searchParams]
   );
 
-  const onSearch = useCallback(
+  const updateQueryParam = useCallback(
     (key: string, value: string) => {
       router.push(`${pathname}?${updateQueryString(key, value)}`, {
         scroll: false,
@@ -65,18 +75,64 @@ const usePaginatedQuery = <T,>({
       setPage(1);
       setQueryParams({
         ...queryParams,
-        [`${key}[]`]: value,
+        [key]: value,
       });
     },
     [pathname, router, updateQueryString]
   );
 
+  const handleSortToggle = useCallback(
+    (field: string, direction: string) => {
+      const currentSort =
+        typeof queryParams[API_SORT_KEY] === "string"
+          ? queryParams[API_SORT_KEY]
+          : "";
+
+      const [currentField, currentDirection] = currentSort
+        ? currentSort.split(":")
+        : [null, null];
+
+      const newDirection =
+        currentField === field && currentDirection === direction
+          ? ""
+          : direction;
+
+      const updatedQueryParams = { ...queryParams };
+
+      if (newDirection) {
+        updatedQueryParams[API_SORT_KEY] = `${field}:${newDirection}`;
+      } else {
+        delete updatedQueryParams[API_SORT_KEY];
+      }
+
+      setQueryParams(updatedQueryParams);
+    },
+    [queryParams]
+  );
+
+  const handleFieldToggle = useCallback(
+    (field: string, options: [string, string]) => {
+      const currentValue = queryParams[field];
+
+      const newValue = currentValue === options[0] ? options[1] : options[0];
+
+      setQueryParams({
+        ...queryParams,
+        [field]: newValue,
+      });
+    },
+    [queryParams]
+  );
+
   return {
     ...restQueryResult,
     ...pagedData,
+    queryParams,
     page,
     setPage,
-    onSearch,
+    updateQueryParam,
+    handleSortToggle,
+    handleFieldToggle,
   } as PaginatedQueryReturn<T>;
 };
 

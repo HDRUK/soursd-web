@@ -7,6 +7,7 @@ interface ActionMenuProps extends HTMLAttributes<HTMLSpanElement> {
   onOpen?(): void;
   onClose?(): void;
   trigger?: ReactNode;
+  icon?: ReactNode;
 }
 
 export default function ActionMenu({
@@ -14,6 +15,7 @@ export default function ActionMenu({
   onOpen,
   onClose,
   trigger,
+  icon = <MoreVertIcon />,
   ...restProps
 }: ActionMenuProps) {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
@@ -34,7 +36,7 @@ export default function ActionMenu({
     <span {...additionalProps}>
       {!trigger && (
         <IconButton size="small" onClick={handleOpen} aria-label={ariaLabel}>
-          <MoreVertIcon />
+          {icon}
         </IconButton>
       )}
 
