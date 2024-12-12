@@ -12,7 +12,7 @@ import IconButton from "@/components/IconButton";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { getUserApprovedProjects } from "@/services/projects";
 import { useState, useCallback } from "react";
-import UserModalDetails from "../UserModalDetails";
+import ProjectUserModalDetails from "../ProjectUserModalDetails";
 
 interface ProjectUserCardProps {
   projectUser: ProjectUser;
@@ -124,7 +124,7 @@ export default function ProjectUserCard({
         </Box>
       </CardContent>
 
-      <UserModalDetails
+      <ProjectUserModalDetails
         {...modalProps}
         projectUser={projectUser}
         onClose={handleCloseModal}

@@ -28,14 +28,13 @@ const StatusIndicator: React.FC<StatusIndicatorProps> = ({
   const dimension = sizes[size];
 
   return (
-    <Box display="flex" alignItems="center" sx={{ mx: 2 }}>
+    <Box display="flex" alignItems="center" sx={{ mx: 0 }}>
       <Box
         sx={{
           width: dimension,
           height: dimension,
           backgroundColor: color,
           borderRadius: "50%",
-          marginRight: 1.5,
         }}
       />
 

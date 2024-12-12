@@ -18,12 +18,12 @@ export default function ProjectsLegend() {
       icon: <IdentityVerifiedIcon />,
     },
     {
-      text: t("approvedUserProject"),
-      icon: <ApprovedUserIcon />,
-    },
-    {
       text: t("approvedProject"),
       icon: <ApprovedIcon />,
+    },
+    {
+      text: t("approvedUserProject"),
+      icon: <ApprovedUserIcon />,
     },
     {
       text: t("pendingProject"),
@@ -31,5 +31,15 @@ export default function ProjectsLegend() {
     },
   ];
 
-  return <Legend items={items} />;
+  return (
+    <Legend
+      items={items}
+      boxSx={{
+        display: "grid",
+        gridTemplateColumns: "repeat(2, 1fr)",
+        rowGap: 2,
+        columnGap: 2,
+      }}
+    />
+  );
 }

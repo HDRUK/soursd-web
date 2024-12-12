@@ -3,7 +3,7 @@ import { act, fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 import { axe } from "jest-axe";
 import { mockedUser } from "@/mocks/data/user";
 import { useRouter } from "next/navigation";
-import Sections from ".";
+import Projects from ".";
 
 jest.mock("@/data/store");
 jest.mock("next/navigation", () => ({
@@ -21,9 +21,9 @@ const defaultUser = mockedUser();
 
 (useStore as unknown as jest.Mock).mockReturnValue(defaultUser);
 
-const renderSections = () => render(<Sections />);
+const renderSections = () => render(<Projects />);
 
-describe("<Sections />", () => {
+describe("<Projects />", () => {
   beforeEach(() => {
     (useRouter as jest.Mock).mockReturnValue({
       push: mockedPush,
