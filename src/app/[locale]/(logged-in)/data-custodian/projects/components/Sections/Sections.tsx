@@ -3,7 +3,7 @@
 import { Message } from "@/components/Message";
 import OverlayCenter from "@/components/OverlayCenter";
 import PageSection from "@/modules/PageSection";
-import { getIssuerProjects } from "@/services/projects";
+import { getCustodianProjects } from "@/services/projects";
 import { CircularProgress, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { ISSUER_ID } from "@/consts/application";
@@ -25,12 +25,12 @@ export default function Sections() {
     page,
     setPage,
   } = usePaginatedQuery({
-    queryKeyBase: "getIssuerProjects",
+    queryKeyBase: "getCustodianProjects",
     queryFn: page =>
-      getIssuerProjects(ISSUER_ID, page, {
+      getCustodianProjects(ISSUER_ID, page, {
         // note: ISSUER_ID - need to update this as hard coded as 1!
         error: {
-          message: "getIssuerProjects",
+          message: "getCustodianProjects",
         },
       }),
   });
@@ -70,7 +70,7 @@ export default function Sections() {
       <PageSection sx={{ flexGrow: 1 }}>
         {isProjectsError && (
           <Message severity="error" sx={{ mb: 3 }}>
-            {t("getIssuerProjectsError")}
+            {t("getCustodianProjectsError")}
           </Message>
         )}
         {!isProjectsLoading && projectsData && (

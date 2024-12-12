@@ -32,7 +32,7 @@ export default function useMutatePermissions(type: EntityType, userId: number) {
   const sendRequest = (
     payload: Pick<
       UpdatePermissonsPayload | UpdateOrganisationPermissonsPayload,
-      "issuer_id" | "permissions"
+      "custodian_id" | "permissions"
     >
   ) => {
     if (type === EntityType.ORGANISATION) {

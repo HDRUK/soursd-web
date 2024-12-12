@@ -7,7 +7,7 @@ import Permissions, { PermissionsProps } from ".";
 
 const mockedProps = {
   userId: faker.number.int(),
-  issuerId: faker.number.int(),
+  custodianId: faker.number.int(),
   permissions: [
     mockedPermission({ id: 1 }),
     mockedPermission({ id: 2 }),
@@ -46,7 +46,7 @@ describe("<Permissions />", () => {
       expect(global.fetch).toHaveBeenCalledWith(
         `${process.env.NEXT_PUBLIC_API_V1_URL}/organisations/permissions`,
         expect.objectContaining({
-          body: `{"issuer_id":${mockedProps.issuerId},"permissions":[1,3],"organisation_id":${mockedProps.userId}}`,
+          body: `{"custodian_id":${mockedProps.custodianId},"permissions":[1,3],"organisation_id":${mockedProps.userId}}`,
         })
       );
     });
@@ -63,7 +63,7 @@ describe("<Permissions />", () => {
       expect(global.fetch).toHaveBeenCalledWith(
         `${process.env.NEXT_PUBLIC_API_V1_URL}/users/permissions`,
         expect.objectContaining({
-          body: `{"issuer_id":${mockedProps.issuerId},"permissions":[1,3],"user_id":${mockedProps.userId}}`,
+          body: `{"custodian_id":${mockedProps.custodianId},"permissions":[1,3],"user_id":${mockedProps.userId}}`,
         })
       );
     });

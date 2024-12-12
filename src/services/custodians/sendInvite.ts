@@ -1,11 +1,14 @@
 import { ResponseJson, ResponseTranslations } from "@/types/requests";
 import { handleJsonResponse, postRequest } from "../requests";
-import { SendIssuerInvitePayload, SendIssuerInviteResponse } from "./types";
+import {
+  SendCustodianInvitePayload,
+  SendCustodianInviteResponse,
+} from "./types";
 
 export default async (
-  payload: SendIssuerInvitePayload,
+  payload: SendCustodianInvitePayload,
   messages: ResponseTranslations
-): Promise<ResponseJson<SendIssuerInviteResponse>> => {
+): Promise<ResponseJson<SendCustodianInviteResponse>> => {
   const response = await postRequest(
     `${process.env.NEXT_PUBLIC_API_V1_URL}/trigger_email`,
     payload,

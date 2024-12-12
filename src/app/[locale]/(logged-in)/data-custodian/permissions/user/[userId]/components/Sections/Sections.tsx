@@ -84,7 +84,7 @@ export default function Sections({ userId }: SectionsProps) {
     (values: AssignOptionsFormValues) => {
       mutatePermissionsAsync({
         user_id: userId,
-        issuer_id: ISSUER_ID,
+        custodian_id: ISSUER_ID,
         permissions: convertStringsToNumbers(
           Object.keys(values).filter((key: string) => values[key])
         ),

@@ -1,13 +1,12 @@
 import { ResponseJson, ResponseTranslations } from "@/types/requests";
-import { deleteRequest, handleResponseError } from "../requests";
-import { GetIssuersUsersResponse } from "./types";
+import { getRequest, handleResponseError } from "../requests";
+import { GetCustodiansUsersResponse } from "./types";
 
 export default async (
-  id: number,
   messages?: ResponseTranslations
-): Promise<ResponseJson<GetIssuersUsersResponse>> => {
-  const response = await deleteRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/issuer_users/${id}`,
+): Promise<ResponseJson<GetCustodiansUsersResponse>> => {
+  const response = await getRequest(
+    `${process.env.NEXT_PUBLIC_API_V1_URL}/custodian_users`,
     undefined,
     {
       headers: {

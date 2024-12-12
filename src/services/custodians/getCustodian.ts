@@ -1,12 +1,13 @@
 import { ResponseJson, ResponseTranslations } from "@/types/requests";
 import { getRequest, handleResponseError } from "../requests";
-import { GetIssuersUsersResponse } from "./types";
+import { GetCustodianResponse } from "./types";
 
 export default async (
-  messages?: ResponseTranslations
-): Promise<ResponseJson<GetIssuersUsersResponse>> => {
+  id: string | number,
+  messages: ResponseTranslations
+): Promise<ResponseJson<GetCustodianResponse>> => {
   const response = await getRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/issuer_users`,
+    `${process.env.NEXT_PUBLIC_API_V1_URL}/custodians/${id}`,
     undefined,
     {
       headers: {

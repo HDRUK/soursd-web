@@ -99,7 +99,7 @@ export default function Sections({ userId, type }: SectionsProps) {
             <Permissions
               type={type}
               userId={userId}
-              issuerId={ISSUER_ID}
+              custodianId={ISSUER_ID}
               permissions={permissionsData?.data.data}
               userPermissions={userData?.data.permissions}
             />

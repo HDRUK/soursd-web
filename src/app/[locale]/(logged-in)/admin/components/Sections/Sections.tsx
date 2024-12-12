@@ -1,6 +1,6 @@
 "use client";
 
-import sendInvite from "@/services/issuers/sendInvite";
+import sendInvite from "@/services/custodians/sendInvite";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
@@ -11,8 +11,8 @@ import ApplicationLink from "@/components/ApplicationLink";
 import OverlayCenter from "@/components/OverlayCenter";
 import OverlayCenterAlert from "@/components/OverlayCenterAlert";
 import yup from "@/config/yup";
-import getIssuers from "@/services/issuers/getIssuers";
-import { SendIssuerInvitePayload } from "@/services/issuers/types";
+import getCustodians from "@/services/custodians/getCustodians";
+import { SendCustodianInvitePayload } from "@/services/custodians/types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
   Box,
@@ -53,13 +53,13 @@ export default function Sections() {
         to: yup
           .number()
           .positive()
-          .required(tValidation("issuerRequiredInvalid"))
+          .required(tValidation("custodianRequiredInvalid"))
           .min(1),
       }),
     []
   );
 
-  const methods = useForm<SendIssuerInvitePayload>({
+  const methods = useForm<SendCustodianInvitePayload>({
     resolver: yupResolver(schema),
     defaultValues: {
       to: 0,
@@ -68,7 +68,7 @@ export default function Sections() {
   });
 
   const handleSendInvite = useCallback(
-    async (payload: SendIssuerInvitePayload) => {
+    async (payload: SendCustodianInvitePayload) => {
       mutateInviteAsync({
         to: payload.to,
         type: EmailTypes.ISSUER,
@@ -79,20 +79,20 @@ export default function Sections() {
   );
 
   const {
-    isError: isGetIssuersError,
-    isLoading: isGetIssuersLoading,
-    data: issuersData,
+    isError: isGetCustodiansError,
+    isLoading: isGetCustodiansLoading,
+    data: custodiansData,
   } = useQuery({
-    queryKey: ["getIssuers"],
+    queryKey: ["getCustodians"],
     queryFn: () =>
-      getIssuers({
-        error: { message: "noDataIssuers" },
+      getCustodians({
+        error: { message: "noCustodians" },
       }),
   });
 
   const { register, handleSubmit } = methods;
 
-  if (isGetIssuersLoading) {
+  if (isGetCustodiansLoading) {
     return (
       <OverlayCenter sx={{ color: "#fff" }}>
         <CircularProgress color="inherit" />
@@ -100,10 +100,10 @@ export default function Sections() {
     );
   }
 
-  if (isGetIssuersError) {
+  if (isGetCustodiansError) {
     return (
       <OverlayCenterAlert>
-        {t.rich("noDataIssuers", {
+        {t.rich("noCustodians", {
           applicationLink: ApplicationLink,
         })}
       </OverlayCenterAlert>
@@ -114,32 +114,32 @@ export default function Sections() {
     <>
       <Accordion>
         <AccordionSummary
-          id="issuer-invite"
-          aria-controls="issuer-invite-content"
+          id="data-custodian-invite"
+          aria-controls="data-custodian-invite-content"
           expandIcon={<ArrowDropDownIcon />}>
-          <Typography>{t("issuerInviteTitle")}</Typography>
+          <Typography>{t("custodianInviteTitle")}</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography>{t("issuerInviteBody")}</Typography>
+          <Typography>{t("custodianInviteBody")}</Typography>
           <Typography variant="subtitle2">
-            {t("issuerInviteSubtitle")}
+            {t("custodianInviteSubtitle")}
           </Typography>
           <FormProvider {...methods}>
             <form onSubmit={handleSubmit(handleSendInvite)}>
               <Box display="flex" alignItems="center" gap={2}>
                 <FormControl sx={{ m: 3, minWidth: 340 }}>
-                  <InputLabel id="issuer-select-label">
-                    Select Issuer...
+                  <InputLabel id="data-custodian-select-label">
+                    Select Custodian...
                   </InputLabel>
                   <Select
                     {...register("to")}
-                    id="issuer-invite-select"
-                    labelId="issuer-select-label"
+                    id="data-custodian-invite-select"
+                    labelId="data-custodian-select-label"
                     inputProps={{
-                      "aria-label": "issuers",
+                      "aria-label": "custodians",
                     }}
-                    label="Select Issuer...">
-                    {issuersData?.data.data.map(({ id, name }) => (
+                    label="Select Custodian...">
+                    {custodiansData?.data.data.map(({ id, name }) => (
                       <MenuItem value={id} key={id}>
                         {name}
                       </MenuItem>
@@ -148,7 +148,7 @@ export default function Sections() {
                 </FormControl>
                 <FormControl>
                   <Button type="submit" color="secondary" variant="contained">
-                    {t("issuerInviteButton")}
+                    {t("custodianInviteButton")}
                   </Button>
                 </FormControl>
               </Box>

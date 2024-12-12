@@ -46,7 +46,7 @@ const mockedOrganisation = (
             invite_accepted_at: "2024-01-02T00:00:00z",
             invite_sent_at: "2024-01-01T00:00:00z",
             pivot: {
-              issuer_id: 1,
+              custodian_id: 1,
               organisation_id: 1,
             },
           },
