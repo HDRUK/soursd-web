@@ -18,43 +18,43 @@ const ROUTES: Routes = {
   },
   profileCustodian: {
     path: "/data-custodian/profile",
-    permissions: [UserGroup.ISSUERS],
+    permissions: [UserGroup.CUSTODIANS],
   },
   usersCustodian: {
     path: "/data-custodian/users",
-    permissions: [UserGroup.ISSUERS],
+    permissions: [UserGroup.CUSTODIANS],
   },
   permissionsResearcherCustodian: {
     path: "/data-custodian/permissions/user",
-    permissions: [UserGroup.ISSUERS],
+    permissions: [UserGroup.CUSTODIANS],
   },
   permissionsOrganisationCustodian: {
     path: "/data-custodian/permissions/organisation",
-    permissions: [UserGroup.ISSUERS],
+    permissions: [UserGroup.CUSTODIANS],
   },
   profileCustodianDetails: {
     path: "/data-custodian/profile/details",
-    permissions: [UserGroup.ISSUERS],
+    permissions: [UserGroup.CUSTODIANS],
   },
   profileCustodianProjects: {
     path: "/data-custodian/profile/projects",
-    permissions: [UserGroup.ISSUERS],
+    permissions: [UserGroup.CUSTODIANS],
   },
   profileCustodianOrganisations: {
     path: "/data-custodian/profile/organisations",
-    permissions: [UserGroup.ISSUERS],
+    permissions: [UserGroup.CUSTODIANS],
   },
   profileCustodianConfiguration: {
     path: "/data-custodian/profile/configuration",
-    permissions: [UserGroup.ISSUERS],
+    permissions: [UserGroup.CUSTODIANS],
   },
   profileCustodianUsers: {
     path: "/data-custodian/profile/users",
-    permissions: [UserGroup.ISSUERS],
+    permissions: [UserGroup.CUSTODIANS],
   },
   profileCustodianKeycards: {
     path: "/data-custodian/profile/keycards",
-    permissions: [UserGroup.ISSUERS],
+    permissions: [UserGroup.CUSTODIANS],
   },
   profileResearcherExperience: {
     path: "/user/profile/experience",

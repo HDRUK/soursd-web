@@ -1,4 +1,4 @@
-import { ISSUER_ID } from "@/consts/application";
+import { CUSTODIAN_ID } from "@/consts/application";
 import useQueriesCombined from "@/hooks/useQueriesCombined";
 import { getCustodian } from "@/services/custodians";
 import { getOrganisation } from "@/services/organisations";
@@ -45,7 +45,7 @@ export default function useApplicationDependencies({
       enabled: !!user.organisation_id,
     },
     {
-      queryKey: ["getCustodian", ISSUER_ID],
+      queryKey: ["getCustodian", CUSTODIAN_ID],
       queryFn: ({ queryKey }) =>
         getCustodian(queryKey[1], {
           error: {

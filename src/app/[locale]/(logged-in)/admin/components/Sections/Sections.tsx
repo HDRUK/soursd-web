@@ -71,8 +71,8 @@ export default function Sections() {
     async (payload: SendCustodianInvitePayload) => {
       mutateInviteAsync({
         to: payload.to,
-        type: EmailTypes.ISSUER,
-        identifier: EmailTemplates.ISSUER_INVITE,
+        type: EmailTypes.CUSTODIAN,
+        identifier: EmailTemplates.CUSTODIAN_INVITE,
       });
     },
     []

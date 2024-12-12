@@ -39,7 +39,7 @@ interface ActiveUserData {
 
 const NAMESPACE_TRANSLATIONS_USERS_LIST = "UsersList";
 
-const ISSUER_ID = 1;
+const CUSTODIAN_ID = 1;
 
 export default function OrganisationUsersList({
   organisation,
@@ -81,7 +81,7 @@ export default function OrganisationUsersList({
               user,
             }) => {
               const isApproved = approvals.some(
-                ({ id: custodianId }) => custodianId === ISSUER_ID
+                ({ id: custodianId }) => custodianId === CUSTODIAN_ID
               );
 
               return (
@@ -135,7 +135,7 @@ export default function OrganisationUsersList({
                               {
                                 type: EntityType.RESEARCHER,
                                 user_id: id,
-                                custodian_id: ISSUER_ID,
+                                custodian_id: CUSTODIAN_ID,
                               },
                               isApproved
                             )

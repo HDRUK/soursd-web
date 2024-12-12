@@ -1,5 +1,5 @@
 enum EmailTypes {
-  ISSUER = "custodian",
+  CUSTODIAN = "custodian",
   RESEARCHER = "researcher",
   ORGANISATION = "organisation",
 }
