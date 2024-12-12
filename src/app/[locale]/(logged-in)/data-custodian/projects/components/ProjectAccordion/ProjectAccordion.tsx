@@ -10,35 +10,36 @@ import FolderOpenIcon from "@mui/icons-material/FolderOpen";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
-
+import { useStore } from "@/data/store";
 import { useQuery } from "@tanstack/react-query";
 import ProjectUserList from "../ProjectUserList";
 
 interface ProjectAccordionProps {
   project: ResearcherProject;
-  first: boolean;
 }
 
-const ProjectAccordion = ({ project, first }: ProjectAccordionProps) => {
+const ProjectAccordion = ({ project }: ProjectAccordionProps) => {
   const {
-    affiliate_id,
     title: projectTitle,
     unique_id: projectUniqueId,
     approvals,
   } = project;
 
+  const organisation = useStore(store => store.getOrganisation());
+  const { id: organisationId } = organisation || {};
+
   const { data: organisationData } = useQuery({
-    queryKey: ["getOrganisationDetailsForIssuer", affiliate_id],
+    queryKey: ["getOrganisationDetailsForCustodian", organisationId],
     queryFn: ({ queryKey }) => {
       const [, id] = queryKey;
 
       return getOrganisation(id, {
         error: {
-          message: "getOrganisationDetailsForIssuerError",
+          message: "getOrganisationDetailsForCustodianError",
         },
       });
     },
-    enabled: !!affiliate_id,
+    enabled: !!organisationId,
   });
 
   const { organisation_name } = organisationData?.data || {};
@@ -46,13 +47,14 @@ const ProjectAccordion = ({ project, first }: ProjectAccordionProps) => {
   const ariaId = organisation_name?.replace(/[^\w]*/g, "");
 
   const isApproved =
-    approvals?.filter(a => a.issuer_id === affiliate_id).length > 0;
+    approvals?.filter(a => a.custodian_id === organisationId).length > 0;
+
   const accordianColor = isApproved
     ? PALETTE_THEME_PURPLE_BLUE.palette.success.light
     : PALETTE_THEME_PURPLE_BLUE.palette.error.light;
 
   return (
-    <Accordion key={organisation_name} defaultExpanded={first}>
+    <Accordion key={organisation_name}>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         sx={{ backgroundColor: accordianColor, color: "white" }}

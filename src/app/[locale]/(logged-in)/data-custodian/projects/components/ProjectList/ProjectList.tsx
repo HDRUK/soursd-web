@@ -12,11 +12,10 @@ export default function ProjectList({ projects }: ProjectListProps) {
 
   return (
     <>
-      {projects.map((project, i) => (
+      {projects.map(project => (
         <ProjectAccordion
           key={`project_accordion_${project.id}`}
           project={project}
-          first={i === 0}
         />
       ))}
     </>

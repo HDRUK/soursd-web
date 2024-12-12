@@ -28,7 +28,7 @@ export default function Details() {
     isPending: isLoading,
     error,
   } = useMutation({
-    mutationKey: ["patchIssuer", organisation?.id],
+    mutationKey: ["patchCustodian", organisation?.id],
     mutationFn: (payload: PatchOrganisationPayload) =>
       patchOrganisation(organisation?.id, payload, {
         error: {

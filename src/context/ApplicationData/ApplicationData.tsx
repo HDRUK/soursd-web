@@ -58,9 +58,9 @@ const ApplicationDataProvider = ({
     store.setOrganisation,
   ]);
 
-  const [issuer, setIssuer] = useStore(store => [
-    store.config.issuer,
-    store.setIssuer,
+  const [custodian, setCustodian] = useStore(store => [
+    store.config.custodian,
+    store.setCustodian,
   ]);
 
   const [sectors, setSectors] = useStore(store => [
@@ -82,8 +82,8 @@ const ApplicationDataProvider = ({
     getSystemConfig: systemConfigData,
     getUser: userData,
     getOrganisation: organisationData,
-    getIssuer: issuerData,
     getSectors: sectorsData,
+    getCustodian: custodianData,
   } = applicationData;
 
   useEffect(() => {
@@ -104,8 +104,8 @@ const ApplicationDataProvider = ({
   }, [organisationData?.data]);
 
   useEffect(() => {
-    setIssuer(issuerData?.data);
-  }, [issuerData?.data]);
+    setCustodian(custodianData?.data);
+  }, [custodianData?.data]);
 
   useEffect(() => {
     setSectors(sectorsData?.data?.data);
@@ -126,7 +126,11 @@ const ApplicationDataProvider = ({
   }, [!!systemConfigData?.data, value]);
 
   const isFinishedLoading =
-    user && sectors && organisation && !isApplicationLoading && issuer;
+    user &&
+    ((me.organisation_id && organisation) || !me.organisation_id) &&
+    !isApplicationLoading &&
+    custodian &&
+    sectors;
 
   return (
     <ApplicationDataContext.Provider value={providerValue}>

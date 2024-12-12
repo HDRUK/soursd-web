@@ -1,13 +1,14 @@
 import { ResponseJson, ResponseTranslations } from "@/types/requests";
-import { handleResponseError, postRequest } from "../requests";
-import { PostIssuerUserPayload, PostIssuerUserResponse } from "./types";
+import { handleResponseError, patchRequest } from "../requests";
+import { PatchCustodianUserPayload, PatchCustodianUserResponse } from "./types";
 
 export default async (
-  payload: PostIssuerUserPayload,
+  userId: number,
+  payload: PatchCustodianUserPayload,
   messages: ResponseTranslations
-): Promise<ResponseJson<PostIssuerUserResponse>> => {
-  const response = await postRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/issuer_users`,
+): Promise<ResponseJson<PatchCustodianUserResponse>> => {
+  const response = await patchRequest(
+    `${process.env.NEXT_PUBLIC_API_V1_URL}/custodian_users/${userId}`,
     payload,
     {
       headers: {

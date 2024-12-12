@@ -7,7 +7,7 @@ import TabsContents from "./components/TabsContents";
 import TabsSections from "./components/TabsSections";
 import { PageTabs } from "./consts/tabs";
 
-const NAMESPACE_TRANSLATIONS_PROFILE = "IssuerProfile";
+const NAMESPACE_TRANSLATIONS_PROFILE = "CustodianProfile";
 
 interface PageProps extends ConfigProps {
   params: {
@@ -19,7 +19,7 @@ function Page({ params: { tabId }, config }: PageProps) {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_PROFILE);
 
   if (!Object.values(PageTabs).includes(tabId)) {
-    redirect(config.routes.profileIssuerDetails.path);
+    redirect(config.routes.profileCustodianDetails.path);
   }
 
   return (

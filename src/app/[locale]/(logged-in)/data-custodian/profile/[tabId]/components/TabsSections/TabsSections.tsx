@@ -12,7 +12,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { PageTabs } from "../../consts/tabs";
 
-const NAMESPACE_TRANSLATION_PROFILE = "IssuerProfile";
+const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 
 export default function TabsSections() {
   const { routes } = useApplicationData();
@@ -32,7 +32,7 @@ export default function TabsSections() {
         <Tab
           icon={<EditNoteOutlinedIcon />}
           label={t("details")}
-          href={routes.profileIssuerDetails.path}
+          href={routes.profileCustodianDetails.path}
           component={Link}
           value={PageTabs.DETAILS}
           iconPosition="start"
@@ -40,7 +40,7 @@ export default function TabsSections() {
         <Tab
           icon={<LanguageIcon />}
           label={t("projects")}
-          href={routes.profileIssuerProjects.path}
+          href={routes.profileCustodianProjects.path}
           component={Link}
           value={PageTabs.PROJECTS}
           iconPosition="start"
@@ -48,7 +48,7 @@ export default function TabsSections() {
         <Tab
           icon={<EditNoteOutlinedIcon />}
           label={t("organisations")}
-          href={routes.profileIssuerOrganisations.path}
+          href={routes.profileCustodianOrganisations.path}
           component={Link}
           value={PageTabs.ORGANISATIONS}
           iconPosition="start"
@@ -56,7 +56,7 @@ export default function TabsSections() {
         <Tab
           icon={<GroupOutlinedIcon />}
           label={t("users")}
-          href={routes.profileIssuerUsers.path}
+          href={routes.profileCustodianUsers.path}
           component={Link}
           value={PageTabs.USERS}
           iconPosition="start"
@@ -64,7 +64,7 @@ export default function TabsSections() {
         <Tab
           icon={<SettingsIcon />}
           label={t("configuration")}
-          href={routes.profileIssuerConfiguration.path}
+          href={routes.profileCustodianConfiguration.path}
           component={Link}
           value={PageTabs.CONFIGURATION}
           iconPosition="start"
@@ -72,7 +72,7 @@ export default function TabsSections() {
         <Tab
           icon={<CreditCardOutlinedIcon />}
           label={t("keycards")}
-          href={routes.profileIssuerKeycards.path}
+          href={routes.profileCustodianKeycards.path}
           component={Link}
           value={PageTabs.KEYCARDS}
           iconPosition="start"

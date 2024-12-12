@@ -5,8 +5,8 @@ import FormControlHorizontal from "@/components/FormControlHorizontal";
 import { Message } from "@/components/Message";
 import Postit from "@/components/Postit";
 import yup from "@/config/yup";
-import { patchIssuer, PatchIssuerPayload } from "@/services/issuers";
-import { Issuer } from "@/types/application";
+import { patchCustodian, PatchCustodianPayload } from "@/services/custodians";
+import { Custodian } from "@/types/application";
 import { yupResolver } from "@hookform/resolvers/yup";
 import SaveIcon from "@mui/icons-material/Save";
 import { LoadingButton } from "@mui/lab";
@@ -24,13 +24,13 @@ export interface DetailsFormValues {
 }
 
 export interface DetailsProps {
-  issuer: Issuer;
+  custodian: Custodian;
 }
 
 const NAMESPACE_TRANSLATION_FORM = "Form";
-const NAMESPACE_TRANSLATION_PROFILE = "IssuerProfile";
+const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 
-export default function Details({ issuer }: DetailsProps) {
+export default function Details({ custodian }: DetailsProps) {
   const queryClient = useQueryClient();
   const theme = useTheme();
 
@@ -40,9 +40,9 @@ export default function Details({ issuer }: DetailsProps) {
     isPending: isUpdateLoading,
     error: updateError,
   } = useMutation({
-    mutationKey: ["patchIssuer", issuer.id],
-    mutationFn: (payload: PatchIssuerPayload) =>
-      patchIssuer(issuer.id, payload, {
+    mutationKey: ["patchCustodian", custodian.id],
+    mutationFn: (payload: PatchCustodianPayload) =>
+      patchCustodian(custodian.id, payload, {
         error: {
           message: "submitError",
         },
@@ -55,12 +55,12 @@ export default function Details({ issuer }: DetailsProps) {
   const handleDetailsSubmit = useCallback(
     async (payload: DetailsFormValues) => {
       await mutateUpdateAsync({
-        ...issuer,
+        ...custodian,
         ...payload,
       });
 
       queryClient.refetchQueries({
-        queryKey: ["getIssuer", issuer.id],
+        queryKey: ["getCustodian", custodian.id],
       });
     },
     []
@@ -82,9 +82,9 @@ export default function Details({ issuer }: DetailsProps) {
   const methods = useForm<DetailsFormValues>({
     resolver: yupResolver(schema),
     defaultValues: {
-      name: issuer.name,
-      contact_email: issuer.contact_email,
-      idvt_required: issuer.idvt_required,
+      name: custodian.name,
+      contact_email: custodian.contact_email,
+      idvt_required: custodian.idvt_required,
     },
     disabled: isUpdateLoading,
   });
@@ -110,7 +110,7 @@ export default function Details({ issuer }: DetailsProps) {
             fontWeight: 500,
             mb: 1,
           }}>
-          {issuer.unique_identifier}
+          {custodian.unique_identifier}
         </Typography>
         <Typography>{tProfile("uniqueIdentifierCaption")}</Typography>
       </Postit>

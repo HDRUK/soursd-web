@@ -4,7 +4,7 @@ import { act, render, screen, waitFor } from "@/utils/testUtils";
 import { axe } from "jest-axe";
 import Users from "./Users";
 
-jest.mock("@/services/issuers");
+jest.mock("@/services/custodians");
 jest.mock("@/data/store");
 
 const defaultUser = mockedUser();

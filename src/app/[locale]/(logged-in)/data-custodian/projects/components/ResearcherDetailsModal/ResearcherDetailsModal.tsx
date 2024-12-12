@@ -31,13 +31,13 @@ export default function ResearcherDetailsModal({
     isLoading: isUserLoading,
     error: userError,
   } = useQuery({
-    queryKey: ["getUserDetailsForIssuer", user?.id],
+    queryKey: ["getUserDetailsForCustodian", user?.id],
     queryFn: ({ queryKey }) => {
       const [, id] = queryKey;
 
       return getUser(id, {
         error: {
-          message: "getUserDetailsForIssuerError",
+          message: "getUserDetailsForCustodianError",
         },
       });
     },

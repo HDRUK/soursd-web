@@ -16,45 +16,45 @@ const ROUTES: Routes = {
   homepage: {
     path: "/homepage",
   },
-  profileIssuer: {
+  profileCustodian: {
     path: "/data-custodian/profile",
-    permissions: [UserGroup.ISSUERS],
+    permissions: [UserGroup.CUSTODIANS],
   },
-  usersIssuer: {
+  usersCustodian: {
     path: "/data-custodian/users",
-    permissions: [UserGroup.ISSUERS],
+    permissions: [UserGroup.CUSTODIANS],
   },
-  permissionsResearcherIssuer: {
+  permissionsResearcherCustodian: {
     path: "/data-custodian/permissions/user",
-    permissions: [UserGroup.ISSUERS],
+    permissions: [UserGroup.CUSTODIANS],
   },
-  permissionsOrganisationIssuer: {
+  permissionsOrganisationCustodian: {
     path: "/data-custodian/permissions/organisation",
-    permissions: [UserGroup.ISSUERS],
+    permissions: [UserGroup.CUSTODIANS],
   },
-  profileIssuerDetails: {
+  profileCustodianDetails: {
     path: "/data-custodian/profile/details",
-    permissions: [UserGroup.ISSUERS],
+    permissions: [UserGroup.CUSTODIANS],
   },
-  profileIssuerProjects: {
+  profileCustodianProjects: {
     path: "/data-custodian/profile/projects",
-    permissions: [UserGroup.ISSUERS],
+    permissions: [UserGroup.CUSTODIANS],
   },
-  profileIssuerOrganisations: {
+  profileCustodianOrganisations: {
     path: "/data-custodian/profile/organisations",
-    permissions: [UserGroup.ISSUERS],
+    permissions: [UserGroup.CUSTODIANS],
   },
-  profileIssuerConfiguration: {
+  profileCustodianConfiguration: {
     path: "/data-custodian/profile/configuration",
-    permissions: [UserGroup.ISSUERS],
+    permissions: [UserGroup.CUSTODIANS],
   },
-  profileIssuerUsers: {
+  profileCustodianUsers: {
     path: "/data-custodian/profile/users",
-    permissions: [UserGroup.ISSUERS],
+    permissions: [UserGroup.CUSTODIANS],
   },
-  profileIssuerKeycards: {
+  profileCustodianKeycards: {
     path: "/data-custodian/profile/keycards",
-    permissions: [UserGroup.ISSUERS],
+    permissions: [UserGroup.CUSTODIANS],
   },
   profileResearcherExperience: {
     path: "/user/profile/experience",

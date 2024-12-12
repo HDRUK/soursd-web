@@ -1,13 +1,13 @@
-import { ISSUER_ID } from "@/consts/application";
+import { CUSTODIAN_ID } from "@/consts/application";
 import useQueriesCombined from "@/hooks/useQueriesCombined";
-import { getIssuer } from "@/services/issuers";
+import { getCustodian } from "@/services/custodians";
 import { getOrganisation } from "@/services/organisations";
 import { getSectors } from "@/services/sectors";
 import { SectorsResponse } from "@/services/sectors/types";
 import { getSystemConfig } from "@/services/system_config";
 import { GetSystemConfigResponse } from "@/services/system_config/types";
 import { getUser } from "@/services/users";
-import { Issuer, Organisation, User } from "@/types/application";
+import { Custodian, Organisation, User } from "@/types/application";
 import { Paged, ResponseJson } from "@/types/requests";
 
 interface UseApplicationDependenciesProps {
@@ -37,21 +37,21 @@ export default function useApplicationDependencies({
         }),
     },
     {
-      queryKey: ["getOrganisation", 1],
+      queryKey: ["getOrganisation", user?.organisation_id],
       queryFn: ({ queryKey }) =>
         getOrganisation(queryKey[1], {
           error: {
             message: "getOrganisationError",
           },
         }),
-      enabled: !!1,
+      enabled: !!user?.organisation_id,
     },
     {
-      queryKey: ["getIssuer", ISSUER_ID],
+      queryKey: ["getCustodian", CUSTODIAN_ID],
       queryFn: ({ queryKey }) =>
-        getIssuer(queryKey[1], {
+        getCustodian(queryKey[1], {
           error: {
-            message: "getIssuerError",
+            message: "getCustodianError",
           },
         }),
     },
@@ -70,7 +70,7 @@ export default function useApplicationDependencies({
     getSystemConfig: ResponseJson<GetSystemConfigResponse>;
     getUser: ResponseJson<User>;
     getOrganisation: ResponseJson<Organisation>;
-    getIssuer: ResponseJson<Issuer>;
     getSectors: ResponseJson<Paged<SectorsResponse>>;
+    getCustodian: ResponseJson<Custodian>;
   }>(queries);
 }
