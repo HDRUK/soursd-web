@@ -2,7 +2,7 @@ import { Box, css, styled, TextField } from "@mui/material";
 
 export const StyledSearchBar = styled(Box)(
   ({ theme }) => css`
-    background-color: ${theme.palette.primary.light};
+    background-color: ${theme.palette.background1.lightPurple};
     border-radius: 30px;
     padding: 10px 10px;
     display: flex;
