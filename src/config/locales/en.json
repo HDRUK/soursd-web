@@ -368,11 +368,12 @@
     "alsoApprovedOn": "Also Approved On: {projects} "
   },
   "ProjectList": {
-    "getCustodianProjectsError": "No projects found",
+    "getOrganisationProjectsError": "No projects found",
     "loadingAriaLabel": "Loading project data",
     "title": "Projects",
     "approvedKey": "Approved Project",
-    "unapprovedKey": "Project Pending Approval"
+    "unapprovedKey": "Project Pending Approval",
+    "searchPlaceholder": "Search Projects"
   },
   "Error": {
     "login": {

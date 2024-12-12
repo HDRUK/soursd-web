@@ -1,11 +1,11 @@
 import getProjects from "./getProjects";
-import getCustodianProjects from "./getCustodianProjects";
+import getOrganisationProjects from "./getOrganisationProjects";
 import getProjectUsers from "./getProjectUsers";
 import getUserApprovedProjects from "./getUserApprovedProjects";
 
 export {
   getProjects,
-  getCustodianProjects,
+  getOrganisationProjects,
   getProjectUsers,
   getUserApprovedProjects,
 };

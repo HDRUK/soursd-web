@@ -3,19 +3,23 @@
 import { Message } from "@/components/Message";
 import OverlayCenter from "@/components/OverlayCenter";
 import PageSection from "@/modules/PageSection";
-import { getCustodianProjects } from "@/services/projects";
+import { getOrganisationProjects } from "@/services/projects";
 import { CircularProgress, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { ISSUER_ID } from "@/consts/application";
 import StatusIndicator from "@/components/StatusIndicator";
 import Pagination from "@/components/Pagination";
 import usePaginatedQuery from "@/hooks/usePaginatedQuery";
+import SearchBar from "@/components/SearchBar";
+import { useStore } from "@/data/store";
 import ProjectList from "../ProjectList";
 
 const NAMESPACE_TRANSLATIONS_PROJECT_LIST = "ProjectList";
 
 export default function Sections() {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_PROJECT_LIST);
+
+  const organisation = useStore(store => store.getOrganisation());
+  const { id: organisationId } = organisation || {};
 
   const {
     data: projectsData,
@@ -24,15 +28,16 @@ export default function Sections() {
     last_page,
     page,
     setPage,
+    onSearch,
   } = usePaginatedQuery({
-    queryKeyBase: "getCustodianProjects",
-    queryFn: page =>
-      getCustodianProjects(ISSUER_ID, page, {
-        // note: ISSUER_ID - need to update this as hard coded as 1!
+    queryKeyBase: "getOrganisationProjects",
+    queryFn: queryParams =>
+      getOrganisationProjects(organisationId, queryParams, {
         error: {
-          message: "getCustodianProjects",
+          message: "getOrganisationProjects",
         },
       }),
+    enabled: !!organisationId,
   });
 
   return (
@@ -51,8 +56,10 @@ export default function Sections() {
           gap: 2,
         }}>
         <PageSection sx={{ display: "flex", flex: 1 }}>
-          {" "}
-          Search bar to go here...{" "}
+          <SearchBar
+            onSearch={text => onSearch("title", text)}
+            placeholder={t("searchPlaceholder")}
+          />
         </PageSection>
         <PageSection sx={{ display: "flex", flex: 1, gap: 2 }}>
           <StatusIndicator
@@ -70,7 +77,7 @@ export default function Sections() {
       <PageSection sx={{ flexGrow: 1 }}>
         {isProjectsError && (
           <Message severity="error" sx={{ mb: 3 }}>
-            {t("getCustodianProjectsError")}
+            {t("getOrganisationProjectsError")}
           </Message>
         )}
         {!isProjectsLoading && projectsData && (

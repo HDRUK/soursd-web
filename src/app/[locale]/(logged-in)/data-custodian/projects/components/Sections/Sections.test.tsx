@@ -2,9 +2,20 @@ import { useStore } from "@/data/store";
 import { act, fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 import { axe } from "jest-axe";
 import { mockedUser } from "@/mocks/data/user";
+import { useRouter } from "next/navigation";
 import Sections from ".";
 
 jest.mock("@/data/store");
+jest.mock("next/navigation", () => ({
+  useParams: jest.fn(),
+  usePathname: jest.fn(),
+  useSearchParams: jest.fn(),
+  useRouter: jest.fn(() => ({
+    push: jest.fn(),
+  })),
+}));
+
+const mockedPush = jest.fn();
 
 const defaultUser = mockedUser();
 
@@ -13,6 +24,12 @@ const defaultUser = mockedUser();
 const renderSections = () => render(<Sections />);
 
 describe("<Sections />", () => {
+  beforeEach(() => {
+    (useRouter as jest.Mock).mockReturnValue({
+      push: mockedPush,
+    });
+  });
+
   it("has no accessibility violations", async () => {
     const { container } = renderSections();
 
