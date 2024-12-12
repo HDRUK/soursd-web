@@ -7,7 +7,6 @@ import { getOrganisationProjects } from "@/services/projects";
 import { CircularProgress, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useStore } from "@/data/store";
-import StatusIndicator from "@/components/StatusIndicator";
 import Pagination from "@/components/Pagination";
 import usePaginatedQuery from "@/hooks/usePaginatedQuery";
 import SearchBar from "@/modules/SearchBar";
@@ -53,22 +52,22 @@ export default function Sections() {
 
   const searchActions = [
     {
-      label: "Sort Alphabetical A-Z",
+      label: t("sortActions.AZ"),
       onClick: () => handleSortToggle("title", "asc"),
       checked: sortDirection === "asc",
     },
     {
-      label: "Sort Alphabetical Z-A",
+      label: t("sortActions.ZA"),
       onClick: () => handleSortToggle("title", "desc"),
       checked: sortDirection === "desc",
     },
     {
-      label: "Approved project",
+      label: t("sortActions.approved"),
       onClick: () => handleFieldToggle("approved", ["1", ""]),
       checked: queryParams.approved === "1",
     },
     {
-      label: "Project pending approval",
+      label: t("sortActions.pending"),
       onClick: () => handleFieldToggle("approved", ["0", ""]),
       checked: queryParams.approved === "0",
     },
@@ -95,12 +94,6 @@ export default function Sections() {
         </PageSection>
         <PageSection sx={{ display: "flex", flex: 1, gap: 2 }}>
           <ProjectsLegend />
-          {/*<StatusIndicator
-            variant="success"
-            size="large"
-            label={t("approvedKey")}
-          />
-          */}
         </PageSection>
       </PageSection>
       <PageSection sx={{ flexGrow: 1 }}>

@@ -373,7 +373,13 @@
     "title": "Projects",
     "approvedKey": "Approved Project",
     "unapprovedKey": "Project Pending Approval",
-    "searchPlaceholder": "Search Projects"
+    "searchPlaceholder": "Search Projects",
+    "sortActions": {
+      "AZ": "Sort Alphabetical A-Z",
+      "ZA": "Sort Alphabetical Z-A",
+      "approved": "Approved project",
+      "pending": "Project pending approval"
+    }
   },
   "Error": {
     "login": {
