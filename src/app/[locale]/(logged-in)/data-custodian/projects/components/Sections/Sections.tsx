@@ -6,11 +6,12 @@ import PageSection from "@/modules/PageSection";
 import { getOrganisationProjects } from "@/services/projects";
 import { CircularProgress, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
+import { useStore } from "@/data/store";
 import StatusIndicator from "@/components/StatusIndicator";
 import Pagination from "@/components/Pagination";
 import usePaginatedQuery from "@/hooks/usePaginatedQuery";
-import SearchBar from "@/components/SearchBar";
-import { useStore } from "@/data/store";
+import SearchBar from "@/modules/SearchBar";
+import SearchActionMenu from "@/modules/SearchActionMenu";
 import ProjectList from "../ProjectList";
 
 const NAMESPACE_TRANSLATIONS_PROJECT_LIST = "ProjectList";
@@ -28,9 +29,15 @@ export default function Sections() {
     last_page,
     page,
     setPage,
-    onSearch,
+    updateQueryParam,
+    handleSortToggle,
+    handleFieldToggle,
+    queryParams,
   } = usePaginatedQuery({
     queryKeyBase: "getOrganisationProjects",
+    defaultQueryParams: {
+      sort: "title:asc",
+    },
     queryFn: queryParams =>
       getOrganisationProjects(organisationId, queryParams, {
         error: {
@@ -39,6 +46,32 @@ export default function Sections() {
       }),
     enabled: !!organisationId,
   });
+
+  const sortDirection =
+    typeof queryParams?.sort === "string" && queryParams?.sort.split(":")[1];
+
+  const searchActions = [
+    {
+      label: "Sort Alphabetical A-Z",
+      onClick: () => handleSortToggle("title", "asc"),
+      checked: sortDirection === "asc",
+    },
+    {
+      label: "Sort Alphabetical Z-A",
+      onClick: () => handleSortToggle("title", "desc"),
+      checked: sortDirection === "desc",
+    },
+    {
+      label: "Approved project",
+      onClick: () => handleFieldToggle("approved", ["1", ""]),
+      checked: queryParams.approved === "1",
+    },
+    {
+      label: "Project pending approval",
+      onClick: () => handleFieldToggle("approved", ["0", ""]),
+      checked: queryParams.approved === "0",
+    },
+  ];
 
   return (
     <>
@@ -57,9 +90,10 @@ export default function Sections() {
         }}>
         <PageSection sx={{ display: "flex", flex: 1 }}>
           <SearchBar
-            onSearch={text => onSearch("title", text)}
+            onSearch={text => updateQueryParam("title[]", text)}
             placeholder={t("searchPlaceholder")}
           />
+          <SearchActionMenu actions={searchActions} />
         </PageSection>
         <PageSection sx={{ display: "flex", flex: 1, gap: 2 }}>
           <StatusIndicator

@@ -16,10 +16,9 @@ import ProjectUserList from "../ProjectUserList";
 
 interface ProjectAccordionProps {
   project: ResearcherProject;
-  first: boolean;
 }
 
-const ProjectAccordion = ({ project, first }: ProjectAccordionProps) => {
+const ProjectAccordion = ({ project }: ProjectAccordionProps) => {
   const {
     title: projectTitle,
     unique_id: projectUniqueId,
@@ -49,12 +48,13 @@ const ProjectAccordion = ({ project, first }: ProjectAccordionProps) => {
 
   const isApproved =
     approvals?.filter(a => a.custodian_id === organisationId).length > 0;
+
   const accordianColor = isApproved
     ? PALETTE_THEME_PURPLE_BLUE.palette.success.light
     : PALETTE_THEME_PURPLE_BLUE.palette.error.light;
 
   return (
-    <Accordion key={organisation_name} defaultExpanded={first}>
+    <Accordion key={organisation_name}>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         sx={{ backgroundColor: accordianColor, color: "white" }}
