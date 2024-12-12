@@ -6,7 +6,6 @@ import PageSection from "@/modules/PageSection";
 import { getOrganisationProjects } from "@/services/projects";
 import { CircularProgress, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
 import { useStore } from "@/data/store";
 import StatusIndicator from "@/components/StatusIndicator";
 import Pagination from "@/components/Pagination";
@@ -31,8 +30,14 @@ export default function Sections() {
     page,
     setPage,
     updateQueryParam,
+    handleSortToggle,
+    handleFieldToggle,
+    queryParams,
   } = usePaginatedQuery({
     queryKeyBase: "getOrganisationProjects",
+    defaultQueryParams: {
+      sort: "title:asc",
+    },
     queryFn: queryParams =>
       getOrganisationProjects(organisationId, queryParams, {
         error: {
@@ -42,49 +47,29 @@ export default function Sections() {
     enabled: !!organisationId,
   });
 
-  const [sortTitleDirection, setSortTitleDirection] = useState<string | null>(
-    "asc"
-  );
-  const [approvalStatus, setApprovalStatus] = useState<boolean | null>(null);
-
-  const handleApprovalToggle = (status: boolean) => {
-    const newStatus = approvalStatus === status ? null : status;
-    setApprovalStatus(newStatus);
-    updateQueryParam(
-      "approved",
-      newStatus === null ? "" : newStatus === true ? "1" : "0"
-    );
-  };
-
-  const handleSortToggle = (field: string, direction: string) => {
-    const newDirection = sortTitleDirection === direction ? null : direction;
-    setSortTitleDirection(newDirection);
-    updateQueryParam(
-      "sort",
-      newDirection === null ? "" : `${field}:${newDirection}`
-    );
-  };
+  const sortDirection =
+    typeof queryParams?.sort === "string" && queryParams?.sort.split(":")[1];
 
   const searchActions = [
     {
       label: "Sort Alphabetical A-Z",
       onClick: () => handleSortToggle("title", "asc"),
-      checked: sortTitleDirection === "asc",
+      checked: sortDirection === "asc",
     },
     {
       label: "Sort Alphabetical Z-A",
       onClick: () => handleSortToggle("title", "desc"),
-      checked: sortTitleDirection === "desc",
+      checked: sortDirection === "desc",
     },
     {
       label: "Approved project",
-      onClick: () => handleApprovalToggle(true),
-      checked: approvalStatus === true,
+      onClick: () => handleFieldToggle("approved", ["1", ""]),
+      checked: queryParams.approved === "1",
     },
     {
       label: "Project pending approval",
-      onClick: () => handleApprovalToggle(false),
-      checked: approvalStatus === false,
+      onClick: () => handleFieldToggle("approved", ["0", ""]),
+      checked: queryParams.approved === "0",
     },
   ];
 
