@@ -23,6 +23,7 @@ import { useState } from "react";
 import OrganisationDetailsModal from "../OrganisationDetailsModal";
 import OrganisationUsersList from "../OrganisationUsersList";
 import { mockedOrganisation } from "@/mocks/data/organisation";
+import OrganisationStats from "../OrganisationStats";
 
 interface OrganisationsListProps {
   organisations: Organisation[];
@@ -146,6 +147,7 @@ export default function OrganisationsList({
                 </AccordionTitle>
               </AccordionSummary>
               <AccordionDetails>
+                <OrganisationStats />
                 <OrganisationUsersList
                   queryState={queryState}
                   organisation={mockedOrganisation({

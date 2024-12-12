@@ -102,8 +102,9 @@ interface User {
   orcid_scanning: boolean;
   orcid_scanning_completed_at: string | null;
   registry: {
-    files: File[];
-    organisations: Organisation[];
+    files?: File[];
+    organisations?: Organisation[];
+    verified: boolean;
   };
 }
 

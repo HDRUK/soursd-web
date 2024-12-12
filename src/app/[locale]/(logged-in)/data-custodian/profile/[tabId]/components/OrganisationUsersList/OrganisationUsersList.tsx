@@ -21,6 +21,11 @@ import { grey } from "@mui/material/colors";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { UserDetailsModal } from "@/modules";
+import {
+  ApprovedTrainingIcon,
+  ApprovedUserIcon,
+  IdentityVerifiedIcon,
+} from "@/consts/icons";
 
 interface UsersListProps {
   organisation: Organisation;
@@ -51,14 +56,30 @@ export default function OrganisationUsersList({
   const [activeUserData, setActiveUserData] = useState<ActiveUserData | null>();
 
   const { registries } = organisation;
-
   const handleViewResearcher = (data: ActiveUserData) => {
     setActiveUserData(data);
   };
-
   const handleCloseModal = () => {
     setActiveUserData(null);
   };
+
+  const getUserIcons = (user) => {
+    const items = [
+      {
+        shouldRender: user.registry.verified && user.user_group === "USERS",
+        icon: <IdentityVerifiedIcon />,
+      },
+      {
+        shouldRender: true,
+        icon: <ApprovedUserIcon />,
+      },
+      {
+        shouldRender: true,
+        icon: <ApprovedTrainingIcon />,
+      },
+    ];
+    return items;
+  }
 
   return (
     <>
@@ -71,6 +92,7 @@ export default function OrganisationUsersList({
             <TableCell>{t("emailHeading")}</TableCell>
             <TableCell>{t("firstNameHeading")}</TableCell>
             <TableCell>{t("lastNameHeading")}</TableCell>
+            <TableCell></TableCell>
             <TableCell sx={{ width: "50px" }} />
           </TableRow>
         </TableHead>
@@ -83,7 +105,7 @@ export default function OrganisationUsersList({
               const isApproved = approvals.some(
                 ({ id: issuerId }) => issuerId === ISSUER_ID
               );
-
+              const userIcons = getUserIcons(user);
               return (
                 <TableRow key={email}>
                   <TableCell sx={{ wordBreak: "break-word" }}>
@@ -96,6 +118,11 @@ export default function OrganisationUsersList({
                   </TableCell>
                   <TableCell sx={{ wordBreak: "break-word" }}>
                     {last_name}
+                  </TableCell>
+                  <TableCell sx={{ wordBreak: "break-word" }}>
+                  {userIcons.map((item) => 
+                    item.shouldRender ? item.icon : null
+                  )}
                   </TableCell>
                   <TableCell sx={{ pr: 0 }}>
                     <ActionMenu aria-label={`${email} actions`}>
