@@ -20,7 +20,7 @@ const SearchActionMenu = ({ actions }: SortButtonProps) => {
     <ActionMenu
       icon={<FilterAltIcon />}
       style={{ margin: "auto" }}
-      aria-label="sort-button">
+      aria-label="search-action-menu">
       {actions?.map(action => (
         <ActionMenuItem key={action.label} onClick={action.onClick}>
           <Checkbox checked={action.checked} />
