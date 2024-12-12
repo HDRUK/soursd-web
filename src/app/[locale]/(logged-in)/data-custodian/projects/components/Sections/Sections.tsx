@@ -7,12 +7,12 @@ import { getOrganisationProjects } from "@/services/projects";
 import { CircularProgress, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { useStore } from "@/data/store";
 import StatusIndicator from "@/components/StatusIndicator";
 import Pagination from "@/components/Pagination";
 import usePaginatedQuery from "@/hooks/usePaginatedQuery";
-import SearchBar from "@/components/SearchBar";
-import { useStore } from "@/data/store";
-import SortButton from "@/components/SortButton";
+import SearchBar from "@/modules/SearchBar";
+import SearchActionMenu from "@/modules/SearchActionMenu";
 import ProjectList from "../ProjectList";
 
 const NAMESPACE_TRANSLATIONS_PROJECT_LIST = "ProjectList";
@@ -108,7 +108,7 @@ export default function Sections() {
             onSearch={text => updateQueryParam("title[]", text)}
             placeholder={t("searchPlaceholder")}
           />
-          <SortButton actions={searchActions} />
+          <SearchActionMenu actions={searchActions} />
         </PageSection>
         <PageSection sx={{ display: "flex", flex: 1, gap: 2 }}>
           <StatusIndicator
