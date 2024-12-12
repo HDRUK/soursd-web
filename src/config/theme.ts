@@ -49,6 +49,7 @@ const PALETTE_THEME_PURPLE_BLUE = {
       dark: "#1e1e1e",
       main: "#1e1e1e",
       contrastText: "#fff",
+      lightPurple: "#f7f3fb",
     },
     greyLight: {
       light: "#fef7ff",
@@ -79,7 +80,6 @@ const PALETTE_THEME_PURPLE_BLUE = {
       main: "#faf3e2",
       contrastText: "#000",
     },
-    searchBar: createColor("#f7f3fb"),
   },
 };
 

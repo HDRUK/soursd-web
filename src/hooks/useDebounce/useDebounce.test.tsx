@@ -3,11 +3,11 @@ import useDebounce from "./useDebounce";
 
 describe("useDebounce", () => {
   beforeAll(() => {
-    jest.useFakeTimers(); // Mock timers for setTimeout and clearTimeout
+    jest.useFakeTimers();
   });
 
   afterAll(() => {
-    jest.useRealTimers(); // Restore original timers after testing
+    jest.useRealTimers();
   });
 
   it("should return the value after the delay", () => {
@@ -19,16 +19,16 @@ describe("useDebounce", () => {
     expect(result.current).toBe("initial");
 
     act(() => {
-      rerender({ value: "updated", delay: 500 }); // Simulate a change in value after the delay
-      jest.advanceTimersByTime(250); // Move the timers forward by 250ms
+      rerender({ value: "updated", delay: 500 });
+      jest.advanceTimersByTime(250);
     });
 
-    expect(result.current).toBe("initial"); // Debounce shouldn't have triggered yet
+    expect(result.current).toBe("initial");
 
     act(() => {
-      jest.advanceTimersByTime(500); // Move the timers forward by another 500ms now
+      jest.advanceTimersByTime(500);
     });
 
-    expect(result.current).toBe("updated"); // Debounced value should update to 'updated'
+    expect(result.current).toBe("updated");
   });
 });

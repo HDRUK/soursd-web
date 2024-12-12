@@ -72,44 +72,44 @@ const ApplicationDataProvider = ({
     user: me,
   });
 
-  const queriedSystemConfig = applicationData["getSystemConfig"];
-  const queriedUser = applicationData["getUser"];
-  const queriedOrganisation = applicationData["getOrganisation"];
-  const queriedIssuer = applicationData["getIssuer"];
-
-  console.log("queriedUser", queriedUser);
+  const {
+    getSystemConfig: systemConfigData,
+    getUser: userData,
+    getOrganisation: organisationData,
+    getIssuer: issuerData,
+  } = applicationData;
 
   useEffect(() => {
-    if (!queriedUser?.data.profile_completed_at) {
+    if (!userData?.data.profile_completed_at) {
       showAlert("warning", {
         text: tProfile("profileCompleteWarningMessage"),
       });
     }
 
-    setUser(queriedUser?.data);
-  }, [queriedUser?.data]);
+    setUser(userData?.data);
+  }, [userData?.data]);
 
   useEffect(() => {
-    setOrganisation(queriedOrganisation?.data);
-  }, [queriedOrganisation?.data]);
+    setOrganisation(organisationData?.data);
+  }, [organisationData?.data]);
 
   useEffect(() => {
-    setIssuer(queriedIssuer?.data);
-  }, [queriedIssuer?.data]);
+    setIssuer(issuerData?.data);
+  }, [issuerData?.data]);
 
   useEffect(() => {
     if (path) addUrlToHistory(path);
   }, [path]);
 
   const providerValue = useMemo(() => {
-    const systemConfig = parseSystemConfig(queriedSystemConfig?.data);
+    const systemConfig = parseSystemConfig(systemConfigData?.data);
 
     return {
       ...value,
       systemConfig,
       validationSchema: systemConfig[VALIDATION_SCHEMA_KEY]?.value,
     };
-  }, [!!queriedSystemConfig?.data, value]);
+  }, [!!systemConfigData?.data, value]);
 
   const isFinishedLoading =
     user &&
