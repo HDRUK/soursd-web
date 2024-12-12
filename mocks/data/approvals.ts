@@ -12,7 +12,7 @@ const mockedApproval = (approval?: Partial<Approval>): Approval => ({
   updated_at: faker.date.recent().toString(),
   pivot: {
     organisation_id: faker.number.int(),
-    issuer_id: faker.number.int(),
+    custodian_id: faker.number.int(),
   },
   ...approval,
 });

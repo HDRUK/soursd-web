@@ -57,9 +57,9 @@ const ApplicationDataProvider = ({
     store.setOrganisation,
   ]);
 
-  const [issuer, setIssuer] = useStore(store => [
-    store.config.issuer,
-    store.setIssuer,
+  const [custodian, setCustodian] = useStore(store => [
+    store.config.custodian,
+    store.setCustodian,
   ]);
 
   const path = usePathname();
@@ -76,7 +76,7 @@ const ApplicationDataProvider = ({
     getSystemConfig: systemConfigData,
     getUser: userData,
     getOrganisation: organisationData,
-    getIssuer: issuerData,
+    getCustodian: custodianData,
   } = applicationData;
 
   useEffect(() => {
@@ -94,8 +94,8 @@ const ApplicationDataProvider = ({
   }, [organisationData?.data]);
 
   useEffect(() => {
-    setIssuer(issuerData?.data);
-  }, [issuerData?.data]);
+    setCustodian(custodianData?.data);
+  }, [custodianData?.data]);
 
   useEffect(() => {
     if (path) addUrlToHistory(path);
@@ -115,7 +115,7 @@ const ApplicationDataProvider = ({
     user &&
     ((me.organisation_id && organisation) || !me.organisation_id) &&
     !isApplicationLoading &&
-    issuer;
+    custodian;
 
   return (
     <ApplicationDataContext.Provider value={providerValue}>

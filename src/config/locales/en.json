@@ -9,12 +9,12 @@
     "getUserError": "Unable to load your user details. Please try again or contact us at <applicationLink></applicationLink>",
     "researcher": "Researcher",
     "organisation": "Organisation",
-    "issuer": "Data Custodian",
+    "custodian": "Data Custodian",
     "companyNumberAbbr": "CRN",
     "getOrganisationError": "There was a problem loading your organisation. Please try again or contact us at <applicationLink></applicationLink>",
-    "getIssuerError": "There was a problem loading your Data Custodian. Please try again or contact us at <applicationLink></applicationLink>"
+    "getCustodianError": "There was a problem loading your Data Custodian. Please try again or contact us at <applicationLink></applicationLink>"
   },
-  "IssuerProfile": {
+  "CustodianProfile": {
     "uniqueIdentifierTitle": "SOURSD Identifier",
     "uniqueIdentifierCaption": "This ‘key’ represents you as a Data Custodian within SOURSD. This is unique to you! Any time SOURSD sends information to you, or activates a callback, this identifier will be sent along with the payload. Meaning you can always trust the source of information.",
     "details": "Profile",
@@ -40,7 +40,7 @@
     "lastLoggedIn": "Last logged in: {date}",
     "addedOn": "Added on: {date}",
     "addNewUser": "Add New",
-    "searchIssuerUsers": "Search",
+    "searchCustodianUsers": "Search",
     "createUserError": "There was a problem creating this user. Please try again or contact us at <contactLink></contactLink>",
     "updateUserError": "There was a problem updating this users details. Please try again or contact us at <contactLink></contactLink>",
     "roleAdministratorDescription": "Can do everything on the system",
@@ -117,7 +117,7 @@
     "ceCertificationNumberRequiredInvalid": "Certification number is invalid",
     "countyRequiredInvalid": "County is required",
     "countryRequiredInvalid": "Country is required",
-    "issuerRequiredInvalid": "Data Custodian is required",
+    "custodianRequiredInvalid": "Data Custodian is required",
     "orcIdRequiredInvalid": "Orc id is required",
     "orcIdFormatInvalid": "Orc id should follow the format 0000-0000-0000-0000",
     "emailPlaceholder": "Email",
@@ -266,10 +266,10 @@
     "training": "Training"
   },
   "ResearcherDetails": {
-    "getUserDetailsForIssuerError": "Couldn't get the user's details"
+    "getUserDetailsForCustodianError": "Couldn't get the user's details"
   },
   "OrganisationDetails": {
-    "getOrganisationDetailsForIssuerError": "Couldn't get the organisation's details"
+    "getOrganisationDetailsForCustodianError": "Couldn't get the organisation's details"
   },
   "Permissions": {
     "title": "Permissions",
@@ -301,7 +301,7 @@
     "togglePanel": "Toggle guidance panel"
   },
   "Pages": {
-    "ProfileIssuer": {
+    "ProfileCustodian": {
       "title": "Profile"
     }
   },
@@ -328,14 +328,14 @@
   },
   "Administration": {
     "title": "Administration",
-    "issuerInviteTitle": "Data Custodian Invitation",
-    "issuerInviteBody": "Invite Data Custodians to use the SOURSD System",
-    "issuerInviteSubtitle": "Data Custodian's are entitys such as Trusted Research Environment (TRE) and Secure Data Environments (SDEs)",
+    "custodianInviteTitle": "Data Custodian Invitation",
+    "custodianInviteBody": "Invite Data Custodians to use the SOURSD System",
+    "custodianInviteSubtitle": "Data Custodian's are entitys such as Trusted Research Environment (TRE) and Secure Data Environments (SDEs)",
     "systemConfigTitle": "System Configuration",
-    "issuerInviteButton": "Send Invite",
+    "custodianInviteButton": "Send Invite",
     "systemConfigBody": "Update or add new System Configuration Parameters",
     "systemConfigSubtitle": "Parameters are in the form of NameValue pairs",
-    "noDataIssuers": "Unable to retrieve known Data Custodians. Please contact us at <applicationLink></applicationLink>"
+    "noCustodians": "Unable to retrieve known Data Custodians. Please contact us at <applicationLink></applicationLink>"
   },
   "SoursdLogo": {
     "logoTitle": "SOURSD"

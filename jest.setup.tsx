@@ -20,7 +20,7 @@ import {
 } from "./mocks/data/systemConfig";
 import { getRoutes } from "./src/utils/router";
 import { ROUTES } from "./src/consts/router";
-import { mockedDataCustodianUser } from "./mocks/data/issuer";
+import { mockedCustodianUser } from "./mocks/data/custodian";
 
 const nextRouterMock = require("next-router-mock");
 
@@ -87,22 +87,22 @@ async function mockFetch(url: string) {
   const formattedUrl = url.toLowerCase().split("?")[0]; //remove query params (for now)
 
   switch (formattedUrl) {
-    case `${process.env.NEXT_PUBLIC_API_V1_URL}/issuer_users/1`: {
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/custodian_users/1`: {
       return mock200Json(
-        mockedDataCustodianUser({
+        mockedCustodianUser({
           id: 1,
         })
       );
     }
-    case `${process.env.NEXT_PUBLIC_API_V1_URL}/issuer_users`: {
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/custodian_users`: {
       return mock200Json([
-        mockedDataCustodianUser({
+        mockedCustodianUser({
           id: 1,
           created_at: "2024-01-01T00:00:00.000",
           first_name: "John",
           last_name: "Smith",
         }),
-        mockedDataCustodianUser({
+        mockedCustodianUser({
           id: 2,
         }),
       ]);
@@ -212,7 +212,7 @@ async function mockFetch(url: string) {
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/approvals/researcher`: {
       return mock200Json(true);
     }
-    case `${process.env.NEXT_PUBLIC_API_V1_URL}/approvals/researcher/1/issuer/1`: {
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/approvals/researcher/1/custodian/1`: {
       return mock200Json(true);
     }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/organisation/1`: {

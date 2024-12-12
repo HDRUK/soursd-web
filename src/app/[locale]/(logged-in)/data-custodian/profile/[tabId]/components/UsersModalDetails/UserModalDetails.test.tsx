@@ -1,14 +1,14 @@
-import { mockedDataCustodianUser } from "@/mocks/data/issuer";
+import { mockedCustodianUser } from "@/mocks/data/custodian";
 import { act, fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 import { faker } from "@faker-js/faker";
 import { axe } from "jest-axe";
 import UserModalDetails, { UserModalDetailsProps } from "./UserModalDetails";
 
-jest.mock("@/services/issuers");
+jest.mock("@/services/custodians");
 jest.mock("@/data/store");
 
 const mockOnSubmit = jest.fn();
-const defaultUser = mockedDataCustodianUser();
+const defaultUser = mockedCustodianUser();
 
 const renderUserModalDetails = (props?: Partial<UserModalDetailsProps>) => {
   return render(

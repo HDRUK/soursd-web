@@ -27,13 +27,13 @@ export default function OrganisationDetailsModal({
     isLoading,
     error: organisationError,
   } = useQuery({
-    queryKey: ["getOrganisationDetailsForIssuer", organisation?.id],
+    queryKey: ["getOrganisationDetailsForCustodian", organisation?.id],
     queryFn: ({ queryKey }) => {
       const [, id] = queryKey;
 
       return getOrganisation(id, {
         error: {
-          message: "getOrganisationDetailsForIssuerError",
+          message: "getOrganisationDetailsForCustodianError",
         },
       });
     },

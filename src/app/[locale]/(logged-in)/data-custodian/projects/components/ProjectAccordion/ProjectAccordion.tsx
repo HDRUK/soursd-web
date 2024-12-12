@@ -29,13 +29,13 @@ const ProjectAccordion = ({ project }: ProjectAccordionProps) => {
   const { id: organisationId } = organisation || {};
 
   const { data: organisationData } = useQuery({
-    queryKey: ["getOrganisationDetailsForIssuer", organisationId],
+    queryKey: ["getOrganisationDetailsForCustodian", organisationId],
     queryFn: ({ queryKey }) => {
       const [, id] = queryKey;
 
       return getOrganisation(id, {
         error: {
-          message: "getOrganisationDetailsForIssuerError",
+          message: "getOrganisationDetailsForCustodianError",
         },
       });
     },
@@ -47,7 +47,7 @@ const ProjectAccordion = ({ project }: ProjectAccordionProps) => {
   const ariaId = organisation_name?.replace(/[^\w]*/g, "");
 
   const isApproved =
-    approvals?.filter(a => a.issuer_id === organisationId).length > 0;
+    approvals?.filter(a => a.custodian_id === organisationId).length > 0;
 
   const accordianColor = isApproved
     ? PALETTE_THEME_PURPLE_BLUE.palette.success.light

@@ -1,14 +1,17 @@
-import { mockedDataCustodianUser } from "@/mocks/data/issuer";
-import { patchIssuerUser, postIssuerUser } from "@/services/issuer_users";
+import { mockedCustodianUser } from "@/mocks/data/custodian";
+import {
+  patchCustodianUser,
+  postCustodianUser,
+} from "@/services/custodian_users";
 import { act, fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 import { axe } from "jest-axe";
 import UserModal, { UserModalProps } from "./UserModal";
 
-jest.mock("@/services/issuer_users");
+jest.mock("@/services/custodian_users");
 
 const mockOnClose = jest.fn();
 
-const defaultUser = mockedDataCustodianUser();
+const defaultUser = mockedCustodianUser();
 
 const renderUserModalDetails = (props?: Partial<UserModalProps>) => {
   return render(
@@ -48,7 +51,7 @@ describe("<UserModal />", () => {
     renderUserModalDetailsUpdate(1);
 
     await waitFor(() => {
-      expect(patchIssuerUser).toHaveBeenCalled();
+      expect(patchCustodianUser).toHaveBeenCalled();
     });
   });
 
@@ -56,7 +59,7 @@ describe("<UserModal />", () => {
     renderUserModalDetailsUpdate();
 
     await waitFor(() => {
-      expect(postIssuerUser).toHaveBeenCalled();
+      expect(postCustodianUser).toHaveBeenCalled();
     });
   });
 
