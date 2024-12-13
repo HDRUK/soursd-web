@@ -3,7 +3,6 @@
 import AccordionTitle from "@/components/AccordionTitle";
 import ActionMenu from "@/components/ActionMenu/ActionMenu";
 import ActionMenuItem from "@/components/ActionMenu/ActionMenuItem";
-import ApprovalStatus from "@/components/ApprovalStatus";
 import { useApplicationData } from "@/context/ApplicationData";
 import { PostApprovalPayloadWithEntity } from "@/services/approvals";
 import { Organisation } from "@/services/organisations";
@@ -20,6 +19,7 @@ import {
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { PALETTE_THEME_PURPLE_BLUE } from "@/config/theme";
 import OrganisationDetailsModal from "../OrganisationDetailsModal";
 import OrganisationUsersList from "../OrganisationUsersList";
 import OrganisationStats from "../OrganisationStats";
@@ -82,9 +82,11 @@ export default function OrganisationsList({
         const { organisation_name, id, approvals } = organisation;
         const ariaId = organisation_name.replace(/[^\w]*/g, "");
 
-        const isApproved = approvals.some(
-          ({ id: custodianId }) => custodianId === CUSTODIAN_ID
-        );
+        const isApproved = approvals?.filter(a => a.id === id).length > 0;
+
+        const accordianColor = isApproved
+          ? PALETTE_THEME_PURPLE_BLUE.palette.success.light
+          : PALETTE_THEME_PURPLE_BLUE.palette.warning.light;
 
         return (
           <>
@@ -92,7 +94,8 @@ export default function OrganisationsList({
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls={`${ariaId}-content`}
-                id={`${ariaId}-header`}>
+                id={`${ariaId}-header`}
+                sx={{ backgroundColor: accordianColor }}>
                 <AccordionTitle
                   icon={<BusinessIcon />}
                   actions={
@@ -139,9 +142,7 @@ export default function OrganisationsList({
                       </ActionMenuItem>
                     </ActionMenu>
                   }>
-                  <ApprovalStatus isApproved={isApproved}>
-                    {organisation_name}
-                  </ApprovalStatus>
+                  {organisation_name}
                 </AccordionTitle>
               </AccordionSummary>
               <AccordionDetails>

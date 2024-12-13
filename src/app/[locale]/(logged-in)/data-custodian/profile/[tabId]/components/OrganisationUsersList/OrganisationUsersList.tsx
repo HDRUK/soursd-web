@@ -2,7 +2,6 @@
 
 import ActionMenu from "@/components/ActionMenu/ActionMenu";
 import ActionMenuItem from "@/components/ActionMenu/ActionMenuItem";
-import ApprovalStatus from "@/components/ApprovalStatus";
 import { useApplicationData } from "@/context/ApplicationData";
 import { PostApprovalPayloadWithEntity } from "@/services/approvals";
 import { EntityType } from "@/types/api";
@@ -10,14 +9,14 @@ import { Organisation, User } from "@/types/application";
 import { QueryState } from "@/types/form";
 import { LoadingButton } from "@mui/lab";
 import {
+  Box,
   Button,
+  Card,
+  CardContent,
+  Icon,
   Table,
   TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
 } from "@mui/material";
-import { grey } from "@mui/material/colors";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { UserDetailsModal } from "@/modules";
@@ -26,6 +25,7 @@ import {
   ApprovedUserIcon,
   IdentityVerifiedIcon,
 } from "@/consts/icons";
+import OrganisationUserCard from "../OrganisationUserCard";
 
 interface UsersListProps {
   organisation: Organisation;
@@ -56,32 +56,29 @@ export default function OrganisationUsersList({
   const [activeUserData, setActiveUserData] = useState<ActiveUserData | null>();
 
   const { registries } = organisation;
+
   const handleViewResearcher = (data: ActiveUserData) => {
     setActiveUserData(data);
   };
+
   const handleCloseModal = () => {
     setActiveUserData(null);
   };
 
-  const getUserIcons = (user: User) => {
-    const items = [
-      {
-        shouldRender: user.registry.verified && user.user_group === "USERS",
-        icon: <IdentityVerifiedIcon />,
-      },
-      {
-        // TODO: SPEEDI-615 - the shouldRender logic needs to be properly implemented here.
-        shouldRender: true,
-        icon: <ApprovedUserIcon />,
-      },
-      {
-        // TODO: SPEEDI-615 - the shouldRender logic needs to be properly implemented here.
-        shouldRender: true,
-        icon: <ApprovedTrainingIcon />,
-      },
-    ];
-    return items;
-  };
+  const getUserIcons = (user: User) => [
+    {
+      shouldRender: user.registry.verified && user.user_group === "USERS",
+      icon: <IdentityVerifiedIcon fontSize="large" />,
+    },
+    {
+      shouldRender: true, // TODO: Replace with proper logic
+      icon: <ApprovedUserIcon fontSize="large" />,
+    },
+    {
+      shouldRender: true, // TODO: Replace with proper logic
+      icon: <ApprovedTrainingIcon fontSize="large" />,
+    },
+  ];
 
   return (
     <>
@@ -89,45 +86,42 @@ export default function OrganisationUsersList({
         sx={{ tableLayout: "fixed" }}
         size="small"
         aria-label={t("tableSummary")}>
-        <TableHead sx={{ background: grey["300"] }}>
-          <TableRow>
-            <TableCell>{t("emailHeading")}</TableCell>
-            <TableCell>{t("firstNameHeading")}</TableCell>
-            <TableCell>{t("lastNameHeading")}</TableCell>
-            <TableCell />
-            <TableCell sx={{ width: "50px" }} />
-          </TableRow>
-        </TableHead>
         <TableBody>
-          {registries.map(
-            ({
-              user: { email, first_name, last_name, id, approvals },
-              user,
-            }) => {
-              const isApproved = approvals.some(
-                ({ id: custodianId }) => custodianId === CUSTODIAN_ID
-              );
-              const userIcons = getUserIcons(user);
-              return (
-                <TableRow key={email}>
-                  <TableCell sx={{ wordBreak: "break-word" }}>
-                    <ApprovalStatus isApproved={isApproved}>
-                      {email}
-                    </ApprovalStatus>
-                  </TableCell>
-                  <TableCell sx={{ wordBreak: "break-word" }}>
-                    {first_name}
-                  </TableCell>
-                  <TableCell sx={{ wordBreak: "break-word" }}>
-                    {last_name}
-                  </TableCell>
-                  <TableCell sx={{ wordBreak: "break-word" }}>
-                    {userIcons.map(item =>
-                      item.shouldRender ? item.icon : null
-                    )}
-                  </TableCell>
-                  <TableCell sx={{ pr: 0 }}>
-                    <ActionMenu aria-label={`${email} actions`}>
+          {registries.map(({ user: { id, approvals }, user }) => {
+            const userIcons = getUserIcons(user);
+
+            const isApproved = approvals.some(
+              ({ id: custodianId }) => custodianId === CUSTODIAN_ID
+            );
+            return (
+              <Card sx={{ mb: 1 }} role="listitem" key={`user_${id}`}>
+                <CardContent>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: {
+                        xs: "column",
+                        md: "row",
+                      },
+                      width: "100%",
+                      gap: {
+                        xs: 1,
+                        md: 2,
+                      },
+                      alignItems: {
+                        md: "center",
+                      },
+                      justifyContent: "space-between",
+                    }}>
+                    <OrganisationUserCard user={user} />
+                    <Box />
+                    <Box />
+                    <Box>
+                      {userIcons.map(item =>
+                        item.shouldRender ? item.icon : <Icon />
+                      )}
+                    </Box>
+                    <ActionMenu aria-label={`${id} actions`}>
                       <ActionMenuItem>
                         <Button
                           fullWidth
@@ -173,11 +167,11 @@ export default function OrganisationUsersList({
                         </LoadingButton>
                       </ActionMenuItem>
                     </ActionMenu>
-                  </TableCell>
-                </TableRow>
-              );
-            }
-          )}
+                  </Box>
+                </CardContent>
+              </Card>
+            );
+          })}
         </TableBody>
       </Table>
       {activeUserData && (

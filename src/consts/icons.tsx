@@ -21,7 +21,7 @@ const ApprovedIcon = (props: SvgIconProps) => (
 );
 
 const PendingIcon = (props: SvgIconProps) => (
-  <SquareIcon {...props} sx={{ color: "error.main" }} />
+  <SquareIcon {...props} sx={{ color: "warning.main" }} />
 );
 
 export {

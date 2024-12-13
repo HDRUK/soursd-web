@@ -301,7 +301,8 @@
     "tableSummary": "Table of users",
     "updateOrganisationApprovalError": "Couldn't update the organisations approval settings",
     "updateApprovalError": "Couldn't update the researchers approval settings",
-    "viewDetails": "View details"
+    "viewDetails": "View details",
+    "approvedOn": "Approved On: {projects}"
   },
   "Guidance": {
     "togglePanel": "Toggle guidance panel"
