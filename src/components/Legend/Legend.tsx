@@ -11,7 +11,14 @@ export interface LegendProps {
 
 export default function Legend({ items }: LegendProps) {
   return (
-    <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap", justifyContent: "space-around", my: 2 }}>
+    <Box
+      sx={{
+        display: "flex",
+        gap: 2,
+        flexWrap: "wrap",
+        justifyContent: "space-around",
+        my: 2,
+      }}>
       {items.map(({ icon, text }) => (
         <Text iconSize="40px" startIcon={icon}>
           {text}

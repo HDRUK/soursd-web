@@ -63,25 +63,25 @@ export default function OrganisationUsersList({
     setActiveUserData(null);
   };
 
-  const getUserIcons = (user) => {
+  const getUserIcons = (user: User) => {
     const items = [
       {
         shouldRender: user.registry.verified && user.user_group === "USERS",
         icon: <IdentityVerifiedIcon />,
       },
       {
-        //TODO: SPEEDI-615 - the shouldRender logic needs to be properly implemented here.
+        // TODO: SPEEDI-615 - the shouldRender logic needs to be properly implemented here.
         shouldRender: true,
         icon: <ApprovedUserIcon />,
       },
       {
-        //TODO: SPEEDI-615 - the shouldRender logic needs to be properly implemented here.
+        // TODO: SPEEDI-615 - the shouldRender logic needs to be properly implemented here.
         shouldRender: true,
         icon: <ApprovedTrainingIcon />,
       },
     ];
     return items;
-  }
+  };
 
   return (
     <>
@@ -94,7 +94,7 @@ export default function OrganisationUsersList({
             <TableCell>{t("emailHeading")}</TableCell>
             <TableCell>{t("firstNameHeading")}</TableCell>
             <TableCell>{t("lastNameHeading")}</TableCell>
-            <TableCell></TableCell>
+            <TableCell />
             <TableCell sx={{ width: "50px" }} />
           </TableRow>
         </TableHead>
@@ -122,9 +122,9 @@ export default function OrganisationUsersList({
                     {last_name}
                   </TableCell>
                   <TableCell sx={{ wordBreak: "break-word" }}>
-                  {userIcons.map((item) => 
-                    item.shouldRender ? item.icon : null
-                  )}
+                    {userIcons.map(item =>
+                      item.shouldRender ? item.icon : null
+                    )}
                   </TableCell>
                   <TableCell sx={{ pr: 0 }}>
                     <ActionMenu aria-label={`${email} actions`}>

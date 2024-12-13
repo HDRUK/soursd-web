@@ -22,7 +22,6 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 import OrganisationDetailsModal from "../OrganisationDetailsModal";
 import OrganisationUsersList from "../OrganisationUsersList";
-import { mockedOrganisation } from "@/mocks/data/organisation";
 import OrganisationStats from "../OrganisationStats";
 
 interface OrganisationsListProps {
@@ -146,7 +145,7 @@ export default function OrganisationsList({
                 </AccordionTitle>
               </AccordionSummary>
               <AccordionDetails>
-                <OrganisationStats organisationId={id}/>
+                <OrganisationStats organisationId={id} />
                 <OrganisationUsersList
                   queryState={queryState}
                   organisation={organisation}

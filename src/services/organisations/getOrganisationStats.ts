@@ -4,7 +4,7 @@ import { getRequest, handleJsonResponse } from "../requests";
 export default async (
   messages: ResponseTranslations,
   statType: string,
-  orgId: number,
+  orgId: number
 ): Promise<ResponseJson<number>> => {
   const response = await getRequest(
     `${process.env.NEXT_PUBLIC_API_V1_URL}/organisations/${orgId}/counts/${statType}`,
