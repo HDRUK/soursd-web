@@ -4,7 +4,7 @@ import { Message } from "@/components/Message";
 import OverlayCenter from "@/components/OverlayCenter";
 import PageSection from "@/modules/PageSection";
 import { getOrganisationProjects } from "@/services/projects";
-import { CircularProgress, Typography } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useStore } from "@/data/store";
 import Pagination from "@/components/Pagination";

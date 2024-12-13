@@ -13,8 +13,12 @@ export interface LegendProps {
 export default function Legend({ items, boxSx }: LegendProps) {
   return (
     <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap", ...boxSx }}>
-      {items.map(({ icon, text }) => (
-        <Text iconSize="40px" startIcon={icon}>
+      {items.map(({ icon, text }, index) => (
+        <Text
+          key={`legend_${index}`}
+          iconSize="40px"
+          startIcon={icon}
+          component="span">
           {text}
         </Text>
       ))}
