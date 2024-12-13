@@ -149,10 +149,7 @@ export default function OrganisationsList({
                 <OrganisationStats organisationId={id}/>
                 <OrganisationUsersList
                   queryState={queryState}
-                  organisation={mockedOrganisation({
-                    organisation_name: "Organisation 1",
-                    id: 1,
-                  })}
+                  organisation={organisation}
                   onApproveToggle={handleApproveClick}
                 />
               </AccordionDetails>
