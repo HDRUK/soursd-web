@@ -3,11 +3,11 @@ import { getRequest, handleJsonResponse } from "../requests";
 import { ProjectsResponse } from "./types";
 
 export default async (
-  userId: number | string,
+  registryId: number | string,
   messages: ResponseTranslations
 ): Promise<ResponseJson<ProjectsResponse>> => {
   const response = await getRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/users/${userId}/projects/approved`,
+    `${process.env.NEXT_PUBLIC_API_V1_URL}/projects/user/${registryId}/approved`,
     undefined,
     {
       headers: {
