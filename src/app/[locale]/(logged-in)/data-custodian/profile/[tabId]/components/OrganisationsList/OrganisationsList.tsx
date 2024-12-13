@@ -81,7 +81,6 @@ export default function OrganisationsList({
     <>
       {filteredOrganisations.map(organisation => {
         const { organisation_name, id, approvals } = organisation;
-
         const ariaId = organisation_name.replace(/[^\w]*/g, "");
 
         const isApproved = approvals.some(
@@ -147,7 +146,7 @@ export default function OrganisationsList({
                 </AccordionTitle>
               </AccordionSummary>
               <AccordionDetails>
-                <OrganisationStats />
+                <OrganisationStats organisationId={id}/>
                 <OrganisationUsersList
                   queryState={queryState}
                   organisation={mockedOrganisation({

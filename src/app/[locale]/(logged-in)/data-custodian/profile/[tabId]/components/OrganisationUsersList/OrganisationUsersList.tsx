@@ -70,10 +70,12 @@ export default function OrganisationUsersList({
         icon: <IdentityVerifiedIcon />,
       },
       {
+        //TODO: SPEEDI-615 - the shouldRender logic needs to be properly implemented here.
         shouldRender: true,
         icon: <ApprovedUserIcon />,
       },
       {
+        //TODO: SPEEDI-615 - the shouldRender logic needs to be properly implemented here.
         shouldRender: true,
         icon: <ApprovedTrainingIcon />,
       },
