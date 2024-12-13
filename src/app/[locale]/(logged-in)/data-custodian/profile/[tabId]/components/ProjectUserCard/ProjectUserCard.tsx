@@ -130,12 +130,6 @@ export default function ProjectUserCard({
         user={user}
         onClose={handleCloseModal}
       />
-
-      {/*<ProjectUserModalDetails
-        {...modalProps}
-        projectUser={projectUser}
-        onClose={handleCloseModal}
-      />*/}
     </Card>
   );
 }
