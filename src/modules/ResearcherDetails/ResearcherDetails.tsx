@@ -33,7 +33,7 @@ export default function ResearcherDetails({
         <Link href={`mailto: ${user.email}`}>{user.email}</Link>
       </Text>
       <Text startIcon={<BusinessIcon />} sx={{ mb: 2 }}>
-        {organisation.organisation_name}
+        {organisation?.organisation_name}
       </Text>
       <ResearcherHistories data={histories} />
     </div>

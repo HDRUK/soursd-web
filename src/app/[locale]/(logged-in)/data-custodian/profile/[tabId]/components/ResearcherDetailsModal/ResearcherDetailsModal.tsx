@@ -41,10 +41,11 @@ export default function ResearcherDetailsModal({
         },
       });
     },
+    enabled: open,
   });
 
   const { data: histories, isLoading: isHistoriesLoading } =
-    useQueriesHistories(user.registry_id);
+    useQueriesHistories(user.registry_id, open);
 
   return (
     <FormModal

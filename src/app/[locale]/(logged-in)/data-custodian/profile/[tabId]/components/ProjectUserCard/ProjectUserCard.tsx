@@ -12,6 +12,7 @@ import IconButton from "@/components/IconButton";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { getUserApprovedProjects } from "@/services/projects";
 import { useState, useCallback } from "react";
+import ResearcherDetailsModal from "../ResearcherDetailsModal";
 import ProjectUserModalDetails from "../ProjectUserModalDetails";
 
 interface ProjectUserCardProps {
@@ -55,12 +56,12 @@ export default function ProjectUserCard({
       : titles.join(", ");
   })();
 
-  const [modalProps, setModalProps] = useState<{
-    open: boolean;
-  } | null>();
+  const [modalProps, setModalProps] = useState<{ open: boolean }>({
+    open: false,
+  });
 
   const handleCloseModal = useCallback(() => {
-    setModalProps(null);
+    setModalProps({ open: false });
   }, []);
 
   return (
@@ -124,11 +125,17 @@ export default function ProjectUserCard({
         </Box>
       </CardContent>
 
-      <ProjectUserModalDetails
+      <ResearcherDetailsModal
+        {...modalProps}
+        user={user}
+        onClose={handleCloseModal}
+      />
+
+      {/*<ProjectUserModalDetails
         {...modalProps}
         projectUser={projectUser}
         onClose={handleCloseModal}
-      />
+      />*/}
     </Card>
   );
 }

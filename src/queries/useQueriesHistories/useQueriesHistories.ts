@@ -11,7 +11,10 @@ export interface HistoryCombinedData {
   getAccreditations: Awaited<ReturnType<typeof getAccreditations>>;
 }
 
-export default function useQueriesHistory(registryId: number) {
+export default function useQueriesHistory(
+  registryId: number,
+  enabled: boolean
+) {
   const queries = [
     {
       queryKey: ["getEmployments", registryId],
@@ -19,6 +22,7 @@ export default function useQueriesHistory(registryId: number) {
         getEmployments(registryId, {
           error: { message: "getEmploymentsError" },
         }),
+      enabled,
     },
     {
       queryKey: ["getEducations", registryId],
@@ -26,6 +30,7 @@ export default function useQueriesHistory(registryId: number) {
         getEducations(registryId, {
           error: { message: "getEducationsError" },
         }),
+      enabled,
     },
     {
       queryKey: ["getTrainings", registryId],
@@ -33,6 +38,7 @@ export default function useQueriesHistory(registryId: number) {
         getTrainings(registryId, {
           error: { message: "getTrainingsError" },
         }),
+      enabled,
     },
     {
       queryKey: ["getAccreditations", registryId],
@@ -40,6 +46,7 @@ export default function useQueriesHistory(registryId: number) {
         getAccreditations(registryId, {
           error: { message: "getAccreditationsError" },
         }),
+      enabled,
     },
   ];
 
