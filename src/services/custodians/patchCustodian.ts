@@ -1,14 +1,14 @@
 import { ResponseJson, ResponseTranslations } from "@/types/requests";
 import { handleJsonResponse, patchRequest } from "../requests";
-import { PatchIssuerPayload, PatchIssuerResponse } from "./types";
+import { PatchCustodianPayload, PatchCustodianResponse } from "./types";
 
 export default async (
   id: number,
-  payload: PatchIssuerPayload,
+  payload: PatchCustodianPayload,
   messages: ResponseTranslations
-): Promise<ResponseJson<PatchIssuerResponse>> => {
+): Promise<ResponseJson<PatchCustodianResponse>> => {
   const response = await patchRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/issuers/${id}`,
+    `${process.env.NEXT_PUBLIC_API_V1_URL}/custodians/${id}`,
     payload,
     {
       headers: {

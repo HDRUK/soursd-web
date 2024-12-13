@@ -1,6 +1,6 @@
 import { ROUTES } from "@/consts/router";
 import { useStore } from "@/data/store";
-import { mockedDataCustodian } from "@/mocks/data/issuer";
+import { mockedCustodian } from "@/mocks/data/custodian";
 import { render, screen } from "@/utils/testUtils";
 import { PageTabs } from "./consts/tabs";
 import Page from "./page";
@@ -14,10 +14,10 @@ jest.mock("next/navigation", () => ({
   })),
 }));
 
-const defaultIssuer = mockedDataCustodian();
+const defaultCustodian = mockedCustodian();
 
 (useStore as unknown as jest.Mock).mockImplementation(() => [
-  () => defaultIssuer,
+  () => defaultCustodian,
   null,
 ]);
 

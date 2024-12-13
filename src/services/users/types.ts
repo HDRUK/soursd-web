@@ -15,7 +15,7 @@ type PatchUserPayload = Partial<User>;
 
 interface UpdatePermissonsPayload {
   user_id: number;
-  issuer_id: number;
+  custodian_id: number;
   permissions: number[];
 }
 

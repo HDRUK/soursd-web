@@ -4,7 +4,7 @@ import ApplicationLink from "@/components/ApplicationLink";
 import MaskLabel from "@/components/MaskLabel";
 import { Message } from "@/components/Message";
 import OverlayCenter from "@/components/OverlayCenter";
-import { ISSUER_ID } from "@/consts/application";
+import { CUSTODIAN_ID } from "@/consts/application";
 import PageSection from "@/modules/PageSection";
 import { Organisation } from "@/services/organisations";
 import { getPermissions } from "@/services/permissions";
@@ -35,7 +35,7 @@ export default function Sections({ userId, type }: SectionsProps) {
     isError: isPermissionsError,
     error: permissionsError,
   } = useQuery({
-    queryKey: ["getPermissions", ISSUER_ID],
+    queryKey: ["getPermissions", CUSTODIAN_ID],
     queryFn: () =>
       getPermissions({
         error: {
@@ -99,7 +99,7 @@ export default function Sections({ userId, type }: SectionsProps) {
             <Permissions
               type={type}
               userId={userId}
-              issuerId={ISSUER_ID}
+              custodianId={CUSTODIAN_ID}
               permissions={permissionsData?.data.data}
               userPermissions={userData?.data.permissions}
             />

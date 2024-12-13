@@ -20,7 +20,7 @@ import { CircularProgress, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useCallback } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { ISSUER_ID } from "@/consts/application";
+import { CUSTODIAN_ID } from "@/consts/application";
 
 const NAMESPACE_TRANSLATIONS_PERMISSIONS = "Permissions";
 const NAMESPACE_TRANSLATIONS_USERS = "Users";
@@ -39,7 +39,7 @@ export default function Sections({ userId }: SectionsProps) {
     isError: isPermissionsError,
     error: permissionsError,
   } = useQuery({
-    queryKey: ["getPermissions", ISSUER_ID],
+    queryKey: ["getPermissions", CUSTODIAN_ID],
     queryFn: () =>
       getPermissions({
         error: {
@@ -84,7 +84,7 @@ export default function Sections({ userId }: SectionsProps) {
     (values: AssignOptionsFormValues) => {
       mutatePermissionsAsync({
         user_id: userId,
-        issuer_id: ISSUER_ID,
+        custodian_id: CUSTODIAN_ID,
         permissions: convertStringsToNumbers(
           Object.keys(values).filter((key: string) => values[key])
         ),

@@ -17,7 +17,7 @@ interface UserDetailsModalProps {
 
 const NAMESPACE_TRANSLATIONS_DETAILS = "ResearcherDetails";
 
-export default function UserDetailsModal({
+export default function ResearcherDetailsModal({
   isApproved,
   user,
   organisation,
