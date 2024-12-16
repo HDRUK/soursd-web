@@ -26,6 +26,7 @@ const mockedUser = (user?: Partial<User>): User => ({
   orcid_scanning_completed_at: null,
   registry: {
     files: [mockedFile()],
+    verified: true,
   },
   ...user,
 });

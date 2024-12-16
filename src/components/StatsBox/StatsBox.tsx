@@ -30,34 +30,35 @@ export default function StatsBox({
   descriptionProps,
   valueProps,
   icon,
-  color = "default",
+  color,
   elevation = 0,
   ...restProps
 }: StatsBoxProps) {
   return (
     <Paper
       elevation={elevation}
-      color={color}
       aria-roledescription="statistic"
+      color={color}
       {...restProps}
       sx={{
-        display: "flex",
-        flexDirection: "column",
         flexBasis: "100%",
         ...restProps.sx,
+        margin: "10px",
+        borderRadius: "10px",
       }}>
-      <CardContent sx={{ display: "flex", flexGrow: 1, gap: 5 }}>
+      <CardContent
+        sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
         {icon && <div>{icon}</div>}
-        <Box sx={{ flexGrow: 1, textAlign: "right" }}>
+        <Box>
+          <Typography fontWeight="bold" variant="h6" {...valueProps}>
+            {value}
+          </Typography>
           <Typography
             variant="subtitle2"
             lineHeight="1.4em"
             component="div"
             {...descriptionProps}>
             {description}
-          </Typography>
-          <Typography fontWeight="bold" variant="h6" {...valueProps}>
-            {value}
           </Typography>
         </Box>
       </CardContent>
