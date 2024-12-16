@@ -47,7 +47,7 @@ export default function OrganisationUserCard({
   })();
 
   return (
-    <Box sx={{ display: "flex", gap: 2 }}>
+    <Box sx={{ display: "flex", minWidth: "50%" }}>
       <div>
         <Typography variant="h6">
           {/* TODO: Users Job title needs to be added to this line once we have access to 'role' */}

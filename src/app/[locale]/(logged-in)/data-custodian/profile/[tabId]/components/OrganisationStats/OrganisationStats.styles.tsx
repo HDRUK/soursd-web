@@ -10,6 +10,7 @@ const StyledBox = styled(Box)`
     6px 6px 12px #bebebe,
     -6px -6px 12px #ffffff;
   margin: auto;
+  margin-top: 15px;
   align-items: center;
 `;
 

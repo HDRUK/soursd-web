@@ -121,7 +121,11 @@ export default function OrganisationUsersList({
                     <Box />
                     <Box>
                       {userIcons.map(item =>
-                        item.shouldRender ? item.icon : <Icon />
+                        item.shouldRender ? (
+                          item.icon
+                        ) : (
+                          <Icon fontSize="large" />
+                        )
                       )}
                     </Box>
                     <ActionMenu aria-label={`${id} actions`}>

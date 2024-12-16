@@ -21,6 +21,7 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { PALETTE_THEME_PURPLE_BLUE } from "@/config/theme";
 import { useStore } from "@/data/store";
+import { mockedOrganisation } from "@/mocks/data/organisation";
 import OrganisationDetailsModal from "../OrganisationDetailsModal";
 import OrganisationUsersList from "../OrganisationUsersList";
 import OrganisationStats from "../OrganisationStats";
@@ -98,7 +99,11 @@ export default function OrganisationsList({
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls={`${ariaId}-content`}
                 id={`${ariaId}-header`}
-                sx={{ backgroundColor: accordianColor }}>
+                sx={{
+                  backgroundColor: accordianColor,
+                  background: `linear-gradient(90deg, ${accordianColor} 9%, ${accordianColor} 80%, rgba(255,255,255,1) 100%);`,
+                  borderRadius: "4px",
+                }}>
                 <AccordionTitle
                   icon={<BusinessIcon />}
                   actions={
@@ -152,7 +157,7 @@ export default function OrganisationsList({
                 <OrganisationStats organisationId={id} />
                 <OrganisationUsersList
                   queryState={queryState}
-                  organisation={organisation}
+                  organisation={mockedOrganisation()}
                   onApproveToggle={handleApproveClick}
                 />
               </AccordionDetails>
