@@ -50,7 +50,8 @@ export default function OrganisationUserCard({
     <Box sx={{ display: "flex", gap: 2 }}>
       <div>
         <Typography variant="h6">
-          {first_name} {last_name}&nbsp; [Job Title]
+          {/*TODO: Users Job title needs to be added to this line once we have access to 'role' */}
+          {first_name} {last_name}&nbsp;
         </Typography>
         <Typography variant="caption" color="grey">
           {userProjectTitles &&

@@ -1,79 +1,87 @@
-import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { EntityType } from "@/types/api";
 import { QueryState } from "@/types/form";
-import { mockedOrganisation } from "@/mocks/data/organisation";
+import { Organisation } from "@/types/application";
 import OrganisationUsersList from "./OrganisationUsersList";
 
-// Mock translation hook
-jest.mock("next-intl", () => ({
-  useTranslations: () => (key: string) => key,
-}));
-
 jest.mock("@/context/ApplicationData", () => ({
-  useApplicationData: () => ({
+  useApplicationData: jest.fn().mockReturnValue({
     routes: {
-      permissionsResearcherCustodian: {
-        path: "/permissions",
-      },
+      permissionsResearcherCustodian: { path: "/permissions" },
     },
   }),
 }));
 
-const mockOrganisation = mockedOrganisation();
+jest.mock("next-intl", () => ({
+  useTranslations: () => jest.fn((key: string) => key),
+}));
 
-const mockQueryClient = new QueryClient();
+jest.mock("@/data/store", () => ({
+  useStore: jest.fn().mockImplementation(selector =>
+    selector({
+      getCustodian: () => ({ id: 1 }),
+    })
+  ),
+}));
 
 describe("OrganisationUsersList", () => {
-  const mockQueryState: QueryState = {
-    isLoading: false,
-    isError: false,
-    isSuccess: true,
-  };
-
   const mockOnApproveToggle = jest.fn();
 
-  it("renders the users list with user data", () => {
+  const organisation: Organisation = {
+    id: 1,
+    name: "Test Organisation",
+    registries: [
+      {
+        user: {
+          id: 1,
+          first_name: "John",
+          last_name: "Doe",
+          email: "john@example.com",
+          registry: { verified: true },
+          user_group: "USERS",
+          approvals: [{ id: 1, pivot: { custodian_id: 1 } }],
+        },
+      },
+    ],
+  };
+
+  const queryState: QueryState = {
+    isLoading: false,
+  };
+
+  const queryClient = new QueryClient();
+
+  const renderComponent = () =>
     render(
-      <QueryClientProvider client={mockQueryClient}>
+      <QueryClientProvider client={queryClient}>
         <OrganisationUsersList
-          organisation={mockOrganisation}
-          queryState={mockQueryState}
+          organisation={organisation}
           onApproveToggle={mockOnApproveToggle}
+          queryState={queryState}
         />
       </QueryClientProvider>
     );
 
-    expect(screen.getByText("emailHeading")).toBeInTheDocument();
-    expect(screen.getByText("firstNameHeading")).toBeInTheDocument();
-    expect(screen.getByText("lastNameHeading")).toBeInTheDocument();
+  it("renders the list of users", () => {
+    renderComponent();
 
-    expect(screen.getByText("john.smith@hdruk.ac.uk")).toBeInTheDocument();
-    expect(screen.getByText("John")).toBeInTheDocument();
-    expect(screen.getByText("Smith")).toBeInTheDocument();
+    const cards = screen.getAllByRole("listitem");
+    expect(cards).toHaveLength(organisation.registries.length);
+    expect(screen.getByText(/John\s+Doe/)).toBeInTheDocument();
   });
 
-  it("calls onApproveToggle when the approve button is clicked", () => {
-    render(
-      <QueryClientProvider client={mockQueryClient}>
-        <OrganisationUsersList
-          organisation={mockOrganisation}
-          queryState={mockQueryState}
-          onApproveToggle={mockOnApproveToggle}
-        />
-      </QueryClientProvider>
-    );
+  it("calls the onApproveToggle handler when approve button is clicked", () => {
+    renderComponent();
 
-    const menuButton = screen.queryAllByRole("button")[0];
+    const menuButton = screen.getByRole("button");
     fireEvent.click(menuButton);
 
-    const approveButton = screen.getByText("approved");
+    const approveButton = screen.getByRole("button", { name: "approved" });
     fireEvent.click(approveButton);
 
     expect(mockOnApproveToggle).toHaveBeenCalledWith(
       {
-        type: EntityType.RESEARCHER,
+        type: "RESEARCHER",
         user_id: 1,
         custodian_id: 1,
       },

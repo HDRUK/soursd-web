@@ -25,6 +25,7 @@ import {
   ApprovedUserIcon,
   IdentityVerifiedIcon,
 } from "@/consts/icons";
+import { useStore } from "@/data/store";
 import OrganisationUserCard from "../OrganisationUserCard";
 
 interface UsersListProps {
@@ -44,8 +45,6 @@ interface ActiveUserData {
 
 const NAMESPACE_TRANSLATIONS_USERS_LIST = "UsersList";
 
-const CUSTODIAN_ID = 1;
-
 export default function OrganisationUsersList({
   organisation,
   onApproveToggle,
@@ -54,6 +53,9 @@ export default function OrganisationUsersList({
   const { routes } = useApplicationData();
   const t = useTranslations(NAMESPACE_TRANSLATIONS_USERS_LIST);
   const [activeUserData, setActiveUserData] = useState<ActiveUserData | null>();
+
+  const custodian = useStore(store => store.getCustodian());
+  const { id: custodianId } = custodian || {};
 
   const { registries } = organisation;
 
@@ -90,9 +92,10 @@ export default function OrganisationUsersList({
           {registries.map(({ user: { id, approvals }, user }) => {
             const userIcons = getUserIcons(user);
 
-            const isApproved = approvals.some(
-              ({ id: custodianId }) => custodianId === CUSTODIAN_ID
-            );
+            const isApproved =
+              approvals?.filter(a => a.pivot.custodian_id === custodianId)
+                .length > 0;
+
             return (
               <Card sx={{ mb: 1 }} role="listitem" key={`user_${id}`}>
                 <CardContent>
@@ -158,7 +161,7 @@ export default function OrganisationUsersList({
                               {
                                 type: EntityType.RESEARCHER,
                                 user_id: id,
-                                custodian_id: CUSTODIAN_ID,
+                                custodian_id: custodianId,
                               },
                               isApproved
                             )

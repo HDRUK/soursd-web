@@ -20,6 +20,7 @@ import {
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { PALETTE_THEME_PURPLE_BLUE } from "@/config/theme";
+import { useStore } from "@/data/store";
 import OrganisationDetailsModal from "../OrganisationDetailsModal";
 import OrganisationUsersList from "../OrganisationUsersList";
 import OrganisationStats from "../OrganisationStats";
@@ -38,8 +39,6 @@ interface ActiveOrganisationData {
 
 const NAMESPACE_TRANSLATIONS_USERS_LIST = "UsersList";
 
-const CUSTODIAN_ID = 1;
-
 export default function OrganisationsList({
   organisations,
   onApprove,
@@ -51,6 +50,8 @@ export default function OrganisationsList({
   const [activeData, setActiveData] = useState<ActiveOrganisationData | null>(
     null
   );
+  const custodian = useStore(store => store.getCustodian());
+  const { id: custodianId } = custodian || {};
 
   const handleApproveClick = (
     payload: PostApprovalPayloadWithEntity,
@@ -82,7 +83,9 @@ export default function OrganisationsList({
         const { organisation_name, id, approvals } = organisation;
         const ariaId = organisation_name.replace(/[^\w]*/g, "");
 
-        const isApproved = approvals?.filter(a => a.id === id).length > 0;
+        const isApproved =
+          approvals?.filter(a => a.pivot.custodian_id === custodianId).length >
+          0;
 
         const accordianColor = isApproved
           ? PALETTE_THEME_PURPLE_BLUE.palette.success.light
@@ -132,7 +135,7 @@ export default function OrganisationsList({
                               {
                                 type: EntityType.ORGANISATION,
                                 organisation_id: id,
-                                custodian_id: CUSTODIAN_ID,
+                                custodian_id: custodianId,
                               },
                               isApproved
                             )
