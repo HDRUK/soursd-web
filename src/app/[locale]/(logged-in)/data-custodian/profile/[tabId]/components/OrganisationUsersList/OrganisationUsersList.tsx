@@ -13,20 +13,15 @@ import {
   Button,
   Card,
   CardContent,
-  Icon,
   Table,
   TableBody,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { UserDetailsModal } from "@/modules";
-import {
-  ApprovedTrainingIcon,
-  ApprovedUserIcon,
-  IdentityVerifiedIcon,
-} from "@/consts/icons";
 import { useStore } from "@/data/store";
 import OrganisationUserCard from "../OrganisationUserCard";
+import UserIcons from "./UserIcons";
 
 interface UsersListProps {
   organisation: Organisation;
@@ -67,21 +62,6 @@ export default function OrganisationUsersList({
     setActiveUserData(null);
   };
 
-  const getUserIcons = (user: User) => [
-    {
-      shouldRender: user.registry.verified && user.user_group === "USERS",
-      icon: <IdentityVerifiedIcon fontSize="large" />,
-    },
-    {
-      shouldRender: true, // TODO: Replace with proper logic
-      icon: <ApprovedUserIcon fontSize="large" />,
-    },
-    {
-      shouldRender: true, // TODO: Replace with proper logic
-      icon: <ApprovedTrainingIcon fontSize="large" />,
-    },
-  ];
-
   return (
     <>
       <Table
@@ -90,8 +70,6 @@ export default function OrganisationUsersList({
         aria-label={t("tableSummary")}>
         <TableBody>
           {registries.map(({ user: { id, approvals }, user }) => {
-            const userIcons = getUserIcons(user);
-
             const isApproved =
               approvals?.filter(a => a.pivot.custodian_id === custodianId)
                 .length > 0;
@@ -120,13 +98,7 @@ export default function OrganisationUsersList({
                     <Box />
                     <Box />
                     <Box>
-                      {userIcons.map(item =>
-                        item.shouldRender ? (
-                          item.icon
-                        ) : (
-                          <Icon fontSize="large" />
-                        )
-                      )}
+                      <UserIcons user={user} />
                     </Box>
                     <ActionMenu aria-label={`${id} actions`}>
                       <ActionMenuItem>

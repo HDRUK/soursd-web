@@ -21,9 +21,9 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { PALETTE_THEME_PURPLE_BLUE } from "@/config/theme";
 import { useStore } from "@/data/store";
-import OrganisationDetailsModal from "../OrganisationDetailsModal";
 import OrganisationUsersList from "../OrganisationUsersList";
-import OrganisationStats from "../OrganisationStats";
+import OrganisationDetailsModal from "../OrganisationDetailsModal";
+import OrganisationStats from "./OrganisationStats";
 
 interface OrganisationsListProps {
   organisations: Organisation[];
