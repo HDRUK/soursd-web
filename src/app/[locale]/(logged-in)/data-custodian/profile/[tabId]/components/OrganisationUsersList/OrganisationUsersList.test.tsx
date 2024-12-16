@@ -4,6 +4,8 @@ import { QueryState } from "@/types/form";
 import { Organisation } from "@/types/application";
 import OrganisationUsersList from "./OrganisationUsersList";
 
+jest.mock("@/services/projects");
+
 jest.mock("@/context/ApplicationData", () => ({
   useApplicationData: jest.fn().mockReturnValue({
     routes: {

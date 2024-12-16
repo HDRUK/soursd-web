@@ -36,7 +36,7 @@ export default function OrganisationUserCard({
     enabled: !!id,
   });
 
-  const userProjectTitles = () => {
+  const userProjectTitles = (() => {
     const titles = userApprovedProjects?.data?.map(project => project?.title);
 
     if (!titles || titles.length === 0) return "";
@@ -44,7 +44,7 @@ export default function OrganisationUserCard({
     return titles.length > 3
       ? `${titles.slice(0, 3).join(", ")} ...`
       : titles.join(", ");
-  };
+  })();
 
   return (
     <Box sx={{ display: "flex", minWidth: "50%" }}>
@@ -56,7 +56,7 @@ export default function OrganisationUserCard({
         <Typography variant="caption" color="grey">
           {userProjectTitles &&
             t("approvedOn", {
-              projects: userProjectTitles(),
+              projects: userProjectTitles,
             })}
         </Typography>
       </div>
