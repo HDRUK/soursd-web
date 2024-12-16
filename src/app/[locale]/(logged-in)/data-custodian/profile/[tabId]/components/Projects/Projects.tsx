@@ -11,6 +11,7 @@ import Pagination from "@/components/Pagination";
 import usePaginatedQuery from "@/hooks/usePaginatedQuery";
 import SearchBar from "@/modules/SearchBar";
 import SearchActionMenu from "@/modules/SearchActionMenu";
+import { SearchDirections } from "@/consts/search";
 import ProjectList from "../ProjectList";
 import ProjectsLegend from "../ProjectsLegend";
 
@@ -53,12 +54,12 @@ export default function Sections() {
   const searchActions = [
     {
       label: t("sortActions.AZ"),
-      onClick: () => handleSortToggle("title", "asc"),
+      onClick: () => handleSortToggle("title", SearchDirections.ASC),
       checked: sortDirection === "asc",
     },
     {
       label: t("sortActions.ZA"),
-      onClick: () => handleSortToggle("title", "desc"),
+      onClick: () => handleSortToggle("title", SearchDirections.DESC),
       checked: sortDirection === "desc",
     },
     {
