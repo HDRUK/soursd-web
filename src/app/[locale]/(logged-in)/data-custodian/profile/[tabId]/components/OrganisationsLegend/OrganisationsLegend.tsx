@@ -36,5 +36,7 @@ export default function OrganisationsLegend() {
     },
   ];
 
-  return <Legend items={items} />;
+  return (
+    <Legend items={items} boxSx={{ justifyContent: "space-around", my: 2 }} />
+  );
 }
