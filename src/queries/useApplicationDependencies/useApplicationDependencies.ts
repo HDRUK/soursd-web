@@ -2,11 +2,13 @@ import { CUSTODIAN_ID } from "@/consts/application";
 import useQueriesCombined from "@/hooks/useQueriesCombined";
 import { getCustodian } from "@/services/custodians";
 import { getOrganisation } from "@/services/organisations";
+import { getSectors } from "@/services/sectors";
+import { SectorsResponse } from "@/services/sectors/types";
 import { getSystemConfig } from "@/services/system_config";
 import { GetSystemConfigResponse } from "@/services/system_config/types";
 import { getUser } from "@/services/users";
 import { Custodian, Organisation, User } from "@/types/application";
-import { ResponseJson } from "@/types/requests";
+import { Paged, ResponseJson } from "@/types/requests";
 
 interface UseApplicationDependenciesProps {
   user: User;
@@ -35,14 +37,14 @@ export default function useApplicationDependencies({
         }),
     },
     {
-      queryKey: ["getOrganisation", user.organisation_id],
+      queryKey: ["getOrganisation", user?.organisation_id],
       queryFn: ({ queryKey }) =>
         getOrganisation(queryKey[1], {
           error: {
             message: "getOrganisationError",
           },
         }),
-      enabled: !!user.organisation_id,
+      enabled: !!user?.organisation_id,
     },
     {
       queryKey: ["getCustodian", CUSTODIAN_ID],
@@ -53,12 +55,22 @@ export default function useApplicationDependencies({
           },
         }),
     },
+    {
+      queryKey: ["getSectors"],
+      queryFn: () =>
+        getSectors({
+          error: {
+            message: "getSectorsError",
+          },
+        }),
+    },
   ];
 
   return useQueriesCombined<{
     getSystemConfig: ResponseJson<GetSystemConfigResponse>;
     getUser: ResponseJson<User>;
     getOrganisation: ResponseJson<Organisation>;
+    getSectors: ResponseJson<Paged<SectorsResponse>>;
     getCustodian: ResponseJson<Custodian>;
   }>(queries);
 }

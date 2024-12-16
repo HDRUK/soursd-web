@@ -4,6 +4,7 @@ import ApplicationLink from "@/components/ApplicationLink";
 import OverlayCenterAlert from "@/components/OverlayCenterAlert";
 import { VALIDATION_SCHEMA_KEY } from "@/consts/application";
 import { ROUTES } from "@/consts/router";
+import { UserGroup } from "@/consts/user";
 import { useStore } from "@/data/store";
 import PageContainer from "@/modules/PageContainer";
 import useApplicationDependencies from "@/queries/useApplicationDependencies";
@@ -62,6 +63,11 @@ const ApplicationDataProvider = ({
     store.setCustodian,
   ]);
 
+  const [sectors, setSectors] = useStore(store => [
+    store.config.sectors,
+    store.setSectors,
+  ]);
+
   const path = usePathname();
 
   const {
@@ -76,11 +82,15 @@ const ApplicationDataProvider = ({
     getSystemConfig: systemConfigData,
     getUser: userData,
     getOrganisation: organisationData,
+    getSectors: sectorsData,
     getCustodian: custodianData,
   } = applicationData;
 
   useEffect(() => {
-    if (!userData?.data.profile_completed_at) {
+    if (
+      !userData?.data.profile_completed_at &&
+      userData?.data?.user_group === UserGroup.USERS
+    ) {
       showAlert("warning", {
         text: tProfile("profileCompleteWarningMessage"),
       });
@@ -96,6 +106,10 @@ const ApplicationDataProvider = ({
   useEffect(() => {
     setCustodian(custodianData?.data);
   }, [custodianData?.data]);
+
+  useEffect(() => {
+    setSectors(sectorsData?.data?.data);
+  }, [sectorsData?.data?.data]);
 
   useEffect(() => {
     if (path) addUrlToHistory(path);
@@ -115,7 +129,8 @@ const ApplicationDataProvider = ({
     user &&
     ((me.organisation_id && organisation) || !me.organisation_id) &&
     !isApplicationLoading &&
-    custodian;
+    custodian &&
+    sectors;
 
   return (
     <ApplicationDataContext.Provider value={providerValue}>

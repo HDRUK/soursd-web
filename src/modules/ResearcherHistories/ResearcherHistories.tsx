@@ -22,7 +22,7 @@ export default function ResearcherHistories({
   const accreditations = data.getAccreditations?.data?.data;
   const employments = data.getEmployments?.data;
   const educations = data.getEducations?.data;
-  const projects = data.getProjects?.data?.data;
+  const projects = data.getApprovedProjects?.data;
   const trainings = data.getTrainings?.data;
 
   return (

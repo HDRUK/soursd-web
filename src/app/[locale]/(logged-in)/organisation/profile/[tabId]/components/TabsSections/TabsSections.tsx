@@ -15,9 +15,9 @@ export default function TabsSections() {
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
   return (
-    <Box sx={{ borderBottom: 1, borderColor: "divider", width: "100%", mb: 2 }}>
+    <Box sx={{ borderBottom: 1, borderColor: "divider", width: "100%" }}>
       <Tabs
-        value={params?.tabId || PageTabs.USER}
+        value={params?.tabId || PageTabs.DETAILS}
         aria-label={t("navigationAriaLabel")}
         role="navigation"
         variant="scrollable"
@@ -26,12 +26,6 @@ export default function TabsSections() {
         indicatorColor="secondary"
         textColor="inherit">
         <Tab
-          label={t("user")}
-          href={routes.profileOrganisationUser.path}
-          component={Link}
-          value={PageTabs.USER}
-        />
-        <Tab
           label={t("details")}
           href={routes.profileOrganisationDetails.path}
           component={Link}
@@ -39,16 +33,23 @@ export default function TabsSections() {
           iconPosition="start"
         />
         <Tab
-          label={t("contacts")}
-          href={routes.profileOrganisationContacts.path}
+          label={t("people")}
+          href={routes.profileOrganisationPeople.path}
           component={Link}
-          value={PageTabs.CONTACTS}
+          value={PageTabs.PEOPLE}
+        />
+
+        <Tab
+          label={t("projects")}
+          href={routes.profileOrganisationProjects.path}
+          component={Link}
+          value={PageTabs.PROJECTS}
         />
         <Tab
-          label={t("users")}
-          href={routes.profileOrganisationUsers.path}
+          label={t("tasks")}
+          href={routes.profileOrganisationTasks.path}
           component={Link}
-          value={PageTabs.USERS}
+          value={PageTabs.TASKS}
         />
       </Tabs>
     </Box>

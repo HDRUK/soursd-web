@@ -9,6 +9,8 @@ interface OrganisationsIdvtResponse {
   data: OrganisationIdvt;
 }
 
+type PatchOrganisationPayload = Partial<Organisation>;
+
 interface UpdateOrganisationPermissionsResponse {
   id: number;
   firstName: string;
@@ -33,4 +35,5 @@ export type {
   UpdateOrganisationPermissionsResponse,
   UpdateOrganisationPermissonsPayload,
   GetOrganisationInviteResponse,
+  PatchOrganisationPayload,
 };

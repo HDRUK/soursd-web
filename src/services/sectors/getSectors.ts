@@ -1,13 +1,12 @@
-import { ResponseJson, ResponseTranslations } from "@/types/requests";
+import { Paged, ResponseJson, ResponseTranslations } from "@/types/requests";
 import { getRequest, handleJsonResponse } from "../requests";
-import { ProjectsResponse } from "./types";
+import { SectorsResponse } from "./types";
 
 export default async (
-  userId: number | string,
   messages: ResponseTranslations
-): Promise<ResponseJson<ProjectsResponse>> => {
+): Promise<ResponseJson<Paged<SectorsResponse>>> => {
   const response = await getRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/users/${userId}/projects/approved`,
+    `${process.env.NEXT_PUBLIC_API_V1_URL}/sectors`,
     undefined,
     {
       headers: {

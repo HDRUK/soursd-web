@@ -1,12 +1,13 @@
-import { Paged, ResponseJson, ResponseTranslations } from "@/types/requests";
+import { ResponseJson, ResponseTranslations } from "@/types/requests";
 import { getRequest, handleJsonResponse } from "../requests";
-import { GetCustodiansResponse } from "./types";
+import { ProjectsResponse } from "./types";
 
 export default async (
+  registryId: number | string,
   messages: ResponseTranslations
-): Promise<ResponseJson<Paged<GetCustodiansResponse>>> => {
+): Promise<ResponseJson<ProjectsResponse>> => {
   const response = await getRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/custodians`,
+    `${process.env.NEXT_PUBLIC_API_V1_URL}/projects/user/${registryId}/approved`,
     undefined,
     {
       headers: {
