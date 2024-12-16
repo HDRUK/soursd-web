@@ -1,3 +1,8 @@
 const SEARCH_CHAR_LIMIT = 3;
 
-export { SEARCH_CHAR_LIMIT };
+enum SearchDirections {
+  ASC = "asc",
+  DESC = "desc",
+}
+
+export { SEARCH_CHAR_LIMIT, SearchDirections };

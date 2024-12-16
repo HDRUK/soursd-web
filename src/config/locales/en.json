@@ -393,7 +393,13 @@
     "title": "Projects",
     "approvedKey": "Approved Project",
     "unapprovedKey": "Project Pending Approval",
-    "searchPlaceholder": "Search Projects"
+    "searchPlaceholder": "Search Projects",
+    "sortActions": {
+      "AZ": "Sort Alphabetical A-Z",
+      "ZA": "Sort Alphabetical Z-A",
+      "approved": "Approved project",
+      "pending": "Project pending approval"
+    }
   },
   "Error": {
     "login": {
@@ -412,5 +418,17 @@
   "Pagination": {
     "nextButtonLabel": "Next",
     "previousButtonLabel": "Previous"
+  },
+  "EmploymentDetails": {
+    "title": "Employment"
+  },
+  "EducationDetails": {
+    "title": "Education"
+  },
+  "TrainingDetails": {
+    "title": "Training"
+  },
+  "AccreditationsDetails": {
+    "title": "Accreditations"
   }
 }
