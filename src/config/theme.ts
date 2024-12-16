@@ -1,3 +1,4 @@
+import { colorToRgba } from "@/utils/theme";
 import { createTheme } from "@mui/material";
 import { blue, blueGrey, green, grey, orange, red } from "@mui/material/colors";
 
@@ -64,9 +65,7 @@ const PALETTE_THEME_PURPLE_BLUE = {
     info: createColor(blue["200"]),
     error: createColor(red["400"]),
     success: createColor(green["600"]),
-    highlight: createColor("#5F9EA0"),
-    highlight2: createColor("#faebd7"),
-    highlight3: createColor("#152238"),
+    highlight: createColor(colorToRgba(grey["400"], 0.25)),
     default: createColor("#7A89C2"),
     inactive: createColor(grey["300"]),
     caption: createColor("#757575"),

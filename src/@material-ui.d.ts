@@ -8,8 +8,6 @@ interface ColorOverrides {
   background1: true;
   background2: true;
   highlight: true;
-  highlight2: true;
-  highlight3: true;
   default: true;
   inactive: true;
   caption: true;
@@ -17,6 +15,7 @@ interface ColorOverrides {
   greyLight: true;
   postitYellow: true;
   mint: true;
+  greyLight: true;
 }
 
 declare module "@mui/material/styles/createPalette" {
@@ -24,8 +23,6 @@ declare module "@mui/material/styles/createPalette" {
     background1: SimplePaletteColorOptions;
     background2: SimplePaletteColorOptions;
     highlight: SimplePaletteColorOptions;
-    highlight2: SimplePaletteColorOptions;
-    highlight3: SimplePaletteColorOptions;
     default: SimplePaletteColorOptions;
     inactive: SimplePaletteColorOptions;
     caption: SimplePaletteColorOptions;

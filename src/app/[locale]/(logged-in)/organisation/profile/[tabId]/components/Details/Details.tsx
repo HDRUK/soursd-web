@@ -1,42 +1,60 @@
 "use client";
 
-import Guidance from "@/components/Guidance";
 import { useStore } from "@/data/store";
 import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
-import { FormControl, Grid, TextField } from "@mui/material";
+import { PageGuidance } from "@/modules";
+import {
+  patchOrganisation,
+  PatchOrganisationPayload,
+} from "@/services/organisations";
+import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
+import DetailsForm, { DetailsFormValues } from "../DetailsForm";
 
-const NAMESPACE_TRANSLATION_FORM = "Form";
+const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
 export default function Details() {
-  const user = useStore(state => state.getUser());
+  const { organisation, setOrganisation } = useStore(state => {
+    return {
+      organisation: state.config.organisation,
+      setOrganisation: state.setOrganisation,
+    };
+  });
+  const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
-  const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
+  const {
+    mutateAsync: mutateUpdateAsync,
+    isError,
+    isPending: isLoading,
+    error,
+  } = useMutation({
+    mutationKey: ["patchCustodian", organisation?.id],
+    mutationFn: (payload: PatchOrganisationPayload) =>
+      patchOrganisation(organisation?.id, payload, {
+        error: {
+          message: "submitError",
+        },
+      }),
+  });
+
+  const handleSubmit = async (fields: DetailsFormValues) => {
+    const payload = { ...organisation, ...fields };
+
+    await mutateUpdateAsync(payload);
+
+    setOrganisation(payload);
+  };
 
   return (
-    <Guidance {...mockedPersonalDetailsGuidanceProps}>
-      <form>
-        <Grid container rowSpacing={3} md={8}>
-          <Grid item xs={12}>
-            <FormControl disabled size="small" fullWidth>
-              <TextField
-                size="small"
-                label={<>{tForm("firstName")}</>}
-                value={user?.first_name}
-              />
-            </FormControl>
-          </Grid>
-          <Grid item xs={12}>
-            <FormControl disabled size="small" fullWidth>
-              <TextField
-                size="small"
-                label={<>{tForm("lastName")}</>}
-                value={user?.last_name}
-              />
-            </FormControl>
-          </Grid>
-        </Grid>
-      </form>
-    </Guidance>
+    <PageGuidance title={t("identity")} {...mockedPersonalDetailsGuidanceProps}>
+      <DetailsForm
+        onSubmit={handleSubmit}
+        queryState={{
+          isError,
+          isLoading,
+          error,
+        }}
+      />
+    </PageGuidance>
   );
 }

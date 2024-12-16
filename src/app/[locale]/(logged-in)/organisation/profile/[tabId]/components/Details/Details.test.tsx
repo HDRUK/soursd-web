@@ -1,14 +1,30 @@
+import { mockedOrganisation } from "@/mocks/data/organisation";
+import { act, fireEvent, render, screen, waitFor } from "@/utils/testUtils";
+import { useMutation } from "@tanstack/react-query";
 import { useStore } from "@/data/store";
-import { mockedUser } from "@/mocks/data/user";
-import { act, render, screen, waitFor } from "@/utils/testUtils";
 import { axe } from "jest-axe";
 import Details from "./Details";
 
+jest.mock("@tanstack/react-query");
 jest.mock("@/data/store");
 
-const defaultUser = mockedUser();
+const mockMutateAsync = jest.fn();
+const mockSetOrganisation = jest.fn();
 
-(useStore as unknown as jest.Mock).mockReturnValue(defaultUser);
+const defaultOrganisation = mockedOrganisation();
+
+(useStore as unknown as jest.Mock).mockImplementation(() => ({
+  organisation: defaultOrganisation,
+  sectors: [],
+  setOrganisation: mockSetOrganisation,
+}));
+
+(useMutation as unknown as jest.Mock).mockReturnValue({
+  mutateAsync: mockMutateAsync,
+  isError: false,
+  isPending: true,
+  error: "",
+});
 
 describe("<Details />", () => {
   it("has no accessibility validations", async () => {
@@ -26,12 +42,14 @@ describe("<Details />", () => {
   it("has the correct values", async () => {
     render(<Details />);
 
-    const firstName = screen.getByLabelText("First name");
-    const lastName = screen.getByLabelText("Last name");
+    fireEvent.submit(screen.getByRole("button", { name: /Save/i }));
 
     await waitFor(() => {
-      expect(firstName).toHaveValue(defaultUser.first_name);
-      expect(lastName).toHaveValue(defaultUser.last_name);
+      expect(mockMutateAsync).toHaveBeenCalled();
+    });
+
+    await waitFor(() => {
+      expect(mockSetOrganisation).toHaveBeenCalled();
     });
   });
 });
