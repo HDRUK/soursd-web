@@ -8,7 +8,7 @@ import {
   QueryFunctionContext,
   QueryKey,
 } from "@tanstack/react-query";
-import { getUserApprovedProjects } from "@/services/projects";
+import { getApprovedProjects } from "@/services/projects";
 
 interface OrganisationUserCardProps {
   user: User;
@@ -23,13 +23,13 @@ export default function OrganisationUserCard({
   const t = useTranslations(NAMESPACE_TRANSLATIONS);
 
   const { data: userApprovedProjects } = useQuery({
-    queryKey: ["getUserApprovedProjects", id],
+    queryKey: ["getApprovedProjects", id],
     queryFn: ({ queryKey }: QueryFunctionContext<QueryKey>) => {
       const [, id] = queryKey;
 
-      return getUserApprovedProjects(id as string, {
+      return getApprovedProjects(id as string, {
         error: {
-          message: "getUserApprovedProjectsError",
+          message: "getApprovedProjectsError",
         },
       });
     },
