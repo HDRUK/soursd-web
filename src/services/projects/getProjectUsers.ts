@@ -1,5 +1,4 @@
-import { ResponseJson, ResponseTranslations } from "@/types/requests";
-import { Paged } from "@/types/requests";
+import { ResponseJson, ResponseTranslations, Paged } from "@/types/requests";
 import { getRequest, handleJsonResponse } from "../requests";
 import { ProjectUsersResponse } from "./types";
 
