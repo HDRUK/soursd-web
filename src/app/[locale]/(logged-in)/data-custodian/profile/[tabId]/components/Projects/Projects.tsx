@@ -35,9 +35,9 @@ export default function Sections() {
     handleFieldToggle,
     queryParams,
   } = usePaginatedQuery({
-    queryKeyBase: "getOrganisationProjects",
+    queryKeyBase: ["getOrganisationProjects"],
     defaultQueryParams: {
-      sort: "title:asc",
+      sort: `title:${SearchDirections.ASC}`,
     },
     queryFn: queryParams =>
       getOrganisationProjects(organisationId, queryParams, {
@@ -55,12 +55,12 @@ export default function Sections() {
     {
       label: t("sortActions.AZ"),
       onClick: () => handleSortToggle("title", SearchDirections.ASC),
-      checked: sortDirection === "asc",
+      checked: sortDirection === SearchDirections.ASC,
     },
     {
       label: t("sortActions.ZA"),
       onClick: () => handleSortToggle("title", SearchDirections.DESC),
-      checked: sortDirection === "desc",
+      checked: sortDirection === SearchDirections.DESC,
     },
     {
       label: t("sortActions.approved"),
