@@ -1,7 +1,7 @@
 "use client";
 
 import { ROUTES } from "@/consts/router";
-import { Custodian, Organisation, User } from "@/types/application";
+import { Custodian, Organisation, Sector, User } from "@/types/application";
 import { Routes } from "@/types/router";
 import { produce } from "immer";
 import { create } from "zustand";
@@ -14,11 +14,14 @@ interface StoreState {
     };
     user?: User;
     organisation?: Organisation;
+    sectors?: Sector[];
     custodian?: Custodian;
   };
   setRoutes: (routes: Routes) => void;
   getUser: () => User | undefined;
   setUser: (user: User) => void;
+  getSectors: () => Sector[] | undefined;
+  setSectors: (sectors: Sector[]) => void;
   getOrganisation: () => Organisation | undefined;
   setOrganisation: (organisation: Organisation | undefined) => void;
   getCustodian: () => Custodian | undefined;
@@ -55,6 +58,15 @@ const useStore = create<StoreState>((set, get) => ({
     ),
   getUser: () => {
     return get().config.user;
+  },
+  setSectors: (sectors: Sector[]) =>
+    set(
+      produce(state => {
+        state.config.sectors = sectors;
+      })
+    ),
+  getSectors: () => {
+    return get().config.sectors;
   },
   setOrganisation: (organisation: Organisation | undefined) =>
     set(

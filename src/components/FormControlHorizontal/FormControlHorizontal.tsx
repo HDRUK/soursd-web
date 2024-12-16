@@ -37,7 +37,7 @@ export default function FormControlHorizontal({
       fullWidth
       {...restProps}>
       <Grid container columnSpacing={2}>
-        <Grid item md={3} sx={{ display: "flex", alignItems: "center" }}>
+        <Grid item md={3} sx={{ display: "flex", pt: 1 }}>
           {label && (
             <FormLabel
               htmlFor={id}

@@ -31,15 +31,5 @@ export default function ProjectsLegend() {
     },
   ];
 
-  return (
-    <Legend
-      items={items}
-      boxSx={{
-        display: "grid",
-        gridTemplateColumns: "repeat(2, 1fr)",
-        rowGap: 2,
-        columnGap: 2,
-      }}
-    />
-  );
+  return <Legend items={items} />;
 }

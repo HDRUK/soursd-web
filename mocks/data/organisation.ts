@@ -12,8 +12,8 @@ const mockedOrganisation = (
   town: faker.string.sample(),
   county: faker.string.sample(),
   country: faker.string.sample(),
-  postcode: faker.string.sample(),
-  companies_house_no: faker.string.alphanumeric(8),
+  postcode: "RG6 1WG",
+  companies_house_no: "01624297",
   dpo_email: "",
   dpo_name: "",
   hr_email: "",
@@ -28,6 +28,11 @@ const mockedOrganisation = (
   lead_applicant_email: faker.internet.email(),
   permissions: [mockedPermission()],
   approvals: [mockedApproval()],
+  sector_id: 1,
+  charity_registration_id: "12345678",
+  smb_status: true,
+  ror_id: "04a496k07",
+  website: faker.internet.url(),
   registries: [
     {
       user: mockedUser({

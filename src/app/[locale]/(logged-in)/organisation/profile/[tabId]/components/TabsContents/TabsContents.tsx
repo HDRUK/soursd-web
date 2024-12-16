@@ -20,10 +20,10 @@ export default function TabsContents({ tabId }: TabsContentsProps) {
 
   return (
     <>
-      {tabId === PageTabs.USER && "User"}
+      {tabId === PageTabs.PEOPLE && <Users />}
       {tabId === PageTabs.DETAILS && <Details />}
-      {tabId === PageTabs.CONTACTS && "Contacts"}
-      {tabId === PageTabs.USERS && <Users />}
+      {tabId === PageTabs.TASKS && "Tasks"}
+      {tabId === PageTabs.PROJECTS && "Projects"}
     </>
   );
 }

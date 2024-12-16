@@ -84,14 +84,24 @@ export default function Sections() {
       <PageSection
         sx={{
           display: "flex",
+          flexDirection: "column",
           gap: 2,
         }}>
-        <PageSection sx={{ display: "flex", flex: 1, maxHeight: 80 }}>
+        <PageSection
+          sx={{
+            display: "grid",
+            gridTemplateColumns: "2fr 1fr",
+            flex: 1,
+            maxHeight: 80,
+          }}>
           <SearchBar
             onSearch={text => updateQueryParam("title[]", text)}
             placeholder={t("searchPlaceholder")}
           />
-          <SearchActionMenu actions={searchActions} />
+          <SearchActionMenu
+            actions={searchActions}
+            sx={{ justifySelf: "start", my: "auto" }}
+          />
         </PageSection>
         <PageSection sx={{ display: "flex", flex: 1, gap: 2 }}>
           <ProjectsLegend />

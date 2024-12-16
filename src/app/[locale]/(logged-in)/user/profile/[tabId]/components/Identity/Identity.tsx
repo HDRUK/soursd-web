@@ -61,7 +61,7 @@ export default function Identity() {
     error: updateError,
   } = useUserProfileCompletion();
 
-  const user = useStore(state => state.getUser());
+  const user = useStore(state => state.config.user);
 
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
