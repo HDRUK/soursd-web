@@ -2,18 +2,11 @@ import { useStore } from "@/data/store";
 import { act, fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 import { axe } from "jest-axe";
 import { mockedUser } from "@/mocks/data/user";
-import { useRouter } from "next/navigation";
+import AppRouterContextProviderMock from "@/mocks/context/router";
+
 import Projects from ".";
 
 jest.mock("@/data/store");
-jest.mock("next/navigation", () => ({
-  useParams: jest.fn(),
-  usePathname: jest.fn(),
-  useSearchParams: jest.fn(),
-  useRouter: jest.fn(() => ({
-    push: jest.fn(),
-  })),
-}));
 
 const mockedPush = jest.fn();
 
@@ -21,17 +14,16 @@ const defaultUser = mockedUser();
 
 (useStore as unknown as jest.Mock).mockReturnValue(defaultUser);
 
-const renderSections = () => render(<Projects />);
+const renderProjects = () =>
+  render(
+    <AppRouterContextProviderMock router={{ push: mockedPush }}>
+      <Projects />
+    </AppRouterContextProviderMock>
+  );
 
 describe("<Projects />", () => {
-  beforeEach(() => {
-    (useRouter as jest.Mock).mockReturnValue({
-      push: mockedPush,
-    });
-  });
-
   it("has no accessibility violations", async () => {
-    const { container } = renderSections();
+    const { container } = renderProjects();
 
     let results;
 
@@ -41,7 +33,7 @@ describe("<Projects />", () => {
     expect(results).toHaveNoViolations();
   });
   it("display 10 projects", async () => {
-    const { container } = renderSections();
+    const { container } = renderProjects();
     await waitFor(() => {
       expect(screen.queryByText("No projects found")).not.toBeInTheDocument();
       const accordions = container.querySelectorAll(".MuiAccordion-root");
