@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   useQuery,
   keepPreviousData,
@@ -10,7 +10,7 @@ import { useSearchParams, useRouter, usePathname } from "next/navigation";
 const API_SORT_KEY = "sort";
 
 type PaginatedQueryProps<T> = {
-  queryKeyBase: string;
+  queryKeyBase: unknown[];
   queryFn: (
     queryParams: Record<string, string | number | undefined>
   ) => Promise<ResponseJson<Paged<T>>>;
@@ -48,8 +48,15 @@ const usePaginatedQuery = <T,>({
     ...defaultQueryParams,
   });
 
+  useEffect(() => {
+    setQueryParams(prev => ({
+      ...prev,
+      page,
+    }));
+  }, [page]);
+
   const queryResult = useQuery({
-    queryKey: [queryKeyBase, queryParams],
+    queryKey: [...queryKeyBase, queryParams],
     queryFn: () => queryFn(queryParams),
     placeholderData: keepPreviousData,
     enabled,
