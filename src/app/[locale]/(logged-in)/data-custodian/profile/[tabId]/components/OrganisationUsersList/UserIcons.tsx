@@ -10,12 +10,14 @@ import { Icon } from "@mui/material";
 
 interface UserIconsProps {
   user: User;
+  verified: boolean;
+  isApproved: boolean;
 }
 
-export default function UserIcons({ user }: UserIconsProps) {
+export default function UserIcons({ user, verified, isApproved }: UserIconsProps) {
   const shouldRenderIdentity =
-    user.registry.verified && user.user_group === "USERS";
-  const shouldRenderApprovedUser = true; // TODO: Replace with proper logic
+    verified && user.user_group === "USERS";
+  const shouldRenderApprovedUser = isApproved
   const shouldRenderTraining = true; // TODO: Replace with proper logic
 
   return (

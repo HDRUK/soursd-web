@@ -96,11 +96,11 @@ export default function Sections() {
           })}
         </Message>
       )}
-      {!isOrganisationsLoading && organisationsData?.data && (
+      {!isOrganisationsLoading && organisationsData?.data?.data && (
         <OrganisationsList
           onApprove={handleApprove}
           onUnapprove={handleUnapprove}
-          organisations={organisationsData?.data}
+          organisations={organisationsData?.data?.data}
           queryState={{
             isError: isDeleteError || isUpdateError,
             isLoading: isDeleteLoading || isUpdateLoading,

@@ -145,6 +145,7 @@ interface Organisation extends OrganisationIdvt {
   smb_status: boolean;
   registries: {
     user: User;
+    verified: boolean;
   }[];
 }
 
