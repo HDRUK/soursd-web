@@ -97,7 +97,11 @@ export default function OrganisationUsersList({
                     <Box />
                     <Box />
                     <Box>
-                      <UserIcons user={user} verified={verified} isApproved={isApproved}/>
+                      <UserIcons
+                        user={user}
+                        verified={verified}
+                        isApproved={isApproved}
+                      />
                     </Box>
                     <ActionMenu aria-label={`${id} actions`}>
                       <ActionMenuItem>

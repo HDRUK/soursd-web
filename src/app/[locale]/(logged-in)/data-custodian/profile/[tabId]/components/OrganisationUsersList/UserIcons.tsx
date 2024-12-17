@@ -14,10 +14,13 @@ interface UserIconsProps {
   isApproved: boolean;
 }
 
-export default function UserIcons({ user, verified, isApproved }: UserIconsProps) {
-  const shouldRenderIdentity =
-    verified && user.user_group === "USERS";
-  const shouldRenderApprovedUser = isApproved
+export default function UserIcons({
+  user,
+  verified,
+  isApproved,
+}: UserIconsProps) {
+  const shouldRenderIdentity = verified && user.user_group === "USERS";
+  const shouldRenderApprovedUser = isApproved;
   const shouldRenderTraining = true; // TODO: Replace with proper logic
 
   return (
