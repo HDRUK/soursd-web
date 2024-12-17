@@ -123,7 +123,7 @@ describe("<AccountConfirm />", () => {
       { error: { message: expect.any(String) } }
     );
     expect(mockedPush).toHaveBeenCalledWith(
-      expect.stringContaining("user/profile")
+      expect.stringContaining("organisation/profile")
     );
   });
 });
