@@ -18,7 +18,7 @@ import {
   Checkbox,
   FormControlLabel,
 } from "@mui/material";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import { useApplicationData } from "@/context/ApplicationData";
 import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
 import AccountOption from "../AccountOption";
@@ -28,6 +28,7 @@ const NAMESPACE_TRANSLATIONS_PROFILE = "Register";
 export default function AccountConfirm() {
   const router = useRouter();
   const { routes } = useApplicationData();
+  const params = useParams();
 
   const [selected, setSelected] = useState<AccountType | null>(null); // To track selected button
   const [termsChecked, setTermsChecked] = useState(false); // To track checkbox
@@ -50,8 +51,19 @@ export default function AccountConfirm() {
   const handleRegister = async () => {
     if (!selected) return;
     mutateAsync({ account_type: selected }).then(() => {
-      // temp
-      router.push(routes.homepage.path);
+      const currentLocale = params?.locale || "en";
+
+      switch (selected) {
+        case AccountType.ORGANISATION:
+          router.push(`/${currentLocale}${routes.profileOrganisation.path}`);
+          break;
+        case AccountType.USER:
+          router.push(`/${currentLocale}${routes.profileResearcher.path}`);
+          break;
+        default:
+          router.push(`/${currentLocale}${routes.homepage.path}`);
+          break;
+      }
     });
   };
 

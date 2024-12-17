@@ -96,7 +96,9 @@ describe("<AccountConfirm />", () => {
       { account_type: AccountType.USER },
       { error: { message: expect.any(String) } }
     );
-    expect(mockedPush).toHaveBeenCalledWith(expect.any(String));
+    expect(mockedPush).toHaveBeenCalledWith(
+      expect.stringContaining("user/profile")
+    );
   });
 
   it("select represent an organisation should register correct account type", async () => {
@@ -120,6 +122,8 @@ describe("<AccountConfirm />", () => {
       { account_type: AccountType.ORGANISATION },
       { error: { message: expect.any(String) } }
     );
-    expect(mockedPush).toHaveBeenCalledWith(expect.any(String));
+    expect(mockedPush).toHaveBeenCalledWith(
+      expect.stringContaining("user/profile")
+    );
   });
 });
