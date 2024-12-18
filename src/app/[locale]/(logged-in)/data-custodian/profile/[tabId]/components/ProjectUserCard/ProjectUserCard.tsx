@@ -16,6 +16,7 @@ import { UserDetailsModal } from "@/modules";
 import { EntityType } from "@/types/api";
 import { getEntityApproval } from "@/services/approvals";
 import { ApprovedUserIcon } from "@/consts/icons";
+import Text from "@/components/Text";
 import { useStore } from "@/data/store";
 
 interface ProjectUserCardProps {
@@ -35,7 +36,7 @@ export default function ProjectUserCard({
   const custodian = useStore(store => store.getCustodian());
 
   const { data: isApprovedData } = useQuery({
-    queryKey: ["getUserHasCustodianApproval"],
+    queryKey: ["getUserHasCustodianApproval", user.id, custodian.id],
     queryFn: () => {
       return getEntityApproval(EntityType.USER, user.id, custodian?.id, {
         error: {
@@ -127,7 +128,14 @@ export default function ProjectUserCard({
           </Box>
 
           <Box sx={{ gap: 2, display: "flex", alignItems: "center" }}>
-            {isApprovedData?.data && <ApprovedUserIcon sx={{ fontSize: 40 }} />}
+            {isApprovedData?.data && (
+              <Text
+                iconSize="40px"
+                startIcon={<ApprovedUserIcon />}
+                component="span">
+                {" "}
+              </Text>
+            )}
 
             <IconButton
               size="small"
