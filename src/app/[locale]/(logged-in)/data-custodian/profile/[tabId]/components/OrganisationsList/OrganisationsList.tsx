@@ -21,12 +21,13 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { PALETTE_THEME_PURPLE_BLUE } from "@/config/theme";
 import { useStore } from "@/data/store";
+import { Paged } from "@/types/requests";
 import OrganisationUsersList from "../OrganisationUsersList";
 import OrganisationDetailsModal from "../OrganisationDetailsModal";
 import OrganisationStats from "./OrganisationStats";
 
 interface OrganisationsListProps {
-  organisations: Organisation[];
+  organisations: Paged<Organisation[]>;
   onApprove(payload: PostApprovalPayloadWithEntity): void;
   onUnapprove(payload: PostApprovalPayloadWithEntity): void;
   queryState: QueryState;

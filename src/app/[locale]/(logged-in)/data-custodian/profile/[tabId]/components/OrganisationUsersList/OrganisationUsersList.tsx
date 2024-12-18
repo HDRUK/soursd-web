@@ -69,11 +69,10 @@ export default function OrganisationUsersList({
         size="small"
         aria-label={t("tableSummary")}>
         <TableBody>
-          {registries.map(({ user: { id, approvals }, user }) => {
+          {registries.map(({ user: { id, approvals }, user, verified }) => {
             const isApproved =
               approvals?.filter(a => a.pivot.custodian_id === custodianId)
                 .length > 0;
-
             return (
               <Card sx={{ mb: 1 }} role="listitem" key={`user_${id}`}>
                 <CardContent>
@@ -98,7 +97,11 @@ export default function OrganisationUsersList({
                     <Box />
                     <Box />
                     <Box>
-                      <UserIcons user={user} />
+                      <UserIcons
+                        user={user}
+                        verified={verified}
+                        isApproved={isApproved}
+                      />
                     </Box>
                     <ActionMenu aria-label={`${id} actions`}>
                       <ActionMenuItem>
@@ -142,7 +145,7 @@ export default function OrganisationUsersList({
                               isApproved
                             )
                           }>
-                          {isApproved ? t("approved") : t("approve")}
+                          {isApproved ? t("unapprove") : t("approve")}
                         </LoadingButton>
                       </ActionMenuItem>
                     </ActionMenu>

@@ -78,7 +78,7 @@ describe("OrganisationUsersList", () => {
     const menuButton = screen.getByRole("button");
     fireEvent.click(menuButton);
 
-    const approveButton = screen.getByRole("button", { name: "approved" });
+    const approveButton = screen.getByRole("button", { name: "unapprove" });
     fireEvent.click(approveButton);
 
     expect(mockOnApproveToggle).toHaveBeenCalledWith(

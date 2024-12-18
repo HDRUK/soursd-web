@@ -313,6 +313,7 @@
     "title": "Users",
     "loadingAriaLabel": "Loading page",
     "approve": "Approve",
+    "unapprove": "Unapprove",
     "approved": "Approved",
     "permissions": "Permissions",
     "emailHeading": "Email",
