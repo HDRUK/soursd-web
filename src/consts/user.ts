@@ -17,4 +17,13 @@ enum UserProfileCompletionCategories {
   TRAINING = "training",
 }
 
-export { UserGroup, UserProvider, UserProfileCompletionCategories };
+enum UserFeedSource {
+  ORG = "ORG",
+}
+
+export {
+  UserGroup,
+  UserProvider,
+  UserProfileCompletionCategories,
+  UserFeedSource,
+};

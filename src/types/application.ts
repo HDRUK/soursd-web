@@ -1,6 +1,10 @@
 import { FileStatus, FileType } from "@/consts/files";
 import { ROUTES } from "@/consts/router";
-import { UserProfileCompletionCategories, UserGroup } from "@/consts/user";
+import {
+  UserProfileCompletionCategories,
+  UserGroup,
+  UserFeedSource,
+} from "@/consts/user";
 
 interface File {
   id: number;
@@ -106,6 +110,9 @@ interface User {
   orc_id: string | null;
   orcid_scanning: boolean;
   orcid_scanning_completed_at: string | null;
+  created_at: string;
+  feed_source?: UserFeedSource;
+  unclaimed?: boolean;
   registry: {
     files: File[];
     organisations: Organisation[];

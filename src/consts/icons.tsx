@@ -1,3 +1,4 @@
+import BlockIcon from "@mui/icons-material/BlockOutlined";
 import ShieldOutlinedIcon from "@mui/icons-material/ShieldOutlined";
 import SquareIcon from "@mui/icons-material/Square";
 import TaskAltOutlinedIcon from "@mui/icons-material/TaskAltOutlined";
@@ -24,10 +25,15 @@ const PendingIcon = (props: SvgIconProps) => (
   <SquareIcon {...props} sx={{ color: "error.main" }} />
 );
 
+const DecoupleIcon = (props: SvgIconProps) => (
+  <BlockIcon {...props} sx={{ color: "error.main" }} />
+);
+
 export {
   ApprovedIcon,
   ApprovedTrainingIcon,
   ApprovedUserIcon,
   IdentityVerifiedIcon,
   PendingIcon,
+  DecoupleIcon,
 };

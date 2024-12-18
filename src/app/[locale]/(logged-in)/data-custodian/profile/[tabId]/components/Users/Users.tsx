@@ -1,5 +1,7 @@
+import ApplicationLink from "@/components/ApplicationLink";
 import Icon from "@/components/Icon";
 import Results from "@/components/Results";
+import ResultsCard from "@/components/ResultsCard";
 import { useStore } from "@/data/store";
 import {
   deleteCustodianUser,
@@ -16,8 +18,6 @@ import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined
 import {
   Box,
   Button,
-  Card,
-  CardContent,
   IconButton,
   InputAdornment,
   TextField,
@@ -123,85 +123,70 @@ export default function Users() {
 
       <Results
         noResultsMessage={t("noResults")}
-        errorMessage={t("getError")}
+        errorMessage={t.rich("getError", {
+          applicationLink: ApplicationLink,
+        })}
         queryState={{
           isLoading: isGetCustodiansLoading,
           isError: isGetCustodiansError,
         }}>
         {custodiansData?.data.map(custodianUser => {
-          const { first_name, last_name, created_at, email } = custodianUser;
+          const { first_name, last_name, created_at } = custodianUser;
 
           return (
-            <Card sx={{ mb: 1 }} role="listitem" key={email}>
-              <CardContent>
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: {
-                      xs: "column",
-                      md: "row",
-                    },
-                    width: "100%",
-                    gap: {
-                      xs: 1,
-                      md: 2,
-                    },
-                    alignItems: {
-                      md: "center",
-                    },
-                  }}>
-                  <Box sx={{ display: "flex", gap: 2 }}>
-                    <Icon size="xlarge">
-                      <PersonOutlineOutlinedIcon />
-                    </Icon>
-                    <div>
-                      <Typography variant="h6">
-                        {first_name} {last_name}
-                      </Typography>
-                      {/* Will be read from db */}
-                      <Typography>Administrator</Typography>
-                    </div>
-                  </Box>
-                  <Box
-                    sx={{
-                      flexGrow: 1,
-                      textAlign: {
-                        md: "right",
-                      },
-                    }}>
-                    <Typography color="caption.main">
-                      {t("addedOn", {
-                        date: formatShortDate(created_at),
-                      })}
-                    </Typography>
-                    <Typography color="caption.main">
-                      {t("lastLoggedIn", {
-                        date: formatShortDate(),
-                      })}
-                    </Typography>
-                  </Box>
-                  <Box>
-                    <IconButton
-                      size="small"
-                      aria-label="Edit user"
-                      onClick={() =>
-                        setModalProps({
-                          open: true,
-                          user: custodianUser,
-                        })
-                      }>
-                      <CreateOutlinedIcon sx={{ color: "default.main" }} />
-                    </IconButton>
-                    <IconButton
-                      size="small"
-                      aria-label="Delete user"
-                      onClick={() => handleDelete(custodianUser?.id)}>
-                      <DeleteForeverOutlinedIcon sx={{ color: "error.main" }} />
-                    </IconButton>
-                  </Box>
-                </Box>
-              </CardContent>
-            </Card>
+            <ResultsCard
+              icon={
+                <Icon size="xlarge">
+                  <PersonOutlineOutlinedIcon />
+                </Icon>
+              }
+              content={
+                <>
+                  {" "}
+                  <Typography variant="h6">
+                    {first_name} {last_name}
+                  </Typography>
+                  {/* Will be read from db */}
+                  <Typography>Administrator</Typography>
+                </>
+              }
+              details={
+                <>
+                  {" "}
+                  <Typography color="caption.main">
+                    {t("addedOn", {
+                      date: formatShortDate(created_at),
+                    })}
+                  </Typography>
+                  <Typography color="caption.main">
+                    {t("lastLoggedIn", {
+                      date: formatShortDate(),
+                    })}
+                  </Typography>
+                </>
+              }
+              actions={
+                <>
+                  <IconButton
+                    size="small"
+                    aria-label="Edit user"
+                    onClick={() =>
+                      setModalProps({
+                        open: true,
+                        user: custodianUser,
+                      })
+                    }>
+                    <CreateOutlinedIcon sx={{ color: "default.main" }} />
+                  </IconButton>
+                  <IconButton
+                    size="small"
+                    aria-label="Delete user"
+                    onClick={() => handleDelete(custodianUser?.id)}>
+                    <DeleteForeverOutlinedIcon sx={{ color: "error.main" }} />
+                  </IconButton>
+                </>
+              }
+            />
           );
         })}
       </Results>

@@ -33,10 +33,10 @@ export default function TabsSections() {
           iconPosition="start"
         />
         <Tab
-          label={t("people")}
-          href={routes.profileOrganisationPeople.path}
+          label={t("manageUsers")}
+          href={routes.profileOrganisationUsers.path}
           component={Link}
-          value={PageTabs.PEOPLE}
+          value={PageTabs.USERS}
         />
 
         <Tab

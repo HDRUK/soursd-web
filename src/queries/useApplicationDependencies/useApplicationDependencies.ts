@@ -37,14 +37,14 @@ export default function useApplicationDependencies({
         }),
     },
     {
-      queryKey: ["getOrganisation", user?.organisation_id],
+      queryKey: ["getOrganisation", 1],
       queryFn: ({ queryKey }) =>
         getOrganisation(queryKey[1], {
           error: {
             message: "getOrganisationError",
           },
         }),
-      enabled: !!user?.organisation_id,
+      enabled: !!1,
     },
     {
       queryKey: ["getCustodian", CUSTODIAN_ID],
