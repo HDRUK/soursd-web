@@ -33,23 +33,22 @@ export default function TabsSections() {
           iconPosition="start"
         />
         <Tab
-          label={t("people")}
-          href={routes.profileOrganisationPeople.path}
+          label={t("manageDelegates")}
+          href={routes.profileOrganisationManageDelegates.path}
           component={Link}
-          value={PageTabs.PEOPLE}
+          value={PageTabs.MANAGE_DELEGATES}
         />
-
+        <Tab
+          label={t("manageUsers")}
+          href={routes.profileOrganisationManageUsers.path}
+          component={Link}
+          value={PageTabs.MANAGE_USERS}
+        />
         <Tab
           label={t("projects")}
           href={routes.profileOrganisationProjects.path}
           component={Link}
           value={PageTabs.PROJECTS}
-        />
-        <Tab
-          label={t("tasks")}
-          href={routes.profileOrganisationTasks.path}
-          component={Link}
-          value={PageTabs.TASKS}
         />
       </Tabs>
     </Box>
