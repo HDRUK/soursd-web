@@ -64,6 +64,9 @@ const mockedOrganisation = (
         last_name: "Doe",
         email: "jane.doe@hdruk.ac.uk",
         id: 2,
+        registry: {
+          verified: false
+        }
       }),
     },
   ],

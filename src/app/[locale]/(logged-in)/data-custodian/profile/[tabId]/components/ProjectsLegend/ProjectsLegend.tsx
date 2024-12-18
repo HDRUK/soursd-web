@@ -18,12 +18,12 @@ export default function ProjectsLegend() {
       icon: <IdentityVerifiedIcon />,
     },
     {
-      text: t("approvedUserProject"),
-      icon: <ApprovedUserIcon />,
-    },
-    {
       text: t("approvedProject"),
       icon: <ApprovedIcon />,
+    },
+    {
+      text: t("approvedUserProject"),
+      icon: <ApprovedUserIcon />,
     },
     {
       text: t("pendingProject"),

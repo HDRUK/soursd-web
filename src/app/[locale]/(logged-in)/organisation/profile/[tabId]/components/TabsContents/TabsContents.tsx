@@ -5,6 +5,8 @@ import { notFound } from "next/navigation";
 import { PageTabs } from "../../consts/tabs";
 import Details from "../Details";
 import Users from "../Users";
+import Projects from "../Projects";
+import Delegates from "../Delegates";
 
 interface TabsContentsProps {
   tabId: string;
@@ -20,10 +22,10 @@ export default function TabsContents({ tabId }: TabsContentsProps) {
 
   return (
     <>
-      {tabId === PageTabs.USERS && <Users />}
       {tabId === PageTabs.DETAILS && <Details />}
-      {tabId === PageTabs.TASKS && "Tasks"}
-      {tabId === PageTabs.PROJECTS && "Projects"}
+      {tabId === PageTabs.MANAGE_DELEGATES && <Delegates />}
+      {tabId === PageTabs.MANAGE_USERS && <Users />}
+      {tabId === PageTabs.PROJECTS && <Projects />}
     </>
   );
 }

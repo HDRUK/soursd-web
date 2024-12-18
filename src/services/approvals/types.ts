@@ -5,7 +5,7 @@ interface Approval {
 }
 
 interface PostApprovalPayload {
-  custodian_id: number;
+  custodian_id?: number;
   organisation_id?: number;
   user_id?: number;
 }

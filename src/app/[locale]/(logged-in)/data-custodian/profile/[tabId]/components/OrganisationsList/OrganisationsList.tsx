@@ -3,7 +3,6 @@
 import AccordionTitle from "@/components/AccordionTitle";
 import ActionMenu from "@/components/ActionMenu/ActionMenu";
 import ActionMenuItem from "@/components/ActionMenu/ActionMenuItem";
-import ApprovalStatus from "@/components/ApprovalStatus";
 import { useApplicationData } from "@/context/ApplicationData";
 import { PostApprovalPayloadWithEntity } from "@/services/approvals";
 import { Organisation } from "@/services/organisations";
@@ -20,11 +19,15 @@ import {
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import OrganisationDetailsModal from "../OrganisationDetailsModal";
+import { PALETTE_THEME_PURPLE_BLUE } from "@/config/theme";
+import { useStore } from "@/data/store";
+import { Paged } from "@/types/requests";
 import OrganisationUsersList from "../OrganisationUsersList";
+import OrganisationDetailsModal from "../OrganisationDetailsModal";
+import OrganisationStats from "./OrganisationStats";
 
-interface UsersListProps {
-  organisations: Organisation[];
+interface OrganisationsListProps {
+  organisations: Paged<Organisation[]>;
   onApprove(payload: PostApprovalPayloadWithEntity): void;
   onUnapprove(payload: PostApprovalPayloadWithEntity): void;
   queryState: QueryState;
@@ -37,19 +40,19 @@ interface ActiveOrganisationData {
 
 const NAMESPACE_TRANSLATIONS_USERS_LIST = "UsersList";
 
-const CUSTODIAN_ID = 1;
-
-export default function UsersList({
+export default function OrganisationsList({
   organisations,
   onApprove,
   onUnapprove,
   queryState,
-}: UsersListProps) {
+}: OrganisationsListProps) {
   const { routes } = useApplicationData();
   const t = useTranslations(NAMESPACE_TRANSLATIONS_USERS_LIST);
   const [activeData, setActiveData] = useState<ActiveOrganisationData | null>(
     null
   );
+  const custodian = useStore(store => store.getCustodian());
+  const { id: custodianId } = custodian || {};
 
   const handleApproveClick = (
     payload: PostApprovalPayloadWithEntity,
@@ -79,12 +82,15 @@ export default function UsersList({
     <>
       {filteredOrganisations.map(organisation => {
         const { organisation_name, id, approvals } = organisation;
-
         const ariaId = organisation_name.replace(/[^\w]*/g, "");
 
-        const isApproved = approvals.some(
-          ({ id: custodianId }) => custodianId === CUSTODIAN_ID
-        );
+        const isApproved =
+          approvals?.filter(a => a.pivot.custodian_id === custodianId).length >
+          0;
+
+        const accordianColor = isApproved
+          ? PALETTE_THEME_PURPLE_BLUE.palette.success.light
+          : PALETTE_THEME_PURPLE_BLUE.palette.warning.light;
 
         return (
           <>
@@ -92,7 +98,10 @@ export default function UsersList({
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls={`${ariaId}-content`}
-                id={`${ariaId}-header`}>
+                id={`${ariaId}-header`}
+                sx={{
+                  backgroundColor: accordianColor,
+                }}>
                 <AccordionTitle
                   icon={<BusinessIcon />}
                   actions={
@@ -129,7 +138,7 @@ export default function UsersList({
                               {
                                 type: EntityType.ORGANISATION,
                                 organisation_id: id,
-                                custodian_id: CUSTODIAN_ID,
+                                custodian_id: custodianId,
                               },
                               isApproved
                             )
@@ -139,12 +148,11 @@ export default function UsersList({
                       </ActionMenuItem>
                     </ActionMenu>
                   }>
-                  <ApprovalStatus isApproved={isApproved}>
-                    {organisation_name}
-                  </ApprovalStatus>
+                  {organisation_name}
                 </AccordionTitle>
               </AccordionSummary>
               <AccordionDetails>
+                <OrganisationStats organisationId={id} />
                 <OrganisationUsersList
                   queryState={queryState}
                   organisation={organisation}

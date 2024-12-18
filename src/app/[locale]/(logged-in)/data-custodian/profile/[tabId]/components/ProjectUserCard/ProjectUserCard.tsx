@@ -8,7 +8,11 @@ import {
   QueryFunctionContext,
   QueryKey,
 } from "@tanstack/react-query";
-import { getUserApprovedProjects } from "@/services/projects";
+import IconButton from "@/components/IconButton";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import { getApprovedProjects } from "@/services/projects";
+import { useState, useCallback } from "react";
+import { UserDetailsModal } from "@/modules";
 
 interface ProjectUserCardProps {
   projectUser: ProjectUser;
@@ -25,14 +29,19 @@ export default function ProjectUserCard({
   const { registry, role } = projectUser;
   const { user, organisations, employment } = registry;
 
+  // note: Calum - forcing the user to be approved, have made a ticket/note of this
+  // - need the BE /projects/{id}/user to return to tell us if the user is approved for this project or not..
+  // - https://hdruk.atlassian.net/browse/SPEEDI-607
+  const isApproved = true;
+
   const { data: userApprovedProjects } = useQuery({
-    queryKey: ["getUserApprovedProjects", user.id],
+    queryKey: ["getApprovedProjects", registry.id],
     queryFn: ({ queryKey }: QueryFunctionContext<QueryKey>) => {
       const [, id] = queryKey;
 
-      return getUserApprovedProjects(id as string, {
+      return getApprovedProjects(id as string, {
         error: {
-          message: "getUserApprovedProjectsError",
+          message: "getApprovedProjects",
         },
       });
     },
@@ -50,6 +59,14 @@ export default function ProjectUserCard({
       ? `${titles.slice(0, 3).join(", ")} ...`
       : titles.join(", ");
   })();
+
+  const [modalProps, setModalProps] = useState<{ open: boolean }>({
+    open: false,
+  });
+
+  const handleCloseModal = useCallback(() => {
+    setModalProps({ open: false });
+  }, []);
 
   return (
     <Card
@@ -72,6 +89,7 @@ export default function ProjectUserCard({
             alignItems: {
               md: "center",
             },
+            justifyContent: "space-between",
           }}>
           <Box sx={{ display: "flex", gap: 2 }}>
             <div>
@@ -95,13 +113,29 @@ export default function ProjectUserCard({
               </Typography>
             </div>
           </Box>
+
           <Box>
-            {/*
-            Buttons to go here... 
-            */}
+            <IconButton
+              size="small"
+              aria-label="Edit user"
+              onClick={() =>
+                setModalProps({
+                  open: true,
+                })
+              }>
+              <VisibilityIcon sx={{ color: "default.main" }} />
+            </IconButton>
           </Box>
         </Box>
       </CardContent>
+
+      <UserDetailsModal
+        {...modalProps}
+        organisation={organisations[0]}
+        isApproved={isApproved}
+        user={user}
+        onClose={handleCloseModal}
+      />
     </Card>
   );
 }

@@ -37,10 +37,10 @@ interface Routes {
   profileResearcherAffiliations: RouteConfig;
   profileResearcherDetails: RouteConfig;
   profileOrganisation: RouteConfig;
-  profileOrganisationUsers: RouteConfig;
+  profileOrganisationManageDelegates: RouteConfig;
   profileOrganisationDetails: RouteConfig;
   profileOrganisationProjects: RouteConfig;
-  profileOrganisationTasks: RouteConfig;
+  profileOrganisationManageUsers: RouteConfig;
   admin: RouteConfig;
 }
 

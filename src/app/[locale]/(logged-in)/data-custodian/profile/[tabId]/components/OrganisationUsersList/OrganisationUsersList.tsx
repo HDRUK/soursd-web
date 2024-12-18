@@ -2,7 +2,6 @@
 
 import ActionMenu from "@/components/ActionMenu/ActionMenu";
 import ActionMenuItem from "@/components/ActionMenu/ActionMenuItem";
-import ApprovalStatus from "@/components/ApprovalStatus";
 import { useApplicationData } from "@/context/ApplicationData";
 import { PostApprovalPayloadWithEntity } from "@/services/approvals";
 import { EntityType } from "@/types/api";
@@ -10,17 +9,19 @@ import { Organisation, User } from "@/types/application";
 import { QueryState } from "@/types/form";
 import { LoadingButton } from "@mui/lab";
 import {
+  Box,
   Button,
+  Card,
+  CardContent,
   Table,
   TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
 } from "@mui/material";
-import { grey } from "@mui/material/colors";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { UserDetailsModal } from "@/modules";
+import { useStore } from "@/data/store";
+import OrganisationUserCard from "../OrganisationUserCard";
+import UserIcons from "./UserIcons";
 
 interface UsersListProps {
   organisation: Organisation;
@@ -39,8 +40,6 @@ interface ActiveUserData {
 
 const NAMESPACE_TRANSLATIONS_USERS_LIST = "UsersList";
 
-const CUSTODIAN_ID = 1;
-
 export default function OrganisationUsersList({
   organisation,
   onApproveToggle,
@@ -49,6 +48,9 @@ export default function OrganisationUsersList({
   const { routes } = useApplicationData();
   const t = useTranslations(NAMESPACE_TRANSLATIONS_USERS_LIST);
   const [activeUserData, setActiveUserData] = useState<ActiveUserData | null>();
+
+  const custodian = useStore(store => store.getCustodian());
+  const { id: custodianId } = custodian || {};
 
   const { registries } = organisation;
 
@@ -66,39 +68,42 @@ export default function OrganisationUsersList({
         sx={{ tableLayout: "fixed" }}
         size="small"
         aria-label={t("tableSummary")}>
-        <TableHead sx={{ background: grey["300"] }}>
-          <TableRow>
-            <TableCell>{t("emailHeading")}</TableCell>
-            <TableCell>{t("firstNameHeading")}</TableCell>
-            <TableCell>{t("lastNameHeading")}</TableCell>
-            <TableCell sx={{ width: "50px" }} />
-          </TableRow>
-        </TableHead>
         <TableBody>
-          {registries.map(
-            ({
-              user: { email, first_name, last_name, id, approvals },
-              user,
-            }) => {
-              const isApproved = approvals.some(
-                ({ id: custodianId }) => custodianId === CUSTODIAN_ID
-              );
-
-              return (
-                <TableRow key={email}>
-                  <TableCell sx={{ wordBreak: "break-word" }}>
-                    <ApprovalStatus isApproved={isApproved}>
-                      {email}
-                    </ApprovalStatus>
-                  </TableCell>
-                  <TableCell sx={{ wordBreak: "break-word" }}>
-                    {first_name}
-                  </TableCell>
-                  <TableCell sx={{ wordBreak: "break-word" }}>
-                    {last_name}
-                  </TableCell>
-                  <TableCell sx={{ pr: 0 }}>
-                    <ActionMenu aria-label={`${email} actions`}>
+          {registries.map(({ user: { id, approvals }, user, verified }) => {
+            const isApproved =
+              approvals?.filter(a => a.pivot.custodian_id === custodianId)
+                .length > 0;
+            return (
+              <Card sx={{ mb: 1 }} role="listitem" key={`user_${id}`}>
+                <CardContent>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: {
+                        xs: "column",
+                        md: "row",
+                      },
+                      width: "100%",
+                      gap: {
+                        xs: 1,
+                        md: 2,
+                      },
+                      alignItems: {
+                        md: "center",
+                      },
+                      justifyContent: "space-between",
+                    }}>
+                    <OrganisationUserCard user={user} />
+                    <Box />
+                    <Box />
+                    <Box>
+                      <UserIcons
+                        user={user}
+                        verified={verified}
+                        isApproved={isApproved}
+                      />
+                    </Box>
+                    <ActionMenu aria-label={`${id} actions`}>
                       <ActionMenuItem>
                         <Button
                           fullWidth
@@ -135,20 +140,20 @@ export default function OrganisationUsersList({
                               {
                                 type: EntityType.RESEARCHER,
                                 user_id: id,
-                                custodian_id: CUSTODIAN_ID,
+                                custodian_id: custodianId,
                               },
                               isApproved
                             )
                           }>
-                          {isApproved ? t("approved") : t("approve")}
+                          {isApproved ? t("unapprove") : t("approve")}
                         </LoadingButton>
                       </ActionMenuItem>
                     </ActionMenu>
-                  </TableCell>
-                </TableRow>
-              );
-            }
-          )}
+                  </Box>
+                </CardContent>
+              </Card>
+            );
+          })}
         </TableBody>
       </Table>
       {activeUserData && (

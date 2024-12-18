@@ -46,8 +46,8 @@ const ProjectAccordion = ({ project }: ProjectAccordionProps) => {
 
   const ariaId = organisation_name?.replace(/[^\w]*/g, "");
 
-  const isApproved =
-    approvals?.filter(a => a.custodian_id === organisationId).length > 0;
+  // is approved by any custodian (?)
+  const isApproved = approvals?.length > 0;
 
   const accordianColor = isApproved
     ? PALETTE_THEME_PURPLE_BLUE.palette.success.light
