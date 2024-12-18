@@ -127,7 +127,7 @@ export default function ProjectUserCard({
           </Box>
 
           <Box sx={{ gap: 2, display: "flex", alignItems: "center" }}>
-            {isApprovedData?.data && <ApprovedUserIcon sx={{ fontSize: 32 }} />}
+            {isApprovedData?.data && <ApprovedUserIcon sx={{ fontSize: 40 }} />}
 
             <IconButton
               size="small"
@@ -137,7 +137,7 @@ export default function ProjectUserCard({
                   open: true,
                 })
               }>
-              <VisibilityIcon sx={{ color: "default.main", fontSize: 32 }} />
+              <VisibilityIcon sx={{ color: "default.main", fontSize: 40 }} />
             </IconButton>
           </Box>
         </Box>
