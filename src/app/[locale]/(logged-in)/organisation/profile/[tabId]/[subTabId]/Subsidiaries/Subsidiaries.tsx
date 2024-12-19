@@ -3,13 +3,17 @@
 import { useStore } from "@/data/store";
 import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
 import { PageGuidance } from "@/modules";
+import {
+  patchOrganisation,
+  PatchOrganisationPayload,
+} from "@/services/organisations";
+import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import usePatchOrganisation from "../../hooks/usePatchOrganisation";
-import DetailsForm from "../DetailsForm";
+import DetailsForm, { DetailsFormValues } from "../../components/DetailsForm";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
-export default function Details() {
+export default function Subsidiaries() {
   const { organisation, setOrganisation } = useStore(state => {
     return {
       organisation: state.config.organisation,
@@ -19,20 +23,32 @@ export default function Details() {
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
   const {
+    mutateAsync: mutateUpdateAsync,
     isError,
     isPending: isLoading,
     error,
-    onSubmit,
-  } = usePatchOrganisation({
-    id: organisation?.id,
-    organisation,
-    setOrganisation,
+  } = useMutation({
+    mutationKey: ["patchCustodian", organisation?.id],
+    mutationFn: (payload: PatchOrganisationPayload) =>
+      patchOrganisation(organisation?.id, payload, {
+        error: {
+          message: "submitError",
+        },
+      }),
   });
+
+  const handleSubmit = async (fields: DetailsFormValues) => {
+    const payload = { ...organisation, ...fields };
+
+    await mutateUpdateAsync(payload);
+
+    setOrganisation(payload);
+  };
 
   return (
     <PageGuidance title={t("identity")} {...mockedPersonalDetailsGuidanceProps}>
       <DetailsForm
-        onSubmit={onSubmit}
+        onSubmit={handleSubmit}
         queryState={{
           isError,
           isLoading,
