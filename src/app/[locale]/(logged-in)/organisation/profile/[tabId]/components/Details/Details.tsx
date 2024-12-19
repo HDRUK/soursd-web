@@ -7,13 +7,13 @@ import {
   patchOrganisation,
   PatchOrganisationPayload,
 } from "@/services/organisations";
-import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
+import usePatchOrganisation from "../../hooks/usePatchOrganisation";
 import DetailsForm, { DetailsFormValues } from "../DetailsForm";
 
-const NAMESPACE_TRANSLATION_PROFILE = "Profile";
+const NAMESPACE_TRANSLATION_PROFILE = "Subsidiaries";
 
-export default function Details() {
+export default function Subsidiaries() {
   const { organisation, setOrganisation } = useStore(state => {
     return {
       organisation: state.config.organisation,
@@ -27,15 +27,7 @@ export default function Details() {
     isError,
     isPending: isLoading,
     error,
-  } = useMutation({
-    mutationKey: ["patchCustodian", organisation?.id],
-    mutationFn: (payload: PatchOrganisationPayload) =>
-      patchOrganisation(organisation?.id, payload, {
-        error: {
-          message: "submitError",
-        },
-      }),
-  });
+  } = usePatchOrganisation(organisation?.id);
 
   const handleSubmit = async (fields: DetailsFormValues) => {
     const payload = { ...organisation, ...fields };
