@@ -1,6 +1,6 @@
 import BlockIcon from "@mui/icons-material/BlockOutlined";
 import ShieldOutlinedIcon from "@mui/icons-material/ShieldOutlined";
-import SquareIcon from "@mui/icons-material/Square";
+import StatusIndicator from "@/components/StatusIndicator";
 import TaskAltOutlinedIcon from "@mui/icons-material/TaskAltOutlined";
 import WorkspacePremiumOutlinedIcon from "@mui/icons-material/WorkspacePremiumOutlined";
 import { SvgIconProps } from "@mui/material";
@@ -18,11 +18,11 @@ const ApprovedTrainingIcon = (props: SvgIconProps) => (
 );
 
 const ApprovedIcon = (props: SvgIconProps) => (
-  <SquareIcon {...props} sx={{ color: "success.main" }} />
+  <StatusIndicator {...props} variant="success" size="large" />
 );
 
 const PendingIcon = (props: SvgIconProps) => (
-  <SquareIcon {...props} sx={{ color: "error.main" }} />
+  <StatusIndicator {...props} variant="error" size="large" />
 );
 
 const DecoupleIcon = (props: SvgIconProps) => (

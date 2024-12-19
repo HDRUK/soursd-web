@@ -19,7 +19,7 @@ export default function OrganisationsLegend() {
       icon: <IdentityVerifiedIcon />,
     },
     {
-      text: t("approvedUserOrgnisation"),
+      text: t("approvedUserOrganisation"),
       icon: <ApprovedUserIcon />,
     },
     {
@@ -36,5 +36,7 @@ export default function OrganisationsLegend() {
     },
   ];
 
-  return <Legend items={items} />;
+  return (
+    <Legend items={items} boxSx={{ justifyContent: "space-around", my: 2 }} />
+  );
 }

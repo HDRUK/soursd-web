@@ -88,16 +88,16 @@ const ROUTES: Routes = {
     path: "/organisation/profile",
     permissions: [UserGroup.ORGANISATIONS],
   },
-  profileOrganisationUsers: {
-    path: "/organisation/profile/users",
+  profileOrganisationManageDelegates: {
+    path: "/organisation/profile/manage-delegates",
     permissions: [UserGroup.ORGANISATIONS],
   },
   profileOrganisationDetails: {
     path: "/organisation/profile/details",
     permissions: [UserGroup.ORGANISATIONS],
   },
-  profileOrganisationTasks: {
-    path: "/organisation/profile/tasks",
+  profileOrganisationManageUsers: {
+    path: "/organisation/profile/manage-users",
     permissions: [UserGroup.ORGANISATIONS],
   },
   profileOrganisationProjects: {
