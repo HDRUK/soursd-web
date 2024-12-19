@@ -21,6 +21,7 @@ import {
 import { getRoutes } from "./src/utils/router";
 import { ROUTES } from "./src/consts/router";
 import { mockedCustodianUser } from "./mocks/data/custodian";
+import { UserFeedSource } from "@/consts/user";
 
 const nextRouterMock = require("next-router-mock");
 
@@ -112,6 +113,22 @@ async function mockFetch(url: string) {
         mockedUser({
           id: 1,
         })
+      );
+    }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/users`: {
+      return mock200Json(
+        mockPagedResults([
+          mockedUser({
+            id: 1,
+            created_at: "2024-01-01 00:00:00",
+            feed_source: UserFeedSource.ORG,
+            first_name: "John",
+            last_name: "Smith",
+          }),
+          mockedUser({
+            id: 2,
+          }),
+        ])
       );
     }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/users/2`: {

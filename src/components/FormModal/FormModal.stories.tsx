@@ -6,6 +6,7 @@ import FormModal, { FormModalProps } from ".";
 import FormControlHorizontal from "../FormControlHorizontal";
 import FormModalBody from "../FormModalBody";
 import FormModalHeader from "../FormModalHeader";
+import FormModalActions from "../FormModalActions";
 
 const meta = {
   title: "components/FormModal",
@@ -50,7 +51,9 @@ const BasicFormModal = ({ open }: FormModalProps) => {
           </Grid>
         </Grid>
       </FormModalBody>
-      <Button variant="contained">Save</Button>
+      <FormModalActions>
+        <Button variant="contained">Save</Button>
+      </FormModalActions>
     </FormModal>
   ) : (
     <Button onClick={() => setShowFormModal(true)}>Open modal</Button>

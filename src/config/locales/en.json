@@ -12,7 +12,10 @@
     "custodian": "Data Custodian",
     "companyNumberAbbr": "CRN",
     "getOrganisationError": "There was a problem loading your organisation. Please try again or contact us at <applicationLink></applicationLink>",
-    "getCustodianError": "There was a problem loading your Data Custodian. Please try again or contact us at <applicationLink></applicationLink>"
+    "getCustodianError": "There was a problem loading your Data Custodian. Please try again or contact us at <applicationLink></applicationLink>",
+    "registered": "Registered",
+    "yes": "Yes",
+    "no": "No"
   },
   "CustodianProfile": {
     "uniqueIdentifierTitle": "SOURSD Identifier",
@@ -37,7 +40,7 @@
     "idvtHeading": "Do you require identification validation?",
     "idvtDescription": "This is handled by a third party Identification Document Verification Technology (IDVT) service.",
     "submitButton": "Save",
-    "getError": "Unable to get the list of users",
+    "getError": "Unable to get the list of users. Please try again or contact us at <applicationLink></applicationLink>",
     "noResults": "There were no users found",
     "lastLoggedIn": "Last logged in: {date}",
     "addedOn": "Added on: {date}",
@@ -80,9 +83,21 @@
     "getOrganisationStatusError": "Unable to determine validation status",
     "navigationAriaLabel": "Profile tabs",
     "patchUserError": "There was a problem updating your user details. Please try again or contact us at <applicationLink></applicationLink>",
-    "updateUserButton": "Save"
+    "updateUserButton": "Save",
+    "searchOrganisationUsers": "Search for users",
+    "inviteNewUserButton": "Invite new user",
+    "invitedOn": "Invited on: {date}",
+    "inviteUserTitle": "Invite new user",
+    "inviteUserDescription": "This is where you can invite a new user to register against you organisation",
+    "sendInviteButton": "Send invite",
+    "inviteUserError": "This user could not be invited. Please ensure you have not already invited them and try again. Alternatively contact us <applicationLink></applicationLink>",
+    "inviteSuccessfulTitle": "User invited",
+    "inviteSuccessfulDescription": "The user has been successfully invited and have been notified via email",
+    "inviteUserAriaLabel": "Invite user",
+    "getError": "Unable to get the list of users. Please try again or contact us at <applicationLink></applicationLink>"
   },
   "Form": {
+    "cancelButton": "Cancel",
     "contactEmailPlaceholder": "Contact email",
     "name": "Name",
     "namePlaceholder": "Name",

@@ -18,7 +18,11 @@ export interface UserModalProps extends Omit<FormModalProps, "children"> {
 
 const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 
-export default function UsersModal({ user, ...restProps }: UserModalProps) {
+export default function UsersModal({
+  user,
+  onClose,
+  ...restProps
+}: UserModalProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const queryClient = useQueryClient();
 
@@ -40,7 +44,7 @@ export default function UsersModal({ user, ...restProps }: UserModalProps) {
   const handleOnSubmit = useCallback(async (payload: CustodianUserFields) => {
     await mutateAsync({ ...user, ...payload });
 
-    restProps.onClose();
+    onClose();
 
     showAlert("success", {
       text: user?.id
@@ -59,10 +63,12 @@ export default function UsersModal({ user, ...restProps }: UserModalProps) {
     <FormModal
       aria-label={`${user.first_name} ${user.last_name} details`}
       variant="content"
+      onClose={onClose}
       {...restProps}>
       {isError && !isPending && <Message severity="error">{t(error)}</Message>}
       {!isPending && (
         <UserModalDetails
+          onClose={onClose}
           onSubmit={handleOnSubmit}
           user={user}
           queryState={{

@@ -1,11 +1,8 @@
-import FormControlCheckbox from "@/components/FormControlCheckbox";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
 import FormModalActions from "@/components/FormModalActions";
 import FormModalBody from "@/components/FormModalBody";
 import FormModalHeader from "@/components/FormModalHeader";
 import yup from "@/config/yup";
-import { CustodianUserRoles } from "@/consts/custodian";
-import { CustodianUser } from "@/types/application";
 import { QueryState } from "@/types/form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import CheckIcon from "@mui/icons-material/Check";
@@ -18,32 +15,28 @@ import {
   Typography,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { ChangeEvent, useMemo } from "react";
+import { useMemo } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
-export interface CustodianUserFields {
+export interface UserFields {
   first_name: string;
   last_name: string;
   email: string;
-  administrator: boolean;
-  approver: boolean;
 }
 
 export interface UserModalDetailsProps {
-  user: Partial<CustodianUser>;
-  queryState: QueryState;
-  onSubmit: (payload: CustodianUserFields) => void;
   onClose: () => void;
+  queryState: QueryState;
+  onSubmit: (fields: UserFields) => void;
 }
 
-const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
+const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
 const NAMESPACE_TRANSLATION_FORM = "Form";
 
 export default function UserModalDetails({
   onClose,
-  user,
-  queryState,
   onSubmit,
+  queryState,
 }: UserModalDetailsProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
@@ -55,56 +48,35 @@ export default function UserModalDetails({
         last_name: yup.string().required(tForm("lastNameRequiredInvalid")),
         email: yup
           .string()
-          .email(t("emailFormatInvalid"))
+          .email(tForm("emailFormatInvalid"))
           .required(tForm("emailRequiredInvalid")),
       }),
     []
   );
 
-  const methods = useForm<CustodianUserFields>({
+  const methods = useForm<UserFields>({
     resolver: yupResolver(schema),
     defaultValues: {
-      first_name: user?.first_name,
-      last_name: user?.last_name,
-      email: user?.email,
-      administrator: user?.role === CustodianUserRoles.ADMINISTRATOR,
-      approver: user?.role === CustodianUserRoles.APPROVER,
+      first_name: "",
+      last_name: "",
+      email: "",
     },
-    disabled: queryState.isLoading,
   });
-
-  const handleCheckRole = (e: ChangeEvent<HTMLInputElement>) => {
-    Object.values(CustodianUserRoles).forEach(role => {
-      setValue(role, false);
-    });
-
-    setValue(e.target.name, e.target.checked);
-  };
 
   const {
     formState: { errors },
     register,
     handleSubmit,
-    setValue,
-    watch,
   } = methods;
-
-  const administratorProps = register("administrator");
-  const approverProps = register("approver");
-
-  const administratorValue = watch("administrator");
-  const approverValue = watch("approver");
 
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
         <FormModalHeader>
           <Typography variant="h4" sx={{ mb: 1 }}>
-            {user?.id ? t("updateUserTitle") : t("createUserTitle")}
+            {t("inviteUserTitle")}
           </Typography>
-          <Typography>
-            {user?.id ? t("updateUserDescription") : t("createUserDescription")}
-          </Typography>
+          <Typography>{t("inviteUserDescription")}</Typography>
         </FormModalHeader>
         <FormModalBody>
           <Grid container rowSpacing={3}>
@@ -153,31 +125,6 @@ export default function UserModalDetails({
             </Grid>
           </Grid>
         </FormModalBody>
-        <FormModalHeader>
-          <Typography variant="h4">Permissions</Typography>
-        </FormModalHeader>
-        <FormModalBody sx={{ mt: -1 }}>
-          <Grid container columnSpacing={2} rowSpacing={2}>
-            <Grid item md={6}>
-              <FormControlCheckbox
-                {...administratorProps}
-                checked={!!administratorValue}
-                onChange={handleCheckRole}
-                label={tForm("roleAdministrator")}
-                labelCaption={t("roleAdministratorDescription")}
-              />
-            </Grid>
-            <Grid item md={6}>
-              <FormControlCheckbox
-                {...approverProps}
-                checked={!!approverValue}
-                onChange={handleCheckRole}
-                label={tForm("roleApprover")}
-                labelCaption={t("roleApproverDescription")}
-              />
-            </Grid>
-          </Grid>
-        </FormModalBody>
         <FormModalActions>
           <Button variant="outlined" onClick={onClose}>
             {tForm("cancelButton")}
@@ -188,7 +135,7 @@ export default function UserModalDetails({
             variant="contained"
             endIcon={<CheckIcon />}
             loading={queryState.isLoading}>
-            {t("submitButton")}
+            {t("sendInviteButton")}
           </LoadingButton>
         </FormModalActions>
       </form>

@@ -15,8 +15,10 @@ type SearchBarProps = TextFieldProps & {
 const SearchBar = ({ onSearch, placeholder, ...rest }: SearchBarProps) => {
   const [searchQuery, setSearchQuery] = useState<string | null>(null);
   const searchQueryDebounced = useDebounce(searchQuery, 500);
+
   useEffect(() => {
     if (searchQueryDebounced === null) return;
+
     onSearch(searchQueryDebounced);
   }, [searchQueryDebounced]);
 
@@ -32,6 +34,8 @@ const SearchBar = ({ onSearch, placeholder, ...rest }: SearchBarProps) => {
     <StyledSearchBar>
       <StyledInput
         fullWidth
+        hiddenLabel
+        label="Search"
         variant="outlined"
         placeholder={placeholder}
         value={searchQuery || ""}
