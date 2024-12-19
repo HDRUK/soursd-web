@@ -1,26 +1,47 @@
-import { mockedCustodianUser } from "@/mocks/data/custodian";
 import { act, fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 import { faker } from "@faker-js/faker";
 import { axe } from "jest-axe";
 import UserModalDetails, { UserModalDetailsProps } from "./UserModalDetails";
 
-jest.mock("@/services/custodians");
+jest.mock("@/services/organisations");
 jest.mock("@/data/store");
 
 const mockOnSubmit = jest.fn();
 const mockOnClose = jest.fn();
-const defaultUser = mockedCustodianUser();
+
+const mockedPayload = {
+  first_name: faker.person.firstName(),
+  last_name: faker.person.lastName(),
+  email: faker.internet.email(),
+};
 
 const renderUserModalDetails = (props?: Partial<UserModalDetailsProps>) => {
   return render(
     <UserModalDetails
-      user={defaultUser}
       queryState={{ isLoading: false, isError: false, error: "" }}
       onSubmit={mockOnSubmit}
       onClose={mockOnClose}
       {...props}
     />
   );
+};
+
+const renderUserModalDetailsUpdate = () => {
+  renderUserModalDetails();
+
+  [
+    { label: "First name", value: mockedPayload.first_name },
+    { label: "Last name", value: mockedPayload.last_name },
+    { label: "Email", value: mockedPayload.email },
+  ].forEach(({ label, value }) => {
+    const input = screen.getByLabelText(label);
+
+    fireEvent.change(input, {
+      target: { value },
+    });
+  });
+
+  fireEvent.submit(screen.getByRole("button", { name: /Send invite/i }));
 };
 
 describe("<UserModalDetails />", () => {
@@ -41,20 +62,10 @@ describe("<UserModalDetails />", () => {
   });
 
   it("submit is called", async () => {
-    renderUserModalDetails();
-
-    const { email, first_name, last_name } = defaultUser;
-
-    fireEvent.submit(screen.getByRole("button", { name: /Save/i }));
+    renderUserModalDetailsUpdate();
 
     await waitFor(() => {
-      expect(mockOnSubmit.mock.lastCall[0]).toEqual({
-        email,
-        first_name,
-        last_name,
-        adminstrator: undefined,
-        approver: undefined,
-      });
+      expect(mockOnSubmit.mock.lastCall[0]).toEqual(mockedPayload);
     });
   });
 
@@ -70,7 +81,7 @@ describe("<UserModalDetails />", () => {
         target: { value: inputValue },
       });
 
-      fireEvent.submit(screen.getByRole("button", { name: /Save/i }));
+      fireEvent.submit(screen.getByRole("button", { name: /Send invite/i }));
 
       expect(mockOnSubmit).not.toHaveBeenCalled();
     }

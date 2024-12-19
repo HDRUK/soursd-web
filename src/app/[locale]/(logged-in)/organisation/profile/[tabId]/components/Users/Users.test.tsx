@@ -1,19 +1,19 @@
+import { useStore } from "@/data/store";
 import { mockedOrganisation } from "@/mocks/data/organisation";
-import { act, render, screen } from "@/utils/testUtils";
+import { act, render, screen, waitFor } from "@/utils/testUtils";
 import { axe } from "jest-axe";
-import Users from ".";
+import Users from "./Users";
 
-const mockedStoreOrganisation = mockedOrganisation();
+jest.mock("@/services/custodians");
+jest.mock("@/data/store");
 
-jest.mock("@/data/store", () => ({
-  useStore: () => mockedStoreOrganisation,
-}));
+const defaultOrganisation = mockedOrganisation();
 
-const renderSections = () => render(<Users />);
+(useStore as unknown as jest.Mock).mockReturnValue(defaultOrganisation);
 
-describe("<Users />", () => {
-  it("has no accessibility violations", async () => {
-    const { container } = renderSections();
+describe("<User />", () => {
+  it("has no accessibility validations", async () => {
+    const { container } = render(<Users />);
 
     let results;
 
@@ -24,13 +24,23 @@ describe("<Users />", () => {
     expect(results).toHaveNoViolations();
   });
 
-  it("displays the correct user", () => {
-    renderSections();
+  it("has the correct number of results", async () => {
+    render(<Users />);
 
-    const { user } = mockedStoreOrganisation.registries[0];
+    const results = await screen.findAllByRole("listitem");
 
-    expect(screen.getByText(user.email)).toBeInTheDocument();
-    expect(screen.getByText(user.first_name)).toBeInTheDocument();
-    expect(screen.getByText(user.last_name)).toBeInTheDocument();
+    expect(results).toHaveLength(2);
+  });
+
+  it("has the correct content", async () => {
+    render(<Users />);
+
+    await waitFor(() => {
+      expect(screen.getByText("Invited on: 01/01/2024"));
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText("John Smith"));
+    });
   });
 });

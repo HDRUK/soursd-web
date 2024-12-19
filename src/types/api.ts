@@ -3,6 +3,7 @@ enum FileType {
 }
 
 enum EntityType {
+  USER = "USER",
   RESEARCHER = "RESEARCHER",
   ORGANISATION = "ORGANISATION",
 }
