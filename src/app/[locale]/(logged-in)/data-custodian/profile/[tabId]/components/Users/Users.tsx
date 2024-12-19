@@ -85,21 +85,7 @@ export default function Users() {
     <Box>
       <Box sx={{ display: "flex", gap: 1, mb: 3 }}>
         <Box component="form" role="search" sx={{ flexGrow: 1 }}>
-          <TextField
-            fullWidth
-            hiddenLabel
-            label="Search"
-            size="small"
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="start">
-                  <IconButton aria-label={t("searchCustodianUsers")}>
-                    <Search />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
+          <SearchBar onSearch={() => {}} />
         </Box>
         <Button
           endIcon={<AddCircleOutlineOutlinedIcon />}

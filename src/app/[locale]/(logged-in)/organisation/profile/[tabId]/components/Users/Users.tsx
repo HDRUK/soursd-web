@@ -25,6 +25,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import UserModal from "../UserModal";
+import SearchBar from "@/modules/SearchBar";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
 
@@ -48,21 +49,7 @@ export default function Users() {
       {...mockedPersonalDetailsGuidanceProps}>
       <Box sx={{ display: "flex", gap: 1, mb: 3 }}>
         <Box component="form" role="search" sx={{ flexGrow: 1 }}>
-          <TextField
-            fullWidth
-            hiddenLabel
-            label="Search"
-            size="small"
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="start">
-                  <IconButton aria-label={t("searchOrganisationUsers")}>
-                    <Search />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
+          <SearchBar onSearch={() => {}} />
         </Box>
         <Button
           endIcon={<AddCircleOutlineOutlinedIcon />}
