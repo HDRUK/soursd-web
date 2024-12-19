@@ -3,6 +3,7 @@ import Icon from "@/components/Icon";
 import Results from "@/components/Results";
 import ResultsCard from "@/components/ResultsCard";
 import { useStore } from "@/data/store";
+import SearchBar from "@/modules/SearchBar";
 import {
   deleteCustodianUser,
   getCustodianUsers,
@@ -10,19 +11,11 @@ import {
 import { CustodianUser } from "@/types/application";
 import { formatShortDate } from "@/utils/date";
 import { showAlert, showLoadingAlertWithPromise } from "@/utils/showAlert";
-import { Search } from "@mui/icons-material";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
-import {
-  Box,
-  Button,
-  IconButton,
-  InputAdornment,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Button, IconButton, Typography } from "@mui/material";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useState } from "react";

@@ -7,25 +7,17 @@ import { DecoupleIcon } from "@/consts/icons";
 import { useStore } from "@/data/store";
 import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
 import { PageGuidance } from "@/modules";
+import SearchBar from "@/modules/SearchBar";
 import { getUsers } from "@/services/users";
 import { formatShortDate } from "@/utils/date";
 import { isRegistered } from "@/utils/user";
-import { Search } from "@mui/icons-material";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
-import {
-  Box,
-  Button,
-  IconButton,
-  InputAdornment,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Button, IconButton, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import UserModal from "../UserModal";
-import SearchBar from "@/modules/SearchBar";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
 
