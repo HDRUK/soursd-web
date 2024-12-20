@@ -207,9 +207,9 @@
     "iso27001CertifiedAriaLabel": "ISO27001 certfied",
     "iso27001Certified": "ISO27001 certfied",
     "ceCertifiedAriaLabel": "CE certfied",
-    "ceCertified": "CE certfied",
-    "ceCertificationNumberPlaceholder": "CE certification number",
-    "ceCertificationNumber": "CE certification number",
+    "ce_certified": "CE certfied",
+    "ce_certification_num": "CE certification number",
+    "ce_certification_numPlaceholder": "Enter a CE certification number",
     "whatIsTheOrcId": "Your ORCiD is a value which identifies you to Data Custodians (although in general anyone) and provides information to them such as your research outputs and activities. If you don't have one of these you can signup at https://orcid.org/register. Although it is recommended to provide this, it is not required for the registry, however it is required for the content scrape.",
     "roleAdministrator": "Administrator",
     "roleApprover": "Approver"

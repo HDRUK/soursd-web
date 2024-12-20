@@ -2,6 +2,7 @@ import { ConfigProps, withConfig } from "@/components/Config";
 import { PageContainer } from "@/modules";
 import { redirect } from "next/navigation";
 import { PageTabs, PageSubTabs, getSubTabs } from "../consts/tabs";
+import Subsidiaries from "./Subsidiaries/Subsidiaries";
 
 interface PageProps extends ConfigProps {
   params: {
@@ -15,7 +16,11 @@ function Page({ params: { tabId, subTabId }, config }: PageProps) {
     redirect(config.routes.profileOrganisationDetails.path);
   }
 
-  return <PageContainer>up da ra boys!</PageContainer>;
+  return (
+    <PageContainer>
+      <Subsidiaries />
+    </PageContainer>
+  );
 }
 
 export default withConfig(Page);

@@ -1,5 +1,5 @@
-import DetailsForm from "./DetailsForm";
+import SubsidiariesForm from "./SubsidiariesForm";
 
-export default DetailsForm;
+export default SubsidiariesForm;
 
-export type * from "./DetailsForm";
+export type * from "./SubsidiariesForm";
