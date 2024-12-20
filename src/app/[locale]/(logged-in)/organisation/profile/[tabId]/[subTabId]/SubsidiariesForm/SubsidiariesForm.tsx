@@ -32,12 +32,9 @@ import {
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useMemo, ComponentType } from "react";
-import {
-  generateSchema,
-  generateDefaultValues,
-  FormFieldsConfig,
-  FormFieldConfig,
-} from "@/utils/yup";
+import { generateSchema, generateDefaultValues } from "@/utils/yup";
+import { FormFieldConfig, FormFieldsConfig } from "@/types/forms";
+
 import { generateSubsidiariesFormFieldsConfig } from "../../consts/form";
 
 export interface DetailsFormValues {
@@ -63,76 +60,6 @@ export interface DetailsFormProps {
 
 const NAMESPACE_TRANSLATION_FORM = "Form";
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
-
-interface RenderFormFieldProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  fieldConfig: FormFieldConfig<ComponentType<any>>;
-  control: Control<FieldValues>;
-}
-
-function RenderFormField({ fieldConfig, control }: RenderFormFieldProps) {
-  const {
-    name,
-    label,
-    component: Component,
-    componentProps,
-    defaultValue,
-  } = fieldConfig;
-
-  const {
-    field,
-    fieldState: { error },
-  } = useController({
-    name,
-    control,
-    defaultValue,
-  });
-
-  return (
-    <FormControlHorizontal
-      key={`form_field_${name}`}
-      label={label || name}
-      error={error}>
-      <Component {...field} {...componentProps} />
-    </FormControlHorizontal>
-  );
-}
-
-function RenderFormFields({
-  config,
-  control,
-}: {
-  config: FormFieldsConfig;
-  control: Control<FieldValues>;
-}) {
-  return (
-    <>
-      {Object.entries(config).map(([key, fieldConfig]) => {
-        return (
-          <RenderFormField
-            key={key}
-            fieldConfig={fieldConfig}
-            control={control}
-          />
-        );
-      })}
-    </>
-  );
-}
-
-function useFormFromConfig<T>(
-  formFieldsConfig: FormFieldsConfig
-): UseFormReturn<Partial<T>> {
-  const schema = useMemo(
-    () => generateSchema(formFieldsConfig),
-    [formFieldsConfig]
-  );
-
-  return useForm<Partial<T>>({
-    resolver: yupResolver(schema),
-    defaultValues: generateDefaultValues(formFieldsConfig),
-  });
-}
 
 export default function SubsidiariesForm({
   onSubmit,
