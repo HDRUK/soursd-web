@@ -41,6 +41,8 @@ import { useTranslations } from "next-intl";
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import DetailsCV from "../DetailsCV";
+import Form from "@/components/Form";
+import FormSection from "@/components/FormSection";
 
 export interface IdentityFormValues {
   first_name: string;
@@ -210,156 +212,156 @@ export default function Identity() {
   }
 
   return (
-    <PageGuidance
-      title={tProfile("identity")}
-      {...mockedPersonalDetailsGuidanceProps}>
+    <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
       <FormProvider {...methods}>
-        <form onSubmit={handleSubmit(handleDetailsSubmit)} autoComplete="off">
-          <Grid container rowSpacing={3}>
-            <Grid item xs={12}>
-              {isGetOrganisationsError && (
-                <Message severity="error" sx={{ mb: 3 }}>
-                  {tProfile.rich(organisationsError, {
-                    applicationLink: ApplicationLink,
-                  })}
-                </Message>
-              )}
-              {isUpdateError && (
-                <Message severity="error" sx={{ mb: 3 }}>
-                  {tProfile.rich(updateError, {
-                    applicationLink: ApplicationLink,
-                  })}
-                </Message>
-              )}
-              {isFileError && (
-                <Message severity="error" sx={{ mb: 3 }}>
-                  {tProfile.rich(fileError, {
-                    applicationLink: ApplicationLink,
-                  })}
-                </Message>
-              )}
-            </Grid>
-            <Grid item xs={12}>
-              <FormControl
-                error={!!errors.organisation_id}
-                size="small"
-                fullWidth>
-                <InputLabel id="organisation_id">
-                  {tForm("organisationName")}
-                </InputLabel>
-                <Select
-                  defaultValue={watch("organisation_id")}
-                  {...register("organisation_id")}
-                  size="small"
-                  inputProps={{
-                    "aria-label": tForm("organisationNameAriaLabel"),
-                  }}
-                  label={<>{tForm("organisationName")}</>}>
-                  {organisationsData?.data?.data.map(
-                    ({ organisation_name, id }) => (
-                      <MenuItem value={id} key={id}>
-                        {organisation_name}
-                      </MenuItem>
-                    )
-                  )}
-                </Select>
-                {errors.organisation_id && (
-                  <FormHelperText>
-                    {errors.organisation_id.message}
-                  </FormHelperText>
+        <Form onSubmit={handleSubmit(handleDetailsSubmit)} autoComplete="off">
+          <FormSection heading={tProfile("identity")}>
+            <Grid container rowSpacing={3}>
+              <Grid item xs={12}>
+                {isGetOrganisationsError && (
+                  <Message severity="error" sx={{ mb: 3 }}>
+                    {tProfile.rich(organisationsError, {
+                      applicationLink: ApplicationLink,
+                    })}
+                  </Message>
                 )}
-              </FormControl>
-            </Grid>
-            <Grid item xs={12}>
-              <FormControl error={!!errors.first_name} size="small" fullWidth>
-                <TextField
-                  {...register("first_name")}
-                  size="small"
-                  placeholder={tForm("firstNamePlaceholder")}
-                  label={<>{tForm("firstName")}</>}
-                />
-                {errors.first_name && (
-                  <FormHelperText>{errors.first_name.message}</FormHelperText>
+                {isUpdateError && (
+                  <Message severity="error" sx={{ mb: 3 }}>
+                    {tProfile.rich(updateError, {
+                      applicationLink: ApplicationLink,
+                    })}
+                  </Message>
                 )}
-              </FormControl>
-            </Grid>
-            <Grid item xs={12}>
-              <FormControl error={!!errors.last_name} size="small" fullWidth>
-                <TextField
-                  {...register("last_name")}
-                  size="small"
-                  placeholder={tForm("lastNamePlaceholder")}
-                  label={<>{tForm("lastName")}</>}
-                />
-                {errors.last_name && (
-                  <FormHelperText>{errors.last_name.message}</FormHelperText>
+                {isFileError && (
+                  <Message severity="error" sx={{ mb: 3 }}>
+                    {tProfile.rich(fileError, {
+                      applicationLink: ApplicationLink,
+                    })}
+                  </Message>
                 )}
-              </FormControl>
-            </Grid>
-            <Grid item>
-              <FormControl error={!!errors.orc_id} size="small" fullWidth>
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 1,
-                    width: "100%",
-                  }}>
-                  <TextField
-                    {...register("orc_id")}
+              </Grid>
+              <Grid item xs={12}>
+                <FormControl
+                  error={!!errors.organisation_id}
+                  size="small"
+                  fullWidth>
+                  <InputLabel id="organisation_id">
+                    {tForm("organisationName")}
+                  </InputLabel>
+                  <Select
+                    defaultValue={watch("organisation_id")}
+                    {...register("organisation_id")}
                     size="small"
-                    placeholder={tForm("orcIdPlaceholder")}
-                    label={<>{tForm("orcId")}</>}
-                    fullWidth
+                    inputProps={{
+                      "aria-label": tForm("organisationNameAriaLabel"),
+                    }}
+                    label={<>{tForm("organisationName")}</>}>
+                    {organisationsData?.data?.data.map(
+                      ({ organisation_name, id }) => (
+                        <MenuItem value={id} key={id}>
+                          {organisation_name}
+                        </MenuItem>
+                      )
+                    )}
+                  </Select>
+                  {errors.organisation_id && (
+                    <FormHelperText>
+                      {errors.organisation_id.message}
+                    </FormHelperText>
+                  )}
+                </FormControl>
+              </Grid>
+              <Grid item xs={12}>
+                <FormControl error={!!errors.first_name} size="small" fullWidth>
+                  <TextField
+                    {...register("first_name")}
+                    size="small"
+                    placeholder={tForm("firstNamePlaceholder")}
+                    label={<>{tForm("firstName")}</>}
                   />
-                  <Tooltip title={tForm("whatIsTheOrcId")}>
-                    <InfoIcon color="info" />
-                  </Tooltip>
-                </Box>
+                  {errors.first_name && (
+                    <FormHelperText>{errors.first_name.message}</FormHelperText>
+                  )}
+                </FormControl>
+              </Grid>
+              <Grid item xs={12}>
+                <FormControl error={!!errors.last_name} size="small" fullWidth>
+                  <TextField
+                    {...register("last_name")}
+                    size="small"
+                    placeholder={tForm("lastNamePlaceholder")}
+                    label={<>{tForm("lastName")}</>}
+                  />
+                  {errors.last_name && (
+                    <FormHelperText>{errors.last_name.message}</FormHelperText>
+                  )}
+                </FormControl>
+              </Grid>
+              <Grid item>
+                <FormControl error={!!errors.orc_id} size="small" fullWidth>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 1,
+                      width: "100%",
+                    }}>
+                    <TextField
+                      {...register("orc_id")}
+                      size="small"
+                      placeholder={tForm("orcIdPlaceholder")}
+                      label={<>{tForm("orcId")}</>}
+                      fullWidth
+                    />
+                    <Tooltip title={tForm("whatIsTheOrcId")}>
+                      <InfoIcon color="info" />
+                    </Tooltip>
+                  </Box>
 
-                {errors.orc_id && (
-                  <FormHelperText>{errors.orc_id.message}</FormHelperText>
-                )}
-              </FormControl>
-            </Grid>
-            <Grid item>
-              <FormControl
-                error={!!errors.consent_scrape}
-                size="small"
-                fullWidth>
-                <FormControlLabel
-                  control={<Checkbox {...register("consent_scrape")} />}
-                  label={tProfile("consentScrape")}
-                  aria-label={tProfile("consentScrapeAriaLabel")}
+                  {errors.orc_id && (
+                    <FormHelperText>{errors.orc_id.message}</FormHelperText>
+                  )}
+                </FormControl>
+              </Grid>
+              <Grid item>
+                <FormControl
+                  error={!!errors.consent_scrape}
+                  size="small"
+                  fullWidth>
+                  <FormControlLabel
+                    control={<Checkbox {...register("consent_scrape")} />}
+                    label={tProfile("consentScrape")}
+                    aria-label={tProfile("consentScrapeAriaLabel")}
+                  />
+                  {errors.consent_scrape && (
+                    <FormHelperText>
+                      {errors.consent_scrape.message}
+                    </FormHelperText>
+                  )}
+                </FormControl>
+              </Grid>
+              <Grid item md={12}>
+                <DetailsCV
+                  fileName={latestCV?.name || tProfile("noCvUploaded")}
+                  isFileSizeTooBig={isFileSizeTooBig}
+                  isFileScanning={isScanning}
+                  isFileOk={isNotInfected}
+                  isFileUploading={isFileLoading}
+                  onFileChange={handleFileChange}
                 />
-                {errors.consent_scrape && (
-                  <FormHelperText>
-                    {errors.consent_scrape.message}
-                  </FormHelperText>
-                )}
-              </FormControl>
+              </Grid>
             </Grid>
-            <Grid item md={12}>
-              <DetailsCV
-                fileName={latestCV?.name || tProfile("noCvUploaded")}
-                isFileSizeTooBig={isFileSizeTooBig}
-                isFileScanning={isScanning}
-                isFileOk={isNotInfected}
-                isFileUploading={isFileLoading}
-                onFileChange={handleFileChange}
-              />
-            </Grid>
-          </Grid>
-          <LoadingButton
-            type="submit"
-            color="primary"
-            variant="contained"
-            endIcon={<SaveIcon />}
-            loading={isUpdateLoading}
-            sx={{ mt: 5 }}>
-            {tProfile("submitButton")}
-          </LoadingButton>
-        </form>
+            <LoadingButton
+              type="submit"
+              color="primary"
+              variant="contained"
+              endIcon={<SaveIcon />}
+              loading={isUpdateLoading}
+              sx={{ mt: 5 }}>
+              {tProfile("submitButton")}
+            </LoadingButton>
+          </FormSection>
+        </Form>
       </FormProvider>
     </PageGuidance>
   );

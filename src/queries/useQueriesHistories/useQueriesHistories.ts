@@ -1,9 +1,10 @@
+import useQueriesCombined from "@/hooks/useQueriesCombined";
 import { getAccreditations } from "@/services/accreditations";
 import { getEducations } from "@/services/educations";
 import { getEmployments } from "@/services/employments";
-import { getTrainings } from "@/services/trainings";
 import { getApprovedProjects } from "@/services/projects";
-import useQueriesCombined from "@/hooks/useQueriesCombined";
+import { getTrainings } from "@/services/trainings";
+import { QueryFunctionContext } from "@tanstack/react-query";
 
 export interface HistoryCombinedData {
   getEmployments: Awaited<ReturnType<typeof getEmployments>>;
@@ -13,6 +14,8 @@ export interface HistoryCombinedData {
   getAccreditations: Awaited<ReturnType<typeof getAccreditations>>;
 }
 
+type QueryFunctionContextDefault = QueryFunctionContext<[string, number]>;
+
 export default function useQueriesHistory(
   registryId: number,
   enabled: boolean
@@ -20,40 +23,48 @@ export default function useQueriesHistory(
   const queries = [
     {
       queryKey: ["getEmployments", registryId],
-      queryFn: () =>
-        getEmployments(registryId, {
+      queryFn: ({ queryKey }: QueryFunctionContextDefault) =>
+        getEmployments(queryKey[1], {
           error: { message: "getEmploymentsError" },
         }),
       enabled,
     },
     {
       queryKey: ["getEducations", registryId],
-      queryFn: () =>
-        getEducations(registryId, {
+      queryFn: ({ queryKey }: QueryFunctionContextDefault) =>
+        getEducations(queryKey[1], {
           error: { message: "getEducationsError" },
         }),
       enabled,
     },
     {
       queryKey: ["getTrainings", registryId],
-      queryFn: () =>
-        getTrainings(registryId, {
+      queryFn: ({ queryKey }: QueryFunctionContextDefault) =>
+        getTrainings(queryKey[1], {
           error: { message: "getTrainingsError" },
         }),
       enabled,
     },
     {
       queryKey: ["getAccreditations", registryId],
-      queryFn: () =>
-        getAccreditations(registryId, {
+      queryFn: ({ queryKey }: QueryFunctionContextDefault) =>
+        getAccreditations(queryKey[1], {
           error: { message: "getAccreditationsError" },
         }),
       enabled,
     },
     {
       queryKey: ["getApprovedProjects", registryId],
-      queryFn: () =>
-        getApprovedProjects(registryId, {
+      queryFn: ({ queryKey }: QueryFunctionContextDefault) =>
+        getApprovedProjects(queryKey[1], {
+          error: { message: "getApprovedProjectsError" },
+        }),
+      enabled,
+    },
+    {
+      queryKey: ["getApprovedProjects", registryId],
+      queryFn: ({ queryKey }: QueryFunctionContextDefault) =>
+        getApprovedProjects(queryKey[1], {
           error: { message: "getApprovedProjectsError" },
         }),
       enabled,

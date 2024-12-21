@@ -8,6 +8,7 @@ import { UserGroup } from "@/consts/user";
 import { useStore } from "@/data/store";
 import PageContainer from "@/modules/PageContainer";
 import useApplicationDependencies from "@/queries/useApplicationDependencies";
+import useQueriesHistories from "@/queries/useQueriesHistories";
 import {
   ApplicationDataState,
   ApplicationSystemConfig,
@@ -68,6 +69,11 @@ const ApplicationDataProvider = ({
     store.setSectors,
   ]);
 
+  const [histories, setHistories] = useStore(store => [
+    store.config.histories,
+    store.setHistories,
+  ]);
+
   const path = usePathname();
 
   const {
@@ -77,6 +83,12 @@ const ApplicationDataProvider = ({
   } = useApplicationDependencies({
     user: me,
   });
+
+  const {
+    isLoading: isHistoriesLoading,
+    isError: isHistoriesError,
+    data: historiesData,
+  } = useQueriesHistories(1, true);
 
   const {
     getSystemConfig: systemConfigData,
@@ -112,6 +124,24 @@ const ApplicationDataProvider = ({
   }, [sectorsData?.data?.data]);
 
   useEffect(() => {
+    const {
+      getAccreditations,
+      getEducations,
+      getTrainings,
+      getEmployments,
+      getApprovedProjects,
+    } = historiesData;
+
+    setHistories({
+      accreditations: getAccreditations?.data?.data,
+      education: getEducations?.data,
+      training: getTrainings?.data,
+      employments: getEmployments?.data,
+      approvedProjects: getApprovedProjects?.data,
+    });
+  }, [historiesData]);
+
+  useEffect(() => {
     if (path) addUrlToHistory(path);
   }, [path]);
 
@@ -127,22 +157,24 @@ const ApplicationDataProvider = ({
 
   const isFinishedLoading =
     user &&
-    ((me.organisation_id && organisation) || !me.organisation_id) &&
+    organisation &&
+    histories &&
     !isApplicationLoading &&
+    !isHistoriesLoading &&
     custodian &&
     sectors;
 
+  console.log("histories", histories);
+
   return (
     <ApplicationDataContext.Provider value={providerValue}>
-      {isApplicationError && (
+      {(isApplicationError || isHistoriesError) && (
         <PageContainer>
-          {isApplicationError && (
-            <OverlayCenterAlert>
-              {t.rich("getDependenciesError", {
-                applicationLink: ApplicationLink,
-              })}
-            </OverlayCenterAlert>
-          )}
+          <OverlayCenterAlert>
+            {t.rich("getDependenciesError", {
+              applicationLink: ApplicationLink,
+            })}
+          </OverlayCenterAlert>
         </PageContainer>
       )}
       {isFinishedLoading && children}

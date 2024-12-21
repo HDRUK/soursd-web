@@ -1,9 +1,10 @@
-import { ResearcherTraining } from "@/types/application";
-import { Typography } from "@mui/material";
 import Text from "@/components/Text";
+import { ResearcherTraining } from "@/types/application";
+import { formatDisplayShortDate } from "@/utils/date";
 import ScheduleIcon from "@mui/icons-material/Schedule";
-import BusinessIcon from "@mui/icons-material/Business";
+import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
+import UserHistoryEntry from "../UserHistoryEntry";
 
 interface ResearcherTrainingEntryProps {
   data: ResearcherTraining;
@@ -18,15 +19,17 @@ export default function ResearcherTrainingEntry({
   const { awarded_at, training_name, expires_at, provider } = data;
 
   return (
-    <div>
-      <Typography variant="h6">{training_name}</Typography>
-      <Typography variant="subtitle2">{awarded_at}</Typography>
-      <Text startIcon={<BusinessIcon />}>
-        {t("provider")}: {provider}
-      </Text>
-      <Text startIcon={<ScheduleIcon />}>
-        {t("expiresAt")}: {expires_at}
-      </Text>
-    </div>
+    <UserHistoryEntry
+      heading={training_name}
+      startDate={awarded_at}
+      description={
+        <>
+          <Typography sx={{ mb: 1 }}>{provider}</Typography>
+          <Text variant="caption" startIcon={<ScheduleIcon />} color="initial">
+            {t("expiresAt")}: {formatDisplayShortDate(expires_at)}
+          </Text>
+        </>
+      }
+    />
   );
 }
