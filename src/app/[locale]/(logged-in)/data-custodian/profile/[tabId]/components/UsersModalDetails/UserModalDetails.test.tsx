@@ -52,8 +52,8 @@ describe("<UserModalDetails />", () => {
         email,
         first_name,
         last_name,
-        adminstrator: undefined,
-        approver: undefined,
+        administrator: false,
+        approver: false,
       });
     });
   });

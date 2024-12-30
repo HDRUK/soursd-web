@@ -15,11 +15,13 @@ export default function Training() {
   return (
     <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
       <Form>
-        <FormSection heading={tProfile("training")}>
-          {trainings?.map(training => (
-            <ResearcherTrainingEntry data={training} />
-          ))}
-        </FormSection>
+        {() => (
+          <FormSection heading={tProfile("training")}>
+            {trainings?.map(training => (
+              <ResearcherTrainingEntry data={training} />
+            ))}
+          </FormSection>
+        )}
       </Form>
     </PageGuidance>
   );

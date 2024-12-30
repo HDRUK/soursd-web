@@ -4,7 +4,6 @@ import { useStore } from "@/data/store";
 import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
 import { PageGuidance } from "@/modules";
 import ResearcherProjectEntry from "@/modules/ResearcherProjectEntry";
-import { Box } from "@mui/material";
 import { useTranslations } from "next-intl";
 import HistoriesSection from "../HistoriesSection";
 
@@ -17,15 +16,17 @@ export default function Experience() {
   return (
     <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
       <Form>
-        <FormSection heading={tProfile("projects")}>
-          <HistoriesSection
-            type="approvedProjects"
-            count={histories?.approvedProjects?.length}>
-            {histories?.approvedProjects?.map(item => (
-              <ResearcherProjectEntry data={item} />
-            ))}
-          </HistoriesSection>
-        </FormSection>
+        {() => (
+          <FormSection heading={tProfile("projects")}>
+            <HistoriesSection
+              type="approvedProjects"
+              count={histories?.approvedProjects?.length}>
+              {histories?.approvedProjects?.map(item => (
+                <ResearcherProjectEntry data={item} />
+              ))}
+            </HistoriesSection>
+          </FormSection>
+        )}
       </Form>
     </PageGuidance>
   );

@@ -164,8 +164,6 @@ const ApplicationDataProvider = ({
     custodian &&
     sectors;
 
-  console.log("histories", histories);
-
   return (
     <ApplicationDataContext.Provider value={providerValue}>
       {(isApplicationError || isHistoriesError) && (

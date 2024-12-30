@@ -1,20 +1,21 @@
 "use client";
 
 import ApplicationLink from "@/components/ApplicationLink";
+import Form from "@/components/Form";
+import FormActions from "@/components/FormActions";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
+import FormField from "@/components/FormField";
 import { Message } from "@/components/Message";
 import Postit from "@/components/Postit";
 import yup from "@/config/yup";
 import { patchCustodian, PatchCustodianPayload } from "@/services/custodians";
 import { Custodian } from "@/types/application";
-import { yupResolver } from "@hookform/resolvers/yup";
 import SaveIcon from "@mui/icons-material/Save";
 import { LoadingButton } from "@mui/lab";
 import { Grid, TextField, Typography, useTheme } from "@mui/material";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo } from "react";
-import { FormProvider, useForm } from "react-hook-form";
 import IdvtSection from "../IdvtSection";
 
 export interface DetailsFormValues {
@@ -79,24 +80,14 @@ export default function Details({ custodian }: DetailsProps) {
     []
   );
 
-  const methods = useForm<DetailsFormValues>({
-    resolver: yupResolver(schema),
+  const formOptions = {
     defaultValues: {
       name: custodian.name,
       contact_email: custodian.contact_email,
       idvt_required: custodian.idvt_required,
     },
     disabled: isUpdateLoading,
-  });
-
-  const {
-    formState: { errors },
-    register,
-    handleSubmit,
-  } = methods;
-
-  const nameProps = register("name");
-  const contactEmailProps = register("contact_email");
+  };
 
   return (
     <>
@@ -114,60 +105,60 @@ export default function Details({ custodian }: DetailsProps) {
         </Typography>
         <Typography>{tProfile("uniqueIdentifierCaption")}</Typography>
       </Postit>
-      <FormProvider {...methods}>
-        <form onSubmit={handleSubmit(handleDetailsSubmit)} autoComplete="off">
-          <Grid container rowSpacing={3} sx={{ maxWidth: "800px" }}>
-            {isUpdateError && (
+      <Form
+        schema={schema}
+        {...formOptions}
+        onSubmit={handleDetailsSubmit}
+        autoComplete="off">
+        {({ formState: { errors }, register }) => (
+          <>
+            <Grid container rowSpacing={3} sx={{ maxWidth: "800px" }}>
+              {isUpdateError && (
+                <Grid item xs={12}>
+                  <Message severity="error" sx={{ mb: 3 }}>
+                    {tProfile.rich(updateError, {
+                      applicationLink: ApplicationLink,
+                    })}
+                  </Message>
+                </Grid>
+              )}
               <Grid item xs={12}>
-                <Message severity="error" sx={{ mb: 3 }}>
-                  {tProfile.rich(updateError, {
-                    applicationLink: ApplicationLink,
-                  })}
-                </Message>
+                <FormControlHorizontal
+                  id="name"
+                  error={errors.name}
+                  renderField={fieldProps => (
+                    <FormField component={TextField} {...fieldProps} />
+                  )}
+                />
               </Grid>
-            )}
-            <Grid item xs={12}>
-              <FormControlHorizontal
-                label={tForm("name")}
-                error={errors.name}
-                id="name"
-                disabled>
-                <TextField
-                  {...nameProps}
-                  size="small"
-                  placeholder={tForm("namePlaceholder")}
+              <Grid item xs={12}>
+                <FormControlHorizontal
+                  id="contact_email"
+                  error={errors.contact_email}
+                  renderField={fieldProps => (
+                    <FormField component={TextField} {...fieldProps} />
+                  )}
                 />
-              </FormControlHorizontal>
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlHorizontal
-                label={tForm("contactEmail")}
-                error={errors.contact_email}
-                id="contact_email">
-                <TextField
-                  {...contactEmailProps}
-                  size="small"
-                  placeholder={tForm("contactEmailPlaceholder")}
+              </Grid>
+              <Grid item xs={12}>
+                <FormControlHorizontal
+                  renderField={() => (
+                    <IdvtSection switchProps={register("idvt_required")} />
+                  )}
                 />
-              </FormControlHorizontal>
+              </Grid>
             </Grid>
-            <Grid item xs={12}>
-              <FormControlHorizontal>
-                <IdvtSection switchProps={register("idvt_required")} />
-              </FormControlHorizontal>
-            </Grid>
-          </Grid>
-          <LoadingButton
-            type="submit"
-            color="primary"
-            variant="contained"
-            endIcon={<SaveIcon />}
-            loading={isUpdateLoading}
-            sx={{ mt: 5 }}>
-            {tProfile("submitButton")}
-          </LoadingButton>
-        </form>
-      </FormProvider>
+            <FormActions>
+              <LoadingButton
+                type="submit"
+                endIcon={<SaveIcon />}
+                loading={isUpdateLoading}>
+                {tProfile("submitButton")}
+              </LoadingButton>
+            </FormActions>
+          </>
+        )}
+      </Form>
     </>
   );
 }

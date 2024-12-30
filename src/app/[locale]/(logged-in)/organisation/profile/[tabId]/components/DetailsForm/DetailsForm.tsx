@@ -1,7 +1,9 @@
 "use client";
 
 import Form from "@/components/Form/Form";
+import FormActions from "@/components/FormActions";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
+import FormField from "@/components/FormField";
 import FormSection from "@/components/FormSection";
 import GoogleAutocomplete, {
   AddressFields,
@@ -15,11 +17,9 @@ import {
 } from "@/consts/form";
 import { useStore } from "@/data/store";
 import { QueryState } from "@/types/form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import SaveIcon from "@mui/icons-material/Save";
 import { LoadingButton } from "@mui/lab";
 import {
-  Box,
   Checkbox,
   FormControlLabel,
   Grid,
@@ -29,12 +29,12 @@ import {
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
-import { FormProvider, useForm } from "react-hook-form";
+import { UseFormSetValue } from "react-hook-form";
 
 export interface DetailsFormValues {
   organisation_name: string;
   address_1: string;
-  address_2: string;
+  address_2?: string | null;
   town: string;
   county: string;
   country: string;
@@ -44,7 +44,7 @@ export interface DetailsFormValues {
   charity_registration_id: string;
   ror_id: string;
   website: string;
-  smb_status: boolean;
+  smb_status?: boolean;
 }
 
 export interface DetailsFormProps {
@@ -76,7 +76,7 @@ export default function DetailsForm({
         county: yup.string().required(tForm("countyRequiredInvalid")),
         country: yup.string().required(tForm("countryRequiredInvalid")),
         postcode: yup.string().required(tForm("postcodeRequiredInvalid")),
-        sector_id: yup.string().required(tForm("sectorRequiredInvalid")),
+        sector_id: yup.number().required(tForm("sectorIdRequiredInvalid")),
         charity_registration_id: yup
           .string()
           .required(tForm("charityRegistrationIdRequiredInvalid"))
@@ -94,43 +94,36 @@ export default function DetailsForm({
           .matches(VALIDATION_URL, tForm("websiteFormatInvalid")),
         companies_house_no: yup
           .string()
-          .required(tForm("companiesHouseNumberRequiredInvalid"))
+          .required(tForm("companiesHouseNoRequiredInvalid"))
           .matches(
             VALIDATION_COMPANY_NUMBER,
-            tForm("companiesHouseNumberFormatInvalid")
+            tForm("companiesHouseNoFormatInvalid")
           ),
+        smb_status: yup.boolean(),
       }),
     []
   );
 
-  const methods = useForm<DetailsFormValues>({
-    resolver: yupResolver(schema),
-    defaultValues: {
-      organisation_name: organisation?.organisation_name,
-      address_1: organisation?.address_1,
-      address_2: organisation?.address_2,
-      town: organisation?.town,
-      county: organisation?.county,
-      country: organisation?.country,
-      postcode: organisation?.postcode,
-      companies_house_no: organisation?.companies_house_no,
-      sector_id: organisation?.sector_id,
-      charity_registration_id: organisation?.charity_registration_id,
-      ror_id: organisation?.ror_id,
-      website: organisation?.website,
-      smb_status: organisation?.smb_status,
-    },
-  });
+  const defaultValues = {
+    organisation_name: organisation?.organisation_name,
+    address_1: organisation?.address_1,
+    address_2: organisation?.address_2,
+    town: organisation?.town,
+    county: organisation?.county,
+    country: organisation?.country,
+    postcode: organisation?.postcode,
+    companies_house_no: organisation?.companies_house_no,
+    sector_id: organisation?.sector_id,
+    charity_registration_id: organisation?.charity_registration_id,
+    ror_id: organisation?.ror_id,
+    website: organisation?.website,
+    smb_status: organisation?.smb_status,
+  };
 
-  const {
-    formState: { errors },
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-  } = methods;
-
-  const handleChange = (_, address: AddressFields) => {
+  const handleChange = (
+    address: AddressFields,
+    setValue: UseFormSetValue<DetailsFormValues>
+  ) => {
     const { postcode, addressLine1, addressLine2, town, county, country } =
       address;
 
@@ -143,194 +136,180 @@ export default function DetailsForm({
   };
 
   return (
-    <FormProvider {...methods}>
-      <Form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
-        <FormSection heading="Organisation name and location">
-          <Grid container rowSpacing={3}>
-            <Grid item xs={12}>
-              <FormControlHorizontal
-                label={tForm("organisationName")}
-                error={errors.organisation_name}
-                id="organisation_name">
-                <TextField
-                  {...register("organisation_name")}
-                  size="small"
-                  placeholder={tForm("organisationNamePlaceholder")}
+    <Form
+      schema={schema}
+      defaultValues={defaultValues}
+      onSubmit={onSubmit}
+      autoComplete="off">
+      {({ formState: { errors }, register, watch, setValue }) => (
+        <>
+          <FormSection heading="Organisation name and location">
+            <Grid container rowSpacing={3}>
+              <Grid item xs={12}>
+                <FormControlHorizontal
+                  id="organisation_name"
+                  error={errors.organisation_name}
+                  renderField={fieldProps => (
+                    <FormField component={TextField} {...fieldProps} />
+                  )}
                 />
-              </FormControlHorizontal>
-            </Grid>
-            <Grid item xs={12}>
-              <GoogleAutocomplete
-                textFieldProps={{ variant: "filled", size: "small" }}
-                onChange={handleChange}
-                placeholder="Search for your address..."
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlHorizontal
-                label={tForm("address1")}
-                error={errors.address_1}
-                id="address_1">
-                <TextField
-                  {...register("address_1")}
-                  placeholder={tForm("address1Placeholder")}
+              </Grid>
+              <Grid item xs={12}>
+                <GoogleAutocomplete
+                  textFieldProps={{ variant: "filled", size: "small" }}
+                  onChange={(_, address) => handleChange(address, setValue)}
+                  placeholder="Search for your address..."
                 />
-              </FormControlHorizontal>
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlHorizontal
-                label={tForm("address2")}
-                error={errors.address_2}
-                id="address_2">
-                <TextField
-                  {...register("address_2")}
-                  placeholder={tForm("address2Placeholder")}
+              </Grid>
+              <Grid item xs={12}>
+                <FormControlHorizontal
+                  id="address_1"
+                  error={errors.address_1}
+                  renderField={fieldProps => (
+                    <FormField component={TextField} {...fieldProps} />
+                  )}
                 />
-              </FormControlHorizontal>
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlHorizontal
-                label={tForm("town")}
-                error={errors.town}
-                id="town">
-                <TextField
-                  {...register("town")}
-                  placeholder={tForm("townPlaceholder")}
+              </Grid>
+              <Grid item xs={12}>
+                <FormControlHorizontal
+                  id="address_2"
+                  error={errors.address_2}
+                  renderField={fieldProps => (
+                    <FormField component={TextField} {...fieldProps} />
+                  )}
                 />
-              </FormControlHorizontal>
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlHorizontal
-                label={tForm("county")}
-                error={errors.county}
-                id="county">
-                <TextField
-                  {...register("county")}
-                  placeholder={tForm("countyPlaceholder")}
+              </Grid>
+              <Grid item xs={12}>
+                <FormControlHorizontal
+                  id="town"
+                  error={errors.town}
+                  renderField={fieldProps => (
+                    <FormField component={TextField} {...fieldProps} />
+                  )}
                 />
-              </FormControlHorizontal>
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlHorizontal
-                label={tForm("country")}
-                error={errors.county}
-                id="country">
-                <TextField
-                  {...register("country")}
-                  placeholder={tForm("countryPlaceholder")}
+              </Grid>
+              <Grid item xs={12}>
+                <FormControlHorizontal
+                  id="county"
+                  error={errors.county}
+                  renderField={fieldProps => (
+                    <FormField component={TextField} {...fieldProps} />
+                  )}
                 />
-              </FormControlHorizontal>
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlHorizontal
-                label={tForm("postcode")}
-                error={errors.postcode}
-                id="postcode">
-                <TextField
-                  {...register("postcode")}
-                  placeholder={tForm("postcodePlaceholder")}
-                  sx={{ maxWidth: "200px" }}
+              </Grid>
+              <Grid item xs={12}>
+                <FormControlHorizontal
+                  id="country"
+                  error={errors.country}
+                  renderField={fieldProps => (
+                    <FormField component={TextField} {...fieldProps} />
+                  )}
                 />
-              </FormControlHorizontal>
-            </Grid>
-          </Grid>
-        </FormSection>
-        <FormSection heading="Organisation persistent identifiers">
-          <Grid container rowSpacing={3}>
-            <Grid item xs={12}>
-              <FormControlHorizontal
-                label={tForm("companiesHouseNumber")}
-                error={errors.companies_house_no}
-                id="companies_house_no">
-                <TextField
-                  {...register("companies_house_no")}
-                  placeholder={tForm("companiesHouseNumberPlaceholder")}
-                />
-              </FormControlHorizontal>
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlHorizontal
-                label={tForm("charityRegistrationId")}
-                error={errors.charity_registration_id}
-                id="charity_registration_id">
-                <TextField
-                  {...register("charity_registration_id")}
-                  placeholder={tForm("charityRegistrationIdPlaceholder")}
-                />
-              </FormControlHorizontal>
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlHorizontal
-                label={tForm("rorId")}
-                error={errors.ror_id}
-                id="ror_id">
-                <TextField
-                  {...register("ror_id")}
-                  placeholder={tForm("rorIdPlaceholder")}
-                />
-              </FormControlHorizontal>
-            </Grid>
-          </Grid>
-        </FormSection>
-        <FormSection heading="Organisation sector, site and website">
-          <Grid container rowSpacing={3}>
-            <Grid item xs={12}>
-              <FormControlHorizontal
-                label={tForm("sector")}
-                error={errors.sector_id}
-                id="sector_id">
-                <Select
-                  defaultValue={organisation?.sector_id}
-                  {...register("sector_id")}
-                  inputProps={{
-                    "aria-label": tForm("sectorAriaLabel"),
-                  }}>
-                  {sectors?.map(({ name, id }) => (
-                    <MenuItem value={id} key={id}>
-                      {name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControlHorizontal>
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlHorizontal label={tForm("smbStatus")}>
-                <FormControlLabel
-                  label={tForm("smbStatusDescription")}
-                  control={
-                    <Checkbox
-                      {...register("smb_status")}
-                      checked={!!watch("smb_status")}
+              </Grid>
+              <Grid item xs={12}>
+                <FormControlHorizontal
+                  id="postcode"
+                  error={errors.postcode}
+                  renderField={fieldProps => (
+                    <FormField
+                      component={TextField}
+                      {...fieldProps}
+                      sx={{ maxWidth: "200px" }}
                     />
-                  }
+                  )}
                 />
-              </FormControlHorizontal>
+              </Grid>
             </Grid>
+          </FormSection>
+          <FormSection heading="Organisation persistent identifiers">
+            <Grid container rowSpacing={3}>
+              <Grid item xs={12}>
+                <FormControlHorizontal
+                  id="companies_house_no"
+                  error={errors.companies_house_no}
+                  renderField={fieldProps => (
+                    <FormField component={TextField} {...fieldProps} />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormControlHorizontal
+                  id="charity_registration_id"
+                  error={errors.charity_registration_id}
+                  renderField={fieldProps => (
+                    <FormField component={TextField} {...fieldProps} />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormControlHorizontal
+                  id="ror_id"
+                  error={errors.ror_id}
+                  renderField={fieldProps => (
+                    <FormField component={TextField} {...fieldProps} />
+                  )}
+                />
+              </Grid>
+            </Grid>
+          </FormSection>
+          <FormSection heading="Organisation sector, site and website">
             <Grid item xs={12}>
               <FormControlHorizontal
-                label={tForm("website")}
-                error={errors.website}
-                id="website">
-                <TextField
-                  {...register("website")}
-                  placeholder={tForm("websitePlaceholder")}
+                id="sector_id"
+                error={errors.sector_id}
+                renderField={() => (
+                  <Select
+                    defaultValue={organisation?.sector_id}
+                    {...register("sector_id")}
+                    inputProps={{
+                      "aria-label": tForm("sectorIdAriaLabel"),
+                    }}>
+                    {sectors?.map(({ name, id }) => (
+                      <MenuItem value={id} key={id}>
+                        {name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                )}
+              />
+              <Grid item xs={12}>
+                <FormControlHorizontal
+                  label={tForm("smbStatus")}
+                  renderField={() => (
+                    <FormControlLabel
+                      label={tForm("smbStatusDescription")}
+                      control={
+                        <Checkbox
+                          {...register("smb_status")}
+                          checked={!!watch("smb_status")}
+                        />
+                      }
+                    />
+                  )}
                 />
-              </FormControlHorizontal>
+              </Grid>
+              <Grid item xs={12}>
+                <FormControlHorizontal
+                  id="website"
+                  error={errors.website}
+                  renderField={fieldProps => (
+                    <FormField component={TextField} {...fieldProps} />
+                  )}
+                />
+              </Grid>
             </Grid>
-          </Grid>
-        </FormSection>
-        <Box sx={{ textAlign: "right" }}>
-          <LoadingButton
-            loading={queryState.isLoading}
-            type="submit"
-            color="primary"
-            variant="contained"
-            endIcon={<SaveIcon />}
-            sx={{ mt: 5 }}>
-            {tProfile("submitButton")}
-          </LoadingButton>
-        </Box>
-      </Form>
-    </FormProvider>
+          </FormSection>
+          <FormActions>
+            <LoadingButton
+              loading={queryState.isLoading}
+              type="submit"
+              endIcon={<SaveIcon />}
+              sx={{ mt: 5 }}>
+              {tProfile("submitButton")}
+            </LoadingButton>
+          </FormActions>
+        </>
+      )}
+    </Form>
   );
 }

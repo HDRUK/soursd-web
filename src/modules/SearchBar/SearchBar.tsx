@@ -40,6 +40,7 @@ const SearchBar = ({ onSearch, placeholder, ...rest }: SearchBarProps) => {
         placeholder={placeholder}
         value={searchQuery || ""}
         onChange={handleSearchChange}
+        size="small"
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">

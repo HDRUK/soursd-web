@@ -18,33 +18,37 @@ export default function Experience() {
   return (
     <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
       <Form>
-        <FormSection heading={tProfile("accreditations")}>
-          <HistoriesSection
-            type="accreditations"
-            count={histories?.accreditations?.length}>
-            {histories?.accreditations?.map(item => (
-              <ResearcherAccreditationEntry data={item} />
-            ))}
-          </HistoriesSection>
-        </FormSection>
-        <FormSection heading={tProfile("education")}>
-          <HistoriesSection
-            type="education"
-            count={histories?.education?.length}>
-            {histories?.education?.map(item => (
-              <ResearcherEducationEntry data={item} />
-            ))}
-          </HistoriesSection>
-        </FormSection>
-        <FormSection heading={tProfile("employment")}>
-          <HistoriesSection
-            type="employments"
-            count={histories?.employments?.length}>
-            {histories?.employments?.map(item => (
-              <ResearcherEmploymentEntry data={item} />
-            ))}
-          </HistoriesSection>
-        </FormSection>
+        {() => (
+          <>
+            <FormSection heading={tProfile("accreditations")}>
+              <HistoriesSection
+                type="accreditations"
+                count={histories?.accreditations?.length}>
+                {histories?.accreditations?.map(item => (
+                  <ResearcherAccreditationEntry data={item} />
+                ))}
+              </HistoriesSection>
+            </FormSection>
+            <FormSection heading={tProfile("education")}>
+              <HistoriesSection
+                type="education"
+                count={histories?.education?.length}>
+                {histories?.education?.map(item => (
+                  <ResearcherEducationEntry data={item} />
+                ))}
+              </HistoriesSection>
+            </FormSection>
+            <FormSection heading={tProfile("employment")}>
+              <HistoriesSection
+                type="employments"
+                count={histories?.employments?.length}>
+                {histories?.employments?.map(item => (
+                  <ResearcherEmploymentEntry data={item} />
+                ))}
+              </HistoriesSection>
+            </FormSection>
+          </>
+        )}
       </Form>
     </PageGuidance>
   );
