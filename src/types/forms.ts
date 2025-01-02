@@ -1,16 +1,20 @@
 import yup from "@/config/yup";
 import { ComponentType, ComponentProps } from "react";
+import { FormControlHorizontalProps } from "@/components/FormControlHorizontal";
 import { SxProps } from "@mui/system";
+
+export type FormDefaultValue = string | number | boolean | Date;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type FormFieldConfig<T extends ComponentType<any>> = {
   name: string;
-  label: string;
+  label?: string;
   component: T;
   componentProps?: ComponentProps<T>;
+  formControlProps?: FormControlHorizontalProps;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   validation?: yup.Schema<any>;
-  defaultValue: string | number | boolean | Date;
+  defaultValue?: FormDefaultValue;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

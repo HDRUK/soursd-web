@@ -1,3 +1,3 @@
-import Details from "./Details";
+import Subsidiaries from "./Subsidiaries";
 
-export default Details;
+export default Subsidiaries;

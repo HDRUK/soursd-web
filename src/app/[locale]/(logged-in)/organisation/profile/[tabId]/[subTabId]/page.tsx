@@ -2,7 +2,7 @@ import { ConfigProps, withConfig } from "@/components/Config";
 import { PageContainer } from "@/modules";
 import { redirect } from "next/navigation";
 import { PageTabs, PageSubTabs, getSubTabs } from "../consts/tabs";
-import Subsidiaries from "./Subsidiaries/Subsidiaries";
+import Subsidiaries from "./Subsidiaries";
 
 interface PageProps extends ConfigProps {
   params: {

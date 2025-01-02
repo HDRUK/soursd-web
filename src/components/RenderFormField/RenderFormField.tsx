@@ -34,10 +34,10 @@ export default function RenderFormField({
   return (
     <FormControlHorizontal
       key={`form_field_${name}`}
-      label={label || name}
+      label={label}
       error={error}
       {...formControlProps}>
-      <Component {...field} {...componentProps} />
+      <Component control={control} {...field} {...componentProps} />
     </FormControlHorizontal>
   );
 }

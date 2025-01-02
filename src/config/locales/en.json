@@ -218,19 +218,28 @@
       "ceCertification": "CE certified?",
       "ceCertificationNum": "CE identifier",
       "ceCertificationNumPlaceholder": "e.g. A1B2",
+      "ceCertificationNumberInvalid": "Certification number must be exactly 4 alphanumeric characters.",
       "cePlusCertification": "CE Plus certified?",
       "cePlusCertificationNum": "CE Plus identifier",
       "cePlusCertificationNumPlaceholder": "e.g. X1Y2",
+      "cePlusCertificationNumberInvalid": "Certification number must be exactly 4 alphanumeric characters.",
       "iso270001Certification": "ISO27001 certified?",
       "iso270001CertificationNum": "ISO27001 identifier",
       "iso270001CertificationNumPlaceholder": "e.g. AB123C",
+      "iso270001CertificationNumInvalid": "ISO27001 identifier is invalid",
       "dsptkCertification": "DSPT certified?",
       "dsptkCertificationNum": "DSPT identifier",
-      "dsptkCertificationNumPlaceholder": "e.g. DSPTK-2025-12345 "
+      "dsptkCertificationNumPlaceholder": "e.g. DSPTK-2025-12345",
+      "dsptkCertificationNumInvalid": "DSPT identifier is invalid"
     },
     "organisationSubsidiaries": {
+      "title": "Organisation UK subsidiaries",
       "name": "Subsidiary name",
-      "website": "Subsidiary website"
+      "website": "Subsidiary website",
+      "removeButton": "Remove",
+      "addButton": "Add Another Subsidiary",
+      "nameInvalid": "Please provide a name for the organisation",
+      "websiteInvalid": "Please provide a valid website for the organisation"
     }
   },
   "Buttons": {

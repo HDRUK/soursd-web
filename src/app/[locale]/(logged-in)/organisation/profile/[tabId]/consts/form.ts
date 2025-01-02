@@ -4,10 +4,10 @@ import {
   VALIDATION_DSPTK_CERTIFICATION_NUMBER,
 } from "@/consts/form";
 import yup from "@/config/yup";
-// import FormControlCheckbox from "@/components/FormControlCheckbox";
 import Checkbox, { CheckboxProps } from "@mui/material/Checkbox";
 import TextField, { TextFieldProps } from "@mui/material/TextField";
 import { FormConfig } from "@/types/forms";
+import FormFieldArray from "@/components/FormFieldArray";
 
 const generateSubsidiariesFormFieldsConfig = (
   t: (key: string) => string
@@ -16,24 +16,58 @@ const generateSubsidiariesFormFieldsConfig = (
     sectionTitle: t("organisationSubsidiaries.title"),
     sectionBoxSx: {
       mb: 4,
-      display: "grid",
-      gridTemplateColumns: "1fr",
-      gap: 1,
+      display: "flex",
     },
     fields: [
       {
-        name: "subsidiary_name",
-        label: t("organisationSubsidiaries.name"),
-        component: TextField,
-        componentProps: {
-          variant: "outlined",
-        } as TextFieldProps,
+        name: "subsidiaries",
         formControlProps: {
-          labelMd: 3,
-          contentMd: 6,
+          labelMd: 0,
+          contentMd: 12,
         },
-        validation: yup.string(),
-        defaultValue: "",
+        component: FormFieldArray,
+        validation: yup.array().of(
+          yup.object().shape({
+            subsidiary_name: yup
+              .string()
+              .transform(value => (value === "" ? null : value))
+              .nullable()
+              .min(3, t("organisationSubsidiaries.nameInvalid")),
+            subsidiary_website: yup
+              .string()
+              .url(t("organisationSubsidiaries.websiteInvalid")),
+          })
+        ),
+        componentProps: {
+          removeButtonLabel: t("organisationSubsidiaries.removeButton"),
+          addButtonLabel: t("organisationSubsidiaries.addButton"),
+          fields: [
+            {
+              name: "subsidiary_name",
+              label: t("organisationSubsidiaries.name"),
+              component: TextField,
+              componentProps: {
+                variant: "outlined",
+              } as TextFieldProps,
+              formControlProps: {
+                labelMd: 4,
+                contentMd: 8,
+              },
+            },
+            {
+              name: "subsidiary_website",
+              label: t("organisationSubsidiaries.website"),
+              component: TextField,
+              componentProps: {
+                variant: "outlined",
+              } as TextFieldProps,
+              formControlProps: {
+                labelMd: 4,
+                contentMd: 8,
+              },
+            },
+          ],
+        },
       },
     ],
   },
@@ -65,12 +99,24 @@ const generateSubsidiariesFormFieldsConfig = (
             "organisationDataSecurityCompliance.ceCertificationNumPlaceholder"
           ),
         } as TextFieldProps,
-        validation: yup
-          .string()
-          .matches(
-            VALIDATION_CE_CERTIFICATION_NUMBER,
-            "ceCertificationNumberInvalid"
-          ),
+        validation: yup.string().when("ce_certification", {
+          is: true,
+          then: () =>
+            yup
+              .string()
+              .matches(
+                VALIDATION_CE_CERTIFICATION_NUMBER,
+                t(
+                  "organisationDataSecurityCompliance.ceCertificationNumberInvalid"
+                )
+              )
+              .required(
+                t(
+                  "organisationDataSecurityCompliance.ceCertificationNumberInvalid"
+                )
+              ),
+          otherwise: () => yup.string().notRequired(),
+        }),
         defaultValue: "",
       },
       {
@@ -92,12 +138,24 @@ const generateSubsidiariesFormFieldsConfig = (
             "organisationDataSecurityCompliance.cePlusCertificationNumPlaceholder"
           ),
         } as TextFieldProps,
-        validation: yup
-          .string()
-          .matches(
-            VALIDATION_CE_CERTIFICATION_NUMBER,
-            "cePlusCertificationNumberInvalid"
-          ),
+        validation: yup.string().when("ce_plus_certification", {
+          is: true,
+          then: () =>
+            yup
+              .string()
+              .matches(
+                VALIDATION_CE_CERTIFICATION_NUMBER,
+                t(
+                  "organisationDataSecurityCompliance.cePlusCertificationNumberInvalid"
+                )
+              )
+              .required(
+                t(
+                  "organisationDataSecurityCompliance.cePlusCertificationNumberInvalid"
+                )
+              ),
+          otherwise: () => yup.string().notRequired(),
+        }),
         defaultValue: "",
       },
       {
@@ -121,12 +179,19 @@ const generateSubsidiariesFormFieldsConfig = (
             "organisationDataSecurityCompliance.iso270001CertificationNumPlaceholder"
           ),
         } as TextFieldProps,
-        validation: yup
-          .string()
-          .matches(
-            VALIDATION_ISO_CERTIFICATION_NUMBER,
-            "iso270001CertificationNumInvalaid"
-          ),
+        validation: yup.string().when("iso_27001_certified", {
+          is: true,
+          then: () =>
+            yup
+              .string()
+              .matches(
+                VALIDATION_ISO_CERTIFICATION_NUMBER,
+                t(
+                  "organisationDataSecurityCompliance.iso270001CertificationNumInvalid"
+                )
+              ),
+          otherwise: () => yup.string().notRequired(),
+        }),
         defaultValue: "",
       },
       {
@@ -148,12 +213,19 @@ const generateSubsidiariesFormFieldsConfig = (
             "organisationDataSecurityCompliance.dsptkCertificationNumPlaceholder"
           ),
         } as TextFieldProps,
-        validation: yup
-          .string()
-          .matches(
-            VALIDATION_DSPTK_CERTIFICATION_NUMBER,
-            "dsptkCertificationNumInvalaid"
-          ),
+        validation: yup.string().when("dsptk_certified", {
+          is: true,
+          then: () =>
+            yup
+              .string()
+              .matches(
+                VALIDATION_DSPTK_CERTIFICATION_NUMBER,
+                t(
+                  "organisationDataSecurityCompliance.dsptkCertificationNumInvalid"
+                )
+              ),
+          otherwise: () => yup.string().notRequired(),
+        }),
         defaultValue: "",
       },
     ],

@@ -17,7 +17,7 @@ export default function RenderFormFields({
         <>
           <FormSection heading={section.sectionTitle} />
           <Box sx={section.sectionBoxSx}>
-            {section.fields.map(fieldConfig => (
+            {section.fields?.map(fieldConfig => (
               <Box>
                 <RenderFormField
                   key={fieldConfig.name}

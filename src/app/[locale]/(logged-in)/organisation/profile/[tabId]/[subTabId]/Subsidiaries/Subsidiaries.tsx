@@ -5,7 +5,7 @@ import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
 import { PageGuidance } from "@/modules";
 import { useTranslations } from "next-intl";
 import usePatchOrganisation from "../../hooks/usePatchOrganisation";
-import SubsidiariesForm from "../SubsidiariesForm";
+import SubsidiariesForm from "../../components/SubsidiariesForm";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
