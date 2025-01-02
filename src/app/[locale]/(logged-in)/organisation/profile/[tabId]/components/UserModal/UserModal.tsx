@@ -58,13 +58,6 @@ export default function UsersModal({
       variant="content"
       onClose={onClose}
       {...restProps}>
-      {isError && (
-        <Message severity="error" sx={{ mb: 3 }}>
-          {t.rich(error, {
-            applicationLink: ApplicationLink,
-          })}
-        </Message>
-      )}
       <UserModalDetails
         queryState={{
           isLoading: isPending,

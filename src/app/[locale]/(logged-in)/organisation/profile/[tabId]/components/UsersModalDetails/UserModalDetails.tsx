@@ -1,3 +1,4 @@
+import ApplicationLink from "@/components/ApplicationLink";
 import Form from "@/components/Form";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
 import FormField from "@/components/FormField";
@@ -48,20 +49,23 @@ export default function UserModalDetails({
     []
   );
 
+  const { isLoading, isError, error } = queryState;
+
   const formOptions = {
     defaultValues: {
       first_name: "",
       last_name: "",
       email: "",
     },
+    error:
+      isError &&
+      t.rich(error, {
+        applicationLink: ApplicationLink,
+      }),
   };
 
   return (
-    <Form
-      {...formOptions}
-      schema={schema}
-      onSubmit={onSubmit}
-      autoComplete="off">
+    <Form schema={schema} onSubmit={onSubmit} {...formOptions}>
       {({ formState: { errors } }) => (
         <>
           <FormModalHeader>
@@ -108,7 +112,7 @@ export default function UserModalDetails({
             <LoadingButton
               type="submit"
               endIcon={<CheckIcon />}
-              loading={queryState.isLoading}>
+              loading={isLoading}>
               {t("sendInviteButton")}
             </LoadingButton>
           </FormModalActions>

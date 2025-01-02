@@ -183,14 +183,6 @@ export default function Identity() {
     []
   );
 
-  const defaultValues = {
-    first_name: user?.first_name,
-    last_name: user?.last_name,
-    orc_id: user?.orc_id,
-    organisation_id: user?.organisation_id,
-    consent_scrape: user?.consent_scrape,
-  };
-
   if (isGetOrganisationsLoading) {
     return (
       <OverlayCenter sx={{ color: "#fff" }}>
@@ -199,40 +191,38 @@ export default function Identity() {
     );
   }
 
+  const error =
+    (isGetOrganisationsError &&
+      tProfile.rich(organisationsError, {
+        applicationLink: ApplicationLink,
+      })) ||
+    (isUpdateError &&
+      tProfile.rich(updateError, {
+        applicationLink: ApplicationLink,
+      })) ||
+    (isFileError &&
+      tProfile.rich(fileError, {
+        applicationLink: ApplicationLink,
+      }));
+
+  const formOptions = {
+    defaultValues: {
+      first_name: user?.first_name,
+      last_name: user?.last_name,
+      orc_id: user?.orc_id,
+      organisation_id: user?.organisation_id,
+      consent_scrape: user?.consent_scrape,
+    },
+    error,
+  };
+
   return (
     <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
-      <Form
-        onSubmit={handleDetailsSubmit}
-        defaultValues={defaultValues}
-        schema={schema}
-        autoComplete="off">
+      <Form onSubmit={handleDetailsSubmit} schema={schema} {...formOptions}>
         {({ formState: { errors }, watch, register }) => (
           <>
             <FormSection heading={tProfile("identity")}>
               <Grid container rowSpacing={3}>
-                <Grid item xs={12}>
-                  {isGetOrganisationsError && (
-                    <Message severity="error" sx={{ mb: 3 }}>
-                      {tProfile.rich(organisationsError, {
-                        applicationLink: ApplicationLink,
-                      })}
-                    </Message>
-                  )}
-                  {isUpdateError && (
-                    <Message severity="error" sx={{ mb: 3 }}>
-                      {tProfile.rich(updateError, {
-                        applicationLink: ApplicationLink,
-                      })}
-                    </Message>
-                  )}
-                  {isFileError && (
-                    <Message severity="error" sx={{ mb: 3 }}>
-                      {tProfile.rich(fileError, {
-                        applicationLink: ApplicationLink,
-                      })}
-                    </Message>
-                  )}
-                </Grid>
                 <Grid item xs={12}>
                   <FormControlHorizontal
                     id="organisation_id"

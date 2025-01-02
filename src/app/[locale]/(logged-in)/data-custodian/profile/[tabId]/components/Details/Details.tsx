@@ -86,6 +86,11 @@ export default function Details({ custodian }: DetailsProps) {
       contact_email: custodian.contact_email,
       idvt_required: custodian.idvt_required,
     },
+    error:
+      isUpdateError &&
+      tProfile.rich(updateError, {
+        applicationLink: ApplicationLink,
+      }),
     disabled: isUpdateLoading,
   };
 
@@ -105,23 +110,10 @@ export default function Details({ custodian }: DetailsProps) {
         </Typography>
         <Typography>{tProfile("uniqueIdentifierCaption")}</Typography>
       </Postit>
-      <Form
-        schema={schema}
-        {...formOptions}
-        onSubmit={handleDetailsSubmit}
-        autoComplete="off">
+      <Form schema={schema} onSubmit={handleDetailsSubmit} {...formOptions}>
         {({ formState: { errors }, register }) => (
           <>
             <Grid container rowSpacing={3} sx={{ maxWidth: "800px" }}>
-              {isUpdateError && (
-                <Grid item xs={12}>
-                  <Message severity="error" sx={{ mb: 3 }}>
-                    {tProfile.rich(updateError, {
-                      applicationLink: ApplicationLink,
-                    })}
-                  </Message>
-                </Grid>
-              )}
               <Grid item xs={12}>
                 <FormControlHorizontal
                   id="name"

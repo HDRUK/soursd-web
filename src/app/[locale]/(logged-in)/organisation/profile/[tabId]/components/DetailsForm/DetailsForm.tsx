@@ -1,5 +1,6 @@
 "use client";
 
+import ApplicationLink from "@/components/ApplicationLink";
 import Form from "@/components/Form/Form";
 import FormActions from "@/components/FormActions";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
@@ -104,22 +105,6 @@ export default function DetailsForm({
     []
   );
 
-  const defaultValues = {
-    organisation_name: organisation?.organisation_name,
-    address_1: organisation?.address_1,
-    address_2: organisation?.address_2,
-    town: organisation?.town,
-    county: organisation?.county,
-    country: organisation?.country,
-    postcode: organisation?.postcode,
-    companies_house_no: organisation?.companies_house_no,
-    sector_id: organisation?.sector_id,
-    charity_registration_id: organisation?.charity_registration_id,
-    ror_id: organisation?.ror_id,
-    website: organisation?.website,
-    smb_status: organisation?.smb_status,
-  };
-
   const handleChange = (
     address: AddressFields,
     setValue: UseFormSetValue<DetailsFormValues>
@@ -135,12 +120,33 @@ export default function DetailsForm({
     setValue("postcode", postcode ?? "");
   };
 
+  const { isError, error, isLoading } = queryState;
+
+  const formOptions = {
+    defaultValues: {
+      organisation_name: organisation?.organisation_name,
+      address_1: organisation?.address_1,
+      address_2: organisation?.address_2,
+      town: organisation?.town,
+      county: organisation?.county,
+      country: organisation?.country,
+      postcode: organisation?.postcode,
+      companies_house_no: organisation?.companies_house_no,
+      sector_id: organisation?.sector_id,
+      charity_registration_id: organisation?.charity_registration_id,
+      ror_id: organisation?.ror_id,
+      website: organisation?.website,
+      smb_status: organisation?.smb_status,
+    },
+    error:
+      isError &&
+      tProfile.rich(error, {
+        applicationLink: ApplicationLink,
+      }),
+  };
+
   return (
-    <Form
-      schema={schema}
-      defaultValues={defaultValues}
-      onSubmit={onSubmit}
-      autoComplete="off">
+    <Form schema={schema} onSubmit={onSubmit} {...formOptions}>
       {({ formState: { errors }, register, watch, setValue }) => (
         <>
           <FormSection heading="Organisation name and location">
@@ -301,10 +307,9 @@ export default function DetailsForm({
           </FormSection>
           <FormActions>
             <LoadingButton
-              loading={queryState.isLoading}
+              loading={isLoading}
               type="submit"
-              endIcon={<SaveIcon />}
-              sx={{ mt: 5 }}>
+              endIcon={<SaveIcon />}>
               {tProfile("submitButton")}
             </LoadingButton>
           </FormActions>

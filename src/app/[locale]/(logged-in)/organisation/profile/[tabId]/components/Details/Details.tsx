@@ -28,11 +28,11 @@ export default function Details() {
     isPending: isLoading,
     error,
   } = useMutation({
-    mutationKey: ["patchCustodian", organisation?.id],
+    mutationKey: ["patchOrganisation", organisation?.id],
     mutationFn: (payload: PatchOrganisationPayload) =>
       patchOrganisation(organisation?.id, payload, {
         error: {
-          message: "submitError",
+          message: "patchUserError",
         },
       }),
   });

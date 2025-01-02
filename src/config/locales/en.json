@@ -74,6 +74,7 @@
     "companyNotValid": "Organisation not validated",
     "companyValidatingPopup": "Your organisation is currently being checked against records held by Companies House",
     "companyValidating": "Organisation is being validated",
+    "identity": "Identity",
     "details": "Profile",
     "manageDelegates": "Manage Delegates",
     "projects": "Projects",
