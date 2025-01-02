@@ -13,6 +13,31 @@ const generateSubsidiariesFormFieldsConfig = (
   t: (key: string) => string
 ): FormConfig => [
   {
+    sectionTitle: t("organisationSubsidiaries.title"),
+    sectionBoxSx: {
+      mb: 4,
+      display: "grid",
+      gridTemplateColumns: "1fr",
+      gap: 1,
+    },
+    fields: [
+      {
+        name: "subsidiary_name",
+        label: t("organisationSubsidiaries.name"),
+        component: TextField,
+        componentProps: {
+          variant: "outlined",
+        } as TextFieldProps,
+        formControlProps: {
+          labelMd: 3,
+          contentMd: 6,
+        },
+        validation: yup.string(),
+        defaultValue: "",
+      },
+    ],
+  },
+  {
     sectionTitle: t("organisationDataSecurityCompliance.title"),
     sectionBoxSx: {
       mb: 4,

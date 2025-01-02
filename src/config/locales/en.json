@@ -227,6 +227,10 @@
       "dsptkCertification": "DSPT certified?",
       "dsptkCertificationNum": "DSPT identifier",
       "dsptkCertificationNumPlaceholder": "e.g. DSPTK-2025-12345 "
+    },
+    "organisationSubsidiaries": {
+      "name": "Subsidiary name",
+      "website": "Subsidiary website"
     }
   },
   "Buttons": {

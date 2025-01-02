@@ -7,6 +7,7 @@ import {
   FormLabel,
   FormLabelProps,
   Grid,
+  GridProps,
   TextFieldProps,
 } from "@mui/material";
 import React, { ReactNode } from "react";
@@ -20,6 +21,7 @@ export interface FormControlHorizontalProps
   labelProps?: FormLabelProps;
   labelMd?: number;
   contentMd?: number;
+  containerProps?: GridProps;
 }
 
 export default function FormControlHorizontal({
@@ -29,6 +31,7 @@ export default function FormControlHorizontal({
   id,
   disabled,
   labelProps,
+  containerProps,
   labelMd = 3,
   contentMd = 9,
   ...restProps
@@ -40,7 +43,7 @@ export default function FormControlHorizontal({
       size="small"
       fullWidth
       {...restProps}>
-      <Grid container columnSpacing={2}>
+      <Grid container columnSpacing={2} px={2} {...containerProps}>
         <Grid item md={labelMd} sx={{ display: "flex", pt: 1 }}>
           {label && (
             <FormLabel
