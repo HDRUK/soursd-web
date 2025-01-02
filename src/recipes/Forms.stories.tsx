@@ -55,7 +55,7 @@ const Forms = () => {
                   disabled={queryState.isLoading}
                   endIcon={<SaveIcon />}
                   loading={queryState.isLoading}>
-                  {tProfile("submitButton")}
+                  {tForm("submitButton")}
                 </LoadingButton>
               </FormActions>
             </>
