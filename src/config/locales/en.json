@@ -180,6 +180,7 @@
     "agreeTermsAndConditions": "I accept the terms and conditions",
     "agreeTermsAndConditionsAriaLabel": "Accept terms and conditions",
     "sectorId": "Sector",
+    "sectorIdPlaceholder": "Sector",
     "sectorIdAriaLabel": "Sector",
     "sectorIdRequiredInvalid": "Sector is required",
     "otpPasscodePlaceholder": "OTP pascode",
