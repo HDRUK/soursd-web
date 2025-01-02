@@ -212,7 +212,22 @@
     "ce_certification_numPlaceholder": "Enter a CE certification number",
     "whatIsTheOrcId": "Your ORCiD is a value which identifies you to Data Custodians (although in general anyone) and provides information to them such as your research outputs and activities. If you don't have one of these you can signup at https://orcid.org/register. Although it is recommended to provide this, it is not required for the registry, however it is required for the content scrape.",
     "roleAdministrator": "Administrator",
-    "roleApprover": "Approver"
+    "roleApprover": "Approver",
+    "organisationDataSecurityCompliance": {
+      "title": "Organisation data security compliance",
+      "ceCertification": "CE certified?",
+      "ceCertificationNum": "CE identifier",
+      "ceCertificationNumPlaceholder": "e.g. A1B2",
+      "cePlusCertification": "CE Plus certified?",
+      "cePlusCertificationNum": "CE Plus identifier",
+      "cePlusCertificationNumPlaceholder": "e.g. X1Y2",
+      "iso270001Certification": "ISO27001 certified?",
+      "iso270001CertificationNum": "ISO27001 identifier",
+      "iso270001CertificationNumPlaceholder": "e.g. AB123C",
+      "dsptkCertification": "DSPT certified?",
+      "dsptkCertificationNum": "DSPT identifier",
+      "dsptkCertificationNumPlaceholder": "e.g. DSPTK-2025-12345 "
+    }
   },
   "Buttons": {
     "register": "Register",

@@ -1,25 +1,34 @@
-import { FormFieldsConfig } from "@/types/forms";
+import { FormConfig } from "@/types/forms";
 import { Control, FieldValues } from "react-hook-form";
+import { Box } from "@mui/material";
 import RenderFormField from "../RenderFormField/RenderFormField";
+import FormSection from "../FormSection";
 
 export default function RenderFormFields({
   config,
   control,
 }: {
-  config: FormFieldsConfig;
+  config: FormConfig;
   control: Control<FieldValues>;
 }) {
   return (
     <>
-      {Object.entries(config).map(([key, fieldConfig]) => {
-        return (
-          <RenderFormField
-            key={key}
-            fieldConfig={fieldConfig}
-            control={control}
-          />
-        );
-      })}
+      {config.map(section => (
+        <>
+          <FormSection heading={section.sectionTitle} />
+          <Box sx={section.sectionBoxSx}>
+            {section.fields.map(fieldConfig => (
+              <Box>
+                <RenderFormField
+                  key={fieldConfig.name}
+                  fieldConfig={fieldConfig}
+                  control={control}
+                />
+              </Box>
+            ))}
+          </Box>
+        </>
+      ))}
     </>
   );
 }

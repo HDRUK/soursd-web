@@ -18,6 +18,7 @@ export default function RenderFormField({
     label,
     component: Component,
     componentProps,
+    formControlProps,
     defaultValue,
   } = fieldConfig;
 
@@ -34,7 +35,8 @@ export default function RenderFormField({
     <FormControlHorizontal
       key={`form_field_${name}`}
       label={label || name}
-      error={error}>
+      error={error}
+      {...formControlProps}>
       <Component {...field} {...componentProps} />
     </FormControlHorizontal>
   );

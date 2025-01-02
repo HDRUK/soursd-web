@@ -31,9 +31,9 @@ import {
   TextField,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useMemo, ComponentType } from "react";
-import { generateSchema, generateDefaultValues } from "@/utils/yup";
-import { FormFieldConfig, FormFieldsConfig } from "@/types/forms";
+import { useMemo } from "react";
+import useFormFromConfig from "@/hooks/useFormFromConfig";
+import RenderFormFields from "@/components/RenderFormFields";
 
 import { generateSubsidiariesFormFieldsConfig } from "../../consts/form";
 
@@ -76,8 +76,6 @@ export default function SubsidiariesForm({
   );
 
   const { control } = useFormFromConfig<DetailsFormValues>(formFieldsConfig);
-
-  console.log(formFieldsConfig);
 
   return <RenderFormFields control={control} config={formFieldsConfig} />;
 

@@ -10,16 +10,15 @@ export type FormFieldConfig<T extends ComponentType<any>> = {
   componentProps?: ComponentProps<T>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   validation?: yup.Schema<any>;
-  defaultValue: unknown;
+  defaultValue: string | number | boolean | Date;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type FormFieldsConfig = FormFieldConfig<ComponentType<any>>[];
 
 export type FormSection = {
-  sectionName: string;
   sectionTitle: string;
-  sectionSx?: SxProps;
+  sectionBoxSx?: SxProps;
   fields: FormFieldsConfig;
 };
 

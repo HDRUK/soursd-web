@@ -18,6 +18,8 @@ export interface FormControlHorizontalProps
   label?: ReactNode;
   error?: FieldError;
   labelProps?: FormLabelProps;
+  labelMd?: number;
+  contentMd?: number;
 }
 
 export default function FormControlHorizontal({
@@ -27,6 +29,8 @@ export default function FormControlHorizontal({
   id,
   disabled,
   labelProps,
+  labelMd = 3,
+  contentMd = 9,
   ...restProps
 }: FormControlHorizontalProps) {
   return (
@@ -37,7 +41,7 @@ export default function FormControlHorizontal({
       fullWidth
       {...restProps}>
       <Grid container columnSpacing={2}>
-        <Grid item md={3} sx={{ display: "flex", pt: 1 }}>
+        <Grid item md={labelMd} sx={{ display: "flex", pt: 1 }}>
           {label && (
             <FormLabel
               htmlFor={id}
@@ -53,7 +57,7 @@ export default function FormControlHorizontal({
             </FormLabel>
           )}
         </Grid>
-        <Grid item xs={12} md={9}>
+        <Grid item xs={12} md={contentMd}>
           {React.Children.map(children, child => {
             if (!React.isValidElement<TextFieldProps>(child)) {
               return child;
