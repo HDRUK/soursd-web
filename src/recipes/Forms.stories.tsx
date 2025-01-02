@@ -32,7 +32,9 @@ const Forms = () => {
           schema={schema}
           defaultValues={defaultValues}
           onSubmit={handleSubmit}
-          autoComplete="off">
+          autoComplete="off"
+          disabled={queryState.isLoading}
+        >
           {({ formState: { errors } }) => (
             <FormSection>
               <Grid container rowSpacing={3}>
@@ -50,6 +52,7 @@ const Forms = () => {
               <FormActions>
                 <LoadingButton
                   type="submit"
+                  disabled={queryState.isLoading}
                   endIcon={<SaveIcon />}
                   loading={queryState.isLoading}>
                   {tProfile("submitButton")}
