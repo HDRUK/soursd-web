@@ -224,10 +224,20 @@ const theme = createTheme(
         },
       },
       MuiButton: {
+        defaultProps: {
+          size: "small",
+          variant: "contained",
+        },
         styleOverrides: {
           root: {
             boxShadow: "none",
           },
+        },
+      },
+      MuiLoadingButton: {
+        defaultProps: {
+          size: "small",
+          variant: "contained",
         },
       },
       MuiToolbar: {

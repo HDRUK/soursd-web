@@ -8,4 +8,4 @@ enum EntityType {
   ORGANISATION = "ORGANISATION",
 }
 
-export { FileType, EntityType };
+export { EntityType, FileType };

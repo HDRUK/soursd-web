@@ -182,6 +182,7 @@ interface ResearcherTraining {
   expires_at: string;
   training_name: string;
   expires_in_years: boolean;
+  id: number;
 }
 
 interface ResearcherEmployment {

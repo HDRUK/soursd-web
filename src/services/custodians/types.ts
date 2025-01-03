@@ -19,9 +19,7 @@ interface SendCustodianInviteResponse {
 
 type GetCustodianResponse = Custodian;
 
-type GetCustodiansResponse = {
-  data: Custodian[];
-};
+type GetCustodiansResponse = Custodian[];
 
 type PatchCustodianPayload = Partial<Custodian>;
 
