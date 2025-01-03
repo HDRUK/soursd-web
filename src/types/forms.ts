@@ -21,6 +21,7 @@ export type FormFieldConfig<T extends ComponentType<any>> = {
 export type FormFieldsConfig = FormFieldConfig<ComponentType<any>>[];
 
 export type FormSection = {
+  sectionId: number;
   sectionTitle: string;
   sectionBoxSx?: SxProps;
   fields: FormFieldsConfig;

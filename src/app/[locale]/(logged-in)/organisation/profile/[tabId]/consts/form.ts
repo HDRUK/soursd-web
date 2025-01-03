@@ -8,11 +8,14 @@ import Checkbox, { CheckboxProps } from "@mui/material/Checkbox";
 import TextField, { TextFieldProps } from "@mui/material/TextField";
 import { FormConfig } from "@/types/forms";
 import FormFieldArray from "@/components/FormFieldArray";
+import { Organisation } from "@/types/application";
 
 const generateSubsidiariesFormFieldsConfig = (
-  t: (key: string) => string
+  t: (key: string) => string,
+  organisation?: Organisation
 ): FormConfig => [
   {
+    sectionId: 1,
     sectionTitle: t("organisationSubsidiaries.title"),
     sectionBoxSx: {
       mb: 4,
@@ -35,6 +38,8 @@ const generateSubsidiariesFormFieldsConfig = (
               .min(3, t("organisationSubsidiaries.nameInvalid")),
             subsidiary_website: yup
               .string()
+              .transform(value => (value === "" ? null : value))
+              .nullable()
               .url(t("organisationSubsidiaries.websiteInvalid")),
           })
         ),
@@ -72,6 +77,7 @@ const generateSubsidiariesFormFieldsConfig = (
     ],
   },
   {
+    sectionId: 2,
     sectionTitle: t("organisationDataSecurityCompliance.title"),
     sectionBoxSx: {
       mb: 4,
@@ -81,12 +87,13 @@ const generateSubsidiariesFormFieldsConfig = (
     },
     fields: [
       {
-        name: "ce_certification",
+        name: "ce_certified",
         label: t("organisationDataSecurityCompliance.ceCertification"),
         component: Checkbox,
-        componentProps: {} as CheckboxProps,
+        componentProps: {
+          defaultChecked: organisation?.ce_certified,
+        } as CheckboxProps,
         formControlProps: { labelMd: 7, contentMd: 5 },
-        defaultValue: false,
         validation: yup.boolean(),
       },
       {
@@ -99,7 +106,7 @@ const generateSubsidiariesFormFieldsConfig = (
             "organisationDataSecurityCompliance.ceCertificationNumPlaceholder"
           ),
         } as TextFieldProps,
-        validation: yup.string().when("ce_certification", {
+        validation: yup.string().when("ce_certified", {
           is: true,
           then: () =>
             yup
@@ -117,15 +124,16 @@ const generateSubsidiariesFormFieldsConfig = (
               ),
           otherwise: () => yup.string().notRequired(),
         }),
-        defaultValue: "",
+        defaultValue: organisation?.ce_certification_num || "",
       },
       {
-        name: "ce_plus_certification",
+        name: "ce_plus_certified",
         label: t("organisationDataSecurityCompliance.cePlusCertification"),
         component: Checkbox,
-        componentProps: {} as CheckboxProps,
+        componentProps: {
+          defaultChecked: organisation?.ce_plus_certified,
+        } as CheckboxProps,
         formControlProps: { labelMd: 7, contentMd: 5 },
-        defaultValue: false,
         validation: yup.boolean(),
       },
       {
@@ -138,7 +146,7 @@ const generateSubsidiariesFormFieldsConfig = (
             "organisationDataSecurityCompliance.cePlusCertificationNumPlaceholder"
           ),
         } as TextFieldProps,
-        validation: yup.string().when("ce_plus_certification", {
+        validation: yup.string().when("ce_plus_certified", {
           is: true,
           then: () =>
             yup
@@ -156,7 +164,7 @@ const generateSubsidiariesFormFieldsConfig = (
               ),
           otherwise: () => yup.string().notRequired(),
         }),
-        defaultValue: "",
+        defaultValue: organisation?.ce_plus_certification_num || "",
       },
       {
         name: "iso_27001_certified",

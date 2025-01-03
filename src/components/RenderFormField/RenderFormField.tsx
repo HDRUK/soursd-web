@@ -23,7 +23,7 @@ export default function RenderFormField({
   } = fieldConfig;
 
   const {
-    field,
+    field: { ref: _unsuedRef, ...field },
     fieldState: { error },
   } = useController({
     name,
@@ -32,11 +32,7 @@ export default function RenderFormField({
   });
 
   return (
-    <FormControlHorizontal
-      key={`form_field_${name}`}
-      label={label}
-      error={error}
-      {...formControlProps}>
+    <FormControlHorizontal label={label} error={error} {...formControlProps}>
       <Component control={control} {...field} {...componentProps} />
     </FormControlHorizontal>
   );

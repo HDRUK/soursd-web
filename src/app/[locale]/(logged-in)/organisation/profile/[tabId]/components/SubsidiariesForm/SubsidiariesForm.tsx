@@ -4,6 +4,7 @@ import { Box } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
+import { useStore } from "@/data/store";
 import useFormFromConfig from "@/hooks/useFormFromConfig";
 import RenderFormFields from "@/components/RenderFormFields";
 import Form from "@/components/Form/Form";
@@ -44,10 +45,14 @@ export default function SubsidiariesForm({
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
+  const organisation = useStore(state => state.config.organisation);
+
   const formFieldsConfig = useMemo(
-    () => generateSubsidiariesFormFieldsConfig(tForm),
-    [tForm]
+    () => generateSubsidiariesFormFieldsConfig(tForm, organisation),
+    [tForm, organisation]
   );
+  console.log(organisation);
+  console.log(formFieldsConfig);
 
   const { control, handleSubmit } =
     useFormFromConfig<DetailsFormValues>(formFieldsConfig);

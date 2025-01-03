@@ -31,8 +31,6 @@ const FormFieldArray = ({
   removeButtonLabel,
   addButtonLabel,
 }: FormFieldArrayProps) => {
-  const initialized = useRef(false);
-
   const {
     fields: fieldsArray,
     append,
@@ -42,6 +40,7 @@ const FormFieldArray = ({
     name,
   });
 
+  const initialized = useRef(false);
   useEffect(() => {
     if (!initialized.current && fieldsArray.length === 0) {
       initialized.current = true;
