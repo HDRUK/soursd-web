@@ -5,7 +5,6 @@ import Form from "@/components/Form";
 import FormActions from "@/components/FormActions";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
 import FormField from "@/components/FormField";
-import { Message } from "@/components/Message";
 import Postit from "@/components/Postit";
 import yup from "@/config/yup";
 import { patchCustodian, PatchCustodianPayload } from "@/services/custodians";

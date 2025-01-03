@@ -122,22 +122,25 @@ export default function DetailsForm({
 
   const { isError, error, isLoading } = queryState;
 
-  const formOptions = {
-    defaultValues: {
-      organisation_name: organisation?.organisation_name,
-      address_1: organisation?.address_1,
-      address_2: organisation?.address_2,
-      town: organisation?.town,
-      county: organisation?.county,
-      country: organisation?.country,
-      postcode: organisation?.postcode,
-      companies_house_no: organisation?.companies_house_no,
-      sector_id: organisation?.sector_id,
-      charity_registration_id: organisation?.charity_registration_id,
-      ror_id: organisation?.ror_id,
-      website: organisation?.website,
-      smb_status: organisation?.smb_status,
+  const fields = {
+    postcode: {
+      type: 'string',
+      required: true,
+      validationKey: 'postcode'
     },
+  };
+
+  const schema = useSchema(fields);
+  const defaultValues = generateDefaultValues(fields, organisation);
+
+  const sections = [
+    {
+      id: 'name',
+    }
+  ]
+
+  const formOptions = {
+    defaultValues,
     error:
       isError &&
       tProfile.rich(error, {
@@ -151,7 +154,7 @@ export default function DetailsForm({
         <>
           <FormSection heading="Organisation name and location">
             <Grid container rowSpacing={3}>
-              <Grid item xs={12}>
+              {fields.map(() => (<Grid item xs={12}>
                 <FormControlHorizontal
                   id="organisation_name"
                   error={errors.organisation_name}
@@ -159,7 +162,7 @@ export default function DetailsForm({
                     <FormField component={TextField} {...fieldProps} />
                   )}
                 />
-              </Grid>
+              </Grid>)}
               <Grid item xs={12}>
                 <GoogleAutocomplete
                   textFieldProps={{ variant: "filled", size: "small" }}
