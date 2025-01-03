@@ -53,6 +53,9 @@ const generateSubsidiariesFormFieldsConfig = (
               component: TextField,
               componentProps: {
                 variant: "outlined",
+                inputProps: {
+                  "aria-label": t("organisationSubsidiaries.name"),
+                },
               } as TextFieldProps,
               formControlProps: {
                 labelMd: 4,
@@ -65,6 +68,9 @@ const generateSubsidiariesFormFieldsConfig = (
               component: TextField,
               componentProps: {
                 variant: "outlined",
+                inputProps: {
+                  "aria-label": t("organisationSubsidiaries.website"),
+                },
               } as TextFieldProps,
               formControlProps: {
                 labelMd: 4,
@@ -91,6 +97,11 @@ const generateSubsidiariesFormFieldsConfig = (
         label: t("organisationDataSecurityCompliance.ceCertification"),
         component: Checkbox,
         componentProps: {
+          inputProps: {
+            "aria-label": t(
+              "organisationDataSecurityCompliance.ceCertification"
+            ),
+          },
           defaultChecked: organisation?.ce_certified,
         } as CheckboxProps,
         formControlProps: { labelMd: 7, contentMd: 5 },
@@ -105,6 +116,11 @@ const generateSubsidiariesFormFieldsConfig = (
           placeholder: t(
             "organisationDataSecurityCompliance.ceCertificationNumPlaceholder"
           ),
+          inputProps: {
+            "aria-label": t(
+              "organisationDataSecurityCompliance.ceCertificationNum"
+            ),
+          },
         } as TextFieldProps,
         validation: yup.string().when("ce_certified", {
           is: true,
@@ -132,6 +148,11 @@ const generateSubsidiariesFormFieldsConfig = (
         component: Checkbox,
         componentProps: {
           defaultChecked: organisation?.ce_plus_certified,
+          inputProps: {
+            "aria-label": t(
+              "organisationDataSecurityCompliance.cePlusCertification"
+            ),
+          },
         } as CheckboxProps,
         formControlProps: { labelMd: 7, contentMd: 5 },
         validation: yup.boolean(),
@@ -145,6 +166,11 @@ const generateSubsidiariesFormFieldsConfig = (
           placeholder: t(
             "organisationDataSecurityCompliance.cePlusCertificationNumPlaceholder"
           ),
+          inputProps: {
+            "aria-label": t(
+              "organisationDataSecurityCompliance.cePlusCertificationNum"
+            ),
+          },
         } as TextFieldProps,
         validation: yup.string().when("ce_plus_certified", {
           is: true,
@@ -170,7 +196,13 @@ const generateSubsidiariesFormFieldsConfig = (
         name: "iso_27001_certified",
         label: t("organisationDataSecurityCompliance.iso270001Certification"),
         component: Checkbox,
-        componentProps: {} as CheckboxProps,
+        componentProps: {
+          inputProps: {
+            "aria-label": t(
+              "organisationDataSecurityCompliance.iso270001Certification"
+            ),
+          },
+        } as CheckboxProps,
         formControlProps: { labelMd: 7, contentMd: 5 },
         defaultValue: false,
         validation: yup.boolean(),
@@ -186,6 +218,11 @@ const generateSubsidiariesFormFieldsConfig = (
           placeholder: t(
             "organisationDataSecurityCompliance.iso270001CertificationNumPlaceholder"
           ),
+          inputProps: {
+            "aria-label": t(
+              "organisationDataSecurityCompliance.iso270001CertificationNum"
+            ),
+          },
         } as TextFieldProps,
         validation: yup.string().when("iso_27001_certified", {
           is: true,
@@ -206,7 +243,13 @@ const generateSubsidiariesFormFieldsConfig = (
         name: "dsptk_certified",
         label: t("organisationDataSecurityCompliance.dsptkCertification"),
         component: Checkbox,
-        componentProps: {} as CheckboxProps,
+        componentProps: {
+          inputProps: {
+            "aria-label": t(
+              "organisationDataSecurityCompliance.dsptkCertification"
+            ),
+          },
+        } as CheckboxProps,
         formControlProps: { labelMd: 7, contentMd: 5 },
         defaultValue: false,
         validation: yup.boolean(),
@@ -220,6 +263,11 @@ const generateSubsidiariesFormFieldsConfig = (
           placeholder: t(
             "organisationDataSecurityCompliance.dsptkCertificationNumPlaceholder"
           ),
+          inputProps: {
+            "aria-label": t(
+              "organisationDataSecurityCompliance.dsptkCertificationNum"
+            ),
+          },
         } as TextFieldProps,
         validation: yup.string().when("dsptk_certified", {
           is: true,

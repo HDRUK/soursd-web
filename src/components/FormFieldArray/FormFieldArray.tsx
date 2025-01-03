@@ -65,6 +65,7 @@ const FormFieldArray = ({
             <RenderFormField
               // eslint-disable-next-line react/no-array-index-key
               key={`${name}.${index}.${fieldConfig.name}`}
+              aria-label={`test-${name}.${index}.${fieldConfig.name}`}
               control={control}
               fieldConfig={{
                 ...fieldConfig,

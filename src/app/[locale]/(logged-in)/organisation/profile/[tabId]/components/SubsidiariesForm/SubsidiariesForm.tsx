@@ -51,8 +51,6 @@ export default function SubsidiariesForm({
     () => generateSubsidiariesFormFieldsConfig(tForm, organisation),
     [tForm, organisation]
   );
-  console.log(organisation);
-  console.log(formFieldsConfig);
 
   const { control, handleSubmit } =
     useFormFromConfig<DetailsFormValues>(formFieldsConfig);
