@@ -3,13 +3,13 @@ import { getAccreditations } from "@/services/accreditations";
 import { getEducations } from "@/services/educations";
 import { getEmployments } from "@/services/employments";
 import { getApprovedProjects } from "@/services/projects";
-import { getTrainings } from "@/services/trainings";
+import { getTrainingByRegistryId } from "@/services/trainings";
 import { QueryFunctionContext } from "@tanstack/react-query";
 
 export interface HistoryCombinedData {
   getEmployments: Awaited<ReturnType<typeof getEmployments>>;
   getEducations: Awaited<ReturnType<typeof getEducations>>;
-  getTrainings: Awaited<ReturnType<typeof getTrainings>>;
+  getTrainings: Awaited<ReturnType<typeof getTrainingByRegistryId>>;
   getApprovedProjects: Awaited<ReturnType<typeof getApprovedProjects>>;
   getAccreditations: Awaited<ReturnType<typeof getAccreditations>>;
 }
