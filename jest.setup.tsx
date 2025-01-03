@@ -149,7 +149,7 @@ async function mockFetch(url: string) {
         }),
       ]);
     }
-    case `${process.env.NEXT_PUBLIC_API_V1_URL}/training/1`: {
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/training/registry/1`: {
       return mock200Json([
         mockedTraining({
           id: 1,

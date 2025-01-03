@@ -40,7 +40,7 @@ export default function useQueriesHistory(
     {
       queryKey: ["getTrainings", registryId],
       queryFn: ({ queryKey }: QueryFunctionContextDefault) =>
-        getTrainings(queryKey[1], {
+        getTrainingByRegistryId(queryKey[1], {
           error: { message: "getTrainingsError" },
         }),
       enabled,
