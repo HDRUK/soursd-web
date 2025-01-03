@@ -3,7 +3,7 @@ import { act, fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 import { useMutation } from "@tanstack/react-query";
 import { useStore } from "@/data/store";
 import { axe } from "jest-axe";
-import Details from "./Details";
+import Subsidiaries from "./Subsidiaries";
 
 jest.mock("@tanstack/react-query");
 jest.mock("@/data/store");
@@ -26,9 +26,9 @@ const defaultOrganisation = mockedOrganisation();
   error: "",
 });
 
-describe("<Details />", () => {
+describe("<Subsidiaries />", () => {
   it("has no accessibility validations", async () => {
-    const { container } = render(<Details />);
+    const { container } = render(<Subsidiaries />);
 
     let results;
 
@@ -40,7 +40,7 @@ describe("<Details />", () => {
   });
 
   it("has the correct values", async () => {
-    render(<Details />);
+    render(<Subsidiaries />);
 
     fireEvent.submit(screen.getByRole("button", { name: /Save/i }));
 
