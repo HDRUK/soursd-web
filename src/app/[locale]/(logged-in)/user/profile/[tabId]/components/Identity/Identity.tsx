@@ -6,7 +6,6 @@ import FormActions from "@/components/FormActions";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
 import FormField from "@/components/FormField";
 import FormSection from "@/components/FormSection";
-import { Message } from "@/components/Message";
 import OverlayCenter from "@/components/OverlayCenter";
 import Text from "@/components/Text";
 import yup from "@/config/yup";
