@@ -100,6 +100,10 @@ const ROUTES: Routes = {
     path: "/organisation/profile/details",
     permissions: [UserGroup.ORGANISATIONS],
   },
+  profileOrganisationDetailsSubsidiaries: {
+    path: "/organisation/profile/details/subsidiaries",
+    permissions: [UserGroup.ORGANISATIONS],
+  },
   profileOrganisationManageUsers: {
     path: "/organisation/profile/manage-users",
     permissions: [UserGroup.ORGANISATIONS],

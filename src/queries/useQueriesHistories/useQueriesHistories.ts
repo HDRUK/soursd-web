@@ -61,14 +61,6 @@ export default function useQueriesHistory(
         }),
       enabled,
     },
-    {
-      queryKey: ["getApprovedProjects", registryId],
-      queryFn: ({ queryKey }: QueryFunctionContextDefault) =>
-        getApprovedProjects(queryKey[1], {
-          error: { message: "getApprovedProjectsError" },
-        }),
-      enabled,
-    },
   ];
 
   return useQueriesCombined<HistoryCombinedData>(queries);

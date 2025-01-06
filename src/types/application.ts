@@ -154,6 +154,10 @@ interface Organisation extends OrganisationIdvt {
     user: User;
     verified: boolean;
   }[];
+  ce_certified: boolean;
+  ce_certification_num: string;
+  ce_plus_certified: boolean;
+  ce_plus_certification_num: string;
 }
 
 interface ResearcherEducation {

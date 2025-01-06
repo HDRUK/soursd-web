@@ -5,11 +5,11 @@ import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
 import { PageGuidance } from "@/modules";
 import { useTranslations } from "next-intl";
 import usePatchOrganisation from "../../hooks/usePatchOrganisation";
-import DetailsForm from "../DetailsForm";
+import SubsidiariesForm from "../../components/SubsidiariesForm";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
-export default function Details() {
+export default function Subsidiaries() {
   const { organisation, setOrganisation } = useStore(state => {
     return {
       organisation: state.config.organisation,
@@ -31,7 +31,7 @@ export default function Details() {
 
   return (
     <PageGuidance title={t("identity")} {...mockedPersonalDetailsGuidanceProps}>
-      <DetailsForm
+      <SubsidiariesForm
         onSubmit={onSubmit}
         queryState={{
           isError,

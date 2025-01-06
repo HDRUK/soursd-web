@@ -5,4 +5,20 @@ enum PageTabs {
   PROJECTS = "projects",
 }
 
-export { PageTabs };
+enum PageSubTabs {
+  SUBSIDIARIES = "subsidiaries",
+}
+
+type TabStructure = {
+  [key in PageTabs]?: PageSubTabs[];
+};
+
+const tabHierarchy: TabStructure = {
+  [PageTabs.DETAILS]: [PageSubTabs.SUBSIDIARIES],
+};
+
+function getSubTabs(tab: PageTabs): PageSubTabs[] | undefined {
+  return tabHierarchy[tab];
+}
+
+export { PageTabs, PageSubTabs, getSubTabs };
