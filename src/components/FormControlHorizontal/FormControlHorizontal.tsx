@@ -72,7 +72,7 @@ export default function FormControlHorizontal({
               },
               visibility: displayLabel ? "visible" : "hidden",
             }}>
-            {label || t(tKey)}
+            {displayLabel && (label || t(tKey))}
           </FormLabel>
         </Grid>
         <Grid item xs={12} md={contentMd}>

@@ -7,31 +7,14 @@ import { useMemo } from "react";
 import { useStore } from "@/data/store";
 import useFormFromConfig from "@/hooks/useFormFromConfig";
 import RenderFormFields from "@/components/RenderFormFields";
-import Form from "@/components/Form/Form";
 import { QueryState } from "@/types/form";
 import { LoadingButton } from "@mui/lab";
+import { PatchOrganisationPayload } from "@/services/organisations";
 
 import { generateSubsidiariesFormFieldsConfig } from "../../consts/form";
 
-export interface DetailsFormValues {
-  organisation_name: string;
-  address_1: string;
-  address_2: string;
-  town: string;
-  county: string;
-  country: string;
-  postcode: string;
-  companies_house_no: string;
-  sector_id: number;
-  charity_registration_id: string;
-  ror_id: string;
-  website: string;
-  smb_status: boolean;
-  subsidiaries: string[];
-}
-
 export interface DetailsFormProps {
-  onSubmit: (fields: Partial<DetailsFormValues>) => void;
+  onSubmit: (fields: Partial<PatchOrganisationPayload>) => void;
   queryState: QueryState;
 }
 
@@ -53,7 +36,7 @@ export default function SubsidiariesForm({
   );
 
   const { control, handleSubmit } =
-    useFormFromConfig<DetailsFormValues>(formFieldsConfig);
+    useFormFromConfig<Partial<PatchOrganisationPayload>>(formFieldsConfig);
 
   return (
     <Box
