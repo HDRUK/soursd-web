@@ -7,7 +7,7 @@ export default async (
   messages: ResponseTranslations
 ): Promise<ResponseJson<TrainingsResponse>> => {
   const response = await getRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/training/${id}`,
+    `${process.env.NEXT_PUBLIC_API_V1_URL}/training/registry/${id}`,
     undefined,
     {
       headers: {

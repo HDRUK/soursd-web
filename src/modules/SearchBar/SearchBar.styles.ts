@@ -4,7 +4,6 @@ export const StyledSearchBar = styled(Box)(
   ({ theme }) => css`
     background-color: ${theme.palette.background1.lightPurple};
     border-radius: 30px;
-    padding: 10px 10px;
     display: flex;
     align-items: center;
     border: 1px solid #e0dfe7;

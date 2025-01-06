@@ -9,10 +9,21 @@ import { GetSystemConfigResponse } from "@/services/system_config/types";
 import { getUser } from "@/services/users";
 import { Custodian, Organisation, User } from "@/types/application";
 import { Paged, ResponseJson } from "@/types/requests";
+import { QueryFunctionContext } from "@tanstack/react-query";
 
 interface UseApplicationDependenciesProps {
   user: User;
 }
+
+interface ApplicationDependenciesCombinedData {
+  getSystemConfig: ResponseJson<GetSystemConfigResponse>;
+  getUser: ResponseJson<User>;
+  getOrganisation: ResponseJson<Organisation>;
+  getSectors: ResponseJson<Paged<SectorsResponse>>;
+  getCustodian: ResponseJson<Custodian>;
+}
+
+type QueryFunctionContextDefault = QueryFunctionContext<[string, number]>;
 
 export default function useApplicationDependencies({
   user,
@@ -29,7 +40,7 @@ export default function useApplicationDependencies({
     },
     {
       queryKey: ["getUser", user.id],
-      queryFn: ({ queryKey }) =>
+      queryFn: ({ queryKey }: QueryFunctionContextDefault) =>
         getUser(queryKey[1], {
           error: {
             message: "getUserError",
@@ -37,18 +48,17 @@ export default function useApplicationDependencies({
         }),
     },
     {
-      queryKey: ["getOrganisation", user?.organisation_id],
-      queryFn: ({ queryKey }) =>
+      queryKey: ["getOrganisation", 1],
+      queryFn: ({ queryKey }: QueryFunctionContextDefault) =>
         getOrganisation(queryKey[1], {
           error: {
             message: "getOrganisationError",
           },
         }),
-      enabled: !!user?.organisation_id,
     },
     {
       queryKey: ["getCustodian", CUSTODIAN_ID],
-      queryFn: ({ queryKey }) =>
+      queryFn: ({ queryKey }: QueryFunctionContextDefault) =>
         getCustodian(queryKey[1], {
           error: {
             message: "getCustodianError",
@@ -66,11 +76,5 @@ export default function useApplicationDependencies({
     },
   ];
 
-  return useQueriesCombined<{
-    getSystemConfig: ResponseJson<GetSystemConfigResponse>;
-    getUser: ResponseJson<User>;
-    getOrganisation: ResponseJson<Organisation>;
-    getSectors: ResponseJson<Paged<SectorsResponse>>;
-    getCustodian: ResponseJson<Custodian>;
-  }>(queries);
+  return useQueriesCombined<ApplicationDependenciesCombinedData>(queries);
 }

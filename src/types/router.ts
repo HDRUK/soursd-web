@@ -36,6 +36,7 @@ interface Routes {
   profileResearcherIdentity: RouteConfig;
   profileResearcherAffiliations: RouteConfig;
   profileResearcherDetails: RouteConfig;
+  profileResearcherProjects: RouteConfig;
   profileOrganisation: RouteConfig;
   profileOrganisationManageDelegates: RouteConfig;
   profileOrganisationDetails: RouteConfig;

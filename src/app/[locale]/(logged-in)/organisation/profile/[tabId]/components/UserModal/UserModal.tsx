@@ -1,6 +1,4 @@
-import ApplicationLink from "@/components/ApplicationLink";
 import FormModal, { FormModalProps } from "@/components/FormModal";
-import { Message } from "@/components/Message";
 import {
   PostOrganisationInviteUserPayload,
   postOrganisationsInviteUser,
@@ -58,13 +56,6 @@ export default function UsersModal({
       variant="content"
       onClose={onClose}
       {...restProps}>
-      {isError && (
-        <Message severity="error" sx={{ mb: 3 }}>
-          {t.rich(error, {
-            applicationLink: ApplicationLink,
-          })}
-        </Message>
-      )}
       <UserModalDetails
         queryState={{
           isLoading: isPending,

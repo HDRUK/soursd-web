@@ -80,6 +80,10 @@ const ROUTES: Routes = {
     path: "/user/profile/affiliations",
     permissions: [UserGroup.USERS],
   },
+  profileResearcherProjects: {
+    path: "/user/profile/projects",
+    permissions: [UserGroup.USERS],
+  },
   profileResearcher: {
     path: "/user/profile",
     permissions: [UserGroup.USERS],

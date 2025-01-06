@@ -1,3 +1,3 @@
-import getTrainings from "./getTrainings";
+import getTrainingByRegistryId from "./getTrainingByRegistryId";
 
-export { getTrainings };
+export { getTrainingByRegistryId };

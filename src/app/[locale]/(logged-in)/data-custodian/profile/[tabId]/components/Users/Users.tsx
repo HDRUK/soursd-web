@@ -149,6 +149,7 @@ export default function Users() {
                   <IconButton
                     size="small"
                     aria-label="Edit user"
+                    color="inherit"
                     onClick={() =>
                       setModalProps({
                         open: true,

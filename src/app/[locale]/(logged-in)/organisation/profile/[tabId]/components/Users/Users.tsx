@@ -43,12 +43,13 @@ export default function Users() {
         <Box component="form" role="search" sx={{ flexGrow: 1 }}>
           <SearchBar onSearch={() => {}} />
         </Box>
-        <Button
-          endIcon={<AddCircleOutlineOutlinedIcon />}
-          variant="contained"
-          onClick={() => setOpen(true)}>
-          {t("inviteNewUserButton")}
-        </Button>
+        <div>
+          <Button
+            endIcon={<AddCircleOutlineOutlinedIcon />}
+            onClick={() => setOpen(true)}>
+            {t("inviteNewUserButton")}
+          </Button>
+        </div>
       </Box>
 
       <Results
@@ -89,7 +90,7 @@ export default function Users() {
                 </>
               }
               actions={
-                <IconButton size="small">
+                <IconButton size="small" color="inherit">
                   <DecoupleIcon />
                 </IconButton>
               }

@@ -1,22 +1,17 @@
+import ApplicationLink from "@/components/ApplicationLink";
+import Form from "@/components/Form";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
+import FormField from "@/components/FormField";
 import FormModalActions from "@/components/FormModalActions";
 import FormModalBody from "@/components/FormModalBody";
 import FormModalHeader from "@/components/FormModalHeader";
 import yup from "@/config/yup";
 import { QueryState } from "@/types/form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import CheckIcon from "@mui/icons-material/Check";
 import { LoadingButton } from "@mui/lab";
-import {
-  Button,
-  FormControl,
-  Grid,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Button, Grid, TextField, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
-import { FormProvider, useForm } from "react-hook-form";
 
 export interface UserFields {
   first_name: string;
@@ -54,91 +49,75 @@ export default function UserModalDetails({
     []
   );
 
-  const methods = useForm<UserFields>({
-    resolver: yupResolver(schema),
+  const { isLoading, isError, error } = queryState;
+
+  const formOptions = {
     defaultValues: {
       first_name: "",
       last_name: "",
       email: "",
     },
-  });
-
-  const {
-    formState: { errors },
-    register,
-    handleSubmit,
-  } = methods;
+    error:
+      isError &&
+      t.rich(error, {
+        applicationLink: ApplicationLink,
+      }),
+  };
 
   return (
-    <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
-        <FormModalHeader>
-          <Typography variant="h4" sx={{ mb: 1 }}>
-            {t("inviteUserTitle")}
-          </Typography>
-          <Typography>{t("inviteUserDescription")}</Typography>
-        </FormModalHeader>
-        <FormModalBody>
-          <Grid container rowSpacing={3}>
-            <Grid item xs={12}>
-              <FormControl error={!!errors.first_name} size="small" fullWidth>
+    <Form schema={schema} onSubmit={onSubmit} {...formOptions}>
+      {({ formState: { errors } }) => (
+        <>
+          <FormModalHeader>
+            <Typography variant="h4" sx={{ mb: 1 }}>
+              {t("inviteUserTitle")}
+            </Typography>
+            <Typography>{t("inviteUserDescription")}</Typography>
+          </FormModalHeader>
+          <FormModalBody>
+            <Grid container rowSpacing={3}>
+              <Grid item xs={12}>
                 <FormControlHorizontal
-                  label={tForm("firstName")}
+                  id="first_name"
                   error={errors.first_name}
-                  id="first_name">
-                  <TextField
-                    {...register("first_name")}
-                    size="small"
-                    placeholder={tForm("firstNamePlaceholder")}
-                  />
-                </FormControlHorizontal>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12}>
-              <FormControl error={!!errors.last_name} size="small" fullWidth>
+                  renderField={fieldProps => (
+                    <FormField component={TextField} {...fieldProps} />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={12}>
                 <FormControlHorizontal
-                  label={tForm("lastName")}
+                  id="last_name"
                   error={errors.last_name}
-                  id="last_name">
-                  <TextField
-                    {...register("last_name")}
-                    size="small"
-                    placeholder={tForm("lastNamePlaceholder")}
-                  />
-                </FormControlHorizontal>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12}>
-              <FormControl error={!!errors.email} size="small" fullWidth>
+                  renderField={fieldProps => (
+                    <FormField component={TextField} {...fieldProps} />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={12}>
                 <FormControlHorizontal
-                  label={tForm("email")}
+                  id="email"
                   error={errors.email}
-                  id="email">
-                  <TextField
-                    {...register("email")}
-                    fullWidth
-                    size="small"
-                    placeholder={tForm("emailPlaceholder")}
-                  />
-                </FormControlHorizontal>
-              </FormControl>
+                  renderField={fieldProps => (
+                    <FormField component={TextField} {...fieldProps} />
+                  )}
+                />
+              </Grid>
             </Grid>
-          </Grid>
-        </FormModalBody>
-        <FormModalActions>
-          <Button variant="outlined" onClick={onClose}>
-            {tForm("cancelButton")}
-          </Button>
-          <LoadingButton
-            type="submit"
-            color="primary"
-            variant="contained"
-            endIcon={<CheckIcon />}
-            loading={queryState.isLoading}>
-            {t("sendInviteButton")}
-          </LoadingButton>
-        </FormModalActions>
-      </form>
-    </FormProvider>
+          </FormModalBody>
+          <FormModalActions>
+            <Button variant="outlined" onClick={onClose}>
+              {tForm("cancelButton")}
+            </Button>
+            <LoadingButton
+              type="submit"
+              endIcon={<CheckIcon />}
+              loading={isLoading}>
+              {t("sendInviteButton")}
+            </LoadingButton>
+          </FormModalActions>
+        </>
+      )}
+    </Form>
   );
 }
