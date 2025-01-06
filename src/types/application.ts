@@ -117,6 +117,7 @@ interface User {
     files?: File[];
     organisations?: Organisation[];
     verified: boolean;
+    training?: ResearcherTraining[];
   };
 }
 

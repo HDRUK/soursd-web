@@ -8,7 +8,8 @@ import {
   QueryFunctionContext,
   QueryKey,
 } from "@tanstack/react-query";
-import { getApprovedProjects } from "@/services/projects";
+import { getUserApprovedProjects } from "@/services/projects";
+import { getEmployments } from "@/services/employments";
 
 interface OrganisationUserCardProps {
   user: User;
@@ -27,9 +28,23 @@ export default function OrganisationUserCard({
     queryFn: ({ queryKey }: QueryFunctionContext<QueryKey>) => {
       const [, id] = queryKey;
 
-      return getApprovedProjects(id as string, {
+      return getUserApprovedProjects(id as string, {
         error: {
           message: "getApprovedProjectsError",
+        },
+      });
+    },
+    enabled: !!id,
+  });
+
+  const { data: userEmployments } = useQuery({
+    queryKey: ["getEmployments", id],
+    queryFn: ({ queryKey }: QueryFunctionContext<QueryKey>) => {
+      const [, id] = queryKey;
+
+      return getEmployments(id as number, {
+        error: {
+          message: "getEmploymentsError",
         },
       });
     },
@@ -46,12 +61,19 @@ export default function OrganisationUserCard({
       : titles.join(", ");
   })();
 
+  const userJobTitles = (() => {
+    const titles = userEmployments?.data?.map(role => role?.role);
+
+    if (!titles || titles.length === 0) return "";
+
+    return `[${titles.join(", ")}]`
+  })
+
   return (
     <Box sx={{ display: "flex", minWidth: "50%" }}>
       <div>
         <Typography variant="h6">
-          {/* TODO: Users Job title needs to be added to this line once we have access to 'role' */}
-          {first_name} {last_name}&nbsp;
+          {first_name} {last_name}&nbsp; {userJobTitles()}
         </Typography>
         <Typography variant="caption" color="grey">
           {userProjectTitles &&
