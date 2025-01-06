@@ -16,11 +16,8 @@ docker_build(
     dockerfile="./Dockerfile.dev",
 )
 
-print("Service name from tiltconf.json:", cfg.get("name"))
 
 k8s_yaml("chart/" + cfg.get("name") + "/" + "deployment.yaml")
 k8s_yaml("chart/" + cfg.get("name") + "/" + "service.yaml")
 
 k8s_resource(cfg.get("name"), port_forwards=3000, labels=["Web"])
-
-# k8s_resource(cfg.get("name") + "-service", port_forwards=30000)
