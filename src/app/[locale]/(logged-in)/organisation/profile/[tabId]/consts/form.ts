@@ -27,6 +27,7 @@ const generateSubsidiariesFormFieldsConfig = (
         formControlProps: {
           labelMd: 0,
           contentMd: 12,
+          displayLabel: false,
         },
         component: FormFieldArray,
         validation: yup.array().of(

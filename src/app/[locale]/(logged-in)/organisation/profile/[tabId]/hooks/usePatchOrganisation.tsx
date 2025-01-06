@@ -36,7 +36,7 @@ const usePatchOrganisation = ({
 }: UseUpdateOrganisationProps) => {
   const mutation = useMutation({
     mutationKey: ["patchOrganisation", id],
-    mutationFn: (payload: Partial<DetailsFormValues>) =>
+    mutationFn: (payload: Partial<PatchOrganisationPayload>) =>
       patchOrganisation(id as number, payload, {
         error: {
           message: "patchOrganisationError",

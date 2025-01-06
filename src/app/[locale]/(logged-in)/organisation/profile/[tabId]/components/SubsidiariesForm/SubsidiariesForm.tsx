@@ -56,7 +56,14 @@ export default function SubsidiariesForm({
     useFormFromConfig<DetailsFormValues>(formFieldsConfig);
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Box
+      onSubmit={handleSubmit(onSubmit)}
+      component="form"
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 3,
+      }}>
       <RenderFormFields control={control} config={formFieldsConfig} />
       <Box sx={{ textAlign: "right" }}>
         <LoadingButton
@@ -69,6 +76,6 @@ export default function SubsidiariesForm({
           {tProfile("submitButton")}
         </LoadingButton>
       </Box>
-    </Form>
+    </Box>
   );
 }
