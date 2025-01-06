@@ -6,7 +6,7 @@ import PageSection from "../PageSection";
 import PageTitle from "../PageTitle";
 
 interface PageGuidanceProps extends GuidanceProps {
-  title: ReactNode;
+  title?: ReactNode;
   children: ReactNode;
 }
 

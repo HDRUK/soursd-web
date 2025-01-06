@@ -80,7 +80,9 @@
     "getOrganisationStatusError": "Unable to determine validation status",
     "navigationAriaLabel": "Profile tabs",
     "patchUserError": "There was a problem updating your user details. Please try again or contact us at <applicationLink></applicationLink>",
-    "updateUserButton": "Save"
+    "updateUserButton": "Save",
+    "noDelegates": "No Delegates Found",
+    "getError": "Unable to get the list of delegates"
   },
   "Form": {
     "contactEmailPlaceholder": "Contact email",
@@ -196,7 +198,11 @@
     "ceCertificationNumber": "CE certification number",
     "whatIsTheOrcId": "Your ORCiD is a value which identifies you to Data Custodians (although in general anyone) and provides information to them such as your research outputs and activities. If you don't have one of these you can signup at https://orcid.org/register. Although it is recommended to provide this, it is not required for the registry, however it is required for the content scrape.",
     "roleAdministrator": "Administrator",
-    "roleApprover": "Approver"
+    "roleApprover": "Approver",
+    "departmentName": "Department Name",
+    "delegateFullName": "Delegate Full Name",
+    "delegateJobTitle": "Delegate Job Title",
+    "delegateEmail": "Delegate Email"
   },
   "Buttons": {
     "register": "Register",
@@ -261,7 +267,8 @@
     "profileCompletedTitle": "Your profile has been completed",
     "profileCompletedDescription": "You have completed all the mandatory fields required for your profile to be considered 'complete'. This will be flagged to Data Custodians when they view your user details.",
     "continueLinkText": "Continue",
-    "profileCompleteWarningMessage": "You have not yet completed your profile. This may mean that some data custodians will not grant access to you. It is advised that you complete this process. Please navigate to your profile"
+    "profileCompleteWarningMessage": "You have not yet completed your profile. This may mean that some data custodians will not grant access to you. It is advised that you complete this process. Please navigate to your profile",
+    "addAnother": "Add Another"
   },
   "ProfileCompleteStatus": {
     "profileComplete": "Profile complete",
