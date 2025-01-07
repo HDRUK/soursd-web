@@ -41,11 +41,16 @@ export async function GET(req: Request) {
       maxAge: expires_in,
     });
 
+    const maxAge = parseInt(
+      process.env.NEXT_PUBLIC_COOKIE_EXPIRATION_VALUE || "2592000",
+      10
+    );
+
     cookieStore.set("refresh_token", refresh_token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       path: "/",
-      maxAge: 30 * 24 * 60 * 60,
+      maxAge,
     });
 
     scheduleTokenRefresh(refresh_token, expires_in - 60);
