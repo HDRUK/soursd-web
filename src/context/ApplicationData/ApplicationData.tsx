@@ -139,7 +139,7 @@ const ApplicationDataProvider = ({
       getEducations,
       getTrainings,
       getEmployments,
-      getApprovedProjects,
+      getUserApprovedProjects,
     } = historiesData;
 
     setHistories({
@@ -147,7 +147,7 @@ const ApplicationDataProvider = ({
       education: getEducations?.data,
       training: getTrainings?.data,
       employments: getEmployments?.data,
-      approvedProjects: getApprovedProjects?.data,
+      approvedProjects: getUserApprovedProjects?.data,
     });
   }, [historiesData]);
 
