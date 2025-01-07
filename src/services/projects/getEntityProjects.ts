@@ -2,8 +2,11 @@ import { Paged, ResponseJson, ResponseTranslations } from "@/types/requests";
 import { getRequest, handleJsonResponse } from "../requests";
 import { ProjectsResponse } from "./types";
 
+export type ProjectEntities = "organisation" | "custodian";
+
 export default async (
-  custodianId: number | undefined,
+  entity: ProjectEntities,
+  id: string | number | undefined,
   searchParams: Record<string, string | number | undefined>,
   messages: ResponseTranslations
 ): Promise<ResponseJson<Paged<ProjectsResponse>>> => {
@@ -14,7 +17,7 @@ export default async (
   );
 
   const response = await getRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/custodian/${custodianId}/projects?${params.toString()}`,
+    `${process.env.NEXT_PUBLIC_API_V1_URL}/${entity}}/${id}/projects?${params.toString()}`,
     undefined,
     {
       headers: {
