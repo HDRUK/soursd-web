@@ -24,13 +24,13 @@ export default function OrganisationUserCard({
   const t = useTranslations(NAMESPACE_TRANSLATIONS);
 
   const { data: userApprovedProjects } = useQuery({
-    queryKey: ["getApprovedProjects", id],
+    queryKey: ["getUserApprovedProjects", id],
     queryFn: ({ queryKey }: QueryFunctionContext<QueryKey>) => {
       const [, id] = queryKey;
 
       return getUserApprovedProjects(id as string, {
         error: {
-          message: "getApprovedProjectsError",
+          message: "getUserApprovedProjectsError",
         },
       });
     },
