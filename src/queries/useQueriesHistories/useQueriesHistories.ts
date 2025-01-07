@@ -2,7 +2,7 @@ import useQueriesCombined from "@/hooks/useQueriesCombined";
 import { getAccreditations } from "@/services/accreditations";
 import { getEducations } from "@/services/educations";
 import { getEmployments } from "@/services/employments";
-import { getApprovedProjects } from "@/services/projects";
+import { getUserApprovedProjects } from "@/services/projects";
 import { getTrainingByRegistryId } from "@/services/trainings";
 import { QueryFunctionContext } from "@tanstack/react-query";
 
@@ -10,7 +10,7 @@ export interface HistoryCombinedData {
   getEmployments: Awaited<ReturnType<typeof getEmployments>>;
   getEducations: Awaited<ReturnType<typeof getEducations>>;
   getTrainings: Awaited<ReturnType<typeof getTrainingByRegistryId>>;
-  getApprovedProjects: Awaited<ReturnType<typeof getApprovedProjects>>;
+  getUserApprovedProjects: Awaited<ReturnType<typeof getUserApprovedProjects>>;
   getAccreditations: Awaited<ReturnType<typeof getAccreditations>>;
 }
 
@@ -54,10 +54,10 @@ export default function useQueriesHistory(
       enabled,
     },
     {
-      queryKey: ["getApprovedProjects", registryId],
+      queryKey: ["getUserApprovedProjects", registryId],
       queryFn: ({ queryKey }: QueryFunctionContextDefault) =>
-        getApprovedProjects(queryKey[1], {
-          error: { message: "getApprovedProjectsError" },
+        getUserApprovedProjects(queryKey[1], {
+          error: { message: "getUserApprovedProjectsError" },
         }),
       enabled,
     },
