@@ -69,7 +69,7 @@ interface CustodianUser {
   last_name: string;
   email: string;
   custodian_id: number;
-  role: string;
+  permissions: number[];
 }
 
 interface UserProfileCompletionFields {

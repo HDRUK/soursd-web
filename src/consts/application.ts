@@ -7,6 +7,7 @@ enum EMAIL_TEMPLATE {
   DELEGATE_SPONSOR = "delegate_sponsor",
   USER_INVITE = "researcher_invite",
   CUSTODIAN_INVITE = "custodian_invite",
+  CUSTODIAN_USER_INVITE = "custodian_invite",
 }
 
 export {

@@ -1,17 +1,19 @@
 import FormModal, { FormModalProps } from "@/components/FormModal";
 import { Message } from "@/components/Message";
-import {
-  patchCustodianUser,
-  postCustodianUser,
-} from "@/services/custodian_users";
+import { useStore } from "@/data/store";
+import useMutationWriteCustodianUser from "@/queries/useMutationWriteCustodianUser";
+import { postCustodianInviteUser } from "@/services/custodian_users";
 import { CustodianUser } from "@/types/application";
 import { showAlert } from "@/utils/showAlert";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback } from "react";
 import UserModalDetails, { CustodianUserFields } from "../UsersModalDetails";
+import { getPermission } from "@/utils/permissions";
+import { CustodianUserRoles } from "@/consts/custodian";
 
 export interface UserModalProps extends Omit<FormModalProps, "children"> {
+  custodianId: number;
   user: Partial<CustodianUser>;
   onClose: () => void;
 }
@@ -19,30 +21,60 @@ export interface UserModalProps extends Omit<FormModalProps, "children"> {
 const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 
 export default function UsersModal({
+  custodianId,
   user,
   onClose,
   ...restProps
 }: UserModalProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
+  const permissions = useStore(state => state.config.permissions);
   const queryClient = useQueryClient();
 
-  const { mutateAsync, isPending, isError, error } = useMutation({
-    mutationKey: ["updateCustodianUser"],
-    mutationFn: (payload: Omit<CustodianUser, "created_at" | "updated_at">) => {
-      if (!user?.id) {
-        return postCustodianUser(payload, {
-          error: { message: "createUserError" },
-        });
-      }
+  const { mutateAsync, isPending, isError, error } =
+    useMutationWriteCustodianUser({ user, custodianId });
 
-      return patchCustodianUser(user.id, payload, {
-        error: { message: "updateUserError" },
+  const {
+    mutateAsync: mutateAsyncInvite,
+    isPending: isInvitePending,
+    isError: isInviteError,
+    error: inviteError,
+  } = useMutation({
+    mutationKey: ["updateCustodianUser"],
+    mutationFn: (id: number) => {
+      return postCustodianInviteUser(id, {
+        error: { message: "createUserError" },
       });
     },
   });
 
   const handleOnSubmit = useCallback(async (payload: CustodianUserFields) => {
-    await mutateAsync({ ...user, ...payload });
+    const { first_name, last_name, email, approver, administrator } = payload;
+    let userPermissions: number[] = [];
+
+    const approverPermission = getPermission(
+      CustodianUserRoles.APPROVER,
+      permissions
+    );
+    const administratorPermissions = getPermission(
+      CustodianUserRoles.ADMINISTRATOR,
+      permissions
+    );
+
+    if (approver && approverPermission) {
+      userPermissions = [approverPermission.id];
+    } else if (administrator && administratorPermissions) {
+      userPermissions = [administratorPermissions.id];
+    }
+
+    const { data } = await mutateAsync({
+      id: user?.id,
+      first_name,
+      last_name,
+      email,
+      permissions: userPermissions,
+    });
+
+    if (!user?.id) await mutateAsyncInvite(data);
 
     onClose();
 
@@ -72,9 +104,9 @@ export default function UsersModal({
           onSubmit={handleOnSubmit}
           user={user}
           queryState={{
-            isLoading: isPending,
-            isError,
-            error,
+            isLoading: isPending || isInvitePending,
+            isError: isError || isInviteError,
+            error: error || inviteError,
           }}
         />
       )}

@@ -1,3 +1,4 @@
+import { EMAIL_TEMPLATE } from "@/consts/application";
 import { Custodian } from "@/types/application";
 
 interface GetCustodianInviteResponse {
@@ -25,7 +26,18 @@ type PatchCustodianPayload = Partial<Custodian>;
 
 type PatchCustodianResponse = Custodian;
 
+interface PostCustodianInviteUserPayload {
+  first_name: string;
+  last_name: string;
+  email: string;
+  identifier?: EMAIL_TEMPLATE;
+}
+
+type PostCustodianInviteUserResponse = number;
+
 export type {
+  PostCustodianInviteUserPayload,
+  PostCustodianInviteUserResponse,
   GetCustodianInviteResponse,
   GetCustodianResponse,
   GetCustodiansResponse,
