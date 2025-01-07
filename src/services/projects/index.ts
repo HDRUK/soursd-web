@@ -9,5 +9,5 @@ export {
   getOrganisationProjects,
   getProjectUsers,
   getApprovedProjects,
-  getUserApprovedProjects
+  getUserApprovedProjects,
 };

@@ -61,13 +61,13 @@ export default function OrganisationUserCard({
       : titles.join(", ");
   })();
 
-  const userJobTitles = (() => {
+  const userJobTitles = () => {
     const titles = userEmployments?.data?.map(role => role?.role);
 
     if (!titles || titles.length === 0) return "";
 
-    return `[${titles.join(", ")}]`
-  })
+    return `[${titles.join(", ")}]`;
+  };
 
   return (
     <Box sx={{ display: "flex", minWidth: "50%" }}>

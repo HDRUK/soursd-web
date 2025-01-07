@@ -7,7 +7,11 @@ import {
   IdentityVerifiedIcon,
 } from "@/consts/icons";
 import { Icon } from "@mui/material";
-import { QueryFunctionContext, QueryKey, useQuery } from "@tanstack/react-query";
+import {
+  QueryFunctionContext,
+  QueryKey,
+  useQuery,
+} from "@tanstack/react-query";
 import { getUser } from "@/services/users";
 
 interface UserIconsProps {
@@ -23,7 +27,6 @@ export default function UserIcons({
   verified,
   isApproved,
 }: UserIconsProps) {
-
   const { data: userInfo } = useQuery({
     queryKey: ["getUser", userId],
     queryFn: ({ queryKey }: QueryFunctionContext<QueryKey>) => {
@@ -40,7 +43,7 @@ export default function UserIcons({
 
   const shouldRenderIdentity = verified && user.user_group === "USERS";
   const shouldRenderApprovedUser = isApproved;
-  const shouldRenderTraining = userInfo?.data.registry.training
+  const shouldRenderTraining = userInfo?.data.registry.training;
 
   return (
     <>
