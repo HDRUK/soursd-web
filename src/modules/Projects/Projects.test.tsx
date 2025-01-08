@@ -1,5 +1,5 @@
 import { useStore } from "@/data/store";
-import { act, fireEvent, render, screen, waitFor } from "@/utils/testUtils";
+import { act, fireEvent, render, waitFor } from "@/utils/testUtils";
 import { axe } from "jest-axe";
 import { mockedCustodian } from "@/mocks/data/custodian";
 import { mockedOrganisation } from "@/mocks/data/organisation";
