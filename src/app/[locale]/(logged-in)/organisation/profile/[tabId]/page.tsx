@@ -15,7 +15,6 @@ function Page({ params: { tabId }, config }: PageProps) {
   if (!Object.values(PageTabs).includes(tabId)) {
     redirect(config.routes.profileOrganisationDetails.path);
   }
-
   return (
     <PageContainer>
       <TabsSections />
