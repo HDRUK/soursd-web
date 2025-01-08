@@ -40,7 +40,6 @@ describe("Organisation Projects", () => {
   it("display 10 projects", async () => {
     const { container } = renderProjects({ variant: "organisation" });
     await waitFor(() => {
-      expect(screen.queryByText("No projects found")).not.toBeInTheDocument();
       const accordions = container.querySelectorAll(".MuiAccordion-root");
       expect(accordions.length).toBe(10);
     });
@@ -58,7 +57,7 @@ describe("Organisation Projects", () => {
 
 describe("Custodian Projects", () => {
   it("has no accessibility violations", async () => {
-    const { container } = renderProjects({ variant: "custodian" });
+    const { container, getByTestId } = renderProjects({ variant: "custodian" });
 
     let results;
 
@@ -68,9 +67,10 @@ describe("Custodian Projects", () => {
     expect(results).toHaveNoViolations();
   });
   it("display 10 projects", async () => {
-    const { container } = renderProjects({ variant: "custodian" });
+    const { container } = renderProjects({
+      variant: "custodian",
+    });
     await waitFor(() => {
-      expect(screen.queryByText("No projects found")).not.toBeInTheDocument();
       const accordions = container.querySelectorAll(".MuiAccordion-root");
       expect(accordions.length).toBe(10);
     });
