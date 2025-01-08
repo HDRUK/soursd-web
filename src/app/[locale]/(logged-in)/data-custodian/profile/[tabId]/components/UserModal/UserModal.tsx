@@ -66,7 +66,7 @@ export default function UsersModal({
       userPermissions = [administratorPermissions.id];
     }
 
-    const { data } = await mutateAsync({
+    const userResponse = await mutateAsync({
       id: user?.id,
       first_name,
       last_name,
@@ -74,7 +74,8 @@ export default function UsersModal({
       permissions: userPermissions,
     });
 
-    if (!user?.id) await mutateAsyncInvite(data);
+    if (!user?.id && userResponse?.data)
+      await mutateAsyncInvite(userResponse.data);
 
     onClose();
 
