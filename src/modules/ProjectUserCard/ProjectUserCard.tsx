@@ -36,7 +36,7 @@ export default function ProjectUserCard({
   const custodian = useStore(store => store.getCustodian());
 
   const { data: isApprovedData } = useQuery({
-    queryKey: ["getUserHasCustodianApproval", user.id, custodian.id],
+    queryKey: ["getUserHasCustodianApproval", user.id, custodian?.id],
     queryFn: () => {
       return getEntityApproval(EntityType.USER, user.id, custodian?.id, {
         error: {

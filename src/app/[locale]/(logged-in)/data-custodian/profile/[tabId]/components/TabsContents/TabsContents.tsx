@@ -20,7 +20,7 @@ export default function TabsContents({ tabId }: TabsContentsProps) {
   return (
     <>
       {tabId === PageTabs.DETAILS && <Details custodian={custodian} />}
-      {tabId === PageTabs.PROJECTS && <Projects variant="organisation" />}
+      {tabId === PageTabs.PROJECTS && <Projects variant="custodian" />}
       {tabId === PageTabs.ORGANISATIONS && <Organisations />}
       {tabId === PageTabs.USERS && <Users />}
       {tabId === PageTabs.KEYCARDS && "Keycards"}
