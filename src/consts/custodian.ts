@@ -1,6 +1,6 @@
 enum CustodianUserRoles {
   ADMINISTRATOR = "CUSTODIAN_ADMIN",
-  APPROVER = "CUSTODIAN_UPDATE",
+  APPROVER = "CUSTODIAN_APPROVER",
 }
 
 export { CustodianUserRoles };

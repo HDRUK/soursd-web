@@ -22,8 +22,6 @@ export default function useMutationWriteCustodianUser({
         "id" | "first_name" | "last_name" | "email" | "permissions"
       >
     ) => {
-      console.log(payload);
-
       if (!user?.id) {
         return postCustodianUser(
           { custodian_id, ...payload },

@@ -57,7 +57,7 @@ export default function UserModalDetails({
         last_name: yup.string().required(tForm("lastNameRequiredInvalid")),
         email: yup
           .string()
-          .email(t("emailFormatInvalid"))
+          .email(tForm("emailFormatInvalid"))
           .required(tForm("emailRequiredInvalid")),
       }),
     []
@@ -68,7 +68,7 @@ export default function UserModalDetails({
       first_name: user?.first_name,
       last_name: user?.last_name,
       email: user?.email,
-      administrator: user && isCustodianAdministrator(user, permissions),
+      administrator: isCustodianAdministrator(user, permissions),
       approver: isCustodianApprover(user, permissions),
     },
     disabled: queryState.isLoading,

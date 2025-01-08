@@ -22,6 +22,7 @@ import { getRoutes } from "./src/utils/router";
 import { ROUTES } from "./src/consts/router";
 import { mockedCustodianUser } from "./mocks/data/custodian";
 import { UserFeedSource } from "@/consts/user";
+import { mockedApiPermissions } from "./mocks/data/store";
 
 const nextRouterMock = require("next-router-mock");
 
@@ -88,6 +89,9 @@ async function mockFetch(url: string) {
   const formattedUrl = url.toLowerCase().split("?")[0]; //remove query params (for now)
 
   switch (formattedUrl) {
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/permissions`: {
+      return mock200Json(mockPagedResults(mockedApiPermissions));
+    }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/custodian_users/1`: {
       return mock200Json(
         mockedCustodianUser({
