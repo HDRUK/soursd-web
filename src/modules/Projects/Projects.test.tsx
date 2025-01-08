@@ -57,7 +57,7 @@ describe("Organisation Projects", () => {
 
 describe("Custodian Projects", () => {
   it("has no accessibility violations", async () => {
-    const { container, getByTestId } = renderProjects({ variant: "custodian" });
+    const { container } = renderProjects({ variant: "custodian" });
 
     let results;
 
