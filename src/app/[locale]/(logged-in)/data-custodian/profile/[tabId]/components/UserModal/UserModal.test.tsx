@@ -1,15 +1,15 @@
+import { useStore } from "@/data/store";
 import { mockedCustodianUser } from "@/mocks/data/custodian";
+import { mockedApiPermissions } from "@/mocks/data/store";
 import {
   patchCustodianUser,
-  postCustodianUser,
   postCustodianInviteUser,
+  postCustodianUser,
 } from "@/services/custodian_users";
 import { act, fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 import { axe } from "jest-axe";
-import UserModal, { UserModalProps } from "./UserModal";
-import { useStore } from "@/data/store";
-import { mockedApiPermissions } from "@/mocks/data/store";
 import { mock200Json } from "jest.utils";
+import UserModal, { UserModalProps } from "./UserModal";
 
 jest.mock("@/services/custodian_users");
 jest.mock("@/data/store");

@@ -1,4 +1,3 @@
-import { EMAIL_TEMPLATE } from "@/consts/application";
 import { CustodianUser } from "@/types/application";
 
 type GetCustodiansUsersResponse = CustodianUser[];
@@ -19,8 +18,8 @@ type PatchCustodianUserPayload = Omit<
 
 export type {
   GetCustodiansUsersResponse,
-  PostCustodianUserResponse,
-  PostCustodianUserPayload,
-  PatchCustodianUserResponse,
   PatchCustodianUserPayload,
+  PatchCustodianUserResponse,
+  PostCustodianUserPayload,
+  PostCustodianUserResponse,
 };

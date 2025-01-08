@@ -1,16 +1,16 @@
 import FormModal, { FormModalProps } from "@/components/FormModal";
 import { Message } from "@/components/Message";
+import { CustodianUserRoles } from "@/consts/custodian";
 import { useStore } from "@/data/store";
 import useMutationWriteCustodianUser from "@/queries/useMutationWriteCustodianUser";
 import { postCustodianInviteUser } from "@/services/custodian_users";
 import { CustodianUser } from "@/types/application";
+import { getPermission } from "@/utils/permissions";
 import { showAlert } from "@/utils/showAlert";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback } from "react";
 import UserModalDetails, { CustodianUserFields } from "../UsersModalDetails";
-import { getPermission } from "@/utils/permissions";
-import { CustodianUserRoles } from "@/consts/custodian";
 
 export interface UserModalProps extends Omit<FormModalProps, "children"> {
   custodianId: number;

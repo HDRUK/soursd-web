@@ -7,7 +7,6 @@ import FormModalBody from "@/components/FormModalBody";
 import FormModalHeader from "@/components/FormModalHeader";
 import yup from "@/config/yup";
 import { CustodianUserRoles } from "@/consts/custodian";
-import { useApplicationData } from "@/context/ApplicationData";
 import { useStore } from "@/data/store";
 import { CustodianUser } from "@/types/application";
 import { QueryState } from "@/types/form";

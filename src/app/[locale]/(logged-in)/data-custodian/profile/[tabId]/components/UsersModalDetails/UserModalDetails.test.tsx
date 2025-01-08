@@ -1,10 +1,10 @@
+import { useStore } from "@/data/store";
 import { mockedCustodianUser } from "@/mocks/data/custodian";
+import { mockedApiPermissions } from "@/mocks/data/store";
 import { act, fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 import { faker } from "@faker-js/faker";
 import { axe } from "jest-axe";
 import UserModalDetails, { UserModalDetailsProps } from "./UserModalDetails";
-import { useStore } from "@/data/store";
-import { mockedApiPermissions } from "@/mocks/data/store";
 
 jest.mock("@/services/custodians");
 jest.mock("@/data/store");
