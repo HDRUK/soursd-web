@@ -80,7 +80,7 @@ function mock200Json<T>(data: T) {
 function mockPagedResults<T>(
   data: T[],
   page: number = 1,
-  perPage: number = 10
+  perPage: number = 25
 ) {
   const startIndex = (page - 1) * perPage;
   const endIndex = startIndex + perPage;
@@ -96,7 +96,7 @@ async function mockFetch(url: string) {
   const [baseUrl, queryString] = url.split("?");
   const queryParams = Object.fromEntries(new URLSearchParams(queryString));
   const page = Number(queryParams.page) || 1;
-  const perPage = Number(queryParams.perPage) || 10;
+  const perPage = Number(queryParams.perPage) || 25;
 
   switch (baseUrl) {
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/custodian_users/1`: {
