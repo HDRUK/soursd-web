@@ -1,10 +1,8 @@
 import { act, renderHook, waitFor } from "@/utils/testUtils";
-import usePaginatedQuery from "./usePaginatedQuery";
-import { SearchDirections } from "@/consts/search";
 import { getProjects } from "@/services/projects";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { ProjectsResponse } from "@/services/projects/types";
-import { PaginatedQueryReturn } from "./usePaginatedQuery";
+import usePaginatedQuery, { PaginatedQueryReturn } from "./usePaginatedQuery";
 
 jest.mock("@/data/store");
 
