@@ -22,7 +22,6 @@ import { getRoutes } from "./src/utils/router";
 import { ROUTES } from "./src/consts/router";
 import { mockedCustodianUser } from "./mocks/data/custodian";
 import { UserFeedSource } from "@/consts/user";
-import { start } from "repl";
 
 const nextRouterMock = require("next-router-mock");
 
