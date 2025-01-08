@@ -6,7 +6,7 @@ import PageSection from "@/modules/PageSection";
 import { getEntityProjects } from "@/services/projects";
 import { CircularProgress } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useStore } from "@/data/store";
+import { useStore, StoreState } from "@/data/store";
 import Pagination from "@/components/Pagination";
 import usePaginatedQuery from "@/hooks/usePaginatedQuery";
 import SearchBar from "@/modules/SearchBar";
@@ -20,7 +20,7 @@ import ProjectsLegend from "../ProjectsLegend";
 const NAMESPACE_TRANSLATIONS_PROJECT_LIST = "ProjectList";
 
 type VariantConfig = {
-  getId: (store: any) => string | undefined;
+  getId: (store: StoreState) => string | number | undefined;
 };
 
 const variantConfig: Record<ProjectEntities, VariantConfig> = {
