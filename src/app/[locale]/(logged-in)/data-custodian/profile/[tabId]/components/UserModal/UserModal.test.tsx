@@ -9,12 +9,14 @@ import { axe } from "jest-axe";
 import UserModal, { UserModalProps } from "./UserModal";
 import { useStore } from "@/data/store";
 import { mockedApiPermissions } from "@/mocks/data/store";
+import { mock200Json } from "jest.utils";
 
 jest.mock("@/services/custodian_users");
 jest.mock("@/data/store");
 
-(useStore as unknown as jest.Mock).mockImplementation(
-  () => mockedApiPermissions
+(useStore as unknown as jest.Mock).mockReturnValue(mockedApiPermissions);
+(postCustodianUser as unknown as jest.Mock).mockResolvedValue(
+  mock200Json(1).json()
 );
 
 const mockOnClose = jest.fn();
@@ -23,7 +25,13 @@ const defaultUser = mockedCustodianUser();
 
 const renderUserModalDetails = (props?: Partial<UserModalProps>) => {
   return render(
-    <UserModal user={defaultUser} onClose={mockOnClose} open {...props} />
+    <UserModal
+      user={defaultUser}
+      custodianId={1}
+      onClose={mockOnClose}
+      open
+      {...props}
+    />
   );
 };
 
@@ -40,7 +48,7 @@ const renderUserModalDetailsUpdate = (id?: number) => {
 
 describe("<UserModal />", () => {
   afterEach(() => {
-    jest.resetAllMocks();
+    mockOnClose.mockReset();
   });
 
   it("has no accessibility validations", async () => {
@@ -55,31 +63,31 @@ describe("<UserModal />", () => {
     expect(results).toHaveNoViolations();
   });
 
-  // it("update user is called with an id", async () => {
-  //   renderUserModalDetailsUpdate(1);
+  it("update user is called with an id", async () => {
+    renderUserModalDetailsUpdate(1);
 
-  //   await waitFor(() => {
-  //     expect(patchCustodianUser).toHaveBeenCalled();
-  //   });
+    await waitFor(() => {
+      expect(patchCustodianUser).toHaveBeenCalled();
+    });
 
-  //   expect(postCustodianInviteUser).not.toHaveBeenCalled();
-  // });
+    expect(postCustodianInviteUser).not.toHaveBeenCalled();
+  });
 
-  // it("create user is called with no id", async () => {
-  //   renderUserModalDetailsUpdate();
+  it("create user is called with no id", async () => {
+    renderUserModalDetailsUpdate();
 
-  //   await waitFor(() => {
-  //     expect(postCustodianUser).toHaveBeenCalled();
-  //   });
+    await waitFor(() => {
+      expect(postCustodianUser).toHaveBeenCalled();
+    });
 
-  //   expect(postCustodianInviteUser).toHaveBeenCalled();
-  // });
+    expect(postCustodianInviteUser).toHaveBeenCalled();
+  });
 
-  // it("show a success alert", async () => {
-  //   renderUserModalDetailsUpdate();
+  it("show a success alert", async () => {
+    renderUserModalDetailsUpdate();
 
-  //   await waitFor(() => screen.findByRole("button", { name: /OK/i }));
+    await waitFor(() => screen.findByRole("button", { name: /OK/i }));
 
-  //   expect(mockOnClose).toHaveBeenCalled();
-  // });
+    expect(mockOnClose).toHaveBeenCalled();
+  });
 });

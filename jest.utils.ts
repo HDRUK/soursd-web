@@ -1,3 +1,5 @@
+import { ResponseMessageType } from "@/consts/requests";
+
 expect.extend({
   toBeControlledBy(
     area: HTMLElement,
@@ -15,3 +17,23 @@ expect.extend({
     };
   },
 });
+
+function mock200Json<T>(data: T) {
+  return {
+    ok: true,
+    status: 200,
+    json: async () => ({
+      message: ResponseMessageType.SUCCESS,
+      data,
+    }),
+  };
+}
+
+function mockPagedResults<T>(data: T) {
+  return {
+    current_page: 1,
+    data,
+  };
+}
+
+export { mock200Json, mockPagedResults };

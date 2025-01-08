@@ -23,6 +23,7 @@ import { ROUTES } from "./src/consts/router";
 import { mockedCustodianUser } from "./mocks/data/custodian";
 import { UserFeedSource } from "@/consts/user";
 import { mockedApiPermissions } from "./mocks/data/store";
+import { mock200Json, mockPagedResults } from "./jest.utils";
 
 const nextRouterMock = require("next-router-mock");
 
@@ -67,25 +68,7 @@ global.matchMedia = () => {
   };
 };
 
-function mock200Json<T>(data: T) {
-  return {
-    ok: true,
-    status: 200,
-    json: async () => ({
-      message: ResponseMessageType.SUCCESS,
-      data,
-    }),
-  };
-}
-
-function mockPagedResults<T>(data: T) {
-  return {
-    current_page: 1,
-    data,
-  };
-}
-
-async function mockFetch(url: string) {
+async function mockFetch(url: string, init: RequestInit) {
   const formattedUrl = url.toLowerCase().split("?")[0]; //remove query params (for now)
 
   switch (formattedUrl) {
@@ -100,17 +83,21 @@ async function mockFetch(url: string) {
       );
     }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/custodian_users`: {
-      return mock200Json([
-        mockedCustodianUser({
-          id: 1,
-          created_at: "2024-01-01T00:00:00.000",
-          first_name: "John",
-          last_name: "Smith",
-        }),
-        mockedCustodianUser({
-          id: 2,
-        }),
-      ]);
+      if (init.method === "POST") {
+        return mock200Json(1);
+      } else {
+        return mock200Json([
+          mockedCustodianUser({
+            id: 1,
+            created_at: "2024-01-01T00:00:00.000",
+            first_name: "John",
+            last_name: "Smith",
+          }),
+          mockedCustodianUser({
+            id: 2,
+          }),
+        ]);
+      }
     }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/users/1`: {
       return mock200Json(

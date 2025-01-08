@@ -63,21 +63,21 @@ describe("<UserModalDetails />", () => {
     });
   });
 
-  // it.each(["First name", "Last name", "Email"])(
-  //   "does not submit when %s is not defined",
-  //   async value => {
-  //     renderUserModalDetails();
+  it.each(["First name", "Last name", "Email"])(
+    "does not submit when %s is not defined",
+    async value => {
+      renderUserModalDetails();
 
-  //     const input = screen.getByLabelText(value);
-  //     const inputValue = faker.string.sample();
+      const input = screen.getByLabelText(value);
+      const inputValue = faker.string.sample();
 
-  //     fireEvent.change(input, {
-  //       target: { value: inputValue },
-  //     });
+      fireEvent.change(input, {
+        target: { value: inputValue },
+      });
 
-  //     fireEvent.submit(screen.getByRole("button", { name: /Save/i }));
+      fireEvent.submit(screen.getByRole("button", { name: /Save/i }));
 
-  //     expect(mockOnSubmit).not.toHaveBeenCalled();
-  //   }
-  // );
+      expect(mockOnSubmit).not.toHaveBeenCalled();
+    }
+  );
 });
