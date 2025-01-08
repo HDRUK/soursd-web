@@ -12,25 +12,12 @@ import usePaginatedQuery from "@/hooks/usePaginatedQuery";
 import SearchBar from "@/modules/SearchBar";
 import SearchActionMenu from "@/modules/SearchActionMenu";
 import { SearchDirections } from "@/consts/search";
+import { ProjectEntities } from "@/services/projects/getEntityProjects";
+import { capitaliseFirstLetter } from "@/utils/string";
 import ProjectList from "../ProjectList";
 import ProjectsLegend from "../ProjectsLegend";
-import { ProjectEntities } from "@/services/projects/getEntityProjects";
 
 const NAMESPACE_TRANSLATIONS_PROJECT_LIST = "ProjectList";
-
-function capitalizeFirstLetter(str: string): string {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
-
-type QueryFn = (
-  id: number | undefined,
-  queryParams: Record<string, any>,
-  options: { error: { message: string } }
-) => Promise<any>;
-
-interface ProjectsProps {
-  variant: ProjectEntities;
-}
 
 type VariantConfig = {
   getId: (store: any) => string | undefined;
@@ -51,6 +38,10 @@ const variantConfig: Record<ProjectEntities, VariantConfig> = {
   },
 };
 
+interface ProjectsProps {
+  variant: ProjectEntities;
+}
+
 export default function Projects({ variant }: ProjectsProps) {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_PROJECT_LIST);
 
@@ -70,14 +61,14 @@ export default function Projects({ variant }: ProjectsProps) {
     handleFieldToggle,
     queryParams,
   } = usePaginatedQuery({
-    queryKeyBase: [`get${capitalizeFirstLetter(variant)}Projects`],
+    queryKeyBase: [`get${capitaliseFirstLetter(variant)}Projects`],
     defaultQueryParams: {
       sort: `title:${SearchDirections.ASC}`,
     },
     queryFn: queryParams =>
       getEntityProjects(variant, entityId as unknown as number, queryParams, {
         error: {
-          message: `get${capitalizeFirstLetter(variant)}Projects`,
+          message: `get${capitaliseFirstLetter(variant)}Projects`,
         },
       }),
     enabled: !!entityId,
