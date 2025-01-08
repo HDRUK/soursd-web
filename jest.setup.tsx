@@ -197,7 +197,7 @@ async function mockFetch(url: string) {
       });
     }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/custodians/1/projects`: {
-      return mock200Json(mockPagedResults(mockedProjects(10)));
+      return mock200Json(mockPagedResults(mockedProjects(5)));
     }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/organisations/1/projects`: {
       return mock200Json(mockPagedResults(mockedProjects(10)));

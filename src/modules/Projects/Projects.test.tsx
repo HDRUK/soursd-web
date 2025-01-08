@@ -38,19 +38,16 @@ describe("Organisation Projects", () => {
     expect(results).toHaveNoViolations();
   });
   it("display 10 projects", async () => {
-    const { container } = renderProjects({ variant: "organisation" });
+    const { getAllByTestId } = renderProjects({
+      variant: "organisation",
+    });
     await waitFor(() => {
-      const accordions = container.querySelectorAll(".MuiAccordion-root");
+      const accordions = getAllByTestId(/^project-accordion-/);
       expect(accordions.length).toBe(10);
     });
 
-    const accordions = container.querySelectorAll(".MuiAccordion-root");
-    const secondAccordion = accordions[1];
-
-    const expandIcon = secondAccordion.querySelector(
-      ".MuiAccordionSummary-expandIconWrapper"
-    );
-    expect(expandIcon).toBeInTheDocument();
+    const expandIcons = getAllByTestId("ExpandMoreIcon");
+    const expandIcon = expandIcons[0];
     fireEvent.click(expandIcon!);
   });
 });
@@ -66,22 +63,17 @@ describe("Custodian Projects", () => {
     });
     expect(results).toHaveNoViolations();
   });
-  it("display 10 projects", async () => {
-    const { container } = renderProjects({
+  it("display 5 projects", async () => {
+    const { getAllByTestId } = renderProjects({
       variant: "custodian",
     });
     await waitFor(() => {
-      const accordions = container.querySelectorAll(".MuiAccordion-root");
-      expect(accordions.length).toBe(10);
+      const accordions = getAllByTestId(/^project-accordion-/);
+      expect(accordions.length).toBe(5);
     });
 
-    const accordions = container.querySelectorAll(".MuiAccordion-root");
-    const secondAccordion = accordions[1];
-
-    const expandIcon = secondAccordion.querySelector(
-      ".MuiAccordionSummary-expandIconWrapper"
-    );
-    expect(expandIcon).toBeInTheDocument();
+    const expandIcons = getAllByTestId("ExpandMoreIcon");
+    const expandIcon = expandIcons[0];
     fireEvent.click(expandIcon!);
   });
 });
