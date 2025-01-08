@@ -35,9 +35,7 @@ describe("<AccountConfirm />", () => {
 
   it("has no accessibility validations", async () => {
     const { container } = render(<TestComponent />);
-
     let results;
-
     await act(async () => {
       results = await axe(container);
     });

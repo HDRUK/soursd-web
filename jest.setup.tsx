@@ -22,6 +22,7 @@ import { getRoutes } from "./src/utils/router";
 import { ROUTES } from "./src/consts/router";
 import { mockedCustodianUser } from "./mocks/data/custodian";
 import { UserFeedSource } from "@/consts/user";
+import { start } from "repl";
 
 const nextRouterMock = require("next-router-mock");
 
@@ -77,17 +78,28 @@ function mock200Json<T>(data: T) {
   };
 }
 
-function mockPagedResults<T>(data: T) {
+function mockPagedResults<T>(
+  data: T[],
+  page: number = 1,
+  perPage: number = 10
+) {
+  const startIndex = (page - 1) * perPage;
+  const endIndex = startIndex + perPage;
+  const paginatedData = data.slice(startIndex, endIndex);
+
   return {
-    current_page: 1,
-    data,
+    current_page: page,
+    data: paginatedData,
   };
 }
 
 async function mockFetch(url: string) {
-  const formattedUrl = url.toLowerCase().split("?")[0]; //remove query params (for now)
+  const [baseUrl, queryString] = url.split("?");
+  const queryParams = Object.fromEntries(new URLSearchParams(queryString));
+  const page = Number(queryParams.page) || 1;
+  const perPage = Number(queryParams.perPage) || 10;
 
-  switch (formattedUrl) {
+  switch (baseUrl) {
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/custodian_users/1`: {
       return mock200Json(
         mockedCustodianUser({
@@ -182,7 +194,7 @@ async function mockFetch(url: string) {
       ]);
     }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/projects`: {
-      return mock200Json(mockPagedResults(mockedProjects(10)));
+      return mock200Json(mockPagedResults(mockedProjects(10), page, perPage));
     }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/projects/user/1/approved`: {
       return mock200Json({

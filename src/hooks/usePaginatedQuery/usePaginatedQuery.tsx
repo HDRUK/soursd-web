@@ -19,7 +19,7 @@ type PaginatedQueryProps<T> = {
   defaultQueryParams?: Record<string, string | number | undefined>;
 };
 
-type PaginatedQueryReturn<T> = UseQueryResult<ResponseJson<Paged<T>>> &
+export type PaginatedQueryReturn<T> = UseQueryResult<ResponseJson<Paged<T>>> &
   Paged<T> & {
     page: number;
     setPage: React.Dispatch<React.SetStateAction<number>>;
