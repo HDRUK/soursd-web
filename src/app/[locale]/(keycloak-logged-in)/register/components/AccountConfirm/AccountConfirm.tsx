@@ -1,73 +1,57 @@
 "use client";
 
 import Guidance from "@/components/Guidance";
-import { useState } from "react";
-import { useTranslations } from "next-intl";
-import PersonIcon from "@mui/icons-material/Person";
-import PeopleIcon from "@mui/icons-material/People";
-import SoursdLogo from "@/components/SoursdLogo";
-import { postRegister, PostRegisterPayload } from "@/services/auth";
-import { useMutation } from "@tanstack/react-query";
 import { Message } from "@/components/Message";
+import SoursdLogo from "@/components/SoursdLogo";
+import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
 import { AccountType } from "@/types/accounts";
+import { getCombinedQueryState } from "@/utils/query";
+import PeopleIcon from "@mui/icons-material/People";
+import PersonIcon from "@mui/icons-material/Person";
 import {
   Box,
-  CircularProgress,
   Button,
-  Typography,
   Checkbox,
+  CircularProgress,
   FormControlLabel,
+  Typography,
 } from "@mui/material";
-import { useRouter, useParams } from "next/navigation";
-import { useApplicationData } from "@/context/ApplicationData";
-import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
+import { useTranslations } from "next-intl";
+import { useParams } from "next/navigation";
+import { useState } from "react";
+import useRegisterCustodian from "../../../../../../hooks/useRegisterCustodian";
+import useRegisterUser from "../../../../../../hooks/useRegisterUser";
 import AccountOption from "../AccountOption";
 
 const NAMESPACE_TRANSLATIONS_PROFILE = "Register";
 
-export default function AccountConfirm() {
-  const router = useRouter();
-  const { routes } = useApplicationData();
+interface AccountConfirmProps {
+  email?: string;
+}
+
+export default function AccountConfirm({ email }: AccountConfirmProps) {
   const params = useParams();
+  const t = useTranslations(NAMESPACE_TRANSLATIONS_PROFILE);
 
   const [selected, setSelected] = useState<AccountType | null>(null); // To track selected button
   const [termsChecked, setTermsChecked] = useState(false); // To track checkbox
+
+  const registerCustodianState = useRegisterCustodian(email);
+  const { handleRegister, ...registerUserState } = useRegisterUser({
+    selected,
+    params,
+  });
 
   const handleSelect = (option: AccountType) => {
     setSelected(option);
   };
 
-  const t = useTranslations(NAMESPACE_TRANSLATIONS_PROFILE);
-
-  const { mutateAsync, isPending, isError, error } = useMutation({
-    mutationKey: ["registerError"],
-    mutationFn: (payload: PostRegisterPayload) => {
-      return postRegister(payload, {
-        error: { message: t("failedToRegister") },
-      });
-    },
-  });
-
-  const handleRegister = async () => {
-    if (!selected) return;
-    mutateAsync({ account_type: selected }).then(() => {
-      const currentLocale = params?.locale || "en";
-
-      switch (selected) {
-        case AccountType.ORGANISATION:
-          router.push(`/${currentLocale}${routes.profileOrganisation.path}`);
-          break;
-        case AccountType.USER:
-          router.push(`/${currentLocale}${routes.profileResearcher.path}`);
-          break;
-        default:
-          router.push(`/${currentLocale}${routes.homepage.path}`);
-          break;
-      }
-    });
-  };
-
   const isContinueDisabled = selected === null || !termsChecked;
+
+  const { isLoading, isError, error } = getCombinedQueryState([
+    registerCustodianState,
+    registerUserState,
+  ]);
 
   return (
     <Guidance {...mockedPersonalDetailsGuidanceProps}>
@@ -131,15 +115,15 @@ export default function AccountConfirm() {
           <Button
             onClick={handleRegister}
             variant="contained"
-            disabled={isContinueDisabled || isPending}
+            disabled={isContinueDisabled || isLoading}
             sx={{ p: 2 }}
             fullWidth>
-            {isPending ? <CircularProgress size={23} /> : t("continueButton")}
+            {isLoading ? <CircularProgress size={23} /> : t("continueButton")}
           </Button>
 
           {isError && (
             <Message severity="error" sx={{ mb: 3 }}>
-              {`${error}`}
+              {`${error[0]}`}
             </Message>
           )}
         </Box>

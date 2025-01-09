@@ -1,13 +1,18 @@
 import { withConfig } from "@/components/Config";
 import PageContainer from "@/modules/PageContainer";
 import PageSection from "@/modules/PageSection";
+import { parseValidJSON } from "@/utils/json";
+import { cookies } from "next/headers";
 import AccountConfirm from "./components/AccountConfirm";
 
-function Page() {
+async function Page() {
+  const cookieStore = await cookies();
+  const token = parseValidJSON(cookieStore.get("access_token")?.value || "{}");
+
   return (
     <PageContainer>
       <PageSection sx={{ flexGrow: 1 }}>
-        <AccountConfirm />
+        <AccountConfirm email={token?.email} />
       </PageSection>
     </PageContainer>
   );

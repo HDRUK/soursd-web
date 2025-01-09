@@ -439,7 +439,8 @@
     "repOrgButton": "I represent an organisation",
     "repMyselfButton": "I represent myself as an individual",
     "termsLabel": "I confirm I have and agree to SOURSD <bold> Terms and Conditions </bold>",
-    "continueButton": "Continue"
+    "continueButton": "Continue",
+    "inviteAccepted": "This invite has already been accepted. If you are having problems accessing the platform, please contact us at <applicationLink></applicationLink>"
   },
   "ProjectUserCard": {
     "notFound": {
