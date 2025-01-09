@@ -4,7 +4,7 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { Checkbox, Box } from "@mui/material";
 import { ActionMenu, ActionMenuItem } from "../../components/ActionMenu";
 
-interface Action {
+export interface Action {
   label: string;
   icon?: ReactNode;
   onClick: () => void;
@@ -21,7 +21,10 @@ const SearchActionMenu = ({ actions, sx }: SortButtonProps) => {
       <ActionMenu icon={<FilterAltIcon />} aria-label="search-action-menu">
         {actions?.map(action => (
           <ActionMenuItem key={action.label} onClick={action.onClick}>
-            <Checkbox checked={action.checked} />
+            <Checkbox
+              checked={action.checked}
+              inputProps={{ "aria-label": `checkbox-${action.label}` }}
+            />
             {action?.icon} {action.label}
           </ActionMenuItem>
         ))}

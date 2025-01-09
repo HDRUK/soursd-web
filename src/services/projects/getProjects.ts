@@ -3,10 +3,19 @@ import { getRequest, handleJsonResponse } from "../requests";
 import { ProjectsResponse } from "./types";
 
 export default async (
+  searchParams: Record<string, string | number | undefined>,
   messages: ResponseTranslations
 ): Promise<ResponseJson<Paged<ProjectsResponse>>> => {
+  const params = new URLSearchParams(
+    Object.entries(searchParams)
+      .filter(([, value]) => value !== undefined)
+      .map(([key, value]) => [key, String(value)])
+  );
+
+  const queryString = params.toString();
+
   const response = await getRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/projects`,
+    `${process.env.NEXT_PUBLIC_API_V1_URL}/projects${queryString ? `?${queryString}` : ""}`,
     undefined,
     {
       headers: {
