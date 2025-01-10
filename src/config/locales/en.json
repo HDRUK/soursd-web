@@ -493,5 +493,31 @@
   },
   "AccreditationsDetails": {
     "title": "Accreditations"
+  },
+  "Rules": {
+    "countrySanctions": {
+      "title": "Country sanctions",
+      "description": "Users and Organisations who are on UK Sanctions Lists should not be provided access to data (existing demo data)."
+    },
+    "userLocation": {
+      "title": "User location",
+      "description": "A User should be located in a country which adheres to equivalent data protection law."
+    },
+    "dueDiligence": {
+      "title": "Due Diligence",
+      "description": "Additional organisation due diligence checks should be carried out on Organisations who are not approved Organisations."
+    },
+    "training": {
+      "title": "Training",
+      "description": "A user must have completed mandatory TRE/SDE training before accessing a TRE/SDE."
+    },
+    "dataSecurityCompliance": {
+      "title": "Data security compliance",
+      "description": "An organisation must provide data security compliance accreditation information within their profile."
+    },
+    "delegate": {
+      "title": "Delegate",
+      "description": "An Organisation must have at least one delegate to vouch for a User’s behaviour within a TRE/SDE."
+    }
   }
 }

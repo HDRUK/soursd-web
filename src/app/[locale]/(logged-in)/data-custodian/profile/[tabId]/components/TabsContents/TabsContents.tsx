@@ -7,6 +7,7 @@ import { PageTabs } from "../../consts/tabs";
 import Details from "../Details";
 import Users from "../Users";
 import Organisations from "../Organisations";
+import Configuration from "../Configuration";
 
 interface TabsContentsProps {
   tabId: string;
@@ -24,7 +25,7 @@ export default function TabsContents({ tabId }: TabsContentsProps) {
       {tabId === PageTabs.ORGANISATIONS && <Organisations />}
       {tabId === PageTabs.USERS && <Users />}
       {tabId === PageTabs.KEYCARDS && "Keycards"}
-      {tabId === PageTabs.CONFIGURATION && "Configuration"}
+      {tabId === PageTabs.CONFIGURATION && <Configuration />}
     </>
   );
 }
