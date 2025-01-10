@@ -61,6 +61,12 @@ type Approval = {
   };
 };
 
+interface UserPermission {
+  custodian_user_id: number;
+  permission_id: number;
+  permission: Permission;
+}
+
 interface CustodianUser {
   id: number;
   created_at: string;
@@ -69,7 +75,7 @@ interface CustodianUser {
   last_name: string;
   email: string;
   custodian_id: number;
-  role: string;
+  user_permissions: UserPermission[];
 }
 
 interface UserProfileCompletionFields {
@@ -117,6 +123,7 @@ interface User {
     files?: File[];
     organisations?: Organisation[];
     verified: boolean;
+    training?: ResearcherTraining[];
   };
 }
 

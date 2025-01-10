@@ -54,7 +54,9 @@ const ProjectAccordion = ({ project }: ProjectAccordionProps) => {
     : PALETTE_THEME_PURPLE_BLUE.palette.error.light;
 
   return (
-    <Accordion key={organisation_name}>
+    <Accordion
+      data-testid={`project-accordion-${organisation_name}`}
+      key={organisation_name}>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         sx={{ backgroundColor: accordianColor, color: "white" }}

@@ -18,7 +18,7 @@ describe("useQueryRefetch", () => {
             getEducations: null,
             getEmployments: null,
             getTrainings: null,
-            getApprovedProjects: null,
+            getUserApprovedProjects: null,
           },
           data: {
             getAccreditations: expect.objectContaining({
@@ -33,7 +33,7 @@ describe("useQueryRefetch", () => {
             getTrainings: expect.objectContaining({
               message: "success",
             }),
-            getApprovedProjects: expect.objectContaining({
+            getUserApprovedProjects: expect.objectContaining({
               message: "success",
             }),
           },

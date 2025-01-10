@@ -10,7 +10,7 @@ import {
 } from "@tanstack/react-query";
 import IconButton from "@/components/IconButton";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import { getApprovedProjects } from "@/services/projects";
+import { getUserApprovedProjects } from "@/services/projects";
 import { useState, useCallback } from "react";
 import { UserDetailsModal } from "@/modules";
 import { EntityType } from "@/types/api";
@@ -36,7 +36,7 @@ export default function ProjectUserCard({
   const custodian = useStore(store => store.getCustodian());
 
   const { data: isApprovedData } = useQuery({
-    queryKey: ["getUserHasCustodianApproval", user.id, custodian.id],
+    queryKey: ["getUserHasCustodianApproval", user.id, custodian?.id],
     queryFn: () => {
       return getEntityApproval(EntityType.USER, user.id, custodian?.id, {
         error: {
@@ -48,13 +48,13 @@ export default function ProjectUserCard({
   });
 
   const { data: userApprovedProjects } = useQuery({
-    queryKey: ["getApprovedProjects", registry.id],
+    queryKey: ["getUserApprovedProjects", registry.id],
     queryFn: ({ queryKey }: QueryFunctionContext<QueryKey>) => {
       const [, id] = queryKey;
 
-      return getApprovedProjects(id as string, {
+      return getUserApprovedProjects(id as string, {
         error: {
-          message: "getApprovedProjects",
+          message: "getUserApprovedProjects",
         },
       });
     },

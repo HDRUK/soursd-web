@@ -99,6 +99,7 @@ export default function OrganisationUsersList({
                     <Box>
                       <UserIcons
                         user={user}
+                        userId={id}
                         verified={verified}
                         isApproved={isApproved}
                       />
