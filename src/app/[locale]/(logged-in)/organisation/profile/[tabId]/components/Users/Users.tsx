@@ -13,14 +13,12 @@ import { isRegistered } from "@/utils/user";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import { Box, Button, IconButton, Typography } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
-import UserModal from "../UserModal";
+import { useState } from "react";
 import { getOrganisationUsers } from "@/services/organisations";
 import Pagination from "@/components/Pagination";
 import usePaginatedQuery from "@/hooks/usePaginatedQuery";
-
+import UserModal from "../UserModal";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
 

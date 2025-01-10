@@ -2,7 +2,6 @@
 
 import { ROUTES } from "@/consts/router";
 import { ApplicationDataProvider } from "@/context/ApplicationData";
-import { mockedUser } from "@/mocks/data/user";
 import { getRequest } from "@/services/requests";
 import { User } from "@/types/application";
 import { ResponseJson } from "@/types/requests";
@@ -29,7 +28,7 @@ async function validateAccessToken(
       },
     }
   );
-  
+
   if (response.ok) {
     return response.json();
   }
@@ -56,12 +55,12 @@ export default function Layout({ children, params: { locale } }: LayoutProps) {
 
   useEffect(() => {
     const performAuthCheck = async () => {
-      // const user = await validateAccessToken(pathname, router);
-      // if (!user?.data) {
-      //   throw new Error("Unauthorised 401");
-      // }
+      const user = await validateAccessToken(pathname, router);
+      if (!user?.data) {
+        throw new Error("Unauthorised 401");
+      }
 
-      setMe(mockedUser);
+      setMe(user?.data);
     };
 
     performAuthCheck();

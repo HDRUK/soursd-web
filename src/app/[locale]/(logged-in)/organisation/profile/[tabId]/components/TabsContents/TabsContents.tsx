@@ -14,12 +14,12 @@ interface TabsContentsProps {
 }
 
 export default function TabsContents({ tabId }: TabsContentsProps) {
-  // const [user, organisation] = useStore(state => [
-  //   state.getUser(),
-  //   state.getOrganisation(),
-  // ]);
+  const [user, organisation] = useStore(state => [
+    state.getUser(),
+    state.getOrganisation(),
+  ]);
 
-  // if (!organisation || !user) notFound();
+  if (!organisation || !user) notFound();
 
   return (
     <>

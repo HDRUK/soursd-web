@@ -1,6 +1,6 @@
 import { useStore } from "@/data/store";
 import { mockedOrganisation } from "@/mocks/data/organisation";
-import { act, render, screen, waitFor } from "@/utils/testUtils";
+import { act, fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 import { axe } from "jest-axe";
 import Users from "./Users";
 
@@ -41,6 +41,26 @@ describe("<User />", () => {
 
     await waitFor(() => {
       expect(screen.getByText("John Smith"));
+    });
+  });
+
+  it("handles pagination correctly", async () => {
+    render(<Users />);
+
+    expect(await screen.findByText("Page 1 of 2")).toBeInTheDocument();
+
+    const nextButton = screen.getByLabelText("Go to next page");
+    fireEvent.click(nextButton);
+
+    await waitFor(() => {
+      expect(screen.getByText("Page 2 of 2")).toBeInTheDocument();
+    });
+
+    const prevButton = screen.getByLabelText("Go to previous page");
+    fireEvent.click(prevButton);
+
+    await waitFor(() => {
+      expect(screen.getByText("Page 1 of 2")).toBeInTheDocument();
     });
   });
 });

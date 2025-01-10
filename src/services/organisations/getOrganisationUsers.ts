@@ -12,7 +12,7 @@ export default async (
       .filter(([, value]) => value !== undefined)
       .map(([key, value]) => [key, String(value)])
   );
-  
+
   const response = await getRequest(
     `${process.env.NEXT_PUBLIC_API_V1_URL}/organisations/${id}/users?${params.toString()}`,
     undefined,
