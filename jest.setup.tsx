@@ -68,7 +68,7 @@ global.matchMedia = () => {
   };
 };
 
-async function mockFetch(url: string) {
+async function mockFetch(url: string, init?: RequestInit) {
   const [baseUrl, queryString] = url.split("?");
   const queryParams = Object.fromEntries(new URLSearchParams(queryString));
   const page = Number(queryParams.page) || 1;
@@ -86,21 +86,21 @@ async function mockFetch(url: string) {
       );
     }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/custodian_users`: {
-      if (init.method === "POST") {
+      if (init?.method === "POST") {
         return mock200Json(1);
-      } else {
-        return mock200Json([
-          mockedCustodianUser({
-            id: 1,
-            created_at: "2024-01-01T00:00:00.000",
-            first_name: "John",
-            last_name: "Smith",
-          }),
-          mockedCustodianUser({
-            id: 2,
-          }),
-        ]);
       }
+
+      return mock200Json([
+        mockedCustodianUser({
+          id: 1,
+          created_at: "2024-01-01T00:00:00.000",
+          first_name: "John",
+          last_name: "Smith",
+        }),
+        mockedCustodianUser({
+          id: 2,
+        }),
+      ]);
     }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/users/1`: {
       return mock200Json(
