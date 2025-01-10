@@ -7,8 +7,13 @@ import FormModalBody from "@/components/FormModalBody";
 import FormModalHeader from "@/components/FormModalHeader";
 import yup from "@/config/yup";
 import { CustodianUserRoles } from "@/consts/custodian";
+import { useStore } from "@/data/store";
 import { CustodianUser } from "@/types/application";
 import { QueryState } from "@/types/form";
+import {
+  isCustodianAdministrator,
+  isCustodianApprover,
+} from "@/utils/custodian";
 import CheckIcon from "@mui/icons-material/Check";
 import { LoadingButton } from "@mui/lab";
 import { Button, Grid, TextField, Typography } from "@mui/material";
@@ -42,6 +47,7 @@ export default function UserModalDetails({
 }: UserModalDetailsProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
+  const permissions = useStore(state => state.config.permissions);
 
   const schema = useMemo(
     () =>
@@ -50,7 +56,7 @@ export default function UserModalDetails({
         last_name: yup.string().required(tForm("lastNameRequiredInvalid")),
         email: yup
           .string()
-          .email(t("emailFormatInvalid"))
+          .email(tForm("emailFormatInvalid"))
           .required(tForm("emailRequiredInvalid")),
       }),
     []
@@ -61,8 +67,8 @@ export default function UserModalDetails({
       first_name: user?.first_name,
       last_name: user?.last_name,
       email: user?.email,
-      administrator: user?.role === CustodianUserRoles.ADMINISTRATOR,
-      approver: user?.role === CustodianUserRoles.APPROVER,
+      administrator: isCustodianAdministrator(user, permissions),
+      approver: isCustodianApprover(user, permissions),
     },
     disabled: queryState.isLoading,
   };

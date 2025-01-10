@@ -173,8 +173,12 @@ export default function Users() {
           );
         })}
       </Results>
-      {modalProps?.user && (
-        <UserModal {...modalProps} onClose={handleCloseModal} />
+      {modalProps?.user && custodian?.id && (
+        <UserModal
+          {...modalProps}
+          custodianId={custodian.id}
+          onClose={handleCloseModal}
+        />
       )}
     </Box>
   );

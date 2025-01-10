@@ -2,7 +2,7 @@ import { CustodianUser } from "@/types/application";
 
 type GetCustodiansUsersResponse = CustodianUser[];
 
-type PostCustodianUserResponse = CustodianUser;
+type PostCustodianUserResponse = number;
 
 type PostCustodianUserPayload = Omit<
   CustodianUser,
@@ -18,8 +18,8 @@ type PatchCustodianUserPayload = Omit<
 
 export type {
   GetCustodiansUsersResponse,
-  PostCustodianUserResponse,
-  PostCustodianUserPayload,
-  PatchCustodianUserResponse,
   PatchCustodianUserPayload,
+  PatchCustodianUserResponse,
+  PostCustodianUserPayload,
+  PostCustodianUserResponse,
 };
