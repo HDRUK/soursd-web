@@ -27,7 +27,7 @@ const mockedCustodianUser = (
   created_at: faker.date.past().toISOString(),
   updated_at: faker.date.recent().toISOString(),
   ...custodianUser,
-  permissions: custodianUser?.permissions || [],
+  user_permissions: custodianUser?.user_permissions || [],
 });
 
 export { mockedCustodian, mockedCustodianUser };

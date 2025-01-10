@@ -25,8 +25,8 @@ interface Permission {
   created_at: string;
   updated_at: string;
   name: string;
-  enabled: number;
-  pivot: {
+  enabled: boolean;
+  pivot?: {
     organisation_id: number;
     permission_id: number;
   };
@@ -61,6 +61,12 @@ type Approval = {
   };
 };
 
+interface UserPermission {
+  custodian_user_id: number;
+  permission_id: number;
+  permission: Permission;
+}
+
 interface CustodianUser {
   id: number;
   created_at: string;
@@ -69,7 +75,7 @@ interface CustodianUser {
   last_name: string;
   email: string;
   custodian_id: number;
-  permissions: number[];
+  user_permissions: UserPermission[];
 }
 
 interface UserProfileCompletionFields {

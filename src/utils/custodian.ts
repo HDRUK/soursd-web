@@ -11,13 +11,13 @@ function isCustodianAdministrator(
     permissions
   );
 
-  return user?.permissions?.[0] === permission?.id;
+  return user?.user_permissions?.[0]?.permission_id === permission?.id;
 }
 
 function isCustodianApprover(user: CustodianUser, permissions: Permission[]) {
   const permission = getPermission(CustodianUserRoles.APPROVER, permissions);
 
-  return user?.permissions?.[0] === permission?.id;
+  return user?.user_permissions?.[0]?.permission_id === permission?.id;
 }
 
 export { isCustodianAdministrator, isCustodianApprover };

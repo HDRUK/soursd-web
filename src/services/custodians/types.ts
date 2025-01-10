@@ -6,7 +6,7 @@ interface GetCustodianInviteResponse {
   contact_email: string;
   invite_sent_at: string;
   invite_accepted_at: string;
-  enabled: number;
+  enabled: boolean;
 }
 
 interface SendCustodianInvitePayload {

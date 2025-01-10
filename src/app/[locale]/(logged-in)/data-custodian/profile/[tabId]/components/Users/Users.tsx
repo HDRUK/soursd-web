@@ -38,7 +38,7 @@ export default function Users() {
     data: custodiansData,
   } = useQuery({
     queryKey: ["getCustodianUsers", custodian?.id],
-    queryFn: () => getCustodianUsers(),
+    queryFn: ({ queryKey }) => getCustodianUsers(queryKey[1]),
   });
 
   const { mutateAsync: deleteCustodianUserAsync } = useMutation({
@@ -110,7 +110,10 @@ export default function Users() {
           isError: isGetCustodiansError,
         }}>
         {custodiansData?.data.map(custodianUser => {
-          const { first_name, last_name, created_at } = custodianUser;
+          const { first_name, last_name, created_at, user_permissions } =
+            custodianUser;
+
+          const role = user_permissions?.[0]?.permission?.name;
 
           return (
             <ResultsCard
@@ -126,7 +129,7 @@ export default function Users() {
                     {first_name} {last_name}
                   </Typography>
                   {/* Will be read from db */}
-                  <Typography>Administrator</Typography>
+                  <Typography>{role && t(role)}</Typography>
                 </>
               }
               details={

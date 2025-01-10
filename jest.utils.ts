@@ -29,10 +29,18 @@ function mock200Json<T>(data: T) {
   };
 }
 
-function mockPagedResults<T>(data: T) {
+function mockPagedResults<T>(
+  data: T[],
+  page: number = 1,
+  perPage: number = 25
+) {
+  const startIndex = (page - 1) * perPage;
+  const endIndex = startIndex + perPage;
+  const paginatedData = data.slice(startIndex, endIndex);
+
   return {
-    current_page: 1,
-    data,
+    current_page: page,
+    data: paginatedData,
   };
 }
 
