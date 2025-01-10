@@ -6,9 +6,8 @@ import UserRegisteredStatus from "@/components/UserRegisteredStatus";
 import { DecoupleIcon } from "@/consts/icons";
 import { useStore } from "@/data/store";
 import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
-import { PageGuidance } from "@/modules";
+import { PageGuidance, PageSection } from "@/modules";
 import SearchBar from "@/modules/SearchBar";
-import { getUsers } from "@/services/users";
 import { formatShortDate } from "@/utils/date";
 import { isRegistered } from "@/utils/user";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
@@ -16,8 +15,12 @@ import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined
 import { Box, Button, IconButton, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UserModal from "../UserModal";
+import { getOrganisationUsers } from "@/services/organisations";
+import Pagination from "@/components/Pagination";
+import usePaginatedQuery from "@/hooks/usePaginatedQuery";
+
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
 
@@ -30,9 +33,19 @@ export default function Users() {
     isError: isGetUsersError,
     isLoading: isGetUsersLoading,
     data: usersData,
-  } = useQuery({
-    queryKey: ["getUsers", organisation?.id],
-    queryFn: () => getUsers(),
+    last_page,
+    page,
+    setPage,
+  } = usePaginatedQuery({
+    queryKeyBase: ["getOrganisationUsers", organisation?.id],
+    queryFn: queryParams => {
+      return getOrganisationUsers(organisation?.id, queryParams, {
+        error: {
+          message: "getUsersError",
+        },
+      });
+    },
+    enabled: !!organisation,
   });
 
   return (
@@ -61,7 +74,7 @@ export default function Users() {
           isLoading: isGetUsersLoading,
           isError: isGetUsersError,
         }}>
-        {usersData?.data?.data.map(user => {
+        {usersData?.map(user => {
           const { first_name, last_name, created_at, email } = user;
 
           return (
@@ -98,6 +111,21 @@ export default function Users() {
           );
         })}
       </Results>
+      <PageSection
+        sx={{
+          flexGrow: 1,
+          display: "flex",
+          justifyContent: "center",
+        }}>
+        <Pagination
+          isLoading={isGetUsersLoading}
+          page={page}
+          count={last_page}
+          onChange={(e: React.ChangeEvent<unknown>, page: number) =>
+            setPage(page)
+          }
+        />
+      </PageSection>
       {!!organisation && (
         <UserModal
           organisation={organisation}
