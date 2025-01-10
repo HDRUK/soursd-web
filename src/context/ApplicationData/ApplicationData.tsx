@@ -156,13 +156,14 @@ const ApplicationDataProvider = ({
   }, [!!systemConfigData?.data, value]);
 
   const isFinishedLoading =
-    user &&
-    organisation &&
-    histories &&
-    !isApplicationLoading &&
-    !isHistoriesLoading &&
-    custodian &&
-    sectors;
+    (user &&
+      organisation &&
+      histories &&
+      !isApplicationLoading &&
+      !isHistoriesLoading &&
+      custodian &&
+      sectors) ||
+    !me;
 
   return (
     <ApplicationDataContext.Provider value={providerValue}>

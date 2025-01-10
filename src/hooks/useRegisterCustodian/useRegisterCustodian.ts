@@ -38,9 +38,9 @@ export default function useRegisterCustodian(email: string | undefined) {
 
   const { mutateAsync: mutateAsyncCustodian, ...patchCustodianState } =
     useMutation({
-      mutationKey: ["patchCustodianByEmail", email],
+      mutationKey: ["patchCustodianByEmail", custodianData?.data.id],
       mutationFn: (payload: PatchCustodianPayload) => {
-        return patchCustodianByEmail(email, payload, {
+        return patchCustodianByEmail(custodianData?.data.id, payload, {
           error: { message: "patchCustodianByEmailError" },
         });
       },
@@ -49,10 +49,16 @@ export default function useRegisterCustodian(email: string | undefined) {
   useEffect(() => {
     async function registerCustodian() {
       if (custodianData) {
+        console.log("**** CUSTODIAN DATA", custodianData);
         await mutateAsync({ account_type: AccountType.CUSTODIAN });
+
+        console.log("**** mutateAsync");
+
         await mutateAsyncCustodian({
           invite_accepted_at: formatNowDBDate(),
         });
+
+        console.log("**** mutateAsyncCustodian");
 
         setCustodian(custodianData.data);
         redirect(routes.profileCustodianDetails.path);

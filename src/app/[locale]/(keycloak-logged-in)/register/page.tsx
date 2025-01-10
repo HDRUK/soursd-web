@@ -1,13 +1,15 @@
 import { withConfig } from "@/components/Config";
 import PageContainer from "@/modules/PageContainer";
 import PageSection from "@/modules/PageSection";
-import { parseValidJSON } from "@/utils/json";
+import { convertJwtToJSON } from "@/utils/json";
 import { cookies } from "next/headers";
 import AccountConfirm from "./components/AccountConfirm";
 
 async function Page() {
   const cookieStore = await cookies();
-  const token = parseValidJSON(cookieStore.get("access_token")?.value || "{}");
+  const token = convertJwtToJSON(
+    cookieStore.get("access_token")?.value || "{}"
+  );
 
   return (
     <PageContainer>

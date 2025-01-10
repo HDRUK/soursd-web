@@ -20,7 +20,17 @@ export async function GET(req: Request) {
 
   const tokenUrl = `${keycloak.authServerUrl}/realms/${keycloak.realm}/protocol/openid-connect/token`;
 
+  console.log("**** TOKEN URL", tokenUrl);
+
   try {
+    console.log("**** POST AUTH", {
+      grant_type: "authorization_code",
+      client_id: keycloak.clientId,
+      client_secret: keycloak.clientSecret,
+      code,
+      redirect_uri: keycloak.redirectUriLogin,
+    });
+
     const response = await axios.post(
       tokenUrl,
       new URLSearchParams({
@@ -33,7 +43,11 @@ export async function GET(req: Request) {
       { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
     );
 
+    console.log("*** RESPONSE", response?.data);
+
     const { access_token, refresh_token, expires_in } = response.data;
+
+    console.log("**** access_token", access_token);
 
     cookieStore.set("access_token", access_token, {
       httpOnly: false,
