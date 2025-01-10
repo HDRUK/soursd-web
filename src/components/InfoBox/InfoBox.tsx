@@ -5,7 +5,7 @@ interface InfoBoxProps {
   index: number;
 }
 
-const InfoBox: React.FC<InfoBoxProps> = ({ children, index }) => {
+const InfoBox = ({ children, index }: InfoBoxProps) => {
   return (
     <StyledInfoBox>
       <StyledAlert icon={<StyledIcon>{index}</StyledIcon>}>

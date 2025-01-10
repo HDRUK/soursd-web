@@ -7,7 +7,7 @@ export const StyledInfoBox = styled("div")(() => ({
 
 export const StyledAlert = styled(Alert)(({ theme }) => ({
   width: "100%",
-  backgroundColor: theme.palette.background1.lightPurple,
+  backgroundColor: theme.palette.lightPurple?.main,
   fontWeight: "bold",
   alignItems: "center",
 }));

@@ -21,7 +21,7 @@ const Configuration = () => {
     <Box display="flex" justifyContent="center" padding={2}>
       <Box display="flex" flexDirection="column" gap={0} maxWidth={1000}>
         {rules?.data.nodes.map((node, index) => (
-          <InfoBox index={index + 1}>
+          <InfoBox key={`info-box-${node.name}`} index={index + 1}>
             {`${t(`${node.name}.title`)}: ${t(`${node.name}.description`)}`}
           </InfoBox>
         ))}
