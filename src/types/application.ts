@@ -125,6 +125,7 @@ interface User {
     verified: boolean;
     training?: ResearcherTraining[];
   };
+  is_delegate: number;
 }
 
 interface OrganisationIdvt {
@@ -165,6 +166,7 @@ interface Organisation extends OrganisationIdvt {
   ce_certification_num: string;
   ce_plus_certified: boolean;
   ce_plus_certification_num: string;
+  departments: Department[];
 }
 
 interface ResearcherEducation {
@@ -269,6 +271,18 @@ interface Auth {
   expires: number;
 }
 
+interface Department {
+  category: string;
+  created_at: string;
+  id: number;
+  name: string;
+  pivot: {
+    organisation_id: number;
+    department_id: number;
+  };
+  updated_at: string;
+}
+
 interface ApplicationDataState {
   routes: Record<
     keyof typeof ROUTES,
@@ -307,4 +321,5 @@ export type {
   UserProfileCompletionJson,
   UserProfileCompletionFields,
   Sector,
+  Department,
 };

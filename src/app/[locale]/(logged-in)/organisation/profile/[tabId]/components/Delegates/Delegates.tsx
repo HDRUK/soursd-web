@@ -2,27 +2,13 @@
 
 import { mockedManageDelegatesGuidance } from "@/mocks/data/cms";
 import { PageGuidance, PageSection } from "@/modules";
-import {
-  getOrganisationUsers,
-  patchOrganisation,
-  PatchOrganisationPayload,
-} from "@/services/organisations";
+import { getOrganisationUsers } from "@/services/organisations";
 import { useStore } from "@/data/store";
-import { useMutation, useQuery } from "@tanstack/react-query";
 import Results from "@/components/Results";
-import { useTranslations } from "next-intl";
-import { getCustodianUsers } from "@/services/custodian_users";
+import { useTranslations } from "
+next-intl";
 import { formatShortDate } from "@/utils/date";
-import {
-  Card,
-  CardContent,
-  Typography,
-  IconButton,
-  Pagination,
-} from "@mui/material";
-import { Box } from "@mui/system";
-import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
-import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
+import { Typography, IconButton, Pagination } from "@mui/material";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import Icon from "@/components/Icon";
 import usePaginatedQuery from "@/hooks/usePaginatedQuery";
@@ -31,9 +17,8 @@ import ResultsCard from "@/components/ResultsCard";
 import UserRegisteredStatus from "@/components/UserRegisteredStatus";
 import { DecoupleIcon } from "@/consts/icons";
 import { isRegistered } from "@/utils/user";
-import UserModal from "../UserModal";
 import usePatchOrganisation from "../../hooks/usePatchOrganisation";
-import DelegatesForm, { DelegatesFormValues } from "./DelegatesForm";
+import DelegatesForm from "./DelegatesForm";
 
 const NAMESPACE_PROFILE_ORGANISATION = "ProfileOrganisation";
 

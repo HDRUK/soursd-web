@@ -22,6 +22,7 @@ interface FormFieldArrayProps {
   name: string;
   removeButtonLabel: string;
   addButtonLabel: string;
+  renderButtons?: boolean;
 }
 
 const FormFieldArray = ({
@@ -30,6 +31,8 @@ const FormFieldArray = ({
   name,
   removeButtonLabel,
   addButtonLabel,
+  renderButtons = true,
+  ...restProps
 }: FormFieldArrayProps) => {
   const {
     fields: fieldsArray,
@@ -60,7 +63,8 @@ const FormFieldArray = ({
           display="flex"
           flexDirection="row"
           gap={2}
-          alignItems="center">
+          alignItems="center"
+          {...restProps}>
           {fields.map(fieldConfig => (
             <RenderFormField
               // eslint-disable-next-line react/no-array-index-key
@@ -73,18 +77,22 @@ const FormFieldArray = ({
               }}
             />
           ))}
-          <Button
-            disabled={fieldsArray.length < 2}
-            onClick={() => remove(index)}>
-            {removeButtonLabel}
-          </Button>
+          {renderButtons && (
+            <Button
+              disabled={fieldsArray.length < 2}
+              onClick={() => remove(index)}>
+              {removeButtonLabel}
+            </Button>
+          )}
         </Box>
       ))}
-      <Box sx={{ mt: 1, display: "flex", justifyContent: "flex-end" }}>
-        <Button onClick={handleAddRow} variant="contained" color="primary">
-          {addButtonLabel}
-        </Button>
-      </Box>
+      {renderButtons && (
+        <Box sx={{ mt: 1, display: "flex", justifyContent: "flex-end" }}>
+          <Button onClick={handleAddRow} variant="contained" color="primary">
+            {addButtonLabel}
+          </Button>
+        </Box>
+      )}
     </Box>
   );
 };

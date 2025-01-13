@@ -100,7 +100,7 @@
     "inviteSuccessfulTitle": "User invited",
     "inviteSuccessfulDescription": "The user has been successfully invited and have been notified via email",
     "inviteUserAriaLabel": "Invite user",
-    "getUsersError": "Unable to get the list of users. Please try again or contact us at <applicationLink></applicationLink>"
+    "getError": "Unable to get the list of users. Please try again or contact us at <applicationLink></applicationLink>"
   },
   "Form": {
     "cancelButton": "Cancel",
@@ -221,10 +221,6 @@
     "whatIsTheOrcId": "Your ORCiD is a value which identifies you to Data Custodians (although in general anyone) and provides information to them such as your research outputs and activities. If you don't have one of these you can signup at https://orcid.org/register. Although it is recommended to provide this, it is not required for the registry, however it is required for the content scrape.",
     "roleAdministrator": "Administrator",
     "roleApprover": "Approver",
-    "departmentName": "Department Name",
-    "delegateFullName": "Delegate Full Name",
-    "delegateJobTitle": "Delegate Job Title",
-    "delegateEmail": "Delegate Email",
     "consentScrapeDescription": "I consent to the Registry using information I provide to gather my historical experience",
     "organisationDataSecurityCompliance": {
       "title": "Organisation data security compliance",
@@ -253,6 +249,13 @@
       "addButton": "Add Another Subsidiary",
       "nameInvalid": "Please provide a name for the organisation",
       "websiteInvalid": "Please provide a valid website for the organisation"
+    },
+    "organisationDelegates": {
+      "title": "Organisation Administrative Delegate",
+      "departmentName": "Department Name",
+      "delegateFullName": "Delegate Full Name",
+      "delegateJobTitle": "Delegate Job Title",
+      "delegateEmail": "Delegate Email"
     }
   },
   "Buttons": {
