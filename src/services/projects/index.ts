@@ -1,11 +1,13 @@
 import getProjects from "./getProjects";
-import getOrganisationProjects from "./getOrganisationProjects";
+import getEntityProjects from "./getEntityProjects";
 import getProjectUsers from "./getProjectUsers";
-import getApprovedProjects from "./getApprovedProjects";
+import getAllProjects from "./getAllProjects";
+import getUserApprovedProjects from "./getUserApprovedProjects";
 
 export {
   getProjects,
-  getOrganisationProjects,
+  getEntityProjects,
   getProjectUsers,
-  getApprovedProjects,
+  getAllProjects,
+  getUserApprovedProjects,
 };

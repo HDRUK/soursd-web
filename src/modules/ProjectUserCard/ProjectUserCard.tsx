@@ -10,9 +10,14 @@ import {
 } from "@tanstack/react-query";
 import IconButton from "@/components/IconButton";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import { getApprovedProjects } from "@/services/projects";
+import { getUserApprovedProjects } from "@/services/projects";
 import { useState, useCallback } from "react";
 import { UserDetailsModal } from "@/modules";
+import { EntityType } from "@/types/api";
+import { getEntityApproval } from "@/services/approvals";
+import { ApprovedUserIcon } from "@/consts/icons";
+import Text from "@/components/Text";
+import { useStore } from "@/data/store";
 
 interface ProjectUserCardProps {
   projectUser: ProjectUser;
@@ -28,20 +33,28 @@ export default function ProjectUserCard({
   const t = useTranslations(NAMESPACE_TRANSLATIONS);
   const { registry, role } = projectUser;
   const { user, organisations, employment } = registry;
+  const custodian = useStore(store => store.getCustodian());
 
-  // note: Calum - forcing the user to be approved, have made a ticket/note of this
-  // - need the BE /projects/{id}/user to return to tell us if the user is approved for this project or not..
-  // - https://hdruk.atlassian.net/browse/SPEEDI-607
-  const isApproved = true;
+  const { data: isApprovedData } = useQuery({
+    queryKey: ["getUserHasCustodianApproval", user.id, custodian?.id],
+    queryFn: () => {
+      return getEntityApproval(EntityType.USER, user.id, custodian?.id, {
+        error: {
+          message: "getUserHasCustodianApprovalError",
+        },
+      });
+    },
+    enabled: !!custodian?.id,
+  });
 
   const { data: userApprovedProjects } = useQuery({
-    queryKey: ["getApprovedProjects", registry.id],
+    queryKey: ["getUserApprovedProjects", registry.id],
     queryFn: ({ queryKey }: QueryFunctionContext<QueryKey>) => {
       const [, id] = queryKey;
 
-      return getApprovedProjects(id as string, {
+      return getUserApprovedProjects(id as string, {
         error: {
-          message: "getApprovedProjects",
+          message: "getUserApprovedProjects",
         },
       });
     },
@@ -114,7 +127,16 @@ export default function ProjectUserCard({
             </div>
           </Box>
 
-          <Box>
+          <Box sx={{ gap: 2, display: "flex", alignItems: "center" }}>
+            {isApprovedData?.data && (
+              <Text
+                iconSize="40px"
+                startIcon={<ApprovedUserIcon />}
+                component="span">
+                {" "}
+              </Text>
+            )}
+
             <IconButton
               size="small"
               aria-label="Edit user"
@@ -123,7 +145,7 @@ export default function ProjectUserCard({
                   open: true,
                 })
               }>
-              <VisibilityIcon sx={{ color: "default.main" }} />
+              <VisibilityIcon sx={{ color: "default.main", fontSize: 40 }} />
             </IconButton>
           </Box>
         </Box>
@@ -132,7 +154,7 @@ export default function ProjectUserCard({
       <UserDetailsModal
         {...modalProps}
         organisation={organisations[0]}
-        isApproved={isApproved}
+        isApproved={isApprovedData?.data || false}
         user={user}
         onClose={handleCloseModal}
       />

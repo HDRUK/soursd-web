@@ -1,10 +1,29 @@
 "use client";
 
 import { ROUTES } from "@/consts/router";
-import { Custodian, Organisation, Sector, User } from "@/types/application";
+import {
+  Custodian,
+  Organisation,
+  Permission,
+  ResearcherAccreditation,
+  ResearcherEducation,
+  ResearcherEmployment,
+  ResearcherProject,
+  ResearcherTraining,
+  Sector,
+  User,
+} from "@/types/application";
 import { Routes } from "@/types/router";
 import { produce } from "immer";
 import { create } from "zustand";
+
+export interface StoreUserHistories {
+  employments: ResearcherEmployment[];
+  training: ResearcherTraining[];
+  education: ResearcherEducation[];
+  approvedProjects: ResearcherProject[];
+  accreditations: ResearcherAccreditation[];
+}
 
 interface StoreState {
   config: {
@@ -14,14 +33,20 @@ interface StoreState {
     };
     user?: User;
     organisation?: Organisation;
-    sectors?: Sector[];
+    sectors: Sector[];
+    permissions: Permission[];
     custodian?: Custodian;
+    histories?: StoreUserHistories;
   };
   setRoutes: (routes: Routes) => void;
   getUser: () => User | undefined;
   setUser: (user: User) => void;
-  getSectors: () => Sector[] | undefined;
+  getSectors: () => Sector[];
   setSectors: (sectors: Sector[]) => void;
+  getPermissions: () => Permission[];
+  setPermissions: (permissions: Permission[]) => void;
+  getHistories: () => StoreUserHistories | undefined;
+  setHistories: (histories: StoreUserHistories) => void;
   getOrganisation: () => Organisation | undefined;
   setOrganisation: (organisation: Organisation | undefined) => void;
   getCustodian: () => Custodian | undefined;
@@ -36,6 +61,8 @@ const useStore = create<StoreState>((set, get) => ({
       history: [],
       entries: ROUTES,
     },
+    permissions: [],
+    sectors: [],
   },
   getPreviousUrl: () => {
     const {
@@ -59,6 +86,15 @@ const useStore = create<StoreState>((set, get) => ({
   getUser: () => {
     return get().config.user;
   },
+  setHistories: (histories: StoreUserHistories) =>
+    set(
+      produce(state => {
+        state.config.histories = histories;
+      })
+    ),
+  getHistories: () => {
+    return get().config.histories;
+  },
   setSectors: (sectors: Sector[]) =>
     set(
       produce(state => {
@@ -67,6 +103,15 @@ const useStore = create<StoreState>((set, get) => ({
     ),
   getSectors: () => {
     return get().config.sectors;
+  },
+  setPermissions: (permissions: Permission[]) =>
+    set(
+      produce(state => {
+        state.config.permissions = permissions;
+      })
+    ),
+  getPermissions: () => {
+    return get().config.permissions;
   },
   setOrganisation: (organisation: Organisation | undefined) =>
     set(

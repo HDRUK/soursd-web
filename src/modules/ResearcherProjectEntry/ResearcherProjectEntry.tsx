@@ -1,8 +1,6 @@
 import { ResearcherProject } from "@/types/application";
 import { Typography } from "@mui/material";
-import ScheduleIcon from "@mui/icons-material/Schedule";
-import Text from "@/components/Text";
-import NotesIcon from "@mui/icons-material/Notes";
+import UserHistoryEntry from "../UserHistoryEntry";
 
 interface ResearcherProjectEntryProps {
   data: ResearcherProject;
@@ -14,12 +12,11 @@ export default function ResearcherProjectEntry({
   const { end_date, start_date, lay_summary, title } = data;
 
   return (
-    <div>
-      <Typography variant="h6">{title}</Typography>
-      <Text startIcon={<NotesIcon />}>{lay_summary}</Text>
-      <Text startIcon={<ScheduleIcon />}>
-        {start_date} - {end_date}
-      </Text>
-    </div>
+    <UserHistoryEntry
+      heading={title}
+      startDate={start_date}
+      endDate={end_date}
+      description={<Typography>{lay_summary}</Typography>}
+    />
   );
 }

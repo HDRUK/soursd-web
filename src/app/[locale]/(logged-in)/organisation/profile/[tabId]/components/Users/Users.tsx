@@ -1,51 +1,110 @@
-"use client";
-
+import ApplicationLink from "@/components/ApplicationLink";
+import Icon from "@/components/Icon";
+import Results from "@/components/Results";
+import ResultsCard from "@/components/ResultsCard";
+import UserRegisteredStatus from "@/components/UserRegisteredStatus";
+import { DecoupleIcon } from "@/consts/icons";
 import { useStore } from "@/data/store";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-} from "@mui/material";
-import { grey } from "@mui/material/colors";
+import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
+import { PageGuidance } from "@/modules";
+import SearchBar from "@/modules/SearchBar";
+import { getUsers } from "@/services/users";
+import { formatShortDate } from "@/utils/date";
+import { isRegistered } from "@/utils/user";
+import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
+import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
+import { Box, Button, IconButton, Typography } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
+import { useState } from "react";
+import UserModal from "../UserModal";
 
-const NAMESPACE_TRANSLATIONS_USERS_LIST = "UsersList";
+const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
 
 export default function Users() {
-  const organisation = useStore(store => store.config.organisation);
-  const filteredUsers = organisation?.registries.filter(({ user }) => !!user);
+  const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
+  const [open, setOpen] = useState(false);
+  const organisation = useStore(state => state.config.organisation);
 
-  const t = useTranslations(NAMESPACE_TRANSLATIONS_USERS_LIST);
+  const {
+    isError: isGetUsersError,
+    isLoading: isGetUsersLoading,
+    data: usersData,
+  } = useQuery({
+    queryKey: ["getUsers", organisation?.id],
+    queryFn: () => getUsers(),
+  });
 
   return (
-    <Table
-      sx={{ tableLayout: "fixed" }}
-      size="small"
-      aria-label={t("tableSummary")}>
-      <TableHead sx={{ background: grey["300"] }}>
-        <TableRow>
-          <TableCell>{t("emailHeading")}</TableCell>
-          <TableCell>{t("firstNameHeading")}</TableCell>
-          <TableCell>{t("lastNameHeading")}</TableCell>
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {filteredUsers?.map(({ user: { email, first_name, last_name } }) => {
+    <PageGuidance
+      title={t("manageUsers")}
+      {...mockedPersonalDetailsGuidanceProps}>
+      <Box sx={{ display: "flex", gap: 1, mb: 3 }}>
+        <Box component="form" role="search" sx={{ flexGrow: 1 }}>
+          <SearchBar onSearch={() => {}} />
+        </Box>
+        <div>
+          <Button
+            endIcon={<AddCircleOutlineOutlinedIcon />}
+            onClick={() => setOpen(true)}>
+            {t("inviteNewUserButton")}
+          </Button>
+        </div>
+      </Box>
+
+      <Results
+        noResultsMessage={t("noResults")}
+        errorMessage={t.rich("getError", {
+          applicationLink: ApplicationLink,
+        })}
+        queryState={{
+          isLoading: isGetUsersLoading,
+          isError: isGetUsersError,
+        }}>
+        {usersData?.data?.data.map(user => {
+          const { first_name, last_name, created_at, email } = user;
+
           return (
-            <TableRow key={email}>
-              <TableCell sx={{ wordBreak: "break-word" }}>{email}</TableCell>
-              <TableCell sx={{ wordBreak: "break-word" }}>
-                {first_name}
-              </TableCell>
-              <TableCell sx={{ wordBreak: "break-word" }}>
-                {last_name}
-              </TableCell>
-            </TableRow>
+            <ResultsCard
+              icon={
+                <Icon size="xlarge">
+                  <PersonOutlineOutlinedIcon />
+                </Icon>
+              }
+              content={
+                <>
+                  <Typography variant="h6">
+                    {first_name} {last_name}
+                  </Typography>
+                  <Typography>{email}</Typography>
+                </>
+              }
+              details={
+                <>
+                  <Typography color="caption.main">
+                    {t("invitedOn", {
+                      date: formatShortDate(created_at),
+                    })}
+                  </Typography>
+                  <UserRegisteredStatus registered={isRegistered(user)} />
+                </>
+              }
+              actions={
+                <IconButton size="small" color="inherit">
+                  <DecoupleIcon />
+                </IconButton>
+              }
+            />
           );
         })}
-      </TableBody>
-    </Table>
+      </Results>
+      {!!organisation && (
+        <UserModal
+          organisation={organisation}
+          open={open}
+          onClose={() => setOpen(false)}
+        />
+      )}
+    </PageGuidance>
   );
 }

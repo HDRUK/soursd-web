@@ -1,13 +1,23 @@
+import { useStore } from "@/data/store";
 import { mockedCustodianUser } from "@/mocks/data/custodian";
+import { mockedApiPermissions } from "@/mocks/data/store";
 import {
   patchCustodianUser,
+  postCustodianInviteUser,
   postCustodianUser,
 } from "@/services/custodian_users";
 import { act, fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 import { axe } from "jest-axe";
+import { mock200Json } from "jest.utils";
 import UserModal, { UserModalProps } from "./UserModal";
 
 jest.mock("@/services/custodian_users");
+jest.mock("@/data/store");
+
+(useStore as unknown as jest.Mock).mockReturnValue(mockedApiPermissions);
+(postCustodianUser as unknown as jest.Mock).mockResolvedValue(
+  mock200Json(1).json()
+);
 
 const mockOnClose = jest.fn();
 
@@ -15,7 +25,13 @@ const defaultUser = mockedCustodianUser();
 
 const renderUserModalDetails = (props?: Partial<UserModalProps>) => {
   return render(
-    <UserModal user={defaultUser} onClose={mockOnClose} open {...props} />
+    <UserModal
+      user={defaultUser}
+      custodianId={1}
+      onClose={mockOnClose}
+      open
+      {...props}
+    />
   );
 };
 
@@ -32,7 +48,7 @@ const renderUserModalDetailsUpdate = (id?: number) => {
 
 describe("<UserModal />", () => {
   afterEach(() => {
-    jest.resetAllMocks();
+    mockOnClose.mockReset();
   });
 
   it("has no accessibility validations", async () => {
@@ -53,6 +69,8 @@ describe("<UserModal />", () => {
     await waitFor(() => {
       expect(patchCustodianUser).toHaveBeenCalled();
     });
+
+    expect(postCustodianInviteUser).not.toHaveBeenCalled();
   });
 
   it("create user is called with no id", async () => {
@@ -61,6 +79,8 @@ describe("<UserModal />", () => {
     await waitFor(() => {
       expect(postCustodianUser).toHaveBeenCalled();
     });
+
+    expect(postCustodianInviteUser).toHaveBeenCalled();
   });
 
   it("show a success alert", async () => {

@@ -80,6 +80,10 @@ const ROUTES: Routes = {
     path: "/user/profile/affiliations",
     permissions: [UserGroup.USERS],
   },
+  profileResearcherProjects: {
+    path: "/user/profile/projects",
+    permissions: [UserGroup.USERS],
+  },
   profileResearcher: {
     path: "/user/profile",
     permissions: [UserGroup.USERS],
@@ -94,6 +98,10 @@ const ROUTES: Routes = {
   },
   profileOrganisationDetails: {
     path: "/organisation/profile/details",
+    permissions: [UserGroup.ORGANISATIONS],
+  },
+  profileOrganisationDetailsSubsidiaries: {
+    path: "/organisation/profile/details/subsidiaries",
     permissions: [UserGroup.ORGANISATIONS],
   },
   profileOrganisationManageUsers: {

@@ -7,7 +7,7 @@ interface ResearcherInviteResponse {
   contact_email: string;
   invite_sent_at: string;
   invite_accepted_at: string;
-  enabled: number;
+  enabled: boolean;
   organisation_id: number;
 }
 

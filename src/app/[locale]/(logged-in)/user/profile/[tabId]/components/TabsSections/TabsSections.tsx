@@ -54,6 +54,21 @@ export default function TabsSections() {
             <Text
               startIcon={
                 !isCategoryCompleted(
+                  UserProfileCompletionCategories.AFFILIATIONS
+                ) && <ErrorIcon color="error" />
+              }>
+              {t("affiliations")}
+            </Text>
+          }
+          href={routes.profileResearcherAffiliations.path}
+          component={Link}
+          value={PageTabs.AFFILIATIONS}
+        />
+        <Tab
+          label={
+            <Text
+              startIcon={
+                !isCategoryCompleted(
                   UserProfileCompletionCategories.EXPERIENCE
                 ) && <ErrorIcon color="error" />
               }>
@@ -80,19 +95,10 @@ export default function TabsSections() {
           value={PageTabs.TRAINING}
         />
         <Tab
-          label={
-            <Text
-              startIcon={
-                !isCategoryCompleted(
-                  UserProfileCompletionCategories.AFFILIATIONS
-                ) && <ErrorIcon color="error" />
-              }>
-              {t("affiliations")}
-            </Text>
-          }
-          href={routes.profileResearcherAffiliations.path}
+          label={t("projects")}
+          href={routes.profileResearcherProjects.path}
           component={Link}
-          value={PageTabs.AFFILIATIONS}
+          value={PageTabs.PROJECTS}
         />
       </Tabs>
     </Box>

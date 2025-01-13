@@ -3,8 +3,9 @@ enum FileType {
 }
 
 enum EntityType {
+  USER = "USER",
   RESEARCHER = "RESEARCHER",
   ORGANISATION = "ORGANISATION",
 }
 
-export { FileType, EntityType };
+export { EntityType, FileType };

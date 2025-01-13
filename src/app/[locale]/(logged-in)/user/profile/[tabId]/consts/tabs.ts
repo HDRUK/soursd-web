@@ -4,6 +4,7 @@ enum PageTabs {
   IDENTITY = "identity",
   TRAINING = "training",
   DETAILS = "details",
+  PROJECTS = "projects",
 }
 
 export { PageTabs };

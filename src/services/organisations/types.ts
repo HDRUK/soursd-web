@@ -1,3 +1,4 @@
+import { EMAIL_TEMPLATE } from "@/consts/application";
 import { Organisation, OrganisationIdvt } from "@/types/application";
 import { Paged } from "@/types/requests";
 
@@ -27,13 +28,24 @@ interface UpdateOrganisationPermissonsPayload {
 
 type GetOrganisationInviteResponse = Organisation;
 
+interface PostOrganisationInviteUserPayload {
+  first_name: string;
+  last_name: string;
+  email: string;
+  identifier?: EMAIL_TEMPLATE;
+}
+
+type PostOrganisationInviteUserResponse = number;
+
 export type {
-  OrganisationsResponse,
+  GetOrganisationInviteResponse,
+  Organisation,
   OrganisationResponse,
   OrganisationsIdvtResponse,
-  Organisation,
+  OrganisationsResponse,
+  PatchOrganisationPayload,
+  PostOrganisationInviteUserPayload,
+  PostOrganisationInviteUserResponse,
   UpdateOrganisationPermissionsResponse,
   UpdateOrganisationPermissonsPayload,
-  GetOrganisationInviteResponse,
-  PatchOrganisationPayload,
 };

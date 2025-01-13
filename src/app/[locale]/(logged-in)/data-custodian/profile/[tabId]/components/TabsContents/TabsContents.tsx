@@ -2,11 +2,12 @@
 
 import { useStore } from "@/data/store";
 import { notFound } from "next/navigation";
+import Projects from "@/modules/Projects";
 import { PageTabs } from "../../consts/tabs";
 import Details from "../Details";
 import Users from "../Users";
-import Projects from "../Projects";
 import Organisations from "../Organisations";
+import Configuration from "../Configuration";
 
 interface TabsContentsProps {
   tabId: string;
@@ -20,11 +21,11 @@ export default function TabsContents({ tabId }: TabsContentsProps) {
   return (
     <>
       {tabId === PageTabs.DETAILS && <Details custodian={custodian} />}
-      {tabId === PageTabs.PROJECTS && <Projects />}
+      {tabId === PageTabs.PROJECTS && <Projects variant="custodian" />}
       {tabId === PageTabs.ORGANISATIONS && <Organisations />}
       {tabId === PageTabs.USERS && <Users />}
       {tabId === PageTabs.KEYCARDS && "Keycards"}
-      {tabId === PageTabs.CONFIGURATION && "Configuration"}
+      {tabId === PageTabs.CONFIGURATION && <Configuration />}
     </>
   );
 }

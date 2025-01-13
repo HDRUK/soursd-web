@@ -1,4 +1,6 @@
+import { useStore } from "@/data/store";
 import { mockedCustodianUser } from "@/mocks/data/custodian";
+import { mockedApiPermissions } from "@/mocks/data/store";
 import { act, fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 import { faker } from "@faker-js/faker";
 import { axe } from "jest-axe";
@@ -7,7 +9,10 @@ import UserModalDetails, { UserModalDetailsProps } from "./UserModalDetails";
 jest.mock("@/services/custodians");
 jest.mock("@/data/store");
 
+(useStore as unknown as jest.Mock).mockReturnValue(mockedApiPermissions);
+
 const mockOnSubmit = jest.fn();
+const mockOnClose = jest.fn();
 const defaultUser = mockedCustodianUser();
 
 const renderUserModalDetails = (props?: Partial<UserModalDetailsProps>) => {
@@ -16,6 +21,7 @@ const renderUserModalDetails = (props?: Partial<UserModalDetailsProps>) => {
       user={defaultUser}
       queryState={{ isLoading: false, isError: false, error: "" }}
       onSubmit={mockOnSubmit}
+      onClose={mockOnClose}
       {...props}
     />
   );
@@ -23,7 +29,8 @@ const renderUserModalDetails = (props?: Partial<UserModalDetailsProps>) => {
 
 describe("<UserModalDetails />", () => {
   afterEach(() => {
-    jest.resetAllMocks();
+    mockOnSubmit.mockReset();
+    mockOnClose.mockReset();
   });
 
   it("has no accessibility validations", async () => {
@@ -50,8 +57,8 @@ describe("<UserModalDetails />", () => {
         email,
         first_name,
         last_name,
-        adminstrator: undefined,
-        approver: undefined,
+        administrator: false,
+        approver: false,
       });
     });
   });

@@ -1,13 +1,15 @@
+import { EntityType } from "@/types/api";
 import { ResponseJson, ResponseTranslations } from "@/types/requests";
-import { getRequest, handleJsonResponse } from "../requests";
-import { TrainingsResponse } from "./types";
+import { handleJsonResponse, getRequest } from "../requests";
 
 export default async (
-  id: number,
+  entityType: EntityType,
+  id: string | number,
+  custodianId: string | number,
   messages: ResponseTranslations
-): Promise<ResponseJson<TrainingsResponse>> => {
+): Promise<ResponseJson<boolean>> => {
   const response = await getRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/training/${id}`,
+    `${process.env.NEXT_PUBLIC_API_V1_URL}/approvals/${entityType}/${id}/custodian/${custodianId}`,
     undefined,
     {
       headers: {

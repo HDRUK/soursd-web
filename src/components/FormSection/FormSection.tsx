@@ -23,11 +23,11 @@ export default function FormSection({
           py: 1,
           backgroundColor: "default.main",
           color: "default.contrastText",
-          mb: 3,
+          mb: 2,
         }}>
         {heading}
       </Box>
-      <Box sx={{ px: 3 }}>{children}</Box>
+      <Box sx={{ px: 2 }}>{children}</Box>
     </Box>
   );
 }

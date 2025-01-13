@@ -21,6 +21,9 @@ import {
 import { getRoutes } from "./src/utils/router";
 import { ROUTES } from "./src/consts/router";
 import { mockedCustodianUser } from "./mocks/data/custodian";
+import { UserFeedSource } from "@/consts/user";
+import { mockedApiPermissions } from "./mocks/data/store";
+import { mock200Json, mockPagedResults } from "./jest.utils";
 
 const nextRouterMock = require("next-router-mock");
 
@@ -65,28 +68,16 @@ global.matchMedia = () => {
   };
 };
 
-function mock200Json<T>(data: T) {
-  return {
-    ok: true,
-    status: 200,
-    json: async () => ({
-      message: ResponseMessageType.SUCCESS,
-      data,
-    }),
-  };
-}
+async function mockFetch(url: string, init?: RequestInit) {
+  const [baseUrl, queryString] = url.split("?");
+  const queryParams = Object.fromEntries(new URLSearchParams(queryString));
+  const page = Number(queryParams.page) || 1;
+  const perPage = Number(queryParams.perPage) || 25;
 
-function mockPagedResults<T>(data: T) {
-  return {
-    current_page: 1,
-    data,
-  };
-}
-
-async function mockFetch(url: string) {
-  const formattedUrl = url.toLowerCase().split("?")[0]; //remove query params (for now)
-
-  switch (formattedUrl) {
+  switch (baseUrl) {
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/permissions`: {
+      return mock200Json(mockPagedResults(mockedApiPermissions));
+    }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/custodian_users/1`: {
       return mock200Json(
         mockedCustodianUser({
@@ -95,6 +86,10 @@ async function mockFetch(url: string) {
       );
     }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/custodian_users`: {
+      if (init?.method === "POST") {
+        return mock200Json(1);
+      }
+
       return mock200Json([
         mockedCustodianUser({
           id: 1,
@@ -112,6 +107,22 @@ async function mockFetch(url: string) {
         mockedUser({
           id: 1,
         })
+      );
+    }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/users`: {
+      return mock200Json(
+        mockPagedResults([
+          mockedUser({
+            id: 1,
+            created_at: "2024-01-01 00:00:00",
+            feed_source: UserFeedSource.ORG,
+            first_name: "John",
+            last_name: "Smith",
+          }),
+          mockedUser({
+            id: 2,
+          }),
+        ])
       );
     }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/users/2`: {
@@ -132,7 +143,7 @@ async function mockFetch(url: string) {
         }),
       ]);
     }
-    case `${process.env.NEXT_PUBLIC_API_V1_URL}/training/1`: {
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/training/registry/1`: {
       return mock200Json([
         mockedTraining({
           id: 1,
@@ -165,7 +176,7 @@ async function mockFetch(url: string) {
       ]);
     }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/projects`: {
-      return mock200Json(mockPagedResults(mockedProjects(10)));
+      return mock200Json(mockPagedResults(mockedProjects(10), page, perPage));
     }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/projects/user/1/approved`: {
       return mock200Json({
@@ -178,6 +189,9 @@ async function mockFetch(url: string) {
           }),
         ],
       });
+    }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/custodians/1/projects`: {
+      return mock200Json(mockPagedResults(mockedProjects(5)));
     }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/organisations/1/projects`: {
       return mock200Json(mockPagedResults(mockedProjects(10)));

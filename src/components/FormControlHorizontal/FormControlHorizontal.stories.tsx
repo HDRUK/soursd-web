@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { TextField } from "@mui/material";
-import { FormProvider, useForm } from "react-hook-form";
 import FormControlHorizontal, { FormControlHorizontalProps } from ".";
+import Form from "../Form";
+import FormField from "../FormField";
 
 const meta = {
   title: "components/FormControlHorizontal",
@@ -15,14 +16,12 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const FormControlHorizontalProvider = (props: FormControlHorizontalProps) => {
-  const methods = useForm();
-
   return (
-    <FormProvider {...methods}>
-      <FormControlHorizontal {...props}>
-        <TextField id="email" />
-      </FormControlHorizontal>
-    </FormProvider>
+    <Form defaultValues={{ name: "" }}>
+      {({ formState: { errors } }) => (
+        <FormControlHorizontal id="name" error={errors.name} {...props} />
+      )}
+    </Form>
   );
 };
 
@@ -30,6 +29,9 @@ export const Basic: Story = {
   args: {
     label: "Email",
     id: "email",
+    renderField: fieldProps => (
+      <FormField component={TextField} {...fieldProps} />
+    ),
   },
   render: props => <FormControlHorizontalProvider {...props} />,
 };

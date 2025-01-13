@@ -39,7 +39,7 @@ describe("<User />", () => {
     render(<Users />);
 
     await waitFor(() => {
-      expect(screen.getByText("Added on: 01/01/2024"));
+      expect(screen.getAllByText("Added on: 01/01/2024")[0]);
     });
 
     await waitFor(() => {

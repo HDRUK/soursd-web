@@ -1,6 +1,10 @@
 import { FileStatus, FileType } from "@/consts/files";
 import { ROUTES } from "@/consts/router";
-import { UserProfileCompletionCategories, UserGroup } from "@/consts/user";
+import {
+  UserProfileCompletionCategories,
+  UserGroup,
+  UserFeedSource,
+} from "@/consts/user";
 
 interface File {
   id: number;
@@ -21,8 +25,8 @@ interface Permission {
   created_at: string;
   updated_at: string;
   name: string;
-  enabled: number;
-  pivot: {
+  enabled: boolean;
+  pivot?: {
     organisation_id: number;
     permission_id: number;
   };
@@ -57,6 +61,12 @@ type Approval = {
   };
 };
 
+interface UserPermission {
+  custodian_user_id: number;
+  permission_id: number;
+  permission: Permission;
+}
+
 interface CustodianUser {
   id: number;
   created_at: string;
@@ -65,7 +75,7 @@ interface CustodianUser {
   last_name: string;
   email: string;
   custodian_id: number;
-  role: string;
+  user_permissions: UserPermission[];
 }
 
 interface UserProfileCompletionFields {
@@ -106,10 +116,14 @@ interface User {
   orc_id: string | null;
   orcid_scanning: boolean;
   orcid_scanning_completed_at: string | null;
+  created_at: string;
+  feed_source?: UserFeedSource;
+  unclaimed?: boolean;
   registry: {
     files?: File[];
     organisations?: Organisation[];
     verified: boolean;
+    training?: ResearcherTraining[];
   };
 }
 
@@ -147,6 +161,10 @@ interface Organisation extends OrganisationIdvt {
     user: User;
     verified: boolean;
   }[];
+  ce_certified: boolean;
+  ce_certification_num: string;
+  ce_plus_certified: boolean;
+  ce_plus_certification_num: string;
 }
 
 interface ResearcherEducation {
@@ -175,6 +193,7 @@ interface ResearcherTraining {
   expires_at: string;
   training_name: string;
   expires_in_years: boolean;
+  id: number;
 }
 
 interface ResearcherEmployment {

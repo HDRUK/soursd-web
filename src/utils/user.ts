@@ -18,9 +18,14 @@ function isOrcIdCompleted(user: User | undefined) {
   return !!user?.orcid_scanning_completed_at;
 }
 
+function isRegistered({ unclaimed }: User) {
+  return !unclaimed;
+}
+
 export {
   getInitialsFromUser,
   getInitialsFromOrganisation,
   isOrcIdScanning,
   isOrcIdCompleted,
+  isRegistered,
 };

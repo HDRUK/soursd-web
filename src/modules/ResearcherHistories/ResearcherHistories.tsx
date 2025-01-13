@@ -22,7 +22,7 @@ export default function ResearcherHistories({
   const accreditations = data.getAccreditations?.data?.data;
   const employments = data.getEmployments?.data;
   const educations = data.getEducations?.data;
-  const projects = data.getApprovedProjects?.data;
+  const projects = data.getUserApprovedProjects?.data;
   const trainings = data.getTrainings?.data;
 
   return (
@@ -40,7 +40,7 @@ export default function ResearcherHistories({
               <ResearcherAccreditationEntry data={accreditation} />
             ))
           ) : (
-            <Message severity="warning">{t("noAccreditationsFound")}</Message>
+            <Message severity="info">{t("noAccreditationsFound")}</Message>
           )}
         </AccordionDetails>
       </Accordion>
@@ -57,7 +57,7 @@ export default function ResearcherHistories({
               <ResearcherEducationEntry data={education} />
             ))
           ) : (
-            <Message severity="warning">{t("noEducationsFound")}</Message>
+            <Message severity="info">{t("noEducationsFound")}</Message>
           )}
         </AccordionDetails>
       </Accordion>
@@ -74,7 +74,7 @@ export default function ResearcherHistories({
               <ResearcherEmploymentEntry data={employment} />
             ))
           ) : (
-            <Message severity="warning">{t("noEmploymentsFound")}</Message>
+            <Message severity="info">{t("noEmploymentsFound")}</Message>
           )}
         </AccordionDetails>
       </Accordion>
@@ -89,7 +89,7 @@ export default function ResearcherHistories({
           {projects?.length ? (
             projects.map(project => <ResearcherProjectEntry data={project} />)
           ) : (
-            <Message severity="warning">{t("noProjectsFound")}</Message>
+            <Message severity="info">{t("noProjectsFound")}</Message>
           )}
         </AccordionDetails>
       </Accordion>
@@ -106,7 +106,7 @@ export default function ResearcherHistories({
               <ResearcherTrainingEntry data={training} />
             ))
           ) : (
-            <Message severity="warning">{t("noTrainingsFound")}</Message>
+            <Message severity="info">{t("noTrainingsFound")}</Message>
           )}
         </AccordionDetails>
       </Accordion>

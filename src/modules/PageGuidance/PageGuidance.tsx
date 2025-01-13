@@ -18,9 +18,11 @@ export default function PageGuidance({
   return (
     <Guidance {...restProps}>
       <PageContent>
-        <PageTitle>
-          <Typography variant="h3">{title}</Typography>
-        </PageTitle>
+        {title && (
+          <PageTitle>
+            <Typography variant="h3">{title}</Typography>
+          </PageTitle>
+        )}
         <PageSection sx={{ flexGrow: 1 }}>{children}</PageSection>
       </PageContent>
     </Guidance>

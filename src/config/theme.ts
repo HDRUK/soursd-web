@@ -13,34 +13,35 @@ const createColor = (mainColor: string) => {
 };
 
 const headingStyles = {
-  fontWeight: 500,
+  fontWeight: 600,
 };
 
 const PALETTE_THEME_PURPLE_BLUE = {
   typography: {
+    fontFamily: `"Inter", "Roboto", "Helvetica", "Arial", sans-serif`,
     h1: {
       ...headingStyles,
-      fontSize: "2.985rem",
+      fontSize: "1.476rem",
     },
     h2: {
       ...headingStyles,
-      fontSize: "2.488rem",
+      fontSize: "1.383rem",
     },
     h3: {
       ...headingStyles,
-      fontSize: "2.074rem",
+      fontSize: "1.296rem",
     },
     h4: {
       ...headingStyles,
-      fontSize: "1.728rem",
+      fontSize: "1.215rem",
     },
     h5: {
       ...headingStyles,
-      fontSize: "1.4rem",
+      fontSize: "1.138rem",
     },
     h6: {
       ...headingStyles,
-      fontSize: "1.2rem",
+      fontSize: "1.067rem",
     },
   },
   palette: {
@@ -50,7 +51,6 @@ const PALETTE_THEME_PURPLE_BLUE = {
       dark: "#1e1e1e",
       main: "#1e1e1e",
       contrastText: "#fff",
-      lightPurple: "#f7f3fb",
     },
     greyLight: {
       light: "#fef7ff",
@@ -78,6 +78,9 @@ const PALETTE_THEME_PURPLE_BLUE = {
       dark: "#faf3e2",
       main: "#faf3e2",
       contrastText: "#000",
+    },
+    lightPurple: {
+      main: "#f7f3fb",
     },
   },
 };
