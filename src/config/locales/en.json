@@ -100,7 +100,7 @@
     "inviteSuccessfulTitle": "User invited",
     "inviteSuccessfulDescription": "The user has been successfully invited and have been notified via email",
     "inviteUserAriaLabel": "Invite user",
-    "getError": "Unable to get the list of users. Please try again or contact us at <applicationLink></applicationLink>"
+    "getUsersError": "Unable to get the list of users. Please try again or contact us at <applicationLink></applicationLink>"
   },
   "Form": {
     "cancelButton": "Cancel",

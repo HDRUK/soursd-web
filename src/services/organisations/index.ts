@@ -4,6 +4,7 @@ import getOrganisationIdvt from "./getOrganisationIdvt";
 import postPermissions from "./postPermissions";
 import patchOrganisation from "./patchOrganisation";
 import postOrganisationsInviteUser from "./postOrganisationsInviteUser";
+import getOrganisationUsers from "./getOrganisationUsers";
 
 export {
   getOrganisations,
@@ -12,6 +13,7 @@ export {
   getOrganisationIdvt,
   patchOrganisation,
   postOrganisationsInviteUser,
+  getOrganisationUsers,
 };
 
 export type * from "./types";

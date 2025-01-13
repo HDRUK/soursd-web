@@ -56,7 +56,6 @@ export default function Layout({ children, params: { locale } }: LayoutProps) {
   useEffect(() => {
     const performAuthCheck = async () => {
       const user = await validateAccessToken(pathname, router);
-
       if (!user?.data) {
         throw new Error("Unauthorised 401");
       }
