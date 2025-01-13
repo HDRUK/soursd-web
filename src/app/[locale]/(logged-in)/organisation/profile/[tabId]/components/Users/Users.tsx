@@ -56,6 +56,7 @@ export default function Users() {
         </Box>
         <div>
           <Button
+            aria-label="modal-button"
             endIcon={<AddCircleOutlineOutlinedIcon />}
             onClick={() => setOpen(true)}>
             {t("inviteNewUserButton")}
@@ -84,7 +85,7 @@ export default function Users() {
               }
               content={
                 <>
-                  <Typography variant="h6">
+                  <Typography variant="body1" sx={{ fontWeight: "bolder" }}>
                     {first_name} {last_name}
                   </Typography>
                   <Typography>{email}</Typography>
@@ -101,7 +102,10 @@ export default function Users() {
                 </>
               }
               actions={
-                <IconButton size="small" color="inherit">
+                <IconButton
+                  size="small"
+                  color="inherit"
+                  aria-label="icon-button">
                   <DecoupleIcon />
                 </IconButton>
               }
