@@ -186,7 +186,7 @@ const ApplicationDataProvider = ({
           </OverlayCenterAlert>
         </PageContainer>
       )}
-      {isFinishedLoading && children}
+      {!!isFinishedLoading && children}
     </ApplicationDataContext.Provider>
   );
 };
