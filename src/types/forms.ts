@@ -15,6 +15,7 @@ export type FormFieldConfig<T extends ComponentType<any>> = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   validation?: yup.Schema<any>;
   defaultValue?: FormDefaultValue;
+  defaultValues?: FormDefaultValue[];
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

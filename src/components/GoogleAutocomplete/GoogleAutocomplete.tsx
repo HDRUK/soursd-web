@@ -5,12 +5,10 @@ import {
   TextField,
   TextFieldProps,
 } from "@mui/material";
-import { useRef } from "react";
-import { useController } from "react-hook-form";
 import useDebounce from "@/hooks/useDebounce";
-import { Control, FieldValues } from "react-hook-form";
+import { Control, FieldValues, useController } from "react-hook-form";
 import { Subsidiary } from "@/types/application";
-import React, { SyntheticEvent, useState, useEffect } from "react";
+import React, { SyntheticEvent, useState, useEffect, useRef } from "react";
 import fetchPredictions from "./actions";
 
 export interface AddressFields {
@@ -22,9 +20,14 @@ export interface AddressFields {
   country?: string;
 }
 
+export interface PredictionResponse {
+  description: string;
+  addressFields: AddressFields;
+}
+
 export interface GoogleAutocompleteOption {
   label: string;
-  value: AddressFields;
+  value: Subsidiary;
 }
 
 export interface GoogleAutocompleteProps {
@@ -33,7 +36,7 @@ export interface GoogleAutocompleteProps {
   textFieldProps?: TextFieldProps;
   label?: string;
   placeholder?: string;
-  onAddressSelected?: (value: AddressFields) => void;
+  onAddressSelected?: (value: AddressFields | string) => void;
   fullWidth?: boolean;
   onChange?: (e: SyntheticEvent<Element, Event>, value: AddressFields) => void;
 }
@@ -89,7 +92,7 @@ const GoogleAutocomplete: React.FC<GoogleAutocompleteProps> = ({
         const predictions = await fetchPredictions(debouncedInputValue);
         setOptions(
           predictions
-            .map((place: any) => {
+            .map((place: PredictionResponse) => {
               const { addressFields } = place;
               const {
                 addressLine1,
@@ -110,7 +113,7 @@ const GoogleAutocomplete: React.FC<GoogleAutocompleteProps> = ({
               } as unknown as Subsidiary;
               return {
                 label: getLabelFromSubsidiary(value),
-                value: value,
+                value,
               };
             })
             .reduce(
@@ -140,7 +143,7 @@ const GoogleAutocomplete: React.FC<GoogleAutocompleteProps> = ({
     setInputValue(newInputValue);
   };
 
-  const getOptionLabel = (option: any) => {
+  const getOptionLabel = (option: GoogleAutocompleteOption | string) => {
     if (typeof option === "string") return option;
     if (option?.label) return option.label;
     if (option?.value && getLabelFromSubsidiary(option.value))
@@ -150,9 +153,9 @@ const GoogleAutocomplete: React.FC<GoogleAutocompleteProps> = ({
 
   const handleOptionSelect = (
     _: SyntheticEvent,
-    newValue: GoogleAutocompleteOption
+    newValue: GoogleAutocompleteOption | string
   ) => {
-    const selected = newValue?.value;
+    const selected = typeof newValue === "string" ? newValue : newValue?.value;
     if (selected) {
       onChange(onAddressSelected ? onAddressSelected(selected) : selected);
     }

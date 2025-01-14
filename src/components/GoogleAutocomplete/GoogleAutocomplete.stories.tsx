@@ -1,5 +1,6 @@
 import React from "react";
 import { Meta, StoryObj } from "@storybook/react";
+import { useForm } from "react-hook-form";
 import GoogleAutocomplete, {
   GoogleAutocompleteProps,
   AddressFields,
@@ -19,25 +20,19 @@ const mockOnAddressSelected = (fields: AddressFields) => {
   console.log("Selected address:", fields);
 };
 
-const GoogleAutocompleteWithProvider = ({
-  label,
-  onAddressSelected,
-  fullWidth,
-}: GoogleAutocompleteProps) => {
-  return (
-    <GoogleAutocomplete
-      label={label}
-      onAddressSelected={onAddressSelected}
-      fullWidth={fullWidth}
-    />
-  );
+const GoogleAutocompleteWithControl = (
+  props: Omit<GoogleAutocompleteProps, "control">
+) => {
+  const { control } = useForm();
+  return <GoogleAutocomplete control={control} {...props} />;
 };
 
 export const Basic: Story = {
   args: {
+    name: "address",
     label: "Choose an address",
     fullWidth: true,
     onAddressSelected: mockOnAddressSelected,
-  },
-  render: props => <GoogleAutocompleteWithProvider {...props} />,
+  } as Omit<GoogleAutocompleteProps, "control">,
+  render: args => <GoogleAutocompleteWithControl {...args} />,
 };

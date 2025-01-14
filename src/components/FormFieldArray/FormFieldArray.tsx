@@ -1,9 +1,8 @@
 "use client";
 
-import { Button, Box } from "@mui/material";
+import { Button, Box, SxProps } from "@mui/material";
 import { Control, FieldValues, useFieldArray } from "react-hook-form";
 import { useEffect, useRef } from "react";
-import { SxProps } from "@mui/material";
 import { FormFieldsConfig, FormDefaultValue } from "@/types/forms";
 import RenderFormField from "@/components/RenderFormField";
 
@@ -31,7 +30,7 @@ const createDefaultValues = (fields: FormFieldsConfig) => {
         acc[field.name] =
           field.defaultValues && field.defaultValues[rowIndex] !== undefined
             ? field.defaultValues[rowIndex]
-            : ""; // Use the default value if it exists, otherwise blank
+            : "";
         return acc;
       },
       {} as Record<string, FormDefaultValue>
@@ -56,7 +55,11 @@ const FormFieldArray = ({
   name,
   removeButtonLabel,
   addButtonLabel,
-  boxSx,
+  boxSx = {
+    display: "flex",
+    flexDirection: "row",
+    gap: 2,
+  },
 }: FormFieldArrayProps) => {
   const {
     fields: fieldsArray,
@@ -86,13 +89,7 @@ const FormFieldArray = ({
   return (
     <Box sx={{ p: 1, gap: 2, display: "flex", flexDirection: "column" }}>
       {fieldsArray.map((field, index) => (
-        <Box
-          key={field.id}
-          display="flex"
-          flexDirection="row"
-          gap={2}
-          alignItems="center"
-          {...boxSx}>
+        <Box key={field.id} sx={boxSx}>
           {fields.map(fieldConfig => (
             <RenderFormField
               // eslint-disable-next-line react/no-array-index-key
