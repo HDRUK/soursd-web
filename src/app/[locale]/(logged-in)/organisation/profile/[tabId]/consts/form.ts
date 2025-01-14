@@ -38,15 +38,12 @@ const generateSubsidiariesFormFieldsConfig = (
         component: FormFieldArray,
         validation: yup.array().of(
           yup.object().shape({
-            name: yup
-              .string()
-              .transform(value => (value === "" ? null : value))
-              .when("address", {
-                is: (address: AddressFields) => Boolean(address),
-                otherwise: schema => schema.nullable(),
-                then: schema =>
-                  schema.required(t("organisationSubsidiaries.nameInvalid")),
-              }),
+            name: yup.string().when("address", {
+              is: (address: AddressFields) => Boolean(address),
+              otherwise: schema => schema.nullable(),
+              then: schema =>
+                schema.required(t("organisationSubsidiaries.nameInvalid")),
+            }),
           })
         ),
         componentProps: {
@@ -77,21 +74,7 @@ const generateSubsidiariesFormFieldsConfig = (
               name: "address",
               label: t("organisationSubsidiaries.address"),
               defaultValues: organisation?.subsidiaries?.map(
-                ({
-                  address_1,
-                  address_2,
-                  country,
-                  county,
-                  postcode,
-                  town,
-                }) => ({
-                  address_1,
-                  address_2,
-                  country,
-                  county,
-                  postcode,
-                  town,
-                })
+                ({ id, name, pivot, ...rest }) => rest
               ),
               component: GoogleAutocomplete,
               componentProps: {

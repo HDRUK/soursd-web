@@ -139,6 +139,10 @@ interface AddressFields {
 interface Subsidiary extends AddressFields {
   id?: number;
   name: string;
+  pivot: {
+    organisation_id: number;
+    subsidiary_id: number;
+  };
 }
 
 interface OrganisationIdvt {
