@@ -125,6 +125,7 @@ interface User {
     verified: boolean;
     training?: ResearcherTraining[];
   };
+  is_delegate: number;
 }
 interface AddressFields {
   postcode?: string;
@@ -173,6 +174,7 @@ interface Organisation extends OrganisationIdvt, AddressFields {
   ce_plus_certified: boolean;
   ce_plus_certification_num: string;
   subsidiaries?: Subsidiary[];
+  departments: Department[];
 }
 
 interface ResearcherEducation {
@@ -277,6 +279,18 @@ interface Auth {
   expires: number;
 }
 
+interface Department {
+  category: string;
+  created_at: string;
+  id: number;
+  name: string;
+  pivot: {
+    organisation_id: number;
+    department_id: number;
+  };
+  updated_at: string;
+}
+
 interface ApplicationDataState {
   routes: Record<
     keyof typeof ROUTES,
@@ -315,6 +329,10 @@ export type {
   UserProfileCompletionJson,
   UserProfileCompletionFields,
   Sector,
+<<<<<<< HEAD
   AddressFields,
   Subsidiary,
+=======
+  Department,
+>>>>>>> origin/develop
 };

@@ -68,3 +68,19 @@ export const mockedSoursdHomepageUsages = {
     </>
   ),
 };
+
+export const mockedManageDelegatesGuidance = {
+  infoTitle: "Guidance",
+  info: (
+    <>
+      <Typography variant="h3" mb={3}>
+        Did you know?
+      </Typography>
+      <Typography mb={5}>
+        Organisation delegates are nominated administrative groups or individuals that vouch 
+        for Users employed by their organisation. A delegate could be a HR representative, 
+        DPO representative, Contracts representative or Legal representative. 
+      </Typography>
+    </>
+  ),
+};

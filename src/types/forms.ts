@@ -12,6 +12,7 @@ export type FormFieldConfig<T extends ComponentType<any>> = {
   component: T;
   componentProps?: ComponentProps<T>;
   formControlProps?: FormControlHorizontalProps;
+  fieldSx?: SxProps;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   validation?: yup.Schema<any>;
   defaultValue?: FormDefaultValue;
