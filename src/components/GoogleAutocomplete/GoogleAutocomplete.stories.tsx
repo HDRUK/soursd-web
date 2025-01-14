@@ -3,8 +3,8 @@ import { Meta, StoryObj } from "@storybook/react";
 import { useForm } from "react-hook-form";
 import GoogleAutocomplete, {
   GoogleAutocompleteProps,
-  AddressFields,
 } from "./GoogleAutocomplete";
+import { AddressFields } from "@/types/application";
 
 const meta = {
   title: "components/GoogleAutocomplete",
