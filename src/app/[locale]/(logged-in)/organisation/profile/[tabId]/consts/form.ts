@@ -10,8 +10,6 @@ import { FormConfig } from "@/types/forms";
 import FormFieldArray from "@/components/FormFieldArray";
 import { AddressFields, Organisation } from "@/types/application";
 import GoogleAutocomplete from "@/components/GoogleAutocomplete";
-import SelectInput from "@/components/SelectInput";
-import { SelectInputProps } from "@/components/SelectInput/SelectInput";
 
 const generateSubsidiariesFormFieldsConfig = (
   t: (key: string) => string,
@@ -74,7 +72,7 @@ const generateSubsidiariesFormFieldsConfig = (
               name: "address",
               label: t("organisationSubsidiaries.address"),
               defaultValues: organisation?.subsidiaries?.map(
-                ({ id, name, pivot, ...rest }) => rest
+                ({ id: _id, name: _name, pivot: _pivot, ...rest }) => rest
               ),
               component: GoogleAutocomplete,
               componentProps: {
