@@ -329,10 +329,7 @@ export type {
   UserProfileCompletionJson,
   UserProfileCompletionFields,
   Sector,
-<<<<<<< HEAD
   AddressFields,
   Subsidiary,
-=======
   Department,
->>>>>>> origin/develop
 };
