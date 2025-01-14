@@ -54,13 +54,6 @@ describe("<Delegates />", () => {
     });
   });
 
-  it("renders without crashing", () => {
-    render(<Delegates />);
-    expect(
-      screen.getByText("Organisation Administrative Delegate")
-    ).toBeInTheDocument();
-  });
-
   it("displays delegate information correctly", async () => {
     render(<Delegates />);
 

@@ -7,7 +7,8 @@ import { useStore } from "@/data/store";
 import Results from "@/components/Results";
 import { useTranslations } from "next-intl";
 import { formatShortDate } from "@/utils/date";
-import { Typography, IconButton, Pagination } from "@mui/material";
+import { Typography, IconButton } from "@mui/material";
+import Pagination from "@/components/Pagination";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import Icon from "@/components/Icon";
 import usePaginatedQuery from "@/hooks/usePaginatedQuery";
@@ -16,30 +17,16 @@ import ResultsCard from "@/components/ResultsCard";
 import UserRegisteredStatus from "@/components/UserRegisteredStatus";
 import { DecoupleIcon } from "@/consts/icons";
 import { isRegistered } from "@/utils/user";
-import usePatchOrganisation from "../../hooks/usePatchOrganisation";
-import DelegatesForm from "./DelegatesForm";
 
 const NAMESPACE_PROFILE_ORGANISATION = "ProfileOrganisation";
 
 export default function Delegates() {
   const t = useTranslations(NAMESPACE_PROFILE_ORGANISATION);
 
-  const { organisation, setOrganisation } = useStore(state => {
+  const { organisation } = useStore(state => {
     return {
       organisation: state.config.organisation,
-      setOrganisation: state.setOrganisation,
     };
-  });
-
-  const {
-    isError,
-    isPending: isLoading,
-    error,
-    onSubmit,
-  } = usePatchOrganisation({
-    id: organisation?.id,
-    organisation,
-    setOrganisation,
   });
 
   const {
@@ -65,14 +52,6 @@ export default function Delegates() {
 
   return (
     <PageGuidance {...mockedManageDelegatesGuidance}>
-      <DelegatesForm
-        onSubmit={onSubmit}
-        queryState={{
-          isError,
-          isLoading,
-          error,
-        }}
-      />
       <Results
         noResultsMessage={t("noDelegates")}
         errorMessage={t.rich("getError", {
