@@ -88,6 +88,8 @@
     "navigationAriaLabel": "Profile tabs",
     "patchUserError": "There was a problem updating your user details. Please try again or contact us at <applicationLink></applicationLink>",
     "updateUserButton": "Save",
+    "noDelegates": "No Delegates Found",
+    "getDelegateError": "Unable to get the list of delegates",
     "searchOrganisationUsers": "Search for users",
     "inviteNewUserButton": "Invite new user",
     "invitedOn": "Invited on: {date}",
@@ -98,7 +100,7 @@
     "inviteSuccessfulTitle": "User invited",
     "inviteSuccessfulDescription": "The user has been successfully invited and have been notified via email",
     "inviteUserAriaLabel": "Invite user",
-    "getUsersError": "Unable to get the list of users. Please try again or contact us at <applicationLink></applicationLink>"
+    "getError": "Unable to get the list of users. Please try again or contact us at <applicationLink></applicationLink>"
   },
   "Form": {
     "cancelButton": "Cancel",
@@ -247,6 +249,13 @@
       "addButton": "Add Another Subsidiary",
       "nameInvalid": "Please provide a name for the organisation",
       "websiteInvalid": "Please provide a valid website for the organisation"
+    },
+    "organisationDelegates": {
+      "title": "Organisation Administrative Delegate",
+      "departmentName": "Department Name",
+      "delegateFullName": "Delegate Full Name",
+      "delegateJobTitle": "Delegate Job Title",
+      "delegateEmail": "Delegate Email"
     }
   },
   "Buttons": {
@@ -316,7 +325,8 @@
     "profileCompletedTitle": "Your profile has been completed",
     "profileCompletedDescription": "You have completed all the mandatory fields required for your profile to be considered 'complete'. This will be flagged to Data Custodians when they view your user details.",
     "continueLinkText": "Continue",
-    "profileCompleteWarningMessage": "You have not yet completed your profile. This may mean that some data custodians will not grant access to you. It is advised that you complete this process. Please navigate to your profile"
+    "profileCompleteWarningMessage": "You have not yet completed your profile. This may mean that some data custodians will not grant access to you. It is advised that you complete this process. Please navigate to your profile",
+    "addAnother": "Add Another"
   },
   "ProfileCompleteStatus": {
     "profileComplete": "Profile complete",
