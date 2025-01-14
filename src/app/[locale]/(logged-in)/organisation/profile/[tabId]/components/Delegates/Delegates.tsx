@@ -5,8 +5,7 @@ import { PageGuidance, PageSection } from "@/modules";
 import { getOrganisationUsers } from "@/services/organisations";
 import { useStore } from "@/data/store";
 import Results from "@/components/Results";
-import { useTranslations } from "
-next-intl";
+import { useTranslations } from "next-intl";
 import { formatShortDate } from "@/utils/date";
 import { Typography, IconButton, Pagination } from "@mui/material";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
@@ -75,7 +74,7 @@ export default function Delegates() {
         }}
       />
       <Results
-        noResultsMessage={t("noResults")}
+        noResultsMessage={t("noDelegates")}
         errorMessage={t.rich("getError", {
           applicationLink: ApplicationLink,
         })}

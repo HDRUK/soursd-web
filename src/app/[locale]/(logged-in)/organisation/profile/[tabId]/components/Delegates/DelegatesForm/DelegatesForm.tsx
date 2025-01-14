@@ -1,4 +1,5 @@
 "use client";
+
 import { useStore } from "@/data/store";
 import { PatchOrganisationPayload } from "@/services/organisations";
 import { Box } from "@mui/material";
@@ -26,9 +27,10 @@ export default function DelegatesForm({ onSubmit }: DelegatesFormProps) {
   const organisation = useStore(state => state.config.organisation);
 
   const departments = organisation?.departments || [];
+
   const filteredDepartments = departments.map(department => ({
     label: department.name,
-    value: department.id,
+    value: String(department.id),
   }));
 
   const formFieldsConfig = useMemo(

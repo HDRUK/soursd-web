@@ -293,7 +293,7 @@ const generateSubsidiariesFormFieldsConfig = (
 
 const generateDelegatesFormFieldsConfig = (
   t: (key: string) => string,
-  departments?: { label: string; value: number }[]
+  departments?: { label: string; value: string }[]
 ): FormConfig => [
   {
     sectionId: 1,
@@ -342,9 +342,7 @@ const generateDelegatesFormFieldsConfig = (
               component: SelectInput,
               componentProps: {
                 variant: "outlined",
-                inputProps: {
-                  "aria-label": t("organisationDelegates.departmentName"),
-                },
+                ariaLabel: t("organisationDelegates.departmentName"),
                 options: departments,
               } as SelectInputProps,
               formControlProps: {
