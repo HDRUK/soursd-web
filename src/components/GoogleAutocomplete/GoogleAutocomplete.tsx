@@ -7,11 +7,11 @@ import {
 } from "@mui/material";
 import useDebounce from "@/hooks/useDebounce";
 import { Control, FieldValues, useController } from "react-hook-form";
-import { Subsidiary } from "@/types/application";
 import React, { SyntheticEvent, useState, useEffect, useRef } from "react";
+import { AddressFields } from "@/types/application";
 import fetchPredictions from "./actions";
 
-export interface AddressFields {
+export interface GoogleAddressFields {
   postcode?: string;
   addressLine1?: string;
   addressLine2?: string;
@@ -22,12 +22,12 @@ export interface AddressFields {
 
 export interface PredictionResponse {
   description: string;
-  addressFields: AddressFields;
+  addressFields: GoogleAddressFields;
 }
 
 export interface GoogleAutocompleteOption {
   label: string;
-  value: Subsidiary;
+  value: AddressFields;
 }
 
 export interface GoogleAutocompleteProps {
@@ -41,8 +41,8 @@ export interface GoogleAutocompleteProps {
   onChange?: (e: SyntheticEvent<Element, Event>, value: AddressFields) => void;
 }
 
-const getLabelFromSubsidiary = (value: Subsidiary) =>
-  `${value.address_1}, ${value.county}`;
+const getLabelFromAddress = (value: AddressFields) =>
+  value ? `${value.address_1}, ${value.county}` : "";
 
 const GoogleAutocomplete: React.FC<GoogleAutocompleteProps> = ({
   control,
@@ -60,7 +60,7 @@ const GoogleAutocomplete: React.FC<GoogleAutocompleteProps> = ({
   const [options, setOptions] = useState<GoogleAutocompleteOption[]>([]);
   const [loading, setLoading] = useState(false);
   const [inputValue, setInputValue] = useState<string>(
-    getLabelFromSubsidiary(value)
+    getLabelFromAddress(value)
   );
   const debouncedInputValue = useDebounce(inputValue, 500);
   const isFirstRender = useRef(true);
@@ -68,7 +68,7 @@ const GoogleAutocomplete: React.FC<GoogleAutocompleteProps> = ({
   useEffect(() => {
     if (isFirstRender.current && value) {
       isFirstRender.current = false;
-      const label = getLabelFromSubsidiary(value);
+      const label = getLabelFromAddress(value);
       if (options.find(option => option.label === label)) return;
       setOptions(prevOptions => [
         {
@@ -81,7 +81,7 @@ const GoogleAutocomplete: React.FC<GoogleAutocompleteProps> = ({
   }, []);
 
   useEffect(() => {
-    if (getLabelFromSubsidiary(value) === debouncedInputValue) return;
+    if (getLabelFromAddress(value) === debouncedInputValue) return;
 
     const fetchOptions = async () => {
       if (!debouncedInputValue) {
@@ -94,25 +94,17 @@ const GoogleAutocomplete: React.FC<GoogleAutocompleteProps> = ({
           predictions
             .map((place: PredictionResponse) => {
               const { addressFields } = place;
-              const {
-                addressLine1,
-                addressLine2,
-                country,
-                county,
-                postcode,
-                town,
-              } = addressFields;
+              const { addressLine1, addressLine2, ...restAddress } =
+                addressFields;
 
               const value = {
                 address_1: addressLine1,
                 address_2: addressLine2,
-                country,
-                county,
-                postcode,
-                town,
-              } as unknown as Subsidiary;
+                ...restAddress,
+              } as AddressFields;
+
               return {
-                label: getLabelFromSubsidiary(value),
+                label: getLabelFromAddress(value),
                 value,
               };
             })
@@ -126,7 +118,7 @@ const GoogleAutocomplete: React.FC<GoogleAutocompleteProps> = ({
                 }
                 return uniqueOptions;
               },
-              [] as { label: string; value: Subsidiary }[]
+              [] as { label: string; value: AddressFields }[]
             )
         );
       } catch (error) {
@@ -146,8 +138,8 @@ const GoogleAutocomplete: React.FC<GoogleAutocompleteProps> = ({
   const getOptionLabel = (option: GoogleAutocompleteOption | string) => {
     if (typeof option === "string") return option;
     if (option?.label) return option.label;
-    if (option?.value && getLabelFromSubsidiary(option.value))
-      return getLabelFromSubsidiary(option.value);
+    if (option?.value && getLabelFromAddress(option.value))
+      return getLabelFromAddress(option.value);
     return "";
   };
 

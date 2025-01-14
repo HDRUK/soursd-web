@@ -126,16 +126,18 @@ interface User {
     training?: ResearcherTraining[];
   };
 }
+interface AddressFields {
+  postcode?: string;
+  address_1?: string;
+  address_2?: string;
+  town?: string;
+  county?: string;
+  country?: string;
+}
 
-interface Subsidiary {
+interface Subsidiary extends AddressFields {
   id?: number;
   name: string;
-  address_1: string;
-  address_2: string;
-  town: string;
-  county: string;
-  country: string;
-  postcode: string;
 }
 
 interface OrganisationIdvt {
@@ -145,14 +147,8 @@ interface OrganisationIdvt {
   idvt_errors: string;
 }
 
-interface Organisation extends OrganisationIdvt {
+interface Organisation extends OrganisationIdvt, AddressFields {
   companies_house_no: string;
-  address_1: string;
-  address_2: string;
-  town: string;
-  county: string;
-  country: string;
-  postcode: string;
   organisation_name: string;
   organisation_unique_id: string;
   dpo_name: string;
@@ -319,5 +315,6 @@ export type {
   UserProfileCompletionJson,
   UserProfileCompletionFields,
   Sector,
+  AddressFields,
   Subsidiary,
 };
