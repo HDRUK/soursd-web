@@ -241,7 +241,9 @@
     },
     "organisationSubsidiaries": {
       "title": "Organisation UK subsidiaries",
-      "name": "Subsidiary name",
+      "name": "Name",
+      "address": "Address",
+      "addressPlaceholder": "Type to search for an address",
       "website": "Subsidiary website",
       "removeButton": "Remove",
       "addButton": "Add Another Subsidiary",

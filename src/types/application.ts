@@ -127,6 +127,17 @@ interface User {
   };
 }
 
+interface Subsidiary {
+  id?: number;
+  name: string;
+  address_1: string;
+  address_2: string;
+  town: string;
+  county: string;
+  country: string;
+  postcode: string;
+}
+
 interface OrganisationIdvt {
   idvt_result: boolean | null;
   idvt_completed_at: string;
@@ -165,6 +176,7 @@ interface Organisation extends OrganisationIdvt {
   ce_certification_num: string;
   ce_plus_certified: boolean;
   ce_plus_certification_num: string;
+  subsidiaries?: Subsidiary[];
 }
 
 interface ResearcherEducation {
@@ -307,4 +319,5 @@ export type {
   UserProfileCompletionJson,
   UserProfileCompletionFields,
   Sector,
+  Subsidiary,
 };

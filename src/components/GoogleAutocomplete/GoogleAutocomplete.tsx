@@ -5,7 +5,12 @@ import {
   TextField,
   TextFieldProps,
 } from "@mui/material";
-import React, { SyntheticEvent, useState } from "react";
+import { useRef } from "react";
+import { useController } from "react-hook-form";
+import useDebounce from "@/hooks/useDebounce";
+import { Control, FieldValues } from "react-hook-form";
+import { Subsidiary } from "@/types/application";
+import React, { SyntheticEvent, useState, useEffect } from "react";
 import fetchPredictions from "./actions";
 
 export interface AddressFields {
@@ -19,69 +24,149 @@ export interface AddressFields {
 
 export interface GoogleAutocompleteOption {
   label: string;
-  addressFields: AddressFields;
+  value: AddressFields;
 }
 
 export interface GoogleAutocompleteProps {
+  name: string;
+  control: Control<FieldValues>;
   textFieldProps?: TextFieldProps;
   label?: string;
   placeholder?: string;
-  onAddressSelected?: (fields: AddressFields) => void;
+  onAddressSelected?: (value: AddressFields) => void;
   fullWidth?: boolean;
-  onChange?: (e: SyntheticEvent<Element, Event>, data: AddressFields) => void;
+  onChange?: (e: SyntheticEvent<Element, Event>, value: AddressFields) => void;
 }
 
-const GoogleAutocomplete: React.FC<GoogleAutocompleteProps> = ({
-  onAddressSelected,
-  label,
-  fullWidth = true,
-  onChange,
-  placeholder,
-  textFieldProps,
-  ...restProps
-}) => {
-  const [inputValue, setInputValue] = useState("");
-  const [options, setOptions] = useState<[]>([]);
-  const [loading, setLoading] = useState<boolean>();
+const getLabelFromSubsidiary = (value: Subsidiary) =>
+  `${value.address_1}, ${value.county}`;
 
-  const handleChange = (
-    e: SyntheticEvent<Element, Event>,
-    option: GoogleAutocompleteOption
-  ) => {
-    onChange?.(e, option.addressFields);
+const GoogleAutocomplete: React.FC<GoogleAutocompleteProps> = ({
+  control,
+  name,
+  label,
+  placeholder,
+  onAddressSelected,
+  fullWidth = true,
+  textFieldProps,
+}) => {
+  const controller = useController({ control, name });
+  const { field } = controller;
+  const { value, onChange } = field;
+
+  const [options, setOptions] = useState<GoogleAutocompleteOption[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [inputValue, setInputValue] = useState<string>(
+    getLabelFromSubsidiary(value)
+  );
+  const debouncedInputValue = useDebounce(inputValue, 500);
+  const isFirstRender = useRef(true);
+
+  useEffect(() => {
+    if (isFirstRender.current && value) {
+      isFirstRender.current = false;
+      const label = getLabelFromSubsidiary(value);
+      if (options.find(option => option.label === label)) return;
+      setOptions(prevOptions => [
+        {
+          label,
+          value,
+        },
+        ...prevOptions,
+      ]);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (getLabelFromSubsidiary(value) === debouncedInputValue) return;
+
+    const fetchOptions = async () => {
+      if (!debouncedInputValue) {
+        return;
+      }
+      setLoading(true);
+      try {
+        const predictions = await fetchPredictions(debouncedInputValue);
+        setOptions(
+          predictions
+            .map((place: any) => {
+              const { addressFields } = place;
+              const {
+                addressLine1,
+                addressLine2,
+                country,
+                county,
+                postcode,
+                town,
+              } = addressFields;
+
+              const value = {
+                address_1: addressLine1,
+                address_2: addressLine2,
+                country,
+                county,
+                postcode,
+                town,
+              } as unknown as Subsidiary;
+              return {
+                label: getLabelFromSubsidiary(value),
+                value: value,
+              };
+            })
+            .reduce(
+              (uniqueOptions, currentOption) => {
+                const seenLabels = new Set(
+                  uniqueOptions.map(option => option.label)
+                );
+                if (!seenLabels.has(currentOption.label)) {
+                  uniqueOptions.push(currentOption);
+                }
+                return uniqueOptions;
+              },
+              [] as { label: string; value: Subsidiary }[]
+            )
+        );
+      } catch (error) {
+        console.error("Error fetching address predictions:", error);
+        setOptions([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchOptions();
+  }, [debouncedInputValue]);
+
+  const handleInputChange = (_: SyntheticEvent, newInputValue: string) => {
+    setInputValue(newInputValue);
   };
 
-  const handleInputChange = async (_, value) => {
-    setInputValue(value);
-    if (value.length < 3) return;
-    setLoading(true);
-    try {
-      // Fetch predictions using the server-side function
-      const predictions = await fetchPredictions(value);
-      onAddressSelected?.(predictions[0].addressFields);
-      setOptions(
-        predictions.map(place => {
-          const { description, addressFields } = place;
+  const getOptionLabel = (option: any) => {
+    if (typeof option === "string") return option;
+    if (option?.label) return option.label;
+    if (option?.value && getLabelFromSubsidiary(option.value))
+      return getLabelFromSubsidiary(option.value);
+    return "";
+  };
 
-          return {
-            label: description,
-            addressFields,
-          };
-        })
-      );
-    } catch (error) {
-      console.error("Error fetching address predictions:", error);
+  const handleOptionSelect = (
+    _: SyntheticEvent,
+    newValue: GoogleAutocompleteOption
+  ) => {
+    const selected = newValue?.value;
+    if (selected) {
+      onChange(onAddressSelected ? onAddressSelected(selected) : selected);
     }
-    setLoading(false);
   };
 
   return (
     <MUIAutocomplete
       freeSolo
       options={options}
-      inputValue={inputValue}
+      getOptionLabel={getOptionLabel}
       onInputChange={handleInputChange}
-      onChange={handleChange}
+      onChange={handleOptionSelect}
+      value={options.find(option => option.value === value) || ""}
+      loading={loading}
       renderInput={params => (
         <TextField
           {...params}
@@ -104,17 +189,15 @@ const GoogleAutocomplete: React.FC<GoogleAutocompleteProps> = ({
             startAdornment: <HomeIcon />,
             endAdornment: (
               <>
-                {" "}
                 {loading ? (
                   <CircularProgress color="inherit" size={20} />
-                ) : null}{" "}
-                {params.InputProps.endAdornment}{" "}
+                ) : null}
+                {params.InputProps.endAdornment}
               </>
             ),
           }}
         />
       )}
-      {...restProps}
     />
   );
 };
