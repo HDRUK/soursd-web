@@ -82,9 +82,9 @@ describe("GoogleAutocomplete", () => {
       expect(screen.getByText("123 Elm St, Springfield")).toBeInTheDocument();
     });
   });
-  /*
+
   it("does not fetch predictions for input length < 3", async () => {
-    setup();
+    renderComponent();
     const input = screen.getByRole("combobox");
     fireEvent.change(input, { target: { value: "12" } });
 
@@ -101,7 +101,7 @@ describe("GoogleAutocomplete", () => {
       },
     ]);
 
-    setup({ onAddressSelected: mockOnAddressSelected });
+    renderComponent({ onAddressSelected: mockOnAddressSelected });
 
     const input = screen.getByRole("combobox");
     fireEvent.change(input, { target: { value: "123" } });
@@ -110,7 +110,7 @@ describe("GoogleAutocomplete", () => {
       expect(mockOnAddressSelected).toHaveBeenCalledWith({ postcode: "12345" });
     });
   });
-
+  /*
   it("handles fetch errors gracefully", async () => {
     const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation();
     mockFetchPredictions.mockRejectedValueOnce(new Error("Network error"));
