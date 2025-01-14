@@ -39,8 +39,14 @@ const generateSubsidiariesFormFieldsConfig = (
             name: yup
               .string()
               .transform(value => (value === "" ? null : value))
-              .required(t("organisationSubsidiaries.nameInvalid"))
-              .min(3, t("organisationSubsidiaries.nameInvalid")),
+              .when("address", {
+                is: address => Boolean(address),
+                otherwise: schema => schema.nullable(),
+                then: schema =>
+                  schema
+                    .required(t("organisationSubsidiaries.nameInvalid"))
+                    .min(3, t("organisationSubsidiaries.nameInvalid")),
+              }),
           })
         ),
         componentProps: {

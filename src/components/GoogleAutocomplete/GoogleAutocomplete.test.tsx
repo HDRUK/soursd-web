@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import {
   render,
   renderHook,
@@ -6,8 +6,7 @@ import {
   fireEvent,
   waitFor,
 } from "@testing-library/react";
-import { useForm } from "react-hook-form";
-import { FormProvider } from "react-hook-form";
+import { useForm, FormProvider } from "react-hook-form";
 import GoogleAutocomplete, {
   GoogleAutocompleteProps,
 } from "./GoogleAutocomplete";
@@ -24,7 +23,7 @@ const renderComponent = (props?: Partial<GoogleAutocompleteProps>) => {
   render(
     <FormProvider {...result.current}>
       <GoogleAutocomplete
-        name={"address"}
+        name="address"
         control={control}
         onAddressSelected={mockOnAddressSelected}
         label="Address"
@@ -37,6 +36,7 @@ const renderComponent = (props?: Partial<GoogleAutocompleteProps>) => {
 describe("GoogleAutocomplete", () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.useFakeTimers();
   });
 
   it("renders the component with a label", () => {
@@ -96,26 +96,42 @@ describe("GoogleAutocomplete", () => {
   it("calls onAddressSelected with the first prediction's addressFields", async () => {
     mockFetchPredictions.mockResolvedValueOnce([
       {
-        description: "123 Main St, Springfield",
-        addressFields: { postcode: "12345" },
+        addressFields: {
+          postcode: "12345",
+          addressLine1: "123 Main St",
+          addressLine2: "",
+          county: "Springfield",
+        },
       },
     ]);
 
     renderComponent({ onAddressSelected: mockOnAddressSelected });
 
     const input = screen.getByRole("combobox");
-    fireEvent.change(input, { target: { value: "123" } });
+    fireEvent.change(input, { target: { value: "123 Main St" } });
 
     await waitFor(() => {
-      expect(mockOnAddressSelected).toHaveBeenCalledWith({ postcode: "12345" });
+      expect(fetchPredictions).toHaveBeenCalled();
+    });
+
+    const option = await screen.findByText("123 Main St, Springfield");
+    fireEvent.click(option);
+
+    await waitFor(() => {
+      expect(mockOnAddressSelected).toHaveBeenCalledWith({
+        postcode: "12345",
+        address_1: "123 Main St",
+        address_2: "",
+        county: "Springfield",
+      });
     });
   });
-  /*
+
   it("handles fetch errors gracefully", async () => {
     const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation();
     mockFetchPredictions.mockRejectedValueOnce(new Error("Network error"));
 
-    setup();
+    renderComponent();
 
     const input = screen.getByRole("combobox");
     fireEvent.change(input, { target: { value: "123" } });
@@ -129,5 +145,4 @@ describe("GoogleAutocomplete", () => {
 
     consoleErrorSpy.mockRestore();
   });
-  */
 });

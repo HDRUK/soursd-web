@@ -82,7 +82,6 @@ const GoogleAutocomplete: React.FC<GoogleAutocompleteProps> = ({
 
   useEffect(() => {
     if (getLabelFromAddress(value) === debouncedInputValue) return;
-
     const fetchOptions = async () => {
       if (!debouncedInputValue) {
         return;

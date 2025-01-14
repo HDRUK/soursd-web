@@ -89,7 +89,7 @@ const FormFieldArray = ({
   return (
     <Box sx={{ p: 1, gap: 2, display: "flex", flexDirection: "column" }}>
       {fieldsArray.map((field, index) => (
-        <Box key={field.id} sx={boxSx}>
+        <Box key={field.id} sx={{ gap: 2, ...boxSx }}>
           {fields.map(fieldConfig => (
             <RenderFormField
               // eslint-disable-next-line react/no-array-index-key
