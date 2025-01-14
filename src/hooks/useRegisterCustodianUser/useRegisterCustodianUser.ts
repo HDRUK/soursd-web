@@ -2,10 +2,10 @@ import { useApplicationData } from "@/context/ApplicationData";
 import { useStore } from "@/data/store";
 import { postRegister, PostRegisterPayload } from "@/services/auth";
 import {
-  getCustodianByEmail,
-  patchCustodian,
-  PatchCustodianPayload,
-} from "@/services/custodians";
+  getCustodianUserByEmail,
+  patchCustodianUser,
+} from "@/services/custodian_users";
+import { getCustodian, PatchCustodianPayload } from "@/services/custodians";
 import { AccountType } from "@/types/accounts";
 import { formatNowDBDate } from "@/utils/date";
 import { getCombinedQueryState } from "@/utils/query";
@@ -13,7 +13,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-export default function useRegisterCustodian(email: string | undefined) {
+export default function useRegisterCustodianUser(email: string) {
   const { routes } = useApplicationData();
   const setCustodian = useStore(state => state.setCustodian);
   const router = useRouter();
@@ -27,47 +27,62 @@ export default function useRegisterCustodian(email: string | undefined) {
     },
   });
 
-  const { data: custodianData, ...getCustodianState } = useQuery({
-    queryKey: ["getCustodianByEmail", email],
+  const { mutateAsync: mutateAsyncCustodian, ...getCustodianState } =
+    useMutation({
+      mutationKey: ["getCustodian"],
+      mutationFn: (id: number) => {
+        return getCustodian(id, {
+          error: { message: "failedToRegister" },
+        });
+      },
+    });
+
+  const { data: custodianUserData, ...getCustodianUserState } = useQuery({
+    queryKey: ["getCustodianUserByEmail", email],
     queryFn: ({ queryKey }) => {
-      return getCustodianByEmail(queryKey[1], {
-        error: { message: "getCustodianByEmailError" },
+      return getCustodianUserByEmail(queryKey[1], {
+        error: { message: "getCustodianUserByEmailError" },
       });
     },
     enabled: !!email,
   });
 
-  const { mutateAsync: mutateAsyncCustodian, ...patchCustodianState } =
+  const { mutateAsync: mutateAsyncCustodianUser, ...patchCustodianState } =
     useMutation({
-      mutationKey: ["patchCustodian", custodianData?.data.id],
+      mutationKey: ["patchCustodianUser", custodianUserData?.data.id],
       mutationFn: (payload: PatchCustodianPayload) => {
-        return patchCustodian(custodianData?.data.id, payload, {
-          error: { message: "patchCustodianError" },
+        return patchCustodianUser(custodianUserData?.data.id, payload, {
+          error: { message: "patchCustodianUserError" },
         });
       },
     });
 
   useEffect(() => {
     async function registerCustodian() {
-      if (custodianData) {
+      if (custodianUserData) {
         await mutateAsync({ account_type: AccountType.CUSTODIAN });
-        await mutateAsyncCustodian({
+        await mutateAsyncCustodianUser({
           invite_accepted_at: formatNowDBDate(),
         });
 
-        setCustodian(custodianData.data);
+        const custodianData = await mutateAsyncCustodian(
+          custodianUserData?.data.custodian_id
+        );
+
+        await setCustodian(custodianData?.data);
         router.replace(routes.profileCustodianDetails.path);
       }
     }
 
     registerCustodian();
-  }, [custodianData]);
+  }, [custodianUserData]);
 
   return {
-    custodian: custodianData?.data,
+    custodianUser: custodianUserData?.data,
     ...getCombinedQueryState([
       patchCustodianState,
       getCustodianState,
+      getCustodianUserState,
       postRegisterState,
     ]),
   };

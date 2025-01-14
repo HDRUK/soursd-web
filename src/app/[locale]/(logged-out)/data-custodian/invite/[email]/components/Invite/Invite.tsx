@@ -1,37 +1,31 @@
 "use client";
 
-import ApplicationLink from "@/components/ApplicationLink";
+import ContactLink from "@/components/ContactLink";
 import OverlayCenter from "@/components/OverlayCenter";
 import OverlayCenterAlert from "@/components/OverlayCenterAlert";
-import { getCustodianByUniqueIdentifier } from "@/services/custodians";
+import useInviteCustodian from "@/hooks/useInviteCustodian";
 import { handleRegister } from "@/utils/keycloak";
 import { CircularProgress } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { notFound } from "next/navigation";
 
 interface InviteProps {
-  uniqueId: string;
+  email: string;
+  isUser?: boolean;
 }
 
 const NAMESPACE_TRANSLATIONS_PROFILE = "Register";
 
-export default function Invite({ uniqueId }: InviteProps) {
+export default function Invite({ email, isUser }: InviteProps) {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_PROFILE);
 
   const {
     data: custodianData,
-    isError,
     isFetched,
-  } = useQuery({
-    queryKey: ["getCustodianByUniqueIdentifier", uniqueId],
-    queryFn: ({ queryKey }) => {
-      return getCustodianByUniqueIdentifier(queryKey[1], {
-        error: {
-          message: "getCustodianByUniqueIdentifierError",
-        },
-      });
-    },
+    isError,
+  } = useInviteCustodian({
+    email: atob(decodeURIComponent(email)),
+    isUser,
   });
 
   if (isFetched) {
@@ -41,7 +35,7 @@ export default function Invite({ uniqueId }: InviteProps) {
       return (
         <OverlayCenterAlert>
           {t.rich("inviteAccepted", {
-            applicationLink: ApplicationLink,
+            contactLink: ContactLink,
           })}
         </OverlayCenterAlert>
       );
@@ -52,7 +46,7 @@ export default function Invite({ uniqueId }: InviteProps) {
 
   return (
     <OverlayCenter variant="contained">
-      <CircularProgress aria-label={t("loadingAriaLabel")} />
+      <CircularProgress aria-label={t("registeringCustodianAriaLabel")} />
     </OverlayCenter>
   );
 }

@@ -3,6 +3,7 @@ import { Message } from "@/components/Message";
 import {
   patchCustodianUser,
   postCustodianUser,
+  postCustodianUserInvite,
 } from "@/services/custodian_users";
 import { CustodianUser } from "@/types/application";
 import { showAlert } from "@/utils/showAlert";
@@ -10,6 +11,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback } from "react";
 import UserModalDetails, { CustodianUserFields } from "../UsersModalDetails";
+import { getCombinedQueryState } from "@/utils/query";
 
 export interface UserModalProps extends Omit<FormModalProps, "children"> {
   user: Partial<CustodianUser>;
@@ -26,7 +28,7 @@ export default function UsersModal({
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const queryClient = useQueryClient();
 
-  const { mutateAsync, isPending, isError, error } = useMutation({
+  const { mutateAsync, ...updateCustodianUserState } = useMutation({
     mutationKey: ["updateCustodianUser"],
     mutationFn: (payload: Omit<CustodianUser, "created_at" | "updated_at">) => {
       if (!user?.id) {
@@ -41,8 +43,24 @@ export default function UsersModal({
     },
   });
 
+  const { mutateAsync: mutateAsyncPost, ...postCustodianUserInviteState } =
+    useMutation({
+      mutationKey: ["postCustodianUserInvite"],
+      mutationFn: (id: number) => {
+        return postCustodianUserInvite(id, {
+          error: { message: "updateUserError" },
+        });
+      },
+    });
+
+  const queryState = getCombinedQueryState([
+    postCustodianUserInviteState,
+    updateCustodianUserState,
+  ]);
+
   const handleOnSubmit = useCallback(async (payload: CustodianUserFields) => {
-    await mutateAsync({ ...user, ...payload });
+    const custodianUserData = await mutateAsync({ ...user, ...payload });
+    await mutateAsyncPost(custodianUserData?.data);
 
     onClose();
 
@@ -65,19 +83,15 @@ export default function UsersModal({
       variant="content"
       onClose={onClose}
       {...restProps}>
-      {isError && !isPending && <Message severity="error">{t(error)}</Message>}
-      {!isPending && (
-        <UserModalDetails
-          onClose={onClose}
-          onSubmit={handleOnSubmit}
-          user={user}
-          queryState={{
-            isLoading: isPending,
-            isError,
-            error,
-          }}
-        />
+      {queryState.isError && !queryState.isLoading && (
+        <Message severity="error">{t(queryState.error[0])}</Message>
       )}
+      <UserModalDetails
+        onClose={onClose}
+        onSubmit={handleOnSubmit}
+        user={user}
+        queryState={queryState}
+      />
     </FormModal>
   );
 }

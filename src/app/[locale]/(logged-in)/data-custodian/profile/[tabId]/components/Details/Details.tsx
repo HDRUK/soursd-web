@@ -1,6 +1,6 @@
 "use client";
 
-import ApplicationLink from "@/components/ApplicationLink";
+import ContactLink from "@/components/ContactLink";
 import Form from "@/components/Form";
 import FormActions from "@/components/FormActions";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
@@ -88,7 +88,7 @@ export default function Details({ custodian }: DetailsProps) {
     error:
       isUpdateError &&
       tProfile.rich(updateError, {
-        applicationLink: ApplicationLink,
+        contactLink: ContactLink,
       }),
     disabled: isUpdateLoading,
   };

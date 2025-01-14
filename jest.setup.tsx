@@ -22,8 +22,11 @@ import { getRoutes } from "./src/utils/router";
 import { ROUTES } from "./src/consts/router";
 import { mockedCustodianUser } from "./mocks/data/custodian";
 import { UserFeedSource } from "@/consts/user";
+import * as matchers from "jest-extended";
 
 const nextRouterMock = require("next-router-mock");
+
+expect.extend(matchers);
 
 jest.mock("next/router", () => nextRouterMock);
 jest.mock("./src/context/ApplicationData", () => ({

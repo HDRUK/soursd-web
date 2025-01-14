@@ -7,7 +7,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import { useCallback, useMemo } from "react";
 
-import ApplicationLink from "@/components/ApplicationLink";
+import ContactLink from "@/components/ContactLink";
 import OverlayCenter from "@/components/OverlayCenter";
 import OverlayCenterAlert from "@/components/OverlayCenterAlert";
 import yup from "@/config/yup";
@@ -104,7 +104,7 @@ export default function Sections() {
     return (
       <OverlayCenterAlert>
         {t.rich("noCustodians", {
-          applicationLink: ApplicationLink,
+          contactLink: ContactLink,
         })}
       </OverlayCenterAlert>
     );

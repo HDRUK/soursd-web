@@ -12,15 +12,24 @@ function isQueriesError(
   return queries.some(query => query.isError);
 }
 
+function isQueriesFetched(
+  queries: (Partial<UseMutationResult> | Partial<UseQueryResult>)[]
+) {
+  return (
+    queries.filter(query => query.isFetched || query.isSuccess || query.isError)
+      .length === queries.length
+  );
+}
+
 function getQueriesError(
   queries: (Partial<UseMutationResult> | Partial<UseQueryResult>)[]
 ) {
-  const errors: Error[] = [];
+  let errors: Error[] = [];
 
   queries.forEach(({ error }) => {
     if (error) {
       if (Array.isArray(error)) {
-        errors.concat(error);
+        errors = errors.concat(error);
       } else {
         errors.push(error);
       }
@@ -28,7 +37,7 @@ function getQueriesError(
   });
 
   return errors.filter(error => {
-    return !error;
+    return !!error;
   });
 }
 
@@ -39,6 +48,7 @@ function getCombinedQueryState(
     isLoading: isQueriesLoading(queries),
     isError: isQueriesError(queries),
     error: getQueriesError(queries),
+    isFetched: isQueriesFetched(queries),
   };
 }
 

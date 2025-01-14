@@ -2,24 +2,26 @@
 
 import Guidance from "@/components/Guidance";
 import { Message } from "@/components/Message";
+import OverlayCenter from "@/components/OverlayCenter";
+import OverlayCenterAlert from "@/components/OverlayCenterAlert";
 import SoursdLogo from "@/components/SoursdLogo";
+import useRegisterCustodian from "@/hooks/useRegisterCustodian";
+import useRegisterCustodianUser from "@/hooks/useRegisterCustodianUser";
 import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
 import { AccountType } from "@/types/accounts";
 import { getCombinedQueryState } from "@/utils/query";
 import PeopleIcon from "@mui/icons-material/People";
 import PersonIcon from "@mui/icons-material/Person";
+import { LoadingButton } from "@mui/lab";
 import {
   Box,
-  Button,
   Checkbox,
   CircularProgress,
   FormControlLabel,
   Typography,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useParams } from "next/navigation";
 import { useState } from "react";
-import useRegisterCustodian from "../../../../../../hooks/useRegisterCustodian";
 import useRegisterUser from "../../../../../../hooks/useRegisterUser";
 import AccountOption from "../AccountOption";
 
@@ -30,17 +32,22 @@ interface AccountConfirmProps {
 }
 
 export default function AccountConfirm({ email }: AccountConfirmProps) {
-  const params = useParams();
   const t = useTranslations(NAMESPACE_TRANSLATIONS_PROFILE);
 
   const [selected, setSelected] = useState<AccountType | null>(null); // To track selected button
   const [termsChecked, setTermsChecked] = useState(false); // To track checkbox
 
   const registerCustodianState = useRegisterCustodian(email);
+  const registerCustodianUserState = useRegisterCustodianUser(email);
+
   const { handleRegister, ...registerUserState } = useRegisterUser({
     selected,
-    params,
   });
+
+  const custodianQueryState = getCombinedQueryState([
+    registerCustodianUserState,
+    registerCustodianState,
+  ]);
 
   const handleSelect = (option: AccountType) => {
     setSelected(option);
@@ -48,10 +55,25 @@ export default function AccountConfirm({ email }: AccountConfirmProps) {
 
   const isContinueDisabled = selected === null || !termsChecked;
 
-  const { isLoading, isError, error } = getCombinedQueryState([
-    registerCustodianState,
-    registerUserState,
-  ]);
+  const { isPending, isError, error } = registerUserState;
+
+  if (custodianQueryState.isFetched) {
+    if (custodianQueryState.isError) {
+      return (
+        <OverlayCenterAlert variant="contained">
+          {t(custodianQueryState.error[0])}
+        </OverlayCenterAlert>
+      );
+    }
+
+    return (
+      <OverlayCenter variant="contained">
+        <CircularProgress aria-label={t("registeringCustodianAriaLabel")} />
+      </OverlayCenter>
+    );
+  }
+
+  //If user exists, redirect to profile
 
   return (
     <Guidance {...mockedPersonalDetailsGuidanceProps}>
@@ -112,18 +134,18 @@ export default function AccountConfirm({ email }: AccountConfirmProps) {
               bold: chunks => <strong> {chunks} </strong>,
             })}
           />
-          <Button
+          <LoadingButton
             onClick={handleRegister}
             variant="contained"
-            disabled={isContinueDisabled || isLoading}
+            disabled={isContinueDisabled || isPending}
             sx={{ p: 2 }}
             fullWidth>
-            {isLoading ? <CircularProgress size={23} /> : t("continueButton")}
-          </Button>
+            {t("continueButton")}
+          </LoadingButton>
 
           {isError && (
             <Message severity="error" sx={{ mb: 3 }}>
-              {`${error[0]}`}
+              {t(error)}
             </Message>
           )}
         </Box>

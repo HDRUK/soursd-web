@@ -1,4 +1,4 @@
-import { Auth } from "@/types/application";
+import { Auth, User } from "@/types/application";
 import { AccountType } from "@/types/accounts";
 
 type LoginRequest = Record<string, string>;
@@ -9,4 +9,11 @@ interface PostRegisterPayload {
   account_type: AccountType;
 }
 
-export type { LoginRequest, LoginResponse, PostRegisterPayload };
+type PostRegisterResponse = User;
+
+export type {
+  LoginRequest,
+  LoginResponse,
+  PostRegisterResponse,
+  PostRegisterPayload,
+};

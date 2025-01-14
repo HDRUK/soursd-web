@@ -4,6 +4,7 @@ import PageSection from "@/modules/PageSection";
 import { convertJwtToJSON } from "@/utils/json";
 import { cookies } from "next/headers";
 import AccountConfirm from "./components/AccountConfirm";
+import useMe from "@/queries/useMe";
 
 async function Page() {
   const cookieStore = await cookies();

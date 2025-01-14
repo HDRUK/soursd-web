@@ -5,16 +5,10 @@ import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
 interface UseRegisterUserArgs {
-  selected: AccountType;
-  params: {
-    locale: string;
-  };
+  selected: AccountType | null;
 }
 
-export default function useRegisterUser({
-  selected,
-  params,
-}: UseRegisterUserArgs) {
+export default function useRegisterUser({ selected }: UseRegisterUserArgs) {
   const { routes } = useApplicationData();
   const router = useRouter();
 
@@ -29,18 +23,17 @@ export default function useRegisterUser({
 
   const handleRegister = async () => {
     if (!selected) return;
-    mutateAsync({ account_type: selected }).then(() => {
-      const currentLocale = params?.locale || "en";
 
+    mutateAsync({ account_type: selected }).then(() => {
       switch (selected) {
         case AccountType.ORGANISATION:
-          router.push(`/${currentLocale}${routes.profileOrganisation.path}`);
+          router.replace(routes.profileOrganisation.path);
           break;
         case AccountType.USER:
-          router.push(`/${currentLocale}${routes.profileResearcher.path}`);
+          router.replace(routes.profileResearcher.path);
           break;
         default:
-          router.push(`/${currentLocale}${routes.homepage.path}`);
+          router.replace(routes.homepage.path);
           break;
       }
     });

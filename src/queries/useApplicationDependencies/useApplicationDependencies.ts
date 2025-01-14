@@ -12,7 +12,7 @@ import { Paged, ResponseJson } from "@/types/requests";
 import { QueryFunctionContext } from "@tanstack/react-query";
 
 interface UseApplicationDependenciesProps {
-  user: User;
+  user?: User;
 }
 
 interface ApplicationDependenciesCombinedData {
