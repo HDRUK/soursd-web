@@ -55,6 +55,7 @@ function getCombinedQueryState(
 export {
   isQueriesLoading,
   isQueriesError,
+  isQueriesFetched,
   getQueriesError,
   getCombinedQueryState,
 };
