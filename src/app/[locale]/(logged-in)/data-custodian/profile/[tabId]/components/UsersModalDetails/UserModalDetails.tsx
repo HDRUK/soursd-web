@@ -1,7 +1,6 @@
 import Form from "@/components/Form";
 import FormControlCheckbox from "@/components/FormControlCheckbox";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
-import FormField from "@/components/FormField";
 import FormModalActions from "@/components/FormModalActions";
 import FormModalBody from "@/components/FormModalBody";
 import FormModalHeader from "@/components/FormModalHeader";
@@ -90,7 +89,6 @@ export default function UserModalDetails({
       {...formOptions}
       onSubmit={onSubmit}
       autoComplete="off">
-      {({ formState: { errors }, register, watch, setValue }) => (
         <>
           <FormModalHeader>
             <Typography variant="h4" sx={{ mb: 1 }}>
@@ -106,28 +104,25 @@ export default function UserModalDetails({
             <Grid container rowSpacing={3}>
               <Grid item xs={12}>
                 <FormControlHorizontal
-                  id="first_name"
-                  error={errors.first_name}
+                  name="first_name"
                   renderField={fieldProps => (
-                    <FormField component={TextField} {...fieldProps} />
+                    <TextField {...fieldProps} />
                   )}
                 />
               </Grid>
               <Grid item xs={12}>
                 <FormControlHorizontal
-                  id="last_name"
-                  error={errors.last_name}
+                  name="last_name"
                   renderField={fieldProps => (
-                    <FormField component={TextField} {...fieldProps} />
+                    <TextField {...fieldProps} />
                   )}
                 />
               </Grid>
               <Grid item xs={12}>
                 <FormControlHorizontal
-                  id="email"
-                  error={errors.email}
+                  name="email"
                   renderField={fieldProps => (
-                    <FormField component={TextField} {...fieldProps} />
+                    <TextField {...fieldProps} />
                   )}
                 />
               </Grid>
@@ -136,6 +131,7 @@ export default function UserModalDetails({
           <FormModalHeader>
             <Typography variant="h4">Permissions</Typography>
           </FormModalHeader>
+          {/*
           <FormModalBody sx={{ mt: -1 }}>
             <Grid container columnSpacing={2} rowSpacing={2}>
               <Grid item md={6}>
@@ -158,6 +154,7 @@ export default function UserModalDetails({
               </Grid>
             </Grid>
           </FormModalBody>
+          */}
           <FormModalActions>
             <Button variant="outlined" onClick={onClose}>
               {tForm("cancelButton")}

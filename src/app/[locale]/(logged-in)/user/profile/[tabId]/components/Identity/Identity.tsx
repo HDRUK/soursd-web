@@ -4,7 +4,6 @@ import ApplicationLink from "@/components/ApplicationLink";
 import Form from "@/components/Form";
 import FormActions from "@/components/FormActions";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
-import FormField from "@/components/FormField";
 import FormSection from "@/components/FormSection";
 import OverlayCenter from "@/components/OverlayCenter";
 import Text from "@/components/Text";
@@ -218,109 +217,98 @@ export default function Identity() {
   return (
     <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
       <Form onSubmit={handleDetailsSubmit} schema={schema} {...formOptions}>
-        {({ formState: { errors }, watch, register }) => (
-          <>
-            <FormSection heading={tProfile("identity")}>
-              <Grid container rowSpacing={3}>
-                <Grid item xs={12}>
-                  <FormControlHorizontal
-                    id="organisation_id"
-                    error={errors.organisation_id}
-                    renderField={() => (
-                      <Select
-                        defaultValue={watch("organisation_id")}
-                        {...register("organisation_id")}
-                        inputProps={{
-                          "aria-label": tForm("organisationNameAriaLabel"),
-                        }}>
-                        {organisationsData?.data?.data.map(
-                          ({ organisation_name, id }) => (
-                            <MenuItem value={id} key={id}>
-                              {organisation_name}
-                            </MenuItem>
-                          )
-                        )}
-                      </Select>
-                    )}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <FormControlHorizontal
-                    id="first_name"
-                    error={errors.first_name}
-                    renderField={fieldProps => (
-                      <FormField component={TextField} {...fieldProps} />
-                    )}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <FormControlHorizontal
-                    id="last_name"
-                    error={errors.last_name}
-                    renderField={fieldProps => (
-                      <FormField component={TextField} {...fieldProps} />
-                    )}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <FormControlHorizontal
-                    id="orc_id"
-                    error={errors.orc_id}
-                    renderField={fieldProps => (
-                      <Text
-                        endIcon={
-                          <Tooltip title={tForm("whatIsTheOrcId")}>
-                            <InfoIcon color="info" />
-                          </Tooltip>
-                        }
-                        sx={{ maxWidth: "200px" }}>
-                        <FormField component={TextField} {...fieldProps} />
-                      </Text>
-                    )}
-                  />
-                </Grid>
-                <Grid item>
-                  <FormControlHorizontal
-                    id="consent_scrape"
-                    renderField={() => (
-                      <>
-                        <FormControlLabel
-                          label={tForm("consentScrapeDescription")}
-                          control={
-                            <Checkbox
-                              {...register("consent_scrape")}
-                              checked={!!watch("consent_scrape")}
-                            />
-                          }
-                          sx={{
-                            mb: 2,
-                          }}
-                        />
-                        <DetailsCV
-                          fileName={latestCV?.name || tProfile("noCvUploaded")}
-                          isFileSizeTooBig={isFileSizeTooBig}
-                          isFileScanning={isScanning}
-                          isFileOk={isNotInfected}
-                          isFileUploading={isFileLoading}
-                          onFileChange={handleFileChange}
-                        />
-                      </>
-                    )}
-                    displayLabel={false}
-                  />
-                </Grid>
+        <>
+          <FormSection heading={tProfile("identity")}>
+            <Grid container rowSpacing={3}>
+              <Grid item xs={12}>
+                <FormControlHorizontal
+                  name="organisation_id"
+                  renderField={fieldProps => (
+                    <Select
+                      {...fieldProps}
+                      inputProps={{
+                        "aria-label": tForm("organisationNameAriaLabel"),
+                      }}>
+                      {organisationsData?.data?.data.map(
+                        ({ organisation_name, id }) => (
+                          <MenuItem value={id} key={id}>
+                            {organisation_name}
+                          </MenuItem>
+                        )
+                      )}
+                    </Select>
+                  )}
+                />
               </Grid>
-            </FormSection>
-            <FormActions>
-              <LoadingButton
-                type="submit"
-                endIcon={<SaveIcon />}
-                loading={isUpdateLoading}>
-                {tProfile("submitButton")}
-              </LoadingButton>
-            </FormActions>
-          </>
-        )}
+              <Grid item xs={12}>
+                <FormControlHorizontal
+                  name="first_name"
+                  renderField={fieldProps => <TextField {...fieldProps} />}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormControlHorizontal
+                  name="last_name"
+                  renderField={fieldProps => <TextField {...fieldProps} />}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormControlHorizontal
+                  name="orc_id"
+                  renderField={fieldProps => (
+                    <Text
+                      endIcon={
+                        <Tooltip title={tForm("whatIsTheOrcId")}>
+                          <InfoIcon color="info" />
+                        </Tooltip>
+                      }
+                      sx={{ maxWidth: "200px" }}>
+                      <TextField {...fieldProps} />
+                    </Text>
+                  )}
+                />
+              </Grid>
+              <Grid item>
+                <FormControlHorizontal
+                  name="consent_scrape"
+                  renderField={fieldProps => (
+                    <>
+                      <FormControlLabel
+                        label={tForm("consentScrapeDescription")}
+                        control={
+                          <Checkbox
+                            {...fieldProps}
+                            checked={!!fieldProps.value}
+                          />
+                        }
+                        sx={{
+                          mb: 2,
+                        }}
+                      />
+                      <DetailsCV
+                        fileName={latestCV?.name || tProfile("noCvUploaded")}
+                        isFileSizeTooBig={isFileSizeTooBig}
+                        isFileScanning={isScanning}
+                        isFileOk={isNotInfected}
+                        isFileUploading={isFileLoading}
+                        onFileChange={handleFileChange}
+                      />
+                    </>
+                  )}
+                  displayLabel={false}
+                />
+              </Grid>
+            </Grid>
+          </FormSection>
+          <FormActions>
+            <LoadingButton
+              type="submit"
+              endIcon={<SaveIcon />}
+              loading={isUpdateLoading}>
+              {tProfile("submitButton")}
+            </LoadingButton>
+          </FormActions>
+        </>
       </Form>
     </PageGuidance>
   );
