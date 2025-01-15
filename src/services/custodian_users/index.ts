@@ -1,5 +1,4 @@
 import getCustodianUsers from "./getCustodianUsers";
-import getCustodianUserByEmail from "./getCustodianUserByEmail";
 import patchCustodianUser from "./patchCustodianUser";
 import postCustodianUser from "./postCustodianUser";
 import deleteCustodianUser from "./deleteCustodianUser";
@@ -11,7 +10,6 @@ export {
   patchCustodianUser,
   postCustodianUser,
   deleteCustodianUser,
-  getCustodianUserByEmail,
   getCustodianUser,
   postCustodianUserInvite,
 };

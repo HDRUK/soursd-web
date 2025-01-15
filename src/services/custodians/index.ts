@@ -2,7 +2,6 @@ import getCustodian from "./getCustodian";
 import patchCustodian from "./patchCustodian";
 import getCustodians from "./getCustodians";
 import getCustodianByUniqueIdentifier from "./getCustodianByUniqueIdentifier";
-import getCustodianByEmail from "./getCustodianByEmail";
 import patchCustodianByEmail from "./patchCustodianByEmail";
 
 export {
@@ -10,7 +9,6 @@ export {
   patchCustodian,
   getCustodians,
   getCustodianByUniqueIdentifier,
-  getCustodianByEmail,
   patchCustodianByEmail,
 };
 
