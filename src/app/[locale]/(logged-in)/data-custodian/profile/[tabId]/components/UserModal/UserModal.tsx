@@ -6,12 +6,12 @@ import {
   postCustodianUserInvite,
 } from "@/services/custodian_users";
 import { CustodianUser } from "@/types/application";
+import { getCombinedQueryState } from "@/utils/query";
 import { showAlert } from "@/utils/showAlert";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback } from "react";
 import UserModalDetails, { CustodianUserFields } from "../UsersModalDetails";
-import { getCombinedQueryState } from "@/utils/query";
 
 export interface UserModalProps extends Omit<FormModalProps, "children"> {
   user: Partial<CustodianUser>;

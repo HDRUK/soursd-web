@@ -1,4 +1,4 @@
-import { useCookies } from "@/context/CookieContext/CookieContext";
+import { useCookies } from "@/context/CookieContext";
 import theme from "@/theme";
 import { handleLogin, handleLogout } from "@/utils/keycloak";
 import {
@@ -10,7 +10,7 @@ import {
 } from "@/utils/testUtils";
 import NavBar from "./NavBar";
 
-jest.mock("@/context/CookieContext/CookieContext", () => ({
+jest.mock("@/context/CookieContext", () => ({
   useCookies: jest.fn(),
 }));
 
