@@ -8,9 +8,8 @@ import Checkbox, { CheckboxProps } from "@mui/material/Checkbox";
 import TextField, { TextFieldProps } from "@mui/material/TextField";
 import { FormConfig } from "@/types/forms";
 import FormFieldArray from "@/components/FormFieldArray";
-import { Organisation } from "@/types/application";
-import SelectInput from "@/components/SelectInput";
-import { SelectInputProps } from "@/components/SelectInput/SelectInput";
+import { AddressFields, Organisation } from "@/types/application";
+import GoogleAutocomplete from "@/components/GoogleAutocomplete";
 
 const generateSubsidiariesFormFieldsConfig = (
   t: (key: string) => string,
@@ -22,6 +21,9 @@ const generateSubsidiariesFormFieldsConfig = (
     sectionBoxSx: {
       mb: 4,
       display: "flex",
+      flexDirection: "column",
+      width: "100%",
+      gap: 2,
     },
     fields: [
       {
@@ -34,25 +36,26 @@ const generateSubsidiariesFormFieldsConfig = (
         component: FormFieldArray,
         validation: yup.array().of(
           yup.object().shape({
-            subsidiary_name: yup
-              .string()
-              .transform(value => (value === "" ? null : value))
-              .nullable()
-              .min(3, t("organisationSubsidiaries.nameInvalid")),
-            subsidiary_website: yup
-              .string()
-              .transform(value => (value === "" ? null : value))
-              .nullable()
-              .url(t("organisationSubsidiaries.websiteInvalid")),
+            name: yup.string().when("address", {
+              is: (address: AddressFields) => Boolean(address),
+              otherwise: schema => schema.nullable(),
+              then: schema =>
+                schema.required(t("organisationSubsidiaries.nameInvalid")),
+            }),
           })
         ),
         componentProps: {
+          boxSx: {
+            display: "grid",
+            gridTemplateColumns: "2fr 3fr 1fr",
+          },
           removeButtonLabel: t("organisationSubsidiaries.removeButton"),
           addButtonLabel: t("organisationSubsidiaries.addButton"),
           fields: [
             {
-              name: "subsidiary_name",
+              name: "name",
               label: t("organisationSubsidiaries.name"),
+              defaultValues: organisation?.subsidiaries?.map(s => s.name),
               component: TextField,
               componentProps: {
                 variant: "outlined",
@@ -61,23 +64,25 @@ const generateSubsidiariesFormFieldsConfig = (
                 },
               } as TextFieldProps,
               formControlProps: {
-                labelMd: 4,
-                contentMd: 8,
+                labelMd: 2,
+                contentMd: 10,
               },
             },
             {
-              name: "subsidiary_website",
-              label: t("organisationSubsidiaries.website"),
-              component: TextField,
+              name: "address",
+              label: t("organisationSubsidiaries.address"),
+              defaultValues: organisation?.subsidiaries?.map(
+                ({ id: _id, name: _name, pivot: _pivot, ...rest }) => rest
+              ),
+              component: GoogleAutocomplete,
               componentProps: {
-                variant: "outlined",
-                inputProps: {
-                  "aria-label": t("organisationSubsidiaries.website"),
-                },
-              } as TextFieldProps,
+                textFieldProps: { variant: "filled", size: "small" },
+                fullWidth: true,
+                placeholder: t("organisationSubsidiaries.addressPlaceholder"),
+              },
               formControlProps: {
-                labelMd: 4,
-                contentMd: 8,
+                labelMd: 2,
+                contentMd: 10,
               },
             },
           ],
@@ -291,118 +296,4 @@ const generateSubsidiariesFormFieldsConfig = (
   },
 ];
 
-const generateDelegatesFormFieldsConfig = (
-  t: (key: string) => string,
-  departments?: { label: string; value: string }[]
-): FormConfig => [
-  {
-    sectionId: 1,
-    sectionTitle: t("organisationDelegates.title"),
-    sectionBoxSx: {
-      mb: 4,
-      display: "flex",
-      flexDirection: "column",
-    },
-    fields: [
-      {
-        name: "delegates",
-        formControlProps: {
-          labelMd: 0,
-          contentMd: 12,
-          displayLabel: false,
-        },
-        component: FormFieldArray,
-        validation: yup.array().of(
-          yup.object().shape({
-            department_name: yup
-              .string()
-              .required()
-              .transform(value => (value === "" ? null : value)),
-            delegate_full_name: yup
-              .string()
-              .required()
-              .transform(value => (value === "" ? null : value)),
-            delegate_job_title: yup
-              .string()
-              .required()
-              .transform(value => (value === "" ? null : value)),
-            delegate_email: yup
-              .string()
-              .transform(value => (value === "" ? null : value))
-              .required(),
-          })
-        ),
-        componentProps: {
-          sx: { display: "flex", flexDirection: "column" },
-          renderButtons: false,
-          fields: [
-            {
-              name: "department_name",
-              label: t("organisationDelegates.departmentName"),
-              component: SelectInput,
-              componentProps: {
-                variant: "outlined",
-                ariaLabel: t("organisationDelegates.departmentName"),
-                options: departments,
-              } as SelectInputProps,
-              formControlProps: {
-                labelMd: 4,
-                contentMd: 8,
-              },
-            },
-            {
-              name: "delegate_full_name",
-              label: t("organisationDelegates.delegateFullName"),
-              component: TextField,
-              componentProps: {
-                variant: "outlined",
-                inputProps: {
-                  "aria-label": t("organisationDelegates.delegateFullName"),
-                },
-              } as TextFieldProps,
-              formControlProps: {
-                labelMd: 4,
-                contentMd: 8,
-              },
-            },
-            {
-              name: "delegate_job_title",
-              label: t("organisationDelegates.delegateJobTitle"),
-              component: TextField,
-              componentProps: {
-                variant: "outlined",
-                inputProps: {
-                  "aria-label": t("organisationDelegates.delegateJobTitle"),
-                },
-              } as TextFieldProps,
-              formControlProps: {
-                labelMd: 4,
-                contentMd: 8,
-              },
-            },
-            {
-              name: "delegate_email",
-              label: t("organisationDelegates.delegateEmail"),
-              component: TextField,
-              componentProps: {
-                variant: "outlined",
-                inputProps: {
-                  "aria-label": t("organisationDelegates.delegateEmail"),
-                },
-              } as TextFieldProps,
-              formControlProps: {
-                labelMd: 4,
-                contentMd: 8,
-              },
-            },
-          ],
-        },
-      },
-    ],
-  },
-];
-
-export {
-  generateSubsidiariesFormFieldsConfig,
-  generateDelegatesFormFieldsConfig,
-};
+export { generateSubsidiariesFormFieldsConfig };
