@@ -53,6 +53,7 @@ export default function FormControlHorizontal({
   displayPlaceholder = true,
   displayLabel = true,
   renderField,
+  fullWidth = true,
   ...restProps
 }: FormControlHorizontalProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_FORM);
@@ -76,8 +77,8 @@ export default function FormControlHorizontal({
     <FormControl
       disabled={disabled}
       size="small"
-      fullWidth
       {...restProps}
+      fullWidth={fullWidth}
       error={!!error}>
       <Grid container columnSpacing={2} {...containerProps}>
         <Grid item md={labelMd} sx={{ display: "flex", pt: 1 }}>
@@ -97,10 +98,11 @@ export default function FormControlHorizontal({
         </Grid>
         <Grid item xs={12} md={contentMd}>
           {renderField({
-            placeholder:
-              displayPlaceholder && (placeholder || t(`${tKey}Placeholder`)),
+            placeholder: displayPlaceholder
+              ? placeholder || t(`${tKey}Placeholder`)
+              : "",
             disabled,
-            fullWidth: true,
+            fullWidth,
             ...field,
           })}
 

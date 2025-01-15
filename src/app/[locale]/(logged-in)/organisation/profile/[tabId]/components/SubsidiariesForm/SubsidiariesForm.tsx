@@ -1,6 +1,6 @@
 "use client";
-
-import { Box, Grid } from "@mui/material";
+import React from "react";
+import { Grid } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
@@ -9,21 +9,17 @@ import Form from "@/components/Form";
 import FormActions from "@/components/FormActions";
 import FormSection from "@/components/FormSection";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
-import Checkbox, { CheckboxProps } from "@mui/material/Checkbox";
-import TextField, { TextFieldProps } from "@mui/material/TextField";
+import Checkbox from "@mui/material/Checkbox";
+import TextField from "@mui/material/TextField";
 import FormFieldArray from "@/components/FormFieldArray";
 import GoogleAutocomplete from "@/components/GoogleAutocomplete";
-import RenderFormFields from "@/components/RenderFormFields";
 import { QueryState } from "@/types/form";
 import { LoadingButton } from "@mui/lab";
 import { PatchOrganisationPayload } from "@/services/organisations";
 
-//import { generateSubsidiariesFormFieldsConfig } from "../../consts/form";
 import { getValidation, getDefaultValues } from "./const/form";
-import { CheckBox } from "@mui/icons-material";
-import { SubsidiariesFormData, FormData } from "./const/form";
-import { FieldError } from "react-hook-form";
-import { AddressFields } from "@/types/application";
+
+import { FormData } from "./const/form";
 
 type Certification = {
   certified: keyof FormData;
@@ -99,7 +95,7 @@ export default function SubsidiariesForm({
                       name: "",
                     })}
                     renderField={(field, index) => (
-                      <>
+                      <React.Fragment key={field.name}>
                         <TextField
                           name={`subsidiaries.${index}.name`}
                           label="Name"
@@ -116,7 +112,7 @@ export default function SubsidiariesForm({
                             "organisationSubsidiaries2.addressPlaceholder"
                           )}
                         />
-                      </>
+                      </React.Fragment>
                     )}
                   />
                 )}
@@ -128,7 +124,7 @@ export default function SubsidiariesForm({
         <FormSection heading={t("organisationDataSecurityCompliance")}>
           <Grid container rowSpacing={3}>
             {certifications.map(cert => (
-              <>
+              <React.Fragment key={cert.certified}>
                 <Grid item xs={4}>
                   <FormControlHorizontal
                     name={cert.certified}
@@ -136,7 +132,7 @@ export default function SubsidiariesForm({
                     labelMd={7}
                     contentMd={5}
                     renderField={fieldProps => (
-                      <Checkbox {...fieldProps} checked={fieldProps.value} />
+                      <Checkbox {...fieldProps} checked={!!fieldProps.value} />
                     )}
                   />
                 </Grid>
@@ -146,7 +142,7 @@ export default function SubsidiariesForm({
                     renderField={fieldProps => <TextField {...fieldProps} />}
                   />
                 </Grid>
-              </>
+              </React.Fragment>
             ))}
           </Grid>
         </FormSection>

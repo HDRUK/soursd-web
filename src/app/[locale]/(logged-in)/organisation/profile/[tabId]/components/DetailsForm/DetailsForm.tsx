@@ -4,9 +4,9 @@ import ApplicationLink from "@/components/ApplicationLink";
 import Form from "@/components/Form/Form";
 import FormActions from "@/components/FormActions";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
-import FormField from "@/components/FormField";
 import FormSection from "@/components/FormSection";
 import GoogleAutocomplete from "@/components/GoogleAutocomplete";
+import { GoogleAddressFields } from "@/components/GoogleAutocomplete";
 import yup from "@/config/yup";
 import {
   VALIDATION_CHARITY_ID,
@@ -29,7 +29,7 @@ import {
 import { AddressFields } from "@/types/application";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
-import { UseFormSetValue } from "react-hook-form";
+import { UseFormSetValue, useFormContext } from "react-hook-form";
 
 export interface DetailsFormValues {
   organisation_name: string;
@@ -104,19 +104,13 @@ export default function DetailsForm({
     []
   );
 
-  const handleChange = (
+  const handleFindAddress = (
     address: AddressFields,
     setValue: UseFormSetValue<DetailsFormValues>
   ) => {
-    const { postcode, addressLine1, addressLine2, town, county, country } =
-      address;
-
-    setValue("address_1", addressLine1 ?? "");
-    setValue("address_2", addressLine2 ?? "");
-    setValue("town", town ?? "");
-    setValue("county", county ?? "");
-    setValue("country", country ?? "");
-    setValue("postcode", postcode ?? "");
+    Object.entries(address).forEach(([key, value]) => {
+      setValue(key as keyof DetailsFormValues, value ?? "");
+    });
   };
 
   const { isError, error, isLoading } = queryState;
@@ -146,177 +140,149 @@ export default function DetailsForm({
 
   return (
     <Form schema={schema} onSubmit={onSubmit} {...formOptions}>
-      {/*{({ control, formState: { errors }, register, watch, setValue }) => (*/}
-        <>
-          <FormSection heading="Organisation name and location">
-            <Grid container rowSpacing={3}>
-              <Grid item xs={12}>
-                <FormControlHorizontal
-                  id="organisation_name"
-                  renderField={fieldProps => (
-                    <TextField {...fieldProps} />
-                  )}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <GoogleAutocomplete
-                  name="address"
-                  control={control}
-                  onAddressSelected={value =>
-                    handleChange(value as AddressFields, setValue)
-                  }
-                  textFieldProps={{ variant: "filled", size: "small" }}
-                  placeholder="Search for your address..."
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlHorizontal
-                  id="address_1"
-                  error={errors.address_1}
-                  renderField={fieldProps => (
-                    <FormField component={TextField} {...fieldProps} />
-                  )}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlHorizontal
-                  id="address_2"
-                  error={errors.address_2}
-                  renderField={fieldProps => (
-                    <FormField component={TextField} {...fieldProps} />
-                  )}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlHorizontal
-                  id="town"
-                  error={errors.town}
-                  renderField={fieldProps => (
-                    <FormField component={TextField} {...fieldProps} />
-                  )}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlHorizontal
-                  id="county"
-                  error={errors.county}
-                  renderField={fieldProps => (
-                    <FormField component={TextField} {...fieldProps} />
-                  )}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlHorizontal
-                  id="country"
-                  error={errors.country}
-                  renderField={fieldProps => (
-                    <FormField component={TextField} {...fieldProps} />
-                  )}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlHorizontal
-                  id="postcode"
-                  error={errors.postcode}
-                  renderField={fieldProps => (
-                    <FormField
-                      component={TextField}
-                      {...fieldProps}
-                      sx={{ maxWidth: "200px" }}
-                    />
-                  )}
-                />
-              </Grid>
-            </Grid>
-          </FormSection>
-          <FormSection heading="Organisation persistent identifiers">
-            <Grid container rowSpacing={3}>
-              <Grid item xs={12}>
-                <FormControlHorizontal
-                  id="companies_house_no"
-                  error={errors.companies_house_no}
-                  renderField={fieldProps => (
-                    <FormField component={TextField} {...fieldProps} />
-                  )}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlHorizontal
-                  id="charity_registration_id"
-                  error={errors.charity_registration_id}
-                  renderField={fieldProps => (
-                    <FormField component={TextField} {...fieldProps} />
-                  )}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlHorizontal
-                  id="ror_id"
-                  error={errors.ror_id}
-                  renderField={fieldProps => (
-                    <FormField component={TextField} {...fieldProps} />
-                  )}
-                />
-              </Grid>
-            </Grid>
-          </FormSection>
-          <FormSection heading="Organisation sector, site and website">
+      <>
+        <FormSection heading="Organisation name and location">
+          <Grid container rowSpacing={3}>
             <Grid item xs={12}>
               <FormControlHorizontal
-                id="sector_id"
-                error={errors.sector_id}
-                renderField={() => (
-                  <Select
-                    defaultValue={organisation?.sector_id}
-                    {...register("sector_id")}
-                    inputProps={{
-                      "aria-label": tForm("sectorIdAriaLabel"),
-                    }}>
-                    {sectors?.map(({ name, id }) => (
-                      <MenuItem value={id} key={id}>
-                        {name}
-                      </MenuItem>
-                    ))}
-                  </Select>
+                name="organisation_name"
+                renderField={fieldProps => <TextField {...fieldProps} />}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControlHorizontal
+                name="address"
+                displayPlaceholder={false}
+                displayLabel={false}
+                renderField={() => {
+                  const { setValue } = useFormContext<DetailsFormValues>();
+
+                  return (
+                    <GoogleAutocomplete
+                      name="address"
+                      textFieldProps={{ variant: "filled", size: "small" }}
+                      onAddressSelected={value =>
+                        handleFindAddress(value as AddressFields, setValue)
+                      }
+                      placeholder="Search for your address..."
+                    />
+                  );
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControlHorizontal
+                name="address_1"
+                renderField={fieldProps => <TextField {...fieldProps} />}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControlHorizontal
+                name="address_2"
+                renderField={fieldProps => <TextField {...fieldProps} />}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControlHorizontal
+                name="town"
+                renderField={fieldProps => <TextField {...fieldProps} />}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControlHorizontal
+                name="county"
+                renderField={fieldProps => <TextField {...fieldProps} />}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControlHorizontal
+                name="country"
+                renderField={fieldProps => <TextField {...fieldProps} />}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControlHorizontal
+                name="postcode"
+                renderField={fieldProps => (
+                  <TextField {...fieldProps} sx={{ maxWidth: "200px" }} />
                 )}
               />
-              <Grid item xs={12}>
-                <FormControlHorizontal
-                  label={tForm("smbStatus")}
-                  renderField={() => (
-                    <FormControlLabel
-                      label={tForm("smbStatusDescription")}
-                      control={
-                        <Checkbox
-                          {...register("smb_status")}
-                          checked={!!watch("smb_status")}
-                        />
-                      }
-                    />
-                  )}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlHorizontal
-                  id="website"
-                  error={errors.website}
-                  renderField={fieldProps => (
-                    <FormField component={TextField} {...fieldProps} />
-                  )}
-                />
-              </Grid>
             </Grid>
-          </FormSection>
-          <FormActions>
-            <LoadingButton
-              loading={isLoading}
-              type="submit"
-              endIcon={<SaveIcon />}>
-              {tProfile("submitButton")}
-            </LoadingButton>
-          </FormActions>
-        </>
-      )}
+          </Grid>
+        </FormSection>
+        <FormSection heading="Organisation persistent identifiers">
+          <Grid container rowSpacing={3}>
+            <Grid item xs={12}>
+              <FormControlHorizontal
+                name="companies_house_no"
+                renderField={fieldProps => <TextField {...fieldProps} />}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControlHorizontal
+                name="charity_registration_id"
+                renderField={fieldProps => <TextField {...fieldProps} />}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControlHorizontal
+                name="ror_id"
+                renderField={fieldProps => <TextField {...fieldProps} />}
+              />
+            </Grid>
+          </Grid>
+        </FormSection>
+        <FormSection heading="Organisation sector, site and website">
+          <Grid item xs={12}>
+            <FormControlHorizontal
+              name="sector_id"
+              renderField={fieldProps => (
+                <Select
+                  {...fieldProps}
+                  inputProps={{
+                    "aria-label": tForm("sectorIdAriaLabel"),
+                  }}>
+                  {sectors?.map(({ name, id }) => (
+                    <MenuItem value={id} key={id}>
+                      {name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              )}
+            />
+            <Grid item xs={12}>
+              <FormControlHorizontal
+                name="smbStatus"
+                displayPlaceholder={false}
+                label={tForm("smbStatus")}
+                renderField={fieldProps => (
+                  <FormControlLabel
+                    label={tForm("smbStatusDescription")}
+                    control={
+                      <Checkbox {...fieldProps} checked={!!fieldProps.value} />
+                    }
+                  />
+                )}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControlHorizontal
+                name="website"
+                renderField={fieldProps => <TextField {...fieldProps} />}
+              />
+            </Grid>
+          </Grid>
+        </FormSection>
+
+        <FormActions>
+          <LoadingButton
+            loading={isLoading}
+            type="submit"
+            endIcon={<SaveIcon />}>
+            {tProfile("submitButton")}
+          </LoadingButton>
+        </FormActions>
+      </>
     </Form>
   );
 }

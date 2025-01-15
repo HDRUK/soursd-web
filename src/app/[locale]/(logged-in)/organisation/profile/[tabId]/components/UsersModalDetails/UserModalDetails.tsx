@@ -1,7 +1,6 @@
 import ApplicationLink from "@/components/ApplicationLink";
 import Form from "@/components/Form";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
-import FormField from "@/components/FormField";
 import FormModalActions from "@/components/FormModalActions";
 import FormModalBody from "@/components/FormModalBody";
 import FormModalHeader from "@/components/FormModalHeader";
@@ -63,6 +62,8 @@ export default function UserModalDetails({
         applicationLink: ApplicationLink,
       }),
   };
+
+  return <b> hi </b>;
 
   return (
     <Form schema={schema} onSubmit={onSubmit} {...formOptions}>
