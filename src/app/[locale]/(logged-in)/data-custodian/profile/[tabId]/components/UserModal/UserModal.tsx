@@ -48,7 +48,7 @@ export default function UsersModal({
       mutationKey: ["postCustodianUserInvite"],
       mutationFn: (id: number) => {
         return postCustodianUserInvite(id, {
-          error: { message: "updateUserError" },
+          error: { message: "postCustodianUserInviteError" },
         });
       },
     });

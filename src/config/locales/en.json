@@ -63,7 +63,8 @@
     "deleteWarningTitle": "Are you sure you want to delete this user?",
     "deleteWarningDescription": "Deleting this user is permanent and will result in them no longer being able to act on your behalf",
     "CUSTODIAN_ADMIN": "Administrator",
-    "CUSTODIAN_APPROVER": "Approver"
+    "CUSTODIAN_APPROVER": "Approver",
+    "postCustodianUserInviteError": "There was a problem inviting this user. Please contact them directly or contact us at <contactLink></contactLink>"
   },
   "OrganisationStats": {
     "affiliatedUsers": "Affiliated Users",
