@@ -256,7 +256,20 @@
       "delegateFullName": "Delegate Full Name",
       "delegateJobTitle": "Delegate Job Title",
       "delegateEmail": "Delegate Email"
-    }
+    },
+    "provider": "Training provider",
+    "providerPlaceholder": "Training provider",
+    "trainingName": "Training name",
+    "trainingNamePlaceholder": "Training name",
+    "awardedAt":"Awarded at",
+    "expiresAt": "Expires at",
+    "trainingProviderRequiredInvalid": "Training provider is required",
+    "trainingNameRequiredInvalid": "Training name is required",
+    "awardedAtRequiredInvalid": "Awarded at is required",
+    "awardedAtFutureInvalid": "Awarded at date cannot be in the future",
+    "expiresAtRequiredInvalid": "Expires at is required",
+    "expiresAtBeforeAwardedAtInvalid": "Expires at date cannot be before the awarded at date",
+    "expiresAtPastInvalid": "Expires at date cannot be in the past"
   },
   "Buttons": {
     "register": "Register",
@@ -326,7 +339,12 @@
     "profileCompletedDescription": "You have completed all the mandatory fields required for your profile to be considered 'complete'. This will be flagged to Data Custodians when they view your user details.",
     "continueLinkText": "Continue",
     "profileCompleteWarningMessage": "You have not yet completed your profile. This may mean that some data custodians will not grant access to you. It is advised that you complete this process. Please navigate to your profile",
-    "addAnother": "Add Another"
+    "addAnother": "Add Another",
+    "postTrainingError": "There was a problem submitting your training experience. Please try again or contact us at <applicationLink></applicationLink>",
+    "postTrainingErrorButton": "Try Again",
+    "postTrainingSuccess": "Training experience submitted successfully",
+    "postTrainingSuccessButton": "Close",
+    "noTrainingsError": "No training experiences found"
   },
   "ProfileCompleteStatus": {
     "profileComplete": "Profile complete",
