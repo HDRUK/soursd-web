@@ -146,16 +146,15 @@ export default function DetailsForm({
 
   return (
     <Form schema={schema} onSubmit={onSubmit} {...formOptions}>
-      {({ control, formState: { errors }, register, watch, setValue }) => (
+      {/*{({ control, formState: { errors }, register, watch, setValue }) => (*/}
         <>
           <FormSection heading="Organisation name and location">
             <Grid container rowSpacing={3}>
               <Grid item xs={12}>
                 <FormControlHorizontal
                   id="organisation_name"
-                  error={errors.organisation_name}
                   renderField={fieldProps => (
-                    <FormField component={TextField} {...fieldProps} />
+                    <TextField {...fieldProps} />
                   )}
                 />
               </Grid>
