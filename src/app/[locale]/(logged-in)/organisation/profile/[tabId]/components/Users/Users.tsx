@@ -11,7 +11,7 @@ import { formatShortDate } from "@/utils/date";
 import { isRegistered } from "@/utils/user";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
-import { Box, Button, IconButton, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { getOrganisationUsers } from "@/services/organisations";
@@ -75,7 +75,7 @@ export default function Users() {
           isError: isGetUsersError,
         }}>
         {usersData?.map(user => {
-          const { id, first_name, last_name, created_at, email } = user;
+          const { first_name, last_name, created_at, email } = user;
 
           return (
             <ResultsCard

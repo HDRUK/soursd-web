@@ -1,7 +1,6 @@
 import { DecoupleIcon } from "@/consts/icons";
 import { Tooltip, IconButton } from "@mui/material";
-import { patchUser } from "@/services/users";
-import { PatchUserPayload } from "@/services/users";
+import { PatchUserPayload, patchUser } from "@/services/users";
 import { useMutation } from "@tanstack/react-query";
 import { showAlert, showLoadingAlertWithPromise } from "@/utils/showAlert";
 import { User } from "@/types/application";
@@ -19,7 +18,7 @@ const DecoupleUser = ({ user, onSuccess }: DecoupleUserProps) => {
   const t = useTranslations(NAMESPACE_TRANSLATION_DECOUPLEUSER);
   const organisation = useStore(state => state.config.organisation);
 
-  const { mutateAsync, isError, isPending, error } = useMutation({
+  const { mutateAsync } = useMutation({
     mutationKey: ["patchUser"],
     mutationFn: (payload: PatchUserPayload) =>
       patchUser(user.id, payload, {
@@ -53,7 +52,7 @@ const DecoupleUser = ({ user, onSuccess }: DecoupleUserProps) => {
   };
 
   return (
-    <Tooltip title={"up the ra"}>
+    <Tooltip title={t("toolTip")}>
       <IconButton
         onClick={handleDecoupleUser}
         size="small"
