@@ -3,7 +3,6 @@ import FormActions from "@/components/FormActions";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
 import FormField from "@/components/FormField";
 import FormSection from "@/components/FormSection";
-import { Controller } from "react-hook-form";
 import { useStore } from "@/data/store";
 import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
 import { PageGuidance } from "@/modules";
@@ -22,10 +21,9 @@ import SaveIcon from "@mui/icons-material/Save";
 import DateInput from "@/components/DateInput";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { PostTrainingsPayload } from "@/services/trainings/types";
-import postTrainings from "@/services/trainings/postTrainings";
 import { Message } from "@/components/Message";
 import { showAlert } from "@/utils/showAlert";
-import { getTrainingByRegistryId } from "@/services/trainings";
+import { getTrainingByRegistryId, postTrainings } from "@/services/trainings";
 import { StyledBox } from "./Training.styles";
 
 export interface TrainingFormValues {
@@ -57,7 +55,6 @@ export default function Training() {
 
   const { update: updateCompletion, isLoading: isUpdateLoading } =
     useUserProfileCompletion();
-
   const {
     isError: isGetTrainingError,
     isLoading: isGetTrainingLoading,
@@ -74,21 +71,25 @@ export default function Training() {
     options: { queryKey: ["getTrainingByRegistryId", user?.id] },
   });
 
-  const { mutateAsync, isPending, isError } = useMutation({
+  const {
+    mutateAsync,
+    isPending,
+    isError,
+    error: postError,
+  } = useMutation({
     mutationKey: ["postTrainings", user?.id],
     mutationFn: (payload: PostTrainingsPayload) => {
       return postTrainings(user?.id, payload, {
-        error: { message: "postTrainingsError" },
+        error: { message: "postTrainingError" },
       });
     },
   });
-
+  console.log(user);
   const handleDetailsSubmit = useCallback(
     async (fields: TrainingFormValues) => {
       try {
         const yearsRemaining = calculateYearsRemaining(fields.expires_at);
 
-        // Format the dates
         const formattedFields = {
           ...fields,
           awarded_at: dayjs(fields.awarded_at).format("YYYY-MM-DD HH:mm:ss"),
@@ -119,9 +120,10 @@ export default function Training() {
           confirmButtonText: tProfile("postTrainingSuccessButton"),
         });
       } catch (error) {
+        const errorMessage = tProfile(postError);
         console.error("Error saving training details:", error);
         showAlert("error", {
-          text: tProfile("postTrainingError"),
+          text: errorMessage,
           confirmButtonText: tProfile("postTrainingErrorButton"),
         });
       }
@@ -141,9 +143,6 @@ export default function Training() {
         awarded_at: yup
           .string()
           .required(tForm("awardedAtRequiredInvalid"))
-          .test("valid-date", tForm("invalidDateFormat"), value => {
-            return dayjs(value, "YYYY-MM-DD", true).isValid();
-          })
           .test("not-future", tForm("awardedAtFutureInvalid"), value => {
             return (
               dayjs(value).isBefore(dayjs()) ||
@@ -153,21 +152,16 @@ export default function Training() {
         expires_at: yup
           .string()
           .required(tForm("expiresAtRequiredInvalid"))
-          .test("valid-date", tForm("invalidDateFormat"), value => {
-            return value === null || dayjs(value, "YYYY-MM-DD", true).isValid();
-          })
           .test(
             "after-awarded",
             tForm("expiresAtBeforeAwardedAtInvalid"),
             (value, context) => {
               const { awarded_at } = context.parent;
-              return (
-                !value || !awarded_at || dayjs(value).isAfter(dayjs(awarded_at))
-              );
+              return dayjs(value).isAfter(dayjs(awarded_at));
             }
           )
           .test("is-future", tForm("expiresAtPastInvalid"), value => {
-            return !value || dayjs(value).isAfter(dayjs());
+            return dayjs(value).isAfter(dayjs());
           }),
       }),
     [tForm]
@@ -192,7 +186,7 @@ export default function Training() {
   return (
     <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
       <Form onSubmit={handleDetailsSubmit} schema={schema} {...formOptions}>
-        {({ formState: { errors }, control }) => (
+        {({ formState: { errors } }) => (
           <>
             <FormSection heading={tProfile("training")}>
               <Grid container rowSpacing={3}>
@@ -218,20 +212,8 @@ export default function Training() {
                   <FormControlHorizontal
                     id="awarded_at"
                     error={errors.awarded_at}
-                    renderField={() => (
-                      <Controller
-                        name="awarded_at"
-                        control={control}
-                        render={({ field }) => (
-                          <DateInput
-                            {...field}
-                            onChange={newValue => field.onChange(newValue)}
-                            value={
-                              field.value ? dayjs(field.value).toDate() : null
-                            }
-                          />
-                        )}
-                      />
+                    renderField={fieldProps => (
+                      <FormField component={DateInput} {...fieldProps} />
                     )}
                   />
                 </Grid>
@@ -239,20 +221,8 @@ export default function Training() {
                   <FormControlHorizontal
                     id="expires_at"
                     error={errors.expires_at}
-                    renderField={() => (
-                      <Controller
-                        name="expires_at"
-                        control={control}
-                        render={({ field }) => (
-                          <DateInput
-                            {...field}
-                            onChange={newValue => field.onChange(newValue)}
-                            value={
-                              field.value ? dayjs(field.value).toDate() : null
-                            }
-                          />
-                        )}
-                      />
+                    renderField={fieldProps => (
+                      <FormField component={DateInput} {...fieldProps} />
                     )}
                   />
                 </Grid>
