@@ -111,7 +111,7 @@ interface User {
   profile_completed_at: string | null;
   profile_steps_completed: string;
   approvals: Approval[];
-  organisation_id: number;
+  organisation_id: number | null;
   consent_scrape: boolean;
   orc_id: string | null;
   orcid_scanning: boolean;

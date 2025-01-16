@@ -3,7 +3,6 @@ import Icon from "@/components/Icon";
 import Results from "@/components/Results";
 import ResultsCard from "@/components/ResultsCard";
 import UserRegisteredStatus from "@/components/UserRegisteredStatus";
-import { DecoupleIcon } from "@/consts/icons";
 import { useStore } from "@/data/store";
 import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
 import { PageGuidance, PageSection } from "@/modules";
@@ -19,6 +18,7 @@ import { getOrganisationUsers } from "@/services/organisations";
 import Pagination from "@/components/Pagination";
 import usePaginatedQuery from "@/hooks/usePaginatedQuery";
 import UserModal from "../UserModal";
+import DecoupleUser from "../DecoupleUser";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
 
@@ -74,7 +74,7 @@ export default function Users() {
           isError: isGetUsersError,
         }}>
         {usersData?.map(user => {
-          const { first_name, last_name, created_at, email } = user;
+          const { id, first_name, last_name, created_at, email } = user;
 
           return (
             <ResultsCard
@@ -102,12 +102,9 @@ export default function Users() {
                 </>
               }
               actions={
-                <IconButton
-                  size="small"
-                  color="inherit"
-                  aria-label="icon-button">
-                  <DecoupleIcon />
-                </IconButton>
+                organisation && (
+                  <DecoupleUser user={user} onSuccess={() => setPage(1)} />
+                )
               }
             />
           );
