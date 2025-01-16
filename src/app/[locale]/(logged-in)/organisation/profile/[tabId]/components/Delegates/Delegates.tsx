@@ -1,22 +1,22 @@
 "use client";
 
-import { mockedManageDelegatesGuidance } from "@/mocks/data/cms";
-import { PageGuidance, PageSection } from "@/modules";
-import { getOrganisationUsers } from "@/services/organisations";
-import { useStore } from "@/data/store";
-import Results from "@/components/Results";
-import { useTranslations } from "next-intl";
-import { formatShortDate } from "@/utils/date";
-import { Typography, IconButton } from "@mui/material";
-import Pagination from "@/components/Pagination";
-import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
+import ContactLink from "@/components/ContactLink";
 import Icon from "@/components/Icon";
-import usePaginatedQuery from "@/hooks/usePaginatedQuery";
-import ApplicationLink from "@/components/ApplicationLink";
+import Pagination from "@/components/Pagination";
+import Results from "@/components/Results";
 import ResultsCard from "@/components/ResultsCard";
 import UserRegisteredStatus from "@/components/UserRegisteredStatus";
 import { DecoupleIcon } from "@/consts/icons";
+import { useStore } from "@/data/store";
+import usePaginatedQuery from "@/hooks/usePaginatedQuery";
+import { mockedManageDelegatesGuidance } from "@/mocks/data/cms";
+import { PageGuidance, PageSection } from "@/modules";
+import { getOrganisationUsers } from "@/services/organisations";
+import { formatShortDate } from "@/utils/date";
 import { isRegistered } from "@/utils/user";
+import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
+import { IconButton, Typography } from "@mui/material";
+import { useTranslations } from "next-intl";
 
 const NAMESPACE_PROFILE_ORGANISATION = "ProfileOrganisation";
 
@@ -55,7 +55,7 @@ export default function Delegates() {
       <Results
         noResultsMessage={t("noDelegates")}
         errorMessage={t.rich("getError", {
-          applicationLink: ApplicationLink,
+          applicationLink: ContactLink,
         })}
         queryState={{
           isLoading: isGetUsersLoading,
