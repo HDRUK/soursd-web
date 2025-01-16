@@ -103,7 +103,8 @@
     "inviteSuccessfulTitle": "User invited",
     "inviteSuccessfulDescription": "The user has been successfully invited and have been notified via email",
     "inviteUserAriaLabel": "Invite user",
-    "getError": "Unable to get the list of users. Please try again or contact us at <contactLink></contactLink>"
+    "getError": "Unable to get the list of users. Please try again or contact us at <contactLink></contactLink>",
+    "getDelegatesError": "Unable to get the list of delegates. Please try again or contact us at <contactLink></contactLink>"
   },
   "Form": {
     "cancelButton": "Cancel",

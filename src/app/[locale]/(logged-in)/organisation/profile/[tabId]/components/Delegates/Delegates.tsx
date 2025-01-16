@@ -54,8 +54,8 @@ export default function Delegates() {
     <PageGuidance {...mockedManageDelegatesGuidance}>
       <Results
         noResultsMessage={t("noDelegates")}
-        errorMessage={t.rich("getError", {
-          applicationLink: ContactLink,
+        errorMessage={t.rich("getDelegatesError", {
+          contactLink: ContactLink,
         })}
         queryState={{
           isLoading: isGetUsersLoading,
