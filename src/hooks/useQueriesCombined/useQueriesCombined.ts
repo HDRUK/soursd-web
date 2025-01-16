@@ -1,3 +1,4 @@
+import { getCombinedQueryState } from "@/utils/query";
 import { UseQueryOptions, useQueries } from "@tanstack/react-query";
 
 interface CombinedResults<T = unknown> {
@@ -11,9 +12,6 @@ export default function useQueriesCombined<T>(queries: UseQueryOptions[]) {
   return useQueries({
     queries,
     combine: results => {
-      const isError = results.some(result => result.isError);
-      const isLoading = results.some(result => result.isLoading);
-
       const error: Record<string, Error | null> = {};
       const data: Record<string, unknown> = {};
 
@@ -27,8 +25,7 @@ export default function useQueriesCombined<T>(queries: UseQueryOptions[]) {
         });
 
       return {
-        isLoading,
-        isError,
+        ...getCombinedQueryState(results),
         error,
         data,
       } as CombinedResults<T>;

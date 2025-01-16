@@ -1,4 +1,4 @@
-import ApplicationLink from "@/components/ApplicationLink";
+import ContactLink from "@/components/ContactLink";
 import Form from "@/components/Form";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
 import FormField from "@/components/FormField";
@@ -60,7 +60,7 @@ export default function UserModalDetails({
     error:
       isError &&
       t.rich(error, {
-        applicationLink: ApplicationLink,
+        contactLink: ContactLink,
       }),
   };
 

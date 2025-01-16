@@ -13,7 +13,7 @@ import { Paged, ResponseJson } from "@/types/requests";
 import { QueryFunctionContext } from "@tanstack/react-query";
 
 interface UseApplicationDependenciesProps {
-  user: User;
+  user?: User;
 }
 
 interface ApplicationDependenciesCombinedData {
@@ -39,15 +39,17 @@ export default function useApplicationDependencies({
             message: "getSystemConfigError",
           },
         }),
+      enabled: !!user,
     },
     {
-      queryKey: ["getUser", user.id],
+      queryKey: ["getUser", user?.id],
       queryFn: ({ queryKey }: QueryFunctionContextDefault) =>
         getUser(queryKey[1], {
           error: {
             message: "getUserError",
           },
         }),
+      enabled: !!user,
     },
     {
       queryKey: ["getOrganisation", 1],
@@ -57,6 +59,7 @@ export default function useApplicationDependencies({
             message: "getOrganisationError",
           },
         }),
+      enabled: !!user,
     },
     {
       queryKey: ["getCustodian", CUSTODIAN_ID],
@@ -66,6 +69,7 @@ export default function useApplicationDependencies({
             message: "getCustodianError",
           },
         }),
+      enabled: !!user,
     },
     {
       queryKey: ["getSectors"],
@@ -75,6 +79,7 @@ export default function useApplicationDependencies({
             message: "getSectorsError",
           },
         }),
+      enabled: !!user,
     },
     {
       queryKey: ["getPermissions"],

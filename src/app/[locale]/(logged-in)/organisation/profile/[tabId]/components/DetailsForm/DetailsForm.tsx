@@ -1,6 +1,6 @@
 "use client";
 
-import ApplicationLink from "@/components/ApplicationLink";
+import ContactLink from "@/components/ContactLink";
 import Form from "@/components/Form/Form";
 import FormActions from "@/components/FormActions";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
@@ -140,7 +140,7 @@ export default function DetailsForm({
     error:
       isError &&
       tProfile.rich(error, {
-        applicationLink: ApplicationLink,
+        contactLink: ContactLink,
       }),
   };
 

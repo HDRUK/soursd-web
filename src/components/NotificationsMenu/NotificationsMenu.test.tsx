@@ -1,4 +1,4 @@
-import { useCookies } from "@/context/CookieContext/CookieContext";
+import { useCookies } from "@/context/CookieContext";
 import { useStore } from "@/data/store";
 import useQueryRefetch from "@/hooks/useQueryRefetch";
 import { mockedUser } from "@/mocks/data/user";
@@ -12,7 +12,7 @@ const defaultUser = mockedUser({
 const mockRefetch = jest.fn();
 const mockCancel = jest.fn();
 
-jest.mock("@/context/CookieContext/CookieContext", () => ({
+jest.mock("@/context/CookieContext", () => ({
   useCookies: jest.fn(),
 }));
 
