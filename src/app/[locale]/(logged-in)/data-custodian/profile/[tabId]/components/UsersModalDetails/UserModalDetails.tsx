@@ -93,7 +93,7 @@ export default function UserModalDetails({
       {({ formState: { errors }, register, watch, setValue }) => (
         <>
           <FormModalHeader>
-            <Typography variant="h4" sx={{ mb: 1 }}>
+            <Typography variant="h5" sx={{ mb: 1 }}>
               {user?.id ? t("updateUserTitle") : t("createUserTitle")}
             </Typography>
             <Typography>
@@ -134,7 +134,7 @@ export default function UserModalDetails({
             </Grid>
           </FormModalBody>
           <FormModalHeader>
-            <Typography variant="h4">Permissions</Typography>
+            <Typography variant="h5">Permissions</Typography>
           </FormModalHeader>
           <FormModalBody sx={{ mt: -1 }}>
             <Grid container columnSpacing={2} rowSpacing={2}>

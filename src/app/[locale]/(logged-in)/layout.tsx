@@ -3,6 +3,7 @@
 import { ROUTES } from "@/consts/router";
 import { ApplicationDataProvider } from "@/context/ApplicationData";
 import { getMe } from "@/services/auth";
+import { getCustodianUser } from "@/services/custodian_users";
 import { User } from "@/types/application";
 import { handleLogin } from "@/utils/keycloak";
 import { getRoutes } from "@/utils/router";
@@ -18,12 +19,9 @@ async function validateAccessToken(
   pathname: string | null,
   router: ReturnType<typeof useRouter>
 ): Promise<User | undefined> {
-  console.log("getting", pathname);
   const response = await getMe({
     suppressThrow: true,
   });
-
-  console.log("response", response);
 
   if (response.status === 404) {
     router.push("/en/register");
@@ -36,9 +34,19 @@ async function validateAccessToken(
     }
   }
 
-  console.log(response?.data);
-
   return response?.data;
+}
+
+async function getCustodianId(user: User) {
+  let custodian_id = user?.custodian_id;
+
+  if (user.custodian_user_id) {
+    const custodianUser = await getCustodianUser(user.custodian_user_id);
+
+    custodian_id = custodianUser?.data.custodian_id;
+  }
+
+  return custodian_id;
 }
 
 export default function Layout({ children, params: { locale } }: LayoutProps) {
@@ -46,6 +54,7 @@ export default function Layout({ children, params: { locale } }: LayoutProps) {
   const pathname = usePathname();
   const router = useRouter();
   const [me, setMe] = useState<User>();
+  const [custodianId, setCustodianId] = useState<number>();
 
   useEffect(() => {
     const performAuthCheck = async () => {
@@ -55,6 +64,7 @@ export default function Layout({ children, params: { locale } }: LayoutProps) {
         throw new Error("Unauthorised 401");
       }
 
+      setCustodianId(await getCustodianId(user));
       setMe(user);
     };
 
@@ -64,6 +74,7 @@ export default function Layout({ children, params: { locale } }: LayoutProps) {
   return (
     me && (
       <ApplicationDataProvider
+        custodianId={custodianId}
         me={me}
         value={{
           routes,

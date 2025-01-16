@@ -14,6 +14,7 @@ import { QueryFunctionContext } from "@tanstack/react-query";
 
 interface UseApplicationDependenciesProps {
   user?: User;
+  custodianId?: number;
 }
 
 interface ApplicationDependenciesCombinedData {
@@ -29,6 +30,7 @@ type QueryFunctionContextDefault = QueryFunctionContext<[string, number]>;
 
 export default function useApplicationDependencies({
   user,
+  custodianId,
 }: UseApplicationDependenciesProps) {
   const queries = [
     {
@@ -62,7 +64,7 @@ export default function useApplicationDependencies({
       enabled: !!user,
     },
     {
-      queryKey: ["getCustodian", CUSTODIAN_ID],
+      queryKey: ["getCustodian", custodianId],
       queryFn: ({ queryKey }: QueryFunctionContextDefault) =>
         getCustodian(queryKey[1], {
           error: {

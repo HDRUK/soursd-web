@@ -7,7 +7,7 @@ export default async (
   options?: ResponseOptions
 ): Promise<ResponseJson<GetCustodianUserResponse>> => {
   const response = await getRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/custodian_user/${id}`,
+    `${process.env.NEXT_PUBLIC_API_V1_URL}/custodian_users/${id}`,
     undefined,
     {
       headers: {
