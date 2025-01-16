@@ -4,7 +4,6 @@ import ContactLink from "@/components/ContactLink";
 import Form from "@/components/Form";
 import FormActions from "@/components/FormActions";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
-import FormField from "@/components/FormField";
 import Postit from "@/components/Postit";
 import yup from "@/config/yup";
 import { patchCustodian, PatchCustodianPayload } from "@/services/custodians";
@@ -110,45 +109,42 @@ export default function Details({ custodian }: DetailsProps) {
         <Typography>{tProfile("uniqueIdentifierCaption")}</Typography>
       </Postit>
       <Form schema={schema} onSubmit={handleDetailsSubmit} {...formOptions}>
-        {({ formState: { errors }, register }) => (
-          <>
-            <Grid container rowSpacing={3} sx={{ maxWidth: "800px" }}>
-              <Grid item xs={12}>
-                <FormControlHorizontal
-                  id="name"
-                  error={errors.name}
-                  renderField={fieldProps => (
-                    <FormField component={TextField} {...fieldProps} />
-                  )}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlHorizontal
-                  id="contact_email"
-                  error={errors.contact_email}
-                  renderField={fieldProps => (
-                    <FormField component={TextField} {...fieldProps} />
-                  )}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlHorizontal
-                  renderField={() => (
-                    <IdvtSection switchProps={register("idvt_required")} />
-                  )}
-                />
-              </Grid>
+        <>
+          <Grid container rowSpacing={3} sx={{ maxWidth: "800px" }}>
+            <Grid item xs={12}>
+              <FormControlHorizontal
+                name="name"
+                renderField={fieldProps => <TextField {...fieldProps} />}
+              />
             </Grid>
-            <FormActions>
-              <LoadingButton
-                type="submit"
-                endIcon={<SaveIcon />}
-                loading={isUpdateLoading}>
-                {tProfile("submitButton")}
-              </LoadingButton>
-            </FormActions>
-          </>
-        )}
+            <Grid item xs={12}>
+              <FormControlHorizontal
+                name="contact_email"
+                renderField={fieldProps => <TextField {...fieldProps} />}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControlHorizontal
+                name="idvt_required"
+                displayLabel={false}
+                displayPlaceholder={false}
+                renderField={fieldProps => (
+                  <IdvtSection
+                    switchProps={{ name: "idvt_required", ...fieldProps }}
+                  />
+                )}
+              />
+            </Grid>
+          </Grid>
+          <FormActions>
+            <LoadingButton
+              type="submit"
+              endIcon={<SaveIcon />}
+              loading={isUpdateLoading}>
+              {tProfile("submitButton")}
+            </LoadingButton>
+          </FormActions>
+        </>
       </Form>
     </>
   );

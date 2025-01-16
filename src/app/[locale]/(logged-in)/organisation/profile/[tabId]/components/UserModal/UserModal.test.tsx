@@ -1,6 +1,13 @@
 import { mockedOrganisation } from "@/mocks/data/organisation";
 import { postOrganisationsInviteUser } from "@/services/organisations";
-import { act, fireEvent, render, screen, waitFor } from "@/utils/testUtils";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  within,
+} from "@/utils/testUtils";
 import { faker } from "@faker-js/faker";
 import { axe } from "jest-axe";
 import UserModal, { UserModalProps } from "./UserModal";
@@ -30,13 +37,13 @@ const renderUserModalDetails = (props?: Partial<UserModalProps>) => {
 
 const renderUserModalDetailsUpdate = () => {
   renderUserModalDetails();
-
   [
-    { label: "First name", value: mockedPayload.first_name },
-    { label: "Last name", value: mockedPayload.last_name },
-    { label: "Email", value: mockedPayload.email },
-  ].forEach(({ label, value }) => {
-    const input = screen.getByLabelText(label);
+    { testId: "first_name", value: mockedPayload.first_name },
+    { testId: "last_name", value: mockedPayload.last_name },
+    { testId: "email", value: mockedPayload.email },
+  ].forEach(({ testId, value }) => {
+    const parentDiv = screen.getByTestId(testId);
+    const input = within(parentDiv).getByRole("textbox");
 
     fireEvent.change(input, {
       target: { value },
