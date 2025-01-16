@@ -12,7 +12,9 @@ export default function FormActions({
   ...restProps
 }: FormActionsProps) {
   return (
-    <Box sx={{ mt: 2, ...sx }} {...restProps}>
+    <Box
+      sx={{ mt: 2, display: "flex", justifyContent: "flex-end", ...sx }}
+      {...restProps}>
       {children}
     </Box>
   );
