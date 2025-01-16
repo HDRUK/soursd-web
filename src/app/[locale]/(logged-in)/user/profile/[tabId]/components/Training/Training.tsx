@@ -84,7 +84,7 @@ export default function Training() {
       });
     },
   });
-  console.log(user);
+
   const handleDetailsSubmit = useCallback(
     async (fields: TrainingFormValues) => {
       try {
