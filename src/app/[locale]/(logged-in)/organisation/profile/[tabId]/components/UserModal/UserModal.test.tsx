@@ -1,7 +1,6 @@
 import { mockedOrganisation } from "@/mocks/data/organisation";
 import { postOrganisationsInviteUser } from "@/services/organisations";
 import {
-  act,
   commonAccessibilityTests,
   fireEvent,
   render,

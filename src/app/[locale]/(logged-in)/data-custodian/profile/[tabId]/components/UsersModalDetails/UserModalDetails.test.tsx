@@ -2,7 +2,6 @@ import { useStore } from "@/data/store";
 import { mockedCustodianUser } from "@/mocks/data/custodian";
 import { mockedApiPermissions } from "@/mocks/data/store";
 import {
-  act,
   commonAccessibilityTests,
   fireEvent,
   render,

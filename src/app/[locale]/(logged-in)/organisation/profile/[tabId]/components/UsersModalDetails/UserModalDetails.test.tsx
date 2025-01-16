@@ -1,11 +1,10 @@
 import {
-  act,
-  within,
+  commonAccessibilityTests,
   fireEvent,
   render,
   screen,
   waitFor,
-  commonAccessibilityTests,
+  within,
 } from "@/utils/testUtils";
 import { faker } from "@faker-js/faker";
 import UserModalDetails, { UserModalDetailsProps } from "./UserModalDetails";
