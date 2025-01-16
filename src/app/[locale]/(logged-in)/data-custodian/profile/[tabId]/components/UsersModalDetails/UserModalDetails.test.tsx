@@ -1,7 +1,14 @@
 import { useStore } from "@/data/store";
 import { mockedCustodianUser } from "@/mocks/data/custodian";
 import { mockedApiPermissions } from "@/mocks/data/store";
-import { act, fireEvent, render, screen, waitFor } from "@/utils/testUtils";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  within,
+} from "@/utils/testUtils";
 import { faker } from "@faker-js/faker";
 import { axe } from "jest-axe";
 import UserModalDetails, { UserModalDetailsProps } from "./UserModalDetails";
@@ -63,12 +70,13 @@ describe("<UserModalDetails />", () => {
     });
   });
 
-  it.each(["First name", "Last name", "Email"])(
+  it.each(["first_name", "last_name", "email"])(
     "does not submit when %s is not defined",
-    async value => {
+    async testId => {
       renderUserModalDetails();
 
-      const input = screen.getByLabelText(value);
+      const parentDiv = screen.getByTestId(testId);
+      const input = within(parentDiv).getByRole("textbox");
       const inputValue = faker.string.sample();
 
       fireEvent.change(input, {

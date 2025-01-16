@@ -126,7 +126,13 @@ export default function Details({ custodian }: DetailsProps) {
             <Grid item xs={12}>
               <FormControlHorizontal
                 name="idvt_required"
-                renderField={fieldProps => <IdvtSection {...fieldProps} />}
+                displayLabel={false}
+                displayPlaceholder={false}
+                renderField={fieldProps => (
+                  <IdvtSection
+                    switchProps={{ name: "idvt_required", ...fieldProps }}
+                  />
+                )}
               />
             </Grid>
           </Grid>

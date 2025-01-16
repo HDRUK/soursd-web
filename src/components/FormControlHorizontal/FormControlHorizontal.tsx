@@ -103,6 +103,7 @@ export default function FormControlHorizontal({
               : "",
             disabled,
             fullWidth,
+            "data-testid": field.name,
             ...field,
           })}
 
