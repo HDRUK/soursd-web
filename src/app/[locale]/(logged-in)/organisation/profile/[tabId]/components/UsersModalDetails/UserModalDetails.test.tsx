@@ -1,4 +1,11 @@
-import { act, fireEvent, render, screen, waitFor } from "@/utils/testUtils";
+import {
+  act,
+  within,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from "@/utils/testUtils";
 import { faker } from "@faker-js/faker";
 import { axe } from "jest-axe";
 import UserModalDetails, { UserModalDetailsProps } from "./UserModalDetails";
@@ -30,11 +37,12 @@ const renderUserModalDetailsUpdate = () => {
   renderUserModalDetails();
 
   [
-    { label: "First name", value: mockedPayload.first_name },
-    { label: "Last name", value: mockedPayload.last_name },
-    { label: "Email", value: mockedPayload.email },
-  ].forEach(({ label, value }) => {
-    const input = screen.getByLabelText(label);
+    { testId: "first_name", value: mockedPayload.first_name },
+    { testId: "last_name", value: mockedPayload.last_name },
+    { testId: "email", value: mockedPayload.email },
+  ].forEach(({ testId, value }) => {
+    const parentDiv = screen.getByTestId(testId);
+    const input = within(parentDiv).getByRole("textbox");
 
     fireEvent.change(input, {
       target: { value },
@@ -69,12 +77,14 @@ describe("<UserModalDetails />", () => {
     });
   });
 
-  it.each(["First name", "Last name", "Email"])(
+  it.each(["first_name", "last_name", "email"])(
     "does not submit when %s is not defined",
-    async value => {
+    async testId => {
       renderUserModalDetails();
 
-      const input = screen.getByLabelText(value);
+      const parentDiv = screen.getByTestId(testId);
+      const input = within(parentDiv).getByRole("textbox");
+
       const inputValue = faker.string.sample();
 
       fireEvent.change(input, {
