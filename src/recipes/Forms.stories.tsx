@@ -1,6 +1,6 @@
 import type { StoryObj } from "@storybook/react";
-
 import SyntaxHighlighter from "react-syntax-highlighter";
+
 interface FormsProps {
   codeString: string;
 }
