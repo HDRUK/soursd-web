@@ -2,10 +2,14 @@ import FormModal, { FormModalProps } from "@/components/FormModal";
 import { Message } from "@/components/Message";
 import { CustodianUserRoles } from "@/consts/custodian";
 import { useStore } from "@/data/store";
-import useMutationWriteCustodianUser from "@/queries/useMutationWriteCustodianUser";
-import { postCustodianInviteUser } from "@/services/custodian_users";
+import {
+  patchCustodianUser,
+  postCustodianUser,
+  postCustodianUserInvite,
+} from "@/services/custodian_users";
 import { CustodianUser } from "@/types/application";
 import { getPermission } from "@/utils/permissions";
+import { getCombinedQueryState } from "@/utils/query";
 import { showAlert } from "@/utils/showAlert";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
@@ -30,67 +34,93 @@ export default function UsersModal({
   const permissions = useStore(state => state.config.permissions);
   const queryClient = useQueryClient();
 
-  const { mutateAsync, isPending, isError, error } =
-    useMutationWriteCustodianUser({ user, custodianId });
+  const { mutateAsync: mutatePostUser, ...updateCustodianUserState } =
+    useMutation({
+      mutationKey: ["updateCustodianUser"],
+      mutationFn: (
+        payload: Omit<CustodianUser, "created_at" | "updated_at">
+      ) => {
+        if (!user?.id) {
+          return postCustodianUser(payload, {
+            error: { message: "createUserError" },
+          });
+        }
+
+        return patchCustodianUser(user.id, payload, {
+          error: { message: "createUserError" },
+        });
+      },
+    });
 
   const {
-    mutateAsync: mutateAsyncInvite,
-    isPending: isInvitePending,
-    isError: isInviteError,
-    error: inviteError,
+    mutateAsync: mutateAsyncPostInvite,
+    ...postCustodianUserInviteState
   } = useMutation({
-    mutationKey: ["updateCustodianUser"],
+    mutationKey: ["postCustodianUserInvite"],
     mutationFn: (id: number) => {
-      return postCustodianInviteUser(id, {
-        error: { message: "createUserError" },
+      return postCustodianUserInvite(id, {
+        error: { message: "postCustodianUserInviteError" },
       });
     },
   });
 
-  const handleOnSubmit = useCallback(async (payload: CustodianUserFields) => {
-    const { first_name, last_name, email, approver, administrator } = payload;
-    let userPermissions: number[] = [];
+  const queryState = getCombinedQueryState([
+    postCustodianUserInviteState,
+    updateCustodianUserState,
+  ]);
 
-    const approverPermission = getPermission(
-      CustodianUserRoles.APPROVER,
-      permissions
-    );
-    const administratorPermissions = getPermission(
-      CustodianUserRoles.ADMINISTRATOR,
-      permissions
-    );
+  const handleOnSubmit = useCallback(
+    async (payload: CustodianUserFields) => {
+      const { first_name, last_name, email, approver, administrator } = payload;
 
-    if (approver && approverPermission) {
-      userPermissions = [approverPermission.id];
-    } else if (administrator && administratorPermissions) {
-      userPermissions = [administratorPermissions.id];
-    }
+      let userPermissions: number[] = [];
 
-    const userResponse = await mutateAsync({
-      id: user?.id,
-      first_name,
-      last_name,
-      email,
-      permissions: userPermissions,
-    });
+      const approverPermission = getPermission(
+        CustodianUserRoles.APPROVER,
+        permissions
+      );
+      const administratorPermissions = getPermission(
+        CustodianUserRoles.ADMINISTRATOR,
+        permissions
+      );
 
-    if (!user?.id && userResponse?.data)
-      await mutateAsyncInvite(userResponse.data);
+      if (approver && approverPermission) {
+        userPermissions = [approverPermission.id];
+      } else if (administrator && administratorPermissions) {
+        userPermissions = [administratorPermissions.id];
+      }
 
-    onClose();
+      const userResponse = await mutatePostUser({
+        id: user?.id,
+        first_name,
+        last_name,
+        email,
+        permissions: userPermissions,
+        custodian_id: custodianId,
+      });
 
-    showAlert("success", {
-      text: user?.id
-        ? t("updateSuccessfulDescription")
-        : t("createSuccessfulDescription"),
-      title: user?.id ? t("updateSuccessfulTitle") : t("createSuccessfulTitle"),
-      willClose: () => {
-        queryClient.refetchQueries({
-          queryKey: ["getCustodianUsers", user?.custodian_id],
-        });
-      },
-    });
-  }, []);
+      if (!user?.id && userResponse?.data) {
+        await mutateAsyncPostInvite(userResponse.data);
+      }
+
+      onClose();
+
+      showAlert("success", {
+        text: user?.id
+          ? t("updateSuccessfulDescription")
+          : t("createSuccessfulDescription"),
+        title: user?.id
+          ? t("updateSuccessfulTitle")
+          : t("createSuccessfulTitle"),
+        willClose: () => {
+          queryClient.refetchQueries({
+            queryKey: ["getCustodianUsers", user?.custodian_id],
+          });
+        },
+      });
+    },
+    [custodianId]
+  );
 
   return (
     <FormModal
@@ -98,19 +128,15 @@ export default function UsersModal({
       variant="content"
       onClose={onClose}
       {...restProps}>
-      {isError && !isPending && <Message severity="error">{t(error)}</Message>}
-      {!isPending && (
-        <UserModalDetails
-          onClose={onClose}
-          onSubmit={handleOnSubmit}
-          user={user}
-          queryState={{
-            isLoading: isPending || isInvitePending,
-            isError: isError || isInviteError,
-            error: error || inviteError,
-          }}
-        />
+      {queryState.isError && !queryState.isLoading && (
+        <Message severity="error">{t(queryState.error[0])}</Message>
       )}
+      <UserModalDetails
+        onClose={onClose}
+        onSubmit={handleOnSubmit}
+        user={user}
+        queryState={queryState}
+      />
     </FormModal>
   );
 }

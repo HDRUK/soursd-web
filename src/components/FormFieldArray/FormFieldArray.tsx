@@ -1,98 +1,81 @@
 "use client";
 
-import { Button, Box } from "@mui/material";
-import { Control, FieldValues, useFieldArray } from "react-hook-form";
-import { useEffect, useRef } from "react";
-import { FormFieldsConfig, FormDefaultValue } from "@/types/forms";
-import RenderFormField from "@/components/RenderFormField";
+import { Button, Box, SxProps } from "@mui/material";
+import {
+  Control,
+  useFormContext,
+  FieldValues,
+  FieldArray,
+  ArrayPath,
+  useFieldArray,
+} from "react-hook-form";
+import { useTranslations } from "next-intl";
 
-const createDefaultValues = (fields: FormFieldsConfig) => {
-  return fields.reduce(
-    (acc, field) => {
-      acc[field.name] = field.defaultValue || "";
-      return acc;
-    },
-    {} as Record<string, FormDefaultValue>
-  );
-};
-
-interface FormFieldArrayProps {
-  fields: FormFieldsConfig;
-  control: Control<FieldValues>;
-  name: string;
-  removeButtonLabel: string;
-  addButtonLabel: string;
-  renderButtons?: boolean;
+interface FormFieldArrayProps<
+  T extends FieldValues,
+  F = FieldArray<T, ArrayPath<T>>,
+> {
+  name: ArrayPath<T>;
+  control?: Control<T>;
+  createNewRow?: () => F;
+  renderField: (field: F, index: number) => React.ReactNode;
+  removeButtonLabel?: string;
+  addButtonLabel?: string;
+  boxSx?: SxProps;
 }
 
-const FormFieldArray = ({
-  fields,
+const NAMESPACE_TRANSLATION_FORM = "Form";
+
+const FormFieldArray = <T extends FieldValues>({
   control,
   name,
+  renderField,
+  createNewRow,
   removeButtonLabel,
   addButtonLabel,
-  renderButtons = true,
-  ...restProps
-}: FormFieldArrayProps) => {
+  boxSx = {
+    display: "flex",
+    flexDirection: "row",
+    gap: 2,
+  },
+}: FormFieldArrayProps<T>) => {
+  const t = useTranslations(NAMESPACE_TRANSLATION_FORM);
+  const context = useFormContext<T>();
+  const effectiveControl = control || context.control;
+
   const {
     fields: fieldsArray,
     append,
     remove,
   } = useFieldArray({
-    control,
+    control: effectiveControl,
     name,
   });
 
-  const initialized = useRef(false);
-  useEffect(() => {
-    if (!initialized.current && fieldsArray.length === 0) {
-      initialized.current = true;
-      append(createDefaultValues(fields));
-    }
-  }, [fieldsArray, append, fields]);
-
   const handleAddRow = () => {
-    append(createDefaultValues(fields));
+    if (createNewRow) {
+      append(createNewRow());
+    }
   };
 
   return (
-    <Box sx={{ p: 1, gap: 2 }}>
+    <Box sx={{ p: 1, gap: 2, display: "flex", flexDirection: "column" }}>
       {fieldsArray.map((field, index) => (
-        <Box
-          key={field.id}
-          display="flex"
-          flexDirection="row"
-          gap={2}
-          alignItems="center"
-          {...restProps}>
-          {fields.map(fieldConfig => (
-            <RenderFormField
-              // eslint-disable-next-line react/no-array-index-key
-              key={`${name}.${index}.${fieldConfig.name}`}
-              aria-label={`test-${name}.${index}.${fieldConfig.name}`}
-              control={control}
-              fieldConfig={{
-                ...fieldConfig,
-                name: `${name}.${index}.${fieldConfig.name}`,
-              }}
-            />
-          ))}
-          {renderButtons && (
-            <Button
-              disabled={fieldsArray.length < 2}
-              onClick={() => remove(index)}>
-              {removeButtonLabel}
-            </Button>
-          )}
-        </Box>
-      ))}
-      {renderButtons && (
-        <Box sx={{ mt: 1, display: "flex", justifyContent: "flex-end" }}>
-          <Button onClick={handleAddRow} variant="contained" color="primary">
-            {addButtonLabel}
+        <Box key={field.id} sx={{ gap: 2, ...boxSx }}>
+          {renderField(field, index)}
+          <Button
+            disabled={fieldsArray.length < 2}
+            onClick={() => remove(index)}>
+            {removeButtonLabel || t("arrayRemoveButton")}
           </Button>
         </Box>
-      )}
+      ))}
+
+      <Box sx={{ mt: 1, display: "flex", justifyContent: "flex-end" }}>
+        <Button onClick={handleAddRow} variant="contained" color="primary">
+          {addButtonLabel || t("arrayAddButton")}
+        </Button>
+      </Box>
     </Box>
   );
 };

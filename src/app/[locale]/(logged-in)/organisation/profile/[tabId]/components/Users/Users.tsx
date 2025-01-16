@@ -1,4 +1,4 @@
-import ApplicationLink from "@/components/ApplicationLink";
+import ContactLink from "@/components/ContactLink";
 import Icon from "@/components/Icon";
 import Results from "@/components/Results";
 import ResultsCard from "@/components/ResultsCard";
@@ -68,7 +68,7 @@ export default function Users() {
       <Results
         noResultsMessage={t("noResults")}
         errorMessage={t.rich("getError", {
-          applicationLink: ApplicationLink,
+          contactLink: ContactLink,
         })}
         queryState={{
           isLoading: isGetUsersLoading,

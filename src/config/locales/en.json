@@ -4,18 +4,20 @@
     "hide": "Hide {name}"
   },
   "Application": {
-    "getDependenciesError": "There was a problem was a problem trying to preload dependencies for SOURSD. Please try again or contact us at <applicationLink></applicationLink>",
-    "getSystemConfigError": "There was a problem loading the application. Please try again or contact us at <applicationLink></applicationLink>",
-    "getUserError": "Unable to load your user details. Please try again or contact us at <applicationLink></applicationLink>",
+    "getDependenciesError": "There was a problem was a problem trying to preload dependencies for SOURSD. Please try again or contact us at <contactLink></contactLink>",
+    "getSystemConfigError": "There was a problem loading the application. Please try again or contact us at <contactLink></contactLink>",
+    "getUserError": "Unable to load your user details. Please try again or contact us at <contactLink></contactLink>",
     "researcher": "Researcher",
     "organisation": "Organisation",
     "custodian": "Data Custodian",
     "companyNumberAbbr": "CRN",
-    "getOrganisationError": "There was a problem loading your organisation. Please try again or contact us at <applicationLink></applicationLink>",
-    "getCustodianError": "There was a problem loading your Data Custodian. Please try again or contact us at <applicationLink></applicationLink>",
+    "getOrganisationError": "There was a problem loading your organisation. Please try again or contact us at <contactLink></contactLink>",
+    "getCustodianError": "There was a problem loading your Data Custodian. Please try again or contact us at <contactLink></contactLink>",
     "registered": "Registered",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "notFound": "We couldn't find the page you were looking for. Please try again or contact us at <contactLink></contactLink>",
+    "loadingAriaLabel": "Application loading"
   },
   "CustodianProfile": {
     "uniqueIdentifierTitle": "SOURSD Identifier",
@@ -40,7 +42,7 @@
     "idvtHeading": "Do you require identification validation?",
     "idvtDescription": "This is handled by a third party Identification Document Verification Technology (IDVT) service.",
     "submitButton": "Save",
-    "getError": "Unable to get the list of users. Please try again or contact us at <applicationLink></applicationLink>",
+    "getError": "Unable to get the list of users. Please try again or contact us at <contactLink></contactLink>",
     "noResults": "There were no users found",
     "lastLoggedIn": "Last logged in: {date}",
     "addedOn": "Added on: {date}",
@@ -61,7 +63,8 @@
     "deleteWarningTitle": "Are you sure you want to delete this user?",
     "deleteWarningDescription": "Deleting this user is permanent and will result in them no longer being able to act on your behalf",
     "CUSTODIAN_ADMIN": "Administrator",
-    "CUSTODIAN_APPROVER": "Approver"
+    "CUSTODIAN_APPROVER": "Approver",
+    "postCustodianUserInviteError": "There was a problem inviting this user. Please contact them directly or contact us at <contactLink></contactLink>"
   },
   "OrganisationStats": {
     "affiliatedUsers": "Affiliated Users",
@@ -72,7 +75,7 @@
   "ProfileOrganisation": {
     "title": "Profile",
     "companyValid": "Organisation validated",
-    "companyNotValidPopup": "Your organisation has not been validated. This could be related to the information you've entered (i.e. company number). If you believe this message to be in error please contact us at  <applicationLink></applicationLink>",
+    "companyNotValidPopup": "Your organisation has not been validated. This could be related to the information you've entered (i.e. company number). If you believe this message to be in error please contact us at  <contactLink></contactLink>",
     "companyNotValid": "Organisation not validated",
     "companyValidatingPopup": "Your organisation is currently being checked against records held by Companies House",
     "companyValidating": "Organisation is being validated",
@@ -86,7 +89,7 @@
     "organisationNotFound": "Organisation was not found",
     "getOrganisationStatusError": "Unable to determine validation status",
     "navigationAriaLabel": "Profile tabs",
-    "patchUserError": "There was a problem updating your user details. Please try again or contact us at <applicationLink></applicationLink>",
+    "patchUserError": "There was a problem updating your user details. Please try again or contact us at <contactLink></contactLink>",
     "updateUserButton": "Save",
     "noDelegates": "No Delegates Found",
     "getDelegateError": "Unable to get the list of delegates",
@@ -96,11 +99,12 @@
     "inviteUserTitle": "Invite new user",
     "inviteUserDescription": "This is where you can invite a new user to register against you organisation",
     "sendInviteButton": "Send invite",
-    "inviteUserError": "This user could not be invited. Please ensure you have not already invited them and try again. Alternatively contact us <applicationLink></applicationLink>",
+    "inviteUserError": "This user could not be invited. Please ensure you have not already invited them and try again. Alternatively contact us <contactLink></contactLink>",
     "inviteSuccessfulTitle": "User invited",
     "inviteSuccessfulDescription": "The user has been successfully invited and have been notified via email",
     "inviteUserAriaLabel": "Invite user",
-    "getError": "Unable to get the list of users. Please try again or contact us at <applicationLink></applicationLink>"
+    "getError": "Unable to get the list of users. Please try again or contact us at <contactLink></contactLink>",
+    "getDelegatesError": "Unable to get the list of delegates. Please try again or contact us at <contactLink></contactLink>"
   },
   "Form": {
     "cancelButton": "Cancel",
@@ -212,44 +216,34 @@
     "country": "Country",
     "digitalToolkitCodePlaceholder": "Dsptk ods code",
     "digitalToolkitCode": "Dsptk ods code",
-    "iso27001CertifiedAriaLabel": "ISO27001 certfied",
-    "iso27001Certified": "ISO27001 certfied",
-    "ceCertifiedAriaLabel": "CE certfied",
-    "ce_certified": "CE certfied",
-    "ce_certification_num": "CE certification number",
-    "ce_certification_numPlaceholder": "Enter a CE certification number",
     "whatIsTheOrcId": "Your ORCiD is a value which identifies you to Data Custodians (although in general anyone) and provides information to them such as your research outputs and activities. If you don't have one of these you can signup at https://orcid.org/register. Although it is recommended to provide this, it is not required for the registry, however it is required for the content scrape.",
     "roleAdministrator": "Administrator",
     "roleApprover": "Approver",
     "consentScrapeDescription": "I consent to the Registry using information I provide to gather my historical experience",
-    "organisationDataSecurityCompliance": {
-      "title": "Organisation data security compliance",
-      "ceCertification": "CE certified?",
-      "ceCertificationNum": "CE identifier",
-      "ceCertificationNumPlaceholder": "e.g. A1B2",
-      "ceCertificationNumberInvalid": "Certification number must be exactly 4 alphanumeric characters.",
-      "cePlusCertification": "CE plus certified?",
-      "cePlusCertificationNum": "CE plus identifier",
-      "cePlusCertificationNumPlaceholder": "e.g. X1Y2",
-      "cePlusCertificationNumberInvalid": "Certification number must be exactly 4 alphanumeric characters.",
-      "iso270001Certification": "ISO27001 certified?",
-      "iso270001CertificationNum": "ISO27001 identifier",
-      "iso270001CertificationNumPlaceholder": "e.g. AB123C",
-      "iso270001CertificationNumInvalid": "ISO27001 identifier is invalid",
-      "dsptkCertification": "DSPT certified?",
-      "dsptkCertificationNum": "DSPT identifier",
-      "dsptkCertificationNumPlaceholder": "e.g. DSPTK-2025-12345",
-      "dsptkCertificationNumInvalid": "DSPT identifier is invalid"
-    },
-    "organisationSubsidiaries": {
-      "title": "Organisation UK subsidiaries",
-      "name": "Subsidiary name",
-      "website": "Subsidiary website",
-      "removeButton": "Remove",
-      "addButton": "Add Another Subsidiary",
-      "nameInvalid": "Please provide a name for the organisation",
-      "websiteInvalid": "Please provide a valid website for the organisation"
-    },
+    "organisationDataSecurityComplianceTemp": {},
+
+    "organisationDataSecurityCompliance": "Organisation data security compliance",
+    "ceCertified": "CE certified?",
+    "ceCertificationNum": "CE identifier",
+    "ceCertificationNumPlaceholder": "e.g. A1B2",
+    "ceCertificationNumberInvalid": "Certification number must be exactly 4 alphanumeric characters.",
+    "cePlusCertified": "CE plus certified?",
+    "cePlusCertificationNum": "CE plus identifier",
+    "cePlusCertificationNumPlaceholder": "e.g. X1Y2",
+    "cePlusCertificationNumberInvalid": "Certification number must be exactly 4 alphanumeric characters.",
+    "iso27001Certified": "ISO27001 certified?",
+    "iso27001CertificationNum": "ISO27001 identifier",
+    "iso27001CertificationNumPlaceholder": "e.g. AB123C",
+    "iso27001CertificationNumInvalid": "ISO27001 identifier is invalid",
+    "dsptkCertified": "DSPT certified?",
+    "dsptkCertificationNum": "DSPT identifier",
+    "dsptkCertificationNumPlaceholder": "e.g. DSPTK-2025-12345",
+    "dsptkCertificationNumInvalid": "DSPT identifier is invalid",
+    "organisationSubsidiaries": "Organisation UK subsidiaries",
+    "address": "Address",
+    "addressPlaceholder": "Type to search for an address",
+    "arrayRemoveButton": "Remove",
+    "arrayAddButton": "Add Another Subsidiary",
     "organisationDelegates": {
       "title": "Organisation Administrative Delegate",
       "departmentName": "Department Name",
@@ -317,10 +311,10 @@
     "navigationAriaLabel": "Profile sections",
     "download": "Download CV",
     "submitButton": "Save",
-    "submitError": "There was a problem updating your details. Please try again or contact us at <applicationLink></applicationLink>",
+    "submitError": "There was a problem updating your details. Please try again or contact us at <contactLink></contactLink>",
     "pending": "Pending",
     "verified": "Verified",
-    "cvUploadFailed": "There was a problem uploading your CV. Please check the file size and try again or alternativley contact us at <applicationLink></applicationLink>",
+    "cvUploadFailed": "There was a problem uploading your CV. Please check the file size and try again or alternativley contact us at <contactLink></contactLink>",
     "noCvUploaded": "No CV uploaded",
     "profileCompletedTitle": "Your profile has been completed",
     "profileCompletedDescription": "You have completed all the mandatory fields required for your profile to be considered 'complete'. This will be flagged to Data Custodians when they view your user details.",
@@ -417,7 +411,7 @@
     "500Description": "We tried to query the selected resource but there seems to be an issue on the server, please contact us via the form in the footer."
   },
   "Auth": {
-    "notAllowed": "You are not allowed to access thie page. If you think this is incorrect please contacts us at <applicationLink></applicationLink>"
+    "notAllowed": "You are not allowed to access thie page. If you think this is incorrect please contacts us at <contactLink></contactLink>"
   },
   "Administration": {
     "title": "Administration",
@@ -428,7 +422,7 @@
     "custodianInviteButton": "Send Invite",
     "systemConfigBody": "Update or add new System Configuration Parameters",
     "systemConfigSubtitle": "Parameters are in the form of NameValue pairs",
-    "noCustodians": "Unable to retrieve known Data Custodians. Please contact us at <applicationLink></applicationLink>"
+    "noCustodians": "Unable to retrieve known Data Custodians. Please contact us at <contactLink></contactLink>"
   },
   "SoursdLogo": {
     "logoTitle": "SOURSD"
@@ -447,11 +441,14 @@
   },
   "Register": {
     "title": "Confirm account type",
-    "failedToRegister": "Failed to register account",
+    "failedToRegister": "Failed to register account. Have you already registered?",
     "repOrgButton": "I represent an organisation",
     "repMyselfButton": "I represent myself as an individual",
     "termsLabel": "I confirm I have and agree to SOURSD <bold> Terms and Conditions </bold>",
-    "continueButton": "Continue"
+    "continueButton": "Continue",
+    "inviteAccepted": "This invite has already been accepted. If you are having problems accessing the platform, please contact us at <contactLink></contactLink>",
+    "loadingAriaLabel": "Registering",
+    "registeringCustodianAriaLabel": "Registering custodian"
   },
   "ProjectUserCard": {
     "notFound": {

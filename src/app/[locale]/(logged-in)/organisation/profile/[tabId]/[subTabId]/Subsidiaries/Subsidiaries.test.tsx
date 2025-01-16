@@ -39,7 +39,7 @@ describe("<Subsidiaries />", () => {
     expect(results).toHaveNoViolations();
   });
 
-  it("has the correct values", async () => {
+  it("Patch of organisation is called on save", async () => {
     render(<Subsidiaries />);
 
     fireEvent.submit(screen.getByRole("button", { name: /Save/i }));

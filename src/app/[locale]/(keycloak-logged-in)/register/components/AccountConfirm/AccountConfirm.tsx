@@ -1,73 +1,38 @@
 "use client";
 
 import Guidance from "@/components/Guidance";
-import { useState } from "react";
-import { useTranslations } from "next-intl";
-import PersonIcon from "@mui/icons-material/Person";
-import PeopleIcon from "@mui/icons-material/People";
-import SoursdLogo from "@/components/SoursdLogo";
-import { postRegister, PostRegisterPayload } from "@/services/auth";
-import { useMutation } from "@tanstack/react-query";
 import { Message } from "@/components/Message";
-import { AccountType } from "@/types/accounts";
-import {
-  Box,
-  CircularProgress,
-  Button,
-  Typography,
-  Checkbox,
-  FormControlLabel,
-} from "@mui/material";
-import { useRouter, useParams } from "next/navigation";
-import { useApplicationData } from "@/context/ApplicationData";
+import SoursdLogo from "@/components/SoursdLogo";
 import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
+import { AccountType } from "@/types/accounts";
+import PeopleIcon from "@mui/icons-material/People";
+import PersonIcon from "@mui/icons-material/Person";
+import { LoadingButton } from "@mui/lab";
+import { Box, Checkbox, FormControlLabel, Typography } from "@mui/material";
+import { useTranslations } from "next-intl";
+import { useState } from "react";
+import useRegisterUser from "../../../../../../hooks/useRegisterUser";
 import AccountOption from "../AccountOption";
 
 const NAMESPACE_TRANSLATIONS_PROFILE = "Register";
 
 export default function AccountConfirm() {
-  const router = useRouter();
-  const { routes } = useApplicationData();
-  const params = useParams();
+  const t = useTranslations(NAMESPACE_TRANSLATIONS_PROFILE);
 
   const [selected, setSelected] = useState<AccountType | null>(null); // To track selected button
   const [termsChecked, setTermsChecked] = useState(false); // To track checkbox
+
+  const { handleRegister, ...registerUserState } = useRegisterUser({
+    selected,
+  });
 
   const handleSelect = (option: AccountType) => {
     setSelected(option);
   };
 
-  const t = useTranslations(NAMESPACE_TRANSLATIONS_PROFILE);
-
-  const { mutateAsync, isPending, isError, error } = useMutation({
-    mutationKey: ["registerError"],
-    mutationFn: (payload: PostRegisterPayload) => {
-      return postRegister(payload, {
-        error: { message: t("failedToRegister") },
-      });
-    },
-  });
-
-  const handleRegister = async () => {
-    if (!selected) return;
-    mutateAsync({ account_type: selected }).then(() => {
-      const currentLocale = params?.locale || "en";
-
-      switch (selected) {
-        case AccountType.ORGANISATION:
-          router.push(`/${currentLocale}${routes.profileOrganisation.path}`);
-          break;
-        case AccountType.USER:
-          router.push(`/${currentLocale}${routes.profileResearcher.path}`);
-          break;
-        default:
-          router.push(`/${currentLocale}${routes.homepage.path}`);
-          break;
-      }
-    });
-  };
-
   const isContinueDisabled = selected === null || !termsChecked;
+
+  const { isPending, isError, error } = registerUserState;
 
   return (
     <Guidance {...mockedPersonalDetailsGuidanceProps}>
@@ -98,7 +63,6 @@ export default function AccountConfirm() {
             name={AccountType.ORGANISATION}
             selected={selected}
           />
-
           <AccountOption
             icon={PersonIcon}
             label={t("repMyselfButton")}
@@ -107,7 +71,6 @@ export default function AccountConfirm() {
             selected={selected}
           />
         </Box>
-
         <Box
           sx={{
             textAlign: "center",
@@ -128,18 +91,17 @@ export default function AccountConfirm() {
               bold: chunks => <strong> {chunks} </strong>,
             })}
           />
-          <Button
+          <LoadingButton
             onClick={handleRegister}
             variant="contained"
             disabled={isContinueDisabled || isPending}
             sx={{ p: 2 }}
             fullWidth>
-            {isPending ? <CircularProgress size={23} /> : t("continueButton")}
-          </Button>
-
+            {t("continueButton")}
+          </LoadingButton>
           {isError && (
             <Message severity="error" sx={{ mb: 3 }}>
-              {`${error}`}
+              {t(error)}
             </Message>
           )}
         </Box>
