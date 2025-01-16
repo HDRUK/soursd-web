@@ -1,6 +1,6 @@
 "use client";
 
-import ApplicationLink from "@/components/ApplicationLink";
+import ContactLink from "@/components/ContactLink";
 import Form from "@/components/Form";
 import FormActions from "@/components/FormActions";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
@@ -192,15 +192,15 @@ export default function Identity() {
   const error =
     (isGetOrganisationsError &&
       tProfile.rich(organisationsError, {
-        applicationLink: ApplicationLink,
+        contactLink: ContactLink,
       })) ||
     (isUpdateError &&
       tProfile.rich(updateError, {
-        applicationLink: ApplicationLink,
+        contactLink: ContactLink,
       })) ||
     (isFileError &&
       tProfile.rich(fileError, {
-        applicationLink: ApplicationLink,
+        contactLink: ContactLink,
       }));
 
   const formOptions = {

@@ -10,7 +10,7 @@ import { Inter } from "next/font/google";
 import { notFound } from "next/navigation";
 import { PropsWithChildren } from "react";
 import "../global.css";
-import { CookieProvider } from "@/context/CookieContext/CookieContext";
+import { CookieProvider } from "@/context/CookieContext";
 import ReactQueryClientProvider from "./components/ReactQueryClientProvider";
 
 const inter = Inter({ subsets: ["latin"] });

@@ -91,7 +91,7 @@ describe("<Delegates />", () => {
     expect(
       screen.getByText(
         content =>
-          content.includes("Unable to get the list of users") &&
+          content.includes("Unable to get the list of delegates") &&
           content.includes("Please try again or contact us")
       )
     ).toBeInTheDocument();

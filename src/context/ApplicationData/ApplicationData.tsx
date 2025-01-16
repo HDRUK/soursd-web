@@ -1,6 +1,6 @@
 "use client";
 
-import ApplicationLink from "@/components/ApplicationLink";
+import ContactLink from "@/components/ContactLink";
 import OverlayCenterAlert from "@/components/OverlayCenterAlert";
 import { VALIDATION_SCHEMA_KEY } from "@/consts/application";
 import { ROUTES } from "@/consts/router";
@@ -36,7 +36,7 @@ const useApplicationData = () => useContext(ApplicationDataContext);
 
 interface ApplicationDataProviderProps {
   children: ReactNode;
-  me: User;
+  me?: User;
   value: ApplicationDataState;
 }
 
@@ -181,7 +181,7 @@ const ApplicationDataProvider = ({
         <PageContainer>
           <OverlayCenterAlert>
             {t.rich("getDependenciesError", {
-              applicationLink: ApplicationLink,
+              contactLink: ContactLink,
             })}
           </OverlayCenterAlert>
         </PageContainer>

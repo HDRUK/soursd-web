@@ -280,13 +280,6 @@ interface ProjectUser {
   role: Role;
 }
 
-interface Auth {
-  access_token: string;
-  refresh_token: string;
-  user: User;
-  expires: number;
-}
-
 interface Department {
   category: string;
   created_at: string;
@@ -318,7 +311,6 @@ export type {
   ApplicationDataState,
   ApplicationSystemConfig,
   Approval,
-  Auth,
   Custodian,
   Organisation,
   OrganisationIdvt,

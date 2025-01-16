@@ -15,7 +15,7 @@ import {
 import mediaQuery from "css-mediaquery";
 import { NextIntlClientProvider } from "next-intl";
 import React, { ReactNode } from "react";
-import { CookieProvider } from "@/context/CookieContext/CookieContext";
+import { CookieProvider } from "@/context/CookieContext";
 import userEvent, { UserEvent } from "@testing-library/user-event";
 
 const defineMatchMedia = (width: number) => {

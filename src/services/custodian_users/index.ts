@@ -2,14 +2,16 @@ import getCustodianUsers from "./getCustodianUsers";
 import patchCustodianUser from "./patchCustodianUser";
 import postCustodianUser from "./postCustodianUser";
 import deleteCustodianUser from "./deleteCustodianUser";
-import postCustodianInviteUser from "./postCustodianInviteUser";
+import getCustodianUser from "./getCustodianUser";
+import postCustodianUserInvite from "./postCustodianUserInvite";
 
 export {
-  postCustodianInviteUser,
+  postCustodianUserInvite,
   getCustodianUsers,
   patchCustodianUser,
   postCustodianUser,
   deleteCustodianUser,
+  getCustodianUser,
 };
 
 export type * from "./types";
