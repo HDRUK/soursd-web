@@ -3,6 +3,7 @@ import { Message } from "@/components/Message";
 import { CustodianUserRoles } from "@/consts/custodian";
 import { useStore } from "@/data/store";
 import {
+  patchCustodianUser,
   postCustodianUser,
   postCustodianUserInvite,
 } from "@/services/custodian_users";
@@ -33,16 +34,23 @@ export default function UsersModal({
   const permissions = useStore(state => state.config.permissions);
   const queryClient = useQueryClient();
 
-  const { mutateAsync, ...updateCustodianUserState } = useMutation({
-    mutationKey: ["updateCustodianUser"],
-    mutationFn: (payload: Omit<CustodianUser, "created_at" | "updated_at">) => {
-      if (!user?.id) {
-        return postCustodianUser(payload, {
+  const { mutateAsync: mutatePostUser, ...updateCustodianUserState } =
+    useMutation({
+      mutationKey: ["updateCustodianUser"],
+      mutationFn: (
+        payload: Omit<CustodianUser, "created_at" | "updated_at">
+      ) => {
+        if (!user?.id) {
+          return postCustodianUser(payload, {
+            error: { message: "createUserError" },
+          });
+        }
+
+        return patchCustodianUser(user.id, payload, {
           error: { message: "createUserError" },
         });
-      }
-    },
-  });
+      },
+    });
 
   const {
     mutateAsync: mutateAsyncPostInvite,
@@ -61,36 +69,39 @@ export default function UsersModal({
     updateCustodianUserState,
   ]);
 
-  const handleOnSubmit = useCallback(async (payload: CustodianUserFields) => {
-    const { first_name, last_name, email, approver, administrator } = payload;
+  const handleOnSubmit = useCallback(
+    async (payload: CustodianUserFields) => {
+      const { first_name, last_name, email, approver, administrator } = payload;
 
-    let userPermissions: number[] = [];
+      let userPermissions: number[] = [];
 
-    const approverPermission = getPermission(
-      CustodianUserRoles.APPROVER,
-      permissions
-    );
-    const administratorPermissions = getPermission(
-      CustodianUserRoles.ADMINISTRATOR,
-      permissions
-    );
+      const approverPermission = getPermission(
+        CustodianUserRoles.APPROVER,
+        permissions
+      );
+      const administratorPermissions = getPermission(
+        CustodianUserRoles.ADMINISTRATOR,
+        permissions
+      );
 
-    if (approver && approverPermission) {
-      userPermissions = [approverPermission.id];
-    } else if (administrator && administratorPermissions) {
-      userPermissions = [administratorPermissions.id];
-    }
+      if (approver && approverPermission) {
+        userPermissions = [approverPermission.id];
+      } else if (administrator && administratorPermissions) {
+        userPermissions = [administratorPermissions.id];
+      }
 
-    const userResponse = await mutateAsync({
-      id: user?.id,
-      first_name,
-      last_name,
-      email,
-      permissions: userPermissions,
-    });
+      const userResponse = await mutatePostUser({
+        id: user?.id,
+        first_name,
+        last_name,
+        email,
+        permissions: userPermissions,
+        custodian_id: custodianId,
+      });
 
-    if (!user?.id && userResponse?.data) {
-      await mutateAsyncPostInvite(userResponse.data);
+      if (!user?.id && userResponse?.data) {
+        await mutateAsyncPostInvite(userResponse.data);
+      }
 
       onClose();
 
@@ -107,8 +118,9 @@ export default function UsersModal({
           });
         },
       });
-    }
-  }, []);
+    },
+    [custodianId]
+  );
 
   return (
     <FormModal
