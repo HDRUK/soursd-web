@@ -30,6 +30,7 @@ const usePatchOrganisation = ({
 
   const onSubmit = async (fields: Partial<PatchOrganisationPayload>) => {
     const payload = { ...fields };
+    console.log(payload);
     await mutation.mutateAsync(payload);
     if (organisation && setOrganisation) {
       setOrganisation({

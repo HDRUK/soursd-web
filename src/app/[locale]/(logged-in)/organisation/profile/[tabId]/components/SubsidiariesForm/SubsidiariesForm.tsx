@@ -70,10 +70,15 @@ export default function SubsidiariesForm({
                     })}
                     renderField={(field, index) => (
                       <React.Fragment key={field.name}>
-                        <TextField
+                        <FormControlHorizontal
+                          displayLabel={false}
+                          labelMd={0}
+                          contentMd={12}
                           name={`subsidiaries.${index}.name`}
-                          label="Name"
-                          defaultValue={field.name}
+                          placeholder={t("name")}
+                          renderField={fieldProps => (
+                            <TextField {...fieldProps} />
+                          )}
                         />
                         <GoogleAutocomplete
                           name={`subsidiaries.${index}.address`}
