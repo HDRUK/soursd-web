@@ -236,17 +236,10 @@
     "dsptkCertificationNumPlaceholder": "e.g. DSPTK-2025-12345",
     "dsptkCertificationNumInvalid": "DSPT identifier is invalid",
     "organisationSubsidiaries": "Organisation UK subsidiaries",
-    "organisationSubsidiaries2": {
-      "title": "Organisation UK subsidiaries",
-      "name": "Name",
-      "address": "Address",
-      "addressPlaceholder": "Type to search for an address",
-      "website": "Subsidiary website",
-      "removeButton": "Remove",
-      "addButton": "Add Another Subsidiary",
-      "nameInvalid": "Please provide a name for the organisation",
-      "websiteInvalid": "Please provide a valid website for the organisation"
-    },
+    "address": "Address",
+    "addressPlaceholder": "Type to search for an address",
+    "arrayRemoveButton": "Remove",
+    "arrayAddButton": "Add Another Subsidiary",
     "organisationDelegates": {
       "title": "Organisation Administrative Delegate",
       "departmentName": "Department Name",

@@ -65,10 +65,6 @@ export default function SubsidiariesForm({
                       display: "grid",
                       gridTemplateColumns: "2fr 3fr 1fr",
                     }}
-                    removeButtonLabel={t(
-                      "organisationSubsidiaries2.removeButton"
-                    )}
-                    addButtonLabel={t("organisationSubsidiaries2.addButton")}
                     createNewRow={() => ({
                       name: "",
                     })}
@@ -86,9 +82,7 @@ export default function SubsidiariesForm({
                             size: "small",
                           }}
                           fullWidth
-                          placeholder={t(
-                            "organisationSubsidiaries2.addressPlaceholder"
-                          )}
+                          placeholder={t("addressPlaceholder")}
                         />
                       </React.Fragment>
                     )}
