@@ -70,6 +70,8 @@ export default function FormControlHorizontal({
     control: effectiveControl,
   });
 
+  const isRequired = true;
+
   return (
     <FormControl
       disabled={disabled}
@@ -92,6 +94,7 @@ export default function FormControlHorizontal({
               visibility: displayLabel ? "visible" : "hidden",
             }}>
             {displayLabel && (label || t(tKey))}
+            {isRequired && <span style={{ color: "red" }}>*</span>}
           </FormLabel>
         </Grid>
         <Grid item xs={12} md={contentMd}>
