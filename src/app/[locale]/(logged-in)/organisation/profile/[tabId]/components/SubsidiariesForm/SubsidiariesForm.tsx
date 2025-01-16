@@ -123,7 +123,7 @@ export default function SubsidiariesForm({
             ))}
           </Grid>
         </FormSection>
-        <FormActions>
+        <FormActions sx={{ display: "flex", justifyContent: "flex-end" }}>
           <LoadingButton
             loading={queryState.isLoading}
             type="submit"
