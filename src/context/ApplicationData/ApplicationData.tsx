@@ -69,6 +69,11 @@ const ApplicationDataProvider = ({
     store.setSectors,
   ]);
 
+  const [permissions, setPermissions] = useStore(store => [
+    store.config.permissions,
+    store.setPermissions,
+  ]);
+
   const [histories, setHistories] = useStore(store => [
     store.config.histories,
     store.setHistories,
@@ -95,6 +100,7 @@ const ApplicationDataProvider = ({
     getUser: userData,
     getOrganisation: organisationData,
     getSectors: sectorsData,
+    getPermissions: permissionsData,
     getCustodian: custodianData,
   } = applicationData;
 
@@ -122,6 +128,10 @@ const ApplicationDataProvider = ({
   useEffect(() => {
     setSectors(sectorsData?.data?.data);
   }, [sectorsData?.data?.data]);
+
+  useEffect(() => {
+    setPermissions(permissionsData?.data?.data);
+  }, [permissionsData?.data?.data]);
 
   useEffect(() => {
     const {
@@ -156,14 +166,14 @@ const ApplicationDataProvider = ({
   }, [!!systemConfigData?.data, value]);
 
   const isFinishedLoading =
-    (user &&
-      organisation &&
-      histories &&
-      !isApplicationLoading &&
-      !isHistoriesLoading &&
-      custodian &&
-      sectors) ||
-    !me;
+    user &&
+    organisation &&
+    histories &&
+    !isApplicationLoading &&
+    !isHistoriesLoading &&
+    custodian &&
+    !!sectors?.length &&
+    !!permissions?.length;
 
   return (
     <ApplicationDataContext.Provider value={providerValue}>
@@ -176,7 +186,7 @@ const ApplicationDataProvider = ({
           </OverlayCenterAlert>
         </PageContainer>
       )}
-      {isFinishedLoading && children}
+      {!!isFinishedLoading && children}
     </ApplicationDataContext.Provider>
   );
 };

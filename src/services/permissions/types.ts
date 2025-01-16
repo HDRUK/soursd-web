@@ -2,8 +2,6 @@ import { Permission } from "@/types/application";
 
 type PermissionResponse = Permission;
 
-interface PermissionsResponse {
-  data: Permission[];
-}
+type PermissionsResponse = Permission[];
 
 export type { PermissionsResponse, PermissionResponse, Permission };

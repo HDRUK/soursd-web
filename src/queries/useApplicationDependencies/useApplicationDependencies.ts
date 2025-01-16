@@ -2,6 +2,7 @@ import { CUSTODIAN_ID } from "@/consts/application";
 import useQueriesCombined from "@/hooks/useQueriesCombined";
 import { getCustodian } from "@/services/custodians";
 import { getOrganisation } from "@/services/organisations";
+import { getPermissions, PermissionsResponse } from "@/services/permissions";
 import { getSectors } from "@/services/sectors";
 import { SectorsResponse } from "@/services/sectors/types";
 import { getSystemConfig } from "@/services/system_config";
@@ -20,6 +21,7 @@ interface ApplicationDependenciesCombinedData {
   getUser: ResponseJson<User>;
   getOrganisation: ResponseJson<Organisation>;
   getSectors: ResponseJson<Paged<SectorsResponse>>;
+  getPermissions: ResponseJson<Paged<PermissionsResponse>>;
   getCustodian: ResponseJson<Custodian>;
 }
 
@@ -78,6 +80,15 @@ export default function useApplicationDependencies({
           },
         }),
       enabled: !!user,
+    },
+    {
+      queryKey: ["getPermissions"],
+      queryFn: () =>
+        getPermissions({
+          error: {
+            message: "getPermissionsError",
+          },
+        }),
     },
   ];
 

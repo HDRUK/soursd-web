@@ -1,10 +1,10 @@
-import { ResponseJson, ResponseTranslations } from "@/types/requests";
+import { Paged, ResponseJson, ResponseTranslations } from "@/types/requests";
 import { getRequest, handleResponseError } from "../requests";
 import { PermissionsResponse } from "./types";
 
 export default async (
   messages: ResponseTranslations
-): Promise<ResponseJson<PermissionsResponse>> => {
+): Promise<ResponseJson<Paged<PermissionsResponse>>> => {
   const response = await getRequest(
     `${process.env.NEXT_PUBLIC_API_V1_URL}/permissions`,
     undefined,

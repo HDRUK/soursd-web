@@ -25,8 +25,8 @@ interface Permission {
   created_at: string;
   updated_at: string;
   name: string;
-  enabled: number;
-  pivot: {
+  enabled: boolean;
+  pivot?: {
     organisation_id: number;
     permission_id: number;
   };
@@ -125,6 +125,24 @@ interface User {
     verified: boolean;
     training?: ResearcherTraining[];
   };
+  is_delegate: number;
+}
+interface AddressFields {
+  postcode?: string;
+  address_1?: string;
+  address_2?: string;
+  town?: string;
+  county?: string;
+  country?: string;
+}
+
+interface Subsidiary extends AddressFields {
+  id?: number;
+  name: string;
+  pivot: {
+    organisation_id: number;
+    subsidiary_id: number;
+  };
 }
 
 interface OrganisationIdvt {
@@ -134,14 +152,8 @@ interface OrganisationIdvt {
   idvt_errors: string;
 }
 
-interface Organisation extends OrganisationIdvt {
+interface Organisation extends OrganisationIdvt, AddressFields {
   companies_house_no: string;
-  address_1: string;
-  address_2: string;
-  town: string;
-  county: string;
-  country: string;
-  postcode: string;
   organisation_name: string;
   organisation_unique_id: string;
   dpo_name: string;
@@ -165,6 +177,8 @@ interface Organisation extends OrganisationIdvt {
   ce_certification_num: string;
   ce_plus_certified: boolean;
   ce_plus_certification_num: string;
+  subsidiaries?: Subsidiary[];
+  departments: Department[];
 }
 
 interface ResearcherEducation {
@@ -262,6 +276,18 @@ interface ProjectUser {
   role: Role;
 }
 
+interface Department {
+  category: string;
+  created_at: string;
+  id: number;
+  name: string;
+  pivot: {
+    organisation_id: number;
+    department_id: number;
+  };
+  updated_at: string;
+}
+
 interface ApplicationDataState {
   routes: Record<
     keyof typeof ROUTES,
@@ -299,4 +325,7 @@ export type {
   UserProfileCompletionJson,
   UserProfileCompletionFields,
   Sector,
+  AddressFields,
+  Subsidiary,
+  Department,
 };

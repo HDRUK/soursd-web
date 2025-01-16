@@ -8,7 +8,8 @@ import Checkbox, { CheckboxProps } from "@mui/material/Checkbox";
 import TextField, { TextFieldProps } from "@mui/material/TextField";
 import { FormConfig } from "@/types/forms";
 import FormFieldArray from "@/components/FormFieldArray";
-import { Organisation } from "@/types/application";
+import { AddressFields, Organisation } from "@/types/application";
+import GoogleAutocomplete from "@/components/GoogleAutocomplete";
 
 const generateSubsidiariesFormFieldsConfig = (
   t: (key: string) => string,
@@ -20,6 +21,9 @@ const generateSubsidiariesFormFieldsConfig = (
     sectionBoxSx: {
       mb: 4,
       display: "flex",
+      flexDirection: "column",
+      width: "100%",
+      gap: 2,
     },
     fields: [
       {
@@ -32,25 +36,26 @@ const generateSubsidiariesFormFieldsConfig = (
         component: FormFieldArray,
         validation: yup.array().of(
           yup.object().shape({
-            subsidiary_name: yup
-              .string()
-              .transform(value => (value === "" ? null : value))
-              .nullable()
-              .min(3, t("organisationSubsidiaries.nameInvalid")),
-            subsidiary_website: yup
-              .string()
-              .transform(value => (value === "" ? null : value))
-              .nullable()
-              .url(t("organisationSubsidiaries.websiteInvalid")),
+            name: yup.string().when("address", {
+              is: (address: AddressFields) => Boolean(address),
+              otherwise: schema => schema.nullable(),
+              then: schema =>
+                schema.required(t("organisationSubsidiaries.nameInvalid")),
+            }),
           })
         ),
         componentProps: {
+          boxSx: {
+            display: "grid",
+            gridTemplateColumns: "2fr 3fr 1fr",
+          },
           removeButtonLabel: t("organisationSubsidiaries.removeButton"),
           addButtonLabel: t("organisationSubsidiaries.addButton"),
           fields: [
             {
-              name: "subsidiary_name",
+              name: "name",
               label: t("organisationSubsidiaries.name"),
+              defaultValues: organisation?.subsidiaries?.map(s => s.name),
               component: TextField,
               componentProps: {
                 variant: "outlined",
@@ -59,23 +64,25 @@ const generateSubsidiariesFormFieldsConfig = (
                 },
               } as TextFieldProps,
               formControlProps: {
-                labelMd: 4,
-                contentMd: 8,
+                labelMd: 2,
+                contentMd: 10,
               },
             },
             {
-              name: "subsidiary_website",
-              label: t("organisationSubsidiaries.website"),
-              component: TextField,
+              name: "address",
+              label: t("organisationSubsidiaries.address"),
+              defaultValues: organisation?.subsidiaries?.map(
+                ({ id: _id, name: _name, pivot: _pivot, ...rest }) => rest
+              ),
+              component: GoogleAutocomplete,
               componentProps: {
-                variant: "outlined",
-                inputProps: {
-                  "aria-label": t("organisationSubsidiaries.website"),
-                },
-              } as TextFieldProps,
+                textFieldProps: { variant: "filled", size: "small" },
+                fullWidth: true,
+                placeholder: t("organisationSubsidiaries.addressPlaceholder"),
+              },
               formControlProps: {
-                labelMd: 4,
-                contentMd: 8,
+                labelMd: 2,
+                contentMd: 10,
               },
             },
           ],

@@ -11,9 +11,15 @@ export type SelectInputProps = SelectProps<string> & {
   options: { label: string; value: string }[];
   label?: string;
   value?: string;
+  ariaLabel?: string;
 };
 
-const SelectInput = ({ options, label, value }: SelectInputProps) => {
+const SelectInput = ({
+  options,
+  label,
+  value,
+  ariaLabel,
+}: SelectInputProps) => {
   const [selectedValue, setSelectedValue] = useState(value || "");
 
   return (
@@ -24,7 +30,10 @@ const SelectInput = ({ options, label, value }: SelectInputProps) => {
         size="small"
         onChange={event => setSelectedValue(event.target.value)}
         label={label}
-        sx={{ textAlign: "left" }}>
+        sx={{ textAlign: "left" }}
+        inputProps={{
+          "aria-label": ariaLabel || label,
+        }}>
         {options.map(option => (
           <MenuItem key={option.value} value={option.value}>
             {option.label}

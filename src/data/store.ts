@@ -4,6 +4,7 @@ import { ROUTES } from "@/consts/router";
 import {
   Custodian,
   Organisation,
+  Permission,
   ResearcherAccreditation,
   ResearcherEducation,
   ResearcherEmployment,
@@ -32,15 +33,18 @@ interface StoreState {
     };
     user?: User;
     organisation?: Organisation;
-    sectors?: Sector[];
+    sectors: Sector[];
+    permissions: Permission[];
     custodian?: Custodian;
     histories?: StoreUserHistories;
   };
   setRoutes: (routes: Routes) => void;
   getUser: () => User | undefined;
   setUser: (user: User) => void;
-  getSectors: () => Sector[] | undefined;
+  getSectors: () => Sector[];
   setSectors: (sectors: Sector[]) => void;
+  getPermissions: () => Permission[];
+  setPermissions: (permissions: Permission[]) => void;
   getHistories: () => StoreUserHistories | undefined;
   setHistories: (histories: StoreUserHistories) => void;
   getOrganisation: () => Organisation | undefined;
@@ -57,6 +61,8 @@ const useStore = create<StoreState>((set, get) => ({
       history: [],
       entries: ROUTES,
     },
+    permissions: [],
+    sectors: [],
   },
   getPreviousUrl: () => {
     const {
@@ -97,6 +103,15 @@ const useStore = create<StoreState>((set, get) => ({
     ),
   getSectors: () => {
     return get().config.sectors;
+  },
+  setPermissions: (permissions: Permission[]) =>
+    set(
+      produce(state => {
+        state.config.permissions = permissions;
+      })
+    ),
+  getPermissions: () => {
+    return get().config.permissions;
   },
   setOrganisation: (organisation: Organisation | undefined) =>
     set(

@@ -91,6 +91,8 @@
     "navigationAriaLabel": "Profile tabs",
     "patchUserError": "There was a problem updating your user details. Please try again or contact us at <contactLink></contactLink>",
     "updateUserButton": "Save",
+    "noDelegates": "No Delegates Found",
+    "getDelegateError": "Unable to get the list of delegates",
     "searchOrganisationUsers": "Search for users",
     "inviteNewUserButton": "Invite new user",
     "invitedOn": "Invited on: {date}",
@@ -244,12 +246,21 @@
     },
     "organisationSubsidiaries": {
       "title": "Organisation UK subsidiaries",
-      "name": "Subsidiary name",
+      "name": "Name",
+      "address": "Address",
+      "addressPlaceholder": "Type to search for an address",
       "website": "Subsidiary website",
       "removeButton": "Remove",
       "addButton": "Add Another Subsidiary",
       "nameInvalid": "Please provide a name for the organisation",
       "websiteInvalid": "Please provide a valid website for the organisation"
+    },
+    "organisationDelegates": {
+      "title": "Organisation Administrative Delegate",
+      "departmentName": "Department Name",
+      "delegateFullName": "Delegate Full Name",
+      "delegateJobTitle": "Delegate Job Title",
+      "delegateEmail": "Delegate Email"
     }
   },
   "Buttons": {
@@ -319,7 +330,8 @@
     "profileCompletedTitle": "Your profile has been completed",
     "profileCompletedDescription": "You have completed all the mandatory fields required for your profile to be considered 'complete'. This will be flagged to Data Custodians when they view your user details.",
     "continueLinkText": "Continue",
-    "profileCompleteWarningMessage": "You have not yet completed your profile. This may mean that some data custodians will not grant access to you. It is advised that you complete this process. Please navigate to your profile"
+    "profileCompleteWarningMessage": "You have not yet completed your profile. This may mean that some data custodians will not grant access to you. It is advised that you complete this process. Please navigate to your profile",
+    "addAnother": "Add Another"
   },
   "ProfileCompleteStatus": {
     "profileComplete": "Profile complete",
@@ -499,5 +511,32 @@
   },
   "AccreditationsDetails": {
     "title": "Accreditations"
+  },
+  "Rules": {
+    "title": "Configure Rules",
+    "countrySanctions": {
+      "title": "Country sanctions",
+      "description": "Users and Organisations who are on UK Sanctions Lists should not be provided access to data (existing demo data)."
+    },
+    "userLocation": {
+      "title": "User location",
+      "description": "A User should be located in a country which adheres to equivalent data protection law."
+    },
+    "dueDiligence": {
+      "title": "Due Diligence",
+      "description": "Additional organisation due diligence checks should be carried out on Organisations who are not approved Organisations."
+    },
+    "training": {
+      "title": "Training",
+      "description": "A user must have completed mandatory TRE/SDE training before accessing a TRE/SDE."
+    },
+    "dataSecurityCompliance": {
+      "title": "Data security compliance",
+      "description": "An organisation must provide data security compliance accreditation information within their profile."
+    },
+    "delegate": {
+      "title": "Delegate",
+      "description": "An Organisation must have at least one delegate to vouch for a User’s behaviour within a TRE/SDE."
+    }
   }
 }

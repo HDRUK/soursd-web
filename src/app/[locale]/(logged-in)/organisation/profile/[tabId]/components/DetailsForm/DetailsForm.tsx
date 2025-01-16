@@ -6,9 +6,7 @@ import FormActions from "@/components/FormActions";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
 import FormField from "@/components/FormField";
 import FormSection from "@/components/FormSection";
-import GoogleAutocomplete, {
-  AddressFields,
-} from "@/components/GoogleAutocomplete";
+import GoogleAutocomplete from "@/components/GoogleAutocomplete";
 import yup from "@/config/yup";
 import {
   VALIDATION_CHARITY_ID,
@@ -28,6 +26,7 @@ import {
   Select,
   TextField,
 } from "@mui/material";
+import { AddressFields } from "@/types/application";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
 import { UseFormSetValue } from "react-hook-form";
@@ -147,7 +146,7 @@ export default function DetailsForm({
 
   return (
     <Form schema={schema} onSubmit={onSubmit} {...formOptions}>
-      {({ formState: { errors }, register, watch, setValue }) => (
+      {({ control, formState: { errors }, register, watch, setValue }) => (
         <>
           <FormSection heading="Organisation name and location">
             <Grid container rowSpacing={3}>
@@ -162,8 +161,12 @@ export default function DetailsForm({
               </Grid>
               <Grid item xs={12}>
                 <GoogleAutocomplete
+                  name="address"
+                  control={control}
+                  onAddressSelected={value =>
+                    handleChange(value as AddressFields, setValue)
+                  }
                   textFieldProps={{ variant: "filled", size: "small" }}
-                  onChange={(_, address) => handleChange(address, setValue)}
                   placeholder="Search for your address..."
                 />
               </Grid>

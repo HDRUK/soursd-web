@@ -6,12 +6,12 @@ import getCustodianUser from "./getCustodianUser";
 import postCustodianUserInvite from "./postCustodianUserInvite";
 
 export {
+  postCustodianUserInvite,
   getCustodianUsers,
   patchCustodianUser,
   postCustodianUser,
   deleteCustodianUser,
   getCustodianUser,
-  postCustodianUserInvite,
 };
 
 export type * from "./types";

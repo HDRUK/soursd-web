@@ -23,6 +23,8 @@ import { ROUTES } from "./src/consts/router";
 import { mockedCustodianUser } from "./mocks/data/custodian";
 import { UserFeedSource } from "@/consts/user";
 import * as matchers from "jest-extended";
+import { mockedApiPermissions } from "./mocks/data/store";
+import { mock200Json, mockPagedResults } from "./jest.utils";
 
 const nextRouterMock = require("next-router-mock");
 
@@ -69,39 +71,16 @@ global.matchMedia = () => {
   };
 };
 
-function mock200Json<T>(data: T) {
-  return {
-    ok: true,
-    status: 200,
-    json: async () => ({
-      message: ResponseMessageType.SUCCESS,
-      data,
-    }),
-  };
-}
-
-function mockPagedResults<T>(
-  data: T[],
-  page: number = 1,
-  perPage: number = 25
-) {
-  const startIndex = (page - 1) * perPage;
-  const endIndex = startIndex + perPage;
-  const paginatedData = data.slice(startIndex, endIndex);
-
-  return {
-    current_page: page,
-    data: paginatedData,
-  };
-}
-
-async function mockFetch(url: string) {
+async function mockFetch(url: string, init?: RequestInit) {
   const [baseUrl, queryString] = url.split("?");
   const queryParams = Object.fromEntries(new URLSearchParams(queryString));
   const page = Number(queryParams.page) || 1;
   const perPage = Number(queryParams.perPage) || 25;
 
   switch (baseUrl) {
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/permissions`: {
+      return mock200Json(mockPagedResults(mockedApiPermissions));
+    }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/custodian_users/1`: {
       return mock200Json(
         mockedCustodianUser({
@@ -110,6 +89,10 @@ async function mockFetch(url: string) {
       );
     }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/custodian_users`: {
+      if (init?.method === "POST") {
+        return mock200Json(1);
+      }
+
       return mock200Json([
         mockedCustodianUser({
           id: 1,
