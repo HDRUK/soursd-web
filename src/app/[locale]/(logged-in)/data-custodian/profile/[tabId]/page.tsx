@@ -1,5 +1,5 @@
 import { ConfigProps, withConfig } from "@/components/Config";
-import { PageContainer, PageContent, PageSection, PageTitle } from "@/modules";
+import { PageContainer, PageContent, PageTitle } from "@/modules";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { redirect } from "next/navigation";

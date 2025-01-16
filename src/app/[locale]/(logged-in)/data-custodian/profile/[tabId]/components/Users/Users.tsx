@@ -3,6 +3,7 @@ import Icon from "@/components/Icon";
 import Results from "@/components/Results";
 import ResultsCard from "@/components/ResultsCard";
 import { useStore } from "@/data/store";
+import { PageSection } from "@/modules";
 import SearchBar from "@/modules/SearchBar";
 import {
   deleteCustodianUser,
@@ -20,7 +21,6 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
 import UserModal from "../UserModal";
-import { PageSection } from "@/modules";
 
 const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 

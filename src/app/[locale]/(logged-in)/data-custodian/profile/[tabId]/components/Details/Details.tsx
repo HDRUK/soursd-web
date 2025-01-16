@@ -7,6 +7,7 @@ import FormControlHorizontal from "@/components/FormControlHorizontal";
 import FormField from "@/components/FormField";
 import Postit from "@/components/Postit";
 import yup from "@/config/yup";
+import { PageSection } from "@/modules";
 import { patchCustodian, PatchCustodianPayload } from "@/services/custodians";
 import { Custodian } from "@/types/application";
 import SaveIcon from "@mui/icons-material/Save";
@@ -16,7 +17,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo } from "react";
 import IdvtSection from "../IdvtSection";
-import { PageSection } from "@/modules";
 
 export interface DetailsFormValues {
   name: string;

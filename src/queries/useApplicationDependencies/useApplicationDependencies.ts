@@ -1,4 +1,3 @@
-import { CUSTODIAN_ID } from "@/consts/application";
 import useQueriesCombined from "@/hooks/useQueriesCombined";
 import { getCustodian } from "@/services/custodians";
 import { getOrganisation } from "@/services/organisations";

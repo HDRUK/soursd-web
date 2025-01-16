@@ -1,15 +1,13 @@
-import React from "react";
+import { useStore } from "@/data/store";
+import usePaginatedQuery from "@/hooks/usePaginatedQuery";
+import { mockedOrganisation } from "@/mocks/data/organisation";
+import { mockedUser } from "@/mocks/data/user";
 import {
   commonAccessibilityTests,
   render,
   screen,
   waitFor,
 } from "@/utils/testUtils";
-import { axe } from "jest-axe";
-import { useStore } from "@/data/store";
-import usePaginatedQuery from "@/hooks/usePaginatedQuery";
-import { mockedUser } from "@/mocks/data/user";
-import { mockedOrganisation } from "@/mocks/data/organisation";
 import usePatchOrganisation from "../../hooks/usePatchOrganisation";
 import Delegates from "./Delegates";
 
