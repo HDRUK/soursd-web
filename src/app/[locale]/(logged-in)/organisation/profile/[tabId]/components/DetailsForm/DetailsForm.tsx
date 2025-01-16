@@ -127,14 +127,6 @@ export default function DetailsForm({
       }),
   };
 
-  function isFieldRequired(
-    schema: yup.AnyObjectSchema,
-    fieldName: string
-  ): boolean {
-    return !(schema.describe().fields[fieldName] as SchemaDescription)
-      ?.optional;
-  }
-
   return (
     <Form schema={schema} onSubmit={onSubmit} {...formOptions}>
       {({ setValue }) => {
