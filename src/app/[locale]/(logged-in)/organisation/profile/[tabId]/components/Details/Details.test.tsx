@@ -32,8 +32,6 @@ const defaultOrganisation = mockedOrganisation();
 });
 
 describe("<Details />", () => {
-  commonAccessibilityTests(render(<Details />));
-
   it("has the correct values", async () => {
     render(<Details />);
 
@@ -46,5 +44,9 @@ describe("<Details />", () => {
     await waitFor(() => {
       expect(mockSetOrganisation).toHaveBeenCalled();
     });
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(render(<Details />));
   });
 });

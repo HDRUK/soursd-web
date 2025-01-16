@@ -14,11 +14,13 @@ const defaultUser = mockedUser();
 (useStore as unknown as jest.Mock).mockReturnValue(defaultUser);
 
 describe("<ProjectList />", () => {
-  commonAccessibilityTests(
-    render(
-      <AppRouterContextProviderMock router={{ push: mockedPush }}>
-        <ProjectList projects={[mockedProject()]} />
-      </AppRouterContextProviderMock>
-    )
-  );
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(
+      render(
+        <AppRouterContextProviderMock router={{ push: mockedPush }}>
+          <ProjectList projects={[mockedProject()]} />
+        </AppRouterContextProviderMock>
+      )
+    );
+  });
 });

@@ -19,8 +19,6 @@ const defaultUser = mockedUser();
 ]);
 
 describe("<User />", () => {
-  commonAccessibilityTests(render(<Users />));
-
   it("has the correct number of results", async () => {
     render(<Users />);
 
@@ -39,5 +37,9 @@ describe("<User />", () => {
     await waitFor(() => {
       expect(screen.getByText("John Smith"));
     });
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(render(<Users />));
   });
 });

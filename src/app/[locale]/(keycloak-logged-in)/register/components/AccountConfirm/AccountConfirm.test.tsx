@@ -38,8 +38,6 @@ describe("<AccountConfirm />", () => {
     (postRegister as jest.Mock).mockReset();
   });
 
-  commonAccessibilityTests(render(<TestComponent />));
-
   it("should be two buttons for representing myself or an organisation", async () => {
     render(<AccountConfirm />);
     const optionButtons = screen.getAllByRole("button", { name: /represent/i });
@@ -121,5 +119,9 @@ describe("<AccountConfirm />", () => {
     expect(mockedReplace).toHaveBeenCalledWith(
       expect.stringContaining("organisation/profile")
     );
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(render(<TestComponent />));
   });
 });

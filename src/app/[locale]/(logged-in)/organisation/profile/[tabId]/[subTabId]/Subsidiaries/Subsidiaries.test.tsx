@@ -32,8 +32,6 @@ const defaultOrganisation = mockedOrganisation();
 });
 
 describe("<Subsidiaries />", () => {
-  commonAccessibilityTests(render(<Subsidiaries />));
-
   it("Patch of organisation is called on save", async () => {
     render(<Subsidiaries />);
 
@@ -46,5 +44,9 @@ describe("<Subsidiaries />", () => {
     await waitFor(() => {
       expect(mockSetOrganisation).toHaveBeenCalled();
     });
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(render(<Subsidiaries />));
   });
 });

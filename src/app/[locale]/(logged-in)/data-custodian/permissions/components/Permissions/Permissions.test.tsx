@@ -26,8 +26,6 @@ const renderPermissions = (props?: Partial<PermissionsProps>) =>
   render(<Permissions {...mockedProps} {...props} />);
 
 describe("<Permissions />", () => {
-  commonAccessibilityTests(renderPermissions());
-
   it("calls the correct methods for an organisation", async () => {
     renderPermissions({
       type: EntityType.ORGANISATION,
@@ -62,5 +60,9 @@ describe("<Permissions />", () => {
         })
       );
     });
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(renderPermissions());
   });
 });

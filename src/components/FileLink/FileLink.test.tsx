@@ -33,8 +33,6 @@ const renderFileLinkDetails = (props?: Partial<FileLinkProps>) => {
 };
 
 describe("<FileLink />", () => {
-  commonAccessibilityTests(renderFileLinkDetails());
-
   it("shows the correct filename", async () => {
     renderFileLinkDetails({
       fileName: "sample.doc",
@@ -73,5 +71,9 @@ describe("<FileLink />", () => {
     });
 
     expect(screen.getByTestId("UploadLink-loader")).toBeInTheDocument();
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(renderFileLinkDetails());
   });
 });

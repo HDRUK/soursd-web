@@ -50,8 +50,6 @@ const mockUsers = [
 });
 
 describe("<User />", () => {
-  commonAccessibilityTests(render(<Users />));
-
   it("has the correct content", async () => {
     render(<Users />);
 
@@ -73,5 +71,9 @@ describe("<User />", () => {
     expect(await screen.findByText("Previous")).toBeInTheDocument();
     expect(await screen.findByText("1")).toBeInTheDocument();
     expect(await screen.findByText("Next")).toBeInTheDocument();
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(render(<Users />));
   });
 });

@@ -23,8 +23,6 @@ const defaultUser = mockedUser({
 (useStore as unknown as jest.Mock).mockReturnValue([defaultUser, mockSetUser]);
 
 describe("<Completion />", () => {
-  // commonAccessibilityTests(render(<Completion />));
-
   it("has the correct values", async () => {
     render(<Completion />);
 
@@ -47,5 +45,9 @@ describe("<Completion />", () => {
         `/en${ROUTES.profileResearcherIdentity.path}`
       );
     });
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(render(<Completion />));
   });
 });

@@ -38,8 +38,6 @@ describe("<UserModalDetails />", () => {
     mockOnClose.mockReset();
   });
 
-  commonAccessibilityTests(renderUserModalDetails());
-
   it("submit is called", async () => {
     renderUserModalDetails();
 
@@ -75,4 +73,8 @@ describe("<UserModalDetails />", () => {
       expect(mockOnSubmit).not.toHaveBeenCalled();
     }
   );
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(renderUserModalDetails());
+  });
 });

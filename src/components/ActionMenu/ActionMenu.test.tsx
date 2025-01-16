@@ -14,8 +14,6 @@ const renderSections = () =>
   );
 
 describe("<ActionMenu />", () => {
-  commonAccessibilityTests(renderSections());
-
   it("displays the menu", async () => {
     renderSections();
 
@@ -25,5 +23,9 @@ describe("<ActionMenu />", () => {
     fireEvent.click(menuTrigger);
 
     return screen.getByText("Permissions");
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(renderSections());
   });
 });

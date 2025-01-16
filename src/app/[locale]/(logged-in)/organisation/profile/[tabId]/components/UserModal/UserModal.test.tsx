@@ -56,8 +56,6 @@ describe("<UserModal />", () => {
     jest.resetAllMocks();
   });
 
-  commonAccessibilityTests(renderUserModalDetails());
-
   it("is updated", async () => {
     renderUserModalDetailsUpdate();
 
@@ -72,5 +70,9 @@ describe("<UserModal />", () => {
     await waitFor(() => screen.findByRole("button", { name: /OK/i }));
 
     expect(mockOnClose).toHaveBeenCalled();
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(renderUserModalDetails());
   });
 });

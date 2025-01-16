@@ -12,5 +12,7 @@ const renderSections = (props?: Partial<SectionsProps>) =>
   render(<Sections {...mockedProps} {...props} />);
 
 describe("<Sections />", () => {
-  commonAccessibilityTests(renderSections());
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(renderSections());
+  });
 });

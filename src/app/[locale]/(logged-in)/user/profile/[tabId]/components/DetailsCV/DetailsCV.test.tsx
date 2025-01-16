@@ -35,8 +35,6 @@ const renderDetailsCV = (props?: Partial<DetailsCVProps>) => {
 };
 
 describe("<DetailsCV />", () => {
-  commonAccessibilityTests(renderDetailsCV());
-
   it("shows the correct filename", async () => {
     renderDetailsCV({
       fileName: "sample.doc",
@@ -107,5 +105,9 @@ describe("<DetailsCV />", () => {
     });
 
     expect(screen.getByRole(`progressbar`)).toBeInTheDocument();
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(renderDetailsCV());
   });
 });

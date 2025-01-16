@@ -102,17 +102,17 @@ const customRenderHook = (
 };
 
 const commonAccessibilityTests = async (rendered: RenderResult) => {
-  it("has no accessibility violations", async () => {
-    const { container } = rendered;
+  // it("has no accessibility violations", async () => {
+  const { container } = rendered;
 
-    let results;
+  let results;
 
-    await act(async () => {
-      results = await axe(container);
-    });
-
-    expect(results).toHaveNoViolations();
+  await act(async () => {
+    results = await axe(container);
   });
+
+  expect(results).toHaveNoViolations();
+  // });
 };
 
 export * from "@testing-library/react";

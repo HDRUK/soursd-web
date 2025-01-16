@@ -31,8 +31,6 @@ const renderProjects = ({ variant }: { variant: ProjectEntities }) =>
   );
 
 describe("Organisation Projects", () => {
-  commonAccessibilityTests(renderProjects({ variant: "organisation" }));
-
   it("display 10 projects", async () => {
     const { getAllByTestId } = renderProjects({
       variant: "organisation",
@@ -46,11 +44,13 @@ describe("Organisation Projects", () => {
     const expandIcon = expandIcons[0];
     fireEvent.click(expandIcon!);
   });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(renderProjects({ variant: "organisation" }));
+  });
 });
 
 describe("Custodian Projects", () => {
-  commonAccessibilityTests(renderProjects({ variant: "custodian" }));
-
   it("display 5 projects", async () => {
     const { getAllByTestId } = renderProjects({
       variant: "custodian",
@@ -63,5 +63,9 @@ describe("Custodian Projects", () => {
     const expandIcons = getAllByTestId("ExpandMoreIcon");
     const expandIcon = expandIcons[0];
     fireEvent.click(expandIcon!);
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(renderProjects({ variant: "custodian" }));
   });
 });

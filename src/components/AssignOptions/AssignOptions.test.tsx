@@ -32,8 +32,6 @@ describe("<AssignOptions />", () => {
     jest.resetAllMocks();
   });
 
-  commonAccessibilityTests(renderAssignOptions());
-
   it("show a loader", async () => {
     renderAssignOptions({
       queryState: {
@@ -96,5 +94,9 @@ describe("<AssignOptions />", () => {
     } else {
       fail("Input (gateway) does not exist");
     }
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(renderAssignOptions());
   });
 });

@@ -56,8 +56,6 @@ describe("<UserModal />", () => {
     mockOnClose.mockReset();
   });
 
-  commonAccessibilityTests(renderUserModalDetails());
-
   it("update user is called with an id", async () => {
     renderUserModalDetailsUpdate(1);
 
@@ -84,5 +82,9 @@ describe("<UserModal />", () => {
     await waitFor(() => screen.findByRole("button", { name: /OK/i }));
 
     expect(mockOnClose).toHaveBeenCalled();
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(renderUserModalDetails());
   });
 });

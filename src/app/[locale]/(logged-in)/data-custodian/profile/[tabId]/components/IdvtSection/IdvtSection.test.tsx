@@ -28,8 +28,6 @@ const TestComponent = (props?: Partial<IdvtSectionProps>) => {
 };
 
 describe("<Details />", () => {
-  commonAccessibilityTests(render(<TestComponent />));
-
   it("changes the idvt value", async () => {
     render(<TestComponent />);
 
@@ -40,5 +38,9 @@ describe("<Details />", () => {
     await waitFor(() => {
       expect((idvtRequired as HTMLInputElement).checked).toBe(true);
     });
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(render(<TestComponent />));
   });
 });

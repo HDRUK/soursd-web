@@ -28,8 +28,6 @@ const renderClosedGuidance = () => {
 };
 
 describe("<Guidance />", () => {
-  commonAccessibilityTests(renderGuidance());
-
   it("shows the correct content", async () => {
     renderGuidance();
 
@@ -81,5 +79,9 @@ describe("<Guidance />", () => {
 
       expect(trigger).toBeInTheDocument();
     });
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(renderGuidance());
   });
 });

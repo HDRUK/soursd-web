@@ -11,13 +11,15 @@ const renderTabs = () => {
 };
 
 describe("<TabsSections />", () => {
-  commonAccessibilityTests(renderTabs());
-
   it("shows default tab is selected", () => {
     renderTabs();
 
     expect(screen.getByRole("tab", { selected: true }).textContent).toEqual(
       "Profile"
     );
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(renderTabs());
   });
 });

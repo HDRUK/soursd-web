@@ -25,8 +25,6 @@ const PasswordTextFieldWithProvider = () => {
 };
 
 describe("<PasswordTextField />", () => {
-  commonAccessibilityTests(render(<PasswordTextFieldWithProvider />));
-
   it("displays error state when values are not defined", async () => {
     render(<PasswordTextFieldWithProvider />);
 
@@ -35,5 +33,9 @@ describe("<PasswordTextField />", () => {
     });
 
     expect(screen.getByTestId("visibility-off")).toBeTruthy();
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(render(<PasswordTextFieldWithProvider />));
   });
 });

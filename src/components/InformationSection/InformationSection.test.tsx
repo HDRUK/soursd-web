@@ -28,8 +28,6 @@ const renderOpenedContent = (props?: Partial<InformationSectionProps>) => {
 };
 
 describe("<InformationSection />", () => {
-  commonAccessibilityTests(renderInformationSection());
-
   it("shows the popup content", async () => {
     renderOpenedContent();
 
@@ -55,5 +53,9 @@ describe("<InformationSection />", () => {
     await waitFor(() => {
       expect(screen.getByText("Content")).toBeInTheDocument();
     });
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(renderInformationSection());
   });
 });

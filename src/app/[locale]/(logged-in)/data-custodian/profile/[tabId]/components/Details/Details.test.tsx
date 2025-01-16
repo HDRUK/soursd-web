@@ -28,8 +28,6 @@ const renderDetails = (props?: Partial<DetailsProps>) => {
 };
 
 describe("<Details />", () => {
-  commonAccessibilityTests(renderDetails());
-
   it("has the correct values", async () => {
     renderDetails();
 
@@ -73,5 +71,9 @@ describe("<Details />", () => {
     } else {
       fail("Contact email or idvt required do not exist");
     }
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(renderDetails());
   });
 });

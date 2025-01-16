@@ -12,5 +12,7 @@ describe("<ListInfoItem />", () => {
     expect(getByText("Test Content")).toBeInTheDocument();
   });
 
-  commonAccessibilityTests(renderListInfoItem("Accessible Content"));
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(renderListInfoItem("Accessible Content"));
+  });
 });

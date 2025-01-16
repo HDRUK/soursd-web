@@ -11,7 +11,6 @@ import ContactForm from "./ContactForm";
 const mockSubmit = jest.fn();
 
 describe("<ContactForm />", () => {
-  commonAccessibilityTests(render(<ContactForm onSubmit={mockSubmit} />));
   it("displays error state when values are not defined", async () => {
     render(<ContactForm onSubmit={mockSubmit} />);
 
@@ -54,5 +53,9 @@ describe("<ContactForm />", () => {
     } else {
       fail("Name, email or message does not exist");
     }
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(render(<ContactForm onSubmit={mockSubmit} />));
   });
 });
