@@ -2,9 +2,14 @@ import { useStore } from "@/data/store";
 import { mockedCustodian } from "@/mocks/data/custodian";
 import { mockedUser } from "@/mocks/data/user";
 import { patchCustodian } from "@/services/custodians";
-import { act, fireEvent, render, screen, waitFor } from "@/utils/testUtils";
+import {
+  commonAccessibilityTests,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from "@/utils/testUtils";
 import { faker } from "@faker-js/faker";
-import { axe } from "jest-axe";
 import Details, { DetailsProps } from "./Details";
 
 jest.mock("@/services/custodians");
@@ -23,17 +28,7 @@ const renderDetails = (props?: Partial<DetailsProps>) => {
 };
 
 describe("<Details />", () => {
-  it("has no accessibility validations", async () => {
-    const { container } = renderDetails();
-
-    let results;
-
-    await act(async () => {
-      results = await axe(container);
-    });
-
-    expect(results).toHaveNoViolations();
-  });
+  commonAccessibilityTests(renderDetails());
 
   it("has the correct values", async () => {
     renderDetails();

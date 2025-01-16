@@ -1,8 +1,13 @@
 import { mockedOrganisation } from "@/mocks/data/organisation";
 import { postOrganisationsInviteUser } from "@/services/organisations";
-import { act, fireEvent, render, screen, waitFor } from "@/utils/testUtils";
+import {
+  commonAccessibilityTests,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from "@/utils/testUtils";
 import { faker } from "@faker-js/faker";
-import { axe } from "jest-axe";
 import UserModal, { UserModalProps } from "./UserModal";
 
 jest.mock("@/services/organisations");
@@ -51,17 +56,7 @@ describe("<UserModal />", () => {
     jest.resetAllMocks();
   });
 
-  it("has no accessibility validations", async () => {
-    const { container } = renderUserModalDetails();
-
-    let results;
-
-    await act(async () => {
-      results = await axe(container);
-    });
-
-    expect(results).toHaveNoViolations();
-  });
+  commonAccessibilityTests(renderUserModalDetails());
 
   it("is updated", async () => {
     renderUserModalDetailsUpdate();

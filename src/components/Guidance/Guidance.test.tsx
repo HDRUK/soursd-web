@@ -1,5 +1,10 @@
-import { act, fireEvent, render, screen, waitFor } from "@/utils/testUtils";
-import { axe } from "jest-axe";
+import {
+  commonAccessibilityTests,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from "@/utils/testUtils";
 import Guidance, { GuidanceProps } from "./Guidance";
 
 const renderGuidance = (props?: Partial<GuidanceProps>) => {
@@ -23,17 +28,7 @@ const renderClosedGuidance = () => {
 };
 
 describe("<Guidance />", () => {
-  it("has no accessibility violations", async () => {
-    const { container } = renderGuidance();
-
-    let results;
-
-    await act(async () => {
-      results = await axe(container);
-    });
-
-    expect(results).toHaveNoViolations();
-  });
+  commonAccessibilityTests(renderGuidance());
 
   it("shows the correct content", async () => {
     renderGuidance();

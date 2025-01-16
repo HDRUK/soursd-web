@@ -1,5 +1,10 @@
-import { act, fireEvent, render, screen } from "@/utils/testUtils";
-import { axe } from "jest-axe";
+import {
+  act,
+  commonAccessibilityTests,
+  fireEvent,
+  render,
+  screen,
+} from "@/utils/testUtils";
 import { FormProvider, useForm } from "react-hook-form";
 import PasswordTextField from ".";
 
@@ -20,12 +25,7 @@ const PasswordTextFieldWithProvider = () => {
 };
 
 describe("<PasswordTextField />", () => {
-  it("has no accessibility validations", async () => {
-    const { container } = render(<PasswordTextFieldWithProvider />);
-
-    const results = await axe(container);
-    expect(results).toHaveNoViolations();
-  });
+  commonAccessibilityTests(render(<PasswordTextFieldWithProvider />));
 
   it("displays error state when values are not defined", async () => {
     render(<PasswordTextFieldWithProvider />);

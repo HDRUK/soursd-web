@@ -1,5 +1,10 @@
-import { act, fireEvent, render, screen } from "@/utils/testUtils";
-import { axe } from "jest-axe";
+import {
+  act,
+  commonAccessibilityTests,
+  fireEvent,
+  render,
+  screen,
+} from "@/utils/testUtils";
 import FileLink, { FileLinkProps } from ".";
 
 const mockOnFileChange = jest.fn();
@@ -28,12 +33,7 @@ const renderFileLinkDetails = (props?: Partial<FileLinkProps>) => {
 };
 
 describe("<FileLink />", () => {
-  it("has no accessibility validations", async () => {
-    const { container } = renderFileLinkDetails();
-
-    const results = await axe(container);
-    expect(results).toHaveNoViolations();
-  });
+  commonAccessibilityTests(renderFileLinkDetails());
 
   it("shows the correct filename", async () => {
     renderFileLinkDetails({

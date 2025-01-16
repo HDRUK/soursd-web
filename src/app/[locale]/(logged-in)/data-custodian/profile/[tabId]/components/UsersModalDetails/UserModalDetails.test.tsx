@@ -1,9 +1,14 @@
 import { useStore } from "@/data/store";
 import { mockedCustodianUser } from "@/mocks/data/custodian";
 import { mockedApiPermissions } from "@/mocks/data/store";
-import { act, fireEvent, render, screen, waitFor } from "@/utils/testUtils";
+import {
+  commonAccessibilityTests,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from "@/utils/testUtils";
 import { faker } from "@faker-js/faker";
-import { axe } from "jest-axe";
 import UserModalDetails, { UserModalDetailsProps } from "./UserModalDetails";
 
 jest.mock("@/services/custodians");
@@ -33,17 +38,7 @@ describe("<UserModalDetails />", () => {
     mockOnClose.mockReset();
   });
 
-  it("has no accessibility validations", async () => {
-    const { container } = renderUserModalDetails();
-
-    let results;
-
-    await act(async () => {
-      results = await axe(container);
-    });
-
-    expect(results).toHaveNoViolations();
-  });
+  commonAccessibilityTests(renderUserModalDetails());
 
   it("submit is called", async () => {
     renderUserModalDetails();

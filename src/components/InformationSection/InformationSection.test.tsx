@@ -1,5 +1,10 @@
-import { act, fireEvent, render, screen, waitFor } from "@/utils/testUtils";
-import { axe } from "jest-axe";
+import {
+  commonAccessibilityTests,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from "@/utils/testUtils";
 import InformationSection, {
   InformationSectionProps,
 } from "./InformationSection";
@@ -23,17 +28,7 @@ const renderOpenedContent = (props?: Partial<InformationSectionProps>) => {
 };
 
 describe("<InformationSection />", () => {
-  it("has no accessibility violations", async () => {
-    const { container } = renderInformationSection();
-
-    let results;
-
-    await act(async () => {
-      results = await axe(container);
-    });
-
-    expect(results).toHaveNoViolations();
-  });
+  commonAccessibilityTests(renderInformationSection());
 
   it("shows the popup content", async () => {
     renderOpenedContent();

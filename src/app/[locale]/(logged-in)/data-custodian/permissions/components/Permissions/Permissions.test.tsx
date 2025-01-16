@@ -1,8 +1,13 @@
 import { mockedPermission } from "@/mocks/data/permission";
 import { EntityType } from "@/types/api";
-import { act, fireEvent, render, screen, waitFor } from "@/utils/testUtils";
+import {
+  commonAccessibilityTests,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from "@/utils/testUtils";
 import { faker } from "@faker-js/faker";
-import { axe } from "jest-axe";
 import Permissions, { PermissionsProps } from ".";
 
 const mockedProps = {
@@ -21,17 +26,7 @@ const renderPermissions = (props?: Partial<PermissionsProps>) =>
   render(<Permissions {...mockedProps} {...props} />);
 
 describe("<Permissions />", () => {
-  it("has no accessibility violations", async () => {
-    const { container } = renderPermissions();
-
-    let results;
-
-    await act(async () => {
-      results = await axe(container);
-    });
-
-    expect(results).toHaveNoViolations();
-  });
+  commonAccessibilityTests(renderPermissions());
 
   it("calls the correct methods for an organisation", async () => {
     renderPermissions({

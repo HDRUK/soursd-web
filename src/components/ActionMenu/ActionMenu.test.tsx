@@ -1,5 +1,9 @@
-import { fireEvent, render, screen } from "@/utils/testUtils";
-import { axe } from "jest-axe";
+import {
+  commonAccessibilityTests,
+  fireEvent,
+  render,
+  screen,
+} from "@/utils/testUtils";
 import { ActionMenu, ActionMenuItem } from ".";
 
 const renderSections = () =>
@@ -10,12 +14,7 @@ const renderSections = () =>
   );
 
 describe("<ActionMenu />", () => {
-  it("has no accessibility violations", async () => {
-    const { container } = renderSections();
-
-    const results = await axe(container);
-    expect(results).toHaveNoViolations();
-  });
+  commonAccessibilityTests(renderSections());
 
   it("displays the menu", async () => {
     renderSections();

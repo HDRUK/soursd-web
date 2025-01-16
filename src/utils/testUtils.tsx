@@ -9,6 +9,7 @@ import {
   RenderHookResult,
   RenderOptions,
   RenderResult,
+  act,
   render,
   renderHook,
 } from "@testing-library/react";
@@ -17,6 +18,7 @@ import { NextIntlClientProvider } from "next-intl";
 import React, { ReactNode } from "react";
 import { CookieProvider } from "@/context/CookieContext";
 import userEvent, { UserEvent } from "@testing-library/user-event";
+import { axe } from "jest-axe";
 
 const defineMatchMedia = (width: number) => {
   Object.defineProperty(window, "matchMedia", {
@@ -99,6 +101,20 @@ const customRenderHook = (
   });
 };
 
+const commonAccessibilityTests = async (rendered: RenderResult) => {
+  it("has no accessibility violations", async () => {
+    const { container } = rendered;
+
+    let results;
+
+    await act(async () => {
+      results = await axe(container);
+    });
+
+    expect(results).toHaveNoViolations();
+  });
+};
+
 export * from "@testing-library/react";
 export * from "@testing-library/user-event";
 
@@ -106,4 +122,5 @@ export {
   defineMatchMedia,
   customRender as render,
   customRenderHook as renderHook,
+  commonAccessibilityTests,
 };

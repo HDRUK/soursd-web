@@ -1,8 +1,13 @@
-import { mockedOrganisation } from "@/mocks/data/organisation";
-import { act, fireEvent, render, screen, waitFor } from "@/utils/testUtils";
-import { useMutation } from "@tanstack/react-query";
 import { useStore } from "@/data/store";
-import { axe } from "jest-axe";
+import { mockedOrganisation } from "@/mocks/data/organisation";
+import {
+  commonAccessibilityTests,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from "@/utils/testUtils";
+import { useMutation } from "@tanstack/react-query";
 import Details from "./Details";
 
 jest.mock("@tanstack/react-query");
@@ -27,17 +32,7 @@ const defaultOrganisation = mockedOrganisation();
 });
 
 describe("<Details />", () => {
-  it("has no accessibility validations", async () => {
-    const { container } = render(<Details />);
-
-    let results;
-
-    await act(async () => {
-      results = await axe(container);
-    });
-
-    expect(results).toHaveNoViolations();
-  });
+  commonAccessibilityTests(render(<Details />));
 
   it("has the correct values", async () => {
     render(<Details />);

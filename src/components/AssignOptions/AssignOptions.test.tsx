@@ -1,6 +1,11 @@
 import { mockedPermission } from "@/mocks/data/permission";
-import { act, fireEvent, render, screen } from "@/utils/testUtils";
-import { axe } from "jest-axe";
+import {
+  act,
+  commonAccessibilityTests,
+  fireEvent,
+  render,
+  screen,
+} from "@/utils/testUtils";
 import AssignOptions, { AssignOptionsProps } from "./AssignOptions";
 
 const mockSubmit = jest.fn();
@@ -27,12 +32,7 @@ describe("<AssignOptions />", () => {
     jest.resetAllMocks();
   });
 
-  it("has no accessibility violations", async () => {
-    const { container } = renderAssignOptions();
-
-    const results = await axe(container);
-    expect(results).toHaveNoViolations();
-  });
+  commonAccessibilityTests(renderAssignOptions());
 
   it("show a loader", async () => {
     renderAssignOptions({

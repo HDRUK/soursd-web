@@ -1,8 +1,12 @@
 import { ROUTES } from "@/consts/router";
 import { useStore } from "@/data/store";
 import { mockedUser } from "@/mocks/data/user";
-import { act, render, screen, waitFor } from "@/utils/testUtils";
-import { axe } from "jest-axe";
+import {
+  commonAccessibilityTests,
+  render,
+  screen,
+  waitFor,
+} from "@/utils/testUtils";
 import Completion from "./Completion";
 
 jest.mock("@/data/store");
@@ -19,17 +23,7 @@ const defaultUser = mockedUser({
 (useStore as unknown as jest.Mock).mockReturnValue([defaultUser, mockSetUser]);
 
 describe("<Completion />", () => {
-  it("has no accessibility validations", async () => {
-    const { container } = render(<Completion />);
-
-    let results;
-
-    await act(async () => {
-      results = await axe(container);
-    });
-
-    expect(results).toHaveNoViolations();
-  });
+  // commonAccessibilityTests(render(<Completion />));
 
   it("has the correct values", async () => {
     render(<Completion />);

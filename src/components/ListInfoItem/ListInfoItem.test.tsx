@@ -1,6 +1,6 @@
+import { commonAccessibilityTests } from "@/utils/testUtils";
+import { render } from "@testing-library/react";
 import React from "react";
-import { render, act } from "@testing-library/react";
-import { axe } from "jest-axe";
 import ListInfoItem from "./ListInfoItem";
 
 describe("<ListInfoItem />", () => {
@@ -12,15 +12,5 @@ describe("<ListInfoItem />", () => {
     expect(getByText("Test Content")).toBeInTheDocument();
   });
 
-  it("has no accessibility violations", async () => {
-    const { container } = renderListInfoItem("Accessible Content");
-
-    let results;
-
-    await act(async () => {
-      results = await axe(container);
-    });
-
-    expect(results).toHaveNoViolations();
-  });
+  commonAccessibilityTests(renderListInfoItem("Accessible Content"));
 });

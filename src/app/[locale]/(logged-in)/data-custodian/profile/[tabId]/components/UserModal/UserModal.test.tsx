@@ -3,11 +3,16 @@ import { mockedCustodianUser } from "@/mocks/data/custodian";
 import { mockedApiPermissions } from "@/mocks/data/store";
 import {
   patchCustodianUser,
-  postCustodianUserInvite,
   postCustodianUser,
+  postCustodianUserInvite,
 } from "@/services/custodian_users";
-import { act, fireEvent, render, screen, waitFor } from "@/utils/testUtils";
-import { axe } from "jest-axe";
+import {
+  commonAccessibilityTests,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from "@/utils/testUtils";
 import { mock200Json } from "jest.utils";
 import UserModal, { UserModalProps } from "./UserModal";
 
@@ -51,17 +56,7 @@ describe("<UserModal />", () => {
     mockOnClose.mockReset();
   });
 
-  it("has no accessibility validations", async () => {
-    const { container } = renderUserModalDetails();
-
-    let results;
-
-    await act(async () => {
-      results = await axe(container);
-    });
-
-    expect(results).toHaveNoViolations();
-  });
+  commonAccessibilityTests(renderUserModalDetails());
 
   it("update user is called with an id", async () => {
     renderUserModalDetailsUpdate(1);
