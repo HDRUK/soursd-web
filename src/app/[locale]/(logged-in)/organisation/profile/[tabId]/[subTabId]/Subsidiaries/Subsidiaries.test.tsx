@@ -29,7 +29,7 @@ const defaultOrganisation = mockedOrganisation();
 describe("<Subsidiaries />", () => {
   it("has no accessibility validations", async () => {
     const { container } = render(<Subsidiaries />);
-
+    screen.debug();
     let results;
 
     await act(async () => {

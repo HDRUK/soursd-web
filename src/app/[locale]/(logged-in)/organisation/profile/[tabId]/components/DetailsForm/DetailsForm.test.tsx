@@ -1,6 +1,13 @@
 import { useStore } from "@/data/store";
 import { mockedOrganisation } from "@/mocks/data/organisation";
-import { act, fireEvent, render, screen, waitFor } from "@/utils/testUtils";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  within,
+} from "@/utils/testUtils";
 import { faker } from "@faker-js/faker";
 import { axe } from "jest-axe";
 import DetailsForm, { DetailsFormProps } from "./DetailsForm";
@@ -53,19 +60,20 @@ describe("<UserModalDetails />", () => {
   });
 
   it.each([
-    "Organisation name",
-    "Address 1",
-    "Town",
-    "County",
-    "Postcode",
-    "Company number",
-    "Charity registration ID",
-    "ROR ID",
-    "Website",
-  ])("does not submit when %s is not defined", async value => {
+    "organisation_name",
+    "address_1",
+    "town",
+    "county",
+    "postcode",
+    "companies_house_no",
+    "charity_registration_id",
+    "ror_id",
+    "website",
+  ])("does not submit when %s is not defined", async testId => {
     renderUserModalDetails();
 
-    const input = screen.getByLabelText(value);
+    const parentDiv = screen.getByTestId(testId);
+    const input = within(parentDiv).getByRole("textbox");
     const inputValue = faker.string.sample();
 
     fireEvent.change(input, {

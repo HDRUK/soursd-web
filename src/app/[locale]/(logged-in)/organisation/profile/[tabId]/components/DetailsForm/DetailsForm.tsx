@@ -6,7 +6,6 @@ import FormActions from "@/components/FormActions";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
 import FormSection from "@/components/FormSection";
 import GoogleAutocomplete from "@/components/GoogleAutocomplete";
-import { GoogleAddressFields } from "@/components/GoogleAutocomplete";
 import yup from "@/config/yup";
 import {
   VALIDATION_CHARITY_ID,
@@ -29,7 +28,6 @@ import {
 import { AddressFields } from "@/types/application";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
-import { UseFormSetValue, useFormContext } from "react-hook-form";
 
 export interface DetailsFormValues {
   organisation_name: string;
@@ -104,15 +102,6 @@ export default function DetailsForm({
     []
   );
 
-  const handleFindAddress = (
-    address: AddressFields,
-    setValue: UseFormSetValue<DetailsFormValues>
-  ) => {
-    Object.entries(address).forEach(([key, value]) => {
-      setValue(key as keyof DetailsFormValues, value ?? "");
-    });
-  };
-
   const { isError, error, isLoading } = queryState;
 
   const formOptions = {
@@ -140,149 +129,158 @@ export default function DetailsForm({
 
   return (
     <Form schema={schema} onSubmit={onSubmit} {...formOptions}>
-      <>
-        <FormSection heading="Organisation name and location">
-          <Grid container rowSpacing={3}>
-            <Grid item xs={12}>
-              <FormControlHorizontal
-                name="organisation_name"
-                renderField={fieldProps => <TextField {...fieldProps} />}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlHorizontal
-                name="address"
-                displayPlaceholder={false}
-                displayLabel={false}
-                renderField={() => {
-                  const { setValue } = useFormContext<DetailsFormValues>();
+      {({ setValue }) => {
+        const handleFindAddress = (address: AddressFields) => {
+          Object.entries(address).forEach(([key, value]) => {
+            setValue(key as keyof DetailsFormValues, value ?? "");
+          });
+        };
 
-                  return (
-                    <GoogleAutocomplete
-                      name="address"
-                      textFieldProps={{ variant: "filled", size: "small" }}
-                      onAddressSelected={value =>
-                        handleFindAddress(value as AddressFields, setValue)
-                      }
-                      placeholder="Search for your address..."
-                    />
-                  );
-                }}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlHorizontal
-                name="address_1"
-                renderField={fieldProps => <TextField {...fieldProps} />}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlHorizontal
-                name="address_2"
-                renderField={fieldProps => <TextField {...fieldProps} />}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlHorizontal
-                name="town"
-                renderField={fieldProps => <TextField {...fieldProps} />}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlHorizontal
-                name="county"
-                renderField={fieldProps => <TextField {...fieldProps} />}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlHorizontal
-                name="country"
-                renderField={fieldProps => <TextField {...fieldProps} />}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlHorizontal
-                name="postcode"
-                renderField={fieldProps => (
-                  <TextField {...fieldProps} sx={{ maxWidth: "200px" }} />
-                )}
-              />
-            </Grid>
-          </Grid>
-        </FormSection>
-        <FormSection heading="Organisation persistent identifiers">
-          <Grid container rowSpacing={3}>
-            <Grid item xs={12}>
-              <FormControlHorizontal
-                name="companies_house_no"
-                renderField={fieldProps => <TextField {...fieldProps} />}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlHorizontal
-                name="charity_registration_id"
-                renderField={fieldProps => <TextField {...fieldProps} />}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlHorizontal
-                name="ror_id"
-                renderField={fieldProps => <TextField {...fieldProps} />}
-              />
-            </Grid>
-          </Grid>
-        </FormSection>
-        <FormSection heading="Organisation sector, site and website">
-          <Grid item xs={12}>
-            <FormControlHorizontal
-              name="sector_id"
-              renderField={fieldProps => (
-                <Select
-                  {...fieldProps}
-                  inputProps={{
-                    "aria-label": tForm("sectorIdAriaLabel"),
-                  }}>
-                  {sectors?.map(({ name, id }) => (
-                    <MenuItem value={id} key={id}>
-                      {name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              )}
-            />
-            <Grid item xs={12}>
-              <FormControlHorizontal
-                name="smbStatus"
-                displayPlaceholder={false}
-                label={tForm("smbStatus")}
-                renderField={fieldProps => (
-                  <FormControlLabel
-                    label={tForm("smbStatusDescription")}
-                    control={
-                      <Checkbox {...fieldProps} checked={!!fieldProps.value} />
-                    }
+        return (
+          <>
+            <FormSection heading="Organisation name and location">
+              <Grid container rowSpacing={3}>
+                <Grid item xs={12}>
+                  <FormControlHorizontal
+                    name="organisation_name"
+                    renderField={fieldProps => <TextField {...fieldProps} />}
                   />
-                )}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlHorizontal
-                name="website"
-                renderField={fieldProps => <TextField {...fieldProps} />}
-              />
-            </Grid>
-          </Grid>
-        </FormSection>
+                </Grid>
+                <Grid item xs={12}>
+                  <FormControlHorizontal
+                    name="address"
+                    displayPlaceholder={false}
+                    displayLabel={false}
+                    renderField={() => (
+                      <GoogleAutocomplete
+                        name="address"
+                        textFieldProps={{ variant: "filled", size: "small" }}
+                        onAddressSelected={value =>
+                          handleFindAddress(value as AddressFields)
+                        }
+                        placeholder="Search for your address..."
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <FormControlHorizontal
+                    name="address_1"
+                    renderField={fieldProps => <TextField {...fieldProps} />}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <FormControlHorizontal
+                    name="address_2"
+                    renderField={fieldProps => <TextField {...fieldProps} />}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <FormControlHorizontal
+                    name="town"
+                    renderField={fieldProps => <TextField {...fieldProps} />}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <FormControlHorizontal
+                    name="county"
+                    renderField={fieldProps => <TextField {...fieldProps} />}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <FormControlHorizontal
+                    name="country"
+                    renderField={fieldProps => <TextField {...fieldProps} />}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <FormControlHorizontal
+                    name="postcode"
+                    renderField={fieldProps => (
+                      <TextField {...fieldProps} sx={{ maxWidth: "200px" }} />
+                    )}
+                  />
+                </Grid>
+              </Grid>
+            </FormSection>
+            <FormSection heading="Organisation persistent identifiers">
+              <Grid container rowSpacing={3}>
+                <Grid item xs={12}>
+                  <FormControlHorizontal
+                    name="companies_house_no"
+                    renderField={fieldProps => <TextField {...fieldProps} />}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <FormControlHorizontal
+                    name="charity_registration_id"
+                    renderField={fieldProps => <TextField {...fieldProps} />}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <FormControlHorizontal
+                    name="ror_id"
+                    renderField={fieldProps => <TextField {...fieldProps} />}
+                  />
+                </Grid>
+              </Grid>
+            </FormSection>
+            <FormSection heading="Organisation sector, site and website">
+              <Grid item xs={12}>
+                <FormControlHorizontal
+                  name="sector_id"
+                  renderField={fieldProps => (
+                    <Select
+                      {...fieldProps}
+                      inputProps={{
+                        "aria-label": tForm("sectorIdAriaLabel"),
+                      }}>
+                      {sectors?.map(({ name, id }) => (
+                        <MenuItem value={id} key={id}>
+                          {name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  )}
+                />
+                <Grid item xs={12}>
+                  <FormControlHorizontal
+                    name="smbStatus"
+                    displayPlaceholder={false}
+                    label={tForm("smbStatus")}
+                    renderField={fieldProps => (
+                      <FormControlLabel
+                        label={tForm("smbStatusDescription")}
+                        control={
+                          <Checkbox
+                            {...fieldProps}
+                            checked={!!fieldProps.value}
+                          />
+                        }
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <FormControlHorizontal
+                    name="website"
+                    renderField={fieldProps => <TextField {...fieldProps} />}
+                  />
+                </Grid>
+              </Grid>
+            </FormSection>
 
-        <FormActions>
-          <LoadingButton
-            loading={isLoading}
-            type="submit"
-            endIcon={<SaveIcon />}>
-            {tProfile("submitButton")}
-          </LoadingButton>
-        </FormActions>
-      </>
+            <FormActions>
+              <LoadingButton
+                loading={isLoading}
+                type="submit"
+                endIcon={<SaveIcon />}>
+                {tProfile("submitButton")}
+              </LoadingButton>
+            </FormActions>
+          </>
+        );
+      }}
     </Form>
   );
 }

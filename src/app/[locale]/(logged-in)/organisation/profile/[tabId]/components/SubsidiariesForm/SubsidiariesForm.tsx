@@ -1,9 +1,9 @@
 "use client";
-import React from "react";
+
 import { Grid } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 import { useTranslations } from "next-intl";
-import { useMemo } from "react";
+import React, { useMemo } from "react";
 import { useStore } from "@/data/store";
 import Form from "@/components/Form";
 import FormActions from "@/components/FormActions";
@@ -16,15 +16,12 @@ import GoogleAutocomplete from "@/components/GoogleAutocomplete";
 import { QueryState } from "@/types/form";
 import { LoadingButton } from "@mui/lab";
 import { PatchOrganisationPayload } from "@/services/organisations";
-
-import { getValidation, getDefaultValues } from "./const/form";
-
-import { FormData } from "./const/form";
-
-type Certification = {
-  certified: keyof FormData;
-  certificationNum: keyof FormData;
-};
+import {
+  FormData,
+  getValidation,
+  getDefaultValues,
+  certificationRows,
+} from "./config/form";
 
 export interface DetailsFormProps {
   onSubmit: (fields: Partial<PatchOrganisationPayload>) => void;
@@ -48,25 +45,6 @@ export default function SubsidiariesForm({
     () => getDefaultValues(organisation),
     [organisation]
   );
-
-  const certifications: Certification[] = [
-    {
-      certified: "ce_certified",
-      certificationNum: "ce_certification_num",
-    },
-    {
-      certified: "ce_plus_certified",
-      certificationNum: "ce_plus_certification_num",
-    },
-    {
-      certified: "iso_27001_certified",
-      certificationNum: "iso_27001_certification_num",
-    },
-    {
-      certified: "dsptk_certified",
-      certificationNum: "dsptk_certification_num",
-    },
-  ];
 
   return (
     <Form schema={schema} defaultValues={defaultValues} onSubmit={onSubmit}>
@@ -107,7 +85,7 @@ export default function SubsidiariesForm({
                             variant: "filled",
                             size: "small",
                           }}
-                          fullWidth={true}
+                          fullWidth
                           placeholder={t(
                             "organisationSubsidiaries2.addressPlaceholder"
                           )}
@@ -123,7 +101,7 @@ export default function SubsidiariesForm({
 
         <FormSection heading={t("organisationDataSecurityCompliance")}>
           <Grid container rowSpacing={3}>
-            {certifications.map(cert => (
+            {certificationRows.map(cert => (
               <React.Fragment key={cert.certified}>
                 <Grid item xs={4}>
                   <FormControlHorizontal

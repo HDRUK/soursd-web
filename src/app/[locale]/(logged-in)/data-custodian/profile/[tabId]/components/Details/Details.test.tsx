@@ -10,8 +10,8 @@ import {
   waitFor,
   within,
 } from "@/utils/testUtils";
-import { faker } from "@faker-js/faker";
 import { axe } from "jest-axe";
+import { faker } from "@faker-js/faker";
 import Details, { DetailsProps } from "./Details";
 
 jest.mock("@/services/custodians");
@@ -30,7 +30,7 @@ const renderDetails = (props?: Partial<DetailsProps>) => {
 };
 
 describe("<Details />", () => {
-  /*it("has no accessibility validations", async () => {
+  it("has no accessibility validations", async () => {
     const { container } = renderDetails();
 
     let results;
@@ -41,16 +41,15 @@ describe("<Details />", () => {
 
     expect(results).toHaveNoViolations();
   });
-  */
 
   it("has the correct values", async () => {
     renderDetails();
 
     const nameContainer = screen.getByTestId("name");
-    const nameInput = within(nameContainer).getByRole("textbox"); // Finds the `input` inside it
+    const nameInput = within(nameContainer).getByRole("textbox");
 
     const emailContainer = screen.getByTestId("contact_email");
-    const emailInput = within(emailContainer).getByRole("textbox"); // Finds the `input` inside it
+    const emailInput = within(emailContainer).getByRole("textbox");
 
     await waitFor(() => {
       expect(nameInput).toHaveValue(defaultCustodian.name);
@@ -62,7 +61,7 @@ describe("<Details />", () => {
     renderDetails();
 
     const emailContainer = screen.getByTestId("contact_email");
-    const email = within(emailContainer).getByRole("textbox"); // Finds the `input` inside it
+    const email = within(emailContainer).getByRole("textbox");
 
     const idvtRequired = screen.getByRole("checkbox");
 

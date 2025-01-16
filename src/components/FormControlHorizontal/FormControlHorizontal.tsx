@@ -8,17 +8,15 @@ import {
   FormLabelProps,
   Grid,
   GridProps,
-  TextFieldProps,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import React, { ReactNode } from "react";
-import { FieldError } from "react-hook-form";
 import {
+  FieldError,
   useFormContext,
   useController,
   Control,
   FieldValues,
-  ControllerRenderProps,
 } from "react-hook-form";
 
 export interface FormControlHorizontalProps
@@ -42,7 +40,6 @@ const NAMESPACE_TRANSLATION_FORM = "Form";
 export default function FormControlHorizontal({
   name,
   control,
-  children,
   label,
   placeholder,
   disabled,
@@ -83,6 +80,7 @@ export default function FormControlHorizontal({
       <Grid container columnSpacing={2} {...containerProps}>
         <Grid item md={labelMd} sx={{ display: "flex", pt: 1 }}>
           <FormLabel
+            id={`${field.name}-label`}
             htmlFor={name}
             {...labelProps}
             sx={{
@@ -98,12 +96,14 @@ export default function FormControlHorizontal({
         </Grid>
         <Grid item xs={12} md={contentMd}>
           {renderField({
+            id: field.name,
             placeholder: displayPlaceholder
               ? placeholder || t(`${tKey}Placeholder`)
               : "",
             disabled,
             fullWidth,
             "data-testid": field.name,
+            "aria-labelledby": `${field.name}-label`,
             ...field,
           })}
 

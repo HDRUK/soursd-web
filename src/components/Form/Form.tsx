@@ -2,21 +2,21 @@ import yup from "@/config/yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, BoxProps, Grid } from "@mui/material";
 import { HTMLAttributes, ReactNode } from "react";
-import { UseFormProps } from "react-hook-form";
 import {
+  UseFormProps,
   DefaultValues,
   FieldValues,
   FormProvider,
   useForm,
-  Resolver,
   UseFormReturn,
+  Resolver,
 } from "react-hook-form";
 import { AnyObject } from "yup";
 import { Message } from "../Message";
 
 export interface FormProps<T extends AnyObject>
   extends Omit<HTMLAttributes<HTMLFormElement>, "onSubmit" | "children"> {
-  children: ReactNode;
+  children: ReactNode | ((methods: UseFormReturn<T>) => ReactNode);
   autoComplete?: "off";
   error?: ReactNode;
   onSubmit?: (values: T) => void;
@@ -33,7 +33,7 @@ export default function Form<T extends FieldValues>({
   onSubmit = () => {},
   ...restProps
 }: FormProps<T>) {
-  let formOptions: UseFormProps<T> = {
+  const formOptions: UseFormProps<T> = {
     defaultValues,
   };
 
@@ -65,7 +65,7 @@ export default function Form<T extends FieldValues>({
             </Message>
           </Grid>
         )}
-        {children}
+        {typeof children === "function" ? children(methods) : children}
       </Box>
     </FormProvider>
   );

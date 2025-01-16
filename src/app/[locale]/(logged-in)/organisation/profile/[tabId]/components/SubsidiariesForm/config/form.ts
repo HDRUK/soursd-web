@@ -110,7 +110,7 @@ export const getDefaultValues = (organisation?: Organisation): FormData => ({
   subsidiaries:
     organisation?.subsidiaries?.map(
       ({ id: _id, pivot: _pivot, name, ...rest }) => ({
-        name: name,
+        name,
         address: rest,
       })
     ) || [],
@@ -123,3 +123,27 @@ export const getDefaultValues = (organisation?: Organisation): FormData => ({
   dsptk_certified: organisation?.dsptk_certified,
   dsptk_certification_num: organisation?.dsptk_certification_num || "",
 });
+
+type Certification = {
+  certified: keyof FormData;
+  certificationNum: keyof FormData;
+};
+
+export const certificationRows: Certification[] = [
+  {
+    certified: "ce_certified",
+    certificationNum: "ce_certification_num",
+  },
+  {
+    certified: "ce_plus_certified",
+    certificationNum: "ce_plus_certification_num",
+  },
+  {
+    certified: "iso_27001_certified",
+    certificationNum: "iso_27001_certification_num",
+  },
+  {
+    certified: "dsptk_certified",
+    certificationNum: "dsptk_certification_num",
+  },
+];
