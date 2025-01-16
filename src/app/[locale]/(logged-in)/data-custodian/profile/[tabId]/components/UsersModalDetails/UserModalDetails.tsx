@@ -103,7 +103,7 @@ export default function UserModalDetails({
             </Typography>
           </FormModalHeader>
           <FormModalBody>
-            <Grid container rowSpacing={3}>
+            <Grid container rowSpacing={2}>
               <Grid item xs={12}>
                 <FormControlHorizontal
                   id="first_name"

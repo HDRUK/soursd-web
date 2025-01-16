@@ -2,9 +2,8 @@
 
 import { ROUTES } from "@/consts/router";
 import { ApplicationDataProvider } from "@/context/ApplicationData";
-import { getRequest } from "@/services/requests";
+import { getMe } from "@/services/auth";
 import { User } from "@/types/application";
-import { ResponseJson } from "@/types/requests";
 import { handleLogin } from "@/utils/keycloak";
 import { getRoutes } from "@/utils/router";
 import Cookies from "js-cookie";
@@ -18,20 +17,13 @@ type LayoutProps = PropsWithChildren<{
 async function validateAccessToken(
   pathname: string | null,
   router: ReturnType<typeof useRouter>
-): Promise<ResponseJson<User> | null> {
-  const response = await getRequest<User>(
-    `${process.env.NEXT_PUBLIC_API_URL}/auth/me`,
-    undefined,
-    {
-      headers: {
-        "content-type": "application/json;charset=UTF-8",
-      },
-    }
-  );
+): Promise<User | undefined> {
+  console.log("getting", pathname);
+  const response = await getMe({
+    suppressThrow: true,
+  });
 
-  if (response.ok) {
-    return response.json();
-  }
+  console.log("response", response);
 
   if (response.status === 404) {
     router.push("/en/register");
@@ -44,7 +36,9 @@ async function validateAccessToken(
     }
   }
 
-  return null;
+  console.log(response?.data);
+
+  return response?.data;
 }
 
 export default function Layout({ children, params: { locale } }: LayoutProps) {
@@ -57,11 +51,11 @@ export default function Layout({ children, params: { locale } }: LayoutProps) {
     const performAuthCheck = async () => {
       const user = await validateAccessToken(pathname, router);
 
-      if (!user?.data) {
+      if (!user) {
         throw new Error("Unauthorised 401");
       }
 
-      setMe(user?.data);
+      setMe(user);
     };
 
     performAuthCheck();

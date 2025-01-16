@@ -4,7 +4,7 @@ import { Message } from "@/components/Message";
 import OverlayCenter from "@/components/OverlayCenter";
 import PageSection from "@/modules/PageSection";
 import { getEntityProjects } from "@/services/projects";
-import { CircularProgress } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useStore, StoreState } from "@/data/store";
 import Pagination from "@/components/Pagination";
@@ -113,7 +113,7 @@ export default function Projects({ variant }: ProjectsProps) {
           flexDirection: "column",
           gap: 2,
         }}>
-        <PageSection
+        <Box
           sx={{
             display: "grid",
             gridTemplateColumns: "2fr 1fr",
@@ -128,10 +128,10 @@ export default function Projects({ variant }: ProjectsProps) {
             actions={searchActions}
             sx={{ justifySelf: "start", my: "auto" }}
           />
-        </PageSection>
-        <PageSection sx={{ display: "flex", flex: 1, gap: 2 }}>
+        </Box>
+        <Box sx={{ display: "flex", flex: 1, gap: 2 }}>
           <ProjectsLegend />
-        </PageSection>
+        </Box>
       </PageSection>
       <PageSection sx={{ flexGrow: 1 }}>
         {isProjectsError && (

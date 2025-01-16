@@ -1,10 +1,10 @@
-import { ResponseJson, ResponseTranslations } from "@/types/requests";
+import { ResponseJson, ResponseOptions } from "@/types/requests";
 import { handleJsonResponse, postRequest } from "../requests";
 import { PostRegisterPayload, PostRegisterResponse } from "./types";
 
 export default async (
   payload?: PostRegisterPayload,
-  messages?: ResponseTranslations
+  options?: ResponseOptions
 ): Promise<ResponseJson<PostRegisterResponse>> => {
   const response = await postRequest(
     `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
@@ -16,5 +16,5 @@ export default async (
     }
   );
 
-  return handleJsonResponse(response, messages);
+  return handleJsonResponse(response, options);
 };

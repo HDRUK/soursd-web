@@ -20,6 +20,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
 import UserModal from "../UserModal";
+import { PageSection } from "@/modules";
 
 const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 
@@ -75,7 +76,7 @@ export default function Users() {
   }, []);
 
   return (
-    <Box>
+    <PageSection>
       <Box sx={{ display: "flex", gap: 1, mb: 3 }}>
         <Box component="form" role="search" sx={{ flexGrow: 1 }}>
           <SearchBar onSearch={() => {}} />
@@ -180,6 +181,6 @@ export default function Users() {
           onClose={handleCloseModal}
         />
       )}
-    </Box>
+    </PageSection>
   );
 }

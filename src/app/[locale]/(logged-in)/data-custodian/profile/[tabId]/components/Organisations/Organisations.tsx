@@ -16,6 +16,7 @@ import { useCallback } from "react";
 import { useMutationApproval, useMutationDeleteApproval } from "../../hooks";
 import OrganisationsList from "../OrganisationsList";
 import OrganisationsLegend from "../OrganisationsLegend";
+import { PageSection } from "@/modules";
 
 const NAMESPACE_TRANSLATIONS_USERS_LIST = "UsersList";
 const NAMESPACE_TRANSLATIONS_USERS = "Users";
@@ -82,7 +83,7 @@ export default function Sections() {
   );
 
   return (
-    <>
+    <PageSection>
       <OrganisationsLegend />
       {isOrganisationsLoading && (
         <OverlayCenter variant="contained">
@@ -108,6 +109,6 @@ export default function Sections() {
           }}
         />
       )}
-    </>
+    </PageSection>
   );
 }

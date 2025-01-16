@@ -29,9 +29,7 @@ function Page({ params: { tabId }, config }: PageProps) {
         <PageTitle>
           <Typography variant="h3">{t(tabId)}</Typography>
         </PageTitle>
-        <PageSection sx={{ flexGrow: 1 }}>
-          <TabsContents tabId={tabId} />
-        </PageSection>
+        <TabsContents tabId={tabId} />
       </PageContent>
     </PageContainer>
   );

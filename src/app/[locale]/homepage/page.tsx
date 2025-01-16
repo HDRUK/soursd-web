@@ -17,6 +17,8 @@ export default function Page() {
   const t = useTranslations(NAMESPACE_TRANSLATIONS);
   const { isReady, isAuthenticated } = useLoginRedirect();
 
+  console.log("isReady", isReady, isAuthenticated);
+
   return isReady && !isAuthenticated ? (
     <>
       <Header />

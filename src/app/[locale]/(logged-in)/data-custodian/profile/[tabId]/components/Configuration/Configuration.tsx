@@ -22,7 +22,7 @@ const Configuration = () => {
   });
   return (
     <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
-      <Box display="flex" justifyContent="center" padding={2}>
+      <Box display="flex" justifyContent="center">
         <Box display="flex" flexDirection="column" gap={0} maxWidth={1000}>
           {rules?.data.nodes.map((node, index) => (
             <ListInfoItem key={`info-box-${node.name}`} index={index + 1}>

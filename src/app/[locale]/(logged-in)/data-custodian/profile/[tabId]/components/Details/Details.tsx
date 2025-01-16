@@ -16,6 +16,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo } from "react";
 import IdvtSection from "../IdvtSection";
+import { PageSection } from "@/modules";
 
 export interface DetailsFormValues {
   name: string;
@@ -94,7 +95,7 @@ export default function Details({ custodian }: DetailsProps) {
   };
 
   return (
-    <>
+    <PageSection>
       <Postit sx={{ mx: "auto", mb: 7 }}>
         <Typography variant="h4" sx={{ mb: 1 }}>
           {tProfile("uniqueIdentifierTitle")}
@@ -150,6 +151,6 @@ export default function Details({ custodian }: DetailsProps) {
           </>
         )}
       </Form>
-    </>
+    </PageSection>
   );
 }
