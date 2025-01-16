@@ -31,6 +31,7 @@ export default function Users() {
     isError: isGetUsersError,
     isLoading: isGetUsersLoading,
     data: usersData,
+    refetch: refetchOrganisationUsers,
     last_page,
     page,
     setPage,
@@ -103,7 +104,10 @@ export default function Users() {
               }
               actions={
                 organisation && (
-                  <DecoupleUser user={user} onSuccess={() => setPage(1)} />
+                  <DecoupleUser
+                    user={user}
+                    onSuccess={refetchOrganisationUsers}
+                  />
                 )
               }
             />
