@@ -1,6 +1,6 @@
 "use client";
 
-import { useCookies } from "@/context/CookieContext/CookieContext";
+import useAuth from "@/hooks/useAuth";
 import { handleLogin, handleLogout, handleRegister } from "@/utils/keycloak";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
@@ -13,12 +13,12 @@ import {
   useTheme,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import HorizontalDrawer from "../HorizontalDrawer";
+import NotificationsMenu from "../NotificationsMenu";
 import SoursdLogo from "../SoursdLogo";
 import { StyledButton, StyledContainer, StyledHeader } from "./NavBar.styles";
-import NotificationsMenu from "../NotificationsMenu";
 
 const NAMESPACE_TRANSLATIONS_NAVBAR = "NavBar";
 
@@ -35,13 +35,8 @@ export enum ButtonVariant {
 
 export default function NavBar() {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_NAVBAR);
-  const { getCookie } = useCookies();
+  const { isAuthenticated } = useAuth();
   const router = useRouter();
-
-  const isAuthenticated = useMemo(
-    () => !!getCookie("access_token"),
-    [getCookie]
-  );
 
   const theme = useTheme();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);

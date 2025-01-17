@@ -127,6 +127,23 @@ interface User {
   };
   is_delegate: number;
 }
+interface AddressFields {
+  postcode?: string;
+  address_1?: string;
+  address_2?: string;
+  town?: string;
+  county?: string;
+  country?: string;
+}
+
+interface Subsidiary extends AddressFields {
+  id?: number;
+  name: string;
+  pivot: {
+    organisation_id: number;
+    subsidiary_id: number;
+  };
+}
 
 interface OrganisationIdvt {
   idvt_result: boolean | null;
@@ -135,14 +152,8 @@ interface OrganisationIdvt {
   idvt_errors: string;
 }
 
-interface Organisation extends OrganisationIdvt {
+interface Organisation extends OrganisationIdvt, AddressFields {
   companies_house_no: string;
-  address_1: string;
-  address_2: string;
-  town: string;
-  county: string;
-  country: string;
-  postcode: string;
   organisation_name: string;
   organisation_unique_id: string;
   dpo_name: string;
@@ -166,6 +177,11 @@ interface Organisation extends OrganisationIdvt {
   ce_certification_num: string;
   ce_plus_certified: boolean;
   ce_plus_certification_num: string;
+  iso_27001_certified: boolean;
+  iso_27001_certification_num: string;
+  dsptk_certified: boolean;
+  dsptk_certification_num: string;
+  subsidiaries?: Subsidiary[];
   departments: Department[];
 }
 
@@ -264,13 +280,6 @@ interface ProjectUser {
   role: Role;
 }
 
-interface Auth {
-  access_token: string;
-  refresh_token: string;
-  user: User;
-  expires: number;
-}
-
 interface Department {
   category: string;
   created_at: string;
@@ -302,7 +311,6 @@ export type {
   ApplicationDataState,
   ApplicationSystemConfig,
   Approval,
-  Auth,
   Custodian,
   Organisation,
   OrganisationIdvt,
@@ -321,5 +329,7 @@ export type {
   UserProfileCompletionJson,
   UserProfileCompletionFields,
   Sector,
+  AddressFields,
+  Subsidiary,
   Department,
 };

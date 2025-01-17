@@ -1,10 +1,11 @@
 import { ResponseJson, ResponseTranslations } from "@/types/requests";
-import { handleJsonResponse, postRequest } from "../requests";
+import { handleResponseError, postRequest } from "../requests";
+import { PostCustodianUserResponse } from "./types";
 
 export default async (
   id: number,
   messages?: ResponseTranslations
-): Promise<ResponseJson<null>> => {
+): Promise<ResponseJson<PostCustodianUserResponse>> => {
   const response = await postRequest(
     `${process.env.NEXT_PUBLIC_API_V1_URL}/custodian_users/invite/${id}`,
     undefined,
@@ -15,5 +16,11 @@ export default async (
     }
   );
 
-  return handleJsonResponse(response, messages);
+  const error = handleResponseError(response, messages);
+
+  if (error) {
+    return Promise.reject(error);
+  }
+
+  return response.json();
 };

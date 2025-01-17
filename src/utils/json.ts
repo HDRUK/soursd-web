@@ -10,4 +10,8 @@ function parseValidJSON(value: string) {
   }
 }
 
-export { escapeAndParse, parseValidJSON };
+function convertJwtToJSON(token: string) {
+  return parseValidJSON(Buffer.from(token.split(".")[1], "base64").toString());
+}
+
+export { escapeAndParse, parseValidJSON, convertJwtToJSON };

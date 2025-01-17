@@ -2,9 +2,16 @@ import { useStore } from "@/data/store";
 import { mockedCustodian } from "@/mocks/data/custodian";
 import { mockedUser } from "@/mocks/data/user";
 import { patchCustodian } from "@/services/custodians";
-import { act, fireEvent, render, screen, waitFor } from "@/utils/testUtils";
-import { faker } from "@faker-js/faker";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  within,
+} from "@/utils/testUtils";
 import { axe } from "jest-axe";
+import { faker } from "@faker-js/faker";
 import Details, { DetailsProps } from "./Details";
 
 jest.mock("@/services/custodians");
@@ -38,19 +45,24 @@ describe("<Details />", () => {
   it("has the correct values", async () => {
     renderDetails();
 
-    const name = screen.getByLabelText("Name");
-    const email = screen.getByLabelText("Contact email");
+    const nameContainer = screen.getByTestId("name");
+    const nameInput = within(nameContainer).getByRole("textbox");
+
+    const emailContainer = screen.getByTestId("contact_email");
+    const emailInput = within(emailContainer).getByRole("textbox");
 
     await waitFor(() => {
-      expect(name).toHaveValue(defaultCustodian.name);
-      expect(email).toHaveValue(defaultCustodian.contact_email);
+      expect(nameInput).toHaveValue(defaultCustodian.name);
+      expect(emailInput).toHaveValue(defaultCustodian.contact_email);
     });
   });
 
   it("submits when values are defined", async () => {
     renderDetails();
 
-    const email = screen.getByLabelText("Contact email");
+    const emailContainer = screen.getByTestId("contact_email");
+    const email = within(emailContainer).getByRole("textbox");
+
     const idvtRequired = screen.getByRole("checkbox");
 
     const emailValue = faker.internet.email();

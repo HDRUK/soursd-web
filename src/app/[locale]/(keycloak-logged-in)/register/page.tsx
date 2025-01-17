@@ -3,7 +3,7 @@ import PageContainer from "@/modules/PageContainer";
 import PageSection from "@/modules/PageSection";
 import AccountConfirm from "./components/AccountConfirm";
 
-function Page() {
+async function Page() {
   return (
     <PageContainer>
       <PageSection sx={{ flexGrow: 1 }}>

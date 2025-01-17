@@ -1,7 +1,6 @@
-import ApplicationLink from "@/components/ApplicationLink";
+import ContactLink from "@/components/ContactLink";
 import Form from "@/components/Form";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
-import FormField from "@/components/FormField";
 import FormModalActions from "@/components/FormModalActions";
 import FormModalBody from "@/components/FormModalBody";
 import FormModalHeader from "@/components/FormModalHeader";
@@ -60,64 +59,53 @@ export default function UserModalDetails({
     error:
       isError &&
       t.rich(error, {
-        applicationLink: ApplicationLink,
+        contactLink: ContactLink,
       }),
   };
 
   return (
     <Form schema={schema} onSubmit={onSubmit} {...formOptions}>
-      {({ formState: { errors } }) => (
-        <>
-          <FormModalHeader>
-            <Typography variant="h4" sx={{ mb: 1 }}>
-              {t("inviteUserTitle")}
-            </Typography>
-            <Typography>{t("inviteUserDescription")}</Typography>
-          </FormModalHeader>
-          <FormModalBody>
-            <Grid container rowSpacing={3}>
-              <Grid item xs={12}>
-                <FormControlHorizontal
-                  id="first_name"
-                  error={errors.first_name}
-                  renderField={fieldProps => (
-                    <FormField component={TextField} {...fieldProps} />
-                  )}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlHorizontal
-                  id="last_name"
-                  error={errors.last_name}
-                  renderField={fieldProps => (
-                    <FormField component={TextField} {...fieldProps} />
-                  )}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlHorizontal
-                  id="email"
-                  error={errors.email}
-                  renderField={fieldProps => (
-                    <FormField component={TextField} {...fieldProps} />
-                  )}
-                />
-              </Grid>
+      <>
+        <FormModalHeader>
+          <Typography variant="h4" sx={{ mb: 1 }}>
+            {t("inviteUserTitle")}
+          </Typography>
+          <Typography>{t("inviteUserDescription")}</Typography>
+        </FormModalHeader>
+        <FormModalBody>
+          <Grid container rowSpacing={3}>
+            <Grid item xs={12}>
+              <FormControlHorizontal
+                name="first_name"
+                renderField={fieldProps => <TextField {...fieldProps} />}
+              />
             </Grid>
-          </FormModalBody>
-          <FormModalActions>
-            <Button variant="outlined" onClick={onClose}>
-              {tForm("cancelButton")}
-            </Button>
-            <LoadingButton
-              type="submit"
-              endIcon={<CheckIcon />}
-              loading={isLoading}>
-              {t("sendInviteButton")}
-            </LoadingButton>
-          </FormModalActions>
-        </>
-      )}
+            <Grid item xs={12}>
+              <FormControlHorizontal
+                name="last_name"
+                renderField={fieldProps => <TextField {...fieldProps} />}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControlHorizontal
+                name="email"
+                renderField={fieldProps => <TextField {...fieldProps} />}
+              />
+            </Grid>
+          </Grid>
+        </FormModalBody>
+        <FormModalActions>
+          <Button variant="outlined" onClick={onClose}>
+            {tForm("cancelButton")}
+          </Button>
+          <LoadingButton
+            type="submit"
+            endIcon={<CheckIcon />}
+            loading={isLoading}>
+            {t("sendInviteButton")}
+          </LoadingButton>
+        </FormModalActions>
+      </>
     </Form>
   );
 }
