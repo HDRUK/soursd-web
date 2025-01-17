@@ -93,7 +93,7 @@ const ApplicationDataProvider = ({
     isLoading: isHistoriesLoading,
     isError: isHistoriesError,
     data: historiesData,
-  } = useQueriesHistories(1, true);
+  } = useQueriesHistories(user?.registry_id as number, !!user?.registry_id);
 
   const {
     getSystemConfig: systemConfigData,
@@ -174,9 +174,6 @@ const ApplicationDataProvider = ({
     custodian &&
     !!sectors?.length &&
     !!permissions?.length;
-
-  console.log(isFinishedLoading);
-  console.log(isApplicationLoading);
 
   return (
     <ApplicationDataContext.Provider value={providerValue}>
