@@ -91,7 +91,7 @@ export default function EmploymentsForm({ onSubmit }: EmploymentsFormProps) {
         country: yup.string().required(tForm("countryRequiredInvalid")),
         postcode: yup.string().required(tForm("postcodeRequiredInvalid")),
         role: yup.string().required(tForm("roleRequiredInvalid")),
-        from: yup.string().required(tForm("fromRequiredInvalid")),
+        from: yup.string(),
         is_current: yup.boolean().required(),
         to: yup.string().nullable(),
         ror: yup

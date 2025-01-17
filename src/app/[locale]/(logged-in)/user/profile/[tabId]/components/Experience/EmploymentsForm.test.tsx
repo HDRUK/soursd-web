@@ -1,6 +1,5 @@
 import React from "react";
 import { render, screen, fireEvent, waitFor } from "@/utils/testUtils";
-import userEvent from "@testing-library/user-event";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { postEmployments } from "@/services/employments";
 import { showAlert } from "@/utils/showAlert";
@@ -52,52 +51,31 @@ describe("EmploymentsForm", () => {
     });
   });
 
-  it("submits the form", async () => {
+  it("submits the form with correct data", async () => {
     (postEmployments as jest.Mock).mockResolvedValue({});
     renderComponent();
 
     fireEvent.click(screen.getByText("Add Employment"));
 
-    await userEvent.type(
-      screen.getByRole("textbox", { name: /Employer name/i }),
-      "Test Company"
-    );
-    await userEvent.type(
-      screen.getByRole("textbox", { name: /Department/i }),
-      "IT Department"
-    );
-    await userEvent.type(
-      screen.getByRole("textbox", { name: /Address 1/i }),
-      "123 Test St"
-    );
-    await userEvent.type(
-      screen.getByRole("textbox", { name: /Address 2/i }),
-      "Test Rd"
-    );
-    await userEvent.type(
-      screen.getByRole("textbox", { name: /Town/i }),
-      "Test Town"
-    );
-    await userEvent.type(
-      screen.getByRole("textbox", { name: /County/i }),
-      "Test County"
-    );
-    await userEvent.type(
-      screen.getByRole("textbox", { name: /Country/i }),
-      "Test Country"
-    );
-    await userEvent.type(
-      screen.getByRole("textbox", { name: /Postcode/i }),
-      "12345"
-    );
-    await userEvent.type(
-      screen.getByRole("textbox", { name: /Role/i }),
-      "Software Developer"
-    );
-    await userEvent.type(
-      screen.getByRole("textbox", { name: /ROR ID/i }),
-      "012345678"
-    );
+    const formData = {
+      "Employer name": "Test Company",
+      Department: "IT Department",
+      "Address 1": "123 Test St",
+      "Address 2": "Test Rd",
+      Town: "Test Town",
+      County: "Test County",
+      Country: "Test Country",
+      Postcode: "12345",
+      Role: "Software Developer",
+      "ROR ID": "012345678",
+    };
+
+    Object.entries(formData).forEach(([label, value]) => {
+      const input = screen.getByRole("textbox", {
+        name: new RegExp(label, "i"),
+      });
+      fireEvent.change(input, { target: { value } });
+    });
 
     fireEvent.click(screen.getByRole("button", { name: /Save/i }));
 
