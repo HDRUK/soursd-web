@@ -1,5 +1,5 @@
 import { useStore } from "@/data/store";
-import { mockedUser } from "@/mocks/data/user";
+import { mockedUser, mockedTraining } from "@/mocks/data/user";
 import { act, render, screen, waitFor, fireEvent } from "@/utils/testUtils";
 import { faker } from "@faker-js/faker";
 import { axe } from "jest-axe";
@@ -55,10 +55,12 @@ describe("<Training />", () => {
       fireEvent.change(input, { target: { value: faker.string.sample() } });
 
       await waitFor(() => {
-        const submitButton = screen.getByRole("button", { name: /save/i });
-        expect(submitButton).toBeInTheDocument();
-        expect(submitButton).not.toBeDisabled();
+        expect(
+          screen.getByRole("button", { name: /save/i })
+        ).toBeInTheDocument();
       });
+
+      expect(screen.getByRole("button", { name: /save/i })).not.toBeDisabled();
 
       await act(() => {
         fireEvent.submit(screen.getByRole("button", { name: /Save/i }));
@@ -72,9 +74,18 @@ describe("<Training />", () => {
 
   it("displays existing trainings", async () => {
     const mockTrainings = [
-      { id: 1, provider: "Provider 1", training_name: "Training 1" },
-      { id: 2, provider: "Provider 2", training_name: "Training 2" },
+      mockedTraining({
+        id: 1,
+        provider: "Provider 1",
+        training_name: "Training 1",
+      }),
+      mockedTraining({
+        id: 2,
+        provider: "Provider 2",
+        training_name: "Training 2",
+      }),
     ];
+
     (getTrainingByRegistryId as jest.Mock).mockResolvedValue({
       data: mockTrainings,
     });

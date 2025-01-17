@@ -24,6 +24,7 @@ import { PostTrainingsPayload } from "@/services/trainings/types";
 import { Message } from "@/components/Message";
 import { showAlert } from "@/utils/showAlert";
 import { getTrainingByRegistryId, postTrainings } from "@/services/trainings";
+import { formatDBDate } from "@/utils/date";
 import { StyledBox } from "./Training.styles";
 
 export interface TrainingFormValues {
@@ -84,7 +85,7 @@ export default function Training() {
       });
     },
   });
-  console.log(user);
+
   const handleDetailsSubmit = useCallback(
     async (fields: TrainingFormValues) => {
       try {
@@ -92,8 +93,8 @@ export default function Training() {
 
         const formattedFields = {
           ...fields,
-          awarded_at: dayjs(fields.awarded_at).format("YYYY-MM-DD HH:mm:ss"),
-          expires_at: dayjs(fields.expires_at).format("YYYY-MM-DD HH:mm:ss"),
+          awarded_at: formatDBDate(fields.awarded_at),
+          expires_at: formatDBDate(fields.awarded_at),
         };
 
         await mutateAsync({
@@ -101,27 +102,25 @@ export default function Training() {
           expires_in_years: yearsRemaining,
         });
 
-        if (user?.id) {
-          const request = {
-            ...user,
-            ...formattedFields,
-          };
+        const request = {
+          ...user,
+          ...formattedFields,
+        };
 
-          await updateCompletion(
-            formattedFields,
-            UserProfileCompletionCategories.TRAINING,
-            request
-          );
-        }
+        await updateCompletion(
+          formattedFields,
+          UserProfileCompletionCategories.TRAINING,
+          request
+        );
+
         refetchTrainings();
 
         showAlert("success", {
           text: tProfile("postTrainingSuccess"),
           confirmButtonText: tProfile("postTrainingSuccessButton"),
         });
-      } catch (error) {
+      } catch (_) {
         const errorMessage = tProfile(postError);
-        console.error("Error saving training details:", error);
         showAlert("error", {
           text: errorMessage,
           confirmButtonText: tProfile("postTrainingErrorButton"),

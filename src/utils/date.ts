@@ -25,6 +25,10 @@ function formatNowDBDate() {
   return dayjs().format(FORMAT_DATE_DB);
 }
 
+function formatDBDate(date?: string) {
+  return dayjs(date).format(FORMAT_DATE_DB);
+}
+
 function isExpiredInvite(invite_sent_at?: string) {
   return (
     invite_sent_at &&
@@ -42,4 +46,5 @@ export {
   formatShortDate,
   formatNowDBDate,
   formatDisplayShortDate,
+  formatDBDate,
 };
