@@ -51,7 +51,7 @@ export default function useApplicationDependencies({
         }),
       enabled: !!user,
     },
-    ...(!!user?.organisation_id
+    ...(user?.organisation_id
       ? [
           {
             queryKey: ["getOrganisation", user.organisation_id],
