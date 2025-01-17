@@ -64,8 +64,8 @@ export default function Experience() {
         <EmploymentsForm onSubmit={onSubmit} />
         <HistoriesSection
           type="employments"
-          count={histories?.employments.length}>
-          {histories?.employments.map(item => (
+          count={histories?.employments?.length}>
+          {histories?.employments?.map(item => (
             <ResearcherEmploymentEntry data={item} />
           ))}
         </HistoriesSection>

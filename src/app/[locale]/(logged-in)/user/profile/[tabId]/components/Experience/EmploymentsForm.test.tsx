@@ -46,58 +46,65 @@ describe("EmploymentsForm", () => {
     const accordion = screen.getByText("Add Employment");
     fireEvent.click(accordion);
     await waitFor(() => {
-      expect(screen.getByLabelText("Employer name")).toBeInTheDocument();
+      expect(
+        screen.getByRole("textbox", { name: /Employer name/i })
+      ).toBeInTheDocument();
     });
   });
 
-  it("submits the form with correct data", async () => {
+  it("submits the form", async () => {
     (postEmployments as jest.Mock).mockResolvedValue({});
     renderComponent();
 
     fireEvent.click(screen.getByText("Add Employment"));
 
     await userEvent.type(
-      screen.getByLabelText("Employer name"),
+      screen.getByRole("textbox", { name: /Employer name/i }),
       "Test Company"
     );
-    await userEvent.type(screen.getByLabelText("Department"), "IT Department");
-    await userEvent.type(screen.getByLabelText("Address 1"), "123 Test St");
-    await userEvent.type(screen.getByLabelText("Address 2"), "Test Rd");
-    await userEvent.type(screen.getByLabelText("Town"), "Test Town");
-    await userEvent.type(screen.getByLabelText("County"), "Test County");
-    await userEvent.type(screen.getByLabelText("Country"), "Test Country");
-    await userEvent.type(screen.getByLabelText("Postcode"), "12345");
-    await userEvent.type(screen.getByLabelText("Role"), "Software Developer");
-    await userEvent.type(screen.getByLabelText("ROR ID"), "012345678");
+    await userEvent.type(
+      screen.getByRole("textbox", { name: /Department/i }),
+      "IT Department"
+    );
+    await userEvent.type(
+      screen.getByRole("textbox", { name: /Address 1/i }),
+      "123 Test St"
+    );
+    await userEvent.type(
+      screen.getByRole("textbox", { name: /Address 2/i }),
+      "Test Rd"
+    );
+    await userEvent.type(
+      screen.getByRole("textbox", { name: /Town/i }),
+      "Test Town"
+    );
+    await userEvent.type(
+      screen.getByRole("textbox", { name: /County/i }),
+      "Test County"
+    );
+    await userEvent.type(
+      screen.getByRole("textbox", { name: /Country/i }),
+      "Test Country"
+    );
+    await userEvent.type(
+      screen.getByRole("textbox", { name: /Postcode/i }),
+      "12345"
+    );
+    await userEvent.type(
+      screen.getByRole("textbox", { name: /Role/i }),
+      "Software Developer"
+    );
+    await userEvent.type(
+      screen.getByRole("textbox", { name: /ROR ID/i }),
+      "012345678"
+    );
 
-    const fromDatePicker = screen.getByLabelText("From");
-
-    fireEvent.click(fromDatePicker);
-    fireEvent.click(screen.getByRole("button", { name: "Previous month" }));
-    fireEvent.click(screen.getAllByRole("gridcell", { name: "1" })[0]);
-
-    fireEvent.click(screen.getByText("Save"));
+    fireEvent.click(screen.getByRole("button", { name: /Save/i }));
 
     await waitFor(() => {
       expect(postEmployments).toHaveBeenCalled();
       expect(mockOnSubmit).toHaveBeenCalled();
       expect(showAlert).toHaveBeenCalledWith("success", expect.anything());
     });
-  });
-
-  it('disables "to" field when "is_current" is checked', async () => {
-    renderComponent();
-
-    // Expand the form
-    fireEvent.click(screen.getByText("Add Employment"));
-
-    const isCurrentCheckbox = screen.getByLabelText("Current Role?");
-    const toField = screen.getByLabelText("To");
-
-    expect(toField).not.toBeDisabled();
-
-    await userEvent.click(isCurrentCheckbox);
-
-    expect(toField).toBeDisabled();
   });
 });

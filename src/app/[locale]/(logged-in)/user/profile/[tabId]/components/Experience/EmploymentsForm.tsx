@@ -1,10 +1,8 @@
 "use client";
 
-import ApplicationLink from "@/components/ApplicationLink";
 import Form from "@/components/Form/Form";
 import FormActions from "@/components/FormActions";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
-import FormField from "@/components/FormField";
 import GoogleAutocomplete from "@/components/GoogleAutocomplete";
 import yup from "@/config/yup";
 import SaveIcon from "@mui/icons-material/Save";
@@ -134,11 +132,7 @@ export default function EmploymentsForm({ onSubmit }: EmploymentsFormProps) {
       ror: "",
       is_current: false,
     },
-    error:
-      isPostError &&
-      tProfile.rich(postError, {
-        applicationLink: ApplicationLink,
-      }),
+    error: isPostError && tProfile(postError),
   };
 
   const handleEmploymentSubmit = useCallback(
@@ -207,20 +201,16 @@ export default function EmploymentsForm({ onSubmit }: EmploymentsFormProps) {
               <Grid container rowSpacing={3}>
                 <Grid item xs={12}>
                   <FormControlHorizontal
-                    id="employer_name"
+                    name="employer_name"
                     error={errors.employer_name}
-                    renderField={fieldProps => (
-                      <FormField component={TextField} {...fieldProps} />
-                    )}
+                    renderField={fieldProps => <TextField {...fieldProps} />}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <FormControlHorizontal
-                    id="department"
+                    name="department"
                     error={errors.department}
-                    renderField={fieldProps => (
-                      <FormField component={TextField} {...fieldProps} />
-                    )}
+                    renderField={fieldProps => <TextField {...fieldProps} />}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -236,107 +226,83 @@ export default function EmploymentsForm({ onSubmit }: EmploymentsFormProps) {
                 </Grid>
                 <Grid item xs={12}>
                   <FormControlHorizontal
-                    id="address_1"
+                    name="address_1"
                     error={errors.address_1}
-                    renderField={fieldProps => (
-                      <FormField component={TextField} {...fieldProps} />
-                    )}
+                    renderField={fieldProps => <TextField {...fieldProps} />}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <FormControlHorizontal
-                    id="address_2"
+                    name="address_2"
                     error={errors.address_2}
-                    renderField={fieldProps => (
-                      <FormField component={TextField} {...fieldProps} />
-                    )}
+                    renderField={fieldProps => <TextField {...fieldProps} />}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <FormControlHorizontal
-                    id="town"
+                    name="town"
                     error={errors.town}
-                    renderField={fieldProps => (
-                      <FormField component={TextField} {...fieldProps} />
-                    )}
+                    renderField={fieldProps => <TextField {...fieldProps} />}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <FormControlHorizontal
-                    id="county"
+                    name="county"
                     error={errors.county}
-                    renderField={fieldProps => (
-                      <FormField component={TextField} {...fieldProps} />
-                    )}
+                    renderField={fieldProps => <TextField {...fieldProps} />}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <FormControlHorizontal
-                    id="country"
+                    name="country"
                     error={errors.country}
-                    renderField={fieldProps => (
-                      <FormField component={TextField} {...fieldProps} />
-                    )}
+                    renderField={fieldProps => <TextField {...fieldProps} />}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <FormControlHorizontal
-                    id="postcode"
+                    name="postcode"
                     error={errors.postcode}
                     renderField={fieldProps => (
-                      <FormField
-                        component={TextField}
-                        {...fieldProps}
-                        sx={{ maxWidth: "200px" }}
-                      />
+                      <TextField sx={{ maxWidth: "2000px" }} {...fieldProps} />
                     )}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <FormControlHorizontal
-                    id="role"
+                    name="role"
                     error={errors.role}
-                    renderField={fieldProps => (
-                      <FormField component={TextField} {...fieldProps} />
-                    )}
+                    renderField={fieldProps => <TextField {...fieldProps} />}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <FormControlHorizontal
-                    id="from"
+                    name="from"
                     error={errors.from}
-                    renderField={fieldProps => (
-                      <FormField component={DateInput} {...fieldProps} />
-                    )}
+                    renderField={fieldProps => <DateInput {...fieldProps} />}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <FormControlHorizontal
-                    id="is_current"
+                    name="is_current"
                     error={errors.from}
                     placeholder="is current"
-                    renderField={fieldProps => (
-                      <FormField component={Checkbox} {...fieldProps} />
-                    )}
+                    renderField={fieldProps => <Checkbox {...fieldProps} />}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <FormControlHorizontal
-                    id="to"
+                    name="to"
                     error={errors.to}
                     disabled={isCurrent}
-                    renderField={fieldProps => (
-                      <FormField component={DateInput} {...fieldProps} />
-                    )}
+                    renderField={fieldProps => <DateInput {...fieldProps} />}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <FormControlHorizontal
-                    id="ror"
+                    name="ror"
                     error={errors.ror}
-                    renderField={fieldProps => (
-                      <FormField component={TextField} {...fieldProps} />
-                    )}
+                    renderField={fieldProps => <TextField {...fieldProps} />}
                   />
                 </Grid>
               </Grid>

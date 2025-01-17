@@ -347,7 +347,7 @@
     "continueLinkText": "Continue",
     "profileCompleteWarningMessage": "You have not yet completed your profile. This may mean that some data custodians will not grant access to you. It is advised that you complete this process. Please navigate to your profile",
     "addAnother": "Add Another",
-    "addEmploymentError": "There was a problem adding your employment. Please try again or contact us at <applicationLink></applicationLink>"
+    "addEmploymentError": "There was a problem adding your employment."
   },
   "ProfileCompleteStatus": {
     "profileComplete": "Profile complete",
