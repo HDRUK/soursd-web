@@ -51,16 +51,20 @@ export default function useApplicationDependencies({
         }),
       enabled: !!user,
     },
-    {
-      queryKey: ["getOrganisation", user?.organisation_id],
-      queryFn: ({ queryKey }: QueryFunctionContextDefault) =>
-        getOrganisation(queryKey[1], {
-          error: {
-            message: "getOrganisationError",
+    ...(!!user?.organisation_id
+      ? [
+          {
+            queryKey: ["getOrganisation", user.organisation_id],
+            queryFn: ({ queryKey }: QueryFunctionContextDefault) =>
+              getOrganisation(queryKey[1], {
+                error: {
+                  message: "getOrganisationError",
+                },
+              }),
+            enabled: !!user.organisation_id,
           },
-        }),
-      enabled: !!user?.organisation_id,
-    },
+        ]
+      : []),
     {
       queryKey: ["getCustodian", CUSTODIAN_ID],
       queryFn: ({ queryKey }: QueryFunctionContextDefault) =>

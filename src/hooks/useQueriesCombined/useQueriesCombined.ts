@@ -22,13 +22,6 @@ export default function useQueriesCombined<T>(queries: UseQueryOptions[]) {
 
           error[queryKey] = result.error;
           data[queryKey] = result.data;
-
-          console.log(queryKey);
-          console.log(result);
-          console.log(result.isPaused);
-          console.log(result.isPending);
-          console.log(result.status);
-          console.log("============");
         });
 
       return {
