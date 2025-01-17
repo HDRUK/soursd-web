@@ -52,14 +52,14 @@ export default function useApplicationDependencies({
       enabled: !!user,
     },
     {
-      queryKey: ["getOrganisation", 1],
+      queryKey: ["getOrganisation", user?.organisation_id],
       queryFn: ({ queryKey }: QueryFunctionContextDefault) =>
         getOrganisation(queryKey[1], {
           error: {
             message: "getOrganisationError",
           },
         }),
-      enabled: !!user,
+      enabled: !!user?.organisation_id,
     },
     {
       queryKey: ["getCustodian", CUSTODIAN_ID],

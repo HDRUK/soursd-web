@@ -167,13 +167,16 @@ const ApplicationDataProvider = ({
 
   const isFinishedLoading =
     user &&
-    organisation &&
+    //organisation &&
     histories &&
     !isApplicationLoading &&
     !isHistoriesLoading &&
     custodian &&
     !!sectors?.length &&
     !!permissions?.length;
+
+  console.log(isFinishedLoading);
+  console.log(isApplicationLoading);
 
   return (
     <ApplicationDataContext.Provider value={providerValue}>
