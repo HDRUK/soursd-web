@@ -1,14 +1,10 @@
 import React from "react";
 import { render, screen, fireEvent, waitFor } from "@/utils/testUtils";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { postEmployments } from "@/services/employments";
-import { showAlert } from "@/utils/showAlert";
 import { mockedUser } from "@/mocks/data/user";
 import EmploymentsForm from "./EmploymentsForm";
 
 // Mock the dependencies
-jest.mock("@/services/employments");
-jest.mock("@/utils/showAlert");
 jest.mock("@/data/store", () => ({
   useStore: jest.fn(() => ({
     config: {
