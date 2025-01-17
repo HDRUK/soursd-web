@@ -167,7 +167,6 @@ const ApplicationDataProvider = ({
 
   const isFinishedLoading =
     user &&
-    //organisation &&
     histories &&
     !isApplicationLoading &&
     !isHistoriesLoading &&
