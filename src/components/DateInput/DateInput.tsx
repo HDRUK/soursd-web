@@ -4,10 +4,11 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
 import { DatePicker, DatePickerProps } from "@mui/x-date-pickers/DatePicker";
 
 export interface DateInputProps extends DatePickerProps<Date> {
+  id?: string;
   label?: string;
 }
 
-const DateInput = ({ label, value, onChange, ...rest }: DateInputProps) => {
+const DateInput = ({ label, value, onChange, id, ...rest }: DateInputProps) => {
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <DatePicker
@@ -15,7 +16,13 @@ const DateInput = ({ label, value, onChange, ...rest }: DateInputProps) => {
         value={value}
         onChange={onChange}
         slotProps={{
-          textField: { fullWidth: true, variant: "outlined", size: "small" },
+          textField: {
+            id,
+            fullWidth: true,
+            variant: "outlined",
+            size: "small",
+            placeholder: "MM/DD/YYYY",
+          },
         }}
         {...rest}
       />
