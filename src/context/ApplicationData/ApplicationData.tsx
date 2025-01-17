@@ -38,6 +38,7 @@ interface ApplicationDataProviderProps {
   children: ReactNode;
   value: ApplicationDataState;
   custodianId?: number;
+  organisationId?: number;
   me?: User;
 }
 
@@ -48,6 +49,7 @@ const ApplicationDataProvider = ({
   children,
   me,
   custodianId,
+  organisationId,
   value,
 }: ApplicationDataProviderProps) => {
   const t = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
@@ -90,6 +92,7 @@ const ApplicationDataProvider = ({
   } = useApplicationDependencies({
     user: me,
     custodianId,
+    organisationId,
   });
 
   const {
@@ -170,12 +173,11 @@ const ApplicationDataProvider = ({
 
   const isFinishedLoading =
     user &&
-    organisation &&
+    ((organisationId && organisation) || !organisationId) &&
     histories &&
     !isApplicationLoading &&
     !isHistoriesLoading &&
-    custodian &&
-    custodianId &&
+    ((custodian && custodianId) || !custodianId) &&
     !!sectors?.length &&
     !!permissions?.length;
 

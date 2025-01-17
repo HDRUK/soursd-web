@@ -1,6 +1,7 @@
 "use client";
 
 import { ROUTES } from "@/consts/router";
+import { UserGroup } from "@/consts/user";
 import { ApplicationDataProvider } from "@/context/ApplicationData";
 import { getMe } from "@/services/auth";
 import { getCustodianUser } from "@/services/custodian_users";
@@ -55,6 +56,7 @@ export default function Layout({ children, params: { locale } }: LayoutProps) {
   const router = useRouter();
   const [me, setMe] = useState<User>();
   const [custodianId, setCustodianId] = useState<number>();
+  const [organisationId, setOrganisationId] = useState<number>();
 
   useEffect(() => {
     const performAuthCheck = async () => {
@@ -64,7 +66,12 @@ export default function Layout({ children, params: { locale } }: LayoutProps) {
         throw new Error("Unauthorised 401");
       }
 
-      setCustodianId(await getCustodianId(user));
+      if (user.user_group === UserGroup.CUSTODIANS) {
+        setCustodianId(await getCustodianId(user));
+      } else if (user.user_group === UserGroup.ORGANISATIONS) {
+        setOrganisationId(user?.organisation_id);
+      }
+
       setMe(user);
     };
 
@@ -75,6 +82,7 @@ export default function Layout({ children, params: { locale } }: LayoutProps) {
     me && (
       <ApplicationDataProvider
         custodianId={custodianId}
+        organisationId={organisationId}
         me={me}
         value={{
           routes,

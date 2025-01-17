@@ -14,6 +14,7 @@ import { QueryFunctionContext } from "@tanstack/react-query";
 interface UseApplicationDependenciesProps {
   user?: User;
   custodianId?: number;
+  organisationId?: number;
 }
 
 interface ApplicationDependenciesCombinedData {
@@ -30,6 +31,7 @@ type QueryFunctionContextDefault = QueryFunctionContext<[string, number]>;
 export default function useApplicationDependencies({
   user,
   custodianId,
+  organisationId,
 }: UseApplicationDependenciesProps) {
   const queries = [
     {
@@ -52,26 +54,34 @@ export default function useApplicationDependencies({
         }),
       enabled: !!user,
     },
-    {
-      queryKey: ["getOrganisation", 1],
-      queryFn: ({ queryKey }: QueryFunctionContextDefault) =>
-        getOrganisation(queryKey[1], {
-          error: {
-            message: "getOrganisationError",
+    ...(!!organisationId
+      ? [
+          {
+            queryKey: ["getOrganisation", organisationId],
+            queryFn: ({ queryKey }: QueryFunctionContextDefault) =>
+              getOrganisation(queryKey[1], {
+                error: {
+                  message: "getOrganisationError",
+                },
+              }),
+            enabled: !!organisationId,
           },
-        }),
-      enabled: !!user,
-    },
-    {
-      queryKey: ["getCustodian", custodianId],
-      queryFn: ({ queryKey }: QueryFunctionContextDefault) =>
-        getCustodian(queryKey[1], {
-          error: {
-            message: "getCustodianError",
+        ]
+      : []),
+    ...(!!custodianId
+      ? [
+          {
+            queryKey: ["getCustodian", custodianId],
+            queryFn: ({ queryKey }: QueryFunctionContextDefault) =>
+              getCustodian(queryKey[1], {
+                error: {
+                  message: "getCustodianError",
+                },
+              }),
+            enabled: !!custodianId,
           },
-        }),
-      enabled: !!user,
-    },
+        ]
+      : []),
     {
       queryKey: ["getSectors"],
       queryFn: () =>
