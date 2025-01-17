@@ -30,8 +30,7 @@ export const getValidation = (t: (key: string) => string) =>
         name: yup.string().when("address", {
           is: (address: AddressFields) => Boolean(address),
           otherwise: schema => schema.nullable(),
-          then: schema =>
-            schema.required(t("organisationSubsidiaries.nameInvalid")),
+          then: schema => schema.required(t("nameInvalid")),
         }),
         address: yup.object().shape({
           postcode: yup.string().nullable(),
@@ -51,11 +50,9 @@ export const getValidation = (t: (key: string) => string) =>
           .string()
           .matches(
             VALIDATION_CE_CERTIFICATION_NUMBER,
-            t("organisationDataSecurityCompliance.ceCertificationNumberInvalid")
+            t("ceCertificationNumberInvalid")
           )
-          .required(
-            t("organisationDataSecurityCompliance.ceCertificationNumberInvalid")
-          ),
+          .required(t("ceCertificationNumberInvalid")),
       otherwise: () => yup.string().notRequired(),
     }),
 
@@ -67,40 +64,32 @@ export const getValidation = (t: (key: string) => string) =>
           .string()
           .matches(
             VALIDATION_CE_CERTIFICATION_NUMBER,
-            t(
-              "organisationDataSecurityCompliance.cePlusCertificationNumberInvalid"
-            )
+            t("cePlusCertificationNumberInvalid")
           )
-          .required(
-            t(
-              "organisationDataSecurityCompliance.cePlusCertificationNumberInvalid"
-            )
-          ),
+          .required(t("cePlusCertificationNumberInvalid")),
       otherwise: () => yup.string().notRequired(),
     }),
     iso_27001_certified: yup.boolean(),
-    iso_27001_certified_num: yup.string().when("iso_27001_certified", {
+    iso_27001_certification_num: yup.string().when("iso_27001_certified", {
       is: true,
       then: () =>
         yup
           .string()
           .matches(
             VALIDATION_ISO_CERTIFICATION_NUMBER,
-            t(
-              "organisationDataSecurityCompliance.iso270001CertificationNumInvalid"
-            )
+            t("iso27001CertificationNumInvalid")
           ),
       otherwise: () => yup.string().notRequired(),
     }),
     dsptk_certified: yup.boolean(),
-    dsptk_certified_num: yup.string().when("dsptk_certified", {
+    dsptk_certification_num: yup.string().when("dsptk_certified", {
       is: true,
       then: () =>
         yup
           .string()
           .matches(
             VALIDATION_DSPTK_CERTIFICATION_NUMBER,
-            t("organisationDataSecurityCompliance.dsptkCertificationNumInvalid")
+            t("dsptkCertificationNumInvalid")
           ),
       otherwise: () => yup.string().notRequired(),
     }),

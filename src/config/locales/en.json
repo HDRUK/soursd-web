@@ -111,6 +111,7 @@
     "contactEmailPlaceholder": "Contact email",
     "name": "Name",
     "namePlaceholder": "Name",
+    "nameInvalid": "Name is invalid",
     "whatIsDpstkOdsCode": "The Data Security and Protection Toolkit is an online self-assessment tool that all organisations must use if they have access to NHS patient data and systems.",
     "dpoOrHrRequiredInvalid": "At least one of these contacts is requured",
     "dpoNameRequiredInvalid": "Dpo name is required",
