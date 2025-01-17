@@ -18,6 +18,7 @@ import {
   Control,
   FieldValues,
 } from "react-hook-form";
+import { ExtendedUseFormReturn } from "../Form/Form";
 
 export interface FormControlHorizontalProps
   extends Omit<FormControlProps, "error"> {
@@ -59,8 +60,10 @@ export default function FormControlHorizontal({
     return g[1].toUpperCase();
   });
 
-  const context = useFormContext();
+  const context = useFormContext() as ExtendedUseFormReturn<FieldValues>;
   const effectiveControl = control || context.control;
+
+  const { isFieldRequired } = context;
 
   const {
     field,
@@ -69,6 +72,8 @@ export default function FormControlHorizontal({
     name,
     control: effectiveControl,
   });
+
+  const isRequired = isFieldRequired(name);
 
   return (
     <FormControl
@@ -92,6 +97,7 @@ export default function FormControlHorizontal({
               visibility: displayLabel ? "visible" : "hidden",
             }}>
             {displayLabel && (label || t(tKey))}
+            {isRequired && <span style={{ color: "red" }}>*</span>}
           </FormLabel>
         </Grid>
         <Grid item xs={12} md={contentMd}>
