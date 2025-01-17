@@ -1,5 +1,5 @@
 import { useStore } from "@/data/store";
-import { mockedUser, mockedTraining } from "@/mocks/data/user";
+import { mockedUser } from "@/mocks/data/user";
 import { act, render, screen, waitFor, fireEvent } from "@/utils/testUtils";
 import { faker } from "@faker-js/faker";
 import { axe } from "jest-axe";

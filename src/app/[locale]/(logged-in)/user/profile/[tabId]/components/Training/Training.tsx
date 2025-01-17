@@ -74,9 +74,9 @@ export default function Training() {
     isError,
     error: postError,
   } = useMutation({
-    mutationKey: ["postTrainings", 1],
+    mutationKey: ["postTrainings", user?.id],
     mutationFn: (payload: PostTrainingsPayload) => {
-      return postTrainings(1, payload, {
+      return postTrainings(user?.id, payload, {
         error: { message: "postTrainingError" },
       });
     },
