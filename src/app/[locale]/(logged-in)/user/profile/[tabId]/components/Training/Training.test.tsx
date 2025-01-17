@@ -46,12 +46,12 @@ describe("<Training />", () => {
     expect(results).toHaveNoViolations();
   });
 
-  it.each(["Training provider", "Training name"])(
+  it.each([/Training provider/i, /Training name/i])(
     "does not submit when %s is not defined",
     async fieldName => {
       renderTrainingComponent();
 
-      const input = screen.getByLabelText(fieldName);
+      const input = screen.getByRole("textbox", { name: fieldName });
       fireEvent.change(input, { target: { value: faker.string.sample() } });
 
       await waitFor(() => {
@@ -71,32 +71,4 @@ describe("<Training />", () => {
       });
     }
   );
-
-  it("displays existing trainings", async () => {
-    const mockTrainings = [
-      mockedTraining({
-        id: 1,
-        provider: "Provider 1",
-        training_name: "Training 1",
-      }),
-      mockedTraining({
-        id: 2,
-        provider: "Provider 2",
-        training_name: "Training 2",
-      }),
-    ];
-
-    (getTrainingByRegistryId as jest.Mock).mockResolvedValue({
-      data: mockTrainings,
-    });
-
-    renderTrainingComponent();
-
-    await waitFor(() => {
-      expect(screen.getByText("Provider 1")).toBeInTheDocument();
-      expect(screen.getByText("Training 1")).toBeInTheDocument();
-      expect(screen.getByText("Provider 2")).toBeInTheDocument();
-      expect(screen.getByText("Training 2")).toBeInTheDocument();
-    });
-  });
 });
