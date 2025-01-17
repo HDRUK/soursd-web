@@ -28,7 +28,6 @@ import { postEmployments } from "@/services/employments";
 import { Add } from "@mui/icons-material";
 import DateInput from "@/components/DateInput";
 import { showAlert } from "@/utils/showAlert";
-import useQueryRefetch from "@/hooks/useQueryRefetch";
 
 export interface EmploymentsFormValues {
   employer_name: string;
@@ -49,7 +48,10 @@ export interface EmploymentsFormValues {
 const NAMESPACE_TRANSLATION_FORM = "Form";
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
-export default function EmploymentsForm({onSubmit}) {
+export interface EmploymentsFormProps {
+  onSubmit: (payload: PostEmploymentsPayload) => void;
+}
+export default function EmploymentsForm({ onSubmit }: EmploymentsFormProps) {
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const user = useStore(state => state.config.user);
@@ -68,9 +70,9 @@ export default function EmploymentsForm({onSubmit}) {
     isPending: isPostLoading,
     error: postError,
   } = useMutation({
-    mutationKey: ["postEmployments", 1],
+    mutationKey: ["postEmployments", user?.id],
     mutationFn: (payload: PostEmploymentsPayload) =>
-      postEmployments(1, payload, {
+      postEmployments(user?.id, payload, {
         error: {
           message: "addEmploymentError",
         },
@@ -165,15 +167,14 @@ export default function EmploymentsForm({onSubmit}) {
 
       try {
         await mutatePostAsync(submissionPayload);
-        await onSubmit();
+        await onSubmit(submissionPayload);
         showAlert("success", {
           text: tForm("postEmploymentSuccess"),
           willClose: () => {
             setExpanded(false);
           },
         });
-        
-      } catch (error) {
+      } catch (_) {
         showAlert("error", {
           text: tForm("postEmploymentError"),
           confirmButtonText: tForm("tryAgainButton"),

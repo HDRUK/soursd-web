@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback } from "react";
 import FormSection from "@/components/FormSection";
 import { useStore } from "@/data/store";
 import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
@@ -7,6 +7,7 @@ import ResearcherAccreditationEntry from "@/modules/ResearcherAccreditationEntry
 import ResearcherEducationEntry from "@/modules/ResearcherEducationEntry";
 import ResearcherEmploymentEntry from "@/modules/ResearcherEmploymentEntry";
 import { useTranslations } from "next-intl";
+import { PostEmploymentsPayload } from "@/services/employments/types";
 import HistoriesSection from "../HistoriesSection";
 import EmploymentsForm from "./EmploymentsForm";
 
@@ -18,18 +19,24 @@ export default function Experience() {
   const setHistories = useStore(state => state.setHistories);
   const getHistories = useStore(state => state.getHistories);
 
-  const onSubmit = useCallback(async () => {
-    try {
-      // Fetch the latest histories data
-      const updatedHistories = getHistories();
-      // Update the store with the new data
-      if (updatedHistories) {
-        setHistories(updatedHistories);
+  // When adding implementation is added for accreditations and education, this will need to be updated to be generic
+  const onSubmit = useCallback(
+    async (employment: PostEmploymentsPayload) => {
+      try {
+        const histories = getHistories();
+        const updatedHistories = {
+          ...histories,
+          employments: [...histories.employments, employment],
+        };
+        if (updatedHistories) {
+          setHistories(updatedHistories);
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.error("Failed to update histories:", error);
-    }
-  }, [getHistories, setHistories]);
+    },
+    [getHistories, setHistories]
+  );
 
   return (
     <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
@@ -40,7 +47,7 @@ export default function Experience() {
           type="accreditations"
           count={histories?.accreditations?.length}>
           {histories?.accreditations?.map(item => (
-            <ResearcherAccreditationEntry key={item.id ?? item._id} data={item} />
+            <ResearcherAccreditationEntry data={item} />
           ))}
         </HistoriesSection>
       </FormSection>
@@ -49,17 +56,17 @@ export default function Experience() {
         sx={{ marginBottom: "16px" }}>
         <HistoriesSection type="education" count={histories?.education?.length}>
           {histories?.education?.map(item => (
-            <ResearcherEducationEntry key={item.id ?? item._id} data={item} />
+            <ResearcherEducationEntry data={item} />
           ))}
         </HistoriesSection>
       </FormSection>
       <FormSection heading={tProfile("employment")}>
-        <EmploymentsForm onSubmit={onSubmit}/>
+        <EmploymentsForm onSubmit={onSubmit} />
         <HistoriesSection
           type="employments"
-          count={histories?.employments?.length}>
-          {histories?.employments?.map(item => (
-            <ResearcherEmploymentEntry key={item.id ?? item._id} data={item} />
+          count={histories?.employments.length}>
+          {histories?.employments.map(item => (
+            <ResearcherEmploymentEntry data={item} />
           ))}
         </HistoriesSection>
       </FormSection>
