@@ -31,6 +31,8 @@ export default function useLoginRedirect() {
         router.replace(routes.profileOrganisationDetails.path);
       } else if (data?.user_group === UserGroup.USERS) {
         router.replace(routes.profileResearcherDetails.path);
+      } else {
+        router.replace(routes.register.path);
       }
 
       setReady(true);

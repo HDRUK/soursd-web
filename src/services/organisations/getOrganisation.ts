@@ -8,12 +8,7 @@ export default async (
 ): Promise<ResponseJson<OrganisationResponse>> => {
   const response = await getRequest(
     `${process.env.NEXT_PUBLIC_API_V1_URL}/organisations/${id}`,
-    undefined,
-    {
-      headers: {
-        "content-type": "application/json;charset=UTF-8",
-      },
-    }
+    undefined
   );
 
   return handleJsonResponse(response, options);

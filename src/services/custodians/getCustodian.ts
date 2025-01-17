@@ -1,5 +1,5 @@
 import { ResponseJson, ResponseOptions } from "@/types/requests";
-import { getRequest, handleResponseError } from "../requests";
+import { getRequest, handleJsonResponse } from "../requests";
 import { GetCustodianResponse } from "./types";
 
 export default async (
@@ -7,18 +7,8 @@ export default async (
   options: ResponseOptions
 ): Promise<ResponseJson<GetCustodianResponse>> => {
   const response = await getRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/custodians/${id}`,
-    undefined,
-    {
-      headers: {
-        "content-type": "application/json;charset=UTF-8",
-      },
-    }
+    `${process.env.NEXT_PUBLIC_API_V1_URL}/custodians/${id}`
   );
 
-  const error = handleResponseError(response, options);
-
-  if (error) return Promise.reject(error);
-
-  return response.json();
+  return handleJsonResponse(response, options);
 };

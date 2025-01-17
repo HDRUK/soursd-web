@@ -17,13 +17,7 @@ export default async (
   );
 
   const response = await getRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/${entity}s/${id}/projects?${params.toString()}`,
-    undefined,
-    {
-      headers: {
-        "content-type": "application/json;charset=UTF-8",
-      },
-    }
+    `${process.env.NEXT_PUBLIC_API_V1_URL}/${entity}s/${id}/projects?${params.toString()}`
   );
 
   return handleJsonResponse(response, options);
