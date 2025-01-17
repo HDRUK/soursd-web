@@ -3,14 +3,13 @@ import { mockedCustodian } from "@/mocks/data/custodian";
 import { mockedUser } from "@/mocks/data/user";
 import { patchCustodian } from "@/services/custodians";
 import {
-  act,
+  commonAccessibilityTests,
   fireEvent,
   render,
   screen,
   waitFor,
   within,
 } from "@/utils/testUtils";
-import { axe } from "jest-axe";
 import { faker } from "@faker-js/faker";
 import Details, { DetailsProps } from "./Details";
 
@@ -30,18 +29,6 @@ const renderDetails = (props?: Partial<DetailsProps>) => {
 };
 
 describe("<Details />", () => {
-  it("has no accessibility validations", async () => {
-    const { container } = renderDetails();
-
-    let results;
-
-    await act(async () => {
-      results = await axe(container);
-    });
-
-    expect(results).toHaveNoViolations();
-  });
-
   it("has the correct values", async () => {
     renderDetails();
 
@@ -90,5 +77,9 @@ describe("<Details />", () => {
     } else {
       fail("Contact email or idvt required do not exist");
     }
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(renderDetails());
   });
 });

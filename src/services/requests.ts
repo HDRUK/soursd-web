@@ -3,7 +3,7 @@ import {
   QueryOptions,
   QueryPayload,
   ResponseJson,
-  ResponseTranslations,
+  ResponseOptions,
 } from "@/types/requests";
 import { objectToQuerystring } from "@/utils/requests";
 import cookies from "js-cookie";
@@ -19,31 +19,25 @@ function getHeadersWithAuthorisation(headers?: HeadersInit) {
   };
 }
 
-function handleResponseError(
-  response: Response,
-  messages?: ResponseTranslations
-) {
+function handleResponseError(response: Response, options?: ResponseOptions) {
   if (!response?.ok) {
-    if (!messages) {
+    if (!options) {
       return new Error(`${response?.status}Error`).message;
     }
 
     return new Error(
       response?.status === 401
-        ? messages["401"]?.message
-        : messages.error?.message
+        ? options["401"]?.message
+        : options.error?.message
     ).message;
   }
 
   return null;
 }
 
-function handleDataError<T>(
-  data: ResponseJson<T>,
-  messages?: ResponseTranslations
-) {
+function handleDataError<T>(data: ResponseJson<T>, options?: ResponseOptions) {
   if (data.message && data.message !== ResponseMessageType.SUCCESS) {
-    return new Error(messages?.error?.message || "responseError");
+    return new Error(options?.error?.message || "responseError");
   }
 
   return null;
@@ -51,18 +45,23 @@ function handleDataError<T>(
 
 async function handleJsonResponse(
   response: Response,
-  messages?: ResponseTranslations
+  options?: ResponseOptions
 ) {
-  const responseError = handleResponseError(response, messages);
-  if (responseError) return Promise.reject(responseError);
+  const responseError = handleResponseError(response, options);
+
+  if (!options?.suppressThrow && responseError)
+    return Promise.reject(responseError);
 
   const data = await response.json();
 
-  const dataError = handleDataError(data, messages);
+  const dataError = handleDataError(data, options);
 
-  if (dataError) return Promise.reject(dataError);
+  if (!options?.suppressThrow && dataError) return Promise.reject(dataError);
 
-  return Promise.resolve(data);
+  return Promise.resolve({
+    ...data,
+    status: response.status,
+  });
 }
 
 async function getRequest<T>(url: string, payload?: T, options?: RequestInit) {

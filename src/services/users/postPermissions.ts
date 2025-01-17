@@ -1,10 +1,10 @@
-import { ResponseJson, ResponseTranslations } from "@/types/requests";
+import { ResponseJson, ResponseOptions } from "@/types/requests";
 import { handleResponseError, postRequest } from "../requests";
 import { UpdatePermissonsPayload, PatchUserResponse } from "./types";
 
 export default async (
   payload: UpdatePermissonsPayload,
-  messages: ResponseTranslations
+  options: ResponseOptions
 ): Promise<ResponseJson<PatchUserResponse>> => {
   const response = await postRequest(
     `${process.env.NEXT_PUBLIC_API_V1_URL}/users/permissions`,
@@ -16,7 +16,7 @@ export default async (
     }
   );
 
-  const error = handleResponseError(response, messages);
+  const error = handleResponseError(response, options);
 
   if (error) {
     return Promise.reject(error);

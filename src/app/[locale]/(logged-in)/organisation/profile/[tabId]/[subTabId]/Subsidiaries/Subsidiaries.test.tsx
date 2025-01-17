@@ -1,8 +1,13 @@
-import { mockedOrganisation } from "@/mocks/data/organisation";
-import { act, fireEvent, render, screen, waitFor } from "@/utils/testUtils";
-import { useMutation } from "@tanstack/react-query";
 import { useStore } from "@/data/store";
-import { axe } from "jest-axe";
+import { mockedOrganisation } from "@/mocks/data/organisation";
+import {
+  commonAccessibilityTests,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from "@/utils/testUtils";
+import { useMutation } from "@tanstack/react-query";
 import Subsidiaries from "./Subsidiaries";
 
 jest.mock("@tanstack/react-query");
@@ -27,18 +32,6 @@ const defaultOrganisation = mockedOrganisation();
 });
 
 describe("<Subsidiaries />", () => {
-  it("has no accessibility validations", async () => {
-    const { container } = render(<Subsidiaries />);
-
-    let results;
-
-    await act(async () => {
-      results = await axe(container);
-    });
-
-    expect(results).toHaveNoViolations();
-  });
-
   it("Patch of organisation is called on save", async () => {
     render(<Subsidiaries />);
 
@@ -51,5 +44,9 @@ describe("<Subsidiaries />", () => {
     await waitFor(() => {
       expect(mockSetOrganisation).toHaveBeenCalled();
     });
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(render(<Subsidiaries />));
   });
 });

@@ -1,10 +1,10 @@
-import { ResponseJson, ResponseTranslations } from "@/types/requests";
+import { ResponseJson, ResponseOptions } from "@/types/requests";
 import { deleteRequest, handleResponseError } from "../requests";
 import { GetCustodiansUsersResponse } from "./types";
 
 export default async (
   id: number,
-  messages?: ResponseTranslations
+  options?: ResponseOptions
 ): Promise<ResponseJson<GetCustodiansUsersResponse>> => {
   const response = await deleteRequest(
     `${process.env.NEXT_PUBLIC_API_V1_URL}/custodian_users/${id}`,
@@ -16,7 +16,7 @@ export default async (
     }
   );
 
-  const error = handleResponseError(response, messages);
+  const error = handleResponseError(response, options);
 
   if (error) return Promise.reject(error);
 

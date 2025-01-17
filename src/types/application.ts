@@ -112,6 +112,8 @@ interface User {
   profile_steps_completed: string;
   approvals: Approval[];
   organisation_id: number;
+  custodian_id?: number;
+  custodian_user_id?: number;
   consent_scrape: boolean;
   orc_id: string | null;
   orcid_scanning: boolean;

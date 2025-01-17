@@ -10,7 +10,7 @@ export default function FormModalHeader({
   ...restProps
 }: FormHeaderProps) {
   return (
-    <Box {...restProps} sx={{ mb: 4, ...restProps.sx }}>
+    <Box {...restProps} sx={{ mb: 2, ...restProps.sx }}>
       {children}
     </Box>
   );
