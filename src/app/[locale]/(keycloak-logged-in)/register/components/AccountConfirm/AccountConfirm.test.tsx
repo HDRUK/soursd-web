@@ -10,7 +10,7 @@ jest.mock("@/data/store");
 jest.mock("next/navigation", () => ({
   useParams: jest.fn(),
   useRouter: jest.fn(() => ({
-    push: jest.fn(),
+    replace: jest.fn(),
   })),
 }));
 
@@ -18,7 +18,7 @@ jest.mock("@/services/auth", () => ({
   postRegister: jest.fn(),
 }));
 
-const mockedPush = jest.fn();
+const mockedReplace = jest.fn();
 
 const TestComponent = () => {
   return <AccountConfirm />;
@@ -27,7 +27,7 @@ const TestComponent = () => {
 describe("<AccountConfirm />", () => {
   beforeEach(() => {
     (useRouter as jest.Mock).mockReturnValue({
-      push: mockedPush,
+      replace: mockedReplace,
     });
 
     (postRegister as jest.Mock).mockReset();
@@ -96,7 +96,7 @@ describe("<AccountConfirm />", () => {
       { account_type: AccountType.USER },
       { error: { message: expect.any(String) } }
     );
-    expect(mockedPush).toHaveBeenCalledWith(
+    expect(mockedReplace).toHaveBeenCalledWith(
       expect.stringContaining("user/profile")
     );
   });
@@ -122,7 +122,8 @@ describe("<AccountConfirm />", () => {
       { account_type: AccountType.ORGANISATION },
       { error: { message: expect.any(String) } }
     );
-    expect(mockedPush).toHaveBeenCalledWith(
+
+    expect(mockedReplace).toHaveBeenCalledWith(
       expect.stringContaining("organisation/profile")
     );
   });

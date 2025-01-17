@@ -9,7 +9,6 @@ export default async (
   // this is a temporary placeholder... this will have to be fixed soon
   // - need to return custodian users FOR a custodian
   // - as of now, the BE just returns all custodian users
-  console.log(custodianId);
   const response = await getRequest(
     `${process.env.NEXT_PUBLIC_API_V1_URL}/custodian_users`, // note - update in some way? ${custodianId}`,
     undefined,

@@ -3,7 +3,7 @@ import { mockedCustodianUser } from "@/mocks/data/custodian";
 import { mockedApiPermissions } from "@/mocks/data/store";
 import {
   patchCustodianUser,
-  postCustodianInviteUser,
+  postCustodianUserInvite,
   postCustodianUser,
 } from "@/services/custodian_users";
 import { act, fireEvent, render, screen, waitFor } from "@/utils/testUtils";
@@ -70,7 +70,7 @@ describe("<UserModal />", () => {
       expect(patchCustodianUser).toHaveBeenCalled();
     });
 
-    expect(postCustodianInviteUser).not.toHaveBeenCalled();
+    expect(postCustodianUserInvite).not.toHaveBeenCalled();
   });
 
   it("create user is called with no id", async () => {
@@ -80,7 +80,7 @@ describe("<UserModal />", () => {
       expect(postCustodianUser).toHaveBeenCalled();
     });
 
-    expect(postCustodianInviteUser).toHaveBeenCalled();
+    expect(postCustodianUserInvite).toHaveBeenCalled();
   });
 
   it("show a success alert", async () => {

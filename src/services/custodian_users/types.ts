@@ -16,8 +16,11 @@ type PatchCustodianUserPayload = Omit<
   "created_at" | "updated_at"
 >;
 
+type GetCustodianUserResponse = CustodianUser;
+
 export type {
   GetCustodiansUsersResponse,
+  GetCustodianUserResponse,
   PatchCustodianUserPayload,
   PatchCustodianUserResponse,
   PostCustodianUserPayload,

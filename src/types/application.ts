@@ -177,6 +177,10 @@ interface Organisation extends OrganisationIdvt, AddressFields {
   ce_certification_num: string;
   ce_plus_certified: boolean;
   ce_plus_certification_num: string;
+  iso_27001_certified: boolean;
+  iso_27001_certification_num: string;
+  dsptk_certified: boolean;
+  dsptk_certification_num: string;
   subsidiaries?: Subsidiary[];
   departments: Department[];
 }
@@ -276,13 +280,6 @@ interface ProjectUser {
   role: Role;
 }
 
-interface Auth {
-  access_token: string;
-  refresh_token: string;
-  user: User;
-  expires: number;
-}
-
 interface Department {
   category: string;
   created_at: string;
@@ -314,7 +311,6 @@ export type {
   ApplicationDataState,
   ApplicationSystemConfig,
   Approval,
-  Auth,
   Custodian,
   Organisation,
   OrganisationIdvt,

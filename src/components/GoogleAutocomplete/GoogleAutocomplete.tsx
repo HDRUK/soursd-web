@@ -6,7 +6,12 @@ import {
   TextFieldProps,
 } from "@mui/material";
 import useDebounce from "@/hooks/useDebounce";
-import { Control, FieldValues, useController } from "react-hook-form";
+import {
+  Control,
+  FieldValues,
+  useController,
+  useFormContext,
+} from "react-hook-form";
 import React, { SyntheticEvent, useState, useEffect, useRef } from "react";
 import { AddressFields } from "@/types/application";
 import fetchPredictions from "./actions";
@@ -32,7 +37,7 @@ export interface GoogleAutocompleteOption {
 
 export interface GoogleAutocompleteProps {
   name: string;
-  control: Control<FieldValues>;
+  control?: Control<FieldValues>;
   textFieldProps?: TextFieldProps;
   label?: string;
   placeholder?: string;
@@ -53,7 +58,10 @@ const GoogleAutocomplete: React.FC<GoogleAutocompleteProps> = ({
   fullWidth = true,
   textFieldProps,
 }) => {
-  const controller = useController({ control, name });
+  const context = useFormContext();
+  const effectiveControl = control || context.control;
+
+  const controller = useController({ control: effectiveControl, name });
   const { field } = controller;
   const { value, onChange } = field;
 

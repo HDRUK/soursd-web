@@ -3,7 +3,6 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { TextField } from "@mui/material";
 import FormControlHorizontal, { FormControlHorizontalProps } from ".";
 import Form from "../Form";
-import FormField from "../FormField";
 
 const meta = {
   title: "components/FormControlHorizontal",
@@ -18,9 +17,7 @@ type Story = StoryObj<typeof meta>;
 const FormControlHorizontalProvider = (props: FormControlHorizontalProps) => {
   return (
     <Form defaultValues={{ name: "" }}>
-      {({ formState: { errors } }) => (
-        <FormControlHorizontal id="name" error={errors.name} {...props} />
-      )}
+      <FormControlHorizontal {...props} />
     </Form>
   );
 };
@@ -28,10 +25,8 @@ const FormControlHorizontalProvider = (props: FormControlHorizontalProps) => {
 export const Basic: Story = {
   args: {
     label: "Email",
-    id: "email",
-    renderField: fieldProps => (
-      <FormField component={TextField} {...fieldProps} />
-    ),
+    name: "email",
+    renderField: fieldProps => <TextField {...fieldProps} />,
   },
   render: props => <FormControlHorizontalProvider {...props} />,
 };

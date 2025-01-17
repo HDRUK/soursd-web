@@ -1,6 +1,6 @@
 "use client";
 
-import { useCookies } from "@/context/CookieContext/CookieContext";
+import { useCookies } from "@/context/CookieContext";
 import { useStore } from "@/data/store";
 import useQueryRefetch from "@/hooks/useQueryRefetch";
 import { getUser } from "@/services/users";
