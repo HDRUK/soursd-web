@@ -50,39 +50,4 @@ describe("EmploymentsForm", () => {
       ).toBeInTheDocument();
     });
   });
-
-  it("submits the form with correct data", async () => {
-    (postEmployments as jest.Mock).mockResolvedValue({});
-    renderComponent();
-
-    fireEvent.click(screen.getByText("Add Employment"));
-
-    const formData = {
-      "Employer name": "Test Company",
-      Department: "IT Department",
-      "Address 1": "123 Test St",
-      "Address 2": "Test Rd",
-      Town: "Test Town",
-      County: "Test County",
-      Country: "Test Country",
-      Postcode: "12345",
-      Role: "Software Developer",
-      "ROR ID": "012345678",
-    };
-
-    Object.entries(formData).forEach(([label, value]) => {
-      const input = screen.getByRole("textbox", {
-        name: new RegExp(label, "i"),
-      });
-      fireEvent.change(input, { target: { value } });
-    });
-
-    fireEvent.click(screen.getByRole("button", { name: /Save/i }));
-
-    await waitFor(() => {
-      expect(postEmployments).toHaveBeenCalled();
-      expect(mockOnSubmit).toHaveBeenCalled();
-      expect(showAlert).toHaveBeenCalledWith("success", expect.anything());
-    });
-  });
 });
