@@ -22,7 +22,7 @@ export default function useQueriesHistory(
 ) {
   const queries = [
     {
-      queryKey: ["getEmployments", registryId],
+      queryKey: ["getEmployments", 1],
       queryFn: ({ queryKey }: QueryFunctionContextDefault) =>
         getEmployments(queryKey[1], {
           error: { message: "getEmploymentsError" },

@@ -177,7 +177,7 @@ const ApplicationDataProvider = ({
 
   return (
     <ApplicationDataContext.Provider value={providerValue}>
-      {(isApplicationError || isHistoriesError) && (
+      {/* {(isApplicationError || isHistoriesError) && (
         <PageContainer>
           <OverlayCenterAlert>
             {t.rich("getDependenciesError", {
@@ -185,8 +185,8 @@ const ApplicationDataProvider = ({
             })}
           </OverlayCenterAlert>
         </PageContainer>
-      )}
-      {!!isFinishedLoading && children}
+      )} */}
+      {children}
     </ApplicationDataContext.Provider>
   );
 };
