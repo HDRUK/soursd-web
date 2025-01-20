@@ -6,6 +6,7 @@ import { VALIDATION_SCHEMA_KEY } from "@/consts/application";
 import { ROUTES } from "@/consts/router";
 import { UserGroup } from "@/consts/user";
 import { useStore } from "@/data/store";
+import { usePathname } from "@/i18n/routing";
 import PageContainer from "@/modules/PageContainer";
 import useApplicationDependencies from "@/queries/useApplicationDependencies";
 import useQueriesHistories from "@/queries/useQueriesHistories";
@@ -17,7 +18,6 @@ import {
 import { parseSystemConfig } from "@/utils/application";
 import { showAlert } from "@/utils/showAlert";
 import { useTranslations } from "next-intl";
-import { usePathname } from "next/navigation";
 import {
   ReactNode,
   createContext,
@@ -38,6 +38,7 @@ interface ApplicationDataProviderProps {
   children: ReactNode;
   value: ApplicationDataState;
   custodianId?: number;
+  organisationId?: number;
   me?: User;
 }
 
@@ -48,6 +49,7 @@ const ApplicationDataProvider = ({
   children,
   me,
   custodianId,
+  organisationId,
   value,
 }: ApplicationDataProviderProps) => {
   const t = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
@@ -90,13 +92,14 @@ const ApplicationDataProvider = ({
   } = useApplicationDependencies({
     user: me,
     custodianId,
+    organisationId,
   });
 
   const {
     isLoading: isHistoriesLoading,
     isError: isHistoriesError,
     data: historiesData,
-  } = useQueriesHistories(1, true);
+  } = useQueriesHistories(me?.registry_id);
 
   const {
     getSystemConfig: systemConfigData,
@@ -170,12 +173,11 @@ const ApplicationDataProvider = ({
 
   const isFinishedLoading =
     user &&
-    organisation &&
-    histories &&
+    ((organisationId && organisation) || !organisationId) &&
     !isApplicationLoading &&
     !isHistoriesLoading &&
-    custodian &&
-    custodianId &&
+    ((me?.registry_id && histories) || !me?.registry_id) &&
+    ((custodian && custodianId) || !custodianId) &&
     !!sectors?.length &&
     !!permissions?.length;
 

@@ -104,7 +104,8 @@
     "inviteSuccessfulDescription": "The user has been successfully invited and have been notified via email",
     "inviteUserAriaLabel": "Invite user",
     "getError": "Unable to get the list of users. Please try again or contact us at <contactLink></contactLink>",
-    "getDelegatesError": "Unable to get the list of delegates. Please try again or contact us at <contactLink></contactLink>"
+    "getDelegatesError": "Unable to get the list of delegates. Please try again or contact us at <contactLink></contactLink>",
+    "noResults": "There are no delegates"
   },
   "Form": {
     "cancelButton": "Cancel",
@@ -442,6 +443,7 @@
   },
   "Register": {
     "title": "Confirm account type",
+    "postOrganisationUnclaimedError": "Unable to create the initial organisation data, please try again. Alternatively, please contact us at <contactLink></contactLink>",
     "failedToRegister": "Failed to register account. Have you already registered?",
     "repOrgButton": "I represent an organisation",
     "repMyselfButton": "I represent myself as an individual",

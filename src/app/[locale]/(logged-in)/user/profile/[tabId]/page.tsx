@@ -1,6 +1,6 @@
 import { ConfigProps, withConfig } from "@/components/Config";
 import { PageContainer } from "@/modules";
-import { redirect } from "next/navigation";
+import { redirect } from "@/i18n/routing";
 import TabsContents from "./components/TabsContents";
 import TabsSections from "./components/TabsSections";
 import { PageTabs } from "./consts/tabs";

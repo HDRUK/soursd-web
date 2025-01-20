@@ -6,13 +6,7 @@ export default async (
   options: ResponseOptions
 ): Promise<ResponseJson<Paged<SectorsResponse>>> => {
   const response = await getRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/sectors`,
-    undefined,
-    {
-      headers: {
-        "content-type": "application/json;charset=UTF-8",
-      },
-    }
+    `${process.env.NEXT_PUBLIC_API_V1_URL}/sectors`
   );
 
   return handleJsonResponse(response, options);

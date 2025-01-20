@@ -1,30 +1,29 @@
+import { UserFeedSource } from "@/consts/user";
 import { defineMatchMedia } from "@/utils/testUtils";
 import "@testing-library/jest-dom";
 import "jest-axe/extend-expect";
-import "./jest.utils";
+import * as matchers from "jest-extended";
 import { forwardRef, useImperativeHandle } from "react";
-import { ResponseMessageType } from "./src/consts/requests";
-import { mockedPermission } from "./mocks/data/permission";
-import {
-  mockedEducation,
-  mockedTraining,
-  mockedUser,
-  mockedAccreditation,
-  mockedEmployment,
-} from "./mocks/data/user";
-import { mockedProject, mockedProjects } from "./mocks/data/project";
+import "./jest.utils";
+import { mock200Json, mockPagedResults } from "./jest.utils";
+import { mockedCustodianUser } from "./mocks/data/custodian";
 import { mockedOrganisation } from "./mocks/data/organisation";
+import { mockedPermission } from "./mocks/data/permission";
+import { mockedProject, mockedProjects } from "./mocks/data/project";
+import { mockedApiPermissions } from "./mocks/data/store";
 import {
   mockedSystemConfig,
   mockedValidationSchema,
 } from "./mocks/data/systemConfig";
-import { getRoutes } from "./src/utils/router";
+import {
+  mockedAccreditation,
+  mockedEducation,
+  mockedEmployment,
+  mockedTraining,
+  mockedUser,
+} from "./mocks/data/user";
+import { ResponseMessageType } from "./src/consts/requests";
 import { ROUTES } from "./src/consts/router";
-import { mockedCustodianUser } from "./mocks/data/custodian";
-import { UserFeedSource } from "@/consts/user";
-import * as matchers from "jest-extended";
-import { mockedApiPermissions } from "./mocks/data/store";
-import { mock200Json, mockPagedResults } from "./jest.utils";
 
 const nextRouterMock = require("next-router-mock");
 
@@ -35,7 +34,7 @@ jest.mock("./src/context/ApplicationData", () => ({
   ...jest.requireActual("./src/context/ApplicationData"),
   useApplicationData: () => ({
     validationSchema: mockedValidationSchema(),
-    routes: getRoutes(ROUTES, "en"),
+    routes: ROUTES,
   }),
 }));
 
@@ -214,7 +213,9 @@ async function mockFetch(url: string, init?: RequestInit) {
         ])
       );
     }
-
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/organisations/unclaimed`: {
+      return mock200Json(1);
+    }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/organisations`: {
       return mock200Json({
         data: [

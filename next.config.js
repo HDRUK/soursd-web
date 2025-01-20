@@ -30,7 +30,7 @@ const nextConfig = withNextIntl({
       },
       {
         source: "/:locale/organisation/profile",
-        destination: `/:locale/user/organisation/details`,
+        destination: `/:locale/organisation/profile/details`,
       },
       {
         source: "/:locale/organisation/profile",

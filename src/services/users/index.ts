@@ -1,17 +1,9 @@
 import getUser from "./getUser";
 import getUsers from "./getUsers";
+import patchUser from "./patchUser";
 import postPermissions from "./postPermissions";
 import postUsers from "./postUsers";
-import patchUser from "./patchUser";
-import getUserByEmail from "./getUserByEmail";
 
-export {
-  postPermissions,
-  postUsers,
-  getUser,
-  getUsers,
-  patchUser,
-  getUserByEmail,
-};
+export { getUser, getUsers, patchUser, postPermissions, postUsers };
 
 export type * from "./types";

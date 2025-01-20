@@ -1,13 +1,13 @@
 import { ResponseJson, ResponseOptions } from "@/types/requests";
 import { handleJsonResponse, postRequest } from "../requests";
-import { PostUserResponse, PostUserPayload } from "./types";
+import { PostOrganisationPayload, PostOrganisationResponse } from "./types";
 
 export default async (
-  payload: PostUserPayload,
+  payload: PostOrganisationPayload,
   options: ResponseOptions
-): Promise<ResponseJson<PostUserResponse>> => {
+): Promise<ResponseJson<PostOrganisationResponse>> => {
   const response = await postRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/users`,
+    `${process.env.NEXT_PUBLIC_API_V1_URL}/organisations`,
     payload
   );
 
