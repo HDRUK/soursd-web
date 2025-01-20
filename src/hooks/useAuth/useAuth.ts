@@ -9,7 +9,7 @@ export default function useAuth() {
   return useMemo(() => {
     const token = getCookie("access_token");
 
-    if (!!token) {
+    if (token) {
       const decoded = jwtDecode<Auth>(token);
 
       return {
