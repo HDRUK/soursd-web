@@ -7,8 +7,7 @@ import useUserProfileCompletion from "@/hooks/useUserProfileCompletion";
 import ErrorIcon from "@mui/icons-material/Error";
 import { Box, Tab, Tabs } from "@mui/material";
 import { useTranslations } from "next-intl";
-import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, Link } from "@/i18n/routing";
 import { PageTabs } from "../../consts/tabs";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";

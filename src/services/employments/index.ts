@@ -1,3 +1,4 @@
 import getEmployments from "./getEmployments";
+import postEmployments from "./postEmployments";
 
-export { getEmployments };
+export { getEmployments, postEmployments };

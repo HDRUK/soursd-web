@@ -1,4 +1,3 @@
-import { withConfig } from "@/components/Config";
 import PageContainer from "@/modules/PageContainer";
 import PageSection from "@/modules/PageSection";
 import AccountConfirm from "./components/AccountConfirm";
@@ -13,4 +12,4 @@ async function Page() {
   );
 }
 
-export default withConfig(Page);
+export default Page;

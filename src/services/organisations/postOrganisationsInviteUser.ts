@@ -16,11 +16,6 @@ export default async (
     {
       ...payload,
       identifier: EMAIL_TEMPLATE.USER_INVITE,
-    },
-    {
-      headers: {
-        "content-type": "application/json;charset=UTF-8",
-      },
     }
   );
 

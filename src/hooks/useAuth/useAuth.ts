@@ -1,15 +1,22 @@
 import { useCookies } from "@/context/CookieContext";
+import { Auth } from "@/types/application";
+import { jwtDecode } from "jwt-decode";
 import { useMemo } from "react";
 
 export default function useAuth() {
   const { getCookie } = useCookies();
 
-  const isAuthenticated = useMemo(
-    () => !!getCookie("access_token"),
-    [getCookie]
-  );
+  return useMemo(() => {
+    const token = getCookie("access_token");
 
-  return {
-    isAuthenticated,
-  };
+    if (token) {
+      const decoded = jwtDecode<Auth>(token);
+
+      return {
+        email: decoded.email,
+      };
+    }
+
+    return undefined;
+  }, [getCookie]);
 }

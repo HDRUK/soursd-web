@@ -7,12 +7,7 @@ export default async (
 ): Promise<ResponseJson<Paged<OrganisationsResponse>>> => {
   const response = await getRequest(
     `${process.env.NEXT_PUBLIC_API_V1_URL}/organisations`,
-    undefined,
-    {
-      headers: {
-        "content-type": "application/json;charset=UTF-8",
-      },
-    }
+    undefined
   );
 
   return handleJsonResponse(response, options);
