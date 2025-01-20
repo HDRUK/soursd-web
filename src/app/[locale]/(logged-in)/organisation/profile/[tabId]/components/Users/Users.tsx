@@ -103,12 +103,10 @@ export default function Users() {
                 </>
               }
               actions={
-                organisation && (
-                  <DecoupleUser
-                    user={user}
-                    onSuccess={refetchOrganisationUsers}
-                  />
-                )
+                <DecoupleUser
+                  user={user}
+                  onSuccess={refetchOrganisationUsers}
+                />
               }
             />
           );
