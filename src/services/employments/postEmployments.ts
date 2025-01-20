@@ -1,11 +1,11 @@
-import { ResponseJson, ResponseTranslations } from "@/types/requests";
+import { ResponseJson, ResponseOptions } from "@/types/requests";
 import { handleResponseError, postRequest } from "../requests";
 import { PostEmploymentsResponse, PostEmploymentsPayload } from "./types";
 
 export default async (
   registryId: number,
   payload: PostEmploymentsPayload,
-  messages: ResponseTranslations
+  options: ResponseOptions
 ): Promise<ResponseJson<PostEmploymentsResponse>> => {
   const response = await postRequest(
     `${process.env.NEXT_PUBLIC_API_V1_URL}/employments/${registryId}`,
@@ -17,7 +17,7 @@ export default async (
     }
   );
 
-  const error = handleResponseError(response, messages);
+  const error = handleResponseError(response, options);
 
   if (error) {
     return Promise.reject(error);
