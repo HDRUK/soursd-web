@@ -1,8 +1,14 @@
 import { useStore } from "@/data/store";
 import { mockedUser } from "@/mocks/data/user";
-import { act, render, screen, waitFor, fireEvent } from "@/utils/testUtils";
+import {
+  act,
+  render,
+  screen,
+  waitFor,
+  fireEvent,
+  commonAccessibilityTests,
+} from "@/utils/testUtils";
 import { faker } from "@faker-js/faker";
-import { axe } from "jest-axe";
 import { postTrainings, getTrainingByRegistryId } from "@/services/trainings";
 import { mock200Json } from "jest.utils";
 import Training from "./Training";
@@ -34,18 +40,6 @@ describe("<Training />", () => {
     jest.clearAllMocks();
   });
 
-  it("has no accessibility violations", async () => {
-    const { container } = renderTrainingComponent();
-
-    let results;
-
-    await act(async () => {
-      results = await axe(container);
-    });
-
-    expect(results).toHaveNoViolations();
-  });
-
   it.each([/Training provider/i, /Training name/i])(
     "does not submit when %s is not defined",
     async fieldName => {
@@ -71,4 +65,8 @@ describe("<Training />", () => {
       });
     }
   );
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(renderTrainingComponent());
+  });
 });
