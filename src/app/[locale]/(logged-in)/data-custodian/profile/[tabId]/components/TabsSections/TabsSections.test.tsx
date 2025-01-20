@@ -18,6 +18,6 @@ describe("<TabsSections />", () => {
       name,
     });
 
-    expect(tab).toHaveAttribute("href", `/en${path}`);
+    expect(tab).toHaveAttribute("href", path);
   });
 });

@@ -3,18 +3,15 @@
 import { ROUTES } from "@/consts/router";
 import { UserGroup } from "@/consts/user";
 import { ApplicationDataProvider } from "@/context/ApplicationData";
+import { usePathname, useRouter } from "@/i18n/routing";
 import { getMe } from "@/services/auth";
 import { getCustodianUser } from "@/services/custodian_users";
 import { User } from "@/types/application";
 import { handleLogin } from "@/utils/keycloak";
-import { getRoutes } from "@/utils/router";
 import Cookies from "js-cookie";
-import { usePathname, useRouter } from "next/navigation";
 import { PropsWithChildren, useEffect, useState } from "react";
 
-type LayoutProps = PropsWithChildren<{
-  params: { locale: string };
-}>;
+type LayoutProps = PropsWithChildren;
 
 async function validateAccessToken(
   pathname: string | null,
@@ -24,8 +21,10 @@ async function validateAccessToken(
     suppressThrow: true,
   });
 
+  console.log("****** response", response);
+
   if (response.status === 404) {
-    router.push("/en/register");
+    router.push(ROUTES.register.path);
   } else if (response.status === 500) {
     const accessToken = Cookies.get("access_token");
 
@@ -50,8 +49,7 @@ async function getCustodianId(user: User) {
   return custodian_id;
 }
 
-export default function Layout({ children, params: { locale } }: LayoutProps) {
-  const routes = getRoutes(ROUTES, locale);
+export default function Layout({ children }: LayoutProps) {
   const pathname = usePathname();
   const router = useRouter();
   const [me, setMe] = useState<User>();
@@ -85,7 +83,7 @@ export default function Layout({ children, params: { locale } }: LayoutProps) {
         organisationId={organisationId}
         me={me}
         value={{
-          routes,
+          routes: ROUTES,
           systemConfigData: {},
         }}>
         {children}

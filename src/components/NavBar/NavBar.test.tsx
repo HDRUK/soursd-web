@@ -9,6 +9,7 @@ import {
   waitFor,
 } from "@/utils/testUtils";
 import NavBar from "./NavBar";
+import { mockedJwt } from "@/mocks/data/auth";
 
 jest.mock("@/context/CookieContext", () => ({
   useCookies: jest.fn(),
@@ -19,7 +20,7 @@ jest.mock("@/utils/keycloak", () => ({
   handleLogout: jest.fn(),
 }));
 
-jest.mock("next/navigation", () => ({
+jest.mock("@/i18n/routing", () => ({
   useRouter: jest.fn(() => ({
     push: jest.fn(),
   })),
@@ -99,7 +100,7 @@ describe("NavBar Component", () => {
   });
 
   it("calls handleLogout on 'Sign Out' click when authenticated", () => {
-    mockGetCookie.mockReturnValue("mockAccessToken");
+    mockGetCookie.mockReturnValue(mockedJwt);
 
     render(<NavBar />);
 
@@ -109,7 +110,7 @@ describe("NavBar Component", () => {
   });
 
   it("displays 'Sign Out' if the user is authenticated", () => {
-    mockGetCookie.mockReturnValue("mockAccessToken");
+    mockGetCookie.mockReturnValue(mockedJwt);
 
     render(<NavBar />);
 

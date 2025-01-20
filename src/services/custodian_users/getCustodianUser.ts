@@ -1,9 +1,5 @@
 import { ResponseJson, ResponseOptions } from "@/types/requests";
-import {
-  getRequest,
-  handleJsonResponse,
-  handleResponseError,
-} from "../requests";
+import { getRequest, handleJsonResponse } from "../requests";
 import { GetCustodianUserResponse } from "./types";
 
 export default async (

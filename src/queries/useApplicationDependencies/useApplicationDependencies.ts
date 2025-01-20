@@ -54,7 +54,7 @@ export default function useApplicationDependencies({
         }),
       enabled: !!user,
     },
-    ...(!!organisationId
+    ...(organisationId
       ? [
           {
             queryKey: ["getOrganisation", organisationId],
@@ -68,7 +68,7 @@ export default function useApplicationDependencies({
           },
         ]
       : []),
-    ...(!!custodianId
+    ...(custodianId
       ? [
           {
             queryKey: ["getCustodian", custodianId],

@@ -13,13 +13,12 @@ import Users from "./Users";
 jest.mock("@/services/organisations");
 jest.mock("@/data/store");
 jest.mock("@/hooks/usePaginatedQuery");
-
-jest.mock("next/navigation", () => ({
+jest.mock("@/i18n/routing", () => ({
+  useSearchParams: jest.fn(),
   usePathname: jest.fn(),
   useRouter: jest.fn(() => ({
     push: jest.fn(),
   })),
-  useSearchParams: jest.fn(),
 }));
 
 const defaultOrganisation = mockedOrganisation();

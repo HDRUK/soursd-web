@@ -5,7 +5,7 @@ import {
   UseQueryResult,
 } from "@tanstack/react-query";
 import { Paged, ResponseJson } from "@/types/requests";
-import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import { useSearchParams, useRouter, usePathname } from "@/i18n/routing";
 
 const API_SORT_KEY = "sort";
 

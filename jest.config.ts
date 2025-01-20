@@ -8,7 +8,8 @@ process.env = Object.assign(process.env, {
   NEXT_PUBLIC_KEYCLOAK_CLIENT_SECRET: "my-client-secret",
   NEXT_PUBLIC_KEYCLOAK_BASE_URL: "https://example.com",
   NEXT_PUBLIC_KEYCLOAK_REDIRECT_URL_LOGIN: "https://example.com/login-callback",
-  NEXT_PUBLIC_KEYCLOAK_REDIRECT_URL_LOGOUT: "https://example.com/logout-callback",
+  NEXT_PUBLIC_KEYCLOAK_REDIRECT_URL_LOGOUT:
+    "https://example.com/logout-callback",
 });
 
 const createJestConfig = nextJest({
@@ -32,6 +33,7 @@ const customJestConfig = {
     "^@/data/(.*)$": "<rootDir>/src/data/$1",
     "^@/utils/(.*)$": "<rootDir>/src/utils/$1",
     "^@/context/(.*)$": "<rootDir>/src/context/$1",
+    "^@/i18n/(.*)$": "<rootDir>/src/i18n/$1",
   },
   testPathIgnorePatterns: [
     "<rootDir>/.next/",
@@ -41,6 +43,11 @@ const customJestConfig = {
     "<rootDir>/src/utils/testUtils.tsx",
     "<rootDir>/src/consts",
     "<rootDir>/src/config",
+    "<rootDir>/src/i18n",
+    "<rootDir>/src/recipes",
+    "<rootDir>/src/services",
+    "<rootDir>/src/types",
+    "<rootDir>/src/pages",
     ".*mockData\\.ts(x)$",
     ".*\\.styles\\.ts$",
   ],
