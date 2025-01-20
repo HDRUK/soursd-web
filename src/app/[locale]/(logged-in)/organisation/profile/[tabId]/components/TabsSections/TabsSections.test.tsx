@@ -1,5 +1,4 @@
-import { act, render, screen } from "@/utils/testUtils";
-import { axe } from "jest-axe";
+import { commonAccessibilityTests, render, screen } from "@/utils/testUtils";
 import { useParams } from "next/navigation";
 import TabsSections from "./TabsSections";
 
@@ -12,23 +11,15 @@ const renderTabs = () => {
 };
 
 describe("<TabsSections />", () => {
-  it("has no accessibility validations", async () => {
-    const { container } = renderTabs();
-
-    let results;
-
-    await act(async () => {
-      results = await axe(container);
-    });
-
-    expect(results).toHaveNoViolations();
-  });
-
   it("shows default tab is selected", () => {
     renderTabs();
 
     expect(screen.getByRole("tab", { selected: true }).textContent).toEqual(
       "Profile"
     );
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(renderTabs());
   });
 });

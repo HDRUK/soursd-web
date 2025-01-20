@@ -1,13 +1,12 @@
 import {
-  act,
-  within,
+  commonAccessibilityTests,
   fireEvent,
   render,
   screen,
   waitFor,
+  within,
 } from "@/utils/testUtils";
 import { faker } from "@faker-js/faker";
-import { axe } from "jest-axe";
 import UserModalDetails, { UserModalDetailsProps } from "./UserModalDetails";
 
 jest.mock("@/services/organisations");
@@ -57,18 +56,6 @@ describe("<UserModalDetails />", () => {
     jest.resetAllMocks();
   });
 
-  it("has no accessibility validations", async () => {
-    const { container } = renderUserModalDetails();
-
-    let results;
-
-    await act(async () => {
-      results = await axe(container);
-    });
-
-    expect(results).toHaveNoViolations();
-  });
-
   it("submit is called", async () => {
     renderUserModalDetailsUpdate();
 
@@ -96,4 +83,8 @@ describe("<UserModalDetails />", () => {
       expect(mockOnSubmit).not.toHaveBeenCalled();
     }
   );
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(renderUserModalDetails());
+  });
 });

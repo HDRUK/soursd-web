@@ -32,12 +32,22 @@ export default function FormControlCheckbox({
 
   return (
     <FormControlLabel
-      control={<Checkbox {...field} checked={checked} {...restProps} />}
+      sx={{ alignItems: "flex-start" }}
+      control={
+        <Checkbox
+          sx={{ mt: "-7px" }}
+          {...field}
+          checked={checked}
+          {...restProps}
+        />
+      }
       label={
         <>
-          <Typography variant="h5">{label}</Typography>
+          <Typography variant="subtitle1">{label}</Typography>
           {labelCaption && (
-            <Typography color="caption.main">{labelCaption}</Typography>
+            <Typography variant="caption" color="caption.main">
+              {labelCaption}
+            </Typography>
           )}
         </>
       }

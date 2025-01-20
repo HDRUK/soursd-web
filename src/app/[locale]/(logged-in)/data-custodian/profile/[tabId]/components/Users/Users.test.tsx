@@ -1,7 +1,11 @@
 import { useStore } from "@/data/store";
 import { mockedUser } from "@/mocks/data/user";
-import { act, render, screen, waitFor } from "@/utils/testUtils";
-import { axe } from "jest-axe";
+import {
+  commonAccessibilityTests,
+  render,
+  screen,
+  waitFor,
+} from "@/utils/testUtils";
 import Users from "./Users";
 
 jest.mock("@/services/custodians");
@@ -15,18 +19,6 @@ const defaultUser = mockedUser();
 ]);
 
 describe("<User />", () => {
-  it("has no accessibility validations", async () => {
-    const { container } = render(<Users />);
-
-    let results;
-
-    await act(async () => {
-      results = await axe(container);
-    });
-
-    expect(results).toHaveNoViolations();
-  });
-
   it("has the correct number of results", async () => {
     render(<Users />);
 
@@ -45,5 +37,9 @@ describe("<User />", () => {
     await waitFor(() => {
       expect(screen.getByText("John Smith"));
     });
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(render(<Users />));
   });
 });

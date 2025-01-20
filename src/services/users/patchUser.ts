@@ -1,11 +1,11 @@
-import { ResponseJson, ResponseTranslations } from "@/types/requests";
+import { ResponseJson, ResponseOptions } from "@/types/requests";
 import { handleResponseError, patchRequest } from "../requests";
 import { PatchUserPayload, PatchUserResponse } from "./types";
 
 export default async (
   id: number,
   payload: PatchUserPayload,
-  messages: ResponseTranslations
+  options: ResponseOptions
 ): Promise<ResponseJson<PatchUserResponse>> => {
   const response = await patchRequest(
     `${process.env.NEXT_PUBLIC_API_V1_URL}/users/${id}`,
@@ -17,7 +17,7 @@ export default async (
     }
   );
 
-  const error = handleResponseError(response, messages);
+  const error = handleResponseError(response, options);
 
   if (error) {
     return Promise.reject(error);

@@ -1,9 +1,13 @@
 import { useStore } from "@/data/store";
-import { mockedOrganisation } from "@/mocks/data/organisation";
 import usePaginatedQuery from "@/hooks/usePaginatedQuery";
-import { act, render, screen, waitFor } from "@/utils/testUtils";
-import { axe } from "jest-axe";
+import { mockedOrganisation } from "@/mocks/data/organisation";
 import { mockedUser } from "@/mocks/data/user";
+import {
+  commonAccessibilityTests,
+  render,
+  screen,
+  waitFor,
+} from "@/utils/testUtils";
 import Users from "./Users";
 
 jest.mock("@/services/organisations");
@@ -46,18 +50,6 @@ const mockUsers = [
 });
 
 describe("<User />", () => {
-  it("has no accessibility validations", async () => {
-    const { container } = render(<Users />);
-
-    let results;
-
-    await act(async () => {
-      results = await axe(container);
-    });
-
-    expect(results).toHaveNoViolations();
-  });
-
   it("has the correct content", async () => {
     render(<Users />);
 
@@ -79,5 +71,9 @@ describe("<User />", () => {
     expect(await screen.findByText("Previous")).toBeInTheDocument();
     expect(await screen.findByText("1")).toBeInTheDocument();
     expect(await screen.findByText("Next")).toBeInTheDocument();
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(render(<Users />));
   });
 });

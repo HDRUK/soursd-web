@@ -1,4 +1,3 @@
-import { CUSTODIAN_ID } from "@/consts/application";
 import useQueriesCombined from "@/hooks/useQueriesCombined";
 import { getCustodian } from "@/services/custodians";
 import { getOrganisation } from "@/services/organisations";
@@ -14,6 +13,7 @@ import { QueryFunctionContext } from "@tanstack/react-query";
 
 interface UseApplicationDependenciesProps {
   user?: User;
+  custodianId?: number;
 }
 
 interface ApplicationDependenciesCombinedData {
@@ -29,6 +29,7 @@ type QueryFunctionContextDefault = QueryFunctionContext<[string, number]>;
 
 export default function useApplicationDependencies({
   user,
+  custodianId,
 }: UseApplicationDependenciesProps) {
   const queries = [
     {
@@ -66,7 +67,7 @@ export default function useApplicationDependencies({
         ]
       : []),
     {
-      queryKey: ["getCustodian", CUSTODIAN_ID],
+      queryKey: ["getCustodian", custodianId],
       queryFn: ({ queryKey }: QueryFunctionContextDefault) =>
         getCustodian(queryKey[1], {
           error: {

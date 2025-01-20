@@ -1,6 +1,11 @@
 import { mockedPermission } from "@/mocks/data/permission";
-import { act, fireEvent, render, screen } from "@/utils/testUtils";
-import { axe } from "jest-axe";
+import {
+  act,
+  commonAccessibilityTests,
+  fireEvent,
+  render,
+  screen,
+} from "@/utils/testUtils";
 import AssignOptions, { AssignOptionsProps } from "./AssignOptions";
 
 const mockSubmit = jest.fn();
@@ -25,13 +30,6 @@ const renderAssignOptions = (props?: Partial<AssignOptionsProps>) =>
 describe("<AssignOptions />", () => {
   afterEach(() => {
     jest.resetAllMocks();
-  });
-
-  it("has no accessibility violations", async () => {
-    const { container } = renderAssignOptions();
-
-    const results = await axe(container);
-    expect(results).toHaveNoViolations();
   });
 
   it("show a loader", async () => {
@@ -96,5 +94,9 @@ describe("<AssignOptions />", () => {
     } else {
       fail("Input (gateway) does not exist");
     }
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(renderAssignOptions());
   });
 });

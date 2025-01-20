@@ -1,10 +1,10 @@
-import { ResponseJson, ResponseTranslations } from "@/types/requests";
+import { ResponseJson, ResponseOptions } from "@/types/requests";
 import { getRequest, handleJsonResponse } from "../requests";
 
 export default async (
   statType: string,
   orgId: number,
-  messages?: ResponseTranslations
+  options?: ResponseOptions
 ): Promise<ResponseJson<string>> => {
   const response = await getRequest(
     `${process.env.NEXT_PUBLIC_API_V1_URL}/organisations/${orgId}/counts/${statType}`,
@@ -16,5 +16,5 @@ export default async (
     }
   );
 
-  return handleJsonResponse(response, messages);
+  return handleJsonResponse(response, options);
 };
