@@ -1,9 +1,9 @@
-import { Paged, ResponseJson, ResponseTranslations } from "@/types/requests";
+import { Paged, ResponseJson, ResponseOptions } from "@/types/requests";
 import { getRequest, handleJsonResponse } from "../requests";
 import { GetCustodiansResponse } from "./types";
 
 export default async (
-  messages: ResponseTranslations
+  options: ResponseOptions
 ): Promise<ResponseJson<Paged<GetCustodiansResponse>>> => {
   const response = await getRequest(
     `${process.env.NEXT_PUBLIC_API_V1_URL}/custodians`,
@@ -15,5 +15,5 @@ export default async (
     }
   );
 
-  return handleJsonResponse(response, messages);
+  return handleJsonResponse(response, options);
 };

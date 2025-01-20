@@ -1,7 +1,7 @@
 import { useStore } from "@/data/store";
 import { mockedOrganisation } from "@/mocks/data/organisation";
 import {
-  act,
+  commonAccessibilityTests,
   fireEvent,
   render,
   screen,
@@ -9,7 +9,6 @@ import {
   within,
 } from "@/utils/testUtils";
 import { faker } from "@faker-js/faker";
-import { axe } from "jest-axe";
 import DetailsForm, { DetailsFormProps } from "./DetailsForm";
 
 jest.mock("@/data/store");
@@ -35,18 +34,6 @@ const renderUserModalDetails = (props?: Partial<DetailsFormProps>) => {
 describe("<UserModalDetails />", () => {
   afterEach(() => {
     jest.clearAllMocks();
-  });
-
-  it("has no accessibility validations", async () => {
-    const { container } = renderUserModalDetails();
-
-    let results;
-
-    await act(async () => {
-      results = await axe(container);
-    });
-
-    expect(results).toHaveNoViolations();
   });
 
   it("submit is called", async () => {
@@ -85,5 +72,9 @@ describe("<UserModalDetails />", () => {
     await waitFor(() => {
       expect(mockOnSubmit).not.toHaveBeenCalled();
     });
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(renderUserModalDetails());
   });
 });

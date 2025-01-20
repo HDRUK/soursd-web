@@ -3,6 +3,7 @@ import Icon from "@/components/Icon";
 import Results from "@/components/Results";
 import ResultsCard from "@/components/ResultsCard";
 import { useStore } from "@/data/store";
+import { PageSection } from "@/modules";
 import SearchBar from "@/modules/SearchBar";
 import {
   deleteCustodianUser,
@@ -75,7 +76,7 @@ export default function Users() {
   }, []);
 
   return (
-    <Box>
+    <PageSection>
       <Box sx={{ display: "flex", gap: 1, mb: 3 }}>
         <Box component="form" role="search" sx={{ flexGrow: 1 }}>
           <SearchBar onSearch={() => {}} />
@@ -180,6 +181,6 @@ export default function Users() {
           onClose={handleCloseModal}
         />
       )}
-    </Box>
+    </PageSection>
   );
 }

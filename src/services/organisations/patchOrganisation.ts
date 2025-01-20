@@ -1,11 +1,11 @@
-import { ResponseJson, ResponseTranslations } from "@/types/requests";
+import { ResponseJson, ResponseOptions } from "@/types/requests";
 import { handleJsonResponse, patchRequest } from "../requests";
 import { OrganisationResponse, PatchOrganisationPayload } from "./types";
 
 export default async (
   id: number,
   payload: PatchOrganisationPayload,
-  messages: ResponseTranslations
+  options: ResponseOptions
 ): Promise<ResponseJson<OrganisationResponse>> => {
   const response = await patchRequest(
     `${process.env.NEXT_PUBLIC_API_V1_URL}/organisations/${id}`,
@@ -17,5 +17,5 @@ export default async (
     }
   );
 
-  return handleJsonResponse(response, messages);
+  return handleJsonResponse(response, options);
 };

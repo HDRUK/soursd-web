@@ -2,9 +2,9 @@
 
 import { ROUTES } from "@/consts/router";
 import { ApplicationDataProvider } from "@/context/ApplicationData";
-import { getRequest } from "@/services/requests";
+import { getMe } from "@/services/auth";
+import { getCustodianUser } from "@/services/custodian_users";
 import { User } from "@/types/application";
-import { ResponseJson } from "@/types/requests";
 import { handleLogin } from "@/utils/keycloak";
 import { getRoutes } from "@/utils/router";
 import Cookies from "js-cookie";
@@ -18,20 +18,10 @@ type LayoutProps = PropsWithChildren<{
 async function validateAccessToken(
   pathname: string | null,
   router: ReturnType<typeof useRouter>
-): Promise<ResponseJson<User> | null> {
-  const response = await getRequest<User>(
-    `${process.env.NEXT_PUBLIC_API_URL}/auth/me`,
-    undefined,
-    {
-      headers: {
-        "content-type": "application/json;charset=UTF-8",
-      },
-    }
-  );
-
-  if (response.ok) {
-    return response.json();
-  }
+): Promise<User | undefined> {
+  const response = await getMe({
+    suppressThrow: true,
+  });
 
   if (response.status === 404) {
     router.push("/en/register");
@@ -44,7 +34,19 @@ async function validateAccessToken(
     }
   }
 
-  return null;
+  return response?.data;
+}
+
+async function getCustodianId(user: User) {
+  let custodian_id = user?.custodian_id;
+
+  if (user.custodian_user_id) {
+    const custodianUser = await getCustodianUser(user.custodian_user_id);
+
+    custodian_id = custodianUser?.data.custodian_id;
+  }
+
+  return custodian_id;
 }
 
 export default function Layout({ children, params: { locale } }: LayoutProps) {
@@ -52,16 +54,18 @@ export default function Layout({ children, params: { locale } }: LayoutProps) {
   const pathname = usePathname();
   const router = useRouter();
   const [me, setMe] = useState<User>();
+  const [custodianId, setCustodianId] = useState<number>();
 
   useEffect(() => {
     const performAuthCheck = async () => {
       const user = await validateAccessToken(pathname, router);
 
-      if (!user?.data) {
+      if (!user) {
         throw new Error("Unauthorised 401");
       }
 
-      setMe(user?.data);
+      setCustodianId(await getCustodianId(user));
+      setMe(user);
     };
 
     performAuthCheck();
@@ -70,6 +74,7 @@ export default function Layout({ children, params: { locale } }: LayoutProps) {
   return (
     me && (
       <ApplicationDataProvider
+        custodianId={custodianId}
         me={me}
         value={{
           routes,

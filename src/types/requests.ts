@@ -2,17 +2,19 @@ interface ResponseTranslation {
   message: string;
 }
 
-interface ResponseTranslations {
+interface ResponseOptions {
   "401"?: ResponseTranslation;
   "403"?: ResponseTranslation;
   "404"?: ResponseTranslation;
   "500"?: ResponseTranslation;
   error?: ResponseTranslation;
+  suppressThrow?: boolean;
 }
 
 type ResponseJson<T> = Response & {
   data: T;
   message: string;
+  status: number;
 };
 
 interface Paged<T> {
@@ -33,7 +35,7 @@ export type {
   Paged,
   ResponseJson,
   ResponseTranslation,
-  ResponseTranslations,
+  ResponseOptions,
   QueryOptions,
   QueryPayload,
 };
