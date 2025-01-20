@@ -1,12 +1,11 @@
 import { act, renderHook, waitFor } from "@/utils/testUtils";
 import { getProjects } from "@/services/projects";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/routing";
 import { ProjectsResponse } from "@/services/projects/types";
 import usePaginatedQuery, { PaginatedQueryReturn } from "./usePaginatedQuery";
 
 jest.mock("@/data/store");
-
-jest.mock("next/navigation");
+jest.mock("@/i18n/routing");
 
 const mockedPush = jest.fn();
 

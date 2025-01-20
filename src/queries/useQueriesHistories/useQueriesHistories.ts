@@ -16,18 +16,15 @@ export interface HistoryCombinedData {
 
 type QueryFunctionContextDefault = QueryFunctionContext<[string, number]>;
 
-export default function useQueriesHistory(
-  registryId: number,
-  enabled: boolean
-) {
+export default function useQueriesHistory(registryId: number) {
   const queries = [
     {
-      queryKey: ["getEmployments", registryId],
+      queryKey: ["getEmployments", 1],
       queryFn: ({ queryKey }: QueryFunctionContextDefault) =>
         getEmployments(queryKey[1], {
           error: { message: "getEmploymentsError" },
         }),
-      enabled,
+      enabled: !!registryId,
     },
     {
       queryKey: ["getEducations", registryId],
@@ -35,7 +32,7 @@ export default function useQueriesHistory(
         getEducations(queryKey[1], {
           error: { message: "getEducationsError" },
         }),
-      enabled,
+      enabled: !!registryId,
     },
     {
       queryKey: ["getTrainings", registryId],
@@ -43,7 +40,7 @@ export default function useQueriesHistory(
         getTrainingByRegistryId(queryKey[1], {
           error: { message: "getTrainingsError" },
         }),
-      enabled,
+      enabled: !!registryId,
     },
     {
       queryKey: ["getAccreditations", registryId],
@@ -51,7 +48,7 @@ export default function useQueriesHistory(
         getAccreditations(queryKey[1], {
           error: { message: "getAccreditationsError" },
         }),
-      enabled,
+      enabled: !!registryId,
     },
     {
       queryKey: ["getUserApprovedProjects", registryId],
@@ -59,7 +56,7 @@ export default function useQueriesHistory(
         getUserApprovedProjects(queryKey[1], {
           error: { message: "getUserApprovedProjectsError" },
         }),
-      enabled,
+      enabled: !!registryId,
     },
   ];
 

@@ -2,7 +2,7 @@
 
 import { handleLogin } from "@/utils/keycloak";
 import Cookies from "js-cookie";
-import { usePathname } from "next/navigation";
+import { usePathname } from "@/i18n/routing";
 import { PropsWithChildren, useEffect, useState } from "react";
 
 async function validateAccessToken(pathname: string | null): Promise<boolean> {

@@ -69,7 +69,10 @@ async function getRequest<T>(url: string, payload?: T, options?: RequestInit) {
     `${url}${payload ? `?${objectToQuerystring(payload)}` : ""}`,
     {
       ...options,
-      headers: getHeadersWithAuthorisation(options?.headers),
+      headers: getHeadersWithAuthorisation({
+        "content-type": "application/json;charset=UTF-8",
+        ...options?.headers,
+      }),
       ...(options?.body && { body: JSON.stringify(options?.body) }),
     }
   );
@@ -85,10 +88,10 @@ async function postRequest<T>(
   const response = await fetch(url, {
     ...options,
     method: "POST",
-    headers: {
-      ...getHeadersWithAuthorisation(options?.headers),
+    headers: getHeadersWithAuthorisation({
+      "content-type": "application/json;charset=UTF-8",
       ...options?.headers,
-    },
+    }),
     body: payload instanceof Function ? payload() : JSON.stringify(payload),
   });
 
@@ -103,7 +106,10 @@ async function patchRequest<T>(
   const response = await fetch(url, {
     ...options,
     method: "PATCH",
-    headers: getHeadersWithAuthorisation(options?.headers),
+    headers: getHeadersWithAuthorisation({
+      "content-type": "application/json;charset=UTF-8",
+      ...options?.headers,
+    }),
     body: payload instanceof Function ? payload() : JSON.stringify(payload),
   });
 
@@ -118,7 +124,10 @@ async function putRequest<T>(
   const response = await fetch(url, {
     ...options,
     method: "PUT",
-    headers: getHeadersWithAuthorisation(options?.headers),
+    headers: getHeadersWithAuthorisation({
+      "content-type": "application/json;charset=UTF-8",
+      ...options?.headers,
+    }),
     body: payload instanceof Function ? payload() : JSON.stringify(payload),
   });
 
@@ -133,7 +142,10 @@ async function deleteRequest<T>(
   const response = await fetch(url, {
     ...options,
     method: "DELETE",
-    headers: getHeadersWithAuthorisation(options?.headers),
+    headers: getHeadersWithAuthorisation({
+      "content-type": "application/json;charset=UTF-8",
+      ...options?.headers,
+    }),
   });
 
   return response;

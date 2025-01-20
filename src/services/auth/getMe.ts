@@ -6,12 +6,7 @@ export default async (
   options?: ResponseOptions
 ): Promise<ResponseJson<MeResponse>> => {
   const response = await getRequest(
-    `${process.env.NEXT_PUBLIC_API_URL}/auth/me`,
-    {
-      headers: {
-        "content-type": "application/json;charset=UTF-8",
-      },
-    }
+    `${process.env.NEXT_PUBLIC_API_URL}/auth/me`
   );
 
   return handleJsonResponse(response, options);

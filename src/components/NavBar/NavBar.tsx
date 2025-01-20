@@ -1,6 +1,7 @@
 "use client";
 
 import useAuth from "@/hooks/useAuth";
+import { useRouter } from "@/i18n/routing";
 import { handleLogin, handleLogout, handleRegister } from "@/utils/keycloak";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
@@ -13,7 +14,6 @@ import {
   useTheme,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import HorizontalDrawer from "../HorizontalDrawer";
 import NotificationsMenu from "../NotificationsMenu";
@@ -35,7 +35,7 @@ export enum ButtonVariant {
 
 export default function NavBar() {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_NAVBAR);
-  const { isAuthenticated } = useAuth();
+  const auth = useAuth();
   const router = useRouter();
 
   const theme = useTheme();
@@ -85,11 +85,11 @@ export default function NavBar() {
     {
       color: ButtonColor.Secondary,
       variant: ButtonVariant.Contained,
-      text: isAuthenticated ? t("signOutButton") : t("signInButton"),
-      onClick: isAuthenticated ? handleLogout : handleLogin,
+      text: auth ? t("signOutButton") : t("signInButton"),
+      onClick: auth ? handleLogout : handleLogin,
     },
     // Conditionally render the register button only when not authenticated
-    ...(isAuthenticated
+    ...(auth
       ? []
       : [
           {

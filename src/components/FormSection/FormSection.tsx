@@ -2,7 +2,7 @@ import { Box, BoxProps } from "@mui/material";
 import { ReactNode } from "react";
 
 export interface FormSectionProps extends BoxProps {
-  heading: ReactNode;
+  heading?: ReactNode;
 }
 
 export default function FormSection({

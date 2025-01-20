@@ -1,3 +1,5 @@
+import { useRouter } from "@/i18n/routing";
+import { mockedJwt } from "@/mocks/data/auth";
 import { postRegister } from "@/services/auth";
 import { AccountType } from "@/types/accounts";
 import {
@@ -7,12 +9,10 @@ import {
   render,
   screen,
 } from "@/utils/testUtils";
-import { useRouter } from "next/navigation";
 import AccountConfirm from "./AccountConfirm";
 
 jest.mock("@/data/store");
-
-jest.mock("next/navigation", () => ({
+jest.mock("@/i18n/routing", () => ({
   useParams: jest.fn(),
   useRouter: jest.fn(() => ({
     replace: jest.fn(),
@@ -21,6 +21,10 @@ jest.mock("next/navigation", () => ({
 
 jest.mock("@/services/auth", () => ({
   postRegister: jest.fn(),
+}));
+
+jest.mock("js-cookie", () => ({
+  get: () => mockedJwt,
 }));
 
 const mockedReplace = jest.fn();
@@ -112,7 +116,7 @@ describe("<AccountConfirm />", () => {
     });
 
     expect(postRegister).toHaveBeenCalledWith(
-      { account_type: AccountType.ORGANISATION },
+      { account_type: AccountType.ORGANISATION, organisation_id: 1 },
       { error: { message: expect.any(String) } }
     );
 

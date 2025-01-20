@@ -42,7 +42,7 @@ describe("<Completion />", () => {
     await waitFor(() => {
       expect(link).toHaveAttribute(
         "href",
-        `/en${ROUTES.profileResearcherIdentity.path}`
+        ROUTES.profileResearcherIdentity.path
       );
     });
   });
