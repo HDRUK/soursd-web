@@ -44,7 +44,7 @@ export default function useProfileCompletion() {
   const { mutateAsync, isError, isPending, error } = useMutation({
     mutationKey: ["patchUser"],
     mutationFn: (payload: PatchUserPayload) =>
-      patchUser(1, payload, {
+      patchUser(user?.id, payload, {
         error: {
           message: "submitError",
         },

@@ -103,8 +103,7 @@ export default function Training() {
           text: tProfile("postTrainingSuccess"),
           confirmButtonText: tProfile("postTrainingSuccessButton"),
         });
-      } catch (error) {
-        console.log(error);
+      } catch (_) {
         const errorMessage = tProfile("postTrainingError");
         showAlert("error", {
           text: errorMessage,
@@ -160,6 +159,13 @@ export default function Training() {
     },
   };
 
+  const formFields = [
+    { name: "provider", component: TextField },
+    { name: "training_name", component: TextField },
+    { name: "awarded_at", component: DateInput },
+    { name: "expires_at", component: DateInput },
+  ];
+
   return (
     <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
       <Form onSubmit={handleDetailsSubmit} schema={schema} {...formOptions}>
@@ -167,30 +173,16 @@ export default function Training() {
           <>
             <FormSection heading={tProfile("training")}>
               <Grid container rowSpacing={3}>
-                <Grid item xs={12}>
-                  <FormControlHorizontal
-                    name="provider"
-                    renderField={fieldProps => <TextField {...fieldProps} />}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <FormControlHorizontal
-                    name="training_name"
-                    renderField={fieldProps => <TextField {...fieldProps} />}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <FormControlHorizontal
-                    name="awarded_at"
-                    renderField={fieldProps => <DateInput {...fieldProps} />}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <FormControlHorizontal
-                    name="expires_at"
-                    renderField={fieldProps => <DateInput {...fieldProps} />}
-                  />
-                </Grid>
+                {formFields.map(field => (
+                  <Grid item xs={12} key={field.name}>
+                    <FormControlHorizontal
+                      name={field.name}
+                      renderField={fieldProps => (
+                        <field.component {...fieldProps} />
+                      )}
+                    />
+                  </Grid>
+                ))}
               </Grid>
             </FormSection>
             <FormActions>
@@ -207,7 +199,7 @@ export default function Training() {
       </Form>
       <StyledBox>
         {histories?.training?.map(training => (
-          <ResearcherTrainingEntry data={training} />
+          <ResearcherTrainingEntry key={training.id} data={training} />
         ))}
       </StyledBox>
       {isError && (
