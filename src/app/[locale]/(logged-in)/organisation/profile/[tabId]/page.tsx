@@ -3,6 +3,7 @@ import { PageContainer } from "@/modules";
 import TabsContents from "./components/TabsContents";
 import TabsSections from "./components/TabsSections";
 import { PageTabs } from "./consts/tabs";
+import { redirect } from "@/i18n/routing";
 
 interface PageProps extends ConfigProps {
   params: {

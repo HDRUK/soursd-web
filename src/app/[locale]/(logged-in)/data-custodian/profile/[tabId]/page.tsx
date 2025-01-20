@@ -1,11 +1,12 @@
-import { ConfigProps, withConfig } from "@/components/Config";
+import { useApplicationData } from "@/context/ApplicationData";
 import { PageContainer, PageContent, PageTitle } from "@/modules";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { redirect } from "next/navigation";
 import TabsContents from "./components/TabsContents";
 import TabsSections from "./components/TabsSections";
 import { PageTabs } from "./consts/tabs";
+import { ConfigProps, withConfig } from "@/components/Config";
+import { redirect } from "@/i18n/routing";
 
 const NAMESPACE_TRANSLATIONS_PROFILE = "CustodianProfile";
 
@@ -16,6 +17,7 @@ interface PageProps extends ConfigProps {
 }
 
 function Page({ params: { tabId }, config }: PageProps) {
+  const { routes } = useApplicationData();
   const t = useTranslations(NAMESPACE_TRANSLATIONS_PROFILE);
 
   if (!Object.values(PageTabs).includes(tabId)) {
