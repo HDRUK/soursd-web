@@ -115,7 +115,6 @@ describe("<User />", () => {
       })
     );
 
-    // Simulate confirming the alert
     const { preConfirm } = (showAlert as jest.Mock).mock.calls[0][1];
     await preConfirm();
 
@@ -138,7 +137,6 @@ describe("<User />", () => {
     const removeButtons = screen.getAllByLabelText("icon-button");
     await userEvent.click(removeButtons[0]);
 
-    // Simulate confirming the alert
     const { preConfirm } = (showAlert as jest.Mock).mock.calls[0][1];
     await preConfirm();
 
@@ -165,7 +163,6 @@ describe("<User />", () => {
     const removeButtons = screen.getAllByLabelText("icon-button");
     await userEvent.click(removeButtons[0]);
 
-    // Simulate confirming the alert
     const { preConfirm } = (showAlert as jest.Mock).mock.calls[0][1];
     await preConfirm();
 
