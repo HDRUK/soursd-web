@@ -26,6 +26,7 @@ import { postEmployments } from "@/services/employments";
 import { Add } from "@mui/icons-material";
 import DateInput from "@/components/DateInput";
 import { showAlert } from "@/utils/showAlert";
+import { VALIDATION_ROR_ID } from "@/consts/form";
 
 export interface EmploymentsFormValues {
   employer_name: string;
@@ -97,7 +98,7 @@ export default function EmploymentsForm({ onSubmit }: EmploymentsFormProps) {
         ror: yup
           .string()
           .required(tForm("rorRequiredInvalid"))
-          .matches(/^0[a-zA-Z0-9]{8}$/, tForm("rorInvalid")),
+          .matches(VALIDATION_ROR_ID, tForm("rorInvalid")),
       }),
     [tForm]
   );
