@@ -2,6 +2,8 @@ import React from "react";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
 import { DatePicker, DatePickerProps } from "@mui/x-date-pickers/DatePicker";
+import { useLocale } from "next-intl";
+import { enGB } from "date-fns/locale/en-GB";
 
 export interface DateInputProps extends DatePickerProps<Date> {
   id?: string;
@@ -9,8 +11,11 @@ export interface DateInputProps extends DatePickerProps<Date> {
 }
 
 const DateInput = ({ label, value, onChange, id, ...rest }: DateInputProps) => {
+  const localeString = useLocale();
+  const locale = localeString === "en" ? enGB : enGB; // Add more locales as needed
+
   return (
-    <LocalizationProvider dateAdapter={AdapterDateFns}>
+    <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={locale}>
       <DatePicker
         label={label}
         value={value}
@@ -21,7 +26,6 @@ const DateInput = ({ label, value, onChange, id, ...rest }: DateInputProps) => {
             fullWidth: true,
             variant: "outlined",
             size: "small",
-            placeholder: "MM/DD/YYYY",
           },
         }}
         {...rest}

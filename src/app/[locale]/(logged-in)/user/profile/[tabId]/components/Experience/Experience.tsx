@@ -22,17 +22,13 @@ export default function Experience() {
   // When adding implementation is added for accreditations and education, this will need to be updated to be generic
   const onSubmit = useCallback(
     async (employment: PostEmploymentsPayload) => {
-      try {
-        const histories = getHistories();
-        const updatedHistories = {
-          ...histories,
-          employments: [...histories.employments, employment],
-        };
-        if (updatedHistories) {
-          setHistories(updatedHistories);
-        }
-      } catch (error) {
-        console.log(error);
+      const histories = getHistories();
+      const updatedHistories = {
+        ...histories,
+        employments: [...histories.employments, employment],
+      };
+      if (updatedHistories) {
+        setHistories(updatedHistories);
       }
     },
     [getHistories, setHistories]

@@ -194,7 +194,7 @@ export default function EmploymentsForm({ onSubmit }: EmploymentsFormProps) {
         onSubmit={handleEmploymentSubmit}
         {...formOptions}
         sx={{ paddingLeft: "16px" }}>
-        {({ control, formState: { errors }, setValue, watch }) => {
+        {({ control, setValue, watch }) => {
           const isCurrent = watch("is_current");
           return (
             <>
@@ -202,14 +202,12 @@ export default function EmploymentsForm({ onSubmit }: EmploymentsFormProps) {
                 <Grid item xs={12}>
                   <FormControlHorizontal
                     name="employer_name"
-                    error={errors.employer_name}
                     renderField={fieldProps => <TextField {...fieldProps} />}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <FormControlHorizontal
                     name="department"
-                    error={errors.department}
                     renderField={fieldProps => <TextField {...fieldProps} />}
                   />
                 </Grid>
@@ -227,73 +225,61 @@ export default function EmploymentsForm({ onSubmit }: EmploymentsFormProps) {
                 <Grid item xs={12}>
                   <FormControlHorizontal
                     name="address_1"
-                    error={errors.address_1}
                     renderField={fieldProps => <TextField {...fieldProps} />}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <FormControlHorizontal
                     name="address_2"
-                    error={errors.address_2}
                     renderField={fieldProps => <TextField {...fieldProps} />}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <FormControlHorizontal
                     name="town"
-                    error={errors.town}
                     renderField={fieldProps => <TextField {...fieldProps} />}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <FormControlHorizontal
                     name="county"
-                    error={errors.county}
                     renderField={fieldProps => <TextField {...fieldProps} />}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <FormControlHorizontal
                     name="country"
-                    error={errors.country}
                     renderField={fieldProps => <TextField {...fieldProps} />}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <FormControlHorizontal
                     name="postcode"
-                    error={errors.postcode}
-                    renderField={fieldProps => (
-                      <TextField sx={{ maxWidth: "2000px" }} {...fieldProps} />
-                    )}
+                    renderField={fieldProps => <TextField {...fieldProps} />}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <FormControlHorizontal
                     name="role"
-                    error={errors.role}
                     renderField={fieldProps => <TextField {...fieldProps} />}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <FormControlHorizontal
                     name="from"
-                    error={errors.from}
                     renderField={fieldProps => <DateInput {...fieldProps} />}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <FormControlHorizontal
                     name="is_current"
-                    error={errors.from}
-                    placeholder="is current"
+                    placeholder="is_current"
                     renderField={fieldProps => <Checkbox {...fieldProps} />}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <FormControlHorizontal
                     name="to"
-                    error={errors.to}
                     disabled={isCurrent}
                     renderField={fieldProps => <DateInput {...fieldProps} />}
                   />
@@ -301,7 +287,6 @@ export default function EmploymentsForm({ onSubmit }: EmploymentsFormProps) {
                 <Grid item xs={12}>
                   <FormControlHorizontal
                     name="ror"
-                    error={errors.ror}
                     renderField={fieldProps => <TextField {...fieldProps} />}
                   />
                 </Grid>
