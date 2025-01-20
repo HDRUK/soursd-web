@@ -1,4 +1,5 @@
 import { useCookies } from "@/context/CookieContext";
+import { mockedJwt } from "@/mocks/data/auth";
 import theme from "@/theme";
 import { handleLogin, handleLogout } from "@/utils/keycloak";
 import {
@@ -9,7 +10,6 @@ import {
   waitFor,
 } from "@/utils/testUtils";
 import NavBar from "./NavBar";
-import { mockedJwt } from "@/mocks/data/auth";
 
 jest.mock("@/context/CookieContext", () => ({
   useCookies: jest.fn(),

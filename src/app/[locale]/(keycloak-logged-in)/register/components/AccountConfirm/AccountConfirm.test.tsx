@@ -1,3 +1,5 @@
+import { useRouter } from "@/i18n/routing";
+import { mockedJwt } from "@/mocks/data/auth";
 import { postRegister } from "@/services/auth";
 import { AccountType } from "@/types/accounts";
 import {
@@ -7,9 +9,7 @@ import {
   render,
   screen,
 } from "@/utils/testUtils";
-import { useRouter } from "@/i18n/routing";
 import AccountConfirm from "./AccountConfirm";
-import { mockedJwt } from "@/mocks/data/auth";
 
 jest.mock("@/data/store");
 jest.mock("@/i18n/routing", () => ({

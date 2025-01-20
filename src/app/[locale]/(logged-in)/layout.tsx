@@ -21,8 +21,6 @@ async function validateAccessToken(
     suppressThrow: true,
   });
 
-  console.log("****** response", response);
-
   if (response.status === 404) {
     router.push(ROUTES.register.path);
   } else if (response.status === 500) {

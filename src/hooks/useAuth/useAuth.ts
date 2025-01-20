@@ -1,8 +1,7 @@
 import { useCookies } from "@/context/CookieContext";
-import { parseValidJSON } from "@/utils/json";
-import { useMemo } from "react";
-import { jwtDecode } from "jwt-decode";
 import { Auth } from "@/types/application";
+import { jwtDecode } from "jwt-decode";
+import { useMemo } from "react";
 
 export default function useAuth() {
   const { getCookie } = useCookies();

@@ -442,6 +442,7 @@
   },
   "Register": {
     "title": "Confirm account type",
+    "postOrganisationUnclaimedError": "Unable to create the initial organisation data, please try again. Alternatively, please contact us at <contactLink></contactLink>",
     "failedToRegister": "Failed to register account. Have you already registered?",
     "repOrgButton": "I represent an organisation",
     "repMyselfButton": "I represent myself as an individual",
