@@ -8,11 +8,17 @@ import {
   screen,
   waitFor,
 } from "@/utils/testUtils";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import * as showAlertModule from "@/utils/showAlert";
+import { showAlert } from "@/utils/showAlert";
+import userEvent from "@testing-library/user-event";
 import Users from "./Users";
 
 jest.mock("@/services/organisations");
 jest.mock("@/data/store");
 jest.mock("@/hooks/usePaginatedQuery");
+jest.mock("@tanstack/react-query");
+jest.mock("@/utils/showAlert");
 jest.mock("@/i18n/routing", () => ({
   useSearchParams: jest.fn(),
   usePathname: jest.fn(),
@@ -47,8 +53,20 @@ const mockUsers = [
   page: 1,
   setPage: jest.fn(),
 });
+(useMutation as jest.Mock).mockReturnValue({
+  mutateAsync: jest.fn(),
+  isPending: false,
+  error: null,
+});
+(useQueryClient as jest.Mock).mockReturnValue({
+  refetchQueries: jest.fn(),
+});
 
 describe("<User />", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it("has the correct content", async () => {
     render(<Users />);
 
@@ -70,6 +88,93 @@ describe("<User />", () => {
     expect(await screen.findByText("Previous")).toBeInTheDocument();
     expect(await screen.findByText("1")).toBeInTheDocument();
     expect(await screen.findByText("Next")).toBeInTheDocument();
+  });
+
+  it("calls handleRemoveUser when remove icon is clicked", async () => {
+    const mockMutateAsync = jest.fn();
+
+    (useMutation as jest.Mock).mockReturnValue({
+      mutateAsync: mockMutateAsync,
+      isPending: false,
+      error: null,
+    });
+
+    jest
+      .spyOn(showAlertModule, "showAlert")
+      .mockImplementation(() => Promise.resolve({ isConfirmed: true }));
+
+    render(<Users />);
+
+    const removeButtons = screen.getAllByLabelText("icon-button");
+    await userEvent.click(removeButtons[0]);
+
+    expect(showAlertModule.showAlert).toHaveBeenCalledWith(
+      "warning",
+      expect.objectContaining({
+        text: "This is a permanent action and the user will be removed from your organisation. Proceed?",
+      })
+    );
+
+    // Simulate confirming the alert
+    const { preConfirm } = (showAlert as jest.Mock).mock.calls[0][1];
+    await preConfirm();
+
+    expect(mockMutateAsync).toHaveBeenCalledWith({
+      organisationId: defaultOrganisation.id,
+      registryId: mockUsers[0].registry_id,
+    });
+  });
+
+  it("shows success alert after successful user removal", async () => {
+    const mockMutateAsync = jest.fn().mockResolvedValue({});
+    (useMutation as jest.Mock).mockReturnValue({
+      mutateAsync: mockMutateAsync,
+      isPending: false,
+      error: null,
+    });
+
+    render(<Users />);
+
+    const removeButtons = screen.getAllByLabelText("icon-button");
+    await userEvent.click(removeButtons[0]);
+
+    // Simulate confirming the alert
+    const { preConfirm } = (showAlert as jest.Mock).mock.calls[0][1];
+    await preConfirm();
+
+    expect(showAlert).toHaveBeenCalledWith(
+      "success",
+      expect.objectContaining({
+        text: "User removed successfully",
+      })
+    );
+  });
+
+  it("shows error alert after failed user removal", async () => {
+    const mockMutateAsync = jest
+      .fn()
+      .mockRejectedValue(new Error("Failed to remove user"));
+    (useMutation as jest.Mock).mockReturnValue({
+      mutateAsync: mockMutateAsync,
+      isPending: false,
+      error: "Unable to delete this user. Please try again",
+    });
+
+    render(<Users />);
+
+    const removeButtons = screen.getAllByLabelText("icon-button");
+    await userEvent.click(removeButtons[0]);
+
+    // Simulate confirming the alert
+    const { preConfirm } = (showAlert as jest.Mock).mock.calls[0][1];
+    await preConfirm();
+
+    expect(showAlert).toHaveBeenCalledWith(
+      "error",
+      expect.objectContaining({
+        text: "Unable to delete this user. Please try again",
+      })
+    );
   });
 
   it("has no accessibility violations", async () => {

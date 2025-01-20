@@ -14,10 +14,13 @@ import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOu
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import { Box, Button, IconButton, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { getOrganisationUsers } from "@/services/organisations";
 import Pagination from "@/components/Pagination";
 import usePaginatedQuery from "@/hooks/usePaginatedQuery";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import deleteOrganisationUser from "@/services/organisations/deleteOrganisationUser";
+import { showAlert } from "@/utils/showAlert";
 import UserModal from "../UserModal";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
@@ -26,6 +29,7 @@ export default function Users() {
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const [open, setOpen] = useState(false);
   const organisation = useStore(state => state.config.organisation);
+  const queryClient = useQueryClient();
 
   const {
     isError: isGetUsersError,
@@ -45,6 +49,57 @@ export default function Users() {
     },
     enabled: !!organisation,
   });
+
+  const {
+    mutateAsync: mutateRemoveUserAsync,
+    isPending,
+    error: removeError,
+  } = useMutation({
+    mutationKey: ["deleteOrganisationUser"],
+    mutationFn: ({
+      organisationId,
+      registryId,
+    }: {
+      organisationId: number;
+      registryId: number;
+    }) => {
+      return deleteOrganisationUser(organisationId, registryId, {
+        error: { message: "deleteOrganisationUserError" },
+      });
+    },
+  });
+
+  const handleRemoveUser = useCallback(
+    async (registryId: number) => {
+      if (organisation?.id) {
+        showAlert("warning", {
+          text: t("removeUserWarningDescription"),
+          preConfirm: async () => {
+            try {
+              await mutateRemoveUserAsync({
+                organisationId: organisation.id,
+                registryId,
+              });
+              showAlert("success", {
+                text: t("removeUserSuccessText"),
+                willClose: () => {
+                  queryClient.refetchQueries({
+                    queryKey: ["getOrganisationUsers", organisation?.id],
+                  });
+                },
+              });
+            } catch (_) {
+              showAlert("error", {
+                text: t("deleteOrganisationUserError"),
+              });
+            }
+          },
+          cancelButtonText: t("cancelButton"),
+        });
+      }
+    },
+    [mutateRemoveUserAsync, organisation?.id, t, removeError]
+  );
 
   return (
     <PageGuidance
@@ -105,7 +160,9 @@ export default function Users() {
                 <IconButton
                   size="small"
                   color="inherit"
-                  aria-label="icon-button">
+                  aria-label="icon-button"
+                  onClick={() => handleRemoveUser(user.registry_id)}
+                  disabled={isPending}>
                   <DecoupleIcon />
                 </IconButton>
               }

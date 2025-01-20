@@ -105,7 +105,11 @@
     "inviteUserAriaLabel": "Invite user",
     "getError": "Unable to get the list of users. Please try again or contact us at <contactLink></contactLink>",
     "getDelegatesError": "Unable to get the list of delegates. Please try again or contact us at <contactLink></contactLink>",
-    "noResults": "There are no delegates"
+    "noResults": "There are no delegates",
+    "deleteOrganisationUserError": "Unable to delete this user. Please try again",
+    "removeUserWarningDescription": "This is a permanent action and the user will be removed from your organisation. Proceed?",
+    "removeUserSuccessText": "User removed successfully",
+    "cancelButton": "Cancel"
   },
   "Form": {
     "cancelButton": "Cancel",
