@@ -36,8 +36,9 @@ const useApplicationData = () => useContext(ApplicationDataContext);
 
 interface ApplicationDataProviderProps {
   children: ReactNode;
-  me?: User;
   value: ApplicationDataState;
+  custodianId?: number;
+  me?: User;
 }
 
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
@@ -46,12 +47,13 @@ const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 const ApplicationDataProvider = ({
   children,
   me,
+  custodianId,
   value,
 }: ApplicationDataProviderProps) => {
   const t = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
-  const addUrlToHistory = useStore(store => store.addUrlToHistory);
 
+  const addUrlToHistory = useStore(store => store.addUrlToHistory);
   const [user, setUser] = useStore(store => [store.config.user, store.setUser]);
 
   const [organisation, setOrganisation] = useStore(store => [
@@ -87,6 +89,7 @@ const ApplicationDataProvider = ({
     data: applicationData,
   } = useApplicationDependencies({
     user: me,
+    custodianId,
   });
 
   const {
@@ -172,6 +175,7 @@ const ApplicationDataProvider = ({
     !isApplicationLoading &&
     !isHistoriesLoading &&
     custodian &&
+    custodianId &&
     !!sectors?.length &&
     !!permissions?.length;
 

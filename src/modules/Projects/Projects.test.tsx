@@ -1,10 +1,14 @@
 import { useStore } from "@/data/store";
-import { act, fireEvent, render, waitFor } from "@/utils/testUtils";
-import { axe } from "jest-axe";
+import AppRouterContextProviderMock from "@/mocks/context/router";
 import { mockedCustodian } from "@/mocks/data/custodian";
 import { mockedOrganisation } from "@/mocks/data/organisation";
-import AppRouterContextProviderMock from "@/mocks/context/router";
 import { ProjectEntities } from "@/services/projects/getEntityProjects";
+import {
+  commonAccessibilityTests,
+  fireEvent,
+  render,
+  waitFor,
+} from "@/utils/testUtils";
 import Projects from ".";
 
 jest.mock("@/data/store");
@@ -27,16 +31,6 @@ const renderProjects = ({ variant }: { variant: ProjectEntities }) =>
   );
 
 describe("Organisation Projects", () => {
-  it("has no accessibility violations", async () => {
-    const { container } = renderProjects({ variant: "organisation" });
-
-    let results;
-
-    await act(async () => {
-      results = await axe(container);
-    });
-    expect(results).toHaveNoViolations();
-  });
   it("display 10 projects", async () => {
     const { getAllByTestId } = renderProjects({
       variant: "organisation",
@@ -50,19 +44,13 @@ describe("Organisation Projects", () => {
     const expandIcon = expandIcons[0];
     fireEvent.click(expandIcon!);
   });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(renderProjects({ variant: "organisation" }));
+  });
 });
 
 describe("Custodian Projects", () => {
-  it("has no accessibility violations", async () => {
-    const { container } = renderProjects({ variant: "custodian" });
-
-    let results;
-
-    await act(async () => {
-      results = await axe(container);
-    });
-    expect(results).toHaveNoViolations();
-  });
   it("display 5 projects", async () => {
     const { getAllByTestId } = renderProjects({
       variant: "custodian",
@@ -75,5 +63,9 @@ describe("Custodian Projects", () => {
     const expandIcons = getAllByTestId("ExpandMoreIcon");
     const expandIcon = expandIcons[0];
     fireEvent.click(expandIcon!);
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(renderProjects({ variant: "custodian" }));
   });
 });

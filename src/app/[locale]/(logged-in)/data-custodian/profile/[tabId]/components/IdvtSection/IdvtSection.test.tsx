@@ -1,5 +1,10 @@
-import { act, fireEvent, render, screen, waitFor } from "@/utils/testUtils";
-import { axe } from "jest-axe";
+import {
+  commonAccessibilityTests,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from "@/utils/testUtils";
 import { FormProvider, useForm } from "react-hook-form";
 import IdvtSection, { IdvtSectionProps } from "./IdvtSection";
 
@@ -23,18 +28,6 @@ const TestComponent = (props?: Partial<IdvtSectionProps>) => {
 };
 
 describe("<Details />", () => {
-  it("has no accessibility validations", async () => {
-    const { container } = render(<TestComponent />);
-
-    let results;
-
-    await act(async () => {
-      results = await axe(container);
-    });
-
-    expect(results).toHaveNoViolations();
-  });
-
   it("changes the idvt value", async () => {
     render(<TestComponent />);
 
@@ -45,5 +38,9 @@ describe("<Details />", () => {
     await waitFor(() => {
       expect((idvtRequired as HTMLInputElement).checked).toBe(true);
     });
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(render(<TestComponent />));
   });
 });

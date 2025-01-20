@@ -4,6 +4,7 @@ import ContactLink from "@/components/ContactLink";
 import { Message } from "@/components/Message";
 import OverlayCenter from "@/components/OverlayCenter";
 import { useNotifications } from "@/context/Notifications";
+import { PageSection } from "@/modules";
 import {
   DeleteApprovalPayloadWithEntity,
   PostApprovalPayloadWithEntity,
@@ -14,8 +15,8 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback } from "react";
 import { useMutationApproval, useMutationDeleteApproval } from "../../hooks";
-import OrganisationsList from "../OrganisationsList";
 import OrganisationsLegend from "../OrganisationsLegend";
+import OrganisationsList from "../OrganisationsList";
 
 const NAMESPACE_TRANSLATIONS_USERS_LIST = "UsersList";
 const NAMESPACE_TRANSLATIONS_USERS = "Users";
@@ -82,7 +83,7 @@ export default function Sections() {
   );
 
   return (
-    <>
+    <PageSection>
       <OrganisationsLegend />
       {isOrganisationsLoading && (
         <OverlayCenter variant="contained">
@@ -108,6 +109,6 @@ export default function Sections() {
           }}
         />
       )}
-    </>
+    </PageSection>
   );
 }

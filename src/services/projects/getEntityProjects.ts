@@ -1,4 +1,4 @@
-import { Paged, ResponseJson, ResponseTranslations } from "@/types/requests";
+import { Paged, ResponseJson, ResponseOptions } from "@/types/requests";
 import { getRequest, handleJsonResponse } from "../requests";
 import { ProjectsResponse } from "./types";
 
@@ -8,7 +8,7 @@ export default async (
   entity: ProjectEntities,
   id: string | number | undefined,
   searchParams: Record<string, string | number | undefined>,
-  messages: ResponseTranslations
+  options: ResponseOptions
 ): Promise<ResponseJson<Paged<ProjectsResponse>>> => {
   const params = new URLSearchParams(
     Object.entries(searchParams)
@@ -26,5 +26,5 @@ export default async (
     }
   );
 
-  return handleJsonResponse(response, messages);
+  return handleJsonResponse(response, options);
 };

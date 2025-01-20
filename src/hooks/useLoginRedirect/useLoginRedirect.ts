@@ -21,15 +21,19 @@ export default function useLoginRedirect() {
         /* tslint:disable-next-line:no-empty */
       }
 
-      const { data } = await getMe();
+      const { data } = await getMe({
+        suppressThrow: true,
+      });
 
-      if (data.user_group === UserGroup.CUSTODIANS) {
+      if (data?.user_group === UserGroup.CUSTODIANS) {
         router.replace(routes.profileCustodianDetails.path);
-      } else if (data.user_group === UserGroup.ORGANISATIONS) {
+      } else if (data?.user_group === UserGroup.ORGANISATIONS) {
         router.replace(routes.profileOrganisationDetails.path);
-      } else {
+      } else if (data?.user_group === UserGroup.USERS) {
         router.replace(routes.profileResearcherDetails.path);
       }
+
+      setReady(true);
     }
 
     if (isAuthenticated) {

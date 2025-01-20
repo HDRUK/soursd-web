@@ -1,18 +1,16 @@
-import { act, fireEvent, render, screen } from "@/utils/testUtils";
+import {
+  act,
+  commonAccessibilityTests,
+  fireEvent,
+  render,
+  screen,
+} from "@/utils/testUtils";
 import { faker } from "@faker-js/faker";
-import { axe } from "jest-axe";
 import ContactForm from "./ContactForm";
 
 const mockSubmit = jest.fn();
 
 describe("<ContactForm />", () => {
-  it("has no accessibility violations", async () => {
-    const { container } = render(<ContactForm onSubmit={mockSubmit} />);
-
-    const results = await axe(container);
-    expect(results).toHaveNoViolations();
-  });
-
   it("displays error state when values are not defined", async () => {
     render(<ContactForm onSubmit={mockSubmit} />);
 
@@ -55,5 +53,9 @@ describe("<ContactForm />", () => {
     } else {
       fail("Name, email or message does not exist");
     }
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(render(<ContactForm onSubmit={mockSubmit} />));
   });
 });

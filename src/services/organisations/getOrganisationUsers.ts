@@ -1,11 +1,11 @@
-import { Paged, ResponseJson, ResponseTranslations } from "@/types/requests";
+import { Paged, ResponseJson, ResponseOptions } from "@/types/requests";
 import { getRequest, handleJsonResponse } from "../requests";
 import { UsersResponse } from "../users";
 
 export default async (
   id: number,
   searchParams: Record<string, string | number | undefined>,
-  messages: ResponseTranslations
+  options: ResponseOptions
 ): Promise<ResponseJson<Paged<UsersResponse>>> => {
   const params = new URLSearchParams(
     Object.entries(searchParams)
@@ -23,5 +23,5 @@ export default async (
     }
   );
 
-  return handleJsonResponse(response, messages);
+  return handleJsonResponse(response, options);
 };

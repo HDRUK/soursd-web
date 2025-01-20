@@ -1,8 +1,13 @@
-import { act, fireEvent, render, screen } from "@/utils/testUtils";
-import { axe } from "jest-axe";
-import { useRouter } from "next/navigation";
 import { postRegister } from "@/services/auth";
 import { AccountType } from "@/types/accounts";
+import {
+  act,
+  commonAccessibilityTests,
+  fireEvent,
+  render,
+  screen,
+} from "@/utils/testUtils";
+import { useRouter } from "next/navigation";
 import AccountConfirm from "./AccountConfirm";
 
 jest.mock("@/data/store");
@@ -31,18 +36,6 @@ describe("<AccountConfirm />", () => {
     });
 
     (postRegister as jest.Mock).mockReset();
-  });
-
-  it("has no accessibility validations", async () => {
-    const { container } = render(<TestComponent />);
-
-    let results;
-
-    await act(async () => {
-      results = await axe(container);
-    });
-
-    expect(results).toHaveNoViolations();
   });
 
   it("should be two buttons for representing myself or an organisation", async () => {
@@ -126,5 +119,9 @@ describe("<AccountConfirm />", () => {
     expect(mockedReplace).toHaveBeenCalledWith(
       expect.stringContaining("organisation/profile")
     );
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(render(<TestComponent />));
   });
 });

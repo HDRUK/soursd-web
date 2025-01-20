@@ -6,6 +6,7 @@ import FormActions from "@/components/FormActions";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
 import Postit from "@/components/Postit";
 import yup from "@/config/yup";
+import { PageSection } from "@/modules";
 import { patchCustodian, PatchCustodianPayload } from "@/services/custodians";
 import { Custodian } from "@/types/application";
 import SaveIcon from "@mui/icons-material/Save";
@@ -93,7 +94,7 @@ export default function Details({ custodian }: DetailsProps) {
   };
 
   return (
-    <>
+    <PageSection>
       <Postit sx={{ mx: "auto", mb: 7 }}>
         <Typography variant="h4" sx={{ mb: 1 }}>
           {tProfile("uniqueIdentifierTitle")}
@@ -146,6 +147,6 @@ export default function Details({ custodian }: DetailsProps) {
           </FormActions>
         </>
       </Form>
-    </>
+    </PageSection>
   );
 }

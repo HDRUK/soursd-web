@@ -1,10 +1,13 @@
-import React from "react";
-import { render, screen, waitFor } from "@/utils/testUtils";
-import { axe } from "jest-axe";
 import { useStore } from "@/data/store";
 import usePaginatedQuery from "@/hooks/usePaginatedQuery";
-import { mockedUser } from "@/mocks/data/user";
 import { mockedOrganisation } from "@/mocks/data/organisation";
+import { mockedUser } from "@/mocks/data/user";
+import {
+  commonAccessibilityTests,
+  render,
+  screen,
+  waitFor,
+} from "@/utils/testUtils";
 import usePatchOrganisation from "../../hooks/usePatchOrganisation";
 import Delegates from "./Delegates";
 
@@ -112,8 +115,6 @@ describe("<Delegates />", () => {
   });
 
   it("has no accessibility violations", async () => {
-    const { container } = render(<Delegates />);
-    const results = await axe(container);
-    expect(results).toHaveNoViolations();
+    commonAccessibilityTests(render(<Delegates />));
   });
 });

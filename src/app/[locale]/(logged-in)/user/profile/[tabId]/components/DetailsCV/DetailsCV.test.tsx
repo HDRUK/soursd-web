@@ -1,7 +1,12 @@
 import { MAX_UPLOAD_SIZE_BYTES } from "@/consts/files";
-import { act, fireEvent, render, screen } from "@/utils/testUtils";
+import {
+  act,
+  commonAccessibilityTests,
+  fireEvent,
+  render,
+  screen,
+} from "@/utils/testUtils";
 import { faker } from "@faker-js/faker";
-import { axe } from "jest-axe";
 import DetailsCV from ".";
 import { DetailsCVProps } from "./DetailsCV";
 
@@ -30,13 +35,6 @@ const renderDetailsCV = (props?: Partial<DetailsCVProps>) => {
 };
 
 describe("<DetailsCV />", () => {
-  it("has no accessibility validations", async () => {
-    const { container } = renderDetailsCV();
-
-    const results = await axe(container);
-    expect(results).toHaveNoViolations();
-  });
-
   it("shows the correct filename", async () => {
     renderDetailsCV({
       fileName: "sample.doc",
@@ -107,5 +105,9 @@ describe("<DetailsCV />", () => {
     });
 
     expect(screen.getByRole(`progressbar`)).toBeInTheDocument();
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(renderDetailsCV());
   });
 });
