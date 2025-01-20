@@ -266,7 +266,6 @@
       "delegateJobTitle": "Delegate Job Title",
       "delegateEmail": "Delegate Email"
     },
-    "employerNameRequiredInvalid": "Employer name is required",
     "departmentRequiredInvalid": "Department is required",
     "roleRequiredInvalid": "Role is required",
     "fromRequiredInvalid": "From date is required",
@@ -277,7 +276,23 @@
     "isCurrent": "Current Role?",
     "postEmploymentSuccess": "Employment added successfully",
     "postEmploymentError": "Failed to add employment",
-    "tryAgainButton": "Try again"
+    "tryAgainButton": "Try again",
+    "provider": "Training provider",
+    "providerPlaceholder": "Training provider",
+    "trainingName": "Training name",
+    "trainingNamePlaceholder": "Training name",
+    "awardedAt":"Awarded at",
+    "awardedAtPlaceholder":"Awarded at",
+    "expiresAt": "Expires at",
+    "expiresAtPlaceholder": "Expires at",
+    "trainingProviderRequiredInvalid": "Training provider is required",
+    "trainingNameRequiredInvalid": "Training name is required",
+    "awardedAtRequiredInvalid": "Awarded at is required",
+    "awardedAtFutureInvalid": "Awarded at date cannot be in the future",
+    "expiresAtRequiredInvalid": "Expires at is required",
+    "expiresAtBeforeAwardedAtInvalid": "Expires at date cannot be before the awarded at date",
+    "expiresAtPastInvalid": "Expires at date cannot be in the past",
+    "employerNameRequiredInvalid": "Employer name is required"
   },
   "Buttons": {
     "register": "Register",
@@ -348,6 +363,11 @@
     "continueLinkText": "Continue",
     "profileCompleteWarningMessage": "You have not yet completed your profile. This may mean that some data custodians will not grant access to you. It is advised that you complete this process. Please navigate to your profile",
     "addAnother": "Add Another",
+    "postTrainingError": "There was a problem submitting your training experience.",
+    "postTrainingErrorButton": "Try Again",
+    "postTrainingSuccess": "Training experience submitted successfully",
+    "postTrainingSuccessButton": "Close",
+    "noTrainingsError": "No training experiences found",
     "addEmploymentError": "There was a problem adding your employment."
   },
   "ProfileCompleteStatus": {
