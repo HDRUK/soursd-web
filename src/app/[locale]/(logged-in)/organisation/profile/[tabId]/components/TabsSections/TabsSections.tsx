@@ -3,8 +3,7 @@
 import { useApplicationData } from "@/context/ApplicationData";
 import { Box, Tab, Tabs } from "@mui/material";
 import { useTranslations } from "next-intl";
-import Link from "next/link";
-import { useParams } from "@/i18n/routing";
+import { useParams, Link } from "@/i18n/routing";
 import { PageTabs } from "../../consts/tabs";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
