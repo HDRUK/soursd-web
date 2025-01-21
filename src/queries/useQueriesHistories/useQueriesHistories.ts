@@ -20,49 +20,51 @@ export interface HistoryCombinedData {
 type QueryFunctionContextDefault = QueryFunctionContext<[string, number]>;
 
 export default function useQueriesHistory(registryId: number) {
-  const queries = [
-    getAffiliationsQuery(registryId),
-    {
-      queryKey: ["getEmployments", registryId],
-      queryFn: ({ queryKey }: QueryFunctionContextDefault) =>
-        getEmployments(queryKey[1], {
-          error: { message: "getEmploymentsError" },
-        }),
-      enabled: !!registryId,
-    },
-    {
-      queryKey: ["getEducations", registryId],
-      queryFn: ({ queryKey }: QueryFunctionContextDefault) =>
-        getEducations(queryKey[1], {
-          error: { message: "getEducationsError" },
-        }),
-      enabled: !!registryId,
-    },
-    {
-      queryKey: ["getTrainings", registryId],
-      queryFn: ({ queryKey }: QueryFunctionContextDefault) =>
-        getTrainingByRegistryId(queryKey[1], {
-          error: { message: "getTrainingsError" },
-        }),
-      enabled: !!registryId,
-    },
-    {
-      queryKey: ["getAccreditations", registryId],
-      queryFn: ({ queryKey }: QueryFunctionContextDefault) =>
-        getAccreditations(queryKey[1], {
-          error: { message: "getAccreditationsError" },
-        }),
-      enabled: !!registryId,
-    },
-    {
-      queryKey: ["getUserApprovedProjects", registryId],
-      queryFn: ({ queryKey }: QueryFunctionContextDefault) =>
-        getUserApprovedProjects(queryKey[1], {
-          error: { message: "getUserApprovedProjectsError" },
-        }),
-      enabled: !!registryId,
-    },
-  ];
+  const queries = !!registryId
+    ? [
+        getAffiliationsQuery(registryId),
+        {
+          queryKey: ["getEmployments", registryId],
+          queryFn: ({ queryKey }: QueryFunctionContextDefault) =>
+            getEmployments(queryKey[1], {
+              error: { message: "getEmploymentsError" },
+            }),
+          enabled: !!registryId,
+        },
+        {
+          queryKey: ["getEducations", registryId],
+          queryFn: ({ queryKey }: QueryFunctionContextDefault) =>
+            getEducations(queryKey[1], {
+              error: { message: "getEducationsError" },
+            }),
+          enabled: !!registryId,
+        },
+        {
+          queryKey: ["getTrainings", registryId],
+          queryFn: ({ queryKey }: QueryFunctionContextDefault) =>
+            getTrainingByRegistryId(queryKey[1], {
+              error: { message: "getTrainingsError" },
+            }),
+          enabled: !!registryId,
+        },
+        {
+          queryKey: ["getAccreditations", registryId],
+          queryFn: ({ queryKey }: QueryFunctionContextDefault) =>
+            getAccreditations(queryKey[1], {
+              error: { message: "getAccreditationsError" },
+            }),
+          enabled: !!registryId,
+        },
+        {
+          queryKey: ["getUserApprovedProjects", registryId],
+          queryFn: ({ queryKey }: QueryFunctionContextDefault) =>
+            getUserApprovedProjects(queryKey[1], {
+              error: { message: "getUserApprovedProjectsError" },
+            }),
+          enabled: !!registryId,
+        },
+      ]
+    : [];
 
   return useQueriesCombined<HistoryCombinedData>(queries);
 }
