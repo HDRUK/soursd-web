@@ -576,5 +576,12 @@
       "title": "Delegate",
       "description": "An Organisation must have at least one delegate to vouch for a User’s behaviour within a TRE/SDE."
     }
+  },
+  "DecoupleUser": {
+    "toolTip": "Decouple this user from your organisation",
+    "alertTitle": "Decouple User?",
+    "alertText": "Are you sure you want to remove {first_name} {last_name} from your organisation ({organisation_name})",
+    "alertConfirm": "Delete",
+    "alertCancel": "Cancel"
   }
 }
