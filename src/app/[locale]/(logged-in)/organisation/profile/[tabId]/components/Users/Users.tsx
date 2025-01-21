@@ -107,6 +107,8 @@ export default function Users() {
                 <DecoupleUser
                   user={user}
                   onSuccess={refetchOrganisationUsers}
+                  payload={{organisation_id: null}}
+                  namespace={"DecoupleUser"}
                 />
               }
             />

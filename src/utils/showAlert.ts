@@ -24,8 +24,8 @@ export const showAlert = (
     closeOnConfirm?: boolean;
     closeOnCancel?: boolean;
     willClose?: () => void;
-    preConfirm?: () => void | undefined | Promise<void>;
-    preDeny?: () => void | undefined | Promise<void>;
+    preConfirm?: () => void | undefined
+    preDeny?: () => void | undefined
   }
 ) => {
   const { cancelButtonText, confirmButtonText, text, title, ...restOptions } =

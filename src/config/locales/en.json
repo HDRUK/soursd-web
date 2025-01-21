@@ -587,5 +587,12 @@
     "alertText": "Are you sure you want to remove {first_name} {last_name} from your organisation ({organisation_name})",
     "alertConfirm": "Delete",
     "alertCancel": "Cancel"
+  },
+  "DecoupleDelegate": {
+    "toolTip": "Decouple this user as a delegate from your organisation",
+    "alertTitle": "Decouple Delegate User?",
+    "alertText": "Are you sure you want to remove {first_name} {last_name} as a delegate from your organisation ({organisation_name})",
+    "alertConfirm": "Delete",
+    "alertCancel": "Cancel"
   }
 }
