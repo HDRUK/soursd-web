@@ -108,6 +108,9 @@
     "noResults": "There are no delegates"
   },
   "Form": {
+    "memberId": "Staff / Student Id",
+    "memberIdPlaceholder": "Staff / Student Id",
+    "currentEmployer": "Current employer?",
     "cancelButton": "Cancel",
     "contactEmailPlaceholder": "Contact email",
     "name": "Name",
@@ -281,8 +284,8 @@
     "providerPlaceholder": "Training provider",
     "trainingName": "Training name",
     "trainingNamePlaceholder": "Training name",
-    "awardedAt":"Awarded at",
-    "awardedAtPlaceholder":"Awarded at",
+    "awardedAt": "Awarded at",
+    "awardedAtPlaceholder": "Awarded at",
     "expiresAt": "Expires at",
     "expiresAtPlaceholder": "Expires at",
     "trainingProviderRequiredInvalid": "Training provider is required",

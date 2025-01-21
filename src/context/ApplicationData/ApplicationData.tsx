@@ -146,6 +146,7 @@ const ApplicationDataProvider = ({
       getTrainings,
       getEmployments,
       getUserApprovedProjects,
+      getAffiliations,
     } = historiesData;
 
     setHistories({
@@ -154,6 +155,7 @@ const ApplicationDataProvider = ({
       training: getTrainings?.data,
       employments: getEmployments?.data,
       approvedProjects: getUserApprovedProjects?.data,
+      affiliations: getAffiliations?.data?.data,
     });
   }, [historiesData]);
 
@@ -170,6 +172,13 @@ const ApplicationDataProvider = ({
       validationSchema: systemConfig[VALIDATION_SCHEMA_KEY]?.value,
     };
   }, [!!systemConfigData?.data, value]);
+
+  // console.log("Org", (organisationId && organisation) || !organisationId);
+  // console.log("Custodian", (custodian && custodianId) || !custodianId);
+  // console.log("Sectors", sectors);
+  // console.log("Permissions", permissions);
+  // console.log("Histories", (me?.registry_id && histories) || !me?.registry_id);
+  // console.log("user", user);
 
   const isFinishedLoading =
     user &&

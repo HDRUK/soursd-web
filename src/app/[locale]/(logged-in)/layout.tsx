@@ -58,6 +58,8 @@ export default function Layout({ children }: LayoutProps) {
     const performAuthCheck = async () => {
       const user = await validateAccessToken(pathname, router);
 
+      console.log("user", user);
+
       if (!user) {
         throw new Error("Unauthorised 401");
       }

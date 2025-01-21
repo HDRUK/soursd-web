@@ -1,5 +1,7 @@
 import useQueriesCombined from "@/hooks/useQueriesCombined";
 import { getAccreditations } from "@/services/accreditations";
+import getAffiliations from "@/services/affiliations/getAffiliations";
+import getAffiliationsQuery from "@/services/affiliations/getAffiliationsQuery";
 import { getEducations } from "@/services/educations";
 import { getEmployments } from "@/services/employments";
 import { getUserApprovedProjects } from "@/services/projects";
@@ -12,12 +14,14 @@ export interface HistoryCombinedData {
   getTrainings: Awaited<ReturnType<typeof getTrainingByRegistryId>>;
   getUserApprovedProjects: Awaited<ReturnType<typeof getUserApprovedProjects>>;
   getAccreditations: Awaited<ReturnType<typeof getAccreditations>>;
+  getAffiliations: Awaited<ReturnType<typeof getAffiliations>>;
 }
 
 type QueryFunctionContextDefault = QueryFunctionContext<[string, number]>;
 
 export default function useQueriesHistory(registryId: number) {
   const queries = [
+    getAffiliationsQuery(registryId),
     {
       queryKey: ["getEmployments", registryId],
       queryFn: ({ queryKey }: QueryFunctionContextDefault) =>
