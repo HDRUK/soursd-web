@@ -7,7 +7,7 @@ import Page from "./page";
 
 jest.mock("@/data/store");
 
-jest.mock("next/navigation", () => ({
+jest.mock("@/i18n/routing", () => ({
   useParams: jest.fn(),
   useRouter: jest.fn(() => ({
     push: jest.fn(),

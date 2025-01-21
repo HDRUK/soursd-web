@@ -1,3 +1,4 @@
 import getTrainingByRegistryId from "./getTrainingByRegistryId";
+import postTrainings from "./postTrainings";
 
-export { getTrainingByRegistryId };
+export { getTrainingByRegistryId, postTrainings };

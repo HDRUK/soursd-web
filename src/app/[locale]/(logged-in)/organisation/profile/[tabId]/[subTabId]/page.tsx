@@ -1,6 +1,6 @@
 import { ConfigProps, withConfig } from "@/components/Config";
 import { PageContainer } from "@/modules";
-import { redirect } from "next/navigation";
+import { redirect } from "@/i18n/routing";
 import { PageTabs, PageSubTabs, getSubTabs } from "../consts/tabs";
 import Subsidiaries from "./Subsidiaries";
 

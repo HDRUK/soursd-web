@@ -100,6 +100,10 @@ type UserProfileCompletionJson = Record<
   }
 >;
 
+interface Auth {
+  email: string;
+}
+
 interface User {
   id: number;
   registry_id: number;
@@ -166,6 +170,7 @@ interface Organisation extends OrganisationIdvt, AddressFields {
   permissions: Permission[];
   approvals: Approval[];
   lead_applicant_email: string;
+  lead_applicant_organisation_name: string;
   sector_id: number;
   charity_registration_id: string;
   ror_id: string;
@@ -334,4 +339,5 @@ export type {
   AddressFields,
   Subsidiary,
   Department,
+  Auth,
 };

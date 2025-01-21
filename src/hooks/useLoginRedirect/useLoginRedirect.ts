@@ -1,17 +1,15 @@
 import { ROUTES } from "@/consts/router";
 import { UserGroup } from "@/consts/user";
+import { useRouter } from "@/i18n/routing";
 import { getMe, postRegister } from "@/services/auth";
-import { getRoutes } from "@/utils/router";
-import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import useAuth from "../useAuth";
 
 export default function useLoginRedirect() {
-  const params = useParams<{ locale: string }>();
-  const routes = getRoutes(ROUTES, params?.locale);
   const [isReady, setReady] = useState(false);
   const router = useRouter();
-  const { isAuthenticated } = useAuth();
+  const auth = useAuth();
+  const isAuthenticated = !!auth;
 
   useEffect(() => {
     async function initRegister() {
@@ -26,11 +24,13 @@ export default function useLoginRedirect() {
       });
 
       if (data?.user_group === UserGroup.CUSTODIANS) {
-        router.replace(routes.profileCustodianDetails.path);
+        router.replace(ROUTES.profileCustodianDetails.path);
       } else if (data?.user_group === UserGroup.ORGANISATIONS) {
-        router.replace(routes.profileOrganisationDetails.path);
+        router.replace(ROUTES.profileOrganisationDetails.path);
       } else if (data?.user_group === UserGroup.USERS) {
-        router.replace(routes.profileResearcherDetails.path);
+        router.replace(ROUTES.profileResearcherDetails.path);
+      } else {
+        router.replace(ROUTES.register.path);
       }
 
       setReady(true);

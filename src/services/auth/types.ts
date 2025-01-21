@@ -5,6 +5,7 @@ type MeResponse = User;
 
 interface PostRegisterPayload {
   account_type: AccountType;
+  organisation_id?: number;
 }
 
 type PostRegisterResponse = string | null;

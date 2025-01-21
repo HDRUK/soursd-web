@@ -1,19 +1,17 @@
 "use client";
 
 import { ROUTES } from "@/consts/router";
+import { UserGroup } from "@/consts/user";
 import { ApplicationDataProvider } from "@/context/ApplicationData";
+import { usePathname, useRouter } from "@/i18n/routing";
 import { getMe } from "@/services/auth";
 import { getCustodianUser } from "@/services/custodian_users";
 import { User } from "@/types/application";
 import { handleLogin } from "@/utils/keycloak";
-import { getRoutes } from "@/utils/router";
 import Cookies from "js-cookie";
-import { usePathname, useRouter } from "next/navigation";
 import { PropsWithChildren, useEffect, useState } from "react";
 
-type LayoutProps = PropsWithChildren<{
-  params: { locale: string };
-}>;
+type LayoutProps = PropsWithChildren;
 
 async function validateAccessToken(
   pathname: string | null,
@@ -24,7 +22,7 @@ async function validateAccessToken(
   });
 
   if (response.status === 404) {
-    router.push("/en/register");
+    router.push(ROUTES.register.path);
   } else if (response.status === 500) {
     const accessToken = Cookies.get("access_token");
 
@@ -49,12 +47,12 @@ async function getCustodianId(user: User) {
   return custodian_id;
 }
 
-export default function Layout({ children, params: { locale } }: LayoutProps) {
-  const routes = getRoutes(ROUTES, locale);
+export default function Layout({ children }: LayoutProps) {
   const pathname = usePathname();
   const router = useRouter();
   const [me, setMe] = useState<User>();
   const [custodianId, setCustodianId] = useState<number>();
+  const [organisationId, setOrganisationId] = useState<number>();
 
   useEffect(() => {
     const performAuthCheck = async () => {
@@ -64,7 +62,12 @@ export default function Layout({ children, params: { locale } }: LayoutProps) {
         throw new Error("Unauthorised 401");
       }
 
-      setCustodianId(await getCustodianId(user));
+      if (user.user_group === UserGroup.CUSTODIANS) {
+        setCustodianId(await getCustodianId(user));
+      } else if (user.user_group === UserGroup.ORGANISATIONS) {
+        setOrganisationId(user?.organisation_id);
+      }
+
       setMe(user);
     };
 
@@ -75,9 +78,10 @@ export default function Layout({ children, params: { locale } }: LayoutProps) {
     me && (
       <ApplicationDataProvider
         custodianId={custodianId}
+        organisationId={organisationId}
         me={me}
         value={{
-          routes,
+          routes: ROUTES,
           systemConfigData: {},
         }}>
         {children}
