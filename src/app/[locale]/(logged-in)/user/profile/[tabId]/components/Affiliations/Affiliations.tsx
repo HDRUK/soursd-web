@@ -83,21 +83,6 @@ export default function Affiliations() {
     });
   }, [affiliationsData?.data?.data]);
 
-  const relationshipOptions = [
-    {
-      label: tApplication("employee"),
-      value: AffiliationRelationship.EMPLOYEE,
-    },
-    {
-      label: tApplication("honoraryContract"),
-      value: AffiliationRelationship.HONORARY_CONTRACT,
-    },
-    {
-      label: tApplication("student"),
-      value: AffiliationRelationship.STUDENT,
-    },
-  ];
-
   return (
     <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
       <AffiliationsForm
@@ -142,11 +127,7 @@ export default function Affiliations() {
                         ? tApplication("currentEmployer")
                         : relationship === AffiliationRelationship.EMPLOYEE
                           ? tApplication("previousEmployer")
-                          : tApplication(
-                              relationshipOptions.find(
-                                ({ value }) => relationship === value
-                              )?.value
-                            )}
+                          : tApplication(relationship)}
                     </TableCell>
                     <TableCell>{member_id}</TableCell>
                   </TableRow>
