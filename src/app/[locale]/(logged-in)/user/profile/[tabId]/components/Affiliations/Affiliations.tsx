@@ -1,223 +1,158 @@
-import Form from "@/components/Form";
-import FormActions from "@/components/FormActions";
-import FormControlHorizontal from "@/components/FormControlHorizontal";
-import FormSection from "@/components/FormSection";
-import ListInfoItem from "@/components/ListInfoItem";
-import { Message } from "@/components/Message";
-import OverlayCenter from "@/components/OverlayCenter";
+import ContactLink from "@/components/ContactLink";
+
 import Results from "@/components/Results";
-import SelectInput from "@/components/SelectInput";
-import yup from "@/config/yup";
+import { AffiliationRelationship } from "@/consts/user";
 import { useStore } from "@/data/store";
 import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
 import { PageGuidance } from "@/modules";
-import ResearcherAffiliationEntry from "@/modules/ResearcherAffiliationEntry";
-import postAffiliationQuery from "@/services/affiliations/postAffiliationQuery";
-import getOrganisationsQuery from "@/services/organisations/getOrganisationsQuery";
-import { ResearcherAffiliation } from "@/types/application";
-import SaveIcon from "@mui/icons-material/Save";
-import { LoadingButton } from "@mui/lab";
 import {
-  Checkbox,
-  CircularProgress,
-  Grid,
+  getAffiliationsQuery,
+  postAffiliationQuery,
+} from "@/services/affiliations";
+import { PostAffiliationPayload } from "@/services/affiliations/types";
+import { showAlert } from "@/utils/showAlert";
+import {
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableRow,
-  TextField,
   Typography,
 } from "@mui/material";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import { useCallback, useMemo } from "react";
-import { FieldValues } from "react-hook-form";
-
-export interface TrainingFormValues {
-  provider: string;
-  training_name: string;
-  awarded_at: string;
-  expires_at: string;
-}
+import { useCallback, useEffect } from "react";
+import AffiliationsForm from "../AffiliationsForm";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
-const NAMESPACE_TRANSLATION_FORM = "Form";
+const NAMESPACE_TRANSLATION_APPLICATION = "Application";
 
 export default function Affiliations() {
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
-  const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
+  const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
+  const queryClient = useQueryClient();
 
-  const user = useStore(state => state.config.user);
-  const histories = useStore(state => state.config.histories);
-  const setHistories = useStore(state => state.setHistories);
-  const getHistories = useStore(state => state.getHistories);
-
-  const { data: organisationsData, ...getOrganisationQueryState } = useQuery(
-    getOrganisationsQuery()
+  const { user, affiliations, getHistories, setHistories } = useStore(
+    state => ({
+      user: state.config.user,
+      affiliations: state.config.histories?.affiliations || [],
+      getHistories: state.getHistories,
+      setHistories: state.setHistories,
+    })
   );
 
-  console.log("organisationsData", organisationsData);
-
-  const onSubmit = useCallback(
-    async (affiliation: ResearcherAffiliation) => {
-      const histories = getHistories();
-      const updatedHistories = {
-        ...histories,
-        affiliations: [...(histories?.affiliations || []), affiliation],
-      };
-
-      if (updatedHistories) {
-        setHistories(updatedHistories);
-      }
-    },
-    [getHistories, setHistories]
+  const { data: affiliationsData, ...getAffiliationsQueryState } = useQuery(
+    getAffiliationsQuery(user?.registry_id)
   );
 
-  const {
-    mutateAsync,
-    isPending,
-    isError,
-    error: postError,
-  } = useMutation(postAffiliationQuery(user));
+  const { mutateAsync, ...postAffiliationQueryState } = useMutation(
+    postAffiliationQuery(user)
+  );
 
   const handleDetailsSubmit = useCallback(
-    async (fields: TrainingFormValues) => {
-      //   try {
-      //     const yearsRemaining = calculateYearsRemaining(fields.expires_at);
-      //     const formattedFields = {
-      //       ...fields,
-      //       awarded_at: formatDBDate(fields.awarded_at),
-      //       expires_at: formatDBDate(fields.awarded_at),
-      //     };
-      //     await mutateAsync({
-      //       ...formattedFields,
-      //       expires_in_years: yearsRemaining,
-      //     });
-      //     onSubmit({ ...formattedFields, expires_in_years: yearsRemaining });
-      //     showAlert("success", {
-      //       text: tProfile("postTrainingSuccess"),
-      //       confirmButtonText: tProfile("postTrainingSuccessButton"),
-      //     });
-      //   } catch (_) {
-      //     const errorMessage = tProfile("postTrainingError");
-      //     showAlert("error", {
-      //       text: errorMessage,
-      //       confirmButtonText: tProfile("postTrainingErrorButton"),
-      //     });
-      //   }
-      // },
+    async (fields: PostAffiliationPayload) => {
+      try {
+        await mutateAsync(fields);
+
+        queryClient.refetchQueries({
+          queryKey: ["getAffiliations", user?.registry_id],
+        });
+
+        showAlert("success", {
+          text: tProfile("postAffiliationSuccess"),
+          confirmButtonText: tProfile("postAffiliationSuccessButton"),
+        });
+      } catch (_) {
+        showAlert("error", {
+          text: tProfile.rich("postAffiliationError", {
+            contactLink: ContactLink,
+          }),
+          confirmButtonText: tProfile("postAffiliationErrorButton"),
+        });
+      }
     },
-    [mutateAsync, onSubmit, tProfile]
+    [mutateAsync, user?.registry_id, tProfile]
   );
 
-  const schema = useMemo(
-    () =>
-      yup.object().shape({
-        member_id: yup.string().required(tForm("memberIdRequiredInvalid")),
-        organisation_id: yup
-          .string()
-          .required(tForm("organisationRequiredInvalid")),
-        current_employer: yup.boolean(),
-      }),
-    [tForm]
-  );
+  useEffect(() => {
+    const storeHistories = getHistories();
 
-  const formOptions = {
-    defaultValues: {
-      member_id: "",
-      organisation_id: "",
-      current_employer: false,
-    },
-  };
+    setHistories({
+      ...storeHistories,
+      affiliations: affiliationsData?.data?.data,
+    });
+  }, [affiliationsData?.data?.data]);
 
-  const formFields = [
+  const relationshipOptions = [
     {
-      name: "organisation_id",
-      component: (field: FieldValues) => (
-        <SelectInput
-          {...field}
-          options={(organisationsData?.data?.data || []).map(
-            ({ organisation_name, id }) => ({
-              label: organisation_name,
-              value: id,
-            })
-          )}
-        />
-      ),
+      label: tApplication("employee"),
+      value: AffiliationRelationship.EMPLOYEE,
     },
-    { name: "member_id", component: TextField },
-    { name: "current_employer", component: Checkbox },
+    {
+      label: tApplication("honoraryContract"),
+      value: AffiliationRelationship.HONORARY_CONTRACT,
+    },
+    {
+      label: tApplication("student"),
+      value: AffiliationRelationship.STUDENT,
+    },
   ];
 
   return (
     <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
-      <Form
+      <AffiliationsForm
         onSubmit={handleDetailsSubmit}
-        schema={schema}
-        {...formOptions}
-        sx={{ mb: 3 }}>
-        {() => (
-          <>
-            <FormSection heading={tProfile("training")}>
-              <Grid container rowSpacing={3}>
-                {formFields.map(field => (
-                  <Grid item xs={12} key={field.name}>
-                    <FormControlHorizontal
-                      name={field.name}
-                      renderField={fieldProps => (
-                        <field.component {...fieldProps} />
-                      )}
-                    />
-                  </Grid>
-                ))}
-              </Grid>
-            </FormSection>
-            <FormActions>
-              <LoadingButton
-                type="submit"
-                endIcon={<SaveIcon />}
-                loading={isPending}
-                sx={{ display: "flex", justifySelf: "end" }}>
-                {tProfile("submitButton")}
-              </LoadingButton>
-            </FormActions>
-          </>
-        )}
-      </Form>
+        queryState={postAffiliationQueryState}
+      />
       <Typography variant="h6" sx={{ mb: 1 }}>
-        Affiliation record
+        {tProfile("affiliationsRecords")}
       </Typography>
       <Results
-        queryState={getOrganisationQueryState}
-        noResultsMessage={"No affiliation results"}
-        errorMessage={tProfile("errorAffiliationsResults")}
-        count={organisationsData?.data?.data?.data?.length}>
+        queryState={getAffiliationsQueryState}
+        noResultsMessage={tProfile("affiliationsNoResultsMessage")}
+        errorMessage={tProfile.rich("affiliationsErrorMessage", {
+          contactLink: ContactLink,
+        })}
+        count={affiliations?.length}>
         <Table>
           <TableHead sx={{ backgroundColor: "lightPurple.main" }}>
             <TableRow>
-              <TableCell>Organisation Name</TableCell>
-              <TableCell>Relationship</TableCell>
-              <TableCell>Member id</TableCell>
+              <TableCell scope="col">
+                {tApplication("organisationName")}
+              </TableCell>
+              <TableCell scope="col">{tApplication("relationship")}</TableCell>
+              <TableCell scope="col">
+                {tApplication("staffStudentId")}
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {histories?.affiliations?.map(
-              (
-                {
-                  member_id,
-                  current_employer,
-                  organisation: { organisation_name },
-                },
-                i
-              ) => (
-                <TableRow>
-                  <TableCell>{organisation_name}</TableCell>
-                  <TableCell>{current_employer}</TableCell>
-                  <TableCell>{member_id}</TableCell>
-                </TableRow>
-              )
-            )}{" "}
+            {affiliations?.map(
+              ({
+                member_id,
+                current_employer,
+                relationship,
+                organisation: { organisation_name },
+              }) => {
+                return (
+                  <TableRow>
+                    <TableCell>{organisation_name}</TableCell>
+                    <TableCell>
+                      {current_employer
+                        ? tApplication("currentEmployer")
+                        : relationship === AffiliationRelationship.EMPLOYEE
+                          ? tApplication("previousEmployer")
+                          : tApplication(
+                              relationshipOptions.find(
+                                ({ value }) => relationship === value
+                              )?.value
+                            )}
+                    </TableCell>
+                    <TableCell>{member_id}</TableCell>
+                  </TableRow>
+                );
+              }
+            )}
           </TableBody>
         </Table>
       </Results>

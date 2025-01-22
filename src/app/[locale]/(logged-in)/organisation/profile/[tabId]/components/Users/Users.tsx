@@ -72,7 +72,8 @@ export default function Users() {
         queryState={{
           isLoading: isGetUsersLoading,
           isError: isGetUsersError,
-        }}>
+        }}
+        count={usersData?.length}>
         {usersData?.map(user => {
           const { first_name, last_name, created_at, email } = user;
 

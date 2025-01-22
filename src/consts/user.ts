@@ -21,9 +21,16 @@ enum UserFeedSource {
   ORG = "ORG",
 }
 
+enum AffiliationRelationship {
+  EMPLOYEE = "employee",
+  STUDENT = "student",
+  HONORARY_CONTRACT = "honoraryContract",
+}
+
 export {
   UserGroup,
   UserProvider,
   UserProfileCompletionCategories,
   UserFeedSource,
+  AffiliationRelationship,
 };

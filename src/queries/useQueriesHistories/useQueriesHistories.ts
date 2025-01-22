@@ -20,7 +20,7 @@ export interface HistoryCombinedData {
 type QueryFunctionContextDefault = QueryFunctionContext<[string, number]>;
 
 export default function useQueriesHistory(registryId: number) {
-  const queries = !!registryId
+  const queries = registryId
     ? [
         getAffiliationsQuery(registryId),
         {

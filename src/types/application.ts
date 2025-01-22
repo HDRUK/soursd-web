@@ -242,8 +242,9 @@ interface ResearcherEndorsement {
 interface ResearcherAffiliation {
   id: number;
   member_id: string;
-  organisation_id: string;
-  current_employer: string;
+  organisation_id: number;
+  current_employer: boolean;
+  relationship?: string;
   organisation: {
     organisation_name: string;
   };

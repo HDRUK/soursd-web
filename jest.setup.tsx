@@ -17,6 +17,7 @@ import {
 } from "./mocks/data/systemConfig";
 import {
   mockedAccreditation,
+  mockedAffiliation,
   mockedEducation,
   mockedEmployment,
   mockedTraining,
@@ -215,6 +216,18 @@ async function mockFetch(url: string, init?: RequestInit) {
     }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/organisations/unclaimed`: {
       return mock200Json(1);
+    }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/affiliations/1`: {
+      return mock200Json(
+        mockPagedResults([
+          mockedAffiliation({
+            id: 1,
+          }),
+          mockedAffiliation({
+            id: 2,
+          }),
+        ])
+      );
     }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/organisations`: {
       return mock200Json({

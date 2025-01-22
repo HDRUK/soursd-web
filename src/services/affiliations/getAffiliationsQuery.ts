@@ -1,5 +1,5 @@
-import getAffiliations from "./getAffiliations";
 import { QueryFunctionContext } from "@tanstack/react-query";
+import getAffiliations from "./getAffiliations";
 
 type QueryFunctionContextDefault = QueryFunctionContext<[string, number]>;
 

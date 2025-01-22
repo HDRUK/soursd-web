@@ -1,3 +1,11 @@
-import getAccreditations from "./getAccreditations";
+import getAffiliations from "./getAffiliations";
+import postAffiliation from "./postAffiliation";
+import getAffiliationsQuery from "./getAffiliationsQuery";
+import postAffiliationQuery from "./postAffiliationQuery";
 
-export { getAccreditations };
+export {
+  getAffiliations,
+  postAffiliation,
+  getAffiliationsQuery,
+  postAffiliationQuery,
+};
