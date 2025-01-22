@@ -17,6 +17,7 @@ import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import DecoupleUser from "../DecoupleUser";
+import DelegatesForm from "./DelegatesForm";
 
 const NAMESPACE_PROFILE_ORGANISATION = "ProfileOrganisation";
 
@@ -53,6 +54,7 @@ export default function Delegates() {
 
   return (
     <PageGuidance {...mockedManageDelegatesGuidance}>
+      <DelegatesForm onSuccess={refetchOrganisationUsers} />
       <Results
         noResultsMessage={t("noDelegates")}
         errorMessage={t.rich("getDelegatesError", {
@@ -94,8 +96,8 @@ export default function Delegates() {
                 <DecoupleUser
                   user={user}
                   onSuccess={refetchOrganisationUsers}
-                  payload={{is_delegate: 0}}
-                  namespace={"DecoupleDelegate"}
+                  payload={{ is_delegate: 0 }}
+                  namespace="DecoupleDelegate"
                 />
               }
             />

@@ -11,11 +11,15 @@ interface DecoupleUserProps {
   user: User;
   onSuccess: () => void;
   payload: PatchUserPayload;
-  alertText?: string;
   namespace: string;
 }
 
-const DecoupleUser = ({ user, onSuccess, payload, namespace }: DecoupleUserProps) => {
+const DecoupleUser = ({
+  user,
+  onSuccess,
+  payload,
+  namespace,
+}: DecoupleUserProps) => {
   const t = useTranslations(namespace);
   const organisation = useStore(state => state.config.organisation);
 
