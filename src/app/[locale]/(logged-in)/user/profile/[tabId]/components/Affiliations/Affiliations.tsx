@@ -5,6 +5,7 @@ import FormSection from "@/components/FormSection";
 import ListInfoItem from "@/components/ListInfoItem";
 import { Message } from "@/components/Message";
 import OverlayCenter from "@/components/OverlayCenter";
+import Results from "@/components/Results";
 import SelectInput from "@/components/SelectInput";
 import yup from "@/config/yup";
 import { useStore } from "@/data/store";
@@ -52,7 +53,7 @@ export default function Affiliations() {
   const setHistories = useStore(state => state.setHistories);
   const getHistories = useStore(state => state.getHistories);
 
-  const { data: organisationsData, isLoading } = useQuery(
+  const { data: organisationsData, ...getOrganisationQueryState } = useQuery(
     getOrganisationsQuery()
   );
 
@@ -187,44 +188,39 @@ export default function Affiliations() {
       <Typography variant="h6" sx={{ mb: 1 }}>
         Affiliation record
       </Typography>
-      <Table>
-        <TableHead sx={{ backgroundColor: "lightPurple.main" }}>
-          <TableRow>
-            <TableCell>Organisation Name</TableCell>
-            <TableCell>Relationship</TableCell>
-            <TableCell>Member id</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {histories?.affiliations?.map(
-            (
-              {
-                member_id,
-                current_employer,
-                organisation: { organisation_name },
-              },
-              i
-            ) => (
-              <TableRow>
-                <TableCell>{organisation_name}</TableCell>
-                <TableCell>{current_employer}</TableCell>
-                <TableCell>{member_id}</TableCell>
-              </TableRow>
-            )
-          )}{" "}
-        </TableBody>
-      </Table>
-      {/* </StyledBox> */}
-      {isLoading && (
-        <OverlayCenter sx={{ color: "#fff" }}>
-          <CircularProgress color="inherit" />
-        </OverlayCenter>
-      )}
-      {isError && (
-        <Message severity="error" sx={{ mb: 3 }}>
-          {`${postError}`}
-        </Message>
-      )}
+      <Results
+        queryState={getOrganisationQueryState}
+        noResultsMessage={"No affiliation results"}
+        errorMessage={tProfile("errorAffiliationsResults")}
+        count={organisationsData?.data?.data?.data?.length}>
+        <Table>
+          <TableHead sx={{ backgroundColor: "lightPurple.main" }}>
+            <TableRow>
+              <TableCell>Organisation Name</TableCell>
+              <TableCell>Relationship</TableCell>
+              <TableCell>Member id</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {histories?.affiliations?.map(
+              (
+                {
+                  member_id,
+                  current_employer,
+                  organisation: { organisation_name },
+                },
+                i
+              ) => (
+                <TableRow>
+                  <TableCell>{organisation_name}</TableCell>
+                  <TableCell>{current_employer}</TableCell>
+                  <TableCell>{member_id}</TableCell>
+                </TableRow>
+              )
+            )}{" "}
+          </TableBody>
+        </Table>
+      </Results>
     </PageGuidance>
   );
 }
