@@ -20,7 +20,7 @@ import {
 import { EMAIL_TEMPLATE } from "@/consts/application";
 
 export interface DelegatesFormValues {
-  department_name: string;
+  department_name?: string | null;
   delegate_full_name: string;
   delegate_job_title: string;
   delegate_email: string;
@@ -55,7 +55,7 @@ export default function DelegatesForm({ onSuccess }: DelegatesFormProps) {
       try {
         const payload: PostOrganisationInviteUserPayload = {
           email: fields.delegate_email,
-          department_id: Number(fields.department_name),
+          department_id: Number(fields.department_name) ?? null,
           first_name: fields.delegate_full_name.split(" ")[0],
           last_name: fields.delegate_full_name.split(" ")[1],
           role: fields.delegate_job_title,
@@ -79,13 +79,10 @@ export default function DelegatesForm({ onSuccess }: DelegatesFormProps) {
     },
     [mutateAsync, onSuccess, t]
   );
-
   const schema = useMemo(
     () =>
       yup.object().shape({
-        department_name: yup
-          .string()
-          .required(t("departmentNameRequiredInvalid")),
+        department_name: yup.string().nullable(),
         delegate_full_name: yup
           .string()
           .required(t("delegateFullNameRequiredInvalid")),
@@ -121,10 +118,10 @@ export default function DelegatesForm({ onSuccess }: DelegatesFormProps) {
                   <Select
                     {...fieldProps}
                     inputProps={{
-                      "aria-label": t("organisationNameAriaLabel"),
+                      "aria-label": t("departmentNameAriaLabel"),
                     }}>
                     {filteredDepartments?.map(({ label, value }) => (
-                      <MenuItem value={value} key={value}>
+                      <MenuItem value={value} key={value} id={label}>
                         {label}
                       </MenuItem>
                     ))}

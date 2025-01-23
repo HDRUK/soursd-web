@@ -192,6 +192,7 @@
     "smbStatusDescription": "I confirm my Organisation is a Small to Medium sized business",
     "organisationSizeAriaLabel": "Size",
     "organisationNameAriaLabel": "Select organisation",
+    "departmentNameAriaLabel": "Select department",
     "toggleOtpPasscodeAriaLabel": "Toggle passcode visibility",
     "togglePasswordAriaLabel": "Toggle password visibility",
     "toggleConfirmPasswordAriaLabel": "Toggle confirm password visibility",
