@@ -15,6 +15,7 @@ describe("useQueryRefetch", () => {
           isLoading: false,
           error: {
             getAccreditations: null,
+            getAffiliations: null,
             getEducations: null,
             getEmployments: null,
             getTrainings: null,
@@ -22,6 +23,9 @@ describe("useQueryRefetch", () => {
           },
           data: {
             getAccreditations: expect.objectContaining({
+              message: "success",
+            }),
+            getAffiliations: expect.objectContaining({
               message: "success",
             }),
             getEducations: expect.objectContaining({

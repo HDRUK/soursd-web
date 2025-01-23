@@ -60,7 +60,8 @@ export default function Delegates() {
         queryState={{
           isLoading: isGetUsersLoading,
           isError: isGetUsersError,
-        }}>
+        }}
+        count={delegates?.length}>
         {delegates?.map(user => {
           const { first_name, last_name, created_at, email } = user;
 

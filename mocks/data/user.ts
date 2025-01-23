@@ -1,6 +1,7 @@
 import { UserGroup } from "@/consts/user";
 import {
   ResearcherAccreditation,
+  ResearcherAffiliation,
   ResearcherEducation,
   ResearcherEmployment,
   ResearcherTraining,
@@ -81,10 +82,25 @@ const mockedEducation = (
   ...education,
 });
 
+const mockedAffiliation = (
+  affiliation?: Partial<ResearcherAffiliation>
+): ResearcherAffiliation => ({
+  id: 1,
+  member_id: faker.string.uuid(),
+  organisation_id: 1,
+  relationship: "employee",
+  current_employer: false,
+  organisation: {
+    organisation_name: faker.company.name(),
+  },
+  ...affiliation,
+});
+
 export {
   mockedAccreditation,
   mockedUser,
   mockedTraining,
   mockedEmployment,
   mockedEducation,
+  mockedAffiliation,
 };
