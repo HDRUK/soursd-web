@@ -6,7 +6,6 @@ import Pagination from "@/components/Pagination";
 import Results from "@/components/Results";
 import ResultsCard from "@/components/ResultsCard";
 import UserRegisteredStatus from "@/components/UserRegisteredStatus";
-import { DecoupleIcon } from "@/consts/icons";
 import { useStore } from "@/data/store";
 import usePaginatedQuery from "@/hooks/usePaginatedQuery";
 import { mockedManageDelegatesGuidance } from "@/mocks/data/cms";
@@ -15,8 +14,10 @@ import { getOrganisationUsers } from "@/services/organisations";
 import { formatShortDate } from "@/utils/date";
 import { isRegistered } from "@/utils/user";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
-import { IconButton, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
+import DecoupleUser from "../DecoupleUser";
+import DelegatesForm from "./DelegatesForm";
 
 const NAMESPACE_PROFILE_ORGANISATION = "ProfileOrganisation";
 
@@ -33,6 +34,7 @@ export default function Delegates() {
     isError: isGetUsersError,
     isLoading: isGetUsersLoading,
     data: usersData,
+    refetch: refetchOrganisationUsers,
     last_page,
     page,
     setPage,
@@ -52,6 +54,7 @@ export default function Delegates() {
 
   return (
     <PageGuidance {...mockedManageDelegatesGuidance}>
+      <DelegatesForm onSuccess={refetchOrganisationUsers} />
       <Results
         noResultsMessage={t("noDelegates")}
         errorMessage={t.rich("getDelegatesError", {
@@ -91,12 +94,12 @@ export default function Delegates() {
                 </>
               }
               actions={
-                <IconButton
-                  size="small"
-                  color="inherit"
-                  aria-label="icon-button">
-                  <DecoupleIcon />
-                </IconButton>
+                <DecoupleUser
+                  user={user}
+                  onSuccess={refetchOrganisationUsers}
+                  payload={{ is_delegate: 0 }}
+                  namespace="DecoupleDelegate"
+                />
               }
             />
           );

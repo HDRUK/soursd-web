@@ -36,6 +36,10 @@ interface PostOrganisationInviteUserPayload {
   last_name: string;
   email: string;
   identifier?: EMAIL_TEMPLATE;
+  department_id?: number;
+  is_delegate?: number;
+  role?: string;
+  user_group?: string;
 }
 
 type PostOrganisationInviteUserResponse = number;
