@@ -3,6 +3,9 @@ import { mockedUser } from "@/mocks/data/user";
 import { screen, render, waitFor, fireEvent } from "@/utils/testUtils";
 import { commonAccessibilityTests } from "@/utils/testUtils";
 import NotificationsMenu from "./NotificationsMenu";
+import { patchUserNotification } from "@/services/notifications";
+import { NOTIFICATIONS_PER_PAGE } from "./NotificationsMenu";
+import { NotificationPatchType } from "@/services/notifications/patchUserNotification";
 
 const defaultUser = mockedUser({
   id: 1,
@@ -11,6 +14,11 @@ const defaultUser = mockedUser({
 jest.mock("@/data/store");
 
 (useStore as unknown as jest.Mock).mockReturnValue(defaultUser);
+
+jest.mock("@/services/notifications", () => ({
+  ...jest.requireActual("@/services/notifications"),
+  patchUserNotification: jest.fn(),
+}));
 
 describe("<NotificationsMenu />", () => {
   beforeEach(() => {
@@ -25,21 +33,98 @@ describe("<NotificationsMenu />", () => {
       expect(screen.getByTestId("notifications-badge")).toHaveTextContent("10");
     });
   });*/
-
+  /*
   it("opens and displays notifications when clicked", async () => {
     render(<NotificationsMenu />);
+
     fireEvent.click(screen.getByTestId("notifications-button"));
+
     await waitFor(() => {
       expect(screen.getByTestId("notifications-menu")).toBeInTheDocument();
     });
 
     await waitFor(() => {
-      expect(screen.getAllByTestId("notification-item")).toHaveLength(5);
+      expect(screen.getAllByTestId("notification-item")).toHaveLength(
+        NOTIFICATIONS_PER_PAGE
+      );
+    });
+  });
+
+  it("loads more notifications when scrolled to bottom", async () => {
+    render(<NotificationsMenu />);
+    fireEvent.click(screen.getByTestId("notifications-button"));
+
+    await waitFor(() => {
+      expect(screen.getAllByTestId("notification-item")).toHaveLength(
+        NOTIFICATIONS_PER_PAGE
+      );
     });
 
-    screen.debug();
+    const menuPaper = document.querySelector(".MuiPaper-root") as HTMLElement;
+    if (!menuPaper) throw new Error("Scrollable Menu Paper element not found!");
 
-    //
+    Object.defineProperty(menuPaper, "scrollHeight", {
+      configurable: true,
+      value: 1000,
+    });
+    Object.defineProperty(menuPaper, "clientHeight", {
+      configurable: true,
+      value: 300,
+    });
+
+    fireEvent.scroll(menuPaper, {
+      target: { scrollTop: menuPaper.scrollHeight - menuPaper.clientHeight },
+    });
+
+    await waitFor(() => {
+      expect(screen.getAllByTestId("notification-item")).toHaveLength(
+        NOTIFICATIONS_PER_PAGE * 2
+      );
+    });
+    */
+
+  it("opens modal when a notification item is clicked", async () => {
+    render(<NotificationsMenu />);
+
+    fireEvent.click(screen.getByTestId("notifications-button"));
+
+    await waitFor(() => {
+      expect(screen.getByTestId("notifications-menu")).toBeInTheDocument();
+    });
+
+    await waitFor(() => {
+      expect(screen.getAllByTestId("notification-item")).toHaveLength(
+        NOTIFICATIONS_PER_PAGE
+      );
+    });
+
+    const mockPatchNotification = patchUserNotification as jest.Mock;
+
+    const firstNotification = screen.getAllByTestId("notification-item")[0];
+    fireEvent.click(firstNotification);
+
+    await waitFor(() => {
+      expect(screen.getByTestId("notification-modal")).toBeInTheDocument();
+    });
+
+    await waitFor(() => {
+      expect(mockPatchNotification).toHaveBeenCalledTimes(1);
+    });
+
+    expect(mockPatchNotification).toHaveBeenCalledWith(
+      expect.any(Number),
+      expect.any(String),
+      NotificationPatchType.READ,
+      expect.objectContaining({ suppressThrow: true })
+    );
+
+    const modalHeader = screen.getByTestId("notification-modal-header");
+    const modalHeaderText =
+      modalHeader.textContent?.split(" details changed!")[0];
+    const notificationText = firstNotification.textContent;
+
+    expect(modalHeader).toBeInTheDocument();
+    expect(notificationText).toContain(modalHeaderText);
   });
 
   /*it("has no accessibility violations", async () => {

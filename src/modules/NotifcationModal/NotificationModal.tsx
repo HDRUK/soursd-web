@@ -63,6 +63,7 @@ export default function NotificationModal({
           ...sx,
         }}>
         <CardHeader
+          data-testid="notification-modal-header"
           title={notification?.data.message}
           subheader={
             <span>

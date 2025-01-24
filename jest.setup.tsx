@@ -75,7 +75,7 @@ async function mockFetch(url: string, init?: RequestInit) {
   const [baseUrl, queryString] = url.split("?");
   const queryParams = Object.fromEntries(new URLSearchParams(queryString));
   const page = Number(queryParams.page) || 1;
-  const perPage = Number(queryParams.perPage) || 25;
+  const perPage = Number(queryParams.per_page) || 25;
 
   switch (baseUrl) {
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/permissions`: {
@@ -113,7 +113,6 @@ async function mockFetch(url: string, init?: RequestInit) {
       );
     }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/users/1/notifications`: {
-      console.log(perPage);
       return mock200Json(
         mockPagedResults(
           [

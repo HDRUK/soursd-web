@@ -39,6 +39,7 @@ function mockPagedResults<T>(
   const paginatedData = data.slice(startIndex, endIndex);
 
   return {
+    last_page: data.length / perPage,
     current_page: page,
     data: paginatedData,
   };

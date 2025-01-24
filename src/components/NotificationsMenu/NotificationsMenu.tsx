@@ -32,7 +32,7 @@ import { StyledMenuItem } from "./NotificationsMenu.styles";
 
 const NAMESPACE_TRANSLATIONS = "NotificationsMenu";
 
-const PER_PAGE = 5;
+export const NOTIFICATIONS_PER_PAGE = 5;
 
 export default function NotificationsMenu() {
   const t = useTranslations(NAMESPACE_TRANSLATIONS);
@@ -68,7 +68,7 @@ export default function NotificationsMenu() {
     queryFn: ({ pageParam }) =>
       getNotifications(
         user?.id as number,
-        { page: pageParam, per_page: PER_PAGE },
+        { page: pageParam, per_page: NOTIFICATIONS_PER_PAGE },
         {
           error: {
             message: "getNotificationsError",
@@ -112,8 +112,6 @@ export default function NotificationsMenu() {
   const notifications =
     notificationsData?.pages.flatMap(page => page.data.data) || [];
 
-  console.log(notifications.length);
-
   const handleOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -141,7 +139,7 @@ export default function NotificationsMenu() {
   const [isNearBottom, setIsNearBottom] = useState<boolean>(false);
   const [debouncedIsNearBottom, setDebouncedIsNearBottom] = useDebounce(
     isNearBottom,
-    2000
+    500
   );
 
   useEffect(() => {
