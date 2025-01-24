@@ -64,6 +64,7 @@ export default function FileLink({
   } else if (fileName) {
     buttonIcon = <EditIcon />;
   }
+
   return (
     <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
       <IconButton

@@ -70,7 +70,7 @@ export default function Experience() {
           const response = await mutateFileAsync(file);
 
           const fileData = response.data;
-          
+
           const newFile: AppFile = {
             id: fileData.id,
             name: fileData.name,
