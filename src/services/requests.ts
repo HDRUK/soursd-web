@@ -85,14 +85,34 @@ async function postRequest<T>(
   payload?: QueryPayload<T>,
   options?: QueryOptions
 ) {
+  const getBody = () => {
+    if (payload instanceof Function) {
+      return payload();
+    }
+    if (payload instanceof FormData) {
+      return payload;
+    }
+    return JSON.stringify(payload);
+  };
+
+  let headers: Record<string, string> = getHeadersWithAuthorisation(
+    options?.headers
+  ) as Record<string, string>;
+
+  if (payload instanceof FormData) {
+    delete headers["content-type"];
+  } else {
+    headers = {
+      ...headers,
+      "content-type": "application/json;charset=UTF-8",
+    };
+  }
+
   const response = await fetch(url, {
     ...options,
     method: "POST",
-    headers: getHeadersWithAuthorisation({
-      "content-type": "application/json;charset=UTF-8",
-      ...options?.headers,
-    }),
-    body: payload instanceof Function ? payload() : JSON.stringify(payload),
+    headers,
+    body: getBody(),
   });
 
   return response;

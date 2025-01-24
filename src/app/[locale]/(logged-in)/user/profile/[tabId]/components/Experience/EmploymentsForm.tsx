@@ -181,7 +181,7 @@ export default function EmploymentsForm({ onSubmit }: EmploymentsFormProps) {
 
   return (
     <Accordion
-      sx={{ marginY: "10px", boxShadow: "none" }}
+      sx={{ marginY: "20px", boxShadow: "none" }}
       expanded={expanded}
       onChange={handleAccordionChange}>
       <AccordionSummary
