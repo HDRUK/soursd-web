@@ -113,12 +113,24 @@ async function mockFetch(url: string, init?: RequestInit) {
       );
     }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/users/1/notifications`: {
+      console.log(perPage);
       return mock200Json(
-        mockPagedResults([
-          ...Array.from({ length: 10 }, () => mockedNotification(true)),
-          ...Array.from({ length: 10 }, () => mockedNotification(false)),
-        ])
+        mockPagedResults(
+          [
+            ...Array.from({ length: 10 }, () => mockedNotification(true)),
+            ...Array.from({ length: 10 }, () => mockedNotification(false)),
+          ],
+          page,
+          perPage
+        )
       );
+    }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/users/1/notifications/count`: {
+      return mock200Json({
+        total: 20,
+        read: 10,
+        unread: 10,
+      });
     }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/users`: {
       return mock200Json(

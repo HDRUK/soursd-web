@@ -13,7 +13,6 @@ export default async (
       .map(([key, value]) => [key, String(value)])
   );
 
-  console.log(` calling /notifications?${params.toString()}`);
   const response = await getRequest(
     `${process.env.NEXT_PUBLIC_API_V1_URL}/users/${userId}/notifications?${params.toString()}`,
     undefined

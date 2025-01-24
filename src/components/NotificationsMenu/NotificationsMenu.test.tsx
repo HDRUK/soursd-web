@@ -1,34 +1,14 @@
-import { useCookies } from "@/context/CookieContext";
 import { useStore } from "@/data/store";
-import useQueryRefetch from "@/hooks/useQueryRefetch";
 import { mockedUser } from "@/mocks/data/user";
-import { render, waitFor } from "@/utils/testUtils";
+import { screen, render, waitFor, fireEvent } from "@/utils/testUtils";
+import { commonAccessibilityTests } from "@/utils/testUtils";
 import NotificationsMenu from "./NotificationsMenu";
 
 const defaultUser = mockedUser({
   id: 1,
 });
 
-const mockRefetch = jest.fn();
-const mockCancel = jest.fn();
-
-jest.mock("@/context/CookieContext", () => ({
-  useCookies: jest.fn(),
-}));
-
-const mockGetCookie = jest.fn().mockReturnValue(undefined);
-
-(useCookies as jest.Mock).mockReturnValue({
-  getCookie: mockGetCookie,
-});
-
 jest.mock("@/data/store");
-jest.mock("@/hooks/useQueryRefetch");
-
-(useQueryRefetch as unknown as jest.Mock).mockImplementation(() => ({
-  refetch: mockRefetch,
-  cancel: mockCancel,
-}));
 
 (useStore as unknown as jest.Mock).mockReturnValue(defaultUser);
 
@@ -37,24 +17,32 @@ describe("<NotificationsMenu />", () => {
     jest.clearAllMocks();
   });
 
-  it("cancels a refetch", async () => {
+  /*it("renders the notifications icon with a badge count", async () => {
     render(<NotificationsMenu />);
+    expect(screen.getByTestId("notifications-button")).toBeInTheDocument();
 
     await waitFor(() => {
-      expect(mockCancel).toHaveBeenCalled();
+      expect(screen.getByTestId("notifications-badge")).toHaveTextContent("10");
     });
-  });
+  });*/
 
-  it("triggers a refetch", async () => {
+  it("opens and displays notifications when clicked", async () => {
     render(<NotificationsMenu />);
-
-    (useStore as unknown as jest.Mock).mockReturnValue({
-      ...defaultUser,
-      id: 2,
+    fireEvent.click(screen.getByTestId("notifications-button"));
+    await waitFor(() => {
+      expect(screen.getByTestId("notifications-menu")).toBeInTheDocument();
     });
 
     await waitFor(() => {
-      expect(mockRefetch).toHaveBeenCalled();
+      expect(screen.getAllByTestId("notification-item")).toHaveLength(5);
     });
+
+    screen.debug();
+
+    //
   });
+
+  /*it("has no accessibility violations", async () => {
+    commonAccessibilityTests(render(<NotificationsMenu />));
+  });*/
 });

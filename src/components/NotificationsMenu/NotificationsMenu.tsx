@@ -112,6 +112,8 @@ export default function NotificationsMenu() {
   const notifications =
     notificationsData?.pages.flatMap(page => page.data.data) || [];
 
+  console.log(notifications.length);
+
   const handleOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -179,6 +181,7 @@ export default function NotificationsMenu() {
   return (
     <Box>
       <IconButton
+        data-testid="notifications-button"
         color="primary"
         onClick={handleOpen}
         sx={{
@@ -187,12 +190,16 @@ export default function NotificationsMenu() {
           minWidth: "30px",
           minHeight: "30px",
         }}>
-        <Badge badgeContent={notificationsCount?.data.unread} color="error">
+        <Badge
+          data-testid="notifications-badge"
+          badgeContent={notificationsCount?.data.unread}
+          color="error">
           <NotificationsIcon />
         </Badge>
       </IconButton>
 
       <Menu
+        data-testid="notifications-menu"
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
@@ -216,6 +223,7 @@ export default function NotificationsMenu() {
           notifications.map(notif => (
             <StyledMenuItem
               key={notif.id}
+              data-testid="notification-item"
               onClick={() => handleViewNotification(notif)}
               className={notif.read_at ? "read" : "unread"}>
               <Typography
