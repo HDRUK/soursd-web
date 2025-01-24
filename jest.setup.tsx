@@ -22,6 +22,7 @@ import {
   mockedTraining,
   mockedUser,
 } from "./mocks/data/user";
+import { mockedNotification } from "./mocks/data/notification";
 import { ResponseMessageType } from "./src/consts/requests";
 import { ROUTES } from "./src/consts/router";
 
@@ -109,6 +110,14 @@ async function mockFetch(url: string, init?: RequestInit) {
         mockedUser({
           id: 1,
         })
+      );
+    }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/users/1/notifications`: {
+      return mock200Json(
+        mockPagedResults([
+          ...Array.from({ length: 10 }, () => mockedNotification(true)),
+          ...Array.from({ length: 10 }, () => mockedNotification(false)),
+        ])
       );
     }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/users`: {

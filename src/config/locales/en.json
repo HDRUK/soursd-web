@@ -330,6 +330,7 @@
     "fileNamePlaceholder": "No CV uploaded"
   },
   "NotificationsMenu": {
+    "noNotifications": "You have no notifications!",
     "orcIdSuccessTitle": "ORCiD scrape completed",
     "orcIdSuccessDescription": "Employment, educaton and qualifications has been gathered from your ORCiD profile. You will need to reload the page to see the updates."
   },

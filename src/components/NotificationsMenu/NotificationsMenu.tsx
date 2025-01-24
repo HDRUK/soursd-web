@@ -35,7 +35,7 @@ const NAMESPACE_TRANSLATIONS = "NotificationsMenu";
 const PER_PAGE = 5;
 
 export default function NotificationsMenu() {
-  // const t = useTranslations(NAMESPACE_TRANSLATIONS);
+  const t = useTranslations(NAMESPACE_TRANSLATIONS);
   const user = useStore(store => store.getUser());
   const [showNotificationModel, setShowNotificationModal] = useState(false);
   const [currentNotification, setCurrentNotification] =
@@ -88,11 +88,8 @@ export default function NotificationsMenu() {
       isFirstLoad.current = false;
       return;
     }
-
     if (!notificationsCount?.data.total) return;
-
     // if the polled total count changes, refetch the notification data
-    console.log("call refetch!");
     refetchNotifications();
   }, [notificationsCount?.data.total]);
 
@@ -213,7 +210,7 @@ export default function NotificationsMenu() {
         }}>
         {notificationsCount?.data.total === 0 ? (
           <MenuItem disabled>
-            <Typography>noNotifications</Typography>
+            <Typography>{t("noNotifications")}</Typography>
           </MenuItem>
         ) : (
           notifications.map(notif => (
