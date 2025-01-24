@@ -4,8 +4,8 @@ import { FileResponse } from "@/services/files/types";
 import { renderHook } from "@/utils/testUtils";
 import useFileScanned from "./useFileScanned";
 
-const setupUseFileScanned = (file?: Partial<FileResponse | undefined>) =>
-  renderHook(() => useFileScanned(mockedFile(file)));
+const setupUseFileScanned = (file?: Partial<FileResponse | undefined>) => () =>
+  useFileScanned(mockedFile(file));
 
 describe("useFileScanned", () => {
   it("scans", async () => {

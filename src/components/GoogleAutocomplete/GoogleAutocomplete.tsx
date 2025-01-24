@@ -70,7 +70,7 @@ const GoogleAutocomplete: React.FC<GoogleAutocompleteProps> = ({
   const [inputValue, setInputValue] = useState<string>(
     getLabelFromAddress(value)
   );
-  const debouncedInputValue = useDebounce(inputValue, 500);
+  const [debouncedInputValue, _] = useDebounce(inputValue, 500);
   const isFirstRender = useRef(true);
 
   useEffect(() => {

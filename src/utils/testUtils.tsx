@@ -80,20 +80,20 @@ const customRender = (
   };
 };
 
-interface OptionHookProps
+interface OptionHookProps<P = unknown>
   extends RenderHookOptions<
-    unknown,
+    P,
     typeof import("@testing-library/dom/types/queries"),
     HTMLElement,
     HTMLElement
   > {
-  wrapperProps: Record<string, unknown>;
+  wrapperProps?: Record<string, unknown>;
 }
 
-const customRenderHook = (
-  ui: (initialProps: unknown) => unknown,
-  options?: OptionHookProps
-): RenderHookResult<unknown, unknown> => {
+const customRenderHook = <P, R>(
+  ui: (initialProps: P) => R,
+  options?: OptionHookProps<P>
+): RenderHookResult<R, P> => {
   const { wrapperProps, ...rest } = options || {};
   return renderHook(ui, {
     wrapper: props => <Wrapper {...props} {...wrapperProps} />,

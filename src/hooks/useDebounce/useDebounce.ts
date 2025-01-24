@@ -1,16 +1,22 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, Dispatch, SetStateAction } from "react";
 import { SEARCH_CHAR_LIMIT } from "@/consts/search";
 
-const useDebounce = (
-  value: string | null,
-  delay = 500,
-  minLetters = SEARCH_CHAR_LIMIT
-) => {
+const useDebounce = <T>(
+  value: T,
+  delay: number = 500,
+  minLetters: number = SEARCH_CHAR_LIMIT
+): [T, Dispatch<SetStateAction<T>>] => {
   const [debouncedValue, setDebouncedValue] = useState(value);
 
   useEffect(() => {
-    if (value === null || (value.length < minLetters && value.length > 0))
-      return undefined;
+    if (
+      typeof value === "string" &&
+      minLetters !== undefined &&
+      value.length < minLetters &&
+      value.length > 0
+    ) {
+      return;
+    }
 
     const handler = setTimeout(() => {
       setDebouncedValue(value);
@@ -21,7 +27,7 @@ const useDebounce = (
     };
   }, [value, delay, minLetters]);
 
-  return debouncedValue;
+  return [debouncedValue, setDebouncedValue];
 };
 
 export default useDebounce;
