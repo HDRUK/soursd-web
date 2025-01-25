@@ -30,6 +30,8 @@ const handleRegister = () => {
     response_type: "code",
   });
 
+  console.log("window", window);
+
   window.location.href = `${registerUrl}?${params.toString()}`;
 };
 

@@ -49,10 +49,13 @@ async function handleJsonResponse(
 ) {
   const responseError = handleResponseError(response, options);
 
+  console.log("***** responseError", responseError);
+
   if (!options?.suppressThrow && responseError)
     return Promise.reject(responseError);
 
   const data = await response.json();
+  console.log("***** data", data);
 
   const dataError = handleDataError(data, options);
 
