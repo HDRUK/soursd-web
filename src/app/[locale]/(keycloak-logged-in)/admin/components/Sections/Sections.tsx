@@ -1,25 +1,12 @@
 "use client";
 
-import sendInvite from "@/services/custodians/sendInvite";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
-import { useCallback, useMemo } from "react";
 
-import ContactLink from "@/components/ContactLink";
-import OverlayCenter from "@/components/OverlayCenter";
-import OverlayCenterAlert from "@/components/OverlayCenterAlert";
-import yup from "@/config/yup";
-import getCustodians from "@/services/custodians/getCustodians";
-import { SendCustodianInvitePayload } from "@/services/custodians/types";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { CircularProgress, Typography } from "@mui/material";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useForm } from "react-hook-form";
-import { EmailTemplates } from "../../consts/emailTemplates";
-import { EmailTypes } from "../../consts/emailTypes";
 import SendInviteCustodian from "../SendInviteCustodian";
 import SendInviteOrganisation from "../SendInviteOrganistion";
 

@@ -1,6 +1,5 @@
 import ContactLink from "@/components/ContactLink";
 import InviteCustodian from "@/modules/InviteCustodian";
-import InviteOrganisation from "@/modules/InviteOrganisation";
 import useCustodianInvite from "@/queries/useCustodianInvite";
 import { showAlert } from "@/utils/showAlert";
 import { useTranslations } from "next-intl";

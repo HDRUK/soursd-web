@@ -23,3 +23,5 @@ export {
   postOrganisationInvite,
   postOrganisationInviteQuery,
 };
+
+export type * from "./types";

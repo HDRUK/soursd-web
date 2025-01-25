@@ -31,7 +31,7 @@ function mock200Json<T>(data: T) {
 
 function mockFailedJson<T>(data: T, status = 404) {
   return {
-    ok: true,
+    ok: false,
     status,
     json: async () => ({
       message: ResponseMessageType.FAILURE,
