@@ -15,8 +15,8 @@ import {
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
+import NotificationsMenu from "@/modules/NotificationsMenu";
 import HorizontalDrawer from "../HorizontalDrawer";
-import NotificationsMenu from "../NotificationsMenu";
 import SoursdLogo from "../SoursdLogo";
 import { StyledButton, StyledContainer, StyledHeader } from "./NavBar.styles";
 
@@ -52,7 +52,8 @@ export default function NavBar() {
   const buttons: {
     color: ButtonColor;
     variant: ButtonVariant;
-    text: string;
+    text?: string;
+    icon?: React.ReactNode;
     isSign?: boolean;
     onClick?: () => void | undefined;
   }[] = [
@@ -103,7 +104,6 @@ export default function NavBar() {
 
   return (
     <StyledContainer>
-      <NotificationsMenu />
       <Box
         sx={{
           display: {
@@ -115,11 +115,12 @@ export default function NavBar() {
         <StyledHeader>
           <SoursdLogo variant="titled" />
           <Box sx={{ display: "flex" }}>
-            {buttons.map(({ text, ...restProps }) => (
+            {buttons.map(({ text, icon, ...restProps }) => (
               <StyledButton {...restProps} key={text}>
-                {text}
+                {text || icon}
               </StyledButton>
             ))}
+            {auth && <NotificationsMenu />}
           </Box>
         </StyledHeader>
       </Box>
