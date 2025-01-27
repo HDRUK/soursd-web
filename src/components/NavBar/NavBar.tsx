@@ -16,7 +16,7 @@ import {
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import HorizontalDrawer from "../HorizontalDrawer";
-import NotificationsMenu from "../NotificationsMenu";
+import NotificationsMenu from "@/modules/NotificationsMenu";
 import SoursdLogo from "../SoursdLogo";
 import { StyledButton, StyledContainer, StyledHeader } from "./NavBar.styles";
 

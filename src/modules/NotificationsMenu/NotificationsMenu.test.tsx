@@ -7,9 +7,9 @@ import {
   fireEvent,
   commonAccessibilityTests,
 } from "@/utils/testUtils";
-import { patchUserNotification } from "@/services/notifications";
-import { NotificationPatchType } from "@/services/notifications/patchUserNotification";
-import NotificationsMenu, { NOTIFICATIONS_PER_PAGE } from "./NotificationsMenu";
+import { NotificationPatchType } from "@/services/notifications/types";
+import { NOTIFICATIONS_PER_PAGE } from "@/consts/notifications";
+import NotificationsMenu from "./NotificationsMenu";
 
 const defaultUser = mockedUser({
   id: 1,

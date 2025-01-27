@@ -21,7 +21,7 @@ import {
 } from "@mui/material";
 import MarkEmailUnreadIcon from "@mui/icons-material/MarkEmailUnread";
 import { Notification } from "@/types/notifications";
-import { formatShortDate } from "@/utils/date";
+import { formatDBDate } from "@/utils/date";
 import { formatNotificationType } from "@/utils/notifications";
 import { useTranslations } from "next-intl";
 
@@ -76,7 +76,7 @@ export default function NotificationModal({
             <span>
               {formatNotificationType(notification.type)}
               {" - "}
-              {formatShortDate(notification.data.time)}
+              {formatDBDate(notification.data.time)}
             </span>
           }
         />

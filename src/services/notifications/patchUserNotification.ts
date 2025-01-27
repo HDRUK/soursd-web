@@ -1,10 +1,6 @@
 import { ResponseOptions } from "@/types/requests";
 import { handleJsonResponse, patchRequest } from "../requests";
-
-export enum NotificationPatchType {
-  READ = "read",
-  UNREAD = "unread",
-}
+import { NotificationPatchType } from "./types";
 
 export default async (
   userId: number,

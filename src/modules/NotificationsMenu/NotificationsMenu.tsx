@@ -11,26 +11,21 @@ import {
   CircularProgress,
 } from "@mui/material";
 
-import { useMutation, useQuery, useInfiniteQuery } from "@tanstack/react-query";
-import dayjs from "dayjs";
+import { formatDBDate } from "@/utils/date";
 import { useTranslations } from "next-intl";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import {
-  getNotifications,
-  getNotificationsCounts,
-  patchUserNotification,
-} from "@/services/notifications";
-import { NotificationPatchType } from "@/services/notifications/patchUserNotification";
+import { NotificationPatchType } from "@/services/notifications/types";
 import { NotificationModal } from "@/modules/NotifcationModal";
 import { Notification } from "@/types/notifications";
 import { formatNotificationType } from "@/utils/notifications";
 import { useState, useEffect, useRef } from "react";
 import useDebounce from "@/hooks/useDebounce";
+import usePatchNotification from "./hooks/usePatchNotification";
+import useGetNotifcations from "./hooks/useGetNotifications";
+import useGetNotificationsCount from "./hooks/useGetNotificationCounts";
 import { StyledMenuItem } from "./NotificationsMenu.styles";
 
 const NAMESPACE_TRANSLATIONS = "NotificationsMenu";
-
-export const NOTIFICATIONS_PER_PAGE = 5;
 
 export default function NotificationsMenu() {
   const t = useTranslations(NAMESPACE_TRANSLATIONS);
@@ -42,17 +37,8 @@ export default function NotificationsMenu() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
-  const { data: notificationsCount, refetch: refetchCount } = useQuery({
-    queryKey: ["getNotificationsCounts", user?.id],
-    queryFn: ({ queryKey }) =>
-      getNotificationsCounts(queryKey[1] as number, {
-        error: {
-          message: "getNotificationsCountsError",
-        },
-      }),
-    enabled: true,
-    refetchInterval: 10000,
-  });
+  const { data: notificationsCount, refetch: refetchCount } =
+    useGetNotificationsCount(user?.id as number);
 
   const {
     data: notificationsData,
@@ -61,24 +47,7 @@ export default function NotificationsMenu() {
     hasNextPage: hasNextPageNotifications,
     isFetching: isFetchingNotifications,
     isFetchingNextPage: isFetchingNextPageNotifications,
-  } = useInfiniteQuery({
-    queryKey: ["getUserNotifications", user?.id],
-    queryFn: ({ pageParam }) =>
-      getNotifications(
-        user?.id as number,
-        { page: pageParam, per_page: NOTIFICATIONS_PER_PAGE },
-        {
-          error: {
-            message: "getNotificationsError",
-          },
-        }
-      ),
-    initialPageParam: 1,
-    getNextPageParam: lastPage => {
-      const { last_page, current_page } = lastPage.data;
-      return current_page < last_page ? current_page + 1 : undefined;
-    },
-  });
+  } = useGetNotifcations(user?.id as number);
 
   const isFirstLoad = useRef(true);
   useEffect(() => {
@@ -91,22 +60,10 @@ export default function NotificationsMenu() {
     refetchNotifications();
   }, [notificationsCount?.data.total]);
 
-  const { mutateAsync: mutateNotification } = useMutation({
-    mutationKey: ["patchUserNotifications"],
-    mutationFn: ({
-      notificationId,
-      type,
-    }: {
-      notificationId: string;
-      type: NotificationPatchType;
-    }) =>
-      patchUserNotification(user?.id as number, notificationId, type, {
-        suppressThrow: true,
-        error: {
-          message: "patchNotificationError",
-        },
-      }),
-  });
+  const { mutateAsync: mutateNotification } = usePatchNotification(
+    user?.id as number
+  );
+
   const notifications =
     notificationsData?.pages.flatMap(page => page.data.data) || [];
 
@@ -240,7 +197,7 @@ export default function NotificationsMenu() {
                 variant="caption"
                 color="text.secondary"
                 sx={{ fontWeight: "inherit" }}>
-                {dayjs(notif.data.time).format("MMM D, YYYY • h:mm A")}
+                {formatDBDate(notif.data.time)}
               </Typography>
             </StyledMenuItem>
           ))

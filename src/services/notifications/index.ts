@@ -1,5 +1,9 @@
-import getNotifications from "./getNotifications";
-import getNotificationsCounts from "./getNotificationsCounts";
-import patchUserNotification from "./patchUserNotification";
+import getNotificationsCountsQuery from "./getNotificationsCountsQuery";
+import getNotificationsQuery from "./getNotificationsQuery";
+import patchNotificationQuery from "./patchNotificationQuery";
 
-export { getNotifications, getNotificationsCounts, patchUserNotification };
+export {
+  getNotificationsCountsQuery,
+  getNotificationsQuery,
+  patchNotificationQuery,
+};
