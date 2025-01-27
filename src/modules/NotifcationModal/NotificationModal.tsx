@@ -21,7 +21,7 @@ import {
 } from "@mui/material";
 import MarkEmailUnreadIcon from "@mui/icons-material/MarkEmailUnread";
 import { Notification } from "@/types/notifications";
-import dayjs from "dayjs";
+import { formatShortDate } from "@/utils/date";
 import { formatNotificationType } from "@/utils/notifications";
 import { useTranslations } from "next-intl";
 
@@ -74,12 +74,9 @@ export default function NotificationModal({
           title={notification?.data.message}
           subheader={
             <span>
-              {" "}
               {formatNotificationType(notification.type)}
               {" - "}
-              {dayjs(notification.data.time).format(
-                "MMM D, YYYY • h:mm A"
-              )}{" "}
+              {formatShortDate(notification.data.time)}
             </span>
           }
         />
