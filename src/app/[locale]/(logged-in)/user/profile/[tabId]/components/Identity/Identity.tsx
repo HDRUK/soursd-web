@@ -8,20 +8,13 @@ import FormSection from "@/components/FormSection";
 import OverlayCenter from "@/components/OverlayCenter";
 import Text from "@/components/Text";
 import yup from "@/config/yup";
-import { MAX_UPLOAD_SIZE_BYTES } from "@/consts/files";
 import { VALIDATION_ORC_ID } from "@/consts/form";
 import { UserProfileCompletionCategories } from "@/consts/user";
 import { useStore } from "@/data/store";
-import useFileScanned from "@/hooks/useFileScanned/useFileScanned";
-import useQueryRefetch from "@/hooks/useQueryRefetch";
 import useUserProfileCompletion from "@/hooks/useUserProfileCompletion";
 import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
 import { PageGuidance } from "@/modules";
-import postFile from "@/services/files/postFile";
-import { FilePayload } from "@/services/files/types";
 import { getOrganisations } from "@/services/organisations";
-import { EntityType, FileType } from "@/types/api";
-import { getLatestCV, isFileScanning } from "@/utils/file";
 import InfoIcon from "@mui/icons-material/Info";
 import SaveIcon from "@mui/icons-material/Save";
 import { LoadingButton } from "@mui/lab";
@@ -35,10 +28,9 @@ import {
   TextField,
   Tooltip,
 } from "@mui/material";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
-import DetailsCV from "../DetailsCV";
+import { useCallback, useMemo } from "react";
 
 export interface IdentityFormValues {
   first_name: string;
@@ -63,39 +55,6 @@ export default function Identity() {
 
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
-  const [isFileSizeTooBig, setIsFileSizeTooBig] = useState(false);
-
-  const latestCV = getLatestCV(user?.registry?.files || []);
-
-  const { isNotInfected, isScanning } = useFileScanned(latestCV);
-
-  const { refetch: refetchUser, cancel: refetchCancel } = useQueryRefetch({
-    options: { queryKey: ["getUser", user?.id] },
-  });
-
-  useEffect(() => {
-    if (isFileScanning(latestCV)) {
-      refetchUser();
-    } else {
-      refetchCancel();
-    }
-
-    return () => refetchCancel();
-  }, [JSON.stringify(latestCV)]);
-
-  const {
-    mutateAsync: mutateFileAsync,
-    isError: isFileError,
-    isPending: isFileLoading,
-    error: fileError,
-  } = useMutation({
-    mutationKey: ["postFile"],
-    mutationFn: (payload: () => FilePayload) => {
-      return postFile(payload, {
-        error: { message: "cvUploadFailed" },
-      });
-    },
-  });
 
   const {
     isError: isGetOrganisationsError,
@@ -109,31 +68,6 @@ export default function Identity() {
         error: { message: "noData" },
       }),
   });
-
-  const handleFileChange = useCallback(
-    async ({ target: { files } }: ChangeEvent<HTMLInputElement>) => {
-      setIsFileSizeTooBig(false);
-
-      if (files?.[0]) {
-        if (files[0].size <= MAX_UPLOAD_SIZE_BYTES) {
-          await mutateFileAsync(() => {
-            const file = new FormData();
-
-            file.append("file", files[0]);
-            file.append("file_type", FileType.CV);
-            file.append("entity_type", EntityType.RESEARCHER);
-
-            return file;
-          });
-
-          refetchUser();
-        } else {
-          setIsFileSizeTooBig(true);
-        }
-      }
-    },
-    []
-  );
 
   const handleDetailsSubmit = useCallback(
     async (fields: IdentityFormValues) => {
@@ -196,10 +130,6 @@ export default function Identity() {
       })) ||
     (isUpdateError &&
       tProfile.rich(updateError, {
-        contactLink: ContactLink,
-      })) ||
-    (isFileError &&
-      tProfile.rich(fileError, {
         contactLink: ContactLink,
       }));
 
@@ -272,28 +202,18 @@ export default function Identity() {
                 <FormControlHorizontal
                   name="consent_scrape"
                   renderField={fieldProps => (
-                    <>
-                      <FormControlLabel
-                        label={tForm("consentScrapeDescription")}
-                        control={
-                          <Checkbox
-                            {...fieldProps}
-                            checked={!!fieldProps.value}
-                          />
-                        }
-                        sx={{
-                          mb: 2,
-                        }}
-                      />
-                      <DetailsCV
-                        fileName={latestCV?.name || tProfile("noCvUploaded")}
-                        isFileSizeTooBig={isFileSizeTooBig}
-                        isFileScanning={isScanning}
-                        isFileOk={isNotInfected}
-                        isFileUploading={isFileLoading}
-                        onFileChange={handleFileChange}
-                      />
-                    </>
+                    <FormControlLabel
+                      label={tForm("consentScrapeDescription")}
+                      control={
+                        <Checkbox
+                          {...fieldProps}
+                          checked={!!fieldProps.value}
+                        />
+                      }
+                      sx={{
+                        mb: 2,
+                      }}
+                    />
                   )}
                   displayLabel={false}
                 />

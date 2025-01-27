@@ -28,7 +28,7 @@ interface Paged<T> {
   data: T;
 }
 
-type QueryOptions = Omit<RequestInit, "body">;
+type QueryOptions = RequestInit;
 type QueryPayload<T> = T | (() => BodyInit & T);
 
 export type {
