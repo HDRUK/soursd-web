@@ -29,6 +29,17 @@ function mock200Json<T>(data: T) {
   };
 }
 
+function mockFailedJson<T>(data: T, status = 404) {
+  return {
+    ok: false,
+    status,
+    json: async () => ({
+      message: ResponseMessageType.FAILURE,
+      data,
+    }),
+  };
+}
+
 function mockPagedResults<T>(
   data: T[],
   page: number = 1,
@@ -44,4 +55,4 @@ function mockPagedResults<T>(
   };
 }
 
-export { mock200Json, mockPagedResults };
+export { mock200Json, mockFailedJson, mockPagedResults };

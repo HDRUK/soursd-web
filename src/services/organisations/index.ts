@@ -5,6 +5,10 @@ import postPermissions from "./postPermissions";
 import patchOrganisation from "./patchOrganisation";
 import postOrganisationsInviteUser from "./postOrganisationsInviteUser";
 import getOrganisationUsers from "./getOrganisationUsers";
+import postOrganisationUnclaimed from "./postOrganisationUnclaimed";
+import postOrganisationUnclaimedQuery from "./postOrganisationUnclaimedQuery";
+import postOrganisationInvite from "./postOrganisationInvite";
+import postOrganisationInviteQuery from "./postOrganisationInviteQuery";
 
 export {
   getOrganisations,
@@ -14,6 +18,10 @@ export {
   patchOrganisation,
   postOrganisationsInviteUser,
   getOrganisationUsers,
+  postOrganisationUnclaimedQuery,
+  postOrganisationUnclaimed,
+  postOrganisationInvite,
+  postOrganisationInviteQuery,
 };
 
 export type * from "./types";

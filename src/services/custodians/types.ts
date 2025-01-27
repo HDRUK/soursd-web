@@ -19,11 +19,9 @@ interface SendCustodianInviteResponse {
 }
 
 type GetCustodianResponse = Custodian;
-
 type GetCustodiansResponse = Custodian[];
 
 type PatchCustodianPayload = Partial<Custodian>;
-
 type PatchCustodianResponse = Custodian;
 
 interface PostCustodianInviteUserPayload {
@@ -35,6 +33,10 @@ interface PostCustodianInviteUserPayload {
 
 type PostCustodianInviteUserResponse = number;
 
+type PostCustodianPayload = Custodian;
+type PostCustodianResponse = number;
+type PostCustodianInviteResponse = Custodian;
+
 export type {
   PostCustodianInviteUserPayload,
   PostCustodianInviteUserResponse,
@@ -45,4 +47,7 @@ export type {
   SendCustodianInviteResponse,
   PatchCustodianPayload,
   PatchCustodianResponse,
+  PostCustodianPayload,
+  PostCustodianResponse,
+  PostCustodianInviteResponse,
 };
