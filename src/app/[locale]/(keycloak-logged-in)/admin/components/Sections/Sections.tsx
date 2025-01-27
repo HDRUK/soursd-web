@@ -10,7 +10,6 @@ import { useTranslations } from "next-intl";
 import SendInviteCustodian from "../SendInviteCustodian";
 import SendInviteOrganisation from "../SendInviteOrganistion";
 
-const NAMESPACE_TRANSLATION_VALIDATION = "Form";
 const NAMESPACE_TRANSLATIONS_ADMINISTRATION = "Administration";
 
 export default function Sections() {
