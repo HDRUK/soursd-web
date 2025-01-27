@@ -8,6 +8,7 @@ interface ResultsProps extends BoxProps {
   queryState: QueryState;
   noResultsMessage: ReactNode;
   errorMessage: ReactNode;
+  count: number | undefined;
 }
 
 export default function Results({
@@ -15,6 +16,7 @@ export default function Results({
   noResultsMessage,
   errorMessage,
   children,
+  count,
   ...restProps
 }: ResultsProps) {
   const { isLoading, isError } = queryState;
@@ -28,12 +30,14 @@ export default function Results({
         gap: 3,
         ...restProps.sx,
       }}>
-      {isLoading && <Message severity="info">{noResultsMessage}</Message>}
+      {!isLoading && !count && (
+        <Message severity="info">{noResultsMessage}</Message>
+      )}
       {isError && !isLoading && (
         <Message severity="error">{errorMessage}</Message>
       )}
       <LoadingWrapper variant="basic" loading={isLoading && !isError}>
-        <div role="list">{children}</div>
+        {!!count && <div role="list">{children}</div>}
       </LoadingWrapper>
     </Box>
   );

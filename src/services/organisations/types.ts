@@ -14,6 +14,11 @@ type PatchOrganisationPayload = Partial<Organisation>;
 
 type PostOrganisationPayload = Partial<Organisation>;
 type PostOrganisationResponse = Organisation;
+type PostOrganisationInviteResponse = Organisation;
+interface PostOrganisationUnclaimedPayload {
+  organisation_name: string;
+  lead_applicant_email: string;
+}
 
 interface UpdateOrganisationPermissionsResponse {
   id: number;
@@ -36,6 +41,10 @@ interface PostOrganisationInviteUserPayload {
   last_name: string;
   email: string;
   identifier?: EMAIL_TEMPLATE;
+  department_id?: number;
+  is_delegate?: number;
+  role?: string;
+  user_group?: string;
 }
 
 type PostOrganisationInviteUserResponse = number;
@@ -53,4 +62,6 @@ export type {
   UpdateOrganisationPermissonsPayload,
   PostOrganisationPayload,
   PostOrganisationResponse,
+  PostOrganisationInviteResponse,
+  PostOrganisationUnclaimedPayload,
 };

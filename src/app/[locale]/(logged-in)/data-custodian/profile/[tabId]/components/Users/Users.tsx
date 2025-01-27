@@ -109,7 +109,8 @@ export default function Users() {
         queryState={{
           isLoading: isGetCustodiansLoading,
           isError: isGetCustodiansError,
-        }}>
+        }}
+        count={custodiansData?.data?.length}>
         {custodiansData?.data.map(custodianUser => {
           const { first_name, last_name, created_at, user_permissions } =
             custodianUser;

@@ -1,8 +1,16 @@
 interface QueryState {
-  isLoading: boolean;
   isError: boolean;
   error?: unknown | string | null;
   isSuccess?: boolean;
+  isFetched?: boolean;
+  isLoading?: boolean;
 }
 
-export type { QueryState };
+interface MutationState {
+  isError: boolean;
+  error?: unknown | string | null;
+  isSuccess?: boolean;
+  isPending?: boolean;
+}
+
+export type { QueryState, MutationState };

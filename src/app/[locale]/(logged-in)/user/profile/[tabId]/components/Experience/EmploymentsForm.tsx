@@ -71,7 +71,7 @@ export default function EmploymentsForm({ onSubmit }: EmploymentsFormProps) {
   } = useMutation({
     mutationKey: ["postEmployments", user?.id],
     mutationFn: (payload: PostEmploymentsPayload) =>
-      postEmployments(user?.id, payload, {
+      postEmployments(user?.registry_id, payload, {
         error: {
           message: "addEmploymentError",
         },

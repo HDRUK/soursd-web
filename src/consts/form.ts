@@ -45,6 +45,8 @@ enum FormModes {
   EDIT = "edit",
 }
 
+const MAX_FORM_WIDTH = "600px";
+
 export {
   FormModes,
   VALIDATION_CE_CERTIFICATION_NUMBER,
@@ -61,4 +63,5 @@ export {
   VALIDATION_CHARITY_ID,
   VALIDATION_EMAIL,
   ORGANISATION_SIZE_OPTIONS,
+  MAX_FORM_WIDTH,
 };

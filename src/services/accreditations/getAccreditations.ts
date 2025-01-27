@@ -3,11 +3,11 @@ import { getRequest, handleJsonResponse } from "../requests";
 import { AccreditationsResponse } from "./types";
 
 export default async (
-  id: number,
+  resgitryId: number,
   options: ResponseOptions
 ): Promise<ResponseJson<Paged<AccreditationsResponse>>> => {
   const response = await getRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/accreditations/${id}`
+    `${process.env.NEXT_PUBLIC_API_V1_URL}/accreditations/${resgitryId}`
   );
 
   return handleJsonResponse(response, options);

@@ -225,7 +225,6 @@ const theme = createTheme(
       },
       MuiButton: {
         defaultProps: {
-          size: "small",
           variant: "contained",
         },
         styleOverrides: {

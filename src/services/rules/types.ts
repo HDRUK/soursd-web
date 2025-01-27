@@ -1,10 +1,6 @@
-export interface Node {
-  id: string;
+export interface Rules {
+  id: number;
   name: string;
-  type: string;
-}
-
-export interface RulesResponse {
-  contentType: string;
-  nodes: Node[];
+  title: string;
+  description: string;
 }
