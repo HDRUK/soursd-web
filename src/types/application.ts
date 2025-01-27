@@ -219,6 +219,7 @@ interface ResearcherTraining {
   training_name: string;
   expires_in_years: boolean;
   id: number;
+  certification_uploaded: boolean;
 }
 
 interface ResearcherEmployment {

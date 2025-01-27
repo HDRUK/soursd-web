@@ -9,7 +9,7 @@ import ResearcherTrainingEntry from "@/modules/ResearcherTrainingEntry";
 import { LoadingButton } from "@mui/lab";
 import { Grid, TextField } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useCallback, useMemo } from "react";
+import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
 import yup from "@/config/yup";
 import dayjs from "dayjs";
 import SaveIcon from "@mui/icons-material/Save";
@@ -21,12 +21,20 @@ import { showAlert } from "@/utils/showAlert";
 import { postTrainings } from "@/services/trainings";
 import { formatDBDate } from "@/utils/date";
 import { StyledBox } from "./Training.styles";
+import FileUploadDetails from "../FileUploadDetails/FileUploadDetails";
+import useFileScanned from "@/hooks/useFileScanned";
+import { getUploadedCertification, isFileScanning } from "@/utils/file";
+import useQueryRefetch from "@/hooks/useQueryRefetch";
+import { FilePayload, postFile } from "@/services/files";
+import { FileType, MAX_UPLOAD_SIZE_BYTES } from "@/consts/files";
+import { EntityType } from "@/types/api";
 
 export interface TrainingFormValues {
   provider: string;
   training_name: string;
   awarded_at: string;
   expires_at: string;
+  certification_upload: File;
 }
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
@@ -50,6 +58,65 @@ export default function Training() {
   const setHistories = useStore(state => state.setHistories);
   const getHistories = useStore(state => state.getHistories);
 
+  const [isFileSizeTooBig, setIsFileSizeTooBig] = useState(false);
+
+  const uploadedCertification = getUploadedCertification(user?.registry?.files || []);
+
+  const { isNotInfected, isScanning } = useFileScanned(uploadedCertification);
+  
+  const { refetch: refetchUser, cancel: refetchCancel } = useQueryRefetch({
+    options: { queryKey: ["getUser", user?.id] },
+  });
+  
+  useEffect(() => {
+    if (isFileScanning(uploadedCertification)) {
+      refetchUser();
+    } else {
+      refetchCancel();
+    }
+
+    return () => refetchCancel();
+  }, [JSON.stringify(uploadedCertification)]);
+  
+  const {
+    mutateAsync: mutateFileAsync,
+    isError: isFileError,
+    isPending: isFileLoading,
+    error: fileError,
+  } = useMutation({
+    mutationKey: ["postFile"],
+    mutationFn: (payload: () => FilePayload) => {
+      return postFile(payload, {
+        error: { message: "certificationUploadFailed" },
+      });
+    },
+  });
+  
+  const handleFileChange = useCallback(
+    async ({ target: { files } }: ChangeEvent<HTMLInputElement>) => {
+      setIsFileSizeTooBig(false);
+
+      if (files?.[0]) {
+        if (files[0].size <= MAX_UPLOAD_SIZE_BYTES) {
+          await mutateFileAsync(() => {
+            const file = new FormData();
+
+            file.append("file", files[0]);
+            file.append("file_type", FileType.CERTIFICATION);
+            file.append("entity_type", EntityType.RESEARCHER);
+
+            return file;
+          });
+
+          refetchUser();
+        } else {
+          setIsFileSizeTooBig(true);
+        }
+      }
+    },
+    []
+  );
+  
   const onSubmit = useCallback(
     async (training: PostTrainingsPayload) => {
       try {
@@ -95,6 +162,7 @@ export default function Training() {
         await mutateAsync({
           ...formattedFields,
           expires_in_years: yearsRemaining,
+          certification_uploaded: !!uploadedCertification
         });
 
         onSubmit({ ...formattedFields, expires_in_years: yearsRemaining });
@@ -146,6 +214,8 @@ export default function Training() {
           .test("is-future", tForm("expiresAtPastInvalid"), value => {
             return dayjs(value).isAfter(dayjs());
           }),
+        certification_upload: yup.mixed().required(tForm("certificationRequiredInvalid")),
+  
       }),
     [tForm]
   );
@@ -183,6 +253,23 @@ export default function Training() {
                     />
                   </Grid>
                 ))}
+                <Grid item xs={12} key={'certification_upload'}>
+                    <FormControlHorizontal
+                      name={'certification_upload'}
+                      renderField={fieldProps => (
+                        <FileUploadDetails 
+                        fileType='certification'
+                        fileName={uploadedCertification?.name || tProfile("noCertificationUploaded")}
+                        isFileSizeTooBig={isFileSizeTooBig}
+                        isFileScanning={isScanning}
+                        isFileOk={isNotInfected}
+                        isFileUploading={isFileLoading}
+                        onFileChange={handleFileChange}
+                        {...fieldProps}
+                        />
+                      )}
+                    />
+                  </Grid>
               </Grid>
             </FormSection>
             <FormActions>

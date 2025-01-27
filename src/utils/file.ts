@@ -5,6 +5,10 @@ function getLatestCV(files: FileResponse[] | undefined) {
   return [...(files || [])].reverse().find(file => file.type === FileType.CV);
 }
 
+function getUploadedCertification(files: FileResponse[] | undefined) {
+  return [...(files || [])].reverse().find(file => file.type === FileType.CERTIFICATION);
+}
+
 function isFileScanning(file: FileResponse | undefined) {
   return file?.status === FileStatus.PENDING;
 }
@@ -25,6 +29,7 @@ function getFileHref(fileName: string | undefined) {
 
 export {
   getLatestCV,
+  getUploadedCertification,
   isFileScanning,
   isFileNotInfected,
   isFileInfected,

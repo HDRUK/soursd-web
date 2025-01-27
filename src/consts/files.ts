@@ -8,6 +8,7 @@ enum FileStatus {
 
 enum FileType {
   CV = "CV",
+  CERTIFICATION = "CERTIFICATION",
 }
 
 export { MAX_UPLOAD_SIZE_BYTES, FileStatus, FileType };

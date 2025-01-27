@@ -327,11 +327,13 @@
     "expiresAtRequiredInvalid": "Expires at is required",
     "expiresAtBeforeAwardedAtInvalid": "Expires at date cannot be before the awarded at date",
     "expiresAtPastInvalid": "Expires at date cannot be in the past",
+    "certificationRequiredInvalid": "Certification is required",
     "employerNameRequiredInvalid": "Employer name is required",
     "addAnother": "Add Another",
     "save": "Save",
     "closeButton": "Close",
-    "errorButton": "Try Again"
+    "errorButton": "Try Again",
+    "certificationUpload": "Certification"
   },
   "Buttons": {
     "register": "Register",
@@ -367,6 +369,9 @@
     "fileScanOk": "CV was sucessfully scanned",
     "fileScanError": "Your CV may have a virus",
     "fileNamePlaceholder": "No CV uploaded"
+  },
+  "Certification": {
+    "fileMaxSize": "{size} Max size"
   },
   "NotificationsMenu": {
     "orcIdSuccessTitle": "ORCiD scrape completed",
@@ -405,7 +410,9 @@
     "pending": "Pending",
     "verified": "Verified",
     "cvUploadFailed": "There was a problem uploading your CV. Please check the file size and try again or alternativley contact us at <contactLink></contactLink>",
+    "certificationUploadFailed": "There was a problem uploading your certification. Please check the file size and try again or alternativley contact us at <contactLink></contactLink>",
     "noCvUploaded": "No CV uploaded",
+    "noCertificationUploaded": "No Certification Uploaded",
     "profileCompletedTitle": "Your profile has been completed",
     "profileCompletedDescription": "You have completed all the mandatory fields required for your profile to be considered 'complete'. This will be flagged to Data Custodians when they view your user details.",
     "continueLinkText": "Continue",
