@@ -98,7 +98,7 @@ async function postRequest<T>(
   const response = await fetch(url, {
     ...options,
     method: "POST",
-    headers: getHeadersWithAuthorisation(headers),
+    headers,
     body:
       payload instanceof Function
         ? payload()
