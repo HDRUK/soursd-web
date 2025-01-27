@@ -8,7 +8,7 @@ export default async (
 ): Promise<ResponseJson<FileResponse>> => {
   const response = await postRequest(
     `${process.env.NEXT_PUBLIC_API_V1_URL}/files`,
-    payload,
+    payload
   );
 
   const error = handleResponseError(response, options);

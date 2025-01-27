@@ -12,12 +12,12 @@ import { PostEmploymentsPayload } from "@/services/employments/types";
 import { getLatestCV, isFileScanning } from "@/utils/file";
 import useFileScanned from "@/hooks/useFileScanned";
 import useQueryRefetch from "@/hooks/useQueryRefetch";
-import { FilePayload, postFile } from "@/services/files";
 import { useMutation } from "@tanstack/react-query";
 import { MAX_UPLOAD_SIZE_BYTES, FileType } from "@/consts/files";
 import { EntityType } from "@/types/api";
 import { Message } from "@/components/Message";
 import ContactLink from "@/components/ContactLink";
+import postFileQuery from "@/services/files/postFileQuery";
 import DetailsCV from "../DetailsCV";
 import EmploymentsForm from "./EmploymentsForm";
 import HistoriesSection from "../HistoriesSection";
@@ -54,14 +54,7 @@ export default function Experience() {
     isPending: isFileLoading,
     isError: isUploadError,
     error: uploadError,
-  } = useMutation({
-    mutationKey: ["postFile"],
-    mutationFn: (payload: FilePayload) => {
-      return postFile(payload, {
-        error: { message: "cvUploadFailed" },
-      });
-    },
-  });
+  } = useMutation(postFileQuery());
 
   const handleFileChange = useCallback(
     async ({ target }: ChangeEvent<HTMLInputElement>) => {

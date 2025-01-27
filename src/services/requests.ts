@@ -99,7 +99,12 @@ async function postRequest<T>(
     ...options,
     method: "POST",
     headers: getHeadersWithAuthorisation(headers),
-    body: payload instanceof Function ? payload() : payload instanceof FormData ? payload : JSON.stringify(payload),
+    body:
+      payload instanceof Function
+        ? payload()
+        : payload instanceof FormData
+          ? payload
+          : JSON.stringify(payload),
   });
 
   return response;
