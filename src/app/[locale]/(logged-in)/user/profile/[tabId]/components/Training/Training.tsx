@@ -101,13 +101,13 @@ export default function Training() {
 
         showAlert("success", {
           text: tProfile("postTrainingSuccess"),
-          confirmButtonText: tProfile("postTrainingSuccessButton"),
+          confirmButtonText: tProfile("closeButton"),
         });
       } catch (_) {
         const errorMessage = tProfile("postTrainingError");
         showAlert("error", {
           text: errorMessage,
-          confirmButtonText: tProfile("postTrainingErrorButton"),
+          confirmButtonText: tProfile("errorButton"),
         });
       }
     },

@@ -3,7 +3,6 @@ import Icon from "@/components/Icon";
 import Results from "@/components/Results";
 import ResultsCard from "@/components/ResultsCard";
 import UserRegisteredStatus from "@/components/UserRegisteredStatus";
-import { DecoupleIcon } from "@/consts/icons";
 import { useStore } from "@/data/store";
 import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
 import { PageGuidance, PageSection } from "@/modules";
@@ -12,13 +11,16 @@ import { formatShortDate } from "@/utils/date";
 import { isRegistered } from "@/utils/user";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
-import { Box, Button, IconButton, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { getOrganisationUsers } from "@/services/organisations";
 import Pagination from "@/components/Pagination";
 import usePaginatedQuery from "@/hooks/usePaginatedQuery";
+
+import { SearchDirections } from "@/consts/search";
 import UserModal from "../UserModal";
+import DecoupleUser from "../DecoupleUser";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
 
@@ -31,11 +33,16 @@ export default function Users() {
     isError: isGetUsersError,
     isLoading: isGetUsersLoading,
     data: usersData,
+    refetch: refetchOrganisationUsers,
     last_page,
     page,
     setPage,
+    updateQueryParam,
   } = usePaginatedQuery({
     queryKeyBase: ["getOrganisationUsers", organisation?.id],
+    defaultQueryParams: {
+      sort: `title:${SearchDirections.ASC}`,
+    },
     queryFn: queryParams => {
       return getOrganisationUsers(organisation?.id, queryParams, {
         error: {
@@ -48,11 +55,14 @@ export default function Users() {
 
   return (
     <PageGuidance
-      title={t("manageUsers")}
+      title={t("manageUsersTitle")}
       {...mockedPersonalDetailsGuidanceProps}>
-      <Box sx={{ display: "flex", gap: 1, mb: 3 }}>
+      <Box sx={{ marginBottom: "30px" }}>{t("manageUsersDescription")}</Box>
+      <Box sx={{ display: "flex", gap: 1, mb: 3, alignItems: "center" }}>
         <Box component="form" role="search" sx={{ flexGrow: 1 }}>
-          <SearchBar onSearch={() => {}} />
+          <SearchBar
+            onSearch={text => updateQueryParam("first_name[]", text)}
+          />
         </Box>
         <div>
           <Button
@@ -103,12 +113,12 @@ export default function Users() {
                 </>
               }
               actions={
-                <IconButton
-                  size="small"
-                  color="inherit"
-                  aria-label="icon-button">
-                  <DecoupleIcon />
-                </IconButton>
+                <DecoupleUser
+                  user={user}
+                  onSuccess={refetchOrganisationUsers}
+                  payload={{ organisation_id: null }}
+                  namespace="DecoupleUser"
+                />
               }
             />
           );

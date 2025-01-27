@@ -66,5 +66,5 @@ export default function useQueriesHistory(registryId: number) {
       ]
     : [];
 
-  return useQueriesCombined<HistoryCombinedData>(queries);
+  return useQueriesCombined<HistoryCombinedData>(registryId ? queries : []);
 }
