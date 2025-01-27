@@ -14,7 +14,8 @@ import { LoadingButton } from "@mui/lab";
 import { Button, Checkbox, Grid, TextField } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import AskOrganisationModal from "../AskOrganisation";
 
 export interface AffiliationsFormProps {
   onSubmit: (affiliation: ResearcherAffiliation) => void;
@@ -32,6 +33,7 @@ export default function AffiliationsForm({
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
+  const [inviteOpen, setInviteOpen] = useState(false);
 
   const { data: organisationsData } = useQuery(getOrganisationsQuery());
 
@@ -75,70 +77,71 @@ export default function AffiliationsForm({
   ];
 
   return (
-    <Form onSubmit={onSubmit} schema={schema} {...formOptions} sx={{ mb: 3 }}>
-      {() => (
-        <>
-          <FormSection heading={tApplication("affiliations")}>
-            <Grid container rowSpacing={3}>
-              <Grid item xs={12}>
-                <FormControlHorizontal
-                  name="organisation_id"
-                  renderField={fieldProps => (
-                    <SelectInput
-                      {...fieldProps}
-                      options={(organisationsData?.data?.data || []).map(
-                        ({ organisation_name, id }) => ({
-                          label: organisation_name,
-                          value: id,
-                        })
-                      )}
-                    />
-                  )}
-                />
-              </Grid>
-              <Grid
-                item
-                xs={12}
-                sx={{ display: "inline-flex", gap: 2, alignItems: "center" }}>
-                <span>{tProfile("organisationNotListed")}</span>
-                <Button>{tProfile("organisationRegister")}</Button>
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlHorizontal
-                  name="current_employer"
-                  renderField={fieldProps => <Checkbox {...fieldProps} />}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlHorizontal
-                  name="relationship"
-                  renderField={fieldProps => (
-                    <SelectInput
-                      {...fieldProps}
-                      options={relationshipOptions}
-                    />
-                  )}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlHorizontal
-                  name="member_id"
-                  renderField={fieldProps => <TextField {...fieldProps} />}
-                />
-              </Grid>
+    <>
+      <Form onSubmit={onSubmit} schema={schema} {...formOptions} sx={{ mb: 3 }}>
+        <FormSection heading={tApplication("affiliations")}>
+          <Grid container rowSpacing={3}>
+            <Grid item xs={12}>
+              <FormControlHorizontal
+                name="organisation_id"
+                renderField={fieldProps => (
+                  <SelectInput
+                    {...fieldProps}
+                    options={(organisationsData?.data?.data || []).map(
+                      ({ organisation_name, id }) => ({
+                        label: organisation_name,
+                        value: id,
+                      })
+                    )}
+                  />
+                )}
+              />
             </Grid>
-          </FormSection>
-          <FormActions>
-            <LoadingButton
-              type="submit"
-              endIcon={<SaveIcon />}
-              loading={queryState.isPending}
-              sx={{ display: "flex", justifySelf: "end" }}>
-              {tProfile(`submitButton`)}
-            </LoadingButton>
-          </FormActions>
-        </>
-      )}
-    </Form>
+            <Grid
+              item
+              xs={12}
+              sx={{ display: "inline-flex", gap: 2, alignItems: "center" }}>
+              <span>{tProfile("organisationNotListed")}</span>
+              <Button onClick={() => setInviteOpen(true)}>
+                {tProfile("organisationRegister")}
+              </Button>
+            </Grid>
+            <Grid item xs={12}>
+              <FormControlHorizontal
+                name="current_employer"
+                renderField={fieldProps => <Checkbox {...fieldProps} />}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControlHorizontal
+                name="relationship"
+                renderField={fieldProps => (
+                  <SelectInput {...fieldProps} options={relationshipOptions} />
+                )}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControlHorizontal
+                name="member_id"
+                renderField={fieldProps => <TextField {...fieldProps} />}
+              />
+            </Grid>
+          </Grid>
+        </FormSection>
+        <FormActions>
+          <LoadingButton
+            type="submit"
+            endIcon={<SaveIcon />}
+            loading={queryState.isPending}
+            sx={{ display: "flex", justifySelf: "end" }}>
+            {tProfile(`submitButton`)}
+          </LoadingButton>
+        </FormActions>
+      </Form>
+      <AskOrganisationModal
+        open={inviteOpen}
+        onClose={() => setInviteOpen(false)}
+      />
+    </>
   );
 }
