@@ -16,6 +16,8 @@ import { FilePayload, postFile } from "@/services/files";
 import { useMutation } from "@tanstack/react-query";
 import { MAX_UPLOAD_SIZE_BYTES, FileType } from "@/consts/files";
 import { EntityType } from "@/types/api";
+import { Message } from "@/components/Message";
+import ContactLink from "@/components/ContactLink";
 import DetailsCV from "../DetailsCV";
 import EmploymentsForm from "./EmploymentsForm";
 import HistoriesSection from "../HistoriesSection";
@@ -47,28 +49,39 @@ export default function Experience() {
     return () => refetchCancel();
   }, [JSON.stringify(latestCV)]);
 
-  const { mutateAsync: mutateFileAsync, isPending: isFileLoading } =
-    useMutation({
-      mutationKey: ["postFile"],
-      mutationFn: (payload: FilePayload) => {
-        return postFile(payload, {
-          error: { message: "cvUploadFailed" },
-        });
-      },
-    });
+  const {
+    mutateAsync: mutateFileAsync,
+    isPending: isFileLoading,
+    isError: isUploadError,
+    error: uploadError,
+  } = useMutation({
+    mutationKey: ["postFile"],
+    mutationFn: (payload: FilePayload) => {
+      return postFile(payload, {
+        error: { message: "cvUploadFailed" },
+      });
+    },
+  });
 
   const handleFileChange = useCallback(
-    async ({ target: { files } }: ChangeEvent<HTMLInputElement>) => {
+    async ({ target }: ChangeEvent<HTMLInputElement>) => {
       setIsFileSizeTooBig(false);
-      if (files?.[0]) {
-        if (files[0].size <= MAX_UPLOAD_SIZE_BYTES) {
-          const file = new FormData();
-          file.append("file", files[0]);
-          file.append("file_type", FileType.CV);
-          file.append("entity_type", EntityType.RESEARCHER);
-          file.append("registry_id", `${user?.id}`);
-          const response = await mutateFileAsync(file);
 
+      if (!target.files || target.files.length === 0) {
+        return;
+      }
+
+      const file = target.files[0];
+
+      if (file.size <= MAX_UPLOAD_SIZE_BYTES) {
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("file_type", FileType.CV);
+        formData.append("entity_type", EntityType.RESEARCHER);
+        formData.append("registry_id", `${user?.registry_id}`);
+
+        try {
+          const response = await mutateFileAsync(formData);
           const fileData = response.data;
 
           const newFile: AppFile = {
@@ -89,14 +102,16 @@ export default function Experience() {
           };
 
           setUser(updatedUser);
-
           refetchUser();
-        } else {
-          setIsFileSizeTooBig(true);
+        } catch (_) {
+          target.value = "";
         }
+      } else {
+        setIsFileSizeTooBig(true);
+        target.value = "";
       }
     },
-    [mutateFileAsync, setUser, refetchUser]
+    [mutateFileAsync, setUser, refetchUser, user?.registry_id]
   );
 
   const onSubmit = useCallback(
@@ -136,6 +151,14 @@ export default function Experience() {
         </HistoriesSection>
       </FormSection>
       <FormSection heading={tProfile("employment")}>
+        {isUploadError && (
+          <Message severity="error" sx={{ mb: 3 }}>
+            {isUploadError &&
+              tProfile.rich(`${uploadError}`, {
+                contactLink: ContactLink,
+              })}
+          </Message>
+        )}
         <DetailsCV
           fileName={latestCV?.name || tProfile("noCvUploaded")}
           isFileSizeTooBig={isFileSizeTooBig}
