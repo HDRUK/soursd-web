@@ -7,15 +7,20 @@ import { User } from "@/types/application";
 import { useTranslations } from "next-intl";
 import { useStore } from "@/data/store";
 
-const NAMESPACE_TRANSLATION_DECOUPLEUSER = "DecoupleUser";
-
 interface DecoupleUserProps {
   user: User;
   onSuccess: () => void;
+  payload: PatchUserPayload;
+  namespace: string;
 }
 
-const DecoupleUser = ({ user, onSuccess }: DecoupleUserProps) => {
-  const t = useTranslations(NAMESPACE_TRANSLATION_DECOUPLEUSER);
+const DecoupleUser = ({
+  user,
+  onSuccess,
+  payload,
+  namespace,
+}: DecoupleUserProps) => {
+  const t = useTranslations(namespace);
   const organisation = useStore(state => state.config.organisation);
 
   const { mutateAsync } = useMutation({
@@ -44,7 +49,7 @@ const DecoupleUser = ({ user, onSuccess }: DecoupleUserProps) => {
       closeOnConfirm: true,
       closeOnCancel: true,
       preConfirm: () => {
-        showLoadingAlertWithPromise(mutateAsync({ organisation_id: null }), {
+        showLoadingAlertWithPromise(mutateAsync(payload), {
           onSuccess,
         });
       },

@@ -115,7 +115,7 @@ interface User {
   profile_completed_at: string | null;
   profile_steps_completed: string;
   approvals: Approval[];
-  organisation_id?: number;
+  organisation_id?: number | null;
   custodian_id?: number;
   custodian_user_id?: number;
   consent_scrape: boolean;
@@ -233,9 +233,21 @@ interface ResearcherEmployment {
 }
 
 interface ResearcherEndorsement {
+  id: number;
   comment: string;
   raised_against: number;
   reported_by: number;
+}
+
+interface ResearcherAffiliation {
+  id: number;
+  member_id: string;
+  organisation_id: number;
+  current_employer: boolean;
+  relationship?: string;
+  organisation: {
+    organisation_name: string;
+  };
 }
 
 interface ResearcherProjectApproval {
@@ -328,6 +340,7 @@ export type {
   ResearcherEndorsement,
   ResearcherTraining,
   ResearcherProject,
+  ResearcherAffiliation,
   ProjectUser,
   File,
   Permission,

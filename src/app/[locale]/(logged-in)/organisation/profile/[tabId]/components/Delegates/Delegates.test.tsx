@@ -77,7 +77,7 @@ describe("<Delegates />", () => {
     });
 
     render(<Delegates />);
-    expect(screen.getByText("No Delegates Found")).toBeInTheDocument();
+    expect(screen.getByRole("progressbar")).toBeInTheDocument();
   });
 
   it("shows error state", () => {

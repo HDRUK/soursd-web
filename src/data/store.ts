@@ -5,6 +5,7 @@ import {
   Custodian,
   Organisation,
   Permission,
+  ResearcherAffiliation,
   ResearcherAccreditation,
   ResearcherEducation,
   ResearcherEmployment,
@@ -23,6 +24,7 @@ export interface StoreUserHistories {
   education: ResearcherEducation[];
   approvedProjects: ResearcherProject[];
   accreditations: ResearcherAccreditation[];
+  affiliations: ResearcherAffiliation[];
 }
 
 interface StoreState {

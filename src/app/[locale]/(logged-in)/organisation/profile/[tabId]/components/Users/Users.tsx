@@ -17,6 +17,8 @@ import { useState } from "react";
 import { getOrganisationUsers } from "@/services/organisations";
 import Pagination from "@/components/Pagination";
 import usePaginatedQuery from "@/hooks/usePaginatedQuery";
+
+import { SearchDirections } from "@/consts/search";
 import UserModal from "../UserModal";
 import DecoupleUser from "../DecoupleUser";
 
@@ -35,8 +37,12 @@ export default function Users() {
     last_page,
     page,
     setPage,
+    updateQueryParam,
   } = usePaginatedQuery({
     queryKeyBase: ["getOrganisationUsers", organisation?.id],
+    defaultQueryParams: {
+      sort: `title:${SearchDirections.ASC}`,
+    },
     queryFn: queryParams => {
       return getOrganisationUsers(organisation?.id, queryParams, {
         error: {
@@ -49,11 +55,14 @@ export default function Users() {
 
   return (
     <PageGuidance
-      title={t("manageUsers")}
+      title={t("manageUsersTitle")}
       {...mockedPersonalDetailsGuidanceProps}>
-      <Box sx={{ display: "flex", gap: 1, mb: 3 }}>
+      <Box sx={{ marginBottom: "30px" }}>{t("manageUsersDescription")}</Box>
+      <Box sx={{ display: "flex", gap: 1, mb: 3, alignItems: "center" }}>
         <Box component="form" role="search" sx={{ flexGrow: 1 }}>
-          <SearchBar onSearch={() => {}} />
+          <SearchBar
+            onSearch={text => updateQueryParam("first_name[]", text)}
+          />
         </Box>
         <div>
           <Button
@@ -73,7 +82,8 @@ export default function Users() {
         queryState={{
           isLoading: isGetUsersLoading,
           isError: isGetUsersError,
-        }}>
+        }}
+        count={usersData?.length}>
         {usersData?.map(user => {
           const { first_name, last_name, created_at, email } = user;
 
@@ -106,6 +116,8 @@ export default function Users() {
                 <DecoupleUser
                   user={user}
                   onSuccess={refetchOrganisationUsers}
+                  payload={{ organisation_id: null }}
+                  namespace="DecoupleUser"
                 />
               }
             />

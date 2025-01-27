@@ -5,4 +5,11 @@ interface QueryState {
   isSuccess?: boolean;
 }
 
-export type { QueryState };
+interface MutationState {
+  isPending: boolean;
+  isError: boolean;
+  error?: unknown | string | null;
+  isSuccess?: boolean;
+}
+
+export type { QueryState, MutationState };
