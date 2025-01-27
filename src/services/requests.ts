@@ -79,29 +79,16 @@ async function getRequest<T>(url: string, payload?: T, options?: RequestInit) {
 
   return response;
 }
-
 async function postRequest<T>(
   url: string,
   payload?: QueryPayload<T>,
   options?: QueryOptions
 ) {
-  const getBody = () => {
-    if (payload instanceof Function) {
-      return payload();
-    }
-    if (payload instanceof FormData) {
-      return payload;
-    }
-    return JSON.stringify(payload);
-  };
-
   let headers: Record<string, string> = getHeadersWithAuthorisation(
     options?.headers
   ) as Record<string, string>;
 
-  if (payload instanceof FormData) {
-    delete headers["content-type"];
-  } else {
+  if (!(payload instanceof FormData)) {
     headers = {
       ...headers,
       "content-type": "application/json;charset=UTF-8",
@@ -111,8 +98,8 @@ async function postRequest<T>(
   const response = await fetch(url, {
     ...options,
     method: "POST",
-    headers,
-    body: getBody(),
+    headers: getHeadersWithAuthorisation(headers),
+    body: payload instanceof Function ? payload() : payload instanceof FormData ? payload : JSON.stringify(payload),
   });
 
   return response;

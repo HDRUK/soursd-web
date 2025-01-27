@@ -9,7 +9,6 @@ export default async (
   const response = await postRequest(
     `${process.env.NEXT_PUBLIC_API_V1_URL}/files`,
     payload,
-    undefined
   );
 
   const error = handleResponseError(response, options);
