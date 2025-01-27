@@ -15,7 +15,6 @@ import {
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
-import NotificationsIcon from "@mui/icons-material/Notifications";
 import HorizontalDrawer from "../HorizontalDrawer";
 import NotificationsMenu from "../NotificationsMenu";
 import SoursdLogo from "../SoursdLogo";

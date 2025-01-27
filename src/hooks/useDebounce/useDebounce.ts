@@ -15,7 +15,7 @@ const useDebounce = <T>(
       value.length < minLetters &&
       value.length > 0
     ) {
-      return;
+      return undefined;
     }
 
     const handler = setTimeout(() => {

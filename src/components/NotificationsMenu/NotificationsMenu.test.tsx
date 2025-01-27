@@ -1,11 +1,15 @@
 import { useStore } from "@/data/store";
 import { mockedUser } from "@/mocks/data/user";
-import { screen, render, waitFor, fireEvent } from "@/utils/testUtils";
-import { commonAccessibilityTests } from "@/utils/testUtils";
-import NotificationsMenu from "./NotificationsMenu";
+import {
+  screen,
+  render,
+  waitFor,
+  fireEvent,
+  commonAccessibilityTests,
+} from "@/utils/testUtils";
 import { patchUserNotification } from "@/services/notifications";
-import { NOTIFICATIONS_PER_PAGE } from "./NotificationsMenu";
 import { NotificationPatchType } from "@/services/notifications/patchUserNotification";
+import NotificationsMenu, { NOTIFICATIONS_PER_PAGE } from "./NotificationsMenu";
 
 const defaultUser = mockedUser({
   id: 1,
@@ -25,15 +29,15 @@ describe("<NotificationsMenu />", () => {
     jest.clearAllMocks();
   });
 
-  /*it("renders the notifications icon with a badge count", async () => {
+  it("renders the notifications icon with a badge count", async () => {
     render(<NotificationsMenu />);
     expect(screen.getByTestId("notifications-button")).toBeInTheDocument();
 
     await waitFor(() => {
       expect(screen.getByTestId("notifications-badge")).toHaveTextContent("10");
     });
-  });*/
-  /*
+  });
+
   it("opens and displays notifications when clicked", async () => {
     render(<NotificationsMenu />);
 
@@ -81,7 +85,7 @@ describe("<NotificationsMenu />", () => {
         NOTIFICATIONS_PER_PAGE * 2
       );
     });
-    */
+  });
 
   it("opens modal when a notification item is clicked", async () => {
     render(<NotificationsMenu />);
@@ -125,9 +129,24 @@ describe("<NotificationsMenu />", () => {
 
     expect(modalHeader).toBeInTheDocument();
     expect(notificationText).toContain(modalHeaderText);
+
+    fireEvent.click(screen.getByTestId("mark-notification-as-unread-button"));
+
+    mockPatchNotification.mockClear();
+
+    await waitFor(() => {
+      expect(mockPatchNotification).toHaveBeenCalledTimes(1);
+    });
+
+    expect(mockPatchNotification).toHaveBeenCalledWith(
+      expect.any(Number),
+      expect.any(String),
+      NotificationPatchType.UNREAD,
+      expect.objectContaining({ suppressThrow: true })
+    );
   });
 
-  /*it("has no accessibility violations", async () => {
+  it("has no accessibility violations", async () => {
     commonAccessibilityTests(render(<NotificationsMenu />));
-  });*/
+  });
 });

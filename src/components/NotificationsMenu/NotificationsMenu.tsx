@@ -11,10 +11,9 @@ import {
   CircularProgress,
 } from "@mui/material";
 
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useInfiniteQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import {
   getNotifications,
@@ -25,8 +24,7 @@ import { NotificationPatchType } from "@/services/notifications/patchUserNotific
 import { NotificationModal } from "@/modules/NotifcationModal";
 import { Notification } from "@/types/notifications";
 import { formatNotificationType } from "@/utils/notifications";
-import { useInfiniteQuery } from "@tanstack/react-query";
-import { useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import useDebounce from "@/hooks/useDebounce";
 import { StyledMenuItem } from "./NotificationsMenu.styles";
 
@@ -93,7 +91,7 @@ export default function NotificationsMenu() {
     refetchNotifications();
   }, [notificationsCount?.data.total]);
 
-  const { mutateAsync: mutateUpdateAsync } = useMutation({
+  const { mutateAsync: mutateNotification } = useMutation({
     mutationKey: ["patchUserNotifications"],
     mutationFn: ({
       notificationId,
@@ -120,10 +118,13 @@ export default function NotificationsMenu() {
     setAnchorEl(null);
   };
 
-  const markAsRead = (notificationId: string) => {
-    mutateUpdateAsync({
+  const changeReadStatus = (
+    notificationId: string,
+    type: NotificationPatchType
+  ) => {
+    mutateNotification({
       notificationId,
-      type: NotificationPatchType.READ,
+      type,
     }).then(() => {
       refetchNotifications();
       refetchCount();
@@ -131,7 +132,7 @@ export default function NotificationsMenu() {
   };
 
   const handleViewNotification = (notif: Notification) => {
-    if (!notif.read_at) markAsRead(notif.id);
+    if (!notif.read_at) changeReadStatus(notif.id, NotificationPatchType.READ);
     setCurrentNotification(notif);
     setShowNotificationModal(true);
   };
@@ -255,6 +256,13 @@ export default function NotificationsMenu() {
       {currentNotification && (
         <NotificationModal
           open={showNotificationModel}
+          handleMarkAsUnread={() => {
+            changeReadStatus(
+              currentNotification.id,
+              NotificationPatchType.UNREAD
+            );
+            setShowNotificationModal(false);
+          }}
           onClose={() => setShowNotificationModal(false)}
           notification={currentNotification}
         />

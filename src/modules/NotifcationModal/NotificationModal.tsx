@@ -15,29 +15,36 @@ import {
   TableBody,
   TableRow,
   TableCell,
+  Tooltip,
   Paper,
   useTheme,
 } from "@mui/material";
+import MarkEmailUnreadIcon from "@mui/icons-material/MarkEmailUnread";
 import { Notification } from "@/types/notifications";
 import dayjs from "dayjs";
 import { formatNotificationType } from "@/utils/notifications";
+import { useTranslations } from "next-intl";
+
+const NAMESPACE_TRANSLATIONS = "NotificationsModal";
 
 export interface FormModalProps extends Omit<ModalProps, "children"> {
   notification: Notification;
+  onClose: (event: React.SyntheticEvent, reason: string) => void;
+  handleMarkAsUnread: () => void;
   isLoading?: boolean;
-  isDismissable?: boolean;
   onBack?: () => void;
 }
 
 export default function NotificationModal({
   notification,
-  isDismissable = true,
   isLoading,
-  onBack,
   onClose,
+  handleMarkAsUnread,
+  onBack,
   sx,
   ...restProps
 }: FormModalProps) {
+  const t = useTranslations(NAMESPACE_TRANSLATIONS);
   const theme = useTheme();
   const mobileMediaQuery = theme.breakpoints.down("sm");
 
@@ -78,6 +85,8 @@ export default function NotificationModal({
         />
         <CardContent
           sx={{
+            mt: 0,
+            pt: 0,
             px: 4,
             [mobileMediaQuery]: {
               px: 2,
@@ -92,15 +101,21 @@ export default function NotificationModal({
               </span>
             </Box>
           )}
-          {isDismissable && onClose && (
-            <Box sx={{ position: "absolute", top: 5, right: 5 }}>
-              <span>
-                <IconButton onClick={e => onClose(e, "escapeKeyDown")}>
-                  <CloseIcon />
+          <Box sx={{ position: "absolute", top: 5, right: 5 }}>
+            <span>
+              <Tooltip title={t("toolTipMarkAsUnread")}>
+                <IconButton
+                  onClick={handleMarkAsUnread}
+                  data-testid="mark-notification-as-unread-button">
+                  <MarkEmailUnreadIcon />
                 </IconButton>
-              </span>
-            </Box>
-          )}
+              </Tooltip>
+              <IconButton onClick={e => onClose(e, "escapeKeyDown")}>
+                <CloseIcon />
+              </IconButton>
+            </span>
+          </Box>
+
           {isLoading && (
             <Box
               sx={{
@@ -118,9 +133,9 @@ export default function NotificationModal({
             <Table size="small">
               <TableHead>
                 <TableRow>
-                  <TableCell>Field</TableCell>
-                  <TableCell align="right">Old Value</TableCell>
-                  <TableCell align="right">New Value</TableCell>
+                  <TableCell>{t("col1")}</TableCell>
+                  <TableCell align="right">{t("col2")}</TableCell>
+                  <TableCell align="right">{t("col3")}</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>

@@ -14,7 +14,7 @@ type SearchBarProps = TextFieldProps & {
 
 const SearchBar = ({ onSearch, placeholder, ...rest }: SearchBarProps) => {
   const [searchQuery, setSearchQuery] = useState<string | null>(null);
-  const [searchQueryDebounced, _] = useDebounce(searchQuery, 500);
+  const [searchQueryDebounced] = useDebounce(searchQuery, 500);
 
   useEffect(() => {
     if (searchQueryDebounced === null) return;
