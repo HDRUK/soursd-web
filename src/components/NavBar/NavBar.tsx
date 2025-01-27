@@ -15,8 +15,8 @@ import {
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
-import HorizontalDrawer from "../HorizontalDrawer";
 import NotificationsMenu from "@/modules/NotificationsMenu";
+import HorizontalDrawer from "../HorizontalDrawer";
 import SoursdLogo from "../SoursdLogo";
 import { StyledButton, StyledContainer, StyledHeader } from "./NavBar.styles";
 
