@@ -18,7 +18,6 @@ export default function OrganisationDetailsModal({
 }: OrganisationDetailsModalProps) {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_ORGANISATION);
   const handleErrorAlert = () => {
-    console.log("********* CALLING ERROR");
     showAlert("error", {
       text: t.rich("inviteOrganisationError", {
         contactLink: ContactLink,
