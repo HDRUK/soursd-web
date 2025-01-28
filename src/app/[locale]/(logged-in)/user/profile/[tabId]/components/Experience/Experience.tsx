@@ -1,4 +1,5 @@
-import React, { useCallback } from "react";
+import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
+import { File as AppFile } from "@/types/application";
 import FormSection from "@/components/FormSection";
 import { useStore } from "@/data/store";
 import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
@@ -8,8 +9,18 @@ import ResearcherEducationEntry from "@/modules/ResearcherEducationEntry";
 import ResearcherEmploymentEntry from "@/modules/ResearcherEmploymentEntry";
 import { useTranslations } from "next-intl";
 import { PostEmploymentsPayload } from "@/services/employments/types";
-import HistoriesSection from "../HistoriesSection";
+import { getLatestCV, isFileScanning } from "@/utils/file";
+import useFileScanned from "@/hooks/useFileScanned";
+import useQueryRefetch from "@/hooks/useQueryRefetch";
+import { useMutation } from "@tanstack/react-query";
+import { MAX_UPLOAD_SIZE_BYTES, FileType } from "@/consts/files";
+import { EntityType } from "@/types/api";
+import { Message } from "@/components/Message";
+import ContactLink from "@/components/ContactLink";
+import postFileQuery from "@/services/files/postFileQuery";
+import DetailsCV from "../DetailsCV";
 import EmploymentsForm from "./EmploymentsForm";
+import HistoriesSection from "../HistoriesSection";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
@@ -18,16 +29,92 @@ export default function Experience() {
   const histories = useStore(state => state.config.histories);
   const setHistories = useStore(state => state.setHistories);
   const getHistories = useStore(state => state.getHistories);
+  const [isFileSizeTooBig, setIsFileSizeTooBig] = useState(false);
+  const [user, setUser] = useStore(store => [store.config.user, store.setUser]);
 
-  // When adding implementation is added for accreditations and education, this will need to be updated to be generic
+  const latestCV = getLatestCV(user?.registry?.files || []);
+  const { isNotInfected, isScanning } = useFileScanned(latestCV);
+
+  const { refetch: refetchUser, cancel: refetchCancel } = useQueryRefetch({
+    options: { queryKey: ["getUser", user?.id] },
+  });
+
+  useEffect(() => {
+    if (isFileScanning(latestCV)) {
+      refetchUser();
+    } else {
+      refetchCancel();
+    }
+
+    return () => refetchCancel();
+  }, [JSON.stringify(latestCV)]);
+
+  const {
+    mutateAsync: mutateFileAsync,
+    isPending: isFileLoading,
+    isError: isUploadError,
+    error: uploadError,
+  } = useMutation(postFileQuery());
+
+  const handleFileChange = useCallback(
+    async ({ target }: ChangeEvent<HTMLInputElement>) => {
+      setIsFileSizeTooBig(false);
+
+      if (!target.files || target.files.length === 0) {
+        return;
+      }
+
+      const file = target.files[0];
+
+      if (file.size <= MAX_UPLOAD_SIZE_BYTES) {
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("file_type", FileType.CV);
+        formData.append("entity_type", EntityType.RESEARCHER);
+        formData.append("registry_id", `${user?.registry_id}`);
+
+        try {
+          const response = await mutateFileAsync(formData);
+          const fileData = response.data;
+
+          const newFile: AppFile = {
+            id: fileData.id,
+            name: fileData.name,
+            status: fileData.status,
+            type: FileType.CV,
+            created_at: fileData.created_at,
+            updated_at: fileData.updated_at,
+          };
+
+          const updatedUser = {
+            ...user,
+            registry: {
+              ...user?.registry,
+              files: [...(user?.registry?.files || []), newFile],
+            },
+          };
+
+          setUser(updatedUser);
+          refetchUser();
+        } catch (_) {
+          target.value = "";
+        }
+      } else {
+        setIsFileSizeTooBig(true);
+        target.value = "";
+      }
+    },
+    [mutateFileAsync, setUser, refetchUser, user?.registry_id]
+  );
+
   const onSubmit = useCallback(
     async (employment: PostEmploymentsPayload) => {
       const histories = getHistories();
-      const updatedHistories = {
-        ...histories,
-        employments: [...histories.employments, employment],
-      };
-      if (updatedHistories) {
+      if (histories) {
+        const updatedHistories = {
+          ...histories,
+          employments: [...(histories.employments || []), employment],
+        };
         setHistories(updatedHistories);
       }
     },
@@ -57,6 +144,22 @@ export default function Experience() {
         </HistoriesSection>
       </FormSection>
       <FormSection heading={tProfile("employment")}>
+        {isUploadError && (
+          <Message severity="error" sx={{ mb: 3 }}>
+            {isUploadError &&
+              tProfile.rich(`${uploadError}`, {
+                contactLink: ContactLink,
+              })}
+          </Message>
+        )}
+        <DetailsCV
+          fileName={latestCV?.name || tProfile("noCvUploaded")}
+          isFileSizeTooBig={isFileSizeTooBig}
+          isFileScanning={isScanning}
+          isFileOk={isNotInfected}
+          isFileUploading={isFileLoading}
+          onFileChange={handleFileChange}
+        />
         <EmploymentsForm onSubmit={onSubmit} />
         <HistoriesSection
           type="employments"

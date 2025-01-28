@@ -79,20 +79,32 @@ async function getRequest<T>(url: string, payload?: T, options?: RequestInit) {
 
   return response;
 }
-
 async function postRequest<T>(
   url: string,
   payload?: QueryPayload<T>,
   options?: QueryOptions
 ) {
+  let headers: Record<string, string> = getHeadersWithAuthorisation(
+    options?.headers
+  ) as Record<string, string>;
+
+  if (!(payload instanceof FormData)) {
+    headers = {
+      ...headers,
+      "content-type": "application/json;charset=UTF-8",
+    };
+  }
+
   const response = await fetch(url, {
     ...options,
     method: "POST",
-    headers: getHeadersWithAuthorisation({
-      "content-type": "application/json;charset=UTF-8",
-      ...options?.headers,
-    }),
-    body: payload instanceof Function ? payload() : JSON.stringify(payload),
+    headers,
+    body:
+      payload instanceof Function
+        ? payload()
+        : payload instanceof FormData
+          ? payload
+          : JSON.stringify(payload),
   });
 
   return response;
