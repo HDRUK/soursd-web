@@ -97,7 +97,7 @@ describe("<FileUploadDetails />", () => {
       });
 
       expect(
-        screen.getByTitle(`Your ${fileType} filemay have a virus`)
+        screen.getByTitle(`Your ${fileType} file may have a virus`)
       ).toBeInTheDocument();
     }
   );

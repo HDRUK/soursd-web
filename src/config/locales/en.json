@@ -378,7 +378,7 @@
     "fileDownload": "Download Certification",
     "fileButtonUpload": "Upload Certification",
     "fileInputLabel": "Certification file input",
-    "fileMaxSizeError": "Your Cerfification must be under {size}",
+    "fileMaxSizeError": "Your Certification must be under {size}",
     "fileScanning": "Scanning Certification...",
     "fileScanOk": "Certification was successfully scanned",
     "fileScanError": "Your Certification file may have a virus",
