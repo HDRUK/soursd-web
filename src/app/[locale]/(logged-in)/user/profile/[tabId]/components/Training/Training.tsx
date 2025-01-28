@@ -266,7 +266,7 @@ export default function Training() {
                     name="certification_upload"
                     renderField={fieldProps => (
                       <FileUploadDetails
-                        fileType="Certification"
+                        fileType={FileType.CERTIFICATION}
                         fileName={
                           uploadedCertification?.name ||
                           tProfile("noCertificationUploaded")

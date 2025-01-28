@@ -1,4 +1,4 @@
-import { MAX_UPLOAD_SIZE_BYTES } from "@/consts/files";
+import { MAX_UPLOAD_SIZE_BYTES, FileType } from "@/consts/files";
 import {
   act,
   commonAccessibilityTests,
@@ -23,18 +23,19 @@ jest.mock("react", () => ({
   }),
 }));
 
-const fileTypes = ["CV", "Certification"] as const;
+const fileTypes = [FileType.CV, FileType.CERTIFICATION] as const;
 const renderFileUploadDetails = (props?: Partial<FileUploadDetailsProps>) => {
   return render(
     <FileUploadDetails
-      fileType={props?.fileType || "cv"}
+      fileType={props?.fileType || FileType.CV}
       fileName={faker.system.fileName()}
       onFileChange={mockOnFileChange}
       {...props}
     />
   );
 };
-
+const formatFileType = (fileType: FileType) =>
+  fileType === FileType.CERTIFICATION ? "Certification" : "CV";
 describe("<FileUploadDetails />", () => {
   it("shows the correct filename", async () => {
     renderFileUploadDetails({
@@ -61,7 +62,9 @@ describe("<FileUploadDetails />", () => {
     });
 
     await act(() => {
-      fireEvent.change(screen.getByLabelText(`${fileType} file input`));
+      fireEvent.change(
+        screen.getByLabelText(`${formatFileType(fileType)} file input`)
+      );
     });
 
     expect(mockOnFileChange).toHaveBeenCalled();
@@ -83,7 +86,7 @@ describe("<FileUploadDetails />", () => {
 
     expect(
       screen.getByText(
-        `Your ${fileType} must be under ${MAX_UPLOAD_SIZE_BYTES}`
+        `Your ${formatFileType(fileType)} must be under ${MAX_UPLOAD_SIZE_BYTES}`
       )
     ).toBeInTheDocument();
   });
@@ -97,7 +100,9 @@ describe("<FileUploadDetails />", () => {
       });
 
       expect(
-        screen.getByTitle(`Your ${fileType} file may have a virus`)
+        screen.getByTitle(
+          `Your ${formatFileType(fileType)} file may have a virus`
+        )
       ).toBeInTheDocument();
     }
   );
@@ -109,7 +114,7 @@ describe("<FileUploadDetails />", () => {
     });
 
     expect(
-      screen.getByTitle(`${fileType} was successfully scanned`)
+      screen.getByTitle(`${formatFileType(fileType)} was successfully scanned`)
     ).toBeInTheDocument();
   });
 

@@ -30,7 +30,9 @@ export default function UserHistoryEntry({
   const router = useRouter();
   const isCertificationPresent = !!certification && certification.length > 0;
   const certificationText = `${isCertificationPresent ? certification.map(file => file.name) : "Not Uploaded"}`;
-  const href = getFileHref(certification?.map(file => file.name)[0]);
+  const href = getFileHref(
+    certification?.map(file => file.name)?.[0] ?? "default-filename"
+  );
   return (
     <Box sx={{ marginBottom: "8px" }}>
       <Box

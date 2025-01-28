@@ -153,7 +153,7 @@ export default function Experience() {
           </Message>
         )}
         <FileUploadDetails
-          fileType="CV"
+          fileType={FileType.CV}
           fileName={latestCV?.name || tProfile("noCvUploaded")}
           isFileSizeTooBig={isFileSizeTooBig}
           isFileScanning={isScanning}
