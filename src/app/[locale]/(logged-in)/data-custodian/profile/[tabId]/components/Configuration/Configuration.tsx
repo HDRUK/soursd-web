@@ -129,7 +129,6 @@ const Configuration = () => {
             </ListInfoItem>
           ))}
         </Box>
-
         <FormActions>
           <LoadingButton
             type="submit"
