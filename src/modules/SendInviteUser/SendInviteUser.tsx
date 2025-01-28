@@ -6,7 +6,13 @@ import { useTranslations } from "next-intl";
 
 const NAMESPACE_TRANSLATIONS_ORGANISATION = "User";
 
-export default function SendInviteOrganisation() {
+interface SendInviteUserProps {
+  organisationId?: number;
+}
+
+export default function SendInviteUser({
+  organisationId,
+}: SendInviteUserProps) {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_ORGANISATION);
 
   const handleErrorAlert = () => {
@@ -26,6 +32,7 @@ export default function SendInviteOrganisation() {
   };
 
   const { queryState, handleSubmit } = useUserInvite({
+    organisationId,
     onError: handleErrorAlert,
     onSuccess: handleSuccessAlert,
   });

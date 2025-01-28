@@ -5,7 +5,7 @@ import { useStore } from "@/data/store";
 import { showAlert } from "@/utils/showAlert";
 import {
   PostOrganisationInviteUserResponse,
-  postOrganisationsInviteUser,
+  postOrganisationInviteUser,
 } from "@/services/organisations";
 import { ResponseJson } from "@/types/requests";
 import DelegatesForm from "./DelegatesForm";
@@ -20,8 +20,8 @@ jest.mock("next-intl", () => ({
 const mockUseStore = useStore as jest.MockedFunction<typeof useStore>;
 const mockShowAlert = showAlert as jest.MockedFunction<typeof showAlert>;
 const mockPostOrganisationsInviteUser =
-  postOrganisationsInviteUser as jest.MockedFunction<
-    typeof postOrganisationsInviteUser
+  postOrganisationInviteUser as jest.MockedFunction<
+    typeof postOrganisationInviteUser
   >;
 
 describe("DelegatesForm", () => {

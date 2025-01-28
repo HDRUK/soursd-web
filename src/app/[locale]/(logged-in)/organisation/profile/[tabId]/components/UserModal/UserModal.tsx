@@ -1,7 +1,7 @@
 import FormModal, { FormModalProps } from "@/components/FormModal";
 import {
   PostOrganisationInviteUserPayload,
-  postOrganisationsInviteUser,
+  postOrganisationInviteUser,
 } from "@/services/organisations";
 import { Organisation } from "@/types/application";
 import { showAlert } from "@/utils/showAlert";
@@ -29,7 +29,7 @@ export default function UsersModal({
   const { mutateAsync, isPending, isError, error } = useMutation({
     mutationKey: ["inviteUser", organisation.id],
     mutationFn: (payload: PostOrganisationInviteUserPayload) => {
-      return postOrganisationsInviteUser(organisation?.id, payload, {
+      return postOrganisationInviteUser(organisation?.id, payload, {
         error: { message: "inviteUserError" },
       });
     },

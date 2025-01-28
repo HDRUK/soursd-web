@@ -7,9 +7,9 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-import SendInviteCustodian from "../SendInviteCustodian";
-import SendInviteOrganisation from "../SendInviteOrganistion";
-import SendInviteUser from "../SendInviteUser";
+import SendInviteCustodian from "@/modules/SendInviteCustodian";
+import SendInviteOrganisation from "@/modules/SendInviteOrganistion";
+import SendInviteUser from "@/modules/SendInviteUser";
 
 const NAMESPACE_TRANSLATIONS_ADMINISTRATION = "Administration";
 

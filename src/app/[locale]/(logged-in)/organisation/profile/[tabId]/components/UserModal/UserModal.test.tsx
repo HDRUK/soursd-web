@@ -1,5 +1,5 @@
 import { mockedOrganisation } from "@/mocks/data/organisation";
-import { postOrganisationsInviteUser } from "@/services/organisations";
+import { postOrganisationInviteUser } from "@/services/organisations";
 import {
   commonAccessibilityTests,
   fireEvent,
@@ -61,7 +61,7 @@ describe("<UserModal />", () => {
     renderUserModalDetailsUpdate();
 
     await waitFor(() => {
-      expect(postOrganisationsInviteUser).toHaveBeenCalled();
+      expect(postOrganisationInviteUser).toHaveBeenCalled();
     });
   });
 

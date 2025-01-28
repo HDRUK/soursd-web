@@ -13,6 +13,8 @@ jest.mock("@/data/store");
 
 const mockSubmit = jest.fn();
 
+const fields = [/First name/i, /Last name/i, /Email/i];
+
 const renderInviteUserComponent = () => {
   return render(
     <InviteUser
@@ -27,37 +29,34 @@ const renderInviteUserComponent = () => {
 };
 
 describe("<InviteUser />", () => {
-  it.each(["user_name", "lead_applicant_email"])(
-    "does not submit when %s is not defined",
-    async fieldName => {
-      const { container } = renderInviteUserComponent();
+  it.each(fields)("does not submit when %s is not defined", async fieldName => {
+    renderInviteUserComponent();
 
-      const input = container.querySelector(`input[name=${fieldName}]`);
+    const input = screen.getByRole("textbox", { name: fieldName });
 
-      if (input) {
-        fireEvent.change(input, { target: { value: faker.string.sample() } });
+    if (input) {
+      fireEvent.change(input, { target: { value: faker.string.sample() } });
 
-        const button = screen.getByRole("button", { name: /invite/i });
+      const button = screen.getByRole("button", { name: /invite/i });
 
-        await act(() => {
-          fireEvent.submit(button);
-        });
+      await act(() => {
+        fireEvent.submit(button);
+      });
 
-        expect(button).not.toBeDisabled();
+      expect(button).not.toBeDisabled();
 
-        await waitFor(() => {
-          expect(mockSubmit).not.toHaveBeenCalled();
-        });
-      } else {
-        throw new Error(`Could not find input ${fieldName}`);
-      }
+      await waitFor(() => {
+        expect(mockSubmit).not.toHaveBeenCalled();
+      });
+    } else {
+      throw new Error(`Could not find input ${fieldName}`);
     }
-  );
+  });
 
   it("submits with the correct fields", async () => {
     renderInviteUserComponent();
 
-    [/User name/i, /Email/i].forEach(name => {
+    fields.forEach(name => {
       const input = screen.getByRole("textbox", { name });
       const inputValue = faker.internet.email();
 

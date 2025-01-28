@@ -8,12 +8,12 @@ import {
 } from "@/utils/testUtils";
 import { faker } from "@faker-js/faker";
 import { mock200Json, mockFailedJson } from "jest.utils";
-import AskOrganisationModal from "./AskOrganisationModal";
+import SendInviteOrganisation from "./SendInviteOrganisation";
 
-const renderAskOrganisationModal = () => render(<AskOrganisationModal open />);
+const renderSendInviteOrganisation = () => render(<SendInviteOrganisation />);
 
 const renderSubmitted = async () => {
-  renderAskOrganisationModal();
+  renderSendInviteOrganisation();
 
   [/Organisation name/i, /Email/i].forEach(name => {
     const input = screen.getByRole("textbox", { name });
@@ -31,7 +31,7 @@ const renderSubmitted = async () => {
   });
 };
 
-describe("<AskOrganisationModal />", () => {
+describe("<SendInviteOrganisation />", () => {
   it("submits the invite", async () => {
     await renderSubmitted();
 
@@ -61,6 +61,6 @@ describe("<AskOrganisationModal />", () => {
   });
 
   it("has no accessibility violations", async () => {
-    commonAccessibilityTests(renderAskOrganisationModal());
+    commonAccessibilityTests(renderSendInviteOrganisation());
   });
 });

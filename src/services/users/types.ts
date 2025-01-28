@@ -34,14 +34,14 @@ interface PostUserPayload {
   is_organisation?: boolean;
 }
 
-/* eslint-disable  @typescript-eslint/no-explicit-any */
-type PostUserResponse = any;
-
-interface PostUserUnclaimedPayload {
+interface PostUserInvitePayload {
   first_name: string;
   last_name: string;
   email: string;
 }
+
+/* eslint-disable  @typescript-eslint/no-explicit-any */
+type PostUserResponse = any;
 
 type PostUserInviteResponse = User;
 
@@ -53,6 +53,6 @@ export type {
   PatchUserResponse,
   UserResponse,
   UsersResponse,
-  PostUserUnclaimedPayload,
   PostUserInviteResponse,
+  PostUserInvitePayload,
 };

@@ -1,35 +1,33 @@
 import {
-  postUserInviteQuery,
-  PostUserUnclaimedPayload,
-  postUserUnclaimedQuery,
-} from "@/services/users";
-import { MutationState } from "@/types/form";
-import { getCombinedQueryState } from "@/utils/query";
+  PostOrganisationInviteUserPayload,
+  postOrganisationInviteUserQuery,
+} from "@/services/organisations";
+import { postUserInviteQuery } from "@/services/users";
 import { useMutation } from "@tanstack/react-query";
 import { useCallback, useMemo } from "react";
 
 interface UseUserInviteProps {
+  organisationId?: number;
   onSuccess: () => void;
   onError: () => void;
 }
 
 export default function useUserInvite({
+  organisationId,
   onSuccess,
   onError,
 }: UseUserInviteProps) {
-  const { mutateAsync: mutateUser, ...postUserQueryState } = useMutation(
-    postUserUnclaimedQuery()
-  );
-
   const { mutateAsync: mutateUserInvite, ...postUserInviteQueryState } =
-    useMutation(postUserInviteQuery());
+    useMutation(
+      organisationId
+        ? postOrganisationInviteUserQuery(organisationId)
+        : postUserInviteQuery()
+    );
 
   const handleSubmit = useCallback(
-    async (payload: PostUserUnclaimedPayload) => {
+    async (payload: PostOrganisationInviteUserPayload) => {
       try {
-        const { data } = await mutateUser(payload);
-
-        await mutateUserInvite(data);
+        await mutateUserInvite(payload);
 
         onSuccess();
       } catch (_) {
@@ -39,16 +37,11 @@ export default function useUserInvite({
     []
   );
 
-  const queryState = getCombinedQueryState<MutationState>([
-    postUserQueryState,
-    postUserInviteQueryState,
-  ]);
-
   return useMemo(
     () => ({
-      queryState,
+      queryState: postUserInviteQueryState,
       handleSubmit,
     }),
-    [queryState]
+    [postUserInviteQueryState]
   );
 }

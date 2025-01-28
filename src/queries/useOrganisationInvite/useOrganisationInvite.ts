@@ -30,19 +30,12 @@ export default function useOrganisationInvite({
   const handleSubmit = useCallback(
     async (organisation: PostOrganisationUnclaimedPayload) => {
       try {
-        const { data } = await mutateOrganisationUnclaimed(organisation);
+        const { data: id } = await mutateOrganisationUnclaimed(organisation);
 
-        console.log("************** organisation", data);
-        // console.log("*********** data", x);
-
-        const x = await mutateOrganisationInvite(data);
-
-        console.log("********** x", x);
+        await mutateOrganisationInvite(id);
 
         onSuccess();
       } catch (_) {
-        console.log("********** FIRING ERROR");
-
         onError();
       }
     },

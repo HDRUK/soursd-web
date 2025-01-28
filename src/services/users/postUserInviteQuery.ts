@@ -1,10 +1,11 @@
 import postUserInvite from "./postUserInvite";
+import { PostUserInvitePayload } from "./types";
 
 export default function postUserInviteQuery() {
   return {
     mutationKey: ["postUserInvite"],
-    mutationFn: (id: number) => {
-      return postUserInvite(id, {
+    mutationFn: (payload: PostUserInvitePayload) => {
+      return postUserInvite(payload, {
         error: { message: "postUserInviteError" },
       });
     },

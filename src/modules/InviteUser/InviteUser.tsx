@@ -4,7 +4,7 @@ import FormControlHorizontal from "@/components/FormControlHorizontal";
 import FormSection from "@/components/FormSection";
 import yup from "@/config/yup";
 import { MAX_FORM_WIDTH } from "@/consts/form";
-import { PostUserUnclaimedPayload } from "@/services/users";
+import { PostUserInvitePayload } from "@/services/users";
 import { MutationState } from "@/types/form";
 import SaveIcon from "@mui/icons-material/Save";
 import { LoadingButton } from "@mui/lab";
@@ -13,7 +13,7 @@ import { useTranslations } from "next-intl";
 import { useMemo } from "react";
 
 export interface InviteUserFormProps {
-  onSubmit: (user: PostUserUnclaimedPayload) => void;
+  onSubmit: (user: PostUserInvitePayload) => void;
   queryState: MutationState;
 }
 
