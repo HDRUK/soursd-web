@@ -243,7 +243,7 @@ export default function Training() {
     { name: "awarded_at", component: DateInput },
     { name: "expires_at", component: DateInput },
   ];
-  console.log(user, histories?.training);
+  
   return (
     <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
       <Form onSubmit={handleDetailsSubmit} schema={schema} {...formOptions}>
