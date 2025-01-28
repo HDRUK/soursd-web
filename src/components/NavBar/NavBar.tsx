@@ -16,10 +16,10 @@ import {
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import NotificationsMenu from "@/modules/NotificationsMenu";
+import { useStore } from "@/data/store";
 import HorizontalDrawer from "../HorizontalDrawer";
 import SoursdLogo from "../SoursdLogo";
 import { StyledButton, StyledContainer, StyledHeader } from "./NavBar.styles";
-import { useStore } from "@/data/store";
 
 const NAMESPACE_TRANSLATIONS_NAVBAR = "NavBar";
 
