@@ -30,7 +30,6 @@ const Error = () => {
 
   useEffect(() => {
     if (type) {
-      const title = t("title");
       const navigateButton = t("navigateButton");
       const hasNavigateButton =
         navigateButton !== `Error.${type}.navigateButton`;
@@ -41,7 +40,6 @@ const Error = () => {
 
       showAlert("error", {
         text: errorMessage,
-        title,
         preConfirm: getButtonAction(type),
         confirmButtonText: t("primaryButton"),
         cancelButtonText: hasNavigateButton ? navigateButton : undefined,
