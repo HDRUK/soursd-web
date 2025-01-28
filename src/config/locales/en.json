@@ -370,7 +370,7 @@
     "fileMaxSizeError": "Your CV must be under {size}",
     "fileScanning": "Scanning CV...",
     "fileScanOk": "CV was successfully scanned",
-    "fileScanError": "Your CV may have a virus",
+    "fileScanError": "Your CV file may have a virus",
     "fileNamePlaceholder": "No CV uploaded"
   },
   "Certification": {
