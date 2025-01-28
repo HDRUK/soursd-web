@@ -32,7 +32,7 @@ export default function UserHistoryEntry({
   const certificationText = `${isCertificationPresent ? certification.map(file => file.name) : "Not Uploaded"}`;
   const href = getFileHref(certification?.map(file => file.name)[0]);
   return (
-    <div>
+    <Box sx={{ marginBottom: "8px" }}>
       <Box
         sx={{
           display: {
@@ -68,6 +68,6 @@ export default function UserHistoryEntry({
           {certificationText}
         </StyledCertificationLink>
       </Typography>
-    </div>
+    </Box>
   );
 }

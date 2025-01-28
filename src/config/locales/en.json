@@ -369,12 +369,20 @@
     "fileInputLabel": "CV file input",
     "fileMaxSizeError": "Your CV must be under {size}",
     "fileScanning": "Scanning CV...",
-    "fileScanOk": "CV was sucessfully scanned",
+    "fileScanOk": "CV was successfully scanned",
     "fileScanError": "Your CV may have a virus",
     "fileNamePlaceholder": "No CV uploaded"
   },
   "Certification": {
-    "fileMaxSize": "{size} Max size"
+    "fileMaxSize": "{size} Max size",
+    "fileDownload": "Download Certification",
+    "fileButtonUpload": "Upload Certification",
+    "fileInputLabel": "Certification file input",
+    "fileMaxSizeError": "Your Cerfification must be under {size}",
+    "fileScanning": "Scanning Certification...",
+    "fileScanOk": "Certification was successfully scanned",
+    "fileScanError": "Your Certification file may have a virus",
+    "fileNamePlaceholder": "No Certification uploaded"
   },
   "NotificationsMenu": {
     "noNotifications": "You have no notifications!",

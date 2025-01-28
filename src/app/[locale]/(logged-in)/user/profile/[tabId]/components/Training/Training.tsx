@@ -266,7 +266,7 @@ export default function Training() {
                     name="certification_upload"
                     renderField={fieldProps => (
                       <FileUploadDetails
-                        fileType="certification"
+                        fileType="Certification"
                         fileName={
                           uploadedCertification?.name ||
                           tProfile("noCertificationUploaded")
@@ -308,7 +308,7 @@ export default function Training() {
           <ResearcherTrainingEntry
             key={training.id}
             data={training}
-            certification={user?.registry.files?.filter(
+            certification={user?.registry?.files?.filter(
               a => a.id === training.certification_id
             )}
           />
