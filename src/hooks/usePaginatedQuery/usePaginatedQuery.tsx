@@ -16,6 +16,7 @@ type PaginatedQueryProps<T> = {
   ) => Promise<ResponseJson<Paged<T>>>;
   initialPage?: number;
   enabled?: boolean;
+  refetchInterval?: number;
   defaultQueryParams?: Record<string, string | number | undefined>;
 };
 
@@ -27,6 +28,9 @@ export type PaginatedQueryReturn<T> = UseQueryResult<ResponseJson<Paged<T>>> &
     handleSortToggle: (field: string, direction: string) => void;
     handleFieldToggle: (field: string, options: [string, string]) => void;
     queryParams: Record<string, string | number | undefined>;
+    setQueryParams: React.Dispatch<
+      React.SetStateAction<Record<string, string | number | undefined>>
+    >;
   };
 
 const usePaginatedQuery = <T,>({
@@ -35,6 +39,7 @@ const usePaginatedQuery = <T,>({
   initialPage = 1,
   defaultQueryParams = {},
   enabled = true,
+  refetchInterval,
 }: PaginatedQueryProps<T>): PaginatedQueryReturn<T> => {
   const router = useRouter();
   const pathname = usePathname();
@@ -60,6 +65,7 @@ const usePaginatedQuery = <T,>({
     queryFn: () => queryFn(queryParams),
     placeholderData: keepPreviousData,
     enabled,
+    refetchInterval,
   });
 
   const { data: queryData, ...restQueryResult } = queryResult;
@@ -135,6 +141,7 @@ const usePaginatedQuery = <T,>({
     ...restQueryResult,
     ...pagedData,
     queryParams,
+    setQueryParams,
     page,
     setPage,
     updateQueryParam,

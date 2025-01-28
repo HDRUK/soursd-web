@@ -39,12 +39,12 @@ describe("usePaginatedQuery", () => {
     });
   });
 
-  const testCases = [{ perPage: 2 }, { perPage: 5 }];
+  const testCases = [{ per_page: 2 }, { per_page: 5 }];
 
   it.each(testCases)(
     "Returns $perPage results when perPage is $perPage",
-    async ({ perPage }) => {
-      const { result } = renderTest({ params: { perPage } });
+    async ({ per_page }) => {
+      const { result } = renderTest({ params: { per_page } });
 
       await waitFor(() => {
         const current = result.current as CurrentResult;
@@ -52,12 +52,12 @@ describe("usePaginatedQuery", () => {
       });
 
       const current = result.current as CurrentResult;
-      expect(current.data).toHaveLength(perPage);
+      expect(current.data).toHaveLength(per_page);
     }
   );
 
   it("Updates the page number using setPage", async () => {
-    const { result } = renderTest({ params: { perPage: 5 } });
+    const { result } = renderTest({ params: { per_page: 5 } });
 
     act(() => {
       (result.current as CurrentResult).setPage(2);
@@ -77,10 +77,10 @@ describe("usePaginatedQuery", () => {
   });
 
   it("Updates queryParams using updateQueryParam", async () => {
-    const { result } = renderTest({ params: { perPage: 5 } });
+    const { result } = renderTest({ params: { per_page: 5 } });
 
     act(() => {
-      (result.current as CurrentResult).updateQueryParam("perPage", "2");
+      (result.current as CurrentResult).updateQueryParam("per_page", "2");
     });
     await waitFor(() => {
       expect((result.current as CurrentResult).data.length).toBe(2);

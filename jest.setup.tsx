@@ -23,6 +23,7 @@ import {
   mockedTraining,
   mockedUser,
 } from "./mocks/data/user";
+import { mockedNotification } from "./mocks/data/notification";
 import { ResponseMessageType } from "./src/consts/requests";
 import { ROUTES } from "./src/consts/router";
 
@@ -75,7 +76,7 @@ async function mockFetch(url: string, init?: RequestInit) {
   const [baseUrl, queryString] = url.split("?");
   const queryParams = Object.fromEntries(new URLSearchParams(queryString));
   const page = Number(queryParams.page) || 1;
-  const perPage = Number(queryParams.perPage) || 25;
+  const perPage = Number(queryParams.per_page) || 25;
 
   switch (baseUrl) {
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/permissions`: {
@@ -111,6 +112,25 @@ async function mockFetch(url: string, init?: RequestInit) {
           id: 1,
         })
       );
+    }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/users/1/notifications`: {
+      return mock200Json(
+        mockPagedResults(
+          [
+            ...Array.from({ length: 10 }, () => mockedNotification(true)),
+            ...Array.from({ length: 10 }, () => mockedNotification(false)),
+          ],
+          page,
+          perPage
+        )
+      );
+    }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/users/1/notifications/count`: {
+      return mock200Json({
+        total: 20,
+        read: 10,
+        unread: 10,
+      });
     }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/users`: {
       return mock200Json(
@@ -241,6 +261,18 @@ async function mockFetch(url: string, init?: RequestInit) {
             id: 2,
           }),
         ],
+      });
+    }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/organisations/unclaimed`: {
+      return mock200Json({
+        data: 1,
+      });
+    }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/organisations/1/invite`: {
+      return mock200Json({
+        data: mockedOrganisation({
+          id: 1,
+        }),
       });
     }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/users/permissions`: {

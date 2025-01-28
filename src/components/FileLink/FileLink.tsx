@@ -84,7 +84,7 @@ export default function FileLink({
         </Typography>
       </div>
       <Box sx={{ display: "flex", gap: 1, height: "1.5rem" }}>
-        {fileName && !isLoading && disabledDownload && (
+        {fileName && !isLoading && !disabledDownload && (
           <Link sx={{ color: "#000" }} href={href} {...linkProps}>
             <DownloadIcon />
           </Link>

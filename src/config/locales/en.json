@@ -124,6 +124,10 @@
     "cancelButton": "Cancel"
   },
   "Form": {
+    "leadApplicantEmail": "Email",
+    "leadApplicantEmailPlaceholder": "Email",
+    "leadApplicantEmailRequiredInvalid": "Email is required",
+    "inviteButton": "Invite",
     "relationship": "Relationship",
     "relationshipPlaceholder": "Relationship",
     "relationshipRequiredInvalid": "Relationship is required",
@@ -144,7 +148,7 @@
     "dpoEmailRequiredInvalid": "Dpo email is required",
     "hrNameRequiredInvalid": "Hr email is required",
     "hrEmailRequiredInvalid": "Hr name is required",
-    "nameRequiredInvalid": "Lead applicant name is a required field",
+    "nameRequiredInvalid": "Name is a required field",
     "organisationNameRequiredInvalid": "Organisation is a required field",
     "firstNameRequiredInvalid": "First name is a required field",
     "lastNameRequiredInvalid": "Last name is a required field",
@@ -262,7 +266,6 @@
     "roleApprover": "Approver",
     "consentScrapeDescription": "I consent to the Registry using information I provide to gather my historical experience",
     "organisationDataSecurityComplianceTemp": {},
-
     "organisationDataSecurityCompliance": "Organisation data security compliance",
     "ceCertified": "CE certified?",
     "ceCertificationNum": "CE identifier",
@@ -374,8 +377,25 @@
     "fileMaxSize": "{size} Max size"
   },
   "NotificationsMenu": {
+    "noNotifications": "You have no notifications!",
     "orcIdSuccessTitle": "ORCiD scrape completed",
     "orcIdSuccessDescription": "Employment, educaton and qualifications has been gathered from your ORCiD profile. You will need to reload the page to see the updates."
+  },
+  "NotificationsModal": {
+    "col1": "Field",
+    "col2": "Old Value",
+    "col3": "New Value",
+    "toolTipMarkAsUnread": "Mark message as unread and close!"
+  },
+  "Organisation": {
+    "inviteOrganisationTitle": "Request Organisation to be invited to create a SOURSD account",
+    "inviteOrganisation": "Invite Organisation",
+    "postOrganisationUnclaimedError": "Unable to invite the Organisation",
+    "postOrganisationInviteError": "Unable to invite the Organisation",
+    "inviteOrganisationErrorButton": "Try again",
+    "inviteOrganisationError": "There was an error inviting the Organisation. Please try again or contact us at <contactLink></contactLink>",
+    "inviteOrganisationSuccessButton": "Ok",
+    "inviteOrganisationSuccess": "You have successfully invited the Organisation. Bear in mind before you can select them they will need to accept the invite"
   },
   "Profile": {
     "organisationRegister": "Ask them to register",
@@ -514,9 +534,20 @@
     "500Description": "We tried to query the selected resource but there seems to be an issue on the server, please contact us via the form in the footer."
   },
   "Auth": {
-    "notAllowed": "You are not allowed to access thie page. If you think this is incorrect please contacts us at <contactLink></contactLink>"
+    "notAllowed": "You are not allowed to access this page. If you think this is incorrect please contacts us at <contactLink></contactLink>"
+  },
+  "Custodian": {
+    "inviteCustodianTitle": "Request Data Custodian to be invited to create a SOURSD account",
+    "inviteCustodian": "Invite Data Custodian",
+    "postCustodianError": "Unable to invite the Data Custodian",
+    "postCustodianInviteError": "Unable to invite the Data Custodian",
+    "inviteCustodianErrorButton": "Try again",
+    "inviteCustodianError": "There was an error inviting the Data Custodian. Please try again or contact us at <contactLink></contactLink>",
+    "inviteCustodianSuccessButton": "Ok",
+    "inviteCustodianSuccess": "You have successfully invited the Data Custodian"
   },
   "Administration": {
+    "inviteOrganisationTitle": "Organisation invitation",
     "title": "Administration",
     "custodianInviteTitle": "Data Custodian Invitation",
     "custodianInviteBody": "Invite Data Custodians to use the SOURSD System",

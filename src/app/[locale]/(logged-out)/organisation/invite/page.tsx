@@ -1,9 +1,13 @@
 "use client";
 
+import { useEffect } from "react";
+
 import { handleRegister } from "@/utils/keycloak";
 
 export default function Page() {
-  handleRegister();
+  useEffect(() => {
+    handleRegister();
+  }, []);
 
   return null;
 }

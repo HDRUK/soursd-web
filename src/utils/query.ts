@@ -1,29 +1,21 @@
-import { UseMutationResult, UseQueryResult } from "@tanstack/react-query";
+import { MutationState, QueryState } from "@/types/form";
 
-function isQueriesLoading(
-  queries: (Partial<UseMutationResult> | Partial<UseQueryResult>)[]
-) {
+function isQueriesLoading<T extends MutationState & QueryState>(queries: T[]) {
   return queries.some(query => query.isLoading || query.isPending);
 }
 
-function isQueriesError(
-  queries: (Partial<UseMutationResult> | Partial<UseQueryResult>)[]
-) {
+function isQueriesError<T extends MutationState & QueryState>(queries: T[]) {
   return queries.some(query => query.isError);
 }
 
-function isQueriesFetched(
-  queries: (Partial<UseMutationResult> | Partial<UseQueryResult>)[]
-) {
+function isQueriesFetched<T extends MutationState & QueryState>(queries: T[]) {
   return (
     queries.filter(query => query.isFetched || query.isSuccess || query.isError)
       .length === queries.length
   );
 }
 
-function getQueriesError(
-  queries: (Partial<UseMutationResult> | Partial<UseQueryResult>)[]
-) {
+function getQueriesError<T extends MutationState & QueryState>(queries: T[]) {
   let errors: Error[] = [];
 
   queries.forEach(({ error }) => {
@@ -41,8 +33,8 @@ function getQueriesError(
   });
 }
 
-function getCombinedQueryState(
-  queries: Partial<UseMutationResult> | Partial<UseQueryResult>[]
+function getCombinedQueryState<T extends MutationState & QueryState>(
+  queries: T[]
 ) {
   return {
     isLoading: isQueriesLoading(queries),
@@ -53,9 +45,9 @@ function getCombinedQueryState(
 }
 
 export {
-  isQueriesLoading,
+  getCombinedQueryState,
+  getQueriesError,
   isQueriesError,
   isQueriesFetched,
-  getQueriesError,
-  getCombinedQueryState,
+  isQueriesLoading,
 };
