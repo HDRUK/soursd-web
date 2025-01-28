@@ -8,10 +8,14 @@ const NAMESPACE_TRANSLATIONS_ORGANISATION = "User";
 
 interface SendInviteUserProps {
   organisationId?: number;
+  onSuccess?: () => void;
+  onError?: () => void;
 }
 
 export default function SendInviteUser({
   organisationId,
+  onSuccess,
+  onError,
 }: SendInviteUserProps) {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_ORGANISATION);
 
@@ -21,6 +25,7 @@ export default function SendInviteUser({
         contactLink: ContactLink,
       }),
       confirmButtonText: t("inviteUserErrorButton"),
+      willClose: () => onError?.(),
     });
   };
 
@@ -28,6 +33,7 @@ export default function SendInviteUser({
     showAlert("success", {
       text: t("inviteUserSuccess"),
       confirmButtonText: t("inviteUserSuccessButton"),
+      willClose: () => onSuccess?.(),
     });
   };
 
