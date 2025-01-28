@@ -37,6 +37,30 @@ export default function TabsSections() {
           iconPosition="start"
         />
         <Tab
+          icon={<SettingsIcon />}
+          label={t("configuration")}
+          href={routes.profileCustodianConfiguration.path}
+          component={Link}
+          value={PageTabs.CONFIGURATION}
+          iconPosition="start"
+        />
+        <Tab
+          icon={<GroupOutlinedIcon />}
+          label={t("users")}
+          href={routes.profileCustodianUsers.path}
+          component={Link}
+          value={PageTabs.USERS}
+          iconPosition="start"
+        />
+        <Tab
+          icon={<CreditCardOutlinedIcon />}
+          label={t("keycards")}
+          href={routes.profileCustodianKeycards.path}
+          component={Link}
+          value={PageTabs.KEYCARDS}
+          iconPosition="start"
+        />
+        <Tab
           icon={<LanguageIcon />}
           label={t("projects")}
           href={routes.profileCustodianProjects.path}
@@ -50,30 +74,6 @@ export default function TabsSections() {
           href={routes.profileCustodianOrganisations.path}
           component={Link}
           value={PageTabs.ORGANISATIONS}
-          iconPosition="start"
-        />
-        <Tab
-          icon={<GroupOutlinedIcon />}
-          label={t("users")}
-          href={routes.profileCustodianUsers.path}
-          component={Link}
-          value={PageTabs.USERS}
-          iconPosition="start"
-        />
-        <Tab
-          icon={<SettingsIcon />}
-          label={t("configuration")}
-          href={routes.profileCustodianConfiguration.path}
-          component={Link}
-          value={PageTabs.CONFIGURATION}
-          iconPosition="start"
-        />
-        <Tab
-          icon={<CreditCardOutlinedIcon />}
-          label={t("keycards")}
-          href={routes.profileCustodianKeycards.path}
-          component={Link}
-          value={PageTabs.KEYCARDS}
           iconPosition="start"
         />
       </Tabs>

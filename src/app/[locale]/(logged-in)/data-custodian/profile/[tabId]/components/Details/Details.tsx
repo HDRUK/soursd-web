@@ -15,6 +15,8 @@ import { Grid, TextField, Typography, useTheme } from "@mui/material";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo } from "react";
+import { showAlert } from "@/utils/showAlert";
+
 import IdvtSection from "../IdvtSection";
 
 export interface DetailsFormValues {
@@ -57,6 +59,11 @@ export default function Details({ custodian }: DetailsProps) {
       await mutateUpdateAsync({
         ...custodian,
         ...payload,
+      });
+
+      showAlert("success", {
+        text: tProfile("saveSuccess"),
+        confirmButtonText: tProfile("okButton"),
       });
 
       queryClient.refetchQueries({

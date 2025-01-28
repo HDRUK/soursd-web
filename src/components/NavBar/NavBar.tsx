@@ -19,6 +19,7 @@ import NotificationsMenu from "@/modules/NotificationsMenu";
 import HorizontalDrawer from "../HorizontalDrawer";
 import SoursdLogo from "../SoursdLogo";
 import { StyledButton, StyledContainer, StyledHeader } from "./NavBar.styles";
+import { useStore } from "@/data/store";
 
 const NAMESPACE_TRANSLATIONS_NAVBAR = "NavBar";
 
@@ -36,6 +37,7 @@ export enum ButtonVariant {
 export default function NavBar() {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_NAVBAR);
   const auth = useAuth();
+  const user = useStore(store => store.getUser());
   const router = useRouter();
 
   const theme = useTheme();
@@ -120,7 +122,7 @@ export default function NavBar() {
                 {text || icon}
               </StyledButton>
             ))}
-            {auth && <NotificationsMenu />}
+            {auth && user && <NotificationsMenu />}
           </Box>
         </StyledHeader>
       </Box>
