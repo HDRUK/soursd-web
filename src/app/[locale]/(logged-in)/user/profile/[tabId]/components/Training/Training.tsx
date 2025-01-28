@@ -69,7 +69,7 @@ export default function Training() {
   const { isNotInfected, isScanning } = useFileScanned(uploadedCertification);
 
   const { refetch: refetchUser } = useQueryRefetch({
-    options: { queryKey: ["getUser", 11] },
+    options: { queryKey: ["getUser", user?.id] },
   });
 
   const {
@@ -94,7 +94,7 @@ export default function Training() {
         formData.append("file", file);
         formData.append("file_type", FileType.CERTIFICATION);
         formData.append("entity_type", EntityType.RESEARCHER);
-        formData.append("registry_id", `2`);
+        formData.append("registry_id", `${user?.registry_id}`);
 
         try {
           const response = await mutateFileAsync(formData);
@@ -151,7 +151,7 @@ export default function Training() {
     isPending,
     isError,
     error: postError,
-  } = useMutation(postTrainingsQuery(2));
+  } = useMutation(postTrainingsQuery(user?.registry_id));
 
   const handleDetailsSubmit = useCallback(
     async (fields: TrainingFormValues) => {
