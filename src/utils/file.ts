@@ -6,7 +6,9 @@ function getLatestCV(files: FileResponse[] | undefined) {
 }
 
 function getUploadedCertification(files: FileResponse[] | undefined) {
-  return [...(files || [])].reverse().find(file => file.type === FileType.CERTIFICATION);
+  return [...(files || [])]
+    .reverse()
+    .find(file => file.type === FileType.CERTIFICATION);
 }
 
 function isFileScanning(file: FileResponse | undefined) {

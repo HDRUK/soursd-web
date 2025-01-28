@@ -471,7 +471,8 @@
     "employment": "Employments",
     "education": "Education",
     "projects": "Projects",
-    "training": "Training"
+    "training": "Training",
+    "certification": "Certification:"
   },
   "ResearcherDetails": {
     "getUserDetailsForCustodianError": "Couldn't get the user's details"

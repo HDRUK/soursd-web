@@ -14,7 +14,7 @@ export interface FileUploadDetailsProps {
   isFileSizeTooBig?: boolean;
   isFileScanning?: boolean;
   isFileOk?: boolean;
-  fileType: 'cv' | 'certification';
+  fileType: "cv" | "certification";
 }
 
 export default function FileUploadDetails({
@@ -24,9 +24,9 @@ export default function FileUploadDetails({
   isFileSizeTooBig,
   isFileScanning,
   isFileOk,
-  fileType = 'cv',
+  fileType = "cv",
 }: FileUploadDetailsProps) {
-  const t = useTranslations(fileType === 'cv' ? 'Cv' : 'Certification');
+  const t = useTranslations(fileType === "cv" ? "Cv" : "Certification");
   const translationsMaxSize = {
     size: prettyBytes(MAX_UPLOAD_SIZE_BYTES),
   };
