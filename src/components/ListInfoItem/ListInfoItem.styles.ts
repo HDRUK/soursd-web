@@ -3,6 +3,7 @@ import { styled, Alert } from "@mui/material";
 export const StyledListInfoItem = styled("div")(() => ({
   display: "flex",
   width: "100%",
+  flexGrow: 1,
 }));
 
 export const StyledAlert = styled(Alert)(({ theme }) => ({
@@ -10,6 +11,12 @@ export const StyledAlert = styled(Alert)(({ theme }) => ({
   backgroundColor: theme.palette.lightPurple?.main,
   fontWeight: "bold",
   alignItems: "center",
+  display: "flex",
+  flexGrow: 1,
+  "& .MuiAlert-message": {
+    flexGrow: 1,
+    width: "100%",
+  },
 }));
 
 export const StyledIcon = styled("div")(({ theme }) => ({

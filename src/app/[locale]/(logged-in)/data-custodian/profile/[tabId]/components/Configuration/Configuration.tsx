@@ -16,6 +16,7 @@ import { LoadingButton } from "@mui/lab";
 import SaveIcon from "@mui/icons-material/Save";
 import FormActions from "@/components/FormActions";
 import { PatchCustodianRulesPayload } from "@/services/rules/patchCustodianRules";
+import { showAlert } from "@/utils/showAlert";
 
 const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 
@@ -81,7 +82,13 @@ const Configuration = () => {
         .map(rule => rule.id),
     } as PatchCustodianRulesPayload;
 
-    mutateUpdateAsync(payload).then(() => refetch());
+    mutateUpdateAsync(payload).then(() => {
+      showAlert("success", {
+        text: tProfile("saveSuccess"),
+        confirmButtonText: tProfile("okButton"),
+      });
+      refetch();
+    });
   };
 
   return (
@@ -92,32 +99,35 @@ const Configuration = () => {
         flexDirection="column"
         component="form"
         onSubmit={handleSubmit(onSubmit)}>
-        <Box>
-          <Box display="flex" flexDirection="column" alignItems="start" gap={1}>
-            {allRules?.data.map((rule, index) => (
-              <ListInfoItem key={`info-box-${rule.name}`} index={index + 1}>
-                <Controller
-                  name={`rule-${rule.id}`}
-                  control={control}
-                  defaultValue={false}
-                  render={({ field }) => (
-                    <FormControlLabel
-                      sx={{ m: 0 }}
-                      labelPlacement="start"
-                      control={<Checkbox {...field} checked={field.value} />}
-                      label={
-                        <Typography variant="body1" noWrap>
-                          <strong>
-                            {rule.title} : {rule.description}
-                          </strong>
-                        </Typography>
-                      }
-                    />
-                  )}
-                />
-              </ListInfoItem>
-            ))}
-          </Box>
+        <Box display="flex" flexDirection="column" alignItems="stretch" gap={1}>
+          {allRules?.data.map((rule, index) => (
+            <ListInfoItem key={`info-box-${rule.name}`} index={index + 1}>
+              <Controller
+                name={`rule-${rule.id}`}
+                control={control}
+                defaultValue={false}
+                render={({ field }) => (
+                  <FormControlLabel
+                    sx={{
+                      m: 0,
+                      width: "100%",
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                    labelPlacement="start"
+                    control={<Checkbox {...field} checked={field.value} />}
+                    label={
+                      <Typography variant="body1">
+                        <strong>
+                          {rule.title} : {rule.description}
+                        </strong>
+                      </Typography>
+                    }
+                  />
+                )}
+              />
+            </ListInfoItem>
+          ))}
         </Box>
         <FormActions>
           <LoadingButton

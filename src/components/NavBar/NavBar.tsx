@@ -16,6 +16,7 @@ import {
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import NotificationsMenu from "@/modules/NotificationsMenu";
+import { useStore } from "@/data/store";
 import HorizontalDrawer from "../HorizontalDrawer";
 import SoursdLogo from "../SoursdLogo";
 import { StyledButton, StyledContainer, StyledHeader } from "./NavBar.styles";
@@ -36,6 +37,7 @@ export enum ButtonVariant {
 export default function NavBar() {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_NAVBAR);
   const auth = useAuth();
+  const user = useStore(store => store.getUser());
   const router = useRouter();
 
   const theme = useTheme();
@@ -120,7 +122,7 @@ export default function NavBar() {
                 {text || icon}
               </StyledButton>
             ))}
-            {auth && <NotificationsMenu />}
+            {auth && user && <NotificationsMenu />}
           </Box>
         </StyledHeader>
       </Box>
