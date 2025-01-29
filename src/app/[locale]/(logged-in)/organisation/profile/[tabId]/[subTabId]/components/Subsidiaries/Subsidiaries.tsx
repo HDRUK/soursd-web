@@ -50,65 +50,71 @@ export default function Subsidiaries() {
 
   return (
     <Form schema={schema} defaultValues={defaultValues} onSubmit={onSubmit}>
-      <>
-        <FormSection heading={t("organisationSubsidiaries")}>
-          <Grid container rowSpacing={3}>
-            <Grid item xs={12}>
-              <FormControlHorizontal
-                displayLabel={false}
-                displayPlaceholder={false}
-                labelMd={0}
-                contentMd={12}
-                name="subsidiaries"
-                renderField={fieldProps => (
-                  <FormFieldArray<FormData>
-                    name={fieldProps.name}
-                    boxSx={{
-                      display: "grid",
-                      gridTemplateColumns: "2fr 3fr 1fr",
-                    }}
-                    createNewRow={() => ({
-                      name: "",
-                    })}
-                    renderField={(field, index) => (
-                      <React.Fragment key={field.name}>
-                        <FormControlHorizontal
-                          displayLabel={false}
-                          labelMd={0}
-                          contentMd={12}
-                          name={`subsidiaries.${index}.name`}
-                          placeholder={t("name")}
-                          renderField={fieldProps => (
-                            <TextField {...fieldProps} />
-                          )}
-                        />
-                        <GoogleAutocomplete
-                          name={`subsidiaries.${index}.address`}
-                          textFieldProps={{
-                            variant: "filled",
-                            size: "small",
-                          }}
-                          fullWidth
-                          placeholder={t("addressPlaceholder")}
-                        />
-                      </React.Fragment>
+      {({ watch }) => {
+        const nsubs = watch("subsidiaries").length;
+        return (
+          <>
+            <FormSection heading={t("organisationSubsidiaries")}>
+              <Grid container rowSpacing={3}>
+                <Grid item xs={12}>
+                  <FormControlHorizontal
+                    displayLabel={false}
+                    displayPlaceholder={false}
+                    labelMd={0}
+                    contentMd={12}
+                    name="subsidiaries"
+                    renderField={fieldProps => (
+                      <FormFieldArray<FormData>
+                        name={fieldProps.name}
+                        boxSx={{
+                          display: "grid",
+                          gridTemplateColumns: "2fr 3fr 1fr",
+                        }}
+                        createNewRow={() => ({
+                          name: "",
+                        })}
+                        renderField={(field, index) => (
+                          <React.Fragment key={field.name}>
+                            <FormControlHorizontal
+                              displayLabel={false}
+                              labelMd={0}
+                              contentMd={12}
+                              name={`subsidiaries.${index}.name`}
+                              placeholder={t("name")}
+                              renderField={fieldProps => (
+                                <TextField {...fieldProps} />
+                              )}
+                            />
+                            <GoogleAutocomplete
+                              name={`subsidiaries.${index}.address`}
+                              textFieldProps={{
+                                variant: "filled",
+                                size: "small",
+                              }}
+                              fullWidth
+                              placeholder={t("addressPlaceholder")}
+                            />
+                          </React.Fragment>
+                        )}
+                      />
                     )}
                   />
-                )}
-              />
-            </Grid>
-          </Grid>
-        </FormSection>
+                </Grid>
+              </Grid>
+            </FormSection>
 
-        <FormActions>
-          <LoadingButton
-            loading={isLoading}
-            type="submit"
-            endIcon={<SaveIcon />}>
-            {tProfile("submitButton")}
-          </LoadingButton>
-        </FormActions>
-      </>
+            <FormActions>
+              <LoadingButton
+                disabled={nsubs === 0}
+                loading={isLoading}
+                type="submit"
+                endIcon={<SaveIcon />}>
+                {tProfile("submitButton")}
+              </LoadingButton>
+            </FormActions>
+          </>
+        );
+      }}
     </Form>
   );
 }
