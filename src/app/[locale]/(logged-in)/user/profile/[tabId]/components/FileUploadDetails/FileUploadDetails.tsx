@@ -1,32 +1,32 @@
 "use client";
 
 import FileScannedLink from "@/components/FileScannedLink";
-import { MAX_UPLOAD_SIZE_BYTES } from "@/consts/files";
+import { FileType, MAX_UPLOAD_SIZE_BYTES } from "@/consts/files";
 import { useTranslations } from "next-intl";
 import { ChangeEventHandler } from "react";
 import prettyBytes from "pretty-bytes";
 import { getFileHref } from "@/utils/file";
 
-const NAMESPACE_TRANSLATION_CV = "Cv";
-
-export interface DetailsCVProps {
+export interface FileUploadDetailsProps {
   fileName: string;
   onFileChange: ChangeEventHandler<HTMLInputElement>;
   isFileUploading?: boolean;
   isFileSizeTooBig?: boolean;
   isFileScanning?: boolean;
   isFileOk?: boolean;
+  fileType: FileType;
 }
 
-export default function DetailsCV({
+export default function FileUploadDetails({
   fileName,
   onFileChange,
   isFileUploading,
   isFileSizeTooBig,
   isFileScanning,
   isFileOk,
-}: DetailsCVProps) {
-  const t = useTranslations(NAMESPACE_TRANSLATION_CV);
+  fileType = FileType.CV,
+}: FileUploadDetailsProps) {
+  const t = useTranslations(fileType === FileType.CV ? "Cv" : "Certification");
   const translationsMaxSize = {
     size: prettyBytes(MAX_UPLOAD_SIZE_BYTES),
   };

@@ -1,22 +1,40 @@
+"use client";
+
 import { formatDisplayShortDate } from "@/utils/date";
 import { Box, Typography } from "@mui/material";
 import { ReactNode } from "react";
+import { File as AppFile } from "@/types/application";
+import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import { getFileHref } from "@/utils/file";
+import { StyledCertificationLink } from "./UserHistoryEntry.styles";
 
 interface UserHistoryEntryProps {
   heading: ReactNode;
   startDate: string;
   description: ReactNode;
   endDate?: string;
+  certification: AppFile[] | undefined;
 }
+
+const NAMESPACE_TRANSLATION_HISTORIES = "ResearcherHistories";
 
 export default function UserHistoryEntry({
   heading,
   startDate,
   endDate,
   description,
+  certification,
 }: UserHistoryEntryProps) {
+  const t = useTranslations(NAMESPACE_TRANSLATION_HISTORIES);
+  const router = useRouter();
+  const isCertificationPresent = !!certification && certification.length > 0;
+  const certificationText = `${isCertificationPresent ? certification.map(file => file.name) : "Not Uploaded"}`;
+  const href = getFileHref(
+    certification?.map(file => file.name)?.[0] ?? "default-filename"
+  );
   return (
-    <div>
+    <Box sx={{ marginBottom: "8px" }}>
       <Box
         sx={{
           display: {
@@ -42,6 +60,16 @@ export default function UserHistoryEntry({
         </Typography>
       </Box>
       <Typography sx={{ color: "caption.main" }}>{description}</Typography>
-    </div>
+      <Typography sx={{ color: "caption.main", display: "flex" }}>
+        {t("certification")}
+        <StyledCertificationLink
+          hasCertification={isCertificationPresent && certification.length > 0}
+          onClick={() => router.push(href)}
+          component="button"
+          disabled={!certification}>
+          {certificationText}
+        </StyledCertificationLink>
+      </Typography>
+    </Box>
   );
 }

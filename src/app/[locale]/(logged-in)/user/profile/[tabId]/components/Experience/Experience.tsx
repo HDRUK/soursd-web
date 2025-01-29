@@ -18,7 +18,7 @@ import { EntityType } from "@/types/api";
 import { Message } from "@/components/Message";
 import ContactLink from "@/components/ContactLink";
 import postFileQuery from "@/services/files/postFileQuery";
-import DetailsCV from "../DetailsCV";
+import FileUploadDetails from "../FileUploadDetails/FileUploadDetails";
 import EmploymentsForm from "./EmploymentsForm";
 import HistoriesSection from "../HistoriesSection";
 
@@ -152,7 +152,8 @@ export default function Experience() {
               })}
           </Message>
         )}
-        <DetailsCV
+        <FileUploadDetails
+          fileType={FileType.CV}
           fileName={latestCV?.name || tProfile("noCvUploaded")}
           isFileSizeTooBig={isFileSizeTooBig}
           isFileScanning={isScanning}

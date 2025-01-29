@@ -332,11 +332,13 @@
     "expiresAtRequiredInvalid": "Expires at is required",
     "expiresAtBeforeAwardedAtInvalid": "Expires at date cannot be before the awarded at date",
     "expiresAtPastInvalid": "Expires at date cannot be in the past",
+    "certificationRequiredInvalid": "Certification is required",
     "employerNameRequiredInvalid": "Employer name is required",
     "addAnother": "Add Another",
     "save": "Save",
     "closeButton": "Close",
-    "errorButton": "Try Again"
+    "errorButton": "Try Again",
+    "certificationUpload": "Certification"
   },
   "Buttons": {
     "register": "Register",
@@ -364,14 +366,25 @@
   },
   "Cv": {
     "fileMaxSize": "{size} Max size",
-    "fileDownload": "Download CV",
-    "fileButtonUpload": "Upload CV",
-    "fileInputLabel": "CV file input",
-    "fileMaxSizeError": "Your CV must be under {size}",
-    "fileScanning": "Scanning CV...",
-    "fileScanOk": "CV was sucessfully scanned",
-    "fileScanError": "Your CV may have a virus",
-    "fileNamePlaceholder": "No CV uploaded"
+    "fileDownload": "Download Cv",
+    "fileButtonUpload": "Upload Cv",
+    "fileInputLabel": "Cv file input",
+    "fileMaxSizeError": "Your Cv must be under {size}",
+    "fileScanning": "Scanning Cv...",
+    "fileScanOk": "Cv was successfully scanned",
+    "fileScanError": "Your Cv file may have a virus",
+    "fileNamePlaceholder": "No Cv uploaded"
+  },
+  "Certification": {
+    "fileMaxSize": "{size} Max size",
+    "fileDownload": "Download Certification",
+    "fileButtonUpload": "Upload Certification",
+    "fileInputLabel": "Certification file input",
+    "fileMaxSizeError": "Your Certification must be under {size}",
+    "fileScanning": "Scanning Certification...",
+    "fileScanOk": "Certification was successfully scanned",
+    "fileScanError": "Your Certification file may have a virus",
+    "fileNamePlaceholder": "No Certification uploaded"
   },
   "NotificationsMenu": {
     "noNotifications": "You have no notifications!",
@@ -427,7 +440,9 @@
     "pending": "Pending",
     "verified": "Verified",
     "cvUploadFailed": "There was a problem uploading your CV. Please check the file size and try again or alternativley contact us at <contactLink></contactLink>",
+    "certificationUploadFailed": "There was a problem uploading your certification. Please check the file size and try again or alternativley contact us at <contactLink></contactLink>",
     "noCvUploaded": "No CV uploaded",
+    "noCertificationUploaded": "No Certification Uploaded",
     "profileCompletedTitle": "Your profile has been completed",
     "profileCompletedDescription": "You have completed all the mandatory fields required for your profile to be considered 'complete'. This will be flagged to Data Custodians when they view your user details.",
     "continueLinkText": "Continue",
@@ -466,7 +481,8 @@
     "employment": "Employments",
     "education": "Education",
     "projects": "Projects",
-    "training": "Training"
+    "training": "Training",
+    "certification": "Certification:"
   },
   "ResearcherDetails": {
     "getUserDetailsForCustodianError": "Couldn't get the user's details"

@@ -1,5 +1,5 @@
 import Text from "@/components/Text";
-import { ResearcherTraining } from "@/types/application";
+import { ResearcherTraining, File as AppFile } from "@/types/application";
 import { formatDisplayShortDate } from "@/utils/date";
 import ScheduleIcon from "@mui/icons-material/Schedule";
 import { Typography } from "@mui/material";
@@ -8,12 +8,14 @@ import UserHistoryEntry from "../UserHistoryEntry";
 
 interface ResearcherTrainingEntryProps {
   data: ResearcherTraining;
+  certification: AppFile[] | undefined;
 }
 
 const NAMESPACE_TRANSLATION_HISTORIES = "ResearcherHistories";
 
 export default function ResearcherTrainingEntry({
   data,
+  certification,
 }: ResearcherTrainingEntryProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_HISTORIES);
   const { awarded_at, training_name, expires_at, provider } = data;
@@ -30,6 +32,7 @@ export default function ResearcherTrainingEntry({
           </Text>
         </>
       }
+      certification={certification}
     />
   );
 }
