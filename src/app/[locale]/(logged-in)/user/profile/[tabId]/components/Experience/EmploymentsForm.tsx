@@ -14,6 +14,8 @@ import {
   Accordion,
   AccordionSummary,
   Typography,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import { AddressFields } from "@/types/application";
 import { useTranslations } from "next-intl";
@@ -23,10 +25,11 @@ import { useMutation } from "@tanstack/react-query";
 import { useStore } from "@/data/store";
 import { PostEmploymentsPayload } from "@/services/employments/types";
 import { postEmployments } from "@/services/employments";
-import { Add } from "@mui/icons-material";
+import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
 import DateInput from "@/components/DateInput";
 import { showAlert } from "@/utils/showAlert";
-import { VALIDATION_ROR_ID } from "@/consts/form";
+import theme from "@/theme";
+import { COUNTRIES_LIST } from "@/consts/countries";
 
 export interface EmploymentsFormValues {
   employer_name: string;
@@ -42,6 +45,7 @@ export interface EmploymentsFormValues {
   to?: string | null;
   ror: string;
   is_current: boolean;
+  email: string;
 }
 
 const NAMESPACE_TRANSLATION_FORM = "Form";
@@ -54,7 +58,7 @@ export default function EmploymentsForm({ onSubmit }: EmploymentsFormProps) {
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const user = useStore(state => state.config.user);
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(true);
 
   const handleAccordionChange = (
     _event: React.SyntheticEvent,
@@ -71,7 +75,7 @@ export default function EmploymentsForm({ onSubmit }: EmploymentsFormProps) {
   } = useMutation({
     mutationKey: ["postEmployments", user?.id],
     mutationFn: (payload: PostEmploymentsPayload) =>
-      postEmployments(user?.registry_id, payload, {
+      postEmployments(2, payload, {
         error: {
           message: "addEmploymentError",
         },
@@ -95,13 +99,16 @@ export default function EmploymentsForm({ onSubmit }: EmploymentsFormProps) {
         from: yup.string(),
         is_current: yup.boolean().required(),
         to: yup.string().nullable(),
-        ror: yup
-          .string()
-          .required(tForm("rorRequiredInvalid"))
-          .matches(VALIDATION_ROR_ID, tForm("rorInvalid")),
+        ror: yup.string(),
+        email: yup.string().email(tForm("emailFormatInvalid")),
       }),
     [tForm]
   );
+
+  const countryOptions = COUNTRIES_LIST.map((country, index) => ({
+    label: country.name,
+    value: index,
+  }));
 
   const handleChange = (
     address: AddressFields,
@@ -109,11 +116,15 @@ export default function EmploymentsForm({ onSubmit }: EmploymentsFormProps) {
   ) => {
     const { postcode, address_1, address_2, town, county, country } = address;
 
+    const countryId = countryOptions.find(
+      option => option.label === country
+    )?.value;
+
     setValue("address_1", address_1 ?? "");
     setValue("address_2", address_2 ?? "");
     setValue("town", town ?? "");
     setValue("county", county ?? "");
-    setValue("country", country ?? "");
+    setValue("country", String(countryId) ?? "");
     setValue("postcode", postcode ?? "");
   };
 
@@ -158,6 +169,7 @@ export default function EmploymentsForm({ onSubmit }: EmploymentsFormProps) {
         role: payload.role,
         employer_address: employerAddress,
         ror: payload.ror,
+        email: payload.email,
       };
 
       try {
@@ -187,7 +199,14 @@ export default function EmploymentsForm({ onSubmit }: EmploymentsFormProps) {
       <AccordionSummary
         id="data-custodian-invite"
         aria-controls="data-custodian-invite-content"
-        expandIcon={<Add />}>
+        expandIcon={<KeyboardDoubleArrowDownIcon />}
+        sx={{
+          "&::after": {
+            content: expanded ? '"Collapse"' : '"Expand"',
+            fontWeight: "bold",
+            color: theme.palette.primary.main,
+          },
+        }}>
         <Typography>{tForm("addEmployment")}</Typography>
       </AccordionSummary>
       <Form
@@ -250,7 +269,15 @@ export default function EmploymentsForm({ onSubmit }: EmploymentsFormProps) {
                 <Grid item xs={12}>
                   <FormControlHorizontal
                     name="country"
-                    renderField={fieldProps => <TextField {...fieldProps} />}
+                    renderField={fieldProps => (
+                      <Select {...fieldProps}>
+                        {countryOptions?.map(({ label, value }) => (
+                          <MenuItem value={value} key={value} id={label}>
+                            {label}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    )}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -288,6 +315,12 @@ export default function EmploymentsForm({ onSubmit }: EmploymentsFormProps) {
                 <Grid item xs={12}>
                   <FormControlHorizontal
                     name="ror"
+                    renderField={fieldProps => <TextField {...fieldProps} />}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <FormControlHorizontal
+                    name="email"
                     renderField={fieldProps => <TextField {...fieldProps} />}
                   />
                 </Grid>

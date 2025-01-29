@@ -9,6 +9,7 @@ interface PostEmploymentsPayload {
   role: string;
   employer_address: string;
   ror: string;
+  email: string;
 }
 
 type PostEmploymentsResponse = number;
