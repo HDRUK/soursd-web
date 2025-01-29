@@ -8,6 +8,6 @@ interface PostRegisterPayload {
   organisation_id?: number;
 }
 
-type PostRegisterResponse = string | null;
+type PostRegisterResponse = number | null;
 
 export type { MeResponse, PostRegisterPayload, PostRegisterResponse };

@@ -190,6 +190,7 @@ interface Organisation extends OrganisationIdvt, AddressFields {
   dsptk_certification_num: string;
   subsidiaries?: Subsidiary[];
   departments: Department[];
+  unclaimed: number;
 }
 
 interface ResearcherEducation {
