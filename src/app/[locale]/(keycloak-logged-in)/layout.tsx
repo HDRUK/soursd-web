@@ -1,5 +1,6 @@
 "use client";
 
+import LoadingWrapper from "@/components/LoadingWrapper";
 import useLoginRedirect from "@/hooks/useLoginRedirect";
 import { usePathname } from "@/i18n/routing";
 import { handleLogin } from "@/utils/keycloak";
@@ -35,5 +36,9 @@ export default function Layout({ children }: PropsWithChildren) {
     performAuthCheck();
   }, [pathname]);
 
-  return isReady && hasAccessToken && children;
+  return (
+    <LoadingWrapper variant="basic" loading={isReady && hasAccessToken}>
+      {children}
+    </LoadingWrapper>
+  );
 }

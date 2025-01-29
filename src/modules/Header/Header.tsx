@@ -1,4 +1,3 @@
-import NavBar from "@/components/NavBar";
 import { DetailedHTMLProps, HTMLAttributes } from "react";
 
 type HeaderProps = DetailedHTMLProps<
@@ -7,9 +6,5 @@ type HeaderProps = DetailedHTMLProps<
 >;
 
 export default function Header(props: HeaderProps) {
-  return (
-    <header {...props}>
-      <NavBar />
-    </header>
-  );
+  return <header {...props}>{/* <NavBar /> */}</header>;
 }
