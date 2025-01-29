@@ -69,7 +69,7 @@ const nextConfig = withNextIntl({
 });
 
 const withBundleAnalyzer =
-  process.env.ANALYZE === "true"
+  process.env.ANALYZE_BUNDLE === "true"
     ? require("@next/bundle-analyzer")({ enabled: true })
     : config => config;
 
