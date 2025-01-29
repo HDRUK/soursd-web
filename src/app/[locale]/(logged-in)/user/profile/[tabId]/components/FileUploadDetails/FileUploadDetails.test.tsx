@@ -7,6 +7,7 @@ import {
   screen,
 } from "@/utils/testUtils";
 import { faker } from "@faker-js/faker";
+import { capitaliseFirstLetter } from "@/utils/string";
 import FileUploadDetails, { FileUploadDetailsProps } from "./FileUploadDetails";
 
 const mockOnFileChange = jest.fn();
@@ -34,8 +35,8 @@ const renderFileUploadDetails = (props?: Partial<FileUploadDetailsProps>) => {
     />
   );
 };
-const formatFileType = (fileType: FileType) =>
-  fileType === FileType.CERTIFICATION ? "Certification" : "CV";
+// const formatFileType = (fileType: FileType) =>
+//   fileType === FileType.CERTIFICATION ? "Certification" : "CV";
 describe("<FileUploadDetails />", () => {
   it("shows the correct filename", async () => {
     renderFileUploadDetails({
@@ -63,7 +64,9 @@ describe("<FileUploadDetails />", () => {
 
     await act(() => {
       fireEvent.change(
-        screen.getByLabelText(`${formatFileType(fileType)} file input`)
+        screen.getByLabelText(
+          `${capitaliseFirstLetter(fileType.toLowerCase())} file input`
+        )
       );
     });
 
@@ -86,7 +89,7 @@ describe("<FileUploadDetails />", () => {
 
     expect(
       screen.getByText(
-        `Your ${formatFileType(fileType)} must be under ${MAX_UPLOAD_SIZE_BYTES}`
+        `Your ${capitaliseFirstLetter(fileType.toLowerCase())} must be under ${MAX_UPLOAD_SIZE_BYTES}`
       )
     ).toBeInTheDocument();
   });
@@ -101,7 +104,7 @@ describe("<FileUploadDetails />", () => {
 
       expect(
         screen.getByTitle(
-          `Your ${formatFileType(fileType)} file may have a virus`
+          `Your ${capitaliseFirstLetter(fileType.toLowerCase())} file may have a virus`
         )
       ).toBeInTheDocument();
     }
@@ -114,7 +117,9 @@ describe("<FileUploadDetails />", () => {
     });
 
     expect(
-      screen.getByTitle(`${formatFileType(fileType)} was successfully scanned`)
+      screen.getByTitle(
+        `${capitaliseFirstLetter(fileType.toLowerCase())} was successfully scanned`
+      )
     ).toBeInTheDocument();
   });
 

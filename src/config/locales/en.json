@@ -364,14 +364,14 @@
   },
   "Cv": {
     "fileMaxSize": "{size} Max size",
-    "fileDownload": "Download CV",
-    "fileButtonUpload": "Upload CV",
-    "fileInputLabel": "CV file input",
-    "fileMaxSizeError": "Your CV must be under {size}",
-    "fileScanning": "Scanning CV...",
-    "fileScanOk": "CV was successfully scanned",
-    "fileScanError": "Your CV file may have a virus",
-    "fileNamePlaceholder": "No CV uploaded"
+    "fileDownload": "Download Cv",
+    "fileButtonUpload": "Upload Cv",
+    "fileInputLabel": "Cv file input",
+    "fileMaxSizeError": "Your Cv must be under {size}",
+    "fileScanning": "Scanning Cv...",
+    "fileScanOk": "Cv was successfully scanned",
+    "fileScanError": "Your Cv file may have a virus",
+    "fileNamePlaceholder": "No Cv uploaded"
   },
   "Certification": {
     "fileMaxSize": "{size} Max size",
