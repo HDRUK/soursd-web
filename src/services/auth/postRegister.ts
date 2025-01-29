@@ -6,7 +6,6 @@ export default async (
   payload?: PostRegisterPayload,
   options?: ResponseOptions
 ): Promise<ResponseJson<PostRegisterResponse>> => {
-  console.log("PAYLOAD", payload);
   const response = await postRequest(
     `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
     payload
