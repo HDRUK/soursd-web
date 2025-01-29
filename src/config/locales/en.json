@@ -92,7 +92,11 @@
     "companyValidating": "Organisation is being validated",
     "identity": "Identity",
     "details": "Profile",
+    "detailsNameAndAddress": "Name and Address",
+    "detailsDigitalIdentifiers": "Digital Identifiers",
+    "detailsSectorSiteAndWebsite": "Sector, Site and Website",
     "detailsSubsidiaries": "Subsidiaries",
+    "detailsSecurityCompliance": "Security Compliance",
     "manageDelegates": "Manage Delegates",
     "projects": "Projects",
     "manageUsers": "Manage Users",
@@ -660,5 +664,9 @@
     "alertText": "Are you sure you want to remove {first_name} {last_name} as a delegate from your organisation ({organisation_name})",
     "alertConfirm": "Delete",
     "alertCancel": "Cancel"
+  },
+  "UsePatchOrganisation": {
+    "text": "Organisation Updated!",
+    "confirmText": "OK"
   }
 }

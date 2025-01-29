@@ -6,18 +6,24 @@ import {
 } from "@/services/organisations";
 import { Organisation } from "@/types/application";
 import { useMutation } from "@tanstack/react-query";
+import { showAlert } from "@/utils/showAlert";
+import { useTranslations } from "use-intl";
 
 interface UseUpdateOrganisationProps {
   id: string | number | undefined;
   organisation?: Organisation;
   setOrganisation?: (organisation: Organisation | undefined) => void;
+  messageSucces?: boolean;
 }
 
+const NAMESPACE_TRANSLATION = "UsePatchOrganisation";
 const usePatchOrganisation = ({
   id,
   organisation,
   setOrganisation,
+  messageSucces = true,
 }: UseUpdateOrganisationProps) => {
+  const t = useTranslations(NAMESPACE_TRANSLATION);
   const mutation = useMutation({
     mutationKey: ["patchOrganisation", id],
     mutationFn: (payload: Partial<PatchOrganisationPayload>) =>
@@ -30,12 +36,19 @@ const usePatchOrganisation = ({
 
   const onSubmit = async (fields: Partial<PatchOrganisationPayload>) => {
     const payload = { ...fields };
+    console.log(payload);
     await mutation.mutateAsync(payload);
     if (organisation && setOrganisation) {
       setOrganisation({
         ...organisation,
         ...payload,
       } as Organisation);
+      if (messageSucces) {
+        showAlert("success", {
+          text: t("text"),
+          confirmButtonText: t("confirmText"),
+        });
+      }
     }
   };
   return {

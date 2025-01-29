@@ -22,6 +22,7 @@ interface FormFieldArrayProps<
   removeButtonLabel?: string;
   addButtonLabel?: string;
   boxSx?: SxProps;
+  minimumRows?: number;
 }
 
 const NAMESPACE_TRANSLATION_FORM = "Form";
@@ -38,6 +39,7 @@ const FormFieldArray = <T extends FieldValues>({
     flexDirection: "row",
     gap: 2,
   },
+  minimumRows,
 }: FormFieldArrayProps<T>) => {
   const t = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const context = useFormContext<T>();
@@ -64,7 +66,7 @@ const FormFieldArray = <T extends FieldValues>({
         <Box key={field.id} sx={{ gap: 2, ...boxSx }}>
           {renderField(field, index)}
           <Button
-            disabled={fieldsArray.length < 2}
+            disabled={minimumRows && fieldsArray.length < minimumRows}
             onClick={() => remove(index)}>
             {removeButtonLabel || t("arrayRemoveButton")}
           </Button>

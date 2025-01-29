@@ -6,7 +6,11 @@ enum PageTabs {
 }
 
 enum PageSubTabs {
+  NAME_AND_ADDRESS = "name-and-address",
+  DIGITAL_IDENTIFIERS = "digital-identifiers",
+  SECTOR_SITE_AND_WEBSITE = "sector-site-and-website",
   SUBSIDIARIES = "subsidiaries",
+  SECURITY_COMPLIANCE = "security-compliance",
 }
 
 type TabStructure = {

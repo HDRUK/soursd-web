@@ -1,9 +1,7 @@
 import { ConfigProps, withConfig } from "@/components/Config";
-import { redirect } from "@/i18n/routing";
-import { PageContainer } from "@/modules";
+import { redirect } from "next/navigation";
+import { PageTabs, getSubTabs } from "./consts/tabs";
 import TabsContents from "./components/TabsContents";
-import TabsSections from "./components/TabsSections";
-import { PageTabs } from "./consts/tabs";
 
 interface PageProps extends ConfigProps {
   params: {
@@ -13,15 +11,14 @@ interface PageProps extends ConfigProps {
 
 function Page({ params: { tabId }, config }: PageProps) {
   if (!Object.values(PageTabs).includes(tabId)) {
-    redirect(config.routes.profileOrganisationDetails.path);
+    redirect(config.routes.profileOrganisationDetailsNameAndAddress.path);
+  }
+  const subTabs = getSubTabs(tabId) || [];
+  if (subTabs?.length > 0) {
+    redirect(subTabs[0]);
   }
 
-  return (
-    <PageContainer>
-      <TabsSections />
-      <TabsContents tabId={tabId} />
-    </PageContainer>
-  );
+  return <TabsContents tabId={tabId} />;
 }
 
 export default withConfig(Page);
