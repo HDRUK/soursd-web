@@ -17,8 +17,10 @@ import { PageGuidance } from "@/modules";
 import { getOrganisations } from "@/services/organisations";
 import InfoIcon from "@mui/icons-material/Info";
 import SaveIcon from "@mui/icons-material/Save";
+import EastIcon from "@mui/icons-material/East";
 import { LoadingButton } from "@mui/lab";
 import {
+  Box,
   Checkbox,
   CircularProgress,
   FormControlLabel,
@@ -31,6 +33,8 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo } from "react";
+import { ROUTES } from "@/consts/router";
+import { useRouter } from "next/navigation";
 
 export interface IdentityFormValues {
   first_name: string;
@@ -50,8 +54,16 @@ export default function Identity() {
     isLoading: isUpdateLoading,
     error: updateError,
   } = useUserProfileCompletion();
-
+  const router = useRouter();
   const user = useStore(state => state.config.user);
+
+  const isContinueDisabled = useMemo(() => {
+    return !(
+      !!user?.first_name &&
+      !!user?.last_name &&
+      !!user?.organisation_id
+    );
+  }, [user?.first_name, user?.last_name, user?.organisation_id]);
 
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
@@ -228,6 +240,17 @@ export default function Identity() {
               {tProfile("submitButton")}
             </LoadingButton>
           </FormActions>
+          <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+            <LoadingButton
+              sx={{ display: "flex" }}
+              endIcon={<EastIcon />}
+              disabled={isContinueDisabled}
+              onClick={() =>
+                router.push(ROUTES.profileResearcherAffiliations.path)
+              }>
+              {tProfile("continueLinkText")}
+            </LoadingButton>
+          </Box>
         </>
       </Form>
     </PageGuidance>

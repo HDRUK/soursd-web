@@ -18,9 +18,14 @@ import { EntityType } from "@/types/api";
 import { Message } from "@/components/Message";
 import ContactLink from "@/components/ContactLink";
 import postFileQuery from "@/services/files/postFileQuery";
-import FileUploadDetails from "../FileUploadDetails/FileUploadDetails";
-import EmploymentsForm from "./EmploymentsForm";
+import { ROUTES } from "@/consts/router";
+import { LoadingButton } from "@mui/lab";
+import { useRouter } from "next/navigation";
+import EastIcon from "@mui/icons-material/East";
+import { Box } from "@mui/system";
 import HistoriesSection from "../HistoriesSection";
+import EmploymentsForm from "./EmploymentsForm";
+import FileUploadDetails from "../FileUploadDetails/FileUploadDetails";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
@@ -31,6 +36,7 @@ export default function Experience() {
   const getHistories = useStore(state => state.getHistories);
   const [isFileSizeTooBig, setIsFileSizeTooBig] = useState(false);
   const [user, setUser] = useStore(store => [store.config.user, store.setUser]);
+  const router = useRouter();
 
   const latestCV = getLatestCV(user?.registry?.files || []);
   const { isNotInfected, isScanning } = useFileScanned(latestCV);
@@ -170,6 +176,14 @@ export default function Experience() {
           ))}
         </HistoriesSection>
       </FormSection>
+      <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3 }}>
+        <LoadingButton
+          sx={{ display: "flex" }}
+          endIcon={<EastIcon />}
+          onClick={() => router.push(ROUTES.profileResearcherTraining.path)}>
+          {tProfile("continueLinkText")}
+        </LoadingButton>
+      </Box>
     </PageGuidance>
   );
 }

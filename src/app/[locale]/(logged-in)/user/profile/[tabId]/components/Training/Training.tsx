@@ -8,7 +8,7 @@ import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
 import { PageGuidance } from "@/modules";
 import ResearcherTrainingEntry from "@/modules/ResearcherTrainingEntry";
 import { LoadingButton } from "@mui/lab";
-import { Grid, TextField } from "@mui/material";
+import { Box, Grid, TextField } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { ChangeEvent, useCallback, useMemo, useState } from "react";
 import yup from "@/config/yup";
@@ -28,8 +28,11 @@ import { EntityType } from "@/types/api";
 import postFileQuery from "@/services/files/postFileQuery";
 import postTrainingsQuery from "@/services/trainings/postTrainingsQuery";
 import ContactLink from "@/components/ContactLink";
-import FileUploadDetails from "../FileUploadDetails/FileUploadDetails";
+import { useRouter } from "next/navigation";
+import { ROUTES } from "@/consts/router";
+import EastIcon from "@mui/icons-material/East";
 import { StyledBox } from "./Training.styles";
+import FileUploadDetails from "../FileUploadDetails/FileUploadDetails";
 
 export interface TrainingFormValues {
   provider: string;
@@ -61,10 +64,15 @@ export default function Training() {
   const getHistories = useStore(state => state.getHistories);
   const [uploadedCertId, setUploadedCertId] = useState<number | null>(null);
   const [isFileSizeTooBig, setIsFileSizeTooBig] = useState(false);
+  const router = useRouter();
 
   const uploadedCertification = getUploadedCertification(
     user?.registry?.files || []
   );
+
+  const isContinueDisabled = useMemo(() => {
+    return !(histories?.training && histories?.training.length > 0);
+  }, [histories?.training]);
 
   const { isNotInfected, isScanning } = useFileScanned(uploadedCertification);
 
@@ -314,6 +322,15 @@ export default function Training() {
           />
         ))}
       </StyledBox>
+      <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3 }}>
+        <LoadingButton
+          sx={{ display: "flex" }}
+          endIcon={<EastIcon />}
+          disabled={isContinueDisabled}
+          onClick={() => router.push(ROUTES.profileResearcherProjects.path)}>
+          {tProfile("continueLinkText")}
+        </LoadingButton>
+      </Box>
       {isError && (
         <Message severity="error" sx={{ mb: 3 }}>
           {`${postError}`}

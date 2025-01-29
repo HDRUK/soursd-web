@@ -4,7 +4,7 @@ import { PostAffiliationPayload } from "./types";
 
 export default function postAffiliationQuery(user: User) {
   return {
-    mutationKey: ["postAffiliation", user.id],
+    mutationKey: ["postAffiliation", user?.id],
     mutationFn: (payload: PostAffiliationPayload) => {
       return postAffiliation(user?.registry_id, payload, {
         error: { message: "postAffiliationError" },

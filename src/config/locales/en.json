@@ -267,6 +267,7 @@
     "roleAdministrator": "Administrator",
     "roleApprover": "Approver",
     "consentScrapeDescription": "I consent to the Registry using information I provide to gather my historical experience",
+    "consentScrapePlaceholder": "I consent to the Registry using information I provide to gather my historical experience",
     "organisationDataSecurityComplianceTemp": {},
     "organisationDataSecurityCompliance": "Organisation data security compliance",
     "ceCertified": "CE certified?",
