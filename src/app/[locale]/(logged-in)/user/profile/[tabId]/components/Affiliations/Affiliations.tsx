@@ -12,6 +12,7 @@ import {
 import { PostAffiliationPayload } from "@/services/affiliations/types";
 import { showAlert } from "@/utils/showAlert";
 import {
+  Box,
   Table,
   TableBody,
   TableCell,
@@ -22,6 +23,10 @@ import {
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect } from "react";
+import { LoadingButton } from "@mui/lab";
+import EastIcon from "@mui/icons-material/East";
+import { useRouter } from "next/navigation";
+import { ROUTES } from "@/consts/router";
 import AffiliationsForm from "../AffiliationsForm";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
@@ -31,6 +36,7 @@ export default function Affiliations() {
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   const { user, affiliations, getHistories, setHistories } = useStore(
     state => ({
@@ -89,6 +95,14 @@ export default function Affiliations() {
         onSubmit={handleDetailsSubmit}
         queryState={postAffiliationQueryState}
       />
+      <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+        <LoadingButton
+          sx={{ display: "flex" }}
+          endIcon={<EastIcon />}
+          onClick={() => router.push(ROUTES.profileResearcherExperience.path)}>
+          {tProfile("continueLinkText")}
+        </LoadingButton>
+      </Box>
       <Typography variant="h6" sx={{ mb: 1 }}>
         {tProfile("affiliationsRecords")}
       </Typography>
