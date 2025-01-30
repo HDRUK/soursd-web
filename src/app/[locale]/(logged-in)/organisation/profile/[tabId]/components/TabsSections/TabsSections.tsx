@@ -25,7 +25,7 @@ export default function TabsSections() {
         indicatorColor="secondary"
         textColor="inherit">
         <Tab
-          label={t("details")}
+          label={t("profile")}
           href={routes.profileOrganisationDetails.path}
           component={Link}
           value={PageTabs.DETAILS}

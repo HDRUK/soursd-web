@@ -91,6 +91,7 @@
     "companyValidatingPopup": "Your organisation is currently being checked against records held by Companies House",
     "companyValidating": "Organisation is being validated",
     "identity": "Identity",
+    "profile": "Profile",
     "details": "Complete your Organisation Profile",
     "detailsNameAndAddress": "Name and Address",
     "detailsDigitalIdentifiers": "Digital Identifiers",
