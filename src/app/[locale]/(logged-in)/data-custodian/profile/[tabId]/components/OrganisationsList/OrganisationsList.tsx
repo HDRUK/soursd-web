@@ -96,7 +96,6 @@ export default function OrganisationsList({
           <>
             <Accordion key={organisation_name}>
               <AccordionSummary
-                color="red"
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls={`${ariaId}-content`}
                 id={`${ariaId}-header`}
