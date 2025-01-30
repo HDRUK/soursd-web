@@ -15,7 +15,7 @@ import { useCallback, useMemo } from "react";
 import Form from "@/components/Form";
 import {
   PostOrganisationInviteUserPayload,
-  postOrganisationInviteUser,
+  postOrganisationsInviteUser,
 } from "@/services/organisations";
 import { EMAIL_TEMPLATE } from "@/consts/application";
 
@@ -44,7 +44,7 @@ export default function DelegatesForm({ onSuccess }: DelegatesFormProps) {
   const { mutateAsync, isPending } = useMutation({
     mutationKey: ["inviteUser", organisation?.id],
     mutationFn: (payload: PostOrganisationInviteUserPayload) => {
-      return postOrganisationInviteUser(organisation?.id, payload, {
+      return postOrganisationsInviteUser(organisation?.id, payload, {
         error: { message: "inviteUserError" },
       });
     },

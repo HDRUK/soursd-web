@@ -11,7 +11,7 @@ import { LoadingButton } from "@mui/lab";
 import { Box, Checkbox, FormControlLabel, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import useRegisterUser from "@/hooks/useRegisterUser";
+import useRegisterUser from "../../../../../../hooks/useRegisterUser";
 import AccountOption from "../AccountOption";
 
 const NAMESPACE_TRANSLATIONS_PROFILE = "Register";

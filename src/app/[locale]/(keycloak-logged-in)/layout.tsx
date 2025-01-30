@@ -1,10 +1,8 @@
 "use client";
 
-import LoadingWrapper from "@/components/LoadingWrapper";
-import useLoginRedirect from "@/hooks/useLoginRedirect";
-import { usePathname } from "@/i18n/routing";
 import { handleLogin } from "@/utils/keycloak";
 import Cookies from "js-cookie";
+import { usePathname } from "@/i18n/routing";
 import { PropsWithChildren, useEffect, useState } from "react";
 
 async function validateAccessToken(pathname: string | null): Promise<boolean> {
@@ -15,7 +13,6 @@ async function validateAccessToken(pathname: string | null): Promise<boolean> {
     handleLogin();
     return false;
   }
-
   return true;
 }
 
@@ -24,21 +21,14 @@ export default function Layout({ children }: PropsWithChildren) {
   const pathname = usePathname();
   const [hasAccessToken, setHasAccessToken] = useState<boolean>(false);
 
-  const { isReady } = useLoginRedirect();
-
   useEffect(() => {
     const performAuthCheck = async () => {
       const isAuth = await validateAccessToken(pathname);
-
       setHasAccessToken(isAuth);
     };
 
     performAuthCheck();
   }, [pathname]);
 
-  return (
-    <LoadingWrapper variant="basic" loading={isReady && hasAccessToken}>
-      {children}
-    </LoadingWrapper>
-  );
+  return hasAccessToken && children;
 }

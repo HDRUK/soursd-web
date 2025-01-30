@@ -1,7 +1,6 @@
 import theme from "@/theme";
 import { Box, BoxProps, CircularProgress } from "@mui/material";
 import React from "react";
-import OverlayCenter from "../OverlayCenter";
 
 export type LoadingWrapperProps = {
   loading: boolean;
@@ -29,19 +28,17 @@ export default function LoadingWrapper({
 
   if (loading) {
     return (
-      <OverlayCenter variant="contained">
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            ...additionalProps,
-          }}>
-          {variant === "rich" && <h2>Loading...</h2>}
-          <CircularProgress title="Loading data" />
-        </Box>
-      </OverlayCenter>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          ...additionalProps,
+        }}>
+        {variant === "rich" && <h2>Loading...</h2>}
+        <CircularProgress title="Loading data" />
+      </Box>
     );
   }
 

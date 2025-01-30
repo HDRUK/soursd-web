@@ -552,16 +552,6 @@
   "Auth": {
     "notAllowed": "You are not allowed to access this page. If you think this is incorrect please contacts us at <contactLink></contactLink>"
   },
-  "User": {
-    "inviteUserTitle": "Request User to be invited to create a SOURSD account",
-    "inviteUser": "Invite User",
-    "postUserError": "Unable to invite the User",
-    "postUserInviteError": "Unable to invite the User",
-    "inviteUserErrorButton": "Try again",
-    "inviteUserError": "There was an error inviting the User. Please try again or contact us at <contactLink></contactLink>",
-    "inviteUserSuccessButton": "Ok",
-    "inviteUserSuccess": "You have successfully invited the User"
-  },
   "Custodian": {
     "inviteCustodianTitle": "Request Data Custodian to be invited to create a SOURSD account",
     "inviteCustodian": "Invite Data Custodian",
@@ -573,8 +563,7 @@
     "inviteCustodianSuccess": "You have successfully invited the Data Custodian"
   },
   "Administration": {
-    "userInviteTitle": "User invitation",
-    "organisationInviteTitle": "Organisation invitation",
+    "inviteOrganisationTitle": "Organisation invitation",
     "title": "Administration",
     "custodianInviteTitle": "Data Custodian Invitation",
     "custodianInviteBody": "Invite Data Custodians to use the SOURSD System",
