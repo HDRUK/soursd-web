@@ -70,10 +70,6 @@ export default function Training() {
     user?.registry?.files || []
   );
 
-  const isContinueDisabled = useMemo(() => {
-    return !(histories?.training && histories?.training.length > 0);
-  }, [histories?.training]);
-
   const { isNotInfected, isScanning } = useFileScanned(uploadedCertification);
 
   const { refetch: refetchUser } = useQueryRefetch({
@@ -326,7 +322,6 @@ export default function Training() {
         <LoadingButton
           sx={{ display: "flex" }}
           endIcon={<EastIcon />}
-          disabled={isContinueDisabled}
           onClick={() => router.push(ROUTES.profileResearcherProjects.path)}>
           {tProfile("continueLinkText")}
         </LoadingButton>

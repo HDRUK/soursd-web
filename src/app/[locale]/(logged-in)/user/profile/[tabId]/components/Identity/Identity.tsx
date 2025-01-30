@@ -57,14 +57,6 @@ export default function Identity() {
   const router = useRouter();
   const user = useStore(state => state.config.user);
 
-  const isContinueDisabled = useMemo(() => {
-    return !(
-      !!user?.first_name &&
-      !!user?.last_name &&
-      !!user?.organisation_id
-    );
-  }, [user?.first_name, user?.last_name, user?.organisation_id]);
-
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
@@ -244,7 +236,6 @@ export default function Identity() {
             <LoadingButton
               sx={{ display: "flex" }}
               endIcon={<EastIcon />}
-              disabled={isContinueDisabled}
               onClick={() =>
                 router.push(ROUTES.profileResearcherAffiliations.path)
               }>

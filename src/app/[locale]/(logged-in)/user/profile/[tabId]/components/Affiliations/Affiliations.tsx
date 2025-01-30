@@ -22,7 +22,7 @@ import {
 } from "@mui/material";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect } from "react";
 import { LoadingButton } from "@mui/lab";
 import EastIcon from "@mui/icons-material/East";
 import { useRouter } from "next/navigation";
@@ -46,10 +46,6 @@ export default function Affiliations() {
       setHistories: state.setHistories,
     })
   );
-
-  const isContinueDisabled = useMemo(() => {
-    return !(affiliations.length > 0);
-  }, [affiliations]);
 
   const { data: affiliationsData, ...getAffiliationsQueryState } = useQuery(
     getAffiliationsQuery(user?.registry_id)
@@ -103,7 +99,6 @@ export default function Affiliations() {
         <LoadingButton
           sx={{ display: "flex" }}
           endIcon={<EastIcon />}
-          disabled={isContinueDisabled}
           onClick={() => router.push(ROUTES.profileResearcherExperience.path)}>
           {tProfile("continueLinkText")}
         </LoadingButton>

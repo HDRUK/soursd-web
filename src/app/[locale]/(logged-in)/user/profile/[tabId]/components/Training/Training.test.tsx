@@ -7,11 +7,23 @@ import {
   waitFor,
   fireEvent,
   commonAccessibilityTests,
+  userEvent,
 } from "@/utils/testUtils";
 import { faker } from "@faker-js/faker";
 import { postTrainings, getTrainingByRegistryId } from "@/services/trainings";
 import { mock200Json } from "jest.utils";
+import { useRouter } from "next/navigation";
 import Training from "./Training";
+
+jest.mock("next/navigation", () => ({
+  useRouter: jest.fn(),
+}));
+
+const mockPush = jest.fn();
+
+(useRouter as jest.Mock).mockReturnValue({
+  push: mockPush,
+});
 
 jest.mock("@/services/trainings");
 jest.mock("@/data/store");
@@ -65,6 +77,12 @@ describe("<Training />", () => {
       });
     }
   );
+  it("navigates when the continue button is clicked", async () => {
+    renderTrainingComponent();
+    const button = screen.getByText("Continue");
+    await userEvent.click(button);
+    expect(mockPush).toHaveBeenCalledWith("/user/profile/projects");
+  });
 
   it("has no accessibility violations", async () => {
     commonAccessibilityTests(renderTrainingComponent());
