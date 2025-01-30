@@ -1,12 +1,10 @@
 import { ConfigProps, withConfig } from "@/components/Config";
-import { redirect } from "@/i18n/routing";
-import { PageContainer, PageContent } from "@/modules";
-import { PageTabs, PageSubTabs } from "../consts/tabs";
-import SubTabsSections from "./components/SubTabSections";
-import SubTabsContents from "./components/SubsTabContents";
-import { PageGuidance } from "@/modules";
+import { PageContent, PageGuidance } from "@/modules";
 import { useTranslations } from "next-intl";
 import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
+import { PageSubTabs } from "../consts/tabs";
+import SubTabsSections from "./components/SubTabSections";
+import SubTabsContents from "./components/SubsTabContents";
 
 interface PageProps extends ConfigProps {
   params: {
@@ -14,15 +12,15 @@ interface PageProps extends ConfigProps {
   };
 }
 
-const NAMESPACE_TRANSLATION_PROFILE = "Profile";
+const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
 
-function Page({ params: { subTabId }, config }: PageProps) {
+function Page({ params: { subTabId } }: PageProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
   return (
     <PageContent sx={{ mx: 4 }}>
       <PageGuidance
-        title={t("identity")}
+        title={t("details")}
         {...mockedPersonalDetailsGuidanceProps}>
         <SubTabsSections />
         <SubTabsContents subTabId={subTabId} />

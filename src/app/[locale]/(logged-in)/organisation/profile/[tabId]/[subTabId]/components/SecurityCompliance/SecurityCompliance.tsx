@@ -1,6 +1,5 @@
 "use client";
 
-import usePatchOrganisation from "../../hooks/usePatchOrganisation";
 import { Grid } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 import { useTranslations } from "next-intl";
@@ -17,6 +16,7 @@ import GoogleAutocomplete from "@/components/GoogleAutocomplete";
 import { QueryState } from "@/types/form";
 import { LoadingButton } from "@mui/lab";
 import { PatchOrganisationPayload } from "@/services/organisations";
+import usePatchOrganisation from "../../hooks/usePatchOrganisation";
 import {
   FormData,
   getValidation,
@@ -57,31 +57,29 @@ export default function SecurityCompliance() {
   return (
     <Form schema={schema} defaultValues={defaultValues} onSubmit={onSubmit}>
       <>
-        <FormSection heading={t("organisationDataSecurityCompliance")}>
-          <Grid container rowSpacing={3}>
-            {certificationRows.map(cert => (
-              <React.Fragment key={cert.certified}>
-                <Grid item xs={4}>
-                  <FormControlHorizontal
-                    name={cert.certified}
-                    displayPlaceholder={false}
-                    labelMd={7}
-                    contentMd={5}
-                    renderField={fieldProps => (
-                      <Checkbox {...fieldProps} checked={!!fieldProps.value} />
-                    )}
-                  />
-                </Grid>
-                <Grid item xs={8}>
-                  <FormControlHorizontal
-                    name={cert.certificationNum}
-                    renderField={fieldProps => <TextField {...fieldProps} />}
-                  />
-                </Grid>
-              </React.Fragment>
-            ))}
-          </Grid>
-        </FormSection>
+        <Grid container rowSpacing={3}>
+          {certificationRows.map(cert => (
+            <React.Fragment key={cert.certified}>
+              <Grid item xs={4}>
+                <FormControlHorizontal
+                  name={cert.certified}
+                  displayPlaceholder={false}
+                  labelMd={7}
+                  contentMd={5}
+                  renderField={fieldProps => (
+                    <Checkbox {...fieldProps} checked={!!fieldProps.value} />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={8}>
+                <FormControlHorizontal
+                  name={cert.certificationNum}
+                  renderField={fieldProps => <TextField {...fieldProps} />}
+                />
+              </Grid>
+            </React.Fragment>
+          ))}
+        </Grid>
         <FormActions>
           <LoadingButton
             loading={isLoading}

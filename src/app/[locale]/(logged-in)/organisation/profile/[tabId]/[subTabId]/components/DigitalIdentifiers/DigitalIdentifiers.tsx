@@ -96,49 +96,37 @@ export default function DigitalIdentifiers() {
 
   return (
     <Form schema={schema} onSubmit={onSubmit} {...formOptions}>
-      {({ setValue }) => {
-        const handleFindAddress = (address: AddressFields) => {
-          Object.entries(address).forEach(([key, value]) => {
-            setValue(key as keyof DigitalIdentifiersFormValues, value ?? "");
-          });
-        };
+      <>
+        <Grid container rowSpacing={3}>
+          <Grid item xs={12}>
+            <FormControlHorizontal
+              name="companies_house_no"
+              renderField={fieldProps => <TextField {...fieldProps} />}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <FormControlHorizontal
+              name="charity_registration_id"
+              renderField={fieldProps => <TextField {...fieldProps} />}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <FormControlHorizontal
+              name="ror_id"
+              renderField={fieldProps => <TextField {...fieldProps} />}
+            />
+          </Grid>
+        </Grid>
 
-        return (
-          <>
-            <FormSection heading="Organisation persistent identifiers">
-              <Grid container rowSpacing={3}>
-                <Grid item xs={12}>
-                  <FormControlHorizontal
-                    name="companies_house_no"
-                    renderField={fieldProps => <TextField {...fieldProps} />}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <FormControlHorizontal
-                    name="charity_registration_id"
-                    renderField={fieldProps => <TextField {...fieldProps} />}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <FormControlHorizontal
-                    name="ror_id"
-                    renderField={fieldProps => <TextField {...fieldProps} />}
-                  />
-                </Grid>
-              </Grid>
-            </FormSection>
-
-            <FormActions>
-              <LoadingButton
-                loading={isLoading}
-                type="submit"
-                endIcon={<SaveIcon />}>
-                {tProfile("submitButton")}
-              </LoadingButton>
-            </FormActions>
-          </>
-        );
-      }}
+        <FormActions>
+          <LoadingButton
+            loading={isLoading}
+            type="submit"
+            endIcon={<SaveIcon />}>
+            {tProfile("submitButton")}
+          </LoadingButton>
+        </FormActions>
+      </>
     </Form>
   );
 }

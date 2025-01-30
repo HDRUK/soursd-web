@@ -47,12 +47,13 @@ export default function SubTabsSections() {
       },
     ],
   };
+  const tab = params?.tabId as string;
+  const selectedTabs = subTabs[tab];
 
-  const selectedTabs = subTabs[params.tabId];
-
-  if (!selectedTabs) {
+  if (!selectedTabs || !tab) {
     return null;
   }
+  const current = params?.subTabId as string;
 
-  return <SubTabs tabs={selectedTabs} />;
+  return <SubTabs current={current} tabs={selectedTabs} />;
 }

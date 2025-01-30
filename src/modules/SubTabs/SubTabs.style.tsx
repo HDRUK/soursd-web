@@ -9,9 +9,8 @@ const StyledSubTab = styled(Tab)(({ theme }) => ({
   border: "1px solid #ccc",
   backgroundColor: "#fff",
   "&.Mui-selected": {
-    backgroundColor: "#2C5282",
+    backgroundColor: "#7A89C2",
     color: "#fff",
-    borderBottom: "2px solid #5A67D8",
   },
   marginRight: theme.spacing(1),
 }));

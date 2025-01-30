@@ -89,47 +89,45 @@ export default function SectorSiteAndWebsite() {
   return (
     <Form schema={schema} onSubmit={onSubmit} {...formOptions}>
       <>
-        <FormSection heading="Organisation sector, site and website">
+        <Grid item xs={12}>
+          <FormControlHorizontal
+            name="sector_id"
+            renderField={fieldProps => (
+              <Select
+                {...fieldProps}
+                inputProps={{
+                  "aria-label": tForm("sectorIdAriaLabel"),
+                }}>
+                {sectors?.map(({ name, id }) => (
+                  <MenuItem value={id} key={id}>
+                    {name}
+                  </MenuItem>
+                ))}
+              </Select>
+            )}
+          />
           <Grid item xs={12}>
             <FormControlHorizontal
-              name="sector_id"
+              name="smbStatus"
+              displayPlaceholder={false}
+              label={tForm("smbStatus")}
               renderField={fieldProps => (
-                <Select
-                  {...fieldProps}
-                  inputProps={{
-                    "aria-label": tForm("sectorIdAriaLabel"),
-                  }}>
-                  {sectors?.map(({ name, id }) => (
-                    <MenuItem value={id} key={id}>
-                      {name}
-                    </MenuItem>
-                  ))}
-                </Select>
+                <FormControlLabel
+                  label={tForm("smbStatusDescription")}
+                  control={
+                    <Checkbox {...fieldProps} checked={!!fieldProps.value} />
+                  }
+                />
               )}
             />
-            <Grid item xs={12}>
-              <FormControlHorizontal
-                name="smbStatus"
-                displayPlaceholder={false}
-                label={tForm("smbStatus")}
-                renderField={fieldProps => (
-                  <FormControlLabel
-                    label={tForm("smbStatusDescription")}
-                    control={
-                      <Checkbox {...fieldProps} checked={!!fieldProps.value} />
-                    }
-                  />
-                )}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlHorizontal
-                name="website"
-                renderField={fieldProps => <TextField {...fieldProps} />}
-              />
-            </Grid>
           </Grid>
-        </FormSection>
+          <Grid item xs={12}>
+            <FormControlHorizontal
+              name="website"
+              renderField={fieldProps => <TextField {...fieldProps} />}
+            />
+          </Grid>
+        </Grid>
 
         <FormActions>
           <LoadingButton
