@@ -90,17 +90,19 @@ export default function OrganisationsList({
 
         const accordianColor = isApproved
           ? PALETTE_THEME_PURPLE_BLUE.palette.success.light
-          : PALETTE_THEME_PURPLE_BLUE.palette.warning.light;
+          : PALETTE_THEME_PURPLE_BLUE.palette.error.light;
 
         return (
           <>
             <Accordion key={organisation_name}>
               <AccordionSummary
+                color="red"
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls={`${ariaId}-content`}
                 id={`${ariaId}-header`}
                 sx={{
                   backgroundColor: accordianColor,
+                  color: "white",
                 }}>
                 <AccordionTitle
                   icon={<BusinessIcon />}
