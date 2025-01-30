@@ -6,7 +6,7 @@ import * as matchers from "jest-extended";
 import { forwardRef, useImperativeHandle } from "react";
 import "./jest.utils";
 import { mock200Json, mockPagedResults } from "./jest.utils";
-import { mockedCustodianUser } from "./mocks/data/custodian";
+import { mockedCustodian, mockedCustodianUser } from "./mocks/data/custodian";
 import { mockedOrganisation } from "./mocks/data/organisation";
 import { mockedPermission } from "./mocks/data/permission";
 import { mockedProject, mockedProjects } from "./mocks/data/project";
@@ -234,9 +234,6 @@ async function mockFetch(url: string, init?: RequestInit) {
         ])
       );
     }
-    case `${process.env.NEXT_PUBLIC_API_V1_URL}/organisations/unclaimed`: {
-      return mock200Json(1);
-    }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/affiliations/1`: {
       return mock200Json(
         mockPagedResults([
@@ -263,10 +260,18 @@ async function mockFetch(url: string, init?: RequestInit) {
         ],
       });
     }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/custodians`: {
+      return mock200Json(1);
+    }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/custodians/1/invite`: {
+      return mock200Json(
+        mockedCustodian({
+          id: 1,
+        })
+      );
+    }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/organisations/unclaimed`: {
-      return mock200Json({
-        data: 1,
-      });
+      return mock200Json(1);
     }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/organisations/1/invite`: {
       return mock200Json({
@@ -284,6 +289,13 @@ async function mockFetch(url: string, init?: RequestInit) {
           id: 2,
         }),
       ]);
+    }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/users/invite`: {
+      return mock200Json(
+        mockedUser({
+          id: 1,
+        })
+      );
     }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/approvals/researcher`: {
       return mock200Json(true);

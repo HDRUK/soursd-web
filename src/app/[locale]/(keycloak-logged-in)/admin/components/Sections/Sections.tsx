@@ -7,54 +7,43 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-import SendInviteCustodian from "../SendInviteCustodian";
-import SendInviteOrganisation from "../SendInviteOrganistion";
+import SendInviteCustodian from "@/modules/SendInviteCustodian";
+import SendInviteOrganisation from "@/modules/SendInviteOrganistion";
+import SendInviteUser from "@/modules/SendInviteUser";
 
 const NAMESPACE_TRANSLATIONS_ADMINISTRATION = "Administration";
 
 export default function Sections() {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_ADMINISTRATION);
 
+  const sections = [
+    {
+      name: "custodian",
+      component: <SendInviteCustodian />,
+    },
+    {
+      name: "organisation",
+      component: <SendInviteOrganisation />,
+    },
+    {
+      name: "user",
+      component: <SendInviteUser />,
+    },
+  ];
+
   return (
     <>
-      <Accordion>
-        <AccordionSummary
-          id="data-custodian-invite"
-          aria-controls="data-custodian-invite-content"
-          expandIcon={<ArrowDropDownIcon />}>
-          <Typography>{t("custodianInviteTitle")}</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <SendInviteCustodian />
-        </AccordionDetails>
-      </Accordion>
-
-      <Accordion>
-        <AccordionSummary
-          id="system-config"
-          aria-controls="system-config-content"
-          expandIcon={<ArrowDropDownIcon />}>
-          <Typography>{t("systemConfigTitle")}</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>{t("systemConfigBody")}</Typography>
-          <Typography variant="subtitle2">
-            {t("systemConfigSubtitle")}
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-
-      <Accordion>
-        <AccordionSummary
-          id="invite-organisation"
-          aria-controls="invite-organisation-content"
-          expandIcon={<ArrowDropDownIcon />}>
-          <Typography>{t("inviteOrganisationTitle")}</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <SendInviteOrganisation />
-        </AccordionDetails>
-      </Accordion>
+      {sections.map(({ name, component }) => (
+        <Accordion>
+          <AccordionSummary
+            id={`data-${name}-invite`}
+            aria-controls={`data-${name}-invite-content`}
+            expandIcon={<ArrowDropDownIcon />}>
+            <Typography>{t(`${name}InviteTitle`)}</Typography>
+          </AccordionSummary>
+          <AccordionDetails>{component}</AccordionDetails>
+        </Accordion>
+      ))}
     </>
   );
 }

@@ -1,16 +1,6 @@
 import { UserProvider } from "@/consts/user";
 import { User } from "@/types/application";
 
-interface ResearcherInviteResponse {
-  id: number;
-  name: string;
-  contact_email: string;
-  invite_sent_at: string;
-  invite_accepted_at: string;
-  enabled: boolean;
-  organisation_id: number;
-}
-
 type PatchUserPayload = Partial<User>;
 
 interface UpdatePermissonsPayload {
@@ -44,16 +34,25 @@ interface PostUserPayload {
   is_organisation?: boolean;
 }
 
+interface PostUserInvitePayload {
+  first_name: string;
+  last_name: string;
+  email: string;
+}
+
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 type PostUserResponse = any;
+
+type PostUserInviteResponse = User;
 
 export type {
   PostUserPayload,
   PostUserResponse,
-  ResearcherInviteResponse,
   UpdatePermissonsPayload,
   PatchUserPayload,
   PatchUserResponse,
   UserResponse,
   UsersResponse,
+  PostUserInviteResponse,
+  PostUserInvitePayload,
 };

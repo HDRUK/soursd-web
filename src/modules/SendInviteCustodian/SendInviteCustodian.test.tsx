@@ -8,14 +8,14 @@ import {
 } from "@/utils/testUtils";
 import { faker } from "@faker-js/faker";
 import { mock200Json, mockFailedJson } from "jest.utils";
-import AskOrganisationModal from "./AskOrganisationModal";
+import SendInviteCustodian from "./SendInviteCustodian";
 
-const renderAskOrganisationModal = () => render(<AskOrganisationModal open />);
+const renderSendInviteCustodian = () => render(<SendInviteCustodian />);
 
 const renderSubmitted = async () => {
-  renderAskOrganisationModal();
+  renderSendInviteCustodian();
 
-  [/Organisation name/i, /Email/i].forEach(name => {
+  [/Name/i, /Contact email/i].forEach(name => {
     const input = screen.getByRole("textbox", { name });
     const inputValue = faker.internet.email();
 
@@ -31,20 +31,20 @@ const renderSubmitted = async () => {
   });
 };
 
-describe("<AskOrganisationModal />", () => {
+describe("<SendInviteCustodian />", () => {
   it("submits the invite", async () => {
     await renderSubmitted();
 
     await waitFor(() => {
       expect(
-        screen.getByText(/You have successfully invited the Organisation/i)
+        screen.getByText(/You have successfully invited the Data Custodian/i)
       ).toBeTruthy();
     });
   });
 
   it("shows error when submit fails", async () => {
     global.fetch.mockImplementation((url: string) => {
-      if (url.endsWith(`/organisations/unclaimed`)) {
+      if (url.endsWith(`/custodians`)) {
         return mock200Json(1);
       }
 
@@ -55,12 +55,12 @@ describe("<AskOrganisationModal />", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText(/There was an error inviting the Organisation/i)
+        screen.getByText(/There was an error inviting the Data Custodian/i)
       ).toBeTruthy();
     });
   });
 
   it("has no accessibility violations", async () => {
-    commonAccessibilityTests(renderAskOrganisationModal());
+    commonAccessibilityTests(renderSendInviteCustodian());
   });
 });
