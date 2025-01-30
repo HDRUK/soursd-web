@@ -30,6 +30,7 @@ import DateInput from "@/components/DateInput";
 import { showAlert } from "@/utils/showAlert";
 import theme from "@/theme";
 import { COUNTRIES_LIST } from "@/consts/countries";
+import { VALIDATION_ROR_ID } from "@/consts/form";
 
 export interface EmploymentsFormValues {
   employer_name: string;
@@ -99,7 +100,12 @@ export default function EmploymentsForm({ onSubmit }: EmploymentsFormProps) {
         from: yup.string(),
         is_current: yup.boolean().required(),
         to: yup.string().nullable(),
-        ror: yup.string(),
+        ror: yup
+          .string()
+          .test("ror-validation", tForm("rorInvalid"), function (value) {
+            if (!value) return true;
+            return new RegExp(VALIDATION_ROR_ID).test(value);
+          }),
         email: yup.string().email(tForm("emailFormatInvalid")),
       }),
     [tForm]
