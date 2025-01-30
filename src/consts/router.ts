@@ -100,8 +100,24 @@ const ROUTES: Routes = {
     path: "/organisation/profile/details",
     permissions: [UserGroup.ORGANISATIONS],
   },
+  profileOrganisationDetailsNameAndAddress: {
+    path: "/organisation/profile/details/name-and-address",
+    permissions: [UserGroup.ORGANISATIONS],
+  },
+  profileOrganisationDetailsDigitalIdentifiers: {
+    path: "/organisation/profile/details/digital-identifiers",
+    permissions: [UserGroup.ORGANISATIONS],
+  },
+  profileOrganisationDetailsSectorSiteAndWebsite: {
+    path: "/organisation/profile/details/sector-site-and-website",
+    permissions: [UserGroup.ORGANISATIONS],
+  },
   profileOrganisationDetailsSubsidiaries: {
     path: "/organisation/profile/details/subsidiaries",
+    permissions: [UserGroup.ORGANISATIONS],
+  },
+  profileOrganisationDetailsSecurityCompliance: {
+    path: "/organisation/profile/details/security-compliance",
     permissions: [UserGroup.ORGANISATIONS],
   },
   profileOrganisationManageUsers: {

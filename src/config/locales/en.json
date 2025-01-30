@@ -91,8 +91,13 @@
     "companyValidatingPopup": "Your organisation is currently being checked against records held by Companies House",
     "companyValidating": "Organisation is being validated",
     "identity": "Identity",
-    "details": "Profile",
+    "profile": "Profile",
+    "details": "Complete your Organisation Profile",
+    "detailsNameAndAddress": "Name and Address",
+    "detailsDigitalIdentifiers": "Digital Identifiers",
+    "detailsSectorSiteAndWebsite": "Sector, Site and Website",
     "detailsSubsidiaries": "Subsidiaries",
+    "detailsSecurityCompliance": "Security Compliance",
     "manageDelegates": "Manage Delegates",
     "projects": "Projects",
     "manageUsers": "Manage Users",
@@ -290,7 +295,7 @@
     "address": "Address",
     "addressPlaceholder": "Type to search for an address",
     "arrayRemoveButton": "Remove",
-    "arrayAddButton": "Add Another Subsidiary",
+    "arrayAddButton": "Add Another",
     "delegateFormTitle": "Organisation Administrative Delegate",
     "departmentName": "Department Name",
     "departmentNamePlaceholder": "Department Name",
@@ -671,5 +676,9 @@
     "alertText": "Are you sure you want to remove {first_name} {last_name} as a delegate from your organisation ({organisation_name})",
     "alertConfirm": "Delete",
     "alertCancel": "Cancel"
+  },
+  "UsePatchOrganisation": {
+    "text": "Organisation Updated!",
+    "confirmText": "OK"
   }
 }

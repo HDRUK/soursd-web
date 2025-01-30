@@ -12,7 +12,6 @@ export interface SubsidiariesFormData {
 }
 
 export interface FormData {
-  subsidiaries?: SubsidiariesFormData[];
   ce_certified?: boolean;
   ce_certification_num?: string;
   ce_plus_certified?: boolean;
@@ -25,23 +24,6 @@ export interface FormData {
 
 export const getValidation = (t: (key: string) => string) =>
   yup.object<FormData>({
-    subsidiaries: yup.array().of(
-      yup.object().shape({
-        name: yup.string().when("address", {
-          is: (address: AddressFields) => Boolean(address),
-          otherwise: schema => schema.nullable(),
-          then: schema => schema.required(t("nameInvalid")),
-        }),
-        address: yup.object().shape({
-          postcode: yup.string().nullable(),
-          address_1: yup.string().nullable(),
-          address_2: yup.string().nullable(),
-          town: yup.string().nullable(),
-          county: yup.string().nullable(),
-          country: yup.string().nullable(),
-        }),
-      })
-    ),
     ce_certified: yup.boolean(),
     ce_certification_num: yup.string().when("ce_certified", {
       is: true,
@@ -96,13 +78,6 @@ export const getValidation = (t: (key: string) => string) =>
   });
 
 export const getDefaultValues = (organisation?: Organisation): FormData => ({
-  subsidiaries:
-    organisation?.subsidiaries?.map(
-      ({ id: _id, pivot: _pivot, name, ...rest }) => ({
-        name,
-        address: rest,
-      })
-    ) || [],
   ce_certified: organisation?.ce_certified,
   ce_certification_num: organisation?.ce_certification_num || "",
   ce_plus_certified: organisation?.ce_plus_certified,
