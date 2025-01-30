@@ -7,18 +7,12 @@ import React, { useMemo } from "react";
 import { useStore } from "@/data/store";
 import Form from "@/components/Form";
 import FormActions from "@/components/FormActions";
-import FormSection from "@/components/FormSection";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
 import Checkbox from "@mui/material/Checkbox";
 import TextField from "@mui/material/TextField";
-import FormFieldArray from "@/components/FormFieldArray";
-import GoogleAutocomplete from "@/components/GoogleAutocomplete";
-import { QueryState } from "@/types/form";
 import { LoadingButton } from "@mui/lab";
-import { PatchOrganisationPayload } from "@/services/organisations";
-import usePatchOrganisation from "../../hooks/usePatchOrganisation";
+import usePatchOrganisation from "../../../hooks/usePatchOrganisation";
 import {
-  FormData,
   getValidation,
   getDefaultValues,
   certificationRows,
@@ -37,12 +31,7 @@ export default function SecurityCompliance() {
   const t = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
-  const {
-    isError,
-    isPending: isLoading,
-    error,
-    onSubmit,
-  } = usePatchOrganisation({
+  const { isPending: isLoading, onSubmit } = usePatchOrganisation({
     id: organisation?.id,
     organisation,
     setOrganisation,

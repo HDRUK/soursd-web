@@ -4,17 +4,9 @@ import ContactLink from "@/components/ContactLink";
 import Form from "@/components/Form/Form";
 import FormActions from "@/components/FormActions";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
-import FormSection from "@/components/FormSection";
-import GoogleAutocomplete from "@/components/GoogleAutocomplete";
 import yup from "@/config/yup";
-import {
-  VALIDATION_CHARITY_ID,
-  VALIDATION_COMPANY_NUMBER,
-  VALIDATION_ROR_ID,
-  VALIDATION_URL,
-} from "@/consts/form";
+import { VALIDATION_URL } from "@/consts/form";
 import { useStore } from "@/data/store";
-import { QueryState } from "@/types/form";
 import SaveIcon from "@mui/icons-material/Save";
 import { LoadingButton } from "@mui/lab";
 import {
@@ -27,7 +19,7 @@ import {
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
-import usePatchOrganisation from "../../hooks/usePatchOrganisation";
+import usePatchOrganisation from "../../../hooks/usePatchOrganisation";
 
 export interface SectorFormValues {
   sector_id: number;

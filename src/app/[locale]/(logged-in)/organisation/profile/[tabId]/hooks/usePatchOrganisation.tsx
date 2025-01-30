@@ -7,7 +7,7 @@ import {
 import { Organisation } from "@/types/application";
 import { useMutation } from "@tanstack/react-query";
 import { showAlert } from "@/utils/showAlert";
-import { useTranslations } from "use-intl";
+import { useTranslations } from "next-intl";
 
 interface UseUpdateOrganisationProps {
   id: string | number | undefined;

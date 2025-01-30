@@ -10,6 +10,7 @@ import { useTranslations } from "next-intl";
 import { useCallback } from "react";
 import { EMAIL_TEMPLATE } from "@/consts/application";
 import UserModalDetails, { UserFields } from "../UsersModalDetails";
+
 export interface UserModalProps extends Omit<FormModalProps, "children"> {
   organisation: Organisation;
   onClose: () => void;

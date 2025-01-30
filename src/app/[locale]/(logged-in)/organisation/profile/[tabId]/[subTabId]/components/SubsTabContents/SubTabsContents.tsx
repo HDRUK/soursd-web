@@ -5,9 +5,10 @@ import { notFound } from "next/navigation";
 import { PageSubTabs } from "../../../consts/tabs";
 import NameAndAddress from "../NameAndAddress";
 import DigitalIdentifiers from "../DigitalIdentifiers";
-import SectorSiteAndWebsite from "../SectorSiteAndWebsite/SectorSiteAndWebsite";
+import SectorSiteAndWebsite from "../SectorSiteAndWebsite";
 import Subsidiaries from "../Subsidiaries";
 import SecurityCompliance from "../SecurityCompliance";
+
 interface TabsContentsProps {
   subTabId: string;
 }

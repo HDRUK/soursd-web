@@ -1,8 +1,3 @@
-import {
-  VALIDATION_CE_CERTIFICATION_NUMBER,
-  VALIDATION_ISO_CERTIFICATION_NUMBER,
-  VALIDATION_DSPTK_CERTIFICATION_NUMBER,
-} from "@/consts/form";
 import yup from "@/config/yup";
 import { AddressFields, Organisation } from "@/types/application";
 

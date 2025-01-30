@@ -13,7 +13,7 @@ import FormFieldArray from "@/components/FormFieldArray";
 import GoogleAutocomplete from "@/components/GoogleAutocomplete";
 
 import { LoadingButton } from "@mui/lab";
-import usePatchOrganisation from "../../hooks/usePatchOrganisation";
+import usePatchOrganisation from "../../../hooks/usePatchOrganisation";
 
 import { FormData, getValidation, getDefaultValues } from "./config/form";
 
