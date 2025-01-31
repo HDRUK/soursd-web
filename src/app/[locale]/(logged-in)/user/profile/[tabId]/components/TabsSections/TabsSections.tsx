@@ -11,11 +11,16 @@ import { PageTabs } from "../../consts/tabs";
 import { useEffect } from "react";
 import { showAlert } from "@/utils/showAlert";
 import { DEFAULT_ALERT_DURATION_HRS } from "@/consts/application";
+import { useMutation } from "@tanstack/react-query";
+import { putUserQuery } from "@/services/users";
+import { useStore } from "@/data/store";
+import { formatNowDBDate } from "@/utils/date";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
 export default function TabsSections() {
   const { routes } = useApplicationData();
+  const user = useStore(state => state.config.user);
   const params = useParams();
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const {
@@ -26,7 +31,15 @@ export default function TabsSections() {
     isComplete,
   } = useUserProfile();
 
+  const updateUser = useMutation(putUserQuery(user?.id));
+
   useEffect(() => {
+    const init = async () => {
+      await updateUser.mutateAsync({
+        profile_completed_at: isComplete ? formatNowDBDate() : null,
+      });
+    };
+
     if (!isComplete) {
       showAlert("warning", {
         id: "profile_complete",
@@ -34,6 +47,8 @@ export default function TabsSections() {
         untilDuration: DEFAULT_ALERT_DURATION_HRS,
       });
     }
+
+    init();
   }, [isComplete]);
 
   return (

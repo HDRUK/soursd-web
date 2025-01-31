@@ -5,14 +5,7 @@ import { useMemo } from "react";
 
 export const IDENTITY_REQUIRED_FIELDS: Array<
   keyof User | ((user: User) => string | undefined)
-> = [
-  "first_name",
-  "last_name",
-  (user: User) => {
-    //Comparator to build values where fields are conditional
-    return user?.orc_id ?? "";
-  },
-];
+> = ["first_name", "last_name"];
 
 export const EXPERIENCES_REQUIRED_SECTIONS: Array<keyof StoreUserHistories> = [
   "education",
@@ -53,9 +46,15 @@ export default function useUserProfile() {
   };
 
   const hasExperiences = () => {
+    console.log(
+      "histories",
+      EXPERIENCES_REQUIRED_SECTIONS.map(name => histories?.[name]?.length)
+    );
     return histories
       ? percentageScore(
-          EXPERIENCES_REQUIRED_SECTIONS.map(name => histories?.[name]?.length)
+          EXPERIENCES_REQUIRED_SECTIONS.map(
+            name => histories?.[name]?.length || undefined
+          )
         )
       : 0;
   };
