@@ -1,14 +1,15 @@
 "use client";
 
 import Text from "@/components/Text";
-import { UserProfileCompletionCategories } from "@/consts/user";
 import { useApplicationData } from "@/context/ApplicationData";
-import useUserProfileCompletion from "@/hooks/useUserProfileCompletion";
+import useUserProfile from "@/hooks/useUserProfile";
+import { Link, useParams } from "@/i18n/routing";
 import ErrorIcon from "@mui/icons-material/Error";
 import { Box, Tab, Tabs } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useParams, Link } from "@/i18n/routing";
 import { PageTabs } from "../../consts/tabs";
+import { useEffect } from "react";
+import { showAlert } from "@/utils/showAlert";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
@@ -16,9 +17,14 @@ export default function TabsSections() {
   const { routes } = useApplicationData();
   const params = useParams();
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
-  const { isCategoryCompleted } = useUserProfileCompletion({
-    suppressMessage: true,
-  });
+  const { affiliationsScore, experiencesScore, identityScore, trainingsScore } =
+    useUserProfile();
+
+  useEffect(() => {
+    showAlert("warning", {
+      text: t("profileCompleteWarningMessage"),
+    });
+  }, []);
 
   return (
     <Box sx={{ borderBottom: 1, borderColor: "divider", width: "100%" }}>
@@ -37,11 +43,7 @@ export default function TabsSections() {
         <Tab
           label={
             <Text
-              startIcon={
-                !isCategoryCompleted(
-                  UserProfileCompletionCategories.IDENTITY
-                ) && <ErrorIcon color="error" />
-              }>
+              startIcon={identityScore < 100 && <ErrorIcon color="error" />}>
               {t("identity")}
             </Text>
           }
@@ -54,9 +56,7 @@ export default function TabsSections() {
           label={
             <Text
               startIcon={
-                !isCategoryCompleted(
-                  UserProfileCompletionCategories.AFFILIATIONS
-                ) && <ErrorIcon color="error" />
+                affiliationsScore < 100 && <ErrorIcon color="error" />
               }>
               {t("affiliations")}
             </Text>
@@ -68,11 +68,7 @@ export default function TabsSections() {
         <Tab
           label={
             <Text
-              startIcon={
-                !isCategoryCompleted(
-                  UserProfileCompletionCategories.EXPERIENCE
-                ) && <ErrorIcon color="error" />
-              }>
+              startIcon={experiencesScore < 100 && <ErrorIcon color="error" />}>
               {t("experience")}
             </Text>
           }
@@ -83,11 +79,7 @@ export default function TabsSections() {
         <Tab
           label={
             <Text
-              startIcon={
-                !isCategoryCompleted(
-                  UserProfileCompletionCategories.TRAINING
-                ) && <ErrorIcon color="error" />
-              }>
+              startIcon={trainingsScore < 100 && <ErrorIcon color="error" />}>
               {t("training")}
             </Text>
           }

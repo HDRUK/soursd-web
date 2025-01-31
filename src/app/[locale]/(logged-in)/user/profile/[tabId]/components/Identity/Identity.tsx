@@ -8,30 +8,27 @@ import FormSection from "@/components/FormSection";
 import Text from "@/components/Text";
 import yup from "@/config/yup";
 import { VALIDATION_ORC_ID } from "@/consts/form";
+import { ROUTES } from "@/consts/router";
 import { useStore } from "@/data/store";
-import useUserProfileCompletion from "@/hooks/useUserProfileCompletion";
 import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
 import { PageGuidance } from "@/modules";
 import { putUserQuery } from "@/services/users";
+import EastIcon from "@mui/icons-material/East";
 import InfoIcon from "@mui/icons-material/Info";
 import SaveIcon from "@mui/icons-material/Save";
-import EastIcon from "@mui/icons-material/East";
 import { LoadingButton } from "@mui/lab";
 import {
   Box,
   Checkbox,
   FormControlLabel,
   Grid,
-  MenuItem,
-  Select,
   TextField,
   Tooltip,
 } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import { useCallback, useMemo } from "react";
-import { ROUTES } from "@/consts/router";
 import { useRouter } from "next/navigation";
+import { useCallback, useMemo } from "react";
 
 export interface IdentityFormValues {
   first_name: string;
@@ -44,12 +41,6 @@ const NAMESPACE_TRANSLATION_FORM = "Form";
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
 export default function Identity() {
-  // const {
-  //   update: updateCompletion,
-  //   isError: isUpdateError,
-  //   isLoading: isUpdateLoading,
-  //   error: updateError,
-  // } = useUserProfileCompletion();
   const router = useRouter();
   const user = useStore(state => state.config.user);
 
@@ -67,12 +58,6 @@ export default function Identity() {
         };
 
         await updateUser.mutateAsync(request);
-
-        // updateCompletion(
-        //   fields,
-        //   UserProfileCompletionCategories.IDENTITY,
-        //   request
-        // );
       }
     },
     [user]
