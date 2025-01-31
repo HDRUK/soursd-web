@@ -3,11 +3,18 @@ import { User } from "@/types/application";
 import { binaryHas } from "@/utils/array";
 import { useMemo } from "react";
 
-const IDENTITY_REQUIRED_FIELDS: Array<
-  keyof Pick<User, "first_name" | "last_name">
-> = ["first_name", "last_name"];
+export const IDENTITY_REQUIRED_FIELDS: Array<
+  keyof User | ((user: User) => string | undefined)
+> = [
+  "first_name",
+  "last_name",
+  (user: User) => {
+    //Comparator to build values where fields are conditional
+    return user?.orc_id ?? "";
+  },
+];
 
-const EXPERIENCES_REQUIRED_SECTIONS: Array<keyof StoreUserHistories> = [
+export const EXPERIENCES_REQUIRED_SECTIONS: Array<keyof StoreUserHistories> = [
   "education",
   "employments",
   "accreditations",
@@ -19,13 +26,16 @@ export default function useUserProfile() {
     state.config.histories,
   ]);
 
-  const percentageScore = (values: (string | number | undefined | null)[]) => {
+  const percentageScore = (
+    values: (string | number | boolean | undefined | null)[]
+  ) => {
     return (
       Math.ceil(
         values.filter(value => {
           return (
             (typeof value === "string" && value.trim() !== "") ||
-            typeof value === "number"
+            typeof value === "number" ||
+            typeof value === "boolean"
           );
         }).length / values.length
       ) * 100
@@ -33,31 +43,48 @@ export default function useUserProfile() {
   };
 
   const hasIdentity = () => {
-    return percentageScore(IDENTITY_REQUIRED_FIELDS.map(name => user?.[name]));
+    return user
+      ? percentageScore(
+          IDENTITY_REQUIRED_FIELDS.map(name =>
+            typeof name === "function" ? name(user) : user?.[name]
+          )
+        )
+      : 0;
   };
 
   const hasExperiences = () => {
-    return percentageScore(
-      EXPERIENCES_REQUIRED_SECTIONS.map(
-        name => histories?.[name].length || undefined
-      )
-    );
+    return histories
+      ? percentageScore(
+          EXPERIENCES_REQUIRED_SECTIONS.map(name => histories?.[name]?.length)
+        )
+      : 0;
   };
 
   const hasTrainings = () => {
-    return binaryHas(histories?.training) * 100;
+    return histories ? binaryHas(histories?.training) * 100 : 0;
   };
 
   const hasAffiliations = () => {
-    return binaryHas(histories?.affiliations) * 100;
+    return histories ? binaryHas(histories?.affiliations) * 100 : 0;
   };
+
+  const trainingsScore = hasTrainings();
+  const affiliationsScore = hasAffiliations();
+  const experiencesScore = hasExperiences();
+  const identityScore = hasIdentity();
 
   return useMemo(
     () => ({
-      trainingsScore: hasTrainings(),
-      affiliationsScore: hasAffiliations(),
-      experiencesScore: hasExperiences(),
-      identityScore: hasIdentity(),
+      trainingsScore,
+      affiliationsScore,
+      experiencesScore,
+      identityScore,
+      isComplete: [
+        trainingsScore,
+        affiliationsScore,
+        experiencesScore,
+        identityScore,
+      ].every(score => score === 100),
     }),
     [user, histories]
   );

@@ -10,6 +10,7 @@ import { useTranslations } from "next-intl";
 import { PageTabs } from "../../consts/tabs";
 import { useEffect } from "react";
 import { showAlert } from "@/utils/showAlert";
+import { DEFAULT_ALERT_DURATION_HRS } from "@/consts/application";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
@@ -17,14 +18,23 @@ export default function TabsSections() {
   const { routes } = useApplicationData();
   const params = useParams();
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
-  const { affiliationsScore, experiencesScore, identityScore, trainingsScore } =
-    useUserProfile();
+  const {
+    affiliationsScore,
+    experiencesScore,
+    identityScore,
+    trainingsScore,
+    isComplete,
+  } = useUserProfile();
 
   useEffect(() => {
-    showAlert("warning", {
-      text: t("profileCompleteWarningMessage"),
-    });
-  }, []);
+    if (!isComplete) {
+      showAlert("warning", {
+        id: "profile_complete",
+        text: t("profileCompleteWarningMessage"),
+        untilDuration: DEFAULT_ALERT_DURATION_HRS,
+      });
+    }
+  }, [isComplete]);
 
   return (
     <Box sx={{ borderBottom: 1, borderColor: "divider", width: "100%" }}>
