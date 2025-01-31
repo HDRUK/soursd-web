@@ -16,7 +16,9 @@ export default function TabsSections() {
   const { routes } = useApplicationData();
   const params = useParams();
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
-  const { isCategoryCompleted } = useUserProfileCompletion();
+  const { isCategoryCompleted } = useUserProfileCompletion({
+    suppressMessage: true,
+  });
 
   return (
     <Box sx={{ borderBottom: 1, borderColor: "divider", width: "100%" }}>

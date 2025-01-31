@@ -638,7 +638,8 @@
       "message": "It looks like we had a problem signing you in. Please try again or contact us on <contact></contact>",
       "primaryButton": "Try Again",
       "navigateButton": "Back to homepage",
-      "navigatePath": "/"
+      "navigatePath": "/",
+      "title": "Login error"
     },
     "register": {
       "message": "It looks like we had a problem registering you. Please try again or contact us on <contact></contact>",
