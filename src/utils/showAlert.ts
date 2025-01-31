@@ -1,9 +1,7 @@
-import { DEFAULT_ALERT_DURATION_HRS } from "@/consts/application";
 import theme from "@/theme";
 import dayjs from "dayjs";
-import Swal, { SweetAlertIcon } from "sweetalert2";
 import Cookies from "js-cookie";
-import { parseValidJSON } from "./json";
+import Swal, { SweetAlertIcon } from "sweetalert2";
 
 const notificationValues = [
   { type: "error", title: "Oh no! Something went wrong" },
@@ -47,7 +45,7 @@ export const showAlert = (
 
   const cookieName = `alert_${id}`;
 
-  if (!Cookies.get(cookieName)) {
+  if (!untilDuration || !Cookies.get(cookieName)) {
     Swal.fire({
       icon: type,
       title:

@@ -1,10 +1,8 @@
-import LoadingWrapper from "@/components/LoadingWrapper";
-import { UserProfileCompletionCategories } from "@/consts/user";
 import { useApplicationData } from "@/context/ApplicationData";
+import useUserProfile from "@/hooks/useUserProfile";
 import { Box, Button } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { PageTabs } from "../../consts/tabs";
-import useUserProfile from "@/hooks/useUserProfile";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 

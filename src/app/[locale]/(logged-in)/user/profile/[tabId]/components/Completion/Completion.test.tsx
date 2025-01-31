@@ -5,7 +5,6 @@ import {
   mockedAffiliation,
   mockedEducation,
   mockedEmployment,
-  mockedTraining,
   mockedUser,
 } from "@/mocks/data/user";
 import {
@@ -17,15 +16,6 @@ import {
 import Completion from "./Completion";
 
 jest.mock("@/data/store");
-
-const mockSetUser = jest.fn();
-
-const defaultUser = mockedUser({
-  profile_steps_completed: `
-    {"identity": {"dob": false, "score": 67, "last_name": true, "first_name": true}}
-  `,
-  profile_completed_at: null,
-});
 
 (useStore as unknown as jest.Mock).mockReturnValue([
   mockedUser(),

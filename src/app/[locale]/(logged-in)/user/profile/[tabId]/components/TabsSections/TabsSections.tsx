@@ -1,20 +1,20 @@
 "use client";
 
 import Text from "@/components/Text";
+import { DEFAULT_ALERT_DURATION_HRS } from "@/consts/application";
 import { useApplicationData } from "@/context/ApplicationData";
+import { useStore } from "@/data/store";
 import useUserProfile from "@/hooks/useUserProfile";
 import { Link, useParams } from "@/i18n/routing";
+import { putUserQuery } from "@/services/users";
+import { formatNowDBDate } from "@/utils/date";
+import { showAlert } from "@/utils/showAlert";
 import ErrorIcon from "@mui/icons-material/Error";
 import { Box, Tab, Tabs } from "@mui/material";
-import { useTranslations } from "next-intl";
-import { PageTabs } from "../../consts/tabs";
-import { useEffect } from "react";
-import { showAlert } from "@/utils/showAlert";
-import { DEFAULT_ALERT_DURATION_HRS } from "@/consts/application";
 import { useMutation } from "@tanstack/react-query";
-import { putUserQuery } from "@/services/users";
-import { useStore } from "@/data/store";
-import { formatNowDBDate } from "@/utils/date";
+import { useTranslations } from "next-intl";
+import { useEffect } from "react";
+import { PageTabs } from "../../consts/tabs";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 

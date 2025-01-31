@@ -1,5 +1,3 @@
-import { act, renderHook, waitFor } from "@/utils/testUtils";
-import useUserProfile, { UseQueryRefetchProps } from "./useUserProfile";
 import { useStore } from "@/data/store";
 import {
   mockedAccreditation,
@@ -9,15 +7,8 @@ import {
   mockedTraining,
   mockedUser,
 } from "@/mocks/data/user";
-
-const mockRefetchQueries = jest.fn(() => Promise.resolve());
-const mockCancelQueries = jest.fn(() => Promise.resolve());
-
-interface CurrentRefetch {
-  cancel: () => void;
-  refetch: () => void;
-  isLoading: boolean;
-}
+import { renderHook } from "@/utils/testUtils";
+import useUserProfile from "./useUserProfile";
 
 jest.mock("@/data/store");
 

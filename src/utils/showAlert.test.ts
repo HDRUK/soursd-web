@@ -1,7 +1,7 @@
-import Swal from "sweetalert2";
 import theme from "@/theme";
+import { get } from "js-cookie";
+import Swal from "sweetalert2";
 import { showAlert, showLoadingAlertWithPromise } from "./showAlert";
-import { get, set } from "js-cookie";
 
 jest.mock("sweetalert2", () => ({
   fire: jest.fn(),
