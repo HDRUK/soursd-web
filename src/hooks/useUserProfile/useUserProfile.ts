@@ -22,16 +22,16 @@ export default function useUserProfile() {
   const percentageScore = (
     values: (string | number | boolean | undefined | null)[]
   ) => {
-    return (
-      Math.ceil(
-        values.filter(value => {
-          return (
-            (typeof value === "string" && value.trim() !== "") ||
-            typeof value === "number" ||
-            typeof value === "boolean"
-          );
-        }).length / values.length
-      ) * 100
+    return Math.ceil(
+      (values.filter(value => {
+        return (
+          (typeof value === "string" && value.trim() !== "") ||
+          typeof value === "number" ||
+          typeof value === "boolean"
+        );
+      }).length /
+        values.length) *
+        100
     );
   };
 
@@ -46,20 +46,16 @@ export default function useUserProfile() {
   };
 
   const hasExperiences = () => {
-    console.log(
-      "histories",
-      EXPERIENCES_REQUIRED_SECTIONS.map(name => histories?.[name]?.length)
-    );
     return histories
       ? percentageScore(
           EXPERIENCES_REQUIRED_SECTIONS.map(
-            name => histories?.[name]?.length || undefined
+            name => !!histories?.[name]?.length || undefined
           )
         )
       : 0;
   };
 
-  const hasTrainings = () => {
+  const hasTraining = () => {
     return histories ? binaryHas(histories?.training) * 100 : 0;
   };
 
@@ -67,19 +63,19 @@ export default function useUserProfile() {
     return histories ? binaryHas(histories?.affiliations) * 100 : 0;
   };
 
-  const trainingsScore = hasTrainings();
+  const trainingScore = hasTraining();
   const affiliationsScore = hasAffiliations();
   const experiencesScore = hasExperiences();
   const identityScore = hasIdentity();
 
   return useMemo(
     () => ({
-      trainingsScore,
+      trainingScore,
       affiliationsScore,
       experiencesScore,
       identityScore,
       isComplete: [
-        trainingsScore,
+        trainingScore,
         affiliationsScore,
         experiencesScore,
         identityScore,

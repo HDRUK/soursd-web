@@ -46,9 +46,8 @@ export const showAlert = (
   } = options;
 
   const cookieName = `alert_${id}`;
-  const alertState = parseValidJSON(Cookies.get(cookieName) || "");
 
-  if (!alertState) {
+  if (!Cookies.get(cookieName)) {
     Swal.fire({
       icon: type,
       title:

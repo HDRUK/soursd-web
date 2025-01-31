@@ -27,7 +27,7 @@ export default function TabsSections() {
     affiliationsScore,
     experiencesScore,
     identityScore,
-    trainingsScore,
+    trainingScore,
     isComplete,
   } = useUserProfile();
 
@@ -104,7 +104,7 @@ export default function TabsSections() {
         <Tab
           label={
             <Text
-              startIcon={trainingsScore < 100 && <ErrorIcon color="error" />}>
+              startIcon={trainingScore < 100 && <ErrorIcon color="error" />}>
               {t("training")}
             </Text>
           }

@@ -167,13 +167,11 @@ export default function Training() {
           expires_at: formatDBDate(fields.awarded_at),
         };
 
-        console.log(
-          await mutateAsync({
-            ...formattedFields,
-            expires_in_years: yearsRemaining,
-            certification_id: uploadedCertId,
-          })
-        );
+        await mutateAsync({
+          ...formattedFields,
+          expires_in_years: yearsRemaining,
+          certification_id: uploadedCertId,
+        });
 
         onSubmit({
           ...formattedFields,

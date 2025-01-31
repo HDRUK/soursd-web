@@ -1,11 +1,16 @@
 import Swal from "sweetalert2";
 import theme from "@/theme";
 import { showAlert, showLoadingAlertWithPromise } from "./showAlert";
+import { get, set } from "js-cookie";
 
 jest.mock("sweetalert2", () => ({
   fire: jest.fn(),
   showLoading: jest.fn(),
 }));
+
+jest.mock("js-cookie");
+
+(get as jest.Mock).mockReturnValue(null);
 
 describe("Alert Utils", () => {
   afterEach(() => {
@@ -15,6 +20,7 @@ describe("Alert Utils", () => {
   describe("showAlert", () => {
     it('should display an alert with the correct default title for "error"', () => {
       showAlert("error", {
+        id: "complete",
         text: "This is an error message.",
       });
 
@@ -27,14 +33,14 @@ describe("Alert Utils", () => {
         denyButtonColor: theme.palette.default.main,
         denyButtonText: undefined,
         showDenyButton: false,
-        preConfirm: undefined,
-        preDeny: undefined,
         allowOutsideClick: false,
+        willClose: expect.any(Function),
       });
     });
 
     it("should override the default title when a custom title is provided", () => {
       showAlert("success", {
+        id: "complete",
         text: "Operation completed successfully!",
         title: "Custom Title",
       });
@@ -48,14 +54,14 @@ describe("Alert Utils", () => {
         denyButtonColor: theme.palette.default.main,
         denyButtonText: undefined,
         showDenyButton: false,
-        preConfirm: undefined,
-        preDeny: undefined,
         allowOutsideClick: false,
+        willClose: expect.any(Function),
       });
     });
 
     it("should display cancel and confirm buttons when cancelButtonText is provided", () => {
       showAlert("question", {
+        id: "complete",
         text: "Do you want to proceed?",
         confirmButtonText: "Yes",
         cancelButtonText: "No",
@@ -70,9 +76,8 @@ describe("Alert Utils", () => {
         denyButtonColor: theme.palette.default.main,
         denyButtonText: "No",
         showDenyButton: true,
-        preConfirm: undefined,
-        preDeny: undefined,
         allowOutsideClick: false,
+        willClose: expect.any(Function),
       });
     });
   });

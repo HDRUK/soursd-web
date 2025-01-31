@@ -11,7 +11,7 @@ const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 export default function Completion() {
   const { routes } = useApplicationData();
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
-  const { identityScore, affiliationsScore, experiencesScore, trainingsScore } =
+  const { identityScore, affiliationsScore, experiencesScore, trainingScore } =
     useUserProfile();
 
   const sections = [
@@ -32,7 +32,7 @@ export default function Completion() {
     },
     {
       title: t(PageTabs.TRAINING),
-      score: trainingsScore,
+      score: trainingScore,
       href: routes.profileResearcherTraining.path,
     },
   ];
