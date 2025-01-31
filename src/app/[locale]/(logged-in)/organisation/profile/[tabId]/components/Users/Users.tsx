@@ -13,14 +13,15 @@ import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOu
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import { Box, Button, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
-import { getOrganisationUsers } from "@/services/organisations";
+import { useMemo, useState } from "react";
+import { getOrganisationRegistries } from "@/services/organisations";
 import Pagination from "@/components/Pagination";
 import usePaginatedQuery from "@/hooks/usePaginatedQuery";
 
 import { SearchDirections } from "@/consts/search";
 import UserModal from "../UserModal";
 import DecoupleUser from "../DecoupleUser";
+import page from "../../page";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
 
@@ -39,12 +40,12 @@ export default function Users() {
     setPage,
     updateQueryParam,
   } = usePaginatedQuery({
-    queryKeyBase: ["getOrganisationUsers", organisation?.id],
+    queryKeyBase: ["getOrganisationRegistries", organisation?.id],
     defaultQueryParams: {
-      sort: `title:${SearchDirections.ASC}`,
+      sort: `last_name:${SearchDirections.ASC}`,
     },
     queryFn: queryParams => {
-      return getOrganisationUsers(organisation?.id, queryParams, {
+      return getOrganisationRegistries(organisation?.id, queryParams, {
         error: {
           message: "getUsersError",
         },
@@ -55,9 +56,11 @@ export default function Users() {
 
   return (
     <PageGuidance
-      title={t("manageUsersTitle")}
+      title={t("manageResearchersTitle")}
       {...mockedPersonalDetailsGuidanceProps}>
-      <Box sx={{ marginBottom: "30px" }}>{t("manageUsersDescription")}</Box>
+      <Box sx={{ marginBottom: "30px" }}>
+        {t("manageResearchersDescription")}
+      </Box>
       <Box sx={{ display: "flex", gap: 1, mb: 3, alignItems: "center" }}>
         <Box component="form" role="search" sx={{ flexGrow: 1 }}>
           <SearchBar
