@@ -61,7 +61,7 @@ export default function InviteOrganisationForm({
           <FormSection subtitle={tOrganisation("inviteOrganisationTitle")}>
             <Grid container rowSpacing={3}>
               {formFields.map((name: string) => (
-                <Grid item xs={12}>
+                <Grid item xs={12} key={name}>
                   <FormControlHorizontal
                     name={name}
                     renderField={fieldProps => <TextField {...fieldProps} />}

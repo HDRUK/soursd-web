@@ -131,6 +131,7 @@
     "cancelButton": "Cancel"
   },
   "Form": {
+    "certificationUploadPlaceholder": "Upload certification",
     "leadApplicantEmail": "Email",
     "leadApplicantEmailPlaceholder": "Email",
     "leadApplicantEmailRequiredInvalid": "Email is required",

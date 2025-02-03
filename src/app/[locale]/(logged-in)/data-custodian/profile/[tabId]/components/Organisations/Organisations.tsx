@@ -3,7 +3,6 @@
 import ContactLink from "@/components/ContactLink";
 import { Message } from "@/components/Message";
 import OverlayCenter from "@/components/OverlayCenter";
-import { useNotifications } from "@/context/Notifications";
 import { PageSection } from "@/modules";
 import {
   DeleteApprovalPayloadWithEntity,
@@ -54,11 +53,6 @@ export default function Sections() {
     isError: isDeleteError,
     error: errorDelete,
   } = useMutationDeleteApproval();
-
-  useNotifications(["postApproval", "deleteApproval"], {
-    immediate: true,
-    tKey: NAMESPACE_TRANSLATIONS_USERS_LIST,
-  });
 
   const handleApprove = useCallback(
     async (payload: PostApprovalPayloadWithEntity) => {

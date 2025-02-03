@@ -29,6 +29,27 @@ import { ROUTES } from "./src/consts/router";
 
 const nextRouterMock = require("next-router-mock");
 
+(() => {
+  const originalConsole = global.console;
+
+  global.console = {
+    ...global.console,
+
+    error: (...args) => {
+      if (
+        typeof args[0] === "string" &&
+        (args[0].includes("for a non-boolean attribute") ||
+          args[0].includes("`fullWidth` prop on a DOM element"))
+      ) {
+        return true;
+      }
+
+      // Show the original error for everything else
+      originalConsole.error(...args);
+    },
+  };
+})();
+
 expect.extend(matchers);
 
 jest.mock("next/router", () => nextRouterMock);
