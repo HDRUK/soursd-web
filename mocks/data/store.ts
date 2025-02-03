@@ -1,3 +1,5 @@
+import { useStore } from "@/data/store";
+
 const mockedApiPermissions = [
   {
     id: 1,
@@ -104,5 +106,90 @@ const mockedApiPermissions = [
     description: null,
   },
 ];
+
+mockedStore = () => {
+  return create<StoreState>((set, get) => ({
+    config: {
+      router: {
+        history: [],
+        entries: ROUTES,
+      },
+      permissions: [],
+      sectors: [],
+    },
+    getPreviousUrl: () => {
+      const {
+        router: { history },
+      } = get().config;
+  
+      return history.length > 1 ? history[history.length - 2] : null;
+    },
+    setRoutes: (routes: Routes) =>
+      set(
+        produce(state => {
+          state.config.entries = routes;
+        })
+      ),
+    setUser: (user: User) =>
+      set(
+        produce(state => {
+          state.config.user = user;
+        })
+      ),
+    getUser: () => {
+      return get().config.user;
+    },
+    setHistories: (histories: StoreUserHistories) =>
+      set(
+        produce(state => {
+          state.config.histories = histories;
+        })
+      ),
+    getHistories: () => {
+      return get().config.histories;
+    },
+    setSectors: (sectors: Sector[]) =>
+      set(
+        produce(state => {
+          state.config.sectors = sectors;
+        })
+      ),
+    getSectors: () => {
+      return get().config.sectors;
+    },
+    setPermissions: (permissions: Permission[]) =>
+      set(
+        produce(state => {
+          state.config.permissions = permissions;
+        })
+      ),
+    getPermissions: () => {
+      return get().config.permissions;
+    },
+    setOrganisation: (organisation: Organisation | undefined) =>
+      set(
+        produce(state => {
+          state.config.organisation = organisation;
+        })
+      ),
+    getOrganisation: () => {
+      return get().config.organisation;
+    },
+    setCustodian: (custodian: Custodian | undefined) =>
+      set(
+        produce(state => {
+          state.config.custodian = custodian;
+        })
+      ),
+    getCustodian: () => {
+      return get().config.custodian;
+    },
+    addUrlToHistory: (url: string) =>
+      set(
+        produce(state => {
+          state.config.router.history.push(url);
+        })
+      ),
+}
 
 export { mockedApiPermissions };
