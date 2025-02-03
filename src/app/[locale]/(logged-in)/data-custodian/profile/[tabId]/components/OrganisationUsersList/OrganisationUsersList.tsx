@@ -3,8 +3,6 @@
 import ActionMenu from "@/components/ActionMenu/ActionMenu";
 import ActionMenuItem from "@/components/ActionMenu/ActionMenuItem";
 import { useApplicationData } from "@/context/ApplicationData";
-import { useStore } from "@/data/store";
-import { UserDetailsModal } from "@/modules";
 import { PostApprovalPayloadWithEntity } from "@/services/approvals";
 import { EntityType } from "@/types/api";
 import { Organisation, User } from "@/types/application";
@@ -20,6 +18,8 @@ import {
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { UserDetailsModal } from "@/modules";
+import { useStore } from "@/data/store";
 import OrganisationUserCard from "../OrganisationUserCard";
 import UserIcons from "./UserIcons";
 
@@ -50,7 +50,6 @@ export default function OrganisationUsersList({
   const [activeUserData, setActiveUserData] = useState<ActiveUserData | null>();
 
   const custodian = useStore(store => store.config.custodian);
-
   const { id: custodianId } = custodian || {};
 
   const { registries } = organisation;

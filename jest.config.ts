@@ -82,7 +82,6 @@ const customJestConfig = {
   },
   globals: {
     fetch: global.fetch,
-    mockUseStore: global.mockStore,
   },
 };
 

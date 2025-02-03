@@ -70,8 +70,17 @@ const useStoreMock = jest.mocked(useStore);
 
 export const mockUseStore = (props: Partial<StoreState> = {}) => {
   useStoreMock.mockImplementation(getterFn => {
+    const originalStore = jest.requireActual("@/data/store").useStore();
+    const state = mockedStoreState();
+
     return getterFn({
-      ...jest.requireActual("@/data/store").useStore(),
+      ...originalStore,
+      ...state,
+      config: {
+        ...originalStore.config,
+        ...state.config,
+        ...props.config,
+      },
       ...props,
     });
   });
@@ -386,5 +395,5 @@ beforeAll(() => {
 
 beforeEach(() => {
   global.fetch.mockImplementation(mockFetch);
-  global.mockUseStore(mockedStoreState());
+  global.mockUseStore();
 });
