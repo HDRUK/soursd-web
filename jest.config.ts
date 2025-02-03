@@ -1,3 +1,5 @@
+import { mockUseStore } from "jest.setup";
+
 const nextJest = require("next/jest");
 
 process.env.TZ = "UTC";
@@ -80,6 +82,7 @@ const customJestConfig = {
   },
   globals: {
     fetch: global.fetch,
+    mockUseStore: global.mockStore,
   },
 };
 

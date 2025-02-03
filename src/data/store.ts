@@ -157,5 +157,5 @@ const useStoreHelpers = () => {
   return helpers;
 };
 
-export { useStore, useStoreHelpers };
+export { useStore, useStoreHelpers, storeMethods };
 export type { StoreState };
