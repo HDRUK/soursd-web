@@ -13,7 +13,7 @@ import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOu
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import { Box, Button, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { getOrganisationRegistries } from "@/services/organisations";
 import Pagination from "@/components/Pagination";
 import usePaginatedQuery from "@/hooks/usePaginatedQuery";
@@ -21,7 +21,6 @@ import usePaginatedQuery from "@/hooks/usePaginatedQuery";
 import { SearchDirections } from "@/consts/search";
 import UserModal from "../UserModal";
 import DecoupleUser from "../DecoupleUser";
-import page from "../../page";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
 
