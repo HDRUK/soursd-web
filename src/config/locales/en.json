@@ -99,6 +99,8 @@
     "detailsSubsidiaries": "Subsidiaries",
     "detailsSecurityCompliance": "Security Compliance",
     "manageDelegates": "Manage Delegates",
+    "userAdmin": "User Administration",
+    "actions": "Actions",
     "projects": "Projects",
     "manageResearchers": "Manage Researchers",
     "manageResearchersTitle": "Administration | Users",

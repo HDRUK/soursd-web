@@ -2,7 +2,7 @@
 
 import { useStore } from "@/data/store";
 import { notFound } from "next/navigation";
-import { PageSubTabs } from "../../../consts/tabs";
+import { DetailsPageSubTabs } from "../../../consts/tabs";
 import NameAndAddress from "../NameAndAddress";
 import DigitalIdentifiers from "../DigitalIdentifiers";
 import SectorSiteAndWebsite from "../SectorSiteAndWebsite";
@@ -23,13 +23,17 @@ export default function SubTabsContents({ subTabId }: TabsContentsProps) {
 
   return (
     <>
-      {subTabId === PageSubTabs.NAME_AND_ADDRESS && <NameAndAddress />}
-      {subTabId === PageSubTabs.DIGITAL_IDENTIFIERS && <DigitalIdentifiers />}
-      {subTabId === PageSubTabs.SECTOR_SITE_AND_WEBSITE && (
+      {subTabId === DetailsPageSubTabs.NAME_AND_ADDRESS && <NameAndAddress />}
+      {subTabId === DetailsPageSubTabs.DIGITAL_IDENTIFIERS && (
+        <DigitalIdentifiers />
+      )}
+      {subTabId === DetailsPageSubTabs.SECTOR_SITE_AND_WEBSITE && (
         <SectorSiteAndWebsite />
       )}
-      {subTabId === PageSubTabs.SUBSIDIARIES && <Subsidiaries />}
-      {subTabId === PageSubTabs.SECURITY_COMPLIANCE && <SecurityCompliance />}
+      {subTabId === DetailsPageSubTabs.SUBSIDIARIES && <Subsidiaries />}
+      {subTabId === DetailsPageSubTabs.SECURITY_COMPLIANCE && (
+        <SecurityCompliance />
+      )}
     </>
   );
 }

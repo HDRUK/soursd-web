@@ -33,4 +33,4 @@ function getSubTabs(tab: PageTabs): PageSubTabs[] | undefined {
   return tabHierarchy[tab];
 }
 
-export { PageTabs, getSubTabs };
+export { PageTabs, DetailsPageSubTabs, UserAdminPageSubTabs, getSubTabs };

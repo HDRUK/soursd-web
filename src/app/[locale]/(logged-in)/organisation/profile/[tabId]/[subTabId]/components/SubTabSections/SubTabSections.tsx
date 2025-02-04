@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { useParams } from "@/i18n/routing";
 import SubTabs from "@/modules/SubTabs";
 import { Option } from "@/types/common";
-import { PageTabs, PageSubTabs } from "../../../consts/tabs";
+import { PageTabs, DetailsPageSubTabs } from "../../../consts/tabs";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
 
@@ -22,27 +22,27 @@ export default function SubTabsSections() {
     [PageTabs.DETAILS]: [
       {
         label: t("detailsNameAndAddress"),
-        value: PageSubTabs.NAME_AND_ADDRESS,
+        value: DetailsPageSubTabs.NAME_AND_ADDRESS,
         href: routes.profileOrganisationDetailsNameAndAddress.path,
       },
       {
         label: t("detailsDigitalIdentifiers"),
-        value: PageSubTabs.DIGITAL_IDENTIFIERS,
+        value: DetailsPageSubTabs.DIGITAL_IDENTIFIERS,
         href: routes.profileOrganisationDetailsDigitalIdentifiers.path,
       },
       {
         label: t("detailsSectorSiteAndWebsite"),
-        value: PageSubTabs.SECTOR_SITE_AND_WEBSITE,
+        value: DetailsPageSubTabs.SECTOR_SITE_AND_WEBSITE,
         href: routes.profileOrganisationDetailsSectorSiteAndWebsite.path,
       },
       {
         label: t("detailsSubsidiaries"),
-        value: PageSubTabs.SUBSIDIARIES,
+        value: DetailsPageSubTabs.SUBSIDIARIES,
         href: routes.profileOrganisationDetailsSubsidiaries.path,
       },
       {
         label: t("detailsSecurityCompliance"),
-        value: PageSubTabs.SECURITY_COMPLIANCE,
+        value: DetailsPageSubTabs.SECURITY_COMPLIANCE,
         href: routes.profileOrganisationDetailsSecurityCompliance.path,
       },
     ],

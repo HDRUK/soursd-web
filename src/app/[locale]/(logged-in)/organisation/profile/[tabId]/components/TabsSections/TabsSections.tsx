@@ -25,6 +25,12 @@ export default function TabsSections() {
         indicatorColor="secondary"
         textColor="inherit">
         <Tab
+          label={t("actions")}
+          href={routes.profileOrganisationActions.path}
+          component={Link}
+          value={PageTabs.ACTIONS}
+        />
+        <Tab
           label={t("profile")}
           href={routes.profileOrganisationDetails.path}
           component={Link}
@@ -32,17 +38,12 @@ export default function TabsSections() {
           iconPosition="start"
         />
         <Tab
-          label={t("manageDelegates")}
-          href={routes.profileOrganisationManageDelegates.path}
+          label={t("userAdmin")}
+          href={routes.profileOrganisationUserAdministration.path}
           component={Link}
-          value={PageTabs.MANAGE_DELEGATES}
+          value={PageTabs.USER_ADMINISTRATION}
         />
-        <Tab
-          label={t("manageResearchers")}
-          href={routes.profileOrganisationManageResearchers.path}
-          component={Link}
-          value={PageTabs.MANAGE_RESEARCHERS}
-        />
+
         <Tab
           label={t("projects")}
           href={routes.profileOrganisationProjects.path}
