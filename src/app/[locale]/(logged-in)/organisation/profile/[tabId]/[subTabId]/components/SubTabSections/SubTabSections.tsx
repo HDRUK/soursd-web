@@ -5,7 +5,11 @@ import { useTranslations } from "next-intl";
 import { useParams } from "@/i18n/routing";
 import SubTabs from "@/modules/SubTabs";
 import { Option } from "@/types/common";
-import { PageTabs, DetailsPageSubTabs } from "../../../consts/tabs";
+import {
+  PageTabs,
+  DetailsPageSubTabs,
+  UserAdminPageSubTabs,
+} from "../../../consts/tabs";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
 
@@ -44,6 +48,18 @@ export default function SubTabsSections() {
         label: t("detailsSecurityCompliance"),
         value: DetailsPageSubTabs.SECURITY_COMPLIANCE,
         href: routes.profileOrganisationDetailsSecurityCompliance.path,
+      },
+    ],
+    [PageTabs.USER_ADMINISTRATION]: [
+      {
+        label: t("userAdminDeletgates"),
+        value: UserAdminPageSubTabs.DELEGATE_ADMINISTRATION,
+        href: routes.profileOrganisationUserAdministrationDelegates.path,
+      },
+      {
+        label: t("userAdminEmployeeStudents"),
+        value: UserAdminPageSubTabs.EMPLOYEE_STUDENT_ADMINISTRATION,
+        href: routes.profileOrganisationUserAdministrationEmployeeStudent.path,
       },
     ],
   };

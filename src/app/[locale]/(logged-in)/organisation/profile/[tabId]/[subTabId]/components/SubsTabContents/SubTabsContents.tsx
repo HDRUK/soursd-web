@@ -2,12 +2,14 @@
 
 import { useStore } from "@/data/store";
 import { notFound } from "next/navigation";
-import { DetailsPageSubTabs } from "../../../consts/tabs";
+import { DetailsPageSubTabs, UserAdminPageSubTabs } from "../../../consts/tabs";
 import NameAndAddress from "../NameAndAddress";
 import DigitalIdentifiers from "../DigitalIdentifiers";
 import SectorSiteAndWebsite from "../SectorSiteAndWebsite";
 import Subsidiaries from "../Subsidiaries";
 import SecurityCompliance from "../SecurityCompliance";
+import Delegates from "../Delegates";
+import Users from "../Users";
 
 interface TabsContentsProps {
   subTabId: string;
@@ -33,6 +35,12 @@ export default function SubTabsContents({ subTabId }: TabsContentsProps) {
       {subTabId === DetailsPageSubTabs.SUBSIDIARIES && <Subsidiaries />}
       {subTabId === DetailsPageSubTabs.SECURITY_COMPLIANCE && (
         <SecurityCompliance />
+      )}
+      {subTabId === UserAdminPageSubTabs.DELEGATE_ADMINISTRATION && (
+        <Delegates />
+      )}
+      {subTabId === UserAdminPageSubTabs.EMPLOYEE_STUDENT_ADMINISTRATION && (
+        <Users />
       )}
     </>
   );
