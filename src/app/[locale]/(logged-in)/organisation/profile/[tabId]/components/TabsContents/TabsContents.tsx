@@ -6,6 +6,7 @@ import Projects from "@/modules/Projects";
 import { PageTabs } from "../../consts/tabs";
 import Delegates from "../Delegates";
 import Users from "../Users/Users";
+import Actions from "../Actions";
 
 interface TabsContentsProps {
   tabId: string;
@@ -21,6 +22,7 @@ export default function TabsContents({ tabId }: TabsContentsProps) {
 
   return (
     <>
+      {tabId === PageTabs.ACTIONS && <Actions />}
       {tabId === PageTabs.MANAGE_DELEGATES && <Delegates />}
       {tabId === PageTabs.MANAGE_USERS && <Users />}
       {tabId === PageTabs.PROJECTS && <Projects variant="organisation" />}
