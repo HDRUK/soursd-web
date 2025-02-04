@@ -38,10 +38,10 @@ export default function TabsSections() {
           value={PageTabs.MANAGE_DELEGATES}
         />
         <Tab
-          label={t("manageUsers")}
-          href={routes.profileOrganisationManageUsers.path}
+          label={t("manageResearchers")}
+          href={routes.profileOrganisationManageResearchers.path}
           component={Link}
-          value={PageTabs.MANAGE_USERS}
+          value={PageTabs.MANAGE_RESEARCHERS}
         />
         <Tab
           label={t("projects")}

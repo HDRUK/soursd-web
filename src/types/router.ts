@@ -46,7 +46,7 @@ interface Routes {
   profileOrganisationDetailsSubsidiaries: RouteConfig;
   profileOrganisationDetailsSecurityCompliance: RouteConfig;
   profileOrganisationProjects: RouteConfig;
-  profileOrganisationManageUsers: RouteConfig;
+  profileOrganisationManageResearchers: RouteConfig;
   admin: RouteConfig;
 }
 

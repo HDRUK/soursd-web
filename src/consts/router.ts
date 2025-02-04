@@ -120,8 +120,8 @@ const ROUTES: Routes = {
     path: "/organisation/profile/details/security-compliance",
     permissions: [UserGroup.ORGANISATIONS],
   },
-  profileOrganisationManageUsers: {
-    path: "/organisation/profile/manage-users",
+  profileOrganisationManageResearchers: {
+    path: "/organisation/profile/manage-researchers",
     permissions: [UserGroup.ORGANISATIONS],
   },
   profileOrganisationProjects: {
