@@ -2,13 +2,13 @@ import React from "react";
 import { render, screen, fireEvent, waitFor, within } from "@/utils/testUtils";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { mockedUser } from "@/mocks/data/user";
+import fetchPredictions from "@/components/GoogleAutocomplete/actions";
 import EmploymentsForm from "./EmploymentsForm";
+
 jest.mock("@/components/GoogleAutocomplete/actions", () => ({
   __esModule: true,
   default: jest.fn(),
 }));
-
-import fetchPredictions from "@/components/GoogleAutocomplete/actions";
 
 // Mock the dependencies
 jest.mock("@/data/store", () => ({
