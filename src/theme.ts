@@ -38,7 +38,7 @@ const createBoxStyles = <T extends { color?: AugmentedColorPaletteOptions }>(
   return null;
 };
 
-const createTabStyles = () => {
+const createTabStyles = (theme: Theme) => {
   return {
     textTransform: "none",
     fontWeight: "bold",
@@ -46,12 +46,19 @@ const createTabStyles = () => {
     padding: "4px 8px",
     minHeight: "36px",
     flexGrow: 1,
+    backgroundColor: theme.palette.greys.extraLight,
+    // borderBottom: `2px solid ${theme.palette.greys.light}`,
     "&:hover": {
-      backgroundColor: getHoverColor(paletteTheme),
+      backgroundColor: theme.palette.greys.light,
+    },
+
+    "&.Mui-selected": {
+      backgroundColor: "white",
+      border: 0,
+      borderTop: `4px solid ${theme.palette.primary.main} `,
     },
   };
 };
-
 const createTabsStyles = <T extends { color?: AugmentedColorPaletteOptions }>(
   ownerState: T
 ) => {
@@ -62,8 +69,12 @@ const createTabsStyles = <T extends { color?: AugmentedColorPaletteOptions }>(
       backgroundColor: color[paletteTheme.palette.mode],
       color: color.contrastText,
       minHeight: "36px",
+      boxShadow: `inset 0 -2px 4px rgba(0, 0, 0, 0.15)`,
+      marginTop: 2,
       ".MuiTabs-indicator": {
         backgroundColor: paletteTheme.palette.primary.main,
+        top: 0,
+        bottom: "auto",
       },
     };
   }
@@ -320,7 +331,7 @@ const theme = createTheme(
       },
       MuiTab: {
         styleOverrides: {
-          root: createTabStyles,
+          root: ({ theme }) => createTabStyles(theme),
         },
       },
       MuiTabs: {

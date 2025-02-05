@@ -18,7 +18,7 @@ export default function TabsSections() {
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
   return (
-    <Box sx={{ borderBottom: 1, borderColor: "divider", width: "100%" }}>
+    <Box sx={{ width: "100%" }}>
       <Tabs
         value={params?.tabId || PageTabs.DETAILS}
         aria-label={t("navigationAriaLabel")}
@@ -26,7 +26,6 @@ export default function TabsSections() {
         variant="scrollable"
         scrollButtons="auto"
         allowScrollButtonsMobile
-        indicatorColor="secondary"
         textColor="inherit">
         <Tab
           icon={<AssignmentTurnedInIcon />}
