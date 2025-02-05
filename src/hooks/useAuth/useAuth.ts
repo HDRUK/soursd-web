@@ -1,6 +1,6 @@
 import { Auth } from "@/types/application";
 import { showAlert } from "@/utils/showAlert";
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import ReactDOMServer from "react-dom/server";
 import ContactLink from "@/components/ContactLink";
@@ -12,7 +12,7 @@ export default function useAuth() {
   const [loading, setLoading] = useState(true);
   const t = useTranslations(NAMESPACE_TRANSLATIONS_AUTH);
 
-  useEffect(() => {
+  useMemo(() => {
     async function fetchUser() {
       try {
         setLoading(true);
@@ -38,7 +38,7 @@ export default function useAuth() {
     }
 
     fetchUser();
-  }, [t]);
+  }, []);
 
   return { user, loading };
 }

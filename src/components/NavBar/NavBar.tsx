@@ -1,6 +1,5 @@
 "use client";
 
-import useAuth from "@/hooks/useAuth";
 import { useRouter } from "@/i18n/routing";
 import { handleLogin, handleLogout, handleRegister } from "@/utils/keycloak";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -36,7 +35,6 @@ export enum ButtonVariant {
 
 export default function NavBar() {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_NAVBAR);
-  const { user } = useAuth();
   const storedUser = useStore(store => store.getUser());
   const router = useRouter();
 
@@ -88,10 +86,10 @@ export default function NavBar() {
     {
       color: ButtonColor.Secondary,
       variant: ButtonVariant.Contained,
-      text: user ? t("signOutButton") : t("signInButton"),
-      onClick: user ? handleLogout : handleLogin,
+      text: storedUser ? t("signOutButton") : t("signInButton"),
+      onClick: storedUser ? handleLogout : handleLogin,
     },
-    ...(user
+    ...(storedUser
       ? []
       : [
           {
@@ -121,7 +119,7 @@ export default function NavBar() {
                 {text || icon}
               </StyledButton>
             ))}
-            {user && storedUser && <NotificationsMenu />}
+            {storedUser && <NotificationsMenu />}
           </Box>
         </StyledHeader>
       </Box>
