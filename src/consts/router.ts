@@ -92,8 +92,8 @@ const ROUTES: Routes = {
     path: "/organisation/profile",
     permissions: [UserGroup.ORGANISATIONS],
   },
-  profileOrganisationManageDelegates: {
-    path: "/organisation/profile/manage-delegates",
+  profileOrganisationActions: {
+    path: "/organisation/profile/actions",
     permissions: [UserGroup.ORGANISATIONS],
   },
   profileOrganisationDetails: {
@@ -120,8 +120,16 @@ const ROUTES: Routes = {
     path: "/organisation/profile/details/security-compliance",
     permissions: [UserGroup.ORGANISATIONS],
   },
-  profileOrganisationManageResearchers: {
-    path: "/organisation/profile/manage-researchers",
+  profileOrganisationUserAdministration: {
+    path: "/organisation/profile/user-administration",
+    permissions: [UserGroup.ORGANISATIONS],
+  },
+  profileOrganisationUserAdministrationDelegates: {
+    path: "/organisation/profile/user-administration/delegates",
+    permissions: [UserGroup.ORGANISATIONS],
+  },
+  profileOrganisationUserAdministrationEmployeeStudent: {
+    path: "/organisation/profile/user-administration/employees-and-students",
     permissions: [UserGroup.ORGANISATIONS],
   },
   profileOrganisationProjects: {
