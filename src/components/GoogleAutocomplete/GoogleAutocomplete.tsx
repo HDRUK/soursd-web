@@ -163,6 +163,7 @@ const GoogleAutocomplete: React.FC<GoogleAutocompleteProps> = ({
   return (
     <MUIAutocomplete
       freeSolo
+      data-testid="google-autocomplete"
       options={options}
       getOptionLabel={getOptionLabel}
       onInputChange={handleInputChange}
