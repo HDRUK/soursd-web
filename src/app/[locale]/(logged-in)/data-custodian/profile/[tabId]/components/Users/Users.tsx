@@ -112,13 +112,14 @@ export default function Users() {
         }}
         count={custodiansData?.data?.length}>
         {custodiansData?.data.map(custodianUser => {
-          const { first_name, last_name, created_at, user_permissions } =
+          const { first_name, last_name, email, created_at, user_permissions } =
             custodianUser;
 
           const role = user_permissions?.[0]?.permission?.name;
 
           return (
             <ResultsCard
+              key={email}
               icon={
                 <Icon size="xlarge">
                   <PersonOutlineOutlinedIcon />

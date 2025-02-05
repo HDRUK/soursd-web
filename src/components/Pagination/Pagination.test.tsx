@@ -1,15 +1,17 @@
 import Pagination from "@/components/Pagination";
-import { render, fireEvent } from "@/utils/testUtils";
+import { render, fireEvent, act } from "@/utils/testUtils";
 
 describe("Pagination", () => {
-  it("calls onChange callback", () => {
+  it("calls onChange callback", async () => {
     const handleChange = jest.fn();
     const { getByText } = render(
       <Pagination count={10} onChange={handleChange} />
     );
 
-    const pageTwoButton = getByText("2");
-    fireEvent.click(pageTwoButton);
+    await act(() => {
+      const pageTwoButton = getByText("2");
+      fireEvent.click(pageTwoButton);
+    });
 
     expect(handleChange).toHaveBeenCalledWith(expect.any(Object), 2);
   });
