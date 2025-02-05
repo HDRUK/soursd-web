@@ -19,8 +19,9 @@ export default function TabsSections() {
   const { isCategoryCompleted } = useUserProfileCompletion();
 
   return (
-    <Box sx={{ borderBottom: 1, borderColor: "divider", width: "100%" }}>
+    <Box sx={{ width: "100%" }}>
       <Tabs
+        variant="fullWidth"
         value={params?.tabId || PageTabs.DETAILS}
         aria-label={t("navigationAriaLabel")}
         role="navigation"
