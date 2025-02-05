@@ -85,6 +85,8 @@ describe("EmploymentsForm", () => {
 
     await waitFor(() => {
       expect(fetchPredictions).toHaveBeenCalledWith("123");
+    });
+    await waitFor(() => {
       expect(screen.getByText("123 Main St, Springfield")).toBeInTheDocument();
     });
 
