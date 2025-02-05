@@ -1,11 +1,14 @@
 "use client";
 
+import { useStore } from "@/data/store";
 import useAuth from "@/hooks/useAuth";
-import { useRouter } from "@/i18n/routing";
+import { Link, useRouter } from "@/i18n/routing";
+import NotificationsMenu from "@/modules/NotificationsMenu";
 import { handleLogin, handleLogout, handleRegister } from "@/utils/keycloak";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
   Box,
+  Button,
   Divider,
   IconButton,
   MenuItem,
@@ -14,12 +17,11 @@ import {
   useTheme,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
+import { LinkProps } from "next/link";
 import { useEffect, useState } from "react";
-import NotificationsMenu from "@/modules/NotificationsMenu";
-import { useStore } from "@/data/store";
 import HorizontalDrawer from "../HorizontalDrawer";
 import SoursdLogo from "../SoursdLogo";
-import { StyledButton, StyledContainer, StyledHeader } from "./NavBar.styles";
+import { StyledContainer, StyledHeader } from "./NavBar.styles";
 
 const NAMESPACE_TRANSLATIONS_NAVBAR = "NavBar";
 
@@ -57,39 +59,48 @@ export default function NavBar() {
     text?: string;
     icon?: React.ReactNode;
     isSign?: boolean;
-    onClick?: () => void | undefined;
+    onClick?: LinkProps["onClick"];
+    href?: string;
   }[] = [
     {
       color: ButtonColor.Inherit,
       variant: ButtonVariant.Text,
       text: t("homeButton"),
-      onClick: () => router.push("/"),
+      href: "/",
     },
     {
       color: ButtonColor.Inherit,
       variant: ButtonVariant.Text,
       text: t("aboutButton"),
+      href: "#",
     },
     {
       color: ButtonColor.Inherit,
       variant: ButtonVariant.Text,
       text: t("featuresButton"),
+      href: "#",
     },
     {
       color: ButtonColor.Inherit,
       variant: ButtonVariant.Text,
       text: t("supportButton"),
+      href: "#",
     },
     {
       color: ButtonColor.Inherit,
       variant: ButtonVariant.Text,
       text: t("contactButton"),
+      href: "#",
     },
     {
       color: ButtonColor.Secondary,
       variant: ButtonVariant.Contained,
       text: auth ? t("signOutButton") : t("signInButton"),
-      onClick: auth ? handleLogout : handleLogin,
+      onClick: e => {
+        e.preventDefault();
+
+        auth ? handleLogout() : handleLogin();
+      },
     },
     // Conditionally render the register button only when not authenticated
     ...(auth
@@ -99,7 +110,11 @@ export default function NavBar() {
             color: ButtonColor.Primary,
             variant: ButtonVariant.Contained,
             text: t("registerButton"),
-            onClick: handleRegister,
+            onClick: e => {
+              e.preventDefault();
+
+              handleRegister();
+            },
           },
         ]),
   ];
@@ -116,11 +131,11 @@ export default function NavBar() {
         data-testid="header-desktop-menu">
         <StyledHeader>
           <SoursdLogo variant="titled" />
-          <Box sx={{ display: "flex" }}>
+          <Box sx={{ display: "flex", gap: 1 }}>
             {buttons.map(({ text, icon, ...restProps }) => (
-              <StyledButton {...restProps} key={text}>
+              <Button component={Link} {...restProps} key={text}>
                 {text || icon}
-              </StyledButton>
+              </Button>
             ))}
             {auth && user && <NotificationsMenu />}
           </Box>
@@ -167,9 +182,9 @@ export default function NavBar() {
               <MenuItem
                 key={text}
                 sx={{ "&:hover": { backgroundColor: "transparent" } }}>
-                <StyledButton fullWidth {...restProps}>
+                <Button component={Link} fullWidth {...restProps}>
                   {text}
-                </StyledButton>
+                </Button>
               </MenuItem>
             ))}
           </MenuList>
