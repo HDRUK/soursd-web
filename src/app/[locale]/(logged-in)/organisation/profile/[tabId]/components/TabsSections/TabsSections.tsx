@@ -20,10 +20,10 @@ export default function TabsSections() {
   return (
     <Box sx={{ width: "100%" }}>
       <Tabs
+        variant="fullWidth"
         value={params?.tabId || PageTabs.DETAILS}
         aria-label={t("navigationAriaLabel")}
         role="navigation"
-        variant="scrollable"
         scrollButtons="auto"
         allowScrollButtonsMobile
         textColor="inherit">

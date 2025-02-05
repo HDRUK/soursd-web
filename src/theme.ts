@@ -49,7 +49,7 @@ const createTabStyles = (theme: Theme) => {
     backgroundColor: theme.palette.greys.extraLight,
     boxShadow: `inset 0 -4px 4px -2px rgba(0, 0, 0, 0.1)`,
     "&:hover": {
-      backgroundColor: theme.palette.greys.light,
+      backgroundColor: getHoverColor(theme),
     },
 
     "&.Mui-selected": {
