@@ -8,8 +8,7 @@ import ResultsCard from "@/components/ResultsCard";
 import UserRegisteredStatus from "@/components/UserRegisteredStatus";
 import { useStore } from "@/data/store";
 import usePaginatedQuery from "@/hooks/usePaginatedQuery";
-import { mockedManageDelegatesGuidance } from "@/mocks/data/cms";
-import { PageGuidance, PageSection } from "@/modules";
+import { PageSection } from "@/modules";
 import { getOrganisationUsers } from "@/services/organisations";
 import { formatShortDate } from "@/utils/date";
 import { isRegistered } from "@/utils/user";
@@ -53,7 +52,7 @@ export default function Delegates() {
   const delegates = usersData?.filter(user => user.is_delegate === 1);
 
   return (
-    <PageGuidance {...mockedManageDelegatesGuidance}>
+    <>
       <DelegatesForm onSuccess={refetchOrganisationUsers} />
       <Results
         noResultsMessage={t("noDelegates")}
@@ -120,6 +119,6 @@ export default function Delegates() {
           }
         />
       </PageSection>
-    </PageGuidance>
+    </>
   );
 }
