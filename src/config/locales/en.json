@@ -98,7 +98,11 @@
     "detailsSectorSiteAndWebsite": "Sector, Site and Website",
     "detailsSubsidiaries": "Subsidiaries",
     "detailsSecurityCompliance": "Security Compliance",
+    "userAdminDeletgates": "Delegate administration",
+    "userAdminEmployeeStudents": "Employee & student administration",
     "manageDelegates": "Manage Delegates",
+    "userAdmin": "User Administration",
+    "actions": "Actions",
     "projects": "Projects",
     "manageResearchers": "Manage Researchers",
     "manageResearchersTitle": "Administration | Users",
@@ -131,6 +135,7 @@
     "cancelButton": "Cancel"
   },
   "Form": {
+    "certificationUploadPlaceholder": "Upload certification",
     "leadApplicantEmail": "Email",
     "leadApplicantEmailPlaceholder": "Email",
     "leadApplicantEmailRequiredInvalid": "Email is required",
@@ -640,7 +645,8 @@
       "message": "It looks like we had a problem signing you in. Please try again or contact us on <contact></contact>",
       "primaryButton": "Try Again",
       "navigateButton": "Back to homepage",
-      "navigatePath": "/"
+      "navigatePath": "/",
+      "title": "Login error"
     },
     "register": {
       "message": "It looks like we had a problem registering you. Please try again or contact us on <contact></contact>",

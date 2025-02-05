@@ -4,8 +4,7 @@ import Results from "@/components/Results";
 import ResultsCard from "@/components/ResultsCard";
 import UserRegisteredStatus from "@/components/UserRegisteredStatus";
 import { useStore } from "@/data/store";
-import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
-import { PageGuidance, PageSection } from "@/modules";
+import { PageSection } from "@/modules";
 import SearchBar from "@/modules/SearchBar";
 import { formatShortDate } from "@/utils/date";
 import { isRegistered } from "@/utils/user";
@@ -54,9 +53,7 @@ export default function Users() {
   });
 
   return (
-    <PageGuidance
-      title={t("manageResearchersTitle")}
-      {...mockedPersonalDetailsGuidanceProps}>
+    <>
       <Box sx={{ marginBottom: "30px" }}>
         {t("manageResearchersDescription")}
       </Box>
@@ -148,6 +145,6 @@ export default function Users() {
           onClose={() => setOpen(false)}
         />
       )}
-    </PageGuidance>
+    </>
   );
 }

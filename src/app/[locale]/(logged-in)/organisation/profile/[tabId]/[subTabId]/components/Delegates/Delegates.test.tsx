@@ -8,12 +8,12 @@ import {
   screen,
   waitFor,
 } from "@/utils/testUtils";
-import usePatchOrganisation from "../../hooks/usePatchOrganisation";
+import usePatchOrganisation from "../../../hooks/usePatchOrganisation";
 import Delegates from "./Delegates";
 
 jest.mock("@/data/store");
 jest.mock("@/hooks/usePaginatedQuery");
-jest.mock("../../hooks/usePatchOrganisation");
+jest.mock("../../../hooks/usePatchOrganisation");
 
 const mockOrganisation = mockedOrganisation();
 const mockDelegates = [

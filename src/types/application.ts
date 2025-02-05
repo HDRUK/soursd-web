@@ -85,9 +85,7 @@ interface UserProfileCompletionFields {
 
 type UserProfileCompletionSchema = Record<
   UserProfileCompletionCategories,
-  {
-    fields: UserProfileCompletionFields[];
-  }
+  UserProfileCompletionFields[]
 >;
 
 type UserProfileCompletionJson = Record<

@@ -40,6 +40,9 @@ const createBoxStyles = <T extends { color?: AugmentedColorPaletteOptions }>(
 
 const createTabStyles = () => {
   return {
+    textTransform: "none",
+    fontWeight: "bold",
+    fontSize: "1rem",
     padding: "4px 8px",
     minHeight: "36px",
     flexGrow: 1,

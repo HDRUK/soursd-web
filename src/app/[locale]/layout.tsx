@@ -1,6 +1,6 @@
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
 import { locales } from "@/config";
-import { NotificationsProvider } from "@/context/Notifications";
+import { CookieProvider } from "@/context/CookieContext";
 import ToastProvider from "@/context/ToastProvider";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import GlobalStyles from "@mui/material/GlobalStyles";
@@ -10,7 +10,6 @@ import { Inter } from "next/font/google";
 import { notFound } from "next/navigation";
 import { PropsWithChildren } from "react";
 import "../global.css";
-import { CookieProvider } from "@/context/CookieContext";
 import ReactQueryClientProvider from "./components/ReactQueryClientProvider";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -38,22 +37,20 @@ export default function RootLayout({
         <CookieProvider>
           <NextIntlClientProvider locale={locale} messages={messages}>
             <AppRouterCacheProvider>
-              <NotificationsProvider>
-                <ReactQueryClientProvider>
-                  <ThemeRegistry>
-                    <ToastProvider>
-                      <GlobalStyles
-                        styles={{
-                          [".MuiGrid-item .MuiGrid-container"]: {
-                            maxWidth: "initial",
-                          },
-                        }}
-                      />
-                      {children}
-                    </ToastProvider>
-                  </ThemeRegistry>
-                </ReactQueryClientProvider>
-              </NotificationsProvider>
+              <ReactQueryClientProvider>
+                <ThemeRegistry>
+                  <ToastProvider>
+                    <GlobalStyles
+                      styles={{
+                        [".MuiGrid-item .MuiGrid-container"]: {
+                          maxWidth: "initial",
+                        },
+                      }}
+                    />
+                    {children}
+                  </ToastProvider>
+                </ThemeRegistry>
+              </ReactQueryClientProvider>
             </AppRouterCacheProvider>
           </NextIntlClientProvider>
         </CookieProvider>

@@ -35,14 +35,11 @@ describe("Organisation Projects", () => {
     const { getAllByTestId } = renderProjects({
       variant: "organisation",
     });
+
     await waitFor(() => {
       const accordions = getAllByTestId(/^project-accordion-/);
       expect(accordions.length).toBe(10);
     });
-
-    const expandIcons = getAllByTestId("ExpandMoreIcon");
-    const expandIcon = expandIcons[0];
-    fireEvent.click(expandIcon!);
   });
 
   it("has no accessibility violations", async () => {

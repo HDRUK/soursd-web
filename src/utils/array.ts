@@ -6,4 +6,8 @@ function filterFalsy<T>(values: T[]) {
   return values.filter(value => !!value);
 }
 
-export { convertStringsToNumbers, filterFalsy };
+function binaryHas<T>(values: T[] | undefined) {
+  return (values?.length ?? 0 > 1) ? 1 : 0;
+}
+
+export { convertStringsToNumbers, filterFalsy, binaryHas };
