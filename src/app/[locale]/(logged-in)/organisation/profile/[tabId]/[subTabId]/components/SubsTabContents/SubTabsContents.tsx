@@ -68,5 +68,5 @@ export default function SubTabsContents({
       content = null;
   }
 
-  return <>{content}</>;
+  return content;
 }
