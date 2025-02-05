@@ -4,7 +4,7 @@ import ContactLink from "@/components/ContactLink";
 import Form from "@/components/Form/Form";
 import FormActions from "@/components/FormActions";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
-
+import React, { useMemo } from "react";
 import yup from "@/config/yup";
 import { VALIDATION_CHARITY_ID, VALIDATION_ROR_ID } from "@/consts/form";
 import { useStore } from "@/data/store";
@@ -12,7 +12,8 @@ import SaveIcon from "@mui/icons-material/Save";
 import { LoadingButton } from "@mui/lab";
 import { Grid, TextField } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useMemo } from "react";
+import SelectCountry from "@/components/SelectCountry";
+import FormFieldArray from "@/components/FormFieldArray";
 import usePatchOrganisation from "../../../hooks/usePatchOrganisation";
 
 export interface DigitalIdentifiersFormValues {
@@ -91,8 +92,52 @@ export default function DigitalIdentifiers() {
           </Grid>
           <Grid item xs={12}>
             <FormControlHorizontal
-              name="charity_registration_id"
-              renderField={fieldProps => <TextField {...fieldProps} />}
+              displayPlaceholder={false}
+              labelMd={0}
+              contentMd={12}
+              name="charities"
+              renderField={fieldProps => (
+                <FormFieldArray<FormData>
+                  name={fieldProps.name}
+                  boxSx={{
+                    display: "grid",
+                    gridTemplateColumns: "2fr 3fr 1fr",
+                  }}
+                  initialRowCount={1}
+                  createNewRow={() => ({
+                    id: "",
+                    country: "GB",
+                  })}
+                  renderField={(field, index) => (
+                    <React.Fragment key={field.name}>
+                      <FormControlHorizontal
+                        displayLabel={false}
+                        labelMd={0}
+                        contentMd={12}
+                        name={`charities.${index}.country`}
+                        placeholder="Country"
+                        renderField={({ value, onChange, ...rest }) => (
+                          <SelectCountry
+                            value={value}
+                            onChange={onChange}
+                            {...rest}
+                          />
+                        )}
+                      />
+                      <FormControlHorizontal
+                        displayLabel={false}
+                        labelMd={0}
+                        contentMd={12}
+                        name={`charities.${index}.id`}
+                        placeholder={" "}
+                        renderField={fieldProps => (
+                          <TextField {...fieldProps} />
+                        )}
+                      />
+                    </React.Fragment>
+                  )}
+                />
+              )}
             />
           </Grid>
           <Grid item xs={12}>
