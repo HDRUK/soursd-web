@@ -1,7 +1,6 @@
 "use client";
 
 import { Button, Box, SxProps } from "@mui/material";
-import { useEffect } from "react";
 import {
   Control,
   useFormContext,
@@ -24,7 +23,6 @@ interface FormFieldArrayProps<
   addButtonLabel?: string;
   boxSx?: SxProps;
   minimumRows?: number;
-  initialRowCount?: number;
 }
 
 const NAMESPACE_TRANSLATION_FORM = "Form";
@@ -43,7 +41,6 @@ const FormFieldArray = <T extends FieldValues>({
     alignItems: "center",
   },
   minimumRows,
-  initialRowCount = 0,
 }: FormFieldArrayProps<T>) => {
   const t = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const context = useFormContext<T>();
@@ -52,7 +49,6 @@ const FormFieldArray = <T extends FieldValues>({
   const {
     fields: fieldsArray,
     append,
-    replace,
     remove,
   } = useFieldArray({
     control: effectiveControl,
@@ -64,12 +60,6 @@ const FormFieldArray = <T extends FieldValues>({
       append(createNewRow());
     }
   };
-
-  useEffect(() => {
-    if (createNewRow && fieldsArray.length === 0 && initialRowCount > 0) {
-      replace(Array.from({ length: initialRowCount }, () => createNewRow()));
-    }
-  }, [initialRowCount, createNewRow, replace, fieldsArray.length]);
 
   return (
     <Box sx={{ p: 1, gap: 2, display: "flex", flexDirection: "column" }}>

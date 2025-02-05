@@ -17,7 +17,6 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
-import SelectCountry from "@/components/SelectCountry";
 import { AddressFields } from "@/types/application";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo, useState } from "react";
@@ -30,6 +29,7 @@ import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrow
 import DateInput from "@/components/DateInput";
 import { showAlert } from "@/utils/showAlert";
 import theme from "@/theme";
+import { COUNTRIES_LIST } from "@/consts/countries";
 import { VALIDATION_ROR_ID } from "@/consts/form";
 
 export interface EmploymentsFormValues {
@@ -111,17 +111,26 @@ export default function EmploymentsForm({ onSubmit }: EmploymentsFormProps) {
     [tForm]
   );
 
+  const countryOptions = COUNTRIES_LIST.map((country, index) => ({
+    label: country.name,
+    value: index,
+  }));
+
   const handleChange = (
     address: AddressFields,
     setValue: UseFormSetValue<EmploymentsFormValues>
   ) => {
     const { postcode, address_1, address_2, town, county, country } = address;
 
+    const countryId = countryOptions.find(
+      option => option.label === country
+    )?.value;
+
     setValue("address_1", address_1 ?? "");
     setValue("address_2", address_2 ?? "");
     setValue("town", town ?? "");
     setValue("county", county ?? "");
-    setValue("country", country ?? "");
+    setValue("country", String(countryId) ?? "");
     setValue("postcode", postcode ?? "");
   };
 
@@ -266,12 +275,14 @@ export default function EmploymentsForm({ onSubmit }: EmploymentsFormProps) {
                 <Grid item xs={12}>
                   <FormControlHorizontal
                     name="country"
-                    renderField={({ value, onChange, ...rest }) => (
-                      <SelectCountry
-                        value={value}
-                        onChange={onChange}
-                        {...rest}
-                      />
+                    renderField={fieldProps => (
+                      <Select {...fieldProps}>
+                        {countryOptions?.map(({ label, value }) => (
+                          <MenuItem value={value} key={value} id={label}>
+                            {label}
+                          </MenuItem>
+                        ))}
+                      </Select>
                     )}
                   />
                 </Grid>
