@@ -47,7 +47,7 @@ const createTabStyles = (theme: Theme) => {
     minHeight: "36px",
     flexGrow: 1,
     backgroundColor: theme.palette.greys.extraLight,
-    // borderBottom: `2px solid ${theme.palette.greys.light}`,
+    boxShadow: `inset 0 -4px 4px -2px rgba(0, 0, 0, 0.1)`,
     "&:hover": {
       backgroundColor: theme.palette.greys.light,
     },
@@ -56,6 +56,7 @@ const createTabStyles = (theme: Theme) => {
       backgroundColor: "white",
       border: 0,
       borderTop: `4px solid ${theme.palette.primary.main} `,
+      boxShadow: "none",
     },
   };
 };
@@ -66,10 +67,9 @@ const createTabsStyles = <T extends { color?: AugmentedColorPaletteOptions }>(
     const color = getAugmentedColor(paletteTheme, ownerState.color);
 
     return {
-      backgroundColor: color[paletteTheme.palette.mode],
       color: color.contrastText,
       minHeight: "36px",
-      boxShadow: `inset 0 -2px 4px rgba(0, 0, 0, 0.15)`,
+      backgroudColor: "inherit",
       marginTop: 2,
       ".MuiTabs-indicator": {
         backgroundColor: paletteTheme.palette.primary.main,
