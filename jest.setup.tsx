@@ -362,22 +362,6 @@ async function mockFetch(url: string, init?: RequestInit) {
         access_token: 'fake-access-token'
       }),
     };
-    // case `/api/auth/token`:
-    // return {
-    //   ok: true,
-    //   status: 200,
-    //   json: async () => ({
-    //     access_token: 'fake-access-token'
-    //   }),
-    // };
-    // case `/api/auth/token`:
-    // return {
-    //   ok: true,
-    //   status: 200,
-    //   json: async () => ({
-    //     access_token: 'fake-access-token'
-    //   }),
-    // };
     default: {
       if (url.includes("/test")) {
         return mock200Json(null);
