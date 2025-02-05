@@ -14,8 +14,6 @@ import {
   Accordion,
   AccordionSummary,
   Typography,
-  Select,
-  MenuItem,
 } from "@mui/material";
 import SelectCountry from "@/components/SelectCountry";
 import { AddressFields } from "@/types/application";
@@ -31,6 +29,7 @@ import DateInput from "@/components/DateInput";
 import { showAlert } from "@/utils/showAlert";
 import theme from "@/theme";
 import { VALIDATION_ROR_ID } from "@/consts/form";
+import { getCountryCode } from "@/utils/countries";
 
 export interface EmploymentsFormValues {
   employer_name: string;
@@ -117,11 +116,13 @@ export default function EmploymentsForm({ onSubmit }: EmploymentsFormProps) {
   ) => {
     const { postcode, address_1, address_2, town, county, country } = address;
 
+    const countryCode = getCountryCode(country as string);
+
     setValue("address_1", address_1 ?? "");
     setValue("address_2", address_2 ?? "");
     setValue("town", town ?? "");
     setValue("county", county ?? "");
-    setValue("country", country ?? "");
+    setValue("country", countryCode ?? "");
     setValue("postcode", postcode ?? "");
   };
 

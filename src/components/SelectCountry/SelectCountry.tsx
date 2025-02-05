@@ -1,6 +1,6 @@
 import { Autocomplete, AutocompleteProps, TextField } from "@mui/material";
 import { Option } from "@/types/common";
-import { countries } from "countries-list";
+import { getCountryOptions } from "@/utils/countries";
 
 interface SelectCountryProps
   extends Omit<
@@ -16,12 +16,7 @@ const SelectCountry = ({
   onChange,
   ...restProps
 }: SelectCountryProps) => {
-  const countryOptions: Option[] = Object.entries(countries)
-    .map(([code, { name }]) => ({
-      value: code,
-      label: name,
-    }))
-    .sort((a, b) => a.label.localeCompare(b.label));
+  const countryOptions = getCountryOptions();
 
   return (
     <Autocomplete
