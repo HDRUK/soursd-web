@@ -1,7 +1,6 @@
-"use client";
-
 import { ConfigProps, withConfig } from "@/components/Config";
-import { redirect, usePathname } from "next/navigation";
+import { redirect } from "next/navigation";
+import usePathServerSide from "@/hooks/usePathServerSide";
 import { PageTabs, getSubTabs } from "./consts/tabs";
 import TabsContents from "./components/TabsContents";
 
@@ -12,7 +11,7 @@ interface PageProps extends ConfigProps {
 }
 
 function Page({ params: { tabId }, config }: PageProps) {
-  const path = usePathname();
+  const path = usePathServerSide();
   if (!Object.values(PageTabs).includes(tabId)) {
     redirect(config.routes.profileOrganisationDetailsNameAndAddress.path);
   }
