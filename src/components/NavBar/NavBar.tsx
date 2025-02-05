@@ -36,8 +36,8 @@ export enum ButtonVariant {
 
 export default function NavBar() {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_NAVBAR);
-  const auth = useAuth();
-  const user = useStore(store => store.getUser());
+  const { user } = useAuth();
+  const storedUser = useStore(store => store.getUser());
   const router = useRouter();
 
   const theme = useTheme();
@@ -88,11 +88,10 @@ export default function NavBar() {
     {
       color: ButtonColor.Secondary,
       variant: ButtonVariant.Contained,
-      text: auth ? t("signOutButton") : t("signInButton"),
-      onClick: auth ? handleLogout : handleLogin,
+      text: user ? t("signOutButton") : t("signInButton"),
+      onClick: user ? handleLogout : handleLogin,
     },
-    // Conditionally render the register button only when not authenticated
-    ...(auth
+    ...(user
       ? []
       : [
           {
@@ -122,7 +121,7 @@ export default function NavBar() {
                 {text || icon}
               </StyledButton>
             ))}
-            {auth && user && <NotificationsMenu />}
+            {user && storedUser && <NotificationsMenu />}
           </Box>
         </StyledHeader>
       </Box>

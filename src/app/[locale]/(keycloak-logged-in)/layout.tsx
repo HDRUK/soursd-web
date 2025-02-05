@@ -3,12 +3,13 @@
 import LoadingWrapper from "@/components/LoadingWrapper";
 import useLoginRedirect from "@/hooks/useLoginRedirect";
 import { usePathname } from "@/i18n/routing";
+import { getAccessToken } from "@/services/requests";
 import { handleLogin } from "@/utils/keycloak";
 import Cookies from "js-cookie";
 import { PropsWithChildren, useEffect, useState } from "react";
 
 async function validateAccessToken(pathname: string | null): Promise<boolean> {
-  const accessToken = Cookies.get("access_token");
+  const accessToken = await getAccessToken();
 
   if (!accessToken) {
     Cookies.set("redirectPath", pathname ?? "/", { path: "/" });

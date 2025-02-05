@@ -3,17 +3,14 @@ import keycloak from "@/config/keycloak";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
-export async function GET(req: Request) {
+export async function POST() {
   const cookieStore = cookies();
-  const { searchParams } = new URL(req.url);
-  const code = searchParams.get("code");
+  const refreshToken = cookieStore.get("refresh_token")?.value;
 
-  cookieStore.delete("redirectPath");
-
-  if (!code) {
+  if (!refreshToken) {
     return NextResponse.json(
-      { error: "Authorization code is missing" },
-      { status: 400 }
+      { error: "Refresh token missing" },
+      { status: 401 }
     );
   }
 
@@ -23,17 +20,20 @@ export async function GET(req: Request) {
     const response = await axios.post(
       tokenUrl,
       new URLSearchParams({
-        grant_type: "authorization_code",
+        grant_type: "refresh_token",
         client_id: keycloak.clientId,
         client_secret: keycloak.clientSecret,
-        code,
-        redirect_uri: keycloak.redirectUriRegister,
+        refresh_token: refreshToken,
       }),
       { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
     );
 
-    const { access_token, refresh_token, expires_in, refresh_expires_in } =
-      response.data;
+    const {
+      access_token,
+      refresh_token: newRefreshToken,
+      expires_in,
+      refresh_expires_in,
+    } = response.data;
 
     cookieStore.set("access_token", access_token, {
       httpOnly: true,
@@ -42,16 +42,14 @@ export async function GET(req: Request) {
       maxAge: expires_in,
     });
 
-    cookieStore.set("refresh_token", refresh_token, {
+    cookieStore.set("refresh_token", newRefreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       path: "/",
       maxAge: refresh_expires_in,
     });
 
-    return NextResponse.redirect(
-      encodeURI(`${process.env.NEXT_PUBLIC_LOCAL_ENV}/en/register`)
-    );
+    return NextResponse.json({ access_token });
   } catch (_) {
     const errorType = encodeURIComponent("register");
     return NextResponse.redirect(

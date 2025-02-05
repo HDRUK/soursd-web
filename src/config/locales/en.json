@@ -550,7 +550,9 @@
     "500Description": "We tried to query the selected resource but there seems to be an issue on the server, please contact us via the form in the footer."
   },
   "Auth": {
-    "notAllowed": "You are not allowed to access this page. If you think this is incorrect please contacts us at <contactLink></contactLink>"
+    "notAllowed": "You are not allowed to access this page. If you think this is incorrect please contacts us at <contactLink></contactLink>",
+    "authError": "There was an error logging in. Please try again or contact us at <contactLink></contactLink>",
+    "authErrorButton": "Try again"
   },
   "User": {
     "inviteUserTitle": "Request User to be invited to create a SOURSD account",

@@ -6,12 +6,28 @@ import { ApplicationDataProvider } from "@/context/ApplicationData";
 import { usePathname, useRouter } from "@/i18n/routing";
 import { getMe } from "@/services/auth";
 import { getCustodianUser } from "@/services/custodian_users";
+import { getAccessToken } from "@/services/requests";
 import { User } from "@/types/application";
 import { handleLogin } from "@/utils/keycloak";
 import Cookies from "js-cookie";
 import { PropsWithChildren, useEffect, useState } from "react";
 
 type LayoutProps = PropsWithChildren;
+
+async function refreshAccessToken(): Promise<string | undefined> {
+  const response = await fetch("/api/auth/refresh", {
+    method: "POST",
+    credentials: "include",
+  });
+
+  if (!response.ok) {
+    console.error("Token refresh failed");
+    return undefined;
+  }
+
+  const data = await response.json();
+  return data.access_token;
+}
 
 async function validateAccessToken(
   pathname: string | null,
@@ -21,14 +37,22 @@ async function validateAccessToken(
     suppressThrow: true,
   });
 
+  let accessToken = await getAccessToken();
+
   if (response.status === 404) {
     router.push(ROUTES.register.path);
   } else if (response.status === 500) {
-    const accessToken = Cookies.get("access_token");
-
     if (!accessToken) {
       Cookies.set("redirectPath", pathname ?? "/", { path: "/" });
       handleLogin();
+    }
+  } else if (response.status === 401) {
+    accessToken = await refreshAccessToken();
+
+    if (!accessToken) {
+      Cookies.remove("access_token");
+      Cookies.remove("refresh_token");
+      router.push(ROUTES.login.path);
     }
   }
 
@@ -73,7 +97,6 @@ export default function Layout({ children }: LayoutProps) {
 
     performAuthCheck();
   }, [pathname]);
-
   return (
     me && (
       <ApplicationDataProvider

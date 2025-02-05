@@ -6,10 +6,24 @@ import {
   ResponseOptions,
 } from "@/types/requests";
 import { objectToQuerystring } from "@/utils/requests";
-import cookies from "js-cookie";
 
-function getHeadersWithAuthorisation(headers?: HeadersInit) {
-  const accessToken = cookies.get("access_token") || "";
+export async function getAccessToken(): Promise<string | undefined> {
+  const response = await fetch("/api/auth/token", {
+    method: "GET",
+    credentials: "include",
+  });
+
+  if (!response.ok) {
+    console.error("Failed to retrieve access token");
+    return undefined;
+  }
+
+  const data = await response.json();
+  return data.access_token;
+}
+
+async function getHeadersWithAuthorization(headers?: HeadersInit) {
+  const accessToken = await getAccessToken();
 
   return {
     ...(accessToken && {
@@ -53,7 +67,6 @@ async function handleJsonResponse(
     return Promise.reject(responseError);
 
   const data = await response.json();
-
   const dataError = handleDataError(data, options);
 
   if (!options?.suppressThrow && dataError) return Promise.reject(dataError);
@@ -64,49 +77,53 @@ async function handleJsonResponse(
   });
 }
 
-async function getRequest<T>(url: string, payload?: T, options?: RequestInit) {
-  const response = await fetch(
-    `${url}${payload ? `?${objectToQuerystring(payload)}` : ""}`,
-    {
-      ...options,
-      headers: getHeadersWithAuthorisation({
-        "content-type": "application/json;charset=UTF-8",
-        ...options?.headers,
-      }),
-      ...(options?.body && { body: JSON.stringify(options?.body) }),
-    }
-  );
+async function request<T>(
+  method: string,
+  url: string,
+  payload?: QueryPayload<T>,
+  options?: QueryOptions
+) {
+  const headers = await getHeadersWithAuthorization({
+    "content-type":
+      payload instanceof FormData
+        ? undefined
+        : "application/json;charset=UTF-8",
+    ...options?.headers,
+  });
+
+  const body =
+    payload instanceof Function
+      ? payload()
+      : payload instanceof FormData
+        ? payload
+        : JSON.stringify(payload);
+
+  const response = await fetch(url, {
+    ...options,
+    method,
+    headers,
+    body,
+  });
 
   return response;
 }
+
+async function getRequest<T>(url: string, payload?: T, options?: RequestInit) {
+  const response = await request(
+    "GET",
+    `${url}${payload ? `?${objectToQuerystring(payload)}` : ""}`,
+    payload,
+    options
+  );
+  return response;
+}
+
 async function postRequest<T>(
   url: string,
   payload?: QueryPayload<T>,
   options?: QueryOptions
 ) {
-  let headers: Record<string, string> = getHeadersWithAuthorisation(
-    options?.headers
-  ) as Record<string, string>;
-
-  if (!(payload instanceof FormData)) {
-    headers = {
-      ...headers,
-      "content-type": "application/json;charset=UTF-8",
-    };
-  }
-
-  const response = await fetch(url, {
-    ...options,
-    method: "POST",
-    headers,
-    body:
-      payload instanceof Function
-        ? payload()
-        : payload instanceof FormData
-          ? payload
-          : JSON.stringify(payload),
-  });
-
+  const response = await request("POST", url, payload, options);
   return response;
 }
 
@@ -115,16 +132,7 @@ async function patchRequest<T>(
   payload?: QueryPayload<T>,
   options?: Omit<RequestInit, "body">
 ) {
-  const response = await fetch(url, {
-    ...options,
-    method: "PATCH",
-    headers: getHeadersWithAuthorisation({
-      "content-type": "application/json;charset=UTF-8",
-      ...options?.headers,
-    }),
-    body: payload instanceof Function ? payload() : JSON.stringify(payload),
-  });
-
+  const response = await request("PATCH", url, payload, options);
   return response;
 }
 
@@ -133,16 +141,7 @@ async function putRequest<T>(
   payload?: QueryPayload<T>,
   options?: QueryOptions
 ) {
-  const response = await fetch(url, {
-    ...options,
-    method: "PUT",
-    headers: getHeadersWithAuthorisation({
-      "content-type": "application/json;charset=UTF-8",
-      ...options?.headers,
-    }),
-    body: payload instanceof Function ? payload() : JSON.stringify(payload),
-  });
-
+  const response = await request("PUT", url, payload, options);
   return response;
 }
 
@@ -151,15 +150,7 @@ async function deleteRequest<T>(
   payload?: QueryPayload<T>,
   options?: QueryOptions
 ) {
-  const response = await fetch(url, {
-    ...options,
-    method: "DELETE",
-    headers: getHeadersWithAuthorisation({
-      "content-type": "application/json;charset=UTF-8",
-      ...options?.headers,
-    }),
-  });
-
+  const response = await request("DELETE", url, payload, options);
   return response;
 }
 
