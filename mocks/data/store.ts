@@ -1,9 +1,7 @@
-import { storeMethods, StoreState, useStore } from "@/data/store";
-import { create } from "zustand";
-import { mockedUser } from "./user";
-import { mockedOrganisation } from "./organisation";
-import { mockedCustodian } from "./custodian";
 import { ROUTES } from "@/consts/router";
+import { mockedCustodian } from "./custodian";
+import { mockedOrganisation } from "./organisation";
+import { mockedUser } from "./user";
 
 const mockedApiPermissions = [
   {

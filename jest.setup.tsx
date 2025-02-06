@@ -1,4 +1,5 @@
 import { UserFeedSource } from "@/consts/user";
+import { StoreState, useStore } from "@/data/store";
 import { defineMatchMedia } from "@/utils/testUtils";
 import "@testing-library/jest-dom";
 import "jest-axe/extend-expect";
@@ -7,6 +8,7 @@ import { forwardRef, useImperativeHandle } from "react";
 import "./jest.utils";
 import { mock200Json, mockPagedResults } from "./jest.utils";
 import { mockedCustodian, mockedCustodianUser } from "./mocks/data/custodian";
+import { mockedNotification } from "./mocks/data/notification";
 import { mockedOrganisation } from "./mocks/data/organisation";
 import { mockedPermission } from "./mocks/data/permission";
 import { mockedProject, mockedProjects } from "./mocks/data/project";
@@ -23,10 +25,8 @@ import {
   mockedTraining,
   mockedUser,
 } from "./mocks/data/user";
-import { mockedNotification } from "./mocks/data/notification";
 import { ResponseMessageType } from "./src/consts/requests";
 import { ROUTES } from "./src/consts/router";
-import { StoreState, useStore } from "@/data/store";
 
 const nextRouterMock = require("next-router-mock");
 
@@ -66,26 +66,6 @@ jest.mock("@/data/store", () => ({
   useStore: jest.fn(),
 }));
 
-const useStoreMock = jest.mocked(useStore);
-
-export const mockUseStore = (props: Partial<StoreState> = {}) => {
-  useStoreMock.mockImplementation(getterFn => {
-    const originalStore = jest.requireActual("@/data/store").useStore();
-    const state = mockedStoreState();
-
-    return getterFn({
-      ...originalStore,
-      ...state,
-      config: {
-        ...originalStore.config,
-        ...state.config,
-        ...props.config,
-      },
-      ...props,
-    });
-  });
-};
-
 jest.mock("react-google-recaptcha", () => {
   const RecaptchaV2 = forwardRef((props, ref) => {
     useImperativeHandle(ref, () => ({
@@ -116,6 +96,28 @@ global.matchMedia = () => {
     addListener: () => {},
     removeListener: () => {},
   };
+};
+
+jest.mock("@/data/store", () => ({
+  useStore: jest.fn(),
+}));
+
+const useStoreMock = jest.mocked(useStore);
+
+export const mockUseStore = (props: Partial<StoreState> = {}) => {
+  useStoreMock.mockImplementation(getterFn => {
+    const originalStore = jest.requireActual("@/data/store").useStore();
+    const state = mockedStoreState();
+
+    // Must mutate to keep references
+    originalStore.config = {
+      ...originalStore.config,
+      ...state.config,
+      ...props.config,
+    };
+
+    return getterFn ? getterFn(originalStore) : originalStore;
+  });
 };
 
 async function mockFetch(url: string, init?: RequestInit) {

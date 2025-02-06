@@ -10,18 +10,19 @@ import {
   waitFor,
 } from "@/utils/testUtils";
 import Projects from ".";
+import { mockUseStore } from "jest.setup";
 
-jest.mock("@/data/store");
+// jest.mock("@/data/store");
 
 const mockedPush = jest.fn();
 
-const defaultOrganisation = mockedOrganisation({ id: 1 });
-const defaultCustodian = mockedCustodian({ id: 1 });
+// const defaultOrganisation = mockedOrganisation({ id: 1 });
+// const defaultCustodian = mockedCustodian({ id: 1 });
 
-(useStore as unknown as jest.Mock).mockImplementation(() => ({
-  getOrganisation: () => defaultOrganisation,
-  getCustodian: () => defaultCustodian,
-}));
+// (useStore as unknown as jest.Mock).mockImplementation(() => ({
+//   getOrganisation: () => defaultOrganisation,
+//   getCustodian: () => defaultCustodian,
+// }));
 
 const renderProjects = ({ variant }: { variant: ProjectEntities }) =>
   render(
@@ -31,6 +32,9 @@ const renderProjects = ({ variant }: { variant: ProjectEntities }) =>
   );
 
 describe("Organisation Projects", () => {
+  beforeEach(() => {
+    mockUseStore();
+  });
   it("display 10 projects", async () => {
     const { getAllByTestId } = renderProjects({
       variant: "organisation",

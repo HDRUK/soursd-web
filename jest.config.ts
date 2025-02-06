@@ -1,5 +1,3 @@
-import { mockUseStore } from "jest.setup";
-
 const nextJest = require("next/jest");
 
 process.env.TZ = "UTC";
@@ -38,6 +36,7 @@ const customJestConfig = {
     "^@/context/(.*)$": "<rootDir>/src/context/$1",
     "^@/i18n/(.*)$": "<rootDir>/src/i18n/$1",
   },
+  transformIgnorePatterns: ["<rootDir>/node_modules/(?!pretty-bytes)/)"],
   testPathIgnorePatterns: [
     "<rootDir>/.next/",
     "<rootDir>/node_modules/",
