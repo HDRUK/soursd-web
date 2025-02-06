@@ -5,7 +5,7 @@ import Form from "@/components/Form/Form";
 import FormActions from "@/components/FormActions";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
-import React, { useMemo, useEffect } from "react";
+import React, { useMemo } from "react";
 import yup from "@/config/yup";
 import { VALIDATION_CHARITY_ID, VALIDATION_ROR_ID } from "@/consts/form";
 import { useStore } from "@/data/store";
@@ -104,11 +104,10 @@ export default function DigitalIdentifiers() {
       {({ watch, setValue }) => {
         const isCharity = watch("isCharity");
 
-        useEffect(() => {
-          if (!isCharity) {
-            setValue("charities", [], { shouldValidate: true });
-          }
-        }, [isCharity, setValue]);
+        if (!isCharity) {
+          setValue("charities", [], { shouldValidate: true });
+        }
+
         return (
           <>
             <Grid container rowSpacing={3}>
@@ -154,7 +153,7 @@ export default function DigitalIdentifiers() {
                         renderField={(field, index) => (
                           <React.Fragment key={field.name}>
                             <FormControlHorizontal
-                              displayLabel={true}
+                              displayLabel
                               label={tForm("country")}
                               labelMd={0}
                               contentMd={12}
@@ -170,7 +169,7 @@ export default function DigitalIdentifiers() {
                               )}
                             />
                             <FormControlHorizontal
-                              displayLabel={true}
+                              displayLabel
                               label={tForm("charityRegistrationId")}
                               labelMd={0}
                               contentMd={12}
