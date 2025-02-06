@@ -70,7 +70,7 @@ export default function Form<T extends FieldValues>({
 
   return (
     <FormProvider {...extendedMethods}>
-      <FormCanLeave isDirty={methods.formState.isDirty}>
+      <FormCanLeave>
         <Box
           component="form"
           onSubmit={handleSubmit(onSubmit)}

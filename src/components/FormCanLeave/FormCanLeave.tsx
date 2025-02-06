@@ -5,7 +5,6 @@ import { ReactNode } from "react";
 import { useFormState, useWatch } from "react-hook-form";
 
 interface FormCanLeaveProps {
-  isDirty?: boolean;
   children?: ReactNode;
 }
 
