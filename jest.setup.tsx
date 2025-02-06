@@ -7,6 +7,7 @@ import { forwardRef, useImperativeHandle } from "react";
 import "./jest.utils";
 import { mock200Json, mockPagedResults } from "./jest.utils";
 import { mockedCustodian, mockedCustodianUser } from "./mocks/data/custodian";
+import { mockedNotification } from "./mocks/data/notification";
 import { mockedOrganisation } from "./mocks/data/organisation";
 import { mockedPermission } from "./mocks/data/permission";
 import { mockedProject, mockedProjects } from "./mocks/data/project";
@@ -23,7 +24,6 @@ import {
   mockedTraining,
   mockedUser,
 } from "./mocks/data/user";
-import { mockedNotification } from "./mocks/data/notification";
 import { ResponseMessageType } from "./src/consts/requests";
 import { ROUTES } from "./src/consts/router";
 
@@ -32,6 +32,29 @@ const nextRouterMock = require("next-router-mock");
 expect.extend(matchers);
 
 jest.mock("next/router", () => nextRouterMock);
+jest.mock("@/i18n/routing", () => ({
+  ...jest.requireActual("@/i18n/routing"),
+  useRouter: jest.fn().mockReturnValue({
+    push: jest.fn(),
+  }),
+  usePathname: jest.fn(),
+}));
+
+jest.mock("next/navigation", () => {
+  return {
+    useParams: jest.fn(),
+    usePathname: jest.fn(),
+    useRouter: jest.fn().mockReturnValue({
+      push: jest.fn(),
+      replace: jest.fn(),
+      prefetch: jest.fn(),
+    }),
+    useSearchParams: () => ({
+      get: () => {},
+    }),
+  };
+});
+
 jest.mock("./src/context/ApplicationData", () => ({
   ...jest.requireActual("./src/context/ApplicationData"),
   useApplicationData: () => ({

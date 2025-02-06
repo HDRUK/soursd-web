@@ -20,23 +20,9 @@ jest.mock("@/utils/keycloak", () => ({
   handleLogout: jest.fn(),
 }));
 
-jest.mock("@/i18n/routing", () => ({
-  useRouter: jest.fn(() => ({
-    push: jest.fn(),
-  })),
-}));
-
 (get as jest.Mock).mockReturnValue(undefined);
 
-const buttonsText = [
-  "Home",
-  "About",
-  "Features",
-  "Support",
-  "Contact",
-  "Sign In",
-  "Register",
-];
+const linksText = ["Home", "About", "Features", "Support", "Contact"];
 
 const renderMobileMenuTest = () => {
   defineMatchMedia(theme.breakpoints.values.xs);
@@ -53,11 +39,11 @@ describe("NavBar Component", () => {
     jest.clearAllMocks();
   });
 
-  it.each(buttonsText)("renders nav item %s", name => {
+  it.each(linksText)("renders nav item %s", name => {
     render(<NavBar />);
 
     expect(
-      screen.getByRole("button", {
+      screen.getByRole("link", {
         name,
       })
     ).toBeInTheDocument();

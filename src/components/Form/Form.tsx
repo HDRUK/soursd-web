@@ -1,21 +1,19 @@
 import yup from "@/config/yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, BoxProps, Grid } from "@mui/material";
-import { HTMLAttributes, ReactNode, useEffect } from "react";
+import { HTMLAttributes, ReactNode } from "react";
 import {
-  UseFormProps,
   DefaultValues,
   FieldValues,
   FormProvider,
-  useForm,
-  UseFormReturn,
   Resolver,
+  useForm,
+  UseFormProps,
+  UseFormReturn,
 } from "react-hook-form";
 import { AnyObject, SchemaDescription } from "yup";
-import { useRouter } from "next/router";
-import { Message } from "../Message";
-import useRouteChange from "@/hooks/useRouteChange";
 import FormCanLeave from "../FormCanLeave";
+import { Message } from "../Message";
 
 function isFieldRequired(
   schema: yup.AnyObjectSchema,
@@ -69,8 +67,6 @@ export default function Form<T extends FieldValues>({
     isFieldRequired: (fieldName: keyof T): boolean =>
       schema ? isFieldRequired(schema, fieldName as string) : false,
   };
-
-  console.log(methods.formState);
 
   return (
     <FormProvider {...extendedMethods}>

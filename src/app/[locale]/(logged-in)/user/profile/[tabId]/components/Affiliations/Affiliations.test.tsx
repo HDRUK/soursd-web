@@ -12,10 +12,6 @@ import Affiliations from "./Affiliations";
 
 jest.mock("@/data/store");
 
-jest.mock("next/navigation", () => ({
-  useRouter: jest.fn(),
-}));
-
 const mockPush = jest.fn();
 
 (useRouter as jest.Mock).mockReturnValue({

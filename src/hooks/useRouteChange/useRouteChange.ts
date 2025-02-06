@@ -1,5 +1,5 @@
-import { useRouter } from "next/navigation";
-import { useEffect, useRef } from "react";
+import { useRouter } from "@/i18n/routing";
+import { useEffect } from "react";
 
 interface UseRouteChangeProps {
   canLeave?: boolean;
@@ -18,7 +18,7 @@ export default function useRouteChange({
 
   useEffect(() => {
     const handleRouteChange = (e: BeforeUnloadEvent) => {
-      if (document.activeElement instanceof HTMLAnchorElement && !canLeave) {
+      if (document.activeElement && !canLeave) {
         e.preventDefault();
 
         onBlocked(document.activeElement.href);
