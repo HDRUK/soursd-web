@@ -7,6 +7,7 @@ import { forwardRef, useImperativeHandle } from "react";
 import "./jest.utils";
 import { mock200Json, mockPagedResults } from "./jest.utils";
 import { mockedCustodian, mockedCustodianUser } from "./mocks/data/custodian";
+import { TextEncoder } from 'util';
 import { mockedOrganisation } from "./mocks/data/organisation";
 import { mockedPermission } from "./mocks/data/permission";
 import { mockedProject, mockedProjects } from "./mocks/data/project";
@@ -92,6 +93,8 @@ global.matchMedia = () => {
     removeListener: () => {},
   };
 };
+
+global.TextEncoder = TextEncoder;
 
 async function mockFetch(url: string, init?: RequestInit) {
   const [baseUrl, queryString] = url.split("?");
@@ -351,6 +354,14 @@ async function mockFetch(url: string, init?: RequestInit) {
           data: mockedSystemConfig(),
         }),
       };
+    case `/api/auth/token`:
+    return {
+      ok: true,
+      status: 200,
+      json: async () => ({
+        access_token: 'fake-access-token'
+      }),
+    };
     default: {
       if (url.includes("/test")) {
         return mock200Json(null);

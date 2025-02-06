@@ -1,112 +1,54 @@
-import { ResponseMessageType } from "@/consts/requests";
-import {
-  QueryOptions,
-  QueryPayload,
-  ResponseJson,
-  ResponseOptions,
-} from "@/types/requests";
+import { QueryOptions, QueryPayload } from "@/types/requests";
 import { objectToQuerystring } from "@/utils/requests";
-import cookies from "js-cookie";
+import { getHeadersWithAuthorization } from "./requestHelpers";
 
-function getHeadersWithAuthorisation(headers?: HeadersInit) {
-  const accessToken = cookies.get("access_token") || "";
-
-  return {
-    ...(accessToken && {
-      Authorization: `Bearer ${accessToken}`,
-    }),
-    ...headers,
-  };
-}
-
-function handleResponseError(response: Response, options?: ResponseOptions) {
-  if (!response?.ok) {
-    if (!options) {
-      return new Error(`${response?.status}Error`).message;
-    }
-
-    return new Error(
-      response?.status === 401
-        ? options["401"]?.message
-        : options.error?.message
-    ).message;
-  }
-
-  return null;
-}
-
-function handleDataError<T>(data: ResponseJson<T>, options?: ResponseOptions) {
-  if (data.message && data.message !== ResponseMessageType.SUCCESS) {
-    return new Error(options?.error?.message || "responseError");
-  }
-
-  return null;
-}
-
-async function handleJsonResponse(
-  response: Response,
-  options?: ResponseOptions
+async function request<T>(
+  method: string,
+  url: string,
+  payload?: QueryPayload<T>,
+  options?: QueryOptions
 ) {
-  const responseError = handleResponseError(response, options);
-
-  if (!options?.suppressThrow && responseError)
-    return Promise.reject(responseError);
-
-  const data = await response.json();
-
-  const dataError = handleDataError(data, options);
-
-  if (!options?.suppressThrow && dataError) return Promise.reject(dataError);
-
-  return Promise.resolve({
-    ...data,
-    status: response.status,
+  const headers = await getHeadersWithAuthorization({
+    "content-type":
+      payload instanceof FormData
+        ? undefined
+        : "application/json;charset=UTF-8",
+    ...options?.headers,
   });
-}
 
-async function getRequest<T>(url: string, payload?: T, options?: RequestInit) {
-  const response = await fetch(
-    `${url}${payload ? `?${objectToQuerystring(payload)}` : ""}`,
-    {
-      ...options,
-      headers: getHeadersWithAuthorisation({
-        "content-type": "application/json;charset=UTF-8",
-        ...options?.headers,
-      }),
-      ...(options?.body && { body: JSON.stringify(options?.body) }),
-    }
-  );
+  const body =
+    payload instanceof Function
+      ? payload()
+      : payload instanceof FormData
+        ? payload
+        : JSON.stringify(payload);
+
+  const response = await fetch(url, {
+    ...options,
+    method,
+    headers,
+    body,
+  });
 
   return response;
 }
+
+async function getRequest<T>(url: string, payload?: T, options?: RequestInit) {
+  const response = await request(
+    "GET",
+    `${url}${payload ? `?${objectToQuerystring(payload)}` : ""}`,
+    payload,
+    options
+  );
+  return response;
+}
+
 async function postRequest<T>(
   url: string,
   payload?: QueryPayload<T>,
   options?: QueryOptions
 ) {
-  let headers: Record<string, string> = getHeadersWithAuthorisation(
-    options?.headers
-  ) as Record<string, string>;
-
-  if (!(payload instanceof FormData)) {
-    headers = {
-      ...headers,
-      "content-type": "application/json;charset=UTF-8",
-    };
-  }
-
-  const response = await fetch(url, {
-    ...options,
-    method: "POST",
-    headers,
-    body:
-      payload instanceof Function
-        ? payload()
-        : payload instanceof FormData
-          ? payload
-          : JSON.stringify(payload),
-  });
-
+  const response = await request("POST", url, payload, options);
   return response;
 }
 
@@ -115,16 +57,7 @@ async function patchRequest<T>(
   payload?: QueryPayload<T>,
   options?: Omit<RequestInit, "body">
 ) {
-  const response = await fetch(url, {
-    ...options,
-    method: "PATCH",
-    headers: getHeadersWithAuthorisation({
-      "content-type": "application/json;charset=UTF-8",
-      ...options?.headers,
-    }),
-    body: payload instanceof Function ? payload() : JSON.stringify(payload),
-  });
-
+  const response = await request("PATCH", url, payload, options);
   return response;
 }
 
@@ -133,16 +66,7 @@ async function putRequest<T>(
   payload?: QueryPayload<T>,
   options?: QueryOptions
 ) {
-  const response = await fetch(url, {
-    ...options,
-    method: "PUT",
-    headers: getHeadersWithAuthorisation({
-      "content-type": "application/json;charset=UTF-8",
-      ...options?.headers,
-    }),
-    body: payload instanceof Function ? payload() : JSON.stringify(payload),
-  });
-
+  const response = await request("PUT", url, payload, options);
   return response;
 }
 
@@ -151,24 +75,8 @@ async function deleteRequest<T>(
   payload?: QueryPayload<T>,
   options?: QueryOptions
 ) {
-  const response = await fetch(url, {
-    ...options,
-    method: "DELETE",
-    headers: getHeadersWithAuthorisation({
-      "content-type": "application/json;charset=UTF-8",
-      ...options?.headers,
-    }),
-  });
-
+  const response = await request("DELETE", url, payload, options);
   return response;
 }
 
-export {
-  deleteRequest,
-  getRequest,
-  handleResponseError,
-  patchRequest,
-  postRequest,
-  putRequest,
-  handleJsonResponse,
-};
+export { deleteRequest, getRequest, patchRequest, postRequest, putRequest };

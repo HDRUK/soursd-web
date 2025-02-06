@@ -1,6 +1,7 @@
 import { EntityType } from "@/types/api";
 import { ResponseJson, ResponseOptions } from "@/types/requests";
-import { handleJsonResponse, getRequest } from "../requests";
+import { getRequest } from "../requests";
+import { handleJsonResponse } from "../requestHelpers";
 
 export default async (
   entityType: EntityType,
