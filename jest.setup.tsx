@@ -27,7 +27,6 @@ import {
 } from "./mocks/data/user";
 import { ResponseMessageType } from "./src/consts/requests";
 import { ROUTES } from "./src/consts/router";
-import deepmerge from "deepmerge";
 
 const nextRouterMock = require("next-router-mock");
 
