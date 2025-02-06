@@ -11,7 +11,12 @@ export default function Completion() {
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const { identityScore, affiliationsScore, experiencesScore, trainingScore } =
     useUserProfile();
-
+  console.log("***************", {
+    identityScore,
+    affiliationsScore,
+    experiencesScore,
+    trainingScore,
+  });
   const sections = [
     {
       title: t(PageTabs.IDENTITY),

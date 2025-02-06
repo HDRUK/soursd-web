@@ -1,7 +1,4 @@
-import { useStore } from "@/data/store";
 import AppRouterContextProviderMock from "@/mocks/context/router";
-import { mockedCustodian } from "@/mocks/data/custodian";
-import { mockedOrganisation } from "@/mocks/data/organisation";
 import { ProjectEntities } from "@/services/projects/getEntityProjects";
 import {
   commonAccessibilityTests,
@@ -9,20 +6,10 @@ import {
   render,
   waitFor,
 } from "@/utils/testUtils";
-import Projects from ".";
 import { mockUseStore } from "jest.setup";
-
-// jest.mock("@/data/store");
+import Projects from ".";
 
 const mockedPush = jest.fn();
-
-// const defaultOrganisation = mockedOrganisation({ id: 1 });
-// const defaultCustodian = mockedCustodian({ id: 1 });
-
-// (useStore as unknown as jest.Mock).mockImplementation(() => ({
-//   getOrganisation: () => defaultOrganisation,
-//   getCustodian: () => defaultCustodian,
-// }));
 
 const renderProjects = ({ variant }: { variant: ProjectEntities }) =>
   render(
@@ -35,6 +22,7 @@ describe("Organisation Projects", () => {
   beforeEach(() => {
     mockUseStore();
   });
+
   it("display 10 projects", async () => {
     const { getAllByTestId } = renderProjects({
       variant: "organisation",

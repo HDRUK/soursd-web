@@ -1,12 +1,4 @@
 import { ROUTES } from "@/consts/router";
-import { useStore } from "@/data/store";
-import {
-  mockedAccreditation,
-  mockedAffiliation,
-  mockedEducation,
-  mockedEmployment,
-  mockedUser,
-} from "@/mocks/data/user";
 import {
   commonAccessibilityTests,
   render,
@@ -15,21 +7,17 @@ import {
 } from "@/utils/testUtils";
 import Completion from "./Completion";
 
-jest.mock("@/data/store");
-
-(useStore as unknown as jest.Mock).mockReturnValue([
-  mockedUser(),
-  {
-    accreditations: [mockedAccreditation()],
-    education: [mockedEducation()],
-    employments: [mockedEmployment()],
-    affiliations: [mockedAffiliation()],
-    training: [],
-    identity: mockedUser(),
-  },
-]);
-
 describe("<Completion />", () => {
+  beforeEach(() => {
+    mockUseStore({
+      config: {
+        histories: {
+          training: [],
+        },
+      },
+    });
+  });
+
   it("has the correct values", async () => {
     render(<Completion />);
 

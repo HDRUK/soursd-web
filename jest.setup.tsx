@@ -27,6 +27,7 @@ import {
 } from "./mocks/data/user";
 import { ResponseMessageType } from "./src/consts/requests";
 import { ROUTES } from "./src/consts/router";
+import deepmerge from "deepmerge";
 
 const nextRouterMock = require("next-router-mock");
 
@@ -109,11 +110,21 @@ export const mockUseStore = (props: Partial<StoreState> = {}) => {
     const originalStore = jest.requireActual("@/data/store").useStore();
     const state = mockedStoreState();
 
+    Object.keys(props).forEach(propKey => {
+      if (propKey !== "config")
+        originalStore[propKey] = props[propKey as keyof StoreState];
+    });
+
     // Must mutate to keep references
     originalStore.config = {
       ...originalStore.config,
       ...state.config,
       ...props.config,
+      histories: {
+        ...originalStore.config.histories,
+        ...state.config.histories,
+        ...props.config?.histories,
+      },
     };
 
     return getterFn ? getterFn(originalStore) : originalStore;

@@ -1,7 +1,15 @@
 import { ROUTES } from "@/consts/router";
 import { mockedCustodian } from "./custodian";
 import { mockedOrganisation } from "./organisation";
-import { mockedUser } from "./user";
+import {
+  mockedAccreditation,
+  mockedAffiliation,
+  mockedEducation,
+  mockedEmployment,
+  mockedTraining,
+  mockedUser,
+} from "./user";
+import { mockedProject } from "./project";
 
 const mockedApiPermissions = [
   {
@@ -112,8 +120,26 @@ const mockedApiPermissions = [
 
 const mockedStoreState = () => ({
   config: {
+    histories: {
+      employments: [mockedEmployment()],
+      training: [mockedTraining()],
+      education: [mockedEducation()],
+      approvedProjects: [mockedProject()],
+      affiliations: [
+        mockedAffiliation({
+          current_employer: false,
+          id: 1,
+          member_id: "A1234567",
+          organisation: {
+            organisation_name: "Organisation 1",
+          },
+        }),
+      ],
+      accreditations: [mockedAccreditation()],
+    },
     user: mockedUser({
       id: 1,
+      registry_id: 1,
     }),
     organisation: mockedOrganisation({
       id: 1,
