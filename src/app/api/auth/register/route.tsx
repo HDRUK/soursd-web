@@ -2,6 +2,7 @@ import axios from "axios";
 import keycloak from "@/config/keycloak";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
+import { COOKIE_OPTIONS } from "@/consts/cookies";
 
 export async function GET(req: Request) {
   const cookieStore = cookies();
@@ -36,16 +37,12 @@ export async function GET(req: Request) {
       response.data;
 
     cookieStore.set("access_token", access_token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      path: "/",
+      ...COOKIE_OPTIONS,
       maxAge: expires_in,
     });
 
     cookieStore.set("refresh_token", refresh_token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      path: "/",
+      ...COOKIE_OPTIONS,
       maxAge: refresh_expires_in,
     });
 

@@ -2,6 +2,7 @@ import axios from "axios";
 import keycloak from "@/config/keycloak";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
+import { COOKIE_OPTIONS } from "@/consts/cookies";
 
 export async function POST() {
   const cookieStore = cookies();
@@ -15,7 +16,6 @@ export async function POST() {
   }
 
   const tokenUrl = `${keycloak.authServerUrl}/realms/${keycloak.realm}/protocol/openid-connect/token`;
-
   try {
     const response = await axios.post(
       tokenUrl,
@@ -36,19 +36,14 @@ export async function POST() {
     } = response.data;
 
     cookieStore.set("access_token", access_token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      path: "/",
+      ...COOKIE_OPTIONS,
       maxAge: expires_in,
     });
 
     cookieStore.set("refresh_token", newRefreshToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      path: "/",
+      ...COOKIE_OPTIONS,
       maxAge: refresh_expires_in,
     });
-
     return NextResponse.json({ access_token });
   } catch (_) {
     const errorType = encodeURIComponent("register");

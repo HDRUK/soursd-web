@@ -3,7 +3,7 @@
 import LoadingWrapper from "@/components/LoadingWrapper";
 import useLoginRedirect from "@/hooks/useLoginRedirect";
 import { usePathname } from "@/i18n/routing";
-import { getAccessToken } from "@/services/requests";
+import { getAccessToken } from "@/services/requestHelpers";
 import { handleLogin } from "@/utils/keycloak";
 import Cookies from "js-cookie";
 import { PropsWithChildren, useEffect, useState } from "react";

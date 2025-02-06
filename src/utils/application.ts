@@ -22,4 +22,8 @@ function parseSystemConfig(data: GetSystemConfigResponse | undefined) {
     : {};
 }
 
-export { parseSystemConfig };
+function isProduction() {
+  return process.env.NODE_ENV === "production";
+}
+
+export { parseSystemConfig, isProduction };

@@ -1,6 +1,7 @@
 import { Paged, ResponseJson, ResponseOptions } from "@/types/requests";
 import { Notification } from "@/types/notifications";
-import { getRequest, handleJsonResponse } from "../requests";
+import { getRequest } from "../requests";
+import { handleJsonResponse } from "../requestHelpers";
 
 export default async (
   userId: number,

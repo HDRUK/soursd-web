@@ -6,7 +6,7 @@ import { ApplicationDataProvider } from "@/context/ApplicationData";
 import { usePathname, useRouter } from "@/i18n/routing";
 import { getMe } from "@/services/auth";
 import { getCustodianUser } from "@/services/custodian_users";
-import { getAccessToken } from "@/services/requests";
+import { getAccessToken } from "@/services/requestHelpers";
 import { User } from "@/types/application";
 import { handleLogin } from "@/utils/keycloak";
 import Cookies from "js-cookie";
