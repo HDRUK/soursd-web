@@ -1,5 +1,6 @@
 import { Paged, ResponseJson, ResponseOptions } from "@/types/requests";
-import { getRequest, handleJsonResponse } from "../requests";
+import { getRequest } from "../requests";
+import { handleJsonResponse } from "../requestHelpers";
 import { AccreditationsResponse } from "./types";
 
 export default async (

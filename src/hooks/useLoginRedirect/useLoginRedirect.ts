@@ -10,8 +10,8 @@ export default function useLoginRedirect() {
   const [isReady, setReady] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
-  const auth = useAuth();
-  const isAuthenticated = !!auth;
+  const { user, loading } = useAuth();
+  const isAuthenticated = !!user;
 
   const redirectUser = async (data?: User) => {
     if (data?.user_group === UserGroup.CUSTODIANS) {
@@ -26,10 +26,6 @@ export default function useLoginRedirect() {
       router.replace(ROUTES.homepage.path);
     }
   };
-
-  useEffect(() => {
-    if (pathname !== ROUTES.register.path) setReady(true);
-  }, [pathname]);
 
   useEffect(() => {
     async function initRegister() {
@@ -48,15 +44,18 @@ export default function useLoginRedirect() {
       }
     }
 
-    if (isAuthenticated) {
-      initRegister();
-    } else {
-      setReady(true);
+    if (!loading) {
+      if (isAuthenticated) {
+        initRegister();
+      } else if (pathname !== ROUTES.register.path) {
+        setReady(true);
+      }
     }
-  }, [isAuthenticated]);
+  }, [loading, isAuthenticated, pathname]);
 
   return {
     isReady,
     isAuthenticated,
+    loading,
   };
 }

@@ -40,6 +40,7 @@
     "babel-jest": "^29.7.0",
     "cookie": "^0.6.0",
     "cookies-next": "^4.2.1",
+    "countries-list": "^3.1.1",
     "date-fns": "^4.1.0",
     "dayjs": "^1.11.11",
     "deepmerge": "^4.3.1",

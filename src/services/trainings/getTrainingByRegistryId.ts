@@ -1,5 +1,6 @@
 import { ResponseJson, ResponseOptions } from "@/types/requests";
-import { getRequest, handleJsonResponse } from "../requests";
+import { getRequest } from "../requests";
+import { handleJsonResponse } from "../requestHelpers";
 import { TrainingsResponse } from "./types";
 
 export default async (

@@ -1,5 +1,6 @@
 import { ResponseJson, ResponseOptions } from "@/types/requests";
-import { handleJsonResponse, patchRequest } from "../requests";
+import { patchRequest } from "../requests";
+import { handleJsonResponse } from "../requestHelpers";
 
 export type PatchCustodianRulesPayload = {
   rule_ids: number[];
