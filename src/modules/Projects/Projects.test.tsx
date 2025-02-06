@@ -6,7 +6,6 @@ import {
   render,
   waitFor,
 } from "@/utils/testUtils";
-import { mockUseStore } from "jest.setup";
 import Projects from ".";
 
 const mockedPush = jest.fn();
@@ -19,10 +18,6 @@ const renderProjects = ({ variant }: { variant: ProjectEntities }) =>
   );
 
 describe("Organisation Projects", () => {
-  beforeEach(() => {
-    mockUseStore();
-  });
-
   it("display 10 projects", async () => {
     const { getAllByTestId } = renderProjects({
       variant: "organisation",

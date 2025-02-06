@@ -12,7 +12,3 @@ declare global {
 }
 
 declare function mockUseStore(config?: Partial<StoreState>): string;
-
-// declare var signup(id?: string): string[];
-
-// declare var mockUseStore(state?: Partial<StoreState>): void;
