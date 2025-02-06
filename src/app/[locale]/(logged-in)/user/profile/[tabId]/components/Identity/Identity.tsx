@@ -47,7 +47,7 @@ export default function Identity() {
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
-  const updateUser = useMutation(putUserQuery(user.id));
+  const updateUser = useMutation(putUserQuery(user?.id));
 
   const handleDetailsSubmit = useCallback(
     async (fields: IdentityFormValues) => {

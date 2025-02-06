@@ -1,6 +1,7 @@
 import { EntityType } from "@/types/api";
 import { ResponseJson, ResponseOptions } from "@/types/requests";
-import { handleJsonResponse, postRequest } from "../requests";
+import { postRequest } from "../requests";
+import { handleJsonResponse } from "../requestHelpers";
 import { PostApprovalPayload } from "./types";
 
 export default async (

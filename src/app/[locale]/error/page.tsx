@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
-import { handleLogin, handleRegister } from "@/utils/keycloak";
+import { handleLogin, handleLogout, handleRegister } from "@/utils/keycloak";
 import ContactLink from "@/components/ContactLink";
 import ReactDOMServer from "react-dom/server";
 
@@ -23,6 +23,8 @@ const Error = () => {
         return () => handleLogin();
       case "register":
         return () => handleRegister();
+      case "logout":
+        return () => handleLogout();
       default:
         return undefined;
     }

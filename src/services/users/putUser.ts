@@ -1,5 +1,6 @@
 import { ResponseJson, ResponseOptions } from "@/types/requests";
-import { handleJsonResponse, putRequest } from "../requests";
+import { putRequest } from "../requests";
+import { handleJsonResponse } from "../requestHelpers";
 import { PutUserPayload, PutUserResponse } from "./types";
 
 export default async (
