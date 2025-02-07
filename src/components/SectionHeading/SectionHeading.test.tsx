@@ -1,5 +1,4 @@
 import { commonAccessibilityTests, render, screen } from "@/utils/testUtils";
-import Quote, { QuoteProps } from "./Quote";
 import SectionHeading from "./SectionHeading";
 
 const renderTest = () =>

@@ -8,7 +8,7 @@ import ResultsCard from "@/components/ResultsCard";
 import UserRegisteredStatus from "@/components/UserRegisteredStatus";
 import { useStore } from "@/data/store";
 import usePaginatedQuery from "@/hooks/usePaginatedQuery";
-import { PageBody, PageBodyContainer, PageSection } from "@/modules";
+import { PageBody, PageSection } from "@/modules";
 import { getOrganisationUsers } from "@/services/organisations";
 import { formatShortDate } from "@/utils/date";
 import { isRegistered } from "@/utils/user";

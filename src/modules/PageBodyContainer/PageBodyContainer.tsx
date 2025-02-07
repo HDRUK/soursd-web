@@ -1,9 +1,7 @@
-import { Box, BoxProps, Typography } from "@mui/material";
-import PageTitle from "../PageTitle";
-import { ReactNode } from "react";
 import SectionHeading, {
   SectionHeadingProps,
 } from "@/components/SectionHeading";
+import { Box, BoxProps } from "@mui/material";
 
 type PageBodyContainerProps = BoxProps & SectionHeadingProps;
 

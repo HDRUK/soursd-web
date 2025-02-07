@@ -6,16 +6,14 @@ import FormControlHorizontal from "@/components/FormControlHorizontal";
 import FormFieldArray from "@/components/FormFieldArray";
 import GoogleAutocomplete from "@/components/GoogleAutocomplete";
 import { useStore } from "@/data/store";
+import { PageBody, PageSection } from "@/modules";
 import SaveIcon from "@mui/icons-material/Save";
+import { LoadingButton } from "@mui/lab";
 import { Box, Grid } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { useTranslations } from "next-intl";
 import React, { useMemo } from "react";
-
-import { LoadingButton } from "@mui/lab";
 import usePatchOrganisation from "../../../hooks/usePatchOrganisation";
-
-import { PageBody, PageSection } from "@/modules";
 import { FormData, getDefaultValues, getValidation } from "./config/form";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";

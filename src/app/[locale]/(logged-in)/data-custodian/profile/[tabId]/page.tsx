@@ -1,7 +1,6 @@
 import { ConfigProps, withConfig } from "@/components/Config";
 import { redirect } from "@/i18n/routing";
-import { PageBodyContainer, PageTitle } from "@/modules";
-import { Typography } from "@mui/material";
+import { PageBodyContainer } from "@/modules";
 import { useTranslations } from "next-intl";
 import TabsContents from "./components/TabsContents";
 import TabsSections from "./components/TabsSections";

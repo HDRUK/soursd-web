@@ -3,7 +3,7 @@ import Icon from "@/components/Icon";
 import Results from "@/components/Results";
 import ResultsCard from "@/components/ResultsCard";
 import { useStore } from "@/data/store";
-import { PageBody, PageBodyContainer, PageSection } from "@/modules";
+import { PageBody, PageSection } from "@/modules";
 import SearchBar from "@/modules/SearchBar";
 import {
   deleteCustodianUser,

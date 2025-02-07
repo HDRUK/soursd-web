@@ -1,5 +1,3 @@
-import { MODE } from "@/config/theme";
-import { colorToRgba } from "@/utils/theme";
 import { css, styled } from "@mui/material";
 
 export const StyledGuidance = styled("div")<{ positionVertical: boolean }>(
