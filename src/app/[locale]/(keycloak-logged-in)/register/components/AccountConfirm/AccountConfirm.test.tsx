@@ -11,7 +11,6 @@ import {
 } from "@/utils/testUtils";
 import AccountConfirm from "./AccountConfirm";
 
-jest.mock("@/data/store");
 jest.mock("@/i18n/routing", () => ({
   useParams: jest.fn(),
   useRouter: jest.fn(() => ({

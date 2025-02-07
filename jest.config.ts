@@ -36,6 +36,7 @@ const customJestConfig = {
     "^@/context/(.*)$": "<rootDir>/src/context/$1",
     "^@/i18n/(.*)$": "<rootDir>/src/i18n/$1",
   },
+  transformIgnorePatterns: ["<rootDir>/node_modules/(?!pretty-bytes)/)"],
   testPathIgnorePatterns: [
     "<rootDir>/.next/",
     "<rootDir>/node_modules/",
