@@ -1,7 +1,7 @@
-import { render, screen, fireEvent } from "@testing-library/react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { QueryState } from "@/types/form";
 import { Organisation } from "@/types/application";
+import { QueryState } from "@/types/form";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { fireEvent, render, screen } from "@testing-library/react";
 import OrganisationUsersList from "./OrganisationUsersList";
 
 jest.mock("@/services/projects");
@@ -16,14 +16,6 @@ jest.mock("@/context/ApplicationData", () => ({
 
 jest.mock("next-intl", () => ({
   useTranslations: () => jest.fn((key: string) => key),
-}));
-
-jest.mock("@/data/store", () => ({
-  useStore: jest.fn().mockImplementation(selector =>
-    selector({
-      getCustodian: () => ({ id: 1 }),
-    })
-  ),
 }));
 
 describe("OrganisationUsersList", () => {

@@ -7,16 +7,19 @@ import PageTitle from "../PageTitle";
 
 interface PageGuidanceProps extends GuidanceProps {
   title?: ReactNode;
+  subTabs?: ReactNode;
   children: ReactNode;
 }
 
 export default function PageGuidance({
   title,
+  subTabs,
   children,
   ...restProps
 }: PageGuidanceProps) {
   return (
     <Guidance {...restProps}>
+      {subTabs}
       <PageContent>
         {title && (
           <PageTitle>

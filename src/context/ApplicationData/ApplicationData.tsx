@@ -4,7 +4,6 @@ import ContactLink from "@/components/ContactLink";
 import OverlayCenterAlert from "@/components/OverlayCenterAlert";
 import { VALIDATION_SCHEMA_KEY } from "@/consts/application";
 import { ROUTES } from "@/consts/router";
-import { UserGroup } from "@/consts/user";
 import { useStore } from "@/data/store";
 import { usePathname } from "@/i18n/routing";
 import PageContainer from "@/modules/PageContainer";
@@ -16,7 +15,6 @@ import {
   User,
 } from "@/types/application";
 import { parseSystemConfig } from "@/utils/application";
-import { showAlert } from "@/utils/showAlert";
 import { useTranslations } from "next-intl";
 import {
   ReactNode,
@@ -43,7 +41,6 @@ interface ApplicationDataProviderProps {
 }
 
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
-const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
 const ApplicationDataProvider = ({
   children,
@@ -53,7 +50,6 @@ const ApplicationDataProvider = ({
   value,
 }: ApplicationDataProviderProps) => {
   const t = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
-  const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
   const addUrlToHistory = useStore(store => store.addUrlToHistory);
   const [user, setUser] = useStore(store => [store.config.user, store.setUser]);
@@ -111,15 +107,6 @@ const ApplicationDataProvider = ({
   } = applicationData;
 
   useEffect(() => {
-    if (
-      !userData?.data.profile_completed_at &&
-      userData?.data?.user_group === UserGroup.USERS
-    ) {
-      showAlert("warning", {
-        text: tProfile("profileCompleteWarningMessage"),
-      });
-    }
-
     setUser(userData?.data);
   }, [userData?.data]);
 

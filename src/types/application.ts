@@ -85,9 +85,7 @@ interface UserProfileCompletionFields {
 
 type UserProfileCompletionSchema = Record<
   UserProfileCompletionCategories,
-  {
-    fields: UserProfileCompletionFields[];
-  }
+  UserProfileCompletionFields[]
 >;
 
 type UserProfileCompletionJson = Record<
@@ -151,6 +149,13 @@ interface Subsidiary extends AddressFields {
   };
 }
 
+interface Charity extends AddressFields {
+  id: number;
+  registration_id: string;
+  name: string;
+  website?: string;
+}
+
 interface OrganisationIdvt {
   idvt_result: boolean | null;
   idvt_completed_at: string;
@@ -172,7 +177,7 @@ interface Organisation extends OrganisationIdvt, AddressFields {
   lead_applicant_email: string;
   lead_applicant_organisation_name: string;
   sector_id: number;
-  charity_registration_id: string;
+  charities: Charity[];
   ror_id: string;
   website: string;
   smb_status: boolean;

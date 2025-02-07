@@ -1,6 +1,8 @@
 "use client";
 
-import { Button, Box, SxProps } from "@mui/material";
+import { Button, Box, SxProps, Tooltip, IconButton } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { useEffect } from "react";
 import {
   Control,
   useFormContext,
@@ -23,6 +25,7 @@ interface FormFieldArrayProps<
   addButtonLabel?: string;
   boxSx?: SxProps;
   minimumRows?: number;
+  initialRowCount?: number;
 }
 
 const NAMESPACE_TRANSLATION_FORM = "Form";
@@ -41,6 +44,7 @@ const FormFieldArray = <T extends FieldValues>({
     alignItems: "center",
   },
   minimumRows,
+  initialRowCount = 0,
 }: FormFieldArrayProps<T>) => {
   const t = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const context = useFormContext<T>();
@@ -49,6 +53,7 @@ const FormFieldArray = <T extends FieldValues>({
   const {
     fields: fieldsArray,
     append,
+    replace,
     remove,
   } = useFieldArray({
     control: effectiveControl,
@@ -60,6 +65,12 @@ const FormFieldArray = <T extends FieldValues>({
       append(createNewRow());
     }
   };
+
+  useEffect(() => {
+    if (createNewRow && fieldsArray.length === 0 && initialRowCount > 0) {
+      replace(Array.from({ length: initialRowCount }, () => createNewRow()));
+    }
+  }, []);
 
   return (
     <Box sx={{ p: 1, gap: 2, display: "flex", flexDirection: "column" }}>
@@ -73,17 +84,20 @@ const FormFieldArray = <T extends FieldValues>({
               mt: 1,
               justifyContent: "flex-end",
             }}>
-            <Button
-              disabled={minimumRows && fieldsArray.length < minimumRows}
-              onClick={() => remove(index)}>
-              {removeButtonLabel || t("arrayRemoveButton")}
-            </Button>
+            <Tooltip title={removeButtonLabel || t("arrayRemoveButton")}>
+              <IconButton
+                disabled={minimumRows && fieldsArray.length <= minimumRows}
+                onClick={() => remove(index)}
+                data-testid="remove-from-field-array-button">
+                <DeleteIcon />
+              </IconButton>
+            </Tooltip>
           </Box>
         </Box>
       ))}
 
-      <Box sx={{ mt: 1, display: "flex", justifyContent: "flex-end" }}>
-        <Button onClick={handleAddRow} variant="contained" color="primary">
+      <Box sx={{ mt: 1, display: "flex", justifyContent: "flex-start" }}>
+        <Button onClick={handleAddRow} variant="outlined" color="primary">
           {addButtonLabel || t("arrayAddButton")}
         </Button>
       </Box>

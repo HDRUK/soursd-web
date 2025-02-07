@@ -1,4 +1,5 @@
 import { UserFeedSource } from "@/consts/user";
+import { StoreState, useStore } from "@/data/store";
 import { defineMatchMedia } from "@/utils/testUtils";
 import "@testing-library/jest-dom";
 import "jest-axe/extend-expect";
@@ -8,10 +9,11 @@ import "./jest.utils";
 import { mock200Json, mockPagedResults } from "./jest.utils";
 import { mockedCustodian, mockedCustodianUser } from "./mocks/data/custodian";
 import { mockedNotification } from "./mocks/data/notification";
+import { TextEncoder } from 'util';
 import { mockedOrganisation } from "./mocks/data/organisation";
 import { mockedPermission } from "./mocks/data/permission";
 import { mockedProject, mockedProjects } from "./mocks/data/project";
-import { mockedApiPermissions } from "./mocks/data/store";
+import { mockedApiPermissions, mockedStoreState } from "./mocks/data/store";
 import {
   mockedSystemConfig,
   mockedValidationSchema,
@@ -28,6 +30,27 @@ import { ResponseMessageType } from "./src/consts/requests";
 import { ROUTES } from "./src/consts/router";
 
 const nextRouterMock = require("next-router-mock");
+
+(() => {
+  const originalConsole = global.console;
+
+  global.console = {
+    ...global.console,
+
+    error: (...args) => {
+      if (
+        typeof args[0] === "string" &&
+        (args[0].includes("for a non-boolean attribute") ||
+          args[0].includes("`fullWidth` prop on a DOM element"))
+      ) {
+        return true;
+      }
+
+      // Show the original error for everything else
+      originalConsole.error(...args);
+    },
+  };
+})();
 
 expect.extend(matchers);
 
@@ -63,6 +86,10 @@ jest.mock("./src/context/ApplicationData", () => ({
   }),
 }));
 
+jest.mock("@/data/store", () => ({
+  useStore: jest.fn(),
+}));
+
 jest.mock("react-google-recaptcha", () => {
   const RecaptchaV2 = forwardRef((props, ref) => {
     useImperativeHandle(ref, () => ({
@@ -94,6 +121,41 @@ global.matchMedia = () => {
     removeListener: () => {},
   };
 };
+
+jest.mock("@/data/store", () => ({
+  useStore: jest.fn(),
+}));
+
+const useStoreMock = jest.mocked(useStore);
+
+export const mockUseStore = (props: Partial<StoreState> = {}) => {
+  useStoreMock.mockImplementation(getterFn => {
+    const originalStore = jest.requireActual("@/data/store").useStore();
+    const state = mockedStoreState();
+
+    Object.keys(props).forEach(propKey => {
+      if (propKey !== "config")
+        originalStore[propKey] = props[propKey as keyof StoreState];
+    });
+
+    // Must mutate to keep references
+    originalStore.config = {
+      ...originalStore.config,
+      ...state.config,
+      ...props.config,
+      histories: {
+        ...originalStore.config.histories,
+        ...state.config.histories,
+        ...props.config?.histories,
+      },
+    };
+
+    return getterFn ? getterFn(originalStore) : originalStore;
+  });
+};
+
+global.TextEncoder = TextEncoder;
+
 
 async function mockFetch(url: string, init?: RequestInit) {
   const [baseUrl, queryString] = url.split("?");
@@ -353,6 +415,14 @@ async function mockFetch(url: string, init?: RequestInit) {
           data: mockedSystemConfig(),
         }),
       };
+    case `/api/auth/token`:
+    return {
+      ok: true,
+      status: 200,
+      json: async () => ({
+        access_token: 'fake-access-token'
+      }),
+    };
     default: {
       if (url.includes("/test")) {
         return mock200Json(null);
@@ -367,6 +437,10 @@ beforeAll(() => {
   defineMatchMedia(1024);
 
   global.fetch = jest.fn();
+  global.mockUseStore = mockUseStore;
 });
 
-beforeEach(() => global.fetch.mockImplementation(mockFetch));
+beforeEach(() => {
+  global.fetch.mockImplementation(mockFetch);
+  global.mockUseStore();
+});

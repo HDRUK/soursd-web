@@ -1,6 +1,7 @@
 import { EntityType } from "@/types/api";
 import { ResponseJson, ResponseOptions } from "@/types/requests";
-import { handleJsonResponse, deleteRequest } from "../requests";
+import { deleteRequest } from "../requests";
+import { handleJsonResponse } from "../requestHelpers";
 import { DeleteApprovalPayload } from "./types";
 
 export default async (

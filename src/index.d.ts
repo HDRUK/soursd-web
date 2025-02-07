@@ -6,3 +6,9 @@ declare namespace jest {
   interface Expect extends CustomMatchers {}
   interface Matchers<R> extends CustomMatchers<R> {}
 }
+
+declare global {
+  function mockUseStore(config?: Partial<StoreState>): void;
+}
+
+declare function mockUseStore(config?: Partial<StoreState>): string;

@@ -38,15 +38,17 @@ interface Routes {
   profileResearcherDetails: RouteConfig;
   profileResearcherProjects: RouteConfig;
   profileOrganisation: RouteConfig;
-  profileOrganisationManageDelegates: RouteConfig;
+  profileOrganisationActions: RouteConfig;
   profileOrganisationDetails: RouteConfig;
   profileOrganisationDetailsNameAndAddress: RouteConfig;
   profileOrganisationDetailsDigitalIdentifiers: RouteConfig;
   profileOrganisationDetailsSectorSiteAndWebsite: RouteConfig;
   profileOrganisationDetailsSubsidiaries: RouteConfig;
   profileOrganisationDetailsSecurityCompliance: RouteConfig;
+  profileOrganisationUserAdministration: RouteConfig;
+  profileOrganisationUserAdministrationDelegates: RouteConfig;
+  profileOrganisationUserAdministrationEmployeeStudent: RouteConfig;
   profileOrganisationProjects: RouteConfig;
-  profileOrganisationManageUsers: RouteConfig;
   admin: RouteConfig;
 }
 

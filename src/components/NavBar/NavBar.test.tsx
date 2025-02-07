@@ -9,6 +9,8 @@ import {
   waitFor,
 } from "@/utils/testUtils";
 import { get } from "js-cookie";
+import { useStore } from "@/data/store";
+import { mockedUser } from "@/mocks/data/user";
 import NavBar from "./NavBar";
 
 jest.mock("js-cookie", () => ({
@@ -19,6 +21,16 @@ jest.mock("@/utils/keycloak", () => ({
   handleLogin: jest.fn(),
   handleLogout: jest.fn(),
 }));
+
+jest.mock("@/i18n/routing", () => ({
+  useRouter: jest.fn(() => ({
+    push: jest.fn(),
+  })),
+}));
+
+jest.mock("@/data/store");
+
+const mockUseStore = useStore as jest.MockedFunction<typeof useStore>;
 
 (get as jest.Mock).mockReturnValue(undefined);
 
@@ -36,6 +48,8 @@ const renderMobileMenuTest = () => {
 
 describe("NavBar Component", () => {
   beforeEach(() => {
+    mockUseStore.mockReturnValue(undefined);
+
     jest.clearAllMocks();
   });
 
@@ -82,6 +96,14 @@ describe("NavBar Component", () => {
   });
 
   it("calls handleLogout on 'Sign Out' click when authenticated", () => {
+    mockUseStore.mockReturnValue({
+      config: {
+        user: mockedUser({
+          first_name: "David",
+        }),
+      },
+    });
+
     (get as jest.Mock).mockReturnValue(mockedJwt);
 
     render(<NavBar />);
@@ -92,6 +114,14 @@ describe("NavBar Component", () => {
   });
 
   it("displays 'Sign Out' if the user is authenticated", () => {
+    mockUseStore.mockReturnValue({
+      config: {
+        user: mockedUser({
+          first_name: "David",
+        }),
+      },
+    });
+
     (get as jest.Mock).mockReturnValue(mockedJwt);
 
     render(<NavBar />);

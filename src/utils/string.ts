@@ -2,4 +2,7 @@ function capitaliseFirstLetter(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-export { capitaliseFirstLetter };
+const toCamelCase = (str: string) =>
+  str.replace(/-([a-z])/g, (_, char) => char.toUpperCase());
+
+export { capitaliseFirstLetter, toCamelCase };

@@ -1,5 +1,7 @@
 import { ResponseJson, ResponseOptions } from "@/types/requests";
-import { deleteRequest, handleJsonResponse } from "../requests";
+import { deleteRequest } from "../requests";
+import { handleJsonResponse } from "../requestHelpers";
+
 import { GetCustodiansUsersResponse } from "./types";
 
 export default async (

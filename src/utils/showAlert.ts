@@ -1,4 +1,6 @@
 import theme from "@/theme";
+import dayjs from "dayjs";
+import Cookies from "js-cookie";
 import Swal, { SweetAlertIcon } from "sweetalert2";
 
 const notificationValues = [
@@ -17,6 +19,7 @@ const notificationValues = [
 export const showAlert = (
   type: SweetAlertIcon,
   options: {
+    id?: string;
     text: string;
     title?: string | undefined;
     confirmButtonText?: string | undefined;
@@ -26,27 +29,49 @@ export const showAlert = (
     willClose?: () => void;
     preConfirm?: () => void | undefined;
     preDeny?: () => void | undefined;
+    untilDuration?: number;
   }
 ) => {
-  const { cancelButtonText, confirmButtonText, text, title, ...restOptions } =
-    options;
+  const {
+    cancelButtonText,
+    confirmButtonText,
+    text,
+    title,
+    willClose,
+    untilDuration,
+    id,
+    ...restOptions
+  } = options;
 
-  Swal.fire({
-    icon: type,
-    title:
-      title ??
-      notificationValues
-        .filter(item => item.type === type)
-        .map(item => item.title),
-    confirmButtonColor: theme.palette.primary.main,
-    confirmButtonText: confirmButtonText ?? "OK",
-    denyButtonColor: theme.palette.default.main,
-    denyButtonText: cancelButtonText,
-    showDenyButton: !!cancelButtonText,
-    allowOutsideClick: false,
-    html: text,
-    ...restOptions,
-  });
+  const cookieName = `alert_${id}`;
+
+  if (!untilDuration || !Cookies.get(cookieName)) {
+    Swal.fire({
+      icon: type,
+      title:
+        title ??
+        notificationValues
+          .filter(item => item.type === type)
+          .map(item => item.title),
+      confirmButtonColor: theme.palette.primary.main,
+      confirmButtonText: confirmButtonText ?? "OK",
+      denyButtonColor: theme.palette.default.main,
+      denyButtonText: cancelButtonText,
+      showDenyButton: !!cancelButtonText,
+      allowOutsideClick: false,
+      html: text,
+      willClose: () => {
+        if (untilDuration) {
+          Cookies.set(cookieName, "true", {
+            expires: dayjs().add(untilDuration, "hour").toDate(),
+          });
+        }
+
+        willClose?.();
+      },
+      ...restOptions,
+    });
+  }
 };
 
 export const closeAlert = () => {

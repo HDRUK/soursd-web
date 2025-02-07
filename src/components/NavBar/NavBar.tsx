@@ -4,6 +4,7 @@ import { useStore } from "@/data/store";
 import useAuth from "@/hooks/useAuth";
 import { Link } from "@/i18n/routing";
 import NotificationsMenu from "@/modules/NotificationsMenu";
+import { useRouter } from "@/i18n/routing";
 import { handleLogin, handleLogout, handleRegister } from "@/utils/keycloak";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
@@ -38,9 +39,8 @@ export enum ButtonVariant {
 
 export default function NavBar() {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_NAVBAR);
-  const auth = useAuth();
-  const user = useStore(store => store.getUser());
-
+  const storedUser = useStore(store => store.getUser());
+  const router = useRouter();
   const theme = useTheme();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
@@ -98,15 +98,14 @@ export default function NavBar() {
       onClick: e => {
         e.preventDefault();
 
-        if (auth) {
+        if (storedUser) {
           handleLogout();
         } else {
           handleLogin();
         }
       },
     },
-    // Conditionally render the register button only when not authenticated
-    ...(auth
+    ...(storedUser
       ? []
       : [
           {
@@ -140,7 +139,7 @@ export default function NavBar() {
                 {text || icon}
               </Button>
             ))}
-            {auth && user && <NotificationsMenu />}
+            {storedUser && <NotificationsMenu />}
           </Box>
         </StyledHeader>
       </Box>

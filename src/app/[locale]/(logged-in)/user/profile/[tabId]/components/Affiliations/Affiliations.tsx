@@ -1,6 +1,7 @@
 import ContactLink from "@/components/ContactLink";
 
 import Results from "@/components/Results";
+import { ROUTES } from "@/consts/router";
 import { AffiliationRelationship } from "@/consts/user";
 import { useStore } from "@/data/store";
 import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
@@ -11,6 +12,8 @@ import {
 } from "@/services/affiliations";
 import { PostAffiliationPayload } from "@/services/affiliations/types";
 import { showAlert } from "@/utils/showAlert";
+import EastIcon from "@mui/icons-material/East";
+import { LoadingButton } from "@mui/lab";
 import {
   Box,
   Table,
@@ -22,11 +25,8 @@ import {
 } from "@mui/material";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import { useCallback, useEffect } from "react";
-import { LoadingButton } from "@mui/lab";
-import EastIcon from "@mui/icons-material/East";
 import { useRouter } from "next/navigation";
-import { ROUTES } from "@/consts/router";
+import { useCallback, useEffect } from "react";
 import AffiliationsForm from "../AffiliationsForm";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
@@ -134,7 +134,7 @@ export default function Affiliations() {
                 organisation: { organisation_name },
               }) => {
                 return (
-                  <TableRow>
+                  <TableRow key={organisation_name}>
                     <TableCell>{organisation_name}</TableCell>
                     <TableCell>
                       {current_employer

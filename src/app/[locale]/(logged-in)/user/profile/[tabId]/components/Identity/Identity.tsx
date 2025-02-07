@@ -5,42 +5,35 @@ import Form from "@/components/Form";
 import FormActions from "@/components/FormActions";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
 import FormSection from "@/components/FormSection";
-import OverlayCenter from "@/components/OverlayCenter";
 import Text from "@/components/Text";
 import yup from "@/config/yup";
 import { VALIDATION_ORC_ID } from "@/consts/form";
-import { UserProfileCompletionCategories } from "@/consts/user";
+import { ROUTES } from "@/consts/router";
 import { useStore } from "@/data/store";
-import useUserProfileCompletion from "@/hooks/useUserProfileCompletion";
 import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
 import { PageGuidance } from "@/modules";
-import { getOrganisations } from "@/services/organisations";
+import { putUserQuery } from "@/services/users";
+import EastIcon from "@mui/icons-material/East";
 import InfoIcon from "@mui/icons-material/Info";
 import SaveIcon from "@mui/icons-material/Save";
-import EastIcon from "@mui/icons-material/East";
 import { LoadingButton } from "@mui/lab";
 import {
   Box,
   Checkbox,
-  CircularProgress,
   FormControlLabel,
   Grid,
-  MenuItem,
-  Select,
   TextField,
   Tooltip,
 } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import { useCallback, useMemo } from "react";
-import { ROUTES } from "@/consts/router";
 import { useRouter } from "next/navigation";
+import { useCallback, useMemo } from "react";
 
 export interface IdentityFormValues {
   first_name: string;
   last_name: string;
   orc_id?: string | null;
-  organisation_id: number;
   consent_scrape?: boolean;
 }
 
@@ -48,30 +41,13 @@ const NAMESPACE_TRANSLATION_FORM = "Form";
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
 export default function Identity() {
-  const {
-    update: updateCompletion,
-    isError: isUpdateError,
-    isLoading: isUpdateLoading,
-    error: updateError,
-  } = useUserProfileCompletion();
   const router = useRouter();
   const user = useStore(state => state.config.user);
 
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
-  const {
-    isError: isGetOrganisationsError,
-    isLoading: isGetOrganisationsLoading,
-    data: organisationsData,
-    error: organisationsError,
-  } = useQuery({
-    queryKey: ["getOrganisationsError"],
-    queryFn: () =>
-      getOrganisations({
-        error: { message: "noData" },
-      }),
-  });
+  const updateUser = useMutation(putUserQuery(user?.id));
 
   const handleDetailsSubmit = useCallback(
     async (fields: IdentityFormValues) => {
@@ -81,11 +57,7 @@ export default function Identity() {
           ...fields,
         };
 
-        updateCompletion(
-          fields,
-          UserProfileCompletionCategories.IDENTITY,
-          request
-        );
+        await updateUser.mutateAsync(request);
       }
     },
     [user]
@@ -96,9 +68,6 @@ export default function Identity() {
       yup.object().shape({
         first_name: yup.string().required(tForm("firstNameRequiredInvalid")),
         last_name: yup.string().required(tForm("lastNameRequiredInvalid")),
-        organisation_id: yup
-          .number()
-          .required(tForm("organisationNameRequiredInvalid")),
         orc_id: yup
           .string()
           .matches(
@@ -119,30 +88,17 @@ export default function Identity() {
     []
   );
 
-  if (isGetOrganisationsLoading) {
-    return (
-      <OverlayCenter sx={{ color: "#fff" }}>
-        <CircularProgress color="inherit" />
-      </OverlayCenter>
-    );
-  }
-
   const error =
-    (isGetOrganisationsError &&
-      tProfile.rich(organisationsError, {
-        contactLink: ContactLink,
-      })) ||
-    (isUpdateError &&
-      tProfile.rich(updateError, {
-        contactLink: ContactLink,
-      }));
+    updateUser.isError &&
+    tProfile.rich(updateUser.error, {
+      contactLink: ContactLink,
+    });
 
   const formOptions = {
     defaultValues: {
       first_name: user?.first_name,
       last_name: user?.last_name,
       orc_id: user?.orc_id,
-      organisation_id: user?.organisation_id,
       consent_scrape: user?.consent_scrape,
     },
     error,
@@ -154,26 +110,6 @@ export default function Identity() {
         <>
           <FormSection heading={tProfile("identity")}>
             <Grid container rowSpacing={3}>
-              <Grid item xs={12}>
-                <FormControlHorizontal
-                  name="organisation_id"
-                  renderField={fieldProps => (
-                    <Select
-                      {...fieldProps}
-                      inputProps={{
-                        "aria-label": tForm("organisationNameAriaLabel"),
-                      }}>
-                      {organisationsData?.data?.data.map(
-                        ({ organisation_name, id }) => (
-                          <MenuItem value={id} key={id}>
-                            {organisation_name}
-                          </MenuItem>
-                        )
-                      )}
-                    </Select>
-                  )}
-                />
-              </Grid>
               <Grid item xs={12}>
                 <FormControlHorizontal
                   name="first_name"
@@ -228,7 +164,7 @@ export default function Identity() {
             <LoadingButton
               type="submit"
               endIcon={<SaveIcon />}
-              loading={isUpdateLoading}>
+              loading={updateUser.isPending}>
               {tProfile("submitButton")}
             </LoadingButton>
           </FormActions>
