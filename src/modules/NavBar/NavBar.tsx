@@ -1,10 +1,13 @@
 "use client";
 
-import { useRouter } from "@/i18n/routing";
+import { useStore } from "@/data/store";
+import { Link } from "@/i18n/routing";
+import NotificationsMenu from "@/modules/NotificationsMenu";
 import { handleLogin, handleLogout, handleRegister } from "@/utils/keycloak";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
   Box,
+  Button,
   Divider,
   IconButton,
   MenuItem,
@@ -13,12 +16,11 @@ import {
   useTheme,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
-import NotificationsMenu from "@/modules/NotificationsMenu";
-import { useStore } from "@/data/store";
-import HorizontalDrawer from "../HorizontalDrawer";
-import SoursdLogo from "../SoursdLogo";
-import { StyledButton, StyledContainer, StyledHeader } from "./NavBar.styles";
+import { LinkProps } from "next/link";
+import { MouseEvent, useEffect, useState } from "react";
+import HorizontalDrawer from "@/components/HorizontalDrawer";
+import SoursdLogo from "@/components/SoursdLogo";
+import { StyledContainer, StyledHeader } from "./NavBar.styles";
 
 const NAMESPACE_TRANSLATIONS_NAVBAR = "NavBar";
 
@@ -36,8 +38,6 @@ export enum ButtonVariant {
 export default function NavBar() {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_NAVBAR);
   const storedUser = useStore(store => store.getUser());
-  const router = useRouter();
-
   const theme = useTheme();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
@@ -55,39 +55,52 @@ export default function NavBar() {
     text?: string;
     icon?: React.ReactNode;
     isSign?: boolean;
-    onClick?: () => void | undefined;
+    onClick?: LinkProps["onClick"];
+    href?: string;
   }[] = [
     {
       color: ButtonColor.Inherit,
       variant: ButtonVariant.Text,
       text: t("homeButton"),
-      onClick: () => router.push("/"),
+      href: "/",
     },
     {
       color: ButtonColor.Inherit,
       variant: ButtonVariant.Text,
       text: t("aboutButton"),
+      href: "#",
     },
     {
       color: ButtonColor.Inherit,
       variant: ButtonVariant.Text,
       text: t("featuresButton"),
+      href: "#",
     },
     {
       color: ButtonColor.Inherit,
       variant: ButtonVariant.Text,
       text: t("supportButton"),
+      href: "#",
     },
     {
       color: ButtonColor.Inherit,
       variant: ButtonVariant.Text,
       text: t("contactButton"),
+      href: "#",
     },
     {
       color: ButtonColor.Secondary,
       variant: ButtonVariant.Contained,
       text: storedUser ? t("signOutButton") : t("signInButton"),
-      onClick: storedUser ? handleLogout : handleLogin,
+      onClick: (e: MouseEvent<HTMLAnchorElement>) => {
+        e.preventDefault();
+
+        if (storedUser) {
+          handleLogout();
+        } else {
+          handleLogin();
+        }
+      },
     },
     ...(storedUser
       ? []
@@ -96,7 +109,11 @@ export default function NavBar() {
             color: ButtonColor.Primary,
             variant: ButtonVariant.Contained,
             text: t("registerButton"),
-            onClick: handleRegister,
+            onClick: (e: MouseEvent<HTMLAnchorElement>) => {
+              e.preventDefault();
+
+              handleRegister();
+            },
           },
         ]),
   ];
@@ -113,11 +130,11 @@ export default function NavBar() {
         data-testid="header-desktop-menu">
         <StyledHeader>
           <SoursdLogo variant="titled" />
-          <Box sx={{ display: "flex" }}>
+          <Box sx={{ display: "flex", gap: 1 }}>
             {buttons.map(({ text, icon, ...restProps }) => (
-              <StyledButton {...restProps} key={text}>
+              <Button component={Link} {...restProps} key={text}>
                 {text || icon}
-              </StyledButton>
+              </Button>
             ))}
             {storedUser && <NotificationsMenu />}
           </Box>
@@ -164,9 +181,9 @@ export default function NavBar() {
               <MenuItem
                 key={text}
                 sx={{ "&:hover": { backgroundColor: "transparent" } }}>
-                <StyledButton fullWidth {...restProps}>
+                <Button component={Link} fullWidth {...restProps}>
                   {text}
-                </StyledButton>
+                </Button>
               </MenuItem>
             ))}
           </MenuList>

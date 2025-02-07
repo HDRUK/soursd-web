@@ -55,6 +55,29 @@ const nextRouterMock = require("next-router-mock");
 expect.extend(matchers);
 
 jest.mock("next/router", () => nextRouterMock);
+jest.mock("@/i18n/routing", () => ({
+  ...jest.requireActual("@/i18n/routing"),
+  useRouter: jest.fn().mockReturnValue({
+    push: jest.fn(),
+  }),
+  usePathname: jest.fn(),
+}));
+
+jest.mock("next/navigation", () => {
+  return {
+    useParams: jest.fn(),
+    usePathname: jest.fn(),
+    useRouter: jest.fn().mockReturnValue({
+      push: jest.fn(),
+      replace: jest.fn(),
+      prefetch: jest.fn(),
+    }),
+    useSearchParams: () => ({
+      get: () => {},
+    }),
+  };
+});
+
 jest.mock("./src/context/ApplicationData", () => ({
   ...jest.requireActual("./src/context/ApplicationData"),
   useApplicationData: () => ({

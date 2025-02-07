@@ -135,6 +135,10 @@
     "cancelButton": "Cancel"
   },
   "Form": {
+    "unsavedAlertText": "Are you sure you want to leave the form with unsaved changes?",
+    "unsavedAlertTitle": "You have unsaved changes",
+    "unsavedAlertConfirmButton": "Leave form",
+    "unsavedAlertCancelButton": "Go back",
     "certificationUploadPlaceholder": "Upload certification",
     "leadApplicantEmail": "Email",
     "leadApplicantEmailPlaceholder": "Email",
