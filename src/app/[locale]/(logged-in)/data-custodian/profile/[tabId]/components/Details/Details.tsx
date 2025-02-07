@@ -17,8 +17,6 @@ import { useTranslations } from "next-intl";
 import { useCallback, useMemo } from "react";
 import { showAlert } from "@/utils/showAlert";
 
-import IdvtSection from "../IdvtSection";
-
 export interface DetailsFormValues {
   name: string;
   contact_email: string;
@@ -129,18 +127,6 @@ export default function Details({ custodian }: DetailsProps) {
               <FormControlHorizontal
                 name="contact_email"
                 renderField={fieldProps => <TextField {...fieldProps} />}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlHorizontal
-                name="idvt_required"
-                displayLabel={false}
-                displayPlaceholder={false}
-                renderField={fieldProps => (
-                  <IdvtSection
-                    switchProps={{ name: "idvt_required", ...fieldProps }}
-                  />
-                )}
               />
             </Grid>
           </Grid>

@@ -17,6 +17,9 @@ import SaveIcon from "@mui/icons-material/Save";
 import FormActions from "@/components/FormActions";
 import { PatchCustodianRulesPayload } from "@/services/rules/patchCustodianRules";
 import { showAlert } from "@/utils/showAlert";
+import Form from "@/components/Form";
+import { patchCustodian, PatchCustodianPayload } from "@/services/custodians";
+import IdvtSection from "../IdvtSection";
 
 const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 
@@ -35,16 +38,31 @@ const Configuration = () => {
       }),
   });
 
-  const { mutateAsync: mutateUpdateAsync, isPending: isUpdateLoading } =
-    useMutation({
-      mutationKey: ["patchCustodianRules", custodian?.id],
-      mutationFn: (payload: PatchCustodianRulesPayload) =>
-        patchCustodianRules(custodian?.id as number, payload, {
-          error: {
-            message: "submitError",
-          },
-        }),
-    });
+  const {
+    mutateAsync: mutateUpdateRulesAsync,
+    isPending: isUpdateRulesLoading,
+  } = useMutation({
+    mutationKey: ["patchCustodianRules", 2],
+    mutationFn: (payload: PatchCustodianRulesPayload) =>
+      patchCustodianRules(2 as number, payload, {
+        error: {
+          message: "submitError",
+        },
+      }),
+  });
+
+  const {
+    mutateAsync: mutateUpdateCustodianAsync,
+    isPending: isUpdateCustodianLoading,
+  } = useMutation({
+    mutationKey: ["patchCustodian", 2],
+    mutationFn: (payload: PatchCustodianPayload) =>
+      patchCustodian(2, payload, {
+        error: {
+          message: "submitError",
+        },
+      }),
+  });
 
   const { data: allRules } = useQuery({
     queryKey: ["getAllRules"],
@@ -75,14 +93,19 @@ const Configuration = () => {
   }, [custodianRules, allRules, reset, custodianRuleIds]);
 
   const onSubmit = (formData: Record<string, boolean>) => {
-    const enabledRules = Object.keys(formData).filter(key => formData[key]);
-    const payload = {
-      rule_ids: allRules?.data
-        .filter(rule => enabledRules.includes(`rule-${rule.id}`))
-        .map(rule => rule.id),
+    const enabledRules = Object.keys(formData)
+      .filter(key => key.startsWith("rule-") && formData[key])
+      .map(key => parseInt(key.replace("rule-", ""), 10));
+    const rulesPayload = {
+      rule_ids: enabledRules,
     } as PatchCustodianRulesPayload;
 
-    mutateUpdateAsync(payload).then(() => {
+    const custodianPayload = {
+      idvt_required: formData.idvt_required,
+    } as PatchCustodianPayload;
+
+    mutateUpdateRulesAsync(rulesPayload);
+    mutateUpdateCustodianAsync(custodianPayload).then(() => {
       showAlert("success", {
         text: tProfile("saveSuccess"),
         confirmButtonText: tProfile("okButton"),
@@ -93,12 +116,7 @@ const Configuration = () => {
 
   return (
     <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
-      <Box
-        gap={2}
-        display="flex"
-        flexDirection="column"
-        component="form"
-        onSubmit={handleSubmit(onSubmit)}>
+      <Form onSubmit={handleSubmit(onSubmit)}>
         <Box display="flex" flexDirection="column" alignItems="stretch" gap={1}>
           {allRules?.data.map((rule, index) => (
             <ListInfoItem key={`info-box-${rule.name}`} index={index + 1}>
@@ -129,15 +147,23 @@ const Configuration = () => {
             </ListInfoItem>
           ))}
         </Box>
+        <Controller
+          name="idvt_required"
+          control={control}
+          defaultValue={false}
+          render={({ field }) => (
+            <IdvtSection switchProps={{ ...field, checked: field.value }} />
+          )}
+        />
         <FormActions>
           <LoadingButton
             type="submit"
             endIcon={<SaveIcon />}
-            loading={isUpdateLoading}>
+            loading={isUpdateRulesLoading && isUpdateCustodianLoading}>
             {tProfile("submitButton")}
           </LoadingButton>
         </FormActions>
-      </Box>
+      </Form>
     </PageGuidance>
   );
 };

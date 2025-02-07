@@ -15,7 +15,6 @@ export default function IdvtSection({
   ...restProps
 }: IdvtSectionProps) {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_PROFILE);
-
   return (
     <InformationSection
       heading={<Switch label={t("idvtHeading")} {...switchProps} />}
