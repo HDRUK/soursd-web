@@ -79,7 +79,6 @@ export default function Details({ custodian }: DetailsProps) {
           .string()
           .required(tForm("contactEmailRequiredInvalid"))
           .email(tForm("contactEmailFormatInvalid")),
-        idvt_required: yup.boolean(),
       }),
     []
   );
@@ -88,7 +87,6 @@ export default function Details({ custodian }: DetailsProps) {
     defaultValues: {
       name: custodian.name,
       contact_email: custodian.contact_email,
-      idvt_required: custodian.idvt_required,
     },
     error:
       isUpdateError &&

@@ -42,9 +42,9 @@ const Configuration = () => {
     mutateAsync: mutateUpdateRulesAsync,
     isPending: isUpdateRulesLoading,
   } = useMutation({
-    mutationKey: ["patchCustodianRules", 2],
+    mutationKey: ["patchCustodianRules", custodian?.id],
     mutationFn: (payload: PatchCustodianRulesPayload) =>
-      patchCustodianRules(2 as number, payload, {
+      patchCustodianRules(custodian?.id as number, payload, {
         error: {
           message: "submitError",
         },
@@ -55,9 +55,9 @@ const Configuration = () => {
     mutateAsync: mutateUpdateCustodianAsync,
     isPending: isUpdateCustodianLoading,
   } = useMutation({
-    mutationKey: ["patchCustodian", 2],
+    mutationKey: ["patchCustodian", custodian?.id],
     mutationFn: (payload: PatchCustodianPayload) =>
-      patchCustodian(2, payload, {
+      patchCustodian(custodian?.id, payload, {
         error: {
           message: "submitError",
         },
