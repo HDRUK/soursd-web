@@ -3,6 +3,7 @@
 import LoadingWrapper from "@/components/LoadingWrapper";
 import useLoginRedirect from "@/hooks/useLoginRedirect";
 import { usePathname } from "@/i18n/routing";
+import { PageContainer } from "@/modules";
 import { getAccessToken } from "@/services/requestHelpers";
 import { handleLogin } from "@/utils/keycloak";
 import Cookies from "js-cookie";
@@ -38,8 +39,10 @@ export default function Layout({ children }: PropsWithChildren) {
   }, [pathname]);
 
   return (
-    <LoadingWrapper variant="basic" loading={isReady && hasAccessToken}>
-      {children}
-    </LoadingWrapper>
+    <PageContainer>
+      <LoadingWrapper variant="basic" loading={isReady && hasAccessToken}>
+        {children}
+      </LoadingWrapper>
+    </PageContainer>
   );
 }

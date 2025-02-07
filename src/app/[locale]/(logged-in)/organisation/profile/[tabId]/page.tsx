@@ -1,28 +1,24 @@
-import { ConfigProps, withConfig } from "@/components/Config";
-import { redirect } from "next/navigation";
+import { ConfigProps } from "@/components/Config";
+import { ReactNode } from "react";
+import { getSubTabs, PageTabs } from "./consts/tabs";
+import { anyIncludes } from "@/utils/string";
 import usePathServerSide from "@/hooks/usePathServerSide";
-import { PageTabs, getSubTabs } from "./consts/tabs";
-import TabsContents from "./components/TabsContents";
+import { redirect } from "next/navigation";
 
 interface PageProps extends ConfigProps {
-  params: {
-    tabId: PageTabs;
-  };
+  children: ReactNode;
+  params: { tabId: PageTabs };
 }
 
-function Page({ params: { tabId }, config }: PageProps) {
+function Page({ children, params: { tabId } }: PageProps) {
   const path = usePathServerSide();
-  if (!Object.values(PageTabs).includes(tabId)) {
-    redirect(config.routes.profileOrganisationDetailsNameAndAddress.path);
-  }
-
   const subTabs = getSubTabs(tabId) || [];
 
-  if (subTabs?.length > 0) {
+  if (!!subTabs?.length && !anyIncludes(path, subTabs)) {
     redirect(`${path}/${subTabs[0]}`);
   }
 
-  return <TabsContents tabId={tabId} />;
+  return children;
 }
 
-export default withConfig(Page);
+export default Page;

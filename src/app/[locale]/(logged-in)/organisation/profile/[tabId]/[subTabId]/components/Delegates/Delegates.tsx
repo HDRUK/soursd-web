@@ -8,7 +8,7 @@ import ResultsCard from "@/components/ResultsCard";
 import UserRegisteredStatus from "@/components/UserRegisteredStatus";
 import { useStore } from "@/data/store";
 import usePaginatedQuery from "@/hooks/usePaginatedQuery";
-import { PageSection } from "@/modules";
+import { PageBody, PageBodyContainer, PageSection } from "@/modules";
 import { getOrganisationUsers } from "@/services/organisations";
 import { formatShortDate } from "@/utils/date";
 import { isRegistered } from "@/utils/user";
@@ -52,58 +52,60 @@ export default function Delegates() {
   const delegates = usersData?.filter(user => user.is_delegate === 1);
 
   return (
-    <>
-      <DelegatesForm onSuccess={refetchOrganisationUsers} />
-      <Results
-        noResultsMessage={t("noDelegates")}
-        errorMessage={t.rich("getDelegatesError", {
-          contactLink: ContactLink,
-        })}
-        queryState={{
-          isLoading: isGetUsersLoading,
-          isError: isGetUsersError,
-        }}
-        count={delegates?.length}>
-        {delegates?.map(user => {
-          const { first_name, last_name, created_at, email } = user;
+    <PageBody>
+      <PageSection>
+        <DelegatesForm onSuccess={refetchOrganisationUsers} />
+        <Results
+          noResultsMessage={t("noDelegates")}
+          errorMessage={t.rich("getDelegatesError", {
+            contactLink: ContactLink,
+          })}
+          queryState={{
+            isLoading: isGetUsersLoading,
+            isError: isGetUsersError,
+          }}
+          count={delegates?.length}>
+          {delegates?.map(user => {
+            const { first_name, last_name, created_at, email } = user;
 
-          return (
-            <ResultsCard
-              icon={
-                <Icon size="xlarge">
-                  <PersonOutlineOutlinedIcon />
-                </Icon>
-              }
-              content={
-                <>
-                  <Typography variant="body1" sx={{ fontWeight: "bolder" }}>
-                    {first_name} {last_name}
-                  </Typography>
-                  <Typography>{email}</Typography>
-                </>
-              }
-              details={
-                <>
-                  <Typography color="caption.main">
-                    {t("invitedOn", {
-                      date: formatShortDate(created_at),
-                    })}
-                  </Typography>
-                  <UserRegisteredStatus registered={isRegistered(user)} />
-                </>
-              }
-              actions={
-                <DecoupleUser
-                  user={user}
-                  onSuccess={refetchOrganisationUsers}
-                  payload={{ is_delegate: 0 }}
-                  namespace="DecoupleDelegate"
-                />
-              }
-            />
-          );
-        })}
-      </Results>
+            return (
+              <ResultsCard
+                icon={
+                  <Icon size="xlarge">
+                    <PersonOutlineOutlinedIcon />
+                  </Icon>
+                }
+                content={
+                  <>
+                    <Typography variant="body1" sx={{ fontWeight: "bolder" }}>
+                      {first_name} {last_name}
+                    </Typography>
+                    <Typography>{email}</Typography>
+                  </>
+                }
+                details={
+                  <>
+                    <Typography color="caption.main">
+                      {t("invitedOn", {
+                        date: formatShortDate(created_at),
+                      })}
+                    </Typography>
+                    <UserRegisteredStatus registered={isRegistered(user)} />
+                  </>
+                }
+                actions={
+                  <DecoupleUser
+                    user={user}
+                    onSuccess={refetchOrganisationUsers}
+                    payload={{ is_delegate: 0 }}
+                    namespace="DecoupleDelegate"
+                  />
+                }
+              />
+            );
+          })}
+        </Results>
+      </PageSection>
       <PageSection
         sx={{
           flexGrow: 1,
@@ -119,6 +121,6 @@ export default function Delegates() {
           }
         />
       </PageSection>
-    </>
+    </PageBody>
   );
 }

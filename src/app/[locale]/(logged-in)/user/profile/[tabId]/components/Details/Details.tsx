@@ -1,5 +1,10 @@
 import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
-import { PageGuidance } from "@/modules";
+import {
+  PageBody,
+  PageBodyContainer,
+  PageGuidance,
+  PageSection,
+} from "@/modules";
 import { useTranslations } from "next-intl";
 import Completion from "../Completion";
 import UserInfo from "../UserInfo";
@@ -10,11 +15,17 @@ export default function Details() {
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
   return (
-    <PageGuidance
-      title={tProfile("profile")}
-      {...mockedPersonalDetailsGuidanceProps}>
-      <UserInfo />
-      <Completion />
-    </PageGuidance>
+    <PageBodyContainer heading={tProfile("profile")}>
+      <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
+        <PageBody>
+          <PageSection>
+            <UserInfo />
+          </PageSection>
+          <PageSection>
+            <Completion />
+          </PageSection>
+        </PageBody>
+      </PageGuidance>
+    </PageBodyContainer>
   );
 }

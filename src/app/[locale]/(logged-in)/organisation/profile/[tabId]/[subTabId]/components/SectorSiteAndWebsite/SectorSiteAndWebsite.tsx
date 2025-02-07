@@ -7,6 +7,7 @@ import FormControlHorizontal from "@/components/FormControlHorizontal";
 import yup from "@/config/yup";
 import { VALIDATION_URL } from "@/consts/form";
 import { useStore } from "@/data/store";
+import { PageBody, PageSection } from "@/modules";
 import SaveIcon from "@mui/icons-material/Save";
 import { LoadingButton } from "@mui/lab";
 import {
@@ -79,57 +80,64 @@ export default function SectorSiteAndWebsite() {
   };
 
   return (
-    <Form schema={schema} onSubmit={onSubmit} {...formOptions}>
-      <>
-        <Grid item xs={12}>
-          <FormControlHorizontal
-            name="sector_id"
-            renderField={fieldProps => (
-              <Select
-                {...fieldProps}
-                inputProps={{
-                  "aria-label": tForm("sectorIdAriaLabel"),
-                }}>
-                {sectors?.map(({ name, id }) => (
-                  <MenuItem value={id} key={id}>
-                    {name}
-                  </MenuItem>
-                ))}
-              </Select>
-            )}
-          />
-          <Grid item xs={12}>
-            <FormControlHorizontal
-              name="smbStatus"
-              displayPlaceholder={false}
-              label={tForm("smbStatus")}
-              renderField={fieldProps => (
-                <FormControlLabel
-                  label={tForm("smbStatusDescription")}
-                  control={
-                    <Checkbox {...fieldProps} checked={!!fieldProps.value} />
-                  }
+    <PageBody>
+      <PageSection>
+        <Form schema={schema} onSubmit={onSubmit} {...formOptions}>
+          <>
+            <Grid item xs={12}>
+              <FormControlHorizontal
+                name="sector_id"
+                renderField={fieldProps => (
+                  <Select
+                    {...fieldProps}
+                    inputProps={{
+                      "aria-label": tForm("sectorIdAriaLabel"),
+                    }}>
+                    {sectors?.map(({ name, id }) => (
+                      <MenuItem value={id} key={id}>
+                        {name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                )}
+              />
+              <Grid item xs={12}>
+                <FormControlHorizontal
+                  name="smbStatus"
+                  displayPlaceholder={false}
+                  label={tForm("smbStatus")}
+                  renderField={fieldProps => (
+                    <FormControlLabel
+                      label={tForm("smbStatusDescription")}
+                      control={
+                        <Checkbox
+                          {...fieldProps}
+                          checked={!!fieldProps.value}
+                        />
+                      }
+                    />
+                  )}
                 />
-              )}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <FormControlHorizontal
-              name="website"
-              renderField={fieldProps => <TextField {...fieldProps} />}
-            />
-          </Grid>
-        </Grid>
+              </Grid>
+              <Grid item xs={12}>
+                <FormControlHorizontal
+                  name="website"
+                  renderField={fieldProps => <TextField {...fieldProps} />}
+                />
+              </Grid>
+            </Grid>
 
-        <FormActions>
-          <LoadingButton
-            loading={isLoading}
-            type="submit"
-            endIcon={<SaveIcon />}>
-            {tProfile("submitButton")}
-          </LoadingButton>
-        </FormActions>
-      </>
-    </Form>
+            <FormActions>
+              <LoadingButton
+                loading={isLoading}
+                type="submit"
+                endIcon={<SaveIcon />}>
+                {tProfile("submitButton")}
+              </LoadingButton>
+            </FormActions>
+          </>
+        </Form>
+      </PageSection>
+    </PageBody>
   );
 }

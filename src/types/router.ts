@@ -18,8 +18,6 @@ interface Routes {
   login: RouteConfig;
   logout: RouteConfig;
   register: RouteConfig;
-  permissionsResearcherCustodian: RouteConfig;
-  permissionsOrganisationCustodian: RouteConfig;
   homepage: RouteConfig;
   usersCustodian: RouteConfig;
   profileCustodian: RouteConfig;

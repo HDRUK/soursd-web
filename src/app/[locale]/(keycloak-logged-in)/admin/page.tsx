@@ -1,6 +1,4 @@
-import PageContainer from "@/modules/PageContainer";
-import PageSection from "@/modules/PageSection";
-import { Typography } from "@mui/material";
+import { PageBody, PageBodyContainer, PageSection } from "@/modules";
 import { useTranslations } from "next-intl";
 import Sections from "./components/Sections/Sections";
 
@@ -10,14 +8,13 @@ function Page() {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_ADMINISTRATION);
 
   return (
-    <PageContainer>
-      <PageSection>
-        <Typography variant="h4">{t("title")}</Typography>
-      </PageSection>
-      <PageSection>
-        <Sections />
-      </PageSection>
-    </PageContainer>
+    <PageBodyContainer heading={t("title")}>
+      <PageBody>
+        <PageSection>
+          <Sections />
+        </PageSection>
+      </PageBody>
+    </PageBodyContainer>
   );
 }
 

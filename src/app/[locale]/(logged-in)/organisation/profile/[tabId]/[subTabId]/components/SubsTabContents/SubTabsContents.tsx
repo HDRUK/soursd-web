@@ -16,6 +16,7 @@ import Subsidiaries from "../Subsidiaries";
 import SecurityCompliance from "../SecurityCompliance";
 import Delegates from "../Delegates";
 import Users from "../Users";
+import { PageBody } from "@/modules";
 
 interface TabsContentsProps {
   tabId: string;
@@ -68,5 +69,5 @@ export default function SubTabsContents({
       content = null;
   }
 
-  return content;
+  return <PageBody>{content}</PageBody>;
 }

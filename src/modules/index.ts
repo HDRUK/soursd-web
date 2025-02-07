@@ -1,19 +1,21 @@
 import Footer from "./Footer";
 import Header from "./Header";
 import PageContainer from "./PageContainer";
-import PageTitle from "./PageTitle";
-import PageSection from "./PageSection";
-import PageContent from "./PageContent";
 import PageGuidance from "./PageGuidance";
+import PageSection from "./PageSection";
+import PageBody from "./PageBody";
+import PageTitle from "./PageTitle";
 import UserDetailsModal from "./UserDetailsModal";
+import PageBodyContainer from "./PageBodyContainer";
 
 export {
   Footer,
-  PageContainer,
   Header,
-  PageTitle,
-  PageSection,
-  PageContent,
+  PageContainer,
   PageGuidance,
+  PageSection,
+  PageBody,
+  PageTitle,
   UserDetailsModal,
+  PageBodyContainer,
 };

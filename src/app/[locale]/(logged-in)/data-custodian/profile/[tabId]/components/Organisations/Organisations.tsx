@@ -3,7 +3,7 @@
 import ContactLink from "@/components/ContactLink";
 import { Message } from "@/components/Message";
 import OverlayCenter from "@/components/OverlayCenter";
-import { PageSection } from "@/modules";
+import { PageBodyContainer, PageSection, PageBody } from "@/modules";
 import {
   DeleteApprovalPayloadWithEntity,
   PostApprovalPayloadWithEntity,
@@ -77,32 +77,34 @@ export default function Sections() {
   );
 
   return (
-    <PageSection>
-      <OrganisationsLegend />
-      {isOrganisationsLoading && (
-        <OverlayCenter variant="contained">
-          <CircularProgress aria-label={tUsersList("loadingAriaLabel")} />
-        </OverlayCenter>
-      )}
-      {isOrganisationsError && (
-        <Message severity="error" sx={{ mb: 3 }}>
-          {tUsers.rich(`${orgainsationsError}`, {
-            contactLink: ContactLink,
-          })}
-        </Message>
-      )}
-      {!isOrganisationsLoading && organisationsData?.data?.data && (
-        <OrganisationsList
-          onApprove={handleApprove}
-          onUnapprove={handleUnapprove}
-          organisations={organisationsData?.data?.data}
-          queryState={{
-            isError: isDeleteError || isUpdateError,
-            isLoading: isDeleteLoading || isUpdateLoading,
-            error: errorDelete || errorUpdate,
-          }}
-        />
-      )}
-    </PageSection>
+    <PageBody>
+      <PageSection>
+        <OrganisationsLegend />
+        {isOrganisationsLoading && (
+          <OverlayCenter variant="contained">
+            <CircularProgress aria-label={tUsersList("loadingAriaLabel")} />
+          </OverlayCenter>
+        )}
+        {isOrganisationsError && (
+          <Message severity="error" sx={{ mb: 3 }}>
+            {tUsers.rich(`${orgainsationsError}`, {
+              contactLink: ContactLink,
+            })}
+          </Message>
+        )}
+        {!isOrganisationsLoading && organisationsData?.data?.data && (
+          <OrganisationsList
+            onApprove={handleApprove}
+            onUnapprove={handleUnapprove}
+            organisations={organisationsData?.data?.data}
+            queryState={{
+              isError: isDeleteError || isUpdateError,
+              isLoading: isDeleteLoading || isUpdateLoading,
+              error: errorDelete || errorUpdate,
+            }}
+          />
+        )}
+      </PageSection>
+    </PageBody>
   );
 }

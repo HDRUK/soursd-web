@@ -71,5 +71,5 @@ export default function SubTabsSections() {
   }
   const current = params?.subTabId as string;
 
-  return <SubTabs current={current} tabs={selectedTabs} />;
+  return <SubTabs current={current} tabs={selectedTabs} sx={{ mb: 4 }} />;
 }

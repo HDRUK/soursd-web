@@ -17,7 +17,8 @@ export const StyledInfo = styled("div")<{
 }>(
   ({ theme, positionVertical, infoWidth }) => css`
     padding: ${theme.spacing(4)} ${theme.spacing(6)};
-    color: ${theme.palette.primary.contrastText};
+    color: ${theme.palette.neutralPink.contrastText};
+    background-color: ${theme.palette.neutralPink.main};
     position: relative;
     display: flex;
     flex-direction: column;
@@ -26,22 +27,16 @@ export const StyledInfo = styled("div")<{
     ${positionVertical
       ? `
         width: 100%;
-        max-height: 300px;
-        background-color: ${theme.palette.background1[MODE]};`
+        max-height: 300px;`
       : `
-        background: linear-gradient(
-          0deg,
-          #fff 0,
-          ${colorToRgba(theme.palette.background1[MODE], 0.9)} 90px,
-          ${theme.palette.background1[MODE]} 100%
-        );
+
 
         width: ${infoWidth || "auto"};
         padding-bottom: 90px;
       `}
 
     * {
-      color: ${theme.palette.primary.contrastText};
+      color: ${theme.palette.neutralPink.contrastText};
     }
 
     h3,

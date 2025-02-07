@@ -1,15 +1,12 @@
-import { Box, BoxProps, Typography } from "@mui/material";
-import { ReactNode } from "react";
+import { Box, BoxProps } from "@mui/material";
+import SectionHeading, { SectionHeadingProps } from "../SectionHeading";
 
-export interface FormSectionProps extends BoxProps {
-  heading?: ReactNode;
-  subtitle?: ReactNode;
-}
+export type FormSectionProps = BoxProps & SectionHeadingProps;
 
 export default function FormSection({
   children,
   heading,
-  subtitle,
+  description,
   ...restProps
 }: FormSectionProps) {
   return (
@@ -18,20 +15,12 @@ export default function FormSection({
       {...restProps}
       sx={{ p: 0, border: "none", ...restProps.sx }}>
       <Box sx={{ mb: 2 }}>
-        {heading && (
-          <Box
-            component="legend"
-            sx={{
-              width: "100%",
-              px: 2,
-              py: 1,
-              backgroundColor: "default.main",
-              color: "default.contrastText",
-            }}>
-            {heading}
-          </Box>
-        )}
-        {subtitle && <Typography variant="h6">{subtitle}</Typography>}
+        <SectionHeading
+          type="form"
+          heading={heading}
+          description={description}
+          variant="h6"
+        />
       </Box>
       <Box sx={{ px: 2 }}>{children}</Box>
     </Box>
