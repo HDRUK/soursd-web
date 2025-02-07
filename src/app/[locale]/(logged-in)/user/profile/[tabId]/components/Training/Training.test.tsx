@@ -15,10 +15,6 @@ import { mock200Json } from "jest.utils";
 import { useRouter } from "next/navigation";
 import Training from "./Training";
 
-jest.mock("next/navigation", () => ({
-  useRouter: jest.fn(),
-}));
-
 const mockPush = jest.fn();
 
 (useRouter as jest.Mock).mockReturnValue({

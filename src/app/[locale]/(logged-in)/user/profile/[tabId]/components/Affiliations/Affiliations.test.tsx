@@ -8,10 +8,6 @@ import {
 import { useRouter } from "next/navigation";
 import Affiliations from "./Affiliations";
 
-jest.mock("next/navigation", () => ({
-  useRouter: jest.fn(),
-}));
-
 const mockPush = jest.fn();
 
 (useRouter as jest.Mock).mockReturnValue({

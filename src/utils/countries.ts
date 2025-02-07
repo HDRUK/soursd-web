@@ -18,10 +18,10 @@ export function getCountryCode(countryName: string): string | null {
  * Function to get country options sorted alphabetically
  * @returns {Option[]} An array of country options with value (code) and label (name)
  */
-export function getCountryOptions(): Option[] {
+export function getCountryOptions(useCountryCode = true): Option[] {
   return Object.entries(countries)
     .map(([code, { name }]) => ({
-      value: code,
+      value: useCountryCode ? code : name,
       label: name,
     }))
     .sort((a, b) => a.label.localeCompare(b.label));

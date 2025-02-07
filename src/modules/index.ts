@@ -7,8 +7,10 @@ import PageBody from "./PageBody";
 import PageTitle from "./PageTitle";
 import UserDetailsModal from "./UserDetailsModal";
 import PageBodyContainer from "./PageBodyContainer";
+import NavBar from "./NavBar";
 
 export {
+  NavBar,
   Footer,
   Header,
   PageContainer,

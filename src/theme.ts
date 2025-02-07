@@ -244,6 +244,7 @@ const theme = createTheme(
         styleOverrides: {
           root: {
             boxShadow: "none",
+            textTransform: "none",
           },
         },
       },

@@ -9,14 +9,16 @@ interface SelectCountryProps
   > {
   value: string;
   onChange: (value: string) => void;
+  useCountryCode: boolean;
 }
 
 const SelectCountry = ({
   value,
   onChange,
+  useCountryCode = true,
   ...restProps
 }: SelectCountryProps) => {
-  const countryOptions = getCountryOptions();
+  const countryOptions = getCountryOptions(useCountryCode);
 
   return (
     <Autocomplete

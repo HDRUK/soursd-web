@@ -136,6 +136,10 @@
     "cancelButton": "Cancel"
   },
   "Form": {
+    "unsavedAlertText": "Are you sure you want to leave the form with unsaved changes?",
+    "unsavedAlertTitle": "You have unsaved changes",
+    "unsavedAlertConfirmButton": "Leave form",
+    "unsavedAlertCancelButton": "Go back",
     "certificationUploadPlaceholder": "Upload certification",
     "leadApplicantEmail": "Email",
     "leadApplicantEmailPlaceholder": "Email",
@@ -197,7 +201,9 @@
     "charityRegistrationIdRequiredInvalid": "Charity registration id is required",
     "charityRegistrationIdFormatInvalid": "Charity registration id is not in the correct format. It should be a an 8 digit number",
     "charityRegistrationId": "Charity registration ID",
-    "charityRegistrationIdPlaceholder": "Charity registration ID",
+    "charityRegistrationIdPlaceholder": "This should be a number with 8 digits..",
+    "isCharity": "We are a charity",
+    "isCharityPlaceholder": "is a charity?",
     "rorIdRequiredInvalid": "ROR ID is required",
     "rorIdFormatInvalid": "ROR ID is not in the correct format",
     "rorId": "ROR ID",
