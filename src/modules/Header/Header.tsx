@@ -1,4 +1,4 @@
-import NavBar from "@/components/NavBar";
+import { NavBar } from "@/modules";
 import { DetailedHTMLProps, HTMLAttributes } from "react";
 
 type HeaderProps = DetailedHTMLProps<

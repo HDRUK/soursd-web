@@ -1,10 +1,8 @@
 "use client";
 
 import { useStore } from "@/data/store";
-import useAuth from "@/hooks/useAuth";
 import { Link } from "@/i18n/routing";
 import NotificationsMenu from "@/modules/NotificationsMenu";
-import { useRouter } from "@/i18n/routing";
 import { handleLogin, handleLogout, handleRegister } from "@/utils/keycloak";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
@@ -19,9 +17,9 @@ import {
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { LinkProps } from "next/link";
-import { useEffect, useState } from "react";
-import HorizontalDrawer from "../HorizontalDrawer";
-import SoursdLogo from "../SoursdLogo";
+import { MouseEvent, useEffect, useState } from "react";
+import HorizontalDrawer from "@/components/HorizontalDrawer";
+import SoursdLogo from "@/components/SoursdLogo";
 import { StyledContainer, StyledHeader } from "./NavBar.styles";
 
 const NAMESPACE_TRANSLATIONS_NAVBAR = "NavBar";
@@ -40,7 +38,6 @@ export enum ButtonVariant {
 export default function NavBar() {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_NAVBAR);
   const storedUser = useStore(store => store.getUser());
-  const router = useRouter();
   const theme = useTheme();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
@@ -94,8 +91,8 @@ export default function NavBar() {
     {
       color: ButtonColor.Secondary,
       variant: ButtonVariant.Contained,
-      text: auth ? t("signOutButton") : t("signInButton"),
-      onClick: e => {
+      text: storedUser ? t("signOutButton") : t("signInButton"),
+      onClick: (e: MouseEvent<HTMLAnchorElement>) => {
         e.preventDefault();
 
         if (storedUser) {
@@ -112,7 +109,7 @@ export default function NavBar() {
             color: ButtonColor.Primary,
             variant: ButtonVariant.Contained,
             text: t("registerButton"),
-            onClick: e => {
+            onClick: (e: MouseEvent<HTMLAnchorElement>) => {
               e.preventDefault();
 
               handleRegister();
