@@ -83,23 +83,21 @@ export default function FormControlHorizontal({
       fullWidth={fullWidth}
       error={!!error}>
       <Grid container columnSpacing={2} {...containerProps}>
-        <Grid item md={labelMd} sx={{ display: "flex", pt: 1 }}>
-          <FormLabel
-            id={`${field.name}-label`}
-            htmlFor={name}
-            {...labelProps}
-            sx={{
-              ...labelProps?.sx,
-              mb: {
-                xs: 0.5,
-                md: 0,
-              },
-              visibility: displayLabel ? "visible" : "hidden",
-            }}>
-            {displayLabel && (label || t(tKey))}
-            {isRequired && <span style={{ color: "red" }}>*</span>}
-          </FormLabel>
-        </Grid>
+        {displayLabel && (
+          <Grid item md={labelMd} sx={{ display: "flex", pt: 1 }}>
+            <FormLabel
+              id={`${field.name}-label`}
+              htmlFor={name}
+              {...labelProps}
+              sx={{
+                ...labelProps?.sx,
+                mb: { xs: 0.5, md: 0 },
+              }}>
+              {label || t(tKey)}
+              {isRequired && <span style={{ color: "red" }}>*</span>}
+            </FormLabel>
+          </Grid>
+        )}
         <Grid item xs={12} md={contentMd}>
           {renderField({
             id: field.name,
