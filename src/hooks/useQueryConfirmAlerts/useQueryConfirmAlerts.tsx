@@ -50,8 +50,6 @@ export default function useQueryConfirmAlerts(
         alertOptions?.confirmAlertType || "warning",
         mergedConfirmAlertProps
       );
-
-      console.log("******* ref.current", ref.current);
     }
   }, []);
 }
