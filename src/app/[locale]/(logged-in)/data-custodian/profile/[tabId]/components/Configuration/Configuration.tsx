@@ -1,9 +1,4 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
-import {
-  getCustodianRules,
-  patchCustodianRules,
-  getRules,
-} from "@/services/rules";
 import { Box, Checkbox, FormControlLabel, Typography } from "@mui/material";
 import ListInfoItem from "@/components/ListInfoItem";
 import { PageGuidance } from "@/modules";
@@ -18,7 +13,11 @@ import FormActions from "@/components/FormActions";
 import { PatchCustodianRulesPayload } from "@/services/rules/patchCustodianRules";
 import { showAlert } from "@/utils/showAlert";
 import Form from "@/components/Form";
-import { patchCustodian, PatchCustodianPayload } from "@/services/custodians";
+import { PatchCustodianPayload } from "@/services/custodians";
+import getCustodianRulesQuery from "@/services/rules/getCustodianRulesQuery";
+import patchCustodianRulesQuery from "@/services/rules/patchCustodianRulesQuery";
+import patchCustodianQuery from "@/services/custodians/patchCustodianQuery";
+import getRulesQuery from "@/services/rules/getRulesQuery";
 import IdvtSection from "../IdvtSection";
 
 const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
@@ -28,51 +27,21 @@ const Configuration = () => {
   const { control, reset, handleSubmit } = useForm();
   const custodian = useStore(store => store.getCustodian());
 
-  const { data: custodianRules, refetch } = useQuery({
-    queryKey: ["getCustodianRules", custodian?.id],
-    queryFn: ({ queryKey }) =>
-      getCustodianRules(queryKey[1] as number, {
-        error: {
-          message: "getCustodianRulesError",
-        },
-      }),
-  });
+  const { data: custodianRules, refetch } = useQuery(
+    getCustodianRulesQuery(custodian?.id)
+  );
 
   const {
     mutateAsync: mutateUpdateRulesAsync,
     isPending: isUpdateRulesLoading,
-  } = useMutation({
-    mutationKey: ["patchCustodianRules", custodian?.id],
-    mutationFn: (payload: PatchCustodianRulesPayload) =>
-      patchCustodianRules(custodian?.id as number, payload, {
-        error: {
-          message: "submitError",
-        },
-      }),
-  });
+  } = useMutation(patchCustodianRulesQuery(custodian?.id));
 
   const {
     mutateAsync: mutateUpdateCustodianAsync,
     isPending: isUpdateCustodianLoading,
-  } = useMutation({
-    mutationKey: ["patchCustodian", custodian?.id],
-    mutationFn: (payload: PatchCustodianPayload) =>
-      patchCustodian(custodian?.id, payload, {
-        error: {
-          message: "submitError",
-        },
-      }),
-  });
+  } = useMutation(patchCustodianQuery(custodian?.id));
 
-  const { data: allRules } = useQuery({
-    queryKey: ["getAllRules"],
-    queryFn: () =>
-      getRules({
-        error: {
-          message: "getAllRulesError",
-        },
-      }),
-  });
+  const { data: allRules } = useQuery(getRulesQuery());
 
   const custodianRuleIds = useMemo(
     () => new Set(custodianRules?.data?.map(r => r.id) || []),
