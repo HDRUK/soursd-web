@@ -1,3 +1,4 @@
+import { mockedCustodianRules, mockedGetRules } from "@/mocks/data/rules";
 import { patchCustodianRulesQuery } from "@/services/rules";
 import { patchCustodianQuery } from "@/services/custodians";
 import {
@@ -8,38 +9,27 @@ import {
   waitFor,
 } from "@/utils/testUtils";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
 import Configuration from "./Configuration";
 
 jest.mock("@/services/rules", () => ({
   getCustodianRulesQuery: jest.fn().mockReturnValue({
     queryKey: ["getCustodianRules", 1],
-    queryFn: jest.fn().mockResolvedValue({ data: [{ id: 1 }] }),
+    queryFn: jest.fn().mockResolvedValue(mockedCustodianRules),
   }),
   getRulesQuery: jest.fn().mockReturnValue({
     queryKey: ["getAllRules"],
-    queryFn: jest.fn().mockResolvedValue({
-      data: [
-        { id: 1, title: "Rule 1", description: "Description 1" },
-        { id: 2, title: "Rule 2", description: "Description 2" },
-      ],
-    }),
+    queryFn: jest.fn().mockResolvedValue(mockedGetRules),
   }),
   patchCustodianRulesQuery: jest.fn().mockReturnValue({
-    mutationFn: jest.fn().mockResolvedValue({ data: { id: 1 } }),
+    mutationFn: jest.fn().mockResolvedValue(mockedCustodianRules),
   }),
 }));
 
 jest.mock("@/services/custodians", () => ({
   patchCustodianQuery: jest.fn().mockReturnValue({
-    mutationFn: jest.fn().mockResolvedValue({ data: { id: 1 } }),
+    mutationFn: jest.fn().mockResolvedValue(mockedCustodianRules),
   }),
-}));
-jest.mock("@/data/store", () => ({
-  useStore: jest.fn().mockImplementation(selector =>
-    selector({
-      getCustodian: () => ({ id: 1 }),
-    })
-  ),
 }));
 
 const mockRules = [
@@ -55,9 +45,6 @@ const queryClient = new QueryClient({
   },
 });
 
-queryClient.setQueryData(["getCustodianRules", 1], { data: [{ id: 1 }] });
-queryClient.setQueryData(["getAllRules"], { data: mockRules });
-
 const renderConfiguration = () => {
   return render(
     <QueryClientProvider client={queryClient}>
@@ -67,6 +54,12 @@ const renderConfiguration = () => {
 };
 
 describe("<Configuration />", () => {
+  beforeEach(() => {
+    mockUseStore({
+      getCustodian: () => ({ id: 1 }),
+    });
+  });
+
   it("renders all rules", async () => {
     renderConfiguration();
 
@@ -113,8 +106,8 @@ describe("<Configuration />", () => {
 
     await waitFor(() => {
       expect(patchCustodianRulesQuery).toHaveBeenCalled();
-      expect(patchCustodianQuery).toHaveBeenCalled();
     });
+    expect(patchCustodianQuery).toHaveBeenCalled();
   });
 
   it("has no accessibility violations", async () => {
