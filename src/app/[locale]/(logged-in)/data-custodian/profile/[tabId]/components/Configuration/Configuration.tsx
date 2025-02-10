@@ -12,7 +12,6 @@ import SaveIcon from "@mui/icons-material/Save";
 import FormActions from "@/components/FormActions";
 import { PatchCustodianRulesPayload } from "@/services/rules/patchCustodianRules";
 import { showAlert } from "@/utils/showAlert";
-import Form from "@/components/Form";
 import {
   PatchCustodianPayload,
   patchCustodianQuery,
@@ -39,12 +38,12 @@ const Configuration = () => {
   const {
     mutateAsync: mutateUpdateRulesAsync,
     isPending: isUpdateRulesLoading,
-  } = useMutation({ ...patchCustodianRulesQuery(custodian?.id) });
+  } = useMutation({ ...patchCustodianRulesQuery(2) });
 
   const {
     mutateAsync: mutateUpdateCustodianAsync,
     isPending: isUpdateCustodianLoading,
-  } = useMutation(patchCustodianQuery(custodian?.id));
+  } = useMutation(patchCustodianQuery(2));
 
   const { data: allRules } = useQuery({ ...getRulesQuery() });
 
@@ -91,61 +90,67 @@ const Configuration = () => {
   return (
     <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
       <PageBody>
-      <PageSection>
-      <Box
-        gap={2}
-        display="flex"
-        flexDirection="column"
-        component="form"
-        onSubmit={handleSubmit(onSubmit)}>
-        <Box display="flex" flexDirection="column" alignItems="stretch" gap={1}>
-          {allRules?.data.map((rule, index) => (
-            <ListInfoItem key={`info-box-${rule.name}`} index={index + 1}>
-              <Controller
-                name={`rule-${rule.id}`}
-                control={control}
-                defaultValue={false}
-                render={({ field }) => (
-                  <FormControlLabel
-                    sx={{
-                      m: 0,
-                      width: "100%",
-                      display: "flex",
-                      justifyContent: "space-between",
-                    }}
-                    labelPlacement="start"
-                    control={<Checkbox {...field} checked={field.value} />}
-                    label={
-                      <Typography variant="body1">
-                        <strong>
-                          {rule.title} : {rule.description}
-                        </strong>
-                      </Typography>
-                    }
+        <PageSection>
+          <Box
+            gap={2}
+            display="flex"
+            flexDirection="column"
+            component="form"
+            onSubmit={handleSubmit(onSubmit)}>
+            <Box
+              display="flex"
+              flexDirection="column"
+              alignItems="stretch"
+              gap={1}>
+              {allRules?.data.map((rule, index) => (
+                <ListInfoItem key={`info-box-${rule.name}`} index={index + 1}>
+                  <Controller
+                    name={`rule-${rule.id}`}
+                    control={control}
+                    defaultValue={false}
+                    render={({ field }) => (
+                      <FormControlLabel
+                        sx={{
+                          m: 0,
+                          width: "100%",
+                          display: "flex",
+                          justifyContent: "space-between",
+                        }}
+                        labelPlacement="start"
+                        control={<Checkbox {...field} checked={field.value} />}
+                        label={
+                          <Typography variant="body1">
+                            <strong>
+                              {rule.title} : {rule.description}
+                            </strong>
+                          </Typography>
+                        }
+                      />
+                    )}
                   />
-                )}
-              />
-            </ListInfoItem>
-          ))}
-        </Box>
-        <Controller
-          name="idvt_required"
-          control={control}
-          defaultValue={false}
-          render={({ field }) => (
-            <IdvtSection checkBoxProps={{ ...field, checked: field.value }} />
-          )}
-        />
-        <FormActions>
-          <LoadingButton
-            type="submit"
-            endIcon={<SaveIcon />}
-            loading={isUpdateRulesLoading && isUpdateCustodianLoading}>
-            {tProfile("submitButton")}
-          </LoadingButton>
-        </FormActions>
-      </Box>
-      </PageSection>
+                </ListInfoItem>
+              ))}
+            </Box>
+            <Controller
+              name="idvt_required"
+              control={control}
+              defaultValue={false}
+              render={({ field }) => (
+                <IdvtSection
+                  checkBoxProps={{ ...field, checked: field.value }}
+                />
+              )}
+            />
+            <FormActions>
+              <LoadingButton
+                type="submit"
+                endIcon={<SaveIcon />}
+                loading={isUpdateRulesLoading && isUpdateCustodianLoading}>
+                {tProfile("submitButton")}
+              </LoadingButton>
+            </FormActions>
+          </Box>
+        </PageSection>
       </PageBody>
     </PageGuidance>
   );
