@@ -85,6 +85,7 @@
   },
   "ProfileOrganisation": {
     "title": "Profile",
+    "userAdministration": "User Administration",
     "companyValid": "Organisation validated",
     "companyNotValidPopup": "Your organisation has not been validated. This could be related to the information you've entered (i.e. company number). If you believe this message to be in error please contact us at  <contactLink></contactLink>",
     "companyNotValid": "Organisation not validated",

@@ -1,20 +1,21 @@
 "use client";
 
 import { useStore } from "@/data/store";
+import { PageBody } from "@/modules";
 import { notFound } from "next/navigation";
 import {
   DetailsPageSubTabs,
-  UserAdminPageSubTabs,
   getSubTabs,
-  PageTabs,
   PageSubTabs,
+  PageTabs,
+  UserAdminPageSubTabs,
 } from "../../../consts/tabs";
-import NameAndAddress from "../NameAndAddress";
-import DigitalIdentifiers from "../DigitalIdentifiers";
-import SectorSiteAndWebsite from "../SectorSiteAndWebsite";
-import Subsidiaries from "../Subsidiaries";
-import SecurityCompliance from "../SecurityCompliance";
 import Delegates from "../Delegates";
+import DigitalIdentifiers from "../DigitalIdentifiers";
+import NameAndAddress from "../NameAndAddress";
+import SectorSiteAndWebsite from "../SectorSiteAndWebsite";
+import SecurityCompliance from "../SecurityCompliance";
+import Subsidiaries from "../Subsidiaries";
 import Users from "../Users";
 
 interface TabsContentsProps {
@@ -68,5 +69,5 @@ export default function SubTabsContents({
       content = null;
   }
 
-  return content;
+  return <PageBody>{content}</PageBody>;
 }

@@ -108,57 +108,55 @@ export default function DelegatesForm({ onSuccess }: DelegatesFormProps) {
 
   return (
     <Form schema={schema} onSubmit={handleDetailsSubmit} {...formOptions}>
-      <>
-        <FormSection heading={t("delegateFormTitle")}>
-          <Grid container rowSpacing={3}>
-            <Grid item xs={12}>
-              <FormControlHorizontal
-                name="department_name"
-                renderField={fieldProps => (
-                  <Select
-                    {...fieldProps}
-                    inputProps={{
-                      "aria-label": t("departmentNameAriaLabel"),
-                    }}>
-                    {filteredDepartments?.map(({ label, value }) => (
-                      <MenuItem value={value} key={value} id={label}>
-                        {label}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                )}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlHorizontal
-                name="delegate_full_name"
-                renderField={fieldProps => <TextField {...fieldProps} />}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlHorizontal
-                name="delegate_job_title"
-                renderField={fieldProps => <TextField {...fieldProps} />}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlHorizontal
-                name="delegate_email"
-                renderField={fieldProps => <TextField {...fieldProps} />}
-              />
-            </Grid>
+      <FormSection heading={t("delegateFormTitle")}>
+        <Grid container rowSpacing={3}>
+          <Grid item xs={12}>
+            <FormControlHorizontal
+              name="department_name"
+              renderField={fieldProps => (
+                <Select
+                  {...fieldProps}
+                  inputProps={{
+                    "aria-label": t("departmentNameAriaLabel"),
+                  }}>
+                  {filteredDepartments?.map(({ label, value }) => (
+                    <MenuItem value={value} key={value} id={label}>
+                      {label}
+                    </MenuItem>
+                  ))}
+                </Select>
+              )}
+            />
           </Grid>
-        </FormSection>
-        <FormActions>
-          <LoadingButton
-            loading={isPending}
-            type="submit"
-            endIcon={<AddCircleOutlineIcon />}
-            sx={{ marginBottom: "20px" }}>
-            {t("save")}
-          </LoadingButton>
-        </FormActions>
-      </>
+          <Grid item xs={12}>
+            <FormControlHorizontal
+              name="delegate_full_name"
+              renderField={fieldProps => <TextField {...fieldProps} />}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <FormControlHorizontal
+              name="delegate_job_title"
+              renderField={fieldProps => <TextField {...fieldProps} />}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <FormControlHorizontal
+              name="delegate_email"
+              renderField={fieldProps => <TextField {...fieldProps} />}
+            />
+          </Grid>
+        </Grid>
+      </FormSection>
+      <FormActions>
+        <LoadingButton
+          loading={isPending}
+          type="submit"
+          endIcon={<AddCircleOutlineIcon />}
+          sx={{ marginBottom: "20px" }}>
+          {t("save")}
+        </LoadingButton>
+      </FormActions>
     </Form>
   );
 }

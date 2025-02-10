@@ -1,9 +1,9 @@
 import { ConfigProps, withConfig } from "@/components/Config";
-import { PageContent, PageGuidance } from "@/modules";
-import { useTranslations } from "next-intl";
 import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
+import { PageBodyContainer, PageGuidance } from "@/modules";
 import { toCamelCase } from "@/utils/string";
-import { PageTabs, PageSubTabs } from "../consts/tabs";
+import { useTranslations } from "next-intl";
+import { PageSubTabs, PageTabs } from "../consts/tabs";
 import SubTabsSections from "./components/SubTabSections";
 import SubTabsContents from "./components/SubsTabContents";
 
@@ -20,14 +20,12 @@ function Page({ params: { tabId, subTabId } }: PageProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
   return (
-    <PageContent sx={{ mx: 4 }}>
-      <PageGuidance
-        title={t(toCamelCase(tabId))}
-        subTabs={<SubTabsSections />}
-        {...mockedPersonalDetailsGuidanceProps}>
+    <PageBodyContainer heading={t(toCamelCase(tabId))}>
+      <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
+        <SubTabsSections />
         <SubTabsContents tabId={tabId} subTabId={subTabId} />
       </PageGuidance>
-    </PageContent>
+    </PageBodyContainer>
   );
 }
 

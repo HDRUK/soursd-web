@@ -4,6 +4,7 @@ import { ROUTES } from "@/consts/router";
 import { UserGroup } from "@/consts/user";
 import { ApplicationDataProvider } from "@/context/ApplicationData";
 import { usePathname, useRouter } from "@/i18n/routing";
+import { PageContainer } from "@/modules";
 import { getMe } from "@/services/auth";
 import { getCustodianUser } from "@/services/custodian_users";
 import { getAccessToken } from "@/services/requestHelpers";
@@ -107,7 +108,7 @@ export default function Layout({ children }: LayoutProps) {
           routes: ROUTES,
           systemConfigData: {},
         }}>
-        {children}
+        <PageContainer>{children}</PageContainer>
       </ApplicationDataProvider>
     )
   );

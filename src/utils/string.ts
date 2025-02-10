@@ -5,4 +5,10 @@ function capitaliseFirstLetter(str: string): string {
 const toCamelCase = (str: string) =>
   str.replace(/-([a-z])/g, (_, char) => char.toUpperCase());
 
-export { capitaliseFirstLetter, toCamelCase };
+const anyIncludes = (value: string | null, list: string[]) => {
+  return !!(
+    value && list.find((listValue: string) => value.includes(listValue))
+  );
+};
+
+export { capitaliseFirstLetter, toCamelCase, anyIncludes };

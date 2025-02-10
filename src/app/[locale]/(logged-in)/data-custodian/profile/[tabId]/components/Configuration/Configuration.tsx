@@ -1,7 +1,7 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { Box, Checkbox, FormControlLabel, Typography } from "@mui/material";
 import ListInfoItem from "@/components/ListInfoItem";
-import { PageGuidance } from "@/modules";
+import { PageBody, PageGuidance, PageSection } from "@/modules";
 import { useForm, Controller } from "react-hook-form";
 import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
 import { useStore } from "@/data/store";
@@ -90,7 +90,14 @@ const Configuration = () => {
 
   return (
     <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
-      <Form onSubmit={handleSubmit(onSubmit)}>
+      <PageBody>
+      <PageSection>
+      <Box
+        gap={2}
+        display="flex"
+        flexDirection="column"
+        component="form"
+        onSubmit={handleSubmit(onSubmit)}>
         <Box display="flex" flexDirection="column" alignItems="stretch" gap={1}>
           {allRules?.data.map((rule, index) => (
             <ListInfoItem key={`info-box-${rule.name}`} index={index + 1}>
@@ -137,7 +144,9 @@ const Configuration = () => {
             {tProfile("submitButton")}
           </LoadingButton>
         </FormActions>
-      </Form>
+      </Box>
+      </PageSection>
+      </PageBody>
     </PageGuidance>
   );
 };
