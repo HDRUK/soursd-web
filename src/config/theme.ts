@@ -81,6 +81,12 @@ const PALETTE_THEME_PURPLE_BLUE = {
     footer: createColor("#72788D"),
     inverseSurface: createColor("#322e36"),
     mint: createColor("#00c7be"),
+    neutralPink: {
+      light: "#F6EBF8",
+      dark: "#F6EBF8",
+      main: "#F6EBF8",
+      contrastText: "#000",
+    },
     postitYellow: {
       light: "#faf3e2",
       dark: "#faf3e2",

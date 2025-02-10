@@ -1,31 +1,36 @@
-import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
-import { File as AppFile } from "@/types/application";
+import ContactLink from "@/components/ContactLink";
 import FormSection from "@/components/FormSection";
+import { Message } from "@/components/Message";
+import { FileType, MAX_UPLOAD_SIZE_BYTES } from "@/consts/files";
+import { ROUTES } from "@/consts/router";
 import { useStore } from "@/data/store";
+import useFileScanned from "@/hooks/useFileScanned";
+import useQueryRefetch from "@/hooks/useQueryRefetch";
 import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
-import { PageGuidance } from "@/modules";
+import {
+  PageBody,
+  PageBodyContainer,
+  PageGuidance,
+  PageSection,
+} from "@/modules";
 import ResearcherAccreditationEntry from "@/modules/ResearcherAccreditationEntry";
 import ResearcherEducationEntry from "@/modules/ResearcherEducationEntry";
 import ResearcherEmploymentEntry from "@/modules/ResearcherEmploymentEntry";
-import { useTranslations } from "next-intl";
 import { PostEmploymentsPayload } from "@/services/employments/types";
-import { getLatestCV, isFileScanning } from "@/utils/file";
-import useFileScanned from "@/hooks/useFileScanned";
-import useQueryRefetch from "@/hooks/useQueryRefetch";
-import { useMutation } from "@tanstack/react-query";
-import { MAX_UPLOAD_SIZE_BYTES, FileType } from "@/consts/files";
-import { EntityType } from "@/types/api";
-import { Message } from "@/components/Message";
-import ContactLink from "@/components/ContactLink";
 import postFileQuery from "@/services/files/postFileQuery";
-import { ROUTES } from "@/consts/router";
-import { LoadingButton } from "@mui/lab";
-import { useRouter } from "next/navigation";
+import { EntityType } from "@/types/api";
+import { File as AppFile } from "@/types/application";
+import { getLatestCV, isFileScanning } from "@/utils/file";
 import EastIcon from "@mui/icons-material/East";
+import { LoadingButton } from "@mui/lab";
 import { Box } from "@mui/system";
+import { useMutation } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
+import FileUploadDetails from "../FileUploadDetails/FileUploadDetails";
 import HistoriesSection from "../HistoriesSection";
 import EmploymentsForm from "./EmploymentsForm";
-import FileUploadDetails from "../FileUploadDetails/FileUploadDetails";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
@@ -128,62 +133,72 @@ export default function Experience() {
   );
 
   return (
-    <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
-      <FormSection
-        heading={tProfile("accreditations")}
-        sx={{ marginBottom: "16px" }}>
-        <HistoriesSection
-          type="accreditations"
-          count={histories?.accreditations?.length}>
-          {histories?.accreditations?.map(item => (
-            <ResearcherAccreditationEntry data={item} />
-          ))}
-        </HistoriesSection>
-      </FormSection>
-      <FormSection
-        heading={tProfile("education")}
-        sx={{ marginBottom: "16px" }}>
-        <HistoriesSection type="education" count={histories?.education?.length}>
-          {histories?.education?.map(item => (
-            <ResearcherEducationEntry data={item} />
-          ))}
-        </HistoriesSection>
-      </FormSection>
-      <FormSection heading={tProfile("employment")}>
-        {isUploadError && (
-          <Message severity="error" sx={{ mb: 3 }}>
-            {isUploadError &&
-              tProfile.rich(`${uploadError}`, {
-                contactLink: ContactLink,
-              })}
-          </Message>
-        )}
-        <FileUploadDetails
-          fileType={FileType.CV}
-          fileName={latestCV?.name || tProfile("noCvUploaded")}
-          isFileSizeTooBig={isFileSizeTooBig}
-          isFileScanning={isScanning}
-          isFileOk={isNotInfected}
-          isFileUploading={isFileLoading}
-          onFileChange={handleFileChange}
-        />
-        <EmploymentsForm onSubmit={onSubmit} />
-        <HistoriesSection
-          type="employments"
-          count={histories?.employments?.length}>
-          {histories?.employments?.map(item => (
-            <ResearcherEmploymentEntry data={item} />
-          ))}
-        </HistoriesSection>
-      </FormSection>
-      <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3 }}>
-        <LoadingButton
-          sx={{ display: "flex" }}
-          endIcon={<EastIcon />}
-          onClick={() => router.push(ROUTES.profileResearcherTraining.path)}>
-          {tProfile("continueLinkText")}
-        </LoadingButton>
-      </Box>
-    </PageGuidance>
+    <PageBodyContainer>
+      <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
+        <PageBody>
+          <PageSection>
+            <FormSection
+              heading={tProfile("accreditations")}
+              sx={{ marginBottom: "16px" }}>
+              <HistoriesSection
+                type="accreditations"
+                count={histories?.accreditations?.length}>
+                {histories?.accreditations?.map(item => (
+                  <ResearcherAccreditationEntry data={item} />
+                ))}
+              </HistoriesSection>
+            </FormSection>
+            <FormSection
+              heading={tProfile("education")}
+              sx={{ marginBottom: "16px" }}>
+              <HistoriesSection
+                type="education"
+                count={histories?.education?.length}>
+                {histories?.education?.map(item => (
+                  <ResearcherEducationEntry data={item} />
+                ))}
+              </HistoriesSection>
+            </FormSection>
+            <FormSection heading={tProfile("employment")}>
+              {isUploadError && (
+                <Message severity="error" sx={{ mb: 3 }}>
+                  {isUploadError &&
+                    tProfile.rich(`${uploadError}`, {
+                      contactLink: ContactLink,
+                    })}
+                </Message>
+              )}
+              <FileUploadDetails
+                fileType={FileType.CV}
+                fileName={latestCV?.name || tProfile("noCvUploaded")}
+                isFileSizeTooBig={isFileSizeTooBig}
+                isFileScanning={isScanning}
+                isFileOk={isNotInfected}
+                isFileUploading={isFileLoading}
+                onFileChange={handleFileChange}
+              />
+              <EmploymentsForm onSubmit={onSubmit} />
+              <HistoriesSection
+                type="employments"
+                count={histories?.employments?.length}>
+                {histories?.employments?.map(item => (
+                  <ResearcherEmploymentEntry data={item} />
+                ))}
+              </HistoriesSection>
+            </FormSection>
+            <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3 }}>
+              <LoadingButton
+                sx={{ display: "flex" }}
+                endIcon={<EastIcon />}
+                onClick={() =>
+                  router.push(ROUTES.profileResearcherTraining.path)
+                }>
+                {tProfile("continueLinkText")}
+              </LoadingButton>
+            </Box>
+          </PageSection>
+        </PageBody>
+      </PageGuidance>
+    </PageBodyContainer>
   );
 }

@@ -1,38 +1,43 @@
+import ContactLink from "@/components/ContactLink";
+import DateInput from "@/components/DateInput";
 import Form from "@/components/Form";
 import FormActions from "@/components/FormActions";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
-import { File as AppFile } from "@/types/application";
 import FormSection from "@/components/FormSection";
-import { useStore } from "@/data/store";
-import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
-import { PageGuidance } from "@/modules";
-import ResearcherTrainingEntry from "@/modules/ResearcherTrainingEntry";
-import { LoadingButton } from "@mui/lab";
-import { Box, Grid, TextField } from "@mui/material";
-import { useTranslations } from "next-intl";
-import { ChangeEvent, useCallback, useMemo, useState } from "react";
-import yup from "@/config/yup";
-import dayjs from "dayjs";
-import SaveIcon from "@mui/icons-material/Save";
-import DateInput from "@/components/DateInput";
-import { useMutation } from "@tanstack/react-query";
-import { PostTrainingsPayload } from "@/services/trainings/types";
 import { Message } from "@/components/Message";
-import { showAlert } from "@/utils/showAlert";
-import { formatDBDate } from "@/utils/date";
-import useFileScanned from "@/hooks/useFileScanned";
-import { getUploadedCertification } from "@/utils/file";
-import useQueryRefetch from "@/hooks/useQueryRefetch";
+import yup from "@/config/yup";
 import { FileType, MAX_UPLOAD_SIZE_BYTES } from "@/consts/files";
-import { EntityType } from "@/types/api";
+import { ROUTES } from "@/consts/router";
+import { useStore } from "@/data/store";
+import useFileScanned from "@/hooks/useFileScanned";
+import useQueryRefetch from "@/hooks/useQueryRefetch";
+import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
+import {
+  PageBody,
+  PageBodyContainer,
+  PageGuidance,
+  PageSection,
+} from "@/modules";
+import ResearcherTrainingEntry from "@/modules/ResearcherTrainingEntry";
 import postFileQuery from "@/services/files/postFileQuery";
 import postTrainingsQuery from "@/services/trainings/postTrainingsQuery";
-import ContactLink from "@/components/ContactLink";
-import { useRouter } from "next/navigation";
-import { ROUTES } from "@/consts/router";
+import { PostTrainingsPayload } from "@/services/trainings/types";
+import { EntityType } from "@/types/api";
+import { File as AppFile } from "@/types/application";
+import { formatDBDate } from "@/utils/date";
+import { getUploadedCertification } from "@/utils/file";
+import { showAlert } from "@/utils/showAlert";
 import EastIcon from "@mui/icons-material/East";
-import { StyledBox } from "./Training.styles";
+import SaveIcon from "@mui/icons-material/Save";
+import { LoadingButton } from "@mui/lab";
+import { Box, Grid, TextField } from "@mui/material";
+import { useMutation } from "@tanstack/react-query";
+import dayjs from "dayjs";
+import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import { ChangeEvent, useCallback, useMemo, useState } from "react";
 import FileUploadDetails from "../FileUploadDetails/FileUploadDetails";
+import { StyledBox } from "./Training.styles";
 
 export interface TrainingFormValues {
   provider: string;
@@ -247,88 +252,99 @@ export default function Training() {
   ];
 
   return (
-    <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
-      <Form onSubmit={handleDetailsSubmit} schema={schema} {...formOptions}>
-        {() => (
-          <>
-            <FormSection heading={tProfile("training")}>
-              <Grid container rowSpacing={3}>
-                {formFields.map(field => (
-                  <Grid item xs={12} key={field.name}>
-                    <FormControlHorizontal
-                      name={field.name}
-                      renderField={fieldProps => (
-                        <field.component {...fieldProps} />
-                      )}
-                    />
-                  </Grid>
-                ))}
-                <Grid item xs={12} key="certification_upload">
-                  <FormControlHorizontal
-                    name="certification_upload"
-                    renderField={fieldProps => (
-                      <FileUploadDetails
-                        fileType={FileType.CERTIFICATION}
-                        fileName={
-                          uploadedCertification?.name ||
-                          tProfile("noCertificationUploaded")
-                        }
-                        isFileSizeTooBig={isFileSizeTooBig}
-                        isFileScanning={isScanning}
-                        isFileOk={isNotInfected}
-                        isFileUploading={isFileLoading}
-                        onFileChange={handleFileChange}
-                        {...fieldProps}
-                      />
+    <PageBodyContainer>
+      <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
+        <PageBody>
+          <PageSection>
+            <Form
+              onSubmit={handleDetailsSubmit}
+              schema={schema}
+              {...formOptions}>
+              {() => (
+                <>
+                  <FormSection heading={tProfile("training")}>
+                    <Grid container rowSpacing={3}>
+                      {formFields.map(field => (
+                        <Grid item xs={12} key={field.name}>
+                          <FormControlHorizontal
+                            name={field.name}
+                            renderField={fieldProps => (
+                              <field.component {...fieldProps} />
+                            )}
+                          />
+                        </Grid>
+                      ))}
+                      <Grid item xs={12} key="certification_upload">
+                        <FormControlHorizontal
+                          name="certification_upload"
+                          renderField={fieldProps => (
+                            <FileUploadDetails
+                              fileType={FileType.CERTIFICATION}
+                              fileName={
+                                uploadedCertification?.name ||
+                                tProfile("noCertificationUploaded")
+                              }
+                              isFileSizeTooBig={isFileSizeTooBig}
+                              isFileScanning={isScanning}
+                              isFileOk={isNotInfected}
+                              isFileUploading={isFileLoading}
+                              onFileChange={handleFileChange}
+                              {...fieldProps}
+                            />
+                          )}
+                        />
+                      </Grid>
+                    </Grid>
+                    {isUploadError && (
+                      <Message severity="error" sx={{ mb: 3 }}>
+                        {isUploadError &&
+                          tProfile.rich(`${uploadError}`, {
+                            contactLink: ContactLink,
+                          })}
+                      </Message>
                     )}
-                  />
-                </Grid>
-              </Grid>
-              {isUploadError && (
-                <Message severity="error" sx={{ mb: 3 }}>
-                  {isUploadError &&
-                    tProfile.rich(`${uploadError}`, {
-                      contactLink: ContactLink,
-                    })}
-                </Message>
+                  </FormSection>
+                  <FormActions>
+                    <LoadingButton
+                      type="submit"
+                      endIcon={<SaveIcon />}
+                      loading={isPending}
+                      sx={{ display: "flex", justifySelf: "end" }}>
+                      {tProfile("submitButton")}
+                    </LoadingButton>
+                  </FormActions>
+                </>
               )}
-            </FormSection>
-            <FormActions>
+            </Form>
+            <StyledBox>
+              {histories?.training?.map(training => (
+                <ResearcherTrainingEntry
+                  key={training.id}
+                  data={training}
+                  certification={user?.registry?.files?.filter(
+                    a => a.id === training.certification_id
+                  )}
+                />
+              ))}
+            </StyledBox>
+            <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3 }}>
               <LoadingButton
-                type="submit"
-                endIcon={<SaveIcon />}
-                loading={isPending}
-                sx={{ display: "flex", justifySelf: "end" }}>
-                {tProfile("submitButton")}
+                sx={{ display: "flex" }}
+                endIcon={<EastIcon />}
+                onClick={() =>
+                  router.push(ROUTES.profileResearcherProjects.path)
+                }>
+                {tProfile("continueLinkText")}
               </LoadingButton>
-            </FormActions>
-          </>
-        )}
-      </Form>
-      <StyledBox>
-        {histories?.training?.map(training => (
-          <ResearcherTrainingEntry
-            key={training.id}
-            data={training}
-            certification={user?.registry?.files?.filter(
-              a => a.id === training.certification_id
+            </Box>
+            {isError && (
+              <Message severity="error" sx={{ mb: 3 }}>
+                {`${postError}`}
+              </Message>
             )}
-          />
-        ))}
-      </StyledBox>
-      <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3 }}>
-        <LoadingButton
-          sx={{ display: "flex" }}
-          endIcon={<EastIcon />}
-          onClick={() => router.push(ROUTES.profileResearcherProjects.path)}>
-          {tProfile("continueLinkText")}
-        </LoadingButton>
-      </Box>
-      {isError && (
-        <Message severity="error" sx={{ mb: 3 }}>
-          {`${postError}`}
-        </Message>
-      )}
-    </PageGuidance>
+          </PageSection>
+        </PageBody>
+      </PageGuidance>
+    </PageBodyContainer>
   );
 }

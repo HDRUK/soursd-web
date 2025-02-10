@@ -6,16 +6,16 @@ import FormActions from "@/components/FormActions";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
 import Postit from "@/components/Postit";
 import yup from "@/config/yup";
-import { PageSection } from "@/modules";
+import { PageBody, PageSection } from "@/modules";
 import { patchCustodian, PatchCustodianPayload } from "@/services/custodians";
 import { Custodian } from "@/types/application";
+import { showAlert } from "@/utils/showAlert";
 import SaveIcon from "@mui/icons-material/Save";
 import { LoadingButton } from "@mui/lab";
 import { Grid, TextField, Typography, useTheme } from "@mui/material";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo } from "react";
-import { showAlert } from "@/utils/showAlert";
 
 import IdvtSection from "../IdvtSection";
 
@@ -101,59 +101,61 @@ export default function Details({ custodian }: DetailsProps) {
   };
 
   return (
-    <PageSection>
-      <Postit sx={{ mx: "auto", mb: 7 }}>
-        <Typography variant="h4" sx={{ mb: 1 }}>
-          {tProfile("uniqueIdentifierTitle")}
-        </Typography>
-        <Typography
-          sx={{
-            fontSize: theme.typography.h4.fontSize,
-            fontWeight: 500,
-            mb: 1,
-          }}>
-          {custodian.unique_identifier}
-        </Typography>
-        <Typography>{tProfile("uniqueIdentifierCaption")}</Typography>
-      </Postit>
-      <Form schema={schema} onSubmit={handleDetailsSubmit} {...formOptions}>
-        <>
-          <Grid container rowSpacing={3} sx={{ maxWidth: "800px" }}>
-            <Grid item xs={12}>
-              <FormControlHorizontal
-                name="name"
-                renderField={fieldProps => <TextField {...fieldProps} />}
-              />
+    <PageBody>
+      <PageSection>
+        <Postit sx={{ mx: "auto", mb: 7 }}>
+          <Typography variant="h4" sx={{ mb: 1 }}>
+            {tProfile("uniqueIdentifierTitle")}
+          </Typography>
+          <Typography
+            sx={{
+              fontSize: theme.typography.h4.fontSize,
+              fontWeight: 500,
+              mb: 1,
+            }}>
+            {custodian.unique_identifier}
+          </Typography>
+          <Typography>{tProfile("uniqueIdentifierCaption")}</Typography>
+        </Postit>
+        <Form schema={schema} onSubmit={handleDetailsSubmit} {...formOptions}>
+          <>
+            <Grid container rowSpacing={3} sx={{ maxWidth: "800px" }}>
+              <Grid item xs={12}>
+                <FormControlHorizontal
+                  name="name"
+                  renderField={fieldProps => <TextField {...fieldProps} />}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormControlHorizontal
+                  name="contact_email"
+                  renderField={fieldProps => <TextField {...fieldProps} />}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormControlHorizontal
+                  name="idvt_required"
+                  displayLabel={false}
+                  displayPlaceholder={false}
+                  renderField={fieldProps => (
+                    <IdvtSection
+                      switchProps={{ name: "idvt_required", ...fieldProps }}
+                    />
+                  )}
+                />
+              </Grid>
             </Grid>
-            <Grid item xs={12}>
-              <FormControlHorizontal
-                name="contact_email"
-                renderField={fieldProps => <TextField {...fieldProps} />}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlHorizontal
-                name="idvt_required"
-                displayLabel={false}
-                displayPlaceholder={false}
-                renderField={fieldProps => (
-                  <IdvtSection
-                    switchProps={{ name: "idvt_required", ...fieldProps }}
-                  />
-                )}
-              />
-            </Grid>
-          </Grid>
-          <FormActions>
-            <LoadingButton
-              type="submit"
-              endIcon={<SaveIcon />}
-              loading={isUpdateLoading}>
-              {tProfile("submitButton")}
-            </LoadingButton>
-          </FormActions>
-        </>
-      </Form>
-    </PageSection>
+            <FormActions>
+              <LoadingButton
+                type="submit"
+                endIcon={<SaveIcon />}
+                loading={isUpdateLoading}>
+                {tProfile("submitButton")}
+              </LoadingButton>
+            </FormActions>
+          </>
+        </Form>
+      </PageSection>
+    </PageBody>
   );
 }

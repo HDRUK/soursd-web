@@ -1,5 +1,5 @@
 import { ConfigProps, withConfig } from "@/components/Config";
-import { PageContainer } from "@/modules";
+import { PageBodyContainer } from "@/modules";
 import { redirect } from "@/i18n/routing";
 import TabsContents from "./components/TabsContents";
 import TabsSections from "./components/TabsSections";
@@ -17,10 +17,10 @@ function Page({ params: { tabId }, config }: PageProps) {
   }
 
   return (
-    <PageContainer>
+    <PageBodyContainer>
       <TabsSections />
       <TabsContents tabId={tabId} />
-    </PageContainer>
+    </PageBodyContainer>
   );
 }
 

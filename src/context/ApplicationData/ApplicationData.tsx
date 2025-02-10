@@ -6,7 +6,7 @@ import { VALIDATION_SCHEMA_KEY } from "@/consts/application";
 import { ROUTES } from "@/consts/router";
 import { useStore } from "@/data/store";
 import { usePathname } from "@/i18n/routing";
-import PageContainer from "@/modules/PageContainer";
+import PageBodyContainer from "@/modules/PageBodyContainer";
 import useApplicationDependencies from "@/queries/useApplicationDependencies";
 import useQueriesHistories from "@/queries/useQueriesHistories";
 import {
@@ -173,13 +173,13 @@ const ApplicationDataProvider = ({
   return (
     <ApplicationDataContext.Provider value={providerValue}>
       {(isApplicationError || isHistoriesError) && (
-        <PageContainer>
+        <PageBodyContainer>
           <OverlayCenterAlert>
             {t.rich("getDependenciesError", {
               contactLink: ContactLink,
             })}
           </OverlayCenterAlert>
-        </PageContainer>
+        </PageBodyContainer>
       )}
       {!!isFinishedLoading && children}
     </ApplicationDataContext.Provider>

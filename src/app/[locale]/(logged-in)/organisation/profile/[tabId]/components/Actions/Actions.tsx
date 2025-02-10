@@ -1,5 +1,13 @@
+import { PageBody, PageBodyContainer, PageSection } from "@/modules";
+
 const Actions = () => {
-  return <b> Actions </b>;
+  return (
+    <PageBodyContainer heading="Actions">
+      <PageBody>
+        <PageSection>Content</PageSection>
+      </PageBody>
+    </PageBodyContainer>
+  );
 };
 
 export default Actions;

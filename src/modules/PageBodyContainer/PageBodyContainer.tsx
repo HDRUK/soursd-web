@@ -1,26 +1,27 @@
-"use client";
-
 import SectionHeading, {
   SectionHeadingProps,
 } from "@/components/SectionHeading";
 import { Box, BoxProps } from "@mui/material";
 
-type PageSectionProps = BoxProps & SectionHeadingProps;
+type PageBodyContainerProps = BoxProps & SectionHeadingProps;
 
-export default function PageSection({
+export default function PageBodyContainer({
   children,
   heading,
   description,
   ...restProps
-}: PageSectionProps) {
+}: PageBodyContainerProps) {
   return (
-    <Box {...restProps} sx={{ position: "relative", zIndex: 1, px: 4, py: 2 }}>
+    <Box {...restProps} sx={{ p: 2 }}>
       <SectionHeading
         type="content"
+        variant="h1"
         heading={heading}
         description={description}
-        variant="h5"
-        sx={{ mb: 4 }}
+        size="large"
+        sx={{
+          mb: 4,
+        }}
       />
       {children}
     </Box>
