@@ -5,7 +5,7 @@ import {
   Switch as MuiSwitch,
 } from "@mui/material";
 import { ReactNode } from "react";
-import { Controller, useFormContext } from "react-hook-form";
+import { Controller } from "react-hook-form";
 
 export interface SwitchProps extends Omit<MuiSwitchProps, "name"> {
   name: string;
@@ -21,25 +21,12 @@ export default function Switch({
   formControlLabelProps,
   ...restProps
 }: SwitchProps) {
-  const { control } = useFormContext();
   return (
     <Controller
       name={name}
-      control={control}
-      defaultValue={false}
-      render={({ field: { value, onChange, ...restField } }) => (
+      render={({ field: { value, ...restField } }) => (
         <FormControlLabel
-          control={
-            <MuiSwitch
-              {...restProps}
-              checked={!!value}
-              onChange={(e, checked) => {
-                onChange(checked);
-                restProps.onChange?.(e, checked);
-              }}
-              {...restField}
-            />
-          }
+          control={<MuiSwitch {...restProps} checked={value} {...restField} />}
           label={label}
           labelPlacement={labelPlacement}
           sx={{ ml: 0 }}
