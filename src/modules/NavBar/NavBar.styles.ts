@@ -1,4 +1,4 @@
-import { Button, styled } from "@mui/material";
+import { styled } from "@mui/material";
 
 const StyledContainer = styled("div")`
   background: white;
@@ -11,9 +11,4 @@ const StyledHeader = styled("header")`
   display: flex;
 `;
 
-const StyledButton = styled(Button)`
-  max-height: 30px;
-  margin-left: 10px;
-`;
-
-export { StyledHeader, StyledContainer, StyledButton };
+export { StyledContainer, StyledHeader };

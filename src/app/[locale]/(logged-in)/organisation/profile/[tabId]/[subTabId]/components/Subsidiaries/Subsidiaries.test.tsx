@@ -1,5 +1,3 @@
-import { useStore } from "@/data/store";
-import { mockedOrganisation } from "@/mocks/data/organisation";
 import {
   commonAccessibilityTests,
   fireEvent,
@@ -11,18 +9,9 @@ import { useMutation } from "@tanstack/react-query";
 import Subsidiaries from "./Subsidiaries";
 
 jest.mock("@tanstack/react-query");
-jest.mock("@/data/store");
 
 const mockMutateAsync = jest.fn();
 const mockSetOrganisation = jest.fn();
-
-const defaultOrganisation = mockedOrganisation();
-
-(useStore as unknown as jest.Mock).mockImplementation(() => ({
-  organisation: defaultOrganisation,
-  sectors: [],
-  setOrganisation: mockSetOrganisation,
-}));
 
 (useMutation as unknown as jest.Mock).mockReturnValue({
   mutateAsync: mockMutateAsync,
@@ -32,6 +21,12 @@ const defaultOrganisation = mockedOrganisation();
 });
 
 describe("<Subsidiaries />", () => {
+  beforeEach(() => {
+    mockUseStore({
+      setOrganisation: mockSetOrganisation,
+    });
+  });
+
   it("Patch of organisation is called on save", async () => {
     render(<Subsidiaries />);
 

@@ -31,17 +31,10 @@ jest.mock("@/i18n/routing", () => ({
 jest.mock("@/data/store");
 
 const mockUseStore = useStore as jest.MockedFunction<typeof useStore>;
+
 (get as jest.Mock).mockReturnValue(undefined);
 
-const buttonsText = [
-  "Home",
-  "About",
-  "Features",
-  "Support",
-  "Contact",
-  "Sign In",
-  "Register",
-];
+const linksText = ["Home", "About", "Features", "Support", "Contact"];
 
 const renderMobileMenuTest = () => {
   defineMatchMedia(theme.breakpoints.values.xs);
@@ -60,11 +53,11 @@ describe("NavBar Component", () => {
     jest.clearAllMocks();
   });
 
-  it.each(buttonsText)("renders nav item %s", name => {
+  it.each(linksText)("renders nav item %s", name => {
     render(<NavBar />);
 
     expect(
-      screen.getByRole("button", {
+      screen.getByRole("link", {
         name,
       })
     ).toBeInTheDocument();

@@ -57,15 +57,7 @@ interface StoreState {
   addUrlToHistory: (url: string) => void;
 }
 
-const useStore = create<StoreState>((set, get) => ({
-  config: {
-    router: {
-      history: [],
-      entries: ROUTES,
-    },
-    permissions: [],
-    sectors: [],
-  },
+const storeMethods = (set, get) => ({
   getPreviousUrl: () => {
     const {
       router: { history },
@@ -139,6 +131,18 @@ const useStore = create<StoreState>((set, get) => ({
         state.config.router.history.push(url);
       })
     ),
+});
+
+const useStore = create<StoreState>((set, get) => ({
+  config: {
+    router: {
+      history: [],
+      entries: ROUTES,
+    },
+    permissions: [],
+    sectors: [],
+  },
+  ...storeMethods(set, get),
 }));
 
 const useStoreHelpers = () => {
@@ -153,5 +157,5 @@ const useStoreHelpers = () => {
   return helpers;
 };
 
-export { useStore, useStoreHelpers };
+export { useStore, useStoreHelpers, storeMethods };
 export type { StoreState };

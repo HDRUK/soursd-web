@@ -1,4 +1,5 @@
 import { UserFeedSource } from "@/consts/user";
+import { StoreState, useStore } from "@/data/store";
 import { defineMatchMedia } from "@/utils/testUtils";
 import "@testing-library/jest-dom";
 import "jest-axe/extend-expect";
@@ -7,11 +8,12 @@ import { forwardRef, useImperativeHandle } from "react";
 import "./jest.utils";
 import { mock200Json, mockPagedResults } from "./jest.utils";
 import { mockedCustodian, mockedCustodianUser } from "./mocks/data/custodian";
+import { mockedNotification } from "./mocks/data/notification";
 import { TextEncoder } from 'util';
 import { mockedOrganisation } from "./mocks/data/organisation";
 import { mockedPermission } from "./mocks/data/permission";
 import { mockedProject, mockedProjects } from "./mocks/data/project";
-import { mockedApiPermissions } from "./mocks/data/store";
+import { mockedApiPermissions, mockedStoreState } from "./mocks/data/store";
 import {
   mockedSystemConfig,
   mockedValidationSchema,
@@ -24,7 +26,6 @@ import {
   mockedTraining,
   mockedUser,
 } from "./mocks/data/user";
-import { mockedNotification } from "./mocks/data/notification";
 import { ResponseMessageType } from "./src/consts/requests";
 import { ROUTES } from "./src/consts/router";
 
@@ -54,12 +55,39 @@ const nextRouterMock = require("next-router-mock");
 expect.extend(matchers);
 
 jest.mock("next/router", () => nextRouterMock);
+jest.mock("@/i18n/routing", () => ({
+  ...jest.requireActual("@/i18n/routing"),
+  useRouter: jest.fn().mockReturnValue({
+    push: jest.fn(),
+  }),
+  usePathname: jest.fn(),
+}));
+
+jest.mock("next/navigation", () => {
+  return {
+    useParams: jest.fn(),
+    usePathname: jest.fn(),
+    useRouter: jest.fn().mockReturnValue({
+      push: jest.fn(),
+      replace: jest.fn(),
+      prefetch: jest.fn(),
+    }),
+    useSearchParams: () => ({
+      get: () => {},
+    }),
+  };
+});
+
 jest.mock("./src/context/ApplicationData", () => ({
   ...jest.requireActual("./src/context/ApplicationData"),
   useApplicationData: () => ({
     validationSchema: mockedValidationSchema(),
     routes: ROUTES,
   }),
+}));
+
+jest.mock("@/data/store", () => ({
+  useStore: jest.fn(),
 }));
 
 jest.mock("react-google-recaptcha", () => {
@@ -94,7 +122,40 @@ global.matchMedia = () => {
   };
 };
 
+jest.mock("@/data/store", () => ({
+  useStore: jest.fn(),
+}));
+
+const useStoreMock = jest.mocked(useStore);
+
+export const mockUseStore = (props: Partial<StoreState> = {}) => {
+  useStoreMock.mockImplementation(getterFn => {
+    const originalStore = jest.requireActual("@/data/store").useStore();
+    const state = mockedStoreState();
+
+    Object.keys(props).forEach(propKey => {
+      if (propKey !== "config")
+        originalStore[propKey] = props[propKey as keyof StoreState];
+    });
+
+    // Must mutate to keep references
+    originalStore.config = {
+      ...originalStore.config,
+      ...state.config,
+      ...props.config,
+      histories: {
+        ...originalStore.config.histories,
+        ...state.config.histories,
+        ...props.config?.histories,
+      },
+    };
+
+    return getterFn ? getterFn(originalStore) : originalStore;
+  });
+};
+
 global.TextEncoder = TextEncoder;
+
 
 async function mockFetch(url: string, init?: RequestInit) {
   const [baseUrl, queryString] = url.split("?");
@@ -376,6 +437,10 @@ beforeAll(() => {
   defineMatchMedia(1024);
 
   global.fetch = jest.fn();
+  global.mockUseStore = mockUseStore;
 });
 
-beforeEach(() => global.fetch.mockImplementation(mockFetch));
+beforeEach(() => {
+  global.fetch.mockImplementation(mockFetch);
+  global.mockUseStore();
+});
