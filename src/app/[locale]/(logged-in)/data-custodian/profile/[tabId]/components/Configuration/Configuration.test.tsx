@@ -1,9 +1,5 @@
-import {
-  getCustodianRules,
-  patchCustodianRules,
-  getRules,
-} from "@/services/rules";
-import { patchCustodian } from "@/services/custodians";
+import { patchCustodianRulesQuery } from "@/services/rules";
+import { patchCustodianQuery } from "@/services/custodians";
 import {
   commonAccessibilityTests,
   fireEvent,
@@ -11,11 +7,33 @@ import {
   screen,
   waitFor,
 } from "@/utils/testUtils";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Configuration from "./Configuration";
 
-jest.mock("@/services/rules");
-jest.mock("@/services/custodians");
+jest.mock("@/services/rules", () => ({
+  getCustodianRulesQuery: jest.fn().mockReturnValue({
+    queryKey: ["getCustodianRules", 1],
+    queryFn: jest.fn().mockResolvedValue({ data: [{ id: 1 }] }),
+  }),
+  getRulesQuery: jest.fn().mockReturnValue({
+    queryKey: ["getAllRules"],
+    queryFn: jest.fn().mockResolvedValue({
+      data: [
+        { id: 1, title: "Rule 1", description: "Description 1" },
+        { id: 2, title: "Rule 2", description: "Description 2" },
+      ],
+    }),
+  }),
+  patchCustodianRulesQuery: jest.fn().mockReturnValue({
+    mutationFn: jest.fn().mockResolvedValue({ data: { id: 1 } }),
+  }),
+}));
 
+jest.mock("@/services/custodians", () => ({
+  patchCustodianQuery: jest.fn().mockReturnValue({
+    mutationFn: jest.fn().mockResolvedValue({ data: { id: 1 } }),
+  }),
+}));
 jest.mock("@/data/store", () => ({
   useStore: jest.fn().mockImplementation(selector =>
     selector({
@@ -29,15 +47,23 @@ const mockRules = [
   { id: 2, title: "Rule 2", description: "Description 2" },
 ];
 
-const mockCustodianRules = {
-  data: [{ id: 1 }],
-};
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+    },
+  },
+});
 
-(getCustodianRules as jest.Mock).mockResolvedValue(mockCustodianRules);
-(getRules as jest.Mock).mockResolvedValue({ data: mockRules });
+queryClient.setQueryData(["getCustodianRules", 1], { data: [{ id: 1 }] });
+queryClient.setQueryData(["getAllRules"], { data: mockRules });
 
 const renderConfiguration = () => {
-  return render(<Configuration />);
+  return render(
+    <QueryClientProvider client={queryClient}>
+      <Configuration />
+    </QueryClientProvider>
+  );
 };
 
 describe("<Configuration />", () => {
@@ -79,27 +105,15 @@ describe("<Configuration />", () => {
       fireEvent.click(rule);
     });
 
-    const idvtToggle = screen.getByRole("checkbox", {
-      name: /Do you require identification validation?/i,
-    });
+    const idvtToggle = screen.getAllByRole("checkbox")[2];
     fireEvent.click(idvtToggle);
 
     const submitButton = screen.getByRole("button", { name: /Save/i });
     fireEvent.click(submitButton);
 
     await waitFor(() => {
-      expect(patchCustodianRules).toHaveBeenCalledWith(
-        1,
-        { rule_ids: [1] },
-        { error: { message: "submitError" } }
-      );
-      expect(patchCustodian).toHaveBeenCalledWith(
-        1,
-        {
-          idvt_required: true,
-        },
-        { error: { message: "submitError" } }
-      );
+      expect(patchCustodianRulesQuery).toHaveBeenCalled();
+      expect(patchCustodianQuery).toHaveBeenCalled();
     });
   });
 

@@ -1,26 +1,39 @@
 import InformationSection from "@/components/InformationSection";
-import Switch, { SwitchProps } from "@/components/Switch";
 import { mockedCustodianIdvtInfoContent } from "@/mocks/data/cms";
-import { BoxProps } from "@mui/material";
+import {
+  BoxProps,
+  CheckboxProps,
+  Checkbox,
+  Typography,
+  Box,
+  FormControl,
+} from "@mui/material";
 import { useTranslations } from "next-intl";
 
 const NAMESPACE_TRANSLATIONS_PROFILE = "CustodianProfile";
 
 export interface IdvtSectionProps extends Omit<BoxProps, "color"> {
-  switchProps: Omit<SwitchProps, "label">;
+  checkBoxProps: CheckboxProps;
 }
 
 export default function IdvtSection({
-  switchProps,
+  checkBoxProps,
   ...restProps
 }: IdvtSectionProps) {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_PROFILE);
   return (
-    <InformationSection
-      heading={<Switch label={t("idvtHeading")} {...switchProps} />}
-      description={t("idvtDescription")}
-      {...restProps}>
-      {mockedCustodianIdvtInfoContent}
-    </InformationSection>
+    <FormControl>
+      <InformationSection
+        heading={
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Typography>{t("idvtHeading")}</Typography>
+            <Checkbox {...checkBoxProps} />
+          </Box>
+        }
+        description={t("idvtDescription")}
+        {...restProps}>
+        {mockedCustodianIdvtInfoContent}
+      </InformationSection>
+    </FormControl>
   );
 }

@@ -13,11 +13,15 @@ import FormActions from "@/components/FormActions";
 import { PatchCustodianRulesPayload } from "@/services/rules/patchCustodianRules";
 import { showAlert } from "@/utils/showAlert";
 import Form from "@/components/Form";
-import { PatchCustodianPayload } from "@/services/custodians";
-import getCustodianRulesQuery from "@/services/rules/getCustodianRulesQuery";
-import patchCustodianRulesQuery from "@/services/rules/patchCustodianRulesQuery";
-import patchCustodianQuery from "@/services/custodians/patchCustodianQuery";
-import getRulesQuery from "@/services/rules/getRulesQuery";
+import {
+  PatchCustodianPayload,
+  patchCustodianQuery,
+} from "@/services/custodians";
+import {
+  getCustodianRulesQuery,
+  getRulesQuery,
+  patchCustodianRulesQuery,
+} from "@/services/rules";
 import IdvtSection from "../IdvtSection";
 
 const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
@@ -27,21 +31,22 @@ const Configuration = () => {
   const { control, reset, handleSubmit } = useForm();
   const custodian = useStore(store => store.getCustodian());
 
-  const { data: custodianRules, refetch } = useQuery(
-    getCustodianRulesQuery(custodian?.id)
-  );
+  const { data: custodianRules, refetch } = useQuery({
+    ...getCustodianRulesQuery(custodian?.id),
+    enabled: !!custodian?.id,
+  });
 
   const {
     mutateAsync: mutateUpdateRulesAsync,
     isPending: isUpdateRulesLoading,
-  } = useMutation(patchCustodianRulesQuery(custodian?.id));
+  } = useMutation({ ...patchCustodianRulesQuery(custodian?.id) });
 
   const {
     mutateAsync: mutateUpdateCustodianAsync,
     isPending: isUpdateCustodianLoading,
   } = useMutation(patchCustodianQuery(custodian?.id));
 
-  const { data: allRules } = useQuery(getRulesQuery());
+  const { data: allRules } = useQuery({ ...getRulesQuery() });
 
   const custodianRuleIds = useMemo(
     () => new Set(custodianRules?.data?.map(r => r.id) || []),
@@ -121,7 +126,7 @@ const Configuration = () => {
           control={control}
           defaultValue={false}
           render={({ field }) => (
-            <IdvtSection switchProps={{ ...field, checked: field.value }} />
+            <IdvtSection checkBoxProps={{ ...field, checked: field.value }} />
           )}
         />
         <FormActions>
