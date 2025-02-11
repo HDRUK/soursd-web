@@ -3,6 +3,14 @@
     "show": "Show {name}",
     "hide": "Hide {name}"
   },
+  "File": {
+    "maxSizeText": "{size} Max size",
+    "inputLabelText": "File input",
+    "maxSizeErrorText": "Your file must be under {size}",
+    "scanningText": "Scanning file...",
+    "scanOkText": "File was successfully scanned",
+    "scanErrorText": "Your file file may have a virus"
+  },
   "Application": {
     "honoraryContract": "Honorary contract",
     "student": "Student",
@@ -383,8 +391,7 @@
   },
   "Cv": {
     "fileMaxSize": "{size} Max size",
-    "fileDownload": "Download Cv",
-    "fileButtonUpload": "Upload Cv",
+    "fileButtonText": "Upload Cv",
     "fileInputLabel": "Cv file input",
     "fileMaxSizeError": "Your Cv must be under {size}",
     "fileScanning": "Scanning Cv...",
@@ -458,6 +465,8 @@
     "verified": "Verified",
     "cvUploadFailed": "There was a problem uploading your CV. Please check the file size and try again or alternativley contact us at <contactLink></contactLink>",
     "certificationUploadFailed": "There was a problem uploading your certification. Please check the file size and try again or alternativley contact us at <contactLink></contactLink>",
+    "uploadCvButtonText": "Upload CV",
+    "uploadCertificationButtonText": "Upload Certification",
     "noCvUploaded": "No CV uploaded",
     "noCertificationUploaded": "No Certification Uploaded",
     "profileCompletedTitle": "Your profile has been completed",

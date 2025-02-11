@@ -1,7 +1,7 @@
 import { FilePayload } from "./types";
 import postFile from "./postFile";
 
-export default function postAffiliationQuery() {
+export default function postFileQuery() {
   return {
     mutationKey: ["postFile"],
     mutationFn: (payload: FilePayload) => {

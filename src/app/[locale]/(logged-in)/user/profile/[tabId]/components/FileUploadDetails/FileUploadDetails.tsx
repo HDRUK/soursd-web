@@ -1,55 +1,32 @@
 "use client";
 
-import FileScannedLink from "@/components/FileScannedLink";
+import FileLink, { FileLinkProps } from "@/components/FileLink";
 import { FileType, MAX_UPLOAD_SIZE_BYTES } from "@/consts/files";
-import { useTranslations } from "next-intl";
-import { ChangeEventHandler } from "react";
-import prettyBytes from "pretty-bytes";
+import { FileUploadState } from "@/hooks/useFileUpload";
 import { getFileHref } from "@/utils/file";
+import { useTranslations } from "next-intl";
+import prettyBytes from "pretty-bytes";
+import { ChangeEventHandler } from "react";
 
-export interface FileUploadDetailsProps {
-  fileName: string;
-  onFileChange: ChangeEventHandler<HTMLInputElement>;
-  isFileUploading?: boolean;
-  isFileSizeTooBig?: boolean;
-  isFileScanning?: boolean;
-  isFileOk?: boolean;
+export interface FileUploadDetailsProps extends FileLinkProps {
   fileType: FileType;
 }
 
 export default function FileUploadDetails({
-  fileName,
-  onFileChange,
-  isFileUploading,
-  isFileSizeTooBig,
-  isFileScanning,
-  isFileOk,
   fileType = FileType.CV,
+  ...fileLinkProps
 }: FileUploadDetailsProps) {
   const t = useTranslations(fileType === FileType.CV ? "Cv" : "Certification");
-  const translationsMaxSize = {
-    size: prettyBytes(MAX_UPLOAD_SIZE_BYTES),
-  };
 
   return (
-    <FileScannedLink
-      fileName={fileName}
-      href={getFileHref(fileName)}
-      isUploading={isFileUploading}
-      isScanning={isFileScanning}
-      isOk={isFileOk}
-      isSizeTooBig={isFileSizeTooBig}
-      onFileChange={onFileChange}
-      messages={{
-        fileButtonUpload: t("fileButtonUpload"),
-        fileDownload: t("fileDownload"),
-        fileInputLabel: t("fileInputLabel"),
-        fileMaxSize: t("fileMaxSize", translationsMaxSize),
-        fileMaxSizeError: t("fileMaxSizeError", translationsMaxSize),
-        fileScanError: t("fileScanError"),
-        fileScanning: t("fileScanning"),
-        fileScanOk: t("fileScanOk"),
-      }}
+    <FileLink
+      {...fileLinkProps}
+      fileButtonText={t("fileDownload")}
+      fileInputLabelText={t("fileInputLabel")}
+      fileScanErrorText={t("fileScanError")}
+      fileScanningText={t("fileScanning")}
+      fileScanOkText={t("fileScanOk")}
+      canDownload
     />
   );
 }

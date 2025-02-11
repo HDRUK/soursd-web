@@ -25,7 +25,7 @@ import { PostTrainingsPayload } from "@/services/trainings/types";
 import { EntityType } from "@/types/api";
 import { File as AppFile } from "@/types/application";
 import { formatDBDate } from "@/utils/date";
-import { getUploadedCertification } from "@/utils/file";
+import { getFileHref, getUploadedCertification } from "@/utils/file";
 import { showAlert } from "@/utils/showAlert";
 import EastIcon from "@mui/icons-material/East";
 import SaveIcon from "@mui/icons-material/Save";
@@ -38,6 +38,8 @@ import { useRouter } from "next/navigation";
 import { ChangeEvent, useCallback, useMemo, useState } from "react";
 import FileUploadDetails from "../FileUploadDetails/FileUploadDetails";
 import { StyledBox } from "./Training.styles";
+import useFileUpload from "@/hooks/useFileUpload";
+import useUserFileUpload from "@/hooks/useUserFileUpload";
 
 export interface TrainingFormValues {
   provider: string;
@@ -67,75 +69,31 @@ export default function Training() {
   const histories = useStore(state => state.config.histories);
   const setHistories = useStore(state => state.setHistories);
   const getHistories = useStore(state => state.getHistories);
-  const [uploadedCertId, setUploadedCertId] = useState<number | null>(null);
-  const [isFileSizeTooBig, setIsFileSizeTooBig] = useState(false);
   const router = useRouter();
 
-  const uploadedCertification = getUploadedCertification(
-    user?.registry?.files || []
-  );
+  const {
+    upload,
+    isScanComplete,
+    isScanFailed,
+    isSizeInvalid,
+    isUploading,
+    isScanning,
+    file,
+  } = useFileUpload();
 
-  const { isNotInfected, isScanning } = useFileScanned(uploadedCertification);
-
-  const { refetch: refetchUser } = useQueryRefetch({
-    options: { queryKey: ["getUser", user?.id] },
+  const uploadFile = useUserFileUpload({
+    user,
+    fileType: FileType.CERTIFICATION,
+    upload,
   });
 
-  const {
-    mutateAsync: mutateFileAsync,
-    isPending: isFileLoading,
-    isError: isUploadError,
-    error: uploadError,
-  } = useMutation(postFileQuery());
-
   const handleFileChange = useCallback(
-    async ({ target }: ChangeEvent<HTMLInputElement>) => {
-      setIsFileSizeTooBig(false);
+    async (e: ChangeEvent<HTMLInputElement>) => {
+      const user = await uploadFile(e);
 
-      if (!target.files || target.files.length === 0) {
-        return;
-      }
-
-      const file = target.files[0];
-
-      if (file.size <= MAX_UPLOAD_SIZE_BYTES) {
-        const formData = new FormData();
-        formData.append("file", file);
-        formData.append("file_type", FileType.CERTIFICATION);
-        formData.append("entity_type", EntityType.RESEARCHER);
-        formData.append("registry_id", `${user?.registry_id}`);
-
-        try {
-          const response = await mutateFileAsync(formData);
-          const fileData = response.data;
-
-          const newFile: AppFile = {
-            id: fileData.id,
-            name: fileData.name,
-            status: fileData.status,
-            type: FileType.CERTIFICATION,
-            created_at: fileData.created_at,
-            updated_at: fileData.updated_at,
-          };
-
-          const updatedUser = {
-            ...user,
-            registry: {
-              ...user?.registry,
-              files: [...(user?.registry?.files || []), newFile],
-            },
-          };
-          setUploadedCertId(newFile.id);
-          setUser(updatedUser);
-        } catch (_) {
-          target.value = "";
-        }
-      } else {
-        setIsFileSizeTooBig(true);
-        target.value = "";
-      }
+      if (user) setUser(user);
     },
-    [mutateFileAsync, setUser, user?.registry_id]
+    [user?.registry_id]
   );
 
   const onSubmit = useCallback(
@@ -155,6 +113,7 @@ export default function Training() {
     },
     [getHistories, setHistories]
   );
+
   const {
     mutateAsync,
     isPending,
@@ -164,39 +123,42 @@ export default function Training() {
 
   const handleDetailsSubmit = useCallback(
     async (fields: TrainingFormValues) => {
-      try {
-        const yearsRemaining = calculateYearsRemaining(fields.expires_at);
-        const formattedFields = {
-          ...fields,
-          awarded_at: formatDBDate(fields.awarded_at),
-          expires_at: formatDBDate(fields.awarded_at),
-        };
+      if (file?.id) {
+        try {
+          const yearsRemaining = calculateYearsRemaining(fields.expires_at);
+          const formattedFields = {
+            ...fields,
+            awarded_at: formatDBDate(fields.awarded_at),
+            expires_at: formatDBDate(fields.awarded_at),
+          };
 
-        await mutateAsync({
-          ...formattedFields,
-          expires_in_years: yearsRemaining,
-          certification_id: uploadedCertId,
-        });
+          await mutateAsync({
+            ...formattedFields,
+            expires_in_years: yearsRemaining,
+            certification_id: file?.id,
+          });
 
-        onSubmit({
-          ...formattedFields,
-          expires_in_years: yearsRemaining,
-          certification_id: uploadedCertId,
-        });
-        refetchUser();
-        showAlert("success", {
-          text: tProfile("postTrainingSuccess"),
-          confirmButtonText: tProfile("closeButton"),
-        });
-      } catch (_) {
-        const errorMessage = tProfile("postTrainingError");
-        showAlert("error", {
-          text: errorMessage,
-          confirmButtonText: tProfile("errorButton"),
-        });
+          onSubmit({
+            ...formattedFields,
+            expires_in_years: yearsRemaining,
+            certification_id: file?.id,
+          });
+
+          showAlert("success", {
+            text: tProfile("postTrainingSuccess"),
+            confirmButtonText: tProfile("closeButton"),
+          });
+        } catch (_) {
+          const errorMessage = tProfile("postTrainingError");
+
+          showAlert("error", {
+            text: errorMessage,
+            confirmButtonText: tProfile("errorButton"),
+          });
+        }
       }
     },
-    [mutateAsync, onSubmit, tProfile]
+    [mutateAsync, onSubmit, tProfile, file?.id]
   );
 
   const schema = useMemo(
@@ -244,6 +206,7 @@ export default function Training() {
       expires_at: "",
     },
   };
+
   const formFields = [
     { name: "provider", component: TextField },
     { name: "training_name", component: TextField },
@@ -279,30 +242,23 @@ export default function Training() {
                           name="certification_upload"
                           renderField={fieldProps => (
                             <FileUploadDetails
-                              fileType={FileType.CERTIFICATION}
-                              fileName={
-                                uploadedCertification?.name ||
+                              fileButtonText={tProfile("uploadCertification")}
+                              fileType={FileType.CV}
+                              fileNameText={
+                                file?.name ||
                                 tProfile("noCertificationUploaded")
                               }
-                              isFileSizeTooBig={isFileSizeTooBig}
-                              isFileScanning={isScanning}
-                              isFileOk={isNotInfected}
-                              isFileUploading={isFileLoading}
+                              isSizeInvalid={isSizeInvalid}
+                              isScanning={isScanning}
+                              isScanComplete={isScanComplete}
+                              isScanFailed={isScanFailed}
+                              isUploading={isUploading}
                               onFileChange={handleFileChange}
-                              {...fieldProps}
                             />
                           )}
                         />
                       </Grid>
                     </Grid>
-                    {isUploadError && (
-                      <Message severity="error" sx={{ mb: 3 }}>
-                        {isUploadError &&
-                          tProfile.rich(`${uploadError}`, {
-                            contactLink: ContactLink,
-                          })}
-                      </Message>
-                    )}
                   </FormSection>
                   <FormActions>
                     <LoadingButton
