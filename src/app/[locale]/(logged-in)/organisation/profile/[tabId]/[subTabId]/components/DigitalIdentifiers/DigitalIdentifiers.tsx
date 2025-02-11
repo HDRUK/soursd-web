@@ -13,9 +13,11 @@ import { useStore } from "@/data/store";
 import { PageBody, PageSection } from "@/modules";
 import SaveIcon from "@mui/icons-material/Save";
 import { LoadingButton } from "@mui/lab";
-import { Grid, TextField } from "@mui/material";
+import { Box, Grid, TextField } from "@mui/material";
 import { useTranslations } from "next-intl";
 import React, { useMemo } from "react";
+import InformationSection from "@/components/InformationSection";
+import { mockedRorIdInfo } from "@/mocks/data/cms";
 import usePatchOrganisation from "../../../hooks/usePatchOrganisation";
 
 export interface DigitalIdentifiersFormValues {
@@ -198,11 +200,17 @@ export default function DigitalIdentifiers() {
                   <Grid item xs={12}>
                     <FormControlHorizontal
                       name="ror_id"
-                      renderField={fieldProps => <TextField {...fieldProps} />}
+                      renderField={fieldProps => (
+                        <Box sx={{ display: "flex", alignItems: "center" }}>
+                          <TextField {...fieldProps} />
+                          <InformationSection>
+                            {mockedRorIdInfo}
+                          </InformationSection>
+                        </Box>
+                      )}
                     />
                   </Grid>
                 </Grid>
-
                 <FormActions>
                   <LoadingButton
                     loading={isLoading}

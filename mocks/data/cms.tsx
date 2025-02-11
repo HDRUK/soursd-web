@@ -84,3 +84,14 @@ export const mockedManageDelegatesGuidance = {
     </>
   ),
 };
+
+export const mockedRorIdInfo = (
+  <>
+    <Typography>
+      Research Organisation Registry (ROR) identification.
+    </Typography>
+    <Typography>
+      E.g. https://ror.org/01abcde11
+    </Typography>
+  </>
+);
