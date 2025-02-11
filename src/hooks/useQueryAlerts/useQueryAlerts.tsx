@@ -25,7 +25,6 @@ export default function useQueryAlerts(
   alertOptions?: QueryAlertOptions,
   ref?: MutableRefObject<ShowAlert | undefined>
 ) {
-  console.log("query", query);
   const t = useTranslations(NAMESPACE_TRANSALATIONS_APPLICATION);
   const internalRef = useRef<ShowAlert>();
 
