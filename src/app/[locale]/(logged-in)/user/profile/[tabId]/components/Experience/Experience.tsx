@@ -65,7 +65,7 @@ export default function Experience() {
     isPending: isFileLoading,
     isError: isUploadError,
     error: uploadError,
-  } = useMutation(postFileQuery());
+  } = useMutation(postFileQuery("cvUploadFailed"));
 
   const handleFileChange = useCallback(
     async ({ target }: ChangeEvent<HTMLInputElement>) => {

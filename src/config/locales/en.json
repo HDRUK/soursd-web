@@ -475,7 +475,7 @@
     "continueLinkText": "Continue",
     "profileCompleteWarningMessage": "You have not yet completed your profile. This may mean that some data custodians will not grant access to you. It is advised that you complete this process. Please navigate to your profile",
     "addAnother": "Add Another",
-    "postTrainingError": "There was a problem submitting your training experience.",
+    "postTrainingError": "There was a problem submitting your training experience. Please try again or contact us at <contactLink></contactLink>",
     "errorButton": "Try Again",
     "postTrainingSuccess": "Training experience submitted successfully",
     "closeButton": "Close",

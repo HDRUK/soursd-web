@@ -86,7 +86,7 @@ export default function Training() {
     isPending: isFileLoading,
     isError: isUploadError,
     error: uploadError,
-  } = useMutation(postFileQuery());
+  } = useMutation(postFileQuery("certificationUploadFailed"));
 
   const handleFileChange = useCallback(
     async ({ target }: ChangeEvent<HTMLInputElement>) => {
@@ -296,7 +296,7 @@ export default function Training() {
                       </Grid>
                     </Grid>
                     {isUploadError && (
-                      <Message severity="error" sx={{ mb: 3 }}>
+                      <Message severity="error" sx={{mt: 3}}>
                         {isUploadError &&
                           tProfile.rich(`${uploadError}`, {
                             contactLink: ContactLink,
@@ -338,8 +338,10 @@ export default function Training() {
               </LoadingButton>
             </Box>
             {isError && (
-              <Message severity="error" sx={{ mb: 3 }}>
-                {`${postError}`}
+              <Message severity="error" sx={{ mt: 3 }}>
+                {tProfile.rich(`${postError}`, {
+                    contactLink: ContactLink,
+                })}
               </Message>
             )}
           </PageSection>
