@@ -7,7 +7,7 @@
     "maxSizeText": "{size} Max size",
     "inputLabelText": "File input",
     "maxSizeErrorText": "Your file must be under {size}",
-    "scanningText": "Scanning file...",
+    "scanningText": "Scanning file for viruses...",
     "scanOkText": "File was successfully scanned",
     "scanErrorText": "Your file file may have a virus"
   },

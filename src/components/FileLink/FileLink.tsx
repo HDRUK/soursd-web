@@ -95,7 +95,7 @@ export default function FileLink({
         <CircularProgress
           color="info"
           size="1em"
-          title={fileScanningText || t("fileScanningText")}
+          title={fileScanningText || t("scanningText")}
         />
       )}
     </>
