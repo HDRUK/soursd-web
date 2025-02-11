@@ -20,7 +20,7 @@ import EastIcon from "@mui/icons-material/East";
 import { Button } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { ChangeEvent, useCallback, useState } from "react";
+import { ChangeEvent, useCallback } from "react";
 import FileUploadDetails from "../FileUploadDetails/FileUploadDetails";
 import HistoriesSection from "../HistoriesSection";
 import EmploymentsForm from "./EmploymentsForm";
@@ -32,7 +32,6 @@ export default function Experience() {
   const histories = useStore(state => state.config.histories);
   const setHistories = useStore(state => state.setHistories);
   const getHistories = useStore(state => state.getHistories);
-  const [isFileSizeTooBig, setIsFileSizeTooBig] = useState(false);
   const [user, setUser] = useStore(store => [store.config.user, store.setUser]);
   const router = useRouter();
 
@@ -107,7 +106,7 @@ export default function Experience() {
               fileButtonText={tProfile("uploadCv")}
               fileHref={getFileHref(latestCV?.name)}
               fileType={FileType.CV}
-              fileNameText={latestCV?.name || tProfile("noCvUploaded")}
+              fileNameText={file?.name || tProfile("noCvUploaded")}
               isSizeInvalid={isSizeInvalid}
               isScanning={isScanning}
               isScanComplete={isScanComplete}

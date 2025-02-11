@@ -1,6 +1,7 @@
 import { QueryOptions, QueryPayload } from "@/types/requests";
 import { objectToQuerystring } from "@/utils/requests";
 import { getHeadersWithAuthorization } from "./requestHelpers";
+import { getFileExtension } from "@/utils/file";
 
 async function request<T>(
   method: string,
@@ -8,14 +9,15 @@ async function request<T>(
   payload?: QueryPayload<T>,
   options?: QueryOptions
 ) {
-const defaultContentType = 
+  let defaultContentType;
 
-if(!(payload instanceof FormData)) {
-  {"content-type": "application/json;charset=UTF-8"};
-};
+  if (!(payload instanceof FormData)) {
+    defaultContentType = "application/json;charset=UTF-8";
+  }
+
   const headers = await getHeadersWithAuthorization({
-    ...(!(payload instanceof FormData) && {
-      "content-type": "application/json;charset=UTF-8",
+    ...(defaultContentType && {
+      "content-type": defaultContentType,
     }),
     ...options?.headers,
   });

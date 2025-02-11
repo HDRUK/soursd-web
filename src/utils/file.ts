@@ -30,7 +30,7 @@ function getFileHref(fileName: string | undefined) {
   return `${process.env.NEXT_PUBLIC_FILE_DOWNLOAD_URL}/${fileName}`;
 }
 
-function getFileName(file: File) {
+function getFileExtension(file: File) {
   return file.name.match(/[^\.]*$/)?.[0]?.toLowerCase();
 }
 
@@ -49,6 +49,6 @@ export {
   isFileScanComplete,
   isFileScanFailed,
   getFileHref,
-  getFileName,
+  getFileExtension,
   getFileFromEvent,
 };

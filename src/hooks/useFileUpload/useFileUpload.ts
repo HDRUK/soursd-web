@@ -9,7 +9,8 @@ import {
   isFileScanning,
 } from "@/utils/file";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import useQueryAlerts from "../useQueryAlerts";
 import useQueryRefetch from "../useQueryRefetch";
 
 export interface FileUploadState {
@@ -27,6 +28,14 @@ export default function useFileUpload() {
 
   const { refetch: refetchFile, cancel: refetchFileCancel } = useQueryRefetch({
     options: { queryKey: ["getFile", file?.id] },
+  });
+
+  useQueryAlerts(postFileState, {
+    commonAlertProps: {
+      willClose: () => {
+        postFileState.reset();
+      },
+    },
   });
 
   const upload = async (formData: FormData) => {
@@ -47,8 +56,10 @@ export default function useFileUpload() {
     return;
   };
 
+  const fileData = getFileState.data?.data;
+
   useEffect(() => {
-    if (file?.id) {
+    if (file?.id && (!fileData || isFileScanning(fileData))) {
       refetchFile();
     } else {
       refetchFileCancel();
@@ -57,17 +68,16 @@ export default function useFileUpload() {
     return () => {
       refetchFileCancel();
     };
-  }, [file?.id]);
+  }, [file?.id, fileData]);
 
   return {
     upload,
-    isScanning: isFileScanning(file),
-    isScanComplete: isFileScanComplete(file),
-    isScanFailed: isFileScanFailed(file),
+    isScanning: isFileScanning(fileData),
+    isScanComplete: isFileScanComplete(fileData),
+    isScanFailed: isFileScanFailed(fileData),
     isSizeInvalid,
     isUploading: getFileState.isLoading,
     fileHref: getFileHref(file?.name),
     file,
-    getFileFromEvent,
   };
 }

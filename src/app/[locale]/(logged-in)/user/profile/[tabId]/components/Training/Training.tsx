@@ -1,4 +1,3 @@
-import ContactLink from "@/components/ContactLink";
 import DateInput from "@/components/DateInput";
 import Form from "@/components/Form";
 import FormActions from "@/components/FormActions";
@@ -6,11 +5,11 @@ import FormControlHorizontal from "@/components/FormControlHorizontal";
 import FormSection from "@/components/FormSection";
 import { Message } from "@/components/Message";
 import yup from "@/config/yup";
-import { FileType, MAX_UPLOAD_SIZE_BYTES } from "@/consts/files";
+import { FileType } from "@/consts/files";
 import { ROUTES } from "@/consts/router";
 import { useStore } from "@/data/store";
-import useFileScanned from "@/hooks/useFileScanned";
-import useQueryRefetch from "@/hooks/useQueryRefetch";
+import useFileUpload from "@/hooks/useFileUpload";
+import useUserFileUpload from "@/hooks/useUserFileUpload";
 import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
 import {
   PageBody,
@@ -19,13 +18,9 @@ import {
   PageSection,
 } from "@/modules";
 import ResearcherTrainingEntry from "@/modules/ResearcherTrainingEntry";
-import postFileQuery from "@/services/files/postFileQuery";
 import postTrainingsQuery from "@/services/trainings/postTrainingsQuery";
 import { PostTrainingsPayload } from "@/services/trainings/types";
-import { EntityType } from "@/types/api";
-import { File as AppFile } from "@/types/application";
 import { formatDBDate } from "@/utils/date";
-import { getFileHref, getUploadedCertification } from "@/utils/file";
 import { showAlert } from "@/utils/showAlert";
 import EastIcon from "@mui/icons-material/East";
 import SaveIcon from "@mui/icons-material/Save";
@@ -35,11 +30,9 @@ import { useMutation } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { ChangeEvent, useCallback, useMemo, useState } from "react";
+import { ChangeEvent, useCallback, useMemo } from "react";
 import FileUploadDetails from "../FileUploadDetails/FileUploadDetails";
 import { StyledBox } from "./Training.styles";
-import useFileUpload from "@/hooks/useFileUpload";
-import useUserFileUpload from "@/hooks/useUserFileUpload";
 
 export interface TrainingFormValues {
   provider: string;
@@ -89,9 +82,9 @@ export default function Training() {
 
   const handleFileChange = useCallback(
     async (e: ChangeEvent<HTMLInputElement>) => {
-      const user = await uploadFile(e);
+      const updatedUser = await uploadFile(e);
 
-      if (user) setUser(user);
+      if (updatedUser) setUser(updatedUser);
     },
     [user?.registry_id]
   );

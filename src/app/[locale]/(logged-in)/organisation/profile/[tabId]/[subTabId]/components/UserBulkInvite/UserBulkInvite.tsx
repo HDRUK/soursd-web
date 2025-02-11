@@ -1,14 +1,9 @@
-import { Box, Button, Typography } from "@mui/material";
-import FileUploadIcon from "@mui/icons-material/FileUpload";
-import FileScannedLink from "@/components/FileScannedLink";
-import { ChangeEvent, useCallback, useEffect, useState } from "react";
-import { FileType, MAX_UPLOAD_SIZE_BYTES } from "@/consts/files";
-import postFileQuery from "@/services/files/postFileQuery";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import useQueryRefetch from "@/hooks/useQueryRefetch";
-import getFileQuery from "@/services/files/getFileQuery";
-import useFileUpload from "@/hooks/useFileUpload";
 import FileLink from "@/components/FileLink";
+import { FileType } from "@/consts/files";
+import useFileUpload from "@/hooks/useFileUpload";
+import { getFileFromEvent } from "@/utils/file";
+import { Box, Typography } from "@mui/material";
+import { ChangeEvent, useCallback } from "react";
 
 interface UserBulkInviteProps {
   organisation_id: number;
@@ -19,7 +14,6 @@ export default function UserBulkInvite({
 }: UserBulkInviteProps) {
   const {
     upload,
-    getFileFromEvent,
     isScanComplete,
     isScanFailed,
     isScanning,
