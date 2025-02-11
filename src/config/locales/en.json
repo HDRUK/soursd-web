@@ -4,6 +4,16 @@
     "hide": "Hide {name}"
   },
   "Application": {
+    "alertSuccessConfirmButton": "Close",
+    "alertErrorConfirmButton": "Close",
+    "alertDeleteConfirmButton": "Delete",
+    "alertDeleteCancelButton": "Cancel",
+    "alertErrorDescription": "There has been a problem with your requests. Please try again or contact us at <contactLink></contactLink>",
+    "alertErrorTitle": "Error",
+    "alertSuccessDescription": "Your request has been successful",
+    "alertSuccessTitle": "Success",
+    "alertDeleteDescription": "Are you sure you want to delete this data? This action may be permanent.",
+    "alertDeleteTitle": "Warning",
     "honoraryContract": "Honorary contract",
     "student": "Student",
     "employee": "Employee",
