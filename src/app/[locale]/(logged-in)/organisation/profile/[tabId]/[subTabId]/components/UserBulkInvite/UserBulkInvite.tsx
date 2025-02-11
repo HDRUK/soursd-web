@@ -57,6 +57,7 @@ export default function UserBulkInvite({
         </Typography>
         <Box sx={{ minWidth: "210px" }}>
           <FileLink
+            accept=".csv"
             includeStatus={false}
             fileButtonText="Bulk upload Users"
             isSizeInvalid={isSizeInvalid}

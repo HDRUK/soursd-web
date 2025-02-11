@@ -28,6 +28,7 @@ import GppGoodIcon from "@mui/icons-material/GppGood";
 export interface FileLinkProps extends FileUploadState {
   fileButtonText: ReactNode;
   onFileChange: ChangeEventHandler<HTMLInputElement>;
+  accept?: string;
   fileScanOkText?: string;
   fileScanErrorText?: string;
   fileScanningText?: string;
@@ -46,6 +47,7 @@ export interface FileLinkProps extends FileUploadState {
 const NAMESPACE_TRANSLATION_FILE = "File";
 
 export default function FileLink({
+  accept,
   fileScanOkText,
   fileScanErrorText,
   fileScanningText,
@@ -149,6 +151,7 @@ export default function FileLink({
         style={{ display: "none" }}
         ref={ref}
         onChange={onFileChange}
+        accept={accept}
       />
     </Box>
   );
