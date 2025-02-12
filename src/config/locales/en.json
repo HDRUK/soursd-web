@@ -400,8 +400,9 @@
     "sendButton": "Send"
   },
   "Cv": {
+    "fileUpload": "Upload Cv",
     "fileMaxSize": "{size} Max size",
-    "fileButtonText": "Upload Cv",
+    "fileButtonUpload": "Upload Cv",
     "fileInputLabel": "Cv file input",
     "fileMaxSizeError": "Your Cv must be under {size}",
     "fileScanning": "Scanning Cv...",

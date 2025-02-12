@@ -17,11 +17,12 @@ export default function FileUploadDetails({
   return (
     <FileLink
       {...fileLinkProps}
-      fileButtonText={t("fileDownload")}
+      fileButtonText={t("fileUpload")}
       fileInputLabelText={t("fileInputLabel")}
       fileScanErrorText={t("fileScanError")}
       fileScanningText={t("fileScanning")}
       fileScanOkText={t("fileScanOk")}
+      includeStatus
       canDownload
     />
   );

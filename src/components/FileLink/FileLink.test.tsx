@@ -34,6 +34,7 @@ const renderFileLinkTest = (props?: Partial<FileLinkProps>) => {
       isScanComplete={false}
       isScanFailed={false}
       isUploading={false}
+      includeStatus
       onDownload={mockOnDownload}
       onFileChange={mockOnFileChange}
       {...props}
@@ -70,9 +71,10 @@ describe("<FileLink />", () => {
     expect(mockOnFileChange).toHaveBeenCalled();
   });
 
-  it("show a loader", async () => {
+  it("show the correct scan status", async () => {
     renderFileLinkTest({
-      isUploading: true,
+      isScanning: true,
+      includeStatus: true,
     });
 
     expect(screen.getByRole("progressbar")).toBeInTheDocument();
@@ -84,6 +86,14 @@ describe("<FileLink />", () => {
     });
 
     expect(screen.getByTitle("Scan failed")).toBeInTheDocument();
+  });
+
+  it("shows the succeed virus state", async () => {
+    renderFileLinkTest({
+      isScanComplete: true,
+    });
+
+    expect(screen.getByTitle("Scan complete")).toBeInTheDocument();
   });
 
   it("is not downloadable", async () => {

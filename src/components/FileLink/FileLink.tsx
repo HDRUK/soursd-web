@@ -87,10 +87,13 @@ export default function FileLink({
           color="info"
           size="1em"
           title={fileScanningText || t("scanningText")}
+          role="progressbar"
         />
       )}
     </>
   );
+
+  const showLink = fileNameText && fileHref;
 
   return (
     <Box
@@ -105,14 +108,14 @@ export default function FileLink({
           variant="contained"
           onClick={handleFileSelectorOpen}
           startIcon={<UploadIcon />}
-          loading={isUploading}
+          loading={isUploading && !isScanning}
           fullWidth>
           {fileButtonText}
         </LoadingButton>
-        {!includeStatus && statusIcons}
+        {!showLink && includeStatus && statusIcons}
       </Box>
       <div>
-        {fileNameText && fileHref && (
+        {showLink && (
           <Link
             href={fileHref}
             onClick={(e: MouseEvent) =>
