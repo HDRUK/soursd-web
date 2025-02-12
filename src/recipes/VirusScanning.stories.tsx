@@ -6,38 +6,33 @@ const VirusScanning = () => {
   const codeString = `
     const Profile = () => {
       const {
-        data
-      } = useQuery(
-        ["getUser", "123"],
-        async ({ queryKey }) => {
-          const [, id] = queryKey;
+        upload,
+        isScanComplete,
+        isScanFailed,
+        isScanning,
+        isSizeInvalid,
+        isUploading,
+        file
+      } = useFileUpload();
 
-          return getUser(id, {
-            error: {
-              message: "submitError",
-            },
-          });
+      const handleFileChange = useCallback(
+        async (e: ChangeEvent<HTMLInputElement>) => {
+          const file = getFileFromEvent(e);
+
+          if (file) {
+            const formData = new FormData();
+
+            formData.append("file", file);
+            formData.append("file_type", FileType.RESEARCHER_LIST);
+            formData.append("organisation_id", 1);
+
+            upload(formData);
+          }
+        },
+        []
       );
 
-      const firstFile = data.registry.files[0];
-
-      return <File data={firstFile} />
-    }
-
-    const File = ({ data }) => {
-      const { isNotInfected, isScanning } = useFileScanned(latestCV);
-
-      const { refetch: refetchUser, cancel: refetchCancel } = useQueryRefetch({
-        options: { queryKey: ["getUser", user.id] },
-      });
-
-      useEffect(() => {
-        if (isFileScanning(latestCV)) {
-          refetchUser();
-        } else {
-          refetchCancel();
-        }
-      }, [JSON.stringify(latestCV)]);
+      return file.name;
   }
   `;
 
