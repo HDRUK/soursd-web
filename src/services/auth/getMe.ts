@@ -9,5 +9,6 @@ export default async (
   const response = await getRequest(
     `${process.env.NEXT_PUBLIC_API_URL}/auth/me`
   );
+
   return handleJsonResponse(response, options);
 };

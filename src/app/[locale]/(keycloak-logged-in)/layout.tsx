@@ -24,15 +24,19 @@ async function validateAccessToken(pathname: string | null): Promise<boolean> {
 export default function Layout({ children }: PropsWithChildren) {
   // temporary layout for if someone is keycloak-logged-in and needs to create an account
   const pathname = usePathname();
-  const [hasAccessToken, setHasAccessToken] = useState<boolean>(false);
+  const enabledRedirect = !pathname.includes("/admin");
 
-  const { isReady } = useLoginRedirect();
+  const { isReady } = useLoginRedirect({
+    enabled: enabledRedirect,
+  });
 
   useEffect(() => {
     const performAuthCheck = async () => {
       const isAuth = await validateAccessToken(pathname);
 
-      setHasAccessToken(isAuth);
+      if (!isAuth) {
+        throw new Error("Unauthorised 401");
+      }
     };
 
     performAuthCheck();
@@ -40,7 +44,7 @@ export default function Layout({ children }: PropsWithChildren) {
 
   return (
     <PageContainer>
-      <LoadingWrapper variant="basic" loading={isReady && hasAccessToken}>
+      <LoadingWrapper variant="basic" loading={!isReady && enabledRedirect}>
         {children}
       </LoadingWrapper>
     </PageContainer>
