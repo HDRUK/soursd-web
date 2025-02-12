@@ -170,6 +170,8 @@ const ApplicationDataProvider = ({
     !!sectors?.length &&
     !!permissions?.length;
 
+  console.log("isFinishedLoading", isFinishedLoading);
+
   return (
     <ApplicationDataContext.Provider value={providerValue}>
       {(isApplicationError || isHistoriesError) && (

@@ -1,6 +1,6 @@
 import { ConfigProps, withConfig } from "@/components/Config";
-import { PageBodyContainer } from "@/modules";
 import { redirect } from "@/i18n/routing";
+import { PageBodyContainer } from "@/modules";
 import TabsContents from "./components/TabsContents";
 import TabsSections from "./components/TabsSections";
 import { PageTabs } from "./consts/tabs";

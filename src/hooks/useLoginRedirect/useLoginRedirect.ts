@@ -10,7 +10,7 @@ interface UseLoginRedirectProps {
   enabled?: boolean;
 }
 
-export default function useLoginRedirect(props: UseLoginRedirectProps) {
+export default function useLoginRedirect(props?: UseLoginRedirectProps) {
   const [isReady, setReady] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
@@ -49,7 +49,7 @@ export default function useLoginRedirect(props: UseLoginRedirectProps) {
     }
 
     if (!loading) {
-      if (props?.enabled !== false) {
+      if (props?.enabled === false) {
         setReady(true);
       } else if (isAuthenticated) {
         initRegister();

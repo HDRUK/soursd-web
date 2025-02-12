@@ -1,5 +1,7 @@
 "use client";
 
+import HorizontalDrawer from "@/components/HorizontalDrawer";
+import SoursdLogo from "@/components/SoursdLogo";
 import { useStore } from "@/data/store";
 import { Link } from "@/i18n/routing";
 import NotificationsMenu from "@/modules/NotificationsMenu";
@@ -18,8 +20,7 @@ import {
 import { useTranslations } from "next-intl";
 import { LinkProps } from "next/link";
 import { MouseEvent, useEffect, useState } from "react";
-import HorizontalDrawer from "@/components/HorizontalDrawer";
-import SoursdLogo from "@/components/SoursdLogo";
+import PageCenter from "../PageCenter";
 import { StyledContainer, StyledHeader } from "./NavBar.styles";
 
 const NAMESPACE_TRANSLATIONS_NAVBAR = "NavBar";
@@ -128,17 +129,19 @@ export default function NavBar() {
           },
         }}
         data-testid="header-desktop-menu">
-        <StyledHeader>
-          <SoursdLogo variant="titled" />
-          <Box sx={{ display: "flex", gap: 1 }}>
-            {buttons.map(({ text, icon, ...restProps }) => (
-              <Button component={Link} {...restProps} key={text}>
-                {text || icon}
-              </Button>
-            ))}
-            {storedUser && <NotificationsMenu />}
-          </Box>
-        </StyledHeader>
+        <PageCenter>
+          <StyledHeader>
+            <SoursdLogo variant="titled" />
+            <Box sx={{ display: "flex", gap: 1 }}>
+              {buttons.map(({ text, icon, ...restProps }) => (
+                <Button component={Link} {...restProps} key={text}>
+                  {text || icon}
+                </Button>
+              ))}
+              {storedUser && <NotificationsMenu />}
+            </Box>
+          </StyledHeader>
+        </PageCenter>
       </Box>
       <Box
         sx={{

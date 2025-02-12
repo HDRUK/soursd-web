@@ -11,6 +11,7 @@ import { notFound } from "next/navigation";
 import { PropsWithChildren } from "react";
 import "../global.css";
 import ReactQueryClientProvider from "./components/ReactQueryClientProvider";
+import { Box } from "@mui/system";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -33,7 +34,10 @@ export default function RootLayout({
 
   return (
     <html lang={locale}>
-      <body className={inter.className}>
+      <Box
+        component="body"
+        className={inter.className}
+        sx={{ background: "#f2f2f2" }}>
         <CookieProvider>
           <NextIntlClientProvider locale={locale} messages={messages}>
             <AppRouterCacheProvider>
@@ -54,7 +58,7 @@ export default function RootLayout({
             </AppRouterCacheProvider>
           </NextIntlClientProvider>
         </CookieProvider>
-      </body>
+      </Box>
     </html>
   );
 }

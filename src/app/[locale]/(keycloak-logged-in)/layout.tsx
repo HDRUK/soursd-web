@@ -7,7 +7,7 @@ import { PageContainer } from "@/modules";
 import { getAccessToken } from "@/services/requestHelpers";
 import { handleLogin } from "@/utils/keycloak";
 import Cookies from "js-cookie";
-import { PropsWithChildren, useEffect, useState } from "react";
+import { PropsWithChildren, useEffect } from "react";
 
 async function validateAccessToken(pathname: string | null): Promise<boolean> {
   const accessToken = await getAccessToken();

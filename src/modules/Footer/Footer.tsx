@@ -1,8 +1,9 @@
 "use client";
 
 import { Box, Divider, Typography } from "@mui/material";
-import { HTMLAttributes } from "react";
 import { useTranslations } from "next-intl";
+import { HTMLAttributes } from "react";
+import PageCenter from "../PageCenter";
 import { StyledFooter, StyledLink } from "./Footer.styles";
 
 type FooterProps = HTMLAttributes<HTMLDivElement>;
@@ -14,27 +15,31 @@ export default function Footer(props: FooterProps) {
   return (
     <Box {...props} component="footer" sx={{ backgroundColor: "footer.main" }}>
       <Divider sx={{ height: "6px" }} />
-      <StyledFooter>
-        <div>
-          <Typography variant="h6" color="white" sx={{ marginBottom: "5px" }}>
-            {t("contactFormTitle")}
-          </Typography>
-          <Box sx={{ display: "flex", flexDirection: "column" }}>
-            <StyledLink color="white">{t("privacyPolicyLink")}</StyledLink>
-            <StyledLink color="white">{t("termsAndConditionsLink")}</StyledLink>
-          </Box>
-        </div>
-        <div>
-          <Typography variant="h6" color="white" sx={{ marginBottom: "5px" }}>
-            {t("fundedByTitle")}
-          </Typography>
-        </div>
-        <div>
-          <Typography variant="h6" color="white" sx={{ marginBottom: "5px" }}>
-            {t("partnershipTitle")}
-          </Typography>
-        </div>
-      </StyledFooter>
+      <PageCenter>
+        <StyledFooter>
+          <div>
+            <Typography variant="h6" color="white" sx={{ marginBottom: "5px" }}>
+              {t("contactFormTitle")}
+            </Typography>
+            <Box sx={{ display: "flex", flexDirection: "column" }}>
+              <StyledLink color="white">{t("privacyPolicyLink")}</StyledLink>
+              <StyledLink color="white">
+                {t("termsAndConditionsLink")}
+              </StyledLink>
+            </Box>
+          </div>
+          <div>
+            <Typography variant="h6" color="white" sx={{ marginBottom: "5px" }}>
+              {t("fundedByTitle")}
+            </Typography>
+          </div>
+          <div>
+            <Typography variant="h6" color="white" sx={{ marginBottom: "5px" }}>
+              {t("partnershipTitle")}
+            </Typography>
+          </div>
+        </StyledFooter>
+      </PageCenter>
     </Box>
   );
 }
