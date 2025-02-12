@@ -1,7 +1,6 @@
 import { QueryOptions, QueryPayload } from "@/types/requests";
 import { objectToQuerystring } from "@/utils/requests";
 import { getHeadersWithAuthorization } from "./requestHelpers";
-import { getFileExtension } from "@/utils/file";
 
 async function request<T>(
   method: string,

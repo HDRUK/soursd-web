@@ -3,31 +3,19 @@
 import Text from "@/components/Text";
 import { MAX_UPLOAD_SIZE_BYTES } from "@/consts/files";
 import { FileUploadState } from "@/hooks/useFileUpload";
-import UploadIcon from "@mui/icons-material/Upload";
-import { LoadingButton } from "@mui/lab";
-import {
-  Box,
-  ButtonProps,
-  CircularProgress,
-  Link,
-  LinkProps,
-  Typography,
-} from "@mui/material";
-import { useTranslations } from "next-intl";
-import prettyBytes from "pretty-bytes";
-import {
-  ChangeEventHandler,
-  HTMLAttributes,
-  ReactNode,
-  useCallback,
-  useRef,
-} from "react";
 import GppBadIcon from "@mui/icons-material/GppBad";
 import GppGoodIcon from "@mui/icons-material/GppGood";
+import UploadIcon from "@mui/icons-material/Upload";
+import { LoadingButton } from "@mui/lab";
+import { Box, CircularProgress, Link, Typography } from "@mui/material";
+import { useTranslations } from "next-intl";
+import prettyBytes from "pretty-bytes";
+import { ChangeEventHandler, ReactNode, useCallback, useRef } from "react";
 
 export interface FileLinkProps extends FileUploadState {
   fileButtonText: ReactNode;
   onFileChange: ChangeEventHandler<HTMLInputElement>;
+  onDownload?: (e: MouseEvent) => void;
   accept?: string;
   fileScanOkText?: string;
   fileScanErrorText?: string;
@@ -66,6 +54,7 @@ export default function FileLink({
   canDownload,
   disableDownload,
   onFileChange,
+  onDownload,
 }: FileLinkProps) {
   const ref = useRef<HTMLInputElement>(null);
 
@@ -126,13 +115,20 @@ export default function FileLink({
         {fileNameText && fileHref && (
           <Link
             href={fileHref}
+            onClick={(e: MouseEvent) =>
+              (disableDownload || canDownload) && onDownload?.(e)
+            }
             sx={{
               ...((disableDownload || canDownload) && {
                 pointerEvents: "none",
                 cursor: "default",
               }),
             }}>
-            {includeStatus && <Text endIcon={statusIcons}>{fileNameText}</Text>}
+            {includeStatus ? (
+              <Text endIcon={statusIcons}>{fileNameText}</Text>
+            ) : (
+              fileNameText
+            )}
           </Link>
         )}
         <Typography
@@ -147,7 +143,7 @@ export default function FileLink({
       <input
         id="fileInput"
         type="file"
-        placeholder={fileInputLabelText || t("inputLabelText")}
+        aria-label={fileInputLabelText || t("inputLabelText")}
         style={{ display: "none" }}
         ref={ref}
         onChange={onFileChange}

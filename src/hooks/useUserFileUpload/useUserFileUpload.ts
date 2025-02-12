@@ -1,10 +1,10 @@
 import { FileType } from "@/consts/files";
 import { EntityType } from "@/types/api";
-import { User, File } from "@/types/application";
+import { File, User } from "@/types/application";
 import { getFileFromEvent } from "@/utils/file";
 import { ChangeEvent, useCallback } from "react";
 
-interface UseUserFileUploadProps {
+export interface UseUserFileUploadProps {
   fileType: FileType;
   user: User;
   upload: (formData: FormData) => Promise<File | undefined>;
@@ -41,7 +41,7 @@ export default function useUserFileUpload({
         }
       }
 
-      return;
+      return null;
     },
     [user?.registry_id]
   );

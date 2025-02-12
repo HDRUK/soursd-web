@@ -9,6 +9,7 @@ import FileLink, { FileLinkProps } from ".";
 
 const mockOnFileChange = jest.fn();
 const mockUploadClick = jest.fn();
+const mockOnDownload = jest.fn();
 
 jest.mock("react", () => ({
   ...jest.requireActual("react"),
@@ -19,14 +20,22 @@ jest.mock("react", () => ({
   }),
 }));
 
-const renderFileLinkDetails = (props?: Partial<FileLinkProps>) => {
+const renderFileLinkTest = (props?: Partial<FileLinkProps>) => {
   return render(
     <FileLink
-      maxSizeLabel="10mb (max)"
+      fileButtonText="Upload"
+      fileHref="/"
+      fileNameText="cv.pdf"
+      fileScanOkText="Scan complete"
+      fileScanErrorText="Scan failed"
+      fileScanningText="File scanning"
+      isSizeInvalid={false}
+      isScanning={false}
+      isScanComplete={false}
+      isScanFailed={false}
+      isUploading={false}
+      onDownload={mockOnDownload}
       onFileChange={mockOnFileChange}
-      iconButtonProps={{
-        "aria-label": "Icon button",
-      }}
       {...props}
     />
   );
@@ -34,15 +43,13 @@ const renderFileLinkDetails = (props?: Partial<FileLinkProps>) => {
 
 describe("<FileLink />", () => {
   it("shows the correct filename", async () => {
-    renderFileLinkDetails({
-      fileName: "sample.doc",
-    });
+    renderFileLinkTest();
 
-    expect(screen.getByText("sample.doc")).toBeInTheDocument();
+    expect(screen.getByText("cv.pdf")).toBeInTheDocument();
   });
 
   it("calls file input", async () => {
-    renderFileLinkDetails();
+    renderFileLinkTest();
 
     await act(() => {
       fireEvent.click(screen.getByRole("button"));
@@ -52,10 +59,8 @@ describe("<FileLink />", () => {
   });
 
   it("uploads a file", async () => {
-    renderFileLinkDetails({
-      inputProps: {
-        "aria-label": "CV file input",
-      },
+    renderFileLinkTest({
+      fileInputLabelText: "CV file input",
     });
 
     await act(() => {
@@ -66,14 +71,36 @@ describe("<FileLink />", () => {
   });
 
   it("show a loader", async () => {
-    renderFileLinkDetails({
-      isLoading: true,
+    renderFileLinkTest({
+      isUploading: true,
     });
 
-    expect(screen.getByTestId("UploadLink-loader")).toBeInTheDocument();
+    expect(screen.getByRole("progressbar")).toBeInTheDocument();
+  });
+
+  it("shows the failed virus state", async () => {
+    renderFileLinkTest({
+      isScanFailed: true,
+    });
+
+    expect(screen.getByTitle("Scan failed")).toBeInTheDocument();
+  });
+
+  it("is not downloadable", async () => {
+    renderFileLinkTest({
+      canDownload: false,
+    });
+
+    const link = screen.getByRole("link", {
+      name: /cv.pdf/i,
+    });
+
+    fireEvent.click(link);
+
+    expect(mockOnDownload).not.toHaveBeenCalled();
   });
 
   it("has no accessibility violations", async () => {
-    commonAccessibilityTests(renderFileLinkDetails());
+    commonAccessibilityTests(renderFileLinkTest());
   });
 });

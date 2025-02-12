@@ -31,24 +31,24 @@ function getFileHref(fileName: string | undefined) {
 }
 
 function getFileExtension(file: File) {
-  return file.name.match(/[^\.]*$/)?.[0]?.toLowerCase();
+  return file.name.match(/[^.]*$/)?.[0]?.toLowerCase();
 }
 
 const getFileFromEvent = ({ target }: ChangeEvent<HTMLInputElement>) => {
-  if (!target.files || !target?.files?.length) {
-    return;
+  if (target.files && target?.files?.length) {
+    return target.files[0];
   }
 
-  return target.files[0];
+  return null;
 };
 
 export {
-  getLatestCV,
-  getUploadedCertification,
-  isFileScanning,
-  isFileScanComplete,
-  isFileScanFailed,
-  getFileHref,
   getFileExtension,
   getFileFromEvent,
+  getFileHref,
+  getLatestCV,
+  getUploadedCertification,
+  isFileScanComplete,
+  isFileScanFailed,
+  isFileScanning,
 };

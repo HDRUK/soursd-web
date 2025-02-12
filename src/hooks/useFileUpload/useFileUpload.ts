@@ -49,11 +49,11 @@ export default function useFileUpload() {
       setFile(data);
 
       return data;
-    } else {
-      setIsSizeInvalid(true);
     }
 
-    return;
+    setIsSizeInvalid(true);
+
+    return null;
   };
 
   const fileData = getFileState.data?.data;

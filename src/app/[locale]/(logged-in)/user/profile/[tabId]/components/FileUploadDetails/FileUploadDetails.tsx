@@ -1,12 +1,8 @@
 "use client";
 
 import FileLink, { FileLinkProps } from "@/components/FileLink";
-import { FileType, MAX_UPLOAD_SIZE_BYTES } from "@/consts/files";
-import { FileUploadState } from "@/hooks/useFileUpload";
-import { getFileHref } from "@/utils/file";
+import { FileType } from "@/consts/files";
 import { useTranslations } from "next-intl";
-import prettyBytes from "pretty-bytes";
-import { ChangeEventHandler } from "react";
 
 export interface FileUploadDetailsProps extends FileLinkProps {
   fileType: FileType;

@@ -233,7 +233,7 @@ export default function Training() {
                       <Grid item xs={12} key="certification_upload">
                         <FormControlHorizontal
                           name="certification_upload"
-                          renderField={fieldProps => (
+                          renderField={() => (
                             <FileUploadDetails
                               fileButtonText={tProfile("uploadCertification")}
                               fileType={FileType.CV}
