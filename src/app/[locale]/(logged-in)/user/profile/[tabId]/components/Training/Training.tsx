@@ -296,7 +296,7 @@ export default function Training() {
                       </Grid>
                     </Grid>
                     {isUploadError && (
-                      <Message severity="error" sx={{mt: 3}}>
+                      <Message severity="error" sx={{ mt: 3 }}>
                         {isUploadError &&
                           tProfile.rich(`${uploadError}`, {
                             contactLink: ContactLink,
@@ -340,7 +340,7 @@ export default function Training() {
             {isError && (
               <Message severity="error" sx={{ mt: 3 }}>
                 {tProfile.rich(`${postError}`, {
-                    contactLink: ContactLink,
+                  contactLink: ContactLink,
                 })}
               </Message>
             )}

@@ -8,7 +8,7 @@ export default async function fetchPredictions(input) {
   const API_KEY = process.env.GOOGLE_MAPS_API_KEY;
   try {
     const autocompleteResponse = await fetch(
-      `${GOOGLE_PLACES_AUTOCOMPLETE_URL}?input=${encodeURIComponent(input)}&key=${API_KEY}&types=geocode&region=uk`
+      `${GOOGLE_PLACES_AUTOCOMPLETE_URL}?input=${encodeURIComponent(input)}&key=${API_KEY}&types=address&region=GB&components=country:GB`
     );
 
     if (!autocompleteResponse.ok) {
