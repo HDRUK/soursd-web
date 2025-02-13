@@ -52,7 +52,7 @@ export default function InformationSection({
   };
 
   let actionProps: Partial<IconButtonProps> = {
-    onMouseOver: handleTrigger,
+    onClick: handleTrigger,
   };
 
   if (variant === "collapse") {

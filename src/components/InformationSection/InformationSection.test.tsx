@@ -22,7 +22,7 @@ const renderOpenedContent = (props?: Partial<InformationSectionProps>) => {
 
   const trigger = screen.getByRole("button");
 
-  fireEvent.mouseOver(trigger);
+  fireEvent.click(trigger);
 
   return component;
 };
