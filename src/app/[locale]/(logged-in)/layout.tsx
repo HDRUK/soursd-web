@@ -81,7 +81,6 @@ export default function Layout({ children }: LayoutProps) {
 
   useEffect(() => {
     const performAuthCheck = async () => {
-      console.log("AUTH");
       const user = await validateAccessToken(pathname, router);
 
       if (!user) {
@@ -99,8 +98,6 @@ export default function Layout({ children }: LayoutProps) {
 
     performAuthCheck();
   }, [pathname]);
-
-  console.log("Me", me);
 
   return (
     me && (
