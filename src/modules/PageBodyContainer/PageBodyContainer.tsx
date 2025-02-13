@@ -12,17 +12,19 @@ export default function PageBodyContainer({
   ...restProps
 }: PageBodyContainerProps) {
   return (
-    <Box {...restProps} sx={{ p: 2 }}>
-      <SectionHeading
-        type="content"
-        variant="h1"
-        heading={heading}
-        description={description}
-        size="large"
-        sx={{
-          mb: 4,
-        }}
-      />
+    <Box {...restProps}>
+      {heading && (
+        <SectionHeading
+          type="content"
+          variant="h1"
+          heading={heading}
+          description={description}
+          size="large"
+          sx={{
+            mb: 4,
+          }}
+        />
+      )}
       {children}
     </Box>
   );

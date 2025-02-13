@@ -6,7 +6,11 @@ import { User } from "@/types/application";
 import { useEffect, useState } from "react";
 import useAuth from "../useAuth";
 
-export default function useLoginRedirect() {
+interface UseLoginRedirectProps {
+  enabled?: boolean;
+}
+
+export default function useLoginRedirect(props?: UseLoginRedirectProps) {
   const [isReady, setReady] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
@@ -45,13 +49,15 @@ export default function useLoginRedirect() {
     }
 
     if (!loading) {
-      if (isAuthenticated) {
+      if (props?.enabled === false) {
+        setReady(true);
+      } else if (isAuthenticated) {
         initRegister();
       } else if (pathname !== ROUTES.register.path) {
         setReady(true);
       }
     }
-  }, [loading, isAuthenticated, pathname]);
+  }, [loading, isAuthenticated, pathname, props?.enabled]);
 
   return {
     isReady,

@@ -44,7 +44,11 @@ function handleResponseError(response: Response, options?: ResponseOptions) {
 }
 
 function handleDataError<T>(data: ResponseJson<T>, options?: ResponseOptions) {
-  if (data.message && data.message !== ResponseMessageType.SUCCESS) {
+  if (
+    data.message &&
+    data.message !== ResponseMessageType.SUCCESS &&
+    !options?.suppressThrow
+  ) {
     return new Error(options?.error?.message || "responseError");
   }
 

@@ -124,6 +124,7 @@ interface User {
   feed_source?: UserFeedSource;
   unclaimed?: boolean;
   registry: {
+    digi_ident: string;
     files?: File[];
     organisations?: Organisation[];
     verified: boolean;

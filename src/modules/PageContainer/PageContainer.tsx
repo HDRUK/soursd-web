@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import { ReactNode } from "react";
 import Footer from "../Footer";
 import Header from "../Header";
+import PageCenter from "../PageCenter";
 
 interface PageContainerProps {
   children: ReactNode;
@@ -14,20 +15,22 @@ function PageContainer({ children }: PageContainerProps) {
         display: "flex",
         flexDirection: "column",
         minHeight: "100vh",
+        width: "100vw",
+        background: "#fff",
       }}>
       <Header />
-      <Box
-        sx={{
-          px: 1,
-          flexGrow: 1,
-          display: "flex",
-          flexDirection: "column",
-        }}>
-        {children}
-      </Box>
-      <Box>
-        <Footer />
-      </Box>
+      <PageCenter>
+        <Box
+          sx={{
+            px: 1,
+            flexGrow: 1,
+            display: "flex",
+            flexDirection: "column",
+          }}>
+          {children}
+        </Box>
+      </PageCenter>
+      <Footer />
     </Box>
   );
 }

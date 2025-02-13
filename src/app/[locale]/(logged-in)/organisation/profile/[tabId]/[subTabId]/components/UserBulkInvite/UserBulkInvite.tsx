@@ -23,7 +23,7 @@ export default function UserBulkInvite({
     isScanning,
     isSizeInvalid,
     isUploading,
-  } = useFileUpload();
+  } = useFileUpload("bulkInviteUploadError");
 
   const handleFileChange = useCallback(
     async (e: ChangeEvent<HTMLInputElement>) => {

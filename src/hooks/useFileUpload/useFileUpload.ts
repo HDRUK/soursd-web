@@ -17,13 +17,14 @@ export interface FileUploadState {
   isScanning: boolean;
   isScanComplete: boolean;
   isScanFailed: boolean;
+  message: string;
 }
 
-export default function useFileUpload() {
+export default function useFileUpload(message: string) {
   const [file, setFile] = useState<ApplicationFile>();
   const [isSizeInvalid, setIsSizeInvalid] = useState<boolean>();
 
-  const postFileState = useMutation(postFileQuery());
+  const postFileState = useMutation(postFileQuery(message));
   const getFileState = useQuery(getFileQuery(file?.id));
 
   const { refetch: refetchFile, cancel: refetchFileCancel } = useQueryRefetch({

@@ -36,6 +36,7 @@ export default function Experience() {
   const router = useRouter();
 
   const latestCV = getLatestCV(user?.registry?.files || []);
+
   const {
     upload,
     isScanComplete,
@@ -44,7 +45,7 @@ export default function Experience() {
     isUploading,
     isScanning,
     file,
-  } = useFileUpload();
+  } = useFileUpload("cvUploadFailed");
 
   const uploadFile = useUserFileUpload({
     user,

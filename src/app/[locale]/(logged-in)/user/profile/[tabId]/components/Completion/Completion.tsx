@@ -41,22 +41,21 @@ export default function Completion() {
         return (
           <Box
             sx={{
-              display: {
-                xs: "static",
-                md: "flex",
-              },
+              display: "flex",
+              gap: 3,
+              alignItems: "center",
             }}>
-            <Box sx={{ flexGrow: 1 }}>{title}</Box>
-            <Box>
-              <Box component="span" sx={{ mr: 3 }}>
+            <Box sx={{ flexGrow: 1, display: "inline-flex", gap: 2 }}>
+              <span>{title}</span>
+              <Box component="span" sx={{ flexGrow: 1, textAlign: "right" }}>
                 {t("completedScore", {
                   score,
                 })}
-              </Box>{" "}
-              <Button component="a" href={href} variant="contained">
-                {t("continueLinkText")}
-              </Button>
+              </Box>
             </Box>
+            <Button component="a" href={href} variant="contained">
+              {t("continueLinkText")}
+            </Button>
           </Box>
         );
       })}

@@ -14,7 +14,7 @@ export const StyledFooter = styled("div")(
     ${theme.breakpoints.up("md")} {
       gap: ${theme.spacing(15)};
       flex-direction: row;
-      padding: ${theme.spacing(5)} ${theme.spacing(20)};
+      padding: ${theme.spacing(5)} ${theme.spacing(3)};
     }
   `
 );
