@@ -250,7 +250,6 @@ const theme = createTheme(
       },
       MuiLoadingButton: {
         defaultProps: {
-          size: "small",
           variant: "contained",
         },
       },

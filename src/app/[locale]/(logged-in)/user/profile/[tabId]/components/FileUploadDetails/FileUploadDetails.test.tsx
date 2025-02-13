@@ -29,7 +29,7 @@ const renderFileUploadDetails = (props?: Partial<FileUploadDetailsProps>) => {
   return render(
     <FileUploadDetails
       fileType={props?.fileType || FileType.CV}
-      fileName={faker.system.fileName()}
+      fileNameText={faker.system.fileName()}
       onFileChange={mockOnFileChange}
       {...props}
     />
@@ -38,9 +38,14 @@ const renderFileUploadDetails = (props?: Partial<FileUploadDetailsProps>) => {
 // const formatFileType = (fileType: FileType) =>
 //   fileType === FileType.CERTIFICATION ? "Certification" : "CV";
 describe("<FileUploadDetails />", () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+  });
+
   it("shows the correct filename", async () => {
     renderFileUploadDetails({
-      fileName: "sample.doc",
+      fileNameText: "sample.doc",
+      fileHref: "/path",
     });
 
     expect(screen.getByText("sample.doc")).toBeInTheDocument();
@@ -58,7 +63,7 @@ describe("<FileUploadDetails />", () => {
 
   it.each(fileTypes)("uploads a file of type %s", async fileType => {
     renderFileUploadDetails({
-      isFileUploading: true,
+      isUploading: true,
       fileType,
     });
 
@@ -75,22 +80,20 @@ describe("<FileUploadDetails />", () => {
 
   it("shows a loader", async () => {
     renderFileUploadDetails({
-      isFileUploading: true,
+      isUploading: true,
     });
 
-    expect(screen.getByTestId("UploadLink-loader")).toBeInTheDocument();
+    expect(screen.getByRole("progressbar")).toBeInTheDocument();
   });
 
   it.each(fileTypes)("shows a file size error for type %s", async fileType => {
     renderFileUploadDetails({
-      isFileSizeTooBig: true,
+      isSizeInvalid: true,
       fileType,
     });
 
     expect(
-      screen.getByText(
-        `Your ${capitaliseFirstLetter(fileType.toLowerCase())} must be under ${MAX_UPLOAD_SIZE_BYTES}`
-      )
+      screen.getByText(`Your file must be under ${MAX_UPLOAD_SIZE_BYTES}`)
     ).toBeInTheDocument();
   });
 
@@ -98,7 +101,7 @@ describe("<FileUploadDetails />", () => {
     "shows a file infected status for type %s",
     async fileType => {
       renderFileUploadDetails({
-        isFileOk: false,
+        isScanFailed: true,
         fileType,
       });
 
@@ -112,7 +115,7 @@ describe("<FileUploadDetails />", () => {
 
   it.each(fileTypes)("shows a file ok status for type %", async fileType => {
     renderFileUploadDetails({
-      isFileOk: true,
+      isScanComplete: true,
       fileType,
     });
 
@@ -125,7 +128,7 @@ describe("<FileUploadDetails />", () => {
 
   it("shows a file scanning status", async () => {
     renderFileUploadDetails({
-      isFileScanning: true,
+      isScanning: true,
     });
 
     expect(screen.getByRole(`progressbar`)).toBeInTheDocument();
