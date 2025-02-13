@@ -34,6 +34,7 @@ import { ChangeEvent, useCallback, useMemo } from "react";
 import FileUploadDetails from "../FileUploadDetails/FileUploadDetails";
 import { StyledBox } from "./Training.styles";
 import ProfessionalsRegistration from "../ProfessionalRegistrations";
+import ButtonSave from "@/components/ButtonSave";
 
 export interface TrainingFormValues {
   provider: string;
@@ -255,38 +256,24 @@ export default function Training() {
                     </Grid>
                   </FormSection>
                   <FormActions>
-                    <LoadingButton
-                      type="submit"
-                      endIcon={<SaveIcon />}
-                      loading={isPending}
-                      sx={{ display: "flex", justifySelf: "end" }}>
-                      {tProfile("submitButton")}
-                    </LoadingButton>
+                    <ButtonSave isLoading={isPending} />
                   </FormActions>
                 </>
               )}
             </Form>
-            <StyledBox>
-              {histories?.training?.map(training => (
-                <ResearcherTrainingEntry
-                  key={training.id}
-                  data={training}
-                  certification={user?.registry?.files?.filter(
-                    a => a.id === training.certification_id
-                  )}
-                />
-              ))}
-            </StyledBox>
-            <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3 }}>
-              <LoadingButton
-                sx={{ display: "flex" }}
-                endIcon={<EastIcon />}
-                onClick={() =>
-                  router.push(ROUTES.profileResearcherProjects.path)
-                }>
-                {tProfile("continueLinkText")}
-              </LoadingButton>
-            </Box>
+            {!!histories?.training?.length && (
+              <StyledBox>
+                {histories.training.map(training => (
+                  <ResearcherTrainingEntry
+                    key={training.id}
+                    data={training}
+                    certification={user?.registry?.files?.filter(
+                      a => a.id === training.certification_id
+                    )}
+                  />
+                ))}
+              </StyledBox>
+            )}
             {isError && (
               <Message severity="error" sx={{ mt: 3 }}>
                 {tProfile.rich(`${postError}`, {
@@ -298,6 +285,16 @@ export default function Training() {
           <PageSection>
             <ProfessionalsRegistration />
           </PageSection>
+          <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3 }}>
+            <LoadingButton
+              sx={{ display: "flex" }}
+              endIcon={<EastIcon />}
+              onClick={() =>
+                router.push(ROUTES.profileResearcherProjects.path)
+              }>
+              {tProfile("continueLinkText")}
+            </LoadingButton>
+          </Box>
         </PageBody>
       </PageGuidance>
     </PageBodyContainer>

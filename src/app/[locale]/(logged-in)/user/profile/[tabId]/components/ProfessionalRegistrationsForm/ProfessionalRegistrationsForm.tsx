@@ -7,7 +7,7 @@ import FormSection from "@/components/FormSection";
 import yup from "@/config/yup";
 import { ResearcherProfessionalRegistration } from "@/types/application";
 import { MutationState } from "@/types/form";
-import { Checkbox, Grid, TextField } from "@mui/material";
+import { Grid, TextField } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
 
@@ -18,27 +18,21 @@ export interface ProfessionalRegistrationsFormProps {
   queryState: MutationState;
 }
 
-const NAMESPACE_TRANSLATION_PROFILE = "Profile";
-const NAMESPACE_TRANSLATION_FORM = "Form";
-const NAMESPACE_TRANSLATION_APPLICATION = "Application";
+const NAMESPACE_TRANSLATION_PROFILE = "ProfessionalRegistrations";
 
 export default function AffiliationsForm({
   onSubmit,
   queryState,
 }: ProfessionalRegistrationsFormProps) {
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
-  const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
-  const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
 
   const schema = useMemo(
     () =>
       yup.object().shape({
-        member_id: yup
-          .string()
-          .required(tForm("registrationIdRequiredInvalid")),
-        name: yup.string().required(tForm("nameRequiredInvalid")),
+        member_id: yup.string().required(tProfile("memberIdRequiredInvalid")),
+        name: yup.string().required(tProfile("nameRequiredInvalid")),
       }),
-    [tForm]
+    [tProfile]
   );
 
   const formOptions = {
@@ -51,23 +45,19 @@ export default function AffiliationsForm({
   return (
     <>
       <Form onSubmit={onSubmit} schema={schema} {...formOptions} sx={{ mb: 3 }}>
-        <FormSection heading={tApplication("affiliations")}>
+        <FormSection heading={tProfile("professionalRegistrations")}>
           <Grid container rowSpacing={3}>
             <Grid item xs={12}>
               <FormControlHorizontal
-                name="current_employer"
-                renderField={fieldProps => <Checkbox {...fieldProps} />}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlHorizontal
                 name="name"
+                tNamespace={NAMESPACE_TRANSLATION_PROFILE}
                 renderField={fieldProps => <TextField {...fieldProps} />}
               />
             </Grid>
             <Grid item xs={12}>
               <FormControlHorizontal
                 name="member_id"
+                tNamespace={NAMESPACE_TRANSLATION_PROFILE}
                 renderField={fieldProps => <TextField {...fieldProps} />}
               />
             </Grid>

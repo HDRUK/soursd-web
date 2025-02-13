@@ -20,17 +20,6 @@ jest.mock("next-intl", () => ({
   useTranslations: () => jest.fn((key: string) => key),
 }));
 
-<<<<<<< Updated upstream
-=======
-// jest.mock("@/data/store", () => ({
-//   useStore: jest.fn().mockImplementation(selector =>
-//     selector({
-//       getCustodian: () => ({ id: 1 }),
-//     })
-//   ),
-// }));
-
->>>>>>> Stashed changes
 describe("OrganisationUsersList", () => {
   beforeEach(() => {
     mockUseStore({

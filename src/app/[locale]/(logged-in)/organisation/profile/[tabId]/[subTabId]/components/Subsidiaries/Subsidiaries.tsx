@@ -15,6 +15,7 @@ import { useTranslations } from "next-intl";
 import React, { useMemo } from "react";
 import usePatchOrganisation from "../../../hooks/usePatchOrganisation";
 import { FormData, getDefaultValues, getValidation } from "./config/form";
+import ButtonSave from "@/components/ButtonSave";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 const NAMESPACE_TRANSLATION_FORM = "Form";
@@ -99,13 +100,10 @@ export default function Subsidiaries() {
                 </Grid>
 
                 <FormActions>
-                  <LoadingButton
-                    disabled={nsubs === 0}
-                    loading={isLoading}
-                    type="submit"
-                    endIcon={<SaveIcon />}>
-                    {tProfile("submitButton")}
-                  </LoadingButton>
+                  <ButtonSave
+                    isLoading={isLoading}
+                    disabled={nsubs === 0 || isLoading}
+                  />
                 </FormActions>
               </>
             );

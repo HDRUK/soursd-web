@@ -1,16 +1,5 @@
-import { useStore } from "@/data/store";
-import {
-  mockedAccreditation,
-  mockedAffiliation,
-  mockedEducation,
-  mockedEmployment,
-  mockedTraining,
-  mockedUser,
-} from "@/mocks/data/user";
 import { renderHook } from "@/utils/testUtils";
 import useUserProfile from "./useUserProfile";
-
-jest.mock("@/data/store");
 
 const setupUseUserProfile = () => renderHook(useUserProfile);
 
@@ -20,17 +9,6 @@ describe("useUserProfile", () => {
   });
 
   it("Is complete when all required data is defined", async () => {
-    (useStore as unknown as jest.Mock).mockReturnValue([
-      mockedUser(),
-      {
-        accreditations: [mockedAccreditation()],
-        education: [mockedEducation()],
-        affiliations: [mockedAffiliation()],
-        employments: [mockedEmployment()],
-        training: [mockedTraining()],
-      },
-    ]);
-
     const { result } = setupUseUserProfile();
 
     expect(result.current).toEqual({
@@ -45,41 +23,53 @@ describe("useUserProfile", () => {
   it.each(["education", "employments", "accreditations"])(
     "Is not complete when any experiences are missing",
     async value => {
-      (useStore as unknown as jest.Mock).mockReturnValue([
-        mockedUser(),
-        {
-          accreditations: [mockedAccreditation()],
-          education: [mockedEducation()],
-          employments: [mockedEmployment()],
+      mockUseStore({
+        histories: {
           [value]: [],
         },
-      ]);
+      });
 
       const { result } = setupUseUserProfile();
 
-      expect(result.current).toEqual(
-        expect.objectContaining({
-          experiencesScore: 67,
-          isComplete: false,
-        })
-      );
+      expect(result.current).toEqual({
+        experiencesScore: 67,
+        affiliationsScore: 100,
+        identityScore: 100,
+        trainingScore: 100,
+        isComplete: false,
+      });
     }
   );
 
-  it.each(["affiliations", "training"])(
-    "Is not complete when any affiliations or training are missing",
+  it.each(["training", "professionalRegistrations"])(
+    "Is not complete when any trainings are missing",
     async value => {
-      (useStore as unknown as jest.Mock).mockReturnValue([
-        mockedUser(),
-        {
-          accreditations: [mockedAccreditation()],
-          education: [mockedEducation()],
-          employments: [mockedEmployment()],
-          affiliations: [mockedAffiliation()],
-          training: [mockedTraining()],
+      mockUseStore({
+        histories: {
           [value]: [],
         },
-      ]);
+      });
+
+      const { result } = setupUseUserProfile();
+
+      expect(result.current).toEqual({
+        affiliationsScore: 100,
+        experiencesScore: 100,
+        identityScore: 100,
+        trainingScore: 50,
+        isComplete: false,
+      });
+    }
+  );
+
+  it.each(["affiliations"])(
+    "Is not complete when any affiliations are missing",
+    async value => {
+      mockUseStore({
+        histories: {
+          [value]: [],
+        },
+      });
 
       const { result } = setupUseUserProfile();
 

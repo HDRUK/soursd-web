@@ -34,6 +34,8 @@ export default function SubTabsContents({
 
   const availableSubTabs = getSubTabs(tabId as PageTabs) || [];
 
+  console.log("user", user);
+
   if (
     !user ||
     !organisation ||

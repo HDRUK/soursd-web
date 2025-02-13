@@ -9,10 +9,7 @@ import "./jest.utils";
 import { mock200Json, mockPagedResults } from "./jest.utils";
 import { mockedCustodian, mockedCustodianUser } from "./mocks/data/custodian";
 import { mockedNotification } from "./mocks/data/notification";
-<<<<<<< Updated upstream
 import { TextEncoder } from "util";
-=======
->>>>>>> Stashed changes
 import { mockedOrganisation } from "./mocks/data/organisation";
 import { mockedPermission } from "./mocks/data/permission";
 import { mockedProject, mockedProjects } from "./mocks/data/project";
@@ -79,6 +76,7 @@ jest.mock("next/navigation", () => {
     useSearchParams: () => ({
       get: () => {},
     }),
+    notFound: jest.fn(),
   };
 });
 
@@ -132,16 +130,11 @@ jest.mock("@/data/store", () => ({
 
 const useStoreMock = jest.mocked(useStore);
 
-<<<<<<< Updated upstream
 export const mockUseStore = (props: Partial<StoreState> = {}) => {
-=======
-export const mockUseStore = (props: Partial<StoreState["config"]> = {}) => {
->>>>>>> Stashed changes
   useStoreMock.mockImplementation(getterFn => {
     const originalStore = jest.requireActual("@/data/store").useStore();
     const state = mockedStoreState();
 
-<<<<<<< Updated upstream
     Object.keys(props).forEach(propKey => {
       if (propKey !== "config")
         originalStore[propKey] = props[propKey as keyof StoreState];
@@ -163,22 +156,6 @@ export const mockUseStore = (props: Partial<StoreState["config"]> = {}) => {
   });
 };
 
-global.TextEncoder = TextEncoder;
-
-=======
-    return getterFn({
-      ...originalStore,
-      ...state,
-      config: {
-        ...originalStore.config,
-        ...state.config,
-        ...props,
-      },
-    });
-  });
-};
-
->>>>>>> Stashed changes
 async function mockFetch(url: string, init?: RequestInit) {
   const [baseUrl, queryString] = url.split("?");
   const queryParams = Object.fromEntries(new URLSearchParams(queryString));
@@ -288,9 +265,13 @@ async function mockFetch(url: string, init?: RequestInit) {
         mockPagedResults([
           mockedProfessionalRegistration({
             id: 1,
+            name: "ONS",
+            member_id: "A1234567",
           }),
           mockedProfessionalRegistration({
             id: 2,
+            name: "HDR",
+            member_id: "B2345678",
           }),
         ])
       );

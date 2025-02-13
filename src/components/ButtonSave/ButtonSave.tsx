@@ -24,7 +24,7 @@ export default function ButtonSave({
       loading={isLoading}
       disabled={isLoading}
       sx={{ display: "flex", justifySelf: "end", ...sx }}>
-      {children || t(`submitButton`)}
+      {children || t(`saveButton`)}
     </LoadingButton>
   );
 }

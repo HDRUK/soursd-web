@@ -4,6 +4,7 @@ import {
   screen,
   userEvent,
   waitFor,
+  within,
 } from "@/utils/testUtils";
 import { useRouter } from "next/navigation";
 import ProfessionalRegistrations from "./ProfessionalRegistrations";
@@ -22,20 +23,23 @@ describe("<ProfessionalRegistrations />", () => {
   it("has the correct content", async () => {
     renderProfessionalRegistrationsComponent();
 
-    await waitFor(() => {
-      expect(screen.getByText(/Name 1/i)).toBeInTheDocument();
-    });
+    const tbody = screen.getByRole("table").querySelector("tbody");
 
-    expect(screen.getByText(/A1234567/i)).toBeInTheDocument();
-  });
+    if (tbody) {
+      const rows = within(tbody).getAllByRole("row");
 
-  it("navigates when the continue button is clicked", async () => {
-    renderProfessionalRegistrationsComponent();
+      await waitFor(() => {
+        expect(rows).toHaveLength(2);
+      });
 
-    const button = screen.getByText("Continue");
-    await userEvent.click(button);
+      expect(screen.getByText(/ONS/i)).toBeInTheDocument();
+      expect(screen.getByText(/A1234567/i)).toBeInTheDocument();
 
-    expect(mockPush).toHaveBeenCalledWith("/user/profile/training");
+      expect(screen.getByText(/HDR/i)).toBeInTheDocument();
+      expect(screen.getByText(/B2345678/i)).toBeInTheDocument();
+    } else {
+      fail("Could not find table body");
+    }
   });
 
   it("has no accessibility violations", async () => {
