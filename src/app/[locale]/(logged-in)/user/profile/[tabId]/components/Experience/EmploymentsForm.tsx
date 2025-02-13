@@ -105,7 +105,7 @@ export default function EmploymentsForm({ onSubmit }: EmploymentsFormProps) {
             if (!value) return true;
             return new RegExp(VALIDATION_ROR_ID).test(value);
           }),
-        email: yup.string().email(tForm("emailFormatInvalid")),
+        email: yup.string().required().email(tForm("emailFormatInvalid")),
       }),
     [tForm]
   );
@@ -141,6 +141,7 @@ export default function EmploymentsForm({ onSubmit }: EmploymentsFormProps) {
       to: "",
       ror: "",
       is_current: false,
+      email: "",
     },
     error: isPostError && tProfile(postError),
   };

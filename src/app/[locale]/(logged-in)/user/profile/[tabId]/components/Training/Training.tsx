@@ -72,7 +72,7 @@ export default function Training() {
     isUploading,
     isScanning,
     file,
-  } = useFileUpload();
+  } = useFileUpload("certificationUploadFailed");
 
   const uploadFile = useUserFileUpload({
     user,
@@ -287,8 +287,10 @@ export default function Training() {
               </LoadingButton>
             </Box>
             {isError && (
-              <Message severity="error" sx={{ mb: 3 }}>
-                {`${postError}`}
+              <Message severity="error" sx={{ mt: 3 }}>
+                {tProfile.rich(`${postError}`, {
+                  contactLink: ContactLink,
+                })}
               </Message>
             )}
           </PageSection>
