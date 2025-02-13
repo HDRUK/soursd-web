@@ -19,7 +19,7 @@ export default function TabsSections() {
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box sx={{ width: "100%", mb: 4 }}>
       <Tabs
         variant="fullWidth"
         value={params?.tabId || PageTabs.DETAILS}

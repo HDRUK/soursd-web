@@ -4,6 +4,7 @@ import { CookieProvider } from "@/context/CookieContext";
 import ToastProvider from "@/context/ToastProvider";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import GlobalStyles from "@mui/material/GlobalStyles";
+import { Box } from "@mui/system";
 import type { Metadata } from "next";
 import { NextIntlClientProvider, useMessages } from "next-intl";
 import { Inter } from "next/font/google";
@@ -33,7 +34,10 @@ export default function RootLayout({
 
   return (
     <html lang={locale}>
-      <body className={inter.className}>
+      <Box
+        component="body"
+        className={inter.className}
+        sx={{ background: "#f2f2f2" }}>
         <CookieProvider>
           <NextIntlClientProvider locale={locale} messages={messages}>
             <AppRouterCacheProvider>
@@ -54,7 +58,7 @@ export default function RootLayout({
             </AppRouterCacheProvider>
           </NextIntlClientProvider>
         </CookieProvider>
-      </body>
+      </Box>
     </html>
   );
 }

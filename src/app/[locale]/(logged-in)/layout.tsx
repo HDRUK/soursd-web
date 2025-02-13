@@ -98,6 +98,7 @@ export default function Layout({ children }: LayoutProps) {
 
     performAuthCheck();
   }, [pathname]);
+
   return (
     me && (
       <ApplicationDataProvider

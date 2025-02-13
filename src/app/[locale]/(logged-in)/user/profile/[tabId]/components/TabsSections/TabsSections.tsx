@@ -52,13 +52,15 @@ export default function TabsSections() {
   }, [isComplete]);
 
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box sx={{ width: "100%", mb: 4 }}>
       <Tabs
-        variant="fullWidth"
+        variant="scrollable"
         value={params?.tabId || PageTabs.DETAILS}
         aria-label={t("navigationAriaLabel")}
         role="navigation"
         indicatorColor="secondary"
+        scrollButtons="auto"
+        allowScrollButtonsMobile
         textColor="inherit">
         <Tab
           label={<Text>{t("details")}</Text>}
