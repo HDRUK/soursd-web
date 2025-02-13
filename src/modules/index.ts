@@ -8,8 +8,12 @@ import PageTitle from "./PageTitle";
 import UserDetailsModal from "./UserDetailsModal";
 import PageBodyContainer from "./PageBodyContainer";
 import NavBar from "./NavBar";
+import Application from "./Application";
+import ApplicationData from "./ApplicationData";
 
 export {
+  ApplicationData,
+  Application,
   NavBar,
   Footer,
   Header,

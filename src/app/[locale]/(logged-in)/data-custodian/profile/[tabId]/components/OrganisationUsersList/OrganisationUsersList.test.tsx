@@ -6,14 +6,6 @@ import OrganisationUsersList from "./OrganisationUsersList";
 
 jest.mock("@/services/projects");
 
-jest.mock("@/context/ApplicationData", () => ({
-  useApplicationData: jest.fn().mockReturnValue({
-    routes: {
-      permissionsResearcherCustodian: { path: "/permissions" },
-    },
-  }),
-}));
-
 jest.mock("next-intl", () => ({
   useTranslations: () => jest.fn((key: string) => key),
 }));

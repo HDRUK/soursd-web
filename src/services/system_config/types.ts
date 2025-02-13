@@ -1,4 +1,5 @@
-/* eslint-disable  @typescript-eslint/no-explicit-any */
-type GetSystemConfigResponse = Record<string, any>[];
+import { SystemConfig } from "@/types/application";
+
+type GetSystemConfigResponse = SystemConfig[];
 
 export type { GetSystemConfigResponse };

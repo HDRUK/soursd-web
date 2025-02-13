@@ -1,54 +1,63 @@
 "use client";
 
-import ContactLink from "@/components/ContactLink";
-import OverlayCenterAlert from "@/components/OverlayCenterAlert";
-import { VALIDATION_SCHEMA_KEY } from "@/consts/application";
 import { ROUTES } from "@/consts/router";
 import { useStore } from "@/data/store";
 import { usePathname } from "@/i18n/routing";
-import PageBodyContainer from "@/modules/PageBodyContainer";
-import useApplicationDependencies from "@/queries/useApplicationDependencies";
-import useQueriesHistories from "@/queries/useQueriesHistories";
 import {
-  ApplicationDataState,
-  ApplicationSystemConfig,
+  Custodian,
+  Organisation,
+  Permission,
+  ResearcherAccreditation,
+  ResearcherAffiliation,
+  ResearcherEducation,
+  ResearcherEmployment,
+  ResearcherProject,
+  ResearcherTraining,
+  Sector,
+  SystemConfig,
   User,
 } from "@/types/application";
 import { parseSystemConfig } from "@/utils/application";
 import { useTranslations } from "next-intl";
-import {
-  ReactNode,
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-} from "react";
+import { ReactNode, useEffect } from "react";
 
-const ApplicationDataContext = createContext({
-  routes: ROUTES,
-  systemConfig: {} as ApplicationSystemConfig,
-  validationSchema: {} as ApplicationSystemConfig,
-});
-
-const useApplicationData = () => useContext(ApplicationDataContext);
-
-interface ApplicationDataProviderProps {
+interface ApplicationDataProps {
+  systemConfigData: SystemConfig[];
+  userData: User;
+  organisationData: Organisation;
+  sectorsData: Sector[];
+  permissionsData: Permission[];
+  custodianData: Custodian;
+  accreditationsData: ResearcherAccreditation[];
+  educationData: ResearcherEducation[];
+  trainingData: ResearcherTraining[];
+  employmentsData: ResearcherEmployment[];
+  projectsData: ResearcherProject[];
+  affiliationData: ResearcherAffiliation[];
+  isOrganisation: boolean;
+  isCustodian: boolean;
   children: ReactNode;
-  value: ApplicationDataState;
-  custodianId?: number;
-  organisationId?: number;
-  me?: User;
 }
 
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
 
-const ApplicationDataProvider = ({
+export default function ApplicationData({
+  systemConfigData,
+  userData,
+  organisationData,
+  sectorsData,
+  permissionsData,
+  custodianData,
+  accreditationsData,
+  educationData,
+  trainingData,
+  employmentsData,
+  projectsData,
+  affiliationData,
+  isOrganisation,
+  isCustodian,
   children,
-  me,
-  custodianId,
-  organisationId,
-  value,
-}: ApplicationDataProviderProps) => {
+}: ApplicationDataProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
 
   const addUrlToHistory = useStore(store => store.addUrlToHistory);
@@ -79,115 +88,49 @@ const ApplicationDataProvider = ({
     store.setHistories,
   ]);
 
+  const [application, setApplication] = useStore(store => [
+    store.application,
+    store.setApplication,
+  ]);
+
   const path = usePathname();
 
-  const {
-    isLoading: isApplicationLoading,
-    isError: isApplicationError,
-    data: applicationData,
-  } = useApplicationDependencies({
-    user: me,
-    custodianId,
-    organisationId,
-  });
-
-  const {
-    isLoading: isHistoriesLoading,
-    isError: isHistoriesError,
-    data: historiesData,
-  } = useQueriesHistories(me?.registry_id);
-
-  const {
-    getSystemConfig: systemConfigData,
-    getUser: userData,
-    getOrganisation: organisationData,
-    getSectors: sectorsData,
-    getPermissions: permissionsData,
-    getCustodian: custodianData,
-  } = applicationData;
-
   useEffect(() => {
-    setUser(userData?.data);
-  }, [userData?.data]);
+    const application = parseSystemConfig(systemConfigData);
 
-  useEffect(() => {
-    setOrganisation(organisationData?.data);
-  }, [organisationData?.data]);
+    setApplication({
+      routes: ROUTES,
+      system: application,
+    });
 
-  useEffect(() => {
-    setCustodian(custodianData?.data);
-  }, [custodianData?.data]);
-
-  useEffect(() => {
-    setSectors(sectorsData?.data?.data);
-  }, [sectorsData?.data?.data]);
-
-  useEffect(() => {
-    setPermissions(permissionsData?.data?.data);
-  }, [permissionsData?.data?.data]);
-
-  useEffect(() => {
-    const {
-      getAccreditations,
-      getEducations,
-      getTrainings,
-      getEmployments,
-      getUserApprovedProjects,
-      getAffiliations,
-    } = historiesData;
+    setPermissions(permissionsData);
+    setSectors(sectorsData);
+    setCustodian(custodianData);
+    setOrganisation(organisationData);
+    setUser(userData);
 
     setHistories({
-      accreditations: getAccreditations?.data?.data,
-      education: getEducations?.data,
-      training: getTrainings?.data,
-      employments: getEmployments?.data,
-      approvedProjects: getUserApprovedProjects?.data,
-      affiliations: getAffiliations?.data?.data,
+      accreditations: accreditationsData,
+      education: educationData,
+      training: trainingData,
+      employments: employmentsData,
+      approvedProjects: projectsData,
+      affiliations: affiliationData,
     });
-  }, [historiesData]);
+  }, []);
 
   useEffect(() => {
     if (path) addUrlToHistory(path);
   }, [path]);
 
-  const providerValue = useMemo(() => {
-    const systemConfig = parseSystemConfig(systemConfigData?.data);
-
-    return {
-      ...value,
-      systemConfig,
-      validationSchema: systemConfig[VALIDATION_SCHEMA_KEY]?.value,
-    };
-  }, [!!systemConfigData?.data, value]);
-
-  const isFinishedLoading =
+  const isAllSet =
+    application &&
     user &&
-    ((organisationId && organisation) || !organisationId) &&
-    !isApplicationLoading &&
-    !isHistoriesLoading &&
-    ((me?.registry_id && histories) || !me?.registry_id) &&
-    ((custodian && custodianId) || !custodianId) &&
+    ((isOrganisation && organisation) || !isOrganisation) &&
+    ((user.registry_id && histories) || !user.registry_id) &&
+    ((custodian && isCustodian) || !isCustodian) &&
     !!sectors?.length &&
     !!permissions?.length;
 
-  console.log("isFinishedLoading", isFinishedLoading);
-
-  return (
-    <ApplicationDataContext.Provider value={providerValue}>
-      {(isApplicationError || isHistoriesError) && (
-        <PageBodyContainer>
-          <OverlayCenterAlert>
-            {t.rich("getDependenciesError", {
-              contactLink: ContactLink,
-            })}
-          </OverlayCenterAlert>
-        </PageBodyContainer>
-      )}
-      {!!isFinishedLoading && children}
-    </ApplicationDataContext.Provider>
-  );
-};
-
-export { ApplicationDataProvider, useApplicationData };
-
-export type { ApplicationSystemConfig };
+  return <>{isAllSet && children}</>;
+}

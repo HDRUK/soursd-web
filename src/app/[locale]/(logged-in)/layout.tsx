@@ -2,7 +2,7 @@
 
 import { ROUTES } from "@/consts/router";
 import { UserGroup } from "@/consts/user";
-import { ApplicationDataProvider } from "@/context/ApplicationData";
+import Application from "@/modules/Application";
 import { usePathname, useRouter } from "@/i18n/routing";
 import { PageContainer } from "@/modules";
 import { getMe } from "@/services/auth";
@@ -100,20 +100,14 @@ export default function Layout({ children }: LayoutProps) {
     performAuthCheck();
   }, [pathname]);
 
-  console.log("Me", me);
-
   return (
     me && (
-      <ApplicationDataProvider
+      <Application
         custodianId={custodianId}
         organisationId={organisationId}
-        me={me}
-        value={{
-          routes: ROUTES,
-          systemConfigData: {},
-        }}>
+        me={me}>
         <PageContainer>{children}</PageContainer>
-      </ApplicationDataProvider>
+      </Application>
     )
   );
 }

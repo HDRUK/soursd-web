@@ -1,1 +1,3 @@
-export * from "./ApplicationData";
+import ApplicationData from "./ApplicationData";
+
+export default ApplicationData;

@@ -1,6 +1,5 @@
 "use client";
 
-import { useApplicationData } from "@/context/ApplicationData";
 import { Box, Tab, Tabs } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useParams, Link } from "@/i18n/routing";
@@ -9,11 +8,12 @@ import EditNoteIcon from "@mui/icons-material/EditNote";
 import PeopleIcon from "@mui/icons-material/People";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import { PageTabs } from "../../consts/tabs";
+import { useStore } from "@/data/store";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
 
 export default function TabsSections() {
-  const { routes } = useApplicationData();
+  const routes = useStore(store => store.application.routes);
   const params = useParams();
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 

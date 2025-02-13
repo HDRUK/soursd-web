@@ -5,19 +5,16 @@ import "@testing-library/jest-dom";
 import "jest-axe/extend-expect";
 import * as matchers from "jest-extended";
 import { forwardRef, useImperativeHandle } from "react";
+import { TextEncoder } from "util";
 import "./jest.utils";
 import { mock200Json, mockPagedResults } from "./jest.utils";
 import { mockedCustodian, mockedCustodianUser } from "./mocks/data/custodian";
 import { mockedNotification } from "./mocks/data/notification";
-import { TextEncoder } from 'util';
 import { mockedOrganisation } from "./mocks/data/organisation";
 import { mockedPermission } from "./mocks/data/permission";
 import { mockedProject, mockedProjects } from "./mocks/data/project";
 import { mockedApiPermissions, mockedStoreState } from "./mocks/data/store";
-import {
-  mockedSystemConfig,
-  mockedValidationSchema,
-} from "./mocks/data/systemConfig";
+import { mockedSystemConfig } from "./mocks/data/systemConfig";
 import {
   mockedAccreditation,
   mockedAffiliation,
@@ -27,7 +24,6 @@ import {
   mockedUser,
 } from "./mocks/data/user";
 import { ResponseMessageType } from "./src/consts/requests";
-import { ROUTES } from "./src/consts/router";
 
 const nextRouterMock = require("next-router-mock");
 
@@ -77,14 +73,6 @@ jest.mock("next/navigation", () => {
     }),
   };
 });
-
-jest.mock("./src/context/ApplicationData", () => ({
-  ...jest.requireActual("./src/context/ApplicationData"),
-  useApplicationData: () => ({
-    validationSchema: mockedValidationSchema(),
-    routes: ROUTES,
-  }),
-}));
 
 jest.mock("@/data/store", () => ({
   useStore: jest.fn(),
@@ -155,7 +143,6 @@ export const mockUseStore = (props: Partial<StoreState> = {}) => {
 };
 
 global.TextEncoder = TextEncoder;
-
 
 async function mockFetch(url: string, init?: RequestInit) {
   const [baseUrl, queryString] = url.split("?");
@@ -416,13 +403,13 @@ async function mockFetch(url: string, init?: RequestInit) {
         }),
       };
     case `/api/auth/token`:
-    return {
-      ok: true,
-      status: 200,
-      json: async () => ({
-        access_token: 'fake-access-token'
-      }),
-    };
+      return {
+        ok: true,
+        status: 200,
+        json: async () => ({
+          access_token: "fake-access-token",
+        }),
+      };
     default: {
       if (url.includes("/test")) {
         return mock200Json(null);
