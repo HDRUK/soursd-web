@@ -3,8 +3,8 @@ import { mockedFile } from "@/mocks/data/file";
 import { faker } from "@faker-js/faker";
 import {
   getLatestCV,
-  isFileInfected,
-  isFileNotInfected,
+  isFileScanFailed,
+  isFileScanComplete,
   isFileScanning,
 } from "./file";
 
@@ -32,8 +32,8 @@ describe("File utils", () => {
     expect(result).toEqual(true);
   });
 
-  it("isFileInfected", () => {
-    const result = isFileInfected(
+  it("isFileScanFailed", () => {
+    const result = isFileScanFailed(
       mockedFile({
         status: FileStatus.FAILED,
       })
@@ -42,8 +42,8 @@ describe("File utils", () => {
     expect(result).toEqual(true);
   });
 
-  it("isFileNotInfected", () => {
-    const result = isFileNotInfected(
+  it("isFileScanComplete", () => {
+    const result = isFileScanComplete(
       mockedFile({
         status: FileStatus.PROCESSED,
       })

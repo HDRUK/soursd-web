@@ -10,6 +10,7 @@ import { SweetAlertIcon } from "sweetalert2";
 const NAMESPACE_TRANSALATIONS_APPLICATION = "Application";
 
 export interface QueryAlertOptions {
+  commonAlertProps?: ShowAlertOptions;
   confirmAlertType?: SweetAlertIcon;
   confirmAlertProps?: ShowAlertOptions;
   successAlertType?: SweetAlertIcon;
@@ -33,12 +34,14 @@ export default function useQueryAlerts(
     text: t("alertSuccessDescription"),
     title: t("alertSuccessTitle"),
     confirmButtonText: t("alertSuccessConfirmButton"),
+    ...alertOptions?.commonAlertProps,
+    ...alertOptions?.successAlertProps,
     willClose: () => {
       defaultRef.current = null;
 
+      alertOptions?.commonAlertProps?.willClose?.();
       alertOptions?.successAlertProps?.willClose?.();
     },
-    ...alertOptions?.successAlertProps,
   };
 
   const mergedErrorAlertProps = {
@@ -49,12 +52,14 @@ export default function useQueryAlerts(
     ),
     title: t("alertErrorTitle"),
     confirmButtonText: t("alertErrorConfirmButton"),
+    ...alertOptions?.commonAlertProps,
+    ...alertOptions?.errorAlertProps,
     willClose: () => {
       defaultRef.current = null;
 
+      alertOptions?.commonAlertProps?.willClose?.();
       alertOptions?.errorAlertProps?.willClose?.();
     },
-    ...alertOptions?.errorAlertProps,
   };
 
   const isEnabled =

@@ -8,8 +8,7 @@ export default async (
   options: ResponseOptions
 ): Promise<ResponseJson<FileResponse>> => {
   const response = await getRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/files/${id}`,
-    undefined
+    `${process.env.NEXT_PUBLIC_API_V1_URL}/files/${id}`
   );
 
   return handleJsonResponse(response, options);
