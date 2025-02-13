@@ -2,7 +2,7 @@ import { ResearcherProfessionalRegistration } from "@/types/application";
 
 interface PostProfessionalRegistrationPayload {
   name: string;
-  registration_id: string;
+  member_id: string;
 }
 
 type PostProfessionalResgitrationResponse = number;

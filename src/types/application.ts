@@ -211,7 +211,7 @@ interface ResearcherEducation {
 interface ResearcherProfessionalRegistration {
   id: number;
   name: string;
-  registration_id: string;
+  member_id: string;
 }
 
 interface ResearcherAccreditation {

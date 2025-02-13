@@ -51,7 +51,7 @@ const mockedProfessionalRegistration = (
 ): ResearcherProfessionalRegistration => ({
   id: 1,
   name: faker.company.name(),
-  registration_id: faker.string.uuid(),
+  member_id: faker.string.uuid(),
   ...professionalRegistration,
 });
 

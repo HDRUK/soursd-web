@@ -33,7 +33,7 @@ export default function AffiliationsForm({
   const schema = useMemo(
     () =>
       yup.object().shape({
-        registration_id: yup
+        member_id: yup
           .string()
           .required(tForm("registrationIdRequiredInvalid")),
         name: yup.string().required(tForm("nameRequiredInvalid")),
@@ -43,7 +43,7 @@ export default function AffiliationsForm({
 
   const formOptions = {
     defaultValues: {
-      registration_id: "",
+      member_id: "",
       name: "",
     },
   };
@@ -67,7 +67,7 @@ export default function AffiliationsForm({
             </Grid>
             <Grid item xs={12}>
               <FormControlHorizontal
-                name="registration_id"
+                name="member_id"
                 renderField={fieldProps => <TextField {...fieldProps} />}
               />
             </Grid>

@@ -25,7 +25,7 @@ const renderProfessionalRegistrationsForm = () => {
 };
 
 describe("<ProfessionalRegistrationsForm />", () => {
-  it.each(["name", "registration_id"])(
+  it.each(["name", "member_id"])(
     "does not submit when %s is not defined",
     async fieldName => {
       const { container } = renderProfessionalRegistrationsForm();

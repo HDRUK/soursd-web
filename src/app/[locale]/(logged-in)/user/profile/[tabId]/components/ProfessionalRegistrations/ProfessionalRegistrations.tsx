@@ -122,16 +122,14 @@ export default function Affiliations() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {professionalRegistrations?.map(
-                    ({ registration_id, name }) => {
-                      return (
-                        <TableRow key={name}>
-                          <TableCell>{name}</TableCell>
-                          <TableCell>{registration_id}</TableCell>
-                        </TableRow>
-                      );
-                    }
-                  )}
+                  {professionalRegistrations?.map(({ member_id, name }) => {
+                    return (
+                      <TableRow key={name}>
+                        <TableCell>{name}</TableCell>
+                        <TableCell>{member_id}</TableCell>
+                      </TableRow>
+                    );
+                  })}
                 </TableBody>
               </Table>
             </Results>
