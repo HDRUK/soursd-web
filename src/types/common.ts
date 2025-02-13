@@ -8,7 +8,7 @@ export interface Option {
 
 export interface ShowAlertOptions {
   id?: string;
-  text: string;
+  text?: string;
   title?: string | undefined;
   confirmButtonText?: string | undefined;
   cancelButtonText?: string | undefined;
