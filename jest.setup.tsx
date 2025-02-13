@@ -9,7 +9,7 @@ import "./jest.utils";
 import { mock200Json, mockPagedResults } from "./jest.utils";
 import { mockedCustodian, mockedCustodianUser } from "./mocks/data/custodian";
 import { mockedNotification } from "./mocks/data/notification";
-import { TextEncoder } from 'util';
+import { TextEncoder } from "util";
 import { mockedOrganisation } from "./mocks/data/organisation";
 import { mockedPermission } from "./mocks/data/permission";
 import { mockedProject, mockedProjects } from "./mocks/data/project";
@@ -23,6 +23,7 @@ import {
   mockedAffiliation,
   mockedEducation,
   mockedEmployment,
+  mockedProfessionalRegistration,
   mockedTraining,
   mockedUser,
 } from "./mocks/data/user";
@@ -156,7 +157,6 @@ export const mockUseStore = (props: Partial<StoreState> = {}) => {
 
 global.TextEncoder = TextEncoder;
 
-
 async function mockFetch(url: string, init?: RequestInit) {
   const [baseUrl, queryString] = url.split("?");
   const queryParams = Object.fromEntries(new URLSearchParams(queryString));
@@ -260,6 +260,18 @@ async function mockFetch(url: string, init?: RequestInit) {
           id: 2,
         }),
       ]);
+    }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/registration_id/1`: {
+      return mock200Json(
+        mockPagedResults([
+          mockedProfessionalRegistration({
+            id: 1,
+          }),
+          mockedProfessionalRegistration({
+            id: 2,
+          }),
+        ])
+      );
     }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/accreditations/1`: {
       return mock200Json(
@@ -416,13 +428,13 @@ async function mockFetch(url: string, init?: RequestInit) {
         }),
       };
     case `/api/auth/token`:
-    return {
-      ok: true,
-      status: 200,
-      json: async () => ({
-        access_token: 'fake-access-token'
-      }),
-    };
+      return {
+        ok: true,
+        status: 200,
+        json: async () => ({
+          access_token: "fake-access-token",
+        }),
+      };
     default: {
       if (url.includes("/test")) {
         return mock200Json(null);
