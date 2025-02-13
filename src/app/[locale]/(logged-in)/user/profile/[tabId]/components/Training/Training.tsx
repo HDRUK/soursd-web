@@ -72,7 +72,7 @@ export default function Training() {
     isUploading,
     isScanning,
     file,
-  } = useFileUpload();
+  } = useFileUpload("certificationUploadFailed");
 
   const uploadFile = useUserFileUpload({
     user,
@@ -252,14 +252,6 @@ export default function Training() {
                         />
                       </Grid>
                     </Grid>
-                    {isUploadError && (
-                      <Message severity="error" sx={{ mt: 3 }}>
-                        {isUploadError &&
-                          tProfile.rich(`${uploadError}`, {
-                            contactLink: ContactLink,
-                          })}
-                      </Message>
-                    )}
                   </FormSection>
                   <FormActions>
                     <LoadingButton

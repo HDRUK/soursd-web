@@ -476,6 +476,7 @@
     "verified": "Verified",
     "cvUploadFailed": "There was a problem uploading your CV. Please check the file size and try again or alternativley contact us at <contactLink></contactLink>",
     "certificationUploadFailed": "There was a problem uploading your certification. Please check the file size and try again or alternativley contact us at <contactLink></contactLink>",
+    "bulkInviteUploadError": "There was a problem uploading your bulk invites. Please try again or alternativley contact us at <contactLink></contactLink>",
     "uploadCvButtonText": "Upload CV",
     "uploadCertificationButtonText": "Upload Certification",
     "noCvUploaded": "No CV uploaded",

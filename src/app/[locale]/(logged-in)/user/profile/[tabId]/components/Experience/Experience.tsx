@@ -36,28 +36,7 @@ export default function Experience() {
   const router = useRouter();
 
   const latestCV = getLatestCV(user?.registry?.files || []);
-  const { isNotInfected, isScanning } = useFileScanned(latestCV);
-
-  const { refetch: refetchUser, cancel: refetchCancel } = useQueryRefetch({
-    options: { queryKey: ["getUser", user?.id] },
-  });
-
-  useEffect(() => {
-    if (isFileScanning(latestCV)) {
-      refetchUser();
-    } else {
-      refetchCancel();
-    }
-
-    return () => refetchCancel();
-  }, [JSON.stringify(latestCV)]);
-
-  const {
-    mutateAsync: mutateFileAsync,
-    isPending: isFileLoading,
-    isError: isUploadError,
-    error: uploadError,
-  } = useMutation(postFileQuery("cvUploadFailed"));
+  
   const {
     upload,
     isScanComplete,
@@ -66,7 +45,7 @@ export default function Experience() {
     isUploading,
     isScanning,
     file,
-  } = useFileUpload();
+  } = useFileUpload("cvUploadFailed");
 
   const uploadFile = useUserFileUpload({
     user,

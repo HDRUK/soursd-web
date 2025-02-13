@@ -1,7 +1,6 @@
 import { FilePayload } from "./types";
 import postFile from "./postFile";
 
-export default function postFileQuery() {
 export default function postFileQuery(message: string) {
   return {
     mutationKey: ["postFile"],
