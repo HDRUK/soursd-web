@@ -1,6 +1,7 @@
 import { ROUTES } from "@/consts/router";
 import { mockedCustodian } from "./custodian";
 import { mockedOrganisation } from "./organisation";
+<<<<<<< Updated upstream
 import {
   mockedAccreditation,
   mockedAffiliation,
@@ -11,6 +12,9 @@ import {
   mockedProfessionalRegistration,
 } from "./user";
 import { mockedProject } from "./project";
+=======
+import { mockedUser } from "./user";
+>>>>>>> Stashed changes
 
 const mockedApiPermissions = [
   {
@@ -121,6 +125,7 @@ const mockedApiPermissions = [
 
 const mockedStoreState = () => ({
   config: {
+<<<<<<< Updated upstream
     histories: {
       employments: [mockedEmployment()],
       training: [mockedTraining()],
@@ -142,6 +147,10 @@ const mockedStoreState = () => ({
     user: mockedUser({
       id: 1,
       registry_id: 1,
+=======
+    user: mockedUser({
+      id: 1,
+>>>>>>> Stashed changes
     }),
     organisation: mockedOrganisation({
       id: 1,

@@ -3,6 +3,8 @@ import { QueryState } from "@/types/form";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { fireEvent, render, screen } from "@testing-library/react";
 import OrganisationUsersList from "./OrganisationUsersList";
+import { mockUseStore } from "jest.setup";
+import { mockedCustodian } from "@/mocks/data/custodian";
 
 jest.mock("@/services/projects");
 
@@ -18,7 +20,26 @@ jest.mock("next-intl", () => ({
   useTranslations: () => jest.fn((key: string) => key),
 }));
 
+<<<<<<< Updated upstream
+=======
+// jest.mock("@/data/store", () => ({
+//   useStore: jest.fn().mockImplementation(selector =>
+//     selector({
+//       getCustodian: () => ({ id: 1 }),
+//     })
+//   ),
+// }));
+
+>>>>>>> Stashed changes
 describe("OrganisationUsersList", () => {
+  beforeEach(() => {
+    mockUseStore({
+      custodian: mockedCustodian({
+        id: 1,
+      }),
+    });
+  });
+
   const mockOnApproveToggle = jest.fn();
 
   const organisation: Organisation = {

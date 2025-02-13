@@ -1,3 +1,3 @@
-import AffiliationsForm from "./AffiliationsForm";
+import ProfessionalRegistrationsForm from "./ProfessionalRegistrationsForm";
 
-export default AffiliationsForm;
+export default ProfessionalRegistrationsForm;

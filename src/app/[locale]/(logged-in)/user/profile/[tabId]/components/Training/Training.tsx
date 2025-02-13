@@ -33,6 +33,7 @@ import { useRouter } from "next/navigation";
 import { ChangeEvent, useCallback, useMemo } from "react";
 import FileUploadDetails from "../FileUploadDetails/FileUploadDetails";
 import { StyledBox } from "./Training.styles";
+import ProfessionalsRegistration from "../ProfessionalRegistrations";
 
 export interface TrainingFormValues {
   provider: string;
@@ -291,6 +292,9 @@ export default function Training() {
                 {`${postError}`}
               </Message>
             )}
+          </PageSection>
+          <PageSection>
+            <ProfessionalsRegistration />
           </PageSection>
         </PageBody>
       </PageGuidance>

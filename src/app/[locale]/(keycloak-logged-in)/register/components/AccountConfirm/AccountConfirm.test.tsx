@@ -11,6 +11,10 @@ import {
 } from "@/utils/testUtils";
 import AccountConfirm from "./AccountConfirm";
 
+<<<<<<< Updated upstream
+=======
+// jest.mock("@/data/store");
+>>>>>>> Stashed changes
 jest.mock("@/i18n/routing", () => ({
   useParams: jest.fn(),
   useRouter: jest.fn(() => ({
