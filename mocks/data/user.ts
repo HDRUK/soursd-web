@@ -4,6 +4,7 @@ import {
   ResearcherAffiliation,
   ResearcherEducation,
   ResearcherEmployment,
+  ResearcherProfessionalRegistration,
   ResearcherTraining,
   User,
 } from "@/types/application";
@@ -35,6 +36,7 @@ const mockedUser = (user?: Partial<User>): User => ({
 const mockedAccreditation = (
   accreditation?: Partial<ResearcherAccreditation>
 ): ResearcherAccreditation => ({
+  id: 1,
   awarded_at: faker.commerce.department(),
   awarding_body_name: faker.company.name(),
   awarding_body_ror: faker.internet.url(),
@@ -42,6 +44,15 @@ const mockedAccreditation = (
   title: faker.string.sample(),
   awarded_locale: faker.location.country(),
   ...accreditation,
+});
+
+const mockedProfessionalRegistration = (
+  professionalRegistration?: Partial<ResearcherProfessionalRegistration>
+): ResearcherProfessionalRegistration => ({
+  id: 1,
+  name: faker.company.name(),
+  member_id: faker.string.uuid(),
+  ...professionalRegistration,
 });
 
 const mockedTraining = (
@@ -103,4 +114,5 @@ export {
   mockedEmployment,
   mockedEducation,
   mockedAffiliation,
+  mockedProfessionalRegistration,
 };

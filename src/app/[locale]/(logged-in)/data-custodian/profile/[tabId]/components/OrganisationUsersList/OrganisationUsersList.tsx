@@ -49,7 +49,7 @@ export default function OrganisationUsersList({
   const t = useTranslations(NAMESPACE_TRANSLATIONS_USERS_LIST);
   const [activeUserData, setActiveUserData] = useState<ActiveUserData | null>();
 
-  const custodian = useStore(store => store.getCustodian());
+  const custodian = useStore(store => store.config.custodian);
   const { id: custodianId } = custodian || {};
 
   const { registries } = organisation;

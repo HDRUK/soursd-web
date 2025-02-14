@@ -1,7 +1,9 @@
+import { mockedCustodian } from "@/mocks/data/custodian";
 import { Organisation } from "@/types/application";
 import { QueryState } from "@/types/form";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { fireEvent, render, screen } from "@testing-library/react";
+import { mockUseStore } from "jest.setup";
 import OrganisationUsersList from "./OrganisationUsersList";
 
 jest.mock("@/services/projects");
@@ -19,6 +21,14 @@ jest.mock("next-intl", () => ({
 }));
 
 describe("OrganisationUsersList", () => {
+  beforeEach(() => {
+    mockUseStore({
+      custodian: mockedCustodian({
+        id: 1,
+      }),
+    });
+  });
+
   const mockOnApproveToggle = jest.fn();
 
   const organisation: Organisation = {
