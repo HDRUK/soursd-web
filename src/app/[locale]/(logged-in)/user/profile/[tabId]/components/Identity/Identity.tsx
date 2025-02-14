@@ -117,6 +117,7 @@ export default function Identity() {
             <Form
               onSubmit={handleDetailsSubmit}
               schema={schema}
+              overrideLeave
               {...formOptions}>
               <>
                 <FormSection heading={tProfile("identity")}>
