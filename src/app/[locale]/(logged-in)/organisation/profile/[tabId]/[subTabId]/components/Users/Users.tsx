@@ -18,9 +18,9 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { SearchDirections } from "@/consts/search";
-import FileUploadIcon from "@mui/icons-material/FileUpload";
 import DecoupleUser from "../DecoupleUser";
 import UserModal from "../UserModal";
+import UserBulkInvite from "../UserBulkInvite";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
 
@@ -55,32 +55,11 @@ export default function Users() {
 
   return (
     <PageBody>
-      <PageSection heading="Add new affiliated employees or students">
-        <Typography sx={{ mb: 4 }}>
-          As a representative of an Organisation, you have been given permission
-          to associate your affiliated Users (an employee or student of your
-          Organisation) with your Organisation’s SOURSD account. Users are
-          individuals involved in active research projects using sensitive data.{" "}
-        </Typography>
-        <Typography variant="h6" sx={{ mb: 1 }}>
-          Add users
-        </Typography>
-        <Box sx={{ display: "flex", gap: 4, alignItems: "flex-start" }}>
-          <Typography sx={{ flexGrow: 1 }}>
-            Add new affiliated Users to SOURSD. Individual Users will create a
-            SOURSD account for themselves and will affiliate themselves with an
-            Organisation.
-          </Typography>
-          <div>
-            <Button
-              startIcon={<FileUploadIcon />}
-              color="secondary"
-              sx={{ minWidth: "210px" }}>
-              Bulk upload Users
-            </Button>
-          </div>
-        </Box>
-      </PageSection>
+      {organisation && (
+        <PageSection heading="Add new affiliated employees or students">
+          <UserBulkInvite organisation_id={organisation.id} />
+        </PageSection>
+      )}
       <PageSection heading="Manage affiliated employees or students">
         <Box sx={{ marginBottom: "30px" }}>
           {t("manageResearchersDescription")}

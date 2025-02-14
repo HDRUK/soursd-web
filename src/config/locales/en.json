@@ -3,6 +3,14 @@
     "show": "Show {name}",
     "hide": "Hide {name}"
   },
+  "File": {
+    "maxSizeText": "{size} Max size",
+    "inputLabelText": "File input",
+    "maxSizeErrorText": "Your file must be under {size}",
+    "scanningText": "Scanning file for viruses...",
+    "scanOkText": "File was successfully scanned",
+    "scanErrorText": "Your file file may have a virus"
+  },
   "Application": {
     "alertSuccessConfirmButton": "Close",
     "alertErrorConfirmButton": "Close",
@@ -392,8 +400,8 @@
     "sendButton": "Send"
   },
   "Cv": {
+    "fileUpload": "Upload Cv",
     "fileMaxSize": "{size} Max size",
-    "fileDownload": "Download Cv",
     "fileButtonUpload": "Upload Cv",
     "fileInputLabel": "Cv file input",
     "fileMaxSizeError": "Your Cv must be under {size}",
@@ -468,6 +476,9 @@
     "verified": "Verified",
     "cvUploadFailed": "There was a problem uploading your CV. Please check the file size and try again or alternativley contact us at <contactLink></contactLink>",
     "certificationUploadFailed": "There was a problem uploading your certification. Please check the file size and try again or alternativley contact us at <contactLink></contactLink>",
+    "bulkInviteUploadError": "There was a problem uploading your bulk invites. Please try again or alternativley contact us at <contactLink></contactLink>",
+    "uploadCvButtonText": "Upload CV",
+    "uploadCertificationButtonText": "Upload Certification",
     "noCvUploaded": "No CV uploaded",
     "noCertificationUploaded": "No Certification Uploaded",
     "profileCompletedTitle": "Your profile has been completed",
@@ -475,7 +486,7 @@
     "continueLinkText": "Continue",
     "profileCompleteWarningMessage": "You have not yet completed your profile. This may mean that some data custodians will not grant access to you. It is advised that you complete this process. Please navigate to your profile",
     "addAnother": "Add Another",
-    "postTrainingError": "There was a problem submitting your training experience.",
+    "postTrainingError": "There was a problem submitting your training experience. Please try again or contact us at <contactLink></contactLink>",
     "errorButton": "Try Again",
     "postTrainingSuccess": "Training experience submitted successfully",
     "closeButton": "Close",

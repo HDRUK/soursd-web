@@ -81,7 +81,6 @@ export default function Layout({ children }: LayoutProps) {
 
   useEffect(() => {
     const performAuthCheck = async () => {
-      console.log("AUTH");
       const user = await validateAccessToken(pathname, router);
 
       if (!user) {

@@ -1,7 +1,7 @@
 import { FileResponse } from "@/services/files/types";
 import {
-  isFileInfected,
-  isFileNotInfected,
+  isFileScanFailed,
+  isFileScanComplete,
   isFileScanning,
 } from "@/utils/file";
 import { useEffect, useState } from "react";
@@ -11,10 +11,10 @@ export default function useFileScanned(file: FileResponse | undefined) {
   const [isScanning, setIsScanning] = useState(false);
 
   const setFileStatus = () => {
-    if (isFileNotInfected(file)) {
+    if (isFileScanComplete(file)) {
       setIsScanning(false);
-      setIsNotInfected(isFileNotInfected(file));
-    } else if (isFileInfected(file)) {
+      setIsNotInfected(isFileScanComplete(file));
+    } else if (isFileScanFailed(file)) {
       setIsScanning(false);
       setIsNotInfected(false);
     } else if (isFileScanning(file)) {

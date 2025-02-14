@@ -8,11 +8,16 @@ async function request<T>(
   payload?: QueryPayload<T>,
   options?: QueryOptions
 ) {
+  let defaultContentType;
+
+  if (!(payload instanceof FormData)) {
+    defaultContentType = "application/json;charset=UTF-8";
+  }
+
   const headers = await getHeadersWithAuthorization({
-    "content-type":
-      payload instanceof FormData
-        ? undefined
-        : "application/json;charset=UTF-8",
+    ...(defaultContentType && {
+      "content-type": defaultContentType,
+    }),
     ...options?.headers,
   });
 
@@ -49,6 +54,7 @@ async function postRequest<T>(
   options?: QueryOptions
 ) {
   const response = await request("POST", url, payload, options);
+
   return response;
 }
 
