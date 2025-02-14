@@ -1,35 +1,34 @@
 "use client";
 
+import ButtonSave from "@/components/ButtonSave";
+import DateInput from "@/components/DateInput";
 import Form from "@/components/Form/Form";
 import FormActions from "@/components/FormActions";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
 import GoogleAutocomplete from "@/components/GoogleAutocomplete";
+import SelectCountry from "@/components/SelectCountry";
 import yup from "@/config/yup";
-import SaveIcon from "@mui/icons-material/Save";
-import { LoadingButton } from "@mui/lab";
+import { VALIDATION_ROR_ID } from "@/consts/form";
+import { useStore } from "@/data/store";
+import { postEmployments } from "@/services/employments";
+import { PostEmploymentsPayload } from "@/services/employments/types";
+import theme from "@/theme";
+import { AddressFields } from "@/types/application";
+import { getCountryCode } from "@/utils/countries";
+import { showAlert } from "@/utils/showAlert";
+import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
 import {
+  Accordion,
+  AccordionSummary,
   Checkbox,
   Grid,
   TextField,
-  Accordion,
-  AccordionSummary,
   Typography,
 } from "@mui/material";
-import SelectCountry from "@/components/SelectCountry";
-import { AddressFields } from "@/types/application";
+import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo, useState } from "react";
 import { UseFormSetValue } from "react-hook-form";
-import { useMutation } from "@tanstack/react-query";
-import { useStore } from "@/data/store";
-import { PostEmploymentsPayload } from "@/services/employments/types";
-import { postEmployments } from "@/services/employments";
-import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
-import DateInput from "@/components/DateInput";
-import { showAlert } from "@/utils/showAlert";
-import theme from "@/theme";
-import { VALIDATION_ROR_ID } from "@/consts/form";
-import { getCountryCode } from "@/utils/countries";
 
 export interface EmploymentsFormValues {
   employer_name: string;
@@ -323,13 +322,7 @@ export default function EmploymentsForm({ onSubmit }: EmploymentsFormProps) {
                 </Grid>
               </Grid>
               <FormActions>
-                <LoadingButton
-                  loading={isPostLoading}
-                  type="submit"
-                  endIcon={<SaveIcon />}
-                  sx={{ display: "flex", justifySelf: "end" }}>
-                  {tProfile("submitButton")}
-                </LoadingButton>
+                <ButtonSave isLoading={isPostLoading} />
               </FormActions>
             </>
           );

@@ -13,6 +13,7 @@ import {
   ResearcherTraining,
   Sector,
   User,
+  ResearcherProfessionalRegistration,
 } from "@/types/application";
 import { Routes } from "@/types/router";
 import { produce } from "immer";
@@ -25,6 +26,7 @@ export interface StoreUserHistories {
   approvedProjects: ResearcherProject[];
   accreditations: ResearcherAccreditation[];
   affiliations: ResearcherAffiliation[];
+  professionalRegistrations: ResearcherProfessionalRegistration[];
 }
 
 export interface StoreApplication {
@@ -37,6 +39,15 @@ export interface StoreApplication {
   /* eslint-disable  @typescript-eslint/no-explicit-any */
   system: Record<string, any>;
 }
+type StoreSet = (
+  partial:
+    | StoreState
+    | Partial<StoreState>
+    | ((state: StoreState) => StoreState | Partial<StoreState>),
+  replace?: boolean | undefined
+) => void;
+
+type StoreGet = () => StoreState;
 
 interface StoreState {
   config: {
@@ -71,17 +82,7 @@ interface StoreState {
   addUrlToHistory: (url: string) => void;
 }
 
-type StateSet = (
-  partial:
-    | StoreState
-    | Partial<StoreState>
-    | ((state: StoreState) => StoreState | Partial<StoreState>),
-  replace?: boolean | undefined
-) => void;
-
-type StateGet = () => StoreState;
-
-const storeMethods = (set: StateSet, get: StateGet) => ({
+const storeMethods = (set: StoreSet, get: StoreGet) => ({
   getPreviousUrl: () => {
     const {
       router: { history },

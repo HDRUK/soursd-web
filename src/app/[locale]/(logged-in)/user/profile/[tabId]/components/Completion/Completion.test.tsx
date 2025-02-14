@@ -23,7 +23,7 @@ describe("<Completion />", () => {
 
     await waitFor(() => {
       expect(screen.getByText("Training")).toBeInTheDocument();
-      expect(screen.getByText("0% complete")).toBeInTheDocument();
+      expect(screen.getByText("50% complete")).toBeInTheDocument();
     });
   });
 

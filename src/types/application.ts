@@ -208,7 +208,14 @@ interface ResearcherEducation {
   source: string;
 }
 
+interface ResearcherProfessionalRegistration {
+  id: number;
+  name: string;
+  member_id: string;
+}
+
 interface ResearcherAccreditation {
+  id: number;
   awarded_at: string;
   awarding_body_name: string;
   awarding_body_ror: string;
@@ -289,6 +296,7 @@ interface Registry {
   education: ResearcherEducation[];
   training: ResearcherTraining[];
   accreditations: ResearcherAccreditation[];
+  professionalRegistratons: ResearcherProfessionalRegistration[];
 }
 
 interface Role {
@@ -338,6 +346,7 @@ export type {
   ResearcherEducation,
   ResearcherEmployment,
   ResearcherEndorsement,
+  ResearcherProfessionalRegistration,
   ResearcherProject,
   ResearcherTraining,
   Sector,

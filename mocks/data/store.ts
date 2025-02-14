@@ -9,6 +9,7 @@ import {
   mockedEmployment,
   mockedTraining,
   mockedUser,
+  mockedProfessionalRegistration,
 } from "./user";
 
 const mockedApiPermissions = [
@@ -220,6 +221,7 @@ const mockedStoreState = () => ({
         }),
       ],
       accreditations: [mockedAccreditation()],
+      professionalRegistrations: [mockedProfessionalRegistration()],
     },
     user: mockedUser({
       id: 1,

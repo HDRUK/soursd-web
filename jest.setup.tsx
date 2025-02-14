@@ -6,7 +6,6 @@ import "jest-axe/extend-expect";
 import * as matchers from "jest-extended";
 import { forwardRef, useImperativeHandle } from "react";
 import { TextEncoder } from "util";
-import "./jest.utils";
 import { mock200Json, mockPagedResults } from "./jest.utils";
 import { mockedCustodian, mockedCustodianUser } from "./mocks/data/custodian";
 import { mockedNotification } from "./mocks/data/notification";
@@ -20,6 +19,7 @@ import {
   mockedAffiliation,
   mockedEducation,
   mockedEmployment,
+  mockedProfessionalRegistration,
   mockedTraining,
   mockedUser,
 } from "./mocks/data/user";
@@ -302,6 +302,22 @@ async function mockFetch(url: string, init?: RequestInit) {
           }),
           mockedProject({
             id: 2,
+          }),
+        ])
+      );
+    }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/professional_registrations/registry/1`: {
+      return mock200Json(
+        mockPagedResults([
+          mockedProfessionalRegistration({
+            id: 1,
+            name: "ONS",
+            member_id: "A1234567",
+          }),
+          mockedProfessionalRegistration({
+            id: 2,
+            name: "HDR",
+            member_id: "B2345678",
           }),
         ])
       );

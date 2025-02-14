@@ -1,5 +1,6 @@
 "use client";
 
+import ButtonSave from "@/components/ButtonSave";
 import ContactLink from "@/components/ContactLink";
 import Form from "@/components/Form";
 import FormActions from "@/components/FormActions";
@@ -20,7 +21,6 @@ import {
 import { putUserQuery } from "@/services/users";
 import EastIcon from "@mui/icons-material/East";
 import InfoIcon from "@mui/icons-material/Info";
-import SaveIcon from "@mui/icons-material/Save";
 import { LoadingButton } from "@mui/lab";
 import {
   Box,
@@ -176,12 +176,7 @@ export default function Identity() {
                   </Grid>
                 </FormSection>
                 <FormActions>
-                  <LoadingButton
-                    type="submit"
-                    endIcon={<SaveIcon />}
-                    loading={updateUser.isPending}>
-                    {tProfile("submitButton")}
-                  </LoadingButton>
+                  <ButtonSave isLoading={updateUser.isPending} />
                 </FormActions>
                 <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
                   <LoadingButton

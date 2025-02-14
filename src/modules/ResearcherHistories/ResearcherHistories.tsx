@@ -4,6 +4,7 @@ import ResearcherEducationEntry from "@/modules/ResearcherEducationEntry";
 import ResearcherEmploymentEntry from "@/modules/ResearcherEmploymentEntry";
 import ResearcherProjectEntry from "@/modules/ResearcherProjectEntry";
 import ResearcherTrainingEntry from "@/modules/ResearcherTrainingEntry";
+import ResearcherProfessionalRegistrationsEntry from "@/modules/ResearcherProfessionalRegistrationsEntry";
 import { HistoryCombinedData } from "@/queries/useQueriesHistories";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
@@ -24,6 +25,8 @@ export default function ResearcherHistories({
   const educations = data.getEducations?.data;
   const projects = data.getUserApprovedProjects?.data;
   const trainings = data.getTrainings?.data;
+  const professionalRegistrations =
+    data.getProfessionalRegistrations?.data?.data;
 
   return (
     <>
@@ -107,6 +110,27 @@ export default function ResearcherHistories({
             ))
           ) : (
             <Message severity="info">{t("noTrainingsFound")}</Message>
+          )}
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary
+          aria-controls="professional-registrations-content"
+          id="professional-registrations-header"
+          expandIcon={<ExpandMoreIcon />}>
+          {t("professionalRegistratons")}
+        </AccordionSummary>
+        <AccordionDetails>
+          {professionalRegistrations?.length ? (
+            professionalRegistrations.map(professionalRegistration => (
+              <ResearcherProfessionalRegistrationsEntry
+                data={professionalRegistration}
+              />
+            ))
+          ) : (
+            <Message severity="info">
+              {t("noProfessionalRegistrationsFound")}
+            </Message>
           )}
         </AccordionDetails>
       </Accordion>
