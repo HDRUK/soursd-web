@@ -319,7 +319,7 @@ async function mockFetch(url: string, init?: RequestInit) {
         ])
       );
     }
-    case `${process.env.NEXT_PUBLIC_API_V1_URL}/professional_registrations/1`: {
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/professional_registrations/registry/1`: {
       return mock200Json(
         mockPagedResults([
           mockedProfessionalRegistration({
