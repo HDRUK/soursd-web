@@ -1,10 +1,10 @@
+import { mockedCustodian } from "@/mocks/data/custodian";
 import { Organisation } from "@/types/application";
 import { QueryState } from "@/types/form";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { fireEvent, render, screen } from "@testing-library/react";
-import OrganisationUsersList from "./OrganisationUsersList";
 import { mockUseStore } from "jest.setup";
-import { mockedCustodian } from "@/mocks/data/custodian";
+import OrganisationUsersList from "./OrganisationUsersList";
 
 jest.mock("@/services/projects");
 

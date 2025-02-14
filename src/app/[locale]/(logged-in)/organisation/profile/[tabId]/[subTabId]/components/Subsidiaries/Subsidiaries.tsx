@@ -15,7 +15,6 @@ import React, { useMemo } from "react";
 import usePatchOrganisation from "../../../hooks/usePatchOrganisation";
 import { FormData, getDefaultValues, getValidation } from "./config/form";
 
-const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 const NAMESPACE_TRANSLATION_FORM = "Form";
 
 export default function Subsidiaries() {
@@ -26,7 +25,6 @@ export default function Subsidiaries() {
     };
   });
   const t = useTranslations(NAMESPACE_TRANSLATION_FORM);
-  const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
   const { isPending: isLoading, onSubmit } = usePatchOrganisation({
     id: organisation?.id,
