@@ -18,7 +18,6 @@ import {
   User,
 } from "@/types/application";
 import { parseSystemConfig } from "@/utils/application";
-import { useTranslations } from "next-intl";
 import { ReactNode, useEffect } from "react";
 
 interface ApplicationDataProps {
@@ -39,8 +38,6 @@ interface ApplicationDataProps {
   children: ReactNode;
 }
 
-const NAMESPACE_TRANSLATION_APPLICATION = "Application";
-
 export default function ApplicationData({
   systemConfigData,
   userData,
@@ -58,8 +55,6 @@ export default function ApplicationData({
   isCustodian,
   children,
 }: ApplicationDataProps) {
-  const t = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
-
   const addUrlToHistory = useStore(store => store.addUrlToHistory);
   const [user, setUser] = useStore(store => [store.config.user, store.setUser]);
 
@@ -132,5 +127,5 @@ export default function ApplicationData({
     !!sectors?.length &&
     !!permissions?.length;
 
-  return <>{isAllSet && children}</>;
+  return isAllSet && children;
 }

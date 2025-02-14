@@ -4,6 +4,7 @@ import { CookieProvider } from "@/context/CookieContext";
 import ToastProvider from "@/context/ToastProvider";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import GlobalStyles from "@mui/material/GlobalStyles";
+import { Box } from "@mui/system";
 import type { Metadata } from "next";
 import { NextIntlClientProvider, useMessages } from "next-intl";
 import { Inter } from "next/font/google";
@@ -11,7 +12,6 @@ import { notFound } from "next/navigation";
 import { PropsWithChildren } from "react";
 import "../global.css";
 import ReactQueryClientProvider from "./components/ReactQueryClientProvider";
-import { Box } from "@mui/system";
 
 const inter = Inter({ subsets: ["latin"] });
 

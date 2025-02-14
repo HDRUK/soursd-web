@@ -3,17 +3,13 @@
 import ContactLink from "@/components/ContactLink";
 import LoadingWrapper from "@/components/LoadingWrapper";
 import OverlayCenterAlert from "@/components/OverlayCenterAlert";
-import { ROUTES } from "@/consts/router";
-import { useStore } from "@/data/store";
-import { usePathname } from "@/i18n/routing";
 import PageBodyContainer from "@/modules/PageBodyContainer";
 import useApplicationDependencies from "@/queries/useApplicationDependencies";
 import useQueriesHistories from "@/queries/useQueriesHistories";
 import { User } from "@/types/application";
-import { parseSystemConfig } from "@/utils/application";
 import { getCombinedQueryState } from "@/utils/query";
 import { useTranslations } from "next-intl";
-import { ReactNode, useEffect } from "react";
+import { ReactNode } from "react";
 import ApplicationData from "../ApplicationData";
 
 interface ApplicationProps {
@@ -97,5 +93,3 @@ export default function Application({
     </LoadingWrapper>
   );
 }
-
-export { Application };

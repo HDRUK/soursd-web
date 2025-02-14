@@ -1,9 +1,8 @@
 import { FileStatus, FileType } from "@/consts/files";
-import { ROUTES } from "@/consts/router";
 import {
-  UserProfileCompletionCategories,
-  UserGroup,
   UserFeedSource,
+  UserGroup,
+  UserProfileCompletionCategories,
 } from "@/consts/user";
 
 interface File {
@@ -323,29 +322,29 @@ interface Department {
 type SystemConfig = Record<string, any>;
 
 export type {
-  SystemConfig,
+  AddressFields,
   Approval,
+  Auth,
   Custodian,
+  CustodianUser,
+  Department,
+  File,
   Organisation,
   OrganisationIdvt,
-  User,
-  ResearcherEducation,
+  Permission,
+  ProjectUser,
   ResearcherAccreditation,
+  ResearcherAffiliation,
+  ResearcherEducation,
   ResearcherEmployment,
   ResearcherEndorsement,
-  ResearcherTraining,
   ResearcherProject,
-  ResearcherAffiliation,
-  ProjectUser,
-  File,
-  Permission,
-  UserProfileCompletionSchema,
-  CustodianUser,
-  UserProfileCompletionJson,
-  UserProfileCompletionFields,
+  ResearcherTraining,
   Sector,
-  AddressFields,
   Subsidiary,
-  Department,
-  Auth,
+  SystemConfig,
+  User,
+  UserProfileCompletionFields,
+  UserProfileCompletionJson,
+  UserProfileCompletionSchema,
 };
