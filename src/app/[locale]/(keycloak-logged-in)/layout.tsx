@@ -42,8 +42,6 @@ export default function Layout({ children }: PropsWithChildren) {
     performAuthCheck();
   }, [pathname]);
 
-  console.log("!isReady", isReady, enabledRedirect);
-
   return (
     <PageContainer>
       <LoadingWrapper variant="basic" loading={!isReady && enabledRedirect}>
