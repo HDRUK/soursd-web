@@ -43,14 +43,12 @@ export default function Affiliations() {
   const queryClient = useQueryClient();
   const router = useRouter();
 
-  const { user, affiliations, getHistories, setHistories } = useStore(
-    state => ({
-      user: state.config.user,
-      affiliations: state.config.histories?.affiliations || [],
-      getHistories: state.getHistories,
-      setHistories: state.setHistories,
-    })
-  );
+  const { affiliations, getHistories, setHistories } = useStore(state => ({
+    user: state.config.user,
+    affiliations: state.config.histories?.affiliations || [],
+    getHistories: state.getHistories,
+    setHistories: state.setHistories,
+  }));
 
   const { data: affiliationsData, ...getAffiliationsQueryState } = useQuery(
     getAffiliationsQuery(user?.registry_id)
@@ -95,7 +93,7 @@ export default function Affiliations() {
   }, [affiliationsData?.data?.data]);
 
   return (
-    <PageBodyContainer>
+    <PageBodyContainer heading={tProfile("affiliationsTitle")}>
       <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
         <PageBody>
           <PageSection>

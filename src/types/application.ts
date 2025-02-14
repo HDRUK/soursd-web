@@ -251,8 +251,11 @@ interface ResearcherAffiliation {
   id: number;
   member_id: string;
   organisation_id: number;
-  current_employer: boolean;
   relationship?: string;
+  current_employer: boolean;
+  start_date?: string;
+  end_date?: string;
+  position?: string;
   organisation: {
     organisation_name: string;
   };
