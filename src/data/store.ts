@@ -29,6 +29,16 @@ export interface StoreUserHistories {
   professionalRegistrations: ResearcherProfessionalRegistration[];
 }
 
+export interface StoreApplication {
+  routes: Record<
+    keyof typeof ROUTES,
+    {
+      path: string;
+    }
+  >;
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
+  system: Record<string, any>;
+}
 type StoreSet = (
   partial:
     | StoreState
@@ -52,6 +62,7 @@ interface StoreState {
     custodian?: Custodian;
     histories?: StoreUserHistories;
   };
+  application: StoreApplication;
   setRoutes: (routes: Routes) => void;
   getUser: () => User | undefined;
   setUser: (user: User) => void;
@@ -65,6 +76,8 @@ interface StoreState {
   setOrganisation: (organisation: Organisation | undefined) => void;
   getCustodian: () => Custodian | undefined;
   setCustodian: (organisation: Custodian | undefined) => void;
+  getApplication: () => StoreApplication;
+  setApplication: (application: StoreApplication) => void;
   getPreviousUrl: () => string | null;
   addUrlToHistory: (url: string) => void;
 }
@@ -128,6 +141,15 @@ const storeMethods = (set: StoreSet, get: StoreGet) => ({
   getOrganisation: () => {
     return get().config.organisation;
   },
+  setApplication: (application: StoreApplication) =>
+    set(
+      produce(state => {
+        state.application = application;
+      })
+    ),
+  getApplication: () => {
+    return get().application;
+  },
   setCustodian: (custodian: Custodian | undefined) =>
     set(
       produce(state => {
@@ -154,6 +176,7 @@ const useStore = create<StoreState>((set, get) => ({
     permissions: [],
     sectors: [],
   },
+  application: { routes: ROUTES, system: {} },
   ...storeMethods(set, get),
 }));
 

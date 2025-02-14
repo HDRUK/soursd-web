@@ -1,8 +1,8 @@
 "use client";
 
 import { useStore } from "@/data/store";
-import { notFound } from "next/navigation";
 import Projects from "@/modules/Projects";
+import { notFound } from "next/navigation";
 import { PageTabs } from "../../consts/tabs";
 import Actions from "../Actions";
 

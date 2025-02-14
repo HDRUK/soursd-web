@@ -3,11 +3,13 @@
 import AccordionTitle from "@/components/AccordionTitle";
 import ActionMenu from "@/components/ActionMenu/ActionMenu";
 import ActionMenuItem from "@/components/ActionMenu/ActionMenuItem";
-import { useApplicationData } from "@/context/ApplicationData";
+import { PALETTE_THEME_PURPLE_BLUE } from "@/config/theme";
+import { useStore } from "@/data/store";
 import { PostApprovalPayloadWithEntity } from "@/services/approvals";
 import { Organisation } from "@/services/organisations";
 import { EntityType } from "@/types/api";
 import { QueryState } from "@/types/form";
+import { Paged } from "@/types/requests";
 import BusinessIcon from "@mui/icons-material/Business";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { LoadingButton } from "@mui/lab";
@@ -19,11 +21,8 @@ import {
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import { PALETTE_THEME_PURPLE_BLUE } from "@/config/theme";
-import { useStore } from "@/data/store";
-import { Paged } from "@/types/requests";
-import OrganisationUsersList from "../OrganisationUsersList";
 import OrganisationDetailsModal from "../OrganisationDetailsModal";
+import OrganisationUsersList from "../OrganisationUsersList";
 import OrganisationStats from "./OrganisationStats";
 
 interface OrganisationsListProps {
@@ -46,12 +45,14 @@ export default function OrganisationsList({
   onUnapprove,
   queryState,
 }: OrganisationsListProps) {
-  const { routes } = useApplicationData();
   const t = useTranslations(NAMESPACE_TRANSLATIONS_USERS_LIST);
   const [activeData, setActiveData] = useState<ActiveOrganisationData | null>(
     null
   );
-  const custodian = useStore(store => store.getCustodian());
+  const custodian = useStore(store => ({
+    custodian: store.getCustodian(),
+    routes: store.getApplication().routes,
+  }));
   const { id: custodianId } = custodian || {};
 
   const handleApproveClick = (

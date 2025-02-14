@@ -1,9 +1,8 @@
 import { FileStatus, FileType } from "@/consts/files";
-import { ROUTES } from "@/consts/router";
 import {
-  UserProfileCompletionCategories,
-  UserGroup,
   UserFeedSource,
+  UserGroup,
+  UserProfileCompletionCategories,
 } from "@/consts/user";
 
 interface File {
@@ -327,47 +326,34 @@ interface Department {
   updated_at: string;
 }
 
-interface ApplicationDataState {
-  routes: Record<
-    keyof typeof ROUTES,
-    {
-      key: string;
-      path: string;
-    }
-  >;
-  /* eslint-disable  @typescript-eslint/no-explicit-any */
-  systemConfigData: Record<string, any>;
-}
-
 /* eslint-disable  @typescript-eslint/no-explicit-any */
-type ApplicationSystemConfig = Record<string, any>;
+type SystemConfig = Record<string, any>;
 
 export type {
-  ApplicationDataState,
-  ApplicationSystemConfig,
+  AddressFields,
   Approval,
+  Auth,
   Custodian,
+  CustodianUser,
+  Department,
+  File,
   Organisation,
   OrganisationIdvt,
-  User,
-  ResearcherEducation,
+  Permission,
+  ProjectUser,
   ResearcherAccreditation,
+  ResearcherAffiliation,
+  ResearcherEducation,
   ResearcherEmployment,
   ResearcherEndorsement,
-  ResearcherTraining,
-  ResearcherProject,
-  ResearcherAffiliation,
-  ProjectUser,
-  File,
-  Permission,
-  UserProfileCompletionSchema,
-  CustodianUser,
-  UserProfileCompletionJson,
-  UserProfileCompletionFields,
-  Sector,
-  AddressFields,
-  Subsidiary,
-  Department,
-  Auth,
   ResearcherProfessionalRegistration,
+  ResearcherProject,
+  ResearcherTraining,
+  Sector,
+  Subsidiary,
+  SystemConfig,
+  User,
+  UserProfileCompletionFields,
+  UserProfileCompletionJson,
+  UserProfileCompletionSchema,
 };

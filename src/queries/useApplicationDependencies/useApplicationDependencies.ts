@@ -1,14 +1,11 @@
 import useQueriesCombined from "@/hooks/useQueriesCombined";
 import { getCustodian } from "@/services/custodians";
 import { getOrganisation } from "@/services/organisations";
-import { getPermissions, PermissionsResponse } from "@/services/permissions";
+import { getPermissions } from "@/services/permissions";
 import { getSectors } from "@/services/sectors";
-import { SectorsResponse } from "@/services/sectors/types";
 import { getSystemConfig } from "@/services/system_config";
-import { GetSystemConfigResponse } from "@/services/system_config/types";
 import { getUser } from "@/services/users";
-import { Custodian, Organisation, User } from "@/types/application";
-import { Paged, ResponseJson } from "@/types/requests";
+import { User } from "@/types/application";
 import { QueryFunctionContext } from "@tanstack/react-query";
 
 interface UseApplicationDependenciesProps {
@@ -18,12 +15,12 @@ interface UseApplicationDependenciesProps {
 }
 
 interface ApplicationDependenciesCombinedData {
-  getSystemConfig: ResponseJson<GetSystemConfigResponse>;
-  getUser: ResponseJson<User>;
-  getOrganisation: ResponseJson<Organisation>;
-  getSectors: ResponseJson<Paged<SectorsResponse>>;
-  getPermissions: ResponseJson<Paged<PermissionsResponse>>;
-  getCustodian: ResponseJson<Custodian>;
+  getSystemConfig: Awaited<ReturnType<typeof getSystemConfig>>;
+  getUser: Awaited<ReturnType<typeof getUser>>;
+  getOrganisation: Awaited<ReturnType<typeof getOrganisation>>;
+  getSectors: Awaited<ReturnType<typeof getSectors>>;
+  getPermissions: Awaited<ReturnType<typeof getPermissions>>;
+  getCustodian: Awaited<ReturnType<typeof getCustodian>>;
 }
 
 type QueryFunctionContextDefault = QueryFunctionContext<[string, number]>;
