@@ -45,30 +45,28 @@ export default function ProfessionalRegistrationsForm({
   };
 
   return (
-    <>
-      <Form onSubmit={onSubmit} schema={schema} {...formOptions} sx={{ mb: 3 }}>
-        <FormSection heading={tProfile("title")}>
-          <Grid container rowSpacing={3}>
-            <Grid item xs={12}>
-              <FormControlHorizontal
-                name="name"
-                tNamespace={NAMESPACE_TRANSLATION_PROFILE}
-                renderField={fieldProps => <TextField {...fieldProps} />}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlHorizontal
-                name="member_id"
-                tNamespace={NAMESPACE_TRANSLATION_PROFILE}
-                renderField={fieldProps => <TextField {...fieldProps} />}
-              />
-            </Grid>
+    <Form onSubmit={onSubmit} schema={schema} {...formOptions} sx={{ mb: 3 }}>
+      <FormSection heading={tProfile("title")}>
+        <Grid container rowSpacing={3}>
+          <Grid item xs={12}>
+            <FormControlHorizontal
+              name="name"
+              tNamespace={NAMESPACE_TRANSLATION_PROFILE}
+              renderField={fieldProps => <TextField {...fieldProps} />}
+            />
           </Grid>
-        </FormSection>
-        <FormActions>
-          <ButtonSave isLoading={queryState.isPending} />
-        </FormActions>
-      </Form>
-    </>
+          <Grid item xs={12}>
+            <FormControlHorizontal
+              name="member_id"
+              tNamespace={NAMESPACE_TRANSLATION_PROFILE}
+              renderField={fieldProps => <TextField {...fieldProps} />}
+            />
+          </Grid>
+        </Grid>
+      </FormSection>
+      <FormActions>
+        <ButtonSave isLoading={queryState.isPending} />
+      </FormActions>
+    </Form>
   );
 }

@@ -1,7 +1,7 @@
 import { ResponseJson, ResponseOptions } from "@/types/requests";
+import { handleJsonResponse } from "../requestHelpers";
 import { postRequest } from "../requests";
-import { handleJsonResponse, handleResponseError } from "../requestHelpers";
-import { PostEmploymentsResponse, PostEmploymentsPayload } from "./types";
+import { PostEmploymentsPayload, PostEmploymentsResponse } from "./types";
 
 export default async (
   registryId: number,

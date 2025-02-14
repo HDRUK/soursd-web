@@ -2,7 +2,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import { LoadingButton, LoadingButtonProps } from "@mui/lab";
 import { useTranslations } from "next-intl";
 
-export interface ButtonSave extends LoadingButtonProps {
+export interface ButtonSaveProps extends LoadingButtonProps {
   isLoading?: boolean;
 }
 
@@ -13,7 +13,7 @@ export default function ButtonSave({
   children,
   sx,
   ...restProps
-}: ButtonSave) {
+}: ButtonSaveProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
 
   return (
