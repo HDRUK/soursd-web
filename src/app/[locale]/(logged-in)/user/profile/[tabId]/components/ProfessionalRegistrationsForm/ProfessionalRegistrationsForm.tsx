@@ -1,3 +1,5 @@
+"use client";
+
 import ButtonSave from "@/components/ButtonSave";
 import Form from "@/components/Form";
 import FormActions from "@/components/FormActions";
@@ -20,7 +22,7 @@ export interface ProfessionalRegistrationsFormProps {
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfessionalRegistrations";
 
-export default function AffiliationsForm({
+export default function ProfessionalRegistrationsForm({
   onSubmit,
   queryState,
 }: ProfessionalRegistrationsFormProps) {
@@ -45,7 +47,7 @@ export default function AffiliationsForm({
   return (
     <>
       <Form onSubmit={onSubmit} schema={schema} {...formOptions} sx={{ mb: 3 }}>
-        <FormSection heading={tProfile("professionalRegistrations")}>
+        <FormSection heading={tProfile("title")}>
           <Grid container rowSpacing={3}>
             <Grid item xs={12}>
               <FormControlHorizontal

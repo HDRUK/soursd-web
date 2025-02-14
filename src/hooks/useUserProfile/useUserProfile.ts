@@ -19,17 +19,11 @@ export const EXPERIENCES_REQUIRED_SECTIONS: Array<keyof StoreUserHistories> = [
 
 export default function useUserProfile() {
   const { user, histories } = useStore(({ getHistories, getUser }) => {
-    console.log({
-      histories: getHistories(),
-      user: getUser(),
-    });
     return {
       histories: getHistories(),
       user: getUser(),
     };
   });
-
-  console.log("histories", histories);
 
   const percentageScore = (
     values: (string | number | boolean | undefined | null)[]

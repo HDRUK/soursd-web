@@ -76,7 +76,6 @@ jest.mock("next/navigation", () => {
     useSearchParams: () => ({
       get: () => {},
     }),
-    notFound: jest.fn(),
   };
 });
 
@@ -155,6 +154,8 @@ export const mockUseStore = (props: Partial<StoreState> = {}) => {
     return getterFn ? getterFn(originalStore) : originalStore;
   });
 };
+
+global.TextEncoder = TextEncoder;
 
 async function mockFetch(url: string, init?: RequestInit) {
   const [baseUrl, queryString] = url.split("?");
@@ -260,22 +261,6 @@ async function mockFetch(url: string, init?: RequestInit) {
         }),
       ]);
     }
-    case `${process.env.NEXT_PUBLIC_API_V1_URL}/professional_registrations/1`: {
-      return mock200Json(
-        mockPagedResults([
-          mockedProfessionalRegistration({
-            id: 1,
-            name: "ONS",
-            member_id: "A1234567",
-          }),
-          mockedProfessionalRegistration({
-            id: 2,
-            name: "HDR",
-            member_id: "B2345678",
-          }),
-        ])
-      );
-    }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/accreditations/1`: {
       return mock200Json(
         mockPagedResults([
@@ -330,6 +315,22 @@ async function mockFetch(url: string, init?: RequestInit) {
           }),
           mockedProject({
             id: 2,
+          }),
+        ])
+      );
+    }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/professional_registrations/1`: {
+      return mock200Json(
+        mockPagedResults([
+          mockedProfessionalRegistration({
+            id: 1,
+            name: "ONS",
+            member_id: "A1234567",
+          }),
+          mockedProfessionalRegistration({
+            id: 2,
+            name: "HDR",
+            member_id: "B2345678",
           }),
         ])
       );

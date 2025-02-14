@@ -379,6 +379,8 @@
     "certificationUpload": "Certification"
   },
   "ProfessionalRegistrations": {
+    "title": "Professional Registrations",
+    "resultsTitle": "Professional Registrations records",
     "id": "ID",
     "name": "Name",
     "namePlaceholder": "Name",
@@ -388,7 +390,9 @@
     "memberIdRequiredInvalid": "ID is required",
     "professionalRegistrationsRecords": "Professional Registrations records",
     "professionalRegistrationsNoResultsMessage": "You currently have no professional registrations",
-    "professionalRegsitrationsErrorMessage": "There was an error getting your professional registrations. Please try again or contact us at <contactLink></contactLink>"
+    "professionalRegsitrationsErrorMessage": "There was an error getting your professional registrations. Please try again or contact us at <contactLink></contactLink>",
+    "errorCreateMessage": "There was an error creating your professional registrations. Please try again or contact us at <contactLink></contactLink>",
+    "successCreateMessage": "Your professional registration was successfully create"
   },
   "Buttons": {
     "register": "Register",
@@ -525,6 +529,7 @@
     "noEmploymentsFound": "Could not find any employment history",
     "noProjectsFound": "Could not find any project history",
     "noTrainingsFound": "Could not find any training history",
+    "noProfessionalRegistrationsFound": "Could not find any professional registrations history history",
     "expiresAt": "Expires at",
     "provider": "Provider",
     "awardingBody": "Awarding body",
@@ -535,6 +540,7 @@
     "education": "Education",
     "projects": "Projects",
     "training": "Training",
+    "professionalRegistrations": "Professional Registrations",
     "certification": "Certification:"
   },
   "ResearcherDetails": {

@@ -1,3 +1,5 @@
+import ButtonSave from "@/components/ButtonSave";
+import ContactLink from "@/components/ContactLink";
 import DateInput from "@/components/DateInput";
 import Form from "@/components/Form";
 import FormActions from "@/components/FormActions";
@@ -6,35 +8,21 @@ import FormSection from "@/components/FormSection";
 import { Message } from "@/components/Message";
 import yup from "@/config/yup";
 import { FileType } from "@/consts/files";
-import { ROUTES } from "@/consts/router";
 import { useStore } from "@/data/store";
 import useFileUpload from "@/hooks/useFileUpload";
 import useUserFileUpload from "@/hooks/useUserFileUpload";
-import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
-import {
-  PageBody,
-  PageBodyContainer,
-  PageGuidance,
-  PageSection,
-} from "@/modules";
 import ResearcherTrainingEntry from "@/modules/ResearcherTrainingEntry";
 import postTrainingsQuery from "@/services/trainings/postTrainingsQuery";
 import { PostTrainingsPayload } from "@/services/trainings/types";
 import { formatDBDate } from "@/utils/date";
 import { showAlert } from "@/utils/showAlert";
-import EastIcon from "@mui/icons-material/East";
-import SaveIcon from "@mui/icons-material/Save";
-import { LoadingButton } from "@mui/lab";
-import { Box, Grid, TextField } from "@mui/material";
+import { Grid, TextField } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
 import { ChangeEvent, useCallback, useMemo } from "react";
 import FileUploadDetails from "../FileUploadDetails/FileUploadDetails";
 import { StyledBox } from "./Training.styles";
-import ProfessionalsRegistration from "../ProfessionalRegistrations";
-import ButtonSave from "@/components/ButtonSave";
 
 export interface TrainingFormValues {
   provider: string;
@@ -64,7 +52,6 @@ export default function Training() {
   const histories = useStore(state => state.config.histories);
   const setHistories = useStore(state => state.setHistories);
   const getHistories = useStore(state => state.getHistories);
-  const router = useRouter();
 
   const {
     upload,
@@ -210,93 +197,66 @@ export default function Training() {
   ];
 
   return (
-    <PageBodyContainer>
-      <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
-        <PageBody>
-          <PageSection>
-            <Form
-              onSubmit={handleDetailsSubmit}
-              schema={schema}
-              {...formOptions}>
-              {() => (
-                <>
-                  <FormSection heading={tProfile("training")}>
-                    <Grid container rowSpacing={3}>
-                      {formFields.map(field => (
-                        <Grid item xs={12} key={field.name}>
-                          <FormControlHorizontal
-                            name={field.name}
-                            renderField={fieldProps => (
-                              <field.component {...fieldProps} />
-                            )}
-                          />
-                        </Grid>
-                      ))}
-                      <Grid item xs={12} key="certification_upload">
-                        <FormControlHorizontal
-                          name="certification_upload"
-                          renderField={() => (
-                            <FileUploadDetails
-                              fileButtonText={tProfile("uploadCertification")}
-                              fileType={FileType.CV}
-                              fileNameText={
-                                file?.name ||
-                                tProfile("noCertificationUploaded")
-                              }
-                              isSizeInvalid={isSizeInvalid}
-                              isScanning={isScanning}
-                              isScanComplete={isScanComplete}
-                              isScanFailed={isScanFailed}
-                              isUploading={isUploading}
-                              onFileChange={handleFileChange}
-                            />
-                          )}
-                        />
-                      </Grid>
-                    </Grid>
-                  </FormSection>
-                  <FormActions>
-                    <ButtonSave isLoading={isPending} />
-                  </FormActions>
-                </>
-              )}
-            </Form>
-            {!!histories?.training?.length && (
-              <StyledBox>
-                {histories.training.map(training => (
-                  <ResearcherTrainingEntry
-                    key={training.id}
-                    data={training}
-                    certification={user?.registry?.files?.filter(
-                      a => a.id === training.certification_id
-                    )}
+    <>
+      <Form onSubmit={handleDetailsSubmit} schema={schema} {...formOptions}>
+        <FormSection heading={tProfile("training")}>
+          <Grid container rowSpacing={3}>
+            {formFields.map(field => (
+              <Grid item xs={12} key={field.name}>
+                <FormControlHorizontal
+                  name={field.name}
+                  renderField={fieldProps => (
+                    <field.component {...fieldProps} />
+                  )}
+                />
+              </Grid>
+            ))}
+            <Grid item xs={12} key="certification_upload">
+              <FormControlHorizontal
+                name="certification_upload"
+                renderField={() => (
+                  <FileUploadDetails
+                    fileButtonText={tProfile("uploadCertification")}
+                    fileType={FileType.CV}
+                    fileNameText={
+                      file?.name || tProfile("noCertificationUploaded")
+                    }
+                    isSizeInvalid={isSizeInvalid}
+                    isScanning={isScanning}
+                    isScanComplete={isScanComplete}
+                    isScanFailed={isScanFailed}
+                    isUploading={isUploading}
+                    onFileChange={handleFileChange}
                   />
-                ))}
-              </StyledBox>
-            )}
-            {isError && (
-              <Message severity="error" sx={{ mt: 3 }}>
-                {tProfile.rich(`${postError}`, {
-                  contactLink: ContactLink,
-                })}
-              </Message>
-            )}
-          </PageSection>
-          <PageSection>
-            <ProfessionalsRegistration />
-          </PageSection>
-          <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3 }}>
-            <LoadingButton
-              sx={{ display: "flex" }}
-              endIcon={<EastIcon />}
-              onClick={() =>
-                router.push(ROUTES.profileResearcherProjects.path)
-              }>
-              {tProfile("continueLinkText")}
-            </LoadingButton>
-          </Box>
-        </PageBody>
-      </PageGuidance>
-    </PageBodyContainer>
+                )}
+              />
+            </Grid>
+          </Grid>
+        </FormSection>
+        <FormActions>
+          <ButtonSave isLoading={isPending} />
+        </FormActions>
+      </Form>
+      {!!histories?.training?.length && (
+        <StyledBox>
+          {histories.training.map(training => (
+            <ResearcherTrainingEntry
+              key={training.id}
+              data={training}
+              certification={user?.registry?.files?.filter(
+                a => a.id === training.certification_id
+              )}
+            />
+          ))}
+        </StyledBox>
+      )}
+      {isError && (
+        <Message severity="error" sx={{ mt: 3 }}>
+          {tProfile.rich(`${postError}`, {
+            contactLink: ContactLink,
+          })}
+        </Message>
+      )}
+    </>
   );
 }

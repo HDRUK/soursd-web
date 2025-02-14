@@ -5,7 +5,7 @@ interface PostProfessionalRegistrationPayload {
   member_id: string;
 }
 
-type PostProfessionalResgitrationResponse = number;
+type PostProfessionalResgitrationResponse = ResearcherProfessionalRegistration;
 type GetProfessionalRegistrationsResponse =
   ResearcherProfessionalRegistration[];
 

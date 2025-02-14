@@ -1,7 +1,9 @@
-import ContactLink from "@/components/ContactLink";
+"use client";
 
+import ContactLink from "@/components/ContactLink";
 import Results from "@/components/Results";
 import { useStore } from "@/data/store";
+import useQueryAlerts from "@/hooks/useQueryAlerts";
 import {
   getProfessionalRegistrationsQuery,
   postProfessionalRegistrationQuery,
@@ -21,7 +23,6 @@ import { useCallback, useEffect } from "react";
 import ProfessionalRegistrationsForm from "../ProfessionalRegistrationsForm";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfessionalRegistrations";
-const NAMESPACE_TRANSLATION_APPLICATION = "Application";
 
 export default function ProfessionalRegistrations() {
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
@@ -44,25 +45,38 @@ export default function ProfessionalRegistrations() {
   const { mutateAsync, ...postProfessionalRegistrationQueryState } =
     useMutation(postProfessionalRegistrationQuery(user?.registry_id));
 
+  useQueryAlerts(postProfessionalRegistrationQueryState, {
+    errorAlertProps: {
+      text: tProfile("errorCreateMessage"),
+    },
+    successAlertProps: {
+      text: tProfile("successCreateMessage"),
+    },
+  });
+
   const handleDetailsSubmit = useCallback(
     async (fields: PostProfessionalRegistrationPayload) => {
       await mutateAsync(fields);
 
       queryClient.refetchQueries({
-        queryKey: ["getProfessionalRegistration", user?.registry_id],
+        queryKey: ["getProfessionalRegistrations", user?.registry_id],
       });
     },
-    [mutateAsync, user?.registry_id, tProfile]
+    [mutateAsync, user?.registry_id]
   );
 
-  useEffect(() => {
-    const storeHistories = getHistories();
+  const data = professionalRegistrationsData?.data?.data;
 
-    setHistories({
-      ...storeHistories,
-      professionalRegistrations: professionalRegistrationsData?.data?.data,
-    });
-  }, [professionalRegistrationsData?.data?.data]);
+  useEffect(() => {
+    if (data) {
+      const storeHistories = getHistories();
+
+      setHistories({
+        ...storeHistories,
+        professionalRegistrations: data,
+      });
+    }
+  }, [data]);
 
   return (
     <>
@@ -71,15 +85,15 @@ export default function ProfessionalRegistrations() {
         queryState={postProfessionalRegistrationQueryState}
       />
       <Typography variant="h6" sx={{ mb: 1 }}>
-        {tProfile("professionalRegistrationsRecords")}
+        {tProfile("resultsTitle")}
       </Typography>
       <Results
         queryState={getProfessionalRegistrationsQueryState}
-        noResultsMessage={tProfile("professionalRegsitrationsNoResultsMessage")}
+        noResultsMessage={tProfile("professionalRegistrationsNoResultsMessage")}
         errorMessage={tProfile.rich("professionalRegsitrationsErrorMessage", {
           contactLink: ContactLink,
         })}
-        count={professionalRegistrationsData?.data?.data.length}>
+        count={professionalRegistrations.length}>
         <Table>
           <TableHead sx={{ backgroundColor: "lightPurple.main" }}>
             <TableRow>
@@ -88,16 +102,14 @@ export default function ProfessionalRegistrations() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {professionalRegistrationsData?.data?.data?.map(
-              ({ member_id, name }) => {
-                return (
-                  <TableRow key={name}>
-                    <TableCell>{name}</TableCell>
-                    <TableCell>{member_id}</TableCell>
-                  </TableRow>
-                );
-              }
-            )}
+            {professionalRegistrations.map(({ member_id, name }) => {
+              return (
+                <TableRow key={name}>
+                  <TableCell>{name}</TableCell>
+                  <TableCell>{member_id}</TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </Results>

@@ -2,7 +2,7 @@ import getProfessionalRegistrations from "./getProfessionalRegistrations";
 
 export default function getProfessionalRegistrationsQuery(registry_id: number) {
   return {
-    queryKey: ["getProfessionalRegistration"],
+    queryKey: ["getProfessionalRegistrations", registry_id],
     queryFn: () =>
       getProfessionalRegistrations(registry_id, {
         error: {

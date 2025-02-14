@@ -4,10 +4,6 @@ import useUserProfile from "./useUserProfile";
 const setupUseUserProfile = () => renderHook(useUserProfile);
 
 describe("useUserProfile", () => {
-  beforeEach(() => {
-    jest.resetAllMocks();
-  });
-
   it("Is complete when all required data is defined", async () => {
     const { result } = setupUseUserProfile();
 
@@ -24,8 +20,10 @@ describe("useUserProfile", () => {
     "Is not complete when any experiences are missing",
     async value => {
       mockUseStore({
-        histories: {
-          [value]: [],
+        config: {
+          histories: {
+            [value]: [],
+          },
         },
       });
 
@@ -45,8 +43,10 @@ describe("useUserProfile", () => {
     "Is not complete when any trainings are missing",
     async value => {
       mockUseStore({
-        histories: {
-          [value]: [],
+        config: {
+          histories: {
+            [value]: [],
+          },
         },
       });
 
@@ -66,8 +66,10 @@ describe("useUserProfile", () => {
     "Is not complete when any affiliations are missing",
     async value => {
       mockUseStore({
-        histories: {
-          [value]: [],
+        config: {
+          histories: {
+            [value]: [],
+          },
         },
       });
 
