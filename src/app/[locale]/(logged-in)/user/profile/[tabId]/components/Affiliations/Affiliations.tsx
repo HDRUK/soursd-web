@@ -32,6 +32,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect } from "react";
+import ReactDOMServer from "react-dom/server";
 import AffiliationsForm from "../AffiliationsForm";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
@@ -75,9 +76,11 @@ export default function Affiliations() {
         });
       } catch (_) {
         showAlert("error", {
-          text: tProfile.rich("postAffiliationError", {
-            contactLink: ContactLink,
-          }),
+          text: ReactDOMServer.renderToString(
+            tProfile.rich("postAffiliationError", {
+              contactLink: ContactLink,
+            })
+          ),
           confirmButtonText: tProfile("postAffiliationErrorButton"),
         });
       }

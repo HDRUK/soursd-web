@@ -15,7 +15,9 @@ export default function PageSection({
   ...restProps
 }: PageSectionProps) {
   return (
-    <Box {...restProps} sx={{ position: "relative", zIndex: 1, px: 4, py: 2, ...sx }}>
+    <Box
+      {...restProps}
+      sx={{ position: "relative", zIndex: 1, px: 4, py: 2, ...sx }}>
       <SectionHeading
         type="content"
         heading={heading}

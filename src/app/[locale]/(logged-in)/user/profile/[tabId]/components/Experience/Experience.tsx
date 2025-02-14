@@ -124,7 +124,8 @@ export default function Experience() {
               ))}
             </HistoriesSection>
           </FormSection>
-          <PageSection sx={{ display: "flex", justifyContent: "flex-end", pr: "16px" }}>
+          <PageSection
+            sx={{ display: "flex", justifyContent: "flex-end", pr: "16px" }}>
             <Button
               sx={{ display: "flex", justifySelf: "flex-end" }}
               endIcon={<EastIcon />}
