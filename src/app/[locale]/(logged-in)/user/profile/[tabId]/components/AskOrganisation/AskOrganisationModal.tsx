@@ -21,7 +21,7 @@ export default function OrganisationDetailsModal({
       variant="content"
       open={open}
       onClose={onClose}>
-      <SendInviteOrganisation />
+      <SendInviteOrganisation onClose={onClose} />
     </FormModal>
   );
 }

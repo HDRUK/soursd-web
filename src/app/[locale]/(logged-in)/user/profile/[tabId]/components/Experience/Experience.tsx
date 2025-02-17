@@ -124,9 +124,10 @@ export default function Experience() {
               ))}
             </HistoriesSection>
           </FormSection>
-          <PageSection sx={{ display: "flex", justifyContent: "flex-end" }}>
+          <PageSection
+            sx={{ display: "flex", justifyContent: "flex-end", pr: "16px" }}>
             <Button
-              sx={{ display: "flex" }}
+              sx={{ display: "flex", justifySelf: "flex-end" }}
               endIcon={<EastIcon />}
               onClick={() =>
                 router.push(ROUTES.profileResearcherTraining.path)
