@@ -2,7 +2,7 @@ import FormModal from "@/components/FormModal";
 import { Message } from "@/components/Message";
 import ResearcherDetails from "@/modules/ResearcherDetails";
 import useQueriesHistories from "@/queries/useQueriesHistories";
-import { getUser } from "@/services/users";
+import { getUser, getUserQuery } from "@/services/users";
 import { Organisation, User } from "@/types/application";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
@@ -30,21 +30,16 @@ export default function ResearcherDetailsModal({
     data: userDetails,
     isLoading: isUserLoading,
     error: userError,
-  } = useQuery({
-    queryKey: ["getUserDetailsForCustodian", user?.id],
-    queryFn: ({ queryKey }) => {
-      const [, id] = queryKey;
-
-      return getUser(id, {
-        error: {
-          message: "getUserDetailsForCustodianError",
-        },
-      });
-    },
-  });
+  } = useQuery(
+    getUserQuery(user.id, {
+      error: {
+        message: "getUserDetailsForCustodianError",
+      },
+    })
+  );
 
   const { data: histories, isLoading: isHistoriesLoading } =
-    useQueriesHistories(user.registry_id, open);
+    useQueriesHistories(user.registry_id);
 
   return (
     <FormModal

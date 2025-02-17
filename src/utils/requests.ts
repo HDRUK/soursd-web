@@ -1,3 +1,5 @@
+import { QueryOptions } from "@/types/requests";
+
 function objectToQuerystring(
   params: Record<string, string | number | boolean | null | undefined>
 ) {

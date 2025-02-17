@@ -1,3 +1,4 @@
 import getEducations from "./getEducations";
+import getEducationsQuery from "./getEducationsQuery";
 
-export { getEducations };
+export { getEducations, getEducationsQuery };

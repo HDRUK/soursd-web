@@ -1,7 +1,10 @@
 "use client";
 
 import AccordionTitle from "@/components/AccordionTitle";
-import { getOrganisation } from "@/services/organisations";
+import {
+  getOrganisation,
+  getOrganisationQuery,
+} from "@/services/organisations";
 
 import { PALETTE_THEME_PURPLE_BLUE } from "@/config/theme";
 import { ResearcherProject } from "@/types/application";
@@ -28,19 +31,14 @@ const ProjectAccordion = ({ project }: ProjectAccordionProps) => {
   const organisation = useStore(store => store.getOrganisation());
   const { id: organisationId } = organisation || {};
 
-  const { data: organisationData } = useQuery({
-    queryKey: ["getOrganisationDetailsForCustodian", organisationId],
-    queryFn: ({ queryKey }) => {
-      const [, id] = queryKey;
-
-      return getOrganisation(id, {
-        error: {
-          message: "getOrganisationDetailsForCustodianError",
-        },
-      });
-    },
-    enabled: !!organisationId,
-  });
+  const { data: organisationData } = useQuery(
+    getOrganisationQuery(organisationId, {
+      error: {
+        message: "getOrganisationDetailsForCustodianError",
+      },
+      enabled: !!organisationId,
+    })
+  );
 
   const { organisation_name } = organisationData?.data || {};
 

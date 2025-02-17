@@ -30,14 +30,24 @@ export default function Application({
   const t = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
 
   const { data: applicationData, ...applicationQueryState } =
-    useApplicationDependencies({
-      user: me,
-      custodianId,
-      organisationId,
-    });
+    useApplicationDependencies(
+      {
+        user: me,
+        custodianId,
+        organisationId,
+      },
+      {
+        queryKey: ["getPreloadedApplication"],
+        enabled: !!me,
+      }
+    );
 
   const { data: historiesData, ...historiesQueryState } = useQueriesHistories(
-    me?.registry_id
+    me?.registry_id,
+    {
+      queryKey: ["getPreloadedHistories"],
+      enabled: !!me?.registry_id,
+    }
   );
 
   const {
@@ -47,6 +57,7 @@ export default function Application({
     getEmployments: employmentsData,
     getUserApprovedProjects: projectsData,
     getAffiliations: affilicationData,
+    getProfessionalRegistrations: professionalRegistratonsData,
   } = historiesData;
 
   const {
@@ -87,7 +98,8 @@ export default function Application({
         trainingData={trainingData?.data}
         employmentsData={employmentsData?.data}
         projectsData={projectsData?.data}
-        affiliationData={affilicationData?.data.data}>
+        affiliationData={affilicationData?.data.data}
+        professionalRegistratonsData={professionalRegistratonsData?.data?.data}>
         {children}
       </ApplicationData>
     </LoadingWrapper>

@@ -1,4 +1,4 @@
-import { QueryOptions, QueryPayload } from "@/types/requests";
+import { QueryPayload } from "@/types/requests";
 import { objectToQuerystring } from "@/utils/requests";
 import { getHeadersWithAuthorization } from "./requestHelpers";
 
@@ -6,7 +6,7 @@ async function request<T>(
   method: string,
   url: string,
   payload?: QueryPayload<T>,
-  options?: QueryOptions
+  options?: RequestInit
 ) {
   let defaultContentType;
 
@@ -51,7 +51,7 @@ async function getRequest<T>(url: string, payload?: T, options?: RequestInit) {
 async function postRequest<T>(
   url: string,
   payload?: QueryPayload<T>,
-  options?: QueryOptions
+  options?: RequestInit
 ) {
   const response = await request("POST", url, payload, options);
 
@@ -70,7 +70,7 @@ async function patchRequest<T>(
 async function putRequest<T>(
   url: string,
   payload?: QueryPayload<T>,
-  options?: QueryOptions
+  options?: RequestInit
 ) {
   const response = await request("PUT", url, payload, options);
   return response;
@@ -79,7 +79,7 @@ async function putRequest<T>(
 async function deleteRequest<T>(
   url: string,
   payload?: QueryPayload<T>,
-  options?: QueryOptions
+  options?: RequestInit
 ) {
   const response = await request("DELETE", url, payload, options);
   return response;
