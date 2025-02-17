@@ -16,7 +16,7 @@ import {
 import { ExtendedUseFormReturn } from "../Form/Form";
 
 export interface FormControlProps
-  extends Omit<FormControlLabelProps, "control"> {
+  extends Omit<FormControlLabelProps, "control" | "label"> {
   renderField: (fieldProps: FieldValues & { error?: boolean }) => ReactNode;
   name: string;
   control?: Control;
@@ -24,6 +24,7 @@ export interface FormControlProps
   displayLabel?: boolean;
   displayPlaceholder?: boolean;
   fullWidth?: boolean;
+  label?: string;
 }
 
 const NAMESPACE_TRANSLATION_FORM = "Form";

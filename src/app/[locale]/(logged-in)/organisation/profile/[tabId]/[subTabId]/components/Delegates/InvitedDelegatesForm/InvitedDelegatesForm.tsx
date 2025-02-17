@@ -27,12 +27,14 @@ export interface DelegatesFormValues {
   delegate_email: string;
 }
 
-export interface DelegatesFormProps {
+export interface InvitedDelegatesFormProps {
   onSuccess: () => void;
 }
 
 const NAMESPACE_TRANSLATION_DELEGATES = "Form";
-export default function DelegatesForm({ onSuccess }: DelegatesFormProps) {
+export default function InvitedDelegatesForm({
+  onSuccess,
+}: InvitedDelegatesFormProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_DELEGATES);
   const organisation = useStore(state => state.config.organisation);
   const departments = organisation?.departments || [];
@@ -159,35 +161,17 @@ export default function DelegatesForm({ onSuccess }: DelegatesFormProps) {
               />
             </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <FormControlHorizontal
-              name="delegate_full_name"
-              renderField={fieldProps => <TextField {...fieldProps} />}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <FormControlHorizontal
-              name="delegate_job_title"
-              renderField={fieldProps => <TextField {...fieldProps} />}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <FormControlHorizontal
-              name="delegate_email"
-              renderField={fieldProps => <TextField {...fieldProps} />}
-            />
-          </Grid>
-        </Grid>
-      </FormSection>
-      <FormActions>
-        <LoadingButton
-          loading={isPending}
-          type="submit"
-          endIcon={<AddCircleOutlineIcon />}
-          sx={{ marginBottom: "20px" }}>
-          {t("save")}
-        </LoadingButton>
-      </FormActions>
+        </FormSection>
+        <FormActions>
+          <LoadingButton
+            loading={isPending}
+            type="submit"
+            endIcon={<AddCircleOutlineIcon />}
+            sx={{ marginBottom: "20px" }}>
+            {t("save")}
+          </LoadingButton>
+        </FormActions>
+      </>
     </Form>
   );
 }

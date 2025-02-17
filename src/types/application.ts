@@ -130,6 +130,8 @@ interface User {
     training?: ResearcherTraining[];
   };
   is_delegate: number;
+  departments?: Department[];
+  role?: string;
 }
 interface AddressFields {
   postcode?: string;

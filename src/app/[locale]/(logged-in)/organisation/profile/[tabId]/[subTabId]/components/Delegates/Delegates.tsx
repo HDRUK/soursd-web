@@ -7,95 +7,31 @@ import Results from "@/components/Results";
 import ResultsCard from "@/components/ResultsCard";
 import UserRegisteredStatus from "@/components/UserRegisteredStatus";
 import { useStore } from "@/data/store";
-import usePaginatedQuery from "@/hooks/usePaginatedQuery";
+
 import { PageBody, PageSection } from "@/modules";
-import { getOrganisationUsers } from "@/services/organisations";
-import { formatShortDate } from "@/utils/date";
+
 import { isRegistered } from "@/utils/user";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { User } from "@/types/application";
 import { ColumnDef } from "@tanstack/react-table";
-import Markdown from "@/components/Markdown";
-import FormSection from "@/components/FormSection";
-import Table from "@/modules/Table";
 import EditDelegate from "./EditDelegate";
 import DecoupleUser from "../DecoupleUser";
-import DelegatesForm from "./DelegatesForm";
+import DelegatesForm from "./InvitedDelegatesForm";
+import KeyContactForm from "./KeyContactForm";
 
 const NAMESPACE_PROFILE_ORGANISATION = "ProfileOrganisation";
 
 export default function Delegates() {
   const t = useTranslations(NAMESPACE_PROFILE_ORGANISATION);
 
-  const { organisation } = useStore(state => {
-    return {
-      organisation: state.config.organisation,
-    };
-  });
-
-  const {
-    isError: isGetUsersError,
-    isLoading: isGetUsersLoading,
-    data: usersData,
-    refetch: refetchOrganisationUsers,
-    last_page,
-    page,
-    setPage,
-  } = usePaginatedQuery({
-    queryKeyBase: ["getOrganisationUsers", organisation?.id],
-    queryFn: queryParams => {
-      return getOrganisationUsers(organisation?.id, queryParams, {
-        error: {
-          message: "getUsersError",
-        },
-      });
-    },
-    enabled: !!organisation,
-  });
-
-  const delegates = usersData?.filter(user => user.is_delegate === 1);
-
-  const columns: ColumnDef<User>[] = [
-    {
-      accessorKey: "name",
-      header: "Full Name",
-      cell: info =>
-        `${info.row.original.first_name} ${info.row.original.last_name}`,
-    },
-    {
-      accessorKey: "department",
-      header: "Department",
-      cell: info => info.row.original.departments[0]?.name || "",
-    },
-    {
-      accessorKey: "created_at",
-      header: "Invited On",
-      cell: info => formatShortDate(info.getValue() as string),
-    },
-    {
-      accessorKey: "actions",
-      header: "Actions",
-      cell: info => (
-        <>
-          <EditDelegate user={info.row.original} />
-          <DecoupleUser
-            user={info.row.original}
-            onSuccess={refetchOrganisationUsers}
-            payload={{ is_delegate: 0 }}
-            namespace="DecoupleDelegate"
-          />
-        </>
-      ),
-    },
-  ];
-
   return (
-    <FormSection
-      description={<Markdown>{t("delegateAdminDescription")}</Markdown>}>
-      <Table data={usersData} columns={columns} />
-    </FormSection>
+    <PageBody>
+      <PageSection>
+        <KeyContactForm />
+      </PageSection>
+    </PageBody>
   );
 
   return (

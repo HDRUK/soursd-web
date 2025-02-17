@@ -20,12 +20,13 @@ interface TableProps<T> {
 }
 
 const Table = <T,>({ data, columns }: TableProps<T>) => {
-  if (!data) return;
   const table = useReactTable({
-    data,
+    data: data || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
+
+  if (!data) return null;
 
   return (
     <TableContainer>
