@@ -16,6 +16,7 @@ const NAMESPACE_TRANSLATIONS = "Application";
 export default function Page() {
   const t = useTranslations(NAMESPACE_TRANSLATIONS);
   const { isReady, isAuthenticated, loading } = useLoginRedirect();
+
   return isReady && !isAuthenticated && !loading ? (
     <>
       <Header />

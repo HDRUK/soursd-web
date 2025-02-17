@@ -17,14 +17,16 @@ export default function PageSection({
   return (
     <Box
       {...restProps}
-      sx={{ position: "relative", zIndex: 1, px: 4, py: 2, ...sx }}>
-      <SectionHeading
-        type="content"
-        heading={heading}
-        description={description}
-        variant="h5"
-        sx={{ mb: 4 }}
-      />
+      sx={{ position: "relative", zIndex: 1, px: 2, py: 2, ...sx }}>
+      {heading && (
+        <SectionHeading
+          type="content"
+          heading={heading}
+          description={description}
+          variant="h5"
+          sx={{ mb: 4 }}
+        />
+      )}
       {children}
     </Box>
   );

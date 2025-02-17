@@ -1,4 +1,4 @@
-import { useApplicationData } from "@/context/ApplicationData";
+import { useStore } from "@/data/store";
 import { useRouter } from "@/i18n/routing";
 import { postRegister, PostRegisterPayload } from "@/services/auth";
 import { PostOrganisationPayload } from "@/services/organisations";
@@ -13,7 +13,7 @@ interface UseRegisterUserArgs {
 }
 
 export default function useRegisterUser({ selected }: UseRegisterUserArgs) {
-  const { routes } = useApplicationData();
+  const routes = useStore(store => store.application.routes);
   const router = useRouter();
   const auth = useAuth();
 

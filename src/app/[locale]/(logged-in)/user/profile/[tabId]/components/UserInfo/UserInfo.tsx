@@ -33,7 +33,7 @@ export default function UserInfo() {
           justifyContent: "center",
           mb: 1,
         }}>
-        12345667891011121314151617
+        {user?.registry.digi_ident}
       </Text>
       <Typography>
         This ‘key’ represents you as a user within SOURSD. This is unique to

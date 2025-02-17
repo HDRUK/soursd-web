@@ -2,7 +2,6 @@
 
 import Text from "@/components/Text";
 import { DEFAULT_ALERT_DURATION_HRS } from "@/consts/application";
-import { useApplicationData } from "@/context/ApplicationData";
 import { useStore } from "@/data/store";
 import useUserProfile from "@/hooks/useUserProfile";
 import { Link, useParams } from "@/i18n/routing";
@@ -19,8 +18,11 @@ import { PageTabs } from "../../consts/tabs";
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
 export default function TabsSections() {
-  const { routes } = useApplicationData();
-  const user = useStore(state => state.config.user);
+  const { user, routes } = useStore(store => ({
+    user: store.getUser(),
+    routes: store.getApplication().routes,
+  }));
+
   const params = useParams();
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const {
@@ -52,13 +54,15 @@ export default function TabsSections() {
   }, [isComplete]);
 
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box sx={{ width: "100%", mb: 4 }}>
       <Tabs
-        variant="fullWidth"
+        variant="scrollable"
         value={params?.tabId || PageTabs.DETAILS}
         aria-label={t("navigationAriaLabel")}
         role="navigation"
         indicatorColor="secondary"
+        scrollButtons="auto"
+        allowScrollButtonsMobile
         textColor="inherit">
         <Tab
           label={<Text>{t("details")}</Text>}

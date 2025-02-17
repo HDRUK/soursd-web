@@ -1,9 +1,8 @@
 import { FileStatus, FileType } from "@/consts/files";
-import { ROUTES } from "@/consts/router";
 import {
-  UserProfileCompletionCategories,
-  UserGroup,
   UserFeedSource,
+  UserGroup,
+  UserProfileCompletionCategories,
 } from "@/consts/user";
 
 interface File {
@@ -124,6 +123,7 @@ interface User {
   feed_source?: UserFeedSource;
   unclaimed?: boolean;
   registry: {
+    digi_ident: string;
     files?: File[];
     organisations?: Organisation[];
     verified: boolean;
@@ -208,7 +208,14 @@ interface ResearcherEducation {
   source: string;
 }
 
+interface ResearcherProfessionalRegistration {
+  id: number;
+  name: string;
+  member_id: string;
+}
+
 interface ResearcherAccreditation {
+  id: number;
   awarded_at: string;
   awarding_body_name: string;
   awarding_body_ror: string;
@@ -289,6 +296,7 @@ interface Registry {
   education: ResearcherEducation[];
   training: ResearcherTraining[];
   accreditations: ResearcherAccreditation[];
+  professionalRegistratons: ResearcherProfessionalRegistration[];
 }
 
 interface Role {
@@ -318,46 +326,34 @@ interface Department {
   updated_at: string;
 }
 
-interface ApplicationDataState {
-  routes: Record<
-    keyof typeof ROUTES,
-    {
-      key: string;
-      path: string;
-    }
-  >;
-  /* eslint-disable  @typescript-eslint/no-explicit-any */
-  systemConfigData: Record<string, any>;
-}
-
 /* eslint-disable  @typescript-eslint/no-explicit-any */
-type ApplicationSystemConfig = Record<string, any>;
+type SystemConfig = Record<string, any>;
 
 export type {
-  ApplicationDataState,
-  ApplicationSystemConfig,
+  AddressFields,
   Approval,
+  Auth,
   Custodian,
+  CustodianUser,
+  Department,
+  File,
   Organisation,
   OrganisationIdvt,
-  User,
-  ResearcherEducation,
+  Permission,
+  ProjectUser,
   ResearcherAccreditation,
+  ResearcherAffiliation,
+  ResearcherEducation,
   ResearcherEmployment,
   ResearcherEndorsement,
-  ResearcherTraining,
+  ResearcherProfessionalRegistration,
   ResearcherProject,
-  ResearcherAffiliation,
-  ProjectUser,
-  File,
-  Permission,
-  UserProfileCompletionSchema,
-  CustodianUser,
-  UserProfileCompletionJson,
-  UserProfileCompletionFields,
+  ResearcherTraining,
   Sector,
-  AddressFields,
   Subsidiary,
-  Department,
-  Auth,
+  SystemConfig,
+  User,
+  UserProfileCompletionFields,
+  UserProfileCompletionJson,
+  UserProfileCompletionSchema,
 };

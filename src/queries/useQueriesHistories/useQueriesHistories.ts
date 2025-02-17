@@ -4,6 +4,10 @@ import getAffiliations from "@/services/affiliations/getAffiliations";
 import getAffiliationsQuery from "@/services/affiliations/getAffiliationsQuery";
 import { getEducations } from "@/services/educations";
 import { getEmployments } from "@/services/employments";
+import {
+  getProfessionalRegistrations,
+  getProfessionalRegistrationsQuery,
+} from "@/services/professional_registrations";
 import { getUserApprovedProjects } from "@/services/projects";
 import { getTrainingByRegistryId } from "@/services/trainings";
 import { QueryFunctionContext } from "@tanstack/react-query";
@@ -15,11 +19,14 @@ export interface HistoryCombinedData {
   getUserApprovedProjects: Awaited<ReturnType<typeof getUserApprovedProjects>>;
   getAccreditations: Awaited<ReturnType<typeof getAccreditations>>;
   getAffiliations: Awaited<ReturnType<typeof getAffiliations>>;
+  getProfessionalRegistrations: Awaited<
+    ReturnType<typeof getProfessionalRegistrations>
+  >;
 }
 
 type QueryFunctionContextDefault = QueryFunctionContext<[string, number]>;
 
-export default function useQueriesHistory(registryId: number) {
+export default function useQueriesHistory(registryId: number | undefined) {
   const queries = registryId
     ? [
         getAffiliationsQuery(registryId),
@@ -29,7 +36,6 @@ export default function useQueriesHistory(registryId: number) {
             getEmployments(queryKey[1], {
               error: { message: "getEmploymentsError" },
             }),
-          enabled: !!registryId,
         },
         {
           queryKey: ["getEducations", registryId],
@@ -37,7 +43,6 @@ export default function useQueriesHistory(registryId: number) {
             getEducations(queryKey[1], {
               error: { message: "getEducationsError" },
             }),
-          enabled: !!registryId,
         },
         {
           queryKey: ["getTrainings", registryId],
@@ -45,7 +50,6 @@ export default function useQueriesHistory(registryId: number) {
             getTrainingByRegistryId(queryKey[1], {
               error: { message: "getTrainingsError" },
             }),
-          enabled: !!registryId,
         },
         {
           queryKey: ["getAccreditations", registryId],
@@ -53,7 +57,6 @@ export default function useQueriesHistory(registryId: number) {
             getAccreditations(queryKey[1], {
               error: { message: "getAccreditationsError" },
             }),
-          enabled: !!registryId,
         },
         {
           queryKey: ["getUserApprovedProjects", registryId],
@@ -61,10 +64,10 @@ export default function useQueriesHistory(registryId: number) {
             getUserApprovedProjects(queryKey[1], {
               error: { message: "getUserApprovedProjectsError" },
             }),
-          enabled: !!registryId,
         },
+        getProfessionalRegistrationsQuery(registryId),
       ]
     : [];
 
-  return useQueriesCombined<HistoryCombinedData>(registryId ? queries : []);
+  return useQueriesCombined<HistoryCombinedData>(queries);
 }

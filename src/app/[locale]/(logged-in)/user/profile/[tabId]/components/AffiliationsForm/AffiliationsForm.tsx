@@ -1,6 +1,7 @@
 import Form from "@/components/Form";
 import FormActions from "@/components/FormActions";
 
+import ButtonSave from "@/components/ButtonSave";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
 import FormSection from "@/components/FormSection";
 import SelectInput from "@/components/SelectInput";
@@ -9,8 +10,6 @@ import { AffiliationRelationship } from "@/consts/user";
 import getOrganisationsQuery from "@/services/organisations/getOrganisationsQuery";
 import { ResearcherAffiliation } from "@/types/application";
 import { MutationState } from "@/types/form";
-import SaveIcon from "@mui/icons-material/Save";
-import { LoadingButton } from "@mui/lab";
 import { Button, Checkbox, Grid, TextField } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
@@ -129,13 +128,7 @@ export default function AffiliationsForm({
           </Grid>
         </FormSection>
         <FormActions>
-          <LoadingButton
-            type="submit"
-            endIcon={<SaveIcon />}
-            loading={queryState.isPending}
-            sx={{ display: "flex", justifySelf: "end" }}>
-            {tProfile(`submitButton`)}
-          </LoadingButton>
+          <ButtonSave isLoading={queryState.isPending} />
         </FormActions>
       </Form>
       <AskOrganisationModal
