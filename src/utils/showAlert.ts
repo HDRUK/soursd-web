@@ -1,7 +1,8 @@
 import theme from "@/theme";
+import { ShowAlertOptions } from "@/types/common";
 import dayjs from "dayjs";
 import Cookies from "js-cookie";
-import Swal, { SweetAlertIcon } from "sweetalert2";
+import Swal, { SweetAlertIcon, SweetAlertResult } from "sweetalert2";
 
 const notificationValues = [
   { type: "error", title: "Oh no! Something went wrong" },
@@ -18,20 +19,8 @@ const notificationValues = [
  */
 export const showAlert = (
   type: SweetAlertIcon,
-  options: {
-    id?: string;
-    text: string;
-    title?: string | undefined;
-    confirmButtonText?: string | undefined;
-    cancelButtonText?: string | undefined;
-    closeOnConfirm?: boolean;
-    closeOnCancel?: boolean;
-    willClose?: () => void;
-    preConfirm?: () => void | undefined;
-    preDeny?: () => void | undefined;
-    untilDuration?: number;
-  }
-) => {
+  options: ShowAlertOptions
+): Promise<SweetAlertResult> | null => {
   const {
     cancelButtonText,
     confirmButtonText,
@@ -46,7 +35,7 @@ export const showAlert = (
   const cookieName = `alert_${id}`;
 
   if (!untilDuration || !Cookies.get(cookieName)) {
-    Swal.fire({
+    return Swal.fire({
       icon: type,
       title:
         title ??
@@ -72,6 +61,8 @@ export const showAlert = (
       ...restOptions,
     });
   }
+
+  return null;
 };
 
 export const closeAlert = () => {

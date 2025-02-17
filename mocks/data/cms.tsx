@@ -77,10 +77,33 @@ export const mockedManageDelegatesGuidance = {
         Did you know?
       </Typography>
       <Typography mb={5}>
-        Organisation delegates are nominated administrative groups or individuals that vouch 
-        for Users employed by their organisation. A delegate could be a HR representative, 
-        DPO representative, Contracts representative or Legal representative. 
+        Organisation delegates are nominated administrative groups or
+        individuals that vouch for Users employed by their organisation. A
+        delegate could be a HR representative, DPO representative, Contracts
+        representative or Legal representative.
       </Typography>
     </>
   ),
 };
+
+export const mockedRorIdInfo = (
+  <>
+    <Typography>
+      Research Organisation Registry (ROR) identification.
+    </Typography>
+    <Typography>E.g. https://ror.org/01abcde11</Typography>
+  </>
+);
+
+export const mockedOrganisationUsersIntro = `
+  As a representative of an Organisation, you have been given permission
+  to associate your affiliated Users (an employee or student of your
+  Organisation) with your Organisation’s SOURSD account. Users are
+  individuals involved in active research projects using sensitive data.
+`;
+
+export const mockedOrganisationBulkInviteIntro = `
+  Add new affiliated Users to SOURSD. Individual Users will create a
+  SOURSD account for themselves and will affiliate themselves with an
+  Organisation.
+`;

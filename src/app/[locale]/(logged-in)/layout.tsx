@@ -2,8 +2,9 @@
 
 import { ROUTES } from "@/consts/router";
 import { UserGroup } from "@/consts/user";
-import { ApplicationDataProvider } from "@/context/ApplicationData";
+import Application from "@/modules/Application";
 import { usePathname, useRouter } from "@/i18n/routing";
+import { PageContainer } from "@/modules";
 import { getMe } from "@/services/auth";
 import { getCustodianUser } from "@/services/custodian_users";
 import { getAccessToken } from "@/services/requestHelpers";
@@ -97,18 +98,15 @@ export default function Layout({ children }: LayoutProps) {
 
     performAuthCheck();
   }, [pathname]);
+
   return (
     me && (
-      <ApplicationDataProvider
+      <Application
         custodianId={custodianId}
         organisationId={organisationId}
-        me={me}
-        value={{
-          routes: ROUTES,
-          systemConfigData: {},
-        }}>
-        {children}
-      </ApplicationDataProvider>
+        me={me}>
+        <PageContainer>{children}</PageContainer>
+      </Application>
     )
   );
 }

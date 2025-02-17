@@ -7,10 +7,11 @@ import FormControlHorizontal from "@/components/FormControlHorizontal";
 import GoogleAutocomplete from "@/components/GoogleAutocomplete";
 import yup from "@/config/yup";
 import { useStore } from "@/data/store";
+import { PageBody, PageSection } from "@/modules";
+import { AddressFields } from "@/types/application";
 import SaveIcon from "@mui/icons-material/Save";
 import { LoadingButton } from "@mui/lab";
 import { Grid, TextField } from "@mui/material";
-import { AddressFields } from "@/types/application";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
 import usePatchOrganisation from "../../../hooks/usePatchOrganisation";
@@ -83,91 +84,98 @@ export default function NameAndAddress() {
   };
 
   return (
-    <Form schema={schema} onSubmit={onSubmit} {...formOptions}>
-      {({ setValue }) => {
-        const handleFindAddress = (address: AddressFields) => {
-          Object.entries(address).forEach(([key, value]) => {
-            setValue(key as keyof NameAndAddressFormValues, value ?? "");
-          });
-        };
+    <PageBody>
+      <PageSection>
+        <Form schema={schema} onSubmit={onSubmit} {...formOptions}>
+          {({ setValue }) => {
+            const handleFindAddress = (address: AddressFields) => {
+              Object.entries(address).forEach(([key, value]) => {
+                setValue(key as keyof NameAndAddressFormValues, value ?? "");
+              });
+            };
 
-        return (
-          <>
-            <Grid container rowSpacing={3}>
-              <Grid item xs={12}>
-                <FormControlHorizontal
-                  name="organisation_name"
-                  renderField={fieldProps => <TextField {...fieldProps} />}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlHorizontal
-                  name="address"
-                  displayPlaceholder={false}
-                  displayLabel={false}
-                  renderField={() => (
-                    <GoogleAutocomplete
-                      name="address"
-                      textFieldProps={{ variant: "filled", size: "small" }}
-                      onAddressSelected={value =>
-                        handleFindAddress(value as AddressFields)
-                      }
-                      placeholder="Search for your address..."
+            return (
+              <>
+                <Grid container rowSpacing={3}>
+                  <Grid item xs={12}>
+                    <FormControlHorizontal
+                      name="organisation_name"
+                      renderField={fieldProps => <TextField {...fieldProps} />}
                     />
-                  )}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlHorizontal
-                  name="address_1"
-                  renderField={fieldProps => <TextField {...fieldProps} />}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlHorizontal
-                  name="address_2"
-                  renderField={fieldProps => <TextField {...fieldProps} />}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlHorizontal
-                  name="town"
-                  renderField={fieldProps => <TextField {...fieldProps} />}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlHorizontal
-                  name="county"
-                  renderField={fieldProps => <TextField {...fieldProps} />}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlHorizontal
-                  name="country"
-                  renderField={fieldProps => <TextField {...fieldProps} />}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlHorizontal
-                  name="postcode"
-                  renderField={fieldProps => (
-                    <TextField {...fieldProps} sx={{ maxWidth: "200px" }} />
-                  )}
-                />
-              </Grid>
-            </Grid>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FormControlHorizontal
+                      name="address"
+                      displayPlaceholder={false}
+                      displayLabel={false}
+                      renderField={() => (
+                        <GoogleAutocomplete
+                          name="address"
+                          textFieldProps={{
+                            variant: "filled",
+                            size: "small",
+                          }}
+                          onAddressSelected={value =>
+                            handleFindAddress(value as AddressFields)
+                          }
+                          placeholder="Search for your address..."
+                        />
+                      )}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FormControlHorizontal
+                      name="address_1"
+                      renderField={fieldProps => <TextField {...fieldProps} />}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FormControlHorizontal
+                      name="address_2"
+                      renderField={fieldProps => <TextField {...fieldProps} />}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FormControlHorizontal
+                      name="town"
+                      renderField={fieldProps => <TextField {...fieldProps} />}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FormControlHorizontal
+                      name="county"
+                      renderField={fieldProps => <TextField {...fieldProps} />}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FormControlHorizontal
+                      name="country"
+                      renderField={fieldProps => <TextField {...fieldProps} />}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FormControlHorizontal
+                      name="postcode"
+                      renderField={fieldProps => (
+                        <TextField {...fieldProps} sx={{ maxWidth: "200px" }} />
+                      )}
+                    />
+                  </Grid>
+                </Grid>
 
-            <FormActions>
-              <LoadingButton
-                loading={isLoading}
-                type="submit"
-                endIcon={<SaveIcon />}>
-                {tProfile("submitButton")}
-              </LoadingButton>
-            </FormActions>
-          </>
-        );
-      }}
-    </Form>
+                <FormActions>
+                  <LoadingButton
+                    loading={isLoading}
+                    type="submit"
+                    endIcon={<SaveIcon />}>
+                    {tProfile("submitButton")}
+                  </LoadingButton>
+                </FormActions>
+              </>
+            );
+          }}
+        </Form>
+      </PageSection>
+    </PageBody>
   );
 }

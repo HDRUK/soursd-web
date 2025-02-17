@@ -159,17 +159,35 @@ export default function DelegatesForm({ onSuccess }: DelegatesFormProps) {
               />
             </Grid>
           </Grid>
-        </FormSection>
-        <FormActions>
-          <LoadingButton
-            loading={isPending}
-            type="submit"
-            endIcon={<AddCircleOutlineIcon />}
-            sx={{ marginBottom: "20px" }}>
-            {t("save")}
-          </LoadingButton>
-        </FormActions>
-      </>
+          <Grid item xs={12}>
+            <FormControlHorizontal
+              name="delegate_full_name"
+              renderField={fieldProps => <TextField {...fieldProps} />}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <FormControlHorizontal
+              name="delegate_job_title"
+              renderField={fieldProps => <TextField {...fieldProps} />}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <FormControlHorizontal
+              name="delegate_email"
+              renderField={fieldProps => <TextField {...fieldProps} />}
+            />
+          </Grid>
+        </Grid>
+      </FormSection>
+      <FormActions>
+        <LoadingButton
+          loading={isPending}
+          type="submit"
+          endIcon={<AddCircleOutlineIcon />}
+          sx={{ marginBottom: "20px" }}>
+          {t("save")}
+        </LoadingButton>
+      </FormActions>
     </Form>
   );
 }

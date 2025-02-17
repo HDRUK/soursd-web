@@ -1,13 +1,30 @@
 "use client";
 
-import { BoxProps } from "@mui/material";
-import { StyledPageSection } from "./PageSection.styles";
+import SectionHeading, {
+  SectionHeadingProps,
+} from "@/components/SectionHeading";
+import { Box, BoxProps } from "@mui/material";
 
-type PageContentProps = BoxProps;
+type PageSectionProps = BoxProps & SectionHeadingProps;
 
 export default function PageSection({
   children,
+  heading,
+  description,
   ...restProps
-}: PageContentProps) {
-  return <StyledPageSection {...restProps}>{children}</StyledPageSection>;
+}: PageSectionProps) {
+  return (
+    <Box {...restProps} sx={{ position: "relative", zIndex: 1, px: 2, py: 2 }}>
+      {heading && (
+        <SectionHeading
+          type="content"
+          heading={heading}
+          description={description}
+          variant="h5"
+          sx={{ mb: 4 }}
+        />
+      )}
+      {children}
+    </Box>
+  );
 }

@@ -24,6 +24,7 @@ export interface FormControlHorizontalProps
   extends Omit<FormControlProps, "error"> {
   renderField: (fieldProps: FieldValues) => ReactNode;
   name: string;
+  tNamespace?: string;
   control?: Control;
   placeholder?: string;
   label?: ReactNode;
@@ -52,9 +53,10 @@ export default function FormControlHorizontal({
   displayLabel = true,
   renderField,
   fullWidth = true,
+  tNamespace = "",
   ...restProps
 }: FormControlHorizontalProps) {
-  const t = useTranslations(NAMESPACE_TRANSLATION_FORM);
+  const t = useTranslations(tNamespace || NAMESPACE_TRANSLATION_FORM);
 
   const tKey = name?.replace(/_([a-zA-Z0-9])/g, function (g) {
     return g[1].toUpperCase();

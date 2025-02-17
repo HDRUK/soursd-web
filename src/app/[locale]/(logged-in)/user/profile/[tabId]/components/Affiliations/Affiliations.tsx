@@ -1,16 +1,24 @@
 import ContactLink from "@/components/ContactLink";
 
 import Results from "@/components/Results";
+import { ROUTES } from "@/consts/router";
 import { AffiliationRelationship } from "@/consts/user";
 import { useStore } from "@/data/store";
 import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
-import { PageGuidance } from "@/modules";
+import {
+  PageBody,
+  PageBodyContainer,
+  PageGuidance,
+  PageSection,
+} from "@/modules";
 import {
   getAffiliationsQuery,
   postAffiliationQuery,
 } from "@/services/affiliations";
 import { PostAffiliationPayload } from "@/services/affiliations/types";
 import { showAlert } from "@/utils/showAlert";
+import EastIcon from "@mui/icons-material/East";
+import { LoadingButton } from "@mui/lab";
 import {
   Box,
   Table,
@@ -22,11 +30,8 @@ import {
 } from "@mui/material";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import { useCallback, useEffect } from "react";
-import { LoadingButton } from "@mui/lab";
-import EastIcon from "@mui/icons-material/East";
 import { useRouter } from "next/navigation";
-import { ROUTES } from "@/consts/router";
+import { useCallback, useEffect } from "react";
 import AffiliationsForm from "../AffiliationsForm";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
@@ -90,67 +95,78 @@ export default function Affiliations() {
   }, [affiliationsData?.data?.data]);
 
   return (
-    <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
-      <AffiliationsForm
-        onSubmit={handleDetailsSubmit}
-        queryState={postAffiliationQueryState}
-      />
-      <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-        <LoadingButton
-          sx={{ display: "flex" }}
-          endIcon={<EastIcon />}
-          onClick={() => router.push(ROUTES.profileResearcherExperience.path)}>
-          {tProfile("continueLinkText")}
-        </LoadingButton>
-      </Box>
-      <Typography variant="h6" sx={{ mb: 1 }}>
-        {tProfile("affiliationsRecords")}
-      </Typography>
-      <Results
-        queryState={getAffiliationsQueryState}
-        noResultsMessage={tProfile("affiliationsNoResultsMessage")}
-        errorMessage={tProfile.rich("affiliationsErrorMessage", {
-          contactLink: ContactLink,
-        })}
-        count={affiliations?.length}>
-        <Table>
-          <TableHead sx={{ backgroundColor: "lightPurple.main" }}>
-            <TableRow>
-              <TableCell scope="col">
-                {tApplication("organisationName")}
-              </TableCell>
-              <TableCell scope="col">{tApplication("relationship")}</TableCell>
-              <TableCell scope="col">
-                {tApplication("staffStudentId")}
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {affiliations?.map(
-              ({
-                member_id,
-                current_employer,
-                relationship,
-                organisation: { organisation_name },
-              }) => {
-                return (
+    <PageBodyContainer>
+      <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
+        <PageBody>
+          <PageSection>
+            <AffiliationsForm
+              onSubmit={handleDetailsSubmit}
+              queryState={postAffiliationQueryState}
+            />
+            <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+              <LoadingButton
+                sx={{ display: "flex" }}
+                endIcon={<EastIcon />}
+                onClick={() =>
+                  router.push(ROUTES.profileResearcherExperience.path)
+                }>
+                {tProfile("continueLinkText")}
+              </LoadingButton>
+            </Box>
+            <Typography variant="h6" sx={{ mb: 1 }}>
+              {tProfile("affiliationsRecords")}
+            </Typography>
+            <Results
+              queryState={getAffiliationsQueryState}
+              noResultsMessage={tProfile("affiliationsNoResultsMessage")}
+              errorMessage={tProfile.rich("affiliationsErrorMessage", {
+                contactLink: ContactLink,
+              })}
+              count={affiliations?.length}>
+              <Table>
+                <TableHead sx={{ backgroundColor: "lightPurple.main" }}>
                   <TableRow>
-                    <TableCell>{organisation_name}</TableCell>
-                    <TableCell>
-                      {current_employer
-                        ? tApplication("currentEmployer")
-                        : relationship === AffiliationRelationship.EMPLOYEE
-                          ? tApplication("previousEmployer")
-                          : tApplication(relationship)}
+                    <TableCell scope="col">
+                      {tApplication("organisationName")}
                     </TableCell>
-                    <TableCell>{member_id}</TableCell>
+                    <TableCell scope="col">
+                      {tApplication("relationship")}
+                    </TableCell>
+                    <TableCell scope="col">
+                      {tApplication("staffStudentId")}
+                    </TableCell>
                   </TableRow>
-                );
-              }
-            )}
-          </TableBody>
-        </Table>
-      </Results>
-    </PageGuidance>
+                </TableHead>
+                <TableBody>
+                  {affiliations?.map(
+                    ({
+                      member_id,
+                      current_employer,
+                      relationship,
+                      organisation: { organisation_name },
+                    }) => {
+                      return (
+                        <TableRow key={organisation_name}>
+                          <TableCell>{organisation_name}</TableCell>
+                          <TableCell>
+                            {current_employer
+                              ? tApplication("currentEmployer")
+                              : relationship ===
+                                  AffiliationRelationship.EMPLOYEE
+                                ? tApplication("previousEmployer")
+                                : tApplication(relationship)}
+                          </TableCell>
+                          <TableCell>{member_id}</TableCell>
+                        </TableRow>
+                      );
+                    }
+                  )}
+                </TableBody>
+              </Table>
+            </Results>
+          </PageSection>
+        </PageBody>
+      </PageGuidance>
+    </PageBodyContainer>
   );
 }

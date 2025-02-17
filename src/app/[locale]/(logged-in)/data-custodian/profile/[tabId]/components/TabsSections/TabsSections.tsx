@@ -1,6 +1,6 @@
 "use client";
 
-import { useApplicationData } from "@/context/ApplicationData";
+import { useStore } from "@/data/store";
 import CreditCardOutlinedIcon from "@mui/icons-material/CreditCardOutlined";
 import EditNoteOutlinedIcon from "@mui/icons-material/EditNoteOutlined";
 import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined";
@@ -14,12 +14,12 @@ import { PageTabs } from "../../consts/tabs";
 const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 
 export default function TabsSections() {
-  const { routes } = useApplicationData();
+  const routes = useStore(store => store.application.routes);
   const params = useParams();
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box sx={{ width: "100%", mb: 4 }}>
       <Tabs
         variant="fullWidth"
         value={params?.tabId || PageTabs.DETAILS}

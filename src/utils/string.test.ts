@@ -1,4 +1,4 @@
-import { capitaliseFirstLetter } from "./string";
+import { anyIncludes, capitaliseFirstLetter } from "./string";
 
 describe("capitaliseFirstLetter", () => {
   test("should capitalise the first letter of a single word", () => {
@@ -23,5 +23,19 @@ describe("capitaliseFirstLetter", () => {
     const input = "javaScript";
     const output = "JavaScript";
     expect(capitaliseFirstLetter(input)).toBe(output);
+  });
+});
+
+describe("anyIncludes", () => {
+  it("finds the conditon", () => {
+    const results = anyIncludes("users", ["users", "organisations"]);
+
+    expect(results).toEqual(true);
+  });
+
+  test("doesn't the conditon", () => {
+    const results = anyIncludes("custodian", ["users", "organisations"]);
+
+    expect(results).toEqual(false);
   });
 });

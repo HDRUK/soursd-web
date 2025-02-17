@@ -18,6 +18,7 @@ import React, { ReactNode } from "react";
 import { CookieProvider } from "@/context/CookieContext";
 import userEvent, { UserEvent } from "@testing-library/user-event";
 import { axe } from "jest-axe";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const defineMatchMedia = (width: number) => {
   Object.defineProperty(window, "matchMedia", {
@@ -31,13 +32,25 @@ const defineMatchMedia = (width: number) => {
 };
 
 const Wrapper = ({ children }: { children: ReactNode }) => {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+      },
+    },
+  });
+
   return (
     <NextIntlClientProvider locale="en" messages={messages}>
       <AppCacheProvider>
         <LocalizationProvider>
           <ReactQueryClientProvider>
             <ThemeRegistry>
-              <CookieProvider>{children}</CookieProvider>
+              <CookieProvider>
+                <QueryClientProvider client={queryClient}>
+                  {children}
+                </QueryClientProvider>
+              </CookieProvider>
             </ThemeRegistry>
           </ReactQueryClientProvider>
         </LocalizationProvider>

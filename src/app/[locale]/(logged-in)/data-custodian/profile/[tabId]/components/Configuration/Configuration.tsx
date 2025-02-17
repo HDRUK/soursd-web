@@ -1,22 +1,22 @@
-import { useQuery, useMutation } from "@tanstack/react-query";
+import FormActions from "@/components/FormActions";
+import ListInfoItem from "@/components/ListInfoItem";
+import { useStore } from "@/data/store";
+import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
+import { PageBody, PageGuidance, PageSection } from "@/modules";
 import {
   getCustodianRules,
-  patchCustodianRules,
   getRules,
+  patchCustodianRules,
 } from "@/services/rules";
-import { Box, Checkbox, FormControlLabel, Typography } from "@mui/material";
-import ListInfoItem from "@/components/ListInfoItem";
-import { PageGuidance } from "@/modules";
-import { useForm, Controller } from "react-hook-form";
-import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
-import { useStore } from "@/data/store";
-import { useMemo, useEffect } from "react";
-import { useTranslations } from "next-intl";
-import { LoadingButton } from "@mui/lab";
-import SaveIcon from "@mui/icons-material/Save";
-import FormActions from "@/components/FormActions";
 import { PatchCustodianRulesPayload } from "@/services/rules/patchCustodianRules";
 import { showAlert } from "@/utils/showAlert";
+import SaveIcon from "@mui/icons-material/Save";
+import { LoadingButton } from "@mui/lab";
+import { Box, Checkbox, FormControlLabel, Typography } from "@mui/material";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
+import { useEffect, useMemo } from "react";
+import { Controller, useForm } from "react-hook-form";
 
 const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 
@@ -93,51 +93,59 @@ const Configuration = () => {
 
   return (
     <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
-      <Box
-        gap={2}
-        display="flex"
-        flexDirection="column"
-        component="form"
-        onSubmit={handleSubmit(onSubmit)}>
-        <Box display="flex" flexDirection="column" alignItems="stretch" gap={1}>
-          {allRules?.data.map((rule, index) => (
-            <ListInfoItem key={`info-box-${rule.name}`} index={index + 1}>
-              <Controller
-                name={`rule-${rule.id}`}
-                control={control}
-                defaultValue={false}
-                render={({ field }) => (
-                  <FormControlLabel
-                    sx={{
-                      m: 0,
-                      width: "100%",
-                      display: "flex",
-                      justifyContent: "space-between",
-                    }}
-                    labelPlacement="start"
-                    control={<Checkbox {...field} checked={field.value} />}
-                    label={
-                      <Typography variant="body1">
-                        <strong>
-                          {rule.title} : {rule.description}
-                        </strong>
-                      </Typography>
-                    }
+      <PageBody>
+        <PageSection>
+          <Box
+            gap={2}
+            display="flex"
+            flexDirection="column"
+            component="form"
+            onSubmit={handleSubmit(onSubmit)}>
+            <Box
+              display="flex"
+              flexDirection="column"
+              alignItems="stretch"
+              gap={1}>
+              {allRules?.data.map((rule, index) => (
+                <ListInfoItem key={`info-box-${rule.name}`} index={index + 1}>
+                  <Controller
+                    name={`rule-${rule.id}`}
+                    control={control}
+                    defaultValue={false}
+                    render={({ field }) => (
+                      <FormControlLabel
+                        sx={{
+                          m: 0,
+                          width: "100%",
+                          display: "flex",
+                          justifyContent: "space-between",
+                        }}
+                        labelPlacement="start"
+                        control={<Checkbox {...field} checked={field.value} />}
+                        label={
+                          <Typography variant="body1">
+                            <strong>
+                              {rule.title} : {rule.description}
+                            </strong>
+                          </Typography>
+                        }
+                      />
+                    )}
                   />
-                )}
-              />
-            </ListInfoItem>
-          ))}
-        </Box>
-        <FormActions>
-          <LoadingButton
-            type="submit"
-            endIcon={<SaveIcon />}
-            loading={isUpdateLoading}>
-            {tProfile("submitButton")}
-          </LoadingButton>
-        </FormActions>
-      </Box>
+                </ListInfoItem>
+              ))}
+            </Box>
+            <FormActions>
+              <LoadingButton
+                type="submit"
+                endIcon={<SaveIcon />}
+                loading={isUpdateLoading}>
+                {tProfile("submitButton")}
+              </LoadingButton>
+            </FormActions>
+          </Box>
+        </PageSection>
+      </PageBody>
     </PageGuidance>
   );
 };

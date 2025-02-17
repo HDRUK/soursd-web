@@ -3,15 +3,16 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, BoxProps, Grid } from "@mui/material";
 import { HTMLAttributes, ReactNode } from "react";
 import {
-  UseFormProps,
   DefaultValues,
   FieldValues,
   FormProvider,
-  useForm,
-  UseFormReturn,
   Resolver,
+  useForm,
+  UseFormProps,
+  UseFormReturn,
 } from "react-hook-form";
 import { AnyObject, SchemaDescription } from "yup";
+import FormCanLeave from "../FormCanLeave";
 import { Message } from "../Message";
 
 function isFieldRequired(
@@ -69,26 +70,30 @@ export default function Form<T extends FieldValues>({
 
   return (
     <FormProvider {...extendedMethods}>
-      <Box
-        component="form"
-        onSubmit={handleSubmit(onSubmit)}
-        autoComplete="off"
-        {...restProps}
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          gap: 3,
-          ...restProps.sx,
-        }}>
-        {error && (
-          <Grid item xs={12}>
-            <Message severity="error" sx={{ mb: 3 }}>
-              {error}
-            </Message>
-          </Grid>
-        )}
-        {typeof children === "function" ? children(extendedMethods) : children}
-      </Box>
+      <FormCanLeave>
+        <Box
+          component="form"
+          onSubmit={handleSubmit(onSubmit)}
+          autoComplete="off"
+          {...restProps}
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 3,
+            ...restProps.sx,
+          }}>
+          {error && (
+            <Grid item xs={12}>
+              <Message severity="error" sx={{ mb: 3 }}>
+                {error}
+              </Message>
+            </Grid>
+          )}
+          {typeof children === "function"
+            ? children(extendedMethods)
+            : children}
+        </Box>
+      </FormCanLeave>
     </FormProvider>
   );
 }

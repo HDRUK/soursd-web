@@ -1,3 +1,17 @@
+import { ROUTES } from "@/consts/router";
+import { mockedCustodian } from "./custodian";
+import { mockedOrganisation } from "./organisation";
+import { mockedProject } from "./project";
+import {
+  mockedAccreditation,
+  mockedAffiliation,
+  mockedEducation,
+  mockedEmployment,
+  mockedTraining,
+  mockedUser,
+  mockedProfessionalRegistration,
+} from "./user";
+
 const mockedApiPermissions = [
   {
     id: 1,
@@ -105,4 +119,127 @@ const mockedApiPermissions = [
   },
 ];
 
-export { mockedApiPermissions };
+const mockedApiSectors = [
+  {
+    id: 1,
+    deleted_at: null,
+    created_at: "2025-02-05T11:03:19.000000Z",
+    updated_at: "2025-02-05T11:03:19.000000Z",
+    name: "NHS",
+  },
+  {
+    id: 2,
+    deleted_at: null,
+    created_at: "2025-02-05T11:03:19.000000Z",
+    updated_at: "2025-02-05T11:03:19.000000Z",
+    name: "NGO",
+  },
+  {
+    id: 3,
+    deleted_at: null,
+    created_at: "2025-02-05T11:03:19.000000Z",
+    updated_at: "2025-02-05T11:03:19.000000Z",
+    name: "Public",
+  },
+  {
+    id: 4,
+    deleted_at: null,
+    created_at: "2025-02-05T11:03:19.000000Z",
+    updated_at: "2025-02-05T11:03:19.000000Z",
+    name: "Healthcare Providers",
+  },
+  {
+    id: 5,
+    deleted_at: null,
+    created_at: "2025-02-05T11:03:19.000000Z",
+    updated_at: "2025-02-05T11:03:19.000000Z",
+    name: "Pharmaceutical and Biotechnology Companies (non-SME)",
+  },
+  {
+    id: 6,
+    deleted_at: null,
+    created_at: "2025-02-05T11:03:19.000000Z",
+    updated_at: "2025-02-05T11:03:19.000000Z",
+    name: "Pharmaceutical and Biotechnology Companies (SME)",
+  },
+  {
+    id: 7,
+    deleted_at: null,
+    created_at: "2025-02-05T11:03:19.000000Z",
+    updated_at: "2025-02-05T11:03:19.000000Z",
+    name: "Academic Research Institutions",
+  },
+  {
+    id: 8,
+    deleted_at: null,
+    created_at: "2025-02-05T11:03:19.000000Z",
+    updated_at: "2025-02-05T11:03:19.000000Z",
+    name: "Government Agencies: e.g., DHSC, Regulatory bodies, NICE",
+  },
+  {
+    id: 9,
+    deleted_at: null,
+    created_at: "2025-02-05T11:03:19.000000Z",
+    updated_at: "2025-02-05T11:03:19.000000Z",
+    name: "Non-Profit Organisations (e.g., foundations, advocacy groups, charities)",
+  },
+  {
+    id: 10,
+    deleted_at: null,
+    created_at: "2025-02-05T11:03:19.000000Z",
+    updated_at: "2025-02-05T11:03:19.000000Z",
+    name: "Other for-profit organisations (non-SME)",
+  },
+  {
+    id: 11,
+    deleted_at: null,
+    created_at: "2025-02-05T11:03:19.000000Z",
+    updated_at: "2025-02-05T11:03:19.000000Z",
+    name: "Other for-profit organisations (SME)",
+  },
+];
+
+const mockedStoreState = () => ({
+  application: {
+    routes: ROUTES,
+    system: {},
+  },
+  config: {
+    histories: {
+      employments: [mockedEmployment()],
+      training: [mockedTraining()],
+      education: [mockedEducation()],
+      approvedProjects: [mockedProject()],
+      affiliations: [
+        mockedAffiliation({
+          current_employer: false,
+          id: 1,
+          member_id: "A1234567",
+          organisation: {
+            organisation_name: "Organisation 1",
+          },
+        }),
+      ],
+      accreditations: [mockedAccreditation()],
+      professionalRegistrations: [mockedProfessionalRegistration()],
+    },
+    user: mockedUser({
+      id: 1,
+      registry_id: 1,
+    }),
+    organisation: mockedOrganisation({
+      id: 1,
+    }),
+    custodian: mockedCustodian({
+      id: 1,
+    }),
+    permissions: mockedApiPermissions,
+    sectors: mockedApiSectors,
+    router: {
+      history: [],
+      entries: ROUTES,
+    },
+  },
+});
+
+export { mockedApiPermissions, mockedStoreState };

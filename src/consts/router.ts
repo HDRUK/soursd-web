@@ -24,14 +24,6 @@ const ROUTES: Routes = {
     path: "/data-custodian/users",
     permissions: [UserGroup.CUSTODIANS],
   },
-  permissionsResearcherCustodian: {
-    path: "/data-custodian/permissions/user",
-    permissions: [UserGroup.CUSTODIANS],
-  },
-  permissionsOrganisationCustodian: {
-    path: "/data-custodian/permissions/organisation",
-    permissions: [UserGroup.CUSTODIANS],
-  },
   profileCustodianDetails: {
     path: "/data-custodian/profile/details",
     permissions: [UserGroup.CUSTODIANS],
@@ -54,6 +46,10 @@ const ROUTES: Routes = {
   },
   profileCustodianKeycards: {
     path: "/data-custodian/profile/keycards",
+    permissions: [UserGroup.CUSTODIANS],
+  },
+  permissionsResearcherCustodian: {
+    path: "/data-custodian/permissions",
     permissions: [UserGroup.CUSTODIANS],
   },
   profileResearcherExperience: {

@@ -1,5 +1,6 @@
 "use client";
 
+import ButtonSave from "@/components/ButtonSave";
 import ContactLink from "@/components/ContactLink";
 import Form from "@/components/Form";
 import FormActions from "@/components/FormActions";
@@ -11,11 +12,15 @@ import { VALIDATION_ORC_ID } from "@/consts/form";
 import { ROUTES } from "@/consts/router";
 import { useStore } from "@/data/store";
 import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
-import { PageGuidance } from "@/modules";
+import {
+  PageBody,
+  PageBodyContainer,
+  PageGuidance,
+  PageSection,
+} from "@/modules";
 import { putUserQuery } from "@/services/users";
 import EastIcon from "@mui/icons-material/East";
 import InfoIcon from "@mui/icons-material/Info";
-import SaveIcon from "@mui/icons-material/Save";
 import { LoadingButton } from "@mui/lab";
 import {
   Box,
@@ -105,81 +110,89 @@ export default function Identity() {
   };
 
   return (
-    <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
-      <Form onSubmit={handleDetailsSubmit} schema={schema} {...formOptions}>
-        <>
-          <FormSection heading={tProfile("identity")}>
-            <Grid container rowSpacing={3}>
-              <Grid item xs={12}>
-                <FormControlHorizontal
-                  name="first_name"
-                  renderField={fieldProps => <TextField {...fieldProps} />}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlHorizontal
-                  name="last_name"
-                  renderField={fieldProps => <TextField {...fieldProps} />}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlHorizontal
-                  name="orc_id"
-                  renderField={fieldProps => (
-                    <Text
-                      endIcon={
-                        <Tooltip title={tForm("whatIsTheOrcId")}>
-                          <InfoIcon color="info" />
-                        </Tooltip>
-                      }
-                      sx={{ maxWidth: "200px" }}>
-                      <TextField {...fieldProps} />
-                    </Text>
-                  )}
-                />
-              </Grid>
-              <Grid item>
-                <FormControlHorizontal
-                  name="consent_scrape"
-                  renderField={fieldProps => (
-                    <FormControlLabel
-                      label={tForm("consentScrapeDescription")}
-                      control={
-                        <Checkbox
-                          {...fieldProps}
-                          checked={!!fieldProps.value}
-                        />
-                      }
-                      sx={{
-                        mb: 2,
-                      }}
-                    />
-                  )}
-                  displayLabel={false}
-                />
-              </Grid>
-            </Grid>
-          </FormSection>
-          <FormActions>
-            <LoadingButton
-              type="submit"
-              endIcon={<SaveIcon />}
-              loading={updateUser.isPending}>
-              {tProfile("submitButton")}
-            </LoadingButton>
-          </FormActions>
-          <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-            <LoadingButton
-              sx={{ display: "flex" }}
-              endIcon={<EastIcon />}
-              onClick={() =>
-                router.push(ROUTES.profileResearcherAffiliations.path)
-              }>
-              {tProfile("continueLinkText")}
-            </LoadingButton>
-          </Box>
-        </>
-      </Form>
-    </PageGuidance>
+    <PageBodyContainer>
+      <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
+        <PageBody>
+          <PageSection>
+            <Form
+              onSubmit={handleDetailsSubmit}
+              schema={schema}
+              {...formOptions}>
+              <>
+                <FormSection heading={tProfile("identity")}>
+                  <Grid container rowSpacing={3}>
+                    <Grid item xs={12}>
+                      <FormControlHorizontal
+                        name="first_name"
+                        renderField={fieldProps => (
+                          <TextField {...fieldProps} />
+                        )}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <FormControlHorizontal
+                        name="last_name"
+                        renderField={fieldProps => (
+                          <TextField {...fieldProps} />
+                        )}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <FormControlHorizontal
+                        name="orc_id"
+                        renderField={fieldProps => (
+                          <Text
+                            endIcon={
+                              <Tooltip title={tForm("whatIsTheOrcId")}>
+                                <InfoIcon color="info" />
+                              </Tooltip>
+                            }
+                            sx={{ maxWidth: "200px" }}>
+                            <TextField {...fieldProps} />
+                          </Text>
+                        )}
+                      />
+                    </Grid>
+                    <Grid item>
+                      <FormControlHorizontal
+                        name="consent_scrape"
+                        renderField={fieldProps => (
+                          <FormControlLabel
+                            label={tForm("consentScrapeDescription")}
+                            control={
+                              <Checkbox
+                                {...fieldProps}
+                                checked={!!fieldProps.value}
+                              />
+                            }
+                            sx={{
+                              mb: 2,
+                            }}
+                          />
+                        )}
+                        displayLabel={false}
+                      />
+                    </Grid>
+                  </Grid>
+                </FormSection>
+                <FormActions>
+                  <ButtonSave isLoading={updateUser.isPending} />
+                </FormActions>
+                <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                  <LoadingButton
+                    sx={{ display: "flex" }}
+                    endIcon={<EastIcon />}
+                    onClick={() =>
+                      router.push(ROUTES.profileResearcherAffiliations.path)
+                    }>
+                    {tProfile("continueLinkText")}
+                  </LoadingButton>
+                </Box>
+              </>
+            </Form>
+          </PageSection>
+        </PageBody>
+      </PageGuidance>
+    </PageBodyContainer>
   );
 }

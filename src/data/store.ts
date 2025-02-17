@@ -13,6 +13,7 @@ import {
   ResearcherTraining,
   Sector,
   User,
+  ResearcherProfessionalRegistration,
 } from "@/types/application";
 import { Routes } from "@/types/router";
 import { produce } from "immer";
@@ -25,7 +26,28 @@ export interface StoreUserHistories {
   approvedProjects: ResearcherProject[];
   accreditations: ResearcherAccreditation[];
   affiliations: ResearcherAffiliation[];
+  professionalRegistrations: ResearcherProfessionalRegistration[];
 }
+
+export interface StoreApplication {
+  routes: Record<
+    keyof typeof ROUTES,
+    {
+      path: string;
+    }
+  >;
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
+  system: Record<string, any>;
+}
+type StoreSet = (
+  partial:
+    | StoreState
+    | Partial<StoreState>
+    | ((state: StoreState) => StoreState | Partial<StoreState>),
+  replace?: boolean | undefined
+) => void;
+
+type StoreGet = () => StoreState;
 
 interface StoreState {
   config: {
@@ -40,6 +62,7 @@ interface StoreState {
     custodian?: Custodian;
     histories?: StoreUserHistories;
   };
+  application: StoreApplication;
   setRoutes: (routes: Routes) => void;
   getUser: () => User | undefined;
   setUser: (user: User) => void;
@@ -53,19 +76,13 @@ interface StoreState {
   setOrganisation: (organisation: Organisation | undefined) => void;
   getCustodian: () => Custodian | undefined;
   setCustodian: (organisation: Custodian | undefined) => void;
+  getApplication: () => StoreApplication;
+  setApplication: (application: StoreApplication) => void;
   getPreviousUrl: () => string | null;
   addUrlToHistory: (url: string) => void;
 }
 
-const useStore = create<StoreState>((set, get) => ({
-  config: {
-    router: {
-      history: [],
-      entries: ROUTES,
-    },
-    permissions: [],
-    sectors: [],
-  },
+const storeMethods = (set: StoreSet, get: StoreGet) => ({
   getPreviousUrl: () => {
     const {
       router: { history },
@@ -124,6 +141,15 @@ const useStore = create<StoreState>((set, get) => ({
   getOrganisation: () => {
     return get().config.organisation;
   },
+  setApplication: (application: StoreApplication) =>
+    set(
+      produce(state => {
+        state.application = application;
+      })
+    ),
+  getApplication: () => {
+    return get().application;
+  },
   setCustodian: (custodian: Custodian | undefined) =>
     set(
       produce(state => {
@@ -139,6 +165,19 @@ const useStore = create<StoreState>((set, get) => ({
         state.config.router.history.push(url);
       })
     ),
+});
+
+const useStore = create<StoreState>((set, get) => ({
+  config: {
+    router: {
+      history: [],
+      entries: ROUTES,
+    },
+    permissions: [],
+    sectors: [],
+  },
+  application: { routes: ROUTES, system: {} },
+  ...storeMethods(set, get),
 }));
 
 const useStoreHelpers = () => {
@@ -153,5 +192,5 @@ const useStoreHelpers = () => {
   return helpers;
 };
 
-export { useStore, useStoreHelpers };
+export { useStore, useStoreHelpers, storeMethods };
 export type { StoreState };

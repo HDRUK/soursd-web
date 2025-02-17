@@ -15,25 +15,23 @@ type Story = StoryObj<typeof meta>;
 export const NotUploaded: Story = {
   args: {
     onFileChange: () => {},
-    fileName: "",
-    fileNamePlaceholder: "[Upload CV]",
-    maxSizeLabel: "10(Mb) max",
-    linkProps: {
-      href: "/",
-      title: "Download cv",
-    },
+    fileButtonText: "Upload",
+    includeStatus: true,
+    isScanComplete: false,
+    isScanFailed: false,
+    isScanning: false,
   },
 };
 
 export const Uploaded: Story = {
   args: {
     onFileChange: () => {},
-    fileName: "sample.cv.doc",
-    fileNamePlaceholder: "",
-    maxSizeLabel: "10(Mb) max",
-    linkProps: {
-      href: "/",
-      title: "Download cv",
-    },
+    fileButtonText: "Upload",
+    fileNameText: "sample.cv.doc",
+    fileHref: "/path",
+    includeStatus: true,
+    isScanComplete: true,
+    isScanFailed: false,
+    isScanning: false,
   },
 };
