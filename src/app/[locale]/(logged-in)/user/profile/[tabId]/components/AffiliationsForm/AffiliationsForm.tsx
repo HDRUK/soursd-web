@@ -162,7 +162,7 @@ export default function AffiliationsForm({
                   endIcon={<SaveIcon />}
                   loading={queryState.isPending}
                   sx={{ display: "flex", justifySelf: "end" }}>
-                  {tProfile("submitButton")}
+                  {tProfile("submitAndContinueButton")}
                 </LoadingButton>
               </FormActions>
             </>

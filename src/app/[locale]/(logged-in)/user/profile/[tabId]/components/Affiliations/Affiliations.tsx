@@ -17,10 +17,7 @@ import {
 } from "@/services/affiliations";
 import { PostAffiliationPayload } from "@/services/affiliations/types";
 import { showAlert } from "@/utils/showAlert";
-import EastIcon from "@mui/icons-material/East";
-import { LoadingButton } from "@mui/lab";
 import {
-  Box,
   Table,
   TableBody,
   TableCell,
@@ -43,12 +40,14 @@ export default function Affiliations() {
   const queryClient = useQueryClient();
   const router = useRouter();
 
-  const { affiliations, getHistories, setHistories } = useStore(state => ({
-    user: state.config.user,
-    affiliations: state.config.histories?.affiliations || [],
-    getHistories: state.getHistories,
-    setHistories: state.setHistories,
-  }));
+  const { affiliations, getHistories, setHistories, user } = useStore(
+    state => ({
+      user: state.config.user,
+      affiliations: state.config.histories?.affiliations || [],
+      getHistories: state.getHistories,
+      setHistories: state.setHistories,
+    })
+  );
 
   const { data: affiliationsData, ...getAffiliationsQueryState } = useQuery(
     getAffiliationsQuery(user?.registry_id)
@@ -70,6 +69,9 @@ export default function Affiliations() {
         showAlert("success", {
           text: tProfile("postAffiliationSuccess"),
           confirmButtonText: tProfile("postAffiliationSuccessButton"),
+          preConfirm: () => {
+            router.push(ROUTES.profileResearcherExperience.path);
+          },
         });
       } catch (_) {
         showAlert("error", {
@@ -101,16 +103,6 @@ export default function Affiliations() {
               onSubmit={handleDetailsSubmit}
               queryState={postAffiliationQueryState}
             />
-            <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-              <LoadingButton
-                sx={{ display: "flex" }}
-                endIcon={<EastIcon />}
-                onClick={() =>
-                  router.push(ROUTES.profileResearcherExperience.path)
-                }>
-                {tProfile("continueLinkText")}
-              </LoadingButton>
-            </Box>
             <Typography variant="h6" sx={{ mb: 1 }}>
               {tProfile("affiliationsRecords")}
             </Typography>

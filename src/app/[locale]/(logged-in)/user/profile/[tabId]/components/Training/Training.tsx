@@ -22,15 +22,16 @@ import postTrainingsQuery from "@/services/trainings/postTrainingsQuery";
 import { PostTrainingsPayload } from "@/services/trainings/types";
 import { formatDBDate } from "@/utils/date";
 import { showAlert } from "@/utils/showAlert";
-import EastIcon from "@mui/icons-material/East";
 import SaveIcon from "@mui/icons-material/Save";
 import { LoadingButton } from "@mui/lab";
-import { Box, Grid, TextField } from "@mui/material";
+import { Grid, TextField } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, useCallback, useMemo } from "react";
+import ContactLink from "@/components/ContactLink";
+import ReactDOMServer from "react-dom/server";
 import FileUploadDetails from "../FileUploadDetails/FileUploadDetails";
 import { StyledBox } from "./Training.styles";
 
@@ -140,12 +141,17 @@ export default function Training() {
           showAlert("success", {
             text: tProfile("postTrainingSuccess"),
             confirmButtonText: tProfile("closeButton"),
+            preConfirm: () => {
+              router.push(ROUTES.profileResearcherProjects.path);
+            },
           });
         } catch (_) {
-          const errorMessage = tProfile("postTrainingError");
-
           showAlert("error", {
-            text: errorMessage,
+            text: ReactDOMServer.renderToString(
+              tProfile.rich("postTrainingError", {
+                contactLink: ContactLink,
+              })
+            ),
             confirmButtonText: tProfile("errorButton"),
           });
         }
@@ -247,6 +253,7 @@ export default function Training() {
                               isScanFailed={isScanFailed}
                               isUploading={isUploading}
                               onFileChange={handleFileChange}
+                              message="certificationUploadFailed"
                             />
                           )}
                         />
@@ -259,7 +266,7 @@ export default function Training() {
                       endIcon={<SaveIcon />}
                       loading={isPending}
                       sx={{ display: "flex", justifySelf: "end" }}>
-                      {tProfile("submitButton")}
+                      {tProfile("submitAndContinueButton")}
                     </LoadingButton>
                   </FormActions>
                 </>
@@ -276,16 +283,6 @@ export default function Training() {
                 />
               ))}
             </StyledBox>
-            <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3 }}>
-              <LoadingButton
-                sx={{ display: "flex" }}
-                endIcon={<EastIcon />}
-                onClick={() =>
-                  router.push(ROUTES.profileResearcherProjects.path)
-                }>
-                {tProfile("continueLinkText")}
-              </LoadingButton>
-            </Box>
             {isError && (
               <Message severity="error" sx={{ mt: 3 }}>
                 {tProfile.rich(`${postError}`, {

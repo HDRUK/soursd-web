@@ -18,12 +18,11 @@ import {
   PageSection,
 } from "@/modules";
 import { putUserQuery } from "@/services/users";
-import EastIcon from "@mui/icons-material/East";
+import { showAlert } from "@/utils/showAlert";
 import InfoIcon from "@mui/icons-material/Info";
 import SaveIcon from "@mui/icons-material/Save";
 import { LoadingButton } from "@mui/lab";
 import {
-  Box,
   Checkbox,
   FormControlLabel,
   Grid,
@@ -34,6 +33,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
+import ReactDOMServer from "react-dom/server";
 
 export interface IdentityFormValues {
   first_name: string;
@@ -53,18 +53,37 @@ export default function Identity() {
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
-  const updateUser = useMutation(putUserQuery(user?.id));
+  const updateUser = useMutation(putUserQuery(2));
 
   const handleDetailsSubmit = useCallback(
     async (fields: IdentityFormValues) => {
-      if (user?.id) {
-        const request = {
-          ...user,
-          ...fields,
-          email: fields.personal_email,
-        };
+      try {
+        if (user?.id) {
+          const request = {
+            ...user,
+            ...fields,
+            email: fields.personal_email,
+          };
 
-        await updateUser.mutateAsync(request);
+          await updateUser.mutateAsync(request);
+        }
+
+        showAlert("success", {
+          text: tProfile("postUserSuccess"),
+          confirmButtonText: tProfile("postUserSuccessButton"),
+          preConfirm: () => {
+            router.push(ROUTES.profileResearcherAffiliations.path);
+          },
+        });
+      } catch (_) {
+        showAlert("error", {
+          text: ReactDOMServer.renderToString(
+            tProfile.rich("postUserError", {
+              contactLink: ContactLink,
+            })
+          ),
+          confirmButtonText: tProfile("postUserErrorButton"),
+        });
       }
     },
     [user]
@@ -195,19 +214,9 @@ export default function Identity() {
                     type="submit"
                     endIcon={<SaveIcon />}
                     loading={updateUser.isPending}>
-                    {tProfile("submitButton")}
+                    {tProfile("submitAndContinueButton")}
                   </LoadingButton>
                 </FormActions>
-                <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-                  <LoadingButton
-                    sx={{ display: "flex" }}
-                    endIcon={<EastIcon />}
-                    onClick={() =>
-                      router.push(ROUTES.profileResearcherAffiliations.path)
-                    }>
-                    {tProfile("continueLinkText")}
-                  </LoadingButton>
-                </Box>
               </>
             </Form>
           </PageSection>

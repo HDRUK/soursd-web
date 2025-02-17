@@ -376,6 +376,7 @@
     "closeButton": "Close",
     "errorButton": "Try Again",
     "certificationUpload": "Certification",
+    "cvUpload": "CV",
     "position": "Position",
     "positionRequiredInvalid": "Position is required",
     "textFieldPlaceholder": "Start typing...",
@@ -473,6 +474,8 @@
     "affiliationsTitle": "Complete your employer or institute information",
     "affiliationsForm": "Current employer or institute",
     "experience": "Experience",
+    "experienceTitle": "Complete your experience information",
+    "experienceForm": "Employment and publication history",
     "training": "Training",
     "profile": "Profile",
     "approvedProjects": "Projects",
@@ -483,6 +486,7 @@
     "navigationAriaLabel": "Profile sections",
     "download": "Download CV",
     "submitButton": "Save",
+    "submitAndContinueButton": "Save & Continue",
     "submitError": "There was a problem updating your details. Please try again or contact us at <contactLink></contactLink>",
     "pending": "Pending",
     "verified": "Verified",
@@ -503,7 +507,11 @@
     "postTrainingSuccess": "Training experience submitted successfully",
     "closeButton": "Close",
     "noTrainingsError": "No training experiences found",
-    "addEmploymentError": "There was a problem adding your employment."
+    "addEmploymentError": "There was a problem adding your employment.",
+    "postUserSuccess": "User updated successfully",
+    "postUserSuccessButton": "Ok",
+    "postUserError": "There was a problem updating your user information. Please try again or contact us at <contactLink></contactLink>",
+    "postUserErrorButton": "Try Again"
   },
   "ProfileCompleteStatus": {
     "profileComplete": "Profile complete",
