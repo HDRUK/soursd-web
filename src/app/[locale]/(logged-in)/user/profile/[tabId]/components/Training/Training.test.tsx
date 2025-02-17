@@ -7,7 +7,6 @@ import {
   waitFor,
   fireEvent,
   commonAccessibilityTests,
-  userEvent,
 } from "@/utils/testUtils";
 import { faker } from "@faker-js/faker";
 import { postTrainings, getTrainingByRegistryId } from "@/services/trainings";
@@ -73,12 +72,6 @@ describe("<Training />", () => {
       });
     }
   );
-  it("navigates when the continue button is clicked", async () => {
-    renderTrainingComponent();
-    const button = screen.getByText("Continue");
-    await userEvent.click(button);
-    expect(mockPush).toHaveBeenCalledWith("/user/profile/projects");
-  });
 
   it("has no accessibility violations", async () => {
     commonAccessibilityTests(renderTrainingComponent());

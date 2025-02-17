@@ -159,7 +159,6 @@ export default function Training() {
     },
     [mutateAsync, onSubmit, tProfile, file?.id]
   );
-
   const schema = useMemo(
     () =>
       yup.object().shape({
@@ -212,7 +211,6 @@ export default function Training() {
     { name: "awarded_at", component: DateInput },
     { name: "expires_at", component: DateInput },
   ];
-
   return (
     <PageBodyContainer>
       <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
