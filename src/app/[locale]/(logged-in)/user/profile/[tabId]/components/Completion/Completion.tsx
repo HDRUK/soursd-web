@@ -1,4 +1,4 @@
-import { useApplicationData } from "@/context/ApplicationData";
+import { useStore } from "@/data/store";
 import useUserProfile from "@/hooks/useUserProfile";
 import { Box, Button } from "@mui/material";
 import { useTranslations } from "next-intl";
@@ -7,7 +7,7 @@ import { PageTabs } from "../../consts/tabs";
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
 export default function Completion() {
-  const { routes } = useApplicationData();
+  const routes = useStore(store => store.application.routes);
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const { identityScore, affiliationsScore, experiencesScore, trainingScore } =
     useUserProfile();

@@ -1,15 +1,15 @@
 import { useStore } from "@/data/store";
 import { mockedUser } from "@/mocks/data/user";
+import { getTrainingByRegistryId, postTrainings } from "@/services/trainings";
 import {
   act,
+  commonAccessibilityTests,
+  fireEvent,
   render,
   screen,
   waitFor,
-  fireEvent,
-  commonAccessibilityTests,
 } from "@/utils/testUtils";
 import { faker } from "@faker-js/faker";
-import { postTrainings, getTrainingByRegistryId } from "@/services/trainings";
 import { mock200Json } from "jest.utils";
 import { useRouter } from "next/navigation";
 import Training from "./Training";

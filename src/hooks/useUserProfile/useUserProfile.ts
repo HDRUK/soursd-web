@@ -7,6 +7,10 @@ export const IDENTITY_REQUIRED_FIELDS: Array<
   keyof User | ((user: User) => string | undefined)
 > = ["first_name", "last_name"];
 
+export const PROFESION_REGISTRATIONS_REQUIRED_SECTIONS: Array<
+  keyof StoreUserHistories
+> = ["training", "professionalRegistrations"];
+
 export const EXPERIENCES_REQUIRED_SECTIONS: Array<keyof StoreUserHistories> = [
   "education",
   "employments",
@@ -14,10 +18,12 @@ export const EXPERIENCES_REQUIRED_SECTIONS: Array<keyof StoreUserHistories> = [
 ];
 
 export default function useUserProfile() {
-  const [user, histories] = useStore(state => [
-    state.config.user,
-    state.config.histories,
-  ]);
+  const { user, histories } = useStore(({ getHistories, getUser }) => {
+    return {
+      histories: getHistories(),
+      user: getUser(),
+    };
+  });
 
   const percentageScore = (
     values: (string | number | boolean | undefined | null)[]
@@ -56,7 +62,13 @@ export default function useUserProfile() {
   };
 
   const hasTraining = () => {
-    return histories ? binaryHas(histories?.training) * 100 : 0;
+    return histories
+      ? percentageScore(
+          PROFESION_REGISTRATIONS_REQUIRED_SECTIONS.map(
+            name => !!histories?.[name]?.length || undefined
+          )
+        )
+      : 0;
   };
 
   const hasAffiliations = () => {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useApplicationData } from "@/context/ApplicationData";
+import { useStore } from "@/data/store";
 import { useTranslations } from "next-intl";
 import { useParams } from "@/i18n/routing";
 import SubTabs from "@/modules/SubTabs";
@@ -18,7 +18,7 @@ export interface SubTabsMap {
 }
 
 export default function SubTabsSections() {
-  const { routes } = useApplicationData();
+  const routes = useStore(store => store.application.routes);
   const params = useParams();
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 

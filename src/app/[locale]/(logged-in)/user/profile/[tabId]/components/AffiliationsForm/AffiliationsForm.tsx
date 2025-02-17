@@ -1,5 +1,6 @@
 import Form from "@/components/Form";
 import FormActions from "@/components/FormActions";
+import ButtonSave from "@/components/ButtonSave";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
 import FormSection from "@/components/FormSection";
 import SelectInput from "@/components/SelectInput";
@@ -157,13 +158,7 @@ export default function AffiliationsForm({
                 </Grid>
               </FormSection>
               <FormActions>
-                <LoadingButton
-                  type="submit"
-                  endIcon={<SaveIcon />}
-                  loading={queryState.isPending}
-                  sx={{ display: "flex", justifySelf: "end" }}>
-                  {tProfile("submitAndContinueButton")}
-                </LoadingButton>
+                <ButtonSave isLoading={queryState.isPending} > {tProfile("submitAndContinueButton")}</ButtonSave>
               </FormActions>
             </>
           );

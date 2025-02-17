@@ -49,13 +49,11 @@ export default function useLoginRedirect(props?: UseLoginRedirectProps) {
     }
 
     if (!loading) {
-      if (props?.enabled === false) {
-        setReady(true);
-      } else if (isAuthenticated) {
+      if (isAuthenticated) {
         initRegister();
-      } else if (pathname !== ROUTES.register.path) {
-        setReady(true);
       }
+
+      setReady(true);
     }
   }, [loading, isAuthenticated, pathname, props?.enabled]);
 

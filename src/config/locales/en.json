@@ -29,6 +29,7 @@
     "previousEmployer": "Previous employer",
     "relationship": "Relationship",
     "affiliations": "Affiliations",
+    "professionalRegistrations": "Professional Registrations",
     "staffStudentId": "Staff / Student Id",
     "getDependenciesError": "There was a problem was a problem trying to preload dependencies for SOURSD. Please try again or contact us at <contactLink></contactLink>",
     "getSystemConfigError": "There was a problem loading the application. Please try again or contact us at <contactLink></contactLink>",
@@ -44,7 +45,9 @@
     "yes": "Yes",
     "no": "No",
     "notFound": "We couldn't find the page you were looking for. Please try again or contact us at <contactLink></contactLink>",
-    "loadingAriaLabel": "Application loading"
+    "loadingAriaLabel": "Application loading",
+    "saveButton": "Save",
+    "continueButton": "Continue"
   },
   "CustodianProfile": {
     "uniqueIdentifierTitle": "SOURSD Identifier",
@@ -384,6 +387,22 @@
     "startDate": "Start date",
     "endDate": "End date"
   },
+  "ProfessionalRegistrations": {
+    "title": "Professional Registrations",
+    "resultsTitle": "Professional Registrations records",
+    "id": "ID",
+    "name": "Name",
+    "namePlaceholder": "Name",
+    "nameInvalid": "Name is required",
+    "memberId": "ID",
+    "memberIdPlaceholder": "ID",
+    "memberIdRequiredInvalid": "ID is required",
+    "professionalRegistrationsRecords": "Professional Registrations records",
+    "professionalRegistrationsNoResultsMessage": "You currently have no professional registrations",
+    "professionalRegsitrationsErrorMessage": "There was an error getting your professional registrations. Please try again or contact us at <contactLink></contactLink>",
+    "errorCreateMessage": "There was an error creating your professional registrations. Please try again or contact us at <contactLink></contactLink>",
+    "successCreateMessage": "Your professional registration was successfully create"
+  },
   "Buttons": {
     "register": "Register",
     "login": "Login",
@@ -531,6 +550,7 @@
     "noEmploymentsFound": "Could not find any employment history",
     "noProjectsFound": "Could not find any project history",
     "noTrainingsFound": "Could not find any training history",
+    "noProfessionalRegistrationsFound": "Could not find any professional registrations history history",
     "expiresAt": "Expires at",
     "provider": "Provider",
     "awardingBody": "Awarding body",
@@ -541,6 +561,7 @@
     "education": "Education",
     "projects": "Projects",
     "training": "Training",
+    "professionalRegistrations": "Professional Registrations",
     "certification": "Certification:"
   },
   "ResearcherDetails": {

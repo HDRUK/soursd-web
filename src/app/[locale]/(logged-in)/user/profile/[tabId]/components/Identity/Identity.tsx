@@ -1,5 +1,6 @@
 "use client";
 
+import ButtonSave from "@/components/ButtonSave";
 import ContactLink from "@/components/ContactLink";
 import Form from "@/components/Form";
 import FormActions from "@/components/FormActions";
@@ -20,7 +21,6 @@ import {
 import { putUserQuery } from "@/services/users";
 import { showAlert } from "@/utils/showAlert";
 import InfoIcon from "@mui/icons-material/Info";
-import SaveIcon from "@mui/icons-material/Save";
 import { LoadingButton } from "@mui/lab";
 import {
   Checkbox,
@@ -143,6 +143,7 @@ export default function Identity() {
             <Form
               onSubmit={handleDetailsSubmit}
               schema={schema}
+              overrideLeave
               {...formOptions}>
               <>
                 <FormSection heading={tProfile("identityForm")}>
@@ -210,12 +211,7 @@ export default function Identity() {
                   </Grid>
                 </FormSection>
                 <FormActions>
-                  <LoadingButton
-                    type="submit"
-                    endIcon={<SaveIcon />}
-                    loading={updateUser.isPending}>
-                    {tProfile("submitAndContinueButton")}
-                  </LoadingButton>
+                  <ButtonSave isLoading={updateUser.isPending} > {tProfile("submitAndContinueButton")} </ButtonSave>
                 </FormActions>
               </>
             </Form>

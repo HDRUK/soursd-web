@@ -1,5 +1,6 @@
 "use client";
 
+import ButtonSave from "@/components/ButtonSave";
 import Form from "@/components/Form";
 import FormActions from "@/components/FormActions";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
@@ -7,8 +8,6 @@ import FormFieldArray from "@/components/FormFieldArray";
 import GoogleAutocomplete from "@/components/GoogleAutocomplete";
 import { useStore } from "@/data/store";
 import { PageBody, PageSection } from "@/modules";
-import SaveIcon from "@mui/icons-material/Save";
-import { LoadingButton } from "@mui/lab";
 import { Box, Grid } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { useTranslations } from "next-intl";
@@ -16,7 +15,6 @@ import React, { useMemo } from "react";
 import usePatchOrganisation from "../../../hooks/usePatchOrganisation";
 import { FormData, getDefaultValues, getValidation } from "./config/form";
 
-const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 const NAMESPACE_TRANSLATION_FORM = "Form";
 
 export default function Subsidiaries() {
@@ -27,7 +25,6 @@ export default function Subsidiaries() {
     };
   });
   const t = useTranslations(NAMESPACE_TRANSLATION_FORM);
-  const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
   const { isPending: isLoading, onSubmit } = usePatchOrganisation({
     id: organisation?.id,
@@ -99,13 +96,10 @@ export default function Subsidiaries() {
                 </Grid>
 
                 <FormActions>
-                  <LoadingButton
-                    disabled={nsubs === 0}
-                    loading={isLoading}
-                    type="submit"
-                    endIcon={<SaveIcon />}>
-                    {tProfile("submitButton")}
-                  </LoadingButton>
+                  <ButtonSave
+                    isLoading={isLoading}
+                    disabled={nsubs === 0 || isLoading}
+                  />
                 </FormActions>
               </>
             );
