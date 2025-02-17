@@ -161,6 +161,24 @@ const createMuiModalStyles = <T extends { outline?: boolean }>(
   return null;
 };
 
+const createMuiTableStyles = <T extends { outline?: boolean }>(
+  ownerState: T
+) => {
+  if (!ownerState.outline) {
+    return `
+      outline: none;
+
+      &:focus,
+      > div {
+        outline: none;
+      };
+    `;
+  }
+
+  return null;
+};
+
+
 const createSwitchStyles = () => {
   return {
     ".MuiSwitch-switchBase.Mui-checked": {
@@ -224,6 +242,11 @@ const theme = createTheme(
     },
     spacing: 4,
     components: {
+      MuiTableCell: {
+        styleOverrides: {
+         root: 
+        },
+      },
       MuiModal: {
         defaultProps: {
           outline: false,

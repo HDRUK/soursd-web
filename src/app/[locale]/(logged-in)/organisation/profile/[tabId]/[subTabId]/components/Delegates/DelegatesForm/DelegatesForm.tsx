@@ -1,7 +1,7 @@
 "use client";
 
 import FormActions from "@/components/FormActions";
-import FormControlHorizontal from "@/components/FormControlHorizontal";
+import FormControl from "@/components/FormControl";
 import FormSection from "@/components/FormSection";
 import yup from "@/config/yup";
 import { useStore } from "@/data/store";
@@ -12,6 +12,7 @@ import { Grid, MenuItem, Select, TextField } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo } from "react";
+import Markdown from "@/components/Markdown";
 import Form from "@/components/Form";
 import {
   PostOrganisationInviteUserPayload,
@@ -107,12 +108,27 @@ export default function DelegatesForm({ onSuccess }: DelegatesFormProps) {
   };
 
   return (
-    <Form schema={schema} onSubmit={handleDetailsSubmit} {...formOptions}>
+    <Form
+      sx={{ mt: 1 }}
+      schema={schema}
+      onSubmit={handleDetailsSubmit}
+      {...formOptions}>
       <>
-        <FormSection heading={t("delegateFormTitle")}>
-          <Grid container rowSpacing={3}>
+        <FormSection
+          description={<Markdown>{t("delegateFormDescription")}</Markdown>}>
+          <Grid
+            container
+            rowSpacing={3}
+            sx={{ width: "70%", justifyContent: "flex-start" }}>
             <Grid item xs={12}>
-              <FormControlHorizontal
+              <FormControl
+                name="delegate_full_name"
+                renderField={fieldProps => <TextField {...fieldProps} />}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <FormControl
                 name="department_name"
                 renderField={fieldProps => (
                   <Select
@@ -129,20 +145,15 @@ export default function DelegatesForm({ onSuccess }: DelegatesFormProps) {
                 )}
               />
             </Grid>
+
             <Grid item xs={12}>
-              <FormControlHorizontal
-                name="delegate_full_name"
-                renderField={fieldProps => <TextField {...fieldProps} />}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlHorizontal
+              <FormControl
                 name="delegate_job_title"
                 renderField={fieldProps => <TextField {...fieldProps} />}
               />
             </Grid>
             <Grid item xs={12}>
-              <FormControlHorizontal
+              <FormControl
                 name="delegate_email"
                 renderField={fieldProps => <TextField {...fieldProps} />}
               />

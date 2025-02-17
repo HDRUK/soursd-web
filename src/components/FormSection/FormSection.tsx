@@ -4,12 +4,14 @@ import { ReactNode } from "react";
 export interface FormSectionProps extends BoxProps {
   heading?: ReactNode;
   subtitle?: ReactNode;
+  description?: ReactNode;
 }
 
 export default function FormSection({
   children,
   heading,
   subtitle,
+  description,
   ...restProps
 }: FormSectionProps) {
   return (
@@ -32,6 +34,7 @@ export default function FormSection({
           </Box>
         )}
         {subtitle && <Typography variant="h6">{subtitle}</Typography>}
+        {description}
       </Box>
       <Box sx={{ px: 2 }}>{children}</Box>
     </Box>

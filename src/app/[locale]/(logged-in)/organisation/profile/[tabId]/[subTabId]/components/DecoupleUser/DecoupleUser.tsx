@@ -1,4 +1,4 @@
-import { DecoupleIcon } from "@/consts/icons";
+import { TrashIcon } from "@/consts/icons";
 import { Tooltip, IconButton } from "@mui/material";
 import { PatchUserPayload, patchUser } from "@/services/users";
 import { useMutation } from "@tanstack/react-query";
@@ -63,7 +63,7 @@ const DecoupleUser = ({
         size="small"
         color="inherit"
         aria-label="icon-button">
-        <DecoupleIcon />
+        <TrashIcon />
       </IconButton>
     </Tooltip>
   );

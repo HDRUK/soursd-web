@@ -15,6 +15,12 @@ import { isRegistered } from "@/utils/user";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
+import { User } from "@/types/application";
+import { ColumnDef } from "@tanstack/react-table";
+import Markdown from "@/components/Markdown";
+import FormSection from "@/components/FormSection";
+import Table from "@/modules/Table";
+import EditDelegate from "./EditDelegate";
 import DecoupleUser from "../DecoupleUser";
 import DelegatesForm from "./DelegatesForm";
 
@@ -50,6 +56,47 @@ export default function Delegates() {
   });
 
   const delegates = usersData?.filter(user => user.is_delegate === 1);
+
+  const columns: ColumnDef<User>[] = [
+    {
+      accessorKey: "name",
+      header: "Full Name",
+      cell: info =>
+        `${info.row.original.first_name} ${info.row.original.last_name}`,
+    },
+    {
+      accessorKey: "department",
+      header: "Department",
+      cell: info => info.row.original.departments[0]?.name || "",
+    },
+    {
+      accessorKey: "created_at",
+      header: "Invited On",
+      cell: info => formatShortDate(info.getValue() as string),
+    },
+    {
+      accessorKey: "actions",
+      header: "Actions",
+      cell: info => (
+        <>
+          <EditDelegate user={info.row.original} />
+          <DecoupleUser
+            user={info.row.original}
+            onSuccess={refetchOrganisationUsers}
+            payload={{ is_delegate: 0 }}
+            namespace="DecoupleDelegate"
+          />
+        </>
+      ),
+    },
+  ];
+
+  return (
+    <FormSection
+      description={<Markdown>{t("delegateAdminDescription")}</Markdown>}>
+      <Table data={usersData} columns={columns} />
+    </FormSection>
+  );
 
   return (
     <>
