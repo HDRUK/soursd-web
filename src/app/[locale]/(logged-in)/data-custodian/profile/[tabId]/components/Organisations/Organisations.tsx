@@ -1,58 +1,48 @@
 "use client";
 
 import ContactLink from "@/components/ContactLink";
-import { Message } from "@/components/Message";
-import OverlayCenter from "@/components/OverlayCenter";
+import Results from "@/components/Results";
 import { PageBody, PageSection } from "@/modules";
+import SearchFilters from "@/modules/SearchFilters";
 import {
   DeleteApprovalPayloadWithEntity,
   PostApprovalPayloadWithEntity,
 } from "@/services/approvals";
-import { getOrganisations } from "@/services/organisations";
-import { CircularProgress } from "@mui/material";
+import {
+  getOrganisations,
+  getOrganisationsQuery,
+} from "@/services/organisations";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback } from "react";
 import { useMutationApproval, useMutationDeleteApproval } from "../../hooks";
 import OrganisationsLegend from "../OrganisationsLegend";
 import OrganisationsList from "../OrganisationsList";
+import { getCombinedQueryState } from "@/utils/query";
+import Pagination from "@/components/Pagination";
 
-const NAMESPACE_TRANSLATIONS_USERS_LIST = "UsersList";
-const NAMESPACE_TRANSLATIONS_USERS = "Users";
+const NAMESPACE_TRANSLATIONS_USERS = "OrganisationsList";
 
 export default function Sections() {
   const queryClient = useQueryClient();
-  const tUsersList = useTranslations(NAMESPACE_TRANSLATIONS_USERS_LIST);
-  const tUsers = useTranslations(NAMESPACE_TRANSLATIONS_USERS);
+  const t = useTranslations(NAMESPACE_TRANSLATIONS_USERS);
 
   const {
-    data: organisationsData,
-    isLoading: isOrganisationsLoading,
-    isError: isOrganisationsError,
-    error: orgainsationsError,
-  } = useQuery({
-    queryKey: ["getOrganisations"],
-    queryFn: () =>
-      getOrganisations({
-        error: {
-          message: "getOrganisations",
-        },
-      }),
-  });
+    data,
+    page,
+    setPage,
+    updateQueryParam,
+    handleSortToggle,
+    handleFieldToggle,
+    queryParams,
+    ...queryState
+  } = getOrganisationsQuery();
 
-  const {
-    mutateAsync: mutateUpdateAsync,
-    isPending: isUpdateLoading,
-    isError: isUpdateError,
-    error: errorUpdate,
-  } = useMutationApproval();
+  const { mutateAsync: mutateUpdateAsync, ...approvingQueryState } =
+    useMutationApproval();
 
-  const {
-    mutateAsync: mutateDeleteAsync,
-    isPending: isDeleteLoading,
-    isError: isDeleteError,
-    error: errorDelete,
-  } = useMutationDeleteApproval();
+  const { mutateAsync: mutateDeleteAsync, ...deleteQueryState } =
+    useMutationDeleteApproval();
 
   const handleApprove = useCallback(
     async (payload: PostApprovalPayloadWithEntity) => {
@@ -76,34 +66,45 @@ export default function Sections() {
     []
   );
 
+  const pagination = (
+    <Pagination
+      page={page}
+      count={queryState.last_page}
+      onChange={(_, page: number) => setPage(page)}
+    />
+  );
+
   return (
     <PageBody>
       <PageSection>
-        <OrganisationsLegend />
-        {isOrganisationsLoading && (
-          <OverlayCenter variant="contained">
-            <CircularProgress aria-label={tUsersList("loadingAriaLabel")} />
-          </OverlayCenter>
-        )}
-        {isOrganisationsError && (
-          <Message severity="error" sx={{ mb: 3 }}>
-            {tUsers.rich(`${orgainsationsError}`, {
-              contactLink: ContactLink,
-            })}
-          </Message>
-        )}
-        {!isOrganisationsLoading && organisationsData?.data?.data && (
+        <SearchFilters
+          actions={[]}
+          updateQueryParam={(text: string) =>
+            updateQueryParam("organisation_name[]", text)
+          }
+          placeholder={t("searchPlaceholder")}
+          legend={<OrganisationsLegend />}
+        />
+      </PageSection>
+      <PageSection>
+        <Results
+          queryState={queryState}
+          noResultsMessage={t("noResultsOrganisations")}
+          pagination={pagination}
+          errorMessage={t.rich(t("noResultsOrganisations"), {
+            contactLink: ContactLink,
+          })}
+          count={queryState.total}>
           <OrganisationsList
             onApprove={handleApprove}
             onUnapprove={handleUnapprove}
-            organisations={organisationsData?.data?.data}
-            queryState={{
-              isError: isDeleteError || isUpdateError,
-              isLoading: isDeleteLoading || isUpdateLoading,
-              error: errorDelete || errorUpdate,
-            }}
+            organisations={data}
+            queryState={getCombinedQueryState([
+              approvingQueryState,
+              deleteQueryState,
+            ])}
           />
-        )}
+        </Results>
       </PageSection>
     </PageBody>
   );

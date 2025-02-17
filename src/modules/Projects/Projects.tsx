@@ -16,6 +16,9 @@ import { ProjectEntities } from "@/services/projects/getEntityProjects";
 import { capitaliseFirstLetter } from "@/utils/string";
 import ProjectList from "../ProjectList";
 import ProjectsLegend from "../ProjectsLegend";
+import getEntityProjectsQuery from "@/services/projects/getEntityProjectsQuery";
+import Results from "@/components/Results";
+import ContactLink from "@/components/ContactLink";
 
 const NAMESPACE_TRANSLATIONS_PROJECT_LIST = "ProjectList";
 
@@ -51,28 +54,28 @@ export default function Projects({ variant }: ProjectsProps) {
 
   const {
     data: projectsData,
-    isLoading: isProjectsLoading,
-    isError: isProjectsError,
     last_page,
     page,
+    total,
     setPage,
     updateQueryParam,
     handleSortToggle,
     handleFieldToggle,
     queryParams,
-  } = usePaginatedQuery({
-    queryKeyBase: [`get${capitaliseFirstLetter(variant)}Projects`],
-    defaultQueryParams: {
-      sort: `title:${SearchDirections.ASC}`,
-    },
-    queryFn: queryParams =>
-      getEntityProjects(variant, entityId as unknown as number, queryParams, {
-        error: {
-          message: `get${capitaliseFirstLetter(variant)}Projects`,
-        },
-      }),
+    ...queryState
+  } = getEntityProjectsQuery(entityId, {
+    variant,
+    queryKeyBase: ["getProjects"],
     enabled: !!entityId,
   });
+
+  const pagination = (
+    <Pagination
+      page={page}
+      count={last_page}
+      onChange={(_, page: number) => setPage(page)}
+    />
+  );
 
   const sortDirection =
     typeof queryParams?.sort === "string" && queryParams?.sort.split(":")[1];
@@ -102,61 +105,27 @@ export default function Projects({ variant }: ProjectsProps) {
 
   return (
     <>
-      {isProjectsLoading && (
-        <OverlayCenter variant="contained">
-          <CircularProgress aria-label={t("loadingAriaLabel")} />
-        </OverlayCenter>
-      )}
-      <PageSection
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          gap: 2,
-        }}>
-        <Box
-          sx={{
-            display: "grid",
-            gridTemplateColumns: "2fr 1fr",
-            flex: 1,
-            maxHeight: 80,
-          }}>
-          <SearchBar
-            onSearch={text => updateQueryParam("title[]", text)}
-            placeholder={t("searchPlaceholder")}
-          />
-          <SearchActionMenu
-            actions={searchActions}
-            sx={{ justifySelf: "start", my: "auto" }}
-          />
-        </Box>
-        <Box sx={{ display: "flex", flex: 1, gap: 2 }}>
-          <ProjectsLegend />
-        </Box>
-      </PageSection>
-      <PageSection sx={{ flexGrow: 1 }}>
-        {isProjectsError && (
-          <Message severity="error" sx={{ mb: 3 }}>
-            {t("getOrganisationProjectsError")}
-          </Message>
-        )}
-        {!isProjectsLoading && projectsData && (
-          <ProjectList projects={projectsData} />
-        )}
-      </PageSection>
-      <PageSection
-        sx={{
-          flexGrow: 1,
-          display: "flex",
-          justifyContent: "center",
-        }}>
-        <Pagination
-          isLoading={isProjectsLoading}
-          page={page}
-          count={last_page}
-          onChange={(e: React.ChangeEvent<unknown>, page: number) =>
-            setPage(page)
+      <PageSection>
+        <SearchFilters
+          actions={[]}
+          updateQueryParam={(text: string) =>
+            updateQueryParam("organisation_name[]", text)
           }
+          placeholder={t("searchPlaceholder")}
+          legend={<ProjectsLegend />}
         />
+      </PageSection>
+      <PageSection>
+        <Results
+          queryState={queryState}
+          noResultsMessage={t("noResultsProjects")}
+          pagination={pagination}
+          errorMessage={t.rich("erroResultsProjects", {
+            contactLink: ContactLink,
+          })}
+          count={total}>
+          <ProjectList projects={projectsData} />
+        </Results>
       </PageSection>
     </>
   );
