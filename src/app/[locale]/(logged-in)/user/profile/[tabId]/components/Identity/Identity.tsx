@@ -21,7 +21,6 @@ import {
 import { putUserQuery } from "@/services/users";
 import { showAlert } from "@/utils/showAlert";
 import InfoIcon from "@mui/icons-material/Info";
-import { LoadingButton } from "@mui/lab";
 import {
   Checkbox,
   FormControlLabel,
@@ -211,7 +210,10 @@ export default function Identity() {
                   </Grid>
                 </FormSection>
                 <FormActions>
-                  <ButtonSave isLoading={updateUser.isPending} > {tProfile("submitAndContinueButton")} </ButtonSave>
+                  <ButtonSave isLoading={updateUser.isPending}>
+                    {" "}
+                    {tProfile("submitAndContinueButton")}{" "}
+                  </ButtonSave>
                 </FormActions>
               </>
             </Form>

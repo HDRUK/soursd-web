@@ -9,8 +9,6 @@ import { AffiliationRelationship } from "@/consts/user";
 import getOrganisationsQuery from "@/services/organisations/getOrganisationsQuery";
 import { ResearcherAffiliation } from "@/types/application";
 import { MutationState } from "@/types/form";
-import SaveIcon from "@mui/icons-material/Save";
-import { LoadingButton } from "@mui/lab";
 import { Checkbox, Grid, MenuItem, Select, TextField } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
@@ -158,7 +156,10 @@ export default function AffiliationsForm({
                 </Grid>
               </FormSection>
               <FormActions>
-                <ButtonSave isLoading={queryState.isPending} > {tProfile("submitAndContinueButton")}</ButtonSave>
+                <ButtonSave isLoading={queryState.isPending}>
+                  {" "}
+                  {tProfile("submitAndContinueButton")}
+                </ButtonSave>
               </FormActions>
             </>
           );
