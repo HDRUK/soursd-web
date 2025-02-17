@@ -47,6 +47,8 @@ export default function InvitedDelegatesForm({
   const { mutateAsync, isPending } = useMutation({
     mutationKey: ["inviteUser", organisation?.id],
     mutationFn: (payload: PostOrganisationInviteUserPayload) => {
+      console.log(payload);
+      return;
       return postOrganisationInviteUser(organisation?.id, payload, {
         error: { message: "inviteUserError" },
       });
@@ -54,7 +56,13 @@ export default function InvitedDelegatesForm({
   });
 
   const handleDetailsSubmit = useCallback(
-    async (fields: DelegatesFormValues) => {
+    async (
+      fields: DelegatesFormValues,
+      event: React.FormEvent<HTMLFormElement>
+    ) => {
+      event.preventDefault();
+      event.stopPropagation();
+
       try {
         const payload: PostOrganisationInviteUserPayload = {
           email: fields.delegate_email,
