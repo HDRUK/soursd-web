@@ -30,13 +30,13 @@ export default function useQueriesHistory(registryId: number | undefined) {
   const queries = registryId
     ? [
         getAffiliationsQuery(registryId),
-        {
+        /*{
           queryKey: ["getEmployments", registryId],
           queryFn: ({ queryKey }: QueryFunctionContextDefault) =>
             getEmployments(queryKey[1], {
               error: { message: "getEmploymentsError" },
             }),
-        },
+        },*/
         {
           queryKey: ["getEducations", registryId],
           queryFn: ({ queryKey }: QueryFunctionContextDefault) =>

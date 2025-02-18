@@ -50,11 +50,13 @@
     "continueButton": "Continue"
   },
   "CustodianProfile": {
+    "home": "Home",
+    "contacts": "Contacts",
     "uniqueIdentifierTitle": "SOURSD Identifier",
     "uniqueIdentifierCaption": "This ‘key’ represents you as a Data Custodian within SOURSD. This is unique to you! Any time SOURSD sends information to you, or activates a callback, this identifier will be sent along with the payload. Meaning you can always trust the source of information.",
     "details": "Profile",
     "users": "Users",
-    "configuration": "Configuration",
+    "configuration": "Configurations",
     "keycards": "Keycards",
     "projects": "Projects",
     "organisations": "Organisations",

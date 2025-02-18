@@ -1,10 +1,11 @@
 "use client";
 
 import { useStore } from "@/data/store";
-import CreditCardOutlinedIcon from "@mui/icons-material/CreditCardOutlined";
-import EditNoteOutlinedIcon from "@mui/icons-material/EditNoteOutlined";
 import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined";
-import LanguageIcon from "@mui/icons-material/Language";
+import CorporateFareIcon from "@mui/icons-material/CorporateFare";
+import AssignmentIcon from "@mui/icons-material/Assignment";
+import HomeIcon from "@mui/icons-material/Home";
+import ContactPageIcon from "@mui/icons-material/ContactPage";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { Box, Tab, Tabs } from "@mui/material";
 import { useTranslations } from "next-intl";
@@ -29,19 +30,19 @@ export default function TabsSections() {
         textColor="inherit"
         allowScrollButtonsMobile>
         <Tab
-          icon={<EditNoteOutlinedIcon />}
-          label={t("details")}
-          href={routes.profileCustodianDetails.path}
+          icon={<HomeIcon />}
+          label={t("home")}
+          href={routes.profileCustodianHome.path}
           component={Link}
           value={PageTabs.DETAILS}
           iconPosition="start"
         />
         <Tab
-          icon={<SettingsIcon />}
-          label={t("configuration")}
-          href={routes.profileCustodianConfiguration.path}
+          icon={<ContactPageIcon />}
+          label={t("contacts")}
+          href={routes.profileCustodianContacts.path}
           component={Link}
-          value={PageTabs.CONFIGURATION}
+          value={PageTabs.USERS}
           iconPosition="start"
         />
         <Tab
@@ -53,15 +54,7 @@ export default function TabsSections() {
           iconPosition="start"
         />
         <Tab
-          icon={<CreditCardOutlinedIcon />}
-          label={t("keycards")}
-          href={routes.profileCustodianKeycards.path}
-          component={Link}
-          value={PageTabs.KEYCARDS}
-          iconPosition="start"
-        />
-        <Tab
-          icon={<LanguageIcon />}
+          icon={<AssignmentIcon />}
           label={t("projects")}
           href={routes.profileCustodianProjects.path}
           component={Link}
@@ -69,11 +62,19 @@ export default function TabsSections() {
           iconPosition="start"
         />
         <Tab
-          icon={<EditNoteOutlinedIcon />}
+          icon={<CorporateFareIcon />}
           label={t("organisations")}
           href={routes.profileCustodianOrganisations.path}
           component={Link}
           value={PageTabs.ORGANISATIONS}
+          iconPosition="start"
+        />
+        <Tab
+          icon={<SettingsIcon />}
+          label={t("configuration")}
+          href={routes.profileCustodianConfiguration.path}
+          component={Link}
+          value={PageTabs.CONFIGURATION}
           iconPosition="start"
         />
       </Tabs>

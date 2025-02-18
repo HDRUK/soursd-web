@@ -24,7 +24,7 @@ export default function TabsContents({ tabId }: TabsContentsProps) {
       {tabId === PageTabs.PROJECTS && <Projects variant="custodian" />}
       {tabId === PageTabs.ORGANISATIONS && <Organisations />}
       {tabId === PageTabs.USERS && <Users />}
-      {tabId === PageTabs.KEYCARDS && "Keycards"}
+      {tabId === PageTabs.CONTACTS && "Contacts"}
       {tabId === PageTabs.CONFIGURATION && <Configuration />}
     </>
   );

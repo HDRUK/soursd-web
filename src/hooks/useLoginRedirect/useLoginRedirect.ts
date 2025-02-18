@@ -19,7 +19,7 @@ export default function useLoginRedirect(props?: UseLoginRedirectProps) {
 
   const redirectUser = async (data?: User) => {
     if (data?.user_group === UserGroup.CUSTODIANS) {
-      router.replace(ROUTES.profileCustodianDetails.path);
+      router.replace(ROUTES.profileCustodianHome.path);
     } else if (data?.user_group === UserGroup.ORGANISATIONS) {
       router.replace(ROUTES.profileOrganisationDetails.path);
     } else if (data?.user_group === UserGroup.USERS) {

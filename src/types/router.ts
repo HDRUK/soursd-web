@@ -21,7 +21,8 @@ interface Routes {
   homepage: RouteConfig;
   usersCustodian: RouteConfig;
   profileCustodian: RouteConfig;
-  profileCustodianDetails: RouteConfig;
+  profileCustodianHome: RouteConfig;
+  profileCustodianContacts: RouteConfig;
   profileCustodianProjects: RouteConfig;
   profileCustodianOrganisations: RouteConfig;
   profileCustodianConfiguration: RouteConfig;

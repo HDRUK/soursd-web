@@ -4,7 +4,7 @@ import TabsSections from "./TabsSections";
 
 describe("<TabsSections />", () => {
   it.each([
-    { name: "Profile", path: `/en${ROUTES.profileCustodianDetails.path}` },
+    { name: "Profile", path: `/en${ROUTES.profileCustodianHome.path}` },
     { name: "Users", path: `/en${ROUTES.profileCustodianUsers.path}` },
     {
       name: "Configuration",

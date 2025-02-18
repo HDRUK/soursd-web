@@ -1,8 +1,8 @@
 enum PageTabs {
   DETAILS = "details",
+  CONTACTS = "contacts",
   USERS = "users",
   CONFIGURATION = "configuration",
-  KEYCARDS = "keycards",
   ORGANISATIONS = "organisations",
   PROJECTS = "projects",
 }
