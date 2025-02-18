@@ -28,6 +28,7 @@ export interface NameAndAddressFormValues {
 
 const NAMESPACE_TRANSLATION_FORM = "Form";
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
+const NAMESPACE_TRANSLATION_ORG_PROFILE = "ProfileOrganisation";
 
 export default function NameAndAddress() {
   const { organisation, setOrganisation } = useStore(state => {
@@ -49,6 +50,7 @@ export default function NameAndAddress() {
 
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
+  const tOrgProfile = useTranslations(NAMESPACE_TRANSLATION_ORG_PROFILE);
 
   const schema = useMemo(
     () =>
@@ -85,7 +87,7 @@ export default function NameAndAddress() {
 
   return (
     <PageBody>
-      <PageSection>
+      <PageSection heading={tOrgProfile("nameAndAddressTitle")} description={tOrgProfile("nameAndAddressDescription")}>
         <Form schema={schema} onSubmit={onSubmit} {...formOptions}>
           {({ setValue }) => {
             const handleFindAddress = (address: AddressFields) => {
@@ -107,7 +109,7 @@ export default function NameAndAddress() {
                     <FormControlHorizontal
                       name="address"
                       displayPlaceholder={false}
-                      displayLabel={false}
+                      description={tOrgProfile("nameAndAddressAddressDescription")}
                       renderField={() => (
                         <GoogleAutocomplete
                           name="address"

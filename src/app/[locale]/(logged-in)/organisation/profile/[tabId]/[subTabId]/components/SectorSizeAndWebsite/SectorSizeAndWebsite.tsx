@@ -30,8 +30,9 @@ export interface SectorFormValues {
 
 const NAMESPACE_TRANSLATION_FORM = "Form";
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
+const NAMESPACE_TRANSLATION_ORG_PROFILE = "ProfileOrganisation";
 
-export default function SectorSiteAndWebsite() {
+export default function SectorSizeAndWebsite() {
   const { organisation, setOrganisation, sectors } = useStore(state => {
     return {
       organisation: state.config.organisation,
@@ -52,6 +53,7 @@ export default function SectorSiteAndWebsite() {
 
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
+  const tOrgProfile = useTranslations(NAMESPACE_TRANSLATION_ORG_PROFILE);
 
   const schema = useMemo(
     () =>
@@ -81,9 +83,9 @@ export default function SectorSiteAndWebsite() {
 
   return (
     <PageBody>
-      <PageSection>
+      <PageSection heading={tOrgProfile("detailsSectorSizeAndWebsite")}>
         <Form schema={schema} onSubmit={onSubmit} {...formOptions}>
-          <>
+          <Grid container rowSpacing={3}>
             <Grid item xs={12}>
               <FormControlHorizontal
                 name="sector_id"
@@ -101,6 +103,7 @@ export default function SectorSiteAndWebsite() {
                   </Select>
                 )}
               />
+            </Grid>
               <Grid item xs={12}>
                 <FormControlHorizontal
                   name="smbStatus"
@@ -126,7 +129,6 @@ export default function SectorSiteAndWebsite() {
                 />
               </Grid>
             </Grid>
-
             <FormActions>
               <LoadingButton
                 loading={isLoading}
@@ -135,7 +137,7 @@ export default function SectorSiteAndWebsite() {
                 {tProfile("submitButton")}
               </LoadingButton>
             </FormActions>
-          </>
+          
         </Form>
       </PageSection>
     </PageBody>

@@ -20,10 +20,10 @@ import {
 import { EMAIL_TEMPLATE } from "@/consts/application";
 
 export interface DelegatesFormValues {
-  department_name?: string | null;
-  delegate_full_name: string;
-  delegate_job_title: string;
-  delegate_email: string;
+  department?: string | null;
+  full_name: string;
+  job_title: string;
+  email_address: string;
 }
 
 export interface DelegatesFormProps {
@@ -54,11 +54,11 @@ export default function DelegatesForm({ onSuccess }: DelegatesFormProps) {
     async (fields: DelegatesFormValues) => {
       try {
         const payload: PostOrganisationInviteUserPayload = {
-          email: fields.delegate_email,
-          department_id: Number(fields.department_name) ?? null,
-          first_name: fields.delegate_full_name.split(" ")[0],
-          last_name: fields.delegate_full_name.split(" ")[1],
-          role: fields.delegate_job_title,
+          email: fields.email_address,
+          department_id: Number(fields.department) ?? null,
+          first_name: fields.full_name.split(" ")[0],
+          last_name: fields.full_name.split(" ")[1],
+          role: fields.job_title,
           user_group: "ORGANISATION",
           is_delegate: 1,
           identifier: EMAIL_TEMPLATE.DELEGATE_INVITE,
@@ -82,37 +82,38 @@ export default function DelegatesForm({ onSuccess }: DelegatesFormProps) {
   const schema = useMemo(
     () =>
       yup.object().shape({
-        department_name: yup.string().nullable(),
-        delegate_full_name: yup
+        department: yup
           .string()
-          .required(t("delegateFullNameRequiredInvalid")),
-        delegate_job_title: yup
+          .required(t("departmentRequiredInvalid")),
+        full_name: yup
           .string()
-          .required(t("delegateJobTitleRequiredInvalid")),
-        delegate_email: yup
+          .required(t("fullNameRequiredInvalid")),
+        job_title: yup
           .string()
-          .email(t("delegateEmailInvalid"))
-          .required(t("delegateEmailRequiredInvalid")),
+          .required(t("jobTitleRequiredInvalid")),
+        email_address: yup
+          .string()
+          .email(t("emailAddressInvalid"))
+          .required(t("emailAddressRequiredInvalid")),
       }),
     [t]
   );
 
   const formOptions = {
     defaultValues: {
-      department_name: "",
-      delegate_full_name: "",
-      delegate_job_title: "",
-      delegate_email: "",
+      department: "",
+      full_name: "",
+      job_title: "",
+      email_address: "",
     },
   };
 
   return (
-    <Form schema={schema} onSubmit={handleDetailsSubmit} {...formOptions}>
-      <FormSection heading={t("delegateFormTitle")}>
+    <Form schema={schema} onSubmit={handleDetailsSubmit} {...formOptions} shouldReset>
         <Grid container rowSpacing={3}>
           <Grid item xs={12}>
             <FormControlHorizontal
-              name="department_name"
+              name="department"
               renderField={fieldProps => (
                 <Select
                   {...fieldProps}
@@ -130,24 +131,23 @@ export default function DelegatesForm({ onSuccess }: DelegatesFormProps) {
           </Grid>
           <Grid item xs={12}>
             <FormControlHorizontal
-              name="delegate_full_name"
+              name="full_name"
               renderField={fieldProps => <TextField {...fieldProps} />}
             />
           </Grid>
           <Grid item xs={12}>
             <FormControlHorizontal
-              name="delegate_job_title"
+              name="job_title"
               renderField={fieldProps => <TextField {...fieldProps} />}
             />
           </Grid>
           <Grid item xs={12}>
             <FormControlHorizontal
-              name="delegate_email"
+              name="email_address"
               renderField={fieldProps => <TextField {...fieldProps} />}
             />
           </Grid>
         </Grid>
-      </FormSection>
       <FormActions>
         <LoadingButton
           loading={isPending}

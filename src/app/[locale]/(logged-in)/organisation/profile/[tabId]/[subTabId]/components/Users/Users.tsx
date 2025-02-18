@@ -21,6 +21,7 @@ import { SearchDirections } from "@/consts/search";
 import DecoupleUser from "../DecoupleUser";
 import UserModal from "../UserModal";
 import UserBulkInvite from "../UserBulkInvite";
+import { mockedEmployeeStudentAdminDescription } from "@/mocks/data/cms";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
 
@@ -56,28 +57,13 @@ export default function Users() {
   return (
     <PageBody>
       {organisation && (
-        <PageSection heading="Add new affiliated employees or students">
-          <UserBulkInvite organisation_id={organisation.id} />
-        </PageSection>
-      )}
-      <PageSection heading="Manage affiliated employees or students">
-        <Box sx={{ marginBottom: "30px" }}>
-          {t("manageResearchersDescription")}
-        </Box>
+        <PageSection heading={t("employeeStudentAdminTitle")} description={mockedEmployeeStudentAdminDescription}>
         <Box sx={{ display: "flex", gap: 1, mb: 3, alignItems: "center" }}>
           <Box component="form" role="search" sx={{ flexGrow: 1 }}>
             <SearchBar
               onSearch={text => updateQueryParam("first_name[]", text)}
             />
           </Box>
-          <div>
-            <Button
-              aria-label="modal-button"
-              endIcon={<AddCircleOutlineOutlinedIcon />}
-              onClick={() => setOpen(true)}>
-              {t("inviteNewUserButton")}
-            </Button>
-          </div>
         </Box>
         <Results
           noResultsMessage={t("noResults")}
@@ -129,7 +115,23 @@ export default function Users() {
             );
           })}
         </Results>
+        <Box sx={{ display: "flex", gap: 2, alignItems: "flex-start" }}>
+          <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <Button
+              aria-label="modal-button"
+              endIcon={<AddCircleOutlineOutlinedIcon />}
+              onClick={() => setOpen(true)}
+              sx={{ height: "100%" }}
+            >
+              {t("inviteNewUserButton")}
+            </Button>
+          </Box>
+          <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <UserBulkInvite organisation_id={organisation.id} />
+          </Box>
+        </Box>
       </PageSection>
+      )}
       <PageSection
         sx={{
           flexGrow: 1,
@@ -144,6 +146,7 @@ export default function Users() {
             setPage(page)
           }
         />
+        
       </PageSection>
       {!!organisation && (
         <UserModal

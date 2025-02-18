@@ -22,13 +22,13 @@ import usePatchOrganisation from "../../../hooks/usePatchOrganisation";
 
 export interface DigitalIdentifiersFormValues {
   companies_house_no: string;
-  sector_id: number;
   charity_registration_id: string;
   ror_id: string;
 }
 
 const NAMESPACE_TRANSLATION_FORM = "Form";
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
+const NAMESPACE_TRANSLATION_ORG_PROFILE = "ProfileOrganisation";
 
 export default function DigitalIdentifiers() {
   const { organisation, setOrganisation } = useStore(state => {
@@ -50,11 +50,12 @@ export default function DigitalIdentifiers() {
 
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
+  const tOrgProfile = useTranslations(NAMESPACE_TRANSLATION_ORG_PROFILE);
 
   const schema = useMemo(
     () =>
       yup.object().shape({
-        sector_id: yup.number().required(tForm("sectorIdRequiredInvalid")),
+        companies_house_no: yup.number(),
         isCharity: yup.boolean(),
         charities: yup.array().when("isCharity", {
           is: true,
@@ -88,7 +89,6 @@ export default function DigitalIdentifiers() {
   const formOptions = {
     defaultValues: {
       companies_house_no: organisation?.companies_house_no,
-      sector_id: organisation?.sector_id,
       charities: organisation?.charities.map(
         ({ country, registration_id }) => ({ country, registration_id })
       ),
@@ -104,7 +104,7 @@ export default function DigitalIdentifiers() {
 
   return (
     <PageBody>
-      <PageSection>
+      <PageSection heading={tOrgProfile("detailsDigitalIdentifiers")}>
         <Form schema={schema} onSubmit={onSubmit} {...formOptions}>
           {({ watch, setValue }) => {
             const isCharity = watch("isCharity");
@@ -120,6 +120,7 @@ export default function DigitalIdentifiers() {
                     <FormControlHorizontal
                       name="companies_house_no"
                       renderField={fieldProps => <TextField {...fieldProps} />}
+                      description={tOrgProfile("companiesHouseIdDescription")}
                     />
                   </Grid>
 
@@ -200,14 +201,8 @@ export default function DigitalIdentifiers() {
                   <Grid item xs={12}>
                     <FormControlHorizontal
                       name="ror_id"
-                      renderField={fieldProps => (
-                        <Box sx={{ display: "flex", alignItems: "center" }}>
-                          <TextField {...fieldProps} />
-                          <InformationSection>
-                            {mockedRorIdInfo}
-                          </InformationSection>
-                        </Box>
-                      )}
+                      renderField={fieldProps => (<TextField {...fieldProps} />)}
+                      description={tForm("rorIdDescription")}
                     />
                   </Grid>
                 </Grid>

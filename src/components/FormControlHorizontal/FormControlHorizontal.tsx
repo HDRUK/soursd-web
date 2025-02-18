@@ -8,6 +8,7 @@ import {
   FormLabelProps,
   Grid,
   GridProps,
+  Typography,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import React, { ReactNode } from "react";
@@ -35,6 +36,7 @@ export interface FormControlHorizontalProps
   containerProps?: GridProps;
   displayLabel?: boolean;
   displayPlaceholder?: boolean;
+  description?: ReactNode;
 }
 
 const NAMESPACE_TRANSLATION_FORM = "Form";
@@ -54,6 +56,7 @@ export default function FormControlHorizontal({
   renderField,
   fullWidth = true,
   tNamespace = "",
+  description,
   ...restProps
 }: FormControlHorizontalProps) {
   const t = useTranslations(tNamespace || NAMESPACE_TRANSLATION_FORM);
@@ -112,7 +115,7 @@ export default function FormControlHorizontal({
             "aria-labelledby": `${field.name}-label`,
             ...field,
           })}
-
+          {!!description && <Typography variant={"subtitle2"} sx={{pt: 1}}>{description}</Typography>}
           {!!error && <FormHelperText>{error.message}</FormHelperText>}
         </Grid>
       </Grid>
