@@ -184,9 +184,7 @@ export default function DigitalIdentifiers() {
                                   labelMd={0}
                                   contentMd={12}
                                   name={`charities.${index}.registration_id`}
-                                  placeholder={tForm(
-                                    "charityRegistrationIdPlaceholder"
-                                  )}
+                                  placeholder={tForm("textFieldPlaceholder")}
                                   renderField={fieldProps => (
                                     <TextField {...fieldProps} />
                                   )}
