@@ -113,6 +113,7 @@ export default function Users() {
         <Box sx={{ display: "flex", gap: 1, mb: 3, alignItems: "center" }}>
           <Box component="form" role="search" sx={{ flexGrow: 1 }}>
             <SearchBar
+              fullWidth={false}
               onSearch={text => updateQueryParam("first_name[]", text)}
             />
           </Box>

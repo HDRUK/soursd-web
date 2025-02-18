@@ -10,9 +10,15 @@ import IconButton from "../../components/IconButton";
 type SearchBarProps = TextFieldProps & {
   onSearch: (query: string) => void;
   placeholder?: string;
+  fullWidth?: boolean;
 };
 
-const SearchBar = ({ onSearch, placeholder, ...rest }: SearchBarProps) => {
+const SearchBar = ({
+  onSearch,
+  placeholder,
+  fullWidth = true,
+  ...rest
+}: SearchBarProps) => {
   const [searchQuery, setSearchQuery] = useState<string | null>(null);
   const [searchQueryDebounced] = useDebounce(searchQuery, 500);
 
@@ -31,7 +37,7 @@ const SearchBar = ({ onSearch, placeholder, ...rest }: SearchBarProps) => {
   };
 
   return (
-    <StyledSearchBar>
+    <StyledSearchBar sx={{ ...(fullWidth && { width: "100%" }) }}>
       <StyledInput
         fullWidth
         hiddenLabel

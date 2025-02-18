@@ -5,7 +5,7 @@ export const StyledSearchBar = styled(Box)(
     display: flex;
     align-items: center;
     border: 1px solid #e0dfe7;
-    width: 100%;
+    max-width: 350px;
   `
 );
 
