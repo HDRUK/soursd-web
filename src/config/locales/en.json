@@ -139,7 +139,7 @@
     "noDelegates": "No Delegates Found",
     "getDelegateError": "Unable to get the list of delegates",
     "searchOrganisationUsers": "Search for users",
-    "inviteNewUserButton": "Invite new user",
+    "inviteNewUserButton": "Add another user",
     "invitedOn": "Invited on: {date}",
     "inviteUserTitle": "Invite new user",
     "inviteUserDescription": "This is where you can invite a new user to register against you organisation",

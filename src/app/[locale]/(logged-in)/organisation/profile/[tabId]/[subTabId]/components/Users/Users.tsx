@@ -13,14 +13,18 @@ import { formatShortDate } from "@/utils/date";
 import { isRegistered } from "@/utils/user";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Checkbox, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import CancelIcon from "@mui/icons-material/Cancel";
 import { SearchDirections } from "@/consts/search";
 import DecoupleUser from "../Delegates/DecoupleDelegate";
+import { ColumnDef, CellContext } from "@tanstack/react-table";
 import UserModal from "../UserModal";
 import UserBulkInvite from "../UserBulkInvite";
+import { User } from "@/types/application";
+import Table from "@/modules/Table";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
 
@@ -53,14 +57,56 @@ export default function Users() {
     enabled: !!organisation,
   });
 
+  const renderAccountCreated = (info: CellContext<User, unknown>) => (
+    <Box sx={{ display: "flex", justifyContent: "center" }}>
+      {info.getValue() ? (
+        <CancelIcon color="error" />
+      ) : (
+        <CheckCircleIcon color="success" />
+      )}
+    </Box>
+  );
+
+  const renderActions = (info: CellContext<User, unknown>) => <></>;
+
+  const columns: ColumnDef<User>[] = [
+    {
+      accessorKey: "id",
+      header: <Checkbox value={true} />,
+      cell: info => <Checkbox value={true} />,
+    },
+    {
+      accessorKey: "name",
+      header: "Employee / Student name",
+      cell: info =>
+        `${info.row.original.first_name} ${info.row.original.last_name}`,
+    },
+    {
+      accessorKey: "email",
+      header: "Email Address",
+      cell: info => info.getValue(),
+    },
+    {
+      accessorKey: "unclaimed",
+      header: "SOURSD account",
+      cell: renderAccountCreated,
+    },
+    {
+      accessorKey: "created_at",
+      header: "Invite Sent",
+      cell: info => formatShortDate(info.getValue() as string),
+    },
+
+    {
+      accessorKey: "actions",
+      header: "Actions",
+      cell: renderActions,
+    },
+  ];
+
   return (
     <PageBody>
-      {organisation && (
-        <PageSection heading="Add new affiliated employees or students">
-          <UserBulkInvite organisation_id={organisation.id} />
-        </PageSection>
-      )}
-      <PageSection heading="Manage affiliated employees or students">
+      <PageSection heading="Employee or student administration">
         <Box sx={{ marginBottom: "30px" }}>
           {t("manageResearchersDescription")}
         </Box>
@@ -70,16 +116,18 @@ export default function Users() {
               onSearch={text => updateQueryParam("first_name[]", text)}
             />
           </Box>
-          <div>
-            <Button
-              aria-label="modal-button"
-              endIcon={<AddCircleOutlineOutlinedIcon />}
-              onClick={() => setOpen(true)}>
-              {t("inviteNewUserButton")}
-            </Button>
-          </div>
         </Box>
-        <Results
+
+        <Table
+          isPaginated
+          page={page}
+          setPage={setPage}
+          last_page={last_page}
+          data={usersData || []}
+          columns={columns}
+        />
+
+        {/*<Results
           noResultsMessage={t("noResults")}
           errorMessage={t.rich("getError", {
             contactLink: ContactLink,
@@ -128,7 +176,18 @@ export default function Users() {
               />
             );
           })}
-        </Results>
+        </Results>*/}
+        <Box sx={{ display: "flex", gap: 2, flexDirection: "row" }}>
+          <div>
+            <Button
+              variant="outlined"
+              aria-label="modal-button"
+              onClick={() => setOpen(true)}>
+              {t("inviteNewUserButton")}
+            </Button>
+          </div>
+          <UserBulkInvite organisation_id={organisation?.id as number} />
+        </Box>
       </PageSection>
       <PageSection
         sx={{

@@ -43,29 +43,20 @@ export default function UserBulkInvite({
   );
 
   return (
-    <>
-      <Typography sx={{ mb: 4 }}>{mockedOrganisationUsersIntro}</Typography>
-      <Typography variant="h6" sx={{ mb: 1 }}>
-        Add users
-      </Typography>
-      <Box sx={{ display: "flex", gap: 4, alignItems: "flex-start" }}>
-        <Typography sx={{ flexGrow: 1 }}>
-          {mockedOrganisationBulkInviteIntro}
-        </Typography>
-        <Box sx={{ minWidth: "210px" }}>
-          <FileLink
-            accept=".csv"
-            includeStatus={false}
-            fileButtonText="Bulk upload Users"
-            isSizeInvalid={isSizeInvalid}
-            isScanning={isScanning}
-            isScanComplete={isScanComplete}
-            isScanFailed={isScanFailed}
-            isUploading={isUploading}
-            onFileChange={handleFileChange}
-          />
-        </Box>
+    <Box>
+      <Box sx={{ minWidth: "210px", maxWidth: "210px" }}>
+        <FileLink
+          accept=".csv"
+          includeStatus={false}
+          fileButtonText="Bulk upload users"
+          isSizeInvalid={isSizeInvalid}
+          isScanning={isScanning}
+          isScanComplete={isScanComplete}
+          isScanFailed={isScanFailed}
+          isUploading={isUploading}
+          onFileChange={handleFileChange}
+        />
       </Box>
-    </>
+    </Box>
   );
 }
