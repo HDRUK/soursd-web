@@ -473,6 +473,7 @@
     "inviteOrganisationSuccess": "You have successfully invited the Organisation. Bear in mind before you can select them they will need to accept the invite"
   },
   "Profile": {
+    "home": "Home",
     "organisationRegister": "Ask them to register",
     "organisationNotListed": "Is your organisation not listed?",
     "postAffiliationSuccess": "You have successfully created an affiliation",
@@ -498,7 +499,7 @@
     "experienceTitle": "Complete your experience information",
     "experienceForm": "Employment and publication history",
     "training": "Training",
-    "profile": "Profile",
+    "homeTitle": "Your actions",
     "approvedProjects": "Projects",
     "accreditations": "Accreditations",
     "education": "Education",

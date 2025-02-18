@@ -60,8 +60,8 @@ const ROUTES: Routes = {
     path: "/user/profile/experience",
     permissions: [UserGroup.USERS],
   },
-  profileResearcherDetails: {
-    path: "/user/profile/details",
+  profileResearcherHome: {
+    path: "/user/profile/home",
     permissions: [UserGroup.USERS],
   },
   profileResearcherCompletion: {

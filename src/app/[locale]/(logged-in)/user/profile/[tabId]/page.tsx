@@ -1,5 +1,5 @@
 import { ConfigProps, withConfig } from "@/components/Config";
-import { redirect } from "@/i18n/routing";
+import { redirect } from "next/navigation";
 import { PageBodyContainer } from "@/modules";
 import TabsContents from "./components/TabsContents";
 import TabsSections from "./components/TabsSections";
@@ -11,9 +11,9 @@ interface PageProps extends ConfigProps {
   };
 }
 
-function Page({ params: { tabId }, config }: PageProps) {
+async function Page({ params: { tabId }, config }: PageProps) {
   if (!Object.values(PageTabs).includes(tabId)) {
-    redirect(config.routes.profileResearcherDetails.path);
+    redirect(config.routes.profileResearcherHome.path);
   }
 
   return (

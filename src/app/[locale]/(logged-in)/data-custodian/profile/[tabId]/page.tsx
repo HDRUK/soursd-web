@@ -1,5 +1,5 @@
 import { ConfigProps, withConfig } from "@/components/Config";
-import { redirect } from "next/navigation";
+import { redirect } from "@/i18n/routing";
 import { PageBodyContainer } from "@/modules";
 import { useTranslations } from "next-intl";
 import TabsContents from "./components/TabsContents";
