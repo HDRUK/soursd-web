@@ -23,7 +23,7 @@ export default function useLoginRedirect(props?: UseLoginRedirectProps) {
     } else if (data?.user_group === UserGroup.ORGANISATIONS) {
       router.replace(ROUTES.profileOrganisationDetails.path);
     } else if (data?.user_group === UserGroup.USERS) {
-      router.replace(ROUTES.profileResearcherDetails.path);
+      router.replace(ROUTES.profileResearcherHome.path);
     } else if (data?.user_group === UserGroup.ADMINS) {
       router.replace(ROUTES.admin.path);
     } else {
