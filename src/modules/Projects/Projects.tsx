@@ -87,6 +87,16 @@ export default function Projects({ variant }: ProjectsProps) {
       onClick: () => handleFieldToggle("approved", ["0", ""]),
       checked: queryParams.approved === "0",
     },
+    {
+      label: t("sortActions.active"),
+      onClick: () => handleFieldToggle("active", ["1", ""]),
+      checked: queryParams.active === "1",
+    },
+    {
+      label: t("sortActions.notActive"),
+      onClick: () => handleFieldToggle("active", ["0", ""]),
+      checked: queryParams.active === "0",
+    },
   ];
 
   const pagination = (

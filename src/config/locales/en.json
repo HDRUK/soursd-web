@@ -678,7 +678,12 @@
   "OrganisationsList": {
     "searchPlaceholder": "Search Organisations",
     "errorResultsProjects": "Unable to get a list of organisations. Please try again or contact us on <contact></contact>",
-    "noResultsProjects": "No organisations found for the search terms provided."
+    "noResultsProjects": "No organisations found for the search terms provided.",
+    "sortActions": {
+      "AZ": "Sort Alphabetical A-Z",
+      "ZA": "Sort Alphabetical Z-A",
+      "hasDelegates": "Has delegates"
+    }
   },
   "ProjectList": {
     "getOrganisationProjectsError": "No projects found",
@@ -691,7 +696,9 @@
       "AZ": "Sort Alphabetical A-Z",
       "ZA": "Sort Alphabetical Z-A",
       "approved": "Approved project",
-      "pending": "Project pending approval"
+      "pending": "Project pending approval",
+      "active": "Active projects",
+      "notActive": "Past projects"
     },
     "errorResultsProjects": "Unable to get a list of projects. Please try again or contact us on <contact></contact>",
     "noResultsProjects": "No projects found for the current search terms."

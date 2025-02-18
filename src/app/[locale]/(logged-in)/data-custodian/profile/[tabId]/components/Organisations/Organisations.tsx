@@ -69,23 +69,20 @@ export default function Sections() {
   const searchActions = [
     {
       label: t("sortActions.AZ"),
-      onClick: () => handleSortToggle("title", SearchDirections.ASC),
+      onClick: () =>
+        handleSortToggle("organisation_name", SearchDirections.ASC),
       checked: sortDirection === SearchDirections.ASC,
     },
     {
       label: t("sortActions.ZA"),
-      onClick: () => handleSortToggle("title", SearchDirections.DESC),
+      onClick: () =>
+        handleSortToggle("organisation_name", SearchDirections.DESC),
       checked: sortDirection === SearchDirections.DESC,
     },
     {
-      label: t("sortActions.approved"),
-      onClick: () => handleFieldToggle("approved", ["1", ""]),
+      label: t("sortActions.hasDelegates"),
+      onClick: () => handleFieldToggle("has_delegates", ["1", ""]),
       checked: queryParams.approved === "1",
-    },
-    {
-      label: t("sortActions.pending"),
-      onClick: () => handleFieldToggle("approved", ["0", ""]),
-      checked: queryParams.approved === "0",
     },
   ];
 
@@ -114,7 +111,7 @@ export default function Sections() {
           queryState={queryState}
           noResultsMessage={t("noResultsOrganisations")}
           pagination={pagination}
-          errorMessage={t.rich(t("noResultsOrganisations"), {
+          errorMessage={t.rich("errorResultsOrganisations", {
             contactLink: ContactLink,
           })}
           count={queryState.total}>
