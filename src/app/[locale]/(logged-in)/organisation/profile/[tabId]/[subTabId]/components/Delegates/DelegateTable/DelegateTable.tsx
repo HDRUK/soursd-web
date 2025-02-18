@@ -13,7 +13,7 @@ import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import { useTranslations } from "next-intl";
 import EditDelegate from "../EditDelegate";
 import DecoupleUser from "../DecoupleDelegate";
-import InvitedDelegatesForm from "../InviteDelegateForm";
+import InviteDelegateForm from "../InviteDelegateForm";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
 
@@ -99,9 +99,8 @@ const DelegateTable = () => {
       <FormModal
         open={openInviteModal}
         onClose={() => setOpenInviteModal(false)}>
-        <InvitedDelegatesForm
+        <InviteDelegateForm
           onSuccess={() => {
-            console.log("calll refetch!!");
             setOpenInviteModal(false);
             refetchDelegates();
           }}

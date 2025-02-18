@@ -80,6 +80,7 @@ export default function InviteDelegateForm({
         });
         onSuccess();
       } catch (_) {
+        onSuccess();
         showAlert("error", {
           text: t("postDelegatesError"),
           confirmButtonText: t("errorButton"),

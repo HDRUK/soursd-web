@@ -26,6 +26,7 @@ import { User } from "@/types/application";
 export interface DelegatesFormValues {
   first_name: string;
   last_name: string;
+  department: number;
 }
 
 export interface EditDelegateFormProps {
@@ -47,7 +48,6 @@ export default function EditDelegateForm({
     value: department.id,
   }));
 
-  console.log(delegate);
   const { mutateAsync, isPending } = useMutation(
     patchUserQuery(delegate?.id as number)
   );
@@ -59,7 +59,7 @@ export default function EditDelegateForm({
     ) => {
       event.preventDefault();
       event.stopPropagation();
-      //
+      console.log(fields);
       onSuccess();
     },
     [mutateAsync, onSuccess, t]
@@ -75,8 +75,9 @@ export default function EditDelegateForm({
 
   const formOptions = {
     defaultValues: {
-      first_name: delegate.first_name,
-      last_name: delegate.last_name,
+      first_name: delegate?.first_name,
+      last_name: delegate?.last_name,
+      department: delegate?.departments?.[0]?.id,
     },
   };
 
@@ -88,7 +89,7 @@ export default function EditDelegateForm({
       {...formOptions}>
       <>
         <FormSection>
-          <Markdown>{t("delegateFormDescription")}</Markdown>
+          <Markdown>{t("editDelegateFormDescription")}</Markdown>
           <Grid
             container
             rowSpacing={3}
@@ -106,6 +107,25 @@ export default function EditDelegateForm({
                 renderField={fieldProps => <TextField {...fieldProps} />}
               />
             </Grid>
+
+            <Grid item xs={12}>
+              <FormControl
+                name="department"
+                renderField={fieldProps => (
+                  <Select
+                    {...fieldProps}
+                    inputProps={{
+                      "aria-label": t("departmentNameAriaLabel"),
+                    }}>
+                    {filteredDepartments?.map(({ label, value }) => (
+                      <MenuItem value={value} key={value} id={label}>
+                        {label}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                )}
+              />
+            </Grid>
           </Grid>
         </FormSection>
         <FormActions>
@@ -114,7 +134,7 @@ export default function EditDelegateForm({
             type="submit"
             endIcon={<AddCircleOutlineIcon />}
             sx={{ marginBottom: "20px" }}>
-            {t("saveButton")}
+            {t("save")}
           </LoadingButton>
         </FormActions>
       </>
