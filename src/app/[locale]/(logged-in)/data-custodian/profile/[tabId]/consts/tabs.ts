@@ -1,5 +1,5 @@
 enum PageTabs {
-  DETAILS = "details",
+  HOME = "home",
   CONTACTS = "contacts",
   USERS = "users",
   CONFIGURATION = "configuration",

@@ -23,7 +23,7 @@ export default function TabsSections() {
     <Box sx={{ width: "100%", mb: 4 }}>
       <Tabs
         variant="fullWidth"
-        value={params?.tabId || PageTabs.DETAILS}
+        value={params?.tabId || PageTabs.HOME}
         aria-label={t("navigationAriaLabel")}
         role="navigation"
         indicatorColor="secondary"
@@ -34,7 +34,7 @@ export default function TabsSections() {
           label={t("home")}
           href={routes.profileCustodianHome.path}
           component={Link}
-          value={PageTabs.DETAILS}
+          value={PageTabs.HOME}
           iconPosition="start"
         />
         <Tab
