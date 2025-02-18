@@ -14,7 +14,7 @@ interface DecoupleUserProps {
   namespace: string;
 }
 
-const DecoupleUser = ({
+const DecoupleDelegate = ({
   user,
   onSuccess,
   payload,
@@ -69,4 +69,4 @@ const DecoupleUser = ({
   );
 };
 
-export default DecoupleUser;
+export default DecoupleDelegate;

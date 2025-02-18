@@ -32,7 +32,7 @@ export interface InvitedDelegatesFormProps {
 }
 
 const NAMESPACE_TRANSLATION_DELEGATES = "Form";
-export default function InvitedDelegatesForm({
+export default function InviteDelegateForm({
   onSuccess,
 }: InvitedDelegatesFormProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_DELEGATES);

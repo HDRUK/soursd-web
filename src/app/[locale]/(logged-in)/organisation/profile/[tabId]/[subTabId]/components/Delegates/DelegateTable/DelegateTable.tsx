@@ -1,31 +1,34 @@
 import Table from "@/modules/Table";
-import { getOrganisationUsers } from "@/services/organisations";
-import usePaginatedQuery from "@/hooks/usePaginatedQuery";
+import { getOrganisationDelegates } from "@/services/organisations";
+import { useQuery } from "@tanstack/react-query";
 import { formatShortDate } from "@/utils/date";
 import { User } from "@/types/application";
 import { ColumnDef, CellContext } from "@tanstack/react-table";
 import LoadingWrapper from "@/components/LoadingWrapper";
 import { useStore } from "@/data/store";
-import { Box } from "@mui/material";
+import FormModal from "@/components/FormModal";
+import { useState } from "react";
+import { Box, Button } from "@mui/material";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
+import { useTranslations } from "next-intl";
 import EditDelegate from "../EditDelegate";
-import DecoupleUser from "../../DecoupleUser";
+import DecoupleUser from "../DecoupleDelegate";
+import InvitedDelegatesForm from "../InviteDelegateForm";
+
+const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
 
 const DelegateTable = () => {
+  const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const organisation = useStore(state => state.config.organisation);
 
   const {
-    isError: isGetUsersError,
     isLoading: isGetUsersLoading,
-    data: usersData,
-    refetch: refetchOrganisationUsers,
-    last_page,
-    page,
-    setPage,
-  } = usePaginatedQuery({
-    queryKeyBase: ["getOrganisationUsers", organisation?.id],
-    queryFn: queryParams => {
-      return getOrganisationUsers(organisation?.id as number, queryParams, {
+    data: delegatesData,
+    refetch: refetchDelegates,
+  } = useQuery({
+    queryKey: ["getOrganisationDelegates", organisation?.id],
+    queryFn: ({ queryKey }) => {
+      return getOrganisationDelegates(queryKey[1] as number, {
         error: {
           message: "getUsersError",
         },
@@ -34,12 +37,28 @@ const DelegateTable = () => {
     enabled: !!organisation,
   });
 
+  const [openInviteModal, setOpenInviteModal] = useState<boolean>(false);
+
   const renderAccountCreated = (info: CellContext<User, unknown>) =>
     info.getValue() ? null : (
       <Box sx={{ display: "flex", justifyContent: "center" }}>
         <TaskAltIcon color="success" />
       </Box>
     );
+
+  const renderActions = (info: CellContext<User, unknown>) => (
+    <>
+      <EditDelegate user={info.row.original} onSuccess={refetchDelegates} />
+      <DecoupleUser
+        user={info.row.original}
+        onSuccess={refetchDelegates}
+        payload={{ is_delegate: 0 }}
+        namespace="DecoupleDelegate"
+      />
+    </>
+  );
+
+  console.log(delegatesData?.data);
 
   const columns: ColumnDef<User>[] = [
     {
@@ -51,7 +70,7 @@ const DelegateTable = () => {
     {
       accessorKey: "department",
       header: "Department",
-      cell: info => info.row.original.departments[0]?.name || "",
+      cell: info => info?.row?.original?.departments?.[0]?.name,
     },
     {
       accessorKey: "created_at",
@@ -66,23 +85,28 @@ const DelegateTable = () => {
     {
       accessorKey: "actions",
       header: "Actions",
-      cell: info => (
-        <>
-          <EditDelegate user={info.row.original} />
-          <DecoupleUser
-            user={info.row.original}
-            onSuccess={refetchOrganisationUsers}
-            payload={{ is_delegate: 0 }}
-            namespace="DecoupleDelegate"
-          />
-        </>
-      ),
+      cell: renderActions,
     },
   ];
 
   return (
     <LoadingWrapper loading={isGetUsersLoading}>
-      <Table data={usersData} columns={columns} />
+      <Table data={delegatesData?.data || []} columns={columns} />
+
+      <Button variant="outlined" onClick={() => setOpenInviteModal(true)}>
+        {tProfile("inviteAnotherDelegate")}
+      </Button>
+      <FormModal
+        open={openInviteModal}
+        onClose={() => setOpenInviteModal(false)}>
+        <InvitedDelegatesForm
+          onSuccess={() => {
+            console.log("calll refetch!!");
+            setOpenInviteModal(false);
+            refetchDelegates();
+          }}
+        />
+      </FormModal>
     </LoadingWrapper>
   );
 };

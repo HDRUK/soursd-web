@@ -8,7 +8,7 @@ import {
   postOrganisationInviteUser,
 } from "@/services/organisations";
 import { ResponseJson } from "@/types/requests";
-import DelegatesForm from "./DelegatesForm";
+import InviteDelegateForm from "./InviteDelegateForm";
 
 jest.mock("@/data/store");
 jest.mock("@/utils/showAlert");
@@ -53,7 +53,7 @@ describe("DelegatesForm", () => {
   const renderComponent = () => {
     render(
       <QueryClientProvider client={queryClient}>
-        <DelegatesForm onSuccess={onSuccess} />
+        <InviteDelegateForm onSuccess={onSuccess} />
       </QueryClientProvider>
     );
   };

@@ -8,7 +8,7 @@ import { useTranslations } from "next-intl";
 import { useStore } from "@/data/store";
 import FormModal from "@/components/FormModal";
 import { useState } from "react";
-import InvitedDelegatesForm from "../InvitedDelegatesForm";
+import EditDelegateForm from "./EditDelegateForm";
 
 interface DecoupleUserProps {
   user: User;
@@ -18,6 +18,7 @@ interface DecoupleUserProps {
 
 const EditDelegate = ({ user, onSuccess, payload }: DecoupleUserProps) => {
   const t = useTranslations("EditDelegate");
+  console.log(user);
   const organisation = useStore(state => state.config.organisation);
   const [openModal, setOpenModal] = useState<boolean>(false);
 
@@ -30,9 +31,6 @@ const EditDelegate = ({ user, onSuccess, payload }: DecoupleUserProps) => {
         },
       }),
   });
-
-  const { first_name, last_name } = user;
-  const { organisation_name } = organisation || {};
 
   return (
     <>
@@ -47,10 +45,9 @@ const EditDelegate = ({ user, onSuccess, payload }: DecoupleUserProps) => {
       </Tooltip>
       <FormModal
         variant="form"
-        sx={{ backgroundColor: "red" }}
         open={openModal}
         onClose={() => setOpenModal(false)}>
-        <InvitedDelegatesForm onSuccess={() => setOpenModal(false)} />
+        <EditDelegateForm onSuccess={() => setOpenModal(false)} />
       </FormModal>
     </>
   );
