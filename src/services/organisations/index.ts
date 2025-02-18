@@ -10,7 +10,7 @@ import postOrganisationUnclaimed from "./postOrganisationUnclaimed";
 import postOrganisationUnclaimedQuery from "./postOrganisationUnclaimedQuery";
 import postOrganisationInvite from "./postOrganisationInvite";
 import postOrganisationInviteQuery from "./postOrganisationInviteQuery";
-import getOrganisationsQuery from "./getOrganisationsQuery";
+import useOrganisationsQuery from "./useOrganisationsQuery";
 import getOrganisationRegistries from "./getOrganisationRegistries";
 
 export {
@@ -27,7 +27,7 @@ export {
   postOrganisationUnclaimed,
   postOrganisationInvite,
   postOrganisationInviteQuery,
-  getOrganisationsQuery,
+  useOrganisationsQuery,
 };
 
 export type * from "./types";

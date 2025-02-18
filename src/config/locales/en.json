@@ -675,6 +675,11 @@
     },
     "alsoApprovedOn": "Also Approved On: {projects} "
   },
+  "OrganisationsList": {
+    "searchPlaceholder": "Search Organisations",
+    "errorResultsProjects": "Unable to get a list of organisations. Please try again or contact us on <contact></contact>",
+    "noResultsProjects": "No organisations found for the search terms provided."
+  },
   "ProjectList": {
     "getOrganisationProjectsError": "No projects found",
     "loadingAriaLabel": "Loading project data",
@@ -687,7 +692,9 @@
       "ZA": "Sort Alphabetical Z-A",
       "approved": "Approved project",
       "pending": "Project pending approval"
-    }
+    },
+    "errorResultsProjects": "Unable to get a list of projects. Please try again or contact us on <contact></contact>",
+    "noResultsProjects": "No projects found for the current search terms."
   },
   "Error": {
     "login": {

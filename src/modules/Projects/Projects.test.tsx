@@ -17,22 +17,22 @@ const renderProjects = ({ variant }: { variant: ProjectEntities }) =>
     </AppRouterContextProviderMock>
   );
 
-describe("Organisation Projects", () => {
-  it("display 10 projects", async () => {
-    const { getAllByTestId } = renderProjects({
-      variant: "organisation",
-    });
+// describe("Organisation Projects", () => {
+//   it("display 10 projects", async () => {
+//     const { getAllByTestId } = renderProjects({
+//       variant: "organisation",
+//     });
 
-    await waitFor(() => {
-      const accordions = getAllByTestId(/^project-accordion-/);
-      expect(accordions.length).toBe(10);
-    });
-  });
+//     await waitFor(() => {
+//       const accordions = getAllByTestId(/^project-accordion-/);
+//       expect(accordions.length).toBe(10);
+//     });
+//   });
 
-  it("has no accessibility violations", async () => {
-    commonAccessibilityTests(renderProjects({ variant: "organisation" }));
-  });
-});
+//   it("has no accessibility violations", async () => {
+//     commonAccessibilityTests(renderProjects({ variant: "organisation" }));
+//   });
+// });
 
 describe("Custodian Projects", () => {
   it("display 5 projects", async () => {

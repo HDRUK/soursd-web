@@ -10,6 +10,8 @@ interface ProjectListProps {
 export default function ProjectList({ projects }: ProjectListProps) {
   if (!projects) return "Not found";
 
+  console.log("***** projects", projects);
+
   return (
     <>
       {projects.map(project => (

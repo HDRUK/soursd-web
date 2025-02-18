@@ -1,6 +1,6 @@
 import { Box, css, styled, TextField } from "@mui/material";
 
-export const StyledSearchBar = styled(Box)(
+export const StyledSearchField = styled(Box)(
   ({ theme }) => css`
     background-color: ${theme.palette.lightPurple.main};
     border-radius: 30px;

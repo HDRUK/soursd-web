@@ -1,32 +1,32 @@
-"use client";
-
+import { SearchDirections } from "@/consts/search";
 import usePaginatedQuery, {
   PaginatedQueryProps,
 } from "@/hooks/usePaginatedQuery";
-import { SearchParams } from "@/types/query";
 import { capitaliseFirstLetter } from "@/utils/string";
 import getEntityProjects, { ProjectEntities } from "./getEntityProjects";
-import { ProjectsResponse } from "./types";
 
 interface GetEntityProjectsQuery<T> extends Partial<PaginatedQueryProps<T>> {
   variant: ProjectEntities;
 }
 
-export default function getEntityProjectsQuery<T>(
+export default function useEntityProjectsQuery<T>(
   id: number,
-  { variant, ...restParams }: GetEntityProjectsQuery<T>
+  { variant, defaultQueryParams, ...restParams }: GetEntityProjectsQuery<T>
 ) {
   const entityKey = `get${capitaliseFirstLetter(variant)}Projects`;
 
   return usePaginatedQuery({
     queryKeyBase: [entityKey],
-    queryFn: (queryParams: SearchParams) => {
-      return getEntityProjects(variant, id, queryParams, {
+    defaultQueryParams: {
+      sort: `title:${SearchDirections.ASC}`,
+      ...defaultQueryParams,
+    },
+    queryFn: queryParams =>
+      getEntityProjects(variant, id, queryParams, {
         error: {
           message: entityKey,
         },
-      });
-    },
+      }),
     ...restParams,
   });
 }

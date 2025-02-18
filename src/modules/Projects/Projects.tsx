@@ -1,24 +1,19 @@
 "use client";
 
-import { Message } from "@/components/Message";
-import OverlayCenter from "@/components/OverlayCenter";
-import PageSection from "@/modules/PageSection";
-import { getEntityProjects } from "@/services/projects";
-import { Box, CircularProgress } from "@mui/material";
-import { useTranslations } from "next-intl";
-import { useStore, StoreState } from "@/data/store";
+import ContactLink from "@/components/ContactLink";
 import Pagination from "@/components/Pagination";
-import usePaginatedQuery from "@/hooks/usePaginatedQuery";
-import SearchBar from "@/modules/SearchBar";
-import SearchActionMenu from "@/modules/SearchActionMenu";
+import Results from "@/components/Results";
 import { SearchDirections } from "@/consts/search";
+import { StoreState, useStore } from "@/data/store";
+import PageSection from "@/modules/PageSection";
+import SearchBar from "@/modules/SearchBar";
 import { ProjectEntities } from "@/services/projects/getEntityProjects";
-import { capitaliseFirstLetter } from "@/utils/string";
+import useEntityProjectsQuery from "@/services/projects/useEntityProjectsQuery";
+import { getSearchSortOrder } from "@/utils/query";
+import { useTranslations } from "next-intl";
 import ProjectList from "../ProjectList";
 import ProjectsLegend from "../ProjectsLegend";
-import getEntityProjectsQuery from "@/services/projects/getEntityProjectsQuery";
-import Results from "@/components/Results";
-import ContactLink from "@/components/ContactLink";
+import PageBody from "../PageBody";
 
 const NAMESPACE_TRANSLATIONS_PROJECT_LIST = "ProjectList";
 
@@ -55,30 +50,21 @@ export default function Projects({ variant }: ProjectsProps) {
   const {
     data: projectsData,
     last_page,
-    page,
     total,
+    page,
     setPage,
     updateQueryParam,
     handleSortToggle,
     handleFieldToggle,
     queryParams,
     ...queryState
-  } = getEntityProjectsQuery(entityId, {
+  } = useEntityProjectsQuery(entityId, {
     variant,
     queryKeyBase: ["getProjects"],
     enabled: !!entityId,
   });
 
-  const pagination = (
-    <Pagination
-      page={page}
-      count={last_page}
-      onChange={(_, page: number) => setPage(page)}
-    />
-  );
-
-  const sortDirection =
-    typeof queryParams?.sort === "string" && queryParams?.sort.split(":")[1];
+  const sortDirection = getSearchSortOrder(queryParams);
 
   const searchActions = [
     {
@@ -103,14 +89,20 @@ export default function Projects({ variant }: ProjectsProps) {
     },
   ];
 
+  const pagination = (
+    <Pagination
+      page={page}
+      count={last_page}
+      onChange={(_, page: number) => setPage(page)}
+    />
+  );
+
   return (
-    <>
+    <PageBody>
       <PageSection>
-        <SearchFilters
-          actions={[]}
-          updateQueryParam={(text: string) =>
-            updateQueryParam("organisation_name[]", text)
-          }
+        <SearchBar
+          actions={searchActions}
+          updateQueryParam={(text: string) => updateQueryParam("title[]", text)}
           placeholder={t("searchPlaceholder")}
           legend={<ProjectsLegend />}
         />
@@ -120,13 +112,13 @@ export default function Projects({ variant }: ProjectsProps) {
           queryState={queryState}
           noResultsMessage={t("noResultsProjects")}
           pagination={pagination}
-          errorMessage={t.rich("erroResultsProjects", {
+          errorMessage={t.rich("errorResultsProjects", {
             contactLink: ContactLink,
           })}
           count={total}>
           <ProjectList projects={projectsData} />
         </Results>
       </PageSection>
-    </>
+    </PageBody>
   );
 }

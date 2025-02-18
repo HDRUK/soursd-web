@@ -49,7 +49,7 @@ export default function OrganisationsList({
   const [activeData, setActiveData] = useState<ActiveOrganisationData | null>(
     null
   );
-  const custodian = useStore(store => ({
+  const { custodian, routes } = useStore(store => ({
     custodian: store.getCustodian(),
     routes: store.getApplication().routes,
   }));

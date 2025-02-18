@@ -26,6 +26,12 @@ function getSearchQuerystring(searchParams: SearchParams) {
   return params ? `?${params.toString()}` : "";
 }
 
+function getSearchSortOrder(queryParams: SearchParams) {
+  return (
+    typeof queryParams?.sort === "string" && queryParams?.sort.split(":")[1]
+  );
+}
+
 function getQueriesError<T extends MutationState & QueryState>(queries: T[]) {
   let errors: Error[] = [];
 
@@ -62,4 +68,5 @@ export {
   isQueriesFetched,
   isQueriesLoading,
   getSearchQuerystring,
+  getSearchSortOrder,
 };

@@ -27,6 +27,7 @@ interface Routes {
   profileCustodianConfiguration: RouteConfig;
   profileCustodianKeycards: RouteConfig;
   profileCustodianUsers: RouteConfig;
+  permissionsOrganisationCustodian: RouteConfig;
   permissionsResearcherCustodian: RouteConfig;
   profileResearcher: RouteConfig;
   profileResearcherCompletion: RouteConfig;

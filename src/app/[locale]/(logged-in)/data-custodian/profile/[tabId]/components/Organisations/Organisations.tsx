@@ -1,25 +1,23 @@
 "use client";
 
 import ContactLink from "@/components/ContactLink";
+import Pagination from "@/components/Pagination";
 import Results from "@/components/Results";
+import { SearchDirections } from "@/consts/search";
 import { PageBody, PageSection } from "@/modules";
-import SearchFilters from "@/modules/SearchFilters";
+import SearchBar from "@/modules/SearchBar";
 import {
   DeleteApprovalPayloadWithEntity,
   PostApprovalPayloadWithEntity,
 } from "@/services/approvals";
-import {
-  getOrganisations,
-  getOrganisationsQuery,
-} from "@/services/organisations";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useOrganisationsQuery } from "@/services/organisations";
+import { getCombinedQueryState, getSearchSortOrder } from "@/utils/query";
+import { useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback } from "react";
 import { useMutationApproval, useMutationDeleteApproval } from "../../hooks";
 import OrganisationsLegend from "../OrganisationsLegend";
 import OrganisationsList from "../OrganisationsList";
-import { getCombinedQueryState } from "@/utils/query";
-import Pagination from "@/components/Pagination";
 
 const NAMESPACE_TRANSLATIONS_USERS = "OrganisationsList";
 
@@ -36,7 +34,7 @@ export default function Sections() {
     handleFieldToggle,
     queryParams,
     ...queryState
-  } = getOrganisationsQuery();
+  } = useOrganisationsQuery();
 
   const { mutateAsync: mutateUpdateAsync, ...approvingQueryState } =
     useMutationApproval();
@@ -66,6 +64,31 @@ export default function Sections() {
     []
   );
 
+  const sortDirection = getSearchSortOrder(queryParams);
+
+  const searchActions = [
+    {
+      label: t("sortActions.AZ"),
+      onClick: () => handleSortToggle("title", SearchDirections.ASC),
+      checked: sortDirection === SearchDirections.ASC,
+    },
+    {
+      label: t("sortActions.ZA"),
+      onClick: () => handleSortToggle("title", SearchDirections.DESC),
+      checked: sortDirection === SearchDirections.DESC,
+    },
+    {
+      label: t("sortActions.approved"),
+      onClick: () => handleFieldToggle("approved", ["1", ""]),
+      checked: queryParams.approved === "1",
+    },
+    {
+      label: t("sortActions.pending"),
+      onClick: () => handleFieldToggle("approved", ["0", ""]),
+      checked: queryParams.approved === "0",
+    },
+  ];
+
   const pagination = (
     <Pagination
       page={page}
@@ -77,8 +100,8 @@ export default function Sections() {
   return (
     <PageBody>
       <PageSection>
-        <SearchFilters
-          actions={[]}
+        <SearchBar
+          actions={searchActions}
           updateQueryParam={(text: string) =>
             updateQueryParam("organisation_name[]", text)
           }

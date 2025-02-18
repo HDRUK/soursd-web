@@ -32,7 +32,7 @@ export default function Results({
         gap: 3,
         ...restProps.sx,
       }}>
-      {!isLoading && !count && (
+      {!isLoading && !count && !isError && (
         <Message severity="info">{noResultsMessage}</Message>
       )}
       {isError && !isLoading && (
