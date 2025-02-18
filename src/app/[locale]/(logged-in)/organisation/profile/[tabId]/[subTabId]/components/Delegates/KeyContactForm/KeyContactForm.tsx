@@ -3,20 +3,22 @@ import { useStore } from "@/data/store";
 import FormActions from "@/components/FormActions";
 import FormControl from "@/components/FormControl";
 import FormSection from "@/components/FormSection";
+import FormModal from "@/components/FormModal";
 import yup from "@/config/yup";
+import { useState, useMemo } from "react";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
 import { LoadingButton } from "@mui/lab";
-import { Grid, MenuItem, Select, TextField } from "@mui/material";
+import { Button, Grid, MenuItem, Select, TextField } from "@mui/material";
 
 import { useTranslations } from "next-intl";
-import { useMemo } from "react";
 import Markdown from "@/components/Markdown";
 import { patchUserQuery } from "@/services/users";
 import Form from "@/components/Form";
 import { showAlert } from "@/utils/showAlert";
 import { useMutation } from "@tanstack/react-query";
 import DelegateTable from "../DelegateTable";
+import InvitedDelegatesForm from "../InvitedDelegatesForm";
 
 export interface KeyContactFormValues {
   first_name: string;
@@ -92,6 +94,8 @@ export default function KeyContactForm() {
     },
   };
 
+  const [openInviteModal, setOpenInviteModal] = useState<boolean>(false);
+
   return (
     <Form schema={schema} onSubmit={handleSubmit} {...formOptions}>
       <>
@@ -151,6 +155,15 @@ export default function KeyContactForm() {
         <FormSection>
           <Markdown>{tProfile("delegateAdminDescription")}</Markdown>
           <DelegateTable />
+
+          <Button variant="outlined" onClick={() => setOpenInviteModal(true)}>
+            {tProfile("inviteAnotherDelegate")}
+          </Button>
+          <FormModal
+            open={openInviteModal}
+            onClose={() => setOpenInviteModal(false)}>
+            <InvitedDelegatesForm onSuccess={() => setOpenInviteModal(false)} />
+          </FormModal>
         </FormSection>
         <FormActions>
           <LoadingButton

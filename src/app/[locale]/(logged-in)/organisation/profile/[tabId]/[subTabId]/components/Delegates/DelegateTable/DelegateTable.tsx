@@ -3,9 +3,11 @@ import { getOrganisationUsers } from "@/services/organisations";
 import usePaginatedQuery from "@/hooks/usePaginatedQuery";
 import { formatShortDate } from "@/utils/date";
 import { User } from "@/types/application";
-import { ColumnDef } from "@tanstack/react-table";
+import { ColumnDef, CellContext } from "@tanstack/react-table";
 import LoadingWrapper from "@/components/LoadingWrapper";
 import { useStore } from "@/data/store";
+import { Box } from "@mui/material";
+import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import EditDelegate from "../EditDelegate";
 import DecoupleUser from "../../DecoupleUser";
 
@@ -32,6 +34,13 @@ const DelegateTable = () => {
     enabled: !!organisation,
   });
 
+  const renderAccountCreated = (info: CellContext<User, unknown>) =>
+    info.getValue() ? null : (
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
+        <TaskAltIcon color="success" />
+      </Box>
+    );
+
   const columns: ColumnDef<User>[] = [
     {
       accessorKey: "name",
@@ -48,6 +57,11 @@ const DelegateTable = () => {
       accessorKey: "created_at",
       header: "Invited On",
       cell: info => formatShortDate(info.getValue() as string),
+    },
+    {
+      accessorKey: "unclaimed",
+      header: "Account created",
+      cell: renderAccountCreated,
     },
     {
       accessorKey: "actions",

@@ -157,7 +157,8 @@
     "removeUserSuccessText": "User removed successfully",
     "cancelButton": "Cancel",
     "closeButton": "Close",
-    "profileUpdateMessage": "Your profile was successfully updated!"
+    "profileUpdateMessage": "Your profile was successfully updated!",
+    "inviteAnotherDelegate": "Invite another delegate"
   },
   "Form": {
     "unsavedAlertText": "Are you sure you want to leave the form with unsaved changes?",
@@ -243,8 +244,8 @@
     "emailRequired": "Email is required",
     "firstNamePlaceholder": "First name",
     "firstName": "First name",
-    "lastNamePlaceholder": "Last name",
-    "lastName": "Last name",
+    "lastNamePlaceholder": "Surname",
+    "lastName": "Surname",
     "orcIdPlaceholder": "ORCiD",
     "orcId": "ORCiD",
     "websitePlaceholder": "Website",

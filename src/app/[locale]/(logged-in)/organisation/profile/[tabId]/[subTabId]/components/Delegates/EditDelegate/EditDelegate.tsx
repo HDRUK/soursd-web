@@ -45,7 +45,11 @@ const EditDelegate = ({ user, onSuccess, payload }: DecoupleUserProps) => {
           <EditIcon />
         </IconButton>
       </Tooltip>
-      <FormModal open={openModal} onClose={() => setOpenModal(false)}>
+      <FormModal
+        variant="form"
+        sx={{ backgroundColor: "red" }}
+        open={openModal}
+        onClose={() => setOpenModal(false)}>
         <InvitedDelegatesForm onSuccess={() => setOpenModal(false)} />
       </FormModal>
     </>

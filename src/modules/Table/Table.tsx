@@ -29,7 +29,7 @@ const Table = <T,>({ data, columns }: TableProps<T>) => {
   if (!data) return null;
 
   return (
-    <TableContainer>
+    <TableContainer sx={{ my: 1 }}>
       <MuiTable>
         <TableHead>
           {table.getHeaderGroups().map(headerGroup => (

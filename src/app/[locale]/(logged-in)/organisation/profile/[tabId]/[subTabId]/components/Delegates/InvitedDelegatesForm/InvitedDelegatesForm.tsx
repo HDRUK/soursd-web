@@ -47,8 +47,6 @@ export default function InvitedDelegatesForm({
   const { mutateAsync, isPending } = useMutation({
     mutationKey: ["inviteUser", organisation?.id],
     mutationFn: (payload: PostOrganisationInviteUserPayload) => {
-      console.log(payload);
-      return;
       return postOrganisationInviteUser(organisation?.id, payload, {
         error: { message: "inviteUserError" },
       });
@@ -124,8 +122,8 @@ export default function InvitedDelegatesForm({
       onSubmit={handleDetailsSubmit}
       {...formOptions}>
       <>
-        <FormSection
-          description={<Markdown>{t("delegateFormDescription")}</Markdown>}>
+        <FormSection>
+          <Markdown>{t("delegateFormDescription")}</Markdown>
           <Grid
             container
             rowSpacing={3}
@@ -176,7 +174,7 @@ export default function InvitedDelegatesForm({
             type="submit"
             endIcon={<AddCircleOutlineIcon />}
             sx={{ marginBottom: "20px" }}>
-            {t("save")}
+            {t("inviteButton")}
           </LoadingButton>
         </FormActions>
       </>
