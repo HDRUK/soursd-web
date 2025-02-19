@@ -1,23 +1,18 @@
 "use client";
 
 import FormActions from "@/components/FormActions";
-import FormControl from "@/components/FormControl";
+import FormControl from "@/components/FormControlWrapper";
 import FormSection from "@/components/FormSection";
 import yup from "@/config/yup";
 import { useStore } from "@/data/store";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import { showAlert } from "@/utils/showAlert";
 import { LoadingButton } from "@mui/lab";
 import { Grid, MenuItem, Select, TextField } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo } from "react";
-import Markdown from "@/components/Markdown";
+
 import Form from "@/components/Form";
-import {
-  PostOrganisationInviteUserPayload,
-  postOrganisationInviteUser,
-} from "@/services/organisations";
 
 import { patchUserQuery } from "@/services/users";
 
@@ -53,12 +48,8 @@ export default function EditDelegateForm({
   );
 
   const handleSubmit = useCallback(
-    async (
-      fields: DelegatesFormValues,
-      event: React.FormEvent<HTMLFormElement>
-    ) => {
-      event.preventDefault();
-      event.stopPropagation();
+    async (fields: DelegatesFormValues) => {
+      // this is coming in another task
       console.log(fields);
       onSuccess();
     },
@@ -67,8 +58,11 @@ export default function EditDelegateForm({
   const schema = useMemo(
     () =>
       yup.object().shape({
-        first_name: yup.string().required(),
-        last_name: yup.string().required(t("delegateFullNameRequiredInvalid")),
+        first_name: yup
+          .string()
+          .required(t("delegateFirstNameRequiredInvalid")),
+        last_name: yup.string().required(t("delegateLastNameRequiredInvalid")),
+        department: yup.number().required(t("departmentRequiredInvalid")),
       }),
     [t]
   );
@@ -89,7 +83,6 @@ export default function EditDelegateForm({
       {...formOptions}>
       <>
         <FormSection>
-          <Markdown>{t("editDelegateFormDescription")}</Markdown>
           <Grid
             container
             rowSpacing={3}

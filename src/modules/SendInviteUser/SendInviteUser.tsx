@@ -3,6 +3,7 @@ import InviteUser from "@/modules/InviteUser";
 import useUserInvite from "@/queries/useUserInvite";
 import { showAlert } from "@/utils/showAlert";
 import { useTranslations } from "next-intl";
+import ReactDOMServer from "react-dom/server";
 
 const NAMESPACE_TRANSLATIONS_ORGANISATION = "User";
 
@@ -21,9 +22,11 @@ export default function SendInviteUser({
 
   const handleErrorAlert = () => {
     showAlert("error", {
-      text: t.rich("inviteUserError", {
-        contactLink: ContactLink,
-      }),
+      text: ReactDOMServer.renderToString(
+        t.rich("inviteUserError", {
+          contactLink: ContactLink,
+        })
+      ),
       confirmButtonText: t("inviteUserErrorButton"),
       willClose: () => onError?.(),
     });

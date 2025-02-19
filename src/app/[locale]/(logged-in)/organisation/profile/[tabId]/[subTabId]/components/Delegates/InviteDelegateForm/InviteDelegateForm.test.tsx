@@ -65,7 +65,10 @@ describe("DelegatesForm", () => {
       screen.getByRole("combobox", { name: /departmentNameAriaLabel/i })
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("textbox", { name: /delegateFullName/i })
+      screen.getByRole("textbox", { name: /delegateFirstName/i })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("textbox", { name: /delegateLastName/i })
     ).toBeInTheDocument();
     expect(
       screen.getByRole("textbox", { name: /delegateJobTitle/i })
@@ -86,17 +89,27 @@ describe("DelegatesForm", () => {
     fireEvent.mouseDown(document.body);
     fireEvent.keyDown(selectElement, { key: "Tab", code: "Tab" });
 
-    fireEvent.change(screen.getAllByLabelText(/delegateFullName/i)[1], {
-      target: { value: "John Doe" },
-    });
-    fireEvent.change(screen.getAllByLabelText(/delegateJobTitle/i)[1], {
-      target: { value: "Manager" },
-    });
-    fireEvent.change(screen.getAllByLabelText(/delegateEmail/i)[1], {
-      target: { value: "john@example.com" },
-    });
+    fireEvent.change(
+      screen.getByTestId("delegate_first_name").querySelector("input")!,
+      { target: { value: "John" } }
+    );
+    fireEvent.change(
+      screen.getByTestId("delegate_last_name").querySelector("input")!,
+      { target: { value: "Doe" } }
+    );
+    fireEvent.change(
+      screen.getByTestId("delegate_job_title").querySelector("input")!,
+      { target: { value: "Manager" } }
+    );
+    fireEvent.change(
+      screen.getByTestId("delegate_email").querySelector("input")!,
+      { target: { value: "john@example.com" } }
+    );
 
-    fireEvent.click(screen.getByText(/save/i));
+    const inviteButton = screen.getByText(/invite/i);
+    expect(inviteButton).toBeInTheDocument();
+    expect(inviteButton).toBeEnabled();
+    fireEvent.click(inviteButton);
 
     await waitFor(() => {
       expect(mockPostOrganisationsInviteUser).toHaveBeenCalledWith(
@@ -130,17 +143,27 @@ describe("DelegatesForm", () => {
     fireEvent.mouseDown(document.body);
     fireEvent.keyDown(selectElement, { key: "Tab", code: "Tab" });
 
-    fireEvent.change(screen.getAllByLabelText(/delegateFullName/i)[1], {
-      target: { value: "John Doe" },
-    });
-    fireEvent.change(screen.getAllByLabelText(/delegateJobTitle/i)[1], {
-      target: { value: "Manager" },
-    });
-    fireEvent.change(screen.getAllByLabelText(/delegateEmail/i)[1], {
-      target: { value: "john@example.com" },
-    });
+    fireEvent.change(
+      screen.getByTestId("delegate_first_name").querySelector("input")!,
+      { target: { value: "John" } }
+    );
+    fireEvent.change(
+      screen.getByTestId("delegate_last_name").querySelector("input")!,
+      { target: { value: "Doe" } }
+    );
+    fireEvent.change(
+      screen.getByTestId("delegate_job_title").querySelector("input")!,
+      { target: { value: "Manager" } }
+    );
+    fireEvent.change(
+      screen.getByTestId("delegate_email").querySelector("input")!,
+      { target: { value: "john@example.com" } }
+    );
 
-    fireEvent.click(screen.getByText(/save/i));
+    const inviteButton = screen.getByText(/invite/i);
+    expect(inviteButton).toBeInTheDocument();
+    expect(inviteButton).toBeEnabled();
+    fireEvent.click(inviteButton);
 
     await waitFor(() => {
       expect(mockShowAlert).toHaveBeenCalledWith("error", expect.any(Object));

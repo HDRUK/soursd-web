@@ -8,6 +8,7 @@ import {
   FormLabelProps,
   Grid,
   GridProps,
+  TextField,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import React, { ReactNode } from "react";
@@ -19,6 +20,18 @@ import {
   FieldValues,
 } from "react-hook-form";
 import { ExtendedUseFormReturn } from "../Form/Form";
+
+function inferComponentType(
+  renderField: (fieldProps: FieldValues) => ReactNode
+): string | null {
+  const renderedElement = renderField({});
+  if (React.isValidElement(renderedElement)) {
+    if (renderedElement.type === TextField) return "textField";
+    // Add more component types that have consistent placeholders if we need them
+    // Placeholder for select not supported with MUI
+  }
+  return null;
+}
 
 export interface FormControlHorizontalProps
   extends Omit<FormControlProps, "error"> {
@@ -77,6 +90,8 @@ export default function FormControlHorizontal({
 
   const isRequired = isFieldRequired(name);
 
+  const componentType = inferComponentType(renderField);
+
   return (
     <FormControl
       disabled={disabled}
@@ -104,8 +119,10 @@ export default function FormControlHorizontal({
           {renderField({
             id: field.name,
             placeholder: displayPlaceholder
-              ? placeholder || t(`${tKey}Placeholder`)
-              : "",
+              ? placeholder
+              : componentType
+                ? t(`${componentType}Placeholder`)
+                : "",
             disabled,
             fullWidth,
             "data-testid": field.name,

@@ -1,5 +1,5 @@
 import { ConfigProps, withConfig } from "@/components/Config";
-import { redirect } from "@/i18n/routing";
+import { redirect } from "next/navigation";
 import { PageBodyContainer } from "@/modules";
 import { useTranslations } from "next-intl";
 import TabsContents from "./components/TabsContents";
@@ -18,7 +18,7 @@ function Page({ params: { tabId }, config }: PageProps) {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_PROFILE);
 
   if (!Object.values(PageTabs).includes(tabId)) {
-    redirect(config.routes.profileCustodianDetails.path);
+    redirect(config.routes.profileCustodianHome.path);
   }
 
   return (
