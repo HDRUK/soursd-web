@@ -48,13 +48,9 @@ export default function EditDelegateForm({
   );
 
   const handleSubmit = useCallback(
-    async (
-      fields: DelegatesFormValues,
-      event: React.FormEvent<HTMLFormElement>
-    ) => {
-      event.preventDefault();
-      event.stopPropagation();
-
+    async (fields: DelegatesFormValues) => {
+      // this is coming in another task
+      console.log(fields);
       onSuccess();
     },
     [mutateAsync, onSuccess, t]

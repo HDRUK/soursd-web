@@ -54,13 +54,7 @@ export default function InviteDelegateForm({
   });
 
   const handleDetailsSubmit = useCallback(
-    async (
-      fields: DelegatesFormValues,
-      event: React.FormEvent<HTMLFormElement>
-    ) => {
-      event.preventDefault();
-      event.stopPropagation();
-
+    async (fields: DelegatesFormValues) => {
       try {
         const payload: PostOrganisationInviteUserPayload = {
           email: fields.delegate_email,
