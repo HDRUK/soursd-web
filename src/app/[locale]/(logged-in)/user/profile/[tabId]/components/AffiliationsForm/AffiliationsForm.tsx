@@ -1,6 +1,5 @@
 import Form from "@/components/Form";
 import FormActions from "@/components/FormActions";
-import ButtonSave from "@/components/ButtonSave";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
 import FormSection from "@/components/FormSection";
 import SelectInput from "@/components/SelectInput";
@@ -14,9 +13,9 @@ import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 import DateInput from "@/components/DateInput";
-import AskOrganisationModal from "../AskOrganisation";
 import { ROUTES } from "@/consts/router";
 import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
+import AskOrganisationModal from "../AskOrganisation";
 
 export interface AffiliationsFormProps {
   onSubmit: (affiliation: ResearcherAffiliation) => void;
@@ -164,12 +163,10 @@ export default function AffiliationsForm({
               </FormSection>
               <FormActions>
                 <ProfileNavigationFooter
-                    previousHref={
-                      ROUTES.profileResearcherIdentity.path
-                    }
-                    nextStepText={tProfile("experience")}
-                    isLoading={queryState.isPending}
-                  />
+                  previousHref={ROUTES.profileResearcherIdentity.path}
+                  nextStepText={tProfile("experience")}
+                  isLoading={queryState.isPending}
+                />
               </FormActions>
             </>
           );

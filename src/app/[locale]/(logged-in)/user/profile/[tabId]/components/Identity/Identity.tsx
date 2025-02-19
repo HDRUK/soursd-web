@@ -1,6 +1,5 @@
 "use client";
 
-import ButtonSave from "@/components/ButtonSave";
 import ContactLink from "@/components/ContactLink";
 import Form from "@/components/Form";
 import FormActions from "@/components/FormActions";
@@ -212,7 +211,7 @@ export default function Identity() {
                   </Grid>
                 </FormSection>
                 <FormActions>
-                <ProfileNavigationFooter
+                  <ProfileNavigationFooter
                     nextStepText={tProfile("affiliations")}
                     isLoading={updateUser.isPending}
                   />

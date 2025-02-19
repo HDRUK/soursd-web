@@ -19,7 +19,6 @@ import {
   getValidation,
 } from "./config/form";
 
-const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 const NAMESPACE_TRANSLATION_FORM = "Form";
 
 export default function SecurityCompliance() {
@@ -30,7 +29,6 @@ export default function SecurityCompliance() {
     };
   });
   const t = useTranslations(NAMESPACE_TRANSLATION_FORM);
-  const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
   const { isPending: isLoading, onSubmit } = usePatchOrganisation({
     id: organisation?.id,
