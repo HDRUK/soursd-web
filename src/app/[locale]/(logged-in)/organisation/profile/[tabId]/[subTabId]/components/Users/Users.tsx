@@ -13,7 +13,13 @@ import { formatShortDate } from "@/utils/date";
 import { isRegistered } from "@/utils/user";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
-import { Box, Button, Checkbox, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Checkbox,
+  FormControlLabel,
+  Typography,
+} from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
@@ -25,6 +31,7 @@ import UserModal from "../UserModal";
 import UserBulkInvite from "../UserBulkInvite";
 import { User } from "@/types/application";
 import Table from "@/modules/Table";
+import Markdown from "@/components/Markdown";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
 
@@ -34,7 +41,6 @@ export default function Users() {
   const organisation = useStore(state => state.config.organisation);
 
   const {
-    isError: isGetUsersError,
     isLoading: isGetUsersLoading,
     data: usersData,
     refetch: refetchOrganisationUsers,
@@ -67,7 +73,16 @@ export default function Users() {
     </Box>
   );
 
-  const renderActions = (info: CellContext<User, unknown>) => <></>;
+  const renderActions = (info: CellContext<User, unknown>) => (
+    <>
+      <DecoupleUser
+        user={info.row.original}
+        onSuccess={refetchOrganisationUsers}
+        payload={{ organisation_id: null }}
+        namespace="DecoupleUser"
+      />
+    </>
+  );
 
   const columns: ColumnDef<User>[] = [
     {
@@ -108,15 +123,20 @@ export default function Users() {
     <PageBody>
       <PageSection heading="Employee or student administration">
         <Box sx={{ marginBottom: "30px" }}>
-          {t("manageResearchersDescription")}
+          <Markdown>{t("manageResearchersDescription")}</Markdown>
         </Box>
-        <Box sx={{ display: "flex", gap: 1, mb: 3, alignItems: "center" }}>
-          <Box component="form" role="search" sx={{ flexGrow: 1 }}>
+        <Box sx={{ display: "flex", gap: 3, mb: 3 }}>
+          <Box component="form" role="search">
             <SearchBar
               fullWidth={false}
               onSearch={text => updateQueryParam("first_name[]", text)}
             />
           </Box>
+          <FormControlLabel
+            label={t("showPendingInvites")}
+            control={<Checkbox value={true} />}
+          />
+          <Button variant="text">{t("clearAll")} </Button>
         </Box>
 
         <Table
@@ -167,12 +187,7 @@ export default function Users() {
                   </>
                 }
                 actions={
-                  <DecoupleUser
-                    user={user}
-                    onSuccess={refetchOrganisationUsers}
-                    payload={{ organisation_id: null }}
-                    namespace="DecoupleUser"
-                  />
+                  
                 }
               />
             );

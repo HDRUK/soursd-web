@@ -24,6 +24,7 @@ interface TableProps<T> {
   page?: number;
   setPage?: React.Dispatch<React.SetStateAction<number>>;
   last_page?: number;
+  dense?: boolean;
 }
 
 const Table = <T,>({
@@ -33,6 +34,7 @@ const Table = <T,>({
   page,
   setPage,
   last_page,
+  dense = true,
 }: TableProps<T>) => {
   const table = useReactTable({
     data: data || [],
@@ -47,7 +49,7 @@ const Table = <T,>({
   return (
     <>
       <TableContainer sx={{ my: 1 }}>
-        <MuiTable>
+        <MuiTable size={dense ? "small" : "medium"}>
           <TableHead>
             {table.getHeaderGroups().map(headerGroup => (
               <TableRow key={headerGroup.id}>

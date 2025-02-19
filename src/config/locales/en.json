@@ -129,7 +129,7 @@
     "projects": "Projects",
     "manageResearchers": "Manage Researchers",
     "manageResearchersTitle": "Administration | Users",
-    "manageResearchersDescription": "As a representative of an Organisation, you have been given permission to add Researchers affiliated with your Organisation. Individual Users will create an account for themselves and will affiliate themselves with an Organisation when setting up a SOURSD account",
+    "manageResearchersDescription": "As a representative of an Organisation, you have been given permission to associate your affiliated users (an employee or student of your Organisation) with your Organisation’s SOURSD account. Users are individuals involved in active research projects using sensitive data. \n \nIndividual users will create a SOURSD account for themselves and will affiliate themselves with an Organisation. \n\nAutomatically invite users to create a SOURSD account. Users will have one SOURSD account that will stay with them throughout their career. Select the user(s) you would like to invite to create a SOURSD account and select ‘Invite User to create a SOURSD account’ in the Actions below. ",
     "contacts": "Contacts",
     "organisationNotFound": "Organisation was not found",
     "getOrganisationStatusError": "Unable to determine validation status",
@@ -158,7 +158,9 @@
     "cancelButton": "Cancel",
     "closeButton": "Close",
     "profileUpdateMessage": "Your profile was successfully updated!",
-    "inviteAnotherDelegate": "Invite another delegate"
+    "inviteAnotherDelegate": "Invite another delegate",
+    "showPendingInvites": "Show pending invites",
+    "clearAll": "clear all"
   },
   "Form": {
     "unsavedAlertText": "Are you sure you want to leave the form with unsaved changes?",
