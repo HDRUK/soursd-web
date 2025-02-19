@@ -10,13 +10,13 @@ import SearchBar from "@/modules/SearchBar";
 import { ProjectEntities } from "@/services/projects/getEntityProjects";
 import useEntityProjectsQuery from "@/services/projects/useEntityProjectsQuery";
 import { getSearchSortOrder } from "@/utils/query";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import SortIcon from "@mui/icons-material/Sort";
 import { useTranslations } from "next-intl";
+import PageBody from "../PageBody";
 import ProjectList from "../ProjectList";
 import ProjectsLegend from "../ProjectsLegend";
-import PageBody from "../PageBody";
 import SearchActionMenu from "../SearchActionMenu";
-import SortIcon from "@mui/icons-material/Sort";
-import FilterAltIcon from "@mui/icons-material/FilterAlt";
 
 const NAMESPACE_TRANSLATIONS_PROJECT_LIST = "ProjectList";
 const NAMESPACE_TRANSLATIONS_APPLICATION = "Application";

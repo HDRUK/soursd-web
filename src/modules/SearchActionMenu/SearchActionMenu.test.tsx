@@ -1,13 +1,11 @@
-import React from "react";
-import { render, screen, waitFor, fireEvent, within } from "@/utils/testUtils";
-import SearchActionMenu, { Action } from "./SearchActionMenu";
+import { fireEvent, render, screen, waitFor } from "@/utils/testUtils";
+import SearchActionMenu from "./SearchActionMenu";
 
 jest.mock("@mui/icons-material/FilterAlt", () => () => (
   <div data-testid="filter-icon" />
 ));
 
 const mockHandleSortToggle = jest.fn();
-const mockHandleFieldToggle = jest.fn();
 
 const actions = [
   {

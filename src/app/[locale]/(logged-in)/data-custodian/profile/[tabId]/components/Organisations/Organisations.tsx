@@ -5,6 +5,7 @@ import Pagination from "@/components/Pagination";
 import Results from "@/components/Results";
 import { SearchDirections } from "@/consts/search";
 import { PageBody, PageSection } from "@/modules";
+import SearchActionMenu from "@/modules/SearchActionMenu";
 import SearchBar from "@/modules/SearchBar";
 import {
   DeleteApprovalPayloadWithEntity,
@@ -20,7 +21,6 @@ import { useCallback } from "react";
 import { useMutationApproval, useMutationDeleteApproval } from "../../hooks";
 import OrganisationsLegend from "../OrganisationsLegend";
 import OrganisationsList from "../OrganisationsList";
-import SearchActionMenu from "@/modules/SearchActionMenu";
 
 const NAMESPACE_TRANSLATIONS_USERS = "OrganisationsList";
 const NAMESPACE_TRANSLATIONS_APPLICATION = "Application";
