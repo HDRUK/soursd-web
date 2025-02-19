@@ -27,6 +27,7 @@ import { showAlert } from "@/utils/showAlert";
 import ReactDOMServer from "react-dom/server";
 import FormActions from "@/components/FormActions";
 import FileUploadDetails from "../FileUploadDetails/FileUploadDetails";
+import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
 
 export interface ExperienceFormValues {
   orc_id?: string | null;
@@ -132,7 +133,7 @@ export default function Experience() {
     <PageBodyContainer heading={tProfile("experienceTitle")}>
       <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
         <PageBody>
-          <Form onSubmit={handleDetailsSubmit} schema={schema} {...formOptions}>
+          <Form onSubmit={handleDetailsSubmit} schema={schema} {...formOptions} key={user?.id}>
             <>
               <FormSection heading={tProfile("experienceForm")}>
                 <Grid container rowSpacing={3}>
@@ -178,13 +179,13 @@ export default function Experience() {
               </FormSection>
 
               <FormActions>
-                <LoadingButton
-                  type="submit"
-                  endIcon={<SaveIcon />}
-                  loading={updateUser.isPending}
-                  sx={{ display: "flex", justifySelf: "end" }}>
-                  {tProfile("submitAndContinueButton")}
-                </LoadingButton>
+                <ProfileNavigationFooter
+                    previousHref={
+                      ROUTES.profileResearcherAffiliations.path
+                    }
+                    nextStepText={tProfile("trainingAndAccreditations")}
+                    isLoading={updateUser.isPending}
+                  />
               </FormActions>
             </>
           </Form>

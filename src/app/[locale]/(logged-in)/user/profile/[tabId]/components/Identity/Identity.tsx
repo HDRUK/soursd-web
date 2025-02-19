@@ -6,6 +6,7 @@ import Form from "@/components/Form";
 import FormActions from "@/components/FormActions";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
 import FormSection from "@/components/FormSection";
+import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
 import Text from "@/components/Text";
 import yup from "@/config/yup";
 import { VALIDATION_ORC_ID } from "@/consts/form";
@@ -143,6 +144,7 @@ export default function Identity() {
               onSubmit={handleDetailsSubmit}
               schema={schema}
               canLeave
+              key={user?.id}
               {...formOptions}>
               <>
                 <FormSection heading={tProfile("identityForm")}>
@@ -210,10 +212,10 @@ export default function Identity() {
                   </Grid>
                 </FormSection>
                 <FormActions>
-                  <ButtonSave isLoading={updateUser.isPending}>
-                    {" "}
-                    {tProfile("submitAndContinueButton")}{" "}
-                  </ButtonSave>
+                <ProfileNavigationFooter
+                    nextStepText={tProfile("affiliations")}
+                    isLoading={updateUser.isPending}
+                  />
                 </FormActions>
               </>
             </Form>

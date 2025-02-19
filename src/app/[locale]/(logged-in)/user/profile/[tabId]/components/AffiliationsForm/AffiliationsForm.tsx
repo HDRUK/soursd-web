@@ -15,6 +15,8 @@ import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 import DateInput from "@/components/DateInput";
 import AskOrganisationModal from "../AskOrganisation";
+import { ROUTES } from "@/consts/router";
+import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
 
 export interface AffiliationsFormProps {
   onSubmit: (affiliation: ResearcherAffiliation) => void;
@@ -161,10 +163,13 @@ export default function AffiliationsForm({
                 </Grid>
               </FormSection>
               <FormActions>
-                <ButtonSave isLoading={queryState.isPending}>
-                  {" "}
-                  {tProfile("submitAndContinueButton")}
-                </ButtonSave>
+                <ProfileNavigationFooter
+                    previousHref={
+                      ROUTES.profileResearcherIdentity.path
+                    }
+                    nextStepText={tProfile("experience")}
+                    isLoading={queryState.isPending}
+                  />
               </FormActions>
             </>
           );
