@@ -9,8 +9,8 @@ export default function getUserQuery(userId: number, options?: QueryOptions) {
       getUser(queryKey[1] as number, {
         error: {
           message: "getUserError",
-          ...options?.error,
         },
+        ...options?.responseOptions,
       }),
     ...options,
   } as UseQueryOptions<ReturnType<typeof getUser>>;

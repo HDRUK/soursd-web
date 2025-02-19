@@ -9,8 +9,8 @@ export default function getPermissionsQuery(options?: QueryOptions) {
       getPermissions({
         error: {
           message: "getPermissionsError",
-          ...options?.error,
         },
+        ...options?.responseOptions,
       }),
     ...options,
   } as UseQueryOptions<ReturnType<typeof getPermissions>>;

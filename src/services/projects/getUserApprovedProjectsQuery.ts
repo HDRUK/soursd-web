@@ -10,7 +10,8 @@ export default function getUserApprovedProjectsQuery(
     queryKey: ["getUserApprovedProjects", registryId],
     queryFn: ({ queryKey }) =>
       getUserApprovedProjects(queryKey[1] as number, {
-        error: { message: "getUserApprovedProjectsError", ...options?.error },
+        error: { message: "getUserApprovedProjectsError" },
+        ...options?.responseOptions,
       }),
     ...options,
   } as UseQueryOptions<ReturnType<typeof getUserApprovedProjects>>;

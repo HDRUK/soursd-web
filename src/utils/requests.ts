@@ -1,5 +1,3 @@
-import { QueryOptions } from "@/types/requests";
-
 function objectToQuerystring(
   params: Record<string, string | number | boolean | null | undefined>
 ) {
@@ -29,4 +27,4 @@ function createFetchInterceptor() {
   };
 }
 
-export { objectToQuerystring, mockedRequest, createFetchInterceptor };
+export { createFetchInterceptor, mockedRequest, objectToQuerystring };

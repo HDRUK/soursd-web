@@ -12,8 +12,8 @@ export default function getCustodianQuery(
       getCustodian(queryKey[1] as number, {
         error: {
           message: "getCustodianError",
-          ...options?.error,
         },
+        ...options?.responseOptions,
       }),
     ...options,
   } as UseQueryOptions<ReturnType<typeof getCustodian>>;

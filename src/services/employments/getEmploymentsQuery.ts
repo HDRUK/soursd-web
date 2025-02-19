@@ -10,7 +10,8 @@ export default function getEmploymentsQuery(
     queryKey: ["getEmployments", registryId],
     queryFn: ({ queryKey }) =>
       getEmployments(queryKey[1] as number, {
-        error: { message: "getEmploymentsError", ...options?.error },
+        error: { message: "getEmploymentsError" },
+        ...options?.responseOptions,
       }),
     ...options,
   } as UseQueryOptions<ReturnType<typeof getEmployments>>;

@@ -10,7 +10,8 @@ export default function getAccreditationsQuery(
     queryKey: ["getAccreditations", registryId],
     queryFn: ({ queryKey }) =>
       getAccreditations(queryKey[1] as number, {
-        error: { message: "getAccreditationsError", ...options?.error },
+        error: { message: "getAccreditationsError" },
+        ...options?.responseOptions,
       }),
     ...options,
   } as UseQueryOptions<ReturnType<typeof getAccreditations>>;

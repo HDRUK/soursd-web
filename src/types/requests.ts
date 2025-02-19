@@ -4,8 +4,8 @@ interface ResponseTranslation {
   message: string;
 }
 
-interface QueryOptions extends Partial<UseQueryOptions>, ResponseOptions {
-  queryKeySuffix?: string;
+interface QueryOptions extends Partial<UseQueryOptions> {
+  responseOptions?: ResponseOptions;
 }
 
 type QueryFunctionContextDefault = QueryFunctionContext<[string, number]>;

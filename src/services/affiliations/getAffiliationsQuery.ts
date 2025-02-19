@@ -10,7 +10,8 @@ export default function getAffiliationsQuery(
     queryKey: ["getAffiliations", registryId],
     queryFn: ({ queryKey }) =>
       getAffiliations(queryKey[1] as number, {
-        error: { message: "getAffiliationsError", ...options?.error },
+        error: { message: "getAffiliationsError" },
+        ...options?.responseOptions,
       }),
     ...options,
   } as UseQueryOptions<ReturnType<typeof getAffiliations>>;

@@ -10,7 +10,8 @@ export default function getEducationsQuery(
     queryKey: ["getEducations", registryId],
     queryFn: ({ queryKey }) =>
       getEducations(queryKey[1] as number, {
-        error: { message: "getEducationsError", ...options?.error },
+        error: { message: "getEducationsError" },
+        ...options?.responseOptions,
       }),
     ...options,
   } as UseQueryOptions<ReturnType<typeof getEducations>>;

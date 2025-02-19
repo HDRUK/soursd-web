@@ -9,8 +9,8 @@ export default function getSystemConfigQuery(options?: QueryOptions) {
       getSystemConfig({
         error: {
           message: "getSystemConfigError",
-          ...options?.error,
         },
+        ...options?.responseOptions,
       }),
     ...options,
   } as UseQueryOptions<ReturnType<typeof getSystemConfig>>;

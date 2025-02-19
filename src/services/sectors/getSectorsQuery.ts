@@ -9,8 +9,8 @@ export default function getSectorsQuery(options?: QueryOptions) {
       getSectors({
         error: {
           message: "getSectorsError",
-          ...options?.error,
         },
+        ...options?.responseOptions,
       }),
     ...options,
   } as UseQueryOptions<ReturnType<typeof getSectors>>;

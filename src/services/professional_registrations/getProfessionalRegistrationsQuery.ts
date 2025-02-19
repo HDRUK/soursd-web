@@ -12,8 +12,8 @@ export default function getProfessionalRegistrationsQuery(
       getProfessionalRegistrations(queryKey[1] as number, {
         error: {
           message: "getProfessionalRegistrationsError",
-          ...options?.error,
         },
+        ...options?.responseOptions,
       }),
     ...options,
   } as UseQueryOptions<ReturnType<typeof getProfessionalRegistrations>>;

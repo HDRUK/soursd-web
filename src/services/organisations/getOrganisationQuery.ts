@@ -12,8 +12,8 @@ export default function getOrganisationQuery(
       getOrganisation(queryKey[1] as number, {
         error: {
           message: "getOrganisationError",
-          ...options?.error,
         },
+        ...options?.responseOptions,
       }),
     ...options,
   } as UseQueryOptions<ReturnType<typeof getOrganisation>>;
