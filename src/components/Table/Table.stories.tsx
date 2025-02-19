@@ -1,10 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import Table from "./Table";
 import { QueryState } from "@/types/form";
 import { ColumnDef } from "@tanstack/react-table";
 import { Box, Select } from "@mui/material";
+import Table from "./Table";
 
-const meta: Meta<typeof Table<any>> = {
+interface Data {
+  id: number;
+  name: string;
+}
+
+const meta: Meta<typeof Table<Data>> = {
   title: "Components/Table",
   component: Table,
   tags: ["autodocs"],
@@ -14,7 +19,7 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const columns: ColumnDef<any>[] = [
+const columns: ColumnDef<Data>[] = [
   {
     accessorKey: "id",
     header: "ID",
@@ -36,7 +41,7 @@ const columns: ColumnDef<any>[] = [
   },
 ];
 
-const data = [
+const data: Data[] = [
   { id: 1, name: "John Doe" },
   { id: 2, name: "Jane Smith" },
 ];

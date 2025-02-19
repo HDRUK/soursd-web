@@ -9,12 +9,12 @@ import { useStore } from "@/data/store";
 import FormModal from "@/components/FormModal";
 import { useState } from "react";
 import { Box, Button } from "@mui/material";
+import ContactLink from "@/components/ContactLink";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import { useTranslations } from "next-intl";
 import EditDelegate from "../EditDelegate";
 import DecoupleUser from "../DecoupleDelegate";
 import InviteDelegateForm from "../InviteDelegateForm";
-import ContactLink from "@/components/ContactLink";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
 

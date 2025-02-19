@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import {
   useReactTable,
   getCoreRowModel,
@@ -15,11 +15,11 @@ import {
   TableRow,
   TableContainer,
   Box,
+  CircularProgress,
 } from "@mui/material";
-import { CircularProgress } from "@mui/material";
 import { Message } from "@/components/Message";
 import { QueryState } from "@/types/form";
-import { ReactNode } from "react";
+
 interface TableProps<T> {
   data: T[];
   columns: ColumnDef<T>[];

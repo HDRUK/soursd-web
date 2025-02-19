@@ -25,7 +25,6 @@ export interface FormControlProps
   displayLabel?: boolean;
   displayPlaceholder?: boolean;
   fullWidth?: boolean;
-  label?: string;
 }
 
 const NAMESPACE_TRANSLATION_FORM = "Form";
@@ -34,7 +33,6 @@ export default function FormControlWrapper({
   name,
   control,
   placeholder,
-  disabled,
   displayPlaceholder = true,
   displayLabel = true,
   renderField,
@@ -45,8 +43,6 @@ export default function FormControlWrapper({
     display: "flex",
     alignItems: "flex-start",
   },
-  labelPlacement = "top",
-  ...restProps
 }: FormControlProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_FORM);
 

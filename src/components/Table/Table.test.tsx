@@ -66,7 +66,7 @@ describe("<Table />", () => {
       <Table
         data={data}
         columns={columns}
-        isPaginated={true}
+        isPaginated
         page={1}
         setPage={setPage}
         last_page={2}
