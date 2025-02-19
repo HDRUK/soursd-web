@@ -33,8 +33,10 @@ const ProjectAccordion = ({ project }: ProjectAccordionProps) => {
 
   const { data: organisationData } = useQuery(
     getOrganisationQuery(organisationId, {
-      error: {
-        message: "getOrganisationDetailsForCustodianError",
+      responseOptions: {
+        error: {
+          message: "getOrganisationDetailsForCustodianError",
+        },
       },
       enabled: !!organisationId,
     })

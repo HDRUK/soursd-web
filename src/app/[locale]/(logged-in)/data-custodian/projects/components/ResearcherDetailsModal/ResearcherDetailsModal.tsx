@@ -32,8 +32,10 @@ export default function ResearcherDetailsModal({
     error: userError,
   } = useQuery(
     getUserQuery(user.id, {
-      error: {
-        message: "getUserDetailsForCustodianError",
+      responseOptions: {
+        error: {
+          message: "getUserDetailsForCustodianError",
+        },
       },
     })
   );
