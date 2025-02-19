@@ -24,8 +24,12 @@ const ROUTES: Routes = {
     path: "/data-custodian/users",
     permissions: [UserGroup.CUSTODIANS],
   },
-  profileCustodianDetails: {
-    path: "/data-custodian/profile/details",
+  profileCustodianHome: {
+    path: "/data-custodian/profile/home",
+    permissions: [UserGroup.CUSTODIANS],
+  },
+  profileCustodianContacts: {
+    path: "/data-custodian/profile/contacts",
     permissions: [UserGroup.CUSTODIANS],
   },
   profileCustodianProjects: {
@@ -56,8 +60,8 @@ const ROUTES: Routes = {
     path: "/user/profile/experience",
     permissions: [UserGroup.USERS],
   },
-  profileResearcherDetails: {
-    path: "/user/profile/details",
+  profileResearcherHome: {
+    path: "/user/profile/home",
     permissions: [UserGroup.USERS],
   },
   profileResearcherCompletion: {
