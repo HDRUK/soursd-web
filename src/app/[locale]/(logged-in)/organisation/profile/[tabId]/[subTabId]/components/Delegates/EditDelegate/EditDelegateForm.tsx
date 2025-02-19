@@ -89,7 +89,6 @@ export default function EditDelegateForm({
       {...formOptions}>
       <>
         <FormSection>
-          <Markdown>{t("editDelegateFormDescription")}</Markdown>
           <Grid
             container
             rowSpacing={3}
