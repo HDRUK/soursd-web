@@ -16,7 +16,9 @@ import {
   TableContainer,
   Box,
 } from "@mui/material";
-
+import { Message } from "@/components/Message";
+import { QueryState } from "@/types/form";
+import { ReactNode } from "react";
 interface TableProps<T> {
   data: T[];
   columns: ColumnDef<T>[];
@@ -25,6 +27,8 @@ interface TableProps<T> {
   setPage?: React.Dispatch<React.SetStateAction<number>>;
   last_page?: number;
   dense?: boolean;
+  queryState: QueryState;
+  errorMessage?: ReactNode;
 }
 
 const Table = <T,>({
@@ -34,7 +38,9 @@ const Table = <T,>({
   page,
   setPage,
   last_page,
+  queryState,
   dense = true,
+  errorMessage = "error",
 }: TableProps<T>) => {
   const table = useReactTable({
     data: data || [],
@@ -44,7 +50,11 @@ const Table = <T,>({
     ...(isPaginated && { getPaginationRowModel: getPaginationRowModel() }),
   });
 
-  if (!data) return null;
+  const { isLoading, isError } = queryState;
+
+  if (!isLoading && isError) {
+    return <Message severity="error">{errorMessage}</Message>;
+  }
 
   return (
     <>

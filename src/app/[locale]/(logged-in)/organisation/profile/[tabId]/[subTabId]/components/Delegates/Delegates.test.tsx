@@ -50,7 +50,7 @@ describe("<Delegates />", () => {
     (useQuery as jest.Mock).mockReturnValue({
       isError: false,
       isLoading: false,
-      data: mockDelegates,
+      data: { data: mockDelegates },
     });
 
     (useMutation as jest.Mock).mockReturnValue({
@@ -71,7 +71,9 @@ describe("<Delegates />", () => {
 
     await waitFor(() => {
       expect(screen.getByText("John Doe")).toBeInTheDocument();
-      expect(screen.getByText("jane@example.com")).toBeInTheDocument();
+      expect(screen.getByText("01/01/2023")).toBeInTheDocument();
+      expect(screen.getByText("Jane Smith")).toBeInTheDocument();
+      expect(screen.getByText("01/02/2023")).toBeInTheDocument();
     });
   });
 
@@ -79,7 +81,7 @@ describe("<Delegates />", () => {
     (useQuery as jest.Mock).mockReturnValue({
       isError: false,
       isLoading: true,
-      data: null,
+      data: undefined,
     });
 
     render(<Delegates />);

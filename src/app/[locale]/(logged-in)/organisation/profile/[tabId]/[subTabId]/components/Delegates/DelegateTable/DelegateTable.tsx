@@ -14,6 +14,8 @@ import { useTranslations } from "next-intl";
 import EditDelegate from "../EditDelegate";
 import DecoupleUser from "../DecoupleDelegate";
 import InviteDelegateForm from "../InviteDelegateForm";
+import { Message } from "@/components/Message";
+import ContactLink from "@/components/ContactLink";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
 
@@ -22,7 +24,8 @@ const DelegateTable = () => {
   const organisation = useStore(state => state.config.organisation);
 
   const {
-    isLoading: isGetUsersLoading,
+    isLoading: isLoadingDelegates,
+    isError: isErrorDelegates,
     data: delegatesData,
     refetch: refetchDelegates,
   } = useQuery({
@@ -30,7 +33,7 @@ const DelegateTable = () => {
     queryFn: ({ queryKey }) => {
       return getOrganisationDelegates(queryKey[1] as number, {
         error: {
-          message: "getUsersError",
+          message: "getOrganisationDelegatesError",
         },
       });
     },
@@ -88,8 +91,18 @@ const DelegateTable = () => {
   ];
 
   return (
-    <LoadingWrapper loading={isGetUsersLoading}>
-      <Table data={delegatesData?.data || []} columns={columns} />
+    <LoadingWrapper variant="basic" loading={isLoadingDelegates}>
+      <Table
+        data={delegatesData?.data || []}
+        columns={columns}
+        errorMessage={tProfile.rich("getDelegatesError", {
+          contactLink: ContactLink,
+        })}
+        queryState={{
+          isLoading: isLoadingDelegates,
+          isError: isErrorDelegates || delegatesData === undefined,
+        }}
+      />
 
       <Button variant="outlined" onClick={() => setOpenInviteModal(true)}>
         {tProfile("inviteAnotherDelegate")}

@@ -39,7 +39,7 @@ export default function LoadingWrapper({
             ...additionalProps,
           }}>
           {variant === "rich" && <h2>Loading...</h2>}
-          <CircularProgress title="Loading data" />
+          <CircularProgress role="progressbar" title="Loading data" />
         </Box>
       </OverlayCenter>
     );
