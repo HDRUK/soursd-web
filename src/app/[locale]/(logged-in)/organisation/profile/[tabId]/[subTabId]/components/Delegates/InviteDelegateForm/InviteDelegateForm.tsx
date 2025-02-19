@@ -80,7 +80,6 @@ export default function InviteDelegateForm({
         });
         onSuccess();
       } catch (_) {
-        onSuccess();
         showAlert("error", {
           text: t("postDelegatesError"),
           confirmButtonText: t("errorButton"),
@@ -92,7 +91,7 @@ export default function InviteDelegateForm({
   const schema = useMemo(
     () =>
       yup.object().shape({
-        department_name: yup.string().required(t("departmentRequiredInvalid")),
+        department_name: yup.string(),
         delegate_first_name: yup
           .string()
           .required(t("delegateFirstNameRequiredInvalid")),
