@@ -118,6 +118,7 @@
     "detailsNameAndAddress": "Name and Address",
     "detailsDigitalIdentifiers": "Digital Identifiers",
     "detailsSectorSizeAndWebsite": "Sector, Size and Website",
+    "detailsOrganisationSectorDescription": "Your Organisation’s sector information should be aligned with Standard Industry Classification (SIC) codes as listed in Companies House or other regulatory sources.",
     "detailsSubsidiaries": "Subsidiaries",
     "detailsSecurityCompliance": "Security Compliance",
     "userAdminDeletgates": "Delegate administration",
@@ -159,7 +160,8 @@
     "nameAndAddressDescription": "Enter the legal name of your Organisation and address details below:",
     "nameAndAddressAddressDescription": "If your headquarters are based outside of the UK, please add the international address of your registered headquarters here and, if relevant, add the UK address of your UK subsidiary within the \"UK subsidiaries.\"",
     "companiesHouseIdDescription": "If your Organisation is listed on Companies House, please provide your Organisations Companies House ID.",
-    "employeeStudentAdminTitle": "Employee or student administration"
+    "employeeStudentAdminTitle": "Employee or student administration",
+    "isCharityDescription": "If your Organisation is a registered charity, please confirm the country your charity is registered and registration ID."
   },
   "Form": {
     "unsavedAlertText": "Are you sure you want to leave the form with unsaved changes?",
@@ -236,7 +238,7 @@
     "rorIdPlaceholder": "ROR ID",
     "rorIdDescription": "Research Organisation ID e.g. https://ror.org/01abcde11",
     "websiteRequiredInvalid": "Website is required",
-    "websiteFormatInvalid": "The website must be a valid url",
+    "websiteFormatInvalid": "The website must be a valid url. e.g. https://www.example.com",
     "sizeRequiredInvalid": "Size is required",
     "companiesHouseNoRequiredInvalid": "Companies house no. is required",
     "companiesHouseNoFormatInvalid": "Companies house no. is not in the correct format",
@@ -260,7 +262,8 @@
     "organisationName": "Organisation name",
     "smbStatus": "SMB status",
     "smbStatusDescription": "I confirm my Organisation is a Small to Medium sized business",
-    "organisationSizeAriaLabel": "Size",
+    "organisationSizeAriaLabel": " Organisation Size",
+    "organisationSize": "Organisation Size",
     "organisationNameAriaLabel": "Select organisation",
     "departmentNameAriaLabel": "Select department",
     "toggleOtpPasscodeAriaLabel": "Toggle passcode visibility",
@@ -536,7 +539,8 @@
     "postUserSuccess": "User updated successfully",
     "postUserSuccessButton": "Ok",
     "postUserError": "There was a problem updating your user information. Please try again or contact us at <contactLink></contactLink>",
-    "postUserErrorButton": "Try Again"
+    "postUserErrorButton": "Try Again",
+    "previousButton": "Previous"
   },
   "ProfileCompleteStatus": {
     "profileComplete": "Profile complete",

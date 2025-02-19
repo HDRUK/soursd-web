@@ -8,11 +8,7 @@ import yup from "@/config/yup";
 import { VALIDATION_URL } from "@/consts/form";
 import { useStore } from "@/data/store";
 import { PageBody, PageSection } from "@/modules";
-import SaveIcon from "@mui/icons-material/Save";
-import { LoadingButton } from "@mui/lab";
 import {
-  Checkbox,
-  FormControlLabel,
   Grid,
   MenuItem,
   Select,
@@ -21,18 +17,25 @@ import {
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
 import usePatchOrganisation from "../../../hooks/usePatchOrganisation";
+import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
+import { ROUTES } from "@/consts/router";
+import { useRouter } from "next/navigation";
+import { Organisation } from "@/types/application";
+import { ORGANISATION_SIZE_OPTIONS as sizeOptions } from "@/consts/form"
 
 export interface SectorFormValues {
   sector_id: number;
   website: string;
-  smb_status?: boolean;
+  organisation_size?: number;
 }
 
 const NAMESPACE_TRANSLATION_FORM = "Form";
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 const NAMESPACE_TRANSLATION_ORG_PROFILE = "ProfileOrganisation";
 
+
 export default function SectorSizeAndWebsite() {
+  const router = useRouter();
   const { organisation, setOrganisation, sectors } = useStore(state => {
     return {
       organisation: state.config.organisation,
@@ -50,7 +53,6 @@ export default function SectorSizeAndWebsite() {
     organisation,
     setOrganisation,
   });
-
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const tOrgProfile = useTranslations(NAMESPACE_TRANSLATION_ORG_PROFILE);
@@ -63,7 +65,7 @@ export default function SectorSizeAndWebsite() {
           .string()
           .required(tForm("websiteRequiredInvalid"))
           .matches(VALIDATION_URL, tForm("websiteFormatInvalid")),
-        smb_status: yup.boolean(),
+        organisation_size: yup.number(),
       }),
     []
   );
@@ -72,7 +74,7 @@ export default function SectorSizeAndWebsite() {
     defaultValues: {
       sector_id: organisation?.sector_id,
       website: organisation?.website,
-      smb_status: organisation?.smb_status,
+      organisation_size: organisation?.organisation_size,
     },
     error:
       isError &&
@@ -80,15 +82,38 @@ export default function SectorSizeAndWebsite() {
         contactLink: ContactLink,
       }),
   };
+  const getSmbStatus = (organisationSize: number | undefined) => {
+    if (!organisationSize) return undefined;
+    return !(organisationSize >= 3);
+  }
 
+  const handleSubmit = (fields: Partial<SectorFormValues>) => {
+
+    const payload = {
+      website: fields.website,
+      sector_id: Number(fields.sector_id),
+      smb_status: getSmbStatus(fields.organisation_size),
+    }
+    
+    onSubmit(payload).then(() => {
+      //We don't want organisation_size sent to the backend, but we want to update local state to store the option selected
+      setOrganisation({
+        ...organisation,
+        organisation_size: fields.organisation_size
+      } as Organisation);
+      router.push(ROUTES.profileOrganisationDetailsSubsidiaries.path);
+    });
+  };
+  
   return (
     <PageBody>
       <PageSection heading={tOrgProfile("detailsSectorSizeAndWebsite")}>
-        <Form schema={schema} onSubmit={onSubmit} {...formOptions}>
+        <Form schema={schema} onSubmit={handleSubmit} {...formOptions} key={organisation?.id}>
           <Grid container rowSpacing={3}>
             <Grid item xs={12}>
               <FormControlHorizontal
                 name="sector_id"
+                description={tOrgProfile("detailsOrganisationSectorDescription")}
                 renderField={fieldProps => (
                   <Select
                     {...fieldProps}
@@ -106,20 +131,21 @@ export default function SectorSizeAndWebsite() {
             </Grid>
               <Grid item xs={12}>
                 <FormControlHorizontal
-                  name="smbStatus"
+                  name="organisation_size"
                   displayPlaceholder={false}
-                  label={tForm("smbStatus")}
                   renderField={fieldProps => (
-                    <FormControlLabel
-                      label={tForm("smbStatusDescription")}
-                      control={
-                        <Checkbox
-                          {...fieldProps}
-                          checked={!!fieldProps.value}
-                        />
-                      }
-                    />
-                  )}
+                  <Select
+                    {...fieldProps}
+                    inputProps={{
+                      "aria-label": tForm("smbStatusDescription"),
+                    }}>
+                    {sizeOptions?.map(({ label, value }) => (
+                      <MenuItem value={value} key={value}>
+                        {label}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                )}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -130,14 +156,11 @@ export default function SectorSizeAndWebsite() {
               </Grid>
             </Grid>
             <FormActions>
-              <LoadingButton
-                loading={isLoading}
-                type="submit"
-                endIcon={<SaveIcon />}>
-                {tProfile("submitButton")}
-              </LoadingButton>
+              <ProfileNavigationFooter 
+                  previousHref={ROUTES.profileOrganisationDetailsDigitalIdentifiers.path}
+                  nextStepText={tOrgProfile("detailsSubsidiaries")}
+                  isLoading={isLoading}/>
             </FormActions>
-          
         </Form>
       </PageSection>
     </PageBody>

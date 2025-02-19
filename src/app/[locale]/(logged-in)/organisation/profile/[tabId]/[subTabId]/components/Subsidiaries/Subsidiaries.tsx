@@ -1,6 +1,5 @@
 "use client";
 
-import ButtonSave from "@/components/ButtonSave";
 import Form from "@/components/Form";
 import FormActions from "@/components/FormActions";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
@@ -14,17 +13,25 @@ import { useTranslations } from "next-intl";
 import React, { useMemo } from "react";
 import usePatchOrganisation from "../../../hooks/usePatchOrganisation";
 import { FormData, getDefaultValues, getValidation } from "./config/form";
+import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
+import { ROUTES } from "@/consts/router";
+import { Organisation } from "@/types/application";
+import { useRouter } from "next/navigation";
+
 
 const NAMESPACE_TRANSLATION_FORM = "Form";
+const NAMESPACE_TRANSLATION_ORG_PROFILE = "ProfileOrganisation";
 
 export default function Subsidiaries() {
+  const router = useRouter();
   const { organisation, setOrganisation } = useStore(state => {
     return {
       organisation: state.config.organisation,
       setOrganisation: state.setOrganisation,
     };
   });
-  const t = useTranslations(NAMESPACE_TRANSLATION_FORM);
+  const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
+  const tOrgProfile = useTranslations(NAMESPACE_TRANSLATION_ORG_PROFILE);
 
   const { isPending: isLoading, onSubmit } = usePatchOrganisation({
     id: organisation?.id,
@@ -32,16 +39,22 @@ export default function Subsidiaries() {
     setOrganisation,
   });
 
-  const schema = getValidation(t);
+  const schema = getValidation(tForm);
   const defaultValues = useMemo(
     () => getDefaultValues(organisation),
     [organisation]
   );
 
+  const handleSubmit = (fields: Partial<Organisation>) => {
+    onSubmit(fields).then(() => {
+      router.push(ROUTES.profileOrganisationDetailsSecurityCompliance.path);
+    });
+  };
+
   return (
     <PageBody>
       <PageSection>
-        <Form schema={schema} defaultValues={defaultValues} onSubmit={onSubmit}>
+        <Form schema={schema} defaultValues={defaultValues} onSubmit={handleSubmit} key={organisation?.id}>
           {({ watch }) => {
             const nsubs = watch("subsidiaries").length;
             return (
@@ -60,6 +73,7 @@ export default function Subsidiaries() {
                           boxSx={{
                             display: "grid",
                             gridTemplateColumns: "2fr 3fr 1fr",
+                            alignItems: "flex-end",
                           }}
                           createNewRow={() => ({
                             name: "",
@@ -71,7 +85,7 @@ export default function Subsidiaries() {
                                 labelMd={0}
                                 contentMd={12}
                                 name={`subsidiaries.${index}.name`}
-                                placeholder={t("name")}
+                                placeholder={tForm("name")}
                                 renderField={fieldProps => (
                                   <TextField {...fieldProps} />
                                 )}
@@ -84,7 +98,7 @@ export default function Subsidiaries() {
                                     size: "small",
                                   }}
                                   fullWidth
-                                  placeholder={t("addressPlaceholder")}
+                                  placeholder={tForm("addressPlaceholder")}
                                 />
                               </Box>
                             </React.Fragment>
@@ -96,10 +110,11 @@ export default function Subsidiaries() {
                 </Grid>
 
                 <FormActions>
-                  <ButtonSave
+                <ProfileNavigationFooter 
+                    previousHref={ROUTES.profileOrganisationDetailsSectorSizeAndWebsite.path}
+                    nextStepText={tOrgProfile("detailsSecurityCompliance")}
                     isLoading={isLoading}
-                    disabled={nsubs === 0 || isLoading}
-                  />
+                    isDisabled={nsubs < 1}/>
                 </FormActions>
               </>
             );

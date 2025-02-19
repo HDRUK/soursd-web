@@ -19,25 +19,16 @@ const VALIDATION_ORC_ID = /^[\d]{4}-[\d]{4}-[\d]{4}-[\d]{4}$/;
 
 const VALIDATION_ROR_ID = /^0[a-hj-km-np-tv-z|0-9]{6}[0-9]{2}$/;
 
-const VALIDATION_URL = /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w-]*)*$/;
+const VALIDATION_URL = /^(https?:\/\/)([\w-]+\.)+[\w-]+(\/[\w-]*)*$/;
 
 const VALIDATION_CHARITY_ID = /^[A-Za-z0-9]{8}/;
 
 const VALIDATION_EMAIL = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$/;
 
 const ORGANISATION_SIZE_OPTIONS = [
-  {
-    label: "Small enterprise: 10 to 49 employees",
-    value: "10 to 49 employees",
-  },
-  {
-    label: "Medium-sized enterprise: 50 to 249 employees",
-    value: "50 to 249 employees",
-  },
-  {
-    label: "Large enterprise: 250 or more employees",
-    value: "250 or more employees",
-  },
+  { value: 1, label: 'Small (10 - 49 Employees)' },
+  { value: 2, label: 'Medium (50 - 249 Employees)' },
+  { value: 3, label: 'Large (250 or more Employees)' },
 ];
 
 enum FormModes {

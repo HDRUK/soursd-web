@@ -9,12 +9,13 @@ import yup from "@/config/yup";
 import { useStore } from "@/data/store";
 import { PageBody, PageSection } from "@/modules";
 import { AddressFields } from "@/types/application";
-import SaveIcon from "@mui/icons-material/Save";
-import { LoadingButton } from "@mui/lab";
 import { Grid, TextField } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
 import usePatchOrganisation from "../../../hooks/usePatchOrganisation";
+import { useRouter } from "next/navigation";
+import { ROUTES } from "@/consts/router";
+import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
 
 export interface NameAndAddressFormValues {
   organisation_name: string;
@@ -31,6 +32,7 @@ const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 const NAMESPACE_TRANSLATION_ORG_PROFILE = "ProfileOrganisation";
 
 export default function NameAndAddress() {
+  const router = useRouter();
   const { organisation, setOrganisation } = useStore(state => {
     return {
       organisation: state.config.organisation,
@@ -67,7 +69,6 @@ export default function NameAndAddress() {
       }),
     []
   );
-
   const formOptions = {
     defaultValues: {
       organisation_name: organisation?.organisation_name,
@@ -85,10 +86,16 @@ export default function NameAndAddress() {
       }),
   };
 
+  const handleSubmit = (fields: Partial<NameAndAddressFormValues>) => {
+    onSubmit(fields).then(() => 
+      router.push(ROUTES.profileOrganisationDetailsDigitalIdentifiers.path)
+    )
+  };
+
   return (
     <PageBody>
       <PageSection heading={tOrgProfile("nameAndAddressTitle")} description={tOrgProfile("nameAndAddressDescription")}>
-        <Form schema={schema} onSubmit={onSubmit} {...formOptions}>
+        <Form schema={schema} onSubmit={handleSubmit} {...formOptions} key={organisation?.id}>
           {({ setValue }) => {
             const handleFindAddress = (address: AddressFields) => {
               Object.entries(address).forEach(([key, value]) => {
@@ -166,12 +173,9 @@ export default function NameAndAddress() {
                 </Grid>
 
                 <FormActions>
-                  <LoadingButton
-                    loading={isLoading}
-                    type="submit"
-                    endIcon={<SaveIcon />}>
-                    {tProfile("submitButton")}
-                  </LoadingButton>
+                <ProfileNavigationFooter 
+                    nextStepText={tOrgProfile("detailsDigitalIdentifiers")}
+                    isLoading={isLoading}/>
                 </FormActions>
               </>
             );

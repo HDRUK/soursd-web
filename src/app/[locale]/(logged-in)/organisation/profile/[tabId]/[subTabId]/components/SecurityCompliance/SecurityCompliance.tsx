@@ -5,8 +5,6 @@ import FormActions from "@/components/FormActions";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
 import { useStore } from "@/data/store";
 import { PageBody, PageSection } from "@/modules";
-import SaveIcon from "@mui/icons-material/Save";
-import { LoadingButton } from "@mui/lab";
 import { Grid } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import TextField from "@mui/material/TextField";
@@ -18,6 +16,8 @@ import {
   getDefaultValues,
   getValidation,
 } from "./config/form";
+import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
+import { ROUTES } from "@/consts/router";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 const NAMESPACE_TRANSLATION_FORM = "Form";
@@ -76,12 +76,9 @@ export default function SecurityCompliance() {
               ))}
             </Grid>
             <FormActions>
-              <LoadingButton
-                loading={isLoading}
-                type="submit"
-                endIcon={<SaveIcon />}>
-                {tProfile("submitButton")}
-              </LoadingButton>
+            <ProfileNavigationFooter 
+                previousHref={ROUTES.profileOrganisationDetailsSubsidiaries.path}
+                isLoading={isLoading}/>
             </FormActions>
           </>
         </Form>
