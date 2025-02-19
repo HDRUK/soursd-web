@@ -132,7 +132,11 @@ export default function FormControlHorizontal({
             "aria-labelledby": `${field.name}-label`,
             ...field,
           })}
-          {!!description && <Typography variant={"subtitle2"} sx={{pt: 1}}>{description}</Typography>}
+          {!!description && (
+            <Typography variant="subtitle2" sx={{ pt: 1 }}>
+              {description}
+            </Typography>
+          )}
           {!!error && <FormHelperText>{error.message}</FormHelperText>}
         </Grid>
       </Grid>

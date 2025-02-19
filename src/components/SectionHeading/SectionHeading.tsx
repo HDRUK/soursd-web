@@ -4,7 +4,7 @@ import { ReactNode } from "react";
 export interface SectionHeadingProps extends BoxProps {
   heading?: ReactNode;
   description?: ReactNode;
-  type?: "form" | "content"
+  type?: "form" | "content";
   size?: "large" | "default";
   variant?: TypographyProps["variant"];
 }

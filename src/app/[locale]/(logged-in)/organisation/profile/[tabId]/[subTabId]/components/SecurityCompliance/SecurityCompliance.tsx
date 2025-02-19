@@ -10,14 +10,14 @@ import Checkbox from "@mui/material/Checkbox";
 import TextField from "@mui/material/TextField";
 import { useTranslations } from "next-intl";
 import React, { useMemo } from "react";
+import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
+import { ROUTES } from "@/consts/router";
 import usePatchOrganisation from "../../../hooks/usePatchOrganisation";
 import {
   certificationRows,
   getDefaultValues,
   getValidation,
 } from "./config/form";
-import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
-import { ROUTES } from "@/consts/router";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 const NAMESPACE_TRANSLATION_FORM = "Form";
@@ -76,9 +76,12 @@ export default function SecurityCompliance() {
               ))}
             </Grid>
             <FormActions>
-            <ProfileNavigationFooter 
-                previousHref={ROUTES.profileOrganisationDetailsSubsidiaries.path}
-                isLoading={isLoading}/>
+              <ProfileNavigationFooter
+                previousHref={
+                  ROUTES.profileOrganisationDetailsSubsidiaries.path
+                }
+                isLoading={isLoading}
+              />
             </FormActions>
           </>
         </Form>

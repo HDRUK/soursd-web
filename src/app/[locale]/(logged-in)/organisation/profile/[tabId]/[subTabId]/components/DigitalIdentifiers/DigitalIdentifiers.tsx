@@ -15,11 +15,11 @@ import { PageBody, PageSection } from "@/modules";
 import { Grid, TextField } from "@mui/material";
 import { useTranslations } from "next-intl";
 import React, { useMemo } from "react";
-import usePatchOrganisation from "../../../hooks/usePatchOrganisation";
 import { ROUTES } from "@/consts/router";
 import { useRouter } from "next/navigation";
 import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
 import { Charity } from "@/types/application";
+import usePatchOrganisation from "../../../hooks/usePatchOrganisation";
 
 export interface DigitalIdentifiersFormValues {
   companies_house_no: string;
@@ -109,7 +109,7 @@ export default function DigitalIdentifiers() {
       charities: fields.charities,
       companies_house_no: fields.companies_house_no,
       ror_id: fields.ror_id,
-    }
+    };
     onSubmit(payload).then(() =>
       router.push(ROUTES.profileOrganisationDetailsSectorSizeAndWebsite.path)
     );
@@ -117,7 +117,11 @@ export default function DigitalIdentifiers() {
   return (
     <PageBody>
       <PageSection heading={tOrgProfile("detailsDigitalIdentifiers")}>
-        <Form schema={schema} onSubmit={handleSubmit} {...formOptions} key={organisation?.id}>
+        <Form
+          schema={schema}
+          onSubmit={handleSubmit}
+          {...formOptions}
+          key={organisation?.id}>
           {({ watch, setValue }) => {
             const isCharity = watch("isCharity");
 
@@ -212,16 +216,19 @@ export default function DigitalIdentifiers() {
                   <Grid item xs={12}>
                     <FormControlHorizontal
                       name="ror_id"
-                      renderField={fieldProps => (<TextField {...fieldProps} />)}
+                      renderField={fieldProps => <TextField {...fieldProps} />}
                       description={tForm("rorIdDescription")}
                     />
                   </Grid>
                 </Grid>
                 <FormActions>
-                  <ProfileNavigationFooter 
-                    previousHref={ROUTES.profileOrganisationDetailsNameAndAddress.path}
+                  <ProfileNavigationFooter
+                    previousHref={
+                      ROUTES.profileOrganisationDetailsNameAndAddress.path
+                    }
                     nextStepText={tOrgProfile("detailsSectorSizeAndWebsite")}
-                    isLoading={isLoading}/>
+                    isLoading={isLoading}
+                  />
                 </FormActions>
               </>
             );

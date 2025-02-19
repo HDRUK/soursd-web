@@ -45,7 +45,12 @@ export default function ProfessionalRegistrationsForm({
   };
 
   return (
-    <Form onSubmit={onSubmit} schema={schema} {...formOptions} sx={{ mb: 3 }} shouldReset>
+    <Form
+      onSubmit={onSubmit}
+      schema={schema}
+      {...formOptions}
+      sx={{ mb: 3 }}
+      shouldReset>
       <FormSection heading={tProfile("title")}>
         <Grid container rowSpacing={3}>
           <Grid item xs={12}>

@@ -17,7 +17,6 @@ import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import DecoupleUser from "../DecoupleUser";
 import DelegatesForm from "./DelegatesForm";
-import { mockedDelegateAdministationDescription, mockedDelegateListDescription } from "@/mocks/data/cms";
 
 const NAMESPACE_PROFILE_ORGANISATION = "ProfileOrganisation";
 
@@ -54,10 +53,8 @@ export default function Delegates() {
 
   return (
     <PageBody>
-      <PageSection heading={t("userAdminDeletgates")} description={mockedDelegateAdministationDescription}>
+      <PageSection>
         <DelegatesForm onSuccess={refetchOrganisationUsers} />
-        </PageSection>
-        <PageSection description={mockedDelegateListDescription}>
         <Results
           noResultsMessage={t("noDelegates")}
           errorMessage={t.rich("getDelegatesError", {

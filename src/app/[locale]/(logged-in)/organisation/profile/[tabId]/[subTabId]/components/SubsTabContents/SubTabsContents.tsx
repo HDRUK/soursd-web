@@ -13,7 +13,7 @@ import {
 import Delegates from "../Delegates";
 import DigitalIdentifiers from "../DigitalIdentifiers";
 import NameAndAddress from "../NameAndAddress";
-import SectorSizeAndWebsite from "../SectorSizeAndWebsite"
+import SectorSizeAndWebsite from "../SectorSizeAndWebsite";
 import SecurityCompliance from "../SecurityCompliance";
 import Subsidiaries from "../Subsidiaries";
 import Users from "../Users";
@@ -34,12 +34,12 @@ export default function SubTabsContents({
 
   const availableSubTabs = getSubTabs(tabId as PageTabs) || [];
 
-  // if (
-  //   !user ||
-  //   !organisation ||
-  //   !availableSubTabs.includes(subTabId as PageSubTabs)
-  // )
-  //   notFound();
+  if (
+    !user ||
+    !organisation ||
+    !availableSubTabs.includes(subTabId as PageSubTabs)
+  )
+    notFound();
 
   let content = null;
 

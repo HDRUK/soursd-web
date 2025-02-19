@@ -74,7 +74,7 @@ export default function Form<T extends FieldValues>({
 
   const handleFormSubmit = (values: T) => {
     onSubmit(values);
-    if(shouldReset){
+    if (shouldReset) {
       reset(defaultValues);
     }
   };

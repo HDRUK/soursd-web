@@ -26,9 +26,9 @@ const VALIDATION_CHARITY_ID = /^[A-Za-z0-9]{8}/;
 const VALIDATION_EMAIL = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$/;
 
 const ORGANISATION_SIZE_OPTIONS = [
-  { value: 1, label: 'Small (10 - 49 Employees)' },
-  { value: 2, label: 'Medium (50 - 249 Employees)' },
-  { value: 3, label: 'Large (250 or more Employees)' },
+  { value: 1, label: "Small (10 - 49 Employees)" },
+  { value: 2, label: "Medium (50 - 249 Employees)" },
+  { value: 3, label: "Large (250 or more Employees)" },
 ];
 
 enum FormModes {

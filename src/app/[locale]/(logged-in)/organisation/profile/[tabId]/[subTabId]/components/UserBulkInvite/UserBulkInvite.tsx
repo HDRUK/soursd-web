@@ -44,7 +44,14 @@ export default function UserBulkInvite({
 
   return (
     <>
+      <Typography sx={{ mb: 4 }}>{mockedOrganisationUsersIntro}</Typography>
+      <Typography variant="h6" sx={{ mb: 1 }}>
+        Add users
+      </Typography>
       <Box sx={{ display: "flex", gap: 4, alignItems: "flex-start" }}>
+        <Typography sx={{ flexGrow: 1 }}>
+          {mockedOrganisationBulkInviteIntro}
+        </Typography>
         <Box sx={{ minWidth: "210px" }}>
           <FileLink
             accept=".csv"
@@ -55,9 +62,8 @@ export default function UserBulkInvite({
             isScanComplete={isScanComplete}
             isScanFailed={isScanFailed}
             isUploading={isUploading}
-            onFileChange={handleFileChange} 
-            message={"bulkInviteUploadError"}         
-            />
+            onFileChange={handleFileChange}
+          />
         </Box>
       </Box>
     </>

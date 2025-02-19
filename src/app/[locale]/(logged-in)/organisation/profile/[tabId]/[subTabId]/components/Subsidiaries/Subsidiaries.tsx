@@ -11,13 +11,12 @@ import { Box, Grid } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { useTranslations } from "next-intl";
 import React, { useMemo } from "react";
-import usePatchOrganisation from "../../../hooks/usePatchOrganisation";
-import { FormData, getDefaultValues, getValidation } from "./config/form";
 import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
 import { ROUTES } from "@/consts/router";
 import { Organisation } from "@/types/application";
 import { useRouter } from "next/navigation";
-
+import { FormData, getDefaultValues, getValidation } from "./config/form";
+import usePatchOrganisation from "../../../hooks/usePatchOrganisation";
 
 const NAMESPACE_TRANSLATION_FORM = "Form";
 const NAMESPACE_TRANSLATION_ORG_PROFILE = "ProfileOrganisation";
@@ -54,7 +53,11 @@ export default function Subsidiaries() {
   return (
     <PageBody>
       <PageSection>
-        <Form schema={schema} defaultValues={defaultValues} onSubmit={handleSubmit} key={organisation?.id}>
+        <Form
+          schema={schema}
+          defaultValues={defaultValues}
+          onSubmit={handleSubmit}
+          key={organisation?.id}>
           {({ watch }) => {
             const nsubs = watch("subsidiaries").length;
             return (
@@ -110,11 +113,14 @@ export default function Subsidiaries() {
                 </Grid>
 
                 <FormActions>
-                <ProfileNavigationFooter 
-                    previousHref={ROUTES.profileOrganisationDetailsSectorSizeAndWebsite.path}
+                  <ProfileNavigationFooter
+                    previousHref={
+                      ROUTES.profileOrganisationDetailsSectorSizeAndWebsite.path
+                    }
                     nextStepText={tOrgProfile("detailsSecurityCompliance")}
                     isLoading={isLoading}
-                    isDisabled={nsubs < 1}/>
+                    isDisabled={nsubs < 1}
+                  />
                 </FormActions>
               </>
             );

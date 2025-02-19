@@ -12,10 +12,10 @@ import { AddressFields } from "@/types/application";
 import { Grid, TextField } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
-import usePatchOrganisation from "../../../hooks/usePatchOrganisation";
 import { useRouter } from "next/navigation";
 import { ROUTES } from "@/consts/router";
 import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
+import usePatchOrganisation from "../../../hooks/usePatchOrganisation";
 
 export interface NameAndAddressFormValues {
   organisation_name: string;
@@ -87,15 +87,21 @@ export default function NameAndAddress() {
   };
 
   const handleSubmit = (fields: Partial<NameAndAddressFormValues>) => {
-    onSubmit(fields).then(() => 
+    onSubmit(fields).then(() =>
       router.push(ROUTES.profileOrganisationDetailsDigitalIdentifiers.path)
-    )
+    );
   };
 
   return (
     <PageBody>
-      <PageSection heading={tOrgProfile("nameAndAddressTitle")} description={tOrgProfile("nameAndAddressDescription")}>
-        <Form schema={schema} onSubmit={handleSubmit} {...formOptions} key={organisation?.id}>
+      <PageSection
+        heading={tOrgProfile("nameAndAddressTitle")}
+        description={tOrgProfile("nameAndAddressDescription")}>
+        <Form
+          schema={schema}
+          onSubmit={handleSubmit}
+          {...formOptions}
+          key={organisation?.id}>
           {({ setValue }) => {
             const handleFindAddress = (address: AddressFields) => {
               Object.entries(address).forEach(([key, value]) => {
@@ -116,7 +122,9 @@ export default function NameAndAddress() {
                     <FormControlHorizontal
                       name="address"
                       displayPlaceholder={false}
-                      description={tOrgProfile("nameAndAddressAddressDescription")}
+                      description={tOrgProfile(
+                        "nameAndAddressAddressDescription"
+                      )}
                       renderField={() => (
                         <GoogleAutocomplete
                           name="address"
@@ -173,9 +181,10 @@ export default function NameAndAddress() {
                 </Grid>
 
                 <FormActions>
-                <ProfileNavigationFooter 
+                  <ProfileNavigationFooter
                     nextStepText={tOrgProfile("detailsDigitalIdentifiers")}
-                    isLoading={isLoading}/>
+                    isLoading={isLoading}
+                  />
                 </FormActions>
               </>
             );
