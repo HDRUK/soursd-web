@@ -14,8 +14,12 @@ import { useTranslations } from "next-intl";
 import ProjectList from "../ProjectList";
 import ProjectsLegend from "../ProjectsLegend";
 import PageBody from "../PageBody";
+import SearchActionMenu from "../SearchActionMenu";
+import SortIcon from "@mui/icons-material/Sort";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
 
 const NAMESPACE_TRANSLATIONS_PROJECT_LIST = "ProjectList";
+const NAMESPACE_TRANSLATIONS_APPLICATION = "Application";
 
 type VariantConfig = {
   getId: (store: StoreState) => string | number | undefined;
@@ -42,6 +46,7 @@ interface ProjectsProps {
 
 export default function Projects({ variant }: ProjectsProps) {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_PROJECT_LIST);
+  const tApplication = useTranslations(NAMESPACE_TRANSLATIONS_APPLICATION);
 
   const store = useStore();
   const { getId } = variantConfig[variant];
@@ -66,7 +71,7 @@ export default function Projects({ variant }: ProjectsProps) {
 
   const sortDirection = getSearchSortOrder(queryParams);
 
-  const searchActions = [
+  const sortActions = [
     {
       label: t("sortActions.AZ"),
       onClick: () => handleSortToggle("title", SearchDirections.ASC),
@@ -77,25 +82,36 @@ export default function Projects({ variant }: ProjectsProps) {
       onClick: () => handleSortToggle("title", SearchDirections.DESC),
       checked: sortDirection === SearchDirections.DESC,
     },
+  ];
+
+  const filterDateActions = [
     {
-      label: t("sortActions.approved"),
+      label: t("filterActions.pastProjects"),
+      onClick: () => handleFieldToggle("active", ["1", ""]),
+      checked: queryParams.approved === "1",
+    },
+    {
+      label: t("filterActions.activeProjects"),
+      onClick: () => handleFieldToggle("active", ["0", ""]),
+      checked: queryParams.approved === "0",
+    },
+  ];
+
+  const filterStatusActions = [
+    {
+      label: t("filterActions.approved"),
       onClick: () => handleFieldToggle("approved", ["1", ""]),
       checked: queryParams.approved === "1",
     },
     {
-      label: t("sortActions.pending"),
-      onClick: () => handleFieldToggle("approved", ["0", ""]),
-      checked: queryParams.approved === "0",
+      label: t("filterActions.pending"),
+      onClick: () => handleFieldToggle("pending", ["1", ""]),
+      checked: queryParams.pending === "1",
     },
     {
-      label: t("sortActions.active"),
-      onClick: () => handleFieldToggle("active", ["1", ""]),
+      label: t("filterActions.completed"),
+      onClick: () => handleFieldToggle("completed", ["1", ""]),
       checked: queryParams.active === "1",
-    },
-    {
-      label: t("sortActions.notActive"),
-      onClick: () => handleFieldToggle("active", ["0", ""]),
-      checked: queryParams.active === "0",
     },
   ];
 
@@ -111,11 +127,32 @@ export default function Projects({ variant }: ProjectsProps) {
     <PageBody>
       <PageSection>
         <SearchBar
-          actions={searchActions}
           updateQueryParam={(text: string) => updateQueryParam("title[]", text)}
           placeholder={t("searchPlaceholder")}
-          legend={<ProjectsLegend />}
-        />
+          legend={<ProjectsLegend />}>
+          <SearchActionMenu
+            actions={sortActions}
+            startIcon={<SortIcon />}
+            renderedSelectedLabel={tApplication("sortedBy")}
+            renderedDefaultLabel={tApplication("sortBy")}
+            aria-label={tApplication("sortBy")}
+          />
+          <SearchActionMenu
+            actions={filterDateActions}
+            startIcon={<FilterAltIcon />}
+            renderedSelectedLabel={tApplication("filteredByDate")}
+            renderedDefaultLabel={tApplication("filterByDate")}
+            aria-label={tApplication("filterByDate")}
+          />
+          <SearchActionMenu
+            actions={filterStatusActions}
+            multiple
+            startIcon={<FilterAltIcon />}
+            renderedSelectedLabel={tApplication("filteredBy")}
+            renderedDefaultLabel={tApplication("filterByProjectStatus")}
+            aria-label={tApplication("filterByProjectStatus")}
+          />
+        </SearchBar>
       </PageSection>
       <PageSection>
         <Results

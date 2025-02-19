@@ -1,13 +1,12 @@
-import React, { useState, useEffect, ChangeEvent } from "react";
-import { InputAdornment } from "@mui/material";
 import useDebounce from "@/hooks/useDebounce";
-import SearchIcon from "@mui/icons-material/Search";
 import ClearIcon from "@mui/icons-material/Clear";
-import { TextFieldProps } from "@mui/material/TextField";
-import { StyledSearchField, StyledInput } from "./SearchField.styles";
+import SearchIcon from "@mui/icons-material/Search";
+import { InputAdornment } from "@mui/material";
+import TextField, { TextFieldProps } from "@mui/material/TextField";
+import { ChangeEvent, useEffect, useState } from "react";
 import IconButton from "../../components/IconButton";
 
-type SearchFieldProps = TextFieldProps & {
+type SearchFieldProps = Omit<TextFieldProps, "change"> & {
   onSearch: (query: string) => void;
   placeholder?: string;
 };
@@ -31,32 +30,29 @@ const SearchField = ({ onSearch, placeholder, ...rest }: SearchFieldProps) => {
   };
 
   return (
-    <StyledSearchField>
-      <StyledInput
-        fullWidth
-        hiddenLabel
-        label="Search"
-        variant="outlined"
-        placeholder={placeholder}
-        value={searchQuery || ""}
-        onChange={handleSearchChange}
-        size="small"
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              {searchQuery ? (
-                <IconButton onClick={handleClearSearch} edge="end">
-                  <ClearIcon />
-                </IconButton>
-              ) : (
-                <SearchIcon />
-              )}
-            </InputAdornment>
-          ),
-        }}
-        {...rest}
-      />
-    </StyledSearchField>
+    <TextField
+      fullWidth
+      hiddenLabel
+      label="Search"
+      placeholder={placeholder}
+      value={searchQuery || ""}
+      onChange={handleSearchChange}
+      size="small"
+      InputProps={{
+        endAdornment: (
+          <InputAdornment position="end">
+            {searchQuery ? (
+              <IconButton onClick={handleClearSearch} edge="end">
+                <ClearIcon />
+              </IconButton>
+            ) : (
+              <SearchIcon />
+            )}
+          </InputAdornment>
+        ),
+      }}
+      {...rest}
+    />
   );
 };
 export default SearchField;

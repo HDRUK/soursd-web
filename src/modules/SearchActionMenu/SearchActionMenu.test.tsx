@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen, waitFor, fireEvent } from "@testing-library/react";
+import { render, screen, waitFor, fireEvent, within } from "@/utils/testUtils";
 import SearchActionMenu, { Action } from "./SearchActionMenu";
 
 jest.mock("@mui/icons-material/FilterAlt", () => () => (
@@ -9,65 +9,48 @@ jest.mock("@mui/icons-material/FilterAlt", () => () => (
 const mockHandleSortToggle = jest.fn();
 const mockHandleFieldToggle = jest.fn();
 
-describe("SearchActionMenu", () => {
-  const searchActions: Action[] = [
-    {
-      label: "A-Z",
-      onClick: mockHandleSortToggle,
-      checked: true,
-      icon: <span data-testid="icon-a-z">A-Z Icon</span>,
-    },
-    {
-      label: "Z-A",
-      onClick: mockHandleSortToggle,
-      checked: false,
-      icon: <span data-testid="icon-z-a">Z-A Icon</span>,
-    },
-    {
-      label: "Approved",
-      onClick: mockHandleFieldToggle,
-      checked: false,
-      icon: <span data-testid="icon-approved">Approved Icon</span>,
-    },
-  ];
+const actions = [
+  {
+    label: "A-Z",
+    onClick: mockHandleSortToggle,
+  },
+  {
+    label: "Z-A",
+    onClick: mockHandleSortToggle,
+  },
+];
 
+const renderMenuOpen = () => {
+  const rendered = render(
+    <SearchActionMenu
+      actions={actions}
+      renderedSelectedLabel="Sorted by"
+      renderedDefaultLabel="Sort by"
+    />
+  );
+
+  fireEvent.mouseDown(screen.getByText("Sort by"));
+
+  return rendered;
+};
+
+describe("SearchActionMenu", () => {
   beforeEach(() => {
-    render(<SearchActionMenu actions={searchActions} />);
-    const filterIconButton = screen.getByTestId("filter-icon");
-    expect(filterIconButton).toBeInTheDocument();
-    fireEvent.click(filterIconButton);
+    renderMenuOpen();
   });
 
   it("renders all actions correctly", async () => {
     await waitFor(() =>
-      searchActions.forEach(action => {
+      actions.forEach(action => {
         expect(screen.getByText(action.label)).toBeInTheDocument();
-        if (action.icon) {
-          const icon = screen.getByTestId(`icon-${action.label.toLowerCase()}`);
-          expect(icon).toBeInTheDocument();
-        }
-      })
-    );
-  });
-
-  it("renders checkboxes with the correct checked state", async () => {
-    await waitFor(() =>
-      searchActions.forEach(action => {
-        const checkbox = screen.getByLabelText(`checkbox-${action.label}`);
-        expect(checkbox).toBeInTheDocument();
-
-        if (action.checked) {
-          expect(checkbox).toBeChecked();
-        } else {
-          expect(checkbox).not.toBeChecked();
-        }
       })
     );
   });
 
   it("calls the correct handler on action click", () => {
-    const firstAction = screen.getByText("A-Z");
-    fireEvent.click(firstAction);
+    const sortAction = screen.getByText("A-Z");
+
+    fireEvent.click(sortAction);
 
     expect(mockHandleSortToggle).toHaveBeenCalled();
   });

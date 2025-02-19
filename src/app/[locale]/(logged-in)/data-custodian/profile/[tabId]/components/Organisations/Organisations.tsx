@@ -12,18 +12,23 @@ import {
 } from "@/services/approvals";
 import { useOrganisationsQuery } from "@/services/organisations";
 import { getCombinedQueryState, getSearchSortOrder } from "@/utils/query";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import SortIcon from "@mui/icons-material/Sort";
 import { useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback } from "react";
 import { useMutationApproval, useMutationDeleteApproval } from "../../hooks";
 import OrganisationsLegend from "../OrganisationsLegend";
 import OrganisationsList from "../OrganisationsList";
+import SearchActionMenu from "@/modules/SearchActionMenu";
 
 const NAMESPACE_TRANSLATIONS_USERS = "OrganisationsList";
+const NAMESPACE_TRANSLATIONS_APPLICATION = "Application";
 
 export default function Sections() {
   const queryClient = useQueryClient();
   const t = useTranslations(NAMESPACE_TRANSLATIONS_USERS);
+  const tApplication = useTranslations(NAMESPACE_TRANSLATIONS_APPLICATION);
 
   const {
     data,
@@ -66,7 +71,7 @@ export default function Sections() {
 
   const sortDirection = getSearchSortOrder(queryParams);
 
-  const searchActions = [
+  const sortActions = [
     {
       label: t("sortActions.AZ"),
       onClick: () =>
@@ -79,10 +84,18 @@ export default function Sections() {
         handleSortToggle("organisation_name", SearchDirections.DESC),
       checked: sortDirection === SearchDirections.DESC,
     },
+  ];
+
+  const filterActions = [
     {
-      label: t("sortActions.hasDelegates"),
+      label: t("filterActions.hasDelegates"),
       onClick: () => handleFieldToggle("has_delegates", ["1", ""]),
-      checked: queryParams.approved === "1",
+      checked: queryParams.has_delegates === "1",
+    },
+    {
+      label: t("filterActions.hasSoursdId"),
+      onClick: () => handleFieldToggle("has_soursd_id", ["1", ""]),
+      checked: queryParams.has_soursd_id === "1",
     },
   ];
 
@@ -98,13 +111,27 @@ export default function Sections() {
     <PageBody>
       <PageSection>
         <SearchBar
-          actions={searchActions}
           updateQueryParam={(text: string) =>
             updateQueryParam("organisation_name[]", text)
           }
           placeholder={t("searchPlaceholder")}
-          legend={<OrganisationsLegend />}
-        />
+          legend={<OrganisationsLegend />}>
+          <SearchActionMenu
+            actions={sortActions}
+            startIcon={<SortIcon />}
+            renderedSelectedLabel={tApplication("sortedBy")}
+            renderedDefaultLabel={tApplication("sortBy")}
+            aria-label={tApplication("sortBy")}
+          />
+          <SearchActionMenu
+            actions={filterActions}
+            startIcon={<FilterAltIcon />}
+            renderedSelectedLabel={tApplication("filteredBy")}
+            renderedDefaultLabel={tApplication("filterBy")}
+            aria-label={tApplication("filterBy")}
+            multiple
+          />
+        </SearchBar>
       </PageSection>
       <PageSection>
         <Results

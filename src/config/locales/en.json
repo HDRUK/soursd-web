@@ -12,6 +12,12 @@
     "scanErrorText": "Your file file may have a virus"
   },
   "Application": {
+    "sortBy": "Sort by",
+    "sortedBy": "Sorted by",
+    "filterBy": "Filter by",
+    "filteredBy": "Filtered by",
+    "filterByDate": "Filter by date",
+    "filterByProjectStatus": "Filter by status",
     "alertSuccessConfirmButton": "Close",
     "alertErrorConfirmButton": "Close",
     "alertDeleteConfirmButton": "Delete",
@@ -681,8 +687,11 @@
     "noResultsProjects": "No organisations found for the search terms provided.",
     "sortActions": {
       "AZ": "Sort Alphabetical A-Z",
-      "ZA": "Sort Alphabetical Z-A",
-      "hasDelegates": "Has delegates"
+      "ZA": "Sort Alphabetical Z-A"
+    },
+    "filterActions": {
+      "hasDelegates": "Has Delegates",
+      "hasSoursdId": "Is Registered"
     }
   },
   "ProjectList": {
@@ -694,11 +703,14 @@
     "searchPlaceholder": "Search Projects",
     "sortActions": {
       "AZ": "Sort Alphabetical A-Z",
-      "ZA": "Sort Alphabetical Z-A",
-      "approved": "Approved project",
-      "pending": "Project pending approval",
-      "active": "Active projects",
-      "notActive": "Past projects"
+      "ZA": "Sort Alphabetical Z-A"
+    },
+    "filterActions": {
+      "approved": "Approved",
+      "pending": "Pending",
+      "completed": "Completed",
+      "activeProjects": "Active projects",
+      "pastProjects": "Past projects"
     },
     "errorResultsProjects": "Unable to get a list of projects. Please try again or contact us on <contact></contact>",
     "noResultsProjects": "No projects found for the current search terms."
