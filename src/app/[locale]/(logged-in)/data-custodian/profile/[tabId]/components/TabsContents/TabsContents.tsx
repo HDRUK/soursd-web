@@ -4,7 +4,7 @@ import { useStore } from "@/data/store";
 import { notFound } from "next/navigation";
 import Projects from "@/modules/Projects";
 import { PageTabs } from "../../consts/tabs";
-import Details from "../Details";
+import Home from "../Home";
 import Users from "../Users";
 import Organisations from "../Organisations";
 import Configuration from "../Configuration";
@@ -20,11 +20,11 @@ export default function TabsContents({ tabId }: TabsContentsProps) {
 
   return (
     <>
-      {tabId === PageTabs.DETAILS && <Details custodian={custodian} />}
+      {tabId === PageTabs.HOME && <Home custodian={custodian} />}
       {tabId === PageTabs.PROJECTS && <Projects variant="custodian" />}
       {tabId === PageTabs.ORGANISATIONS && <Organisations />}
       {tabId === PageTabs.USERS && <Users />}
-      {tabId === PageTabs.KEYCARDS && "Keycards"}
+      {tabId === PageTabs.CONTACTS && "Contacts"}
       {tabId === PageTabs.CONFIGURATION && <Configuration />}
     </>
   );
