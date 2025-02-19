@@ -65,7 +65,10 @@ describe("DelegatesForm", () => {
       screen.getByRole("combobox", { name: /departmentNameAriaLabel/i })
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("textbox", { name: /delegateFullName/i })
+      screen.getByRole("textbox", { name: /delegateFirstName/i })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("textbox", { name: /delegateLastName/i })
     ).toBeInTheDocument();
     expect(
       screen.getByRole("textbox", { name: /delegateJobTitle/i })
@@ -86,9 +89,10 @@ describe("DelegatesForm", () => {
     fireEvent.mouseDown(document.body);
     fireEvent.keyDown(selectElement, { key: "Tab", code: "Tab" });
 
-    fireEvent.change(screen.getAllByLabelText(/delegateFullName/i)[1], {
-      target: { value: "John Doe" },
-    });
+    const input = screen.getByTestId("delegate_first_name");
+    const textField = input.querySelector("input");
+    fireEvent.change(textField, { target: { value: "John" } });
+
     fireEvent.change(screen.getAllByLabelText(/delegateJobTitle/i)[1], {
       target: { value: "Manager" },
     });

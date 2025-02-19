@@ -16,6 +16,7 @@ jest.mock("@/hooks/usePaginatedQuery");
 jest.mock("../../../hooks/usePatchOrganisation");
 
 const mockOrganisation = mockedOrganisation();
+const mockUser = mockedUser();
 const mockDelegates = [
   mockedUser({
     is_delegate: 1,
@@ -35,10 +36,11 @@ const mockDelegates = [
 
 describe("<Delegates />", () => {
   beforeEach(() => {
-    (useStore as unknown as jest.Mock).mockReturnValue({
-      organisation: mockOrganisation,
-      setOrganisation: jest.fn(),
-    });
+    (useStore as unknown as jest.Mock).mockReturnValue([
+      mockOrganisation,
+      mockUser,
+      jest.fn(),
+    ]);
 
     (usePaginatedQuery as jest.Mock).mockReturnValue({
       isError: false,

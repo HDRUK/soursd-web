@@ -3,7 +3,7 @@
 import { useStore } from "@/data/store";
 import { PageBody, PageSection } from "@/modules";
 import FormActions from "@/components/FormActions";
-import FormControl from "@/components/FormControl";
+import FormControl from "@/components/FormControlWrapper";
 import FormSection from "@/components/FormSection";
 
 import yup from "@/config/yup";
@@ -19,7 +19,7 @@ import { getUserQuery, patchUserQuery } from "@/services/users";
 import Form from "@/components/Form";
 import { showAlert } from "@/utils/showAlert";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import DelegateTable from "../Delegates/DelegateTable";
+import DelegateTable from "./DelegateTable";
 
 export interface KeyContactFormValues {
   first_name: string;
@@ -33,8 +33,11 @@ const NAMESPACE_TRANSLATION_DELEGATES = "Form";
 const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
 
 export default function Delegates() {
-  const [user, setUser] = useStore(state => [state.getUser(), state.setUser]);
-  const organisation = useStore(state => state.config.organisation);
+  const [organisation, user, setUser] = useStore(state => [
+    state.getOrganisation(),
+    state.getUser(),
+    state.setUser,
+  ]);
 
   const t = useTranslations(NAMESPACE_TRANSLATION_DELEGATES);
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);

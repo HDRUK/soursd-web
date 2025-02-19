@@ -58,8 +58,6 @@ const DelegateTable = () => {
     </>
   );
 
-  console.log(delegatesData?.data);
-
   const columns: ColumnDef<User>[] = [
     {
       accessorKey: "name",
