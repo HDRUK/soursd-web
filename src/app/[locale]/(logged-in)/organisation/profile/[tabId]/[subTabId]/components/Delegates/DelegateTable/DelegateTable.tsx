@@ -1,4 +1,4 @@
-import Table from "@/modules/Table";
+import Table from "@/components/Table";
 import { getOrganisationDelegates } from "@/services/organisations";
 import { useQuery } from "@tanstack/react-query";
 import { formatShortDate } from "@/utils/date";
@@ -14,7 +14,6 @@ import { useTranslations } from "next-intl";
 import EditDelegate from "../EditDelegate";
 import DecoupleUser from "../DecoupleDelegate";
 import InviteDelegateForm from "../InviteDelegateForm";
-import { Message } from "@/components/Message";
 import ContactLink from "@/components/ContactLink";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
