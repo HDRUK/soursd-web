@@ -50,11 +50,13 @@
     "continueButton": "Continue"
   },
   "CustodianProfile": {
+    "home": "Home",
+    "contacts": "Contacts",
     "uniqueIdentifierTitle": "SOURSD Identifier",
     "uniqueIdentifierCaption": "This ‘key’ represents you as a Data Custodian within SOURSD. This is unique to you! Any time SOURSD sends information to you, or activates a callback, this identifier will be sent along with the payload. Meaning you can always trust the source of information.",
     "details": "Profile",
     "users": "Users",
-    "configuration": "Configuration",
+    "configuration": "Configurations",
     "keycards": "Keycards",
     "projects": "Projects",
     "organisations": "Organisations",
@@ -471,6 +473,7 @@
     "inviteOrganisationSuccess": "You have successfully invited the Organisation. Bear in mind before you can select them they will need to accept the invite"
   },
   "Profile": {
+    "home": "Home",
     "organisationRegister": "Ask them to register",
     "organisationNotListed": "Is your organisation not listed?",
     "postAffiliationSuccess": "You have successfully created an affiliation",
@@ -496,7 +499,7 @@
     "experienceTitle": "Complete your experience information",
     "experienceForm": "Employment and publication history",
     "training": "Training",
-    "profile": "Profile",
+    "homeTitle": "Your actions",
     "approvedProjects": "Projects",
     "accreditations": "Accreditations",
     "education": "Education",

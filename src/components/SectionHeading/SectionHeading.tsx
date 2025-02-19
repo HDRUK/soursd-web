@@ -38,6 +38,7 @@ export default function SectionHeading({
             width: "100%",
             px: 2,
             py: 1,
+            my: 1,
             backgroundColor: "default.main",
             color: "default.contrastText",
             border: "none",
