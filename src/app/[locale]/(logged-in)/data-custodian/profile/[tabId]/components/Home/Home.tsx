@@ -25,14 +25,14 @@ export interface DetailsFormValues {
   idvt_required: boolean;
 }
 
-export interface DetailsProps {
+export interface HomeProps {
   custodian: Custodian;
 }
 
 const NAMESPACE_TRANSLATION_FORM = "Form";
 const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 
-export default function Details({ custodian }: DetailsProps) {
+export default function Home({ custodian }: HomeProps) {
   const queryClient = useQueryClient();
   const theme = useTheme();
 

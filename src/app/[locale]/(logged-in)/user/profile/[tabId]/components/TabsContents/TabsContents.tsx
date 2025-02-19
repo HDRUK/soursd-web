@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { PageTabs } from "../../consts/tabs";
 import Affiliations from "../Affiliations";
 import Identity from "../Identity";
-import Details from "../Details";
+import Home from "../Home";
 import Experience from "../Experience";
 import Trainings from "../Trainings";
 import Projects from "../Projects";
@@ -25,7 +25,7 @@ export default function TabsContents({ tabId }: TabsContentsProps) {
       {tabId === PageTabs.EXPERIENCE && <Experience />}
       {tabId === PageTabs.AFFILIATIONS && <Affiliations />}
       {tabId === PageTabs.TRAINING && <Trainings />}
-      {tabId === PageTabs.DETAILS && <Details />}
+      {tabId === PageTabs.HOME && <Home />}
       {tabId === PageTabs.PROJECTS && <Projects />}
     </>
   );

@@ -3,7 +3,7 @@ enum PageTabs {
   AFFILIATIONS = "affiliations",
   IDENTITY = "identity",
   TRAINING = "training",
-  DETAILS = "details",
+  HOME = "home",
   PROJECTS = "projects",
 }
 

@@ -3,6 +3,7 @@ import InviteCustodian from "@/modules/InviteCustodian";
 import useCustodianInvite from "@/queries/useCustodianInvite";
 import { showAlert } from "@/utils/showAlert";
 import { useTranslations } from "next-intl";
+import ReactDOMServer from "react-dom/server";
 
 const NAMESPACE_TRANSLATIONS_ORGANISATION = "Custodian";
 
@@ -11,9 +12,11 @@ export default function SendInviteOrganisation() {
 
   const handleErrorAlert = () => {
     showAlert("error", {
-      text: t.rich("inviteCustodianError", {
-        contactLink: ContactLink,
-      }),
+      text: ReactDOMServer.renderToString(
+        t.rich("inviteCustodianError", {
+          contactLink: ContactLink,
+        })
+      ),
       confirmButtonText: t("inviteCustodianErrorButton"),
     });
   };
