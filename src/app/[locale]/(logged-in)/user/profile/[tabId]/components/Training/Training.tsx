@@ -21,6 +21,7 @@ import { useMutation } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { useTranslations } from "next-intl";
 import { ChangeEvent, useCallback, useMemo } from "react";
+import ReactDOMServer from "react-dom/server";
 import FileUploadDetails from "../FileUploadDetails/FileUploadDetails";
 import { StyledBox } from "./Training.styles";
 
@@ -129,12 +130,17 @@ export default function Training() {
           showAlert("success", {
             text: tProfile("postTrainingSuccess"),
             confirmButtonText: tProfile("closeButton"),
+            preConfirm: () => {
+              router.push(ROUTES.profileResearcherProjects.path);
+            },
           });
         } catch (_) {
-          const errorMessage = tProfile("postTrainingError");
-
           showAlert("error", {
-            text: errorMessage,
+            text: ReactDOMServer.renderToString(
+              tProfile.rich("postTrainingError", {
+                contactLink: ContactLink,
+              })
+            ),
             confirmButtonText: tProfile("errorButton"),
           });
         }
@@ -142,7 +148,6 @@ export default function Training() {
     },
     [mutateAsync, onSubmit, tProfile, file?.id]
   );
-
   const schema = useMemo(
     () =>
       yup.object().shape({
@@ -195,7 +200,6 @@ export default function Training() {
     { name: "awarded_at", component: DateInput },
     { name: "expires_at", component: DateInput },
   ];
-
   return (
     <>
       <Form onSubmit={handleDetailsSubmit} schema={schema} {...formOptions}>
@@ -227,6 +231,7 @@ export default function Training() {
                     isScanFailed={isScanFailed}
                     isUploading={isUploading}
                     onFileChange={handleFileChange}
+                    message="certificationUploadFailed"
                   />
                 )}
               />

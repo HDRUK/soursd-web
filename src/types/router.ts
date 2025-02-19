@@ -21,7 +21,8 @@ interface Routes {
   homepage: RouteConfig;
   usersCustodian: RouteConfig;
   profileCustodian: RouteConfig;
-  profileCustodianDetails: RouteConfig;
+  profileCustodianHome: RouteConfig;
+  profileCustodianContacts: RouteConfig;
   profileCustodianProjects: RouteConfig;
   profileCustodianOrganisations: RouteConfig;
   profileCustodianConfiguration: RouteConfig;
@@ -34,7 +35,7 @@ interface Routes {
   profileResearcherExperience: RouteConfig;
   profileResearcherIdentity: RouteConfig;
   profileResearcherAffiliations: RouteConfig;
-  profileResearcherDetails: RouteConfig;
+  profileResearcherHome: RouteConfig;
   profileResearcherProjects: RouteConfig;
   profileOrganisation: RouteConfig;
   profileOrganisationActions: RouteConfig;
