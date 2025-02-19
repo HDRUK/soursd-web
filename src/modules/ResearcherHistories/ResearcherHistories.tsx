@@ -1,7 +1,7 @@
 import { Message } from "@/components/Message";
 import ResearcherAccreditationEntry from "@/modules/ResearcherAccreditationEntry";
 import ResearcherEducationEntry from "@/modules/ResearcherEducationEntry";
-import ResearcherEmploymentEntry from "@/modules/ResearcherEmploymentEntry";
+// import ResearcherEmploymentEntry from "@/modules/ResearcherEmploymentEntry";
 import ResearcherProjectEntry from "@/modules/ResearcherProjectEntry";
 import ResearcherTrainingEntry from "@/modules/ResearcherTrainingEntry";
 import ResearcherProfessionalRegistrationsEntry from "@/modules/ResearcherProfessionalRegistrationsEntry";
