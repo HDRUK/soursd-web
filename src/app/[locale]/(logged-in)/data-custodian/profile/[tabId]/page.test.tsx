@@ -26,10 +26,10 @@ const renderPageTab = (tabId: PageTabs) =>
 
 describe("<Page />", () => {
   it.each([
-    { tabId: PageTabs.DETAILS, name: "Profile" },
+    { tabId: PageTabs.HOME, name: "Home" },
     { tabId: PageTabs.USERS, name: "Users" },
-    { tabId: PageTabs.CONFIGURATION, name: "Configuration" },
-    { tabId: PageTabs.KEYCARDS, name: "Keycards" },
+    { tabId: PageTabs.CONFIGURATION, name: "Configurations" },
+    { tabId: PageTabs.CONTACTS, name: "Contacts" },
   ])("has the correct content $s", ({ tabId, name }) => {
     renderPageTab(tabId);
 

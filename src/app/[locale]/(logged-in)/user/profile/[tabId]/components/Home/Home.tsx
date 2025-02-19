@@ -11,11 +11,11 @@ import UserInfo from "../UserInfo";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
-export default function Details() {
+export default function Home() {
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
   return (
-    <PageBodyContainer heading={tProfile("profile")}>
+    <PageBodyContainer heading={tProfile("homeTitle")}>
       <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
         <PageBody>
           <PageSection>

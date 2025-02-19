@@ -11,7 +11,7 @@ import {
   within,
 } from "@/utils/testUtils";
 import { faker } from "@faker-js/faker";
-import Details, { DetailsProps } from "./Details";
+import Home, { HomeProps } from "./Home";
 
 jest.mock("@/services/custodians");
 jest.mock("@/data/store");
@@ -24,13 +24,13 @@ const defaultUser = mockedUser();
   null,
 ]);
 
-const renderDetails = (props?: Partial<DetailsProps>) => {
-  return render(<Details custodian={defaultCustodian} {...props} />);
+const renderHome = (props?: Partial<HomeProps>) => {
+  return render(<Home custodian={defaultCustodian} {...props} />);
 };
 
-describe("<Details />", () => {
+describe("<Home />", () => {
   it("has the correct values", async () => {
-    renderDetails();
+    renderHome();
 
     const nameContainer = screen.getByTestId("name");
     const nameInput = within(nameContainer).getByRole("textbox");
@@ -45,7 +45,7 @@ describe("<Details />", () => {
   });
 
   it("submits when values are defined", async () => {
-    renderDetails();
+    renderHome();
 
     const emailContainer = screen.getByTestId("contact_email");
     const email = within(emailContainer).getByRole("textbox");
@@ -80,6 +80,6 @@ describe("<Details />", () => {
   });
 
   it("has no accessibility violations", async () => {
-    commonAccessibilityTests(renderDetails());
+    commonAccessibilityTests(renderHome());
   });
 });

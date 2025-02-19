@@ -4,13 +4,13 @@ import TabsSections from "./TabsSections";
 
 describe("<TabsSections />", () => {
   it.each([
-    { name: "Profile", path: `/en${ROUTES.profileCustodianDetails.path}` },
+    { name: "Home", path: `/en${ROUTES.profileCustodianHome.path}` },
     { name: "Users", path: `/en${ROUTES.profileCustodianUsers.path}` },
     {
-      name: "Configuration",
+      name: "Configurations",
       path: `/en${ROUTES.profileCustodianConfiguration.path}`,
     },
-    { name: "Keycards", path: `/en${ROUTES.profileCustodianKeycards.path}` },
+    { name: "Contacts", path: `/en${ROUTES.profileCustodianContacts.path}` },
   ])("has the correct path $s", ({ name, path }) => {
     render(<TabsSections />);
 

@@ -57,7 +57,7 @@ export default function TabsSections() {
     <Box sx={{ width: "100%", mb: 4 }}>
       <Tabs
         variant="scrollable"
-        value={params?.tabId || PageTabs.DETAILS}
+        value={params?.tabId || PageTabs.HOME}
         aria-label={t("navigationAriaLabel")}
         role="navigation"
         indicatorColor="secondary"
@@ -65,10 +65,10 @@ export default function TabsSections() {
         allowScrollButtonsMobile
         textColor="inherit">
         <Tab
-          label={<Text>{t("details")}</Text>}
-          href={routes.profileResearcherDetails.path}
+          label={<Text>{t("home")}</Text>}
+          href={routes.profileResearcherHome.path}
           component={Link}
-          value={PageTabs.DETAILS}
+          value={PageTabs.HOME}
         />
         <Tab
           label={

@@ -5,33 +5,38 @@ import { useStore } from "@/data/store";
 import useFileUpload from "@/hooks/useFileUpload";
 import useUserFileUpload from "@/hooks/useUserFileUpload";
 import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
-import {
-  PageBody,
-  PageBodyContainer,
-  PageGuidance,
-  PageSection,
-} from "@/modules";
-import ResearcherAccreditationEntry from "@/modules/ResearcherAccreditationEntry";
-import ResearcherEducationEntry from "@/modules/ResearcherEducationEntry";
-import ResearcherEmploymentEntry from "@/modules/ResearcherEmploymentEntry";
-import { PostEmploymentsPayload } from "@/services/employments/types";
+import { PageBody, PageBodyContainer, PageGuidance } from "@/modules";
+import Text from "@/components/Text";
+import InfoIcon from "@mui/icons-material/Info";
+import { LoadingButton } from "@mui/lab";
+import SaveIcon from "@mui/icons-material/Save";
+
 import { getFileHref, getLatestCV } from "@/utils/file";
-import EastIcon from "@mui/icons-material/East";
-import { Button } from "@mui/material";
+import { Grid, TextField, Tooltip } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { ChangeEvent, useCallback } from "react";
+import { ChangeEvent, useCallback, useMemo } from "react";
+import FormControlHorizontal from "@/components/FormControlHorizontal";
+import Form from "@/components/Form";
+import yup from "@/config/yup";
+import { VALIDATION_ORC_ID } from "@/consts/form";
+import { useMutation } from "@tanstack/react-query";
+import { putUserQuery } from "@/services/users";
+import ContactLink from "@/components/ContactLink";
+import { showAlert } from "@/utils/showAlert";
+import ReactDOMServer from "react-dom/server";
+import FormActions from "@/components/FormActions";
 import FileUploadDetails from "../FileUploadDetails/FileUploadDetails";
-import HistoriesSection from "../HistoriesSection";
-import EmploymentsForm from "./EmploymentsForm";
+
+export interface ExperienceFormValues {
+  orc_id?: string | null;
+}
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
-
+const NAMESPACE_TRANSLATION_FORM = "Form";
 export default function Experience() {
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
-  const histories = useStore(state => state.config.histories);
-  const setHistories = useStore(state => state.setHistories);
-  const getHistories = useStore(state => state.getHistories);
+  const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const [user, setUser] = useStore(store => [store.config.user, store.setUser]);
   const router = useRouter();
 
@@ -62,78 +67,127 @@ export default function Experience() {
     []
   );
 
-  const onSubmit = useCallback(
-    async (employment: PostEmploymentsPayload) => {
-      const histories = getHistories();
+  const updateUser = useMutation(putUserQuery(user?.id));
 
-      if (histories) {
-        const updatedHistories = {
-          ...histories,
-          employments: [...(histories.employments || []), employment],
-        };
+  const handleDetailsSubmit = useCallback(
+    async (fields: ExperienceFormValues) => {
+      try {
+        if (user?.id) {
+          const request = {
+            ...user,
+            ...fields,
+          };
 
-        setHistories(updatedHistories);
+          await updateUser.mutateAsync(request);
+        }
+
+        showAlert("success", {
+          text: tProfile("postUserSuccess"),
+          confirmButtonText: tProfile("postUserSuccessButton"),
+          preConfirm: () => {
+            router.push(ROUTES.profileResearcherTraining.path);
+          },
+        });
+      } catch (_) {
+        showAlert("error", {
+          text: ReactDOMServer.renderToString(
+            tProfile.rich("postUserError", {
+              contactLink: ContactLink,
+            })
+          ),
+          confirmButtonText: tProfile("postUserErrorButton"),
+        });
       }
     },
-    [getHistories, setHistories]
+    [user]
   );
 
+  const schema = useMemo(
+    () =>
+      yup.object().shape({
+        orc_id: yup
+          .string()
+          .required()
+          .matches(
+            new RegExp(`(${VALIDATION_ORC_ID.source})|^$`),
+            tForm("orcIdFormatInvalid")
+          ),
+      }),
+    []
+  );
+  const error =
+    updateUser.isError &&
+    tProfile.rich(updateUser.error, {
+      contactLink: ContactLink,
+    });
+
+  const formOptions = {
+    defaultValues: {
+      orc_id: user?.orc_id,
+    },
+    error,
+  };
+
   return (
-    <PageBodyContainer>
+    <PageBodyContainer heading={tProfile("experienceTitle")}>
       <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
         <PageBody>
-          <FormSection
-            heading={tProfile("accreditations")}
-            sx={{ marginBottom: "16px" }}>
-            <HistoriesSection
-              type="accreditations"
-              count={histories?.accreditations?.length}>
-              {histories?.accreditations?.map(item => (
-                <ResearcherAccreditationEntry data={item} />
-              ))}
-            </HistoriesSection>
-          </FormSection>
-          <FormSection heading={tProfile("education")}>
-            <HistoriesSection
-              type="education"
-              count={histories?.education?.length}>
-              {histories?.education?.map(item => (
-                <ResearcherEducationEntry data={item} />
-              ))}
-            </HistoriesSection>
-          </FormSection>
-          <FormSection heading={tProfile("employment")}>
-            <FileUploadDetails
-              fileButtonText={tProfile("uploadCv")}
-              fileHref={getFileHref(latestCV?.name)}
-              fileType={FileType.CV}
-              fileNameText={file?.name || tProfile("noCvUploaded")}
-              isSizeInvalid={isSizeInvalid}
-              isScanning={isScanning}
-              isScanComplete={isScanComplete}
-              isScanFailed={isScanFailed}
-              isUploading={isUploading}
-              onFileChange={handleFileChange}
-            />
-            <EmploymentsForm onSubmit={onSubmit} />
-            <HistoriesSection
-              type="employments"
-              count={histories?.employments?.length}>
-              {histories?.employments?.map(item => (
-                <ResearcherEmploymentEntry data={item} />
-              ))}
-            </HistoriesSection>
-          </FormSection>
-          <PageSection sx={{ display: "flex", justifyContent: "flex-end" }}>
-            <Button
-              sx={{ display: "flex" }}
-              endIcon={<EastIcon />}
-              onClick={() =>
-                router.push(ROUTES.profileResearcherTraining.path)
-              }>
-              {tProfile("continueLinkText")}
-            </Button>
-          </PageSection>
+          <Form onSubmit={handleDetailsSubmit} schema={schema} {...formOptions}>
+            <>
+              <FormSection heading={tProfile("experienceForm")}>
+                <Grid container rowSpacing={3}>
+                  <Grid item xs={12}>
+                    <FormControlHorizontal
+                      name="orc_id"
+                      renderField={fieldProps => (
+                        <Text
+                          endIcon={
+                            <Tooltip title={tForm("whatIsTheOrcId")}>
+                              <InfoIcon color="info" />
+                            </Tooltip>
+                          }
+                          sx={{ maxWidth: "200px" }}>
+                          <TextField {...fieldProps} />
+                        </Text>
+                      )}
+                    />
+                  </Grid>
+                  <Grid item xs={12} key="cv_upload">
+                    <FormControlHorizontal
+                      name="cv_upload"
+                      renderField={() => (
+                        <FileUploadDetails
+                          fileButtonText={tProfile("uploadCv")}
+                          fileHref={getFileHref(latestCV?.name)}
+                          fileType={FileType.CV}
+                          fileNameText={
+                            file?.name || tProfile("noCertificationUploaded")
+                          }
+                          isSizeInvalid={isSizeInvalid}
+                          isScanning={isScanning}
+                          isScanComplete={isScanComplete}
+                          isScanFailed={isScanFailed}
+                          isUploading={isUploading}
+                          onFileChange={handleFileChange}
+                          message="certificationUploadFailed"
+                        />
+                      )}
+                    />
+                  </Grid>
+                </Grid>
+              </FormSection>
+
+              <FormActions>
+                <LoadingButton
+                  type="submit"
+                  endIcon={<SaveIcon />}
+                  loading={updateUser.isPending}
+                  sx={{ display: "flex", justifySelf: "end" }}>
+                  {tProfile("submitAndContinueButton")}
+                </LoadingButton>
+              </FormActions>
+            </>
+          </Form>
         </PageBody>
       </PageGuidance>
     </PageBodyContainer>
