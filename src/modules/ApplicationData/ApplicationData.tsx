@@ -10,7 +10,6 @@ import {
   ResearcherAccreditation,
   ResearcherAffiliation,
   ResearcherEducation,
-  ResearcherEmployment,
   ResearcherProfessionalRegistration,
   ResearcherProject,
   ResearcherTraining,
@@ -31,7 +30,6 @@ interface ApplicationDataProps {
   accreditationsData: ResearcherAccreditation[];
   educationData: ResearcherEducation[];
   trainingData: ResearcherTraining[];
-  employmentsData: ResearcherEmployment[];
   projectsData: ResearcherProject[];
   affiliationData: ResearcherAffiliation[];
   professionalRegistratonsData: ResearcherProfessionalRegistration[];
@@ -50,7 +48,6 @@ export default function ApplicationData({
   accreditationsData,
   educationData,
   trainingData,
-  employmentsData,
   projectsData,
   affiliationData,
   professionalRegistratonsData,
@@ -130,7 +127,7 @@ export default function ApplicationData({
       accreditations: accreditationsData,
       education: educationData,
       training: trainingData,
-      employments: employmentsData,
+      employments: [],
       approvedProjects: projectsData,
       affiliations: affiliationData,
       professionalRegistrations: professionalRegistratonsData,

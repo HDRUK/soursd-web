@@ -6,7 +6,6 @@ import {
 import getAffiliations from "@/services/affiliations/getAffiliations";
 import getAffiliationsQuery from "@/services/affiliations/getAffiliationsQuery";
 import { getEducations, getEducationsQuery } from "@/services/educations";
-import { getEmployments, getEmploymentsQuery } from "@/services/employments";
 import {
   getProfessionalRegistrations,
   getProfessionalRegistrationsQuery,
@@ -22,7 +21,6 @@ import {
 import { QueryOptions } from "@/types/requests";
 
 export interface HistoryCombinedData {
-  getEmployments: Awaited<ReturnType<typeof getEmployments>>;
   getEducations: Awaited<ReturnType<typeof getEducations>>;
   getTrainings: Awaited<ReturnType<typeof getTrainingByRegistryId>>;
   getUserApprovedProjects: Awaited<ReturnType<typeof getUserApprovedProjects>>;
@@ -40,7 +38,6 @@ export default function useQueriesHistory(
   const queries = registryId
     ? [
         getAffiliationsQuery(registryId, options),
-        getEmploymentsQuery(registryId, options),
         getEducationsQuery(registryId, options),
         getTrainingByRegistryIdQuery(registryId, options),
         getAccreditationsQuery(registryId, options),

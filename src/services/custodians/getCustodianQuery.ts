@@ -7,7 +7,7 @@ export default function getCustodianQuery(
   options?: QueryOptions
 ) {
   return {
-    queryKey: ["getCustodian", custodianId],
+    queryKey: ["getCustodian", custodianId, ...(options?.queryKeySuffix || [])],
     queryFn: ({ queryKey }) =>
       getCustodian(queryKey[1] as number, {
         error: {

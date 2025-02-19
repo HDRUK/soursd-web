@@ -7,7 +7,11 @@ export default function getUserApprovedProjectsQuery(
   options?: QueryOptions
 ) {
   return {
-    queryKey: ["getUserApprovedProjects", registryId],
+    queryKey: [
+      "getUserApprovedProjects",
+      registryId,
+      ...(options?.queryKeySuffix || []),
+    ],
     queryFn: ({ queryKey }) =>
       getUserApprovedProjects(queryKey[1] as number, {
         error: { message: "getUserApprovedProjectsError" },

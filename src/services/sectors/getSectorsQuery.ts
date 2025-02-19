@@ -4,7 +4,7 @@ import getSectors from "./getSectors";
 
 export default function getSectorsQuery(options?: QueryOptions) {
   return {
-    queryKey: ["getSectors"],
+    queryKey: ["getSectors", ...(options?.queryKeySuffix || [])],
     queryFn: () =>
       getSectors({
         error: {

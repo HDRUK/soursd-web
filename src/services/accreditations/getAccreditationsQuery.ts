@@ -7,7 +7,11 @@ export default function getAccreditationsQuery(
   options?: QueryOptions
 ) {
   return {
-    queryKey: ["getAccreditations", registryId],
+    queryKey: [
+      "getAccreditations",
+      registryId,
+      ...(options?.queryKeySuffix || []),
+    ],
     queryFn: ({ queryKey }) =>
       getAccreditations(queryKey[1] as number, {
         error: { message: "getAccreditationsError" },

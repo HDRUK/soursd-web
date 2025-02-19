@@ -7,7 +7,7 @@ export default function getEducationsQuery(
   options?: QueryOptions
 ) {
   return {
-    queryKey: ["getEducations", registryId],
+    queryKey: ["getEducations", registryId, ...(options?.queryKeySuffix || [])],
     queryFn: ({ queryKey }) =>
       getEducations(queryKey[1] as number, {
         error: { message: "getEducationsError" },

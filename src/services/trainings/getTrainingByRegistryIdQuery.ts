@@ -7,7 +7,7 @@ export default function getTrainingQuery(
   options?: QueryOptions
 ) {
   return {
-    queryKey: ["getTrainings", registryId],
+    queryKey: ["getTrainings", registryId, ...(options?.queryKeySuffix || [])],
     queryFn: ({ queryKey }) =>
       getTrainingByRegistryId(queryKey[1] as number, {
         error: { message: "getTrainingsError" },

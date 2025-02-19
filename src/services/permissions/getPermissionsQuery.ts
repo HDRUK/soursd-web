@@ -4,7 +4,7 @@ import getPermissions from "./getPermissions";
 
 export default function getPermissionsQuery(options?: QueryOptions) {
   return {
-    queryKey: ["getPermissions"],
+    queryKey: ["getPermissions", ...(options?.queryKeySuffix || [])],
     queryFn: () =>
       getPermissions({
         error: {

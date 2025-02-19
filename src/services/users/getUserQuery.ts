@@ -4,7 +4,7 @@ import getUser from "./getUser";
 
 export default function getUserQuery(userId: number, options?: QueryOptions) {
   return {
-    queryKey: ["getUser", userId],
+    queryKey: ["getUser", userId, ...(options?.queryKeySuffix || [])],
     queryFn: ({ queryKey }) =>
       getUser(queryKey[1] as number, {
         error: {

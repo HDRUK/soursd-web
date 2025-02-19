@@ -5,6 +5,7 @@ interface ResponseTranslation {
 }
 
 interface QueryOptions extends Partial<UseQueryOptions> {
+  queryKeySuffix?: (string | number)[];
   responseOptions?: ResponseOptions;
 }
 

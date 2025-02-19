@@ -4,7 +4,7 @@ import getSystemConfig from "./getSystemConfig";
 
 export default function getSystemConfigQuery(options?: QueryOptions) {
   return {
-    queryKey: ["getSystemConfig"],
+    queryKey: ["getSystemConfig", ...(options?.queryKeySuffix || [])],
     queryFn: () =>
       getSystemConfig({
         error: {

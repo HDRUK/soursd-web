@@ -7,7 +7,11 @@ export default function getProfessionalRegistrationsQuery(
   options?: QueryOptions
 ) {
   return {
-    queryKey: ["getProfessionalRegistrations", registry_id],
+    queryKey: [
+      "getProfessionalRegistrations",
+      registry_id,
+      ...(options?.queryKeySuffix || []),
+    ],
     queryFn: ({ queryKey }) =>
       getProfessionalRegistrations(queryKey[1] as number, {
         error: {

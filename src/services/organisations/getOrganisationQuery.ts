@@ -7,7 +7,11 @@ export default function getOrganisationQuery(
   options: QueryOptions
 ) {
   return {
-    queryKey: ["getOrganisation", organisationId],
+    queryKey: [
+      "getOrganisation",
+      organisationId,
+      ...(options?.queryKeySuffix || []),
+    ],
     queryFn: ({ queryKey }) =>
       getOrganisation(queryKey[1] as number, {
         error: {

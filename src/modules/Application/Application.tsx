@@ -37,7 +37,7 @@ export default function Application({
         organisationId,
       },
       {
-        queryKey: ["getPreloadedApplication"],
+        queryKeySuffix: ["initial"],
         enabled: !!me,
       }
     );
@@ -45,7 +45,7 @@ export default function Application({
   const { data: historiesData, ...historiesQueryState } = useQueriesHistories(
     me?.registry_id,
     {
-      queryKey: ["getPreloadedHistories"],
+      queryKeySuffix: ["initial"],
       enabled: !!me?.registry_id,
     }
   );
@@ -54,7 +54,6 @@ export default function Application({
     getAccreditations: accreditationsData,
     getEducations: educationData,
     getTrainings: trainingData,
-    getEmployments: employmentsData,
     getUserApprovedProjects: projectsData,
     getAffiliations: affiliationData,
     getProfessionalRegistrations: professionalRegistratonsData,
@@ -96,7 +95,6 @@ export default function Application({
         accreditationsData={accreditationsData?.data.data}
         educationData={educationData?.data}
         trainingData={trainingData?.data}
-        employmentsData={employmentsData?.data}
         projectsData={projectsData?.data}
         affiliationData={affiliationData?.data.data}
         professionalRegistratonsData={professionalRegistratonsData?.data?.data}>
