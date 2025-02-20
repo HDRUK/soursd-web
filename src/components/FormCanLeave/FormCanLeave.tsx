@@ -6,23 +6,22 @@ import { useFormState, useWatch } from "react-hook-form";
 
 interface FormCanLeaveProps {
   children?: ReactNode;
-  overrideLeave?: boolean;
+  canLeave?: boolean;
 }
 
 const NAMESPACE_TRANSLATION_FORM = "Form";
 
 export default function FormCanLeave({
   children,
-  overrideLeave,
+  canLeave,
 }: FormCanLeaveProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const formState = useFormState();
   const isDirty = !!Object.keys(formState.dirtyFields).length;
-
   useWatch();
 
   const { continueTo } = useRouteChange({
-    canLeave: !isDirty || overrideLeave,
+    canLeave: !isDirty || canLeave,
     onBlocked: (pathname: string | null) => {
       showAlert("warning", {
         text: t("unsavedAlertText"),

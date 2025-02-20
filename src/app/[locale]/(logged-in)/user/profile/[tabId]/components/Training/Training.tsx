@@ -202,7 +202,12 @@ export default function Training() {
   ];
   return (
     <>
-      <Form onSubmit={handleDetailsSubmit} schema={schema} {...formOptions}>
+      <Form
+        onSubmit={handleDetailsSubmit}
+        schema={schema}
+        {...formOptions}
+        shouldReset
+        key={user?.id}>
         <FormSection heading={tProfile("training")}>
           <Grid container rowSpacing={3}>
             {formFields.map(field => (
