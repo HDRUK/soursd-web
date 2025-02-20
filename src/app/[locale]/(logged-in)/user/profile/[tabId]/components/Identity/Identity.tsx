@@ -174,11 +174,13 @@ export default function Identity() {
                         renderField={fieldProps => (
                           <TextField {...fieldProps} />
                         )}
+                        description={tProfile("emailDescription")}
                       />
                     </Grid>
                     <Grid item xs={12}>
                       <FormControlHorizontal
                         name="location"
+                        description={tProfile("locationDescription")}
                         renderField={({
                           value,
                           onChange,
