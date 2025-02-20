@@ -82,7 +82,6 @@ export default function DigitalIdentifiers() {
         }),
         ror_id: yup
           .string()
-          .required(tForm("rorIdRequiredInvalid"))
           .matches(VALIDATION_ROR_ID, tForm("rorIdFormatInvalid")),
       }),
     []
