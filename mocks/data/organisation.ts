@@ -3,6 +3,7 @@ import { faker } from "@faker-js/faker";
 import { mockedPermission } from "./permission";
 import { mockedUser } from "./user";
 import { mockedApproval } from "./approvals";
+import { mockedDepartment } from "./departments";
 
 const mockedOrganisation = (
   organisation?: Partial<Organisation>
@@ -34,28 +35,14 @@ const mockedOrganisation = (
   ror_id: "04a496k07",
   website: faker.internet.url(),
   departments: [
-    {
-      id: faker.number.int(),
-      created_at: "2025-02-19T15:02:26.000000Z",
-      updated_at: "2025-02-19T15:02:26.000000Z",
+    mockedDepartment({
       name: "Clinical Research",
       category: "Health-Focused Departments",
-      pivot: {
-        organisation_id: faker.number.int(),
-        department_id: faker.number.int(),
-      },
-    },
-    {
-      id: faker.number.int(),
-      created_at: "2025-02-19T15:02:26.000000Z",
-      updated_at: "2025-02-19T15:02:26.000000Z",
+    }),
+    mockedDepartment({
       name: "Biostatistics and Data Science",
       category: "Health-Focused Departments",
-      pivot: {
-        organisation_id: faker.number.int(),
-        department_id: faker.number.int(),
-      },
-    },
+    }),
   ],
   registries: [
     {
