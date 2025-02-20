@@ -15,8 +15,13 @@ import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
 import { ROUTES } from "@/consts/router";
 import { Organisation } from "@/types/application";
 import { useRouter } from "next/navigation";
+import { ColumnDef, CellContext } from "@tanstack/react-table";
+import Table from "@/components/Table";
+import { Subsidiary } from "@/types/application";
 import { FormData, getDefaultValues, getValidation } from "./config/form";
 import usePatchOrganisation from "../../../hooks/usePatchOrganisation";
+import { patchOrganisation } from "@/services/organisations";
+import { formatAddress } from "@/utils/address";
 
 const NAMESPACE_TRANSLATION_FORM = "Form";
 const NAMESPACE_TRANSLATION_ORG_PROFILE = "ProfileOrganisation";
@@ -32,7 +37,11 @@ export default function Subsidiaries() {
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const tOrgProfile = useTranslations(NAMESPACE_TRANSLATION_ORG_PROFILE);
 
-  const { isPending: isLoading, onSubmit } = usePatchOrganisation({
+  const {
+    isPending: isLoading,
+    onSubmit,
+    ...patchOrganisationQueryState
+  } = usePatchOrganisation({
     id: organisation?.id,
     organisation,
     setOrganisation,
@@ -49,6 +58,36 @@ export default function Subsidiaries() {
       router.push(ROUTES.profileOrganisationDetailsSecurityCompliance.path);
     });
   };
+
+  const renderActions = (info: CellContext<Subsidiary, unknown>) => (
+    <>Actions</>
+  );
+
+  const columns: ColumnDef<Subsidiary>[] = [
+    {
+      accessorKey: "name",
+      header: "Name",
+      cell: ({ getValue }) => getValue(),
+    },
+    {
+      accessorKey: "address",
+      header: "Address",
+      cell: ({ row: { original } }) => formatAddress(original),
+    },
+    {
+      accessorKey: "actions",
+      header: "Actions",
+      cell: renderActions,
+    },
+  ];
+
+  return (
+    <Table
+      data={organisation?.subsidiaries || []}
+      columns={columns}
+      queryState={patchOrganisationQueryState}
+    />
+  );
 
   return (
     <PageBody>
