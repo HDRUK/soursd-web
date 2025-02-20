@@ -13,7 +13,10 @@ const NAMESPACE_TRANSLATIONS_FOOTER = "Footer";
 export default function Footer(props: FooterProps) {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_FOOTER);
   return (
-    <Box {...props} component="footer" sx={{ backgroundColor: "footer.main" }}>
+    <Box
+      {...props}
+      component="footer"
+      sx={{ backgroundColor: "footer.main", mt: 3 }}>
       <Divider sx={{ height: "6px" }} />
       <PageCenter>
         <StyledFooter>

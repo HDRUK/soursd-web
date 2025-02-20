@@ -3,6 +3,7 @@ import { faker } from "@faker-js/faker";
 import { mockedPermission } from "./permission";
 import { mockedUser } from "./user";
 import { mockedApproval } from "./approvals";
+import { mockedDepartment } from "./departments";
 
 const mockedOrganisation = (
   organisation?: Partial<Organisation>
@@ -33,6 +34,16 @@ const mockedOrganisation = (
   smb_status: true,
   ror_id: "04a496k07",
   website: faker.internet.url(),
+  departments: [
+    mockedDepartment({
+      name: "Clinical Research",
+      category: "Health-Focused Departments",
+    }),
+    mockedDepartment({
+      name: "Biostatistics and Data Science",
+      category: "Health-Focused Departments",
+    }),
+  ],
   registries: [
     {
       user: mockedUser({
@@ -65,8 +76,8 @@ const mockedOrganisation = (
         email: "jane.doe@hdruk.ac.uk",
         id: 2,
         registry: {
-          verified: false
-        }
+          verified: false,
+        },
       }),
     },
   ],

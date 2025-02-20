@@ -1,12 +1,19 @@
 import useQueriesCombined from "@/hooks/useQueriesCombined";
-import { getCustodian } from "@/services/custodians";
-import { getOrganisation } from "@/services/organisations";
-import { getPermissions } from "@/services/permissions";
-import { getSectors } from "@/services/sectors";
-import { getSystemConfig } from "@/services/system_config";
+import { getCustodian, getCustodianQuery } from "@/services/custodians";
+import {
+  getOrganisation,
+  getOrganisationQuery,
+} from "@/services/organisations";
+import { getPermissions, getPermissionsQuery } from "@/services/permissions";
+import { getSectors, getSectorsQuery } from "@/services/sectors";
+import {
+  getSystemConfig,
+  getSystemConfigQuery,
+} from "@/services/system_config";
 import { getUser } from "@/services/users";
+import getUserQuery from "@/services/users/getUserQuery";
 import { User } from "@/types/application";
-import { QueryFunctionContext } from "@tanstack/react-query";
+import { QueryOptions } from "@/types/requests";
 
 interface UseApplicationDependenciesProps {
   user?: User;
@@ -23,82 +30,22 @@ interface ApplicationDependenciesCombinedData {
   getCustodian: Awaited<ReturnType<typeof getCustodian>>;
 }
 
-type QueryFunctionContextDefault = QueryFunctionContext<[string, number]>;
-
-export default function useApplicationDependencies({
-  user,
-  custodianId,
-  organisationId,
-}: UseApplicationDependenciesProps) {
-  const queries = [
-    {
-      queryKey: ["getSystemConfig"],
-      queryFn: () =>
-        getSystemConfig({
-          error: {
-            message: "getSystemConfigError",
-          },
-        }),
-      enabled: !!user,
-    },
-    {
-      queryKey: ["getUser", user?.id],
-      queryFn: ({ queryKey }: QueryFunctionContextDefault) =>
-        getUser(queryKey[1], {
-          error: {
-            message: "getUserError",
-          },
-        }),
-      enabled: !!user,
-    },
-    ...(organisationId
-      ? [
-          {
-            queryKey: ["getOrganisation", organisationId],
-            queryFn: ({ queryKey }: QueryFunctionContextDefault) =>
-              getOrganisation(queryKey[1], {
-                error: {
-                  message: "getOrganisationError",
-                },
-              }),
-            enabled: !!organisationId,
-          },
-        ]
-      : []),
-    ...(custodianId
-      ? [
-          {
-            queryKey: ["getCustodian", custodianId],
-            queryFn: ({ queryKey }: QueryFunctionContextDefault) =>
-              getCustodian(queryKey[1], {
-                error: {
-                  message: "getCustodianError",
-                },
-              }),
-            enabled: !!custodianId,
-          },
-        ]
-      : []),
-    {
-      queryKey: ["getSectors"],
-      queryFn: () =>
-        getSectors({
-          error: {
-            message: "getSectorsError",
-          },
-        }),
-      enabled: !!user,
-    },
-    {
-      queryKey: ["getPermissions"],
-      queryFn: () =>
-        getPermissions({
-          error: {
-            message: "getPermissionsError",
-          },
-        }),
-    },
-  ];
+export default function useApplicationDependencies(
+  { user, custodianId, organisationId }: UseApplicationDependenciesProps,
+  options: QueryOptions = {}
+) {
+  const queries = user
+    ? [
+        getSystemConfigQuery(),
+        getUserQuery(user.id, options),
+        ...(organisationId
+          ? [getOrganisationQuery(organisationId, options)]
+          : []),
+        ...(custodianId ? [getCustodianQuery(custodianId, options)] : []),
+        getSectorsQuery(options),
+        getPermissionsQuery(options),
+      ]
+    : [];
 
   return useQueriesCombined<ApplicationDependenciesCombinedData>(queries);
 }

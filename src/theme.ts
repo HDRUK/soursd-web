@@ -1,6 +1,7 @@
 "use client";
 
 import { AugmentedColorPaletteOptions, Theme } from "@mui/material";
+import { TableCellProps } from "@mui/material/TableCell";
 import { createTheme, darken } from "@mui/material/styles";
 import { createBreakpoints } from "@mui/system";
 import { Roboto } from "next/font/google";
@@ -161,6 +162,14 @@ const createMuiModalStyles = <T extends { outline?: boolean }>(
   return null;
 };
 
+const createMuiTableStyles = (ownerState: TableCellProps) => {
+  return {
+    ...(ownerState?.variant === "head" && {
+      fontWeight: "bold",
+    }),
+  };
+};
+
 const createSwitchStyles = () => {
   return {
     ".MuiSwitch-switchBase.Mui-checked": {
@@ -224,12 +233,17 @@ const theme = createTheme(
     },
     spacing: 4,
     components: {
+      MuiTableCell: {
+        styleOverrides: {
+          root: ({ ownerState }) => createMuiTableStyles(ownerState),
+        },
+      },
       MuiModal: {
         defaultProps: {
           outline: false,
         },
         styleOverrides: {
-          root: ownerState => createMuiModalStyles(ownerState),
+          root: ({ ownerState }) => createMuiModalStyles(ownerState),
         },
       },
       MuiCssBaseline: {

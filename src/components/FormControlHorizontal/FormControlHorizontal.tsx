@@ -8,6 +8,8 @@ import {
   FormLabelProps,
   Grid,
   GridProps,
+  TextField,
+  Typography,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import React, { ReactNode } from "react";
@@ -19,6 +21,18 @@ import {
   FieldValues,
 } from "react-hook-form";
 import { ExtendedUseFormReturn } from "../Form/Form";
+
+function inferComponentType(
+  renderField: (fieldProps: FieldValues) => ReactNode
+): string | null {
+  const renderedElement = renderField({});
+  if (React.isValidElement(renderedElement)) {
+    if (renderedElement.type === TextField) return "textField";
+    // Add more component types that have consistent placeholders if we need them
+    // Placeholder for select not supported with MUI
+  }
+  return null;
+}
 
 export interface FormControlHorizontalProps
   extends Omit<FormControlProps, "error"> {
@@ -35,6 +49,7 @@ export interface FormControlHorizontalProps
   containerProps?: GridProps;
   displayLabel?: boolean;
   displayPlaceholder?: boolean;
+  description?: ReactNode;
 }
 
 const NAMESPACE_TRANSLATION_FORM = "Form";
@@ -54,6 +69,7 @@ export default function FormControlHorizontal({
   renderField,
   fullWidth = true,
   tNamespace = "",
+  description,
   ...restProps
 }: FormControlHorizontalProps) {
   const t = useTranslations(tNamespace || NAMESPACE_TRANSLATION_FORM);
@@ -76,6 +92,8 @@ export default function FormControlHorizontal({
   });
 
   const isRequired = isFieldRequired(name);
+
+  const componentType = inferComponentType(renderField);
 
   return (
     <FormControl
@@ -104,15 +122,21 @@ export default function FormControlHorizontal({
           {renderField({
             id: field.name,
             placeholder: displayPlaceholder
-              ? placeholder || t(`${tKey}Placeholder`)
-              : "",
+              ? placeholder
+              : componentType
+                ? t(`${componentType}Placeholder`)
+                : "",
             disabled,
             fullWidth,
             "data-testid": field.name,
             "aria-labelledby": `${field.name}-label`,
             ...field,
           })}
-
+          {!!description && (
+            <Typography variant="subtitle2" sx={{ pt: 1 }}>
+              {description}
+            </Typography>
+          )}
           {!!error && <FormHelperText>{error.message}</FormHelperText>}
         </Grid>
       </Grid>

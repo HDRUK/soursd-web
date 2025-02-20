@@ -41,6 +41,8 @@ export interface FormProps<T extends AnyObject>
   sx?: BoxProps["sx"];
   defaultValues?: DefaultValues<T>;
   schema?: yup.ObjectSchema<T>;
+  canLeave?: boolean;
+  shouldReset?: boolean;
 }
 
 export default function Form<T extends FieldValues>({
@@ -49,6 +51,8 @@ export default function Form<T extends FieldValues>({
   schema,
   error,
   onSubmit = () => {},
+  canLeave = false,
+  shouldReset = false,
   ...restProps
 }: FormProps<T>) {
   const formOptions: UseFormProps<T> = {
@@ -60,7 +64,7 @@ export default function Form<T extends FieldValues>({
   }
 
   const methods = useForm<T>(formOptions);
-  const { handleSubmit } = methods;
+  const { handleSubmit, reset } = methods;
 
   const extendedMethods: ExtendedUseFormReturn<T> = {
     ...methods,
@@ -68,12 +72,23 @@ export default function Form<T extends FieldValues>({
       schema ? isFieldRequired(schema, fieldName as string) : false,
   };
 
+  const handleFormSubmit = (values: T) => {
+    onSubmit(values);
+    if (shouldReset) {
+      reset(defaultValues);
+    }
+  };
+
   return (
     <FormProvider {...extendedMethods}>
-      <FormCanLeave>
+      <FormCanLeave canLeave={canLeave}>
         <Box
           component="form"
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={event => {
+            event.preventDefault();
+            handleSubmit(handleFormSubmit)(event);
+            event.stopPropagation();
+          }}
           autoComplete="off"
           {...restProps}
           sx={{

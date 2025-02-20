@@ -35,9 +35,9 @@ export default function SubTabsSections() {
         href: routes.profileOrganisationDetailsDigitalIdentifiers.path,
       },
       {
-        label: t("detailsSectorSiteAndWebsite"),
-        value: DetailsPageSubTabs.SECTOR_SITE_AND_WEBSITE,
-        href: routes.profileOrganisationDetailsSectorSiteAndWebsite.path,
+        label: t("detailsSectorSizeAndWebsite"),
+        value: DetailsPageSubTabs.SECTOR_SIZE_AND_WEBSITE,
+        href: routes.profileOrganisationDetailsSectorSizeAndWebsite.path,
       },
       {
         label: t("detailsSubsidiaries"),

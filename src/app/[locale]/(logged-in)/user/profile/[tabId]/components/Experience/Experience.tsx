@@ -5,33 +5,26 @@ import { useStore } from "@/data/store";
 import useFileUpload from "@/hooks/useFileUpload";
 import useUserFileUpload from "@/hooks/useUserFileUpload";
 import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
-import {
-  PageBody,
-  PageBodyContainer,
-  PageGuidance,
-  PageSection,
-} from "@/modules";
-import ResearcherAccreditationEntry from "@/modules/ResearcherAccreditationEntry";
-import ResearcherEducationEntry from "@/modules/ResearcherEducationEntry";
-import ResearcherEmploymentEntry from "@/modules/ResearcherEmploymentEntry";
-import { PostEmploymentsPayload } from "@/services/employments/types";
+import { PageBody, PageBodyContainer, PageGuidance } from "@/modules";
 import { getFileHref, getLatestCV } from "@/utils/file";
-import EastIcon from "@mui/icons-material/East";
-import { Button } from "@mui/material";
+import { Grid } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, useCallback } from "react";
+import FormControlHorizontal from "@/components/FormControlHorizontal";
+import Form from "@/components/Form";
+import { useMutation } from "@tanstack/react-query";
+import { putUserQuery } from "@/services/users";
+import ContactLink from "@/components/ContactLink";
+import { showAlert } from "@/utils/showAlert";
+import ReactDOMServer from "react-dom/server";
+import FormActions from "@/components/FormActions";
+import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
 import FileUploadDetails from "../FileUploadDetails/FileUploadDetails";
-import HistoriesSection from "../HistoriesSection";
-import EmploymentsForm from "./EmploymentsForm";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
-
 export default function Experience() {
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
-  const histories = useStore(state => state.config.histories);
-  const setHistories = useStore(state => state.setHistories);
-  const getHistories = useStore(state => state.getHistories);
   const [user, setUser] = useStore(store => [store.config.user, store.setUser]);
   const router = useRouter();
 
@@ -62,78 +55,89 @@ export default function Experience() {
     []
   );
 
-  const onSubmit = useCallback(
-    async (employment: PostEmploymentsPayload) => {
-      const histories = getHistories();
+  const updateUser = useMutation(putUserQuery(user?.id));
 
-      if (histories) {
-        const updatedHistories = {
-          ...histories,
-          employments: [...(histories.employments || []), employment],
+  const handleDetailsSubmit = useCallback(async () => {
+    try {
+      if (user?.id) {
+        const request = {
+          ...user,
         };
 
-        setHistories(updatedHistories);
+        await updateUser.mutateAsync(request);
       }
-    },
-    [getHistories, setHistories]
-  );
+
+      showAlert("success", {
+        text: tProfile("postUserSuccess"),
+        confirmButtonText: tProfile("postUserSuccessButton"),
+        preConfirm: () => {
+          router.push(ROUTES.profileResearcherTraining.path);
+        },
+      });
+    } catch (_) {
+      showAlert("error", {
+        text: ReactDOMServer.renderToString(
+          tProfile.rich("postUserError", {
+            contactLink: ContactLink,
+          })
+        ),
+        confirmButtonText: tProfile("postUserErrorButton"),
+      });
+    }
+  }, [user]);
+
+  const error =
+    updateUser.isError &&
+    tProfile.rich(updateUser.error, {
+      contactLink: ContactLink,
+    });
+
+  const formOptions = {
+    error,
+  };
 
   return (
-    <PageBodyContainer>
+    <PageBodyContainer heading={tProfile("experienceTitle")}>
       <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
         <PageBody>
-          <FormSection
-            heading={tProfile("accreditations")}
-            sx={{ marginBottom: "16px" }}>
-            <HistoriesSection
-              type="accreditations"
-              count={histories?.accreditations?.length}>
-              {histories?.accreditations?.map(item => (
-                <ResearcherAccreditationEntry data={item} />
-              ))}
-            </HistoriesSection>
-          </FormSection>
-          <FormSection heading={tProfile("education")}>
-            <HistoriesSection
-              type="education"
-              count={histories?.education?.length}>
-              {histories?.education?.map(item => (
-                <ResearcherEducationEntry data={item} />
-              ))}
-            </HistoriesSection>
-          </FormSection>
-          <FormSection heading={tProfile("employment")}>
-            <FileUploadDetails
-              fileButtonText={tProfile("uploadCv")}
-              fileHref={getFileHref(latestCV?.name)}
-              fileType={FileType.CV}
-              fileNameText={file?.name || tProfile("noCvUploaded")}
-              isSizeInvalid={isSizeInvalid}
-              isScanning={isScanning}
-              isScanComplete={isScanComplete}
-              isScanFailed={isScanFailed}
-              isUploading={isUploading}
-              onFileChange={handleFileChange}
-            />
-            <EmploymentsForm onSubmit={onSubmit} />
-            <HistoriesSection
-              type="employments"
-              count={histories?.employments?.length}>
-              {histories?.employments?.map(item => (
-                <ResearcherEmploymentEntry data={item} />
-              ))}
-            </HistoriesSection>
-          </FormSection>
-          <PageSection sx={{ display: "flex", justifyContent: "flex-end" }}>
-            <Button
-              sx={{ display: "flex" }}
-              endIcon={<EastIcon />}
-              onClick={() =>
-                router.push(ROUTES.profileResearcherTraining.path)
-              }>
-              {tProfile("continueLinkText")}
-            </Button>
-          </PageSection>
+          <Form onSubmit={handleDetailsSubmit} {...formOptions} key={user?.id}>
+            <>
+              <FormSection heading={tProfile("experienceForm")}>
+                <Grid container rowSpacing={3}>
+                  <Grid item xs={12} key="cv_upload">
+                    <FormControlHorizontal
+                      name="cv_upload"
+                      renderField={() => (
+                        <FileUploadDetails
+                          fileButtonText={tProfile("uploadCv")}
+                          fileHref={getFileHref(latestCV?.name)}
+                          fileType={FileType.CV}
+                          fileNameText={
+                            file?.name || tProfile("noCertificationUploaded")
+                          }
+                          isSizeInvalid={isSizeInvalid}
+                          isScanning={isScanning}
+                          isScanComplete={isScanComplete}
+                          isScanFailed={isScanFailed}
+                          isUploading={isUploading}
+                          onFileChange={handleFileChange}
+                          message="certificationUploadFailed"
+                        />
+                      )}
+                    />
+                  </Grid>
+                </Grid>
+              </FormSection>
+
+              <FormActions>
+                <ProfileNavigationFooter
+                  previousHref={ROUTES.profileResearcherAffiliations.path}
+                  nextStepText={tProfile("trainingAndAccreditations")}
+                  isLoading={updateUser.isPending}
+                />
+              </FormActions>
+            </>
+          </Form>
         </PageBody>
       </PageGuidance>
     </PageBodyContainer>

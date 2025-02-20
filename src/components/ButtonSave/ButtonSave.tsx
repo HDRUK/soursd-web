@@ -12,6 +12,7 @@ export default function ButtonSave({
   isLoading,
   children,
   sx,
+  disabled,
   ...restProps
 }: ButtonSaveProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
@@ -22,7 +23,7 @@ export default function ButtonSave({
       {...restProps}
       type="submit"
       loading={isLoading}
-      disabled={isLoading}
+      disabled={isLoading || disabled}
       sx={{ display: "flex", justifySelf: "end", ...sx }}>
       {children || t(`saveButton`)}
     </LoadingButton>
