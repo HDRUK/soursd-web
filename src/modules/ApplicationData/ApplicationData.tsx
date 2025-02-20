@@ -57,6 +57,24 @@ export default function ApplicationData({
 }: ApplicationDataProps) {
   const path = usePathname();
 
+  const useStoreValues = useStore(state => ({
+    addUrlToHistory: state.addUrlToHistory,
+    user: state.getUser(),
+    setUser: state.setUser,
+    organisation: state.getOrganisation(),
+    setOrganisation: state.setOrganisation,
+    custodian: state.getCustodian(),
+    setCustodian: state.setCustodian,
+    sectors: state.getSectors(),
+    setSectors: state.setSectors,
+    permissions: state.getPermissions(),
+    setPermissions: state.setPermissions,
+    histories: state.getHistories(),
+    setHistories: state.setHistories,
+    application: state.getApplication(),
+    setApplication: state.setApplication,
+  }));
+
   const {
     addUrlToHistory,
     user,
@@ -73,41 +91,7 @@ export default function ApplicationData({
     setHistories,
     application,
     setApplication,
-  } = useStore(
-    ({
-      addUrlToHistory,
-      getUser,
-      setUser,
-      getOrganisation,
-      setOrganisation,
-      getCustodian,
-      setCustodian,
-      getSectors,
-      setSectors,
-      getPermissions,
-      setPermissions,
-      getHistories,
-      setHistories,
-      getApplication,
-      setApplication,
-    }) => ({
-      addUrlToHistory,
-      user: getUser(),
-      setUser,
-      organisation: getOrganisation(),
-      setOrganisation,
-      custodian: getCustodian(),
-      setCustodian,
-      sectors: getSectors(),
-      setSectors,
-      permissions: getPermissions(),
-      setPermissions,
-      histories: getHistories(),
-      setHistories,
-      application: getApplication(),
-      setApplication,
-    })
-  );
+  } = useStoreValues;
 
   useEffect(() => {
     const application = parseSystemConfig(systemConfigData);
