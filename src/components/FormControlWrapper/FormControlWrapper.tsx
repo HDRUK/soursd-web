@@ -14,7 +14,7 @@ import {
   Control,
   FieldValues,
 } from "react-hook-form";
-import { ExtendedUseFormReturn } from "../Form/Form";
+import { ExtendedUseFormReturn } from "../Form";
 
 export interface FormControlProps
   extends Omit<FormControlLabelProps, "control" | "label"> {

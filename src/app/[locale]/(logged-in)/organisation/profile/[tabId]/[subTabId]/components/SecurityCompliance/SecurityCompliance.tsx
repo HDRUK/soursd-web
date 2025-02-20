@@ -5,13 +5,13 @@ import FormActions from "@/components/FormActions";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
 import { useStore } from "@/data/store";
 import { PageBody, PageSection } from "@/modules";
-import SaveIcon from "@mui/icons-material/Save";
-import { LoadingButton } from "@mui/lab";
 import { Grid } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import TextField from "@mui/material/TextField";
 import { useTranslations } from "next-intl";
 import React, { useMemo } from "react";
+import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
+import { ROUTES } from "@/consts/router";
 import usePatchOrganisation from "../../../hooks/usePatchOrganisation";
 import {
   certificationRows,
@@ -19,7 +19,6 @@ import {
   getValidation,
 } from "./config/form";
 
-const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 const NAMESPACE_TRANSLATION_FORM = "Form";
 
 export default function SecurityCompliance() {
@@ -30,7 +29,6 @@ export default function SecurityCompliance() {
     };
   });
   const t = useTranslations(NAMESPACE_TRANSLATION_FORM);
-  const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
   const { isPending: isLoading, onSubmit } = usePatchOrganisation({
     id: organisation?.id,
@@ -76,12 +74,12 @@ export default function SecurityCompliance() {
               ))}
             </Grid>
             <FormActions>
-              <LoadingButton
-                loading={isLoading}
-                type="submit"
-                endIcon={<SaveIcon />}>
-                {tProfile("submitButton")}
-              </LoadingButton>
+              <ProfileNavigationFooter
+                previousHref={
+                  ROUTES.profileOrganisationDetailsSubsidiaries.path
+                }
+                isLoading={isLoading}
+              />
             </FormActions>
           </>
         </Form>

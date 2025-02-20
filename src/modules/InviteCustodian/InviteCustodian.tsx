@@ -53,6 +53,7 @@ export default function InviteCustodianForm({
       onSubmit={onSubmit}
       schema={schema}
       {...formOptions}
+      shouldReset
       sx={{ mb: 3, maxWidth: MAX_FORM_WIDTH }}>
       {() => (
         <>

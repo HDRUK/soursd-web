@@ -5,19 +5,16 @@ import { PageBody, PageSection } from "@/modules";
 import FormActions from "@/components/FormActions";
 import FormControl from "@/components/FormControlWrapper";
 import FormSection from "@/components/FormSection";
-
 import yup from "@/config/yup";
 import { useMemo, useEffect } from "react";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-
 import { LoadingButton } from "@mui/lab";
-import { Grid, MenuItem, Select, TextField } from "@mui/material";
-
+import { Grid, TextField } from "@mui/material";
+import SelectDepartments from "@/components/SelectDepartments";
 import { useTranslations } from "next-intl";
 import Markdown from "@/components/Markdown";
 import { getUserQuery, patchUserQuery } from "@/services/users";
 import Form from "@/components/Form";
-import { showAlert } from "@/utils/showAlert";
+import useQueryAlerts from "@/hooks/useQueryAlerts";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import DelegateTable from "./DelegateTable";
 
@@ -33,23 +30,16 @@ const NAMESPACE_TRANSLATION_DELEGATES = "Form";
 const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
 
 export default function Delegates() {
-  const [organisation, user, setUser] = useStore(state => [
-    state.getOrganisation(),
-    state.getUser(),
-    state.setUser,
-  ]);
+  const { organisation, user, setUser } = useStore(state => ({
+    organisation: state.getOrganisation(),
+    user: state.getUser(),
+    setUser: state.setUser,
+  }));
 
   const t = useTranslations(NAMESPACE_TRANSLATION_DELEGATES);
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
-  const departments = organisation?.departments || [];
-
-  const filteredDepartments = departments.map(department => ({
-    label: department.name,
-    value: department.id,
-  }));
-
-  const { mutateAsync: mutateUser, isPending } = useMutation(
+  const { mutateAsync: mutateUser, ...patchUserQueryState } = useMutation(
     patchUserQuery(user?.id as number)
   );
 
@@ -64,6 +54,15 @@ export default function Delegates() {
     }
   }, [userData, setUser]);
 
+  useQueryAlerts(patchUserQueryState, {
+    errorAlertProps: {
+      text: tProfile("errorCreateMessage"),
+    },
+    successAlertProps: {
+      text: tProfile("profileUpdateMessage"),
+    },
+  });
+
   const handleSubmit = async (formData: KeyContactFormValues) => {
     const { first_name, last_name, email, job_title, department } = formData;
 
@@ -77,10 +76,6 @@ export default function Delegates() {
 
     mutateUser(payload).then(() => {
       refetchUserData();
-      showAlert("success", {
-        text: tProfile("profileUpdateMessage"),
-        confirmButtonText: tProfile("closeButton"),
-      });
     });
   };
 
@@ -140,17 +135,13 @@ export default function Delegates() {
                   <FormControl
                     name="department"
                     renderField={fieldProps => (
-                      <Select
+                      <SelectDepartments
+                        organisation={organisation}
                         {...fieldProps}
                         inputProps={{
                           "aria-label": t("departmentNameAriaLabel"),
-                        }}>
-                        {filteredDepartments?.map(({ label, value }) => (
-                          <MenuItem value={value} key={value} id={label}>
-                            {label}
-                          </MenuItem>
-                        ))}
-                      </Select>
+                        }}
+                      />
                     )}
                   />
                 </Grid>
@@ -174,10 +165,8 @@ export default function Delegates() {
             </FormSection>
             <FormActions>
               <LoadingButton
-                loading={isPending}
-                type="submit"
-                endIcon={<AddCircleOutlineIcon />}
-                sx={{ marginBottom: "20px" }}>
+                loading={patchUserQueryState.isPending}
+                type="submit">
                 {t("save")}
               </LoadingButton>
             </FormActions>

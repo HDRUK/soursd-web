@@ -5,10 +5,9 @@ import FormControl from "@/components/FormControlWrapper";
 import FormSection from "@/components/FormSection";
 import yup from "@/config/yup";
 import { useStore } from "@/data/store";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { showAlert } from "@/utils/showAlert";
 import { LoadingButton } from "@mui/lab";
-import { Grid, MenuItem, Select, TextField } from "@mui/material";
+import { Grid, TextField } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo } from "react";
@@ -18,6 +17,7 @@ import {
   postOrganisationInviteUser,
 } from "@/services/organisations";
 import { EMAIL_TEMPLATE } from "@/consts/application";
+import SelectDepartments from "@/components/SelectDepartments";
 
 export interface DelegatesFormValues {
   department_name?: string | null;
@@ -37,12 +37,6 @@ export default function InviteDelegateForm({
 }: InvitedDelegatesFormProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_DELEGATES);
   const organisation = useStore(state => state.config.organisation);
-  const departments = organisation?.departments || [];
-
-  const filteredDepartments = departments.map(department => ({
-    label: department.name,
-    value: department.id,
-  }));
 
   const { mutateAsync, isPending } = useMutation({
     mutationKey: ["inviteUser", organisation?.id],
@@ -143,17 +137,13 @@ export default function InviteDelegateForm({
               <FormControl
                 name="department_name"
                 renderField={fieldProps => (
-                  <Select
+                  <SelectDepartments
+                    organisation={organisation}
                     {...fieldProps}
                     inputProps={{
                       "aria-label": t("departmentNameAriaLabel"),
-                    }}>
-                    {filteredDepartments?.map(({ label, value }) => (
-                      <MenuItem value={value} key={value} id={label}>
-                        {label}
-                      </MenuItem>
-                    ))}
-                  </Select>
+                    }}
+                  />
                 )}
               />
             </Grid>
@@ -173,11 +163,7 @@ export default function InviteDelegateForm({
           </Grid>
         </FormSection>
         <FormActions>
-          <LoadingButton
-            loading={isPending}
-            type="submit"
-            endIcon={<AddCircleOutlineIcon />}
-            sx={{ marginBottom: "20px" }}>
+          <LoadingButton loading={isPending} type="submit">
             {t("inviteButton")}
           </LoadingButton>
         </FormActions>

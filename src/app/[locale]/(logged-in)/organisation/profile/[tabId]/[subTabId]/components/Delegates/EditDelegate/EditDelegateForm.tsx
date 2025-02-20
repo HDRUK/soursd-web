@@ -5,17 +5,14 @@ import FormControl from "@/components/FormControlWrapper";
 import FormSection from "@/components/FormSection";
 import yup from "@/config/yup";
 import { useStore } from "@/data/store";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { LoadingButton } from "@mui/lab";
-import { Grid, MenuItem, Select, TextField } from "@mui/material";
+import { Grid, TextField } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo } from "react";
-
+import SelectDepartments from "@/components/SelectDepartments";
 import Form from "@/components/Form";
-
 import { patchUserQuery } from "@/services/users";
-
 import { User } from "@/types/application";
 
 export interface DelegatesFormValues {
@@ -36,12 +33,6 @@ export default function EditDelegateForm({
 }: EditDelegateFormProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_DELEGATES);
   const organisation = useStore(state => state.config.organisation);
-  const departments = organisation?.departments || [];
-
-  const filteredDepartments = departments.map(department => ({
-    label: department.name,
-    value: department.id,
-  }));
 
   const { mutateAsync, isPending } = useMutation(
     patchUserQuery(delegate?.id as number)
@@ -105,28 +96,20 @@ export default function EditDelegateForm({
               <FormControl
                 name="department"
                 renderField={fieldProps => (
-                  <Select
+                  <SelectDepartments
+                    organisation={organisation}
                     {...fieldProps}
                     inputProps={{
                       "aria-label": t("departmentNameAriaLabel"),
-                    }}>
-                    {filteredDepartments?.map(({ label, value }) => (
-                      <MenuItem value={value} key={value} id={label}>
-                        {label}
-                      </MenuItem>
-                    ))}
-                  </Select>
+                    }}
+                  />
                 )}
               />
             </Grid>
           </Grid>
         </FormSection>
         <FormActions>
-          <LoadingButton
-            loading={isPending}
-            type="submit"
-            endIcon={<AddCircleOutlineIcon />}
-            sx={{ marginBottom: "20px" }}>
+          <LoadingButton loading={isPending} type="submit">
             {t("save")}
           </LoadingButton>
         </FormActions>
