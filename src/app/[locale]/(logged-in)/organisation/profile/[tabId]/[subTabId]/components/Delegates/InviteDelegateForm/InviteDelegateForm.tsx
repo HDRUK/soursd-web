@@ -164,11 +164,7 @@ export default function InviteDelegateForm({
           </Grid>
         </FormSection>
         <FormActions>
-          <LoadingButton
-            loading={isPending}
-            type="submit"
-            endIcon={<AddCircleOutlineIcon />}
-            sx={{ marginBottom: "20px" }}>
+          <LoadingButton loading={isPending} type="submit">
             {t("inviteButton")}
           </LoadingButton>
         </FormActions>

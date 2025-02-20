@@ -7,7 +7,6 @@ import FormControl from "@/components/FormControlWrapper";
 import FormSection from "@/components/FormSection";
 import yup from "@/config/yup";
 import { useMemo, useEffect } from "react";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { LoadingButton } from "@mui/lab";
 import { Grid, TextField } from "@mui/material";
 import SelectDepartments from "@/components/SelectDepartments";
@@ -167,8 +166,7 @@ export default function Delegates() {
             <FormActions>
               <LoadingButton
                 loading={patchUserQueryState.isPending}
-                type="submit"
-                endIcon={<AddCircleOutlineIcon />}>
+                type="submit">
                 {t("save")}
               </LoadingButton>
             </FormActions>
