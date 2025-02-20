@@ -98,7 +98,9 @@ export default function Affiliations() {
   }, [affiliationsData?.data?.data]);
 
   return (
-    <PageBodyContainer heading={tProfile("affiliationsTitle")} description={tProfile("affiliationsDescription")}>
+    <PageBodyContainer
+      heading={tProfile("affiliationsTitle")}
+      description={tProfile("affiliationsDescription")}>
       <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
         <PageBody>
           <PageSection>

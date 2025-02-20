@@ -6,9 +6,6 @@ import useFileUpload from "@/hooks/useFileUpload";
 import useUserFileUpload from "@/hooks/useUserFileUpload";
 import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
 import { PageBody, PageBodyContainer, PageGuidance } from "@/modules";
-import Text from "@/components/Text";
-import InfoIcon from "@mui/icons-material/Info";
-
 import { getFileHref, getLatestCV } from "@/utils/file";
 import { Grid } from "@mui/material";
 import { useTranslations } from "next-intl";
@@ -60,37 +57,34 @@ export default function Experience() {
 
   const updateUser = useMutation(putUserQuery(user?.id));
 
-  const handleDetailsSubmit = useCallback(
-    async () => {
-      try {
-        if (user?.id) {
-          const request = {
-            ...user,
-          };
+  const handleDetailsSubmit = useCallback(async () => {
+    try {
+      if (user?.id) {
+        const request = {
+          ...user,
+        };
 
-          await updateUser.mutateAsync(request);
-        }
-
-        showAlert("success", {
-          text: tProfile("postUserSuccess"),
-          confirmButtonText: tProfile("postUserSuccessButton"),
-          preConfirm: () => {
-            router.push(ROUTES.profileResearcherTraining.path);
-          },
-        });
-      } catch (_) {
-        showAlert("error", {
-          text: ReactDOMServer.renderToString(
-            tProfile.rich("postUserError", {
-              contactLink: ContactLink,
-            })
-          ),
-          confirmButtonText: tProfile("postUserErrorButton"),
-        });
+        await updateUser.mutateAsync(request);
       }
-    },
-    [user]
-  );
+
+      showAlert("success", {
+        text: tProfile("postUserSuccess"),
+        confirmButtonText: tProfile("postUserSuccessButton"),
+        preConfirm: () => {
+          router.push(ROUTES.profileResearcherTraining.path);
+        },
+      });
+    } catch (_) {
+      showAlert("error", {
+        text: ReactDOMServer.renderToString(
+          tProfile.rich("postUserError", {
+            contactLink: ContactLink,
+          })
+        ),
+        confirmButtonText: tProfile("postUserErrorButton"),
+      });
+    }
+  }, [user]);
 
   const error =
     updateUser.isError &&
@@ -99,17 +93,14 @@ export default function Experience() {
     });
 
   const formOptions = {
-    error
+    error,
   };
 
   return (
     <PageBodyContainer heading={tProfile("experienceTitle")}>
       <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
         <PageBody>
-          <Form
-            onSubmit={handleDetailsSubmit}
-            {...formOptions}
-            key={user?.id}>
+          <Form onSubmit={handleDetailsSubmit} {...formOptions} key={user?.id}>
             <>
               <FormSection heading={tProfile("experienceForm")}>
                 <Grid container rowSpacing={3}>

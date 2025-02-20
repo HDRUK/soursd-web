@@ -181,11 +181,7 @@ export default function Identity() {
                       <FormControlHorizontal
                         name="location"
                         description={tProfile("locationDescription")}
-                        renderField={({
-                          value,
-                          onChange,
-                          ...rest
-                        }) => (
+                        renderField={({ value, onChange, ...rest }) => (
                           <SelectCountry
                             useCountryCode={false}
                             value={value}
