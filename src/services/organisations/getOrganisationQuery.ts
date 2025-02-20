@@ -20,5 +20,5 @@ export default function getOrganisationQuery(
         ...options?.responseOptions,
       }),
     ...options,
-  } as UseQueryOptions<ReturnType<typeof getOrganisation>>;
+  } as UseQueryOptions<Awaited<ReturnType<typeof getOrganisation>>>;
 }

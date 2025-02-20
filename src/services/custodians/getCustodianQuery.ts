@@ -16,5 +16,5 @@ export default function getCustodianQuery(
         ...options?.responseOptions,
       }),
     ...options,
-  } as UseQueryOptions<ReturnType<typeof getCustodian>>;
+  } as UseQueryOptions<Awaited<ReturnType<typeof getCustodian>>>;
 }

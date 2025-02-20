@@ -18,5 +18,5 @@ export default function getEmploymentsQuery(
         ...options?.responseOptions,
       }),
     ...options,
-  } as UseQueryOptions<ReturnType<typeof getEmployments>>;
+  } as UseQueryOptions<Awaited<ReturnType<typeof getEmployments>>>;
 }

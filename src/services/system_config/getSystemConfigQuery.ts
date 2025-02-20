@@ -13,5 +13,5 @@ export default function getSystemConfigQuery(options?: QueryOptions) {
         ...options?.responseOptions,
       }),
     ...options,
-  } as UseQueryOptions<ReturnType<typeof getSystemConfig>>;
+  } as UseQueryOptions<Awaited<ReturnType<typeof getSystemConfig>>>;
 }

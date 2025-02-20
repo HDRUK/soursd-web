@@ -18,5 +18,5 @@ export default function getAffiliationsQuery(
         ...options?.responseOptions,
       }),
     ...options,
-  } as UseQueryOptions<ReturnType<typeof getAffiliations>>;
+  } as UseQueryOptions<Awaited<ReturnType<typeof getAffiliations>>>;
 }

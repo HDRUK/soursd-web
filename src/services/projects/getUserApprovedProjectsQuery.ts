@@ -18,5 +18,5 @@ export default function getUserApprovedProjectsQuery(
         ...options?.responseOptions,
       }),
     ...options,
-  } as UseQueryOptions<ReturnType<typeof getUserApprovedProjects>>;
+  } as UseQueryOptions<Awaited<ReturnType<typeof getUserApprovedProjects>>>;
 }

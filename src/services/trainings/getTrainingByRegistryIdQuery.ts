@@ -14,5 +14,5 @@ export default function getTrainingQuery(
         ...options?.responseOptions,
       }),
     ...options,
-  } as UseQueryOptions<ReturnType<typeof getTrainingByRegistryId>>;
+  } as UseQueryOptions<Awaited<ReturnType<typeof getTrainingByRegistryId>>>;
 }

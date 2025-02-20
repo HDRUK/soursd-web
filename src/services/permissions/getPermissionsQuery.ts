@@ -13,5 +13,5 @@ export default function getPermissionsQuery(options?: QueryOptions) {
         ...options?.responseOptions,
       }),
     ...options,
-  } as UseQueryOptions<ReturnType<typeof getPermissions>>;
+  } as UseQueryOptions<Awaited<ReturnType<typeof getPermissions>>>;
 }

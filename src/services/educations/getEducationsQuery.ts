@@ -14,5 +14,5 @@ export default function getEducationsQuery(
         ...options?.responseOptions,
       }),
     ...options,
-  } as UseQueryOptions<ReturnType<typeof getEducations>>;
+  } as UseQueryOptions<Awaited<ReturnType<typeof getEducations>>>;
 }

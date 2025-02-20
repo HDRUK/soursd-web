@@ -13,5 +13,5 @@ export default function getSectorsQuery(options?: QueryOptions) {
         ...options?.responseOptions,
       }),
     ...options,
-  } as UseQueryOptions<ReturnType<typeof getSectors>>;
+  } as UseQueryOptions<Awaited<ReturnType<typeof getSectors>>>;
 }
