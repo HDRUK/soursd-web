@@ -11,13 +11,13 @@ import { useState } from "react";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { SearchDirections } from "@/consts/search";
-import DecoupleUser from "../Delegates/DecoupleDelegate";
-import { ColumnDef, CellContext } from "@tanstack/react-table";
-import UserModal from "../UserModal";
-import UserBulkInvite from "../UserBulkInvite";
 import { User } from "@/types/application";
 import Table from "@/components/Table";
 import Markdown from "@/components/Markdown";
+import { ColumnDef, CellContext } from "@tanstack/react-table";
+import DecoupleUser from "../Delegates/DecoupleDelegate";
+import UserModal from "../UserModal";
+import UserBulkInvite from "../UserBulkInvite";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
 
@@ -60,21 +60,22 @@ export default function Users() {
   );
 
   const renderActions = (info: CellContext<User, unknown>) => (
-    <>
-      <DecoupleUser
-        user={info.row.original}
-        onSuccess={refetchOrganisationUsers}
-        payload={{ organisation_id: null }}
-        namespace="DecoupleUser"
-      />
-    </>
+    <DecoupleUser
+      user={info.row.original}
+      onSuccess={refetchOrganisationUsers}
+      payload={{ organisation_id: null }}
+      namespace="DecoupleUser"
+    />
   );
+
+  // task coming for this
+  const renderSelectColumn = () => <Checkbox value />;
 
   const columns: ColumnDef<User>[] = [
     {
       accessorKey: "id",
-      header: <Checkbox value={true} />,
-      cell: () => <Checkbox value={true} />,
+      header: <Checkbox value />,
+      cell: renderSelectColumn,
     },
     {
       accessorKey: "name",
@@ -120,7 +121,7 @@ export default function Users() {
           </Box>
           <FormControlLabel
             label={t("showPendingInvites")}
-            control={<Checkbox value={true} />}
+            control={<Checkbox value />}
           />
           <Button variant="text">{t("clearAll")} </Button>
         </Box>

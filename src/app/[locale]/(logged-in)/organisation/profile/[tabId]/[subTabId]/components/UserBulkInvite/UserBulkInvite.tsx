@@ -1,12 +1,8 @@
 import FileLink from "@/components/FileLink";
 import { FileType } from "@/consts/files";
 import useFileUpload from "@/hooks/useFileUpload";
-import {
-  mockedOrganisationBulkInviteIntro,
-  mockedOrganisationUsersIntro,
-} from "@/mocks/data/cms";
 import { getFileFromEvent } from "@/utils/file";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { ChangeEvent, useCallback } from "react";
 
 interface UserBulkInviteProps {

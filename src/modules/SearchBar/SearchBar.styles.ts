@@ -1,7 +1,7 @@
 import { Box, css, styled, TextField } from "@mui/material";
 
 export const StyledSearchBar = styled(Box)(
-  ({ theme }) => css`
+  () => css`
     display: flex;
     align-items: center;
     border: 1px solid #e0dfe7;
