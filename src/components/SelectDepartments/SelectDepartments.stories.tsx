@@ -29,7 +29,7 @@ const mockOrganisation = mockedOrganisation();
 export const Basic: Story = {
   args: {
     organisation: mockOrganisation,
-    value: "Clinical Research",
+    value: mockOrganisation.departments[0].id,
     onChange: event => console.log(event.target.value),
   },
   render: props => <SelectDepartmentsWithProvider {...props} />,
