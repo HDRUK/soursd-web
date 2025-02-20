@@ -6,8 +6,8 @@ import useFileUpload from "@/hooks/useFileUpload";
 import useUserFileUpload from "@/hooks/useUserFileUpload";
 import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
 import { PageBody, PageBodyContainer, PageGuidance } from "@/modules";
-import { LoadingButton } from "@mui/lab";
-import SaveIcon from "@mui/icons-material/Save";
+import Text from "@/components/Text";
+import InfoIcon from "@mui/icons-material/Info";
 
 import { getFileHref, getLatestCV } from "@/utils/file";
 import { Grid } from "@mui/material";
@@ -22,6 +22,7 @@ import ContactLink from "@/components/ContactLink";
 import { showAlert } from "@/utils/showAlert";
 import ReactDOMServer from "react-dom/server";
 import FormActions from "@/components/FormActions";
+import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
 import FileUploadDetails from "../FileUploadDetails/FileUploadDetails";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
@@ -105,7 +106,10 @@ export default function Experience() {
     <PageBodyContainer heading={tProfile("experienceTitle")}>
       <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
         <PageBody>
-          <Form onSubmit={handleDetailsSubmit} {...formOptions}>
+          <Form
+            onSubmit={handleDetailsSubmit}
+            {...formOptions}
+            key={user?.id}>
             <>
               <FormSection heading={tProfile("experienceForm")}>
                 <Grid container rowSpacing={3}>
@@ -135,13 +139,11 @@ export default function Experience() {
               </FormSection>
 
               <FormActions>
-                <LoadingButton
-                  type="submit"
-                  endIcon={<SaveIcon />}
-                  loading={updateUser.isPending}
-                  sx={{ display: "flex", justifySelf: "end" }}>
-                  {tProfile("submitAndContinueButton")}
-                </LoadingButton>
+                <ProfileNavigationFooter
+                  previousHref={ROUTES.profileResearcherAffiliations.path}
+                  nextStepText={tProfile("trainingAndAccreditations")}
+                  isLoading={updateUser.isPending}
+                />
               </FormActions>
             </>
           </Form>
