@@ -9,28 +9,30 @@ import FormFieldArray from "@/components/FormFieldArray";
 import SelectCountry from "@/components/SelectCountry";
 import yup from "@/config/yup";
 import { VALIDATION_CHARITY_ID, VALIDATION_ROR_ID } from "@/consts/form";
+
 import { useStore } from "@/data/store";
 import { PageBody, PageSection } from "@/modules";
-import SaveIcon from "@mui/icons-material/Save";
-import { LoadingButton } from "@mui/lab";
-import { Box, Grid, TextField } from "@mui/material";
+import { Grid, TextField } from "@mui/material";
 import { useTranslations } from "next-intl";
 import React, { useMemo } from "react";
-import InformationSection from "@/components/InformationSection";
-import { mockedRorIdInfo } from "@/mocks/data/cms";
+import { ROUTES } from "@/consts/router";
+import { useRouter } from "next/navigation";
+import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
+import { Charity } from "@/types/application";
 import usePatchOrganisation from "../../../hooks/usePatchOrganisation";
 
 export interface DigitalIdentifiersFormValues {
   companies_house_no: string;
-  sector_id: number;
-  charity_registration_id: string;
+  charities: Charity[];
   ror_id: string;
 }
 
 const NAMESPACE_TRANSLATION_FORM = "Form";
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
+const NAMESPACE_TRANSLATION_ORG_PROFILE = "ProfileOrganisation";
 
 export default function DigitalIdentifiers() {
+  const router = useRouter();
   const { organisation, setOrganisation } = useStore(state => {
     return {
       organisation: state.config.organisation,
@@ -50,11 +52,12 @@ export default function DigitalIdentifiers() {
 
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
+  const tOrgProfile = useTranslations(NAMESPACE_TRANSLATION_ORG_PROFILE);
 
   const schema = useMemo(
     () =>
       yup.object().shape({
-        sector_id: yup.number().required(tForm("sectorIdRequiredInvalid")),
+        companies_house_no: yup.string(),
         isCharity: yup.boolean(),
         charities: yup.array().when("isCharity", {
           is: true,
@@ -88,7 +91,6 @@ export default function DigitalIdentifiers() {
   const formOptions = {
     defaultValues: {
       companies_house_no: organisation?.companies_house_no,
-      sector_id: organisation?.sector_id,
       charities: organisation?.charities.map(
         ({ country, registration_id }) => ({ country, registration_id })
       ),
@@ -102,10 +104,24 @@ export default function DigitalIdentifiers() {
       }),
   };
 
+  const handleSubmit = (fields: Partial<DigitalIdentifiersFormValues>) => {
+    const payload = {
+      charities: fields.charities,
+      companies_house_no: fields.companies_house_no,
+      ror_id: fields.ror_id,
+    };
+    onSubmit(payload).then(() =>
+      router.push(ROUTES.profileOrganisationDetailsSectorSizeAndWebsite.path)
+    );
+  };
   return (
     <PageBody>
-      <PageSection>
-        <Form schema={schema} onSubmit={onSubmit} {...formOptions}>
+      <PageSection heading={tOrgProfile("detailsDigitalIdentifiers")}>
+        <Form
+          schema={schema}
+          onSubmit={handleSubmit}
+          {...formOptions}
+          key={organisation?.id}>
           {({ watch, setValue }) => {
             const isCharity = watch("isCharity");
 
@@ -120,6 +136,7 @@ export default function DigitalIdentifiers() {
                     <FormControlHorizontal
                       name="companies_house_no"
                       renderField={fieldProps => <TextField {...fieldProps} />}
+                      description={tOrgProfile("companiesHouseIdDescription")}
                     />
                   </Grid>
 
@@ -127,6 +144,7 @@ export default function DigitalIdentifiers() {
                     <FormControlHorizontal
                       name="isCharity"
                       label={tForm("isCharity")}
+                      description={tOrgProfile("isCharityDescription")}
                       renderField={fieldProps => (
                         <Checkbox {...fieldProps} checked={fieldProps.value} />
                       )}
@@ -198,24 +216,19 @@ export default function DigitalIdentifiers() {
                   <Grid item xs={12}>
                     <FormControlHorizontal
                       name="ror_id"
-                      renderField={fieldProps => (
-                        <Box sx={{ display: "flex", alignItems: "center" }}>
-                          <TextField {...fieldProps} />
-                          <InformationSection>
-                            {mockedRorIdInfo}
-                          </InformationSection>
-                        </Box>
-                      )}
+                      renderField={fieldProps => <TextField {...fieldProps} />}
+                      description={tForm("rorIdDescription")}
                     />
                   </Grid>
                 </Grid>
                 <FormActions>
-                  <LoadingButton
-                    loading={isLoading}
-                    type="submit"
-                    endIcon={<SaveIcon />}>
-                    {tProfile("submitButton")}
-                  </LoadingButton>
+                  <ProfileNavigationFooter
+                    previousHref={
+                      ROUTES.profileOrganisationDetailsNameAndAddress.path
+                    }
+                    nextStepText={tOrgProfile("detailsSectorSizeAndWebsite")}
+                    isLoading={isLoading}
+                  />
                 </FormActions>
               </>
             );

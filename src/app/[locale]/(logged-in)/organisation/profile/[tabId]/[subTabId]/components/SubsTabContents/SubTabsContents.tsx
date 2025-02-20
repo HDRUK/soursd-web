@@ -13,7 +13,7 @@ import {
 import Delegates from "../Delegates";
 import DigitalIdentifiers from "../DigitalIdentifiers";
 import NameAndAddress from "../NameAndAddress";
-import SectorSiteAndWebsite from "../SectorSiteAndWebsite";
+import SectorSizeAndWebsite from "../SectorSizeAndWebsite";
 import SecurityCompliance from "../SecurityCompliance";
 import Subsidiaries from "../Subsidiaries";
 import Users from "../Users";
@@ -50,8 +50,8 @@ export default function SubTabsContents({
     case DetailsPageSubTabs.DIGITAL_IDENTIFIERS:
       content = <DigitalIdentifiers />;
       break;
-    case DetailsPageSubTabs.SECTOR_SITE_AND_WEBSITE:
-      content = <SectorSiteAndWebsite />;
+    case DetailsPageSubTabs.SECTOR_SIZE_AND_WEBSITE:
+      content = <SectorSizeAndWebsite />;
       break;
     case DetailsPageSubTabs.SUBSIDIARIES:
       content = <Subsidiaries />;

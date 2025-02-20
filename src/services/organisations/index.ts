@@ -7,6 +7,8 @@ import patchOrganisation from "./patchOrganisation";
 import postOrganisationInviteUser from "./postOrganisationInviteUser";
 import postOrganisationInviteUserQuery from "./postOrganisationInviteUserQuery";
 import getOrganisationUsers from "./getOrganisationUsers";
+import getOrganisationDelegates from "./getOrganisationDelegates";
+import getOrganisationDelegatesQuery from "./getOrganisationDelegatesQuery";
 import postOrganisationUnclaimed from "./postOrganisationUnclaimed";
 import postOrganisationUnclaimedQuery from "./postOrganisationUnclaimedQuery";
 import postOrganisationInvite from "./postOrganisationInvite";
@@ -24,6 +26,8 @@ export {
   postOrganisationInviteUser,
   postOrganisationInviteUserQuery,
   getOrganisationUsers,
+  getOrganisationDelegates,
+  getOrganisationDelegatesQuery,
   getOrganisationRegistries,
   postOrganisationUnclaimedQuery,
   postOrganisationUnclaimed,

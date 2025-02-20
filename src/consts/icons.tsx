@@ -1,3 +1,5 @@
+import DeleteIcon from "@mui/icons-material/Delete";
+import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import BlockIcon from "@mui/icons-material/BlockOutlined";
 import ShieldOutlinedIcon from "@mui/icons-material/ShieldOutlined";
 import StatusIndicator from "@/components/StatusIndicator";
@@ -29,6 +31,14 @@ const DecoupleIcon = (props: SvgIconProps) => (
   <BlockIcon {...props} sx={{ color: "error.main" }} />
 );
 
+const TrashIcon = (props: SvgIconProps) => (
+  <DeleteIcon {...props} sx={{ color: "error.main" }} />
+);
+
+const EditIcon = (props: SvgIconProps) => (
+  <ModeEditIcon {...props} sx={{ color: "default.main" }} />
+);
+
 export {
   ApprovedIcon,
   ApprovedTrainingIcon,
@@ -36,4 +46,6 @@ export {
   IdentityVerifiedIcon,
   PendingIcon,
   DecoupleIcon,
+  TrashIcon,
+  EditIcon,
 };

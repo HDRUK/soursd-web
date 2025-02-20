@@ -1,6 +1,5 @@
 import Form from "@/components/Form";
 import FormActions from "@/components/FormActions";
-import ButtonSave from "@/components/ButtonSave";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
 import FormSection from "@/components/FormSection";
 import SelectInput from "@/components/SelectInput";
@@ -14,6 +13,8 @@ import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 import DateInput from "@/components/DateInput";
+import { ROUTES } from "@/consts/router";
+import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
 import AskOrganisationModal from "../AskOrganisation";
 
 export interface AffiliationsFormProps {
@@ -80,7 +81,12 @@ export default function AffiliationsForm({
 
   return (
     <>
-      <Form onSubmit={onSubmit} schema={schema} {...formOptions} sx={{ mb: 3 }}>
+      <Form
+        onSubmit={onSubmit}
+        schema={schema}
+        {...formOptions}
+        sx={{ mb: 3 }}
+        shouldReset>
         {({ watch }) => {
           const isCurrent = watch("current_employer");
           return (
@@ -156,10 +162,11 @@ export default function AffiliationsForm({
                 </Grid>
               </FormSection>
               <FormActions>
-                <ButtonSave isLoading={queryState.isPending}>
-                  {" "}
-                  {tProfile("submitAndContinueButton")}
-                </ButtonSave>
+                <ProfileNavigationFooter
+                  previousHref={ROUTES.profileResearcherIdentity.path}
+                  nextStepText={tProfile("experience")}
+                  isLoading={queryState.isPending}
+                />
               </FormActions>
             </>
           );

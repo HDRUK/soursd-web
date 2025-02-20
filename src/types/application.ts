@@ -130,11 +130,14 @@ interface User {
     training?: ResearcherTraining[];
   };
   is_delegate: number;
+  departments?: Department[];
+  role?: string;
+  location?: string;
 }
 interface AddressFields {
   postcode?: string;
   address_1?: string;
-  address_2?: string;
+  address_2?: string | null;
   town?: string;
   county?: string;
   country?: string;
@@ -196,6 +199,7 @@ interface Organisation extends OrganisationIdvt, AddressFields {
   subsidiaries?: Subsidiary[];
   departments: Department[];
   unclaimed: number;
+  organisation_size?: number;
 }
 
 interface ResearcherEducation {
@@ -338,6 +342,7 @@ export type {
   Auth,
   Custodian,
   CustodianUser,
+  Charity,
   Department,
   File,
   Organisation,

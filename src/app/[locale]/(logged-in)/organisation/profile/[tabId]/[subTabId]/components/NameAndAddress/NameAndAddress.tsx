@@ -9,11 +9,12 @@ import yup from "@/config/yup";
 import { useStore } from "@/data/store";
 import { PageBody, PageSection } from "@/modules";
 import { AddressFields } from "@/types/application";
-import SaveIcon from "@mui/icons-material/Save";
-import { LoadingButton } from "@mui/lab";
 import { Grid, TextField } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
+import { useRouter } from "next/navigation";
+import { ROUTES } from "@/consts/router";
+import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
 import usePatchOrganisation from "../../../hooks/usePatchOrganisation";
 
 export interface NameAndAddressFormValues {
@@ -28,8 +29,10 @@ export interface NameAndAddressFormValues {
 
 const NAMESPACE_TRANSLATION_FORM = "Form";
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
+const NAMESPACE_TRANSLATION_ORG_PROFILE = "ProfileOrganisation";
 
 export default function NameAndAddress() {
+  const router = useRouter();
   const { organisation, setOrganisation } = useStore(state => {
     return {
       organisation: state.config.organisation,
@@ -49,6 +52,7 @@ export default function NameAndAddress() {
 
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
+  const tOrgProfile = useTranslations(NAMESPACE_TRANSLATION_ORG_PROFILE);
 
   const schema = useMemo(
     () =>
@@ -65,7 +69,6 @@ export default function NameAndAddress() {
       }),
     []
   );
-
   const formOptions = {
     defaultValues: {
       organisation_name: organisation?.organisation_name,
@@ -83,10 +86,22 @@ export default function NameAndAddress() {
       }),
   };
 
+  const handleSubmit = (fields: Partial<NameAndAddressFormValues>) => {
+    onSubmit(fields).then(() =>
+      router.push(ROUTES.profileOrganisationDetailsDigitalIdentifiers.path)
+    );
+  };
+
   return (
     <PageBody>
-      <PageSection>
-        <Form schema={schema} onSubmit={onSubmit} {...formOptions}>
+      <PageSection
+        heading={tOrgProfile("nameAndAddressTitle")}
+        description={tOrgProfile("nameAndAddressDescription")}>
+        <Form
+          schema={schema}
+          onSubmit={handleSubmit}
+          {...formOptions}
+          key={organisation?.id}>
           {({ setValue }) => {
             const handleFindAddress = (address: AddressFields) => {
               Object.entries(address).forEach(([key, value]) => {
@@ -107,7 +122,9 @@ export default function NameAndAddress() {
                     <FormControlHorizontal
                       name="address"
                       displayPlaceholder={false}
-                      displayLabel={false}
+                      description={tOrgProfile(
+                        "nameAndAddressAddressDescription"
+                      )}
                       renderField={() => (
                         <GoogleAutocomplete
                           name="address"
@@ -164,12 +181,10 @@ export default function NameAndAddress() {
                 </Grid>
 
                 <FormActions>
-                  <LoadingButton
-                    loading={isLoading}
-                    type="submit"
-                    endIcon={<SaveIcon />}>
-                    {tProfile("submitButton")}
-                  </LoadingButton>
+                  <ProfileNavigationFooter
+                    nextStepText={tOrgProfile("detailsDigitalIdentifiers")}
+                    isLoading={isLoading}
+                  />
                 </FormActions>
               </>
             );

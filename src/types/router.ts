@@ -43,7 +43,7 @@ interface Routes {
   profileOrganisationDetails: RouteConfig;
   profileOrganisationDetailsNameAndAddress: RouteConfig;
   profileOrganisationDetailsDigitalIdentifiers: RouteConfig;
-  profileOrganisationDetailsSectorSiteAndWebsite: RouteConfig;
+  profileOrganisationDetailsSectorSizeAndWebsite: RouteConfig;
   profileOrganisationDetailsSubsidiaries: RouteConfig;
   profileOrganisationDetailsSecurityCompliance: RouteConfig;
   profileOrganisationUserAdministration: RouteConfig;
