@@ -192,6 +192,8 @@
     "organisationNameRequiredInvalid": "Organisation is a required field",
     "firstNameRequiredInvalid": "First name is a required field",
     "lastNameRequiredInvalid": "Last name is a required field",
+    "location": "Location",
+    "locationRequiredInvalid": "Location is a required field",
     "emailRequiredInvalid": "Email is a required field",
     "emailFormatInvalid": "Email must be a valid address",
     "contactEmail": "Contact email",
