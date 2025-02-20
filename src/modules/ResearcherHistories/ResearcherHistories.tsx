@@ -1,7 +1,7 @@
 import { Message } from "@/components/Message";
 import ResearcherAccreditationEntry from "@/modules/ResearcherAccreditationEntry";
 import ResearcherEducationEntry from "@/modules/ResearcherEducationEntry";
-import ResearcherEmploymentEntry from "@/modules/ResearcherEmploymentEntry";
+// import ResearcherEmploymentEntry from "@/modules/ResearcherEmploymentEntry";
 import ResearcherProjectEntry from "@/modules/ResearcherProjectEntry";
 import ResearcherTrainingEntry from "@/modules/ResearcherTrainingEntry";
 import ResearcherProfessionalRegistrationsEntry from "@/modules/ResearcherProfessionalRegistrationsEntry";
@@ -21,7 +21,7 @@ export default function ResearcherHistories({
 }: ResearcherHistoriesProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_HISTORIES);
   const accreditations = data.getAccreditations?.data?.data;
-  const employments = data.getEmployments?.data;
+  // const employments = data.getEmployments?.data;
   const educations = data.getEducations?.data;
   const projects = data.getUserApprovedProjects?.data;
   const trainings = data.getTrainings?.data;
@@ -64,7 +64,7 @@ export default function ResearcherHistories({
           )}
         </AccordionDetails>
       </Accordion>
-      <Accordion>
+      {/* <Accordion>
         <AccordionSummary
           aria-controls="employments-content"
           id="employments-header"
@@ -80,7 +80,7 @@ export default function ResearcherHistories({
             <Message severity="info">{t("noEmploymentsFound")}</Message>
           )}
         </AccordionDetails>
-      </Accordion>
+      </Accordion> */}
       <Accordion>
         <AccordionSummary
           aria-controls="projects-content"

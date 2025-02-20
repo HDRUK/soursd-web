@@ -30,23 +30,33 @@ export default function Application({
   const t = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
 
   const { data: applicationData, ...applicationQueryState } =
-    useApplicationDependencies({
-      user: me,
-      custodianId,
-      organisationId,
-    });
+    useApplicationDependencies(
+      {
+        user: me,
+        custodianId,
+        organisationId,
+      },
+      {
+        queryKeySuffix: ["initial"],
+        enabled: !!me,
+      }
+    );
 
   const { data: historiesData, ...historiesQueryState } = useQueriesHistories(
-    me?.registry_id
+    me?.registry_id,
+    {
+      queryKeySuffix: ["initial"],
+      enabled: !!me?.registry_id,
+    }
   );
 
   const {
     getAccreditations: accreditationsData,
     getEducations: educationData,
     getTrainings: trainingData,
-    getEmployments: employmentsData,
     getUserApprovedProjects: projectsData,
-    getAffiliations: affilicationData,
+    getAffiliations: affiliationData,
+    getProfessionalRegistrations: professionalRegistratonsData,
   } = historiesData;
 
   const {
@@ -85,9 +95,9 @@ export default function Application({
         accreditationsData={accreditationsData?.data.data}
         educationData={educationData?.data}
         trainingData={trainingData?.data}
-        employmentsData={employmentsData?.data}
         projectsData={projectsData?.data}
-        affiliationData={affilicationData?.data.data}>
+        affiliationData={affiliationData?.data.data}
+        professionalRegistratonsData={professionalRegistratonsData?.data?.data}>
         {children}
       </ApplicationData>
     </LoadingWrapper>

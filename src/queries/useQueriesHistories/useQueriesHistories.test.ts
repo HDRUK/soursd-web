@@ -1,8 +1,7 @@
 import { renderHook, waitFor } from "@/utils/testUtils";
 import useQueriesHistories from "./useQueriesHistories";
 
-const setupUseQueryHistories = () =>
-  renderHook(() => useQueriesHistories(1, true));
+const setupUseQueryHistories = () => renderHook(() => useQueriesHistories(1));
 
 describe("useQueryRefetch", () => {
   it("gets all history", async () => {

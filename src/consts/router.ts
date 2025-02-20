@@ -53,7 +53,11 @@ const ROUTES: Routes = {
     permissions: [UserGroup.CUSTODIANS],
   },
   permissionsResearcherCustodian: {
-    path: "/data-custodian/permissions",
+    path: "/data-custodian/permissions/user",
+    permissions: [UserGroup.CUSTODIANS],
+  },
+  permissionsOrganisationCustodian: {
+    path: "/data-custodian/permissions/organisation",
     permissions: [UserGroup.CUSTODIANS],
   },
   profileResearcherExperience: {

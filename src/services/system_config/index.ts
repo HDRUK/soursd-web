@@ -1,3 +1,4 @@
 import getSystemConfig from "./getSystemConfig";
+import getSystemConfigQuery from "./getSystemConfigQuery";
 
-export { getSystemConfig };
+export { getSystemConfig, getSystemConfigQuery };

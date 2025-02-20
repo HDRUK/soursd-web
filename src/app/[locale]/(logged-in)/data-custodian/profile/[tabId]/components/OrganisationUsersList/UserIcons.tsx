@@ -1,18 +1,14 @@
 "use client";
 
-import { User } from "@/types/application";
 import {
   ApprovedTrainingIcon,
   ApprovedUserIcon,
   IdentityVerifiedIcon,
 } from "@/consts/icons";
+import getUserQuery from "@/services/users/getUserQuery";
+import { User } from "@/types/application";
 import { Icon } from "@mui/material";
-import {
-  QueryFunctionContext,
-  QueryKey,
-  useQuery,
-} from "@tanstack/react-query";
-import { getUser } from "@/services/users";
+import { useQuery } from "@tanstack/react-query";
 
 interface UserIconsProps {
   user: User;
@@ -27,19 +23,11 @@ export default function UserIcons({
   verified,
   isApproved,
 }: UserIconsProps) {
-  const { data: userInfo } = useQuery({
-    queryKey: ["getUser", userId],
-    queryFn: ({ queryKey }: QueryFunctionContext<QueryKey>) => {
-      const [, id] = queryKey;
-
-      return getUser(id as number, {
-        error: {
-          message: "getUserError",
-        },
-      });
-    },
-    enabled: !!userId,
-  });
+  const { data: userInfo } = useQuery(
+    getUserQuery(userId, {
+      enabled: !!userId,
+    })
+  );
 
   const shouldRenderIdentity = verified && user.user_group === "USERS";
   const shouldRenderApprovedUser = isApproved;

@@ -9,7 +9,6 @@ import { PostApprovalPayloadWithEntity } from "@/services/approvals";
 import { Organisation } from "@/services/organisations";
 import { EntityType } from "@/types/api";
 import { QueryState } from "@/types/form";
-import { Paged } from "@/types/requests";
 import BusinessIcon from "@mui/icons-material/Business";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { LoadingButton } from "@mui/lab";
@@ -26,7 +25,7 @@ import OrganisationUsersList from "../OrganisationUsersList";
 import OrganisationStats from "./OrganisationStats";
 
 interface OrganisationsListProps {
-  organisations: Paged<Organisation[]>;
+  organisations: Organisation[];
   onApprove(payload: PostApprovalPayloadWithEntity): void;
   onUnapprove(payload: PostApprovalPayloadWithEntity): void;
   queryState: QueryState;
@@ -49,7 +48,7 @@ export default function OrganisationsList({
   const [activeData, setActiveData] = useState<ActiveOrganisationData | null>(
     null
   );
-  const custodian = useStore(store => ({
+  const { custodian, routes } = useStore(store => ({
     custodian: store.getCustodian(),
     routes: store.getApplication().routes,
   }));

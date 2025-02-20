@@ -10,7 +10,7 @@ import {
   ResearcherAccreditation,
   ResearcherAffiliation,
   ResearcherEducation,
-  ResearcherEmployment,
+  ResearcherProfessionalRegistration,
   ResearcherProject,
   ResearcherTraining,
   Sector,
@@ -30,9 +30,9 @@ interface ApplicationDataProps {
   accreditationsData: ResearcherAccreditation[];
   educationData: ResearcherEducation[];
   trainingData: ResearcherTraining[];
-  employmentsData: ResearcherEmployment[];
   projectsData: ResearcherProject[];
   affiliationData: ResearcherAffiliation[];
+  professionalRegistratonsData: ResearcherProfessionalRegistration[];
   isOrganisation: boolean;
   isCustodian: boolean;
   children: ReactNode;
@@ -48,47 +48,50 @@ export default function ApplicationData({
   accreditationsData,
   educationData,
   trainingData,
-  employmentsData,
   projectsData,
   affiliationData,
+  professionalRegistratonsData,
   isOrganisation,
   isCustodian,
   children,
 }: ApplicationDataProps) {
-  const addUrlToHistory = useStore(store => store.addUrlToHistory);
-  const [user, setUser] = useStore(store => [store.config.user, store.setUser]);
-
-  const [organisation, setOrganisation] = useStore(store => [
-    store.config.organisation,
-    store.setOrganisation,
-  ]);
-
-  const [custodian, setCustodian] = useStore(store => [
-    store.config.custodian,
-    store.setCustodian,
-  ]);
-
-  const [sectors, setSectors] = useStore(store => [
-    store.config.sectors,
-    store.setSectors,
-  ]);
-
-  const [permissions, setPermissions] = useStore(store => [
-    store.config.permissions,
-    store.setPermissions,
-  ]);
-
-  const [histories, setHistories] = useStore(store => [
-    store.config.histories,
-    store.setHistories,
-  ]);
-
-  const [application, setApplication] = useStore(store => [
-    store.application,
-    store.setApplication,
-  ]);
-
   const path = usePathname();
+
+  const useStoreValues = useStore(state => ({
+    addUrlToHistory: state.addUrlToHistory,
+    user: state.getUser(),
+    setUser: state.setUser,
+    organisation: state.getOrganisation(),
+    setOrganisation: state.setOrganisation,
+    custodian: state.getCustodian(),
+    setCustodian: state.setCustodian,
+    sectors: state.getSectors(),
+    setSectors: state.setSectors,
+    permissions: state.getPermissions(),
+    setPermissions: state.setPermissions,
+    histories: state.getHistories(),
+    setHistories: state.setHistories,
+    application: state.getApplication(),
+    setApplication: state.setApplication,
+  }));
+
+  const {
+    addUrlToHistory,
+    user,
+    setUser,
+    organisation,
+    setOrganisation,
+    custodian,
+    setCustodian,
+    sectors,
+    setSectors,
+    permissions,
+    setPermissions,
+    histories,
+    setHistories,
+    application,
+    setApplication,
+  } = useStoreValues;
 
   useEffect(() => {
     const application = parseSystemConfig(systemConfigData);
@@ -108,9 +111,10 @@ export default function ApplicationData({
       accreditations: accreditationsData,
       education: educationData,
       training: trainingData,
-      employments: employmentsData,
+      employments: [],
       approvedProjects: projectsData,
       affiliations: affiliationData,
+      professionalRegistrations: professionalRegistratonsData,
     });
   }, []);
 
