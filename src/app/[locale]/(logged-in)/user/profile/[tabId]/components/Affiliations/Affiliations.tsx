@@ -17,10 +17,7 @@ import {
 } from "@/services/affiliations";
 import { PostAffiliationPayload } from "@/services/affiliations/types";
 import { showAlert } from "@/utils/showAlert";
-import EastIcon from "@mui/icons-material/East";
-import { LoadingButton } from "@mui/lab";
 import {
-  Box,
   Table,
   TableBody,
   TableCell,
@@ -32,6 +29,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect } from "react";
+import ReactDOMServer from "react-dom/server";
 import AffiliationsForm from "../AffiliationsForm";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
@@ -43,7 +41,7 @@ export default function Affiliations() {
   const queryClient = useQueryClient();
   const router = useRouter();
 
-  const { user, affiliations, getHistories, setHistories } = useStore(
+  const { affiliations, getHistories, setHistories, user } = useStore(
     state => ({
       user: state.config.user,
       affiliations: state.config.histories?.affiliations || [],
@@ -72,12 +70,17 @@ export default function Affiliations() {
         showAlert("success", {
           text: tProfile("postAffiliationSuccess"),
           confirmButtonText: tProfile("postAffiliationSuccessButton"),
+          preConfirm: () => {
+            router.push(ROUTES.profileResearcherExperience.path);
+          },
         });
       } catch (_) {
         showAlert("error", {
-          text: tProfile.rich("postAffiliationError", {
-            contactLink: ContactLink,
-          }),
+          text: ReactDOMServer.renderToString(
+            tProfile.rich("postAffiliationError", {
+              contactLink: ContactLink,
+            })
+          ),
           confirmButtonText: tProfile("postAffiliationErrorButton"),
         });
       }
@@ -95,7 +98,7 @@ export default function Affiliations() {
   }, [affiliationsData?.data?.data]);
 
   return (
-    <PageBodyContainer>
+    <PageBodyContainer heading={tProfile("affiliationsTitle")}>
       <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
         <PageBody>
           <PageSection>
@@ -103,16 +106,6 @@ export default function Affiliations() {
               onSubmit={handleDetailsSubmit}
               queryState={postAffiliationQueryState}
             />
-            <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-              <LoadingButton
-                sx={{ display: "flex" }}
-                endIcon={<EastIcon />}
-                onClick={() =>
-                  router.push(ROUTES.profileResearcherExperience.path)
-                }>
-                {tProfile("continueLinkText")}
-              </LoadingButton>
-            </Box>
             <Typography variant="h6" sx={{ mb: 1 }}>
               {tProfile("affiliationsRecords")}
             </Typography>
