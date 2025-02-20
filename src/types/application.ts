@@ -132,6 +132,7 @@ interface User {
   is_delegate: number;
   departments?: Department[];
   role?: string;
+  location?: string;
 }
 interface AddressFields {
   postcode?: string;
