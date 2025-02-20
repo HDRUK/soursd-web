@@ -20,6 +20,7 @@ import Form from "@/components/Form";
 import { showAlert } from "@/utils/showAlert";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import DelegateTable from "./DelegateTable";
+import SelectDepartments from "@/components/SelectDepartments";
 
 export interface KeyContactFormValues {
   first_name: string;
@@ -33,21 +34,14 @@ const NAMESPACE_TRANSLATION_DELEGATES = "Form";
 const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
 
 export default function Delegates() {
-  const [organisation, user, setUser] = useStore(state => [
-    state.getOrganisation(),
-    state.getUser(),
-    state.setUser,
-  ]);
+  const { organisation, user, setUser } = useStore(state => ({
+    organisation: state.getOrganisation(),
+    user: state.getUser(),
+    setUser: state.setUser,
+  }));
 
   const t = useTranslations(NAMESPACE_TRANSLATION_DELEGATES);
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
-
-  const departments = organisation?.departments || [];
-
-  const filteredDepartments = departments.map(department => ({
-    label: department.name,
-    value: department.id,
-  }));
 
   const { mutateAsync: mutateUser, isPending } = useMutation(
     patchUserQuery(user?.id as number)
@@ -140,17 +134,13 @@ export default function Delegates() {
                   <FormControl
                     name="department"
                     renderField={fieldProps => (
-                      <Select
+                      <SelectDepartments
+                        organisation={organisation}
                         {...fieldProps}
                         inputProps={{
                           "aria-label": t("departmentNameAriaLabel"),
-                        }}>
-                        {filteredDepartments?.map(({ label, value }) => (
-                          <MenuItem value={value} key={value} id={label}>
-                            {label}
-                          </MenuItem>
-                        ))}
-                      </Select>
+                        }}
+                      />
                     )}
                   />
                 </Grid>
@@ -176,8 +166,7 @@ export default function Delegates() {
               <LoadingButton
                 loading={isPending}
                 type="submit"
-                endIcon={<AddCircleOutlineIcon />}
-                sx={{ marginBottom: "20px" }}>
+                endIcon={<AddCircleOutlineIcon />}>
                 {t("save")}
               </LoadingButton>
             </FormActions>

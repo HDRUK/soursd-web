@@ -11,11 +11,9 @@ import { Grid, MenuItem, Select, TextField } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo } from "react";
-
+import SelectDepartments from "@/components/SelectDepartments";
 import Form from "@/components/Form";
-
 import { patchUserQuery } from "@/services/users";
-
 import { User } from "@/types/application";
 
 export interface DelegatesFormValues {
@@ -36,12 +34,6 @@ export default function EditDelegateForm({
 }: EditDelegateFormProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_DELEGATES);
   const organisation = useStore(state => state.config.organisation);
-  const departments = organisation?.departments || [];
-
-  const filteredDepartments = departments.map(department => ({
-    label: department.name,
-    value: department.id,
-  }));
 
   const { mutateAsync, isPending } = useMutation(
     patchUserQuery(delegate?.id as number)
@@ -50,7 +42,6 @@ export default function EditDelegateForm({
   const handleSubmit = useCallback(
     async (fields: DelegatesFormValues) => {
       // this is coming in another task
-      console.log(fields);
       onSuccess();
     },
     [mutateAsync, onSuccess, t]
@@ -105,17 +96,13 @@ export default function EditDelegateForm({
               <FormControl
                 name="department"
                 renderField={fieldProps => (
-                  <Select
+                  <SelectDepartments
+                    organisation={organisation}
                     {...fieldProps}
                     inputProps={{
                       "aria-label": t("departmentNameAriaLabel"),
-                    }}>
-                    {filteredDepartments?.map(({ label, value }) => (
-                      <MenuItem value={value} key={value} id={label}>
-                        {label}
-                      </MenuItem>
-                    ))}
-                  </Select>
+                    }}
+                  />
                 )}
               />
             </Grid>

@@ -18,6 +18,7 @@ import {
   postOrganisationInviteUser,
 } from "@/services/organisations";
 import { EMAIL_TEMPLATE } from "@/consts/application";
+import SelectDepartments from "@/components/SelectDepartments";
 
 export interface DelegatesFormValues {
   department_name?: string | null;
@@ -37,12 +38,6 @@ export default function InviteDelegateForm({
 }: InvitedDelegatesFormProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_DELEGATES);
   const organisation = useStore(state => state.config.organisation);
-  const departments = organisation?.departments || [];
-
-  const filteredDepartments = departments.map(department => ({
-    label: department.name,
-    value: department.id,
-  }));
 
   const { mutateAsync, isPending } = useMutation({
     mutationKey: ["inviteUser", organisation?.id],
@@ -143,17 +138,13 @@ export default function InviteDelegateForm({
               <FormControl
                 name="department_name"
                 renderField={fieldProps => (
-                  <Select
+                  <SelectDepartments
+                    organisation={organisation}
                     {...fieldProps}
                     inputProps={{
                       "aria-label": t("departmentNameAriaLabel"),
-                    }}>
-                    {filteredDepartments?.map(({ label, value }) => (
-                      <MenuItem value={value} key={value} id={label}>
-                        {label}
-                      </MenuItem>
-                    ))}
-                  </Select>
+                    }}
+                  />
                 )}
               />
             </Grid>

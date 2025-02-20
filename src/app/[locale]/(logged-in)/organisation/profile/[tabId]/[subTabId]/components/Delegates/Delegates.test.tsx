@@ -8,6 +8,7 @@ import {
   screen,
   waitFor,
 } from "@/utils/testUtils";
+import { mockUseStore } from "jest.setup";
 import usePatchOrganisation from "../../../hooks/usePatchOrganisation";
 import Delegates from "./Delegates";
 
@@ -17,6 +18,8 @@ jest.mock("@tanstack/react-query", () => ({
   useMutation: jest.fn(),
   useQuery: jest.fn(),
 }));
+
+const mockSetOrganisation = jest.fn();
 
 jest.mock("../../../hooks/usePatchOrganisation");
 
@@ -41,11 +44,11 @@ const mockDelegates = [
 
 describe("<Delegates />", () => {
   beforeEach(() => {
-    (useStore as unknown as jest.Mock).mockReturnValue([
-      mockOrganisation,
-      mockUser,
-      jest.fn(),
-    ]);
+    mockUseStore({
+      getUser: () => mockUser,
+      getOrganisation: () => mockOrganisation,
+      setOrganisation: mockSetOrganisation,
+    });
 
     (useQuery as jest.Mock).mockReturnValue({
       isError: false,

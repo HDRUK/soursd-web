@@ -33,6 +33,30 @@ const mockedOrganisation = (
   smb_status: true,
   ror_id: "04a496k07",
   website: faker.internet.url(),
+  departments: [
+    {
+      id: faker.number.int(),
+      created_at: "2025-02-19T15:02:26.000000Z",
+      updated_at: "2025-02-19T15:02:26.000000Z",
+      name: "Clinical Research",
+      category: "Health-Focused Departments",
+      pivot: {
+        organisation_id: faker.number.int(),
+        department_id: faker.number.int(),
+      },
+    },
+    {
+      id: faker.number.int(),
+      created_at: "2025-02-19T15:02:26.000000Z",
+      updated_at: "2025-02-19T15:02:26.000000Z",
+      name: "Biostatistics and Data Science",
+      category: "Health-Focused Departments",
+      pivot: {
+        organisation_id: faker.number.int(),
+        department_id: faker.number.int(),
+      },
+    },
+  ],
   registries: [
     {
       user: mockedUser({
@@ -65,8 +89,8 @@ const mockedOrganisation = (
         email: "jane.doe@hdruk.ac.uk",
         id: 2,
         registry: {
-          verified: false
-        }
+          verified: false,
+        },
       }),
     },
   ],
