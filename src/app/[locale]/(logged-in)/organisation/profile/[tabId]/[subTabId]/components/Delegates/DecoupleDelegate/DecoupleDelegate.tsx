@@ -1,4 +1,4 @@
-import { DecoupleIcon } from "@/consts/icons";
+import { TrashIcon } from "@/consts/icons";
 import { Tooltip, IconButton } from "@mui/material";
 import { PatchUserPayload, patchUser } from "@/services/users";
 import { useMutation } from "@tanstack/react-query";
@@ -14,7 +14,7 @@ interface DecoupleUserProps {
   namespace: string;
 }
 
-const DecoupleUser = ({
+const DecoupleDelegate = ({
   user,
   onSuccess,
   payload,
@@ -63,10 +63,10 @@ const DecoupleUser = ({
         size="small"
         color="inherit"
         aria-label="icon-button">
-        <DecoupleIcon />
+        <TrashIcon />
       </IconButton>
     </Tooltip>
   );
 };
 
-export default DecoupleUser;
+export default DecoupleDelegate;
