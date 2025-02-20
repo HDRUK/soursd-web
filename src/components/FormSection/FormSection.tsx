@@ -14,16 +14,16 @@ export default function FormSection({
       component="fieldset"
       {...restProps}
       sx={{ p: 0, border: "none", ...restProps.sx }}>
-      <Box sx={{ mb: 2 }}>
-        {heading && (
+      {heading && (
+        <Box sx={{ mb: 2 }}>
           <SectionHeading
             type="form"
             heading={heading}
             description={description}
             variant="h6"
           />
-        )}
-      </Box>
+        </Box>
+      )}
       <Box sx={{ px: 2 }}>{children}</Box>
     </Box>
   );
