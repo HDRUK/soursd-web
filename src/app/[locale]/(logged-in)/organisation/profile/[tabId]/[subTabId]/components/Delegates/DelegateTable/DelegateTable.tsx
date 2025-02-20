@@ -1,5 +1,5 @@
 import Table from "@/components/Table";
-import { getOrganisationDelegates } from "@/services/organisations";
+import { getOrganisationDelegatesQuery } from "@/services/organisations";
 import { useQuery } from "@tanstack/react-query";
 import { formatShortDate } from "@/utils/date";
 import { User } from "@/types/application";
@@ -27,17 +27,9 @@ const DelegateTable = () => {
     isError: isErrorDelegates,
     data: delegatesData,
     refetch: refetchDelegates,
-  } = useQuery({
-    queryKey: ["getOrganisationDelegates", organisation?.id],
-    queryFn: ({ queryKey }) => {
-      return getOrganisationDelegates(queryKey[1] as number, {
-        error: {
-          message: "getOrganisationDelegatesError",
-        },
-      });
-    },
-    enabled: !!organisation,
-  });
+  } = useQuery(
+    getOrganisationDelegatesQuery(organisation?.id as number, !!organisation)
+  );
 
   const [openInviteModal, setOpenInviteModal] = useState<boolean>(false);
 
