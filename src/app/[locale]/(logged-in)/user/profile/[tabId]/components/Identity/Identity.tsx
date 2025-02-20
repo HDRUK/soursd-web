@@ -6,6 +6,7 @@ import FormActions from "@/components/FormActions";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
 import FormSection from "@/components/FormSection";
 import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
+import SelectCountry from "@/components/SelectCountry";
 import Text from "@/components/Text";
 import yup from "@/config/yup";
 import { VALIDATION_ORC_ID } from "@/consts/form";
@@ -40,6 +41,7 @@ export interface IdentityFormValues {
   personal_email: string;
   orc_id?: string | null;
   consent_scrape?: boolean;
+  location: string;
 }
 
 const NAMESPACE_TRANSLATION_FORM = "Form";
@@ -52,7 +54,7 @@ export default function Identity() {
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
-  const updateUser = useMutation(putUserQuery(2));
+  const updateUser = useMutation(putUserQuery(user?.id));
 
   const handleDetailsSubmit = useCallback(
     async (fields: IdentityFormValues) => {
@@ -97,6 +99,7 @@ export default function Identity() {
           .string()
           .email()
           .required(tForm("emailRequiredInvalid")),
+        location: yup.string().required(tForm("locationRequiredInvalid")),
         orc_id: yup
           .string()
           .matches(
@@ -130,6 +133,7 @@ export default function Identity() {
       personal_email: user?.email,
       orc_id: user?.orc_id,
       consent_scrape: user?.consent_scrape,
+      location: user?.location,
     },
     error,
   };
@@ -169,6 +173,21 @@ export default function Identity() {
                         name="personal_email"
                         renderField={fieldProps => (
                           <TextField {...fieldProps} />
+                        )}
+                        description={tProfile("emailDescription")}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <FormControlHorizontal
+                        name="location"
+                        description={tProfile("locationDescription")}
+                        renderField={({ value, onChange, ...rest }) => (
+                          <SelectCountry
+                            useCountryCode={false}
+                            value={value}
+                            onChange={onChange}
+                            {...rest}
+                          />
                         )}
                       />
                     </Grid>
