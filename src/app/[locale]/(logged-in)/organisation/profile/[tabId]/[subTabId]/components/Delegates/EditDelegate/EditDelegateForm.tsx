@@ -7,7 +7,7 @@ import yup from "@/config/yup";
 import { useStore } from "@/data/store";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { LoadingButton } from "@mui/lab";
-import { Grid, MenuItem, Select, TextField } from "@mui/material";
+import { Grid, TextField } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo } from "react";
@@ -42,6 +42,7 @@ export default function EditDelegateForm({
   const handleSubmit = useCallback(
     async (fields: DelegatesFormValues) => {
       // this is coming in another task
+      console.log(fields);
       onSuccess();
     },
     [mutateAsync, onSuccess, t]

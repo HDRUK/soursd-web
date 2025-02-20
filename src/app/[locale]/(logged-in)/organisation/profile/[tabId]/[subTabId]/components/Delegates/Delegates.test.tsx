@@ -1,4 +1,3 @@
-import { useStore } from "@/data/store";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { mockedOrganisation } from "@/mocks/data/organisation";
 import { mockedUser } from "@/mocks/data/user";

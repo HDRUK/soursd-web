@@ -107,3 +107,33 @@ export const mockedOrganisationBulkInviteIntro = `
   SOURSD account for themselves and will affiliate themselves with an
   Organisation.
 `;
+
+export const mockedDelegateAdministationDescription = (
+  <>
+    <Typography variant="subtitle1" fontSize="large" sx={{pb: 1}}>Senior Responsible Officer (SRO) contact information</Typography>
+    <Typography>
+      As a representative of your Organisation, you have been nominated as a Senior Responsible Officer (SRO), 
+      with sufficient seniority and relevant responsibility to nominate Delegates from your Organisation to 
+      affiliate your employees or students. As an SRO, You can provide your individual information here:
+    </Typography>
+  </>
+);
+
+export const mockedDelegateListDescription = (
+  <>
+    <Typography variant="subtitle1" fontSize="large" sx={{pb: 1}}>Organisation administrative Delegates</Typography>
+    <Typography>
+    As a Senior Responsible Officer (SRO) for your Organisation, you can invite nominated Delegates from your Organisation to create a SOURSD account.  
+    A Delegate could be a Human Resources (HR) representative, Information Governance representative e.g. Data Protection Officer (DPO)
+    , Contracts representative or Legal representative.You can invite nominated Delegates to register for a SOURSD account here:
+    </Typography>
+  </>
+);
+
+export const mockedEmployeeStudentAdminDescription = `
+As a representative of an Organisation, you have been given permission to associate your affiliated users (an employee or student of your Organisation) with your Organisation’s SOURSD account. Users are individuals involved in active research projects using sensitive data. 
+
+Individual users will create a SOURSD account for themselves and will affiliate themselves with an Organisation.
+
+Automatically invite users to create a SOURSD account. Users will have one SOURSD account that will stay with them throughout their career. Select the user(s) you would like to invite to create a SOURSD account and select ‘Invite User to create a SOURSD account’ in the Actions below. 
+`

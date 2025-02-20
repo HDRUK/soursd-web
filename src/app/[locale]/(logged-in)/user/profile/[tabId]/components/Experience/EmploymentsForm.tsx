@@ -209,6 +209,7 @@ export default function EmploymentsForm({ onSubmit }: EmploymentsFormProps) {
       </AccordionSummary>
       <Form
         schema={schema}
+        shouldReset
         onSubmit={handleEmploymentSubmit}
         {...formOptions}
         sx={{ paddingLeft: "16px" }}>

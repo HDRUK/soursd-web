@@ -1,8 +1,8 @@
 import React from "react";
 import { Meta, StoryObj } from "@storybook/react";
-import { useForm, FormProvider } from "react-hook-form";
-import SelectDepartments from "./SelectDepartments";
 import { mockedOrganisation } from "@/mocks/data/organisation";
+import { useForm, FormProvider } from "react-hook-form";
+import SelectDepartments, { SelectDepartmentsProps } from "./SelectDepartments";
 
 const meta = {
   title: "components/SelectDepartments",
@@ -14,7 +14,7 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const SelectDepartmentsWithProvider = (props: any) => {
+const SelectDepartmentsWithProvider = (props: SelectDepartmentsProps) => {
   const methods = useForm();
 
   return (

@@ -5,9 +5,8 @@ import {
   screen,
   fireEvent,
 } from "@/utils/testUtils";
-
-import SelectDepartments from "../SelectDepartments";
 import { mockedOrganisation } from "@/mocks/data/organisation";
+import SelectDepartments from "./SelectDepartments";
 
 const mockOrganisation = mockedOrganisation();
 

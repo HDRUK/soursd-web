@@ -5,22 +5,19 @@ import { PageBody, PageSection } from "@/modules";
 import FormActions from "@/components/FormActions";
 import FormControl from "@/components/FormControlWrapper";
 import FormSection from "@/components/FormSection";
-
 import yup from "@/config/yup";
 import { useMemo, useEffect } from "react";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-
 import { LoadingButton } from "@mui/lab";
-import { Grid, MenuItem, Select, TextField } from "@mui/material";
-
+import { Grid, TextField } from "@mui/material";
+import SelectDepartments from "@/components/SelectDepartments";
 import { useTranslations } from "next-intl";
 import Markdown from "@/components/Markdown";
 import { getUserQuery, patchUserQuery } from "@/services/users";
 import Form from "@/components/Form";
-import { showAlert } from "@/utils/showAlert";
+import useQueryAlerts from "@/hooks/useQueryAlerts";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import DelegateTable from "./DelegateTable";
-import SelectDepartments from "@/components/SelectDepartments";
 
 export interface KeyContactFormValues {
   first_name: string;
@@ -43,7 +40,7 @@ export default function Delegates() {
   const t = useTranslations(NAMESPACE_TRANSLATION_DELEGATES);
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
-  const { mutateAsync: mutateUser, isPending } = useMutation(
+  const { mutateAsync: mutateUser, ...patchUserQueryState } = useMutation(
     patchUserQuery(user?.id as number)
   );
 
@@ -58,6 +55,15 @@ export default function Delegates() {
     }
   }, [userData, setUser]);
 
+  useQueryAlerts(patchUserQueryState, {
+    errorAlertProps: {
+      text: tProfile("errorCreateMessage"),
+    },
+    successAlertProps: {
+      text: tProfile("profileUpdateMessage"),
+    },
+  });
+
   const handleSubmit = async (formData: KeyContactFormValues) => {
     const { first_name, last_name, email, job_title, department } = formData;
 
@@ -71,10 +77,6 @@ export default function Delegates() {
 
     mutateUser(payload).then(() => {
       refetchUserData();
-      showAlert("success", {
-        text: tProfile("profileUpdateMessage"),
-        confirmButtonText: tProfile("closeButton"),
-      });
     });
   };
 
@@ -164,7 +166,7 @@ export default function Delegates() {
             </FormSection>
             <FormActions>
               <LoadingButton
-                loading={isPending}
+                loading={patchUserQueryState.isPending}
                 type="submit"
                 endIcon={<AddCircleOutlineIcon />}>
                 {t("save")}

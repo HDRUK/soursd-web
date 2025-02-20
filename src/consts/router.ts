@@ -108,8 +108,8 @@ const ROUTES: Routes = {
     path: "/organisation/profile/details/digital-identifiers",
     permissions: [UserGroup.ORGANISATIONS],
   },
-  profileOrganisationDetailsSectorSiteAndWebsite: {
-    path: "/organisation/profile/details/sector-site-and-website",
+  profileOrganisationDetailsSectorSizeAndWebsite: {
+    path: "/organisation/profile/details/sector-size-and-website",
     permissions: [UserGroup.ORGANISATIONS],
   },
   profileOrganisationDetailsSubsidiaries: {

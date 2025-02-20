@@ -55,7 +55,8 @@ export default function InviteOrganisationForm({
       onSubmit={onSubmit}
       schema={schema}
       {...formOptions}
-      sx={{ mb: 3, maxWidth: MAX_FORM_WIDTH }}>
+      sx={{ mb: 3, maxWidth: MAX_FORM_WIDTH }}
+      shouldReset>
       {() => (
         <>
           <FormSection subtitle={tOrganisation("inviteOrganisationTitle")}>
