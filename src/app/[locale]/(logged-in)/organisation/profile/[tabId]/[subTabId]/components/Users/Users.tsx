@@ -18,7 +18,7 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { SearchDirections } from "@/consts/search";
-import DecoupleUser from "../DecoupleUser";
+import DecoupleUser from "../Delegates/DecoupleDelegate";
 import UserModal from "../UserModal";
 import UserBulkInvite from "../UserBulkInvite";
 

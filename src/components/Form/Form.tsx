@@ -84,7 +84,11 @@ export default function Form<T extends FieldValues>({
       <FormCanLeave canLeave={canLeave}>
         <Box
           component="form"
-          onSubmit={handleSubmit(handleFormSubmit)}
+          onSubmit={event => {
+            event.preventDefault();
+            handleSubmit(handleFormSubmit)(event);
+            event.stopPropagation();
+          }}
           autoComplete="off"
           {...restProps}
           sx={{
