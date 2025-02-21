@@ -17,15 +17,18 @@ import { Message } from "../Message";
 
 function isFieldRequired(
   schema: yup.AnyObjectSchema,
-  fieldName: string
+  fieldPath: string
 ): boolean {
-  const fieldSchema = schema.describe().fields[fieldName] as
-    | SchemaDescription
-    | undefined;
-  if (!fieldSchema) {
-    return false;
+  const fields = fieldPath.split(".");
+  let currentSchema: any = schema.describe();
+
+  for (const field of fields) {
+    if (!currentSchema.fields[field]) {
+      return false;
+    }
+    currentSchema = currentSchema.fields[field];
   }
-  return !fieldSchema.optional;
+  return !currentSchema.optional;
 }
 
 export type ExtendedUseFormReturn<T extends FieldValues> = UseFormReturn<T> & {

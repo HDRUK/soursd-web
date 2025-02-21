@@ -1,33 +1,31 @@
 "use client";
 
-import Form from "@/components/Form";
-import FormActions from "@/components/FormActions";
-import FormControlHorizontal from "@/components/FormControlHorizontal";
-import FormFieldArray from "@/components/FormFieldArray";
-import GoogleAutocomplete from "@/components/GoogleAutocomplete";
 import { useStore } from "@/data/store";
 import { PageBody, PageSection } from "@/modules";
-import { Box, Grid } from "@mui/material";
-import TextField from "@mui/material/TextField";
+import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-import React, { useMemo } from "react";
-import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
-import { ROUTES } from "@/consts/router";
+import React from "react";
 import { Organisation } from "@/types/application";
-import { useRouter } from "next/navigation";
 import { ColumnDef, CellContext } from "@tanstack/react-table";
 import Table from "@/components/Table";
 import { Subsidiary } from "@/types/application";
-import { FormData, getDefaultValues, getValidation } from "./config/form";
-import usePatchOrganisation from "../../../hooks/usePatchOrganisation";
-import { patchOrganisation } from "@/services/organisations";
 import { formatAddress } from "@/utils/address";
+import ModalFormButton from "@/components/ModalFormButton";
+
+import { useQuery } from "@tanstack/react-query";
+import { getOrganisationsQuery } from "@/services/organisations";
+
+import AddSubsidiaryForm, {
+  AddSubsidiaryFormValues,
+} from "./AddSubsidiaryForm";
+import RemoveSubsidiary from "./RemoveSubsidiary";
+
+import usePatchOrganisation from "../../../hooks/usePatchOrganisation";
 
 const NAMESPACE_TRANSLATION_FORM = "Form";
 const NAMESPACE_TRANSLATION_ORG_PROFILE = "ProfileOrganisation";
 
 export default function Subsidiaries() {
-  const router = useRouter();
   const { organisation, setOrganisation } = useStore(state => {
     return {
       organisation: state.config.organisation,
@@ -35,7 +33,7 @@ export default function Subsidiaries() {
     };
   });
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
-  const tOrgProfile = useTranslations(NAMESPACE_TRANSLATION_ORG_PROFILE);
+  const tProfile = useTranslations(NAMESPACE_TRANSLATION_ORG_PROFILE);
 
   const {
     isPending: isLoading,
@@ -47,124 +45,105 @@ export default function Subsidiaries() {
     setOrganisation,
   });
 
-  const schema = getValidation(tForm);
-  const defaultValues = useMemo(
-    () => getDefaultValues(organisation),
-    [organisation]
-  );
+  const { data: organisationsData } = useQuery({
+    ...getOrganisationsQuery(),
+    enabled: false,
+  });
 
-  const handleSubmit = (fields: Partial<Organisation>) => {
-    onSubmit(fields).then(() => {
-      router.push(ROUTES.profileOrganisationDetailsSecurityCompliance.path);
+  const handleSubmit = (
+    fields: AddSubsidiaryFormValues,
+    callback?: () => void
+  ) => {
+    const payload = {
+      subsidiaries: [
+        ...(organisation?.subsidiaries?.map(
+          ({
+            name,
+            address_1,
+            address_2,
+            town,
+            county,
+            country,
+            postcode,
+          }) => ({
+            name,
+            address: {
+              address_1,
+              address_2,
+              town,
+              county,
+              country,
+              postcode,
+            },
+          })
+        ) ?? []),
+        {
+          name: fields.subsidiary_name,
+          address: fields.subsidiary_address,
+        },
+      ],
+    } as Partial<Organisation>;
+
+    onSubmit(payload).then(() => {
+      const updatedSubsidiaries = [
+        ...(organisation?.subsidiaries ?? []),
+        {
+          name: fields.subsidiary_name,
+          ...fields.subsidiary_address,
+        },
+      ];
+      setOrganisation({
+        ...organisation,
+        subsidiaries: updatedSubsidiaries,
+      } as Organisation);
+      callback && callback();
     });
   };
 
   const renderActions = (info: CellContext<Subsidiary, unknown>) => (
-    <>Actions</>
+    <>
+      <RemoveSubsidiary subsidiary={info.row.original} onSubmit={onSubmit} />
+    </>
   );
 
   const columns: ColumnDef<Subsidiary>[] = [
     {
       accessorKey: "name",
-      header: "Name",
-      cell: ({ getValue }) => getValue(),
+      cell: ({ getValue }) => (
+        <Typography color="primary"> {getValue() as string} </Typography>
+      ),
     },
     {
       accessorKey: "address",
-      header: "Address",
       cell: ({ row: { original } }) => formatAddress(original),
     },
     {
       accessorKey: "actions",
-      header: "Actions",
       cell: renderActions,
     },
   ];
 
   return (
-    <Table
-      data={organisation?.subsidiaries || []}
-      columns={columns}
-      queryState={patchOrganisationQueryState}
-    />
-  );
-
-  return (
     <PageBody>
-      <PageSection>
-        <Form
-          schema={schema}
-          defaultValues={defaultValues}
-          onSubmit={handleSubmit}
-          key={organisation?.id}>
-          {({ watch }) => {
-            const nsubs = watch("subsidiaries").length;
-            return (
-              <>
-                <Grid container rowSpacing={3}>
-                  <Grid item xs={12}>
-                    <FormControlHorizontal
-                      displayLabel={false}
-                      displayPlaceholder={false}
-                      labelMd={0}
-                      contentMd={12}
-                      name="subsidiaries"
-                      renderField={fieldProps => (
-                        <FormFieldArray<FormData>
-                          name={fieldProps.name}
-                          boxSx={{
-                            display: "grid",
-                            gridTemplateColumns: "2fr 3fr 1fr",
-                            alignItems: "flex-end",
-                          }}
-                          createNewRow={() => ({
-                            name: "",
-                          })}
-                          renderField={(field, index) => (
-                            <React.Fragment key={field.name}>
-                              <FormControlHorizontal
-                                displayLabel={false}
-                                labelMd={0}
-                                contentMd={12}
-                                name={`subsidiaries.${index}.name`}
-                                placeholder={tForm("name")}
-                                renderField={fieldProps => (
-                                  <TextField {...fieldProps} />
-                                )}
-                              />
-                              <Box sx={{ mt: 1 }}>
-                                <GoogleAutocomplete
-                                  name={`subsidiaries.${index}.address`}
-                                  textFieldProps={{
-                                    variant: "filled",
-                                    size: "small",
-                                  }}
-                                  fullWidth
-                                  placeholder={tForm("addressPlaceholder")}
-                                />
-                              </Box>
-                            </React.Fragment>
-                          )}
-                        />
-                      )}
-                    />
-                  </Grid>
-                </Grid>
+      <PageSection heading={tForm("organisationSubsidiaries")}>
+        <Table
+          showHeader={false}
+          data={organisation?.subsidiaries || []}
+          columns={columns}
+          queryState={patchOrganisationQueryState}
+        />
 
-                <FormActions>
-                  <ProfileNavigationFooter
-                    previousHref={
-                      ROUTES.profileOrganisationDetailsSectorSizeAndWebsite.path
-                    }
-                    nextStepText={tOrgProfile("detailsSecurityCompliance")}
-                    isLoading={isLoading}
-                    isDisabled={nsubs < 1}
-                  />
-                </FormActions>
-              </>
-            );
-          }}
-        </Form>
+        <ModalFormButton
+          isLoading={isLoading}
+          buttonText={tProfile("addAnotherSubsidiary")}
+          formContent={({ closeModal }) => (
+            <AddSubsidiaryForm
+              onSubmit={data => {
+                handleSubmit(data, closeModal);
+              }}
+            />
+          )}
+        />
       </PageSection>
     </PageBody>
   );
