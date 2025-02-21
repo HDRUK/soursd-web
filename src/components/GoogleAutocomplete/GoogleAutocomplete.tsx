@@ -1,4 +1,4 @@
-import HomeIcon from "@mui/icons-material/Home";
+import SearchIcon from "@mui/icons-material/Search";
 import {
   CircularProgress,
   Autocomplete as MUIAutocomplete,
@@ -186,12 +186,13 @@ const GoogleAutocomplete: React.FC<GoogleAutocompleteProps> = ({
           InputProps={{
             ...params.InputProps,
             placeholder,
-            startAdornment: <HomeIcon />,
             endAdornment: (
               <>
                 {loading ? (
                   <CircularProgress color="inherit" size={20} />
-                ) : null}
+                ) : (
+                  <SearchIcon />
+                )}
                 {params.InputProps.endAdornment}
               </>
             ),

@@ -12,24 +12,23 @@ import { useMemo } from "react";
 import Form from "@/components/Form";
 import GoogleAutocomplete from "@/components/GoogleAutocomplete";
 import SelectCountry from "@/components/SelectCountry";
-import LoadingWrapper from "@/components/LoadingWrapper";
 
-export interface AddSubsidiaryFormValues {
+export interface SubsidiaryFormValues {
   subsidiary_name: string;
   subsidiary_address: AddressFields;
   subsidiary_website?: string;
 }
 
-export interface AddSubsidiaryFormProps {
-  onSubmit: (formData: AddSubsidiaryFormValues) => void;
+export interface SubsidiaryFormProps {
+  onSubmit: (formData: SubsidiaryFormValues) => void;
   isLoading?: boolean;
 }
 
 const NAMESPACE_TRANSLATION_FORM = "Form";
-export default function AddSubsidiaryForm({
+export default function SubsidiaryForm({
   onSubmit,
   isLoading = true,
-}: AddSubsidiaryFormProps) {
+}: SubsidiaryFormProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_FORM);
 
   const schema = useMemo(

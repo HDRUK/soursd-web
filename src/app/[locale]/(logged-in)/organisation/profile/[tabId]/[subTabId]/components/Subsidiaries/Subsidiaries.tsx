@@ -12,9 +12,7 @@ import { Subsidiary } from "@/types/application";
 import { formatAddress } from "@/utils/address";
 import ModalFormButton from "@/components/ModalFormButton";
 
-import AddSubsidiaryForm, {
-  AddSubsidiaryFormValues,
-} from "./AddSubsidiaryForm";
+import SubsidiaryForm, { SubsidiaryFormValues } from "./SubsidiaryForm";
 import RemoveSubsidiary from "./RemoveSubsidiary";
 
 import usePatchOrganisation from "../../../hooks/usePatchOrganisation";
@@ -41,7 +39,7 @@ export default function Subsidiaries() {
   });
 
   const handleSubmit = (
-    fields: AddSubsidiaryFormValues,
+    fields: SubsidiaryFormValues,
     callback?: () => void
   ) => {
     const payload = {
@@ -120,7 +118,7 @@ export default function Subsidiaries() {
           isLoading={isLoading}
           buttonText={tProfile("addAnotherSubsidiary")}
           formContent={({ closeModal, isLoading }) => (
-            <AddSubsidiaryForm
+            <SubsidiaryForm
               isLoading={isLoading}
               onSubmit={data => {
                 handleSubmit(data, closeModal);

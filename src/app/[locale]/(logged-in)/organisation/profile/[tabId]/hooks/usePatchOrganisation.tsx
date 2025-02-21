@@ -53,13 +53,13 @@ const usePatchOrganisation = ({
           setOrganisation(res.data.data);
         }
       }
-      mutation.isPending = false;
       if (messageSuccess) {
         showAlert("success", {
           text: t("text"),
           confirmButtonText: t("confirmText"),
         });
       }
+      mutation.isPending = false;
     });
   };
 
