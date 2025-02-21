@@ -32,8 +32,6 @@ export default function SecurityCompliance() {
 
   const { isPending: isLoading, onSubmit } = usePatchOrganisation({
     id: organisation?.id,
-    organisation,
-    setOrganisation,
   });
 
   const schema = getValidation(t);

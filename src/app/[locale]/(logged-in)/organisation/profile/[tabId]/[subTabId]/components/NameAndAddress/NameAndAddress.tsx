@@ -46,8 +46,6 @@ export default function NameAndAddress() {
     onSubmit,
   } = usePatchOrganisation({
     id: organisation?.id,
-    organisation,
-    setOrganisation,
   });
 
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);

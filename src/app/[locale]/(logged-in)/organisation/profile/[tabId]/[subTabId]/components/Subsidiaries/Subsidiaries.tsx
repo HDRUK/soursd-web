@@ -12,9 +12,6 @@ import { Subsidiary } from "@/types/application";
 import { formatAddress } from "@/utils/address";
 import ModalFormButton from "@/components/ModalFormButton";
 
-import { useQuery } from "@tanstack/react-query";
-import { getOrganisationsQuery } from "@/services/organisations";
-
 import AddSubsidiaryForm, {
   AddSubsidiaryFormValues,
 } from "./AddSubsidiaryForm";
@@ -41,13 +38,6 @@ export default function Subsidiaries() {
     ...patchOrganisationQueryState
   } = usePatchOrganisation({
     id: organisation?.id,
-    organisation,
-    setOrganisation,
-  });
-
-  const { data: organisationsData } = useQuery({
-    ...getOrganisationsQuery(),
-    enabled: false,
   });
 
   const handleSubmit = (
@@ -85,24 +75,17 @@ export default function Subsidiaries() {
     } as Partial<Organisation>;
 
     onSubmit(payload).then(() => {
-      const updatedSubsidiaries = [
-        ...(organisation?.subsidiaries ?? []),
-        {
-          name: fields.subsidiary_name,
-          ...fields.subsidiary_address,
-        },
-      ];
-      setOrganisation({
-        ...organisation,
-        subsidiaries: updatedSubsidiaries,
-      } as Organisation);
       callback && callback();
     });
   };
 
   const renderActions = (info: CellContext<Subsidiary, unknown>) => (
     <>
-      <RemoveSubsidiary subsidiary={info.row.original} onSubmit={onSubmit} />
+      <RemoveSubsidiary
+        isLoading={isLoading}
+        subsidiary={info.row.original}
+        onSubmit={onSubmit}
+      />
     </>
   );
 
@@ -136,8 +119,9 @@ export default function Subsidiaries() {
         <ModalFormButton
           isLoading={isLoading}
           buttonText={tProfile("addAnotherSubsidiary")}
-          formContent={({ closeModal }) => (
+          formContent={({ closeModal, isLoading }) => (
             <AddSubsidiaryForm
+              isLoading={isLoading}
               onSubmit={data => {
                 handleSubmit(data, closeModal);
               }}

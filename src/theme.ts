@@ -166,6 +166,7 @@ const createMuiTableStyles = (ownerState: TableCellProps) => {
   return {
     ...(ownerState?.variant === "head" && {
       fontWeight: "bold",
+      borderTop: "1px solid rgba(224, 224, 224, 1)",
     }),
   };
 };

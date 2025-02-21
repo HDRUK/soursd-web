@@ -1,22 +1,22 @@
 import { QueryOptions } from "@/types/requests";
 import { UseQueryOptions } from "@tanstack/react-query";
-import getAffiliations from "./getAffiliations";
+import getUserApprovedProjects from "./getUserApprovedProjects";
 
-export default function getAffiliationsQuery(
+export default function getUserApprovedProjectsQuery(
   registryId: number,
   options?: QueryOptions
 ) {
   return {
     queryKey: [
-      "getAffiliations",
+      "getUserApprovedProjects",
       registryId,
       ...(options?.queryKeySuffix || []),
     ],
     queryFn: ({ queryKey }) =>
-      getAffiliations(queryKey[1] as number, {
-        error: { message: "getAffiliationsError" },
+      getUserApprovedProjects(queryKey[1] as number, {
+        error: { message: "getUserApprovedProjectsError" },
         ...options?.responseOptions,
       }),
     ...options,
-  } as UseQueryOptions<Awaited<ReturnType<typeof getAffiliations>>>;
+  } as UseQueryOptions<Awaited<ReturnType<typeof getUserApprovedProjects>>>;
 }

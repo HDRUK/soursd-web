@@ -1,16 +1,16 @@
 "use client";
 
 import AccordionTitle from "@/components/AccordionTitle";
-import { getOrganisation } from "@/services/organisations";
+import { getOrganisationQuery } from "@/services/organisations";
 
 import { PALETTE_THEME_PURPLE_BLUE } from "@/config/theme";
 import { ResearcherProject } from "@/types/application";
 
-import FolderOpenIcon from "@mui/icons-material/FolderOpen";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import FolderOpenIcon from "@mui/icons-material/FolderOpen";
 
-import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 import { useStore } from "@/data/store";
+import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import ProjectUserList from "../ProjectUserList";
 
@@ -28,19 +28,16 @@ const ProjectAccordion = ({ project }: ProjectAccordionProps) => {
   const organisation = useStore(store => store.getOrganisation());
   const { id: organisationId } = organisation || {};
 
-  const { data: organisationData } = useQuery({
-    queryKey: ["getOrganisationDetailsForCustodian", organisationId],
-    queryFn: ({ queryKey }) => {
-      const [, id] = queryKey;
-
-      return getOrganisation(id, {
+  const { data: organisationData } = useQuery(
+    getOrganisationQuery(organisationId, {
+      responseOptions: {
         error: {
           message: "getOrganisationDetailsForCustodianError",
         },
-      });
-    },
-    enabled: !!organisationId,
-  });
+      },
+      enabled: !!organisationId,
+    })
+  );
 
   const { organisation_name } = organisationData?.data || {};
 

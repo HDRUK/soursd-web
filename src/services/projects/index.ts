@@ -3,6 +3,7 @@ import getEntityProjects from "./getEntityProjects";
 import getProjectUsers from "./getProjectUsers";
 import getAllProjects from "./getAllProjects";
 import getUserApprovedProjects from "./getUserApprovedProjects";
+import getUserApprovedProjectsQuery from "./getUserApprovedProjectsQuery";
 
 export {
   getProjects,
@@ -10,4 +11,5 @@ export {
   getProjectUsers,
   getAllProjects,
   getUserApprovedProjects,
+  getUserApprovedProjectsQuery,
 };

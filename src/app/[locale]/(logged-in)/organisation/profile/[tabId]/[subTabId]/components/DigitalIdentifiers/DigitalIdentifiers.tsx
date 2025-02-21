@@ -46,8 +46,6 @@ export default function DigitalIdentifiers() {
     onSubmit,
   } = usePatchOrganisation({
     id: organisation?.id,
-    organisation,
-    setOrganisation,
   });
 
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
@@ -82,7 +80,6 @@ export default function DigitalIdentifiers() {
         }),
         ror_id: yup
           .string()
-          .required(tForm("rorIdRequiredInvalid"))
           .matches(VALIDATION_ROR_ID, tForm("rorIdFormatInvalid")),
       }),
     []
