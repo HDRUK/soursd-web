@@ -50,16 +50,12 @@ describe("<Home />", () => {
     const emailContainer = screen.getByTestId("contact_email");
     const email = within(emailContainer).getByRole("textbox");
 
-    const idvtRequired = screen.getByRole("checkbox");
-
     const emailValue = faker.internet.email();
 
-    if (email && idvtRequired) {
+    if (email) {
       fireEvent.change(email, {
         target: { value: emailValue },
       });
-
-      fireEvent.click(idvtRequired);
 
       fireEvent.submit(screen.getByRole("button", { name: /Save/i }));
 
@@ -75,7 +71,7 @@ describe("<Home />", () => {
         );
       });
     } else {
-      fail("Contact email or idvt required do not exist");
+      fail("Contact email does not exist");
     }
   });
 
