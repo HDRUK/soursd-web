@@ -65,7 +65,6 @@ describe("<Home />", () => {
           {
             ...defaultCustodian,
             contact_email: emailValue,
-            idvt_required: true,
           },
           { error: { message: "submitError" } }
         );

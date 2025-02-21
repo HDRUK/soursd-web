@@ -15,6 +15,10 @@ jest.mock("./consts/tabs", () => ({
   },
 }));
 
+jest.mock("@/utils/string", () => ({
+  anyIncludes: jest.fn(),
+}));
+
 const mockPath = "/some/path/subtab2";
 const mockSubTabs = ["subtab1", "subtab2"];
 describe("<Page />", () => {
