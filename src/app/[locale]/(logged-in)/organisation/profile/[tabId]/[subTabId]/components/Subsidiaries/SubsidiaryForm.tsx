@@ -7,7 +7,7 @@ import yup from "@/config/yup";
 import { LoadingButton } from "@mui/lab";
 import { Grid, TextField } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { AddressFields } from "@/types/application";
+import { AddressFields, Subsidiary } from "@/types/application";
 import { useMemo } from "react";
 import Form from "@/components/Form";
 import GoogleAutocomplete from "@/components/GoogleAutocomplete";
@@ -22,12 +22,14 @@ export interface SubsidiaryFormValues {
 export interface SubsidiaryFormProps {
   onSubmit: (formData: SubsidiaryFormValues) => void;
   isLoading?: boolean;
+  defaultValues?: Subsidiary;
 }
 
 const NAMESPACE_TRANSLATION_FORM = "Form";
 export default function SubsidiaryForm({
   onSubmit,
   isLoading = true,
+  defaultValues,
 }: SubsidiaryFormProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_FORM);
 
@@ -50,14 +52,14 @@ export default function SubsidiaryForm({
 
   const formOptions = {
     defaultValues: {
-      subsidiary_name: "",
+      subsidiary_name: defaultValues?.name ?? "",
       subsidiary_address: {
-        postcode: "",
-        address_1: "",
-        address_2: "",
-        town: "",
-        county: "",
-        country: "United Kingdom",
+        postcode: defaultValues?.postcode ?? "",
+        address_1: defaultValues?.address_1 ?? "",
+        address_2: defaultValues?.address_2 ?? "",
+        town: defaultValues?.town ?? "",
+        county: defaultValues?.county ?? "",
+        country: defaultValues?.country ?? "United Kingdom",
       } as AddressFields,
       subsidiary_website: "",
     },

@@ -45,22 +45,22 @@ const usePatchOrganisation = ({
   const onSubmit = async (fields: Partial<PatchOrganisationPayload>) => {
     const payload = { ...fields };
     await mutation.mutateAsync(payload);
-    mutation.isPending = true;
 
-    refetchOrganisation().then(res => {
+    await refetchOrganisation().then(res => {
       if (organisation && setOrganisation) {
         if (res?.data?.data) {
           setOrganisation(res.data.data);
         }
       }
-      if (messageSuccess) {
-        showAlert("success", {
-          text: t("text"),
-          confirmButtonText: t("confirmText"),
-        });
-      }
-      mutation.isPending = false;
     });
+    console.log("hello --> refetched organisation");
+    if (messageSuccess) {
+      showAlert("success", {
+        text: t("text"),
+        confirmButtonText: t("confirmText"),
+      });
+    }
+    return Promise.resolve();
   };
 
   return {

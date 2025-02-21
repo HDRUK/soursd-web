@@ -11,25 +11,10 @@ import {
   UseFormProps,
   UseFormReturn,
 } from "react-hook-form";
-import { AnyObject, SchemaDescription } from "yup";
+import { AnyObject } from "yup";
+import { isFieldRequired } from "@/utils/form";
 import FormCanLeave from "../FormCanLeave";
 import { Message } from "../Message";
-
-function isFieldRequired(
-  schema: yup.AnyObjectSchema,
-  fieldPath: string
-): boolean {
-  const fields = fieldPath.split(".");
-  let currentSchema: any = schema.describe();
-
-  for (const field of fields) {
-    if (!currentSchema.fields[field]) {
-      return false;
-    }
-    currentSchema = currentSchema.fields[field];
-  }
-  return !currentSchema.optional;
-}
 
 export type ExtendedUseFormReturn<T extends FieldValues> = UseFormReturn<T> & {
   isFieldRequired: (fieldName: keyof T) => boolean;

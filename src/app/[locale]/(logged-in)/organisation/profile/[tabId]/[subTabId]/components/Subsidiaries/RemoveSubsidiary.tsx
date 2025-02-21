@@ -44,7 +44,7 @@ const RemoveSubsidiary = ({
   };
 
   return (
-    <Tooltip title={t("toolTip")}>
+    <Tooltip title={t("removeSubsidiaryToolTip")}>
       <IconButton
         disabled={isLoading}
         onClick={handleRemoveSubsidiary}

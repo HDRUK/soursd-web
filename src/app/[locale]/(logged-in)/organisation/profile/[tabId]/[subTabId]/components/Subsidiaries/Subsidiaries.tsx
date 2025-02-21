@@ -14,6 +14,7 @@ import ModalFormButton from "@/components/ModalFormButton";
 
 import SubsidiaryForm, { SubsidiaryFormValues } from "./SubsidiaryForm";
 import RemoveSubsidiary from "./RemoveSubsidiary";
+import EditSubsidiary from "./EditSubsidiary";
 
 import usePatchOrganisation from "../../../hooks/usePatchOrganisation";
 
@@ -79,6 +80,11 @@ export default function Subsidiaries() {
 
   const renderActions = (info: CellContext<Subsidiary, unknown>) => (
     <>
+      <EditSubsidiary
+        isLoading={isLoading}
+        subsidiary={info.row.original}
+        onSubmit={onSubmit}
+      />
       <RemoveSubsidiary
         isLoading={isLoading}
         subsidiary={info.row.original}
