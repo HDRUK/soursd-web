@@ -1,11 +1,10 @@
-import { ConfigProps } from "@/components/Config";
 import { redirect } from "next/navigation";
 import { anyIncludes } from "@/utils/string";
 import usePathServerSide from "@/hooks/usePathServerSide";
 import { ReactNode } from "react";
 import { getSubTabs, PageTabs } from "./consts/tabs";
 
-interface PageProps extends ConfigProps {
+interface PageProps {
   children: ReactNode;
   params: {
     tabId: PageTabs;

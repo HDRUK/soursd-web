@@ -1,4 +1,5 @@
 "use client";
+
 import { useStore } from "@/data/store";
 import { notFound } from "next/navigation";
 import Projects from "@/modules/Projects";
