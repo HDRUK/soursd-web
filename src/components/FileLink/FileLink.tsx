@@ -104,8 +104,8 @@ export default function FileLink({
       }}>
       <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
         <LoadingButton
-          color="secondary"
-          variant="contained"
+          color="primary"
+          variant="outlined"
           onClick={handleFileSelectorOpen}
           startIcon={<UploadIcon />}
           loading={isUploading && !isScanning}

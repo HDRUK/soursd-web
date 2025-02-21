@@ -37,12 +37,12 @@ export default function SectionHeading({
           {...titleProps}
           sx={{
             width: "100%",
-            px: 2,
             py: 1,
             border: "none",
             ...(size === "large" && {
               borderRadius: "10px",
               py: 2,
+              px: 2,
               backgroundColor: "default.main",
               color: "default.contrastText",
             }),
