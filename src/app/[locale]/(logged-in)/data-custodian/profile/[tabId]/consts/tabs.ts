@@ -7,4 +7,22 @@ enum PageTabs {
   PROJECTS = "projects",
 }
 
-export { PageTabs };
+enum ConfigurationSubTabs {
+  WEBHOOKS = "webhooks",
+  RULES = "rules",
+  VALIDATION_CHECKS = "validation-checks",
+}
+
+type TabStructure = {
+  [key in PageTabs]?: ConfigurationSubTabs[];
+};
+
+const tabHierarchy: TabStructure = {
+  [PageTabs.CONFIGURATION]: Object.values(ConfigurationSubTabs),
+};
+
+function getSubTabs(tab: PageTabs): ConfigurationSubTabs[] | undefined {
+  return tabHierarchy[tab];
+}
+
+export { PageTabs, ConfigurationSubTabs, getSubTabs };

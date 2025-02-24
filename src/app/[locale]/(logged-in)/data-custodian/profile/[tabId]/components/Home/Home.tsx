@@ -17,12 +17,9 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo } from "react";
 
-import IdvtSection from "../IdvtSection";
-
 export interface DetailsFormValues {
   name: string;
   contact_email: string;
-  idvt_required: boolean;
 }
 
 export interface HomeProps {
@@ -81,7 +78,6 @@ export default function Home({ custodian }: HomeProps) {
           .string()
           .required(tForm("contactEmailRequiredInvalid"))
           .email(tForm("contactEmailFormatInvalid")),
-        idvt_required: yup.boolean(),
       }),
     []
   );
@@ -90,7 +86,6 @@ export default function Home({ custodian }: HomeProps) {
     defaultValues: {
       name: custodian.name,
       contact_email: custodian.contact_email,
-      idvt_required: custodian.idvt_required,
     },
     error:
       isUpdateError &&
@@ -130,18 +125,6 @@ export default function Home({ custodian }: HomeProps) {
                 <FormControlHorizontal
                   name="contact_email"
                   renderField={fieldProps => <TextField {...fieldProps} />}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlHorizontal
-                  name="idvt_required"
-                  displayLabel={false}
-                  displayPlaceholder={false}
-                  renderField={fieldProps => (
-                    <IdvtSection
-                      switchProps={{ name: "idvt_required", ...fieldProps }}
-                    />
-                  )}
                 />
               </Grid>
             </Grid>

@@ -71,8 +71,11 @@ jest.mock("next/navigation", () => {
     useSearchParams: () => ({
       get: () => {},
     }),
+    redirect: jest.fn()
   };
 });
+
+jest.mock("@/hooks/usePathServerSide", () => jest.fn());
 
 jest.mock("@/data/store", () => ({
   useStore: jest.fn(),
