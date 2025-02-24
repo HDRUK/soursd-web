@@ -39,12 +39,11 @@ describe("GoogleAutocomplete", () => {
     jest.useFakeTimers();
   });
 
-  /*
   it("renders the component with a label", () => {
     renderComponent();
     expect(screen.getByLabelText("Address")).toBeInTheDocument();
   });
-  
+
   it("updates input value when typing", () => {
     renderComponent();
     const input = screen.getByRole("combobox");
@@ -53,21 +52,21 @@ describe("GoogleAutocomplete", () => {
 
     expect(input).toHaveValue("123 Main St");
   });
-  */
+
   it("fetches predictions when input length >= 3 and displays options", async () => {
     mockFetchPredictions.mockResolvedValueOnce([
       {
         addressFields: {
           postcode: "12345",
           addressLine1: "123 Main St",
-          county: "Springfield",
+          town: "Springfield",
         },
       },
       {
         addressFields: {
           postcode: "67890",
           addressLine1: "123 Elm St",
-          county: "Springfield",
+          town: "Springfield",
         },
       },
     ]);
@@ -77,15 +76,17 @@ describe("GoogleAutocomplete", () => {
     const input = screen.getByRole("combobox");
     fireEvent.change(input, { target: { value: "123" } });
 
-    screen.debug(undefined, Infinity);
-    //    return;
     await waitFor(() => {
       expect(mockFetchPredictions).toHaveBeenCalledWith("123");
-      expect(screen.getByText("123 Main St, Springfield")).toBeInTheDocument();
-      //expect(screen.getByText("123 Elm St, Springfield")).toBeInTheDocument();
+      expect(
+        screen.getByText("123 Main St, Springfield, 12345")
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText("123 Elm St, Springfield, 67890")
+      ).toBeInTheDocument();
     });
   });
-  /*
+
   it("does not fetch predictions for input length < 3", async () => {
     renderComponent();
     const input = screen.getByRole("combobox");
@@ -103,7 +104,7 @@ describe("GoogleAutocomplete", () => {
           postcode: "12345",
           addressLine1: "123 Main St",
           addressLine2: "",
-          county: "Springfield",
+          town: "Springfield",
         },
       },
     ]);
@@ -117,7 +118,7 @@ describe("GoogleAutocomplete", () => {
       expect(fetchPredictions).toHaveBeenCalled();
     });
 
-    const option = await screen.findByText("123 Main St, Springfield");
+    const option = await screen.findByText("123 Main St, Springfield, 12345");
     fireEvent.click(option);
 
     await waitFor(() => {
@@ -125,7 +126,7 @@ describe("GoogleAutocomplete", () => {
         postcode: "12345",
         address_1: "123 Main St",
         address_2: "",
-        county: "Springfield",
+        town: "Springfield",
       });
     });
   });
@@ -147,5 +148,5 @@ describe("GoogleAutocomplete", () => {
     });
 
     consoleErrorSpy.mockRestore();
-  });*/
+  });
 });
