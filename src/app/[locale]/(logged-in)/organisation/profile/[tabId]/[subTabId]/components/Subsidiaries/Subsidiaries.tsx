@@ -1,14 +1,13 @@
 "use client";
 
 import { useStore } from "@/data/store";
-import { PageBody, PageSection } from "@/modules";
+import { PageSection } from "@/modules";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import React from "react";
-import { Organisation } from "@/types/application";
+import { Subsidiary, Organisation } from "@/types/application";
 import { ColumnDef, CellContext } from "@tanstack/react-table";
 import Table from "@/components/Table";
-import { Subsidiary } from "@/types/application";
 import { formatAddress } from "@/utils/address";
 import ModalFormButton from "@/components/ModalFormButton";
 
@@ -22,12 +21,7 @@ const NAMESPACE_TRANSLATION_FORM = "Form";
 const NAMESPACE_TRANSLATION_ORG_PROFILE = "ProfileOrganisation";
 
 export default function Subsidiaries() {
-  const { organisation, setOrganisation } = useStore(state => {
-    return {
-      organisation: state.config.organisation,
-      setOrganisation: state.setOrganisation,
-    };
-  });
+  const organisation = useStore(state => state.config.organisation);
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_ORG_PROFILE);
 
@@ -39,10 +33,7 @@ export default function Subsidiaries() {
     id: organisation?.id,
   });
 
-  const handleSubmit = (
-    fields: SubsidiaryFormValues,
-    callback?: () => void
-  ) => {
+  const handleSubmit = async (fields: SubsidiaryFormValues) => {
     const payload = {
       subsidiaries: [
         ...(organisation?.subsidiaries?.map(
@@ -73,9 +64,7 @@ export default function Subsidiaries() {
       ],
     } as Partial<Organisation>;
 
-    onSubmit(payload).then(() => {
-      callback && callback();
-    });
+    return onSubmit(payload);
   };
 
   const renderActions = (info: CellContext<Subsidiary, unknown>) => (
@@ -93,12 +82,14 @@ export default function Subsidiaries() {
     </>
   );
 
+  const renderNameCell = (info: CellContext<Subsidiary, unknown>) => (
+    <Typography color="primary">{info.getValue() as string}</Typography>
+  );
+
   const columns: ColumnDef<Subsidiary>[] = [
     {
       accessorKey: "name",
-      cell: ({ getValue }) => (
-        <Typography color="primary"> {getValue() as string} </Typography>
-      ),
+      cell: renderNameCell,
     },
     {
       accessorKey: "address",
@@ -110,29 +101,31 @@ export default function Subsidiaries() {
     },
   ];
 
-  return (
-    <PageBody>
-      <PageSection heading={tForm("organisationSubsidiaries")}>
-        <Table
-          showHeader={false}
-          data={organisation?.subsidiaries || []}
-          columns={columns}
-          queryState={patchOrganisationQueryState}
-        />
+  const renderFormContent = (closeModal: () => void, isLoading?: boolean) => (
+    <SubsidiaryForm
+      isLoading={isLoading}
+      onSubmit={data => {
+        handleSubmit(data).then(() => closeModal());
+      }}
+    />
+  );
 
-        <ModalFormButton
-          isLoading={isLoading}
-          buttonText={tProfile("addAnotherSubsidiary")}
-          formContent={({ closeModal, isLoading }) => (
-            <SubsidiaryForm
-              isLoading={isLoading}
-              onSubmit={data => {
-                handleSubmit(data, closeModal);
-              }}
-            />
-          )}
-        />
-      </PageSection>
-    </PageBody>
+  return (
+    <PageSection heading={tForm("organisationSubsidiaries")}>
+      <Table
+        showHeader={false}
+        data={organisation?.subsidiaries || []}
+        columns={columns}
+        queryState={patchOrganisationQueryState}
+      />
+
+      <ModalFormButton
+        isLoading={isLoading}
+        buttonText={tProfile("addAnotherSubsidiary")}
+        formContent={({ closeModal, isLoading }) =>
+          renderFormContent(closeModal, isLoading)
+        }
+      />
+    </PageSection>
   );
 }

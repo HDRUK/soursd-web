@@ -16,6 +16,7 @@ import { useRouter } from "next/navigation";
 import { ROUTES } from "@/consts/router";
 import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
 import usePatchOrganisation from "../../../hooks/usePatchOrganisation";
+import Subsidiaries from "../Subsidiaries";
 
 export interface NameAndAddressFormValues {
   organisation_name: string;
@@ -88,23 +89,23 @@ export default function NameAndAddress() {
 
   return (
     <PageBody>
-      <PageSection
-        heading={tOrgProfile("nameAndAddressTitle")}
-        description={tOrgProfile("nameAndAddressDescription")}>
-        <Form
-          schema={schema}
-          onSubmit={handleSubmit}
-          {...formOptions}
-          key={organisation?.id}>
-          {({ setValue }) => {
-            const handleFindAddress = (address: AddressFields) => {
-              Object.entries(address).forEach(([key, value]) => {
-                setValue(key as keyof NameAndAddressFormValues, value ?? "");
-              });
-            };
+      <Form
+        schema={schema}
+        onSubmit={handleSubmit}
+        {...formOptions}
+        key={organisation?.id}>
+        {({ setValue }) => {
+          const handleFindAddress = (address: AddressFields) => {
+            Object.entries(address).forEach(([key, value]) => {
+              setValue(key as keyof NameAndAddressFormValues, value ?? "");
+            });
+          };
 
-            return (
-              <>
+          return (
+            <>
+              <PageSection
+                heading={tOrgProfile("nameAndAddressTitle")}
+                description={tOrgProfile("nameAndAddressDescription")}>
                 <Grid container rowSpacing={3}>
                   <Grid item xs={12}>
                     <FormControlHorizontal
@@ -123,7 +124,6 @@ export default function NameAndAddress() {
                         <GoogleAutocomplete
                           name="address"
                           textFieldProps={{
-                            variant: "filled",
                             size: "small",
                           }}
                           onAddressSelected={value =>
@@ -173,18 +173,20 @@ export default function NameAndAddress() {
                     />
                   </Grid>
                 </Grid>
+              </PageSection>
 
-                <FormActions>
-                  <ProfileNavigationFooter
-                    nextStepText={tOrgProfile("detailsDigitalIdentifiers")}
-                    isLoading={isLoading}
-                  />
-                </FormActions>
-              </>
-            );
-          }}
-        </Form>
-      </PageSection>
+              <Subsidiaries />
+
+              <FormActions>
+                <ProfileNavigationFooter
+                  nextStepText={tOrgProfile("detailsDigitalIdentifiers")}
+                  isLoading={isLoading}
+                />
+              </FormActions>
+            </>
+          );
+        }}
+      </Form>
     </PageBody>
   );
 }

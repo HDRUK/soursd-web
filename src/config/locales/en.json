@@ -351,7 +351,7 @@
     "dsptkCertificationNumInvalid": "DSPT identifier is invalid",
     "organisationSubsidiaries": "UK subsidiaries",
     "address": "Address search",
-    "addressPlaceholder": "Type to search for an address",
+    "addressPlaceholder": "Start typing an address to search",
     "arrayRemoveButton": "Remove",
     "arrayAddButton": "Add Another",
     "keyContactFormTitle": "Key Contact Information",

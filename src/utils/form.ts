@@ -21,23 +21,20 @@ function isFieldRequired(
   fieldPath: string
 ): boolean {
   const fields = fieldPath.split(".");
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let currentSchema: any = schema.describe();
 
-  for (const field of fields) {
-    if (currentSchema.type === "array" && !isNaN(Number(field))) {
-      currentSchema = currentSchema.innerType;
-      if (!currentSchema) {
-        return false;
-      }
-      continue;
+  currentSchema = fields.reduce((acc, field) => {
+    if (!acc) return null;
+
+    if (acc.type === "array" && !Number.isNaN(Number(field))) {
+      return acc.innerType || null;
     }
 
-    if (!currentSchema.fields || !currentSchema.fields[field]) {
-      return false;
-    }
-    currentSchema = currentSchema.fields[field];
-  }
-  return !currentSchema.optional;
+    return acc.fields?.[field] || null;
+  }, currentSchema);
+
+  return currentSchema ? !currentSchema.optional : false;
 }
 
 export { getCheckboxFormValuesFromIntersection, isFieldRequired };

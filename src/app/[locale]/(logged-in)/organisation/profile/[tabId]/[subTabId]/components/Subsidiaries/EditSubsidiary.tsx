@@ -22,7 +22,7 @@ const EditSubsidiary = ({
   const organisation = useStore(state => state.getOrganisation());
 
   const handleUpdateSubsidiary = async (formData: SubsidiaryFormValues) => {
-    if (!organisation?.subsidiaries) return;
+    if (!organisation?.subsidiaries) return null;
 
     const updatedSubsidiaries = organisation.subsidiaries.map(sub =>
       sub.id === subsidiary.id
@@ -49,20 +49,24 @@ const EditSubsidiary = ({
     return onSubmit(payload);
   };
 
+  const renderFormContent = (closeModal: () => void, isLoading?: boolean) => (
+    <SubsidiaryForm
+      defaultValues={subsidiary}
+      isLoading={isLoading}
+      onSubmit={data => {
+        handleUpdateSubsidiary(data).then(() => closeModal());
+      }}
+    />
+  );
+
   return (
     <ModalFormButton
       icon={<EditIcon />}
       tooltipText={t("editSubsidiaryToolTip")}
       isLoading={isLoading}
-      formContent={({ closeModal, isLoading }) => (
-        <SubsidiaryForm
-          defaultValues={subsidiary}
-          isLoading={isLoading}
-          onSubmit={data => {
-            handleUpdateSubsidiary(data).then(() => closeModal());
-          }}
-        />
-      )}
+      formContent={({ closeModal, isLoading }) =>
+        renderFormContent(closeModal, isLoading)
+      }
     />
   );
 };

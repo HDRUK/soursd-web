@@ -10,8 +10,7 @@ import { useTranslations } from "next-intl";
 import { AddressFields, Subsidiary } from "@/types/application";
 import { useMemo } from "react";
 import Form from "@/components/Form";
-import GoogleAutocomplete from "@/components/GoogleAutocomplete";
-import SelectCountry from "@/components/SelectCountry";
+import AddressForm from "@/components/AddressForm";
 
 export interface SubsidiaryFormValues {
   subsidiary_name: string;
@@ -67,131 +66,35 @@ export default function SubsidiaryForm({
 
   return (
     <Form sx={{ mt: 1 }} schema={schema} onSubmit={onSubmit} {...formOptions}>
-      {({ setValue }) => {
-        const handleFindAddress = (address: AddressFields) => {
-          Object.entries(address).forEach(([key, value]) => {
-            setValue(`subsidiary_address.${key}`, value ?? "", {
-              shouldDirty: true,
-              shouldValidate: true,
-            });
-          });
-        };
+      <>
+        <FormSection heading={t("addSubsidiary")}>
+          <Grid
+            container
+            rowSpacing={3}
+            sx={{ width: "100%", justifyContent: "flex-start" }}>
+            <Grid item xs={12}>
+              <FormControl
+                name="subsidiary_name"
+                renderField={fieldProps => <TextField {...fieldProps} />}
+              />
+            </Grid>
 
-        return (
-          <>
-            <FormSection heading={t("addSubsidiary")}>
-              <Grid
-                container
-                rowSpacing={3}
-                sx={{ width: "100%", justifyContent: "flex-start" }}>
-                <Grid item xs={12}>
-                  <FormControl
-                    name="subsidiary_name"
-                    renderField={fieldProps => <TextField {...fieldProps} />}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <FormControl
-                    name="subsidiary_address"
-                    renderField={fieldProps => (
-                      <GoogleAutocomplete
-                        name="subsidiary_address"
-                        onAddressSelected={value => {
-                          handleFindAddress(value as AddressFields);
-                          return value;
-                        }}
-                        textFieldProps={{
-                          size: "small",
-                        }}
-                        fullWidth
-                        placeholder={t("subsidiaryAddressPlaceholder")}
-                        {...fieldProps}
-                      />
-                    )}
-                  />
-                </Grid>
+            <AddressForm name="subsidiary_address" />
 
-                <Grid item xs={12}>
-                  <FormControl
-                    name="subsidiary_address.address_1"
-                    label={t("address1")}
-                    renderField={fieldProps => (
-                      <TextField {...fieldProps} placeholder="" />
-                    )}
-                  />
-                </Grid>
-
-                <Grid item xs={12}>
-                  <FormControl
-                    name="subsidiary_address.address_2"
-                    label={t("address2")}
-                    renderField={fieldProps => (
-                      <TextField {...fieldProps} placeholder="" />
-                    )}
-                  />
-                </Grid>
-
-                <Grid item xs={12}>
-                  <FormControl
-                    name="subsidiary_address.town"
-                    label={t("town")}
-                    renderField={fieldProps => (
-                      <TextField {...fieldProps} placeholder="" />
-                    )}
-                  />
-                </Grid>
-
-                <Grid item xs={12}>
-                  <FormControl
-                    name="subsidiary_address.county"
-                    label={t("county")}
-                    renderField={fieldProps => (
-                      <TextField {...fieldProps} placeholder="" />
-                    )}
-                  />
-                </Grid>
-
-                <Grid item xs={12}>
-                  <FormControl
-                    name="subsidiary_address.country"
-                    label={t("country")}
-                    renderField={fieldProps => (
-                      <SelectCountry
-                        useCountryCode={false}
-                        {...fieldProps}
-                        value={fieldProps.value}
-                        onChange={fieldProps.onChange}
-                      />
-                    )}
-                  />
-                </Grid>
-
-                <Grid item xs={12}>
-                  <FormControl
-                    name="subsidiary_address.postcode"
-                    label={t("postcode")}
-                    renderField={fieldProps => (
-                      <TextField {...fieldProps} placeholder="" />
-                    )}
-                  />
-                </Grid>
-
-                <Grid item xs={12}>
-                  <FormControl
-                    name="subsidiary_website"
-                    renderField={fieldProps => <TextField {...fieldProps} />}
-                  />
-                </Grid>
-              </Grid>
-            </FormSection>
-            <FormActions>
-              <LoadingButton loading={isLoading} type="submit">
-                {t("save")}
-              </LoadingButton>
-            </FormActions>
-          </>
-        );
-      }}
+            <Grid item xs={12}>
+              <FormControl
+                name="subsidiary_website"
+                renderField={fieldProps => <TextField {...fieldProps} />}
+              />
+            </Grid>
+          </Grid>
+        </FormSection>
+        <FormActions>
+          <LoadingButton loading={isLoading} type="submit">
+            {t("save")}
+          </LoadingButton>
+        </FormActions>
+      </>
     </Form>
   );
 }

@@ -1,5 +1,5 @@
-import { isFieldRequired, getCheckboxFormValuesFromIntersection } from "./form";
 import * as yup from "yup";
+import { isFieldRequired, getCheckboxFormValuesFromIntersection } from "./form";
 
 describe("isFieldRequired", () => {
   it("should return true for a required field", () => {

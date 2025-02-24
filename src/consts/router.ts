@@ -116,10 +116,6 @@ const ROUTES: Routes = {
     path: "/organisation/profile/details/sector-size-and-website",
     permissions: [UserGroup.ORGANISATIONS],
   },
-  profileOrganisationDetailsSubsidiaries: {
-    path: "/organisation/profile/details/subsidiaries",
-    permissions: [UserGroup.ORGANISATIONS],
-  },
   profileOrganisationDetailsSecurityCompliance: {
     path: "/organisation/profile/details/security-compliance",
     permissions: [UserGroup.ORGANISATIONS],

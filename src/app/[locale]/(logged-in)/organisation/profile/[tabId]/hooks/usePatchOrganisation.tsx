@@ -3,12 +3,11 @@
 import {
   patchOrganisation,
   PatchOrganisationPayload,
+  getOrganisationQuery,
 } from "@/services/organisations";
-import { useMutation } from "@tanstack/react-query";
 import { showAlert } from "@/utils/showAlert";
 import { useTranslations } from "next-intl";
-import { useQuery } from "@tanstack/react-query";
-import { getOrganisationQuery } from "@/services/organisations";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { useStore } from "@/data/store";
 
 interface UseUpdateOrganisationProps {
@@ -53,7 +52,6 @@ const usePatchOrganisation = ({
         }
       }
     });
-    console.log("hello --> refetched organisation");
     if (messageSuccess) {
       showAlert("success", {
         text: t("text"),

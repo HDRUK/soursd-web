@@ -1,8 +1,7 @@
 import { useState, ReactNode } from "react";
 import { Tooltip, IconButton, CircularProgress } from "@mui/material";
-import FormModal from "../FormModal";
-
 import { LoadingButton } from "@mui/lab";
+import FormModal from "../FormModal";
 
 interface ModalFormButtonProps {
   buttonText?: string;
@@ -17,14 +16,14 @@ interface ModalFormButtonProps {
   icon?: ReactNode;
 }
 
-const ModalFormButton: React.FC<ModalFormButtonProps> = ({
+const ModalFormButton = ({
   buttonText,
   formContent,
   onSubmit,
   isLoading = false,
   icon,
   tooltipText,
-}) => {
+}: ModalFormButtonProps) => {
   const [open, setOpen] = useState<boolean>(false);
 
   return (
