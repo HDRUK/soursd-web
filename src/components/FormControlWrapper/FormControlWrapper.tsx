@@ -54,7 +54,7 @@ export default function FormControlWrapper({
   const effectiveControl = control || context.control;
 
   const { isFieldRequired } = context;
-  const isRequired = isFieldRequired(name);
+  const isRequired = isFieldRequired?.(name);
 
   return (
     <Controller
