@@ -64,10 +64,6 @@ const ROUTES: Routes = {
     path: "/data-custodian/profile/keycards",
     permissions: [UserGroup.CUSTODIANS],
   },
-  permissionsOrganisationCustodian: {
-    path: "/data-custodian/permissions",
-    permissions: [UserGroup.CUSTODIANS],
-  },
   permissionsResearcherCustodian: {
     path: "/data-custodian/permissions/user",
     permissions: [UserGroup.CUSTODIANS],
