@@ -5,11 +5,10 @@ import FormSection from "@/components/FormSection";
 import SelectInput from "@/components/SelectInput";
 import yup from "@/config/yup";
 import { AffiliationRelationship } from "@/consts/user";
-import getOrganisationsQuery from "@/services/organisations/getOrganisationsQuery";
+import useOrganisationsQuery from "@/services/organisations/useOrganisationsQuery";
 import { ResearcherAffiliation } from "@/types/application";
 import { MutationState } from "@/types/form";
 import { Checkbox, Grid, MenuItem, Select, TextField } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 import DateInput from "@/components/DateInput";
@@ -35,7 +34,7 @@ export default function AffiliationsForm({
   const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
   const [inviteOpen, setInviteOpen] = useState(false);
 
-  const { data: organisationsData } = useQuery(getOrganisationsQuery());
+  const { data: organisationsData } = useOrganisationsQuery();
 
   const schema = useMemo(
     () =>

@@ -9,7 +9,7 @@ import { useSearchParams, useRouter, usePathname } from "@/i18n/routing";
 
 const API_SORT_KEY = "sort";
 
-type PaginatedQueryProps<T> = {
+export type PaginatedQueryProps<T> = {
   queryKeyBase: unknown[];
   queryFn: (
     queryParams: Record<string, string | number | undefined>

@@ -22,18 +22,11 @@ import {
 const NAMESPACE_TRANSLATION_FORM = "Form";
 
 export default function SecurityCompliance() {
-  const { organisation, setOrganisation } = useStore(state => {
-    return {
-      organisation: state.config.organisation,
-      setOrganisation: state.setOrganisation,
-    };
-  });
+  const organisation = useStore(state => state.config.organisation);
   const t = useTranslations(NAMESPACE_TRANSLATION_FORM);
 
   const { isPending: isLoading, onSubmit } = usePatchOrganisation({
     id: organisation?.id,
-    organisation,
-    setOrganisation,
   });
 
   const schema = getValidation(t);

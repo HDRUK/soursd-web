@@ -31,6 +31,7 @@ interface Routes {
   profileCustodianConfigurationValidationChecks: RouteConfig;
   profileCustodianKeycards: RouteConfig;
   profileCustodianUsers: RouteConfig;
+  permissionsOrganisationCustodian: RouteConfig;
   permissionsResearcherCustodian: RouteConfig;
   permissionsOrganisationCustodian: RouteConfig;
   profileResearcher: RouteConfig;
