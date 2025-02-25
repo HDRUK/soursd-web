@@ -1,132 +1,131 @@
 "use client";
 
-import Form from "@/components/Form";
-import FormActions from "@/components/FormActions";
-import FormControlHorizontal from "@/components/FormControlHorizontal";
-import FormFieldArray from "@/components/FormFieldArray";
-import GoogleAutocomplete from "@/components/GoogleAutocomplete";
 import { useStore } from "@/data/store";
-import { PageBody, PageSection } from "@/modules";
-import { Box, Grid } from "@mui/material";
-import TextField from "@mui/material/TextField";
+import { PageSection } from "@/modules";
+import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-import React, { useMemo } from "react";
-import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
-import { ROUTES } from "@/consts/router";
-import { Organisation } from "@/types/application";
-import { useRouter } from "next/navigation";
-import { FormData, getDefaultValues, getValidation } from "./config/form";
+import React from "react";
+import { Subsidiary, Organisation } from "@/types/application";
+import { ColumnDef, CellContext } from "@tanstack/react-table";
+import Table from "@/components/Table";
+import { formatAddress } from "@/utils/address";
+import ModalFormButton from "@/components/ModalFormButton";
+
+import SubsidiaryForm, { SubsidiaryFormValues } from "./SubsidiaryForm";
+import RemoveSubsidiary from "./RemoveSubsidiary";
+import EditSubsidiary from "./EditSubsidiary";
+
 import usePatchOrganisation from "../../../hooks/usePatchOrganisation";
 
 const NAMESPACE_TRANSLATION_FORM = "Form";
 const NAMESPACE_TRANSLATION_ORG_PROFILE = "ProfileOrganisation";
 
 export default function Subsidiaries() {
-  const router = useRouter();
-  const { organisation, setOrganisation } = useStore(state => {
-    return {
-      organisation: state.config.organisation,
-      setOrganisation: state.setOrganisation,
-    };
-  });
+  const organisation = useStore(state => state.config.organisation);
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
-  const tOrgProfile = useTranslations(NAMESPACE_TRANSLATION_ORG_PROFILE);
+  const tProfile = useTranslations(NAMESPACE_TRANSLATION_ORG_PROFILE);
 
-  const { isPending: isLoading, onSubmit } = usePatchOrganisation({
+  const {
+    isPending: isLoading,
+    onSubmit,
+    ...patchOrganisationQueryState
+  } = usePatchOrganisation({
     id: organisation?.id,
-    organisation,
-    setOrganisation,
   });
 
-  const schema = getValidation(tForm);
-  const defaultValues = useMemo(
-    () => getDefaultValues(organisation),
-    [organisation]
-  );
+  const handleSubmit = async (fields: SubsidiaryFormValues) => {
+    const payload = {
+      subsidiaries: [
+        ...(organisation?.subsidiaries?.map(
+          ({
+            name,
+            address_1,
+            address_2,
+            town,
+            county,
+            country,
+            postcode,
+          }) => ({
+            name,
+            address: {
+              address_1,
+              address_2,
+              town,
+              county,
+              country,
+              postcode,
+            },
+          })
+        ) ?? []),
+        {
+          name: fields.subsidiary_name,
+          address: fields.subsidiary_address,
+        },
+      ],
+    } as Partial<Organisation>;
 
-  const handleSubmit = (fields: Partial<Organisation>) => {
-    onSubmit(fields).then(() => {
-      router.push(ROUTES.profileOrganisationDetailsSecurityCompliance.path);
-    });
+    return onSubmit(payload);
   };
 
-  return (
-    <PageBody>
-      <PageSection>
-        <Form
-          schema={schema}
-          defaultValues={defaultValues}
-          onSubmit={handleSubmit}
-          key={organisation?.id}>
-          {({ watch }) => {
-            const nsubs = watch("subsidiaries").length;
-            return (
-              <>
-                <Grid container rowSpacing={3}>
-                  <Grid item xs={12}>
-                    <FormControlHorizontal
-                      displayLabel={false}
-                      displayPlaceholder={false}
-                      labelMd={0}
-                      contentMd={12}
-                      name="subsidiaries"
-                      renderField={fieldProps => (
-                        <FormFieldArray<FormData>
-                          name={fieldProps.name}
-                          boxSx={{
-                            display: "grid",
-                            gridTemplateColumns: "2fr 3fr 1fr",
-                            alignItems: "flex-end",
-                          }}
-                          createNewRow={() => ({
-                            name: "",
-                          })}
-                          renderField={(field, index) => (
-                            <React.Fragment key={field.name}>
-                              <FormControlHorizontal
-                                displayLabel={false}
-                                labelMd={0}
-                                contentMd={12}
-                                name={`subsidiaries.${index}.name`}
-                                placeholder={tForm("name")}
-                                renderField={fieldProps => (
-                                  <TextField {...fieldProps} />
-                                )}
-                              />
-                              <Box sx={{ mt: 1 }}>
-                                <GoogleAutocomplete
-                                  name={`subsidiaries.${index}.address`}
-                                  textFieldProps={{
-                                    variant: "filled",
-                                    size: "small",
-                                  }}
-                                  fullWidth
-                                  placeholder={tForm("addressPlaceholder")}
-                                />
-                              </Box>
-                            </React.Fragment>
-                          )}
-                        />
-                      )}
-                    />
-                  </Grid>
-                </Grid>
+  const renderActions = (info: CellContext<Subsidiary, unknown>) => (
+    <>
+      <EditSubsidiary
+        isLoading={isLoading}
+        subsidiary={info.row.original}
+        onSubmit={onSubmit}
+      />
+      <RemoveSubsidiary
+        isLoading={isLoading}
+        subsidiary={info.row.original}
+        onSubmit={onSubmit}
+      />
+    </>
+  );
 
-                <FormActions>
-                  <ProfileNavigationFooter
-                    previousHref={
-                      ROUTES.profileOrganisationDetailsSectorSizeAndWebsite.path
-                    }
-                    nextStepText={tOrgProfile("detailsSecurityCompliance")}
-                    isLoading={isLoading}
-                    isDisabled={nsubs < 1}
-                  />
-                </FormActions>
-              </>
-            );
-          }}
-        </Form>
-      </PageSection>
-    </PageBody>
+  const renderNameCell = (info: CellContext<Subsidiary, unknown>) => (
+    <Typography color="primary">{info.getValue() as string}</Typography>
+  );
+
+  const columns: ColumnDef<Subsidiary>[] = [
+    {
+      accessorKey: "name",
+      cell: renderNameCell,
+    },
+    {
+      accessorKey: "address",
+      cell: ({ row: { original } }) => formatAddress(original),
+    },
+    {
+      accessorKey: "actions",
+      cell: renderActions,
+    },
+  ];
+
+  const renderFormContent = (closeModal: () => void, isLoading?: boolean) => (
+    <SubsidiaryForm
+      isLoading={isLoading}
+      onSubmit={data => {
+        handleSubmit(data).then(() => closeModal());
+      }}
+    />
+  );
+
+  return (
+    <PageSection heading={tForm("organisationSubsidiaries")}>
+      <Table
+        showHeader={false}
+        data={organisation?.subsidiaries || []}
+        columns={columns}
+        queryState={patchOrganisationQueryState}
+      />
+
+      <ModalFormButton
+        isLoading={isLoading}
+        buttonText={tProfile("addAnotherSubsidiary")}
+        formContent={({ closeModal, isLoading }) =>
+          renderFormContent(closeModal, isLoading)
+        }
+      />
+    </PageSection>
   );
 }
