@@ -43,6 +43,7 @@ export default function useFileUpload(message: string) {
     setIsSizeInvalid(false);
 
     const file = formData.get("file") as File;
+    console.log(file);
 
     if (file.size <= MAX_UPLOAD_SIZE_BYTES) {
       const { data } = await postFileState.mutateAsync(formData);
@@ -53,6 +54,7 @@ export default function useFileUpload(message: string) {
     }
 
     setIsSizeInvalid(true);
+    console.log("size invalid");
 
     return null;
   };

@@ -43,8 +43,6 @@ const usePatchOrganisation = ({
 
   const onSubmit = async (fields: Partial<PatchOrganisationPayload>) => {
     const payload = { ...fields };
-    console.log("hiya", payload);
-    return;
     await mutation.mutateAsync(payload);
 
     await refetchOrganisation().then(res => {

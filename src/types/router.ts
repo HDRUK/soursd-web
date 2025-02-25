@@ -47,7 +47,6 @@ interface Routes {
   profileOrganisationDetailsNameAndAddress: RouteConfig;
   profileOrganisationDetailsDigitalIdentifiers: RouteConfig;
   profileOrganisationDetailsSectorSizeAndWebsite: RouteConfig;
-  profileOrganisationDetailsSubsidiaries: RouteConfig;
   profileOrganisationDetailsSecurityCompliance: RouteConfig;
   profileOrganisationUserAdministration: RouteConfig;
   profileOrganisationUserAdministrationDelegates: RouteConfig;

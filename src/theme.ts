@@ -376,6 +376,13 @@ const theme = createTheme(
           },
         },
       },
+      MuiFormLabel: {
+        styleOverrides: {
+          root: {
+            fontWeight: "bold",
+          },
+        },
+      },
     },
   },
   paletteTheme

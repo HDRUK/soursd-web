@@ -3,12 +3,21 @@ import {
   FORMAT_DISPLAY_SHORT_DATE,
   FORMAT_SHORT_DATE,
 } from "@/consts/date";
+import { format } from "date-fns";
 import dayjs from "dayjs";
 
 function isExpired(date: string) {
   const expirationTime = dayjs(date);
 
   return expirationTime.isAfter(dayjs());
+}
+
+function dateToString(date?: Date, formatString: string = "yyyy-MM-dd") {
+  return date ? format(date, formatString) : undefined;
+}
+
+function getDate(date?: string) {
+  return date ? new Date(date) : undefined;
 }
 
 function formatShortDate(date?: string) {
@@ -47,4 +56,6 @@ export {
   formatNowDBDate,
   formatDisplayShortDate,
   formatDBDate,
+  dateToString,
+  getDate,
 };

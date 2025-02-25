@@ -4,14 +4,10 @@ import {
   VALIDATION_DSPTK_CERTIFICATION_NUMBER,
 } from "@/consts/form";
 import yup from "@/config/yup";
-import { AddressFields, Organisation } from "@/types/application";
+import { Organisation } from "@/types/application";
+import { getDate } from "@/utils/date";
 
-export interface SubsidiariesFormData {
-  name: string;
-  address?: AddressFields;
-}
-
-export interface FormData {
+export interface SecurityCompilanceFormData {
   ce_certification_num?: string;
   ce_expiry_date?: Date;
   ce_plus_certification_num?: string;
@@ -89,37 +85,44 @@ export const getValidation = (t: (key: string) => string) =>
       }),
   });
 
-export const getDefaultValues = (organisation?: Organisation): FormData => ({
+export const getDefaultValues = (
+  organisation?: Organisation
+): SecurityCompilanceFormData => ({
   ce_certification_num: organisation?.ce_certification_num || "",
-  ce_expiry_date: organisation?.ce_expiry_date,
+  ce_expiry_date: getDate(organisation?.ce_expiry_date),
   ce_plus_certification_num: organisation?.ce_plus_certification_num || "",
-  ce_plus_expiry_date: organisation?.ce_plus_expiry_date,
+  ce_plus_expiry_date: getDate(organisation?.ce_plus_expiry_date),
   iso_27001_certification_num: organisation?.iso_27001_certification_num || "",
-  iso_expiry_date: organisation?.iso_expiry_date,
+  iso_expiry_date: getDate(organisation?.iso_expiry_date),
   dsptk_ods_code: organisation?.dsptk_ods_code || "",
-  dsptk_expiry_date: organisation?.dsptk_expiry_date,
+  dsptk_expiry_date: getDate(organisation?.dsptk_expiry_date),
 });
 
 type Certification = {
-  certificationNum: keyof FormData;
-  certificationExpiryDate: keyof FormData;
+  name: string;
+  certificationNum: keyof SecurityCompilanceFormData;
+  certificationExpiryDate: keyof SecurityCompilanceFormData;
 };
 
 export const certificationRows: Certification[] = [
   {
+    name: "ceCertified",
     certificationNum: "ce_certification_num",
     certificationExpiryDate: "ce_expiry_date",
-  },
+  } /*
   {
+    name: "cePlusCertified",
     certificationNum: "ce_plus_certification_num",
     certificationExpiryDate: "ce_plus_expiry_date",
   },
   {
+    name: "iso27001Certified",
     certificationNum: "iso_27001_certification_num",
     certificationExpiryDate: "iso_expiry_date",
   },
   {
+    name: "dsptkCertified",
     certificationNum: "dsptk_ods_code",
     certificationExpiryDate: "dsptk_expiry_date",
-  },
+  },*/,
 ];
