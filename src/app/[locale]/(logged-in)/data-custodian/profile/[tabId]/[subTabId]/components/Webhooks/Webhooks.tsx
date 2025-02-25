@@ -50,7 +50,7 @@ export default function Webhooks() {
     refetch: refetchWebhookData,
     isLoading: isWebhooksLoading,
   } = useQuery(getCustodianWebhooksQuery(custodian?.id));
-  
+
   const { data: webhookEventTriggers } = useQuery(
     getWebhookEventTriggerQuery()
   );

@@ -1,16 +1,16 @@
 import { render, screen, waitFor } from "@/utils/testUtils";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import Webhooks from "./Webhooks";
 import { mockedCustodian } from "@/mocks/data/custodian";
+import Webhooks from "./Webhooks";
 
 // Mock the dependencies
 jest.mock("@tanstack/react-query");
 jest.mock("@/data/store", () => ({
-    useStore: jest.fn(() => ({
-        config: {
-          custodian: mockedCustodian({ id: 1 }),
-        },
-    })),
+  useStore: jest.fn(() => ({
+    config: {
+      custodian: mockedCustodian({ id: 1 }),
+    },
+  })),
 }));
 
 describe("<Webhooks />", () => {
@@ -29,13 +29,20 @@ describe("<Webhooks />", () => {
   };
 
   beforeEach(() => {
-    (useQuery as jest.Mock).mockImplementation((queryConfig) => {
-
-      if (typeof queryConfig === 'object' && queryConfig !== null && Array.isArray(queryConfig.queryKey)) {
+    (useQuery as jest.Mock).mockImplementation(queryConfig => {
+      if (
+        typeof queryConfig === "object" &&
+        queryConfig !== null &&
+        Array.isArray(queryConfig.queryKey)
+      ) {
         const queryKey = queryConfig.queryKey[0];
 
         if (queryKey === "getCustodianWebhooks") {
-          return { data: mockWebhooksData, isLoading: false, refetch: jest.fn() };
+          return {
+            data: mockWebhooksData,
+            isLoading: false,
+            refetch: jest.fn(),
+          };
         }
         if (queryKey === "getWebhookEventTrigger") {
           return { data: mockEventTriggers };
@@ -54,16 +61,20 @@ describe("<Webhooks />", () => {
     render(<Webhooks />);
 
     await waitFor(() => {
-        expect(screen.getByText("Webhooks")).toBeInTheDocument();
-      });
+      expect(screen.getByText("Webhooks")).toBeInTheDocument();
+    });
   });
 
   it("displays existing webhooks", async () => {
     render(<Webhooks />);
 
     await waitFor(() => {
-      expect(screen.getByDisplayValue("https://example.com/webhook1")).toBeInTheDocument();
-      expect(screen.getByDisplayValue("https://example.com/webhook2")).toBeInTheDocument();
+      expect(
+        screen.getByDisplayValue("https://example.com/webhook1")
+      ).toBeInTheDocument();
+      expect(
+        screen.getByDisplayValue("https://example.com/webhook2")
+      ).toBeInTheDocument();
     });
   });
 
