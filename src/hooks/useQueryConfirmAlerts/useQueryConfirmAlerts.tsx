@@ -24,6 +24,7 @@ export default function useQueryConfirmAlerts(
 ) {
   const t = useTranslations(NAMESPACE_TRANSALATIONS_APPLICATION);
   const ref = useRef<ShowAlert>();
+  const argsRef = useRef<unknown>();
   const [hasClosed, setHasClosed] = useState(false);
 
   const mergedConfirmAlertProps = {
@@ -38,13 +39,15 @@ export default function useQueryConfirmAlerts(
     willClose: () => {
       ref.current = null;
 
-      alertOptions?.confirmAlertProps?.willClose?.();
+      alertOptions?.confirmAlertProps?.willClose?.(argsRef.current);
     },
   };
 
   useQueryAlerts(query, { ...alertOptions, enabled: hasClosed }, ref);
 
-  return useCallback(() => {
+  return useCallback(<T,>(data: T) => {
+    argsRef.current = data;
+
     if (!ref.current) {
       ref.current = showAlert(
         alertOptions?.confirmAlertType || "warning",

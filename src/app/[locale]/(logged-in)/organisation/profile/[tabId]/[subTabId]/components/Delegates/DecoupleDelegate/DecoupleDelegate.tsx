@@ -6,6 +6,7 @@ import { showAlert, showLoadingAlertWithPromise } from "@/utils/showAlert";
 import { User } from "@/types/application";
 import { useTranslations } from "next-intl";
 import { useStore } from "@/data/store";
+import useQueryConfirmAlerts from "@/hooks/useQueryConfirmAlerts";
 
 interface DecoupleUserProps {
   user: User;
@@ -23,7 +24,7 @@ const DecoupleDelegate = ({
   const t = useTranslations(namespace);
   const organisation = useStore(state => state.config.organisation);
 
-  const { mutateAsync } = useMutation({
+  const { mutateAsync, ...queryState } = useMutation({
     mutationKey: ["patchUser"],
     mutationFn: (payload: PatchUserPayload) =>
       patchUser(user.id, payload, {
@@ -36,24 +37,26 @@ const DecoupleDelegate = ({
   const { first_name, last_name } = user;
   const { organisation_name } = organisation || {};
 
-  const handleDecoupleUser = async () => {
-    showAlert("warning", {
+  const showConfirmAlert = useQueryConfirmAlerts(queryState, {
+    confirmAlertProps: {
+      title: t("alertTitle"),
       text: t("alertText", {
         first_name,
         last_name,
         organisation_name,
       }),
-      title: t("alertTitle"),
       confirmButtonText: t("alertConfirm"),
       cancelButtonText: t("alertCancel"),
-      closeOnConfirm: true,
-      closeOnCancel: true,
-      preConfirm: () => {
+      willClose: () => {
         showLoadingAlertWithPromise(mutateAsync(payload), {
           onSuccess,
         });
       },
-    });
+    },
+  });
+
+  const handleDecoupleUser = async () => {
+    showConfirmAlert();
   };
 
   return (

@@ -3,6 +3,7 @@ import Icon from "@/components/Icon";
 import Results from "@/components/Results";
 import ResultsCard from "@/components/ResultsCard";
 import { useStore } from "@/data/store";
+import useQueryConfirmAlerts from "@/hooks/useQueryConfirmAlerts";
 import { PageBody, PageSection } from "@/modules";
 import SearchBar from "@/modules/SearchBar";
 import {
@@ -11,7 +12,7 @@ import {
 } from "@/services/custodian_users";
 import { CustodianUser } from "@/types/application";
 import { formatShortDate } from "@/utils/date";
-import { showAlert, showLoadingAlertWithPromise } from "@/utils/showAlert";
+import { showLoadingAlertWithPromise } from "@/utils/showAlert";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
@@ -42,7 +43,7 @@ export default function Users() {
     queryFn: ({ queryKey }) => getCustodianUsers(queryKey[1]),
   });
 
-  const { mutateAsync: deleteCustodianUserAsync } = useMutation({
+  const { mutateAsync: deleteCustodianUserAsync, ...queryState } = useMutation({
     mutationKey: ["deleteCustodianUser"],
     mutationFn: (id: number) => {
       return deleteCustodianUser(id, {
@@ -51,24 +52,27 @@ export default function Users() {
     },
   });
 
-  const handleDelete = async (userId: number) => {
-    showAlert("warning", {
+  const showConfirmAlert = useQueryConfirmAlerts(queryState, {
+    confirmAlertProps: {
       text: t("deleteWarningDescription"),
       title: t("deleteWarningTitle"),
-      confirmButtonText: "Delete user",
-      cancelButtonText: "Cancel",
-      closeOnConfirm: true,
-      closeOnCancel: true,
-      preConfirm: () => {
-        showLoadingAlertWithPromise(deleteCustodianUserAsync(userId), {
-          onSuccess: () => {
-            queryClient.refetchQueries({
-              queryKey: ["getCustodianUsers", custodian?.id],
-            });
-          },
+      confirmButtonText: t("deleteConfirmButton"),
+      cancelButtonText: t("deleteCancelButton"),
+      willClose: <T,>(userId: T) => {
+        deleteCustodianUserAsync(userId as number);
+      },
+    },
+    successAlertProps: {
+      willClose: () => {
+        queryClient.refetchQueries({
+          queryKey: ["getCustodianUsers", custodian?.id],
         });
       },
-    });
+    },
+  });
+
+  const handleDelete = async (userId: number) => {
+    showConfirmAlert(userId);
   };
 
   const handleCloseModal = useCallback(() => {
