@@ -303,7 +303,7 @@ interface Registry {
   education: ResearcherEducation[];
   training: ResearcherTraining[];
   accreditations: ResearcherAccreditation[];
-  professionalRegistratons: ResearcherProfessionalRegistration[];
+  professionalRegistrations: ResearcherProfessionalRegistration[];
 }
 
 interface Role {

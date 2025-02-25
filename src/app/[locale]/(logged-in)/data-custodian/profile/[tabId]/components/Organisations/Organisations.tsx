@@ -1,58 +1,51 @@
 "use client";
 
 import ContactLink from "@/components/ContactLink";
-import { Message } from "@/components/Message";
-import OverlayCenter from "@/components/OverlayCenter";
+import Pagination from "@/components/Pagination";
+import Results from "@/components/Results";
+import { SearchDirections } from "@/consts/search";
 import { PageBody, PageSection } from "@/modules";
+import SearchActionMenu from "@/modules/SearchActionMenu";
+import SearchBar from "@/modules/SearchBar";
 import {
   DeleteApprovalPayloadWithEntity,
   PostApprovalPayloadWithEntity,
 } from "@/services/approvals";
-import { getOrganisations } from "@/services/organisations";
-import { CircularProgress } from "@mui/material";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useOrganisationsQuery } from "@/services/organisations";
+import { getCombinedQueryState, getSearchSortOrder } from "@/utils/query";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import SortIcon from "@mui/icons-material/Sort";
+import { useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback } from "react";
 import { useMutationApproval, useMutationDeleteApproval } from "../../hooks";
 import OrganisationsLegend from "../OrganisationsLegend";
 import OrganisationsList from "../OrganisationsList";
 
-const NAMESPACE_TRANSLATIONS_USERS_LIST = "UsersList";
-const NAMESPACE_TRANSLATIONS_USERS = "Users";
+const NAMESPACE_TRANSLATIONS_USERS = "OrganisationsList";
+const NAMESPACE_TRANSLATIONS_APPLICATION = "Application";
 
 export default function Sections() {
   const queryClient = useQueryClient();
-  const tUsersList = useTranslations(NAMESPACE_TRANSLATIONS_USERS_LIST);
-  const tUsers = useTranslations(NAMESPACE_TRANSLATIONS_USERS);
+  const t = useTranslations(NAMESPACE_TRANSLATIONS_USERS);
+  const tApplication = useTranslations(NAMESPACE_TRANSLATIONS_APPLICATION);
 
   const {
-    data: organisationsData,
-    isLoading: isOrganisationsLoading,
-    isError: isOrganisationsError,
-    error: orgainsationsError,
-  } = useQuery({
-    queryKey: ["getOrganisations"],
-    queryFn: () =>
-      getOrganisations({
-        error: {
-          message: "getOrganisations",
-        },
-      }),
-  });
+    data,
+    page,
+    setPage,
+    updateQueryParam,
+    handleSortToggle,
+    handleFieldToggle,
+    queryParams,
+    ...queryState
+  } = useOrganisationsQuery();
 
-  const {
-    mutateAsync: mutateUpdateAsync,
-    isPending: isUpdateLoading,
-    isError: isUpdateError,
-    error: errorUpdate,
-  } = useMutationApproval();
+  const { mutateAsync: mutateUpdateAsync, ...approvingQueryState } =
+    useMutationApproval();
 
-  const {
-    mutateAsync: mutateDeleteAsync,
-    isPending: isDeleteLoading,
-    isError: isDeleteError,
-    error: errorDelete,
-  } = useMutationDeleteApproval();
+  const { mutateAsync: mutateDeleteAsync, ...deleteQueryState } =
+    useMutationDeleteApproval();
 
   const handleApprove = useCallback(
     async (payload: PostApprovalPayloadWithEntity) => {
@@ -76,34 +69,89 @@ export default function Sections() {
     []
   );
 
+  const sortDirection = getSearchSortOrder(queryParams);
+
+  const sortActions = [
+    {
+      label: t("sortActions.AZ"),
+      onClick: () =>
+        handleSortToggle("organisation_name", SearchDirections.ASC),
+      checked: sortDirection === SearchDirections.ASC,
+    },
+    {
+      label: t("sortActions.ZA"),
+      onClick: () =>
+        handleSortToggle("organisation_name", SearchDirections.DESC),
+      checked: sortDirection === SearchDirections.DESC,
+    },
+  ];
+
+  const filterActions = [
+    {
+      label: t("filterActions.hasDelegates"),
+      onClick: () => handleFieldToggle("has_delegates", ["1", ""]),
+      checked: queryParams.has_delegates === "1",
+    },
+    {
+      label: t("filterActions.hasSoursdId"),
+      onClick: () => handleFieldToggle("has_soursd_id", ["1", ""]),
+      checked: queryParams.has_soursd_id === "1",
+    },
+  ];
+
+  const pagination = (
+    <Pagination
+      page={page}
+      count={queryState.last_page}
+      onChange={(_, page: number) => setPage(page)}
+    />
+  );
+
   return (
     <PageBody>
       <PageSection>
-        <OrganisationsLegend />
-        {isOrganisationsLoading && (
-          <OverlayCenter variant="contained">
-            <CircularProgress aria-label={tUsersList("loadingAriaLabel")} />
-          </OverlayCenter>
-        )}
-        {isOrganisationsError && (
-          <Message severity="error" sx={{ mb: 3 }}>
-            {tUsers.rich(`${orgainsationsError}`, {
-              contactLink: ContactLink,
-            })}
-          </Message>
-        )}
-        {!isOrganisationsLoading && organisationsData?.data?.data && (
+        <SearchBar
+          updateQueryParam={(text: string) =>
+            updateQueryParam("organisation_name[]", text)
+          }
+          placeholder={t("searchPlaceholder")}
+          legend={<OrganisationsLegend />}>
+          <SearchActionMenu
+            actions={sortActions}
+            startIcon={<SortIcon />}
+            renderedSelectedLabel={tApplication("sortedBy")}
+            renderedDefaultLabel={tApplication("sortBy")}
+            aria-label={tApplication("sortBy")}
+          />
+          <SearchActionMenu
+            actions={filterActions}
+            startIcon={<FilterAltIcon />}
+            renderedSelectedLabel={tApplication("filteredBy")}
+            renderedDefaultLabel={tApplication("filterBy")}
+            aria-label={tApplication("filterBy")}
+            multiple
+          />
+        </SearchBar>
+      </PageSection>
+      <PageSection>
+        <Results
+          queryState={queryState}
+          noResultsMessage={t("noResultsOrganisations")}
+          pagination={pagination}
+          errorMessage={t.rich("errorResultsOrganisations", {
+            contactLink: ContactLink,
+          })}
+          count={queryState.total}>
           <OrganisationsList
             onApprove={handleApprove}
             onUnapprove={handleUnapprove}
-            organisations={organisationsData?.data?.data}
-            queryState={{
-              isError: isDeleteError || isUpdateError,
-              isLoading: isDeleteLoading || isUpdateLoading,
-              error: errorDelete || errorUpdate,
-            }}
+            organisations={data}
+            queryState={getCombinedQueryState([
+              approvingQueryState,
+              deleteQueryState,
+            ])}
           />
-        )}
+        </Results>
       </PageSection>
     </PageBody>
   );
