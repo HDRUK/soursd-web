@@ -7,21 +7,23 @@ export type LoadingWrapperProps = {
   loading: boolean;
   children: React.ReactNode;
   variant?: "rich" | "basic";
+  additionalProps?: BoxProps["sx"];
 };
 
 export default function LoadingWrapper({
   loading,
   children,
   variant = "rich",
+  additionalProps = {},
 }: LoadingWrapperProps) {
-  let additionalProps: BoxProps["sx"] = {};
-
   if (variant === "basic") {
     additionalProps = {
+      ...additionalProps,
       py: 5,
     };
   } else {
     additionalProps = {
+      ...additionalProps,
       height: "100vh",
       background: `linear-gradient(90deg, ${theme.palette.background1.light} 0%, ${theme.palette.background1.extraLight} 35%, #fff 100%)`,
     };

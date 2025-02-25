@@ -46,8 +46,6 @@ export default function SectorSizeAndWebsite() {
     onSubmit,
   } = usePatchOrganisation({
     id: organisation?.id,
-    organisation,
-    setOrganisation,
   });
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
