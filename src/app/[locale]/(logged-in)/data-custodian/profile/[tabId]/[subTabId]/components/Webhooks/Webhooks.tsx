@@ -49,7 +49,8 @@ export default function Webhooks() {
     data: webhooksData,
     refetch: refetchWebhookData,
     isLoading: isWebhooksLoading,
-  } = useQuery(getCustodianWebhooksQuery(1));
+  } = useQuery(getCustodianWebhooksQuery(custodian?.id));
+  
   const { data: webhookEventTriggers } = useQuery(
     getWebhookEventTriggerQuery()
   );
@@ -57,7 +58,7 @@ export default function Webhooks() {
     postCustodianWebhookQuery()
   );
   const { mutateAsync: deleteWebhook, isPending: isDeleteLoading } =
-    useMutation(deleteCustodianWebhookQuery(1));
+    useMutation(deleteCustodianWebhookQuery(custodian?.id));
 
   const schema = yup.object<WebhookFormData>().shape({
     webhooks: yup
@@ -91,7 +92,7 @@ export default function Webhooks() {
     try {
       if (operation === "add") {
         await postWebhook({
-          custodian_id: 1,
+          custodian_id: custodian.id,
           url: (webhook as WebhookFormValues).receiver_url,
           webhook_event_id: (webhook as WebhookFormValues).event_trigger,
         });
