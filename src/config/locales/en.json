@@ -101,7 +101,8 @@
     "postCustodianUserInviteError": "There was a problem inviting this user. Please contact them directly or contact us at <contactLink></contactLink>",
     "configurationRules": "Rules",
     "configurationValidationChecks": "Validation Checks",
-    "configurationWebhooks": "Webhooks"
+    "configurationWebhooks": "Webhooks",
+    "webhookError": "There was a problem with the webhook configuration. Please try again or contact us at <contactLink></contactLink>"
   },
   "OrganisationStats": {
     "affiliatedUsers": "Affiliated Users",
@@ -355,7 +356,8 @@
     "address": "Address search",
     "addressPlaceholder": "Type to search for an address",
     "arrayRemoveButton": "Remove",
-    "arrayAddButton": "Add Another",
+    "arrayAddButton": "Add",
+    "arrayAddAnotherButton": "Add Another",
     "keyContactFormTitle": "Key Contact Information",
     "keyContactFormDescription": "### Senior Responsible Officer (SRO) contact information \n As a representative of your Organisation, you have been nominated as a Key Contact, with sufficient seniority and relevant responsibility to vouch for Users (employees or students) affiliated with your Organisation. \n\n You can provide your individual information here: ",
     "departmentName": "Department",
@@ -425,7 +427,9 @@
     "textFieldPlaceholder": "Start typing...",
     "selectPlaceholder": "Select from options",
     "startDate": "Start date",
-    "endDate": "End date"
+    "endDate": "End date",
+    "webhookEventAriaLabel": "Webhook Event Trigger",
+    "webhookRequiredInvalid": "Webhook event trigger is required"
   },
   "ProfessionalRegistrations": {
     "title": "Professional Registrations",

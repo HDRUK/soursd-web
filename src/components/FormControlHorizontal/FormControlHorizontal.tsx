@@ -50,6 +50,7 @@ export interface FormControlHorizontalProps
   displayLabel?: boolean;
   displayPlaceholder?: boolean;
   description?: ReactNode;
+  required?: boolean;
 }
 
 const NAMESPACE_TRANSLATION_FORM = "Form";
@@ -70,6 +71,7 @@ export default function FormControlHorizontal({
   fullWidth = true,
   tNamespace = "",
   description,
+  required = false,
   ...restProps
 }: FormControlHorizontalProps) {
   const t = useTranslations(tNamespace || NAMESPACE_TRANSLATION_FORM);
@@ -91,7 +93,7 @@ export default function FormControlHorizontal({
     control: effectiveControl,
   });
 
-  const isRequired = isFieldRequired(name);
+  const isRequired = isFieldRequired(name) || required;
 
   const componentType = inferComponentType(renderField);
 
