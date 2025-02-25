@@ -146,7 +146,7 @@ interface AddressFields {
 interface Subsidiary extends AddressFields {
   id?: number;
   name: string;
-  pivot: {
+  pivot?: {
     organisation_id: number;
     subsidiary_id: number;
   };
@@ -303,7 +303,7 @@ interface Registry {
   education: ResearcherEducation[];
   training: ResearcherTraining[];
   accreditations: ResearcherAccreditation[];
-  professionalRegistratons: ResearcherProfessionalRegistration[];
+  professionalRegistrations: ResearcherProfessionalRegistration[];
 }
 
 interface Role {

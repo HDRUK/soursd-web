@@ -1,4 +1,4 @@
-import HomeIcon from "@mui/icons-material/Home";
+import SearchIcon from "@mui/icons-material/Search";
 import {
   CircularProgress,
   Autocomplete as MUIAutocomplete,
@@ -13,6 +13,7 @@ import {
   useFormContext,
 } from "react-hook-form";
 import React, { SyntheticEvent, useState, useEffect, useRef } from "react";
+import { formatAddress } from "@/utils/address";
 import { AddressFields } from "@/types/application";
 import fetchPredictions from "./actions";
 
@@ -46,9 +47,6 @@ export interface GoogleAutocompleteProps {
   onChange?: (e: SyntheticEvent<Element, Event>, value: AddressFields) => void;
 }
 
-const getLabelFromAddress = (value: AddressFields) =>
-  value ? `${value.address_1}, ${value.county}` : "";
-
 const GoogleAutocomplete: React.FC<GoogleAutocompleteProps> = ({
   control,
   name,
@@ -67,16 +65,14 @@ const GoogleAutocomplete: React.FC<GoogleAutocompleteProps> = ({
 
   const [options, setOptions] = useState<GoogleAutocompleteOption[]>([]);
   const [loading, setLoading] = useState(false);
-  const [inputValue, setInputValue] = useState<string>(
-    getLabelFromAddress(value)
-  );
+  const [inputValue, setInputValue] = useState<string>(formatAddress(value));
   const [debouncedInputValue] = useDebounce(inputValue, 500);
   const isFirstRender = useRef(true);
 
   useEffect(() => {
     if (isFirstRender.current && value) {
       isFirstRender.current = false;
-      const label = getLabelFromAddress(value);
+      const label = formatAddress(value);
       if (options.find(option => option.label === label)) return;
       setOptions(prevOptions => [
         {
@@ -89,7 +85,7 @@ const GoogleAutocomplete: React.FC<GoogleAutocompleteProps> = ({
   }, []);
 
   useEffect(() => {
-    if (getLabelFromAddress(value) === debouncedInputValue) return;
+    if (formatAddress(value) === debouncedInputValue) return;
     const fetchOptions = async () => {
       if (!debouncedInputValue) {
         return;
@@ -111,7 +107,7 @@ const GoogleAutocomplete: React.FC<GoogleAutocompleteProps> = ({
               } as AddressFields;
 
               return {
-                label: getLabelFromAddress(value),
+                label: formatAddress(value),
                 value,
               };
             })
@@ -145,8 +141,8 @@ const GoogleAutocomplete: React.FC<GoogleAutocompleteProps> = ({
   const getOptionLabel = (option: GoogleAutocompleteOption | string) => {
     if (typeof option === "string") return option;
     if (option?.label) return option.label;
-    if (option?.value && getLabelFromAddress(option.value))
-      return getLabelFromAddress(option.value);
+    if (option?.value && formatAddress(option.value))
+      return formatAddress(option.value);
     return "";
   };
 
@@ -162,6 +158,7 @@ const GoogleAutocomplete: React.FC<GoogleAutocompleteProps> = ({
 
   return (
     <MUIAutocomplete
+      fullWidth={fullWidth}
       freeSolo
       data-testid="google-autocomplete"
       options={options}
@@ -189,12 +186,13 @@ const GoogleAutocomplete: React.FC<GoogleAutocompleteProps> = ({
           InputProps={{
             ...params.InputProps,
             placeholder,
-            startAdornment: <HomeIcon />,
             endAdornment: (
               <>
                 {loading ? (
                   <CircularProgress color="inherit" size={20} />
-                ) : null}
+                ) : (
+                  <SearchIcon />
+                )}
                 {params.InputProps.endAdornment}
               </>
             ),

@@ -1,4 +1,5 @@
 import { MutationState, QueryState } from "@/types/form";
+import { SearchParams } from "@/types/query";
 
 function isQueriesLoading<T extends MutationState & QueryState>(queries: T[]) {
   return queries.some(query => query.isLoading || query.isPending);
@@ -12,6 +13,22 @@ function isQueriesFetched<T extends MutationState & QueryState>(queries: T[]) {
   return (
     queries.filter(query => query.isFetched || query.isSuccess || query.isError)
       .length === queries.length
+  );
+}
+
+function getSearchQuerystring(searchParams: SearchParams) {
+  const params = new URLSearchParams(
+    Object.entries(searchParams)
+      .filter(([, value]) => value !== undefined)
+      .map(([key, value]) => [key, String(value)])
+  );
+
+  return params ? `?${params.toString()}` : "";
+}
+
+function getSearchSortOrder(queryParams: SearchParams) {
+  return (
+    typeof queryParams?.sort === "string" && queryParams?.sort.split(":")[1]
   );
 }
 
@@ -50,4 +67,6 @@ export {
   isQueriesError,
   isQueriesFetched,
   isQueriesLoading,
+  getSearchQuerystring,
+  getSearchSortOrder,
 };

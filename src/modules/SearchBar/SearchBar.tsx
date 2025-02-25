@@ -1,68 +1,46 @@
-import React, { useState, useEffect, ChangeEvent } from "react";
-import { InputAdornment } from "@mui/material";
-import useDebounce from "@/hooks/useDebounce";
-import SearchIcon from "@mui/icons-material/Search";
-import ClearIcon from "@mui/icons-material/Clear";
-import { TextFieldProps } from "@mui/material/TextField";
-import { StyledSearchBar, StyledInput } from "./SearchBar.styles";
-import IconButton from "../../components/IconButton";
+"use client";
 
-type SearchBarProps = TextFieldProps & {
-  onSearch: (query: string) => void;
-  placeholder?: string;
-  fullWidth?: boolean;
-};
+import { Box } from "@mui/material";
+import { ReactNode } from "react";
+import SearchField from "../SearchField";
 
-const SearchBar = ({
-  onSearch,
+export interface SearchBarProps {
+  updateQueryParam: (text: string) => void;
+  placeholder: string;
+  legend: ReactNode;
+  children: ReactNode;
+}
+
+export default function SearchBar({
   placeholder,
-  fullWidth = true,
-  ...rest
-}: SearchBarProps) => {
-  const [searchQuery, setSearchQuery] = useState<string | null>(null);
-  const [searchQueryDebounced] = useDebounce(searchQuery, 500);
-
-  useEffect(() => {
-    if (searchQueryDebounced === null) return;
-
-    onSearch(searchQueryDebounced);
-  }, [searchQueryDebounced]);
-
-  const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(event.target.value);
-  };
-
-  const handleClearSearch = () => {
-    setSearchQuery("");
-  };
-
+  legend,
+  updateQueryParam,
+  children,
+}: SearchBarProps) {
   return (
-    <StyledSearchBar sx={{ ...(fullWidth && { width: "100%" }) }}>
-      <StyledInput
-        fullWidth
-        hiddenLabel
-        label="Search"
-        variant="outlined"
-        placeholder={placeholder}
-        value={searchQuery || ""}
-        onChange={handleSearchChange}
-        size="small"
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              {searchQuery ? (
-                <IconButton onClick={handleClearSearch} edge="end">
-                  <ClearIcon />
-                </IconButton>
-              ) : (
-                <SearchIcon />
-              )}
-            </InputAdornment>
-          ),
-        }}
-        {...rest}
-      />
-    </StyledSearchBar>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 2,
+      }}>
+      <Box
+        sx={{
+          display: "flex",
+          gap: 2,
+          flexDirection: {
+            md: "row",
+            xs: "column",
+          },
+        }}>
+        <SearchField
+          onSearch={(text: string) => updateQueryParam(text)}
+          placeholder={placeholder}
+          sx={{ flexGrow: 1 }}
+        />
+        {children}
+      </Box>
+      {legend}
+    </Box>
   );
-};
-export default SearchBar;
+}

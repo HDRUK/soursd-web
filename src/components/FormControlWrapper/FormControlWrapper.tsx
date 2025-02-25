@@ -20,6 +20,7 @@ export interface FormControlProps
   extends Omit<FormControlLabelProps, "control" | "label"> {
   renderField: (fieldProps: FieldValues & { error?: boolean }) => ReactNode;
   name: string;
+  label?: string;
   control?: Control;
   placeholder?: string;
   displayLabel?: boolean;
@@ -32,6 +33,7 @@ const NAMESPACE_TRANSLATION_FORM = "Form";
 export default function FormControlWrapper({
   name,
   control,
+  label,
   placeholder,
   displayPlaceholder = true,
   displayLabel = true,
@@ -52,7 +54,7 @@ export default function FormControlWrapper({
   const effectiveControl = control || context.control;
 
   const { isFieldRequired } = context;
-  const isRequired = isFieldRequired(name);
+  const isRequired = isFieldRequired?.(name);
 
   return (
     <Controller
@@ -65,7 +67,8 @@ export default function FormControlWrapper({
         <FormControl sx={sx} fullWidth={fullWidth} error={invalid}>
           {displayLabel && (
             <FormLabel htmlFor={field.name}>
-              {t(tKey)} {isRequired && <span style={{ color: "red" }}>*</span>}
+              {label || t(tKey)}
+              {isRequired && <span style={{ color: "red" }}>*</span>}
             </FormLabel>
           )}
           {renderField({

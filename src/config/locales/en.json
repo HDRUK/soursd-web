@@ -12,6 +12,12 @@
     "scanErrorText": "Your file file may have a virus"
   },
   "Application": {
+    "sortBy": "Sort by",
+    "sortedBy": "Sorted by",
+    "filterBy": "Filter by",
+    "filteredBy": "Filtered by",
+    "filterByDate": "Filter by date",
+    "filterByProjectStatus": "Filter by status",
     "alertSuccessConfirmButton": "Close",
     "alertErrorConfirmButton": "Close",
     "alertDeleteConfirmButton": "Delete",
@@ -125,7 +131,7 @@
     "detailsDigitalIdentifiers": "Digital Identifiers",
     "detailsSectorSizeAndWebsite": "Sector, Size and Website",
     "detailsOrganisationSectorDescription": "Your Organisation’s sector information should be aligned with Standard Industry Classification (SIC) codes as listed in Companies House or other regulatory sources.",
-    "detailsSubsidiaries": "Subsidiaries",
+    "detailsSubsidiaries": "UK subsidiaries",
     "detailsSecurityCompliance": "Security Compliance",
     "userAdminDeletgates": "Delegate administration",
     "userAdminEmployeeStudents": "Employee & student administration",
@@ -166,6 +172,7 @@
     "closeButton": "Close",
     "profileUpdateMessage": "Your profile was successfully updated!",
     "inviteAnotherDelegate": "Invite another delegate",
+    "addAnotherSubsidiary": "Add a subsidiary",
     "showPendingInvites": "Show pending invites",
     "clearAll": "clear all",
     "nameAndAddressTitle": "Your organisation name & address",
@@ -311,7 +318,7 @@
     "address2Placeholder": "Address 2",
     "address2": "Address 2",
     "townPlaceholder": "Town",
-    "town": "Town",
+    "town": "Town / City",
     "countyPlaceholder": "County",
     "county": "County",
     "countryPlaceholder": "Country",
@@ -352,9 +359,9 @@
     "dsptkCertificationNum": "DSPT identifier",
     "dsptkCertificationNumPlaceholder": "e.g. DSPTK-2025-12345",
     "dsptkCertificationNumInvalid": "DSPT identifier is invalid",
-    "organisationSubsidiaries": "Organisation UK subsidiaries",
+    "organisationSubsidiaries": "UK subsidiaries",
     "address": "Address search",
-    "addressPlaceholder": "Type to search for an address",
+    "addressPlaceholder": "Start typing an address to search",
     "arrayRemoveButton": "Remove",
     "arrayAddButton": "Add",
     "arrayAddAnotherButton": "Add Another",
@@ -430,6 +437,15 @@
     "endDate": "End date",
     "webhookEventAriaLabel": "Webhook Event Trigger",
     "webhookRequiredInvalid": "Webhook event trigger is required"
+    "addSubsidiary": "Add a subsidiary",
+    "subsidiaryName": "Subsidiary name",
+    "subsidiaryNamePlaceholder": "Subsidiary name",
+    "subsidiaryNameRequired": "Subsidiary name is required",
+    "subsidiaryAddress": "Subsidiary address",
+    "subsidiaryAddressPlaceholder": "Start typing an address to search",
+    "subsidiaryAddressRequired": "Subsidiary address is required",
+    "subsidiaryWebsite": "Subsidiary website",
+    "subsidiaryWebsitePlaceholder": "Subsidiary website"
   },
   "ProfessionalRegistrations": {
     "title": "Professional Registrations",
@@ -746,6 +762,19 @@
     },
     "alsoApprovedOn": "Also Approved On: {projects} "
   },
+  "OrganisationsList": {
+    "searchPlaceholder": "Search Organisations",
+    "errorResultsProjects": "Unable to get a list of organisations. Please try again or contact us on <contact></contact>",
+    "noResultsProjects": "No organisations found for the search terms provided.",
+    "sortActions": {
+      "AZ": "Sort Alphabetical A-Z",
+      "ZA": "Sort Alphabetical Z-A"
+    },
+    "filterActions": {
+      "hasDelegates": "Has Delegates",
+      "hasSoursdId": "Is Registered"
+    }
+  },
   "ProjectList": {
     "getOrganisationProjectsError": "No projects found",
     "loadingAriaLabel": "Loading project data",
@@ -755,10 +784,17 @@
     "searchPlaceholder": "Search Projects",
     "sortActions": {
       "AZ": "Sort Alphabetical A-Z",
-      "ZA": "Sort Alphabetical Z-A",
-      "approved": "Approved project",
-      "pending": "Project pending approval"
-    }
+      "ZA": "Sort Alphabetical Z-A"
+    },
+    "filterActions": {
+      "approved": "Approved",
+      "pending": "Pending",
+      "completed": "Completed",
+      "activeProjects": "Active projects",
+      "pastProjects": "Past projects"
+    },
+    "errorResultsProjects": "Unable to get a list of projects. Please try again or contact us on <contact></contact>",
+    "noResultsProjects": "No projects found for the current search terms."
   },
   "Error": {
     "login": {
