@@ -153,7 +153,7 @@ export default function Webhooks() {
             schema={schema}
             defaultValues={defaultValues}
             onSubmit={handleSubmit}
-            key={`${custodian?.id}-${webhooksData ? JSON.stringify(webhooksData) : "loading"}`}>
+            key={`${custodian?.id}-${webhooksData ? "webhooks" : "loading"}`}>
             {({ watch }) => {
               const watchedWebhooks = watch("webhooks");
               const isFormChanged =
