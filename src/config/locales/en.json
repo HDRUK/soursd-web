@@ -436,7 +436,7 @@
     "startDate": "Start date",
     "endDate": "End date",
     "webhookEventAriaLabel": "Webhook Event Trigger",
-    "webhookRequiredInvalid": "Webhook event trigger is required"
+    "webhookRequiredInvalid": "Webhook event trigger is required",
     "addSubsidiary": "Add a subsidiary",
     "subsidiaryName": "Subsidiary name",
     "subsidiaryNamePlaceholder": "Subsidiary name",
