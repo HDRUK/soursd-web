@@ -4,10 +4,10 @@ export default function getWebhookEventTriggerQuery() {
   return {
     queryKey: ["getWebhookEventTrigger"],
     queryFn: () =>
-        getWebhookEventTrigger({
+      getWebhookEventTrigger({
         error: {
-            message: "getWebhookEventTriggerError",
+          message: "getWebhookEventTriggerError",
         },
-        }),
-    };
+      }),
+  };
 }

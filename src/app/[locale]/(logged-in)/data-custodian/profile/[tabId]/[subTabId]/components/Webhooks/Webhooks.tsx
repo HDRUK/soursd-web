@@ -15,7 +15,12 @@ import { VALIDATION_URL } from "@/consts/form";
 import { ROUTES } from "@/consts/router";
 import { useStore } from "@/data/store";
 import { PageBody, PageSection } from "@/modules";
-import { getWebhookEventTriggerQuery, getCustodianWebhooksQuery, postCustodianWebhookQuery, deleteCustodianWebhookQuery } from "@/services/webhooks/index";
+import {
+  getWebhookEventTriggerQuery,
+  getCustodianWebhooksQuery,
+  postCustodianWebhookQuery,
+  deleteCustodianWebhookQuery,
+} from "@/services/webhooks/index";
 import { Webhook } from "@/services/webhooks/types";
 import { showAlert } from "@/utils/showAlert";
 import { mockedWebhookDescription } from "@/mocks/data/cms";
@@ -36,44 +41,72 @@ export default function Webhooks() {
   const t = useTranslations(NAMESPACE_TRANSLATION_CUSTODIAN_PROFILE);
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
 
-  const { custodian } = useStore(state => ({ custodian: state.config.custodian }));
+  const { custodian } = useStore(state => ({
+    custodian: state.config.custodian,
+  }));
 
-  const { data: webhooksData, refetch: refetchWebhookData, isLoading: isWebhooksLoading } = useQuery(getCustodianWebhooksQuery(1));
-  const { data: webhookEventTriggers } = useQuery(getWebhookEventTriggerQuery());
-  const { mutateAsync: postWebhook, isPending: isPostLoading } = useMutation(postCustodianWebhookQuery());
-  const { mutateAsync: deleteWebhook, isPending: isDeleteLoading } = useMutation(deleteCustodianWebhookQuery(1));
+  const {
+    data: webhooksData,
+    refetch: refetchWebhookData,
+    isLoading: isWebhooksLoading,
+  } = useQuery(getCustodianWebhooksQuery(1));
+  const { data: webhookEventTriggers } = useQuery(
+    getWebhookEventTriggerQuery()
+  );
+  const { mutateAsync: postWebhook, isPending: isPostLoading } = useMutation(
+    postCustodianWebhookQuery()
+  );
+  const { mutateAsync: deleteWebhook, isPending: isDeleteLoading } =
+    useMutation(deleteCustodianWebhookQuery(1));
 
   const schema = yup.object<WebhookFormData>().shape({
-    webhooks: yup.array().of(
-      yup.object().shape({
-        receiver_url: yup.string().required(tForm("websiteRequiredInvalid")).matches(VALIDATION_URL, tForm("websiteFormatInvalid")),
-        event_trigger: yup.number().required(tForm("webhookRequiredInvalid"))
-      })
-    ).defined() 
+    webhooks: yup
+      .array()
+      .of(
+        yup.object().shape({
+          receiver_url: yup
+            .string()
+            .required(tForm("websiteRequiredInvalid"))
+            .matches(VALIDATION_URL, tForm("websiteFormatInvalid")),
+          event_trigger: yup.number().required(tForm("webhookRequiredInvalid")),
+        })
+      )
+      .defined(),
   });
 
-  const defaultValues = useMemo(() => ({
-    webhooks: webhooksData?.data.map((data: Webhook) => ({
-      receiver_url: data.url,
-      event_trigger: data.webhook_event
-    })) || [{ receiver_url: '', event_trigger: 1 }]
-  }), [webhooksData]);
+  const defaultValues = useMemo(
+    () => ({
+      webhooks: webhooksData?.data.map((data: Webhook) => ({
+        receiver_url: data.url,
+        event_trigger: data.webhook_event,
+      })) || [{ receiver_url: "", event_trigger: 1 }],
+    }),
+    [webhooksData]
+  );
 
-  const handleWebhookOperation = async (operation: 'add' | 'delete', webhook: Webhook | WebhookFormValues) => {
+  const handleWebhookOperation = async (
+    operation: "add" | "delete",
+    webhook: Webhook | WebhookFormValues
+  ) => {
     try {
-      if (operation === 'add') {
+      if (operation === "add") {
         await postWebhook({
           custodian_id: 1,
           url: (webhook as WebhookFormValues).receiver_url,
-          webhook_event_id: (webhook as WebhookFormValues).event_trigger
+          webhook_event_id: (webhook as WebhookFormValues).event_trigger,
         });
       } else {
         await deleteWebhook({ id: (webhook as Webhook).id });
       }
-      showAlert("success", { text: t("saveSuccess"), confirmButtonText: t("okButton") });
+      showAlert("success", {
+        text: t("saveSuccess"),
+        confirmButtonText: t("okButton"),
+      });
     } catch (_e) {
       showAlert("error", {
-        text: ReactDOMServer.renderToString(t.rich("webhookError", { contactLink: ContactLink })),
+        text: ReactDOMServer.renderToString(
+          t.rich("webhookError", { contactLink: ContactLink })
+        ),
         confirmButtonText: tForm("errorButton"),
       });
     }
@@ -83,50 +116,53 @@ export default function Webhooks() {
     const existingWebhooks = webhooksData?.data || [];
     const formWebhooks = fields.webhooks;
 
-    const webhooksToDelete = existingWebhooks.filter(existingWebhook => 
-      !formWebhooks.some(formWebhook => 
-        formWebhook.receiver_url === existingWebhook.url && 
-        formWebhook.event_trigger === existingWebhook.webhook_event
-      )
+    const webhooksToDelete = existingWebhooks.filter(
+      existingWebhook =>
+        !formWebhooks.some(
+          formWebhook =>
+            formWebhook.receiver_url === existingWebhook.url &&
+            formWebhook.event_trigger === existingWebhook.webhook_event
+        )
     );
 
-    const webhooksToAdd = formWebhooks.filter(formWebhook => 
-      !existingWebhooks.some(existingWebhook => 
-        existingWebhook.url === formWebhook.receiver_url && 
-        existingWebhook.webhook_event === formWebhook.event_trigger
-      )
+    const webhooksToAdd = formWebhooks.filter(
+      formWebhook =>
+        !existingWebhooks.some(
+          existingWebhook =>
+            existingWebhook.url === formWebhook.receiver_url &&
+            existingWebhook.webhook_event === formWebhook.event_trigger
+        )
     );
 
-    for (const webhook of webhooksToDelete) {
-      await handleWebhookOperation('delete', webhook);
-    }
-
-    for (const webhook of webhooksToAdd) {
-      await handleWebhookOperation('add', webhook);
-    }
+    await Promise.all([
+      ...webhooksToDelete.map(webhook =>
+        handleWebhookOperation("delete", webhook)
+      ),
+      ...webhooksToAdd.map(webhook => handleWebhookOperation("add", webhook)),
+    ]);
 
     await refetchWebhookData();
   };
 
   return (
-      <PageBody>
-            <LoadingWrapper variant="basic" loading={isWebhooksLoading}>
-
+    <PageBody>
+      <LoadingWrapper variant="basic" loading={isWebhooksLoading}>
         <PageSection heading={t("configurationWebhooks")}>
           <Form<WebhookFormData>
             schema={schema}
             defaultValues={defaultValues}
             onSubmit={handleSubmit}
-            key={`${custodian?.id}-${webhooksData ? JSON.stringify(webhooksData) : 'loading'}`}
-          >
+            key={`${custodian?.id}-${webhooksData ? JSON.stringify(webhooksData) : "loading"}`}>
             {({ watch }) => {
               const watchedWebhooks = watch("webhooks");
-              const isFormChanged = JSON.stringify(watchedWebhooks) !== JSON.stringify(defaultValues.webhooks);
+              const isFormChanged =
+                JSON.stringify(watchedWebhooks) !==
+                JSON.stringify(defaultValues.webhooks);
 
               return (
                 <>
                   <Grid container rowSpacing={3}>
-                    <Grid item xs={12} >
+                    <Grid item xs={12}>
                       <FormControlHorizontal
                         displayLabel={false}
                         displayPlaceholder={false}
@@ -141,7 +177,10 @@ export default function Webhooks() {
                               gridTemplateColumns: "3fr 2fr 1fr",
                               alignItems: "flex-end",
                             }}
-                            createNewRow={() => ({ receiver_url: "", event_trigger: 1 })}
+                            createNewRow={() => ({
+                              receiver_url: "",
+                              event_trigger: 1,
+                            })}
                             renderField={(field, index) => (
                               <React.Fragment key={field.receiver_url}>
                                 <FormControlHorizontal
@@ -151,7 +190,9 @@ export default function Webhooks() {
                                   contentMd={12}
                                   name={`webhooks.${index}.receiver_url`}
                                   placeholder={tForm("name")}
-                                  renderField={fieldProps => <TextField {...fieldProps} />}
+                                  renderField={fieldProps => (
+                                    <TextField {...fieldProps} />
+                                  )}
                                 />
                                 <FormControlHorizontal
                                   label="Event Trigger"
@@ -163,11 +204,18 @@ export default function Webhooks() {
                                   renderField={fieldProps => (
                                     <Select
                                       {...fieldProps}
-                                      inputProps={{ "aria-label": tForm("webhookEventAriaLabel") }}
-                                    >
-                                      {webhookEventTriggers?.data.map(({ name, id }) => (
-                                        <MenuItem value={id} key={id}>{name}</MenuItem>
-                                      ))}
+                                      inputProps={{
+                                        "aria-label": tForm(
+                                          "webhookEventAriaLabel"
+                                        ),
+                                      }}>
+                                      {webhookEventTriggers?.data.map(
+                                        ({ name, id }) => (
+                                          <MenuItem value={id} key={id}>
+                                            {name}
+                                          </MenuItem>
+                                        )
+                                      )}
                                     </Select>
                                   )}
                                 />
@@ -178,12 +226,13 @@ export default function Webhooks() {
                       />
                     </Grid>
                   </Grid>
-                  <Box>
-                    {mockedWebhookDescription}
-                  </Box>
+                  <Box>{mockedWebhookDescription}</Box>
                   <FormActions>
                     <ProfileNavigationFooter
-                      previousHref={ROUTES.profileOrganisationDetailsSectorSizeAndWebsite.path}
+                      previousHref={
+                        ROUTES.profileOrganisationDetailsSectorSizeAndWebsite
+                          .path
+                      }
                       isLoading={isPostLoading || isDeleteLoading}
                       isDisabled={!isFormChanged}
                     />
@@ -193,8 +242,7 @@ export default function Webhooks() {
             }}
           </Form>
         </PageSection>
-        </LoadingWrapper>
-
-      </PageBody>
+      </LoadingWrapper>
+    </PageBody>
   );
 }

@@ -16,6 +16,6 @@ export {
   getWebhookEventTriggerQuery,
   postCustodianWebhook,
   postCustodianWebhookQuery,
-}
+};
 
 export type * from "./types";
