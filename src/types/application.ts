@@ -190,12 +190,16 @@ interface Organisation extends OrganisationIdvt, AddressFields {
   }[];
   ce_certified: boolean;
   ce_certification_num: string;
+  ce_expiry_date: Date;
   ce_plus_certified: boolean;
   ce_plus_certification_num: string;
+  ce_plus_expiry_date: Date;
   iso_27001_certified: boolean;
   iso_27001_certification_num: string;
+  iso_expiry_date: Date;
   dsptk_certified: boolean;
-  dsptk_certification_num: string;
+  dsptk_ods_code: string;
+  dsptk_expiry_date: Date;
   subsidiaries?: Subsidiary[];
   departments: Department[];
   unclaimed: number;
