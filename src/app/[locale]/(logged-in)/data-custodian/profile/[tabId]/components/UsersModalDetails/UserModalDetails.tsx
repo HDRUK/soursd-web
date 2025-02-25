@@ -76,6 +76,7 @@ export default function UserModalDetails({
       schema={schema}
       {...formOptions}
       onSubmit={onSubmit}
+      shouldReset
       autoComplete="off">
       {({ setValue }) => {
         const handleCheckRole = (e: ChangeEvent<HTMLInputElement>) => {

@@ -27,4 +27,4 @@ function createFetchInterceptor() {
   };
 }
 
-export { objectToQuerystring, mockedRequest, createFetchInterceptor };
+export { createFetchInterceptor, mockedRequest, objectToQuerystring };

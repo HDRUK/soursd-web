@@ -44,6 +44,18 @@ const ROUTES: Routes = {
     path: "/data-custodian/profile/configuration",
     permissions: [UserGroup.CUSTODIANS],
   },
+  profileCustodianConfigurationWebhooks: {
+    path: "/data-custodian/profile/configuration/webhooks",
+    permissions: [UserGroup.CUSTODIANS],
+  },
+  profileCustodianConfigurationRules: {
+    path: "/data-custodian/profile/configuration/rules",
+    permissions: [UserGroup.CUSTODIANS],
+  },
+  profileCustodianConfigurationValidationChecks: {
+    path: "/data-custodian/profile/configuration/validation-checks",
+    permissions: [UserGroup.CUSTODIANS],
+  },
   profileCustodianUsers: {
     path: "/data-custodian/profile/users",
     permissions: [UserGroup.CUSTODIANS],
@@ -57,7 +69,11 @@ const ROUTES: Routes = {
     permissions: [UserGroup.CUSTODIANS],
   },
   permissionsResearcherCustodian: {
-    path: "/data-custodian/permissions",
+    path: "/data-custodian/permissions/user",
+    permissions: [UserGroup.CUSTODIANS],
+  },
+  permissionsOrganisationCustodian: {
+    path: "/data-custodian/permissions/organisation",
     permissions: [UserGroup.CUSTODIANS],
   },
   profileResearcherExperience: {
@@ -112,8 +128,8 @@ const ROUTES: Routes = {
     path: "/organisation/profile/details/digital-identifiers",
     permissions: [UserGroup.ORGANISATIONS],
   },
-  profileOrganisationDetailsSectorSiteAndWebsite: {
-    path: "/organisation/profile/details/sector-site-and-website",
+  profileOrganisationDetailsSectorSizeAndWebsite: {
+    path: "/organisation/profile/details/sector-size-and-website",
     permissions: [UserGroup.ORGANISATIONS],
   },
   profileOrganisationDetailsSubsidiaries: {

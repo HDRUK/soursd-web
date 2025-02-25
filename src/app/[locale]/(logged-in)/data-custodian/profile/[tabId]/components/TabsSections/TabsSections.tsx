@@ -42,7 +42,7 @@ export default function TabsSections() {
           label={t("contacts")}
           href={routes.profileCustodianContacts.path}
           component={Link}
-          value={PageTabs.USERS}
+          value={PageTabs.CONTACTS}
           iconPosition="start"
         />
         <Tab

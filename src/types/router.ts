@@ -26,10 +26,14 @@ interface Routes {
   profileCustodianProjects: RouteConfig;
   profileCustodianOrganisations: RouteConfig;
   profileCustodianConfiguration: RouteConfig;
+  profileCustodianConfigurationWebhooks: RouteConfig;
+  profileCustodianConfigurationRules: RouteConfig;
+  profileCustodianConfigurationValidationChecks: RouteConfig;
   profileCustodianKeycards: RouteConfig;
   profileCustodianUsers: RouteConfig;
   permissionsOrganisationCustodian: RouteConfig;
   permissionsResearcherCustodian: RouteConfig;
+  permissionsOrganisationCustodian: RouteConfig;
   profileResearcher: RouteConfig;
   profileResearcherCompletion: RouteConfig;
   profileResearcherTraining: RouteConfig;
@@ -43,7 +47,7 @@ interface Routes {
   profileOrganisationDetails: RouteConfig;
   profileOrganisationDetailsNameAndAddress: RouteConfig;
   profileOrganisationDetailsDigitalIdentifiers: RouteConfig;
-  profileOrganisationDetailsSectorSiteAndWebsite: RouteConfig;
+  profileOrganisationDetailsSectorSizeAndWebsite: RouteConfig;
   profileOrganisationDetailsSubsidiaries: RouteConfig;
   profileOrganisationDetailsSecurityCompliance: RouteConfig;
   profileOrganisationUserAdministration: RouteConfig;

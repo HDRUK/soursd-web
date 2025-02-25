@@ -1,5 +1,4 @@
-import { useStore } from "@/data/store";
-import usePaginatedQuery from "@/hooks/usePaginatedQuery";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { mockedOrganisation } from "@/mocks/data/organisation";
 import { mockedUser } from "@/mocks/data/user";
 import {
@@ -8,14 +7,23 @@ import {
   screen,
   waitFor,
 } from "@/utils/testUtils";
+import { mockUseStore } from "jest.setup";
 import usePatchOrganisation from "../../../hooks/usePatchOrganisation";
 import Delegates from "./Delegates";
 
 jest.mock("@/data/store");
-jest.mock("@/hooks/usePaginatedQuery");
+
+jest.mock("@tanstack/react-query", () => ({
+  useMutation: jest.fn(),
+  useQuery: jest.fn(),
+}));
+
+const mockSetOrganisation = jest.fn();
+
 jest.mock("../../../hooks/usePatchOrganisation");
 
 const mockOrganisation = mockedOrganisation();
+const mockUser = mockedUser();
 const mockDelegates = [
   mockedUser({
     is_delegate: 1,
@@ -35,18 +43,21 @@ const mockDelegates = [
 
 describe("<Delegates />", () => {
   beforeEach(() => {
-    (useStore as unknown as jest.Mock).mockReturnValue({
-      organisation: mockOrganisation,
-      setOrganisation: jest.fn(),
+    mockUseStore({
+      getUser: () => mockUser,
+      getOrganisation: () => mockOrganisation,
+      setOrganisation: mockSetOrganisation,
     });
 
-    (usePaginatedQuery as jest.Mock).mockReturnValue({
+    (useQuery as jest.Mock).mockReturnValue({
       isError: false,
       isLoading: false,
-      data: mockDelegates,
-      last_page: 1,
-      page: 1,
-      setPage: jest.fn(),
+      data: { data: mockDelegates },
+    });
+
+    (useMutation as jest.Mock).mockReturnValue({
+      mutateAsync: jest.fn().mockResolvedValue({ success: true }),
+      isPending: false,
     });
 
     (usePatchOrganisation as jest.Mock).mockReturnValue({
@@ -62,18 +73,17 @@ describe("<Delegates />", () => {
 
     await waitFor(() => {
       expect(screen.getByText("John Doe")).toBeInTheDocument();
-      expect(screen.getByText("jane@example.com")).toBeInTheDocument();
+      expect(screen.getByText("01/01/2023")).toBeInTheDocument();
+      expect(screen.getByText("Jane Smith")).toBeInTheDocument();
+      expect(screen.getByText("01/02/2023")).toBeInTheDocument();
     });
   });
 
   it("shows loading state", () => {
-    (usePaginatedQuery as jest.Mock).mockReturnValue({
+    (useQuery as jest.Mock).mockReturnValue({
       isError: false,
       isLoading: true,
-      data: null,
-      last_page: 1,
-      page: 1,
-      setPage: jest.fn(),
+      data: undefined,
     });
 
     render(<Delegates />);
@@ -81,13 +91,10 @@ describe("<Delegates />", () => {
   });
 
   it("shows error state", () => {
-    (usePaginatedQuery as jest.Mock).mockReturnValue({
+    (useQuery as jest.Mock).mockReturnValue({
       isError: true,
       isLoading: false,
       data: null,
-      last_page: 1,
-      page: 1,
-      setPage: jest.fn(),
     });
 
     render(<Delegates />);
@@ -98,20 +105,6 @@ describe("<Delegates />", () => {
           content.includes("Please try again or contact us")
       )
     ).toBeInTheDocument();
-  });
-
-  it("renders pagination when there are multiple pages", () => {
-    (usePaginatedQuery as jest.Mock).mockReturnValue({
-      isError: false,
-      isLoading: false,
-      data: mockDelegates,
-      last_page: 2,
-      page: 1,
-      setPage: jest.fn(),
-    });
-
-    render(<Delegates />);
-    expect(screen.getByRole("navigation")).toBeInTheDocument();
   });
 
   it("has no accessibility violations", async () => {

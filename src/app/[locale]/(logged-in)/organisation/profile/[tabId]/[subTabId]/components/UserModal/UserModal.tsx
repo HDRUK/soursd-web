@@ -21,6 +21,7 @@ export default function UsersModal({
   const queryClient = useQueryClient();
 
   const handleOnSuccess = useCallback(() => {
+    onClose();
     queryClient.refetchQueries({
       queryKey: ["getUsers", organisation?.id],
     });

@@ -1,6 +1,15 @@
+import { QueryFunctionContext, UseQueryOptions } from "@tanstack/react-query";
+
 interface ResponseTranslation {
   message: string;
 }
+
+interface QueryOptions extends Partial<UseQueryOptions> {
+  queryKeySuffix?: (string | number)[];
+  responseOptions?: ResponseOptions;
+}
+
+type QueryFunctionContextDefault = QueryFunctionContext<[string, number]>;
 
 interface ResponseOptions {
   "401"?: ResponseTranslation;
@@ -28,7 +37,6 @@ interface Paged<T> {
   data: T;
 }
 
-type QueryOptions = RequestInit;
 type QueryPayload<T> = T | (() => BodyInit & T);
 
 export type {
@@ -36,6 +44,7 @@ export type {
   ResponseJson,
   ResponseTranslation,
   ResponseOptions,
-  QueryOptions,
   QueryPayload,
+  QueryOptions,
+  QueryFunctionContextDefault,
 };
