@@ -143,7 +143,7 @@ export const mockedWebhookDescription = (
     SOURSD uses an exponential back-off mechanism to avoid missed callbacks. 
     In the event of your server not returning an <strong>HTTP_OK (200) response</strong>, 
     we will continuously try to re-send with increasing retry times, until we receive a <strong>HTTP_OK 
-    (200) response</strong>, or we reach our send cap. <span color="red">We cannot resend events indefinitely. 
-    If we reach our retry cap, and the event is still unsent, it will be deleted.</span>
+    (200) response</strong>, or we reach our send cap. <Typography component="span" sx={{ color: 'red' }}>We cannot resend events indefinitely. 
+    If we reach our retry cap, and the event is still unsent, it will be deleted.</Typography>
     </Typography>
 );
