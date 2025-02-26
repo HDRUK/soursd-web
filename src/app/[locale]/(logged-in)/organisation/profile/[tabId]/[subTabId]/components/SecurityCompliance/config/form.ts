@@ -98,7 +98,7 @@ export const getDefaultValues = (
   dsptk_expiry_date: getDate(organisation?.dsptk_expiry_date),
 });
 
-type Certification = {
+export type Certification = {
   name: string;
   certificationNum: keyof SecurityCompilanceFormData;
   certificationExpiryDate: keyof SecurityCompilanceFormData;
@@ -109,7 +109,7 @@ export const certificationRows: Certification[] = [
     name: "ceCertified",
     certificationNum: "ce_certification_num",
     certificationExpiryDate: "ce_expiry_date",
-  } /*
+  },
   {
     name: "cePlusCertified",
     certificationNum: "ce_plus_certification_num",
@@ -124,5 +124,7 @@ export const certificationRows: Certification[] = [
     name: "dsptkCertified",
     certificationNum: "dsptk_ods_code",
     certificationExpiryDate: "dsptk_expiry_date",
-  },*/,
+  },
 ];
+
+export type CertificationName = (typeof certificationRows)[number]["name"];

@@ -16,20 +16,17 @@ export default function useOrganisationFileUpload({
   upload,
 }: UseOrganisationFileUploadProps) {
   return useCallback(
-    async (e: ChangeEvent<HTMLInputElement>) => {
-      console.log("starting to call useOrganisation file upload");
+    async (name: string, e: ChangeEvent<HTMLInputElement>) => {
       const fileFromEvent = getFileFromEvent(e);
       const formData = new FormData();
 
       if (fileFromEvent) {
         formData.append("file", fileFromEvent);
-        formData.append("file_type", fileType);
+        formData.append("file_type", `${fileType}_${name.toUpperCase()}`);
         formData.append("entity_type", EntityType.ORGANISATION);
-        //formData.append("registry_id", `${user?.registry_id}`);
+        formData.append("organisation_id", `${organisation?.id}`);
 
         const fileFromApi = await upload(formData);
-        console.log(fileFromApi);
-
         return fileFromApi;
       }
 

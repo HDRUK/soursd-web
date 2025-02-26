@@ -25,10 +25,13 @@ export default function useFileUpload(message: string) {
   const [isSizeInvalid, setIsSizeInvalid] = useState<boolean>();
 
   const postFileState = useMutation(postFileQuery(message));
-  const getFileState = useQuery(getFileQuery(file?.id));
+  const getFileState = useQuery({
+    ...getFileQuery(file?.id),
+    queryKey: [`getFile${message}`],
+  });
 
   const { refetch: refetchFile, cancel: refetchFileCancel } = useQueryRefetch({
-    options: { queryKey: ["getFile", file?.id] },
+    options: { queryKey: [`getFile${message}`, file?.id] },
   });
 
   useQueryAlerts(postFileState, {
@@ -43,7 +46,6 @@ export default function useFileUpload(message: string) {
     setIsSizeInvalid(false);
 
     const file = formData.get("file") as File;
-    console.log(file);
 
     if (file.size <= MAX_UPLOAD_SIZE_BYTES) {
       const { data } = await postFileState.mutateAsync(formData);
@@ -54,7 +56,6 @@ export default function useFileUpload(message: string) {
     }
 
     setIsSizeInvalid(true);
-    console.log("size invalid");
 
     return null;
   };

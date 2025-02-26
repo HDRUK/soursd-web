@@ -828,5 +828,9 @@
   "UsePatchOrganisation": {
     "text": "Organisation Updated!",
     "confirmText": "OK"
+  },
+  "CertificationUpload": {
+    "buttonText": "Upload evidence",
+    "evidence": "evidence"
   }
 }
