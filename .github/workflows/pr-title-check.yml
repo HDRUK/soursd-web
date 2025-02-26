@@ -33,7 +33,7 @@ jobs:
           else
             echo "❌ Invalid PR title format!"
 
-            COMMENT="🚨 **Invalid PR title format!**\n\nYour PR title must follow one of these formats:\n- \`feat(GAT-1234): Your title\`\n- \`fix!(GAT-5678): Breaking change\`\n- \`RELEASE: vX.Y.Z\`\n\nPlease update your PR title accordingly. 😊"
+            COMMENT="🚨 **Invalid PR title format!**\n\nYour PR title must follow one of these formats:\n- \`feat(SOURSD-1234): Your title\`\n- \`fix!(SOURSD-5678): Breaking change\`\n- \`RELEASE: vX.Y.Z\`\n\nPlease update your PR title accordingly. 😊"
             
             curl -s -X POST -H "Authorization: token $GITHUB_TOKEN" \
               -H "Accept: application/vnd.github.v3+json" \
