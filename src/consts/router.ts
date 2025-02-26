@@ -52,10 +52,6 @@ const ROUTES: Routes = {
     path: "/data-custodian/profile/keycards",
     permissions: [UserGroup.CUSTODIANS],
   },
-  permissionsOrganisationCustodian: {
-    path: "/data-custodian/permissions",
-    permissions: [UserGroup.CUSTODIANS],
-  },
   permissionsResearcherCustodian: {
     path: "/data-custodian/permissions/user",
     permissions: [UserGroup.CUSTODIANS],
@@ -106,6 +102,10 @@ const ROUTES: Routes = {
   },
   profileOrganisationDetails: {
     path: "/organisation/profile/details",
+    permissions: [UserGroup.ORGANISATIONS],
+  },
+  profileOrganisationHome: {
+    path: "/organisation/profile/home",
     permissions: [UserGroup.ORGANISATIONS],
   },
   profileOrganisationDetailsNameAndAddress: {

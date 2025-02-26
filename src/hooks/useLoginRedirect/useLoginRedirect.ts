@@ -21,7 +21,7 @@ export default function useLoginRedirect(props?: UseLoginRedirectProps) {
     if (data?.user_group === UserGroup.CUSTODIANS) {
       router.replace(ROUTES.profileCustodianHome.path);
     } else if (data?.user_group === UserGroup.ORGANISATIONS) {
-      router.replace(ROUTES.profileOrganisationDetails.path);
+      router.replace(ROUTES.profileOrganisationHome.path);
     } else if (data?.user_group === UserGroup.USERS) {
       router.replace(ROUTES.profileResearcherHome.path);
     } else if (data?.user_group === UserGroup.ADMINS) {

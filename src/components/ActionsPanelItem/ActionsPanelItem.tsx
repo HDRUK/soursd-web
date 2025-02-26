@@ -24,11 +24,11 @@ export default function ActionsPanelItem({
         alignItems: "center",
         p: 2,
       }}>
-      <Box sx={{ display: "flex", gap: 1, flexGrow: 1 }}>
+      <Box sx={{ display: "flex", gap: 1, flexGrow: 1, alignItems: "center" }}>
         <span>{icon}</span>
         <Box>
-          <Typography variant="h6">{heading}</Typography>
-          <Typography>{description}</Typography>
+          <Typography>{heading}</Typography>
+          <Typography color="textSecondary.main">{description}</Typography>
         </Box>
       </Box>
       <Box sx={{ minWidth: "200px", textAlign: "right" }}>{action}</Box>

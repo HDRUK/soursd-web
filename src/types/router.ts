@@ -30,7 +30,7 @@ interface Routes {
   profileCustodianUsers: RouteConfig;
   permissionsOrganisationCustodian: RouteConfig;
   permissionsResearcherCustodian: RouteConfig;
-  permissionsOrganisationCustodian: RouteConfig;
+  profileOrganisationHome: RouteConfig;
   profileResearcher: RouteConfig;
   profileResearcherCompletion: RouteConfig;
   profileResearcherTraining: RouteConfig;

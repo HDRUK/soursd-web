@@ -37,12 +37,72 @@ export default function Home({ custodian }: HomeProps) {
 
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
+  const actions = [
+    {
+      heading: "Complete your configuration",
+      description:
+        "This is where we need you to setup things lke IDV technology and the decision models...",
+      action: (
+        <Button
+          component={Link}
+          href={routes.profileCustodianConfiguration.path}>
+          Get started
+        </Button>
+      ),
+    },
+    {
+      heading: "Add your users",
+      description:
+        "As well as yourself, it’s a good idea to set up your colleagues who will help administer the system and approve users, projects and organisations",
+      action: (
+        <Button
+          component={Link}
+          variant="outlined"
+          href={routes.profileCustodianUsers.path}>
+          Add users
+        </Button>
+      ),
+    },
+    {
+      heading: "Add your contacts",
+      action: (
+        <Button
+          component={Link}
+          variant="outlined"
+          href={routes.profileCustodianContacts.path}>
+          Add contacts
+        </Button>
+      ),
+    },
+    {
+      heading: "Add your projects",
+      action: (
+        <Button
+          component={Link}
+          variant="outlined"
+          href={routes.profileCustodianProjects.path}>
+          Add projects
+        </Button>
+      ),
+    },
+    {
+      heading: "Add organisations",
+      action: (
+        <Button
+          component={Link}
+          variant="outlined"
+          href={routes.profileCustodianOrganisations.path}>
+          Add organisations
+        </Button>
+      ),
+    },
+  ];
+
   return (
     <PageColumns>
       <PageColumnBody>
         <PageBody>
           <ActionsPanel
-            heading="Outstanding actions"
             description={
               <>
                 Welcome to Sourced! You’ll see a list of tasks below we’ve
@@ -56,67 +116,9 @@ export default function Home({ custodian }: HomeProps) {
                 </ul>
               </>
             }>
-            <ActionsPanelItem
-              icon={<SettingsIcon />}
-              heading="Complete your configuration"
-              description="This is where we need you to setup things lke IDV technology and the decision models..."
-              action={
-                <Button
-                  component={Link}
-                  href={routes.profileCustodianConfiguration.path}>
-                  Get started
-                </Button>
-              }
-            />
-            <ActionsPanelItem
-              icon={<PersonIcon />}
-              heading="Add your contacts"
-              description="As well as yourself, it’s a good idea to set up your colleagues who will help administer the system and approve users, projects and organisations"
-              action={
-                <Button
-                  component={Link}
-                  variant="outlined"
-                  href={routes.profileCustodianContacts.path}>
-                  Add contacts
-                </Button>
-              }
-            />
-            <ActionsPanelItem
-              icon={<SettingsIcon />}
-              heading="Add your users"
-              action={
-                <Button
-                  component={Link}
-                  variant="outlined"
-                  href={routes.profileCustodianUsers.path}>
-                  Add users
-                </Button>
-              }
-            />
-            <ActionsPanelItem
-              icon={<PersonIcon />}
-              heading="Add your projects"
-              action={
-                <Button
-                  component={Link}
-                  variant="outlined"
-                  href={routes.profileCustodianProjects.path}>
-                  Add projects
-                </Button>
-              }
-            />
-            <ActionsPanelItem
-              icon={<SettingsIcon />}
-              heading="Add organisations"
-              action={
-                <Button
-                  component={Link}
-                  variant="outlined"
-                  href={routes.profileCustodianOrganisations.path}>
-                  Add organisations
-                </Button>
-              }
-            />
+            {actions.map(action => (
+              <ActionsPanelItem {...action} />
+            ))}
           </ActionsPanel>
         </PageBody>
       </PageColumnBody>
