@@ -35,6 +35,12 @@ const DateInput = ({
             fullWidth: true,
             variant: "outlined",
             size: "small",
+            inputProps: {
+              "data-testid": (rest as Record<string, string>)?.["data-testid"],
+              "aria-labelledby": (rest as Record<string, string>)?.[
+                "aria-labelledby"
+              ],
+            },
           },
         }}
         {...rest}
