@@ -94,7 +94,7 @@ export default function SectorSizeAndWebsite() {
         ...organisation,
         organisation_size: fields.organisation_size,
       } as Organisation);
-      router.push(ROUTES.profileOrganisationDetailsSubsidiaries.path);
+      router.push(ROUTES.profileOrganisationDetailsSecurityCompliance.path);
     });
   };
 

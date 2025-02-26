@@ -4,110 +4,127 @@ import {
   VALIDATION_DSPTK_CERTIFICATION_NUMBER,
 } from "@/consts/form";
 import yup from "@/config/yup";
-import { AddressFields, Organisation } from "@/types/application";
+import { Organisation } from "@/types/application";
+import { getDate } from "@/utils/date";
 
-export interface SubsidiariesFormData {
-  name: string;
-  address?: AddressFields;
-}
-
-export interface FormData {
-  ce_certified?: boolean;
+export interface SecurityCompilanceFormData {
   ce_certification_num?: string;
-  ce_plus_certified?: boolean;
+  ce_expiry_date?: Date;
   ce_plus_certification_num?: string;
-  iso_27001_certified?: boolean;
+  ce_plus_expiry_date?: Date;
   iso_27001_certification_num?: string;
-  dsptk_certified?: boolean;
-  dsptk_certification_num?: string;
+  iso_expiry_date?: Date;
+  dsptk_ods_code?: string;
+  dsptk_expiry_date?: Date;
 }
 
 export const getValidation = (t: (key: string) => string) =>
   yup.object<FormData>({
-    ce_certified: yup.boolean(),
-    ce_certification_num: yup.string().when("ce_certified", {
-      is: true,
-      then: () =>
-        yup
-          .string()
-          .matches(
-            VALIDATION_CE_CERTIFICATION_NUMBER,
-            t("ceCertificationNumberInvalid")
-          )
-          .required(t("ceCertificationNumberInvalid")),
-      otherwise: () => yup.string().notRequired(),
-    }),
+    ce_certification_num: yup
+      .string()
+      .optional()
+      .matches(VALIDATION_CE_CERTIFICATION_NUMBER, {
+        message: t("ceCertificationNumberInvalid"),
+        excludeEmptyString: true,
+      }),
+    ce_expiry_date: yup
+      .date()
+      .nullable()
+      .when("ce_certification_num", {
+        is: (value: string) => !!value,
+        then: schema => schema.required(t("ceExpiryDateRequired")),
+        otherwise: schema => schema.notRequired(),
+      }),
 
-    ce_plus_certified: yup.boolean(),
-    ce_plus_certification_num: yup.string().when("ce_plus_certified", {
-      is: true,
-      then: () =>
-        yup
-          .string()
-          .matches(
-            VALIDATION_CE_CERTIFICATION_NUMBER,
-            t("cePlusCertificationNumberInvalid")
-          )
-          .required(t("cePlusCertificationNumberInvalid")),
-      otherwise: () => yup.string().notRequired(),
-    }),
-    iso_27001_certified: yup.boolean(),
-    iso_27001_certification_num: yup.string().when("iso_27001_certified", {
-      is: true,
-      then: () =>
-        yup
-          .string()
-          .matches(
-            VALIDATION_ISO_CERTIFICATION_NUMBER,
-            t("iso27001CertificationNumInvalid")
-          ),
-      otherwise: () => yup.string().notRequired(),
-    }),
-    dsptk_certified: yup.boolean(),
-    dsptk_certification_num: yup.string().when("dsptk_certified", {
-      is: true,
-      then: () =>
-        yup
-          .string()
-          .matches(
-            VALIDATION_DSPTK_CERTIFICATION_NUMBER,
-            t("dsptkCertificationNumInvalid")
-          ),
-      otherwise: () => yup.string().notRequired(),
-    }),
+    ce_plus_certification_num: yup
+      .string()
+      .optional()
+      .matches(VALIDATION_CE_CERTIFICATION_NUMBER, {
+        message: t("cePlusCertificationNumberInvalid"),
+        excludeEmptyString: true,
+      }),
+    ce_plus_expiry_date: yup
+      .date()
+      .nullable()
+      .when("ce_plus_certification_num", {
+        is: (value: string) => !!value,
+        then: schema => schema.required(t("cePlusExpiryDateRequired")),
+        otherwise: schema => schema.notRequired(),
+      }),
+
+    iso_27001_certification_num: yup
+      .string()
+      .optional()
+      .matches(VALIDATION_ISO_CERTIFICATION_NUMBER, {
+        message: t("iso27001CertificationNumInvalid"),
+        excludeEmptyString: true,
+      }),
+    iso_expiry_date: yup
+      .date()
+      .nullable()
+      .when("iso_27001_certification_num", {
+        is: (value: string) => !!value,
+        then: schema => schema.required(t("isoExpiryDateRequired")),
+        otherwise: schema => schema.notRequired(),
+      }),
+
+    dsptk_ods_code: yup
+      .string()
+      .optional()
+      .matches(VALIDATION_DSPTK_CERTIFICATION_NUMBER, {
+        message: t("dsptkOdsCodeInvalid"),
+        excludeEmptyString: true,
+      }),
+    dsptk_expiry_date: yup
+      .date()
+      .nullable()
+      .when("dsptk_ods_code", {
+        is: (value: string) => !!value,
+        then: schema => schema.required(t("dsptkExpiryDateRequired")),
+        otherwise: schema => schema.notRequired(),
+      }),
   });
 
-export const getDefaultValues = (organisation?: Organisation): FormData => ({
-  ce_certified: organisation?.ce_certified,
+export const getDefaultValues = (
+  organisation?: Organisation
+): SecurityCompilanceFormData => ({
   ce_certification_num: organisation?.ce_certification_num || "",
-  ce_plus_certified: organisation?.ce_plus_certified,
+  ce_expiry_date: getDate(organisation?.ce_expiry_date),
   ce_plus_certification_num: organisation?.ce_plus_certification_num || "",
-  iso_27001_certified: organisation?.iso_27001_certified,
+  ce_plus_expiry_date: getDate(organisation?.ce_plus_expiry_date),
   iso_27001_certification_num: organisation?.iso_27001_certification_num || "",
-  dsptk_certified: organisation?.dsptk_certified,
-  dsptk_certification_num: organisation?.dsptk_certification_num || "",
+  iso_expiry_date: getDate(organisation?.iso_expiry_date),
+  dsptk_ods_code: organisation?.dsptk_ods_code || "",
+  dsptk_expiry_date: getDate(organisation?.dsptk_expiry_date),
 });
 
-type Certification = {
-  certified: keyof FormData;
-  certificationNum: keyof FormData;
+export type Certification = {
+  name: string;
+  certificationNum: keyof SecurityCompilanceFormData;
+  certificationExpiryDate: keyof SecurityCompilanceFormData;
 };
 
 export const certificationRows: Certification[] = [
   {
-    certified: "ce_certified",
+    name: "ceCertified",
     certificationNum: "ce_certification_num",
+    certificationExpiryDate: "ce_expiry_date",
   },
   {
-    certified: "ce_plus_certified",
+    name: "cePlusCertified",
     certificationNum: "ce_plus_certification_num",
+    certificationExpiryDate: "ce_plus_expiry_date",
   },
   {
-    certified: "iso_27001_certified",
+    name: "iso27001Certified",
     certificationNum: "iso_27001_certification_num",
+    certificationExpiryDate: "iso_expiry_date",
   },
   {
-    certified: "dsptk_certified",
-    certificationNum: "dsptk_certification_num",
+    name: "dsptkCertified",
+    certificationNum: "dsptk_ods_code",
+    certificationExpiryDate: "dsptk_expiry_date",
   },
 ];
+
+export type CertificationName = (typeof certificationRows)[number]["name"];
