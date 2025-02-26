@@ -14,7 +14,7 @@ export const StyledLogoContainer = styled(Box)<SoursdLogoProps>(
 
 export const StyledLogoTitle = styled(Typography)(
   () => css`
-    font-size: 1.5rem;
+    font-size: 90%;
     color: #333;
     margin-top: 0;
     letter-spacing: 5px;

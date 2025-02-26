@@ -458,8 +458,10 @@
     "contactFormSubtitle": "Some subtitle here",
     "fundedByTitle": "Funded by",
     "partnershipTitle": "In partnership with",
-    "privacyPolicyLink": "Privacy policy",
-    "termsAndConditionsLink": "Terms and Conditions"
+    "privacyCookieLink": "Privacy policy",
+    "termsAndConditionsLink": "Terms and Conditions",
+    "aboutUsLink": "About Us",
+    "contactUsLink": "Contact Us"
   },
   "ContactForm": {
     "namePlaceholder": "Name",
