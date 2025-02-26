@@ -50,7 +50,7 @@ const CertificationUploader = ({
         <FileLink
           fileButtonText={t("buttonText")}
           message={`${FileType.CERTIFICATION}${name.toUpperCase()}`}
-          fileNameText={file?.name || "No certification uploaded"}
+          fileNameText={file?.name || t("noCertificationUploaded")}
           isSizeInvalid={isSizeInvalid}
           isScanning={isScanning}
           isScanComplete={isScanComplete}
