@@ -9,11 +9,11 @@ export default function useBreakpoint() {
   const isLg = useMediaQuery(theme.breakpoints.up("lg"));
   const isXl = useMediaQuery(theme.breakpoints.up("xl"));
 
-  if (isXl) return "xl";
-  if (isLg) return "lg";
-  if (isMd) return "md";
-  if (isSm) return "sm";
-  if (isXs) return "xs";
-
-  return null;
+  return {
+    isXs,
+    isSm,
+    isMd,
+    isLg,
+    isXl,
+  };
 }

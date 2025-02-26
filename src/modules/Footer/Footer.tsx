@@ -42,14 +42,16 @@ export default function Footer(props: FooterProps) {
       <PageCenter>
         <StyledFooter>
           <SoursdLogo variant="titled" size={56} />
-          <div>
-            <Typography variant="h6" color="white" sx={{ marginBottom: "5px" }}>
-              {t("contactFormTitle")}
-            </Typography>
+          <Box sx={{ flexGrow: 1 }}>
             <UL
-              variant="horizontal"
+              sx={{
+                mb: 4,
+              }}
               responsiveProps={{
-                xs: "vertical",
+                variant: {
+                  md: "horizontal",
+                  sm: "vertical",
+                },
               }}>
               {footerLinkPages.map(({ label, ...linkProps }) => (
                 <li>
@@ -62,28 +64,30 @@ export default function Footer(props: FooterProps) {
                 </li>
               ))}
             </UL>
-          </div>
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "flex-end",
-            }}>
+            Copyright (C) 2024 Health Data Research UK
+          </Box>
+          <Box>
             <Typography color="white" sx={{ marginBottom: "5px" }}>
               {t("fundedByTitle")}
             </Typography>
-            <Image
-              src="/images/logos/mrc.svg"
-              width={207}
-              height={64}
-              alt="Medical Research Council logo"
-            />
-            <Image
-              src="/images/logos/dsit.svg"
-              width={228}
-              height={122}
-              alt="Department for Science, Innovation & Technology"
-            />
+            <Box
+              sx={{
+                alignItems: "center",
+                display: "flex",
+              }}>
+              <Image
+                src="/images/logos/mrc.svg"
+                width={207}
+                height={64}
+                alt="Medical Research Council logo"
+              />
+              <Image
+                src="/images/logos/dsit.svg"
+                width={228}
+                height={122}
+                alt="Department for Science, Innovation & Technology"
+              />
+            </Box>
           </Box>
         </StyledFooter>
       </PageCenter>

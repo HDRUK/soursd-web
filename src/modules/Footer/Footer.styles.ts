@@ -7,13 +7,13 @@ export const StyledFooter = styled("div")(
     color: #fff;
     display: grid;
     gap: ${theme.spacing(3)};
-    grid-template-columns: 90px 1fr 1fr;
+    grid-template-rows: 90px 1fr 1fr;
     grid-auto-flow: row;
     padding: ${theme.spacing(3)} ${theme.spacing(8)};
 
     ${theme.breakpoints.up("md")} {
+      grid-template-columns: 90px 1fr 1fr;
       gap: ${theme.spacing(9)};
-      flex-direction: row;
       padding: ${theme.spacing(5)} ${theme.spacing(3)};
     }
   `
