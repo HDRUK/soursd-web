@@ -118,7 +118,7 @@ export default function ResearcherHistories({
           aria-controls="professional-registrations-content"
           id="professional-registrations-header"
           expandIcon={<ExpandMoreIcon />}>
-          {t("professionalRegistratons")}
+          {t("professionalRegistrations")}
         </AccordionSummary>
         <AccordionDetails>
           {professionalRegistrations?.length ? (

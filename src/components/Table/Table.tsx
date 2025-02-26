@@ -24,6 +24,7 @@ interface TableProps<T> {
   data: T[];
   columns: ColumnDef<T>[];
   isPaginated?: boolean;
+  showHeader?: boolean;
   page?: number;
   setPage?: React.Dispatch<React.SetStateAction<number>>;
   last_page?: number;
@@ -36,6 +37,7 @@ const Table = <T,>({
   data,
   columns,
   isPaginated = false,
+  showHeader = true,
   page,
   setPage,
   last_page,
@@ -61,22 +63,24 @@ const Table = <T,>({
     <>
       <TableContainer sx={{ my: 1 }}>
         <MuiTable size={dense ? "small" : "medium"}>
-          <TableHead>
-            {table.getHeaderGroups().map(headerGroup => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map(header => (
-                  <TableCell key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))}
-          </TableHead>
+          {showHeader && (
+            <TableHead>
+              {table.getHeaderGroups().map(headerGroup => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map(header => (
+                    <TableCell key={header.id}>
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))}
+            </TableHead>
+          )}
 
           <TableBody>
             {table?.getRowModel().rows.map(row => (

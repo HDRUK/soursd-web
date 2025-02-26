@@ -46,8 +46,6 @@ export default function SectorSizeAndWebsite() {
     onSubmit,
   } = usePatchOrganisation({
     id: organisation?.id,
-    organisation,
-    setOrganisation,
   });
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
@@ -96,7 +94,7 @@ export default function SectorSizeAndWebsite() {
         ...organisation,
         organisation_size: fields.organisation_size,
       } as Organisation);
-      router.push(ROUTES.profileOrganisationDetailsSubsidiaries.path);
+      router.push(ROUTES.profileOrganisationDetailsSecurityCompliance.path);
     });
   };
 

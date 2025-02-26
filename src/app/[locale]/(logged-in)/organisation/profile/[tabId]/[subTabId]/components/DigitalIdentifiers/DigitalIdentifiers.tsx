@@ -33,12 +33,8 @@ const NAMESPACE_TRANSLATION_ORG_PROFILE = "ProfileOrganisation";
 
 export default function DigitalIdentifiers() {
   const router = useRouter();
-  const { organisation, setOrganisation } = useStore(state => {
-    return {
-      organisation: state.config.organisation,
-      setOrganisation: state.setOrganisation,
-    };
-  });
+  const organisation = useStore(state => state.config.organisation);
+
   const {
     isError,
     isPending: isLoading,
@@ -46,8 +42,6 @@ export default function DigitalIdentifiers() {
     onSubmit,
   } = usePatchOrganisation({
     id: organisation?.id,
-    organisation,
-    setOrganisation,
   });
 
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);

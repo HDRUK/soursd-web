@@ -9,7 +9,7 @@ describe("<PageSection />", () => {
 
     expect(
       screen.getByRole("heading", {
-        level: 5,
+        level: 3,
       })
     ).toHaveTextContent("This is a heading");
   });
