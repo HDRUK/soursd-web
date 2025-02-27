@@ -23,7 +23,7 @@ export default function PageSection({
           type="content"
           heading={heading}
           description={description}
-          variant="h5"
+          variant="h3"
           sx={{ mb: 4 }}
         />
       )}

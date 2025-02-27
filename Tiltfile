@@ -8,6 +8,7 @@ cfg = read_json("tiltconf.json")
 docker_build(
     ref="hdruk/" + cfg.get("name"),
     context=".",
+    ignore=["./node_modules/.cache/storybook/**"],
     live_update=[
         sync("./src", "/usr/src/src"),
         sync("./public", "/usr/src/public"),
