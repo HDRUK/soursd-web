@@ -1,7 +1,7 @@
-import { EntityType } from "./types";
 import { QueryOptions } from "@/types/requests";
-import getCustodianEntityModel from "./getCustodianEntityModel";
 import { UseQueryOptions } from "@tanstack/react-query";
+import { EntityType } from "./types";
+import getCustodianEntityModel from "./getCustodianEntityModel";
 
 export default function getCustodianEntityModelQuery(
   custodianId: number | undefined,
@@ -9,14 +9,23 @@ export default function getCustodianEntityModelQuery(
   options?: QueryOptions
 ) {
   return {
-    queryKey: ["getCustodianEntityModel", custodianId, entity_type, ...(options?.queryKeySuffix || [])],
+    queryKey: [
+      "getCustodianEntityModel",
+      custodianId,
+      entity_type,
+      ...(options?.queryKeySuffix || []),
+    ],
     queryFn: ({ queryKey }) =>
-      getCustodianEntityModel(queryKey[1] as number, queryKey[2] as EntityType, {
-        error: {
-          message: "getCustodianEntityModelError",
-        },
-        ...options?.responseOptions,
-      }),
+      getCustodianEntityModel(
+        queryKey[1] as number,
+        queryKey[2] as EntityType,
+        {
+          error: {
+            message: "getCustodianEntityModelError",
+          },
+          ...options?.responseOptions,
+        }
+      ),
     ...options,
   } as UseQueryOptions<Awaited<ReturnType<typeof getCustodianEntityModel>>>;
 }

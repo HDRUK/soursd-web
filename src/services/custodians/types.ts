@@ -58,7 +58,10 @@ type PostCustodianPayload = Custodian;
 type PostCustodianResponse = number;
 type PostCustodianInviteResponse = Custodian;
 
-type EntityType = "decision_models" | "user_validation_rules" | "org_validation_rules";
+type EntityType =
+  | "decision_models"
+  | "user_validation_rules"
+  | "org_validation_rules";
 
 export type {
   PostCustodianInviteUserPayload,
@@ -76,5 +79,5 @@ export type {
   EntityType,
   GetCustodianEntityModelResponse,
   PutCustodianActiveEntityModelPayload,
-  PutCustodianActiveEntityModelResponse
+  PutCustodianActiveEntityModelResponse,
 };

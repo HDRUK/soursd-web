@@ -1,7 +1,10 @@
 import { ResponseJson, ResponseOptions } from "@/types/requests";
 import { putRequest } from "../requests";
 import { handleJsonResponse } from "../requestHelpers";
-import { PutCustodianActiveEntityModelResponse, PutCustodianActiveEntityModelPayload } from "./types";
+import {
+  PutCustodianActiveEntityModelResponse,
+  PutCustodianActiveEntityModelPayload,
+} from "./types";
 
 export default async (
   id: number | undefined,

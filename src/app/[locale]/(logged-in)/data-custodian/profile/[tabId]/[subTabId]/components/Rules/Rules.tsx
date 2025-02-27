@@ -5,12 +5,19 @@ import { PageGuidance, PageBody, PageSection } from "@/modules";
 import Form from "@/components/Form";
 import FormActions from "@/components/FormActions";
 import CheckboxList from "@/components/CheckboxList";
-import { mockedConfigurationRulesDescription, mockedConfigurationRulesGuidanceProps } from "@/mocks/data/cms";
+import {
+  mockedConfigurationRulesDescription,
+  mockedConfigurationRulesGuidanceProps,
+} from "@/mocks/data/cms";
 import { showAlert } from "@/utils/showAlert";
 import ContactLink from "@/components/ContactLink";
 import ReactDOMServer from "react-dom/server";
 import { EntityModelTypes } from "@/consts/custodian";
-import { getCustodianEntityModelQuery, GetCustodianEntityModelResponse, putCustodianActiveEntityModelQuery } from "@/services/custodians";
+import {
+  getCustodianEntityModelQuery,
+  GetCustodianEntityModelResponse,
+  putCustodianActiveEntityModelQuery,
+} from "@/services/custodians";
 import { Rule } from "@/types/rules";
 import LoadingWrapper from "@/components/LoadingWrapper";
 import { useStore } from "@/data/store";
@@ -25,29 +32,44 @@ export default function Rules() {
   const custodian = useStore(state => state.getCustodian());
 
   const { data: userRulesData, isLoading: isLoadingUserRules } = useQuery(
-    getCustodianEntityModelQuery(custodian?.id, EntityModelTypes.USER_VALIDATION_RULES)
+    getCustodianEntityModelQuery(
+      custodian?.id,
+      EntityModelTypes.USER_VALIDATION_RULES
+    )
   );
 
   const { data: orgRulesData, isLoading: isLoadingOrgRules } = useQuery(
-    getCustodianEntityModelQuery(custodian?.id, EntityModelTypes.ORG_VALIDATION_RULES)
+    getCustodianEntityModelQuery(
+      custodian?.id,
+      EntityModelTypes.ORG_VALIDATION_RULES
+    )
   );
 
   const { mutateAsync, isPending, isError } = useMutation(
-    putCustodianActiveEntityModelQuery(custodian?.id));
+    putCustodianActiveEntityModelQuery(custodian?.id)
+  );
 
-  const formatRules = (rulesData: any): Rule[] => {
-    return rulesData?.data.map((rule: any) => {
-      return {
-        id: rule.id,
-        label: rule.name || rule.id,
-        text: rule.description || '',
-        active: rule.active === true || rule.active === 1,
-      };
-    }) || [];
+  const formatRules = (rulesData): Rule[] => {
+    return (
+      rulesData?.data.map(rule => {
+        return {
+          id: rule.id,
+          label: rule.name || rule.id,
+          text: rule.description || "",
+          active: rule.active === true || rule.active === 1,
+        };
+      }) || []
+    );
   };
 
-  const formattedUserRules: Rule[] = useMemo(() => formatRules(userRulesData), [userRulesData]);
-  const formattedOrgRules: Rule[] = useMemo(() => formatRules(orgRulesData), [orgRulesData]);
+  const formattedUserRules: Rule[] = useMemo(
+    () => formatRules(userRulesData),
+    [userRulesData]
+  );
+  const formattedOrgRules: Rule[] = useMemo(
+    () => formatRules(orgRulesData),
+    [orgRulesData]
+  );
 
   useEffect(() => {
     if (userRulesData) {
@@ -60,37 +82,52 @@ export default function Rules() {
     }
   }, [userRulesData, orgRulesData, formattedUserRules, formattedOrgRules]);
 
-  const UserRulesCheckboxList = useCallback(() => (
-    <CheckboxList 
-      items={formattedUserRules} 
-      title={t("userRulesTitle")}
-      checked={userRules}
-      setChecked={setUserRules}
-    />
-  ), [formattedUserRules, userRules, setUserRules, t]);
+  const UserRulesCheckboxList = useCallback(
+    () => (
+      <CheckboxList
+        items={formattedUserRules}
+        title={t("userRulesTitle")}
+        checked={userRules}
+        setChecked={setUserRules}
+      />
+    ),
+    [formattedUserRules, userRules, setUserRules, t]
+  );
 
-  const OrgRulesCheckboxList = useCallback(() => (
-    <CheckboxList 
-      items={formattedOrgRules} 
-      title={t("organisationRulesTitle")}
-      checked={orgRules}
-      setChecked={setOrgRules}
-    />
-  ), [formattedOrgRules, orgRules, setOrgRules, t]);
+  const OrgRulesCheckboxList = useCallback(
+    () => (
+      <CheckboxList
+        items={formattedOrgRules}
+        title={t("organisationRulesTitle")}
+        checked={orgRules}
+        setChecked={setOrgRules}
+      />
+    ),
+    [formattedOrgRules, orgRules, setOrgRules, t]
+  );
 
   const handleSubmit = async () => {
-    const createRulePayload = (rulesData: (Response & { data: GetCustodianEntityModelResponse[]; message: string; status: number; }) | undefined, checkedState: boolean[]) => 
-      rulesData?.data.map((rule: { id: any; }, index: number) => ({
+    const createRulePayload = (
+      rulesData:
+        | (Response & {
+            data: GetCustodianEntityModelResponse[];
+            message: string;
+            status: number;
+          })
+        | undefined,
+      checkedState: boolean[]
+    ) =>
+      rulesData?.data.map((rule: { id: number }, index: number) => ({
         entity_model_id: rule.id,
-        active: checkedState[index]
+        active: checkedState[index],
       })) || [];
 
-      const payload = {
-        configs: [
-          ...createRulePayload(userRulesData, userRules),
-          ...createRulePayload(orgRulesData, orgRules)
-        ]
-      };
+    const payload = {
+      configs: [
+        ...createRulePayload(userRulesData, userRules),
+        ...createRulePayload(orgRulesData, orgRules),
+      ],
+    };
 
     try {
       await mutateAsync(payload);
@@ -116,20 +153,21 @@ export default function Rules() {
 
   return (
     <LoadingWrapper loading={isLoadingUserRules || isLoadingOrgRules}>
-    <PageGuidance {...mockedConfigurationRulesGuidanceProps}>
-      <PageBody>
-        <Form onSubmit={handleSubmit} {...formOptions}>
-          <PageSection heading={t("configurationRulesTitle")} description={mockedConfigurationRulesDescription}>
+      <PageGuidance {...mockedConfigurationRulesGuidanceProps}>
+        <PageBody>
+          <Form onSubmit={handleSubmit} {...formOptions}>
+            <PageSection
+              heading={t("configurationRulesTitle")}
+              description={mockedConfigurationRulesDescription}>
               <UserRulesCheckboxList />
               <OrgRulesCheckboxList />
-          </PageSection>
-          <FormActions>
-            <ButtonSave isLoading={isPending} />
-          </FormActions>
-        </Form>
-      </PageBody>
-    </PageGuidance>
+            </PageSection>
+            <FormActions>
+              <ButtonSave isLoading={isPending} />
+            </FormActions>
+          </Form>
+        </PageBody>
+      </PageGuidance>
     </LoadingWrapper>
-
   );
 }

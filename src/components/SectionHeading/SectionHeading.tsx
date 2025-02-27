@@ -46,9 +46,8 @@ export default function SectionHeading({
               px: 2,
               backgroundColor: "default.main",
               color: "default.contrastText",
-              
             }),
-            ...sx
+            ...sx,
           }}>
           {heading}
         </Typography>

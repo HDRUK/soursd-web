@@ -1,6 +1,5 @@
 import { ConfigProps, withConfig } from "@/components/Config";
-import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
-import { PageBodyContainer, PageGuidance } from "@/modules";
+import { PageBodyContainer } from "@/modules";
 import { toCamelCase } from "@/utils/string";
 import { useTranslations } from "next-intl";
 import { ConfigurationSubTabs, PageTabs } from "../consts/tabs";
@@ -21,8 +20,8 @@ function Page({ params: { tabId, subTabId } }: PageProps) {
 
   return (
     <PageBodyContainer heading={t(toCamelCase(tabId))}>
-        <SubTabsSections />
-        <SubTabsContents tabId={tabId} subTabId={subTabId} />
+      <SubTabsSections />
+      <SubTabsContents tabId={tabId} subTabId={subTabId} />
     </PageBodyContainer>
   );
 }
