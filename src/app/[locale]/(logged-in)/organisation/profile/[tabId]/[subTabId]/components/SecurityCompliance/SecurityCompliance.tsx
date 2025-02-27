@@ -2,28 +2,34 @@
 
 import Form from "@/components/Form";
 import FormActions from "@/components/FormActions";
-import FormControlHorizontal from "@/components/FormControlHorizontal";
 import { useStore } from "@/data/store";
 import { PageBody, PageSection } from "@/modules";
-import { Grid } from "@mui/material";
-import Checkbox from "@mui/material/Checkbox";
-import TextField from "@mui/material/TextField";
+import { TextField, Grid } from "@mui/material";
+import DateInput from "@/components/DateInput";
+import FormControlWrapper from "@/components/FormControlWrapper";
 import { useTranslations } from "next-intl";
 import React, { useMemo } from "react";
 import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
 import { ROUTES } from "@/consts/router";
+import FormSection from "@/components/FormSection";
+import { PatchOrganisationPayload } from "@/services/organisations";
+import { dateToString } from "@/utils/date";
 import usePatchOrganisation from "../../../hooks/usePatchOrganisation";
 import {
   certificationRows,
   getDefaultValues,
   getValidation,
+  SecurityCompilanceFormData,
 } from "./config/form";
+import CertificationUploader from "./CertificationUploader";
 
 const NAMESPACE_TRANSLATION_FORM = "Form";
+const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
 
 export default function SecurityCompliance() {
   const organisation = useStore(state => state.config.organisation);
   const t = useTranslations(NAMESPACE_TRANSLATION_FORM);
+  const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
   const { isPending: isLoading, onSubmit } = usePatchOrganisation({
     id: organisation?.id,
@@ -35,41 +41,70 @@ export default function SecurityCompliance() {
     [organisation]
   );
 
+  const handleSubmit = (data: SecurityCompilanceFormData) => {
+    const payload = {
+      ...data,
+      ce_expiry_date: dateToString(data.ce_expiry_date),
+      ce_plus_expiry_date: dateToString(data.ce_plus_expiry_date),
+      iso_expiry_date: dateToString(data.iso_expiry_date),
+      dsptk_expiry_date: dateToString(data.dsptk_expiry_date),
+    } as PatchOrganisationPayload;
+    onSubmit(payload);
+  };
+
   return (
     <PageBody>
-      <PageSection>
-        <Form schema={schema} defaultValues={defaultValues} onSubmit={onSubmit}>
+      <PageSection
+        heading={tProfile("dataSecurityCompliance")}
+        description={tProfile("dataSecurityComplianceText")}>
+        <Form
+          schema={schema}
+          defaultValues={defaultValues}
+          onSubmit={handleSubmit}>
           <>
-            <Grid container rowSpacing={3}>
-              {certificationRows.map(cert => (
-                <React.Fragment key={cert.certified}>
-                  <Grid item xs={4}>
-                    <FormControlHorizontal
-                      name={cert.certified}
-                      displayPlaceholder={false}
-                      labelMd={7}
-                      contentMd={5}
-                      renderField={fieldProps => (
-                        <Checkbox
-                          {...fieldProps}
-                          checked={!!fieldProps.value}
-                        />
-                      )}
-                    />
+            {certificationRows.map(cert => (
+              <FormSection heading={t(cert.name)}>
+                <Grid container rowSpacing={3}>
+                  <Grid container item spacing={3}>
+                    <Grid item xs={6}>
+                      <FormControlWrapper
+                        name={cert.certificationNum}
+                        renderField={fieldProps => (
+                          <TextField {...fieldProps} />
+                        )}
+                      />
+                    </Grid>
                   </Grid>
-                  <Grid item xs={8}>
-                    <FormControlHorizontal
-                      name={cert.certificationNum}
-                      renderField={fieldProps => <TextField {...fieldProps} />}
-                    />
+
+                  <Grid container item spacing={3}>
+                    <Grid item xs={3}>
+                      <FormControlWrapper
+                        name={cert.certificationExpiryDate}
+                        renderField={fieldProps => (
+                          <DateInput {...fieldProps} disabled={false} />
+                        )}
+                      />
+                    </Grid>
                   </Grid>
-                </React.Fragment>
-              ))}
-            </Grid>
+                  <FormControlWrapper
+                    name={`${cert.name}Evidence`}
+                    displayLabel={false}
+                    renderField={fieldProps => (
+                      <CertificationUploader
+                        name={cert.name}
+                        value={fieldProps.value}
+                        onChange={fieldProps.onChange}
+                      />
+                    )}
+                  />
+                </Grid>
+              </FormSection>
+            ))}
+
             <FormActions>
               <ProfileNavigationFooter
                 previousHref={
-                  ROUTES.profileOrganisationDetailsSubsidiaries.path
+                  ROUTES.profileOrganisationDetailsSectorSizeAndWebsite.path
                 }
                 isLoading={isLoading}
               />
