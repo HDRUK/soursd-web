@@ -35,7 +35,7 @@ export default function SectionHeading({
       ...(type === "form" && {
         fontWeight: "normal",
       }),
-      ...sx
+      ...sx,
     },
   };
 
