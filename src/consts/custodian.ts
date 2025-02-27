@@ -3,4 +3,10 @@ enum CustodianUserRoles {
   APPROVER = "CUSTODIAN_APPROVER",
 }
 
-export { CustodianUserRoles };
+enum EntityModelTypes {
+  DECISION_MODELS = 'decision_models',
+  USER_VALIDATION_RULES = 'user_validation_rules',
+  ORG_VALIDATION_RULES = 'org_validation_rules',
+}
+
+export { CustodianUserRoles, EntityModelTypes };

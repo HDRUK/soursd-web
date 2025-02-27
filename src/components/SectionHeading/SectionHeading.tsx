@@ -13,6 +13,7 @@ export default function SectionHeading({
   heading,
   description,
   variant,
+  sx,
   type = "content",
   size = "default",
   ...restProps
@@ -45,7 +46,9 @@ export default function SectionHeading({
               px: 2,
               backgroundColor: "default.main",
               color: "default.contrastText",
+              
             }),
+            ...sx
           }}>
           {heading}
         </Typography>

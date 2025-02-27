@@ -137,3 +137,45 @@ Individual users will create a SOURSD account for themselves and will affiliate 
 
 Automatically invite users to create a SOURSD account. Users will have one SOURSD account that will stay with them throughout their career. Select the user(s) you would like to invite to create a SOURSD account and select ‘Invite User to create a SOURSD account’ in the Actions below. 
 `
+export const mockedConfigurationRulesDescription =  (
+  <>
+    <Typography mb={2}>SOURSD can be configured to flag if a certain property of a 
+      User or Organisation profile does not meet a set of individual 
+      Data Custodian "decision models" or criteria, supporting your decision making process.
+       SOURSD does not make any decisions as to which Users or Organisations are considered "safe" - 
+       that decision remains with each Data Custodian.
+    </Typography>
+    <Typography mb={2}>
+    A User or Organisation can still be approved by a Data Custodian to work on a particular project even if the User/Organisation 
+    is flagged as not meeting the requirements of a decision model.
+    </Typography>
+    <Typography mb={2}>
+    Configure rules in line with your individual Trusted Research Environment 
+    or NHS Research Secure Data Environment policies or procedures below.
+    </Typography>
+  </>
+);
+
+export const mockedConfigurationRulesGuidanceProps = {
+  infoTitle: "Guidance",
+  info: (
+    <>
+      <Typography mb={5}>
+        IDVT tests an individual against the following criteria:
+      </Typography>
+      <Typography mb={5}>
+        <ol>
+          <li>Valid government issued identification. (Fraud)</li>
+          <li>Likeness check against ID. (Identity)</li>
+          <li>Liveness check. (Identity)</li>
+          <li>Sanctions. (AML)</li>
+        </ol>
+      </Typography>
+      <Typography mb={5}>
+      This feature is supplied as part of SOURSD and is entirely up to you, 
+      as a Data Custodian, whether you want these additional security checks carried out,
+       above and beyond what an employer would do.
+      </Typography>
+    </>
+  ),
+};

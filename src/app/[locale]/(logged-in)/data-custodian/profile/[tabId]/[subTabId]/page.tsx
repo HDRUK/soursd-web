@@ -21,10 +21,8 @@ function Page({ params: { tabId, subTabId } }: PageProps) {
 
   return (
     <PageBodyContainer heading={t(toCamelCase(tabId))}>
-      <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
         <SubTabsSections />
         <SubTabsContents tabId={tabId} subTabId={subTabId} />
-      </PageGuidance>
     </PageBodyContainer>
   );
 }
