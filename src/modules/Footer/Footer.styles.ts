@@ -1,4 +1,4 @@
-import { css, Link, styled } from "@mui/material";
+import { css, styled } from "@mui/material";
 
 export const StyledFooter = styled("div")(
   ({ theme }) => css`

@@ -15,7 +15,7 @@ export default function useResponsiveProps<T>(
     (previous: Partial<T>, key: keyof T) => {
       let currentBreakpoint = "";
 
-      if (isXs && responsiveProps[key]["xs"]) {
+      if (isXs && responsiveProps[key].xs) {
         currentBreakpoint = "xs";
       }
 
