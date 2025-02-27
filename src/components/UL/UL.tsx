@@ -3,18 +3,7 @@
 import useResponsiveProps, {
   ResponsiveProps,
 } from "@/hooks/useResponsiveProps";
-import {
-  Box,
-  BoxProps,
-  Breakpoints,
-  CardActions,
-  CardContent,
-  Divider,
-  Paper,
-  PaperProps,
-  Typography,
-  TypographyProps,
-} from "@mui/material";
+import { Box, BoxProps } from "@mui/material";
 import { ReactNode } from "react";
 
 export interface ULBaseProps extends BoxProps {

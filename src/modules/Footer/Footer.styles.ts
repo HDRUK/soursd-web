@@ -18,10 +18,3 @@ export const StyledFooter = styled("div")(
     }
   `
 );
-
-export const StyledLink = styled(Link)(
-  () => css`
-    cursor: pointer;
-    padding-top: 5px;
-  `
-);

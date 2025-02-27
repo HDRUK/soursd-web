@@ -19,19 +19,19 @@ export default function useResponsiveProps<T>(
         currentBreakpoint = "xs";
       }
 
-      if (isSm && responsiveProps[key]["sm"]) {
+      if (isSm && responsiveProps[key].sm) {
         currentBreakpoint = "sm";
       }
 
-      if (isMd && responsiveProps[key]["md"]) {
+      if (isMd && responsiveProps[key].md) {
         currentBreakpoint = "md";
       }
 
-      if (isLg && responsiveProps[key]["lg"]) {
+      if (isLg && responsiveProps[key].lg) {
         currentBreakpoint = "lg";
       }
 
-      if (isXl && responsiveProps[key]["xl"]) {
+      if (isXl && responsiveProps[key].xl) {
         currentBreakpoint = "xl";
       }
 
