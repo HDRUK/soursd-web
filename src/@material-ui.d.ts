@@ -19,6 +19,7 @@ interface ColorOverrides {
   greys: true;
   lightPurple: true;
   neutralPink: true;
+  grey700: true;
 }
 
 declare module "@mui/material/styles/createPalette" {
@@ -36,6 +37,7 @@ declare module "@mui/material/styles/createPalette" {
     mint: SimplePaletteColorOptions;
     lightPurple: SimplePaletteColorOptions;
     neutralPink: SimplePaletteColorOptions;
+    grey700: string;
   }
 
   interface Palette extends CustomPalette {}
@@ -43,7 +45,7 @@ declare module "@mui/material/styles/createPalette" {
 
   type AugmentedColorPaletteOptions = KeysMatching<
     Palette,
-    SimplePaletteColorOptions | PaletteColor
+    SimplePaletteColorOptions | PaletteColor | string
   >;
 
   interface IconButtonProps {}
