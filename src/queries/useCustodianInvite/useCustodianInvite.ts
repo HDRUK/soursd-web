@@ -32,7 +32,11 @@ export default function useCustodianInvite({
         enabled: false,
       });
 
-      await mutateCustodianInvite(data);
+      console.log("***  CUSTODIAN create custodian response", data);
+
+      const inviteData = await mutateCustodianInvite(data);
+
+      console.log("*** CUSTODIAN invite sent response", inviteData);
 
       onSuccess();
     } catch (_) {

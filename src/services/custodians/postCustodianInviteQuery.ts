@@ -4,6 +4,7 @@ export default function postCustodianInviteQuery() {
   return {
     mutationKey: ["postCustodianInvite"],
     mutationFn: (custodianId: number) => {
+      console.log("**** custodianId", custodianId);
       return postCustodianInvite(custodianId, {
         error: { message: "postCustodianInviteError" },
       });
