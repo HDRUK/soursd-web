@@ -40,11 +40,6 @@ export default function SubTabsSections() {
         href: routes.profileOrganisationDetailsSectorSizeAndWebsite.path,
       },
       {
-        label: t("detailsSubsidiaries"),
-        value: DetailsPageSubTabs.SUBSIDIARIES,
-        href: routes.profileOrganisationDetailsSubsidiaries.path,
-      },
-      {
         label: t("detailsSecurityCompliance"),
         value: DetailsPageSubTabs.SECURITY_COMPLIANCE,
         href: routes.profileOrganisationDetailsSecurityCompliance.path,

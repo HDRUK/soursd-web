@@ -31,6 +31,7 @@ interface Routes {
   profileCustodianConfigurationValidationChecks: RouteConfig;
   profileCustodianKeycards: RouteConfig;
   profileCustodianUsers: RouteConfig;
+  permissionsOrganisationCustodian: RouteConfig;
   permissionsResearcherCustodian: RouteConfig;
   permissionsOrganisationCustodian: RouteConfig;
   profileResearcher: RouteConfig;
@@ -47,7 +48,6 @@ interface Routes {
   profileOrganisationDetailsNameAndAddress: RouteConfig;
   profileOrganisationDetailsDigitalIdentifiers: RouteConfig;
   profileOrganisationDetailsSectorSizeAndWebsite: RouteConfig;
-  profileOrganisationDetailsSubsidiaries: RouteConfig;
   profileOrganisationDetailsSecurityCompliance: RouteConfig;
   profileOrganisationUserAdministration: RouteConfig;
   profileOrganisationUserAdministrationDelegates: RouteConfig;

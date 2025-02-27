@@ -20,7 +20,7 @@ export default function FormSection({
             type="form"
             heading={heading}
             description={description}
-            variant="h6"
+            variant="h4"
           />
         )}
       </Box>

@@ -15,7 +15,6 @@ import DigitalIdentifiers from "../DigitalIdentifiers";
 import NameAndAddress from "../NameAndAddress";
 import SectorSizeAndWebsite from "../SectorSizeAndWebsite";
 import SecurityCompliance from "../SecurityCompliance";
-import Subsidiaries from "../Subsidiaries";
 import Users from "../Users";
 
 interface TabsContentsProps {
@@ -52,9 +51,6 @@ export default function SubTabsContents({
       break;
     case DetailsPageSubTabs.SECTOR_SIZE_AND_WEBSITE:
       content = <SectorSizeAndWebsite />;
-      break;
-    case DetailsPageSubTabs.SUBSIDIARIES:
-      content = <Subsidiaries />;
       break;
     case DetailsPageSubTabs.SECURITY_COMPLIANCE:
       content = <SecurityCompliance />;

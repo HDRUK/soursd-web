@@ -12,6 +12,12 @@
     "scanErrorText": "Your file file may have a virus"
   },
   "Application": {
+    "sortBy": "Sort by",
+    "sortedBy": "Sorted by",
+    "filterBy": "Filter by",
+    "filteredBy": "Filtered by",
+    "filterByDate": "Filter by date",
+    "filterByProjectStatus": "Filter by status",
     "alertSuccessConfirmButton": "Close",
     "alertErrorConfirmButton": "Close",
     "alertDeleteConfirmButton": "Delete",
@@ -101,7 +107,8 @@
     "postCustodianUserInviteError": "There was a problem inviting this user. Please contact them directly or contact us at <contactLink></contactLink>",
     "configurationRules": "Rules",
     "configurationValidationChecks": "Validation Checks",
-    "configurationWebhooks": "Webhooks"
+    "configurationWebhooks": "Webhooks",
+    "webhookError": "There was a problem with the webhook configuration. Please try again or contact us at <contactLink></contactLink>"
   },
   "OrganisationStats": {
     "affiliatedUsers": "Affiliated Users",
@@ -124,7 +131,7 @@
     "detailsDigitalIdentifiers": "Digital Identifiers",
     "detailsSectorSizeAndWebsite": "Sector, Size and Website",
     "detailsOrganisationSectorDescription": "Your Organisation’s sector information should be aligned with Standard Industry Classification (SIC) codes as listed in Companies House or other regulatory sources.",
-    "detailsSubsidiaries": "Subsidiaries",
+    "detailsSubsidiaries": "UK subsidiaries",
     "detailsSecurityCompliance": "Security Compliance",
     "userAdminDeletgates": "Delegate administration",
     "userAdminEmployeeStudents": "Employee & student administration",
@@ -165,6 +172,7 @@
     "closeButton": "Close",
     "profileUpdateMessage": "Your profile was successfully updated!",
     "inviteAnotherDelegate": "Invite another delegate",
+    "addAnotherSubsidiary": "Add a subsidiary",
     "showPendingInvites": "Show pending invites",
     "clearAll": "clear all",
     "nameAndAddressTitle": "Your organisation name & address",
@@ -172,7 +180,10 @@
     "nameAndAddressAddressDescription": "If your headquarters are based outside of the UK, please add the international address of your registered headquarters here and, if relevant, add the UK address of your UK subsidiary within the \"UK subsidiaries.\"",
     "companiesHouseIdDescription": "If your Organisation is listed on Companies House, please provide your Organisations Companies House ID.",
     "employeeStudentAdminTitle": "Employee or student administration",
-    "isCharityDescription": "If your Organisation is a registered charity, please confirm the country your charity is registered and registration ID."
+    "isCharityDescription": "If your Organisation is a registered charity, please confirm the country your charity is registered and registration ID.",
+    "dataSecurityCompliance": "Data Security Compliance",
+    "dataSecurityComplianceText": "Please enter your certificate IDs if your Organisation has any of the following:",
+    "uploadCertification": "Upload Certificate"
   },
   "Form": {
     "unsavedAlertText": "Are you sure you want to leave the form with unsaved changes?",
@@ -310,7 +321,7 @@
     "address2Placeholder": "Address 2",
     "address2": "Address 2",
     "townPlaceholder": "Town",
-    "town": "Town",
+    "town": "Town / City",
     "countyPlaceholder": "County",
     "county": "County",
     "countryPlaceholder": "Country",
@@ -335,27 +346,36 @@
     "consentScrapePlaceholder": "I consent to SOURSD gathering research experience and employment information from my ORCiD.",
     "organisationDataSecurityComplianceTemp": {},
     "organisationDataSecurityCompliance": "Organisation data security compliance",
-    "ceCertified": "CE certified?",
-    "ceCertificationNum": "CE identifier",
+    "ceCertified": "Cyber Essentials Certified",
+    "ceCertificationNum": "Cyber Essentials Certified ID",
     "ceCertificationNumPlaceholder": "e.g. A1B2",
     "ceCertificationNumberInvalid": "Certification number must be exactly 4 alphanumeric characters.",
-    "cePlusCertified": "CE plus certified?",
-    "cePlusCertificationNum": "CE plus identifier",
+    "ceExpiryDate": "Expiry date",
+    "ceExpiryDateRequired": "An expiry date for your code needs to be set.",
+    "cePlusCertified": "Cyber Essentials Plus Certified",
+    "cePlusCertificationNum": "Cyber Essentials Plus Certified ID",
     "cePlusCertificationNumPlaceholder": "e.g. X1Y2",
     "cePlusCertificationNumberInvalid": "Certification number must be exactly 4 alphanumeric characters.",
-    "iso27001Certified": "ISO27001 certified?",
-    "iso27001CertificationNum": "ISO27001 identifier",
+    "cePlusExpiryDate": "Expiry date",
+    "cePlusExpiryDateRequired": "An expiry date for your code needs to be set.",
+    "iso27001Certified": "ISO27001 Accredited",
+    "iso27001CertificationNum": "ISO27001 Accredited",
     "iso27001CertificationNumPlaceholder": "e.g. AB123C",
     "iso27001CertificationNumInvalid": "ISO27001 identifier is invalid",
-    "dsptkCertified": "DSPT certified?",
-    "dsptkCertificationNum": "DSPT identifier",
-    "dsptkCertificationNumPlaceholder": "e.g. DSPTK-2025-12345",
-    "dsptkCertificationNumInvalid": "DSPT identifier is invalid",
-    "organisationSubsidiaries": "Organisation UK subsidiaries",
+    "isoExpiryDate": "Expiry date",
+    "isoExpiryDateRequired": "An expiry date for your code needs to be set.",
+    "dsptkCertified": "DSPT Certified",
+    "dsptkOdsCode": "DSPT Certified  ID",
+    "dsptkOdsCodePlaceholder": "e.g. DSPTK-2025-12345",
+    "dsptkOdsCodeInvalid": "DSPTK identifier is invalid, it must be in the form, e.g.: e.g. DSPTK-2025-12345",
+    "dsptkExpiryDate": "Expiry date",
+    "dsptkExpiryDateRequired": "An expiry date for your code needs to be set.",
+    "organisationSubsidiaries": "UK subsidiaries",
     "address": "Address search",
-    "addressPlaceholder": "Type to search for an address",
+    "addressPlaceholder": "Start typing an address to search",
     "arrayRemoveButton": "Remove",
-    "arrayAddButton": "Add Another",
+    "arrayAddButton": "Add",
+    "arrayAddAnotherButton": "Add Another",
     "keyContactFormTitle": "Key Contact Information",
     "keyContactFormDescription": "### Senior Responsible Officer (SRO) contact information \n As a representative of your Organisation, you have been nominated as a Key Contact, with sufficient seniority and relevant responsibility to vouch for Users (employees or students) affiliated with your Organisation. \n\n You can provide your individual information here: ",
     "departmentName": "Department",
@@ -425,7 +445,18 @@
     "textFieldPlaceholder": "Start typing...",
     "selectPlaceholder": "Select from options",
     "startDate": "Start date",
-    "endDate": "End date"
+    "endDate": "End date",
+    "webhookEventAriaLabel": "Webhook Event Trigger",
+    "webhookRequiredInvalid": "Webhook event trigger is required",
+    "addSubsidiary": "Add a subsidiary",
+    "subsidiaryName": "Subsidiary name",
+    "subsidiaryNamePlaceholder": "Subsidiary name",
+    "subsidiaryNameRequired": "Subsidiary name is required",
+    "subsidiaryAddress": "Subsidiary address",
+    "subsidiaryAddressPlaceholder": "Start typing an address to search",
+    "subsidiaryAddressRequired": "Subsidiary address is required",
+    "subsidiaryWebsite": "Subsidiary website",
+    "subsidiaryWebsitePlaceholder": "Subsidiary website"
   },
   "ProfessionalRegistrations": {
     "title": "Professional Registrations",
@@ -744,6 +775,19 @@
     },
     "alsoApprovedOn": "Also Approved On: {projects} "
   },
+  "OrganisationsList": {
+    "searchPlaceholder": "Search Organisations",
+    "errorResultsProjects": "Unable to get a list of organisations. Please try again or contact us on <contact></contact>",
+    "noResultsProjects": "No organisations found for the search terms provided.",
+    "sortActions": {
+      "AZ": "Sort Alphabetical A-Z",
+      "ZA": "Sort Alphabetical Z-A"
+    },
+    "filterActions": {
+      "hasDelegates": "Has Delegates",
+      "hasSoursdId": "Is Registered"
+    }
+  },
   "ProjectList": {
     "getOrganisationProjectsError": "No projects found",
     "loadingAriaLabel": "Loading project data",
@@ -753,10 +797,17 @@
     "searchPlaceholder": "Search Projects",
     "sortActions": {
       "AZ": "Sort Alphabetical A-Z",
-      "ZA": "Sort Alphabetical Z-A",
-      "approved": "Approved project",
-      "pending": "Project pending approval"
-    }
+      "ZA": "Sort Alphabetical Z-A"
+    },
+    "filterActions": {
+      "approved": "Approved",
+      "pending": "Pending",
+      "completed": "Completed",
+      "activeProjects": "Active projects",
+      "pastProjects": "Past projects"
+    },
+    "errorResultsProjects": "Unable to get a list of projects. Please try again or contact us on <contact></contact>",
+    "noResultsProjects": "No projects found for the current search terms."
   },
   "Error": {
     "login": {
@@ -809,5 +860,9 @@
   "UsePatchOrganisation": {
     "text": "Organisation Updated!",
     "confirmText": "OK"
+  },
+  "CertificationUpload": {
+    "buttonText": "Upload evidence",
+    "evidence": "evidence"
   }
 }
