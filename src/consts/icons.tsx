@@ -1,12 +1,11 @@
+import StatusIndicator from "@/components/StatusIndicator";
+import BlockIcon from "@mui/icons-material/BlockOutlined";
+import BusinessIcon from "@mui/icons-material/Business";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
-import BlockIcon from "@mui/icons-material/BlockOutlined";
 import ShieldOutlinedIcon from "@mui/icons-material/ShieldOutlined";
-import StatusIndicator from "@/components/StatusIndicator";
 import TaskAltOutlinedIcon from "@mui/icons-material/TaskAltOutlined";
 import WorkspacePremiumOutlinedIcon from "@mui/icons-material/WorkspacePremiumOutlined";
-import BusinessIcon from "@mui/icons-material/Business";
-import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import { SvgIconProps } from "@mui/material";
 
 const IdentityVerifiedIcon = (props: SvgIconProps) => (
@@ -47,10 +46,10 @@ export {
   ApprovedIcon,
   ApprovedTrainingIcon,
   ApprovedUserIcon,
-  IdentityVerifiedIcon,
-  PendingIcon,
   DecoupleIcon,
-  TrashIcon,
   EditIcon,
+  IdentityVerifiedIcon,
   OrganisationIcon,
+  PendingIcon,
+  TrashIcon,
 };

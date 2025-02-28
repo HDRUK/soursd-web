@@ -59,14 +59,14 @@ describe("GoogleAutocomplete", () => {
         addressFields: {
           postcode: "12345",
           addressLine1: "123 Main St",
-          county: "Springfield",
+          town: "Springfield",
         },
       },
       {
         addressFields: {
           postcode: "67890",
           addressLine1: "123 Elm St",
-          county: "Springfield",
+          town: "Springfield",
         },
       },
     ]);
@@ -78,8 +78,12 @@ describe("GoogleAutocomplete", () => {
 
     await waitFor(() => {
       expect(mockFetchPredictions).toHaveBeenCalledWith("123");
-      expect(screen.getByText("123 Main St, Springfield")).toBeInTheDocument();
-      expect(screen.getByText("123 Elm St, Springfield")).toBeInTheDocument();
+      expect(
+        screen.getByText("123 Main St, Springfield, 12345")
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText("123 Elm St, Springfield, 67890")
+      ).toBeInTheDocument();
     });
   });
 
@@ -100,7 +104,7 @@ describe("GoogleAutocomplete", () => {
           postcode: "12345",
           addressLine1: "123 Main St",
           addressLine2: "",
-          county: "Springfield",
+          town: "Springfield",
         },
       },
     ]);
@@ -114,7 +118,7 @@ describe("GoogleAutocomplete", () => {
       expect(fetchPredictions).toHaveBeenCalled();
     });
 
-    const option = await screen.findByText("123 Main St, Springfield");
+    const option = await screen.findByText("123 Main St, Springfield, 12345");
     fireEvent.click(option);
 
     await waitFor(() => {
@@ -122,7 +126,7 @@ describe("GoogleAutocomplete", () => {
         postcode: "12345",
         address_1: "123 Main St",
         address_2: "",
-        county: "Springfield",
+        town: "Springfield",
       });
     });
   });

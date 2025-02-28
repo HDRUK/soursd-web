@@ -1,42 +1,55 @@
-import { ROUTES } from "@/consts/router";
-import { useStore } from "@/data/store";
-import { mockedCustodian } from "@/mocks/data/custodian";
-import { render, screen } from "@/utils/testUtils";
-import { PageTabs } from "./consts/tabs";
+import { render } from "@/utils/testUtils";
+import usePathServerSide from "@/hooks/usePathServerSide";
+import { anyIncludes } from "@/utils/string";
+import { redirect } from "next/navigation";
 import Page from "./page";
+import { PageTabs, getSubTabs } from "./consts/tabs";
 
-jest.mock("@/data/store");
-
-jest.mock("@/i18n/routing", () => ({
-  useParams: jest.fn(),
-  useRouter: jest.fn(() => ({
-    push: jest.fn(),
-  })),
+jest.mock("./consts/tabs", () => ({
+  getSubTabs: jest.fn(),
+  PageTabs: {
+    HOME: "home",
+    USERS: "users",
+    CONFIGURATION: "configuration",
+    CONTACTS: "contacts",
+  },
 }));
 
-const defaultCustodian = mockedCustodian();
+jest.mock("@/utils/string", () => ({
+  anyIncludes: jest.fn(),
+}));
 
-(useStore as unknown as jest.Mock).mockImplementation(() => [
-  () => defaultCustodian,
-  null,
-]);
-
-const renderPageTab = (tabId: PageTabs) =>
-  render(<Page params={{ tabId }} config={{ routes: ROUTES }} />);
-
+const mockPath = "/some/path/subtab2";
+const mockSubTabs = ["subtab1", "subtab2"];
 describe("<Page />", () => {
-  it.each([
-    { tabId: PageTabs.HOME, name: "Home" },
-    { tabId: PageTabs.USERS, name: "Users" },
-    { tabId: PageTabs.CONFIGURATION, name: "Configurations" },
-    { tabId: PageTabs.CONTACTS, name: "Contacts" },
-  ])("has the correct content $s", ({ tabId, name }) => {
-    renderPageTab(tabId);
+  const mockChildren = <div>Test Children</div>;
 
-    expect(
-      screen.getByRole("heading", {
-        name,
-      })
-    ).toBeInTheDocument();
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it("renders children when no redirection is needed", () => {
+    (usePathServerSide as jest.Mock).mockReturnValue(mockPath);
+    (getSubTabs as jest.Mock).mockReturnValue([]);
+    (anyIncludes as jest.Mock).mockReturnValue(true);
+
+    const { getByText } = render(
+      <Page params={{ tabId: PageTabs.HOME }}>{mockChildren}</Page>
+    );
+
+    expect(getByText("Test Children")).toBeInTheDocument();
+    expect(redirect).not.toHaveBeenCalled();
+  });
+
+  it("redirects when a subtab", () => {
+    (usePathServerSide as jest.Mock).mockReturnValue(mockPath);
+    (getSubTabs as jest.Mock).mockReturnValue(mockSubTabs);
+    (anyIncludes as jest.Mock).mockReturnValue(false);
+
+    render(
+      <Page params={{ tabId: PageTabs.CONFIGURATION }}>{mockChildren}</Page>
+    );
+
+    expect(redirect).toHaveBeenCalledWith(`${mockPath}/${mockSubTabs[0]}`);
   });
 });

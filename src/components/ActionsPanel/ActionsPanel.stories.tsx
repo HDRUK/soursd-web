@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
+import PersonIcon from "@mui/icons-material/Person";
 import SettingsIcon from "@mui/icons-material/Settings";
+import { Button } from "@mui/material";
 import ActionsPanelItem from "../ActionsPanelItem";
 import ActionsPanel from "./ActionsPanel";
-import { Button } from "@mui/material";
-import PersonIcon from "@mui/icons-material/Person";
 
 const meta = {
   title: "components/ActionsPanel",

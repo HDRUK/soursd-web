@@ -10,18 +10,14 @@ import {
   PageColumnBody,
   PageColumnDetails,
   PageColumns,
-  PageSection,
 } from "@/modules";
 import { Custodian } from "@/types/application";
-import PersonIcon from "@mui/icons-material/Person";
-import SettingsIcon from "@mui/icons-material/Settings";
 import { Button, Typography, useTheme } from "@mui/material";
 import { useTranslations } from "next-intl";
 
 export interface DetailsFormValues {
   name: string;
   contact_email: string;
-  idvt_required: boolean;
 }
 
 export interface HomeProps {

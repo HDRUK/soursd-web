@@ -1,5 +1,4 @@
 import { Box, Typography, useTheme } from "@mui/material";
-import { borderBottomColor } from "@mui/system";
 import { ReactNode } from "react";
 
 interface ActionsPanelProps {

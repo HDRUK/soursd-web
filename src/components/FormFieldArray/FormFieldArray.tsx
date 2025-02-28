@@ -73,7 +73,7 @@ const FormFieldArray = <T extends FieldValues>({
   }, []);
 
   return (
-    <Box sx={{ p: 1, gap: 2, display: "flex", flexDirection: "column" }}>
+    <Box sx={{ pb: 1, gap: 2, display: "flex", flexDirection: "column" }}>
       {fieldsArray.map((field, index) => (
         <Box key={field.id} sx={{ gap: 2, ...boxSx }}>
           {renderField(field, index)}
@@ -98,7 +98,10 @@ const FormFieldArray = <T extends FieldValues>({
 
       <Box sx={{ mt: 1, display: "flex", justifyContent: "flex-start" }}>
         <Button onClick={handleAddRow} variant="outlined" color="primary">
-          {addButtonLabel || t("arrayAddButton")}
+          {addButtonLabel ||
+            (fieldsArray.length === 0
+              ? t("arrayAddButton")
+              : t("arrayAddAnotherButton"))}
         </Button>
       </Box>
     </Box>

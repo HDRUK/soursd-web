@@ -1,34 +1,35 @@
-import { ConfigProps, withConfig } from "@/components/Config";
-import { redirect } from "next/navigation";
+import usePathServerSide from "@/hooks/usePathServerSide";
 import { PageBodyContainer } from "@/modules";
+import { anyIncludes } from "@/utils/string";
 import { useTranslations } from "next-intl";
+import { redirect } from "next/navigation";
+import { ReactNode } from "react";
 import TabsContents from "./components/TabsContents";
-import TabsSections from "./components/TabsSections";
-import { PageTabs } from "./consts/tabs";
+import { getSubTabs, PageTabs } from "./consts/tabs";
 
-const NAMESPACE_TRANSLATIONS_PROFILE = "CustodianProfile";
-
-interface PageProps extends ConfigProps {
+interface PageProps {
+  children: ReactNode;
   params: {
     tabId: PageTabs;
   };
 }
 
-function Page({ params: { tabId }, config }: PageProps) {
-  const t = useTranslations(NAMESPACE_TRANSLATIONS_PROFILE);
+const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 
-  if (!Object.values(PageTabs).includes(tabId)) {
-    redirect(config.routes.profileCustodianHome.path);
+function Page({ params: { tabId } }: PageProps) {
+  const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
+  const path = usePathServerSide();
+  const subTabs = getSubTabs(tabId) || [];
+
+  if (!!subTabs?.length && !anyIncludes(path, subTabs)) {
+    redirect(`${path}/${subTabs[0]}`);
   }
 
   return (
-    <>
-      <TabsSections />
-      <PageBodyContainer heading={t(tabId)}>
-        <TabsContents tabId={tabId} />
-      </PageBodyContainer>
-    </>
+    <PageBodyContainer heading={t(tabId)}>
+      <TabsContents tabId={tabId} />
+    </PageBodyContainer>
   );
 }
 
-export default withConfig(Page);
+export default Page;

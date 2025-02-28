@@ -9,7 +9,6 @@ enum DetailsPageSubTabs {
   NAME_AND_ADDRESS = "name-and-address",
   DIGITAL_IDENTIFIERS = "digital-identifiers",
   SECTOR_SIZE_AND_WEBSITE = "sector-size-and-website",
-  SUBSIDIARIES = "subsidiaries",
   SECURITY_COMPLIANCE = "security-compliance",
 }
 

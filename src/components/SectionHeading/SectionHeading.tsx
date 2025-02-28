@@ -17,39 +17,29 @@ export default function SectionHeading({
   size = "default",
   ...restProps
 }: SectionHeadingProps) {
-  let titleProps: Partial<TypographyProps> = {};
-
-  if (type === "form") {
-    titleProps = {
-      component: "fieldset",
-    };
-  } else {
-    titleProps = {
-      variant,
-    };
-  }
+  const titleProps: Partial<TypographyProps> = {
+    variant: variant ?? "h2",
+    ...(type === "form" && { component: "fieldset" }),
+    sx: {
+      width: "100%",
+      py: 1,
+      border: "none",
+      ...(size === "large" && {
+        borderRadius: "10px",
+        py: 2,
+        px: 2,
+        backgroundColor: "default.main",
+        color: "default.contrastText",
+      }),
+      ...(type === "form" && {
+        fontWeight: "normal",
+      }),
+    },
+  };
 
   return (
     <Box {...restProps}>
-      {heading && (
-        <Typography
-          variant="h2"
-          {...titleProps}
-          sx={{
-            width: "100%",
-            px: 2,
-            py: 1,
-            border: "none",
-            ...(size === "large" && {
-              borderRadius: "10px",
-              py: 2,
-              backgroundColor: "default.main",
-              color: "default.contrastText",
-            }),
-          }}>
-          {heading}
-        </Typography>
-      )}
+      {heading && <Typography {...titleProps}>{heading}</Typography>}
       {description && <Typography>{description}</Typography>}
     </Box>
   );

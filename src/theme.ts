@@ -166,6 +166,7 @@ const createMuiTableStyles = (ownerState: TableCellProps) => {
   return {
     ...(ownerState?.variant === "head" && {
       fontWeight: "bold",
+      borderTop: "1px solid rgba(224, 224, 224, 1)",
     }),
   };
 };
@@ -372,6 +373,13 @@ const theme = createTheme(
             paper: {
               sx: { p: 1, maxWidth: "500px" },
             },
+          },
+        },
+      },
+      MuiFormLabel: {
+        styleOverrides: {
+          root: {
+            fontWeight: "bold",
           },
         },
       },

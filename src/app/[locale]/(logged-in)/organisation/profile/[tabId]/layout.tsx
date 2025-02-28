@@ -1,11 +1,11 @@
 import { ConfigProps, withConfig } from "@/components/Config";
+import { PageBodyContainer } from "@/modules";
+import { useTranslations } from "next-intl";
 import { redirect } from "next/navigation";
 import { ReactNode } from "react";
 import TabsContents from "./components/TabsContents";
 import TabsSections from "./components/TabsSections";
 import { PageSubTabs, PageTabs } from "./consts/tabs";
-import { PageBodyContainer } from "@/modules";
-import { useTranslations } from "next-intl";
 
 interface LayoutProps extends ConfigProps {
   children: ReactNode;

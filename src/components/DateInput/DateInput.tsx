@@ -8,9 +8,17 @@ import { enGB } from "date-fns/locale/en-GB";
 export interface DateInputProps extends DatePickerProps<Date> {
   id?: string;
   label?: string;
+  format?: string;
 }
 
-const DateInput = ({ label, value, onChange, id, ...rest }: DateInputProps) => {
+const DateInput = ({
+  label,
+  value,
+  onChange,
+  id,
+  format,
+  ...rest
+}: DateInputProps) => {
   const localeString = useLocale();
   const locale = localeString === "en" ? enGB : enGB; // Add more locales as needed
 
@@ -20,12 +28,19 @@ const DateInput = ({ label, value, onChange, id, ...rest }: DateInputProps) => {
         label={label}
         value={value}
         onChange={onChange}
+        format={format}
         slotProps={{
           textField: {
             id,
             fullWidth: true,
             variant: "outlined",
             size: "small",
+            inputProps: {
+              "data-testid": (rest as Record<string, string>)?.["data-testid"],
+              "aria-labelledby": (rest as Record<string, string>)?.[
+                "aria-labelledby"
+              ],
+            },
           },
         }}
         {...rest}

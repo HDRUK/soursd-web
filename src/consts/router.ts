@@ -44,6 +44,18 @@ const ROUTES: Routes = {
     path: "/data-custodian/profile/configuration",
     permissions: [UserGroup.CUSTODIANS],
   },
+  profileCustodianConfigurationWebhooks: {
+    path: "/data-custodian/profile/configuration/webhooks",
+    permissions: [UserGroup.CUSTODIANS],
+  },
+  profileCustodianConfigurationRules: {
+    path: "/data-custodian/profile/configuration/rules",
+    permissions: [UserGroup.CUSTODIANS],
+  },
+  profileCustodianConfigurationValidationChecks: {
+    path: "/data-custodian/profile/configuration/validation-checks",
+    permissions: [UserGroup.CUSTODIANS],
+  },
   profileCustodianUsers: {
     path: "/data-custodian/profile/users",
     permissions: [UserGroup.CUSTODIANS],
@@ -118,10 +130,6 @@ const ROUTES: Routes = {
   },
   profileOrganisationDetailsSectorSizeAndWebsite: {
     path: "/organisation/profile/details/sector-size-and-website",
-    permissions: [UserGroup.ORGANISATIONS],
-  },
-  profileOrganisationDetailsSubsidiaries: {
-    path: "/organisation/profile/details/subsidiaries",
     permissions: [UserGroup.ORGANISATIONS],
   },
   profileOrganisationDetailsSecurityCompliance: {

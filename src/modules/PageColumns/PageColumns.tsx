@@ -4,7 +4,6 @@ type PageColumnsProps = GridProps;
 
 export default function PageColumns({
   children,
-  container,
   ...restProps
 }: PageColumnsProps) {
   return (
