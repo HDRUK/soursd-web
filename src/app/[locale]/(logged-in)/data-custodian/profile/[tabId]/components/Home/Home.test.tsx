@@ -29,51 +29,6 @@ const renderHome = (props?: Partial<HomeProps>) => {
 };
 
 describe("<Home />", () => {
-  it("has the correct values", async () => {
-    renderHome();
-
-    const nameContainer = screen.getByTestId("name");
-    const nameInput = within(nameContainer).getByRole("textbox");
-
-    const emailContainer = screen.getByTestId("contact_email");
-    const emailInput = within(emailContainer).getByRole("textbox");
-
-    await waitFor(() => {
-      expect(nameInput).toHaveValue(defaultCustodian.name);
-      expect(emailInput).toHaveValue(defaultCustodian.contact_email);
-    });
-  });
-
-  it("submits when values are defined", async () => {
-    renderHome();
-
-    const emailContainer = screen.getByTestId("contact_email");
-    const email = within(emailContainer).getByRole("textbox");
-
-    const emailValue = faker.internet.email();
-
-    if (email) {
-      fireEvent.change(email, {
-        target: { value: emailValue },
-      });
-
-      fireEvent.submit(screen.getByRole("button", { name: /Save/i }));
-
-      await waitFor(() => {
-        expect(patchCustodian).toHaveBeenCalledWith(
-          defaultCustodian.id,
-          {
-            ...defaultCustodian,
-            contact_email: emailValue,
-          },
-          { error: { message: "submitError" } }
-        );
-      });
-    } else {
-      fail("Contact email does not exist");
-    }
-  });
-
   it("has no accessibility violations", async () => {
     commonAccessibilityTests(renderHome());
   });

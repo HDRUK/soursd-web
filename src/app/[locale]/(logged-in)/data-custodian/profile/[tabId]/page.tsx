@@ -3,12 +3,10 @@ import { PageBodyContainer } from "@/modules";
 import { anyIncludes } from "@/utils/string";
 import { useTranslations } from "next-intl";
 import { redirect } from "next/navigation";
-import { ReactNode } from "react";
 import TabsContents from "./components/TabsContents";
 import { getSubTabs, PageTabs } from "./consts/tabs";
 
 interface PageProps {
-  children: ReactNode;
   params: {
     tabId: PageTabs;
   };
