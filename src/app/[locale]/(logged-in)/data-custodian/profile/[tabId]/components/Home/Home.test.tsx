@@ -1,16 +1,7 @@
 import { useStore } from "@/data/store";
 import { mockedCustodian } from "@/mocks/data/custodian";
 import { mockedUser } from "@/mocks/data/user";
-import { patchCustodian } from "@/services/custodians";
-import {
-  commonAccessibilityTests,
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-  within,
-} from "@/utils/testUtils";
-import { faker } from "@faker-js/faker";
+import { commonAccessibilityTests, render } from "@/utils/testUtils";
 import Home, { HomeProps } from "./Home";
 
 jest.mock("@/services/custodians");
