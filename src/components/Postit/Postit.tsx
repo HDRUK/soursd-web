@@ -15,7 +15,7 @@ export default function Postit({
     <Paper
       color={color}
       elevation={elevation}
-      sx={{ p: 3, maxWidth: "700px", wordBreak: "break-word", ...sx }}
+      sx={{ p: 3, wordBreak: "break-word", ...sx }}
       {...restProps}>
       {children}
     </Paper>
