@@ -1,4 +1,3 @@
-import AppRouterContextProviderMock from "@/mocks/context/router";
 import { ProjectEntities } from "@/services/projects/getEntityProjects";
 import {
   commonAccessibilityTests,
@@ -8,14 +7,8 @@ import {
 } from "@/utils/testUtils";
 import Projects from ".";
 
-const mockedPush = jest.fn();
-
 const renderProjects = ({ variant }: { variant: ProjectEntities }) =>
-  render(
-    <AppRouterContextProviderMock router={{ push: mockedPush }}>
-      <Projects variant={variant} />
-    </AppRouterContextProviderMock>
-  );
+  render(<Projects variant={variant} />);
 
 describe("Organisation Projects", () => {
   it("display 10 projects", async () => {
@@ -39,6 +32,7 @@ describe("Custodian Projects", () => {
     const { getAllByTestId } = renderProjects({
       variant: "custodian",
     });
+
     await waitFor(() => {
       const accordions = getAllByTestId(/^project-accordion-/);
       expect(accordions.length).toBe(5);

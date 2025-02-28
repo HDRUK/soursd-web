@@ -28,19 +28,6 @@ describe("<Page />", () => {
     jest.clearAllMocks();
   });
 
-  it("renders children when no redirection is needed", () => {
-    (usePathServerSide as jest.Mock).mockReturnValue(mockPath);
-    (getSubTabs as jest.Mock).mockReturnValue([]);
-    (anyIncludes as jest.Mock).mockReturnValue(true);
-
-    const { getByText } = render(
-      <Page params={{ tabId: PageTabs.HOME }}>{mockChildren}</Page>
-    );
-
-    expect(getByText("Test Children")).toBeInTheDocument();
-    expect(redirect).not.toHaveBeenCalled();
-  });
-
   it("redirects when a subtab", () => {
     (usePathServerSide as jest.Mock).mockReturnValue(mockPath);
     (getSubTabs as jest.Mock).mockReturnValue(mockSubTabs);

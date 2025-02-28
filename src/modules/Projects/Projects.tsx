@@ -1,23 +1,25 @@
 "use client";
 
-import { Message } from "@/components/Message";
-import OverlayCenter from "@/components/OverlayCenter";
-import PageSection from "@/modules/PageSection";
-import { getEntityProjects } from "@/services/projects";
-import { Box, CircularProgress } from "@mui/material";
-import { useTranslations } from "next-intl";
-import { useStore, StoreState } from "@/data/store";
+import ContactLink from "@/components/ContactLink";
 import Pagination from "@/components/Pagination";
-import usePaginatedQuery from "@/hooks/usePaginatedQuery";
-import SearchBar from "@/modules/SearchBar";
-import SearchActionMenu from "@/modules/SearchActionMenu";
+import Results from "@/components/Results";
 import { SearchDirections } from "@/consts/search";
+import { StoreState, useStore } from "@/data/store";
+import PageSection from "@/modules/PageSection";
+import SearchBar from "@/modules/SearchBar";
 import { ProjectEntities } from "@/services/projects/getEntityProjects";
-import { capitaliseFirstLetter } from "@/utils/string";
+import useEntityProjectsQuery from "@/services/projects/useEntityProjectsQuery";
+import { getSearchSortOrder } from "@/utils/query";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import SortIcon from "@mui/icons-material/Sort";
+import { useTranslations } from "next-intl";
+import PageBody from "../PageBody";
 import ProjectList from "../ProjectList";
 import ProjectsLegend from "../ProjectsLegend";
+import SearchActionMenu from "../SearchActionMenu";
 
 const NAMESPACE_TRANSLATIONS_PROJECT_LIST = "ProjectList";
+const NAMESPACE_TRANSLATIONS_APPLICATION = "Application";
 
 type VariantConfig = {
   getId: (store: StoreState) => string | number | undefined;
@@ -44,6 +46,7 @@ interface ProjectsProps {
 
 export default function Projects({ variant }: ProjectsProps) {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_PROJECT_LIST);
+  const tApplication = useTranslations(NAMESPACE_TRANSLATIONS_APPLICATION);
 
   const store = useStore();
   const { getId } = variantConfig[variant];
@@ -51,33 +54,24 @@ export default function Projects({ variant }: ProjectsProps) {
 
   const {
     data: projectsData,
-    isLoading: isProjectsLoading,
-    isError: isProjectsError,
     last_page,
+    total,
     page,
     setPage,
     updateQueryParam,
     handleSortToggle,
     handleFieldToggle,
     queryParams,
-  } = usePaginatedQuery({
-    queryKeyBase: [`get${capitaliseFirstLetter(variant)}Projects`],
-    defaultQueryParams: {
-      sort: `title:${SearchDirections.ASC}`,
-    },
-    queryFn: queryParams =>
-      getEntityProjects(variant, entityId as unknown as number, queryParams, {
-        error: {
-          message: `get${capitaliseFirstLetter(variant)}Projects`,
-        },
-      }),
+    ...queryState
+  } = useEntityProjectsQuery(entityId, {
+    variant,
+    queryKeyBase: ["getProjects"],
     enabled: !!entityId,
   });
 
-  const sortDirection =
-    typeof queryParams?.sort === "string" && queryParams?.sort.split(":")[1];
+  const sortDirection = getSearchSortOrder(queryParams);
 
-  const searchActions = [
+  const sortActions = [
     {
       label: t("sortActions.AZ"),
       onClick: () => handleSortToggle("title", SearchDirections.ASC),
@@ -88,76 +82,90 @@ export default function Projects({ variant }: ProjectsProps) {
       onClick: () => handleSortToggle("title", SearchDirections.DESC),
       checked: sortDirection === SearchDirections.DESC,
     },
+  ];
+
+  const filterDateActions = [
     {
-      label: t("sortActions.approved"),
-      onClick: () => handleFieldToggle("approved", ["1", ""]),
+      label: t("filterActions.pastProjects"),
+      onClick: () => handleFieldToggle("active", ["1", ""]),
       checked: queryParams.approved === "1",
     },
     {
-      label: t("sortActions.pending"),
-      onClick: () => handleFieldToggle("approved", ["0", ""]),
+      label: t("filterActions.activeProjects"),
+      onClick: () => handleFieldToggle("active", ["0", ""]),
       checked: queryParams.approved === "0",
     },
   ];
 
+  const filterStatusActions = [
+    {
+      label: t("filterActions.approved"),
+      onClick: () => handleFieldToggle("approved", ["1", ""]),
+      checked: queryParams.approved === "1",
+    },
+    {
+      label: t("filterActions.pending"),
+      onClick: () => handleFieldToggle("pending", ["1", ""]),
+      checked: queryParams.pending === "1",
+    },
+    {
+      label: t("filterActions.completed"),
+      onClick: () => handleFieldToggle("completed", ["1", ""]),
+      checked: queryParams.active === "1",
+    },
+  ];
+
+  const pagination = (
+    <Pagination
+      page={page}
+      count={last_page}
+      onChange={(_, page: number) => setPage(page)}
+    />
+  );
+
   return (
-    <>
-      {isProjectsLoading && (
-        <OverlayCenter variant="contained">
-          <CircularProgress aria-label={t("loadingAriaLabel")} />
-        </OverlayCenter>
-      )}
-      <PageSection
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          gap: 2,
-        }}>
-        <Box
-          sx={{
-            display: "grid",
-            gridTemplateColumns: "2fr 1fr",
-            flex: 1,
-            maxHeight: 80,
-          }}>
-          <SearchBar
-            onSearch={text => updateQueryParam("title[]", text)}
-            placeholder={t("searchPlaceholder")}
+    <PageBody>
+      <PageSection>
+        <SearchBar
+          updateQueryParam={(text: string) => updateQueryParam("title[]", text)}
+          placeholder={t("searchPlaceholder")}
+          legend={<ProjectsLegend />}>
+          <SearchActionMenu
+            actions={sortActions}
+            startIcon={<SortIcon />}
+            renderedSelectedLabel={tApplication("sortedBy")}
+            renderedDefaultLabel={tApplication("sortBy")}
+            aria-label={tApplication("sortBy")}
           />
           <SearchActionMenu
-            actions={searchActions}
-            sx={{ justifySelf: "start", my: "auto" }}
+            actions={filterDateActions}
+            startIcon={<FilterAltIcon />}
+            renderedSelectedLabel={tApplication("filteredByDate")}
+            renderedDefaultLabel={tApplication("filterByDate")}
+            aria-label={tApplication("filterByDate")}
           />
-        </Box>
-        <Box sx={{ display: "flex", flex: 1, gap: 2 }}>
-          <ProjectsLegend />
-        </Box>
+          <SearchActionMenu
+            actions={filterStatusActions}
+            multiple
+            startIcon={<FilterAltIcon />}
+            renderedSelectedLabel={tApplication("filteredBy")}
+            renderedDefaultLabel={tApplication("filterByProjectStatus")}
+            aria-label={tApplication("filterByProjectStatus")}
+          />
+        </SearchBar>
       </PageSection>
-      <PageSection sx={{ flexGrow: 1 }}>
-        {isProjectsError && (
-          <Message severity="error" sx={{ mb: 3 }}>
-            {t("getOrganisationProjectsError")}
-          </Message>
-        )}
-        {!isProjectsLoading && projectsData && (
+      <PageSection>
+        <Results
+          queryState={queryState}
+          noResultsMessage={t("noResultsProjects")}
+          pagination={pagination}
+          errorMessage={t.rich("errorResultsProjects", {
+            contactLink: ContactLink,
+          })}
+          count={total}>
           <ProjectList projects={projectsData} />
-        )}
+        </Results>
       </PageSection>
-      <PageSection
-        sx={{
-          flexGrow: 1,
-          display: "flex",
-          justifyContent: "center",
-        }}>
-        <Pagination
-          isLoading={isProjectsLoading}
-          page={page}
-          count={last_page}
-          onChange={(e: React.ChangeEvent<unknown>, page: number) =>
-            setPage(page)
-          }
-        />
-      </PageSection>
-    </>
+    </PageBody>
   );
 }

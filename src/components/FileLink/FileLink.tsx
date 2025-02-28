@@ -7,7 +7,7 @@ import GppBadIcon from "@mui/icons-material/GppBad";
 import GppGoodIcon from "@mui/icons-material/GppGood";
 import UploadIcon from "@mui/icons-material/Upload";
 import { LoadingButton } from "@mui/lab";
-import { Box, CircularProgress, Link, Typography } from "@mui/material";
+import { CircularProgress, Link, Typography, Grid } from "@mui/material";
 import { useTranslations } from "next-intl";
 import prettyBytes from "pretty-bytes";
 import { ChangeEventHandler, ReactNode, useCallback, useRef } from "react";
@@ -96,25 +96,23 @@ export default function FileLink({
   const showLink = fileNameText && fileHref;
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        gap: 1,
-      }}>
-      <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
-        <LoadingButton
-          color="primary"
-          variant="outlined"
-          onClick={handleFileSelectorOpen}
-          startIcon={<UploadIcon />}
-          loading={isUploading && !isScanning}
-          fullWidth>
-          {fileButtonText}
-        </LoadingButton>
-        {!showLink && includeStatus && statusIcons}
-      </Box>
-      <div>
+    <Grid container item spacing={0}>
+      <Grid container item>
+        <Grid item xs={10}>
+          <LoadingButton
+            color="primary"
+            variant="outlined"
+            onClick={handleFileSelectorOpen}
+            startIcon={<UploadIcon />}
+            loading={isUploading && !isScanning}>
+            {fileButtonText}
+          </LoadingButton>
+        </Grid>
+        <Grid item xs={2} sx={{ alignContent: "center" }}>
+          {!showLink && includeStatus && statusIcons}
+        </Grid>
+      </Grid>
+      <Grid item xs={12}>
         {showLink && (
           <Link
             href={fileHref}
@@ -142,7 +140,7 @@ export default function FileLink({
         </Typography>
         {isSizeInvalid &&
           (fileMaxSizeErrorText || t("maxSizeErrorText", translationsMaxSize))}
-      </div>
+      </Grid>
       <input
         id="fileInput"
         type="file"
@@ -152,6 +150,6 @@ export default function FileLink({
         onChange={onFileChange}
         accept={accept}
       />
-    </Box>
+    </Grid>
   );
 }
