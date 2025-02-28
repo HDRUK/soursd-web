@@ -124,32 +124,34 @@ export default function NotificationModal({
             </Box>
           )}
 
-          <TableContainer
-            component={Paper}
-            sx={{ marginTop: 0, width: "100%" }}>
-            <Table size="small">
-              <TableHead>
-                <TableRow>
-                  <TableCell>{t("col1")}</TableCell>
-                  <TableCell align="right">{t("col2")}</TableCell>
-                  <TableCell align="right">{t("col3")}</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {Object.entries(notification.data.details).map(
-                  ([key, value]) => (
-                    <TableRow key={key}>
-                      <TableCell component="th" scope="row">
-                        {key}
-                      </TableCell>
-                      <TableCell align="right">{value.old}</TableCell>
-                      <TableCell align="right">{value.new}</TableCell>
-                    </TableRow>
-                  )
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
+          {notification.data.details && (
+            <TableContainer
+              component={Paper}
+              sx={{ marginTop: 0, width: "100%" }}>
+              <Table size="small">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>{t("col1")}</TableCell>
+                    <TableCell align="right">{t("col2")}</TableCell>
+                    <TableCell align="right">{t("col3")}</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {Object.entries(notification.data.details).map(
+                    ([key, value]) => (
+                      <TableRow key={key}>
+                        <TableCell component="th" scope="row">
+                          {key}
+                        </TableCell>
+                        <TableCell align="right">{value.old}</TableCell>
+                        <TableCell align="right">{value.new}</TableCell>
+                      </TableRow>
+                    )
+                  )}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          )}
         </CardContent>
       </Card>
     </Modal>
