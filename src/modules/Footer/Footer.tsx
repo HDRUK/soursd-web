@@ -37,7 +37,10 @@ export default function Footer(props: FooterProps) {
   ];
 
   return (
-    <Box {...props} component="footer" sx={{ backgroundColor: "footer.main" }}>
+    <Box
+      {...props}
+      component="footer"
+      sx={{ backgroundColor: "footer.main", mt: 3 }}>
       <Divider sx={{ height: "6px" }} />
       <PageCenter>
         <StyledFooter>

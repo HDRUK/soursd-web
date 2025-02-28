@@ -116,6 +116,10 @@ const ROUTES: Routes = {
     path: "/organisation/profile/details",
     permissions: [UserGroup.ORGANISATIONS],
   },
+  profileOrganisationHome: {
+    path: "/organisation/profile/home",
+    permissions: [UserGroup.ORGANISATIONS],
+  },
   profileOrganisationDetailsNameAndAddress: {
     path: "/organisation/profile/details/name-and-address",
     permissions: [UserGroup.ORGANISATIONS],
