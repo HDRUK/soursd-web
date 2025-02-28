@@ -21,12 +21,16 @@ async function request<T>(
     ...options?.headers,
   });
 
+  console.log("** HEADEES", headers);
+
   const body =
     payload instanceof Function
       ? payload()
       : payload instanceof FormData
         ? payload
         : JSON.stringify(payload);
+
+  console.log("url", url);
 
   const response = await fetch(url, {
     ...options,

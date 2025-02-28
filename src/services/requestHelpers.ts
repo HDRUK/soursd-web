@@ -2,15 +2,17 @@ import { ResponseMessageType } from "@/consts/requests";
 import { ResponseOptions, ResponseJson } from "@/types/requests";
 
 export async function getAccessToken(): Promise<string | undefined> {
-  const response = await fetch("/api/auth/token", {
+  const response = await fetch("http://localhost:3000/api/auth/token", {
     method: "GET",
     credentials: "include",
   });
 
-  if (!response.ok) {
-    handleResponseError(response);
-    return undefined;
-  }
+  console.log("response", response);
+
+  // if (!response.ok) {
+  //   handleResponseError(response);
+  //   return undefined;
+  // }
 
   const data = await response.json();
   return data.access_token;

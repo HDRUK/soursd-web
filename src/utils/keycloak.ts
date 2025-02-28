@@ -1,6 +1,6 @@
 import keycloakConfig from "@/config/keycloak";
 
-const handleLogin = () => {
+const getKeycloakLoginUrl = () => {
   const authUrl = `${keycloakConfig.authServerUrl}/realms/${keycloakConfig.realm}/protocol/openid-connect/auth`;
   const params = new URLSearchParams({
     client_id: keycloakConfig.clientId,
@@ -8,7 +8,12 @@ const handleLogin = () => {
     redirect_uri: keycloakConfig.redirectUriLogin,
     scope: "openid profile email",
   });
-  window.location.href = `${authUrl}?${params.toString()}`;
+
+  return `${authUrl}?${params.toString()}`;
+};
+
+const handleLogin = () => {
+  window.location.href = getKeycloakLoginUrl();
 };
 
 const handleLogout = () => {
@@ -33,4 +38,4 @@ const handleRegister = () => {
   window.location.href = `${registerUrl}?${params.toString()}`;
 };
 
-export { handleLogin, handleLogout, handleRegister };
+export { handleLogin, handleLogout, handleRegister, getKeycloakLoginUrl };
