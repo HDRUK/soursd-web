@@ -48,7 +48,5 @@ export default function useResponsiveProps<T>(
     {}
   );
 
-  console.log("props", props);
-
   return props as T;
 }
