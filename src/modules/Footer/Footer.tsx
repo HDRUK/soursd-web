@@ -68,7 +68,7 @@ export default function Footer(props: FooterProps) {
                 </li>
               ))}
             </UL>
-            Copyright (C) 2024 Health Data Research UK
+            {t("copyright")}
           </Box>
           <Box>
             <Typography
@@ -85,7 +85,7 @@ export default function Footer(props: FooterProps) {
                 src="/images/logos/mrc.svg"
                 width={207}
                 height={64}
-                alt="Medical Research Council logo"
+                alt={t("mrcLogoAlt")}
               />
 
               <Box sx={{ mb: "-21px" }}>
@@ -93,7 +93,7 @@ export default function Footer(props: FooterProps) {
                   src="/images/logos/dsit.svg"
                   width={228}
                   height={122}
-                  alt="Department for Science, Innovation & Technology"
+                  alt={t("dsitLogoAlt")}
                 />
               </Box>
             </Box>
