@@ -1,7 +1,6 @@
 import { ConfigProps, withConfig } from "@/components/Config";
 import { redirect } from "next/navigation";
 import { ReactNode } from "react";
-import TabsContents from "./components/TabsContents";
 import TabsSections from "./components/TabsSections";
 import { ConfigurationSubTabs, PageTabs } from "./consts/tabs";
 
@@ -21,7 +20,6 @@ function Layout({ children, params: { tabId }, config }: LayoutProps) {
   return (
     <>
       <TabsSections />
-      <TabsContents tabId={tabId} />
       {children}
     </>
   );

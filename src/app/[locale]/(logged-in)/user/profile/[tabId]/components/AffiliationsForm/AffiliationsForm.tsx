@@ -1,9 +1,12 @@
+import DateInput from "@/components/DateInput";
 import Form from "@/components/Form";
 import FormActions from "@/components/FormActions";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
 import FormSection from "@/components/FormSection";
+import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
 import SelectInput from "@/components/SelectInput";
 import yup from "@/config/yup";
+import { ROUTES } from "@/consts/router";
 import { AffiliationRelationship } from "@/consts/user";
 import useOrganisationsQuery from "@/services/organisations/useOrganisationsQuery";
 import { ResearcherAffiliation } from "@/types/application";
@@ -11,9 +14,6 @@ import { MutationState } from "@/types/form";
 import { Checkbox, Grid, MenuItem, Select, TextField } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
-import DateInput from "@/components/DateInput";
-import { ROUTES } from "@/consts/router";
-import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
 import AskOrganisationModal from "../AskOrganisation";
 
 export interface AffiliationsFormProps {

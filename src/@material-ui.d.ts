@@ -19,6 +19,7 @@ interface ColorOverrides {
   greys: true;
   lightPurple: true;
   neutralPink: true;
+  textSecondary: true;
 }
 
 declare module "@mui/material/styles/createPalette" {
@@ -36,6 +37,7 @@ declare module "@mui/material/styles/createPalette" {
     mint: SimplePaletteColorOptions;
     lightPurple: SimplePaletteColorOptions;
     neutralPink: SimplePaletteColorOptions;
+    textSecondary: SimplePaletteColorOptions;
   }
 
   interface Palette extends CustomPalette {}

@@ -17,10 +17,12 @@ async function Page({ params: { tabId }, config }: PageProps) {
   }
 
   return (
-    <PageBodyContainer>
+    <>
       <TabsSections />
-      <TabsContents tabId={tabId} />
-    </PageBodyContainer>
+      <PageBodyContainer>
+        <TabsContents tabId={tabId} />
+      </PageBodyContainer>
+    </>
   );
 }
 

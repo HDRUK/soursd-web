@@ -96,6 +96,7 @@ const PALETTE_THEME_PURPLE_BLUE = {
     lightPurple: {
       main: "#f7f3fb",
     },
+    textSecondary: createColor("#585754"),
   },
 };
 

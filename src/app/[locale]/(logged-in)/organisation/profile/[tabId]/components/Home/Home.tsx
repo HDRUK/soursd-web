@@ -1,8 +1,6 @@
-"use client";
-
 import ActionsPanel from "@/components/ActionsPanel";
 import ActionsPanelItem from "@/components/ActionsPanelItem";
-import Postit from "@/components/Postit";
+import { OrganisationIcon } from "@/consts/icons";
 import { useStore } from "@/data/store";
 import { Link } from "@/i18n/routing";
 import {
@@ -11,33 +9,16 @@ import {
   PageColumnDetails,
   PageColumns,
 } from "@/modules";
-import { Custodian } from "@/types/application";
-import { Button, Typography, useTheme } from "@mui/material";
-import { useTranslations } from "next-intl";
+import { Button } from "@mui/material";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 
-export interface DetailsFormValues {
-  name: string;
-  contact_email: string;
-}
-
-export interface HomeProps {
-  custodian: Custodian;
-}
-
-const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
-
-export default function Home({ custodian }: HomeProps) {
-  const theme = useTheme();
-
+const Home = () => {
   const routes = useStore(state => state.getApplication().routes);
-
-  const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
   const actions = [
     {
-      heading: "Complete your configuration",
-      description:
-        "This is where we need you to setup things lke IDV technology and the decision models...",
+      heading: "Complete your Organisation name & address",
+      icon: <OrganisationIcon />,
       action: (
         <Button
           component={Link}
@@ -47,48 +28,75 @@ export default function Home({ custodian }: HomeProps) {
       ),
     },
     {
-      heading: "Add your users",
-      description:
-        "As well as yourself, it’s a good idea to set up your colleagues who will help administer the system and approve users, projects and organisations",
+      heading: "Complete your organisation digital identifiers",
+      icon: <OrganisationIcon />,
       action: (
         <Button
           component={Link}
           variant="outlined"
           href={routes.profileCustodianUsers.path}>
-          Add users
+          Complete this section
         </Button>
       ),
     },
     {
-      heading: "Add your contacts",
+      heading: "Complete your sector, size & website details",
+      icon: <OrganisationIcon />,
       action: (
         <Button
           component={Link}
           variant="outlined"
-          href={routes.profileCustodianContacts.path}>
-          Add contacts
+          href={routes.profileCustodianUsers.path}>
+          Complete this section
         </Button>
       ),
     },
     {
-      heading: "Add your projects",
+      heading: "Add your Organisation's UK subsidiaries",
+      icon: <OrganisationIcon />,
       action: (
         <Button
           component={Link}
           variant="outlined"
-          href={routes.profileCustodianProjects.path}>
-          Add projects
+          href={routes.profileCustodianUsers.path}>
+          Complete this section
         </Button>
       ),
     },
     {
-      heading: "Add organisations",
+      heading: "Complete your Organisation's data security compliance",
+      icon: <OrganisationIcon />,
       action: (
         <Button
           component={Link}
           variant="outlined"
-          href={routes.profileCustodianOrganisations.path}>
-          Add organisations
+          href={routes.profileCustodianUsers.path}>
+          Complete this section
+        </Button>
+      ),
+    },
+    {
+      heading:
+        "Add a Senior Responsible Officer (SRO) and Delegates from your Organisation",
+      icon: <ManageAccountsIcon />,
+      action: (
+        <Button
+          component={Link}
+          variant="outlined"
+          href={routes.profileCustodianUsers.path}>
+          Add delegates
+        </Button>
+      ),
+    },
+    {
+      heading: "Affiliate employees or students with your Organisation",
+      icon: <ManageAccountsIcon />,
+      action: (
+        <Button
+          component={Link}
+          variant="outlined"
+          href={routes.profileCustodianUsers.path}>
+          Add user
         </Button>
       ),
     },
@@ -119,23 +127,10 @@ export default function Home({ custodian }: HomeProps) {
         </PageBody>
       </PageColumnBody>
       <PageColumnDetails>
-        <PageBody>
-          <Postit>
-            <Typography variant="h4" sx={{ mb: 1 }}>
-              {t("uniqueIdentifierTitle")}
-            </Typography>
-            <Typography
-              sx={{
-                fontSize: theme.typography.h4.fontSize,
-                fontWeight: 500,
-                mb: 1,
-              }}>
-              {custodian.unique_identifier}
-            </Typography>
-            <Typography>{t("uniqueIdentifierCaption")}</Typography>
-          </Postit>
-        </PageBody>
+        <PageBody>SOURSD</PageBody>
       </PageColumnDetails>
     </PageColumns>
   );
-}
+};
+
+export default Home;
