@@ -45,7 +45,7 @@ declare module "@mui/material/styles/createPalette" {
 
   type AugmentedColorPaletteOptions = KeysMatching<
     Palette,
-    SimplePaletteColorOptions | PaletteColor | string
+    SimplePaletteColorOptions | PaletteColor
   >;
 
   interface IconButtonProps {}
