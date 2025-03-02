@@ -1,3 +1,3 @@
-import TermsAndConditionsModal from "./TermsAndConditionsModal"
+import TermsAndConditionsModal from "./TermsAndConditionsModal";
 
 export default TermsAndConditionsModal;

@@ -8,15 +8,21 @@ import { AccountType } from "@/types/accounts";
 import PeopleIcon from "@mui/icons-material/People";
 import PersonIcon from "@mui/icons-material/Person";
 import { LoadingButton } from "@mui/lab";
-import { Box, Checkbox, FormControlLabel, Typography, Link } from "@mui/material";
+import {
+  Box,
+  Checkbox,
+  FormControlLabel,
+  Typography,
+  Button,
+} from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import useRegisterUser from "@/hooks/useRegisterUser";
-import AccountOption from "../AccountOption";
 import TermsAndConditionsModal from "@/components/TermsAndConditionsModal";
 import { useRouter } from "next/navigation";
 import { showAlert } from "@/utils/showAlert";
 import { ROUTES } from "@/consts/router";
+import AccountOption from "../AccountOption";
 
 const NAMESPACE_TRANSLATIONS_PROFILE = "Register";
 const NAMESPACE_TRANSLATION_TERMS_AND_CONDITIONS = "TermsAndConditions";
@@ -34,7 +40,7 @@ export default function AccountConfirm() {
   const { handleRegister, ...registerUserState } = useRegisterUser({
     selected,
   });
-  
+
   const handleSelect = (option: AccountType) => {
     setSelected(option);
   };
@@ -50,7 +56,7 @@ export default function AccountConfirm() {
 
   const handleDeclineTerms = () => {
     handleCloseModal();
-    setTimeout(() => { 
+    setTimeout(() => {
       showAlert("warning", {
         text: tTerms("alertText"),
         title: tTerms("alertTitle"),
@@ -59,16 +65,36 @@ export default function AccountConfirm() {
         closeOnConfirm: true,
         closeOnCancel: true,
         preConfirm: () => {
-          router.push(ROUTES.homepage.path)
+          router.push(ROUTES.homepage.path);
         },
         preDeny: () => {
-          handleOpenModal()
-        }
+          handleOpenModal();
+        },
       });
     }, 100);
-  }
+  };
 
-  const isContinueDisabled = selected === null || !termsChecked || !hasAcceptedTerms;
+  const renderBoldText = useCallback(
+    (chunks: React.ReactNode) => (
+      <Button
+        onClick={handleOpenModal}
+        sx={{
+          padding: 0,
+          textTransform: "none",
+          fontWeight: "bold",
+          "&:hover": {
+            backgroundColor: "transparent",
+            textDecoration: "underline",
+          },
+        }}>
+        {chunks}
+      </Button>
+    ),
+    []
+  );
+
+  const isContinueDisabled =
+    selected === null || !termsChecked || !hasAcceptedTerms;
   const { isPending, isError, error } = registerUserState;
 
   return (
@@ -124,13 +150,7 @@ export default function AccountConfirm() {
                 disabled={!hasAcceptedTerms}
               />
             }
-            label={t.rich("termsLabel", {
-              bold: chunks => (
-                <Link component="button" onClick={handleOpenModal}>
-                  <strong>{chunks}</strong>
-                </Link>
-              ),
-            })}
+            label={t.rich("termsLabel", { bold: renderBoldText })}
           />
           <LoadingButton
             onClick={handleRegister}
@@ -147,14 +167,11 @@ export default function AccountConfirm() {
           )}
         </Box>
         {(!hasAcceptedTerms || !termsChecked) && (
-              <Message severity="info">
-                {tTerms("termsAndConditionsInfo")}
-              </Message>
-            )}
+          <Message severity="info">{tTerms("termsAndConditionsInfo")}</Message>
+        )}
       </Box>
-           
-  
-      <TermsAndConditionsModal 
+
+      <TermsAndConditionsModal
         open={isModalOpen}
         onClose={handleCloseModal}
         onAccept={handleAcceptTerms}
