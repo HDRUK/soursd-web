@@ -1,28 +1,37 @@
-import { BoxProps } from "@mui/system";
+import { BoxProps, useTheme } from "@mui/system";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import image from "public/soursd_logo.svg";
+import logoDefault from "public/soursd_logo.svg";
+import logoWhite from "public/soursd_logo_white.svg";
 import { StyledLogoContainer, StyledLogoTitle } from "./SoursdLogo.styles";
 
 const NAMESPACE_TRANSLATIONS_SOURSD_LOGO = "SoursdLogo";
 
-export interface SoursdLogoProps extends BoxProps {
+export interface SoursdLogoProps extends Omit<BoxProps, "color"> {
+  color?: "default" | "white";
   variant?: "basic" | "titled";
   size?: number;
 }
 
 export default function SoursdLogo({
   variant = "basic",
-  size = 90,
+  size = 65,
+  color,
   ...restProps
 }: SoursdLogoProps) {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_SOURSD_LOGO);
+  const theme = useTheme();
+
+  const logoColor = color === "white" ? logoWhite : logoDefault;
+  const textColor = color === "white" ? "#fff" : theme.palette.grey700;
 
   return (
     <StyledLogoContainer variant={variant} {...restProps}>
-      <Image src={image} alt="SOURSD" width={size} height={size} priority />
+      <Image src={logoColor} alt="SOURSD" width={size} height={size} priority />
       {variant === "titled" && (
-        <StyledLogoTitle variant="h1">{t("logoTitle")}</StyledLogoTitle>
+        <StyledLogoTitle sx={{ color: textColor }}>
+          {t("logoTitle")}
+        </StyledLogoTitle>
       )}
     </StyledLogoContainer>
   );

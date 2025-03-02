@@ -52,6 +52,7 @@ const PALETTE_THEME_PURPLE_BLUE = {
       main: "#1e1e1e",
       contrastText: "#fff",
     },
+    grey700: "#53575A",
     greys: {
       extraLight: grey["100"],
       light: grey["300"],
