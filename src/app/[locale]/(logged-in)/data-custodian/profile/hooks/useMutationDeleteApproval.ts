@@ -2,7 +2,7 @@ import { DeleteApprovalPayload, deleteApproval } from "@/services/approvals";
 import { EntityType } from "@/types/api";
 import { useMutation } from "@tanstack/react-query";
 
-export default function useMutationApprovals() {
+export default function useMutationDeleteApproval() {
   return useMutation({
     mutationKey: ["deleteApproval"],
     mutationFn: (payload: DeleteApprovalPayload & { type: EntityType }) => {

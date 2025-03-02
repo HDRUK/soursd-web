@@ -4,8 +4,8 @@ import { PageBodyContainer, PageGuidance } from "@/modules";
 import { toCamelCase } from "@/utils/string";
 import { useTranslations } from "next-intl";
 import { ConfigurationSubTabs, PageTabs } from "../consts/tabs";
-import SubTabsSections from "./components/SubTabSections";
-import SubTabsContents from "./components/SubsTabContents";
+import SubTabsSections from "../SubTabSections";
+import SubTabsContents from "../SubsTabContents";
 
 interface PageProps extends ConfigProps {
   params: {

@@ -1,14 +1,13 @@
 import { ConfigProps, withConfig } from "@/components/Config";
 import { redirect } from "next/navigation";
 import { ReactNode } from "react";
-import TabsSections from "./components/TabsSections";
-import { ConfigurationSubTabs, PageTabs } from "./consts/tabs";
+import TabsSections from "../TabsSections";
+import { ConfigurationSubTabs, PageTabs, UserSubTabs } from "../../consts/tabs";
 
 interface LayoutProps extends ConfigProps {
   children: ReactNode;
   params: {
     tabId: PageTabs;
-    subTabId: ConfigurationSubTabs;
   };
 }
 

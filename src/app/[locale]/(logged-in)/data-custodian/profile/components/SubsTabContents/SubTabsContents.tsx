@@ -7,10 +7,17 @@ import {
   getSubTabs,
   ConfigurationSubTabs,
   PageTabs,
-} from "../../../consts/tabs";
+  UserSubTabs,
+} from "../../consts/tabs";
 import Rules from "../Rules";
 import ValidationChecks from "../ValidationChecks";
 import Webhooks from "../Webhooks";
+import UserHistory from "../UserHistory";
+import UserIdentity from "../UserIdentity";
+import UserTrainingAccreditations from "../UserTrainingAccreditations";
+import UserProjects from "../UserProjects";
+import UserCustodianOrgInfo from "../UserCustodianOrgInfo";
+import UserAffiliations from "../UserAffiliations";
 
 interface TabsContentsProps {
   tabId: string;
@@ -28,12 +35,9 @@ export default function SubTabsContents({
 
   const availableSubTabs = getSubTabs(tabId as PageTabs) || [];
 
-  if (
-    !user ||
-    !custodian ||
-    !availableSubTabs.includes(subTabId as ConfigurationSubTabs)
-  )
+  if (!user || !custodian || !availableSubTabs.includes(subTabId)) {
     notFound();
+  }
 
   let content = null;
 
@@ -46,6 +50,24 @@ export default function SubTabsContents({
       break;
     case ConfigurationSubTabs.WEBHOOKS:
       content = <Webhooks />;
+      break;
+    case UserSubTabs.HISTORY:
+      content = <UserHistory />;
+      break;
+    case UserSubTabs.IDENTITY:
+      content = <UserIdentity />;
+      break;
+    case UserSubTabs.TRAINING_ACCREDITATIONS:
+      content = <UserTrainingAccreditations />;
+      break;
+    case UserSubTabs.PROJECTS:
+      content = <UserProjects />;
+      break;
+    case UserSubTabs.CUSTODIAN_ORG_INFO:
+      content = <UserCustodianOrgInfo />;
+      break;
+    case UserSubTabs.AFFILIATIONS:
+      content = <UserAffiliations />;
       break;
     default:
       content = null;

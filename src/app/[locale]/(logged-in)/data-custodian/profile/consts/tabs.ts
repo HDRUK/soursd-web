@@ -18,19 +18,22 @@ enum UserSubTabs {
   PROJECTS = "projects",
   IDENTITY = "identity",
   TRAINING_ACCREDITATIONS = "training_accreditations",
-  CUSTODIAN_ORG_INFORMATION = "custodian_org_information",
+  CUSTODIAN_ORG_INFO = "custodian_org_information",
   HISTORY = "history",
 }
 
 type TabStructure = {
-  [key in PageTabs]?: ConfigurationSubTabs[];
+  [key in PageTabs]?: ConfigurationSubTabs[] | UserSubTabs[];
 };
 
 const tabHierarchy: TabStructure = {
   [PageTabs.CONFIGURATION]: Object.values(ConfigurationSubTabs),
+  [PageTabs.USERS]: Object.values(UserSubTabs),
 };
 
-function getSubTabs(tab: PageTabs): ConfigurationSubTabs[] | undefined {
+function getSubTabs(
+  tab: PageTabs
+): ConfigurationSubTabs[] | UserSubTabs[] | undefined {
   return tabHierarchy[tab];
 }
 
