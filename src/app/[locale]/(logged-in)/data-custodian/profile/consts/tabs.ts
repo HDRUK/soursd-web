@@ -13,6 +13,15 @@ enum ConfigurationSubTabs {
   VALIDATION_CHECKS = "validation-checks",
 }
 
+enum UserSubTabs {
+  AFFILIATIONS = "affiliations",
+  PROJECTS = "projects",
+  IDENTITY = "identity",
+  TRAINING_ACCREDITATIONS = "training_accreditations",
+  CUSTODIAN_ORG_INFORMATION = "custodian_org_information",
+  HISTORY = "history",
+}
+
 type TabStructure = {
   [key in PageTabs]?: ConfigurationSubTabs[];
 };
@@ -25,4 +34,4 @@ function getSubTabs(tab: PageTabs): ConfigurationSubTabs[] | undefined {
   return tabHierarchy[tab];
 }
 
-export { PageTabs, ConfigurationSubTabs, getSubTabs };
+export { UserSubTabs, PageTabs, ConfigurationSubTabs, getSubTabs };

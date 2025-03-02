@@ -3,10 +3,10 @@
 import { useStore } from "@/data/store";
 import { notFound } from "next/navigation";
 import Projects from "@/modules/Projects";
-import { PageTabs } from "../../consts/tabs";
 import Home from "../Home";
 import Users from "../Users";
 import Organisations from "../Organisations";
+import { PageTabs } from "../../consts/tabs";
 
 interface TabsContentsProps {
   tabId: string;
