@@ -152,7 +152,7 @@ export const mockedTermsAndConditions = {
   acceptingTerms: {
     content: (
       <>
-        <Typography variant="h2" gutterBottom>
+        <Typography variant="h5" gutterBottom>
           Accepting Terms and Conditions
         </Typography>
         <Typography>
@@ -165,7 +165,7 @@ export const mockedTermsAndConditions = {
   changesToTerms: {
     content: (
       <>
-        <Typography variant="h2" gutterBottom>
+        <Typography variant="h5" gutterBottom>
           Changes to Terms and Conditions
         </Typography>
         <Typography>
@@ -178,7 +178,7 @@ export const mockedTermsAndConditions = {
   usingOurProduct: {
     content: (
       <>
-        <Typography variant="h2" gutterBottom>
+        <Typography variant="h5" gutterBottom>
           Using Our Product
         </Typography>
         <Typography>
@@ -191,7 +191,7 @@ export const mockedTermsAndConditions = {
   generalRestrictions: {
     content: (
       <>
-        <Typography variant="h2" gutterBottom>
+        <Typography variant="h5" gutterBottom>
           General Restrictions
         </Typography>
         <Typography>
@@ -204,7 +204,7 @@ export const mockedTermsAndConditions = {
   contentPolicy: {
     content: (
       <>
-        <Typography variant="h2" gutterBottom>
+        <Typography variant="h5" gutterBottom>
           Content Policy
         </Typography>
         <Typography>
@@ -219,7 +219,7 @@ export const mockedTermsAndConditions = {
   yourRights: {
     content: (
       <>
-        <Typography variant="h2" gutterBottom>
+        <Typography variant="h5" gutterBottom>
           Your Rights
         </Typography>
         <Typography>
@@ -234,7 +234,7 @@ export const mockedTermsAndConditions = {
   copyrightPolicy: {
     content: (
       <>
-        <Typography variant="h2" gutterBottom>
+        <Typography variant="h5" gutterBottom>
           Copyright Policy
         </Typography>
         <Typography>
@@ -248,7 +248,7 @@ export const mockedTermsAndConditions = {
   relationshipGuidelines: {
     content: (
       <>
-        <Typography variant="h2" gutterBottom>
+        <Typography variant="h5" gutterBottom>
           Relationship Guidelines
         </Typography>
         <Typography>
@@ -262,7 +262,7 @@ export const mockedTermsAndConditions = {
   liabilityPolicy: {
     content: (
       <>
-        <Typography variant="h2" gutterBottom>
+        <Typography variant="h5" gutterBottom>
           Liability Policy
         </Typography>
         <Typography>
@@ -275,7 +275,7 @@ export const mockedTermsAndConditions = {
   generalLegalTerms: {
     content: (
       <>
-        <Typography variant="h2" gutterBottom>
+        <Typography variant="h5" gutterBottom>
           General Legal Terms
         </Typography>
         <Typography>
