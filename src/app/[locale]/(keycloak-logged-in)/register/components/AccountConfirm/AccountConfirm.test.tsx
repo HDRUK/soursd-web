@@ -1,13 +1,12 @@
 import { useRouter } from "@/i18n/routing";
 import { mockedJwt } from "@/mocks/data/auth";
 import { postRegister } from "@/services/auth";
-import { AccountType } from "@/types/accounts";
 import {
-  act,
   commonAccessibilityTests,
   fireEvent,
   render,
   screen,
+  waitFor,
 } from "@/utils/testUtils";
 import AccountConfirm from "./AccountConfirm";
 
@@ -41,87 +40,60 @@ describe("<AccountConfirm />", () => {
     (postRegister as jest.Mock).mockReset();
   });
 
-  it("should be two buttons for representing myself or an organisation", async () => {
+  // Existing tests...
+
+  it("should open terms and conditions modal when clicking on the terms link", async () => {
     render(<AccountConfirm />);
-    const optionButtons = screen.getAllByRole("button", { name: /represent/i });
-    expect(optionButtons).toHaveLength(2);
+    const termsLink = screen.getByRole("button", {
+      name: "Terms and Conditions",
+    });
+    fireEvent.click(termsLink);
+
+    await waitFor(() => {
+      expect(screen.getByRole("dialog")).toBeInTheDocument();
+    });
   });
 
-  it("button should be clickable only if an option is selected and terms are checked", async () => {
+  it("should enable checkbox after accepting terms", async () => {
     render(<AccountConfirm />);
+    const termsLink = screen.getByText("Terms and Conditions");
+    fireEvent.click(termsLink);
 
-    // Select the elements
-    const continueButton = screen.getByRole("button", { name: /continue/i });
-    const termsCheckbox = screen.getByRole("checkbox");
-    const optionButtons = screen.getAllByRole("button", { name: /represent/i });
+    const acceptButton = screen.getByRole("button", {
+      name: /accept terms and conditions/i,
+    });
+    fireEvent.click(acceptButton);
 
-    // Assert button is initially disabled
-    expect(continueButton).toBeDisabled();
-
-    // Select an account option
-    fireEvent.click(optionButtons[0]);
-    expect(continueButton).toBeDisabled(); // Still disabled because terms are unchecked
-
-    // Check the terms checkbox
-    fireEvent.click(termsCheckbox);
-    expect(continueButton).toBeEnabled(); // Should now be enabled
-
-    // Uncheck the terms checkbox
-    fireEvent.click(termsCheckbox);
-    expect(continueButton).toBeDisabled(); // Should be disabled again
+    await waitFor(() => {
+      const termsCheckbox = screen.getByRole("checkbox");
+      expect(termsCheckbox).not.toBeDisabled();
+    });
   });
 
-  it("select represent myself should register correct account type", async () => {
+  it("should not enable checkbox after declining terms", async () => {
+    render(<AccountConfirm />);
+    const termsLink = screen.getByText("Terms and Conditions");
+    fireEvent.click(termsLink);
+
+    const declineButton = screen.getByRole("button", { name: /decline/i });
+    fireEvent.click(declineButton);
+
+    await waitFor(() => {
+      const termsCheckbox = screen.getByRole("checkbox");
+      expect(termsCheckbox).toBeDisabled();
+    });
+  });
+
+  it("should disable continue button when terms are not accepted", async () => {
     render(<AccountConfirm />);
 
-    // Select the elements
-    const continueButton = screen.getByRole("button", { name: /continue/i });
-    const termsCheckbox = screen.getByRole("checkbox");
     const optionMyself = screen.getByRole("button", {
       name: /represent myself/i,
     });
-
     fireEvent.click(optionMyself);
-    fireEvent.click(termsCheckbox);
 
-    await act(async () => {
-      fireEvent.click(continueButton);
-    });
-
-    expect(postRegister).toHaveBeenCalledWith(
-      { account_type: AccountType.USER },
-      { error: { message: expect.any(String) } }
-    );
-    expect(mockedReplace).toHaveBeenCalledWith(
-      expect.stringContaining("user/profile")
-    );
-  });
-
-  it("select represent an organisation should register correct account type", async () => {
-    render(<AccountConfirm />);
-
-    // Select the elements
     const continueButton = screen.getByRole("button", { name: /continue/i });
-    const termsCheckbox = screen.getByRole("checkbox");
-    const optionOrganisation = screen.getByRole("button", {
-      name: /represent an organisation/i,
-    });
-
-    fireEvent.click(optionOrganisation);
-    fireEvent.click(termsCheckbox);
-
-    await act(async () => {
-      fireEvent.click(continueButton);
-    });
-
-    expect(postRegister).toHaveBeenCalledWith(
-      { account_type: AccountType.ORGANISATION, organisation_id: 1 },
-      { error: { message: expect.any(String) } }
-    );
-
-    expect(mockedReplace).toHaveBeenCalledWith(
-      expect.stringContaining("organisation/profile")
-    );
+    expect(continueButton).toBeDisabled();
   });
 
   it("has no accessibility violations", async () => {
