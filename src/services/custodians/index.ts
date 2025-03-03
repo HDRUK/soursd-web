@@ -7,6 +7,10 @@ import postCustodian from "./postCustodian";
 import postCustodianQuery from "./postCustodianQuery";
 import postCustodianInvite from "./postCustodianInvite";
 import postCustodianInviteQuery from "./postCustodianInviteQuery";
+import getCustodianEntityModelQuery from "./getCustodianEntityModelQuery";
+import getCustodianEntityModel from "./getCustodianEntityModel";
+import putCustodianActiveEntityModelQuery from "./putCustodianActiveEntityModelQuery";
+import putCustodianActiveEntityModel from "./putCustodianActiveEntityModel";
 
 export {
   getCustodian,
@@ -18,6 +22,10 @@ export {
   postCustodianInvite,
   postCustodianInviteQuery,
   postCustodianQuery,
+  getCustodianEntityModelQuery,
+  getCustodianEntityModel,
+  putCustodianActiveEntityModelQuery,
+  putCustodianActiveEntityModel,
 };
 
 export type * from "./types";
