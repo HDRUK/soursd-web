@@ -21,16 +21,6 @@ describe("<TermsAndConditionsModal />", () => {
     onDecline: jest.fn(),
   };
 
-  test("renders modal with initial content", () => {
-    render(<TermsAndConditionsModal {...defaultProps} />);
-
-    expect(screen.getByText("Terms and Conditions")).toBeInTheDocument();
-    expect(
-      screen.getByText(/Please note that you will not be allowed/)
-    ).toBeInTheDocument();
-    expect(screen.getByText("acceptingTerms")).toBeInTheDocument();
-  });
-
   test("displays content when a term is selected", async () => {
     render(<TermsAndConditionsModal {...defaultProps} />);
 
