@@ -2,18 +2,25 @@ import { render, screen, waitFor } from "@/utils/testUtils";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { mockedCustodian } from "@/mocks/data/custodian";
 import { EntityModelTypes } from "@/consts/custodian";
+import { mockUseStore } from "jest.setup";
 import Rules from "./Rules";
 
 jest.mock("@tanstack/react-query");
 jest.mock("@/data/store", () => ({
   useStore: jest.fn(() => ({
-    config: {
-      custodian: mockedCustodian({ id: 1 }),
-    },
+    
   })),
 }));
 
 describe("<Rules />", () => {
+  beforeEach(() => {
+    mockUseStore({
+      custodian: mockedCustodian({
+        id: 1,
+      }),
+    });
+  });
+  
   const mockUserRulesData = {
     data: [
       { id: 1, name: "User Rule 1", description: "Description 1" },
