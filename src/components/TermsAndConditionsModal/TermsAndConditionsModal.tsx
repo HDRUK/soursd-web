@@ -1,17 +1,14 @@
 import { useState } from "react";
-import {
-  Typography,
-  Button,
-  Box,
-  List,
-  ListItemButton,
-  ListItemText,
-  Radio,
-} from "@mui/material";
+import { Typography, Button, Box, List } from "@mui/material";
 import FormModal, { FormModalProps } from "@/components/FormModal";
 import { useTranslations } from "next-intl";
 import { termsItems } from "@/consts/termsAndConditions";
 import { mockedTermsAndConditions } from "@/mocks/data/cms";
+import {
+  StyledListItemButton,
+  StyledRadio,
+  StyledListItemText,
+} from "./TermsAndConditionsModal.styles";
 
 export interface TermsAndConditionsModalProps
   extends Omit<FormModalProps, "children"> {
@@ -61,42 +58,19 @@ export default function TermsAndConditionsModal({
           }}>
           <List component="nav" sx={{ py: 0 }}>
             {(termsItems as TermsKey[]).map(item => (
-              <ListItemButton
+              <StyledListItemButton
                 key={item}
                 selected={selectedItem === item}
-                onClick={() => handleListItemClick(item)}
-                sx={{
-                  py: 1,
-                  "&.Mui-selected": {
-                    bgcolor: "white",
-                    "&:hover": {
-                      bgcolor: "white",
-                    },
-                  },
-                  "&:hover": {
-                    bgcolor: "rgba(0, 0, 0, 0.04)",
-                  },
-                }}>
-                <Radio
+                onClick={() => handleListItemClick(item)}>
+                <StyledRadio
                   checked={selectedItem === item}
                   onChange={() => handleListItemClick(item)}
-                  sx={{
-                    color: "action.active",
-                    "&.Mui-checked": {
-                      color: "default",
-                    },
-                  }}
                 />
-                <ListItemText
+                <StyledListItemText
                   primary={t(item)}
-                  sx={{
-                    "& .MuiListItemText-primary": {
-                      fontSize: "0.875rem",
-                      fontWeight: selectedItem === item ? 500 : 400,
-                    },
-                  }}
+                  isSelected={selectedItem === item}
                 />
-              </ListItemButton>
+              </StyledListItemButton>
             ))}
           </List>
         </Box>
@@ -104,14 +78,13 @@ export default function TermsAndConditionsModal({
           {/* This section is a placeholder until we have content sign off from legal team */}
           <>
             <Typography variant="h4" gutterBottom>
-              Terms and Conditions
+              {t("title")}
             </Typography>
             <Typography
               variant="body1"
               paragraph
               sx={{ borderBottom: 1, borderColor: "divider", pb: 1 }}>
-              Please note that you will not be allowed access to Cohort
-              Discovery unless you have agreed to our Terms and Conditions.
+              {t("description")}
             </Typography>
             {renderContent()}
           </>
