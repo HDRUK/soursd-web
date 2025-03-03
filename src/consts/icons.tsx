@@ -6,10 +6,23 @@ import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import ShieldOutlinedIcon from "@mui/icons-material/ShieldOutlined";
 import TaskAltOutlinedIcon from "@mui/icons-material/TaskAltOutlined";
 import WorkspacePremiumOutlinedIcon from "@mui/icons-material/WorkspacePremiumOutlined";
+import GppBadOutlinedIcon from "@mui/icons-material/GppBadOutlined";
+import VerifiedUserOutlinedIcon from "@mui/icons-material/VerifiedUserOutlined";
 import { SvgIconProps } from "@mui/material";
 
 const IdentityVerifiedIcon = (props: SvgIconProps) => (
-  <ShieldOutlinedIcon {...props} sx={{ color: "default.main" }} />
+  <ShieldOutlinedIcon {...props} sx={{ color: "default.main", ...props.sx }} />
+);
+
+const VerifyIcon = (props: SvgIconProps) => (
+  <VerifiedUserOutlinedIcon
+    {...props}
+    sx={{ color: "primary.main", ...props.sx }}
+  />
+);
+
+const RejectIcon = (props: SvgIconProps) => (
+  <GppBadOutlinedIcon {...props} sx={{ color: "primary.main", ...props.sx }} />
 );
 
 const ApprovedUserIcon = (props: SvgIconProps) => (
@@ -52,4 +65,6 @@ export {
   OrganisationIcon,
   PendingIcon,
   TrashIcon,
+  VerifyIcon,
+  RejectIcon,
 };

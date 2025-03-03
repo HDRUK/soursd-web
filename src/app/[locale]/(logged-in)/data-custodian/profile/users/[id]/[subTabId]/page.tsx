@@ -4,7 +4,7 @@ import LoadingWrapper from "@/components/LoadingWrapper";
 import { getUserQuery } from "@/services/users";
 import { useQuery } from "@tanstack/react-query";
 import { notFound } from "next/navigation";
-import SubPage from "../../../components/SubPage";
+import SubPageUsers from "../../../components/SubPageUsers";
 import { PageTabs, UserSubTabs } from "../../../consts/tabs";
 
 interface UsersSubPageProps {
@@ -23,7 +23,7 @@ function UsersSubPage({ params: { subTabId, id } }: UsersSubPageProps) {
 
   return (
     <LoadingWrapper variant="basic" loading={isPending}>
-      <SubPage
+      <SubPageUsers
         params={{
           tabId: PageTabs.USERS,
           subTabId,
