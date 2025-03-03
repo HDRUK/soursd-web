@@ -33,7 +33,7 @@ function injectParamsIntoPath(
   let replacedPath = path;
 
   Object.keys(params).forEach(name => {
-    replacedPath = replacedPath.replace(`{${name}}`, params[name].toString());
+    replacedPath = replacedPath.replace(`{${name}}`, params[name]?.toString());
   });
 
   return replacedPath;

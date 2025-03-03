@@ -18,6 +18,27 @@ interface SendCustodianInviteResponse {
   data: object;
 }
 
+interface GetCustodianEntityModelResponse {
+  id: number;
+  created_at: string;
+  updated_at: string;
+  name: string;
+  description: string;
+  entity_model_type_id: number;
+  calls_file: boolean;
+  calls_operation: boolean;
+  active: number;
+}
+
+interface PutCustodianActiveEntityModelPayload {
+  configs: Array<PutCustodianActiveEntityModelResponse>;
+}
+
+interface PutCustodianActiveEntityModelResponse {
+  entity_model_id: number;
+  active: boolean;
+}
+
 type GetCustodianResponse = Custodian;
 type GetCustodiansResponse = Custodian[];
 
@@ -37,6 +58,11 @@ type PostCustodianPayload = Custodian;
 type PostCustodianResponse = number;
 type PostCustodianInviteResponse = Custodian;
 
+type EntityType =
+  | "decision_models"
+  | "user_validation_rules"
+  | "org_validation_rules";
+
 export type {
   PostCustodianInviteUserPayload,
   PostCustodianInviteUserResponse,
@@ -50,4 +76,8 @@ export type {
   PostCustodianPayload,
   PostCustodianResponse,
   PostCustodianInviteResponse,
+  EntityType,
+  GetCustodianEntityModelResponse,
+  PutCustodianActiveEntityModelPayload,
+  PutCustodianActiveEntityModelResponse,
 };
