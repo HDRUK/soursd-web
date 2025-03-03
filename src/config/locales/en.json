@@ -872,5 +872,27 @@
   "CertificationUpload": {
     "buttonText": "Upload evidence",
     "evidence": "evidence"
+  },
+  "TermsAndConditions": {
+    "title": "Terms and Conditions",
+    "description": "Please note that you will not be allowed access to Cohort Discovery unless you have agreed to our Terms and Conditions.",
+    "acceptingTerms": "Accepting the terms",
+    "changesToTerms": "Changes to Terms",
+    "usingOurProduct": "Using Our Product",
+    "generalRestrictions": "General Restrictions",
+    "contentPolicy": "Content Policy",
+    "yourRights": "Your Rights",
+    "copyrightPolicy": "Copyright Policy",
+    "relationshipGuidelines": "Relationship Guidelines",
+    "liabilityPolicy": "Liability Policy",
+    "generalLegalTerms": "General Legal Terms",
+    "sendCopy": "Send a copy to my email",
+    "accept": "Accept Terms and Conditions",
+    "decline": "Decline",
+    "termsAndConditionsInfo": "You must accept the terms and conditions to proceed. If you decline, you will not be able to access SOURSD.",
+    "alertTitle": "Are you sure you want to decline?",
+    "alertText": "If you decline, you will not be able to access SOURSD.",
+    "alertConfirm": "Confirm. Back to homepage",
+    "alertCancel": "Cancel"
   }
 }
