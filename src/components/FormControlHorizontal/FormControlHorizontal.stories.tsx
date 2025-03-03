@@ -1,9 +1,25 @@
 import type { Meta, StoryObj } from "@storybook/react";
-
 import { TextField } from "@mui/material";
 import FormControlHorizontal, { FormControlHorizontalProps } from ".";
 import Form from "../Form";
+import { AppRouterContext } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
+const mockRouter = {
+  back: () => {},
+  forward: () => {},
+  push: () => {},
+  replace: () => {},
+  refresh: () => {},
+  prefetch: () => Promise.resolve(),
+};
+
+const RouterWrapper = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <AppRouterContext.Provider value={mockRouter}>
+      {children}
+    </AppRouterContext.Provider>
+  );
+};
 const meta = {
   title: "components/FormControlHorizontal",
   component: FormControlHorizontal,
@@ -16,9 +32,11 @@ type Story = StoryObj<typeof meta>;
 
 const FormControlHorizontalProvider = (props: FormControlHorizontalProps) => {
   return (
-    <Form defaultValues={{ name: "" }}>
-      <FormControlHorizontal {...props} />
-    </Form>
+    <RouterWrapper>
+      <Form defaultValues={{ name: "" }}>
+        <FormControlHorizontal {...props} />
+      </Form>
+    </RouterWrapper>
   );
 };
 
