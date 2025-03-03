@@ -14,16 +14,19 @@ import { PageTabs } from "../../consts/tabs";
 
 const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 
-export default function TabsSections() {
+interface TabsSectionsProps {
+  tabId: PageTabs;
+}
+
+export default function TabsSections({ tabId }: TabsSectionsProps) {
   const routes = useStore(store => store.application.routes);
-  const params = useParams();
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
   return (
     <Box sx={{ width: "100%", mb: 4 }}>
       <Tabs
         variant="fullWidth"
-        value={params?.tabId || PageTabs.HOME}
+        value={tabId || PageTabs.HOME}
         aria-label={t("navigationAriaLabel")}
         role="navigation"
         indicatorColor="secondary"

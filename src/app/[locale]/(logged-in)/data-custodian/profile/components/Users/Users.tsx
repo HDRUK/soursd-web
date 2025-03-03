@@ -3,6 +3,7 @@ import Icon from "@/components/Icon";
 import Results from "@/components/Results";
 import ResultsCard from "@/components/ResultsCard";
 import { useStore } from "@/data/store";
+import { Link } from "@/i18n/routing";
 import { PageBody, PageSection } from "@/modules";
 import SearchBar from "@/modules/SearchBar";
 import {
@@ -10,6 +11,7 @@ import {
   getCustodianUsers,
 } from "@/services/custodian_users";
 import { CustodianUser } from "@/types/application";
+import { injectParamsIntoPath } from "@/utils/application";
 import { formatShortDate } from "@/utils/date";
 import { showAlert, showLoadingAlertWithPromise } from "@/utils/showAlert";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
@@ -31,7 +33,10 @@ export default function Users() {
     open: boolean;
     user?: Partial<CustodianUser>;
   } | null>();
-  const custodian = useStore(state => state.getCustodian());
+  const { custodian, routes } = useStore(state => ({
+    custodian: state.getCustodian(),
+    routes: state.getApplication().routes,
+  }));
 
   const {
     isError: isGetCustodiansError,
@@ -114,6 +119,7 @@ export default function Users() {
           count={custodiansData?.data?.length}>
           {custodiansData?.data.map(custodianUser => {
             const {
+              id,
               first_name,
               last_name,
               email,
@@ -134,7 +140,15 @@ export default function Users() {
                 content={
                   <>
                     {" "}
-                    <Typography variant="h6">
+                    <Typography
+                      component={Link}
+                      href={injectParamsIntoPath(
+                        routes.profileCustodianUserById.path,
+                        {
+                          id,
+                        }
+                      )}
+                      variant="h6">
                       {first_name} {last_name}
                     </Typography>
                     {/* Will be read from db */}

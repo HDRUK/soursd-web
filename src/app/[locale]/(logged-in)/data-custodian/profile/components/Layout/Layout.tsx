@@ -18,7 +18,7 @@ function Layout({ children, params: { tabId }, config }: LayoutProps) {
 
   return (
     <>
-      <TabsSections />
+      <TabsSections tabId={tabId} />
       {children}
     </>
   );

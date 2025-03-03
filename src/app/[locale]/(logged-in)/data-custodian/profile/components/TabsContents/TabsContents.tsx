@@ -9,7 +9,7 @@ import Organisations from "../Organisations";
 import { PageTabs } from "../../consts/tabs";
 
 interface TabsContentsProps {
-  tabId: string;
+  tabId: PageTabs;
 }
 
 export default function TabsContents({ tabId }: TabsContentsProps) {

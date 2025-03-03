@@ -20,8 +20,8 @@ import UserCustodianOrgInfo from "../UserCustodianOrgInfo";
 import UserAffiliations from "../UserAffiliations";
 
 interface TabsContentsProps {
-  tabId: string;
-  subTabId: string;
+  tabId: PageTabs;
+  subTabId: ConfigurationSubTabs | UserSubTabs;
 }
 
 export default function SubTabsContents({

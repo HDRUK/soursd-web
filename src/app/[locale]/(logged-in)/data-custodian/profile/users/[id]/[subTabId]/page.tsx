@@ -9,11 +9,12 @@ import { PageTabs, UserSubTabs } from "../../../consts/tabs";
 
 interface UsersSubPageProps {
   params: {
+    subTabId: UserSubTabs;
     id: number;
   };
 }
 
-function UsersSubPage({ params: { id } }: UsersSubPageProps) {
+function UsersSubPage({ params: { subTabId, id } }: UsersSubPageProps) {
   const { data: user, isPending, isFetched } = useQuery(getUserQuery(id));
 
   if (!user?.data && isFetched) {
@@ -25,7 +26,8 @@ function UsersSubPage({ params: { id } }: UsersSubPageProps) {
       <SubPage
         params={{
           tabId: PageTabs.USERS,
-          subTabId: UserSubTabs.IDENTITY,
+          subTabId,
+          id,
         }}
       />
     </LoadingWrapper>

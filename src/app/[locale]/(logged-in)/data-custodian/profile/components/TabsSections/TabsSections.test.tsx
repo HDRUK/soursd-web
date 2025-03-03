@@ -1,6 +1,7 @@
 import { ROUTES } from "@/consts/router";
 import { render, screen } from "@/utils/testUtils";
 import TabsSections from "./TabsSections";
+import { PageTabs } from "../../consts/tabs";
 
 describe("<TabsSections />", () => {
   it.each([
@@ -8,7 +9,7 @@ describe("<TabsSections />", () => {
     { name: "Users", path: `/en${ROUTES.profileCustodianUsers.path}` },
     { name: "Contacts", path: `/en${ROUTES.profileCustodianContacts.path}` },
   ])("has the correct path $s", ({ name, path }) => {
-    render(<TabsSections />);
+    render(<TabsSections tabId={name as PageTabs} />);
 
     const tab = screen.getByRole("tab", {
       name,
