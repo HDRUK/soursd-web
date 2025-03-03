@@ -37,7 +37,7 @@ export default function FormModal({
     <Modal
       data-testid="form-modal"
       onClose={onClose}
-      sx={{ p: "16px" }}
+      sx={{ p: 1 }}
       {...restProps}>
       <Card
         sx={{
