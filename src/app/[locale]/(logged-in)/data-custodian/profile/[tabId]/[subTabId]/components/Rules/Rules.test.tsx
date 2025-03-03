@@ -7,9 +7,7 @@ import Rules from "./Rules";
 
 jest.mock("@tanstack/react-query");
 jest.mock("@/data/store", () => ({
-  useStore: jest.fn(() => ({
-    
-  })),
+  useStore: jest.fn(() => ({})),
 }));
 
 describe("<Rules />", () => {
@@ -20,7 +18,7 @@ describe("<Rules />", () => {
       }),
     });
   });
-  
+
   const mockUserRulesData = {
     data: [
       { id: 1, name: "User Rule 1", description: "Description 1" },
