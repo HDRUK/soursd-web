@@ -1,0 +1,79 @@
+import React from "react";
+import {
+  commonAccessibilityTests,
+  render,
+  screen,
+  fireEvent,
+  waitFor,
+} from "@/utils/testUtils";
+import { termsItems } from "@/consts/termsAndConditions";
+import TermsAndConditionsModal from "./TermsAndConditionsModal";
+
+jest.mock("next-intl", () => ({
+  useTranslations: () => (key: string) => key,
+}));
+
+describe("<TermsAndConditionsModal />", () => {
+  const defaultProps = {
+    open: true,
+    onClose: jest.fn(),
+    onAccept: jest.fn(),
+    onDecline: jest.fn(),
+  };
+
+  test("displays content when a term is selected", async () => {
+    render(<TermsAndConditionsModal {...defaultProps} />);
+
+    const privacyButton = screen.getByText("acceptingTerms");
+    fireEvent.click(privacyButton);
+    await waitFor(() => {
+      expect(
+        screen.getByText("Accepting Terms and Conditions")
+      ).toBeInTheDocument();
+    });
+  });
+
+  test("calls onAccept when accept button is clicked", () => {
+    render(<TermsAndConditionsModal {...defaultProps} />);
+
+    const acceptButton = screen.getByText("accept");
+    fireEvent.click(acceptButton);
+
+    expect(defaultProps.onAccept).toHaveBeenCalled();
+  });
+
+  test("calls onDecline when decline button is clicked", () => {
+    render(<TermsAndConditionsModal {...defaultProps} />);
+
+    const declineButton = screen.getByText("decline");
+    fireEvent.click(declineButton);
+
+    expect(defaultProps.onDecline).toHaveBeenCalled();
+  });
+
+  test("changes selected item when a new term is clicked", async () => {
+    render(<TermsAndConditionsModal {...defaultProps} />);
+
+    const acceptingButton = screen.getByText("acceptingTerms");
+    fireEvent.click(acceptingButton);
+
+    await waitFor(() => {
+      const selectedRadio = screen.getByRole("radio", { checked: true });
+      expect(selectedRadio).toBeInTheDocument();
+    });
+  });
+
+  test("renders all term items", () => {
+    render(<TermsAndConditionsModal {...defaultProps} />);
+
+    termsItems.forEach(item => {
+      expect(screen.getByText(item)).toBeInTheDocument();
+    });
+  });
+
+  it("has no accessibility violations", async () => {
+    await commonAccessibilityTests(
+      render(<TermsAndConditionsModal {...defaultProps} />)
+    );
+  });
+});
