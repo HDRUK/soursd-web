@@ -138,7 +138,7 @@
     "manageDelegates": "Manage Delegates",
     "delegateAdminDescription": "### Organisation administrative Delegates \n\n As a Key Contact for your Organisation, you can invited nominated Delegates from your Organisation to create a SOURSD account. A Delegate could be a Human Resources (HR) representative, Information Governance (IG) representative e.g. Data Protection Officer (DPO), Contracts representative or Legal representative.",
     "userAdmin": "User Administration",
-    "actions": "Actions",
+    "home": "Home",
     "projects": "Projects",
     "manageResearchers": "Manage Researchers",
     "manageResearchersTitle": "Administration | Users",
@@ -485,12 +485,17 @@
     "previous": "previous slide"
   },
   "Footer": {
+    "dsitLogoAlt": "Department for Science, Innovation & Technology",
+    "mrcLogoAlt": "Medical Research Council logo",
+    "copyright": "Copyright (C) 2025 Health Data Research UK",
     "contactFormTitle": "Contact Us",
     "contactFormSubtitle": "Some subtitle here",
     "fundedByTitle": "Funded by",
     "partnershipTitle": "In partnership with",
-    "privacyPolicyLink": "Privacy policy",
-    "termsAndConditionsLink": "Terms and Conditions"
+    "privacyCookieLink": "Privacy policy",
+    "termsAndConditionsLink": "Terms and Conditions",
+    "aboutUsLink": "About Us",
+    "contactUsLink": "Contact Us"
   },
   "ContactForm": {
     "namePlaceholder": "Name",

@@ -30,10 +30,10 @@ export default function TabsSections() {
         <Tab
           icon={<AssignmentTurnedInIcon />}
           iconPosition="start"
-          label={t("actions")}
+          label={t("home")}
           href={routes.profileOrganisationActions.path}
           component={Link}
-          value={PageTabs.ACTIONS}
+          value={PageTabs.HOME}
         />
         <Tab
           icon={<EditNoteIcon />}

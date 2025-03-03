@@ -1,21 +1,19 @@
 "use client";
 
-import ContactLink from "@/components/ContactLink";
-import Form from "@/components/Form";
-import FormActions from "@/components/FormActions";
-import FormControlHorizontal from "@/components/FormControlHorizontal";
+import ActionsPanel from "@/components/ActionsPanel";
+import ActionsPanelItem from "@/components/ActionsPanelItem";
 import Postit from "@/components/Postit";
-import yup from "@/config/yup";
-import { PageBody, PageSection } from "@/modules";
-import { patchCustodian, PatchCustodianPayload } from "@/services/custodians";
+import { useStore } from "@/data/store";
+import { Link } from "@/i18n/routing";
+import {
+  PageBody,
+  PageColumnBody,
+  PageColumnDetails,
+  PageColumns,
+} from "@/modules";
 import { Custodian } from "@/types/application";
-import { showAlert } from "@/utils/showAlert";
-import SaveIcon from "@mui/icons-material/Save";
-import { LoadingButton } from "@mui/lab";
-import { Grid, TextField, Typography, useTheme } from "@mui/material";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Button, Typography, useTheme } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useCallback, useMemo } from "react";
 
 export interface DetailsFormValues {
   name: string;
@@ -26,119 +24,118 @@ export interface HomeProps {
   custodian: Custodian;
 }
 
-const NAMESPACE_TRANSLATION_FORM = "Form";
 const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 
 export default function Home({ custodian }: HomeProps) {
-  const queryClient = useQueryClient();
   const theme = useTheme();
 
-  const {
-    mutateAsync: mutateUpdateAsync,
-    isError: isUpdateError,
-    isPending: isUpdateLoading,
-    error: updateError,
-  } = useMutation({
-    mutationKey: ["patchCustodian", custodian.id],
-    mutationFn: (payload: PatchCustodianPayload) =>
-      patchCustodian(custodian.id, payload, {
-        error: {
-          message: "submitError",
-        },
-      }),
-  });
+  const routes = useStore(state => state.getApplication().routes);
 
-  const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
-  const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
+  const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
-  const handleDetailsSubmit = useCallback(
-    async (payload: DetailsFormValues) => {
-      await mutateUpdateAsync({
-        ...custodian,
-        ...payload,
-      });
-
-      showAlert("success", {
-        text: tProfile("saveSuccess"),
-        confirmButtonText: tProfile("okButton"),
-      });
-
-      queryClient.refetchQueries({
-        queryKey: ["getCustodian", custodian.id],
-      });
+  const actions = [
+    {
+      heading: "Complete your configuration",
+      description:
+        "This is where we need you to setup things lke IDV technology and the decision models...",
+      action: (
+        <Button
+          component={Link}
+          href={routes.profileCustodianConfiguration.path}>
+          Get started
+        </Button>
+      ),
     },
-    []
-  );
-
-  const schema = useMemo(
-    () =>
-      yup.object().shape({
-        name: yup.string().required(tForm("nameRequiredInvalid")),
-        contact_email: yup
-          .string()
-          .required(tForm("contactEmailRequiredInvalid"))
-          .email(tForm("contactEmailFormatInvalid")),
-      }),
-    []
-  );
-
-  const formOptions = {
-    defaultValues: {
-      name: custodian.name,
-      contact_email: custodian.contact_email,
+    {
+      heading: "Add your users",
+      description:
+        "As well as yourself, it’s a good idea to set up your colleagues who will help administer the system and approve users, projects and organisations",
+      action: (
+        <Button
+          component={Link}
+          variant="outlined"
+          href={routes.profileCustodianUsers.path}>
+          Add users
+        </Button>
+      ),
     },
-    error:
-      isUpdateError &&
-      tProfile.rich(updateError, {
-        contactLink: ContactLink,
-      }),
-    disabled: isUpdateLoading,
-  };
+    {
+      heading: "Add your contacts",
+      action: (
+        <Button
+          component={Link}
+          variant="outlined"
+          href={routes.profileCustodianContacts.path}>
+          Add contacts
+        </Button>
+      ),
+    },
+    {
+      heading: "Add your projects",
+      action: (
+        <Button
+          component={Link}
+          variant="outlined"
+          href={routes.profileCustodianProjects.path}>
+          Add projects
+        </Button>
+      ),
+    },
+    {
+      heading: "Add organisations",
+      action: (
+        <Button
+          component={Link}
+          variant="outlined"
+          href={routes.profileCustodianOrganisations.path}>
+          Add organisations
+        </Button>
+      ),
+    },
+  ];
 
   return (
-    <PageBody>
-      <PageSection>
-        <Postit sx={{ mx: "auto", mb: 7 }}>
-          <Typography variant="h4" sx={{ mb: 1 }}>
-            {tProfile("uniqueIdentifierTitle")}
-          </Typography>
-          <Typography
-            sx={{
-              fontSize: theme.typography.h4.fontSize,
-              fontWeight: 500,
-              mb: 1,
-            }}>
-            {custodian.unique_identifier}
-          </Typography>
-          <Typography>{tProfile("uniqueIdentifierCaption")}</Typography>
-        </Postit>
-        <Form schema={schema} onSubmit={handleDetailsSubmit} {...formOptions}>
-          <>
-            <Grid container rowSpacing={3} sx={{ maxWidth: "800px" }}>
-              <Grid item xs={12}>
-                <FormControlHorizontal
-                  name="name"
-                  renderField={fieldProps => <TextField {...fieldProps} />}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlHorizontal
-                  name="contact_email"
-                  renderField={fieldProps => <TextField {...fieldProps} />}
-                />
-              </Grid>
-            </Grid>
-            <FormActions>
-              <LoadingButton
-                type="submit"
-                endIcon={<SaveIcon />}
-                loading={isUpdateLoading}>
-                {tProfile("submitButton")}
-              </LoadingButton>
-            </FormActions>
-          </>
-        </Form>
-      </PageSection>
-    </PageBody>
+    <PageColumns>
+      <PageColumnBody>
+        <PageBody>
+          <ActionsPanel
+            description={
+              <>
+                Welcome to Sourced! You’ll see a list of tasks below we’ve
+                assigned to you to complete your profile. To help you do that as
+                quickly as possible here’s a list of things you’ll need before
+                you dive in:
+                <ul>
+                  <li>Prerequisite 1</li>
+                  <li>Prerequisite 2</li>
+                  <li>Prerequisite 3</li>
+                </ul>
+              </>
+            }>
+            {actions.map(action => (
+              <ActionsPanelItem {...action} />
+            ))}
+          </ActionsPanel>
+        </PageBody>
+      </PageColumnBody>
+      <PageColumnDetails>
+        <PageBody>
+          <Postit>
+            <Typography variant="h4" sx={{ mb: 1 }}>
+              {t("uniqueIdentifierTitle")}
+            </Typography>
+            <Typography
+              sx={{
+                fontSize: theme.typography.h4.fontSize,
+                fontWeight: 500,
+                mb: 1,
+              }}>
+              {custodian.unique_identifier}
+            </Typography>
+            <Typography>{t("uniqueIdentifierCaption")}</Typography>
+          </Postit>
+        </PageBody>
+      </PageColumnDetails>
+    </PageColumns>
   );
 }
