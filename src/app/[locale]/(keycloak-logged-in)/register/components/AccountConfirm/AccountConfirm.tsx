@@ -78,12 +78,14 @@ export default function AccountConfirm() {
     (chunks: React.ReactNode) => (
       <Button
         onClick={handleOpenModal}
+        variant="text"
         sx={{
-          padding: 0,
+          pb: 1,
           textTransform: "none",
           fontWeight: "bold",
+          backgroundColor: "none",
           "&:hover": {
-            backgroundColor: "transparent",
+            backgroundColor: "none",
             textDecoration: "underline",
           },
         }}>
