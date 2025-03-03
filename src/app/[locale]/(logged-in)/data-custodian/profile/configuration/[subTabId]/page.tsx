@@ -1,6 +1,5 @@
 import SubPage from "../../components/SubPage";
-import { ConfigurationSubTabs } from "../../consts/tabs";
-import { PageTabs } from "../../consts/tabs";
+import { ConfigurationSubTabs, PageTabs } from "../../consts/tabs";
 
 interface ConfigurationPageProps {
   params: {

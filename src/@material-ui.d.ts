@@ -19,10 +19,7 @@ interface ColorOverrides {
   greys: true;
   lightPurple: true;
   neutralPink: true;
-<<<<<<< HEAD
-=======
   grey700: true;
->>>>>>> develop
   textSecondary: true;
 }
 

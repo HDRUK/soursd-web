@@ -1,15 +1,15 @@
 "use client";
 
 import { useStore } from "@/data/store";
-import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined";
-import CorporateFareIcon from "@mui/icons-material/CorporateFare";
+import { Link } from "@/i18n/routing";
 import AssignmentIcon from "@mui/icons-material/Assignment";
-import HomeIcon from "@mui/icons-material/Home";
 import ContactPageIcon from "@mui/icons-material/ContactPage";
+import CorporateFareIcon from "@mui/icons-material/CorporateFare";
+import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined";
+import HomeIcon from "@mui/icons-material/Home";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { Box, Tab, Tabs } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useParams, Link } from "@/i18n/routing";
 import { PageTabs } from "../../consts/tabs";
 
 const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";

@@ -1,7 +1,7 @@
 import { ROUTES } from "@/consts/router";
 import { render, screen } from "@/utils/testUtils";
-import TabsSections from "./TabsSections";
 import { PageTabs } from "../../consts/tabs";
+import TabsSections from "./TabsSections";
 
 describe("<TabsSections />", () => {
   it.each([
