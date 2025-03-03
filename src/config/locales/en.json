@@ -490,12 +490,17 @@
     "previous": "previous slide"
   },
   "Footer": {
+    "dsitLogoAlt": "Department for Science, Innovation & Technology",
+    "mrcLogoAlt": "Medical Research Council logo",
+    "copyright": "Copyright (C) 2025 Health Data Research UK",
     "contactFormTitle": "Contact Us",
     "contactFormSubtitle": "Some subtitle here",
     "fundedByTitle": "Funded by",
     "partnershipTitle": "In partnership with",
-    "privacyPolicyLink": "Privacy policy",
-    "termsAndConditionsLink": "Terms and Conditions"
+    "privacyCookieLink": "Privacy policy",
+    "termsAndConditionsLink": "Terms and Conditions",
+    "aboutUsLink": "About Us",
+    "contactUsLink": "Contact Us"
   },
   "ContactForm": {
     "namePlaceholder": "Name",
