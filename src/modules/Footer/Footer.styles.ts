@@ -1,27 +1,21 @@
-import { css, Link, styled } from "@mui/material";
+import { css, styled } from "@mui/material";
 
 export const StyledFooter = styled("div")(
   ({ theme }) => css`
     width: 100%;
     position: relative;
     color: #fff;
-    display: grid;
-    gap: ${theme.spacing(5)};
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-auto-flow: row;
+    display: flex;
+    gap: ${theme.spacing(3)};
     padding: ${theme.spacing(3)} ${theme.spacing(8)};
+    flex-direction: column;
+    align-items: flex-start;
 
     ${theme.breakpoints.up("md")} {
-      gap: ${theme.spacing(15)};
       flex-direction: row;
+      gap: ${theme.spacing(9)};
       padding: ${theme.spacing(5)} ${theme.spacing(3)};
+      align-items: flex-end;
     }
-  `
-);
-
-export const StyledLink = styled(Link)(
-  () => css`
-    cursor: pointer;
-    padding-top: 5px;
   `
 );
