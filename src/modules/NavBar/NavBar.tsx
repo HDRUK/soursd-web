@@ -131,7 +131,7 @@ export default function NavBar() {
         data-testid="header-desktop-menu">
         <PageCenter>
           <StyledHeader>
-            <SoursdLogo variant="titled" />
+            <SoursdLogo variant="titled" sx={{ mt: "-9px" }} />
             <Box sx={{ display: "flex", gap: 1 }}>
               {buttons.map(({ text, icon, ...restProps }) => (
                 <Button component={Link} {...restProps} key={text}>
