@@ -1,10 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import PersonIcon from "@mui/icons-material/Person";
-import SettingsIcon from "@mui/icons-material/Settings";
-import { Button, Link } from "@mui/material";
-import ActionsPanelValidationChecks from "./ActionsPanelValidationChecks";
+import { Link } from "@mui/material";
 import ActionsPanel from "../ActionsPanel";
+import ActionsPanelValidationChecks from "./ActionsPanelValidationChecks";
 
 const meta = {
   title: "components/ActionsPanelValidationChecks",
@@ -25,12 +23,17 @@ const BasicStory = () => {
           {
             heading: "Mike Doe (custodian), 2 days ago",
             description: "Here is that attachment",
-            actions: <Link href="#">Attachment</Link>,
+            actions: <Link href="/">Attachment</Link>,
           },
           {
             heading: "Patrick Nash (User), 3 days ago",
             description: "Detail of the comment here",
-            actions: <Link href="#">Attachment</Link>,
+            actions: <Link href="/">Attachment</Link>,
+          },
+          {
+            heading: "John Smith (User), 4 days ago",
+            description: "Detail of the comment here",
+            actions: <Link href="/">Attachment</Link>,
           },
         ]}
       />

@@ -5,7 +5,7 @@ import getProjectQuery from "@/services/projects/getProjectQuery";
 import { useQuery } from "@tanstack/react-query";
 import { notFound } from "next/navigation";
 import SubPageProjects from "../../../components/SubPageProjects";
-import { PageTabs, ProjectsSubTabs } from "../../../consts/tabs";
+import { ProjectsSubTabs } from "../../../consts/tabs";
 
 interface SubPageProjectsProps {
   params: {
@@ -24,7 +24,7 @@ function ProjectsSubPage({ params: { subTabId, id } }: SubPageProjectsProps) {
   return (
     <LoadingWrapper variant="basic" loading={isPending}>
       <SubPageProjects
-        projectData={project?.data}
+        projectData={project.data}
         params={{
           subTabId,
           id,

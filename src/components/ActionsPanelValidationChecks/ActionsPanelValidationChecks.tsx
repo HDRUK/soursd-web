@@ -1,6 +1,5 @@
-import { getElementHeightWithMargins } from "@/utils/dom";
 import { Box, Paper, Typography } from "@mui/material";
-import { ReactNode, useLayoutEffect, useRef } from "react";
+import { ReactNode, useRef } from "react";
 import ViewMore from "../ViewMore";
 
 interface ActionsPanelItemProps {

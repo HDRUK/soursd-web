@@ -1,6 +1,6 @@
 import { getElementHeightWithMargins } from "@/utils/dom";
-import { Box, Button, Collapse, CollapseProps, Link } from "@mui/material";
-import { ReactNode, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { Box, Button, Collapse, CollapseProps } from "@mui/material";
+import { ReactNode, useEffect, useRef, useState } from "react";
 
 interface ActionsPanelItemProps extends CollapseProps {
   collapseNumRows: number;
@@ -58,7 +58,9 @@ export default function ActionsPanelItem({
           onClick: handleExpandCollapse,
         }) || (
           <Box sx={{ mt: 4 }}>
-            <Link onClick={handleExpandCollapse}>View all</Link>
+            <Button variant="text" onClick={handleExpandCollapse}>
+              View all
+            </Button>
           </Box>
         ))}
     </div>

@@ -1,8 +1,8 @@
 import { Paged, ResponseJson, ResponseOptions } from "@/types/requests";
+import { getSearchQuerystring } from "@/utils/query";
 import { handleJsonResponse } from "../requestHelpers";
 import { getRequest } from "../requests";
 import { ProjectUsersResponse } from "./types";
-import { getSearchQuerystring } from "@/utils/query";
 
 export default async (
   projectId: number,

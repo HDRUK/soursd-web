@@ -1,29 +1,22 @@
-import React, { ReactNode } from "react";
-import {
-  useReactTable,
-  getCoreRowModel,
-  getPaginationRowModel,
-  flexRender,
-  ColumnDef,
-} from "@tanstack/react-table";
 import Pagination from "@/components/Pagination";
+import { QueryState } from "@/types/form";
 import {
   Table as MuiTable,
-  TableHead,
   TableBody,
   TableCell,
-  TableRow,
   TableContainer,
-  Box,
-  CircularProgress,
+  TableHead,
+  TableRow,
 } from "@mui/material";
-import { Message } from "@/components/Message";
-import { QueryState } from "@/types/form";
-import Results from "../Results";
 import {
-  PaginatedQueryHelpers,
-  PaginatedQueryReturn,
-} from "@/hooks/usePaginatedQuery";
+  ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  getPaginationRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
+import React, { ReactNode } from "react";
+import Results from "../Results";
 
 interface TableProps<T> {
   data: T[];

@@ -2,29 +2,41 @@ import StatusIndicator from "@/components/StatusIndicator";
 import BlockIcon from "@mui/icons-material/BlockOutlined";
 import BusinessIcon from "@mui/icons-material/Business";
 import DeleteIcon from "@mui/icons-material/Delete";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import GppBadOutlinedIcon from "@mui/icons-material/GppBadOutlined";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import ShieldOutlinedIcon from "@mui/icons-material/ShieldOutlined";
 import TaskAltOutlinedIcon from "@mui/icons-material/TaskAltOutlined";
-import WorkspacePremiumOutlinedIcon from "@mui/icons-material/WorkspacePremiumOutlined";
-import GppBadOutlinedIcon from "@mui/icons-material/GppBadOutlined";
 import VerifiedUserOutlinedIcon from "@mui/icons-material/VerifiedUserOutlined";
+import WorkspacePremiumOutlinedIcon from "@mui/icons-material/WorkspacePremiumOutlined";
 import { SvgIconProps } from "@mui/material";
-import FilterAltIcon from "@mui/icons-material/FilterAlt";
 
-const IdentityVerifiedIcon = (props: SvgIconProps) => (
-  <ShieldOutlinedIcon {...props} sx={{ color: "default.main", ...props.sx }} />
-);
+const IdentityVerifiedIcon = (props: SvgIconProps) => {
+  const { sx, ...restProps } = props;
 
-const VerifyIcon = (props: SvgIconProps) => (
-  <VerifiedUserOutlinedIcon
-    {...props}
-    sx={{ color: "primary.main", ...props.sx }}
-  />
-);
+  return (
+    <ShieldOutlinedIcon {...restProps} sx={{ color: "default.main", ...sx }} />
+  );
+};
 
-const RejectIcon = (props: SvgIconProps) => (
-  <GppBadOutlinedIcon {...props} sx={{ color: "primary.main", ...props.sx }} />
-);
+const VerifyIcon = (props: SvgIconProps) => {
+  const { sx, ...restProps } = props;
+
+  return (
+    <VerifiedUserOutlinedIcon
+      {...restProps}
+      sx={{ color: "primary.main", ...sx }}
+    />
+  );
+};
+
+const RejectIcon = (props: SvgIconProps) => {
+  const { sx, ...restProps } = props;
+
+  return (
+    <GppBadOutlinedIcon {...restProps} sx={{ color: "primary.main", ...sx }} />
+  );
+};
 
 const ApprovedUserIcon = (props: SvgIconProps) => (
   <TaskAltOutlinedIcon {...props} sx={{ color: "success.main" }} />
@@ -64,11 +76,11 @@ export {
   ApprovedUserIcon,
   DecoupleIcon,
   EditIcon,
+  FilterIcon,
   IdentityVerifiedIcon,
   OrganisationIcon,
   PendingIcon,
+  RejectIcon,
   TrashIcon,
   VerifyIcon,
-  RejectIcon,
-  FilterIcon,
 };
