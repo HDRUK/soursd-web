@@ -9,7 +9,6 @@ export default async (
   searchParams: Record<string, string | number | undefined>,
   options: ResponseOptions
 ): Promise<ResponseJson<Paged<ProjectUsersResponse>>> => {
-  console.log("PROJECT ID", projectId);
   const response = await getRequest(
     `${process.env.NEXT_PUBLIC_API_V1_URL}/projects/${projectId}/users${getSearchQuerystring(searchParams)}`
   );

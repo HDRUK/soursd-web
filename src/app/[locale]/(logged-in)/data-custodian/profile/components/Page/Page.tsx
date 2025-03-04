@@ -15,8 +15,6 @@ const NAMESPACE_TRANSLATION_CUSTODIAN_PROFILE = "CustodianProfile";
 function Page({ params: { tabId } }: PageProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_CUSTODIAN_PROFILE);
 
-  console.log("tabId", tabId);
-
   return (
     <PageBodyContainer heading={t(toCamelCase(tabId))}>
       <TabsContents tabId={tabId} />
