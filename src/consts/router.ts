@@ -64,6 +64,34 @@ const ROUTES: Routes = {
     path: "/data-custodian/profile/keycards",
     permissions: [UserGroup.CUSTODIANS],
   },
+  profileCustodianUserById: {
+    path: "/data-custodian/profile/users/{id}",
+    permissions: [UserGroup.CUSTODIANS],
+  },
+  profileCustodianUsersHistory: {
+    path: "/data-custodian/profile/users/{id}/history",
+    permissions: [UserGroup.CUSTODIANS],
+  },
+  profileCustodianUsersTrainingAccreditations: {
+    path: "/data-custodian/profile/users/{id}/training_accreditations",
+    permissions: [UserGroup.CUSTODIANS],
+  },
+  profileCustodianUsersIdentity: {
+    path: "/data-custodian/profile/users/{id}/identity",
+    permissions: [UserGroup.CUSTODIANS],
+  },
+  profileCustodianUsersProjects: {
+    path: "/data-custodian/profile/users/{id}/projects",
+    permissions: [UserGroup.CUSTODIANS],
+  },
+  profileCustodianUsersCustodianOrgInfo: {
+    path: "/data-custodian/profile/users/{id}/custodian_org_info",
+    permissions: [UserGroup.CUSTODIANS],
+  },
+  profileCustodianUsersAffiliations: {
+    path: "/data-custodian/profile/users/{id}/affiliations",
+    permissions: [UserGroup.CUSTODIANS],
+  },
   permissionsResearcherCustodian: {
     path: "/data-custodian/permissions/user",
     permissions: [UserGroup.CUSTODIANS],

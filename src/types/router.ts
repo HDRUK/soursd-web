@@ -21,6 +21,7 @@ interface Routes {
   homepage: RouteConfig;
   usersCustodian: RouteConfig;
   profileCustodian: RouteConfig;
+  profileCustodianUserById: RouteConfig;
   profileCustodianHome: RouteConfig;
   profileCustodianContacts: RouteConfig;
   profileCustodianProjects: RouteConfig;
@@ -31,6 +32,12 @@ interface Routes {
   profileCustodianConfigurationValidationChecks: RouteConfig;
   profileCustodianKeycards: RouteConfig;
   profileCustodianUsers: RouteConfig;
+  profileCustodianUsersProjects: RouteConfig;
+  profileCustodianUsersHistory: RouteConfig;
+  profileCustodianUsersTrainingAccreditations: RouteConfig;
+  profileCustodianUsersCustodianOrgInfo: RouteConfig;
+  profileCustodianUsersIdentity: RouteConfig;
+  profileCustodianUsersAffiliations: RouteConfig;
   permissionsOrganisationCustodian: RouteConfig;
   permissionsResearcherCustodian: RouteConfig;
   profileOrganisationHome: RouteConfig;
