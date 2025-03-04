@@ -1,9 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Link } from "@mui/material";
-import ActionsPanel from "../ActionsPanel";
-import ActionsPanelValidationChecks from "./ActionsPanelValidationChecks";
 import { mockedVerifications } from "@/mocks/data/static";
+import ActionsPanelValidationChecks from "./ActionsPanelValidationChecks";
 
 const meta = {
   title: "components/ActionsPanelValidationChecks",
