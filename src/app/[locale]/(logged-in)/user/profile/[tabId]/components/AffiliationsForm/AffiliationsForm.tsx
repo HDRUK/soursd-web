@@ -97,7 +97,7 @@ export default function AffiliationsForm({
                       name="organisation_id"
                       renderField={fieldProps => (
                         <Select {...fieldProps}>
-                          {(organisationsData?.data?.data ?? []).map(
+                          {(organisationsData ?? []).map(
                             (org: {
                               organisation_name: string;
                               id: string;
