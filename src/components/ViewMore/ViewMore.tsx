@@ -59,7 +59,7 @@ export default function ActionsPanelItem({
         }) || (
           <Box sx={{ mt: 4 }}>
             <Button variant="text" onClick={handleExpandCollapse}>
-              View all
+              {!expanded ? "View more" : "View less"}
             </Button>
           </Box>
         ))}
