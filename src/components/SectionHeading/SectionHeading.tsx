@@ -13,6 +13,7 @@ export default function SectionHeading({
   heading,
   description,
   variant,
+  sx,
   type = "content",
   size = "default",
   ...restProps
@@ -34,6 +35,7 @@ export default function SectionHeading({
       ...(type === "form" && {
         fontWeight: "normal",
       }),
+      ...sx,
     },
   };
 

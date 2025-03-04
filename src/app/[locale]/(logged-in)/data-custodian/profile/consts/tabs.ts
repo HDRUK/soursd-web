@@ -14,11 +14,11 @@ enum ConfigurationSubTabs {
 }
 
 enum ProjectsSubTabs {
-  SAFE_PROJECT = "safe_project",
-  SAFE_DATA = "safe_data",
-  SAFE_PEOPLE = "safe_people",
-  SAFE_SETTINGS = "safe_settings",
-  SAFE_OUTPUTS = "safe_outputs",
+  SAFE_PROJECT = "safe-project",
+  SAFE_DATA = "safe-data",
+  SAFE_PEOPLE = "safe-people",
+  SAFE_SETTINGS = "safe-settings",
+  SAFE_OUTPUTS = "safe-outputs",
 }
 
 enum UserSubTabs {

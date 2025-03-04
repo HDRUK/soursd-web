@@ -69,23 +69,23 @@ const ROUTES: Routes = {
     permissions: [UserGroup.CUSTODIANS],
   },
   profileCustodianProjectsSafeProject: {
-    path: "/data-custodian/profile/projects/{id}/safe_project",
+    path: "/data-custodian/profile/projects/{id}/safe-project",
     permissions: [UserGroup.CUSTODIANS],
   },
   profileCustodianProjectsSafeData: {
-    path: "/data-custodian/profile/projects/{id}/safe_data",
+    path: "/data-custodian/profile/projects/{id}/safe-data",
     permissions: [UserGroup.CUSTODIANS],
   },
   profileCustodianProjectsSafePeople: {
-    path: "/data-custodian/profile/projects/{id}/safe_people",
+    path: "/data-custodian/profile/projects/{id}/safe-people",
     permissions: [UserGroup.CUSTODIANS],
   },
   profileCustodianProjectsSafeSettings: {
-    path: "/data-custodian/profile/projects/{id}/safe_settings",
+    path: "/data-custodian/profile/projects/{id}/safe-settings",
     permissions: [UserGroup.CUSTODIANS],
   },
   profileCustodianProjectsSafeOutputs: {
-    path: "/data-custodian/profile/projects/{id}/safe_outputs",
+    path: "/data-custodian/profile/projects/{id}/safe-outputs",
     permissions: [UserGroup.CUSTODIANS],
   },
   profileCustodianUsersHistory: {

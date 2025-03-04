@@ -1,4 +1,4 @@
-import { PageBodyContainer } from "@/modules";
+import { PageBody, PageBodyContainer } from "@/modules";
 import { toCamelCase } from "@/utils/string";
 import { useTranslations } from "next-intl";
 import { ConfigurationSubTabs, PageTabs, UserSubTabs } from "../../consts/tabs";
@@ -9,6 +9,7 @@ interface PageProps {
   params: {
     tabId: PageTabs;
     subTabId: ConfigurationSubTabs | UserSubTabs;
+    id?: number;
   };
 }
 
@@ -19,8 +20,10 @@ function SubPage({ params }: PageProps) {
 
   return (
     <PageBodyContainer heading={t(toCamelCase(params.tabId))}>
-      <SubTabsSections {...params} />
-      <SubTabsContents {...params} />
+      <PageBody>
+        <SubTabsSections {...params} />
+        <SubTabsContents {...params} />
+      </PageBody>
     </PageBodyContainer>
   );
 }

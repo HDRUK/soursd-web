@@ -25,7 +25,6 @@ function UsersSubPage({ params: { subTabId, id } }: UsersSubPageProps) {
     <LoadingWrapper variant="basic" loading={isPending}>
       <SubPageUsers
         params={{
-          tabId: PageTabs.USERS,
           subTabId,
           id,
         }}

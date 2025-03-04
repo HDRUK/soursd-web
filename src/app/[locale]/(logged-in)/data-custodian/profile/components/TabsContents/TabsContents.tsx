@@ -7,6 +7,7 @@ import Home from "../Home";
 import Users from "../Users";
 import Organisations from "../Organisations";
 import { PageTabs } from "../../consts/tabs";
+import Contacts from "../Contacts";
 
 interface TabsContentsProps {
   tabId: PageTabs;
@@ -22,7 +23,7 @@ export default function TabsContents({ tabId }: TabsContentsProps) {
       {tabId === PageTabs.PROJECTS && <Projects variant="custodian" />}
       {tabId === PageTabs.ORGANISATIONS && <Organisations />}
       {tabId === PageTabs.USERS && <Users />}
-      {tabId === PageTabs.CONTACTS && "Contacts"}
+      {tabId === PageTabs.CONTACTS && <Contacts />}
     </>
   );
 }

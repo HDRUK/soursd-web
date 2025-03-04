@@ -1,5 +1,4 @@
-import { ConfigProps, withConfig } from "@/components/Config";
-import { redirect } from "next/navigation";
+import { ConfigProps } from "@/components/Config";
 import { ReactNode } from "react";
 import { PageTabs } from "../../consts/tabs";
 import TabsSections from "../TabsSections";
@@ -11,11 +10,7 @@ interface LayoutProps extends ConfigProps {
   };
 }
 
-function Layout({ children, params: { tabId }, config }: LayoutProps) {
-  if (!Object.values(PageTabs).includes(tabId)) {
-    redirect(config.routes.profileCustodianHome.path);
-  }
-
+function Layout({ children, params: { tabId } }: LayoutProps) {
   return (
     <>
       <TabsSections tabId={tabId} />
@@ -24,4 +19,4 @@ function Layout({ children, params: { tabId }, config }: LayoutProps) {
   );
 }
 
-export default withConfig(Layout);
+export default Layout;

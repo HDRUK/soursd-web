@@ -19,7 +19,6 @@ import { mockedVerifications } from "@/mocks/data/static";
 
 interface PageProps {
   params: {
-    tabId: PageTabs;
     subTabId: UserSubTabs;
     id?: number;
   };
@@ -29,17 +28,14 @@ const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 
 function SubPageUsers({ params }: PageProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
-
-  if (params.tabId === PageTabs.USERS && !params.id) {
-    notFound();
-  }
+  const tabId = PageTabs.USERS;
 
   return (
-    <PageBodyContainer heading={t(toCamelCase(params.tabId))}>
+    <PageBodyContainer heading={t(toCamelCase(tabId))}>
       <PageColumns>
         <PageColumnBody>
-          <SubTabsSections {...params} />
-          <SubTabsContents {...params} />
+          <SubTabsSections tabId={tabId} {...params} />
+          <SubTabsContents tabId={tabId} {...params} />
         </PageColumnBody>
         <PageColumnDetails>{mockedVerifications()}</PageColumnDetails>
       </PageColumns>

@@ -1,14 +1,14 @@
 import Page from "../components/Page";
 import { PageTabs } from "../consts/tabs";
 
-function ProjectsPage() {
+function ContactsPage() {
   return (
     <Page
       params={{
-        tabId: PageTabs.PROJECTS,
+        tabId: PageTabs.CONTACTS,
       }}
     />
   );
 }
 
-export default ProjectsPage;
+export default ContactsPage;

@@ -1,48 +1,35 @@
-import ActionsPanel from "@/components/ActionsPanel";
-import ActionsPanelValidationChecks from "@/components/ActionsPanelValidationChecks";
-import { RejectIcon, VerifyIcon } from "@/consts/icons";
-import { Link } from "@/i18n/routing";
+import { mockedVerifications } from "@/mocks/data/static";
 import {
+  PageBody,
   PageBodyContainer,
   PageColumnBody,
   PageColumnDetails,
   PageColumns,
 } from "@/modules";
 import { toCamelCase } from "@/utils/string";
-import { Button } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { notFound } from "next/navigation";
-import { PageTabs, UserSubTabs } from "../../consts/tabs";
+import { PageTabs, ProjectsSubTabs } from "../../consts/tabs";
 import SubTabsSections from "../SubTabSections";
 import SubTabsContents from "../SubsTabContents";
-import { mockedVerifications } from "@/mocks/data/static";
+import { ResearcherProject } from "@/types/application";
 
 interface PageProps {
+  projectData: ResearcherProject;
   params: {
-    tabId: PageTabs;
-    subTabId: UserSubTabs;
+    subTabId: ProjectsSubTabs;
     id?: number;
   };
 }
 
-const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
-
-export default function SubPageProjects({ params }: PageProps) {
-  const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
-
-  if (params.tabId === PageTabs.PROJECTS && !params.id) {
-    notFound();
-  }
+export default function SubPageProjects({ params, projectData }: PageProps) {
+  const tabId = PageTabs.PROJECTS;
 
   return (
-    <PageBodyContainer heading={t(toCamelCase(params.tabId))}>
-      <PageColumns>
-        <PageColumnBody>
-          <SubTabsSections {...params} />
-          <SubTabsContents {...params} />
-        </PageColumnBody>
-        <PageColumnDetails>{mockedVerifications()}</PageColumnDetails>
-      </PageColumns>
+    <PageBodyContainer heading={projectData.title}>
+      <PageBody>
+        <SubTabsSections tabId={tabId} {...params} />
+        <SubTabsContents tabId={tabId} {...params} />
+      </PageBody>
     </PageBodyContainer>
   );
 }

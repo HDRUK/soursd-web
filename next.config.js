@@ -37,6 +37,10 @@ const nextConfig = withNextIntl({
         destination: `/:locale/data-custodian/profile/configuration/webhooks`,
       },
       {
+        source: "/:locale/data-custodian/profile/projects/:id",
+        destination: `/:locale/data-custodian/profile/projects/:id/safe-project`,
+      },
+      {
         source: "/:locale/organisation/profile",
         destination: `/:locale/organisation/profile/home`,
       },
