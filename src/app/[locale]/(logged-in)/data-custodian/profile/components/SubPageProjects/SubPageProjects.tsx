@@ -27,10 +27,10 @@ interface PageProps {
 
 const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 
-function SubPageUsers({ params }: PageProps) {
+export default function SubPageProjects({ params }: PageProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
-  if (params.tabId === PageTabs.USERS && !params.id) {
+  if (params.tabId === PageTabs.PROJECTS && !params.id) {
     notFound();
   }
 
@@ -46,5 +46,3 @@ function SubPageUsers({ params }: PageProps) {
     </PageBodyContainer>
   );
 }
-
-export default SubPageUsers;

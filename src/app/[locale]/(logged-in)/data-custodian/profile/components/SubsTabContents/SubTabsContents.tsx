@@ -8,6 +8,7 @@ import {
   ConfigurationSubTabs,
   PageTabs,
   UserSubTabs,
+  ProjectsSubTabs,
 } from "../../consts/tabs";
 import Rules from "../Rules";
 import ValidationChecks from "../ValidationChecks";
@@ -21,7 +22,7 @@ import UserAffiliations from "../UserAffiliations";
 
 interface TabsContentsProps {
   tabId: PageTabs;
-  subTabId: ConfigurationSubTabs | UserSubTabs;
+  subTabId: ConfigurationSubTabs | UserSubTabs | ProjectsSubTabs;
 }
 
 export default function SubTabsContents({

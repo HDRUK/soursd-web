@@ -56,6 +56,11 @@
     "continueButton": "Continue"
   },
   "CustodianProfile": {
+    "safeProject": "Safe Project",
+    "safeOutputs": "Safe Outputs",
+    "safePeople": "Safe People",
+    "safeData": "Safe Data",
+    "safeSettings": "Safe Settings",
     "home": "Home",
     "contacts": "Contacts",
     "uniqueIdentifierTitle": "SOURSD Identifier",
