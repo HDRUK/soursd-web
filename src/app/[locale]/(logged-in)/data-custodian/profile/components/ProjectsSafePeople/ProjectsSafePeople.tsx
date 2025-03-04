@@ -37,18 +37,16 @@ export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
   const getUsersFromResponse = (usersData: ProjectUser[]) => {
     const users: FilteredUser[] = [];
 
-    if (usersData) {
-      usersData.forEach(({ registry: { user, organisations } }) => {
-        organisations.forEach(({ organisation_name }) => {
-          users.push({
-            organisation_name,
-            ...user,
-            project_status: "Live",
-            project_role: "Data analyst",
-          });
+    usersData?.forEach(({ registry: { user, organisations } }) => {
+      organisations?.forEach(({ organisation_name }) => {
+        users.push({
+          organisation_name,
+          ...user,
+          project_status: "Live",
+          project_role: "Data analyst",
         });
       });
-    }
+    });
 
     return users;
   };

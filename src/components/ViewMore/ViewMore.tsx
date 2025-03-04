@@ -23,7 +23,7 @@ export default function ActionsPanelItem({
 
   useEffect(() => {
     if (ref.current) {
-      const elements = ref.current.querySelectorAll(":scope > div > *");
+      const elements = Array.from(ref.current.children);
       let initialHeight = 0;
 
       if (collapseNumRows < elements.length) {
