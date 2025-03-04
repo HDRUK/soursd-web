@@ -9,6 +9,7 @@ import WorkspacePremiumOutlinedIcon from "@mui/icons-material/WorkspacePremiumOu
 import GppBadOutlinedIcon from "@mui/icons-material/GppBadOutlined";
 import VerifiedUserOutlinedIcon from "@mui/icons-material/VerifiedUserOutlined";
 import { SvgIconProps } from "@mui/material";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
 
 const IdentityVerifiedIcon = (props: SvgIconProps) => (
   <ShieldOutlinedIcon {...props} sx={{ color: "default.main", ...props.sx }} />
@@ -55,6 +56,8 @@ const EditIcon = (props: SvgIconProps) => (
 
 const OrganisationIcon = (props: SvgIconProps) => <BusinessIcon {...props} />;
 
+const FilterIcon = (props: SvgIconProps) => <FilterAltIcon {...props} />;
+
 export {
   ApprovedIcon,
   ApprovedTrainingIcon,
@@ -67,4 +70,5 @@ export {
   TrashIcon,
   VerifyIcon,
   RejectIcon,
+  FilterIcon,
 };

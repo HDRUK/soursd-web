@@ -19,15 +19,18 @@ import UserTrainingAccreditations from "../UserTrainingAccreditations";
 import UserProjects from "../UserProjects";
 import UserCustodianOrgInfo from "../UserCustodianOrgInfo";
 import UserAffiliations from "../UserAffiliations";
+import ProjectsSafePeople from "../ProjectsSafePeople";
 
 interface TabsContentsProps {
   tabId: PageTabs;
   subTabId: ConfigurationSubTabs | UserSubTabs | ProjectsSubTabs;
+  id?: number;
 }
 
 export default function SubTabsContents({
   tabId,
   subTabId,
+  id,
 }: TabsContentsProps) {
   const [user, custodian] = useStore(state => [
     state.getUser(),
@@ -69,6 +72,9 @@ export default function SubTabsContents({
       break;
     case UserSubTabs.AFFILIATIONS:
       content = <UserAffiliations />;
+      break;
+    case ProjectsSubTabs.SAFE_PEOPLE:
+      content = <ProjectsSafePeople id={id} />;
       break;
     default:
       content = null;

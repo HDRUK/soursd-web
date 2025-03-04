@@ -3,6 +3,7 @@
 import ContactLink from "@/components/ContactLink";
 import Pagination from "@/components/Pagination";
 import Results from "@/components/Results";
+import { FilterIcon } from "@/consts/icons";
 import { SearchDirections } from "@/consts/search";
 import { PageBody, PageSection } from "@/modules";
 import SearchActionMenu from "@/modules/SearchActionMenu";
@@ -13,7 +14,6 @@ import {
 } from "@/services/approvals";
 import { useOrganisationsQuery } from "@/services/organisations";
 import { getCombinedQueryState, getSearchSortOrder } from "@/utils/query";
-import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import SortIcon from "@mui/icons-material/Sort";
 import { useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
@@ -125,7 +125,7 @@ export default function Sections() {
           />
           <SearchActionMenu
             actions={filterActions}
-            startIcon={<FilterAltIcon />}
+            startIcon={<FilterIcon />}
             renderedSelectedLabel={tApplication("filteredBy")}
             renderedDefaultLabel={tApplication("filterBy")}
             aria-label={tApplication("filterBy")}
@@ -141,7 +141,7 @@ export default function Sections() {
           errorMessage={t.rich("errorResultsOrganisations", {
             contactLink: ContactLink,
           })}
-          count={queryState.total}>
+          total={queryState.total}>
           <OrganisationsList
             onApprove={handleApprove}
             onUnapprove={handleUnapprove}
