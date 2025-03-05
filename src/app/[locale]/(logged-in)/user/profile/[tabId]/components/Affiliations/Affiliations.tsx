@@ -60,8 +60,6 @@ export default function Affiliations() {
 
   const handleDetailsSubmit = useCallback(
     async (fields: PostAffiliationPayload) => {
-      console.log(fields);
-      return;
       try {
         await mutateAsync(fields);
 
