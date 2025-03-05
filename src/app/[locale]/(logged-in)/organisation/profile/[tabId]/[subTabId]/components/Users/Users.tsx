@@ -127,6 +127,7 @@ export default function Users() {
         </Box>
 
         <Table
+          total={usersData.data.total}
           isPaginated
           page={page}
           setPage={setPage}

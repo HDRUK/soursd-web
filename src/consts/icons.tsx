@@ -2,15 +2,41 @@ import StatusIndicator from "@/components/StatusIndicator";
 import BlockIcon from "@mui/icons-material/BlockOutlined";
 import BusinessIcon from "@mui/icons-material/Business";
 import DeleteIcon from "@mui/icons-material/Delete";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import GppBadOutlinedIcon from "@mui/icons-material/GppBadOutlined";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import ShieldOutlinedIcon from "@mui/icons-material/ShieldOutlined";
 import TaskAltOutlinedIcon from "@mui/icons-material/TaskAltOutlined";
+import VerifiedUserOutlinedIcon from "@mui/icons-material/VerifiedUserOutlined";
 import WorkspacePremiumOutlinedIcon from "@mui/icons-material/WorkspacePremiumOutlined";
 import { SvgIconProps } from "@mui/material";
 
-const IdentityVerifiedIcon = (props: SvgIconProps) => (
-  <ShieldOutlinedIcon {...props} sx={{ color: "default.main" }} />
-);
+const IdentityVerifiedIcon = (props: SvgIconProps) => {
+  const { sx, ...restProps } = props;
+
+  return (
+    <ShieldOutlinedIcon {...restProps} sx={{ color: "default.main", ...sx }} />
+  );
+};
+
+const VerifyIcon = (props: SvgIconProps) => {
+  const { sx, ...restProps } = props;
+
+  return (
+    <VerifiedUserOutlinedIcon
+      {...restProps}
+      sx={{ color: "primary.main", ...sx }}
+    />
+  );
+};
+
+const RejectIcon = (props: SvgIconProps) => {
+  const { sx, ...restProps } = props;
+
+  return (
+    <GppBadOutlinedIcon {...restProps} sx={{ color: "primary.main", ...sx }} />
+  );
+};
 
 const ApprovedUserIcon = (props: SvgIconProps) => (
   <TaskAltOutlinedIcon {...props} sx={{ color: "success.main" }} />
@@ -42,14 +68,19 @@ const EditIcon = (props: SvgIconProps) => (
 
 const OrganisationIcon = (props: SvgIconProps) => <BusinessIcon {...props} />;
 
+const FilterIcon = (props: SvgIconProps) => <FilterAltIcon {...props} />;
+
 export {
   ApprovedIcon,
   ApprovedTrainingIcon,
   ApprovedUserIcon,
   DecoupleIcon,
   EditIcon,
+  FilterIcon,
   IdentityVerifiedIcon,
   OrganisationIcon,
   PendingIcon,
+  RejectIcon,
   TrashIcon,
+  VerifyIcon,
 };

@@ -1,3 +1,5 @@
+"use client";
+
 import { Box, Typography, useTheme } from "@mui/material";
 import { ReactNode } from "react";
 
@@ -41,9 +43,14 @@ export default function ActionsPanel({
       sx={{
         display: "flex",
         flexDirection: "column",
+        borderRadius: 3,
         ...panelSx,
       }}>
-      {heading && <Typography variant="h5">{heading}</Typography>}
+      {heading && (
+        <Typography variant="h4" sx={{ mb: 2 }}>
+          {heading}
+        </Typography>
+      )}
       {description && <Box sx={{ mb: 2 }}>{description}</Box>}
       <Box
         sx={{

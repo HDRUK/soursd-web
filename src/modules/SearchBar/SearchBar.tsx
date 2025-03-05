@@ -7,8 +7,8 @@ import SearchField from "../SearchField";
 export interface SearchBarProps {
   updateQueryParam: (text: string) => void;
   placeholder: string;
-  legend: ReactNode;
-  children: ReactNode;
+  legend?: ReactNode;
+  children?: ReactNode;
 }
 
 export default function SearchBar({

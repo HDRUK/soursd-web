@@ -1,24 +1,22 @@
-import React, { ReactNode } from "react";
-import {
-  useReactTable,
-  getCoreRowModel,
-  getPaginationRowModel,
-  flexRender,
-  ColumnDef,
-} from "@tanstack/react-table";
 import Pagination from "@/components/Pagination";
+import { QueryState } from "@/types/form";
 import {
   Table as MuiTable,
-  TableHead,
   TableBody,
   TableCell,
-  TableRow,
   TableContainer,
-  Box,
-  CircularProgress,
+  TableHead,
+  TableRow,
 } from "@mui/material";
-import { Message } from "@/components/Message";
-import { QueryState } from "@/types/form";
+import {
+  ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  getPaginationRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
+import React, { ReactNode } from "react";
+import Results from "../Results";
 
 interface TableProps<T> {
   data: T[];
@@ -31,6 +29,8 @@ interface TableProps<T> {
   dense?: boolean;
   queryState: QueryState;
   errorMessage?: ReactNode;
+  noResultsMessage?: ReactNode;
+  total?: number;
 }
 
 const Table = <T,>({
@@ -43,7 +43,9 @@ const Table = <T,>({
   last_page,
   queryState,
   dense = true,
-  errorMessage = "error",
+  errorMessage = "Error",
+  noResultsMessage = "No results",
+  total,
 }: TableProps<T>) => {
   const table = useReactTable({
     data: data || [],
@@ -53,14 +55,23 @@ const Table = <T,>({
     ...(isPaginated && { getPaginationRowModel: getPaginationRowModel() }),
   });
 
-  const { isLoading, isError } = queryState;
-
-  if (!isLoading && isError) {
-    return <Message severity="error">{errorMessage}</Message>;
-  }
-
   return (
-    <>
+    <Results
+      total={total}
+      queryState={queryState}
+      noResultsMessage={noResultsMessage}
+      errorMessage={errorMessage}
+      pagination={
+        isPaginated && (
+          <Pagination
+            count={last_page}
+            page={page}
+            onChange={(e: React.ChangeEvent<unknown>, page: number) => {
+              setPage?.(page);
+            }}
+          />
+        )
+      }>
       <TableContainer sx={{ my: 1 }}>
         <MuiTable size={dense ? "small" : "medium"}>
           {showHeader && (
@@ -95,27 +106,7 @@ const Table = <T,>({
           </TableBody>
         </MuiTable>
       </TableContainer>
-      {isLoading && (
-        <Box sx={{ p: 5, display: "flex", justifyContent: "center" }}>
-          <CircularProgress />
-        </Box>
-      )}
-      {isPaginated && page && setPage && (
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-          }}>
-          <Pagination
-            count={last_page}
-            page={page}
-            onChange={(e: React.ChangeEvent<unknown>, page: number) => {
-              setPage(page);
-            }}
-          />
-        </Box>
-      )}
-    </>
+    </Results>
   );
 };
 

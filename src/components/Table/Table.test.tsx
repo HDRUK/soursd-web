@@ -35,6 +35,7 @@ describe("<Table />", () => {
   test("renders table with data", () => {
     render(
       <Table
+        total={2}
         data={data}
         columns={columns}
         queryState={{ isLoading: false, isError: false }}
@@ -70,6 +71,7 @@ describe("<Table />", () => {
         page={1}
         setPage={setPage}
         last_page={2}
+        total={2}
         queryState={{ isLoading: false, isError: false }}
       />
     );

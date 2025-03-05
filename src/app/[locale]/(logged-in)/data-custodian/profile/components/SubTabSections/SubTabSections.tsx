@@ -5,7 +5,12 @@ import SubTabs from "@/modules/SubTabs";
 import { Option } from "@/types/common";
 import { injectParamsIntoPath } from "@/utils/application";
 import { useTranslations } from "next-intl";
-import { ConfigurationSubTabs, PageTabs, UserSubTabs } from "../../consts/tabs";
+import {
+  ConfigurationSubTabs,
+  PageTabs,
+  ProjectsSubTabs,
+  UserSubTabs,
+} from "../../consts/tabs";
 
 const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 
@@ -16,7 +21,7 @@ export interface SubTabsMap {
 interface SubTabsSectionsProps {
   tabId: PageTabs;
   subTabId: ConfigurationSubTabs | UserSubTabs;
-  id: number;
+  id?: number;
 }
 
 export default function SubTabsSections({
@@ -96,6 +101,58 @@ export default function SubTabsSections({
         href: injectParamsIntoPath(routes.profileCustodianUsersHistory.path, {
           id,
         }),
+      },
+    ],
+    [PageTabs.PROJECTS]: [
+      {
+        label: t("safeProject"),
+        value: ProjectsSubTabs.SAFE_PROJECT,
+        href: injectParamsIntoPath(
+          routes.profileCustodianProjectsSafeProject.path,
+          {
+            id,
+          }
+        ),
+      },
+      {
+        label: t("safeData"),
+        value: ProjectsSubTabs.SAFE_DATA,
+        href: injectParamsIntoPath(
+          routes.profileCustodianProjectsSafeData.path,
+          {
+            id,
+          }
+        ),
+      },
+      {
+        label: t("safePeople"),
+        value: ProjectsSubTabs.SAFE_PEOPLE,
+        href: injectParamsIntoPath(
+          routes.profileCustodianProjectsSafePeople.path,
+          {
+            id,
+          }
+        ),
+      },
+      {
+        label: t("safeSettings"),
+        value: ProjectsSubTabs.SAFE_SETTINGS,
+        href: injectParamsIntoPath(
+          routes.profileCustodianProjectsSafeSettings.path,
+          {
+            id,
+          }
+        ),
+      },
+      {
+        label: t("safeOutputs"),
+        value: ProjectsSubTabs.SAFE_OUTPUTS,
+        href: injectParamsIntoPath(
+          routes.profileCustodianProjectsSafeOutputs.path,
+          {
+            id,
+          }
+        ),
       },
     ],
   };

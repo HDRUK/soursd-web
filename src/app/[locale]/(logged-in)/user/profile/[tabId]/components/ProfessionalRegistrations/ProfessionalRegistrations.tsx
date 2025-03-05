@@ -93,7 +93,7 @@ export default function ProfessionalRegistrations() {
         errorMessage={tProfile.rich("professionalRegsitrationsErrorMessage", {
           contactLink: ContactLink,
         })}
-        count={professionalRegistrations.length}>
+        total={professionalRegistrations.length}>
         <Table>
           <TableHead sx={{ backgroundColor: "lightPurple.main" }}>
             <TableRow>

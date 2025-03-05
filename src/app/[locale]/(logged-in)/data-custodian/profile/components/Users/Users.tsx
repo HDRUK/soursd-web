@@ -116,7 +116,7 @@ export default function Users() {
             isLoading: isGetCustodiansLoading,
             isError: isGetCustodiansError,
           }}
-          count={custodiansData?.data?.length}>
+          total={custodiansData?.data?.length}>
           {custodiansData?.data.map(custodianUser => {
             const {
               id,

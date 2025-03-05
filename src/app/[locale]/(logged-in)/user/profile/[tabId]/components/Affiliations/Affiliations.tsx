@@ -117,7 +117,7 @@ export default function Affiliations() {
               errorMessage={tProfile.rich("affiliationsErrorMessage", {
                 contactLink: ContactLink,
               })}
-              count={affiliations?.length}>
+              total={affiliations?.length}>
               <Table>
                 <TableHead sx={{ backgroundColor: "lightPurple.main" }}>
                   <TableRow>
