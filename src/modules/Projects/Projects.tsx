@@ -3,6 +3,7 @@
 import ContactLink from "@/components/ContactLink";
 import Pagination from "@/components/Pagination";
 import Results from "@/components/Results";
+import { FilterIcon } from "@/consts/icons";
 import { SearchDirections } from "@/consts/search";
 import { StoreState, useStore } from "@/data/store";
 import PageSection from "@/modules/PageSection";
@@ -10,7 +11,6 @@ import SearchBar from "@/modules/SearchBar";
 import { ProjectEntities } from "@/services/projects/getEntityProjects";
 import useEntityProjectsQuery from "@/services/projects/useEntityProjectsQuery";
 import { getSearchSortOrder } from "@/utils/query";
-import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import SortIcon from "@mui/icons-material/Sort";
 import { useTranslations } from "next-intl";
 import PageBody from "../PageBody";
@@ -139,7 +139,7 @@ export default function Projects({ variant }: ProjectsProps) {
           />
           <SearchActionMenu
             actions={filterDateActions}
-            startIcon={<FilterAltIcon />}
+            startIcon={<FilterIcon />}
             renderedSelectedLabel={tApplication("filteredByDate")}
             renderedDefaultLabel={tApplication("filterByDate")}
             aria-label={tApplication("filterByDate")}
@@ -147,7 +147,7 @@ export default function Projects({ variant }: ProjectsProps) {
           <SearchActionMenu
             actions={filterStatusActions}
             multiple
-            startIcon={<FilterAltIcon />}
+            startIcon={<FilterIcon />}
             renderedSelectedLabel={tApplication("filteredBy")}
             renderedDefaultLabel={tApplication("filterByProjectStatus")}
             aria-label={tApplication("filterByProjectStatus")}
@@ -162,7 +162,7 @@ export default function Projects({ variant }: ProjectsProps) {
           errorMessage={t.rich("errorResultsProjects", {
             contactLink: ContactLink,
           })}
-          count={total}>
+          total={total}>
           <ProjectList projects={projectsData} />
         </Results>
       </PageSection>

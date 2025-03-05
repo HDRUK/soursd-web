@@ -26,15 +26,19 @@ const nextConfig = withNextIntl({
       },
       {
         source: "/:locale/data-custodian/profile",
-        destination: `/:locale/data-custodian/profile/home`,
+        destination: `/:locale/user/data-custodian/profile/home`,
+      },
+      {
+        source: "/:locale/data-custodian/profile/users/:id",
+        destination: `/:locale/data-custodian/profile/users/:id/identity`,
       },
       {
         source: "/:locale/data-custodian/profile/configuration",
         destination: `/:locale/data-custodian/profile/configuration/webhooks`,
       },
       {
-        source: "/:locale/data-custodian/profile/users/:id",
-        destination: `/:locale/data-custodian/profile/users/:id/identity`,
+        source: "/:locale/data-custodian/profile/projects/:id",
+        destination: `/:locale/data-custodian/profile/projects/:id/safe-project`,
       },
       {
         source: "/:locale/organisation/profile",

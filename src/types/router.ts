@@ -25,6 +25,11 @@ interface Routes {
   profileCustodianHome: RouteConfig;
   profileCustodianContacts: RouteConfig;
   profileCustodianProjects: RouteConfig;
+  profileCustodianProjectsSafeProject: RouteConfig;
+  profileCustodianProjectsSafeData: RouteConfig;
+  profileCustodianProjectsSafePeople: RouteConfig;
+  profileCustodianProjectsSafeSettings: RouteConfig;
+  profileCustodianProjectsSafeOutputs: RouteConfig;
   profileCustodianOrganisations: RouteConfig;
   profileCustodianConfiguration: RouteConfig;
   profileCustodianConfigurationWebhooks: RouteConfig;
