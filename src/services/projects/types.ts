@@ -8,7 +8,7 @@ type ProjectUsersResponse = ProjectUser[];
 
 type DeleteProjectUserPayload = {
   projectId: number;
-  userDigitalIdent: string;
+  registryId: number;
 };
 
 export type {

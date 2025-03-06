@@ -36,8 +36,7 @@ export default function useQueryConfirmAlerts<T>(
     preConfirm: () => {
       setHasClosed(true);
     },
-    willClose: <T,>() => {
-      console.log("refPayload", refPayload.current);
+    willClose: () => {
       alertOptions?.confirmAlertProps?.willClose<T>?.(refPayload.current);
 
       ref.current = null;

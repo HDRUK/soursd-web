@@ -4,12 +4,11 @@ import { deleteRequest } from "../requests";
 
 export default async (
   projectId: number,
-  userDigitalIdent: string,
+  registryId: number,
   options: ResponseOptions
 ): Promise<ResponseJson<null>> => {
-  console.log("***** projectId", projectId);
   const response = await deleteRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/projects/${projectId}/users/${userDigitalIdent}`
+    `${process.env.NEXT_PUBLIC_API_V1_URL}/projects/${projectId}/users/${registryId}`
   );
 
   return handleJsonResponse(response, options);

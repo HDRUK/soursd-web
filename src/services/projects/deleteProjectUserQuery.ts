@@ -7,8 +7,7 @@ export default function deleteProjectUserQuery(options?: MutationOptions) {
   return {
     mutationKey: ["deleteProjectUser", ...(options?.mutationKeySuffix || [])],
     mutationFn: (payload: DeleteProjectUserPayload) => {
-      console.log("******** delete payload", payload);
-      return deleteProjectUser(payload.projectId, payload.userDigitalIdent, {
+      return deleteProjectUser(payload.projectId, payload.registryId, {
         error: { message: "deleteProjectUser" },
         ...options?.responseOptions,
       });

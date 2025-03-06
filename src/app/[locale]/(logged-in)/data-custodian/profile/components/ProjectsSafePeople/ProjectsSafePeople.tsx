@@ -45,51 +45,53 @@ export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
 
   const getUsersFromResponse = (usersData: ProjectUser[]) => {
     const users: FilteredUser[] = [];
-    console.log("**** usersData", usersData);
-    usersData?.forEach(
-      ({ user_digital_ident, registry: { user, organisations } }) => {
-        organisations?.forEach(({ organisation_name }) => {
-          users.push({
-            organisation_name,
-            ...user,
-            user_digital_ident,
-            project_status: "Live",
-            project_role: "Data analyst",
-          });
+
+    usersData?.forEach(({ registry: { user, organisations } }) => {
+      organisations?.forEach(({ organisation_name }) => {
+        users.push({
+          organisation_name,
+          ...user,
+          project_status: "Live",
+          project_role: "Data analyst",
         });
-      }
-    );
+      });
+    });
 
     return users;
   };
 
   const users = getUsersFromResponse(usersData);
 
-  const showDeleteConfirm = useQueryConfirmAlerts(deleteQueryState, {
-    confirmAlertProps: {
-      willClose: async (payload: DeleteProjectUserPayload) => {
-        await deleteUserAsync(payload);
+  const showDeleteConfirm = useQueryConfirmAlerts<DeleteProjectUserPayload>(
+    deleteQueryState,
+    {
+      confirmAlertProps: {
+        willClose: async payload => {
+          await deleteUserAsync(payload as DeleteProjectUserPayload);
 
-        refetch();
+          refetch();
+        },
       },
-    },
-  });
+    }
+  );
 
   const renderActionMenuCell = <T extends FilteredUser>(
     info: CellContext<T, unknown>
   ) => {
-    // console.log("info.row.original", info.row.original);
-    const { user_digital_ident } = info.row.original;
+    const {
+      registry: { id: registryId },
+    } = info.row.original;
 
+    //This will be an action menu
     return (
       <Button
         onClick={async () => {
           showDeleteConfirm({
             projectId: id,
-            userDigitalIdent: user_digital_ident,
+            registryId: registryId,
           });
         }}>
-        {user_digital_ident}
+        Delete
       </Button>
     );
   };
