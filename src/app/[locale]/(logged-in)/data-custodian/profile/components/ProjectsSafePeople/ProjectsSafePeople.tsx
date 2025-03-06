@@ -80,7 +80,6 @@ export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
   ) => {
     const { registry_id } = info.row.original;
 
-    //This will be an action menu
     return (
       <Button
         onClick={async () => {
