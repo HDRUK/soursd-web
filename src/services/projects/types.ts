@@ -6,4 +6,14 @@ type ProjectResponse = ResearcherProject;
 
 type ProjectUsersResponse = ProjectUser[];
 
-export type { ProjectsResponse, ProjectUsersResponse, ProjectResponse };
+type DeleteProjectUserPayload = {
+  projectId: number;
+  userDigitalIdent: string;
+};
+
+export type {
+  ProjectsResponse,
+  ProjectUsersResponse,
+  ProjectResponse,
+  DeleteProjectUserPayload,
+};

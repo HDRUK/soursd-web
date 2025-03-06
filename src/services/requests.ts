@@ -1,6 +1,9 @@
 import { QueryPayload } from "@/types/requests";
 import { objectToQuerystring } from "@/utils/requests";
-import { getHeadersWithAuthorization } from "./requestHelpers";
+import {
+  createEmptyErrorResponse,
+  getHeadersWithAuthorization,
+} from "./requestHelpers";
 
 async function request<T>(
   method: string,
@@ -8,34 +11,38 @@ async function request<T>(
   payload?: QueryPayload<T>,
   options?: RequestInit
 ) {
-  let defaultContentType;
+  try {
+    let defaultContentType;
 
-  if (!(payload instanceof FormData)) {
-    defaultContentType = "application/json;charset=UTF-8";
+    if (!(payload instanceof FormData)) {
+      defaultContentType = "application/json;charset=UTF-8";
+    }
+
+    const headers = await getHeadersWithAuthorization({
+      ...(defaultContentType && {
+        "content-type": defaultContentType,
+      }),
+      ...options?.headers,
+    });
+
+    const body =
+      payload instanceof Function
+        ? payload()
+        : payload instanceof FormData
+          ? payload
+          : JSON.stringify(payload);
+
+    const response = await fetch(url, {
+      ...options,
+      method,
+      headers,
+      body,
+    });
+
+    return response;
+  } catch (e) {
+    return createEmptyErrorResponse();
   }
-
-  const headers = await getHeadersWithAuthorization({
-    ...(defaultContentType && {
-      "content-type": defaultContentType,
-    }),
-    ...options?.headers,
-  });
-
-  const body =
-    payload instanceof Function
-      ? payload()
-      : payload instanceof FormData
-        ? payload
-        : JSON.stringify(payload);
-
-  const response = await fetch(url, {
-    ...options,
-    method,
-    headers,
-    body,
-  });
-
-  return response;
 }
 
 async function getRequest<T>(url: string, payload?: T, options?: RequestInit) {
@@ -45,6 +52,7 @@ async function getRequest<T>(url: string, payload?: T, options?: RequestInit) {
     payload,
     options
   );
+
   return response;
 }
 

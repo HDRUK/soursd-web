@@ -4,12 +4,6 @@ import { UserGroup } from "./user";
 const PROTECTED_ROUTES: RoutePermissions[] = [];
 
 const ROUTES: Routes = {
-  login: {
-    path: "/login",
-  },
-  logout: {
-    path: "/logout",
-  },
   register: {
     path: "/register",
   },

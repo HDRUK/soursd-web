@@ -18,12 +18,13 @@ export interface QueryAlertConfirmOptions
   errorAlertProps?: ShowAlertOptions;
 }
 
-export default function useQueryConfirmAlerts(
+export default function useQueryConfirmAlerts<T>(
   query: QueryState | MutationState,
   alertOptions?: QueryAlertConfirmOptions
 ) {
   const t = useTranslations(NAMESPACE_TRANSALATIONS_APPLICATION);
   const ref = useRef<ShowAlert>();
+  const refPayload = useRef<T | null | undefined>();
   const [hasClosed, setHasClosed] = useState(false);
 
   const mergedConfirmAlertProps = {
@@ -35,17 +36,20 @@ export default function useQueryConfirmAlerts(
     preConfirm: () => {
       setHasClosed(true);
     },
-    willClose: () => {
-      ref.current = null;
+    willClose: <T,>() => {
+      console.log("refPayload", refPayload.current);
+      alertOptions?.confirmAlertProps?.willClose<T>?.(refPayload.current);
 
-      alertOptions?.confirmAlertProps?.willClose?.();
+      ref.current = null;
+      refPayload.current = null;
     },
   };
 
   useQueryAlerts(query, { ...alertOptions, enabled: hasClosed }, ref);
 
-  return useCallback(() => {
+  return useCallback((payload: T) => {
     if (!ref.current) {
+      refPayload.current = payload;
       ref.current = showAlert(
         alertOptions?.confirmAlertType || "warning",
         mergedConfirmAlertProps

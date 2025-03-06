@@ -68,6 +68,7 @@
     "statusLive": "Live",
     "safeOutputs": "Safe Outputs",
     "safePeople": "Safe People",
+    "safePeopleDeleteError": "",
     "safeData": "Safe Data",
     "safeSettings": "Safe Settings",
     "home": "Home",

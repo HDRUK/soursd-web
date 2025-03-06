@@ -23,6 +23,10 @@ export default function Results({
 }: ResultsProps) {
   const { isLoading, isError } = queryState;
 
+  console.log("total", total);
+  console.log("isLoading", isLoading);
+  console.log("isError", isError);
+
   return (
     <Box
       {...restProps}

@@ -1,20 +1,24 @@
 import Table from "@/components/Table";
 import { FilterIcon } from "@/consts/icons";
 import { useStore } from "@/data/store";
+import useQueryConfirmAlerts from "@/hooks/useQueryConfirmAlerts";
 import SearchActionMenu from "@/modules/SearchActionMenu";
 import SearchBar from "@/modules/SearchBar";
+import { deleteProjectUserQuery } from "@/services/projects";
 import useProjectUsersQuery from "@/services/projects/getProjectUsersQuery";
+import { DeleteProjectUserPayload } from "@/services/projects/types";
 import { Organisation, ProjectUser, User } from "@/types/application";
 import { renderUserNameCell } from "@/utils/cells";
-import { Box } from "@mui/material";
-import { ColumnDef } from "@tanstack/react-table";
+import { Box, Button } from "@mui/material";
+import { useMutation } from "@tanstack/react-query";
+import { CellContext, ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
 
 interface ProjectsSafePeopleProps {
   id: number;
 }
 
-type FilteredUser = User & Pick<Organisation, "organisation_name">;
+type FilteredUser = ProjectUser & Pick<Organisation, "organisation_name">;
 
 const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
@@ -28,30 +32,67 @@ export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
     setPage,
     handleFieldToggle,
     queryParams,
+    refetch,
     ...queryState
   } = useProjectUsersQuery(id);
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
   const routes = useStore(state => state.getApplication().routes);
 
+  const { mutateAsync: deleteUserAsync, ...deleteQueryState } = useMutation(
+    deleteProjectUserQuery()
+  );
+
   const getUsersFromResponse = (usersData: ProjectUser[]) => {
     const users: FilteredUser[] = [];
-
-    usersData?.forEach(({ registry: { user, organisations } }) => {
-      organisations?.forEach(({ organisation_name }) => {
-        users.push({
-          organisation_name,
-          ...user,
-          project_status: "Live",
-          project_role: "Data analyst",
+    console.log("**** usersData", usersData);
+    usersData?.forEach(
+      ({ user_digital_ident, registry: { user, organisations } }) => {
+        organisations?.forEach(({ organisation_name }) => {
+          users.push({
+            organisation_name,
+            ...user,
+            user_digital_ident,
+            project_status: "Live",
+            project_role: "Data analyst",
+          });
         });
-      });
-    });
+      }
+    );
 
     return users;
   };
 
   const users = getUsersFromResponse(usersData);
+
+  const showDeleteConfirm = useQueryConfirmAlerts(deleteQueryState, {
+    confirmAlertProps: {
+      willClose: async (payload: DeleteProjectUserPayload) => {
+        await deleteUserAsync(payload);
+
+        refetch();
+      },
+    },
+  });
+
+  const renderActionMenuCell = <T extends FilteredUser>(
+    info: CellContext<T, unknown>
+  ) => {
+    // console.log("info.row.original", info.row.original);
+    const { user_digital_ident } = info.row.original;
+
+    return (
+      <Button
+        onClick={async () => {
+          showDeleteConfirm({
+            projectId: id,
+            userDigitalIdent: user_digital_ident,
+          });
+        }}>
+        {user_digital_ident}
+      </Button>
+    );
+  };
 
   const filterActions = [
     {
@@ -82,6 +123,7 @@ export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
     },
     {
       header: tApplication("actions"),
+      cell: renderActionMenuCell,
     },
   ];
 

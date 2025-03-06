@@ -15,8 +15,6 @@ interface RouteConfig {
 }
 
 interface Routes {
-  login: RouteConfig;
-  logout: RouteConfig;
   register: RouteConfig;
   homepage: RouteConfig;
   usersCustodian: RouteConfig;

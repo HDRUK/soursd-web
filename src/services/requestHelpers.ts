@@ -1,4 +1,5 @@
 import { ResponseMessageType } from "@/consts/requests";
+import { ResponseEmptyError } from "@/types/query";
 import { ResponseOptions, ResponseJson } from "@/types/requests";
 
 export async function getAccessToken(): Promise<string | undefined> {
@@ -56,7 +57,7 @@ function handleDataError<T>(data: ResponseJson<T>, options?: ResponseOptions) {
 }
 
 async function handleJsonResponse(
-  response: Response,
+  response: Response | ResponseEmptyError,
   options?: ResponseOptions
 ) {
   const responseError = handleResponseError(response, options);
@@ -75,4 +76,22 @@ async function handleJsonResponse(
   });
 }
 
-export { handleResponseError, handleJsonResponse, getHeadersWithAuthorization };
+async function createEmptyErrorResponse(
+  status: 500 | 404 | 400 = 500
+): Promise<ResponseEmptyError> {
+  return Promise.resolve({
+    ok: false,
+    status,
+    json: async () => ({
+      message: "failed",
+      data: null,
+    }),
+  });
+}
+
+export {
+  handleResponseError,
+  handleJsonResponse,
+  getHeadersWithAuthorization,
+  createEmptyErrorResponse,
+};
