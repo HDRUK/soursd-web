@@ -4,7 +4,7 @@ import Text from "@/components/Text";
 import { DEFAULT_ALERT_DURATION_HRS } from "@/consts/application";
 import { useStore } from "@/data/store";
 import useUserProfile from "@/hooks/useUserProfile";
-import { Link, useParams } from "@/i18n/routing";
+import { Link } from "@/i18n/routing";
 import { putUserQuery } from "@/services/users";
 import { formatNowDBDate } from "@/utils/date";
 import { showAlert } from "@/utils/showAlert";
@@ -17,13 +17,16 @@ import { PageTabs } from "../../consts/tabs";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
-export default function TabsSections() {
+interface TabsSectionsProps {
+  tabId: PageTabs;
+}
+
+export default function TabsSections({ tabId }: TabsSectionsProps) {
   const { user, routes } = useStore(store => ({
     user: store.getUser(),
     routes: store.getApplication().routes,
   }));
 
-  const params = useParams();
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const {
     affiliationsScore,
@@ -57,7 +60,7 @@ export default function TabsSections() {
     <Box sx={{ width: "100%", mb: 4 }}>
       <Tabs
         variant="scrollable"
-        value={params?.tabId || PageTabs.HOME}
+        value={tabId || PageTabs.HOME}
         aria-label={t("navigationAriaLabel")}
         role="navigation"
         indicatorColor="secondary"
