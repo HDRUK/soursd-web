@@ -104,8 +104,7 @@ export default function FileLink({
           onClick={handleFileSelectorOpen}
           startIcon={<UploadIcon />}
           loading={isUploading && !isScanning}
-          fullWidth
-        >
+          fullWidth>
           {fileButtonText}
         </LoadingButton>
       </Grid>
@@ -117,7 +116,7 @@ export default function FileLink({
           {fileMaxSizeText || t("maxSizeText", translationsMaxSize)}
         </Typography>
       </Grid>
-      <Grid item xs={12} sm={1} sx={{ textAlign: 'right' }}>
+      <Grid item xs={12} sm={1} sx={{ textAlign: "right" }}>
         {!showLink && includeStatus && statusIcons}
       </Grid>
       {isSizeInvalid && (
@@ -139,8 +138,7 @@ export default function FileLink({
                 pointerEvents: "none",
                 cursor: "default",
               }),
-            }}
-          >
+            }}>
             {includeStatus ? (
               <Text endIcon={statusIcons}>{fileNameText}</Text>
             ) : (

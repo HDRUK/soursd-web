@@ -58,11 +58,16 @@ export default function ProfileNavigationFooter({
         )}
       </Grid>
       <Grid item xs={3} sx={{ display: "flex", justifyContent: "flex-end" }}>
-        <ButtonSave isLoading={isLoading} sx={{ my: 1 }} disabled={isDisabled} onClick={onClick && (() => onClick())}>
-          {isLastStep ? tProfile("finishLinkText") : 
-            nextStepText
-            ? tProfile("submitAndContinueButton")
-            : tProfile("submitButton")}
+        <ButtonSave
+          isLoading={isLoading}
+          sx={{ my: 1 }}
+          disabled={isDisabled}
+          onClick={onClick && (() => onClick())}>
+          {isLastStep
+            ? tProfile("finishLinkText")
+            : nextStepText
+              ? tProfile("submitAndContinueButton")
+              : tProfile("submitButton")}
         </ButtonSave>
       </Grid>
     </Grid>

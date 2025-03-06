@@ -21,8 +21,8 @@ import {
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
+import AddIcon from "@mui/icons-material/Add";
 import ProfessionalRegistrationsForm from "./ProfessionalRegistrationsForm";
-import AddIcon from '@mui/icons-material/Add';
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfessionalRegistrations";
 
@@ -99,7 +99,7 @@ export default function ProfessionalRegistrations() {
           contactLink: ContactLink,
         })}
         count={professionalRegistrations.length}
-        sx={{maxWidth: "50%"}}>
+        sx={{ maxWidth: "50%" }}>
         <Table>
           <TableHead sx={{ backgroundColor: "lightPurple.main" }}>
             <TableRow>
@@ -119,13 +119,12 @@ export default function ProfessionalRegistrations() {
           </TableBody>
         </Table>
       </Results>
-      <Button 
+      <Button
         startIcon={<AddIcon />}
-        variant="outlined" 
-        color="primary" 
+        variant="outlined"
+        color="primary"
         onClick={() => setIsModalOpen(true)}
-        sx={{ mt: 2 }}
-      >
+        sx={{ mt: 2 }}>
         {tProfile("addProfessionalRegistration")}
       </Button>
     </>

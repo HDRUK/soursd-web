@@ -71,15 +71,11 @@ export default function ProfessionalRegistrationsForm({
           </Grid>
         </Grid>
       </FormSection>
-      <FormActions sx={{display: "flex", justifyContent:"space-between"}}>
-        <Button 
-              onClick={onClose} 
-              variant="outlined" 
-            >
-              {tProfile("cancel")}
+      <FormActions sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Button onClick={onClose} variant="outlined">
+          {tProfile("cancel")}
         </Button>
         <ButtonSave isLoading={queryState.isPending} />
-       
       </FormActions>
     </Form>
   );

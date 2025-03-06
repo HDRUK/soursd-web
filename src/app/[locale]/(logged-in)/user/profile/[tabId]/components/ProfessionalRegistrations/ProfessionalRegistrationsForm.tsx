@@ -1,8 +1,8 @@
-import React from 'react';
-import FormModal from '@/components/FormModal';
-import ProfessionalRegistrationsForm from '../ProfessionalRegistrationsForm';
+import React from "react";
+import FormModal from "@/components/FormModal";
 import { PostProfessionalRegistrationPayload } from "@/services/professional_registrations/types";
-import { UseQueryResult } from '@tanstack/react-query';
+import { UseQueryResult } from "@tanstack/react-query";
+import ProfessionalRegistrationsForm from "../ProfessionalRegistrationsForm";
 
 interface ProfessionalRegistrationsFormModalProps {
   open: boolean;
@@ -15,13 +15,10 @@ export default function ProfessionalRegistrationsFormModal({
   open,
   onSubmit,
   onClose,
-  queryState
+  queryState,
 }: ProfessionalRegistrationsFormModalProps) {
   return (
-    <FormModal
-      open={open}
-      title="Add Professional Registration"
-    >
+    <FormModal open={open} title="Add Professional Registration">
       <ProfessionalRegistrationsForm
         onClose={onClose}
         onSubmit={onSubmit}

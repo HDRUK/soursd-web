@@ -3,7 +3,7 @@ import { ShowAlertOptions } from "@/types/common";
 import dayjs from "dayjs";
 import Cookies from "js-cookie";
 import Swal, { SweetAlertIcon, SweetAlertResult } from "sweetalert2";
-import '../app/sweetalert2-custom.css'
+import "../app/sweetalert2-custom.css";
 
 const notificationValues = [
   { type: "error", title: "Oh no! Something went wrong" },

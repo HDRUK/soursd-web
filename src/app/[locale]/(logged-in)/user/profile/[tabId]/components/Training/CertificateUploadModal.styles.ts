@@ -1,5 +1,5 @@
-import styled from '@emotion/styled';
-import { Box, Typography } from '@mui/material';
+import styled from "@emotion/styled";
+import { Box, Typography } from "@mui/material";
 
 export const ModalContent = styled(Box)`
   position: absolute;
@@ -9,7 +9,7 @@ export const ModalContent = styled(Box)`
   width: 600px;
   background-color: white;
   padding: 32px;
-  borderRadius: 2;
+  borderradius: 2;
   margin-bottom: 16px;
 `;
 

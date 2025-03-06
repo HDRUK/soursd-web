@@ -9,9 +9,9 @@ import {
 import { Box, Checkbox, FormControlLabel, Link } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
+import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
 import ProfessionalsRegistration from "../ProfessionalRegistrations";
 import Training from "../Training";
-import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
@@ -33,15 +33,14 @@ export default function Trainings() {
           <Box sx={{ mt: 1, maxWidth: "50%" }}>
             <FormControlLabel
               control={<Checkbox />}
-              sx={{alignItems: "flex-start"}}
+              sx={{ alignItems: "flex-start" }}
               label={
                 <Box>
                   {tProfile("accreditedResearcherCheckboxLabel")}
-                  <Link 
-                    href={tProfile("accreditedResearcherLinkHref")} 
-                    color="primary" 
-                    sx={{ display: 'block', mt: 0.5 }}
-                  >
+                  <Link
+                    href={tProfile("accreditedResearcherLinkHref")}
+                    color="primary"
+                    sx={{ display: "block", mt: 0.5 }}>
                     {tProfile("findOutMore")}
                   </Link>
                 </Box>
@@ -52,15 +51,14 @@ export default function Trainings() {
           <Box sx={{ mt: 1, maxWidth: "50%" }}>
             <FormControlLabel
               control={<Checkbox />}
-              sx={{alignItems: "flex-start"}}
+              sx={{ alignItems: "flex-start" }}
               label={
                 <Box>
                   {tProfile("userDeclarationCheckboxLabel")}
-                  <Link 
-                    href={tProfile("userDeclarationLinkHref")} 
-                    color="primary" 
-                    sx={{ display: 'block', mt: 0.5 }}
-                  >
+                  <Link
+                    href={tProfile("userDeclarationLinkHref")}
+                    color="primary"
+                    sx={{ display: "block", mt: 0.5 }}>
                     {tProfile("findOutMore")}
                   </Link>
                 </Box>
@@ -68,7 +66,7 @@ export default function Trainings() {
             />
           </Box>
           <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3 }}>
-            <ProfileNavigationFooter 
+            <ProfileNavigationFooter
               nextStepText={tProfile("completeYourProfile")}
               isLastStep
               onClick={() => router.push(ROUTES.profileResearcherHome.path)}
