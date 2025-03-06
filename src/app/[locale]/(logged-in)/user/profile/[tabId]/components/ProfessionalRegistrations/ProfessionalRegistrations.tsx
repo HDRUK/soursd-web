@@ -99,7 +99,7 @@ export default function ProfessionalRegistrations() {
           contactLink: ContactLink,
         })}
         count={professionalRegistrations.length}
-        sx={{ maxWidth: "50%" }}>
+        sx={{ maxWidth: "50%" }}
         total={professionalRegistrations.length}>
         <Table>
           <TableHead sx={{ backgroundColor: "lightPurple.main" }}>
