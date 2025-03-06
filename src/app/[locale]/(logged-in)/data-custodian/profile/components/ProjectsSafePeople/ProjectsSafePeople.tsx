@@ -18,7 +18,7 @@ interface ProjectsSafePeopleProps {
   id: number;
 }
 
-type FilteredUser = ProjectUser & Pick<Organisation, "organisation_name">;
+type FilteredUser = User & Pick<Organisation, "organisation_name">;
 
 const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
@@ -78,9 +78,7 @@ export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
   const renderActionMenuCell = <T extends FilteredUser>(
     info: CellContext<T, unknown>
   ) => {
-    const {
-      registry: { id: registryId },
-    } = info.row.original;
+    const { registry_id } = info.row.original;
 
     //This will be an action menu
     return (
@@ -88,7 +86,7 @@ export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
         onClick={async () => {
           showDeleteConfirm({
             projectId: id,
-            registryId: registryId,
+            registryId: registry_id,
           });
         }}>
         Delete
