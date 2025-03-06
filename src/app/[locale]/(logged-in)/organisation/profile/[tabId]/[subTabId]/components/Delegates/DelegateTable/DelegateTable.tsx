@@ -84,6 +84,7 @@ const DelegateTable = () => {
   return (
     <LoadingWrapper variant="basic" loading={isLoadingDelegates}>
       <Table
+        total={delegatesData?.data.length}
         data={delegatesData?.data || []}
         columns={columns}
         errorMessage={tProfile.rich("getDelegatesError", {

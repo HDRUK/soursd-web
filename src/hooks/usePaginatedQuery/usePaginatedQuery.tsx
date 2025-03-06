@@ -20,18 +20,21 @@ export type PaginatedQueryProps<T> = {
   defaultQueryParams?: Record<string, string | number | undefined>;
 };
 
+export interface PaginatedQueryHelpers {
+  page: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+  updateQueryParam: (key: string, value: string) => void;
+  handleSortToggle: (field: string, direction: string) => void;
+  handleFieldToggle: (field: string, options: [string, string]) => void;
+  queryParams: Record<string, string | number | undefined>;
+  setQueryParams: React.Dispatch<
+    React.SetStateAction<Record<string, string | number | undefined>>
+  >;
+}
+
 export type PaginatedQueryReturn<T> = UseQueryResult<ResponseJson<Paged<T>>> &
-  Paged<T> & {
-    page: number;
-    setPage: React.Dispatch<React.SetStateAction<number>>;
-    updateQueryParam: (key: string, value: string) => void;
-    handleSortToggle: (field: string, direction: string) => void;
-    handleFieldToggle: (field: string, options: [string, string]) => void;
-    queryParams: Record<string, string | number | undefined>;
-    setQueryParams: React.Dispatch<
-      React.SetStateAction<Record<string, string | number | undefined>>
-    >;
-  };
+  Paged<T> &
+  PaginatedQueryHelpers;
 
 const usePaginatedQuery = <T,>({
   queryKeyBase,

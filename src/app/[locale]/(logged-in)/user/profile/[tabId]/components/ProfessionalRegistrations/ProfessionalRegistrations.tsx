@@ -100,6 +100,7 @@ export default function ProfessionalRegistrations() {
         })}
         count={professionalRegistrations.length}
         sx={{ maxWidth: "50%" }}>
+        total={professionalRegistrations.length}>
         <Table>
           <TableHead sx={{ backgroundColor: "lightPurple.main" }}>
             <TableRow>

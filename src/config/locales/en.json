@@ -12,12 +12,18 @@
     "scanErrorText": "Your file file may have a virus"
   },
   "Application": {
+    "name": "Name",
+    "userStatusLive": "Live",
+    "projectStatus": "Project status",
+    "projectRole": "Project role",
+    "actions": "Actions",
     "sortBy": "Sort by",
     "sortedBy": "Sorted by",
     "filterBy": "Filter by",
     "filteredBy": "Filtered by",
     "filterByDate": "Filter by date",
     "filterByProjectStatus": "Filter by status",
+    "filterByUserStatus": "Filter by status",
     "alertSuccessConfirmButton": "Close",
     "alertErrorConfirmButton": "Close",
     "alertDeleteConfirmButton": "Delete",
@@ -56,6 +62,14 @@
     "continueButton": "Continue"
   },
   "CustodianProfile": {
+    "safeProject": "Safe Project",
+    "filterBy": "Filter by status",
+    "filteredBy": "Filtered by",
+    "statusLive": "Live",
+    "safeOutputs": "Safe Outputs",
+    "safePeople": "Safe People",
+    "safeData": "Safe Data",
+    "safeSettings": "Safe Settings",
     "home": "Home",
     "contacts": "Contacts",
     "uniqueIdentifierTitle": "SOURSD Identifier",
