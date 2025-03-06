@@ -22,6 +22,7 @@ export interface FileLinkProps extends FileUploadState {
   fileScanningText?: string;
   fileMaxSizeText?: ReactNode;
   fileMaxSizeErrorText?: ReactNode;
+  fileTypesText?: ReactNode;
   fileNameText?: ReactNode;
   fileInputLabelText?: string;
   fileHref?: string;
@@ -42,6 +43,7 @@ export default function FileLink({
   fileButtonText,
   fileMaxSizeText,
   fileMaxSizeErrorText,
+  fileTypesText,
   fileNameText,
   fileHref,
   fileInputLabelText,
@@ -57,9 +59,7 @@ export default function FileLink({
   onDownload,
 }: FileLinkProps) {
   const ref = useRef<HTMLInputElement>(null);
-
   const t = useTranslations(NAMESPACE_TRANSLATION_FILE);
-
   const translationsMaxSize = {
     size: prettyBytes(MAX_UPLOAD_SIZE_BYTES),
   };
@@ -96,24 +96,39 @@ export default function FileLink({
   const showLink = fileNameText && fileHref;
 
   return (
-    <Grid container item spacing={0}>
-      <Grid container item>
-        <Grid item xs={10}>
-          <LoadingButton
-            color="primary"
-            variant="outlined"
-            onClick={handleFileSelectorOpen}
-            startIcon={<UploadIcon />}
-            loading={isUploading && !isScanning}>
-            {fileButtonText}
-          </LoadingButton>
-        </Grid>
-        <Grid item xs={2} sx={{ alignContent: "center" }}>
-          {!showLink && includeStatus && statusIcons}
-        </Grid>
+    <Grid container spacing={2} alignItems="center">
+      <Grid item xs={12} sm={4}>
+        <LoadingButton
+          color="secondary"
+          variant="contained"
+          onClick={handleFileSelectorOpen}
+          startIcon={<UploadIcon />}
+          loading={isUploading && !isScanning}
+          fullWidth
+        >
+          {fileButtonText}
+        </LoadingButton>
       </Grid>
-      <Grid item xs={12}>
-        {showLink && (
+      <Grid item xs={12} sm={7}>
+        <Typography variant="caption" color="caption.main" component="div">
+          {fileTypesText || t("fileTypesText")}
+        </Typography>
+        <Typography variant="caption" color="caption.main" component="div">
+          {fileMaxSizeText || t("maxSizeText", translationsMaxSize)}
+        </Typography>
+      </Grid>
+      <Grid item xs={12} sm={1} sx={{ textAlign: 'right' }}>
+        {!showLink && includeStatus && statusIcons}
+      </Grid>
+      {isSizeInvalid && (
+        <Grid item xs={12}>
+          <Typography variant="caption" color="error">
+            {fileMaxSizeErrorText || t("maxSizeErrorText", translationsMaxSize)}
+          </Typography>
+        </Grid>
+      )}
+      {showLink && (
+        <Grid item xs={12}>
           <Link
             href={fileHref}
             onClick={(e: MouseEvent) =>
@@ -124,23 +139,16 @@ export default function FileLink({
                 pointerEvents: "none",
                 cursor: "default",
               }),
-            }}>
+            }}
+          >
             {includeStatus ? (
               <Text endIcon={statusIcons}>{fileNameText}</Text>
             ) : (
               fileNameText
             )}
           </Link>
-        )}
-        <Typography
-          variant="caption"
-          color="caption.main"
-          sx={{ display: "block" }}>
-          {fileMaxSizeText || t("maxSizeText", translationsMaxSize)}
-        </Typography>
-        {isSizeInvalid &&
-          (fileMaxSizeErrorText || t("maxSizeErrorText", translationsMaxSize))}
-      </Grid>
+        </Grid>
+      )}
       <input
         id="fileInput"
         type="file"

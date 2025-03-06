@@ -37,7 +37,7 @@ export default function useApplicationDependencies(
   const queries = user
     ? [
         getSystemConfigQuery(),
-        getUserQuery(user.id, options),
+        getUserQuery(11, options),
         ...(organisationId
           ? [getOrganisationQuery(organisationId, options)]
           : []),

@@ -9,7 +9,7 @@ import FormSection from "@/components/FormSection";
 import yup from "@/config/yup";
 import { ResearcherProfessionalRegistration } from "@/types/application";
 import { MutationState } from "@/types/form";
-import { Grid, TextField } from "@mui/material";
+import { Button, Grid, TextField } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
 
@@ -18,12 +18,14 @@ export interface ProfessionalRegistrationsFormProps {
     professionalRegistration: ResearcherProfessionalRegistration
   ) => void;
   queryState: MutationState;
+  onClose: () => void;
 }
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfessionalRegistrations";
 
 export default function ProfessionalRegistrationsForm({
   onSubmit,
+  onClose,
   queryState,
 }: ProfessionalRegistrationsFormProps) {
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
@@ -69,8 +71,15 @@ export default function ProfessionalRegistrationsForm({
           </Grid>
         </Grid>
       </FormSection>
-      <FormActions>
+      <FormActions sx={{display: "flex", justifyContent:"space-between"}}>
+        <Button 
+              onClick={onClose} 
+              variant="outlined" 
+            >
+              {tProfile("cancel")}
+        </Button>
         <ButtonSave isLoading={queryState.isPending} />
+       
       </FormActions>
     </Form>
   );

@@ -16,15 +16,18 @@ import {
   TableHead,
   TableRow,
   Typography,
+  Button,
 } from "@mui/material";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import { useCallback, useEffect } from "react";
-import ProfessionalRegistrationsForm from "../ProfessionalRegistrationsForm";
+import { useCallback, useEffect, useState } from "react";
+import ProfessionalRegistrationsForm from "./ProfessionalRegistrationsForm";
+import AddIcon from '@mui/icons-material/Add';
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfessionalRegistrations";
 
 export default function ProfessionalRegistrations() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const queryClient = useQueryClient();
 
@@ -57,12 +60,12 @@ export default function ProfessionalRegistrations() {
   const handleDetailsSubmit = useCallback(
     async (fields: PostProfessionalRegistrationPayload) => {
       await mutateAsync(fields);
-
+      setIsModalOpen(false);
       queryClient.refetchQueries({
         queryKey: ["getProfessionalRegistrations", user?.registry_id],
       });
     },
-    [mutateAsync, user?.registry_id]
+    [mutateAsync, user?.registry_id, queryClient]
   );
 
   const data = professionalRegistrationsData?.data?.data;
@@ -70,20 +73,22 @@ export default function ProfessionalRegistrations() {
   useEffect(() => {
     if (data) {
       const storeHistories = getHistories();
-
       setHistories({
         ...storeHistories,
         professionalRegistrations: data,
       });
     }
-  }, [data]);
+  }, [data, getHistories, setHistories]);
 
   return (
     <>
       <ProfessionalRegistrationsForm
+        open={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
         onSubmit={handleDetailsSubmit}
         queryState={postProfessionalRegistrationQueryState}
       />
+
       <Typography variant="h6" sx={{ mb: 1 }}>
         {tProfile("resultsTitle")}
       </Typography>
@@ -93,7 +98,8 @@ export default function ProfessionalRegistrations() {
         errorMessage={tProfile.rich("professionalRegsitrationsErrorMessage", {
           contactLink: ContactLink,
         })}
-        count={professionalRegistrations.length}>
+        count={professionalRegistrations.length}
+        sx={{maxWidth: "50%"}}>
         <Table>
           <TableHead sx={{ backgroundColor: "lightPurple.main" }}>
             <TableRow>
@@ -113,6 +119,15 @@ export default function ProfessionalRegistrations() {
           </TableBody>
         </Table>
       </Results>
+      <Button 
+        startIcon={<AddIcon />}
+        variant="outlined" 
+        color="primary" 
+        onClick={() => setIsModalOpen(true)}
+        sx={{ mt: 2 }}
+      >
+        {tProfile("addProfessionalRegistration")}
+      </Button>
     </>
   );
 }
