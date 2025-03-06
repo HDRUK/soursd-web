@@ -52,9 +52,11 @@ describe("<Training />", () => {
     async fieldName => {
       renderTrainingComponent();
 
-      const addButton = screen.getByRole("button", { name: /add training course/i });
+      const addButton = screen.getByRole("button", {
+        name: /add training course/i,
+      });
       fireEvent.click(addButton);
-      
+
       const input = screen.getByRole("textbox", { name: fieldName });
       fireEvent.change(input, { target: { value: faker.string.sample() } });
 
