@@ -1,5 +1,5 @@
 import { User } from "@/types/application";
-import { Box, Chip, ChipProps, Typography, useTheme } from "@mui/material";
+import { Chip, ChipProps } from "@mui/material";
 import { useTranslations } from "next-intl";
 
 interface UserStatusProps extends ChipProps {

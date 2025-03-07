@@ -11,7 +11,7 @@ import useProjectUsersQuery from "@/services/projects/getProjectUsersQuery";
 import { DeleteProjectUserPayload } from "@/services/projects/types";
 import { Organisation, ProjectUser, User } from "@/types/application";
 import { renderUserNameCell } from "@/utils/cells";
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { CellContext, ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
