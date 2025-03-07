@@ -1,4 +1,6 @@
+import { ActionMenu, ActionMenuItem } from "@/components/ActionMenu";
 import Table from "@/components/Table";
+import UserStatus from "@/components/UserStatus";
 import { FilterIcon } from "@/consts/icons";
 import { useStore } from "@/data/store";
 import useQueryConfirmAlerts from "@/hooks/useQueryConfirmAlerts";
@@ -18,7 +20,10 @@ interface ProjectsSafePeopleProps {
   id: number;
 }
 
-type FilteredUser = User & Pick<Organisation, "organisation_name">;
+type FilteredUser = User &
+  Pick<Organisation, "organisation_name"> & {
+    project_role: string;
+  };
 
 const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
@@ -46,13 +51,12 @@ export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
   const getUsersFromResponse = (usersData: ProjectUser[]) => {
     const users: FilteredUser[] = [];
 
-    usersData?.forEach(({ registry: { user, organisations } }) => {
+    usersData?.forEach(({ role, registry: { user, organisations } }) => {
       organisations?.forEach(({ organisation_name }) => {
         users.push({
           organisation_name,
           ...user,
-          project_status: "Live",
-          project_role: "Data analyst",
+          project_role: role.name,
         });
       });
     });
@@ -81,15 +85,17 @@ export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
     const { registry_id } = info.row.original;
 
     return (
-      <Button
-        onClick={async () => {
-          showDeleteConfirm({
-            projectId: id,
-            registryId: registry_id,
-          });
-        }}>
-        Delete
-      </Button>
+      <ActionMenu>
+        <ActionMenuItem
+          onClick={() => {
+            showDeleteConfirm({
+              projectId: id,
+              registryId: registry_id,
+            });
+          }}>
+          {tApplication("removeUserFromProject")}
+        </ActionMenuItem>
+      </ActionMenu>
     );
   };
 
@@ -117,8 +123,9 @@ export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
       header: tApplication("organisationName"),
     },
     {
-      accessorKey: "project_status",
-      header: tApplication("projectStatus"),
+      accessorKey: "status",
+      header: tApplication("status"),
+      cell: info => <UserStatus status={info.row.original.status} />,
     },
     {
       header: tApplication("actions"),
