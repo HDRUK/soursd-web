@@ -26,9 +26,7 @@ export default function Home() {
       heading: "Add your personal details",
       icon: <BadgeOutlinedIcon />,
       action: (
-        <Button
-          component={Link}
-          href={routes.profileResearcherIdentity.path}>
+        <Button component={Link} href={routes.profileResearcherIdentity.path}>
           Get started
         </Button>
       ),

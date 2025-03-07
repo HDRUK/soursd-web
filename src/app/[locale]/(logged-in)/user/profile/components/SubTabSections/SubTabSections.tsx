@@ -5,10 +5,7 @@ import SubTabs from "@/modules/SubTabs";
 import { Option } from "@/types/common";
 import { injectParamsIntoPath } from "@/utils/application";
 import { useTranslations } from "next-intl";
-import {
-  PageTabs,
-  ProjectsSubTabs,
-} from "../../consts/tabs";
+import { PageTabs, ProjectsSubTabs } from "../../consts/tabs";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 

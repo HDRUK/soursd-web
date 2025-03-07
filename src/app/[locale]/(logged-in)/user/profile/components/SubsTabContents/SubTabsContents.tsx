@@ -3,11 +3,7 @@
 import { useStore } from "@/data/store";
 import { PageBody } from "@/modules";
 import { notFound } from "next/navigation";
-import {
-  getSubTabs,
-  PageTabs,
-  ProjectsSubTabs,
-} from "../../consts/tabs";
+import { getSubTabs, PageTabs, ProjectsSubTabs } from "../../consts/tabs";
 import ProjectsSafePeople from "../ProjectsSafePeople";
 
 interface TabsContentsProps {

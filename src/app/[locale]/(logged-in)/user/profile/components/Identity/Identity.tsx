@@ -139,7 +139,7 @@ export default function Identity() {
   };
 
   return (
-    <PageBodyContainer >
+    <PageBodyContainer>
       <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
         <PageBody>
           <PageSection>

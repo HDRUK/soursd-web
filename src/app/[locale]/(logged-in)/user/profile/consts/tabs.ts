@@ -16,22 +16,15 @@ enum ProjectsSubTabs {
 }
 
 type TabStructure = {
-  [key in PageTabs]?:
-    | ProjectsSubTabs[];
+  [key in PageTabs]?: ProjectsSubTabs[];
 };
 
 const tabHierarchy: TabStructure = {
   [PageTabs.PROJECTS]: Object.values(ProjectsSubTabs),
 };
 
-function getSubTabs(
-  tab: PageTabs
-): ProjectsSubTabs[] | undefined {
+function getSubTabs(tab: PageTabs): ProjectsSubTabs[] | undefined {
   return tabHierarchy[tab];
 }
 
-export {
-  PageTabs,
-  ProjectsSubTabs,
-  getSubTabs,
-};
+export { PageTabs, ProjectsSubTabs, getSubTabs };
