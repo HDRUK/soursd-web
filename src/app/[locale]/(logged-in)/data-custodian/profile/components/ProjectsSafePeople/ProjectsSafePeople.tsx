@@ -1,13 +1,17 @@
 import Table from "@/components/Table";
 import { FilterIcon } from "@/consts/icons";
 import { useStore } from "@/data/store";
+import useQueryConfirmAlerts from "@/hooks/useQueryConfirmAlerts";
 import SearchActionMenu from "@/modules/SearchActionMenu";
 import SearchBar from "@/modules/SearchBar";
+import { deleteProjectUserQuery } from "@/services/projects";
 import useProjectUsersQuery from "@/services/projects/getProjectUsersQuery";
+import { DeleteProjectUserPayload } from "@/services/projects/types";
 import { Organisation, ProjectUser, User } from "@/types/application";
 import { renderUserNameCell } from "@/utils/cells";
-import { Box } from "@mui/material";
-import { ColumnDef } from "@tanstack/react-table";
+import { Box, Button } from "@mui/material";
+import { useMutation } from "@tanstack/react-query";
+import { CellContext, ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
 
 interface ProjectsSafePeopleProps {
@@ -28,11 +32,16 @@ export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
     setPage,
     handleFieldToggle,
     queryParams,
+    refetch,
     ...queryState
   } = useProjectUsersQuery(id);
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
   const routes = useStore(state => state.getApplication().routes);
+
+  const { mutateAsync: deleteUserAsync, ...deleteQueryState } = useMutation(
+    deleteProjectUserQuery()
+  );
 
   const getUsersFromResponse = (usersData: ProjectUser[]) => {
     const users: FilteredUser[] = [];
@@ -52,6 +61,37 @@ export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
   };
 
   const users = getUsersFromResponse(usersData);
+
+  const showDeleteConfirm = useQueryConfirmAlerts<DeleteProjectUserPayload>(
+    deleteQueryState,
+    {
+      confirmAlertProps: {
+        willClose: async payload => {
+          await deleteUserAsync(payload as DeleteProjectUserPayload);
+
+          refetch();
+        },
+      },
+    }
+  );
+
+  const renderActionMenuCell = <T extends FilteredUser>(
+    info: CellContext<T, unknown>
+  ) => {
+    const { registry_id } = info.row.original;
+
+    return (
+      <Button
+        onClick={async () => {
+          showDeleteConfirm({
+            projectId: id,
+            registryId: registry_id,
+          });
+        }}>
+        Delete
+      </Button>
+    );
+  };
 
   const filterActions = [
     {
@@ -82,6 +122,7 @@ export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
     },
     {
       header: tApplication("actions"),
+      cell: renderActionMenuCell,
     },
   ];
 
