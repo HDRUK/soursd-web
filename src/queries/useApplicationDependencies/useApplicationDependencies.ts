@@ -37,7 +37,7 @@ export default function useApplicationDependencies(
   const queries = user
     ? [
         getSystemConfigQuery(),
-        getUserQuery(11, options),
+        getUserQuery(user.id, options),
         ...(organisationId
           ? [getOrganisationQuery(organisationId, options)]
           : []),
@@ -46,6 +46,5 @@ export default function useApplicationDependencies(
         getPermissionsQuery(options),
       ]
     : [];
-
   return useQueriesCombined<ApplicationDependenciesCombinedData>(queries);
 }

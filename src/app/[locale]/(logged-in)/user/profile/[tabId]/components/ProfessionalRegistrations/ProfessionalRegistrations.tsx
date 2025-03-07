@@ -22,6 +22,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
+import ReactDOMServer from "react-dom/server";
 import ProfessionalRegistrationsForm from "./ProfessionalRegistrationsForm";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfessionalRegistrations";
@@ -50,7 +51,11 @@ export default function ProfessionalRegistrations() {
 
   useQueryAlerts(postProfessionalRegistrationQueryState, {
     errorAlertProps: {
-      text: tProfile("errorCreateMessage"),
+      text: ReactDOMServer.renderToString(
+        tProfile.rich("errorCreateMessage", {
+          contactLink: ContactLink,
+        })
+      ),
     },
     successAlertProps: {
       text: tProfile("successCreateMessage"),

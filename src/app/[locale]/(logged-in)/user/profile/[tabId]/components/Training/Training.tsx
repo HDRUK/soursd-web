@@ -2,7 +2,6 @@ import { useStore } from "@/data/store";
 
 import postTrainingsQuery from "@/services/trainings/postTrainingsQuery";
 import { PostTrainingsPayload } from "@/services/trainings/types";
-import { showAlert } from "@/utils/showAlert";
 import {
   Button,
   Table,
@@ -20,9 +19,10 @@ import FormModal from "@/components/FormModal";
 import ContactLink from "@/components/ContactLink";
 import AddIcon from "@mui/icons-material/Add";
 import { formatShortDate } from "@/utils/date";
+import useQueryAlerts from "@/hooks/useQueryAlerts";
 import TrainingForm from "./TrainingForm";
 
-const NAMESPACE_TRANSLATION_PROFILE = "Profile.Training";
+const NAMESPACE_TRANSLATION_PROFILE = "Training";
 
 export default function Training() {
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
@@ -53,32 +53,30 @@ export default function Training() {
     },
     [getHistories, setHistories]
   );
-  const { mutateAsync, isPending } = useMutation(
+  const { mutateAsync, isPending, ...postTrainingsQueryState } = useMutation(
     postTrainingsQuery(user?.registry_id)
   );
 
+  useQueryAlerts(postTrainingsQueryState, {
+    errorAlertProps: {
+      text: ReactDOMServer.renderToString(
+        t.rich("postTrainingError", {
+          contactLink: ContactLink,
+        })
+      ),
+    },
+    successAlertProps: {
+      text: t("postTrainingSuccess"),
+    },
+  });
+
   const handleSubmit = useCallback(
     async (training: PostTrainingsPayload) => {
-      try {
-        await mutateAsync(training);
-        await onSubmit(training);
-        showAlert("success", {
-          text: t("postTrainingSuccess"),
-          confirmButtonText: t("closeButton"),
-        });
-        handleCloseModal();
-      } catch (_) {
-        showAlert("error", {
-          text: ReactDOMServer.renderToString(
-            t.rich("postTrainingError", {
-              contactLink: ContactLink,
-            })
-          ),
-          confirmButtonText: t("errorButton"),
-        });
-      }
+      await mutateAsync(training);
+      await onSubmit(training);
+      handleCloseModal();
     },
-    [mutateAsync, onSubmit, t]
+    [mutateAsync, onSubmit]
   );
 
   return (
