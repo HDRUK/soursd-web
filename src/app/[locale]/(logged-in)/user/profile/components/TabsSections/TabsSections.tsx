@@ -12,7 +12,8 @@ import HomeIcon from "@mui/icons-material/Home";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import BadgeOutlinedIcon from "@mui/icons-material/BadgeOutlined";
 import BusinessCenterOutlinedIcon from "@mui/icons-material/BusinessCenterOutlined";
-import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
+import { OrganisationIcon } from "@/consts/icons";
+import WorkspacePremiumOutlinedIcon from "@mui/icons-material/WorkspacePremiumOutlined";
 import ErrorIcon from "@mui/icons-material/Error";
 import { Box, Tab, Tabs } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
@@ -109,7 +110,7 @@ export default function TabsSections({ tabId }: TabsSectionsProps) {
           iconPosition="start"
         />
         <Tab
-          icon={<BusinessOutlinedIcon />}
+          icon={<OrganisationIcon />}
           label={
             <Text
               startIcon={experiencesScore < 100 && <ErrorIcon color="error" />}>
@@ -122,6 +123,7 @@ export default function TabsSections({ tabId }: TabsSectionsProps) {
           iconPosition="start"
         />
         <Tab
+          icon={<WorkspacePremiumOutlinedIcon />}
           label={
             <Text
               startIcon={trainingScore < 100 && <ErrorIcon color="error" />}>
