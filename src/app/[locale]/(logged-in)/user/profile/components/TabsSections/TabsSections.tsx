@@ -8,7 +8,7 @@ import { Link } from "@/i18n/routing";
 import { putUserQuery } from "@/services/users";
 import { formatNowDBDate } from "@/utils/date";
 import { showAlert } from "@/utils/showAlert";
-import HomeIcon from "@mui/icons-material/Home";
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import BadgeOutlinedIcon from "@mui/icons-material/BadgeOutlined";
 import BusinessCenterOutlinedIcon from "@mui/icons-material/BusinessCenterOutlined";
@@ -74,7 +74,7 @@ export default function TabsSections({ tabId }: TabsSectionsProps) {
         allowScrollButtonsMobile
         textColor="inherit">
         <Tab
-          icon={<HomeIcon />}
+          icon={<HomeOutlinedIcon />}
           label={<Text>{t("home")}</Text>}
           href={routes.profileResearcherHome.path}
           component={Link}

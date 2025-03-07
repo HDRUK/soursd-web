@@ -16,7 +16,7 @@ function Page({ params: { tabId } }: PageProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
   return (
-    <PageBodyContainer heading={t(toCamelCase(tabId))}>
+    <PageBodyContainer>
       <TabsContents tabId={tabId} />
     </PageBodyContainer>
   );
