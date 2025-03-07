@@ -1,6 +1,5 @@
 import { ActionMenu, ActionMenuItem } from "@/components/ActionMenu";
 import Table from "@/components/Table";
-import UserStatus from "@/components/UserStatus";
 import { FilterIcon } from "@/consts/icons";
 import { useStore } from "@/data/store";
 import useQueryConfirmAlerts from "@/hooks/useQueryConfirmAlerts";
@@ -10,7 +9,7 @@ import { deleteProjectUserQuery } from "@/services/projects";
 import useProjectUsersQuery from "@/services/projects/getProjectUsersQuery";
 import { DeleteProjectUserPayload } from "@/services/projects/types";
 import { Organisation, ProjectUser, User } from "@/types/application";
-import { renderUserNameCell } from "@/utils/cells";
+import { renderUserNameCell, renderUserStatus } from "@/utils/cells";
 import { Box } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { CellContext, ColumnDef } from "@tanstack/react-table";
@@ -125,7 +124,7 @@ export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
     {
       accessorKey: "status",
       header: tApplication("status"),
-      cell: info => <UserStatus status={info.row.original.status} />,
+      cell: renderUserStatus,
     },
     {
       header: tApplication("actions"),

@@ -1,3 +1,4 @@
+import UserStatus from "@/components/UserStatus";
 import { User } from "@/types/application";
 import { Link, Typography } from "@mui/material";
 import { CellContext } from "@tanstack/react-table";
@@ -21,4 +22,8 @@ function renderUserNameCell<T extends User>(
   );
 }
 
-export { renderUserNameCell };
+function renderUserStatus<T extends User>(info: CellContext<T, unknown>) {
+  return <UserStatus status={info.row.original.status} />;
+}
+
+export { renderUserNameCell, renderUserStatus };
