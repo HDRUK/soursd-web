@@ -9,7 +9,6 @@ interface PageProps {
 }
 
 function Page({ params: { tabId } }: PageProps) {
-
   return (
     <PageBodyContainer>
       <TabsContents tabId={tabId} />
