@@ -28,7 +28,7 @@ export default function Home() {
       action: (
         <Button
           component={Link}
-          href={routes.profileCustodianConfiguration.path}>
+          href={routes.profileResearcherIdentity.path}>
           Get started
         </Button>
       ),
@@ -40,7 +40,7 @@ export default function Home() {
         <Button
           component={Link}
           variant="outlined"
-          href={routes.profileCustodianUsers.path}>
+          href={routes.profileResearcherAffiliations.path}>
           Add affiliations
         </Button>
       ),
@@ -52,7 +52,7 @@ export default function Home() {
         <Button
           component={Link}
           variant="outlined"
-          href={routes.profileCustodianUsers.path}>
+          href={routes.profileResearcherTraining.path}>
           Add training
         </Button>
       ),
@@ -64,7 +64,7 @@ export default function Home() {
         <Button
           component={Link}
           variant="outlined"
-          href={routes.profileCustodianUsers.path}>
+          href={routes.profileResearcherProjects.path}>
           Review
         </Button>
       ),

@@ -16,7 +16,7 @@ interface ProjectsSafePeopleProps {
 
 type FilteredUser = User & Pick<Organisation, "organisation_name">;
 
-const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
+const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
 
 export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
