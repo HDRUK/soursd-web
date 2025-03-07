@@ -1,4 +1,3 @@
-import { mockedVerifications } from "@/mocks/data/static";
 import {
   PageBodyContainer,
   PageColumnBody,
@@ -7,6 +6,7 @@ import {
 } from "@/modules";
 import { toCamelCase } from "@/utils/string";
 import { useTranslations } from "next-intl";
+import ProjectUserValidation from "../ProjectUserValidation";
 import { PageTabs, UserSubTabs } from "../../consts/tabs";
 import SubTabsSections from "../SubTabSections";
 import SubTabsContents from "../SubsTabContents";
@@ -31,7 +31,9 @@ function SubPageUsers({ params }: PageProps) {
           <SubTabsSections tabId={tabId} {...params} />
           <SubTabsContents tabId={tabId} {...params} />
         </PageColumnBody>
-        <PageColumnDetails>{mockedVerifications()}</PageColumnDetails>
+        <PageColumnDetails>
+          <ProjectUserValidation userId={params?.id as number} />
+        </PageColumnDetails>
       </PageColumns>
     </PageBodyContainer>
   );
