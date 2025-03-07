@@ -8,6 +8,11 @@ import { Link } from "@/i18n/routing";
 import { putUserQuery } from "@/services/users";
 import { formatNowDBDate } from "@/utils/date";
 import { showAlert } from "@/utils/showAlert";
+import HomeIcon from "@mui/icons-material/Home";
+import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
+import BadgeOutlinedIcon from "@mui/icons-material/BadgeOutlined";
+import BusinessCenterOutlinedIcon from "@mui/icons-material/BusinessCenterOutlined";
+import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
 import ErrorIcon from "@mui/icons-material/Error";
 import { Box, Tab, Tabs } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
@@ -68,12 +73,15 @@ export default function TabsSections({ tabId }: TabsSectionsProps) {
         allowScrollButtonsMobile
         textColor="inherit">
         <Tab
+          icon={<HomeIcon />}
           label={<Text>{t("home")}</Text>}
           href={routes.profileResearcherHome.path}
           component={Link}
           value={PageTabs.HOME}
+          iconPosition="start"
         />
         <Tab
+          icon={<BadgeOutlinedIcon />}
           label={
             <Text
               startIcon={identityScore < 100 && <ErrorIcon color="error" />}>
@@ -86,6 +94,7 @@ export default function TabsSections({ tabId }: TabsSectionsProps) {
           iconPosition="start"
         />
         <Tab
+          icon={<BusinessCenterOutlinedIcon />}
           label={
             <Text
               startIcon={
@@ -97,8 +106,10 @@ export default function TabsSections({ tabId }: TabsSectionsProps) {
           href={routes.profileResearcherAffiliations.path}
           component={Link}
           value={PageTabs.AFFILIATIONS}
+          iconPosition="start"
         />
         <Tab
+          icon={<BusinessOutlinedIcon />}
           label={
             <Text
               startIcon={experiencesScore < 100 && <ErrorIcon color="error" />}>
@@ -108,6 +119,7 @@ export default function TabsSections({ tabId }: TabsSectionsProps) {
           href={routes.profileResearcherExperience.path}
           component={Link}
           value={PageTabs.EXPERIENCE}
+          iconPosition="start"
         />
         <Tab
           label={
@@ -119,12 +131,15 @@ export default function TabsSections({ tabId }: TabsSectionsProps) {
           href={routes.profileResearcherTraining.path}
           component={Link}
           value={PageTabs.TRAINING}
+          iconPosition="start"
         />
         <Tab
+          icon={<AssignmentOutlinedIcon />}
           label={t("projects")}
           href={routes.profileResearcherProjects.path}
           component={Link}
           value={PageTabs.PROJECTS}
+          iconPosition="start"
         />
       </Tabs>
     </Box>
