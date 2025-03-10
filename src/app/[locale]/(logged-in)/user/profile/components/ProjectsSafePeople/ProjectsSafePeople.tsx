@@ -3,9 +3,5 @@ interface ProjectsSafePeopleProps {
 }
 
 export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
-  return (
-    <>
-      Subpage for Safe People for Project {id}
-    </>
-  );
+  return <>Subpage for Safe People for Project {id}</>;
 }
