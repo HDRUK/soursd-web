@@ -12,8 +12,11 @@
     "scanErrorText": "Your file file may have a virus"
   },
   "Application": {
+    "status": "Status",
+    "removeUserFromProject": "Remove from project",
     "name": "Name",
-    "userStatusLive": "Live",
+    "userStatus_registered": "SOURSD account created",
+    "userStatus_invited": "Invited",
     "projectStatus": "Project status",
     "projectRole": "Project role",
     "actions": "Actions",

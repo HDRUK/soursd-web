@@ -37,8 +37,6 @@ async function validateAccessToken(
     suppressThrow: true,
   });
 
-  console.log("response", response);
-
   let accessToken = await getAccessToken();
 
   if (response.status === 404) {

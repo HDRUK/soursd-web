@@ -171,6 +171,12 @@ const createMuiTableStyles = (ownerState: TableCellProps) => {
   };
 };
 
+const createMuiChipStyles = () => {
+  return {
+    borderRadius: 3,
+  };
+};
+
 const createSwitchStyles = () => {
   return {
     ".MuiSwitch-switchBase.Mui-checked": {
@@ -301,6 +307,11 @@ const theme = createTheme(
       MuiCard: {
         styleOverrides: {
           root: ({ ownerState }) => createBoxStyles(ownerState),
+        },
+      },
+      MuiChip: {
+        styleOverrides: {
+          root: createMuiChipStyles,
         },
       },
       MuiSwitch: {

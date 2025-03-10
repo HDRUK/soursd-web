@@ -133,6 +133,7 @@ interface User {
   departments?: Department[];
   role?: string;
   location?: string;
+  status: "invited" | "registered";
 }
 interface AddressFields {
   postcode?: string;
