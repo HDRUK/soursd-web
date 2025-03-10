@@ -5,7 +5,7 @@ import React, {
   useEffect,
   ChangeEvent,
 } from "react";
-import { useForm } from "react-hook-form"; // Add this import
+import { useForm } from "react-hook-form";
 import { TextField, Button, Grid, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import Form from "@/components/Form";
@@ -156,7 +156,6 @@ export default function TrainingForm({
       onSubmit={handleSubmit}
       schema={schema}
       {...formOptions}
-      shouldReset
       key={user?.id}>
       <Grid container rowSpacing={3}>
         <Grid item xs={12} key="provider">

@@ -6,23 +6,27 @@ import {
   PageGuidance,
   PageSection,
 } from "@/modules";
-import { Box, Checkbox, FormControlLabel, Link } from "@mui/material";
+import { Box, Link } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
 import ProfessionalsRegistration from "../ProfessionalRegistrations";
 import Training from "../Training";
+import FormControlCheckbox from "@/components/FormControlCheckbox";
+import { useForm, FormProvider } from "react-hook-form";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
 export default function Trainings() {
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const router = useRouter();
+  const methods = useForm();
 
   return (
-    <PageBodyContainer>
-      <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
-        <PageBody>
+    <FormProvider {...methods}>
+      <PageBodyContainer>
+        <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
+          <PageBody>
           <PageSection>
             <Training />
           </PageSection>
@@ -31,37 +35,33 @@ export default function Trainings() {
           </PageSection>
 
           <Box sx={{ mt: 1, maxWidth: "50%" }}>
-            <FormControlLabel
-              control={<Checkbox />}
-              sx={{ alignItems: "flex-start" }}
-              label={
-                <Box>
-                  {tProfile("accreditedResearcherCheckboxLabel")}
-                  <Link
-                    href={tProfile("accreditedResearcherLinkHref")}
-                    color="primary"
-                    sx={{ display: "block", mt: 0.5 }}>
-                    {tProfile("findOutMore")}
-                  </Link>
-                </Box>
+            <FormControlCheckbox
+              name="accreditedResearcher"
+              label={tProfile("accreditedResearcherCheckboxLabel")}
+              labelCaption={
+                <Link
+                  href={tProfile("accreditedResearcherLinkHref")}
+                  color="primary"
+                  sx={{ display: "block", mt: 0.5 }}
+                >
+                  {tProfile("findOutMore")}
+                </Link>
               }
             />
           </Box>
 
           <Box sx={{ mt: 1, maxWidth: "50%" }}>
-            <FormControlLabel
-              control={<Checkbox />}
-              sx={{ alignItems: "flex-start" }}
-              label={
-                <Box>
-                  {tProfile("userDeclarationCheckboxLabel")}
-                  <Link
-                    href={tProfile("userDeclarationLinkHref")}
-                    color="primary"
-                    sx={{ display: "block", mt: 0.5 }}>
-                    {tProfile("findOutMore")}
-                  </Link>
-                </Box>
+            <FormControlCheckbox
+              name="userDeclaration"
+              label={tProfile("userDeclarationCheckboxLabel")}
+              labelCaption={
+                <Link
+                  href={tProfile("userDeclarationLinkHref")}
+                  color="primary"
+                  sx={{ display: "block", mt: 0.5 }}
+                >
+                  {tProfile("findOutMore")}
+                </Link>
               }
             />
           </Box>
@@ -75,5 +75,6 @@ export default function Trainings() {
         </PageBody>
       </PageGuidance>
     </PageBodyContainer>
+    </FormProvider>
   );
 }
