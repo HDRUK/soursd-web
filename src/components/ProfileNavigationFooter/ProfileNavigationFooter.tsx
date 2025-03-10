@@ -13,6 +13,8 @@ export type ProfileNavigationFooterProps = {
   isLoading?: boolean;
   previousHref?: string;
   isDisabled?: boolean;
+  isLastStep?: boolean;
+  onClick?: () => void;
 };
 
 export default function ProfileNavigationFooter({
@@ -20,6 +22,8 @@ export default function ProfileNavigationFooter({
   nextStepText,
   isLoading,
   isDisabled = false,
+  isLastStep = false,
+  onClick,
 }: ProfileNavigationFooterProps) {
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
@@ -54,10 +58,16 @@ export default function ProfileNavigationFooter({
         )}
       </Grid>
       <Grid item xs={3} sx={{ display: "flex", justifyContent: "flex-end" }}>
-        <ButtonSave isLoading={isLoading} sx={{ my: 1 }} disabled={isDisabled}>
-          {nextStepText
-            ? tProfile("submitAndContinueButton")
-            : tProfile("submitButton")}
+        <ButtonSave
+          isLoading={isLoading}
+          sx={{ my: 1 }}
+          disabled={isDisabled}
+          onClick={onClick && (() => onClick())}>
+          {isLastStep
+            ? tProfile("finishLinkText")
+            : nextStepText
+              ? tProfile("submitAndContinueButton")
+              : tProfile("submitButton")}
         </ButtonSave>
       </Grid>
     </Grid>

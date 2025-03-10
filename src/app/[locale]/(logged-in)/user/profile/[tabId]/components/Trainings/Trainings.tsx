@@ -6,11 +6,12 @@ import {
   PageGuidance,
   PageSection,
 } from "@/modules";
-import EastIcon from "@mui/icons-material/East";
-import { LoadingButton } from "@mui/lab";
-import { Box } from "@mui/material";
+import { Box, Link } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
+import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
+import FormControlCheckbox from "@/components/FormControlCheckbox";
+import { useForm, FormProvider } from "react-hook-form";
 import ProfessionalsRegistration from "../ProfessionalRegistrations";
 import Training from "../Training";
 
@@ -19,29 +20,59 @@ const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 export default function Trainings() {
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const router = useRouter();
+  const methods = useForm();
 
   return (
-    <PageBodyContainer>
-      <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
-        <PageBody>
-          <PageSection>
-            <Training />
-          </PageSection>
-          <PageSection>
-            <ProfessionalsRegistration />
-          </PageSection>
-          <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3 }}>
-            <LoadingButton
-              sx={{ display: "flex" }}
-              endIcon={<EastIcon />}
-              onClick={() =>
-                router.push(ROUTES.profileResearcherProjects.path)
-              }>
-              {tProfile("continueLinkText")}
-            </LoadingButton>
-          </Box>
-        </PageBody>
-      </PageGuidance>
-    </PageBodyContainer>
+    <FormProvider {...methods}>
+      <PageBodyContainer>
+        <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
+          <PageBody>
+            <PageSection>
+              <Training />
+            </PageSection>
+            <PageSection>
+              <ProfessionalsRegistration />
+            </PageSection>
+
+            <Box sx={{ mt: 1, maxWidth: "50%" }}>
+              <FormControlCheckbox
+                name="accreditedResearcher"
+                label={tProfile("accreditedResearcherCheckboxLabel")}
+                labelCaption={
+                  <Link
+                    href={tProfile("accreditedResearcherLinkHref")}
+                    color="primary"
+                    sx={{ display: "block", mt: 0.5 }}>
+                    {tProfile("findOutMore")}
+                  </Link>
+                }
+              />
+            </Box>
+
+            <Box sx={{ mt: 1, maxWidth: "50%" }}>
+              <FormControlCheckbox
+                name="userDeclaration"
+                label={tProfile("userDeclarationCheckboxLabel")}
+                labelCaption={
+                  <Link
+                    href={tProfile("userDeclarationLinkHref")}
+                    color="primary"
+                    sx={{ display: "block", mt: 0.5 }}>
+                    {tProfile("findOutMore")}
+                  </Link>
+                }
+              />
+            </Box>
+            <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3 }}>
+              <ProfileNavigationFooter
+                nextStepText={tProfile("completeYourProfile")}
+                isLastStep
+                onClick={() => router.push(ROUTES.profileResearcherHome.path)}
+              />
+            </Box>
+          </PageBody>
+        </PageGuidance>
+      </PageBodyContainer>
+    </FormProvider>
   );
 }
