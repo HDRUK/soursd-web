@@ -15,7 +15,6 @@ import { DeleteProjectUserPayload } from "@/services/projects/types";
 import { Organisation, ProjectUser, User } from "@/types/application";
 import { renderUserNameCell, renderUserStatus } from "@/utils/cells";
 import { Box } from "@mui/material";
-import { yellow } from "@mui/material/colors";
 import { useMutation } from "@tanstack/react-query";
 import { CellContext, ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
