@@ -60,6 +60,13 @@ declare module "@mui/material/CircularProgress" {
   interface CircularProgressPropsColorOverrides extends ColorOverrides {}
 }
 
+declare module "@mui/material/Chip" {
+  type AugmentedColorPaletteOptions =
+    import("@mui/material/styles/createPalette").AugmentedColorPaletteOptions;
+
+  interface ChipPropsColorOverrides extends ColorOverrides {}
+}
+
 declare module "@mui/material/Card" {
   type AugmentedColorPaletteOptions =
     import("@mui/material/styles/createPalette").AugmentedColorPaletteOptions;

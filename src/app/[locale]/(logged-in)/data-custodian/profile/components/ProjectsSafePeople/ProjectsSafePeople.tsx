@@ -1,3 +1,4 @@
+import { ActionMenu, ActionMenuItem } from "@/components/ActionMenu";
 import Table from "@/components/Table";
 import { FilterIcon } from "@/consts/icons";
 import { useStore } from "@/data/store";
@@ -8,8 +9,8 @@ import { deleteProjectUserQuery } from "@/services/projects";
 import useProjectUsersQuery from "@/services/projects/getProjectUsersQuery";
 import { DeleteProjectUserPayload } from "@/services/projects/types";
 import { Organisation, ProjectUser, User } from "@/types/application";
-import { renderUserNameCell } from "@/utils/cells";
-import { Box, Button } from "@mui/material";
+import { renderUserNameCell, renderUserStatus } from "@/utils/cells";
+import { Box } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { CellContext, ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
@@ -18,7 +19,10 @@ interface ProjectsSafePeopleProps {
   id: number;
 }
 
-type FilteredUser = User & Pick<Organisation, "organisation_name">;
+type FilteredUser = User &
+  Pick<Organisation, "organisation_name"> & {
+    project_role: string;
+  };
 
 const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
@@ -46,13 +50,12 @@ export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
   const getUsersFromResponse = (usersData: ProjectUser[]) => {
     const users: FilteredUser[] = [];
 
-    usersData?.forEach(({ registry: { user, organisations } }) => {
+    usersData?.forEach(({ role, registry: { user, organisations } }) => {
       organisations?.forEach(({ organisation_name }) => {
         users.push({
           organisation_name,
           ...user,
-          project_status: "Live",
-          project_role: "Data analyst",
+          project_role: role.name,
         });
       });
     });
@@ -81,15 +84,17 @@ export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
     const { registry_id } = info.row.original;
 
     return (
-      <Button
-        onClick={async () => {
-          showDeleteConfirm({
-            projectId: id,
-            registryId: registry_id,
-          });
-        }}>
-        Delete
-      </Button>
+      <ActionMenu>
+        <ActionMenuItem
+          onClick={() => {
+            showDeleteConfirm({
+              projectId: id,
+              registryId: registry_id,
+            });
+          }}>
+          {tApplication("removeUserFromProject")}
+        </ActionMenuItem>
+      </ActionMenu>
     );
   };
 
@@ -117,8 +122,9 @@ export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
       header: tApplication("organisationName"),
     },
     {
-      accessorKey: "project_status",
-      header: tApplication("projectStatus"),
+      accessorKey: "status",
+      header: tApplication("status"),
+      cell: renderUserStatus,
     },
     {
       header: tApplication("actions"),
