@@ -23,7 +23,7 @@ import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import ReactDOMServer from "react-dom/server";
-import ProfessionalRegistrationsForm from "./ProfessionalRegistrationsForm";
+import ProfessionalRegistrationsFormModal from "./ProfessionalRegistrationsFormModal";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfessionalRegistrations";
 
@@ -87,7 +87,7 @@ export default function ProfessionalRegistrations() {
 
   return (
     <>
-      <ProfessionalRegistrationsForm
+      <ProfessionalRegistrationsFormModal
         open={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onSubmit={handleDetailsSubmit}
