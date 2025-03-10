@@ -1,16 +1,21 @@
 import { ActionMenu, ActionMenuItem } from "@/components/ActionMenu";
 import Table from "@/components/Table";
-import { FilterIcon } from "@/consts/icons";
+import { FilterIcon, PrimaryContactIcon } from "@/consts/icons";
 import { useStore } from "@/data/store";
+import useQueryAlerts from "@/hooks/useQueryAlerts";
 import useQueryConfirmAlerts from "@/hooks/useQueryConfirmAlerts";
 import SearchActionMenu from "@/modules/SearchActionMenu";
 import SearchBar from "@/modules/SearchBar";
-import { deleteProjectUserQuery } from "@/services/projects";
+import {
+  deleteProjectUserQuery,
+  putProjectUserPrimaryContactQuery,
+} from "@/services/projects";
 import useProjectUsersQuery from "@/services/projects/getProjectUsersQuery";
 import { DeleteProjectUserPayload } from "@/services/projects/types";
 import { Organisation, ProjectUser, User } from "@/types/application";
 import { renderUserNameCell, renderUserStatus } from "@/utils/cells";
 import { Box } from "@mui/material";
+import { yellow } from "@mui/material/colors";
 import { useMutation } from "@tanstack/react-query";
 import { CellContext, ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
@@ -22,6 +27,7 @@ interface ProjectsSafePeopleProps {
 type FilteredUser = User &
   Pick<Organisation, "organisation_name"> & {
     project_role: string;
+    primary_contact: number;
   };
 
 const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
@@ -47,18 +53,24 @@ export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
     deleteProjectUserQuery()
   );
 
+  const { mutateAsync: makePrimaryContactAsync, ...primaryContactQueryState } =
+    useMutation(putProjectUserPrimaryContactQuery());
+
   const getUsersFromResponse = (usersData: ProjectUser[]) => {
     const users: FilteredUser[] = [];
 
-    usersData?.forEach(({ role, registry: { user, organisations } }) => {
-      organisations?.forEach(({ organisation_name }) => {
-        users.push({
-          organisation_name,
-          ...user,
-          project_role: role.name,
+    usersData?.forEach(
+      ({ primary_contact, role, registry: { user, organisations } }) => {
+        organisations?.forEach(({ organisation_name }) => {
+          users.push({
+            organisation_name,
+            ...user,
+            project_role: role.name,
+            primary_contact,
+          });
         });
-      });
-    });
+      }
+    );
 
     return users;
   };
@@ -78,10 +90,12 @@ export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
     }
   );
 
+  useQueryAlerts(primaryContactQueryState);
+
   const renderActionMenuCell = <T extends FilteredUser>(
     info: CellContext<T, unknown>
   ) => {
-    const { registry_id } = info.row.original;
+    const { registry_id, primary_contact } = info.row.original;
 
     return (
       <ActionMenu>
@@ -94,22 +108,45 @@ export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
           }}>
           {tApplication("removeUserFromProject")}
         </ActionMenuItem>
+        <ActionMenuItem
+          onClick={async () => {
+            await makePrimaryContactAsync({
+              projectId: id,
+              registryId: registry_id,
+              primaryContact: !primary_contact,
+            });
+
+            refetch();
+          }}>
+          {!primary_contact
+            ? tApplication("makePrimaryContact")
+            : tApplication("removeAsPrimaryContact")}
+        </ActionMenuItem>
       </ActionMenu>
     );
   };
 
   const filterActions = [
     {
-      label: tApplication("userStatusLive"),
-      onClick: () => handleFieldToggle("status", ["live", ""]),
-      checked: queryParams.status === "live",
+      label: tApplication("userStatus_registered"),
+      onClick: () => handleFieldToggle("status", ["registered", ""]),
+      checked: queryParams.status === "registered",
     },
   ];
 
   const columns: ColumnDef<FilteredUser>[] = [
     {
-      cell: row =>
-        renderUserNameCell(row, routes.profileCustodianUsersIdentity.path),
+      cell: info => {
+        return (
+          <Box sx={{ display: "flex" }}>
+            {renderUserNameCell(
+              info,
+              routes.profileCustodianUsersIdentity.path
+            )}
+            {!!info.row.original.primary_contact && <PrimaryContactIcon />}
+          </Box>
+        );
+      },
       accessorKey: "name",
       header: tApplication("name"),
     },
