@@ -30,6 +30,9 @@ describe("Alert Utils", () => {
         html: "This is an error message.",
         confirmButtonColor: theme.palette.primary.main,
         confirmButtonText: "OK",
+        customClass: {
+          container: "swal2-container",
+        },
         denyButtonColor: theme.palette.default.main,
         denyButtonText: undefined,
         showDenyButton: false,
@@ -51,6 +54,9 @@ describe("Alert Utils", () => {
         html: "Operation completed successfully!",
         confirmButtonColor: theme.palette.primary.main,
         confirmButtonText: "OK",
+        customClass: {
+          container: "swal2-container",
+        },
         denyButtonColor: theme.palette.default.main,
         denyButtonText: undefined,
         showDenyButton: false,
@@ -73,6 +79,9 @@ describe("Alert Utils", () => {
         html: "Do you want to proceed?",
         confirmButtonColor: theme.palette.primary.main,
         confirmButtonText: "Yes",
+        customClass: {
+          container: "swal2-container",
+        },
         denyButtonColor: theme.palette.default.main,
         denyButtonText: "No",
         showDenyButton: true,

@@ -47,10 +47,15 @@ describe("<Training />", () => {
     jest.clearAllMocks();
   });
 
-  it.each([/Training provider/i, /Training name/i])(
+  it.each([/Training provider/i, /Training course name/i])(
     "does not submit when %s is not defined",
     async fieldName => {
       renderTrainingComponent();
+
+      const addButton = screen.getByRole("button", {
+        name: /add training course/i,
+      });
+      fireEvent.click(addButton);
 
       const input = screen.getByRole("textbox", { name: fieldName });
       fireEvent.change(input, { target: { value: faker.string.sample() } });
@@ -63,7 +68,7 @@ describe("<Training />", () => {
 
       expect(screen.getByRole("button", { name: /save/i })).not.toBeDisabled();
 
-      await act(() => {
+      act(() => {
         fireEvent.submit(screen.getByRole("button", { name: /Save/i }));
       });
 
