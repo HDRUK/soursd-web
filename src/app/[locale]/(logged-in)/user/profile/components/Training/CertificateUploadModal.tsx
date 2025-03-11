@@ -1,13 +1,5 @@
 import React, { ChangeEvent } from "react";
-import {
-  Modal,
-  Typography,
-  Button,
-  Divider,
-  List,
-  ListItem,
-  ListItemText,
-} from "@mui/material";
+import { Modal, Typography, Button, Divider } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { FileType } from "@/consts/files";
 import { File as ApplicationFile } from "@/types/application";
@@ -76,13 +68,7 @@ export default function CertificateUploadModal({
           message="certificationUploadFailed"
         />
 
-        {file ? (
-          <List>
-            <ListItem sx={{ pl: 0 }}>
-              <ListItemText primary={file.name} />
-            </ListItem>
-          </List>
-        ) : (
+        {!file && (
           <Typography variant="body2" sx={{ mt: 2, color: "text.secondary" }}>
             {tUpload("noFilesUploaded")}
           </Typography>

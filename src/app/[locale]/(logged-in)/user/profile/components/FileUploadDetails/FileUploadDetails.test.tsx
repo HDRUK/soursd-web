@@ -45,7 +45,6 @@ describe("<FileUploadDetails />", () => {
   it("shows the correct filename", async () => {
     renderFileUploadDetails({
       fileNameText: "sample.doc",
-      fileHref: "/path",
     });
 
     expect(screen.getByText("sample.doc")).toBeInTheDocument();
@@ -55,7 +54,7 @@ describe("<FileUploadDetails />", () => {
     renderFileUploadDetails();
 
     await act(() => {
-      fireEvent.click(screen.getByRole("button"));
+      fireEvent.click(screen.getByTestId("upload-file"));
     });
 
     expect(mockUploadClick).toHaveBeenCalled();

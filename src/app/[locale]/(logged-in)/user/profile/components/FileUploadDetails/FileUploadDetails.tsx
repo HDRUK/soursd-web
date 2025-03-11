@@ -23,7 +23,6 @@ export default function FileUploadDetails({
       fileScanningText={t("fileScanning")}
       fileScanOkText={t("fileScanOk")}
       includeStatus
-      canDownload
     />
   );
 }
