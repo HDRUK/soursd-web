@@ -168,10 +168,10 @@ export default function Projects({ variant }: ProjectsProps) {
     {
       accessorKey: "organisations",
       header: t("organisations"),
-      cell: info => 
+      cell: info =>
         info.row.original.organisations
-      .map(org => org.organisation_name)
-      .join(),
+          .map(org => org.organisation_name)
+          .join(),
     },
     {
       accessorKey: "status",
