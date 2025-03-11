@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent } from "react";
 import useFileUpload from "@/hooks/useFileUpload";
 import useFileDownload from "@/hooks/useFileDownload";
 import FileLink from "@/components/FileLink";
@@ -31,10 +31,7 @@ const CertificationUploader = ({
     enabled: !!value,
   });
 
-  const { downloadFile, data: f2 } = useFileDownload(
-    fileData?.data?.id as number
-  );
-  console.log(f2);
+  const { downloadFile } = useFileDownload(fileData?.data?.id as number);
 
   const {
     upload,
@@ -78,7 +75,7 @@ const CertificationUploader = ({
           isScanFailed={isScanFailed}
           isUploading={isUploading}
           onFileChange={handleFileChange}
-          onDownload={downloadFile}
+          onDownload={() => downloadFile()}
           includeStatus
         />
       </Grid>

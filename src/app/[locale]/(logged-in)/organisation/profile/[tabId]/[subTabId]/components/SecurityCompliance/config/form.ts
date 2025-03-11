@@ -128,10 +128,13 @@ export const getDefaultValues = (
   ce_expiry_evidence: organisation?.ce_expiry_evidence?.id,
   ce_plus_certification_num: organisation?.ce_plus_certification_num || "",
   ce_plus_expiry_date: getDate(organisation?.ce_plus_expiry_date),
+  ce_plus_expiry_evidence: organisation?.ce_plus_expiry_evidence?.id,
   iso_27001_certification_num: organisation?.iso_27001_certification_num || "",
   iso_expiry_date: getDate(organisation?.iso_expiry_date),
+  iso_expiry_evidence: organisation?.iso_expiry_evidence?.id,
   dsptk_ods_code: organisation?.dsptk_ods_code || "",
   dsptk_expiry_date: getDate(organisation?.dsptk_expiry_date),
+  dsptk_expiry_evidence: organisation?.dsptk_expiry_evidence?.id,
 });
 
 export type Certification = {

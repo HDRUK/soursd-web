@@ -9,12 +9,13 @@ export default async (id: number) => {
     if (!response.ok) {
       throw new Error("Failed to download file");
     }
-
     const blob = await response.blob();
 
     const fileName =
-      response.headers.get("Content-Disposition")?.split("filename=")[1] ||
-      `download`;
+      response.headers
+        .get("Content-Disposition")
+        ?.split("filename=")[1]
+        ?.replace(/"/g, "") || "downloaded_file";
 
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement("a");
