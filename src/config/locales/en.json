@@ -13,6 +13,8 @@
     "scanErrorText": "Your file file may have a virus"
   },
   "Application": {
+    "delete": "Delete",
+    "edit": "Edit",
     "status": "Status",
     "makePrimaryContact": "Make primary contact",
     "removeAsPrimaryContact": "Remove as primary contact",
@@ -489,7 +491,7 @@
     "subsidiaryWebsite": "Subsidiary website",
     "subsidiaryWebsitePlaceholder": "Subsidiary website",
     "Training": {
-      "provider":"Training provider",
+      "provider": "Training provider",
       "trainingProviderRequiredInvalid": "Training provider is required",
       "trainingNameRequiredInvalid": "Training name is required",
       "awardedAtRequiredInvalid": "Award date is required",
@@ -529,6 +531,8 @@
     "professionalRegsitrationsErrorMessage": "There was an error getting your professional registrations. Please try again or contact us at <contactLink></contactLink>",
     "errorCreateMessage": "There was an error creating your professional registrations. Please try again or contact us at <contactLink></contactLink>",
     "successCreateMessage": "Your professional registration was successfully create",
+    "errorDeleteMessage": "There was an error delete your professional registration. Please try again or contact us at <contactLink></contactLink>",
+    "successDeleteMessage": "Your professional registration was successfully deleted",
     "cancel": "Cancel"
   },
   "Buttons": {
