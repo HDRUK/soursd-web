@@ -18,6 +18,7 @@ import { Box } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { CellContext, ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
+import { useCallback } from "react";
 
 interface ProjectsSafePeopleProps {
   id: number;
@@ -91,39 +92,52 @@ export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
 
   useQueryAlerts(primaryContactQueryState);
 
-  const renderActionMenuCell = <T extends FilteredUser>(
-    info: CellContext<T, unknown>
-  ) => {
-    const { registry_id, primary_contact } = info.row.original;
+  const renderNameCell = useCallback(
+    <T extends FilteredUser>(info: CellContext<T, unknown>) => {
+      return (
+        <Box sx={{ display: "flex" }}>
+          {renderUserNameCell(info, routes.profileCustodianUsersIdentity.path)}
+          {!!info.row.original.primary_contact && <PrimaryContactIcon />}
+        </Box>
+      );
+    },
+    []
+  );
 
-    return (
-      <ActionMenu>
-        <ActionMenuItem
-          onClick={() => {
-            showDeleteConfirm({
-              projectId: id,
-              registryId: registry_id,
-            });
-          }}>
-          {tApplication("removeUserFromProject")}
-        </ActionMenuItem>
-        <ActionMenuItem
-          onClick={async () => {
-            await makePrimaryContactAsync({
-              projectId: id,
-              registryId: registry_id,
-              primaryContact: !primary_contact,
-            });
+  const renderActionMenuCell = useCallback(
+    <T extends FilteredUser>(info: CellContext<T, unknown>) => {
+      const { registry_id, primary_contact } = info.row.original;
 
-            refetch();
-          }}>
-          {!primary_contact
-            ? tApplication("makePrimaryContact")
-            : tApplication("removeAsPrimaryContact")}
-        </ActionMenuItem>
-      </ActionMenu>
-    );
-  };
+      return (
+        <ActionMenu>
+          <ActionMenuItem
+            onClick={() => {
+              showDeleteConfirm({
+                projectId: id,
+                registryId: registry_id,
+              });
+            }}>
+            {tApplication("removeUserFromProject")}
+          </ActionMenuItem>
+          <ActionMenuItem
+            onClick={async () => {
+              await makePrimaryContactAsync({
+                projectId: id,
+                registryId: registry_id,
+                primaryContact: !primary_contact,
+              });
+
+              refetch();
+            }}>
+            {!primary_contact
+              ? tApplication("makePrimaryContact")
+              : tApplication("removeAsPrimaryContact")}
+          </ActionMenuItem>
+        </ActionMenu>
+      );
+    },
+    []
+  );
 
   const filterActions = [
     {
@@ -135,17 +149,7 @@ export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
 
   const columns: ColumnDef<FilteredUser>[] = [
     {
-      cell: info => {
-        return (
-          <Box sx={{ display: "flex" }}>
-            {renderUserNameCell(
-              info,
-              routes.profileCustodianUsersIdentity.path
-            )}
-            {!!info.row.original.primary_contact && <PrimaryContactIcon />}
-          </Box>
-        );
-      },
+      cell: renderNameCell,
       accessorKey: "name",
       header: tApplication("name"),
     },
