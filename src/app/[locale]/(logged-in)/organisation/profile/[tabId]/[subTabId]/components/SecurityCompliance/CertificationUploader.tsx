@@ -41,7 +41,6 @@ const CertificationUploader = ({
     isUploading,
     isScanning,
     file,
-    fileHref,
   } = useFileUpload(`certification${capitaliseFirstLetter(name)}UploadFailed`);
 
   const uploadFile = useOrganisationFileUpload({

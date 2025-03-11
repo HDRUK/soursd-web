@@ -1,13 +1,5 @@
 import React, { ChangeEvent } from "react";
-import {
-  Modal,
-  Typography,
-  Button,
-  Divider,
-  List,
-  ListItem,
-  ListItemText,
-} from "@mui/material";
+import { Modal, Typography, Button, Divider } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { FileType } from "@/consts/files";
 import { File as ApplicationFile } from "@/types/application";
