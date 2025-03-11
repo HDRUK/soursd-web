@@ -7,9 +7,7 @@ import FormControlHorizontal from "@/components/FormControlHorizontal";
 import FormSection from "@/components/FormSection";
 import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
 import SelectCountry from "@/components/SelectCountry";
-import Text from "@/components/Text";
 import yup from "@/config/yup";
-import { VALIDATION_ORC_ID } from "@/consts/form";
 import { ROUTES } from "@/consts/router";
 import { useStore } from "@/data/store";
 import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
@@ -21,14 +19,7 @@ import {
 } from "@/modules";
 import { putUserQuery } from "@/services/users";
 import { showAlert } from "@/utils/showAlert";
-import InfoIcon from "@mui/icons-material/Info";
-import {
-  Checkbox,
-  FormControlLabel,
-  Grid,
-  TextField,
-  Tooltip,
-} from "@mui/material";
+import { Grid, TextField } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -97,7 +88,7 @@ export default function Identity() {
           .string()
           .email()
           .required(tForm("emailRequiredInvalid")),
-        location: yup.string().required(tForm("locationRequiredInvalid"))
+        location: yup.string().required(tForm("locationRequiredInvalid")),
       }),
     []
   );
