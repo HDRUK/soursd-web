@@ -13,6 +13,8 @@
   },
   "Application": {
     "status": "Status",
+    "makePrimaryContact": "Make primary contact",
+    "removeAsPrimaryContact": "Remove as primary contact",
     "removeUserFromProject": "Remove from project",
     "name": "Name",
     "userStatus_registered": "SOURSD account created",
@@ -65,6 +67,7 @@
     "continueButton": "Continue"
   },
   "CustodianProfile": {
+    "searchPlaceholder": "Search",
     "safeProject": "Safe Project",
     "filterBy": "Filter by status",
     "filteredBy": "Filtered by",

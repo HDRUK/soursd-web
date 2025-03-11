@@ -324,6 +324,7 @@ interface ProjectUser {
   project_role_id: number;
   registry: Registry;
   role: Role;
+  primary_contact: number;
 }
 
 interface Department {
