@@ -7,7 +7,13 @@ import GppBadIcon from "@mui/icons-material/GppBad";
 import GppGoodIcon from "@mui/icons-material/GppGood";
 import UploadIcon from "@mui/icons-material/Upload";
 import { LoadingButton } from "@mui/lab";
-import { CircularProgress, Link, Typography, Grid } from "@mui/material";
+import {
+  CircularProgress,
+  Link,
+  Typography,
+  Grid,
+  Button,
+} from "@mui/material";
 import { useTranslations } from "next-intl";
 import prettyBytes from "pretty-bytes";
 import { ChangeEventHandler, ReactNode, useCallback, useRef } from "react";
@@ -15,7 +21,7 @@ import { ChangeEventHandler, ReactNode, useCallback, useRef } from "react";
 export interface FileLinkProps extends FileUploadState {
   fileButtonText: ReactNode;
   onFileChange: ChangeEventHandler<HTMLInputElement>;
-  onDownload?: (e: MouseEvent) => void;
+  onDownload?: (e: MouseEvent | React.MouseEvent<HTMLButtonElement>) => void;
   accept?: string;
   fileScanOkText?: string;
   fileScanErrorText?: string;
@@ -113,8 +119,9 @@ export default function FileLink({
         </Grid>
       </Grid>
       <Grid item xs={12}>
-        {showLink && (
+        {/* showLink && (
           <Link
+            target="_blank"
             href={fileHref}
             onClick={(e: MouseEvent) =>
               (disableDownload || canDownload) && onDownload?.(e)
@@ -131,6 +138,15 @@ export default function FileLink({
               fileNameText
             )}
           </Link>
+        ) */}
+        {showLink && (
+          <Button onClick={(e: MouseEvent) => onDownload?.(e)}>
+            {includeStatus ? (
+              <Text endIcon={statusIcons}>{fileNameText}</Text>
+            ) : (
+              fileNameText
+            )}
+          </Button>
         )}
         <Typography
           variant="caption"

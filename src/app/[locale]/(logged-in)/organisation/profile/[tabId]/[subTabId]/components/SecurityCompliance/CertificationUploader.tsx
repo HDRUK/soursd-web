@@ -1,6 +1,9 @@
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import useFileUpload from "@/hooks/useFileUpload";
+import useFileDownload from "@/hooks/useFileDownload";
 import FileLink from "@/components/FileLink";
+import getFileQuery from "@/services/files/getFileQuery";
+import { useQuery } from "@tanstack/react-query";
 import { FileType } from "@/consts/files";
 import { Grid } from "@mui/material";
 import useOrganisationFileUpload from "@/hooks/useOrganisationFileUpload";
@@ -10,8 +13,8 @@ import { useTranslations } from "next-intl";
 
 interface CertificationUploaderProps {
   name: string;
-  value: string;
-  onChange: (value: string) => void;
+  value: number;
+  onChange: (value: number) => void;
 }
 const NAMESPACE_TRANSLATION_CERT = "CertificationUpload";
 const CertificationUploader = ({
@@ -21,6 +24,18 @@ const CertificationUploader = ({
 }: CertificationUploaderProps) => {
   const organisation = useStore(state => state.config.organisation);
   const t = useTranslations(NAMESPACE_TRANSLATION_CERT);
+
+  const { data: fileData } = useQuery({
+    ...getFileQuery(value as number),
+    queryKey: [`getFile${value}`],
+    enabled: !!value,
+  });
+
+  const { downloadFile, data: f2 } = useFileDownload(
+    fileData?.data?.id as number
+  );
+  console.log(f2);
+
   const {
     upload,
     isScanComplete,
@@ -29,6 +44,7 @@ const CertificationUploader = ({
     isUploading,
     isScanning,
     file,
+    fileHref,
   } = useFileUpload(`certification${capitaliseFirstLetter(name)}UploadFailed`);
 
   const uploadFile = useOrganisationFileUpload({
@@ -39,35 +55,32 @@ const CertificationUploader = ({
 
   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const data = await uploadFile(name, e);
-    if (data?.name) {
-      onChange(data.name);
+    if (data?.id) {
+      onChange(data.id);
     }
   };
 
   return (
     <Grid container item spacing={3} sx={{ mt: 1 }}>
-      <Grid item xs={3}>
+      <Grid item xs={4}>
         <FileLink
-          fileButtonText={t("buttonText")}
+          fileButtonText={
+            file?.name || fileData?.data.name
+              ? t("buttonTextAlt")
+              : t("buttonText")
+          }
           message={`${FileType.CERTIFICATION}${name.toUpperCase()}`}
-          fileNameText={file?.name || t("noCertificationUploaded")}
+          fileNameText={file?.name || fileData?.data.name}
+          fileHref={fileHref || fileData?.data.path}
           isSizeInvalid={isSizeInvalid}
           isScanning={isScanning}
           isScanComplete={isScanComplete}
           isScanFailed={isScanFailed}
           isUploading={isUploading}
           onFileChange={handleFileChange}
+          onDownload={downloadFile}
           includeStatus
-          canDownload
         />
-      </Grid>
-      <Grid item xs={8}>
-        {value ? (
-          <>
-            <b> {t("evidence")} </b>
-            {value}
-          </>
-        ) : null}
       </Grid>
     </Grid>
   );

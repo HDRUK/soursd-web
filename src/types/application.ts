@@ -8,6 +8,7 @@ import {
 interface File {
   id: number;
   name: string;
+  path: string;
   status: keyof typeof FileStatus;
   type: keyof typeof FileType;
   created_at: string;
@@ -191,6 +192,7 @@ interface Organisation extends OrganisationIdvt, AddressFields {
   ce_certified: boolean;
   ce_certification_num: string;
   ce_expiry_date: string;
+  ce_expiry_evidence: File | null;
   ce_plus_certified: boolean;
   ce_plus_certification_num: string;
   ce_plus_expiry_date: string;
