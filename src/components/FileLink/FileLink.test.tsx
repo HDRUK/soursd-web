@@ -23,8 +23,8 @@ jest.mock("react", () => ({
 const renderFileLinkTest = (props?: Partial<FileLinkProps>) => {
   return render(
     <FileLink
+      message="test"
       fileButtonText="Upload"
-      fileHref="/"
       fileNameText="cv.pdf"
       fileScanOkText="Scan complete"
       fileScanErrorText="Scan failed"
@@ -51,9 +51,8 @@ describe("<FileLink />", () => {
 
   it("calls file input", async () => {
     renderFileLinkTest();
-
     await act(() => {
-      fireEvent.click(screen.getByRole("button"));
+      fireEvent.click(screen.getByTestId("upload-file"));
     });
 
     expect(mockUploadClick).toHaveBeenCalled();
@@ -98,16 +97,24 @@ describe("<FileLink />", () => {
 
   it("is not downloadable", async () => {
     renderFileLinkTest({
-      canDownload: false,
+      onDownload: undefined,
     });
 
-    const link = screen.getByRole("link", {
-      name: /cv.pdf/i,
-    });
+    const link = screen.getByTestId("download-file");
 
     fireEvent.click(link);
 
     expect(mockOnDownload).not.toHaveBeenCalled();
+  });
+
+  it("is downloadable", async () => {
+    renderFileLinkTest();
+
+    const link = screen.getByTestId("download-file");
+
+    fireEvent.click(link);
+
+    expect(mockOnDownload).toHaveBeenCalled();
   });
 
   it("has no accessibility violations", async () => {
