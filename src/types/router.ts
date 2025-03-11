@@ -52,6 +52,11 @@ interface Routes {
   profileResearcherAffiliations: RouteConfig;
   profileResearcherHome: RouteConfig;
   profileResearcherProjects: RouteConfig;
+  profileResearcherProjectsSafeProject: RouteConfig;
+  profileResearcherProjectsSafeData: RouteConfig;
+  profileResearcherProjectsSafePeople: RouteConfig;
+  profileResearcherProjectsSafeSettings: RouteConfig;
+  profileResearcherProjectsSafeOutputs: RouteConfig;
   profileOrganisation: RouteConfig;
   profileOrganisationActions: RouteConfig;
   profileOrganisationDetails: RouteConfig;

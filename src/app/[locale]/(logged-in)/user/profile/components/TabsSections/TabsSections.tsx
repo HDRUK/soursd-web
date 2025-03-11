@@ -4,10 +4,16 @@ import Text from "@/components/Text";
 import { DEFAULT_ALERT_DURATION_HRS } from "@/consts/application";
 import { useStore } from "@/data/store";
 import useUserProfile from "@/hooks/useUserProfile";
-import { Link, useParams } from "@/i18n/routing";
+import { Link } from "@/i18n/routing";
 import { putUserQuery } from "@/services/users";
 import { formatNowDBDate } from "@/utils/date";
 import { showAlert } from "@/utils/showAlert";
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
+import BadgeOutlinedIcon from "@mui/icons-material/BadgeOutlined";
+import BusinessCenterOutlinedIcon from "@mui/icons-material/BusinessCenterOutlined";
+import { OrganisationIcon } from "@/consts/icons";
+import WorkspacePremiumOutlinedIcon from "@mui/icons-material/WorkspacePremiumOutlined";
 import ErrorIcon from "@mui/icons-material/Error";
 import { Box, Tab, Tabs } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
@@ -17,13 +23,16 @@ import { PageTabs } from "../../consts/tabs";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
-export default function TabsSections() {
+interface TabsSectionsProps {
+  tabId: PageTabs;
+}
+
+export default function TabsSections({ tabId }: TabsSectionsProps) {
   const { user, routes } = useStore(store => ({
     user: store.getUser(),
     routes: store.getApplication().routes,
   }));
 
-  const params = useParams();
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const {
     affiliationsScore,
@@ -57,7 +66,7 @@ export default function TabsSections() {
     <Box sx={{ width: "100%", mb: 4 }}>
       <Tabs
         variant="scrollable"
-        value={params?.tabId || PageTabs.HOME}
+        value={tabId || PageTabs.HOME}
         aria-label={t("navigationAriaLabel")}
         role="navigation"
         indicatorColor="secondary"
@@ -65,12 +74,15 @@ export default function TabsSections() {
         allowScrollButtonsMobile
         textColor="inherit">
         <Tab
+          icon={<HomeOutlinedIcon />}
           label={<Text>{t("home")}</Text>}
           href={routes.profileResearcherHome.path}
           component={Link}
           value={PageTabs.HOME}
+          iconPosition="start"
         />
         <Tab
+          icon={<BadgeOutlinedIcon />}
           label={
             <Text
               startIcon={identityScore < 100 && <ErrorIcon color="error" />}>
@@ -83,6 +95,7 @@ export default function TabsSections() {
           iconPosition="start"
         />
         <Tab
+          icon={<BusinessCenterOutlinedIcon />}
           label={
             <Text
               startIcon={
@@ -94,8 +107,10 @@ export default function TabsSections() {
           href={routes.profileResearcherAffiliations.path}
           component={Link}
           value={PageTabs.AFFILIATIONS}
+          iconPosition="start"
         />
         <Tab
+          icon={<OrganisationIcon />}
           label={
             <Text
               startIcon={experiencesScore < 100 && <ErrorIcon color="error" />}>
@@ -105,8 +120,10 @@ export default function TabsSections() {
           href={routes.profileResearcherExperience.path}
           component={Link}
           value={PageTabs.EXPERIENCE}
+          iconPosition="start"
         />
         <Tab
+          icon={<WorkspacePremiumOutlinedIcon />}
           label={
             <Text
               startIcon={trainingScore < 100 && <ErrorIcon color="error" />}>
@@ -116,12 +133,15 @@ export default function TabsSections() {
           href={routes.profileResearcherTraining.path}
           component={Link}
           value={PageTabs.TRAINING}
+          iconPosition="start"
         />
         <Tab
+          icon={<AssignmentOutlinedIcon />}
           label={t("projects")}
           href={routes.profileResearcherProjects.path}
           component={Link}
           value={PageTabs.PROJECTS}
+          iconPosition="start"
         />
       </Tabs>
     </Box>
