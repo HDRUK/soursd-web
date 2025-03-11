@@ -1,10 +1,8 @@
-import React from "react";
 import FormModal from "@/components/FormModal";
 import { PostProfessionalRegistrationPayload } from "@/services/professional_registrations/types";
-import { UseQueryResult } from "@tanstack/react-query";
-import ProfessionalRegistrationsForm from "../ProfessionalRegistrationsForm";
 import { ResearcherProfessionalRegistration } from "@/types/application";
 import { MutationState, QueryState } from "@/types/form";
+import ProfessionalRegistrationsForm from "../ProfessionalRegistrationsForm";
 
 interface ProfessionalRegistrationsFormModalProps {
   open: boolean;

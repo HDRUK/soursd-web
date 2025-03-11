@@ -1,34 +1,33 @@
 "use client";
 
+import { ActionMenu, ActionMenuItem } from "@/components/ActionMenu";
 import ContactLink from "@/components/ContactLink";
 import Results from "@/components/Results";
 import { useStore } from "@/data/store";
 import useQueryAlerts from "@/hooks/useQueryAlerts";
+import useQueryConfirmAlerts from "@/hooks/useQueryConfirmAlerts";
+import useMutationUpdateProfessionalRegistration from "@/queries/useMutationUpdateProfessionalRegistration";
 import {
   deleteProfessionalRegistrationQuery,
   getProfessionalRegistrationsQuery,
-  postProfessionalRegistrationQuery,
 } from "@/services/professional_registrations";
 import { PostProfessionalRegistrationPayload } from "@/services/professional_registrations/types";
+import { ResearcherProfessionalRegistration } from "@/types/application";
+import AddIcon from "@mui/icons-material/Add";
 import {
+  Button,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableRow,
   Typography,
-  Button,
 } from "@mui/material";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
-import AddIcon from "@mui/icons-material/Add";
 import ReactDOMServer from "react-dom/server";
 import ProfessionalRegistrationsFormModal from "./ProfessionalRegistrationsFormModal";
-import { ActionMenu, ActionMenuItem } from "@/components/ActionMenu";
-import { ResearcherProfessionalRegistration } from "@/types/application";
-import useMutationUpdateProfessionalRegistration from "@/queries/useMutationUpdateProfessionalRegistration";
-import useQueryConfirmAlerts from "@/hooks/useQueryConfirmAlerts";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfessionalRegistrations";
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
@@ -136,7 +135,7 @@ export default function ProfessionalRegistrations() {
   }, [data, getHistories, setHistories]);
 
   useEffect(() => {
-    if (!!editRecord) setIsModalOpen(true);
+    if (editRecord) setIsModalOpen(true);
   }, [editRecord]);
 
   return (
@@ -164,7 +163,7 @@ export default function ProfessionalRegistrations() {
             <TableRow>
               <TableCell scope="col">{tProfile("name")}</TableCell>
               <TableCell scope="col">{tProfile("id")}</TableCell>
-              <TableCell scope="col"></TableCell>
+              <TableCell scope="col" />
             </TableRow>
           </TableHead>
           <TableBody>
