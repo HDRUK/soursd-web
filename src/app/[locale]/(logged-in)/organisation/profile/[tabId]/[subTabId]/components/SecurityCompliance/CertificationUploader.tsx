@@ -1,6 +1,5 @@
 import React, { ChangeEvent } from "react";
 import useFileUpload from "@/hooks/useFileUpload";
-import useFileDownload from "@/hooks/useFileDownload";
 import FileLink from "@/components/FileLink";
 import getFileQuery from "@/services/files/getFileQuery";
 import { useQuery } from "@tanstack/react-query";
@@ -10,6 +9,7 @@ import useOrganisationFileUpload from "@/hooks/useOrganisationFileUpload";
 import { useStore } from "@/data/store";
 import { capitaliseFirstLetter } from "@/utils/string";
 import { useTranslations } from "next-intl";
+import { downloadFile } from "@/services/files";
 
 interface CertificationUploaderProps {
   name: string;
@@ -31,7 +31,7 @@ const CertificationUploader = ({
     enabled: !!value,
   });
 
-  const { downloadFile } = useFileDownload(fileData?.data?.id as number);
+  console.log("hello", fileData?.data);
 
   const {
     upload,
@@ -73,7 +73,7 @@ const CertificationUploader = ({
           isScanFailed={isScanFailed}
           isUploading={isUploading}
           onFileChange={handleFileChange}
-          onDownload={() => downloadFile()}
+          onDownload={() => downloadFile(fileData?.data?.id as number)}
           includeStatus
         />
       </Grid>

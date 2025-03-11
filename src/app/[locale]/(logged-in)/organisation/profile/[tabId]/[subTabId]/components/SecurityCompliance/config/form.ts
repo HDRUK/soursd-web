@@ -113,7 +113,7 @@ export const getValidation = (t: (key: string) => string) =>
     dsptk_expiry_evidence: yup
       .number()
       .nullable()
-      .when("iso_expdsptk_expiry_dateiry_date", {
+      .when("dsptk_expiry_date", {
         is: (value: string) => !!value,
         then: schema => schema.required(t("dsptkExpiryEvidenceRequired")),
         otherwise: schema => schema.notRequired(),

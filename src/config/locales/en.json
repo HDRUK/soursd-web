@@ -408,7 +408,7 @@
     "dsptkOdsCodeInvalid": "DSPTK identifier is invalid, it must be in the form, e.g.: e.g. DSPTK-2025-12345",
     "dsptkExpiryDate": "Expiry date",
     "dsptkExpiryDateRequired": "An expiry date for your code needs to be set.",
-    "idsptkExpiryEvidenceRequired": "Evidence of your DSPTK certification is required",
+    "dsptkExpiryEvidenceRequired": "Evidence of your DSPTK certification is required",
     "organisationSubsidiaries": "UK subsidiaries",
     "address": "Address search",
     "addressPlaceholder": "Start typing an address to search",
