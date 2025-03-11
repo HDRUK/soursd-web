@@ -13,6 +13,8 @@
     "fileTypesText": "PDF, DOC, and DOCX"
   },
   "Application": {
+    "delete": "Delete",
+    "edit": "Edit",
     "status": "Status",
     "makePrimaryContact": "Make primary contact",
     "removeAsPrimaryContact": "Remove as primary contact",
@@ -533,6 +535,8 @@
     "professionalRegsitrationsErrorMessage": "There was an error getting your professional registrations. Please try again or contact us at <contactLink></contactLink>",
     "errorCreateMessage": "There was an error creating your professional registrations. Please try again or contact us at <contactLink></contactLink>",
     "successCreateMessage": "Your professional registration was successfully create",
+    "errorDeleteMessage": "There was an error delete your professional registration. Please try again or contact us at <contactLink></contactLink>",
+    "successDeleteMessage": "Your professional registration was successfully deleted",
     "cancel": "Cancel"
   },
   "Buttons": {

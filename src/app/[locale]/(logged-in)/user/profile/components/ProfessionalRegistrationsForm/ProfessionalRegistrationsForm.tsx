@@ -19,6 +19,7 @@ export interface ProfessionalRegistrationsFormProps {
   ) => void;
   queryState: MutationState;
   onClose: () => void;
+  data?: ResearcherProfessionalRegistration;
 }
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfessionalRegistrations";
@@ -27,6 +28,7 @@ export default function ProfessionalRegistrationsForm({
   onSubmit,
   onClose,
   queryState,
+  data,
 }: ProfessionalRegistrationsFormProps) {
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
@@ -43,6 +45,7 @@ export default function ProfessionalRegistrationsForm({
     defaultValues: {
       member_id: "",
       name: "",
+      ...data,
     },
   };
 
