@@ -66,7 +66,7 @@ export default function FormControlWrapper({
       }) => (
         <FormControl sx={sx} fullWidth={fullWidth} error={invalid}>
           {displayLabel && (
-            <FormLabel htmlFor={field.name}>
+            <FormLabel htmlFor={field.name} sx={{ pb: 1 }}>
               {label || t(tKey)}
               {isRequired && <span style={{ color: "red" }}>*</span>}
             </FormLabel>

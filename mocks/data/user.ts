@@ -58,7 +58,7 @@ const mockedProfessionalRegistration = (
 const mockedTraining = (
   training?: Partial<ResearcherTraining>
 ): ResearcherTraining => ({
-  awarded_at: faker.commerce.department(),
+  awarded_at: faker.date.past().toDateString(),
   provider: faker.company.name(),
   awarding_body_ror: faker.internet.url(),
   expires_at: faker.date.future().toDateString(),

@@ -22,6 +22,7 @@ export interface FileLinkProps extends FileUploadState {
   fileScanningText?: string;
   fileMaxSizeText?: ReactNode;
   fileMaxSizeErrorText?: ReactNode;
+  fileTypesText?: ReactNode;
   fileNameText?: ReactNode;
   fileInputLabelText?: string;
   isUploading?: boolean;
@@ -39,6 +40,7 @@ export default function FileLink({
   fileButtonText,
   fileMaxSizeText,
   fileMaxSizeErrorText,
+  fileTypesText,
   fileNameText,
   fileInputLabelText,
   isScanning,
@@ -51,9 +53,7 @@ export default function FileLink({
   onDownload,
 }: FileLinkProps) {
   const ref = useRef<HTMLInputElement>(null);
-
   const t = useTranslations(NAMESPACE_TRANSLATION_FILE);
-
   const translationsMaxSize = {
     size: prettyBytes(MAX_UPLOAD_SIZE_BYTES),
   };
@@ -119,10 +119,9 @@ export default function FileLink({
             )}
           </Button>
         )}
-        <Typography
-          variant="caption"
-          color="caption.main"
-          sx={{ display: "block" }}>
+        <Typography variant="caption" color="caption.main" component="div">
+          {fileTypesText || t("fileTypesText")}
+          {". "}
           {fileMaxSizeText || t("maxSizeText", translationsMaxSize)}
         </Typography>
         {isSizeInvalid &&

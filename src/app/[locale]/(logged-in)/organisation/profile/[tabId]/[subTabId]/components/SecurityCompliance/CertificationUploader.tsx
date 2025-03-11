@@ -68,7 +68,6 @@ const CertificationUploader = ({
           }
           message={`${FileType.CERTIFICATION}${name.toUpperCase()}`}
           fileNameText={file?.name || fileData?.data.name}
-          fileHref={fileHref || fileData?.data.path}
           isSizeInvalid={isSizeInvalid}
           isScanning={isScanning}
           isScanComplete={isScanComplete}

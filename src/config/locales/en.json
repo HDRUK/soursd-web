@@ -4,16 +4,22 @@
     "hide": "Hide {name}"
   },
   "File": {
-    "maxSizeText": "{size} Max size",
+    "maxSizeText": "{size} limit.",
     "inputLabelText": "File input",
     "maxSizeErrorText": "Your file must be under {size}",
     "scanningText": "Scanning file for viruses...",
     "scanOkText": "File was successfully scanned",
-    "scanErrorText": "Your file file may have a virus"
+    "scanErrorText": "Your file file may have a virus",
+    "fileTypesText": "PDF, DOC, and DOCX"
   },
   "Application": {
+    "status": "Status",
+    "makePrimaryContact": "Make primary contact",
+    "removeAsPrimaryContact": "Remove as primary contact",
+    "removeUserFromProject": "Remove from project",
     "name": "Name",
-    "userStatusLive": "Live",
+    "userStatus_registered": "SOURSD account created",
+    "userStatus_invited": "Invited",
     "projectStatus": "Project status",
     "projectRole": "Project role",
     "actions": "Actions",
@@ -62,6 +68,7 @@
     "continueButton": "Continue"
   },
   "CustodianProfile": {
+    "searchPlaceholder": "Search",
     "safeProject": "Safe Project",
     "filterBy": "Filter by status",
     "filteredBy": "Filtered by",
@@ -455,8 +462,6 @@
     "awardedAtPlaceholder": "Awarded at",
     "expiresAt": "Expires at",
     "expiresAtPlaceholder": "Expires at",
-    "trainingProviderRequiredInvalid": "Training provider is required",
-    "trainingNameRequiredInvalid": "Training name is required",
     "awardedAtRequiredInvalid": "Awarded at is required",
     "awardedAtFutureInvalid": "Awarded at date cannot be in the future",
     "expiresAtRequiredInvalid": "Expires at is required",
@@ -486,23 +491,49 @@
     "subsidiaryAddressPlaceholder": "Start typing an address to search",
     "subsidiaryAddressRequired": "Subsidiary address is required",
     "subsidiaryWebsite": "Subsidiary website",
-    "subsidiaryWebsitePlaceholder": "Subsidiary website"
+    "subsidiaryWebsitePlaceholder": "Subsidiary website",
+    "Training": {
+      "provider": "Training provider",
+      "trainingProviderRequiredInvalid": "Training provider is required",
+      "trainingNameRequiredInvalid": "Training name is required",
+      "awardedAtRequiredInvalid": "Award date is required",
+      "awardedAtFutureInvalid": "Award date cannot be in the future",
+      "expiresAtRequiredInvalid": "Expiration date is required",
+      "expiresAtBeforeAwardedAtInvalid": "Expiration date must be after the award date",
+      "expiresAtPastInvalid": "Expiration date must be in the future",
+      "certificationUploadRequiredInvalid": "Certification is required",
+      "trainingName": "Training course name",
+      "awardedAt": "Date of issue",
+      "expiresAt": "Expiry date",
+      "cancel": "Cancel",
+      "certificationUpload": "Training certificate upload",
+      "certificationUploadButton": "Upload certificate",
+      "trainingCertificateUpload": "Training certificate upload",
+      "uploadInstructions": "Please upload your training certificate in the recommended format to provide Data Custodians with up-to-date information on mandatory training and accreditations.",
+      "fileUpload": "File upload",
+      "uploadCertification": "Upload Certificate",
+      "noCertificationUploaded": "No files have been uploaded yet",
+      "certificationUploadFailed": "Certificate upload failed",
+      "done": "Done"
+    }
   },
   "ProfessionalRegistrations": {
     "title": "Professional Registrations",
-    "resultsTitle": "Professional Registrations records",
+    "resultsTitle": "Professional registrations history",
+    "addProfessionalRegistration": "Add professional registrations",
     "id": "ID",
-    "name": "Name",
+    "name": "Professional registration",
     "namePlaceholder": "Name",
-    "nameInvalid": "Name is required",
-    "memberId": "ID",
+    "nameRequiredInvalid": "Name is required",
+    "memberId": "Professional Registration ID",
     "memberIdPlaceholder": "ID",
     "memberIdRequiredInvalid": "ID is required",
     "professionalRegistrationsRecords": "Professional Registrations records",
     "professionalRegistrationsNoResultsMessage": "You currently have no professional registrations",
     "professionalRegsitrationsErrorMessage": "There was an error getting your professional registrations. Please try again or contact us at <contactLink></contactLink>",
     "errorCreateMessage": "There was an error creating your professional registrations. Please try again or contact us at <contactLink></contactLink>",
-    "successCreateMessage": "Your professional registration was successfully create"
+    "successCreateMessage": "Your professional registration was successfully create",
+    "cancel": "Cancel"
   },
   "Buttons": {
     "register": "Register",
@@ -545,7 +576,9 @@
     "fileNamePlaceholder": "No Cv uploaded"
   },
   "Certification": {
-    "fileMaxSize": "{size} Max size",
+    "fileUpload": "Select File",
+    "fileMaxSize": "Max size: {size} per file",
+    "fileTypesText": "File types: PDF, Word",
     "fileDownload": "Download Certification",
     "fileButtonUpload": "Upload Certification",
     "fileInputLabel": "Certification file input",
@@ -553,7 +586,8 @@
     "fileScanning": "Scanning Certification...",
     "fileScanOk": "Certification was successfully scanned",
     "fileScanError": "Your Certification file may have a virus",
-    "fileNamePlaceholder": "No Certification uploaded"
+    "fileNamePlaceholder": "No Certification uploaded",
+    "noFilesUploaded": "No files have been uploaded yet"
   },
   "NotificationsMenu": {
     "noNotifications": "You have no notifications!",
@@ -589,6 +623,11 @@
     "affiliationsNoResultsMessage": "You currently have no affiliations",
     "affiliationsErrorMessage": "There was an error getting your affiliations. Please try again or contact us at <contactLink></contactLink>",
     "projects": "Projects",
+    "safeProject": "Safe Project",
+    "safeData": "Safe Data",
+    "safePeople": "Safe People",
+    "safeSettings": "Safe Settings",
+    "safeOutputs": "Safe Outputs",
     "organisations": "Organisations",
     "completedScore": "{score}% complete",
     "noHistoryResults": "There are currently no {type} that have been entered",
@@ -603,7 +642,6 @@
     "experience": "Experience",
     "experienceTitle": "Complete your experience information",
     "experienceForm": "Employment and publication history",
-    "training": "Training",
     "trainingAndAccreditations": "Training and Accreditations",
     "homeTitle": "Your actions",
     "approvedProjects": "Projects",
@@ -627,8 +665,11 @@
     "noCvUploaded": "No CV uploaded",
     "noCertificationUploaded": "No Certification Uploaded",
     "profileCompletedTitle": "Your profile has been completed",
+    "training": "Training",
     "profileCompletedDescription": "You have completed all the mandatory fields required for your profile to be considered 'complete'. This will be flagged to Data Custodians when they view your user details.",
     "continueLinkText": "Continue",
+    "finishLinkText": "Finish",
+    "completeYourProfile": "Complete Your Profile",
     "profileCompleteWarningMessage": "You have not yet completed your profile. This may mean that some data custodians will not grant access to you. It is advised that you complete this process. Please navigate to your profile",
     "addAnother": "Add Another",
     "postTrainingError": "There was a problem submitting your training experience. Please try again or contact us at <contactLink></contactLink>",
@@ -643,7 +684,25 @@
     "postUserErrorButton": "Try Again",
     "previousButton": "Previous",
     "emailDescription": "Your personal email is used to set up a SOURSD account so that your account stays with you, regardless of your employment or enrolment at a higher education institute. You can also recover your account using your personal email.",
-    "locationDescription": "Some data custodians need to know the country that you will be accessing data from as different countries adhere to different laws regarding data sharing and data confidentiality."
+    "locationDescription": "Some data custodians need to know the country that you will be accessing data from as different countries adhere to different laws regarding data sharing and data confidentiality.",
+    "accreditedResearcherCheckboxLabel": "I am a registered Accredited Researcher as published on the UK Statistics Authority website.",
+    "accreditedResearcherLinkHref": "https://www.gov.uk/government/consultations/digital-economy-act-part-5-data-sharing-codes-and-regulations/research-code-of-practice-and-accreditation-criteria",
+    "userDeclarationCheckboxLabel": "I have signed a User declaration for accessing Digital Economy Act accredited environments.",
+    "userDeclarationLinkHref": "https://www.gov.uk/government/consultations/digital-economy-act-part-5-data-sharing-codes-and-regulations/research-code-of-practice-and-accreditation-criteria",
+    "findOutMore": "Find out more"
+  },
+  "Training": {
+    "title": "Training",
+    "trainingHistoryTitle": "Training history",
+    "trainingHistoryColumnProvider": "Training provider",
+    "trainingHistoryColumnName": "Training course",
+    "trainingHistoryColumnAwardedAt": "Date of issue",
+    "trainingHistoryColumnExpiresAt": "Date of expiry",
+    "addTrainingCourse": "Add training course",
+    "postTrainingSuccess": "Training course added successfully",
+    "closeButton": "Close",
+    "postTrainingError": "An error occurred while adding the training course. Please try again or <contactLink>contact support</contactLink> if the problem persists.",
+    "errorButton": "OK"
   },
   "ProfileCompleteStatus": {
     "profileComplete": "Profile complete",

@@ -134,6 +134,7 @@ interface User {
   departments?: Department[];
   role?: string;
   location?: string;
+  status: "invited" | "registered";
 }
 interface AddressFields {
   postcode?: string;
@@ -328,6 +329,7 @@ interface ProjectUser {
   project_role_id: number;
   registry: Registry;
   role: Role;
+  primary_contact: number;
 }
 
 interface Department {
