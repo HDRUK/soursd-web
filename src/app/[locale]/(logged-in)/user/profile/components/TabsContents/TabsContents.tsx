@@ -2,13 +2,13 @@
 
 import { useStore } from "@/data/store";
 import { notFound } from "next/navigation";
+import Projects from "@/modules/Projects";
 import { PageTabs } from "../../consts/tabs";
 import Affiliations from "../Affiliations";
 import Identity from "../Identity";
 import Home from "../Home";
 import Experience from "../Experience";
 import Trainings from "../Trainings";
-import Projects from "@/modules/Projects";
 
 interface TabsContentsProps {
   tabId: string;

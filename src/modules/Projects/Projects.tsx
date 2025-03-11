@@ -8,16 +8,16 @@ import SearchBar from "@/modules/SearchBar";
 import { ProjectEntities } from "@/services/projects/getEntityProjects";
 import useEntityProjectsQuery from "@/services/projects/useEntityProjectsQuery";
 import { renderProjectNameCell } from "@/utils/cells";
+import { formatDisplayLongDate } from "@/utils/date";
 import { getSearchSortOrder } from "@/utils/query";
 import { Organisation, User } from "@/types/application";
 import SortIcon from "@mui/icons-material/Sort";
 import { ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
+import Table from "@/components/Table";
 import PageBody from "../PageBody";
 import ProjectsLegend from "../ProjectsLegend";
 import SearchActionMenu from "../SearchActionMenu";
-import Table from "@/components/Table";
-import { formatDisplayLongDate } from "@/utils/date";
 
 const NAMESPACE_TRANSLATIONS_PROJECTS = "Projects";
 const NAMESPACE_TRANSLATIONS_APPLICATION = "Application";
@@ -66,7 +66,6 @@ export default function Projects({ variant }: ProjectsProps) {
     data: projectsData,
     last_page,
     total,
-    page,
     setPage,
     updateQueryParam,
     handleSortToggle,
@@ -140,6 +139,8 @@ export default function Projects({ variant }: ProjectsProps) {
           case "user":
             route = routes.profileResearcherProjectsSafeProject;
             break;
+          default:
+            route = null;
         }
         return renderProjectNameCell(info, route.path);
       },
@@ -167,7 +168,10 @@ export default function Projects({ variant }: ProjectsProps) {
     {
       accessorKey: "organisations",
       header: t("organisations"),
-      cell: info => info.row.original.organisations.map(org => org.organisation_name).join(),
+      cell: info => 
+        info.row.original.organisations
+      .map(org => org.organisation_name)
+      .join(),
     },
     {
       accessorKey: "status",
@@ -208,14 +212,14 @@ export default function Projects({ variant }: ProjectsProps) {
       </PageSection>
       <PageSection>
         <Table
-            total={total}
-            last_page={last_page}
-            setPage={setPage}
-            data={projectsData}
-            columns={columns}
-            queryState={queryState}
-            isPaginated
-          />
+          total={total}
+          last_page={last_page}
+          setPage={setPage}
+          data={projectsData}
+          columns={columns}
+          queryState={queryState}
+          isPaginated
+        />
       </PageSection>
     </PageBody>
   );
