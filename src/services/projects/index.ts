@@ -7,6 +7,8 @@ import getUserApprovedProjects from "./getUserApprovedProjects";
 import getUserApprovedProjectsQuery from "./getUserApprovedProjectsQuery";
 import deleteProjectUser from "./deleteProjectUser";
 import deleteProjectUserQuery from "./deleteProjectUserQuery";
+import putProjectUserPrimaryContact from "./putProjectUserPrimaryContact";
+import putProjectUserPrimaryContactQuery from "./putProjectUserPrimaryContactQuery";
 
 export {
   getProjects,
@@ -18,4 +20,6 @@ export {
   getProject,
   deleteProjectUser,
   deleteProjectUserQuery,
+  putProjectUserPrimaryContact,
+  putProjectUserPrimaryContactQuery,
 };

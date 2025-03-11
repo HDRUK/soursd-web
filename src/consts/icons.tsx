@@ -9,7 +9,9 @@ import ShieldOutlinedIcon from "@mui/icons-material/ShieldOutlined";
 import TaskAltOutlinedIcon from "@mui/icons-material/TaskAltOutlined";
 import VerifiedUserOutlinedIcon from "@mui/icons-material/VerifiedUserOutlined";
 import WorkspacePremiumOutlinedIcon from "@mui/icons-material/WorkspacePremiumOutlined";
+import StarIcon from "@mui/icons-material/Star";
 import { SvgIconProps } from "@mui/material";
+import { yellow } from "@mui/material/colors";
 
 const IdentityVerifiedIcon = (props: SvgIconProps) => {
   const { sx, ...restProps } = props;
@@ -70,6 +72,10 @@ const OrganisationIcon = (props: SvgIconProps) => <BusinessIcon {...props} />;
 
 const FilterIcon = (props: SvgIconProps) => <FilterAltIcon {...props} />;
 
+const PrimaryContactIcon = (props: SvgIconProps) => (
+  <StarIcon sx={{ color: yellow["700"] }} {...props} />
+);
+
 export {
   ApprovedIcon,
   ApprovedTrainingIcon,
@@ -83,4 +89,5 @@ export {
   RejectIcon,
   TrashIcon,
   VerifyIcon,
+  PrimaryContactIcon,
 };
