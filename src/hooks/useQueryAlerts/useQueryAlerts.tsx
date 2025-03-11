@@ -61,6 +61,8 @@ export default function useQueryAlerts(
 
       alertOptions?.commonAlertProps?.willClose?.();
       alertOptions?.errorAlertProps?.willClose?.();
+
+      query.reset?.();
     },
   };
 

@@ -1,0 +1,3 @@
+import useMutationUpdateProfessionalRegistration from "./useMutationUpdateProfessionalRegistration";
+
+export default useMutationUpdateProfessionalRegistration;
