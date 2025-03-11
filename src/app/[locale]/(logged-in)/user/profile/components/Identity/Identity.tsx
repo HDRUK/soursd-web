@@ -39,8 +39,6 @@ export interface IdentityFormValues {
   first_name: string;
   last_name: string;
   personal_email: string;
-  orc_id?: string | null;
-  consent_scrape?: boolean;
   location: string;
 }
 
@@ -99,23 +97,7 @@ export default function Identity() {
           .string()
           .email()
           .required(tForm("emailRequiredInvalid")),
-        location: yup.string().required(tForm("locationRequiredInvalid")),
-        orc_id: yup
-          .string()
-          .matches(
-            new RegExp(`(${VALIDATION_ORC_ID.source})|^$`),
-            tForm("orcIdFormatInvalid")
-          )
-          .when("consent_scrape", {
-            is: true,
-            then: () =>
-              yup
-                .string()
-                .required(tForm("orcIdRequiredInvalid"))
-                .matches(VALIDATION_ORC_ID, tForm("orcIdFormatInvalid")),
-          })
-          .nullable(),
-        consent_scrape: yup.bool(),
+        location: yup.string().required(tForm("locationRequiredInvalid"))
       }),
     []
   );
@@ -131,8 +113,6 @@ export default function Identity() {
       first_name: user?.first_name,
       last_name: user?.last_name,
       personal_email: user?.email,
-      orc_id: user?.orc_id,
-      consent_scrape: user?.consent_scrape,
       location: user?.location,
     },
     error,
@@ -189,42 +169,6 @@ export default function Identity() {
                             {...rest}
                           />
                         )}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <FormControlHorizontal
-                        name="orc_id"
-                        renderField={fieldProps => (
-                          <Text
-                            endIcon={
-                              <Tooltip title={tForm("whatIsTheOrcId")}>
-                                <InfoIcon color="info" />
-                              </Tooltip>
-                            }
-                            sx={{ maxWidth: "200px" }}>
-                            <TextField {...fieldProps} />
-                          </Text>
-                        )}
-                      />
-                    </Grid>
-                    <Grid item>
-                      <FormControlHorizontal
-                        name="consent_scrape"
-                        renderField={fieldProps => (
-                          <FormControlLabel
-                            label={tForm("consentScrapeDescription")}
-                            control={
-                              <Checkbox
-                                {...fieldProps}
-                                checked={!!fieldProps.value}
-                              />
-                            }
-                            sx={{
-                              mb: 2,
-                            }}
-                          />
-                        )}
-                        displayLabel={false}
                       />
                     </Grid>
                   </Grid>
