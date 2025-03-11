@@ -31,8 +31,6 @@ const CertificationUploader = ({
     enabled: !!value,
   });
 
-  console.log("hello", fileData?.data);
-
   const {
     upload,
     isScanComplete,
