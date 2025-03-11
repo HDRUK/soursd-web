@@ -1,8 +1,5 @@
 "use client";
 
-import ContactLink from "@/components/ContactLink";
-import Pagination from "@/components/Pagination";
-import Results from "@/components/Results";
 import { FilterIcon } from "@/consts/icons";
 import { SearchDirections } from "@/consts/search";
 import { StoreState, useStore } from "@/data/store";
@@ -10,16 +7,22 @@ import PageSection from "@/modules/PageSection";
 import SearchBar from "@/modules/SearchBar";
 import { ProjectEntities } from "@/services/projects/getEntityProjects";
 import useEntityProjectsQuery from "@/services/projects/useEntityProjectsQuery";
+import { renderProjectNameCell } from "@/utils/cells";
 import { getSearchSortOrder } from "@/utils/query";
+import { Organisation, User } from "@/types/application";
 import SortIcon from "@mui/icons-material/Sort";
+import { ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
 import PageBody from "../PageBody";
-import ProjectList from "../ProjectList";
 import ProjectsLegend from "../ProjectsLegend";
 import SearchActionMenu from "../SearchActionMenu";
+import Table from "@/components/Table";
+import { formatDisplayLongDate } from "@/utils/date";
 
-const NAMESPACE_TRANSLATIONS_PROJECT_LIST = "ProjectList";
+const NAMESPACE_TRANSLATIONS_PROJECTS = "Projects";
 const NAMESPACE_TRANSLATIONS_APPLICATION = "Application";
+
+type FilteredUser = User & Pick<Organisation, "organisation_name">;
 
 type VariantConfig = {
   getId: (store: StoreState) => string | number | undefined;
@@ -38,6 +41,12 @@ const variantConfig: Record<ProjectEntities, VariantConfig> = {
       return custodian?.id;
     },
   },
+  user: {
+    getId: store => {
+      const user = store.getUser();
+      return user?.id;
+    },
+  },
 };
 
 interface ProjectsProps {
@@ -45,8 +54,9 @@ interface ProjectsProps {
 }
 
 export default function Projects({ variant }: ProjectsProps) {
-  const t = useTranslations(NAMESPACE_TRANSLATIONS_PROJECT_LIST);
+  const t = useTranslations(NAMESPACE_TRANSLATIONS_PROJECTS);
   const tApplication = useTranslations(NAMESPACE_TRANSLATIONS_APPLICATION);
+  const routes = useStore(state => state.getApplication().routes);
 
   const store = useStore();
   const { getId } = variantConfig[variant];
@@ -115,13 +125,55 @@ export default function Projects({ variant }: ProjectsProps) {
     },
   ];
 
-  const pagination = (
-    <Pagination
-      page={page}
-      count={last_page}
-      onChange={(_, page: number) => setPage(page)}
-    />
-  );
+  const columns: ColumnDef<FilteredUser>[] = [
+    {
+      cell: info => {
+        let route = null;
+
+        switch (variant) {
+          case "organisation":
+            route = routes.profileOrganisationProjectsSafeProject;
+            break;
+          case "custodian":
+            route = routes.profileCustodianProjectsSafeProject;
+            break;
+          case "user":
+            route = routes.profileResearcherProjectsSafeProject;
+            break;
+        }
+        return renderProjectNameCell(info, route.path);
+      },
+      accessorKey: "title",
+      header: t("title"),
+    },
+    {
+      accessorKey: "lay_summary",
+      header: t("laySummary"),
+    },
+    {
+      accessorKey: "start_date",
+      header: t("startDate"),
+      cell: info => formatDisplayLongDate(info.getValue() as string),
+    },
+    {
+      accessorKey: "end_date",
+      header: t("endDate"),
+      cell: info => formatDisplayLongDate(info.getValue() as string),
+    },
+    {
+      accessorKey: "project_users_count",
+      header: t("users"),
+    },
+    {
+      accessorKey: "organisations",
+      header: t("organisations"),
+      cell: info => info.row.original.organisations.map(org => org.organisation_name).join(),
+    },
+    {
+      accessorKey: "status",
+      header: t("status"),
+    },
+  ];
 
   return (
     <PageBody>
@@ -155,16 +207,15 @@ export default function Projects({ variant }: ProjectsProps) {
         </SearchBar>
       </PageSection>
       <PageSection>
-        <Results
-          queryState={queryState}
-          noResultsMessage={t("noResultsProjects")}
-          pagination={pagination}
-          errorMessage={t.rich("errorResultsProjects", {
-            contactLink: ContactLink,
-          })}
-          total={total}>
-          <ProjectList projects={projectsData} />
-        </Results>
+        <Table
+            total={total}
+            last_page={last_page}
+            setPage={setPage}
+            data={projectsData}
+            columns={columns}
+            queryState={queryState}
+            isPaginated
+          />
       </PageSection>
     </PageBody>
   );

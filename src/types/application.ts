@@ -318,6 +318,13 @@ interface Role {
   name: string;
 }
 
+interface Project {
+  id: number;
+  title: string;
+  start_date: string;
+  end_date: string;
+}
+
 interface ProjectUser {
   project_id: number;
   user_digital_ident: string;
@@ -353,6 +360,7 @@ export type {
   Organisation,
   OrganisationIdvt,
   Permission,
+  Project,
   ProjectUser,
   ResearcherAccreditation,
   ResearcherAffiliation,

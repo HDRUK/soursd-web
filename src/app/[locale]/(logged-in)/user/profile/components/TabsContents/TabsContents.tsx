@@ -8,7 +8,7 @@ import Identity from "../Identity";
 import Home from "../Home";
 import Experience from "../Experience";
 import Trainings from "../Trainings";
-import Projects from "../Projects";
+import Projects from "@/modules/Projects";
 
 interface TabsContentsProps {
   tabId: string;
@@ -26,7 +26,7 @@ export default function TabsContents({ tabId }: TabsContentsProps) {
       {tabId === PageTabs.AFFILIATIONS && <Affiliations />}
       {tabId === PageTabs.TRAINING && <Trainings />}
       {tabId === PageTabs.HOME && <Home />}
-      {tabId === PageTabs.PROJECTS && <Projects />}
+      {tabId === PageTabs.PROJECTS && <Projects variant="user" />}
     </>
   );
 }
