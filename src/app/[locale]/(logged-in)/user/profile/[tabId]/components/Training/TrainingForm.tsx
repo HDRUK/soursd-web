@@ -24,6 +24,7 @@ import { useStore } from "@/data/store";
 import UploadIcon from "@mui/icons-material/Upload";
 import { File as ApplicationFile } from "@/types/application";
 import CertificateUploadModal from "./CertificateUploadModal";
+import { mockedUser } from "@/mocks/data/user";
 
 const NAMESPACE_TRANSLATION_FORM = "Form.Training";
 
@@ -46,7 +47,7 @@ export default function TrainingForm({
   onCancel,
 }: TrainingFormProps) {
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
-  const [user, setUser] = useStore(store => [store.config.user, store.setUser]);
+  const [user, setUser] = useStore(store => [mockedUser({registry_id: 10}), store.setUser]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const calculateYearsRemaining = (expirationDate: string): number => {

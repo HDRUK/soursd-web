@@ -689,7 +689,8 @@
     "postTrainingSuccess": "Training course added successfully",
     "closeButton": "Close",
     "postTrainingError": "An error occurred while adding the training course. Please try again or <contactLink>contact support</contactLink> if the problem persists.",
-    "errorButton": "OK"
+    "errorButton": "OK",
+    "viewCertificate": "View Certificate"
   },
   "ProfileCompleteStatus": {
     "profileComplete": "Profile complete",

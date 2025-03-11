@@ -131,7 +131,7 @@ export default function FileLink({
           <Link
             href={fileHref}
             onClick={(e: MouseEvent) =>
-              (disableDownload || canDownload) && onDownload?.(e)
+              (!disableDownload || canDownload) && onDownload?.(e)
             }
             sx={{
               ...((disableDownload || canDownload) && {
