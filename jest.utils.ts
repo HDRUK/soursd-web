@@ -29,6 +29,20 @@ function mock200Json<T>(data: T) {
   };
 }
 
+function mockDownloadFile() {
+  return {
+    ok: true,
+    blob: () =>
+      Promise.resolve(new Blob(["mock file content"], { type: "text/plain" })),
+    headers: {
+      get: (key: string) =>
+        key === "Content-Disposition"
+          ? 'attachment; filename="mockfile.txt"'
+          : null,
+    },
+  };
+}
+
 function mockFailedJson<T>(data: T, status = 404) {
   return {
     ok: false,
@@ -57,4 +71,4 @@ function mockPagedResults<T>(
   };
 }
 
-export { mock200Json, mockFailedJson, mockPagedResults };
+export { mock200Json, mockDownloadFile, mockFailedJson, mockPagedResults };

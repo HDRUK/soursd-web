@@ -49,6 +49,7 @@ export default function SecurityCompliance() {
       iso_expiry_date: dateToString(data.iso_expiry_date),
       dsptk_expiry_date: dateToString(data.dsptk_expiry_date),
     } as PatchOrganisationPayload;
+
     onSubmit(payload);
   };
 
@@ -87,7 +88,7 @@ export default function SecurityCompliance() {
                     </Grid>
                   </Grid>
                   <FormControlWrapper
-                    name={`${cert.name}Evidence`}
+                    name={cert.certificationEvidence}
                     displayLabel={false}
                     renderField={fieldProps => (
                       <CertificationUploader

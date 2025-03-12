@@ -23,7 +23,7 @@ import { ResearcherAffiliation } from "@/types/application";
 import { renderAffiliationDateRangeCell } from "@/utils/cells";
 import { Button, Typography } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { CellContext, ColumnDef } from "@tanstack/react-table";
+import { ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
 import ReactDOMServer from "react-dom/server";
@@ -77,21 +77,18 @@ export default function Affiliations() {
     },
   });
 
-  const renderActionMenuCell = useCallback(
-    <T extends ResearcherAffiliation>(_info: CellContext<T, unknown>) => {
-      return (
-        <ActionMenu>
-          <ActionMenuItem
-            onClick={() => {
-              // Placeholder
-            }}>
-            Delete affiliation
-          </ActionMenuItem>
-        </ActionMenu>
-      );
-    },
-    []
-  );
+  const renderActionMenuCell = useCallback(() => {
+    return (
+      <ActionMenu>
+        <ActionMenuItem
+          onClick={() => {
+            // Placeholder
+          }}>
+          Delete affiliation
+        </ActionMenuItem>
+      </ActionMenu>
+    );
+  }, []);
 
   const columns: ColumnDef<ResearcherAffiliation>[] = [
     {

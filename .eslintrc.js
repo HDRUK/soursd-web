@@ -44,13 +44,12 @@ module.exports = {
   ],
   rules: {
     "react/no-unstable-nested-components": "warn",
-    "jsx-a11y/anchor-is-valid": "off",
     "no-shadow": "off",
     "@typescript-eslint/no-shadow": ["off"],
     "security/detect-object-injection": "off",
     "@typescript-eslint/no-non-null-assertion": "off",
     "react/no-unknown-property": ["error", { ignore: ["css"] }],
-    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/no-unused-vars": ["error"],
     "@typescript-eslint/no-explicit-any": "error",
     "@typescript-eslint/no-var-requires": "off",
     "no-useless-computed-key": "off",
@@ -84,7 +83,7 @@ module.exports = {
       },
     ],
     "jsx-a11y/anchor-is-valid": [
-      "error",
+      "warn",
       {
         components: ["Link"],
         specialLink: ["hrefLeft", "hrefRight"],

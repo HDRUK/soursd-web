@@ -28,6 +28,7 @@ export interface FormControlProps
   displayLabel?: boolean;
   displayPlaceholder?: boolean;
   fullWidth?: boolean;
+  description?: string;
 }
 
 const NAMESPACE_TRANSLATION_FORM = "Form";
@@ -37,11 +38,11 @@ export default function FormControlWrapper({
   control,
   label,
   placeholder,
-  description,
   displayPlaceholder = true,
   displayLabel = true,
   renderField,
   fullWidth = true,
+  description,
   sx = {
     m: 0,
     width: "100%",
