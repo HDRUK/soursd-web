@@ -1,8 +1,22 @@
-import UserStatus from "@/components/UserStatus";
-import { Project, User } from "@/types/application";
+import { Project, ResearcherAffiliation, User } from "@/types/application";
 import { Link, Typography } from "@mui/material";
 import { CellContext } from "@tanstack/react-table";
 import { injectParamsIntoPath } from "./application";
+import { formatShortDate } from "./date";
+
+function renderAffiliationDateRangeCell<T extends ResearcherAffiliation>(
+  info: CellContext<T, unknown>
+) {
+  const { from, to } = info.row.original;
+
+  if (!from) return null;
+
+  return (
+    <Typography>
+      {formatShortDate(from)} - {to ? formatShortDate(to) : "Present"}
+    </Typography>
+  );
+}
 
 function renderProjectNameCell<T extends Project>(
   info: CellContext<T, unknown>,
@@ -40,8 +54,8 @@ function renderUserNameCell<T extends User>(
   );
 }
 
-function renderUserStatus<T extends User>(info: CellContext<T, unknown>) {
-  return <UserStatus status={info.row.original.status} />;
-}
-
-export { renderProjectNameCell, renderUserNameCell, renderUserStatus };
+export {
+  renderProjectNameCell,
+  renderUserNameCell,
+  renderAffiliationDateRangeCell,
+};
