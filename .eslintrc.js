@@ -43,6 +43,8 @@ module.exports = {
     "plugin:storybook/recommended",
   ],
   rules: {
+    "react/no-unstable-nested-components": "warn",
+    "jsx-a11y/anchor-is-valid": "off",
     "no-shadow": "off",
     "@typescript-eslint/no-shadow": ["off"],
     "security/detect-object-injection": "off",

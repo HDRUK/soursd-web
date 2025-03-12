@@ -2,18 +2,17 @@
 
 import {
   FormControl,
-  FormLabel,
-  FormHelperText,
   FormControlLabelProps,
-  Typography,
+  FormHelperText,
+  FormLabel,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import {
-  useFormContext,
-  Controller,
   Control,
+  Controller,
   FieldValues,
+  useFormContext,
 } from "react-hook-form";
 import { ExtendedUseFormReturn } from "../Form";
 import FormControlDescription from "../FormControlDescription";

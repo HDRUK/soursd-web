@@ -78,9 +78,7 @@ export default function Affiliations() {
   });
 
   const renderActionMenuCell = useCallback(
-    <T extends ResearcherAffiliation>(info: CellContext<T, unknown>) => {
-      const { id } = info.row.original;
-
+    <T extends ResearcherAffiliation>(_info: CellContext<T, unknown>) => {
       return (
         <ActionMenu>
           <ActionMenuItem

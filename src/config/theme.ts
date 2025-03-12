@@ -1,6 +1,6 @@
 import { colorToRgba } from "@/utils/theme";
 import { createTheme } from "@mui/material";
-import { blue, blueGrey, green, grey, orange, red } from "@mui/material/colors";
+import { blue, blueGrey, grey, orange, red } from "@mui/material/colors";
 
 const MODE = "light";
 

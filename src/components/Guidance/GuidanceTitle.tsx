@@ -1,7 +1,6 @@
 "use client";
 
 import { ReactNode } from "react";
-import SoursdLogo from "../SoursdLogo";
 import Text, { TextProps } from "../Text";
 
 export interface GuidanceTitleProps extends TextProps {
