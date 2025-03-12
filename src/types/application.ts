@@ -299,6 +299,7 @@ interface ResearcherProject {
   affiliate_id: number;
   unique_id: string;
   approvals: ResearcherProjectApproval[];
+  organisations: Organisation[];
 }
 
 interface Registry {
@@ -321,6 +322,13 @@ interface Role {
   created_at: string;
   updated_at: string;
   name: string;
+}
+
+interface Project {
+  id: number;
+  title: string;
+  start_date: string;
+  end_date: string;
 }
 
 interface ProjectUser {
@@ -359,6 +367,7 @@ export type {
   Organisation,
   OrganisationIdvt,
   Permission,
+  Project,
   ProjectUser,
   ResearcherAccreditation,
   ResearcherAffiliation,

@@ -890,10 +890,11 @@
       "hasSoursdId": "Is Registered"
     }
   },
-  "ProjectList": {
+  "Projects": {
     "getOrganisationProjectsError": "No projects found",
     "loadingAriaLabel": "Loading project data",
-    "title": "Projects",
+    "title": "Project Name",
+    "laySummary": "Summary",
     "approvedKey": "Approved Project",
     "unapprovedKey": "Project Pending Approval",
     "searchPlaceholder": "Search Projects",
@@ -901,6 +902,11 @@
       "AZ": "Sort Alphabetical A-Z",
       "ZA": "Sort Alphabetical Z-A"
     },
+    "endDate": "End date",
+    "startDate": "Start date",
+    "users": "Users",
+    "organisations": "Organisation(s)",
+    "status": "Status",
     "filterActions": {
       "approved": "Approved",
       "pending": "Pending",

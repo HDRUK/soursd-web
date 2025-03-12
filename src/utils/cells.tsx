@@ -1,8 +1,26 @@
 import UserStatus from "@/components/UserStatus";
-import { User } from "@/types/application";
+import { Project, User } from "@/types/application";
 import { Link, Typography } from "@mui/material";
 import { CellContext } from "@tanstack/react-table";
 import { injectParamsIntoPath } from "./application";
+
+function renderProjectNameCell<T extends Project>(
+  info: CellContext<T, unknown>,
+  route: string
+) {
+  const { title, id } = info.row.original;
+
+  return (
+    <Typography color="primary">
+      <Link
+        href={injectParamsIntoPath(route, {
+          id,
+        })}>
+        {title}
+      </Link>
+    </Typography>
+  );
+}
 
 function renderUserNameCell<T extends User>(
   info: CellContext<T, unknown>,
@@ -26,4 +44,4 @@ function renderUserStatus<T extends User>(info: CellContext<T, unknown>) {
   return <UserStatus status={info.row.original.status} />;
 }
 
-export { renderUserNameCell, renderUserStatus };
+export { renderProjectNameCell, renderUserNameCell, renderUserStatus };
