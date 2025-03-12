@@ -41,6 +41,8 @@ export default function useQueryAlerts(
 
       alertOptions?.commonAlertProps?.willClose?.();
       alertOptions?.successAlertProps?.willClose?.();
+
+      query.reset?.();
     },
   };
 
@@ -59,6 +61,8 @@ export default function useQueryAlerts(
 
       alertOptions?.commonAlertProps?.willClose?.();
       alertOptions?.errorAlertProps?.willClose?.();
+
+      query.reset?.();
     },
   };
 

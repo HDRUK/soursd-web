@@ -10,6 +10,7 @@ interface File {
   mime_type: string | undefined;
   id: number;
   name: string;
+  path: string;
   status: keyof typeof FileStatus;
   type: keyof typeof FileType;
   created_at: string;
@@ -194,15 +195,19 @@ interface Organisation extends OrganisationIdvt, AddressFields {
   ce_certified: boolean;
   ce_certification_num: string;
   ce_expiry_date: string;
+  ce_expiry_evidence: File | null;
   ce_plus_certified: boolean;
   ce_plus_certification_num: string;
   ce_plus_expiry_date: string;
+  ce_plus_expiry_evidence: File | null;
   iso_27001_certified: boolean;
   iso_27001_certification_num: string;
   iso_expiry_date: string;
+  iso_expiry_evidence: File | null;
   dsptk_certified: boolean;
   dsptk_ods_code: string;
   dsptk_expiry_date: string;
+  dsptk_expiry_evidence: File | null;
   subsidiaries?: Subsidiary[];
   departments: Department[];
   unclaimed: number;
@@ -326,6 +331,7 @@ interface ProjectUser {
   project_role_id: number;
   registry: Registry;
   role: Role;
+  primary_contact: number;
 }
 
 interface Department {

@@ -7,7 +7,7 @@ import GppBadIcon from "@mui/icons-material/GppBad";
 import GppGoodIcon from "@mui/icons-material/GppGood";
 import UploadIcon from "@mui/icons-material/Upload";
 import { LoadingButton } from "@mui/lab";
-import { CircularProgress, Link, Typography, Grid } from "@mui/material";
+import { CircularProgress, Typography, Grid, Button } from "@mui/material";
 import { useTranslations } from "next-intl";
 import prettyBytes from "pretty-bytes";
 import { ChangeEventHandler, ReactNode, useCallback, useRef } from "react";
@@ -15,7 +15,7 @@ import { ChangeEventHandler, ReactNode, useCallback, useRef } from "react";
 export interface FileLinkProps extends FileUploadState {
   fileButtonText: ReactNode;
   onFileChange: ChangeEventHandler<HTMLInputElement>;
-  onDownload?: (e: MouseEvent) => void;
+  onDownload?: (e?: React.MouseEvent<HTMLButtonElement>) => void;
   accept?: string;
   fileScanOkText?: string;
   fileScanErrorText?: string;
@@ -25,12 +25,9 @@ export interface FileLinkProps extends FileUploadState {
   fileTypesText?: ReactNode;
   fileNameText?: ReactNode;
   fileInputLabelText?: string;
-  fileHref?: string;
   isUploading?: boolean;
   includeStatus?: boolean;
   isSizeInvalid?: boolean;
-  canDownload?: boolean;
-  disableDownload?: boolean;
 }
 
 const NAMESPACE_TRANSLATION_FILE = "File";
@@ -45,7 +42,6 @@ export default function FileLink({
   fileMaxSizeErrorText,
   fileTypesText,
   fileNameText,
-  fileHref,
   fileInputLabelText,
   isScanning,
   isScanComplete,
@@ -53,8 +49,6 @@ export default function FileLink({
   isUploading,
   isSizeInvalid,
   includeStatus,
-  canDownload,
-  disableDownload,
   onFileChange,
   onDownload,
 }: FileLinkProps) {
@@ -93,60 +87,46 @@ export default function FileLink({
     </>
   );
 
-  const showLink = fileNameText && fileHref;
-
   return (
-    <Grid container spacing={2} alignItems="center">
-      <Grid item xs={12} sm={4}>
-        <LoadingButton
-          color="secondary"
-          variant="contained"
-          onClick={handleFileSelectorOpen}
-          startIcon={<UploadIcon />}
-          loading={isUploading && !isScanning}
-          fullWidth>
-          {fileButtonText}
-        </LoadingButton>
-      </Grid>
-      <Grid item xs={12} sm={7}>
-        <Typography variant="caption" color="caption.main" component="div">
-          {fileTypesText || t("fileTypesText")}
-        </Typography>
-        <Typography variant="caption" color="caption.main" component="div">
-          {fileMaxSizeText || t("maxSizeText", translationsMaxSize)}
-        </Typography>
-      </Grid>
-      <Grid item xs={12} sm={1} sx={{ textAlign: "right" }}>
-        {!showLink && includeStatus && statusIcons}
-      </Grid>
-      {isSizeInvalid && (
-        <Grid item xs={12}>
-          <Typography variant="caption" color="error">
-            {fileMaxSizeErrorText || t("maxSizeErrorText", translationsMaxSize)}
-          </Typography>
+    <Grid container item spacing={0}>
+      <Grid container item>
+        <Grid item xs={10}>
+          <LoadingButton
+            color="primary"
+            variant="outlined"
+            data-testid="upload-file"
+            onClick={handleFileSelectorOpen}
+            startIcon={<UploadIcon />}
+            loading={isUploading && !isScanning}>
+            {fileButtonText}
+          </LoadingButton>
         </Grid>
-      )}
-      {showLink && (
-        <Grid item xs={12}>
-          <Link
-            href={fileHref}
-            onClick={(e: MouseEvent) =>
-              (!disableDownload || canDownload) && onDownload?.(e)
-            }
-            sx={{
-              ...((disableDownload || canDownload) && {
-                pointerEvents: "none",
-                cursor: "default",
-              }),
-            }}>
+        <Grid item xs={2} sx={{ alignContent: "center" }}>
+          {!fileNameText && includeStatus && statusIcons}
+        </Grid>
+      </Grid>
+      <Grid item xs={12}>
+        {fileNameText && (
+          <Button
+            data-testid="download-file"
+            variant="text"
+            onClick={e => onDownload?.(e)}
+            disabled={!onDownload}>
             {includeStatus ? (
               <Text endIcon={statusIcons}>{fileNameText}</Text>
             ) : (
               fileNameText
             )}
-          </Link>
-        </Grid>
-      )}
+          </Button>
+        )}
+        <Typography variant="caption" color="caption.main" component="div">
+          {fileTypesText || t("fileTypesText")}
+          {". "}
+          {fileMaxSizeText || t("maxSizeText", translationsMaxSize)}
+        </Typography>
+        {isSizeInvalid &&
+          (fileMaxSizeErrorText || t("maxSizeErrorText", translationsMaxSize))}
+      </Grid>
       <input
         id="fileInput"
         type="file"
