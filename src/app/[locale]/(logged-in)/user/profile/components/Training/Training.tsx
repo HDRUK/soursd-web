@@ -2,7 +2,6 @@ import { useStore } from "@/data/store";
 
 import postTrainingsQuery from "@/services/trainings/postTrainingsQuery";
 import { PostTrainingsPayload } from "@/services/trainings/types";
-import { FileResponse } from "@/services/files/types";
 import {
   Button,
   Table,
@@ -12,7 +11,7 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useState, useEffect } from "react";
 import ReactDOMServer from "react-dom/server";
@@ -21,77 +20,63 @@ import ContactLink from "@/components/ContactLink";
 import AddIcon from "@mui/icons-material/Add";
 import { formatShortDate } from "@/utils/date";
 import useQueryAlerts from "@/hooks/useQueryAlerts";
-import { mockedUser } from "@/mocks/data/user";
-import { FileType } from "@/consts/files";
 import { ResearcherTraining } from "@/types/application";
 import { ActionMenu, ActionMenuItem } from "@/components/ActionMenu";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
+import useFileDownload from "@/hooks/useFileDownload";
+import { showAlert } from "@/utils/showAlert";
 import TrainingForm from "./TrainingForm";
-import getFileQuery from "@/services/files/getFileQuery";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Training";
 
 export default function Training() {
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
-  // const user = useStore(store => store.config.user);
-  const user = mockedUser({ registry_id: 10 });
+  const user = useStore(store => store.config.user);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const histories = useStore(state => state.config.histories);
   const setHistories = useStore(state => state.setHistories);
   const getHistories = useStore(state => state.getHistories);
 
-  const [fileIdToDownload, setFileIdToDownload] = useState<number | undefined>();
-  const { data: fileResponse, error: fileError } = useQuery(
-    getFileQuery(fileIdToDownload),
-  );
+  const [fileIdToDownload, setFileIdToDownload] = useState<
+    number | undefined
+  >();
+  const { downloadFile: fileDownload } = useFileDownload(fileIdToDownload);
 
   const downloadFile = useCallback((fileId: number) => {
     setFileIdToDownload(fileId);
   }, []);
 
   useEffect(() => {
-    if (fileError) {
-      console.error("Error fetching file:", fileError);
-      setFileIdToDownload(undefined);
-      return;
-    }
-
-    if (fileResponse && fileResponse.data) {
-      try {
-        const fileData = fileResponse.data as FileResponse;
-        const blob = new Blob([fileData.content], { type: fileData.mime_type });
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', fileData.name || 'download');
-        document.body.appendChild(link);
-        link.click();
-        link.parentNode?.removeChild(link);
-        window.URL.revokeObjectURL(url);
-      } catch (error) {
-        console.error("Error downloading file:", error);
-      } finally {
+    try {
+      if (fileIdToDownload) {
+        fileDownload();
         setFileIdToDownload(undefined);
       }
+    } catch (_) {
+      showAlert("error", {
+        text: ReactDOMServer.renderToString(
+          t.rich("fileDownloadError", {
+            contactLink: ContactLink,
+          })
+        ),
+        confirmButtonText: t("errorButton"),
+      });
     }
-  }, [fileResponse, fileError]);
-
+  }, [fileIdToDownload, fileDownload]);
 
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
 
   const renderActions = (training: ResearcherTraining) => {
-    const certificateFile = user.registry?.files[0];
-
+    const certificateFile = user?.registry?.files[0];
     return (
       <ActionMenu aria-label={`Actions for ${training.training_name}`}>
         <ActionMenuItem
           icon={<TaskAltIcon sx={{ color: "menuList1.main" }} />}
           sx={{ color: "menuList1.main" }}
           onClick={() => certificateFile && downloadFile(certificateFile.id)}
-          disabled={!certificateFile}
-        >
+          disabled={!certificateFile}>
           {t("viewCertificate")}
         </ActionMenuItem>
       </ActionMenu>
