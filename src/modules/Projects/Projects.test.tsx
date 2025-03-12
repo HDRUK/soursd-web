@@ -1,9 +1,5 @@
 import { ProjectEntities } from "@/services/projects/getEntityProjects";
-import {
-  commonAccessibilityTests,
-  render,
-  waitFor,
-} from "@/utils/testUtils";
+import { commonAccessibilityTests, render, waitFor } from "@/utils/testUtils";
 import Projects from ".";
 
 const renderProjects = ({ variant }: { variant: ProjectEntities }) =>
