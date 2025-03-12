@@ -6,8 +6,6 @@ import {
 } from "@/consts/user";
 
 interface File {
-  content: BlobPart;
-  mime_type: string | undefined;
   id: number;
   name: string;
   path: string;
