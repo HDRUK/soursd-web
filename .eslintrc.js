@@ -49,7 +49,7 @@ module.exports = {
     "security/detect-object-injection": "off",
     "@typescript-eslint/no-non-null-assertion": "off",
     "react/no-unknown-property": ["error", { ignore: ["css"] }],
-    "@typescript-eslint/no-unused-vars": ["error"],
+    "@typescript-eslint/no-unused-vars": "error",
     "@typescript-eslint/no-explicit-any": "error",
     "@typescript-eslint/no-var-requires": "off",
     "no-useless-computed-key": "off",
