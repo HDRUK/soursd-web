@@ -1,5 +1,6 @@
 import { ResearcherProject } from "@/types/application";
 import { faker } from "@faker-js/faker";
+import { mockedOrganisation } from "./organisation";
 
 const mockedProject = (
   project?: Partial<ResearcherProject>
@@ -13,6 +14,7 @@ const mockedProject = (
   end_date: faker.date.future().toDateString(),
   request_category_type: faker.string.sample(),
   other_approval_committees: faker.string.sample(),
+  organisations: [mockedOrganisation()],
   ...project,
 });
 

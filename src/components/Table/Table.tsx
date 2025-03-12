@@ -95,7 +95,7 @@ const Table = <T,>({
 
           <TableBody>
             {table?.getRowModel().rows.map(row => (
-              <TableRow key={row.id}>
+              <TableRow key={row.id} role="row">
                 {row.getVisibleCells().map(cell => (
                   <TableCell key={cell.id}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}

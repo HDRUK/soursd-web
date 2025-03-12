@@ -294,6 +294,7 @@ interface ResearcherProject {
   affiliate_id: number;
   unique_id: string;
   approvals: ResearcherProjectApproval[];
+  organisations: Organisation[];
 }
 
 interface Registry {
