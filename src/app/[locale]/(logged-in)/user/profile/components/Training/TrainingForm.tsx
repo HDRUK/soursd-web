@@ -6,14 +6,14 @@ import React, {
   ChangeEvent,
 } from "react";
 import { useForm } from "react-hook-form";
-import { TextField, Button, Grid, Typography } from "@mui/material";
+import { TextField, Button, Grid, Typography, Box } from "@mui/material";
 import { useTranslations } from "next-intl";
 import Form from "@/components/Form";
 import FormControl from "@/components/FormControlWrapper";
 import FormActions from "@/components/FormActions";
 import ButtonSave from "@/components/ButtonSave";
 import DateInput from "@/components/DateInput";
-import { FileType } from "@/consts/files";
+import { FileType, MAX_UPLOAD_SIZE_BYTES } from "@/consts/files";
 import yup from "@/config/yup";
 import dayjs from "dayjs";
 import { formatDBDate } from "@/utils/date";
@@ -24,8 +24,10 @@ import { useStore } from "@/data/store";
 import UploadIcon from "@mui/icons-material/Upload";
 import { File as ApplicationFile } from "@/types/application";
 import CertificateUploadModal from "./CertificateUploadModal";
+import prettyBytes from "pretty-bytes";
 
-const NAMESPACE_TRANSLATION_FORM = "Form.Training";
+const NAMESPACE_TRANSLATION_FORM_TRAINING = "Form.Training";
+const NAMESPACE_TRANSLATION_FILE = "File";
 
 export interface TrainingFormValues {
   provider: string;
@@ -45,7 +47,8 @@ export default function TrainingForm({
   isPending,
   onCancel,
 }: TrainingFormProps) {
-  const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
+  const tTraining = useTranslations(NAMESPACE_TRANSLATION_FORM_TRAINING);
+  const tFile = useTranslations(NAMESPACE_TRANSLATION_FILE);
   const [user, setUser] = useStore(store => [store.config.user, store.setUser]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -98,14 +101,14 @@ export default function TrainingForm({
       yup.object().shape({
         provider: yup
           .string()
-          .required(tForm("trainingProviderRequiredInvalid")),
+          .required(tTraining("trainingProviderRequiredInvalid")),
         training_name: yup
           .string()
-          .required(tForm("trainingNameRequiredInvalid")),
+          .required(tTraining("trainingNameRequiredInvalid")),
         awarded_at: yup
           .string()
-          .required(tForm("awardedAtRequiredInvalid"))
-          .test("not-future", tForm("awardedAtFutureInvalid"), value => {
+          .required(tTraining("awardedAtRequiredInvalid"))
+          .test("not-future", tTraining("awardedAtFutureInvalid"), value => {
             return (
               dayjs(value).isBefore(dayjs()) ||
               dayjs(value).isSame(dayjs(), "day")
@@ -113,21 +116,21 @@ export default function TrainingForm({
           }),
         expires_at: yup
           .string()
-          .required(tForm("expiresAtRequiredInvalid"))
+          .required(tTraining("expiresAtRequiredInvalid"))
           .test(
             "after-awarded",
-            tForm("expiresAtBeforeAwardedAtInvalid"),
+            tTraining("expiresAtBeforeAwardedAtInvalid"),
             (value, context) => {
               const { awarded_at } = context.parent;
               return dayjs(value).isAfter(dayjs(awarded_at));
             }
           )
-          .test("is-future", tForm("expiresAtPastInvalid"), value => {
+          .test("is-future", tTraining("expiresAtPastInvalid"), value => {
             return dayjs(value).isAfter(dayjs());
           }),
         certification_upload: yup.mixed(),
       }),
-    [tForm]
+    [tTraining]
   );
 
   const formOptions = {
@@ -151,6 +154,10 @@ export default function TrainingForm({
     onSubmit(formattedFields);
   };
 
+  const translationsMaxSize = {
+    size: prettyBytes(MAX_UPLOAD_SIZE_BYTES),
+  };
+
   return (
     <Form
       onSubmit={handleSubmit}
@@ -161,42 +168,60 @@ export default function TrainingForm({
         <Grid item xs={12} key="provider">
           <FormControl
             name="provider"
-            label={tForm("provider")}
+            label={tTraining("provider")}
             renderField={props => <TextField {...props} />}
           />
         </Grid>
         <Grid item xs={12} key="training_name">
           <FormControl
             name="training_name"
-            label={tForm("trainingName")}
+            label={tTraining("trainingName")}
             renderField={props => <TextField {...props} />}
           />
         </Grid>
-        <Grid item xs={7} key="awarded_at">
-          <FormControl
-            name="awarded_at"
-            label={tForm("awardedAt")}
-            renderField={props => <DateInput {...props} />}
-          />
+        <Grid item xs={12}>
+          <Grid container columnSpacing={3}>
+            <Grid item xs={6}>
+              <FormControl
+                name="awarded_at"
+                label={tTraining("awardedAt")}
+                renderField={props => <DateInput {...props} />}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <FormControl
+                name="expires_at"
+                label={tTraining("expiresAt")}
+                renderField={props => <DateInput {...props} />}
+              />
+            </Grid>
+          </Grid>
         </Grid>
-        <Grid item xs={7} key="expires_at">
-          <FormControl
-            name="expires_at"
-            label={tForm("expiresAt")}
-            renderField={props => <DateInput {...props} />}
-          />
-        </Grid>
-        <Grid item xs={12} key="certification_upload">
+        <Grid item xs={6} key="certification_upload">
           <FormControl
             name="certification_upload"
-            label={tForm("certificationUpload")}
+            label={tTraining("certificationUpload")}
+            description={
+              <>
+                <Box sx={{ mb: 1 }}>
+                  Upload your training certificate to provide Data Custodians
+                  with up-to-date information on mandatory training and
+                  accreditations.
+                </Box>
+                <Box>
+                  File types: PDF, Word
+                  <br />
+                  Max size: {tFile("maxSizeText", translationsMaxSize)} per file{" "}
+                </Box>
+              </>
+            }
             renderField={props => (
               <>
                 <Button
                   startIcon={<UploadIcon />}
                   variant="outlined"
                   onClick={handleOpenModal}>
-                  {tForm("uploadCertification")}
+                  {tTraining("uploadCertification")}
                 </Button>
                 {file && (
                   <Typography variant="body2" sx={{ mt: 1 }} {...props}>
@@ -222,7 +247,7 @@ export default function TrainingForm({
       </Grid>
       <FormActions sx={{ display: "flex", justifyContent: "space-between" }}>
         <Button onClick={onCancel} variant="outlined">
-          {tForm("cancel")}
+          {tTraining("cancel")}
         </Button>
         <ButtonSave type="submit" disabled={isPending} />
       </FormActions>

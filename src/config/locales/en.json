@@ -4,9 +4,8 @@
     "hide": "Hide {name}"
   },
   "File": {
-    "maxSizeText": "{size} limit.",
+    "maxSizeText": "{size} limit",
     "inputLabelText": "File input",
-    "fileTypesText": "File types: PDF, DOC, and DOCX",
     "maxSizeErrorText": "Your file must be under {size}",
     "scanningText": "Scanning file for viruses...",
     "scanOkText": "File was successfully scanned",

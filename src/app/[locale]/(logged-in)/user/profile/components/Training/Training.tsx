@@ -53,6 +53,7 @@ export default function Training() {
     },
     [getHistories, setHistories]
   );
+
   const { mutateAsync, isPending, ...postTrainingsQueryState } = useMutation(
     postTrainingsQuery(user?.registry_id)
   );
@@ -125,7 +126,7 @@ export default function Training() {
         {t("addTrainingCourse")}
       </Button>
 
-      <FormModal open={isModalOpen} title={t("addTrainingCourse")}>
+      <FormModal open={isModalOpen} heading={t("addTrainingCourse")}>
         <TrainingForm
           onSubmit={handleSubmit}
           isPending={isPending}

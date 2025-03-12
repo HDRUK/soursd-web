@@ -23,7 +23,7 @@ export default function ProfessionalRegistrationsFormModal({
   data,
 }: ProfessionalRegistrationsFormModalProps) {
   return (
-    <FormModal open={open} title="Add Professional Registration">
+    <FormModal open={open} heading="Add Professional Registration">
       <ProfessionalRegistrationsForm
         onClose={onClose}
         onSubmit={onSubmit}
