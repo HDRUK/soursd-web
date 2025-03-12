@@ -81,7 +81,7 @@ export default function useFileUpload(message: string) {
     isScanFailed: isFileScanFailed(fileData),
     isSizeInvalid,
     isUploading: getFileState.isLoading,
-    fileHref: getFileHref(file?.name),
+    fileHref: getFileHref(file),
     file,
   };
 }

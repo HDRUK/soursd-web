@@ -4,6 +4,7 @@ interface QueryState {
   isSuccess?: boolean;
   isFetched?: boolean;
   isLoading?: boolean;
+  reset?: () => void;
 }
 
 interface MutationState {
@@ -11,6 +12,7 @@ interface MutationState {
   error?: unknown | string | null;
   isSuccess?: boolean;
   isPending?: boolean;
+  reset?: () => void;
 }
 
 export type { QueryState, MutationState };

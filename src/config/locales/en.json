@@ -4,15 +4,21 @@
     "hide": "Hide {name}"
   },
   "File": {
-    "maxSizeText": "Max size: {size} Per file",
+    "maxSizeText": "{size} limit.",
     "inputLabelText": "File input",
+    "fileTypesText": "File types: PDF, DOC, and DOCX",
     "maxSizeErrorText": "Your file must be under {size}",
     "scanningText": "Scanning file for viruses...",
     "scanOkText": "File was successfully scanned",
-    "scanErrorText": "Your file file may have a virus"
+    "scanErrorText": "Your file file may have a virus",
+    "fileTypesText": "PDF, DOC, and DOCX"
   },
   "Application": {
+    "delete": "Delete",
+    "edit": "Edit",
     "status": "Status",
+    "makePrimaryContact": "Make primary contact",
+    "removeAsPrimaryContact": "Remove as primary contact",
     "removeUserFromProject": "Remove from project",
     "name": "Name",
     "userStatus_registered": "SOURSD account created",
@@ -65,6 +71,7 @@
     "continueButton": "Continue"
   },
   "CustodianProfile": {
+    "searchPlaceholder": "Search",
     "safeProject": "Safe Project",
     "filterBy": "Filter by status",
     "filteredBy": "Filtered by",
@@ -381,24 +388,28 @@
     "ceCertificationNumberInvalid": "Certification number must be exactly 4 alphanumeric characters.",
     "ceExpiryDate": "Expiry date",
     "ceExpiryDateRequired": "An expiry date for your code needs to be set.",
+    "ceExpiryEvidenceRequired": "Evidence of your cyber essentials certification is required",
     "cePlusCertified": "Cyber Essentials Plus Certified",
     "cePlusCertificationNum": "Cyber Essentials Plus Certified ID",
     "cePlusCertificationNumPlaceholder": "e.g. X1Y2",
     "cePlusCertificationNumberInvalid": "Certification number must be exactly 4 alphanumeric characters.",
     "cePlusExpiryDate": "Expiry date",
     "cePlusExpiryDateRequired": "An expiry date for your code needs to be set.",
+    "cePlusExpiryEvidenceRequired": "Evidence of your cyber essentials plus certification is required",
     "iso27001Certified": "ISO27001 Accredited",
     "iso27001CertificationNum": "ISO27001 Accredited",
     "iso27001CertificationNumPlaceholder": "e.g. AB123C",
     "iso27001CertificationNumInvalid": "ISO27001 identifier is invalid",
     "isoExpiryDate": "Expiry date",
     "isoExpiryDateRequired": "An expiry date for your code needs to be set.",
+    "isoExpiryEvidenceRequired": "Evidence of your ISO27001 certification is required",
     "dsptkCertified": "DSPT Certified",
     "dsptkOdsCode": "DSPT Certified  ID",
     "dsptkOdsCodePlaceholder": "e.g. DSPTK-2025-12345",
     "dsptkOdsCodeInvalid": "DSPTK identifier is invalid, it must be in the form, e.g.: e.g. DSPTK-2025-12345",
     "dsptkExpiryDate": "Expiry date",
     "dsptkExpiryDateRequired": "An expiry date for your code needs to be set.",
+    "dsptkExpiryEvidenceRequired": "Evidence of your DSPTK certification is required",
     "organisationSubsidiaries": "UK subsidiaries",
     "address": "Address search",
     "addressPlaceholder": "Start typing an address to search",
@@ -485,7 +496,7 @@
     "subsidiaryWebsite": "Subsidiary website",
     "subsidiaryWebsitePlaceholder": "Subsidiary website",
     "Training": {
-      "provider":"Training provider",
+      "provider": "Training provider",
       "trainingProviderRequiredInvalid": "Training provider is required",
       "trainingNameRequiredInvalid": "Training name is required",
       "awardedAtRequiredInvalid": "Award date is required",
@@ -525,6 +536,8 @@
     "professionalRegsitrationsErrorMessage": "There was an error getting your professional registrations. Please try again or contact us at <contactLink></contactLink>",
     "errorCreateMessage": "There was an error creating your professional registrations. Please try again or contact us at <contactLink></contactLink>",
     "successCreateMessage": "Your professional registration was successfully create",
+    "errorDeleteMessage": "There was an error delete your professional registration. Please try again or contact us at <contactLink></contactLink>",
+    "successDeleteMessage": "Your professional registration was successfully deleted",
     "cancel": "Cancel"
   },
   "Buttons": {
@@ -681,7 +694,12 @@
     "accreditedResearcherLinkHref": "https://www.gov.uk/government/consultations/digital-economy-act-part-5-data-sharing-codes-and-regulations/research-code-of-practice-and-accreditation-criteria",
     "userDeclarationCheckboxLabel": "I have signed a User declaration for accessing Digital Economy Act accredited environments.",
     "userDeclarationLinkHref": "https://www.gov.uk/government/consultations/digital-economy-act-part-5-data-sharing-codes-and-regulations/research-code-of-practice-and-accreditation-criteria",
-    "findOutMore": "Find out more"
+    "findOutMore": "Find out more",
+    "employmentEducationPublicationRecord": "Employment, education and publication record",
+    "orcidDescription": "Please enter your ORCID, if you have one, as this can help Data Custodians identify you.",
+    "orcidFormDescription": "Please provide your ORCID if you have one. If this information is not up-to-date or you do not have an ORCID, please upload a CV with the same relevant information. We can automatically pull in your publicly visible employment history from your ORCID profile. We recommend that you do this only if the information is correct and up-to-date. You will be able to edit the information after we’ve automatically pulled it in from ORCID. However please note if synchronisation is turned on, some of these edits maybe overwritten.",
+    "cvUpload": "CV Upload",
+    "cvUploadDescription": "Please upload an up-to-date CV , including your professional employment, education and qualifications, and publication record."
   },
   "Training": {
     "title": "Training",
@@ -953,6 +971,7 @@
   },
   "CertificationUpload": {
     "buttonText": "Upload evidence",
+    "buttonTextAlt": "Re-upload evidence",
     "evidence": "evidence"
   },
   "TermsAndConditions": {

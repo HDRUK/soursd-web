@@ -6,7 +6,7 @@ import "jest-axe/extend-expect";
 import * as matchers from "jest-extended";
 import { forwardRef, useImperativeHandle } from "react";
 import { TextEncoder } from "util";
-import { mock200Json, mockPagedResults } from "./jest.utils";
+import { mock200Json, mockDownloadFile, mockPagedResults } from "./jest.utils";
 import { mockedCustodian, mockedCustodianUser } from "./mocks/data/custodian";
 import { mockedNotification } from "./mocks/data/notification";
 import { mockedOrganisation } from "./mocks/data/organisation";
@@ -71,7 +71,7 @@ jest.mock("next/navigation", () => {
     useSearchParams: () => ({
       get: () => {},
     }),
-    redirect: jest.fn()
+    redirect: jest.fn(),
   };
 });
 
@@ -424,6 +424,8 @@ async function mockFetch(url: string, init?: RequestInit) {
           data: mockedSystemConfig(),
         }),
       };
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/files/1/download`:
+      return mockDownloadFile();
     case `/api/auth/token`:
       return {
         ok: true,

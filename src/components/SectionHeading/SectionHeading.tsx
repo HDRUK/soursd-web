@@ -24,6 +24,7 @@ export default function SectionHeading({
     sx: {
       width: "100%",
       py: 1,
+      px: 2,
       border: "none",
       ...(size === "large" && {
         borderRadius: "10px",
@@ -42,7 +43,7 @@ export default function SectionHeading({
   return (
     <Box {...restProps}>
       {heading && <Typography {...titleProps}>{heading}</Typography>}
-      {description && <Typography>{description}</Typography>}
+      {description && <Typography sx={{ p: 2 }}> {description}</Typography>}
     </Box>
   );
 }
