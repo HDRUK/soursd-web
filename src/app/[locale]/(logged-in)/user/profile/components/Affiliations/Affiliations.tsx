@@ -30,6 +30,8 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect } from "react";
 import ReactDOMServer from "react-dom/server";
+import { Message } from "@/components/Message";
+import Link from "next/link";
 import AffiliationsForm from "../AffiliationsForm";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
@@ -97,6 +99,13 @@ export default function Affiliations() {
     });
   }, [affiliationsData?.data?.data]);
 
+  const renderMessageLink = useCallback(
+    (chunks: React.ReactNode) => (
+      <Link href={ROUTES.profileResearcherExperience.path}>{chunks}</Link>
+    ),
+    []
+  );
+
   return (
     <PageBodyContainer
       heading={tProfile("affiliationsTitle")}
@@ -104,6 +113,13 @@ export default function Affiliations() {
       <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
         <PageBody>
           <PageSection>
+            {!user?.orc_id && (
+              <Message severity="warning">
+                {tProfile.rich("missingOrcIdMessage", {
+                  link: renderMessageLink,
+                })}
+              </Message>
+            )}{" "}
             <AffiliationsForm
               onSubmit={handleDetailsSubmit}
               queryState={postAffiliationQueryState}
