@@ -5,6 +5,7 @@ import {
   FormLabel,
   FormHelperText,
   FormControlLabelProps,
+  Typography,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import React, { ReactNode } from "react";
@@ -26,6 +27,7 @@ export interface FormControlProps
   displayLabel?: boolean;
   displayPlaceholder?: boolean;
   fullWidth?: boolean;
+  description?: string;
 }
 
 const NAMESPACE_TRANSLATION_FORM = "Form";
@@ -39,6 +41,7 @@ export default function FormControlWrapper({
   displayLabel = true,
   renderField,
   fullWidth = true,
+  description,
   sx = {
     m: 0,
     width: "100%",
@@ -66,7 +69,7 @@ export default function FormControlWrapper({
       }) => (
         <FormControl sx={sx} fullWidth={fullWidth} error={invalid}>
           {displayLabel && (
-            <FormLabel htmlFor={field.name}>
+            <FormLabel htmlFor={field.name} sx={{ pb: 1 }}>
               {label || t(tKey)}
               {isRequired && <span style={{ color: "red" }}>*</span>}
             </FormLabel>
@@ -83,6 +86,11 @@ export default function FormControlWrapper({
             "aria-labelledby": `${field.name}-label`,
             ...field,
           })}
+          {description && (
+            <Typography variant="subtitle2" sx={{ pt: 1 }}>
+              {description}
+            </Typography>
+          )}
           {error && <FormHelperText>{error.message}</FormHelperText>}
         </FormControl>
       )}

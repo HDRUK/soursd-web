@@ -8,6 +8,7 @@ import {
 interface File {
   id: number;
   name: string;
+  path: string;
   status: keyof typeof FileStatus;
   type: keyof typeof FileType;
   created_at: string;
@@ -133,6 +134,7 @@ interface User {
   departments?: Department[];
   role?: string;
   location?: string;
+  status: "invited" | "registered";
 }
 interface AddressFields {
   postcode?: string;
@@ -191,15 +193,19 @@ interface Organisation extends OrganisationIdvt, AddressFields {
   ce_certified: boolean;
   ce_certification_num: string;
   ce_expiry_date: string;
+  ce_expiry_evidence: File | null;
   ce_plus_certified: boolean;
   ce_plus_certification_num: string;
   ce_plus_expiry_date: string;
+  ce_plus_expiry_evidence: File | null;
   iso_27001_certified: boolean;
   iso_27001_certification_num: string;
   iso_expiry_date: string;
+  iso_expiry_evidence: File | null;
   dsptk_certified: boolean;
   dsptk_ods_code: string;
   dsptk_expiry_date: string;
+  dsptk_expiry_evidence: File | null;
   subsidiaries?: Subsidiary[];
   departments: Department[];
   unclaimed: number;
@@ -293,6 +299,7 @@ interface ResearcherProject {
   affiliate_id: number;
   unique_id: string;
   approvals: ResearcherProjectApproval[];
+  organisations: Organisation[];
 }
 
 interface Registry {
@@ -317,12 +324,20 @@ interface Role {
   name: string;
 }
 
+interface Project {
+  id: number;
+  title: string;
+  start_date: string;
+  end_date: string;
+}
+
 interface ProjectUser {
   project_id: number;
   user_digital_ident: string;
   project_role_id: number;
   registry: Registry;
   role: Role;
+  primary_contact: number;
 }
 
 interface Department {
@@ -352,6 +367,7 @@ export type {
   Organisation,
   OrganisationIdvt,
   Permission,
+  Project,
   ProjectUser,
   ResearcherAccreditation,
   ResearcherAffiliation,

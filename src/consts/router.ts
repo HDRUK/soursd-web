@@ -142,6 +142,26 @@ const ROUTES: Routes = {
     path: "/user/profile/projects",
     permissions: [UserGroup.USERS],
   },
+  profileResearcherProjectsSafeProject: {
+    path: "/user/profile/projects/{id}/safe-project",
+    permissions: [UserGroup.USERS],
+  },
+  profileResearcherProjectsSafeData: {
+    path: "/user/profile/projects/{id}/safe-data",
+    permissions: [UserGroup.USERS],
+  },
+  profileResearcherProjectsSafePeople: {
+    path: "/user/profile/projects/{id}/safe-people",
+    permissions: [UserGroup.USERS],
+  },
+  profileResearcherProjectsSafeSettings: {
+    path: "/user/profile/projects/{id}/safe-settings",
+    permissions: [UserGroup.USERS],
+  },
+  profileResearcherProjectsSafeOutputs: {
+    path: "/user/profile/projects/{id}/safe-outputs",
+    permissions: [UserGroup.USERS],
+  },
   profileResearcher: {
     path: "/user/profile",
     permissions: [UserGroup.USERS],
@@ -192,6 +212,10 @@ const ROUTES: Routes = {
   },
   profileOrganisationProjects: {
     path: "/organisation/profile/projects",
+    permissions: [UserGroup.ORGANISATIONS],
+  },
+  profileOrganisationProjectsSafeProject: {
+    path: "/organisation/profile/projects/{id}/safe-project",
     permissions: [UserGroup.ORGANISATIONS],
   },
   admin: {
