@@ -75,11 +75,20 @@ const Table = <T,>({
       <TableContainer sx={{ my: 1 }}>
         <MuiTable size={dense ? "small" : "medium"}>
           {showHeader && (
-            <TableHead>
+            <TableHead
+              sx={{
+                backgroundColor: "neutralGrey.main",
+              }}>
               {table.getHeaderGroups().map(headerGroup => (
                 <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map(header => (
-                    <TableCell key={header.id}>
+                    <TableCell
+                      key={header.id}
+                      sx={{
+                        color: "neutralGrey.contrastText",
+                        fontWeight: "600",
+                        py: 1,
+                      }}>
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -97,7 +106,12 @@ const Table = <T,>({
             {table?.getRowModel().rows.map(row => (
               <TableRow key={row.id}>
                 {row.getVisibleCells().map(cell => (
-                  <TableCell key={cell.id}>
+                  <TableCell
+                    key={cell.id}
+                    sx={{
+                      borderBottom: "neutralGrey.main",
+                      py: 1,
+                    }}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
                 ))}

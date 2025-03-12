@@ -73,7 +73,7 @@ const PALETTE_THEME_PURPLE_BLUE = {
     warning: createColor(orange["300"]),
     info: createColor(blue["200"]),
     error: createColor(red["400"]),
-    success: createColor(green["600"]),
+    success: createColor("#0C695D"),
     highlight: createColor(colorToRgba(grey["400"], 0.25)),
     default: createColor("#7A89C2"),
     inactive: createColor(grey["300"]),
@@ -88,6 +88,12 @@ const PALETTE_THEME_PURPLE_BLUE = {
       main: "#F6EBF8",
       contrastText: "#000",
     },
+    neutralGrey: {
+      light: "#F2F2F2",
+      dark: "#F2F2F2",
+      main: "#F2F2F2",
+      contrastText: "#3C3C3B",
+    },
     postitYellow: {
       light: "#faf3e2",
       dark: "#faf3e2",
@@ -98,6 +104,8 @@ const PALETTE_THEME_PURPLE_BLUE = {
       main: "#f7f3fb",
     },
     textSecondary: createColor("#585754"),
+    textPrimary: createColor("#1E1E1E"),
+    midGrey: createColor("#687078"),
   },
 };
 

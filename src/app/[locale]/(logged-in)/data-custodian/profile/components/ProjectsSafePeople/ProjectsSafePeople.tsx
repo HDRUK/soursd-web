@@ -141,7 +141,7 @@ export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
 
   const filterActions = [
     {
-      label: tApplication("userStatus_registered"),
+      label: tApplication("status_registered"),
       onClick: () => handleFieldToggle("status", ["registered", ""]),
       checked: queryParams.status === "registered",
     },

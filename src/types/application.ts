@@ -268,8 +268,8 @@ interface ResearcherAffiliation {
   organisation_id: number;
   relationship?: string;
   current_employer: boolean;
-  start_date?: string;
-  end_date?: string;
+  from?: string | null;
+  to?: string | null;
   position?: string;
   organisation: {
     organisation_name: string;

@@ -1,8 +1,9 @@
-import UserStatus from "@/components/UserStatus";
-import { User } from "@/types/application";
+import ChipStatus from "@/components/ChipStatus";
+import { ResearcherAffiliation, User } from "@/types/application";
 import { Link, Typography } from "@mui/material";
 import { CellContext } from "@tanstack/react-table";
 import { injectParamsIntoPath } from "./application";
+import { formatShortDate } from "./date";
 
 function renderUserNameCell<T extends User>(
   info: CellContext<T, unknown>,
@@ -22,8 +23,22 @@ function renderUserNameCell<T extends User>(
   );
 }
 
-function renderUserStatus<T extends User>(info: CellContext<T, unknown>) {
-  return <UserStatus status={info.row.original.status} />;
+function renderChipStatus<T extends User>(info: CellContext<T, unknown>) {
+  return <ChipStatus status={info.row.original.status} />;
 }
 
-export { renderUserNameCell, renderUserStatus };
+function renderAffiliationDateRangeCell<T extends ResearcherAffiliation>(
+  info: CellContext<T, unknown>
+) {
+  const { from, to } = info.row.original;
+
+  if (!from) return null;
+
+  return (
+    <Typography>
+      {formatShortDate(from)} - {to ? formatShortDate(to) : "Present"}
+    </Typography>
+  );
+}
+
+export { renderUserNameCell, renderChipStatus, renderAffiliationDateRangeCell };

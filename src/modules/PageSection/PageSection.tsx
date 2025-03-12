@@ -17,7 +17,7 @@ export default function PageSection({
   return (
     <Box
       {...restProps}
-      sx={{ position: "relative", zIndex: 1, px: 2, py: 2, ...sx }}>
+      sx={{ position: "relative", zIndex: 1, pr: 2, py: 2, ...sx }}>
       {(!!heading || !!description) && (
         <SectionHeading
           type="content"

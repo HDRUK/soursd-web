@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import UserStatus from ".";
+import ChipStatus from ".";
 
 const meta = {
-  title: "components/UserStatus",
-  component: UserStatus,
+  title: "components/ChipStatus",
+  component: ChipStatus,
   tags: ["autodocs"],
-} satisfies Meta<typeof UserStatus>;
+} satisfies Meta<typeof ChipStatus>;
 
 export default meta;
 

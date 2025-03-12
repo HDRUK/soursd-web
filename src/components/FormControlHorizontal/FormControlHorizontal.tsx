@@ -21,6 +21,7 @@ import {
   FieldValues,
 } from "react-hook-form";
 import { ExtendedUseFormReturn } from "../Form/Form";
+import FormControlDescription from "../FormControlDescription";
 
 function inferComponentType(
   renderField: (fieldProps: FieldValues) => ReactNode
@@ -135,9 +136,7 @@ export default function FormControlHorizontal({
             ...field,
           })}
           {!!description && (
-            <Typography variant="subtitle2" sx={{ pt: 1 }}>
-              {description}
-            </Typography>
+            <FormControlDescription>{description}</FormControlDescription>
           )}
           {!!error && <FormHelperText>{error.message}</FormHelperText>}
         </Grid>

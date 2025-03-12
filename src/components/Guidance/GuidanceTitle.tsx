@@ -16,13 +16,8 @@ export default function GuidanceTitle({
   return (
     <Text
       variant="h3"
-      startIcon={
-        infoTitleIcon || <SoursdLogo sx={{ backgroundColor: "transparent" }} />
-      }
+      startIcon={infoTitleIcon}
       sx={{
-        textAlign: "right",
-        display: "flex",
-        justifyContent: "flex-end",
         mb: 4,
       }}
       {...restProps}>
