@@ -56,6 +56,11 @@ function isExpiredInvite(invite_sent_at?: string) {
   );
 }
 
+function getDaysSince(dateString: string) {
+  const date = dayjs(dateString);
+  return date.isValid() ? dayjs().diff(date, "day") : undefined;
+}
+
 export {
   isExpired,
   isExpiredInvite,
@@ -66,4 +71,5 @@ export {
   formatDBDate,
   dateToString,
   getDate,
+  getDaysSince,
 };

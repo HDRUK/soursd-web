@@ -1,68 +1,44 @@
 import { getElementHeightWithMargins } from "@/utils/dom";
 import { Box, Button, Collapse, CollapseProps } from "@mui/material";
-import { ReactNode, useEffect, useRef, useState } from "react";
+import React, { ReactNode, useEffect, useRef, useState } from "react";
 
-interface ActionsPanelItemProps extends CollapseProps {
+interface ViewMoreProps extends CollapseProps {
   collapseNumRows: number;
   actions?: ({ onClick }: { onClick: () => void }) => ReactNode;
 }
 
-export default function ActionsPanelItem({
+export default function ViewMore({
   actions,
   children,
   collapseNumRows = 1,
-}: ActionsPanelItemProps) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [height, setHeight] = useState(0);
+}: ViewMoreProps) {
+  const childArray = React.Children.toArray(children);
   const [expanded, setExpanded] = useState(false);
-  const [hasMoreItems, setHasMoreItems] = useState(true);
 
-  const handleExpandCollapse = () => {
-    setExpanded(!expanded);
+  const toggleExpand = () => {
+    setExpanded(prev => !prev);
   };
 
-  useEffect(() => {
-    if (ref.current) {
-      const elements = Array.from(ref.current.children);
-      let initialHeight = 0;
-
-      if (collapseNumRows < elements.length) {
-        Array.from(elements)
-          .slice(0, collapseNumRows)
-          .forEach(element => {
-            initialHeight += getElementHeightWithMargins(
-              element as HTMLElement
-            );
-          });
-        setHeight(initialHeight + 10);
-        setHasMoreItems(true);
-      } else {
-        setHasMoreItems(false);
-      }
-    } else {
-      setHasMoreItems(false);
-    }
-  }, []);
+  const visibleChildren = expanded
+    ? childArray
+    : childArray.slice(0, collapseNumRows);
+  const hasMoreItems = childArray.length > collapseNumRows;
 
   return (
-    <div>
-      {hasMoreItems ? (
-        <Collapse collapsedSize={height} in={expanded}>
-          <div ref={ref}>{children}</div>
-        </Collapse>
-      ) : (
-        children
-      )}
+    <Box
+      data-testid="view-more-box"
+      sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+      {visibleChildren}
       {hasMoreItems &&
         (actions?.({
-          onClick: handleExpandCollapse,
+          onClick: toggleExpand,
         }) || (
-          <Box sx={{ mt: 4 }}>
-            <Button variant="text" onClick={handleExpandCollapse}>
-              {!expanded ? "View more" : "View less"}
+          <Box sx={{ mt: 1 }}>
+            <Button variant="text" onClick={toggleExpand}>
+              {expanded ? "View Less" : "View All"}
             </Button>
           </Box>
         ))}
-    </div>
+    </Box>
   );
 }
