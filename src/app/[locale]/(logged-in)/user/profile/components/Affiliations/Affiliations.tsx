@@ -31,7 +31,6 @@ import { useRouter } from "next/navigation";
 import { useCallback, useEffect } from "react";
 import ReactDOMServer from "react-dom/server";
 import { Message } from "@/components/Message";
-import Link from "next/link";
 import AffiliationsForm from "../AffiliationsForm";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
@@ -51,7 +50,6 @@ export default function Affiliations() {
       setHistories: state.setHistories,
     })
   );
-
   const { data: affiliationsData, ...getAffiliationsQueryState } = useQuery(
     getAffiliationsQuery(user?.registry_id)
   );
@@ -99,12 +97,9 @@ export default function Affiliations() {
     });
   }, [affiliationsData?.data?.data]);
 
-  const renderMessageLink = useCallback(
-    (chunks: React.ReactNode) => (
-      <Link href={ROUTES.profileResearcherExperience.path}>{chunks}</Link>
-    ),
-    []
-  );
+  const ocrIdBannerToAppear = affiliations.some(affiliation => {
+    return affiliation.organisation_id === null || affiliation.email === null;
+  });
 
   return (
     <PageBodyContainer
@@ -113,13 +108,6 @@ export default function Affiliations() {
       <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
         <PageBody>
           <PageSection>
-            {!user?.orc_id && (
-              <Message severity="warning">
-                {tProfile.rich("missingOrcIdMessage", {
-                  link: renderMessageLink,
-                })}
-              </Message>
-            )}{" "}
             <AffiliationsForm
               onSubmit={handleDetailsSubmit}
               queryState={postAffiliationQueryState}
@@ -127,6 +115,12 @@ export default function Affiliations() {
             <Typography variant="h6" sx={{ mb: 1 }}>
               {tProfile("affiliationsRecords")}
             </Typography>
+            {!ocrIdBannerToAppear && (
+              <Message severity="warning" sx={{ mb: 2 }}>
+                {/* This contains a link in the designs that should link to the first entry that needed to be edited, this can be implemented once edit affiliations is implemented */}
+                {tProfile("missingOrcIdMessage")}
+              </Message>
+            )}{" "}
             <Results
               queryState={getAffiliationsQueryState}
               noResultsMessage={tProfile("affiliationsNoResultsMessage")}
