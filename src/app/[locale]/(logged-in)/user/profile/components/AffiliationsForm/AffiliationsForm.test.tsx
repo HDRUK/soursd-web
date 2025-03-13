@@ -9,12 +9,10 @@ import {
 import { faker } from "@faker-js/faker";
 import AffiliationsForm from "./AffiliationsForm";
 
-jest.mock("@/data/store");
-
 const mockSubmit = jest.fn();
 
 const renderAffiliationsComponent = () => {
-  return render(
+  const rendered = render(
     <AffiliationsForm
       onSubmit={mockSubmit}
       queryState={{
@@ -24,6 +22,14 @@ const renderAffiliationsComponent = () => {
       }}
     />
   );
+
+  const button = screen.getByRole("button", { name: /add affiliation/i });
+
+  act(() => {
+    fireEvent.click(button);
+  });
+
+  return rendered;
 };
 
 describe("<AffiliationsForm />", () => {
@@ -37,7 +43,7 @@ describe("<AffiliationsForm />", () => {
       if (input) {
         fireEvent.change(input, { target: { value: faker.string.sample() } });
 
-        const button = screen.getByRole("button", { name: /save/i });
+        const button = screen.getByRole("button", { name: /add affiliation/i });
 
         await act(() => {
           fireEvent.submit(button);

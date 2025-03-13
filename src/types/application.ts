@@ -1,3 +1,4 @@
+import { Status } from "@/components/ChipStatus";
 import { FileStatus, FileType } from "@/consts/files";
 import {
   UserFeedSource,
@@ -134,7 +135,7 @@ interface User {
   departments?: Department[];
   role?: string;
   location?: string;
-  status: "invited" | "registered";
+  status: Status;
 }
 interface AddressFields {
   postcode?: string;
@@ -273,8 +274,8 @@ interface ResearcherAffiliation {
   organisation_id: number;
   relationship?: string;
   current_employer: boolean;
-  start_date?: string;
-  end_date?: string;
+  from?: string | null;
+  to?: string | null;
   position?: string;
   organisation: {
     organisation_name: string;
@@ -300,6 +301,7 @@ interface ResearcherProject {
   affiliate_id: number;
   unique_id: string;
   approvals: ResearcherProjectApproval[];
+  organisations: Organisation[];
 }
 
 interface Registry {
@@ -322,6 +324,13 @@ interface Role {
   created_at: string;
   updated_at: string;
   name: string;
+}
+
+interface Project {
+  id: number;
+  title: string;
+  start_date: string;
+  end_date: string;
 }
 
 interface ProjectUser {
@@ -360,6 +369,7 @@ export type {
   Organisation,
   OrganisationIdvt,
   Permission,
+  Project,
   ProjectUser,
   ResearcherAccreditation,
   ResearcherAffiliation,

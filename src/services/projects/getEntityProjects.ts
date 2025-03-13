@@ -4,7 +4,7 @@ import { handleJsonResponse } from "../requestHelpers";
 import { getRequest } from "../requests";
 import { ProjectsResponse } from "./types";
 
-export type ProjectEntities = "organisation" | "custodian";
+export type ProjectEntities = "organisation" | "custodian" | "user";
 
 export default async (
   entity: ProjectEntities,
