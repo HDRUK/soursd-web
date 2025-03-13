@@ -1,10 +1,5 @@
 import { ProjectEntities } from "@/services/projects/getEntityProjects";
-import {
-  commonAccessibilityTests,
-  fireEvent,
-  render,
-  waitFor,
-} from "@/utils/testUtils";
+import { commonAccessibilityTests, render, waitFor } from "@/utils/testUtils";
 import Projects from ".";
 
 const renderProjects = ({ variant }: { variant: ProjectEntities }) =>
@@ -12,13 +7,14 @@ const renderProjects = ({ variant }: { variant: ProjectEntities }) =>
 
 describe("Organisation Projects", () => {
   it("display 10 projects", async () => {
-    const { getAllByTestId } = renderProjects({
+    const { getAllByRole, getByText } = renderProjects({
       variant: "organisation",
     });
 
     await waitFor(() => {
-      const accordions = getAllByTestId(/^project-accordion-/);
-      expect(accordions.length).toBe(10);
+      expect(getByText("Project Name")).toBeInTheDocument();
+      const rows = getAllByRole("row");
+      expect(rows.slice(1).length).toBe(10);
     });
   });
 
@@ -29,21 +25,36 @@ describe("Organisation Projects", () => {
 
 describe("Custodian Projects", () => {
   it("display 5 projects", async () => {
-    const { getAllByTestId } = renderProjects({
+    const { getAllByRole, getByText } = renderProjects({
       variant: "custodian",
     });
 
     await waitFor(() => {
-      const accordions = getAllByTestId(/^project-accordion-/);
-      expect(accordions.length).toBe(5);
+      expect(getByText("Project Name")).toBeInTheDocument();
+      const rows = getAllByRole("row");
+      expect(rows.slice(1).length).toBe(5);
     });
-
-    const expandIcons = getAllByTestId("ExpandMoreIcon");
-    const expandIcon = expandIcons[0];
-    fireEvent.click(expandIcon!);
   });
 
   it("has no accessibility violations", async () => {
     commonAccessibilityTests(renderProjects({ variant: "custodian" }));
+  });
+});
+
+describe("User Projects", () => {
+  it("display 7 projects", async () => {
+    const { getAllByRole, getByText } = renderProjects({
+      variant: "user",
+    });
+
+    await waitFor(() => {
+      expect(getByText("Project Name")).toBeInTheDocument();
+      const rows = getAllByRole("row");
+      expect(rows.slice(1).length).toBe(7);
+    });
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(renderProjects({ variant: "user" }));
   });
 });

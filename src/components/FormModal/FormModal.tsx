@@ -1,3 +1,5 @@
+"use client";
+
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import CloseIcon from "@mui/icons-material/Close";
 import {
@@ -8,12 +10,14 @@ import {
   IconButton,
   Modal,
   ModalProps,
+  Typography,
   useTheme,
 } from "@mui/material";
 import { ReactNode } from "react";
 
 export interface FormModalProps extends Omit<ModalProps, "children"> {
   children: ReactNode;
+  heading?: ReactNode;
   variant?: "form" | "content";
   isLoading?: boolean;
   isDismissable?: boolean;
@@ -28,6 +32,7 @@ export default function FormModal({
   onBack,
   onClose,
   sx,
+  heading,
   ...restProps
 }: FormModalProps) {
   const theme = useTheme();
@@ -89,6 +94,9 @@ export default function FormModal({
               <CircularProgress />
             </Box>
           )}
+          <Typography gutterBottom variant="h3" component="div" sx={{ mb: 3 }}>
+            {heading}
+          </Typography>
           {children}
         </CardContent>
       </Card>
