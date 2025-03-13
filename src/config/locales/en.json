@@ -714,7 +714,8 @@
     "postTrainingError": "An error occurred while adding the training course. Please try again or <contactLink>contact support</contactLink> if the problem persists.",
     "errorButton": "OK",
     "viewCertificate": "View Certificate",
-    "fileDownloadError": "An error occurred while downloading the certificate. Please try again or <contactLink>contact support</contactLink> if the problem persists."
+    "fileDownloadError": "An error occurred while downloading the certificate. Please try again or <contactLink>contact support</contactLink> if the problem persists.",
+    "noResultsMessage": "You currently have no training history"
   },
   "ProfileCompleteStatus": {
     "profileComplete": "Profile complete",

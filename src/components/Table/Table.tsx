@@ -75,7 +75,7 @@ const Table = <T,>({
       <TableContainer sx={{ my: 1 }}>
         <MuiTable size={dense ? "small" : "medium"}>
           {showHeader && (
-            <TableHead>
+            <TableHead sx={{ background: "#f2f2f2" }}>
               {table.getHeaderGroups().map(headerGroup => (
                 <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map(header => (

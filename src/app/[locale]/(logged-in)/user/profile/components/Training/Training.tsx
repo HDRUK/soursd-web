@@ -2,22 +2,14 @@ import { useStore } from "@/data/store";
 
 import postTrainingsQuery from "@/services/trainings/postTrainingsQuery";
 import { PostTrainingsPayload } from "@/services/trainings/types";
-import {
-  Button,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  Typography,
-} from "@mui/material";
-import { useMutation } from "@tanstack/react-query";
+import { Button, Typography } from "@mui/material";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useState, useEffect } from "react";
 import ReactDOMServer from "react-dom/server";
 import FormModal from "@/components/FormModal";
 import ContactLink from "@/components/ContactLink";
-import AddIcon from "@mui/icons-material/Add";
+import Table from "@/components/Table";
 import { formatShortDate } from "@/utils/date";
 import useQueryAlerts from "@/hooks/useQueryAlerts";
 import { ResearcherTraining } from "@/types/application";
@@ -25,6 +17,8 @@ import { ActionMenu, ActionMenuItem } from "@/components/ActionMenu";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import useFileDownload from "@/hooks/useFileDownload";
 import { showAlert } from "@/utils/showAlert";
+import { getTrainingByRegistryIdQuery } from "@/services/trainings";
+import AddIcon from "@mui/icons-material/Add";
 import TrainingForm from "./TrainingForm";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Training";
@@ -34,7 +28,6 @@ export default function Training() {
   const user = useStore(store => store.config.user);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const histories = useStore(state => state.config.histories);
   const setHistories = useStore(state => state.setHistories);
   const getHistories = useStore(state => state.getHistories);
 
@@ -46,6 +39,12 @@ export default function Training() {
   const downloadFile = useCallback((fileId: number) => {
     setFileIdToDownload(fileId);
   }, []);
+
+  const {
+    data: trainingsData,
+    refetch: refetchTrainings,
+    ...trainingDataQueryState
+  } = useQuery(getTrainingByRegistryIdQuery(user?.registry_id));
 
   useEffect(() => {
     try {
@@ -121,51 +120,50 @@ export default function Training() {
     async (training: PostTrainingsPayload) => {
       await mutateAsync(training);
       await onSubmit(training);
+      refetchTrainings();
       handleCloseModal();
     },
     [mutateAsync, onSubmit]
   );
 
+  const columns = [
+    {
+      header: t("trainingHistoryColumnProvider"),
+      accessorKey: "provider",
+    },
+    {
+      header: t("trainingHistoryColumnName"),
+      accessorKey: "training_name",
+    },
+    {
+      header: t("trainingHistoryColumnAwardedAt"),
+      accessorKey: "awarded_at",
+      cell: ({ row }) => formatShortDate(row.original.awarded_at),
+    },
+    {
+      header: t("trainingHistoryColumnExpiresAt"),
+      accessorKey: "expires_at",
+      cell: ({ row }) => formatShortDate(row.original.expires_at),
+    },
+    {
+      header: "",
+      accessorKey: "actions",
+      cell: ({ row }) => renderActions(row.original),
+    },
+  ];
   return (
     <>
       <Typography variant="h6" sx={{ mb: 1 }}>
         {t("trainingHistoryTitle")}
       </Typography>
-      {!!histories?.training.length && (
-        <Table>
-          <TableHead sx={{ backgroundColor: "lightPurple.main" }}>
-            <TableRow>
-              <TableCell scope="col">
-                {t("trainingHistoryColumnProvider")}
-              </TableCell>
-              <TableCell scope="col">
-                {t("trainingHistoryColumnName")}
-              </TableCell>
-              <TableCell scope="col">
-                {t("trainingHistoryColumnAwardedAt")}
-              </TableCell>
-              <TableCell scope="col">
-                {t("trainingHistoryColumnExpiresAt")}
-              </TableCell>
-              <TableCell scope="col" />
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {histories?.training.map(training => {
-              const { training_name, provider, awarded_at, expires_at } =
-                training;
-              return (
-                <TableRow key={provider}>
-                  <TableCell>{provider}</TableCell>
-                  <TableCell>{training_name}</TableCell>
-                  <TableCell>{formatShortDate(awarded_at)}</TableCell>
-                  <TableCell>{formatShortDate(expires_at)}</TableCell>
-                  <TableCell>{renderActions(training)}</TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
+      {!!trainingsData?.data.length && (
+        <Table
+          data={trainingsData.data}
+          columns={columns}
+          queryState={trainingDataQueryState}
+          total={trainingsData.data.length}
+          noResultsMessage={t("NoResultsMessage")}
+        />
       )}
       <Button
         onClick={handleOpenModal}
