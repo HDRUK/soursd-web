@@ -68,19 +68,18 @@ export default function Experience() {
     []
   );
 
-  const updateUser = useMutation(putUserQuery(10));
+  const updateUser = useMutation(putUserQuery(user?.id));
 
   const handleDetailsSubmit = useCallback(
     async (fields: ExperienceFormValues) => {
       try {
         const request = {
-          ...fields,
           ...user,
+          orc_id: fields.orc_id,
           consent_scrape: consentScrape,
         };
-
         await updateUser.mutateAsync(request);
-
+        setUser(request);
         showAlert("success", {
           text: tProfile("postUserSuccess"),
           confirmButtonText: tProfile("postUserSuccessButton"),
