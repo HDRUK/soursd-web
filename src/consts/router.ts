@@ -218,7 +218,7 @@ const ROUTES: Routes = {
     path: "/organisation/profile/projects/{id}/safe-project",
     permissions: [UserGroup.ORGANISATIONS],
   },
-  admin: {
+  profileAdmin: {
     path: "/admin",
     permissions: [UserGroup.ADMINS],
   },

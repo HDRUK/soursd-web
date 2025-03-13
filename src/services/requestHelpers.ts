@@ -1,24 +1,10 @@
 import { ResponseMessageType } from "@/consts/requests";
 import { ResponseEmptyError } from "@/types/query";
-import { ResponseOptions, ResponseJson } from "@/types/requests";
+import { ResponseJson, ResponseOptions } from "@/types/requests";
 
 export async function getAccessToken(): Promise<string | undefined> {
   const response = await fetch("/api/auth/token", {
     method: "GET",
-    credentials: "include",
-  });
-
-  if (!response.ok) {
-    return undefined;
-  }
-
-  const data = await response.json();
-  return data.access_token;
-}
-
-async function getRefreshAccessToken(): Promise<string | undefined> {
-  const response = await fetch("/api/auth/refresh", {
-    method: "POST",
     credentials: "include",
   });
 
@@ -41,7 +27,10 @@ async function getHeadersWithAuthorization(headers?: HeadersInit) {
   };
 }
 
-function handleResponseError(response: Response, options?: ResponseOptions) {
+function handleResponseError(
+  response: Response | ResponseEmptyError,
+  options?: ResponseOptions
+) {
   if (!response?.ok) {
     if (!options) {
       return new Error(`${response?.status}Error`).message;
@@ -103,9 +92,8 @@ async function createEmptyErrorResponse(
 }
 
 export {
-  handleResponseError,
-  handleJsonResponse,
-  getHeadersWithAuthorization,
   createEmptyErrorResponse,
-  getRefreshAccessToken,
+  getHeadersWithAuthorization,
+  handleJsonResponse,
+  handleResponseError,
 };

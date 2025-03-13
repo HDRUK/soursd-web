@@ -1,44 +1,22 @@
 "use client";
 
 import LoadingWrapper from "@/components/LoadingWrapper";
-import { ROUTES } from "@/consts/router";
-import { UserGroup } from "@/consts/user";
-import { usePathname, useRouter } from "@/i18n/routing";
+import { usePathname } from "@/i18n/routing";
 import { getMe } from "@/services/auth";
-import {
-  getAccessToken,
-  getRefreshAccessToken,
-} from "@/services/requestHelpers";
 import { User } from "@/types/application";
-import { handleLogin } from "@/utils/keycloak";
-import Cookies from "js-cookie";
+import {
+  redirectOnServerError,
+  redirectRefreshToken,
+  redirectToProfile,
+  redirectWithoutAccessToken,
+  registerAndRedirect,
+} from "@/utils/requests";
+import { useRouter } from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";
 
 interface ApplicationRedirectProps {
   children: ReactNode;
   onMeFetched?: (me: User | undefined) => void;
-}
-
-async function serverErrorRedirect(
-  accessToken: string | undefined,
-  pathname: string | null
-) {
-  if (!accessToken) {
-    Cookies.set("redirectPath", pathname ?? "/", { path: "/" });
-
-    handleLogin();
-  }
-}
-
-async function refreshTokenRedirect(router: ReturnType<typeof useRouter>) {
-  const accessToken = await getRefreshAccessToken();
-
-  if (!accessToken) {
-    Cookies.remove("access_token");
-    Cookies.remove("refresh_token");
-
-    router.push(ROUTES.homepage.path);
-  }
 }
 
 export default function ApplicationRedirect({
@@ -52,39 +30,28 @@ export default function ApplicationRedirect({
 
   useEffect(() => {
     const init = async () => {
-      const accessToken = await getAccessToken();
+      const accessToken = await redirectWithoutAccessToken(router, pathname);
 
       if (!accessToken) {
-        return router.replace(ROUTES.homepage.path);
+        setFetched(true);
+
+        return;
       }
 
-      const me = await getMe();
+      const me = await getMe({
+        suppressThrow: true,
+      });
 
       if (me.status === 200) {
-        if (
-          me.data.user_group === UserGroup.ADMINS &&
-          !pathname.includes(ROUTES.admin.path)
-        ) {
-          router.replace(ROUTES.admin.path);
-        } else if (
-          me.data.user_group === UserGroup.ORGANISATIONS &&
-          !pathname.includes(ROUTES.profileOrganisation.path)
-        ) {
-          router.replace(ROUTES.profileOrganisation.path);
-        } else if (
-          me.data.user_group === UserGroup.CUSTODIANS &&
-          !pathname.includes(ROUTES.profileCustodian.path)
-        ) {
-          router.replace(ROUTES.profileCustodian.path);
-        } else if (!pathname.includes(ROUTES.profileResearcher.path)) {
-          router.replace(ROUTES.profileResearcher.path);
-        }
-
         onMeFetched?.(me.data);
+
+        redirectToProfile(me.data, pathname);
       } else if (me.status === 401) {
-        refreshTokenRedirect(router);
+        redirectRefreshToken(router);
+      } else if (me.status === 404) {
+        registerAndRedirect(pathname);
       } else if (me.status === 500) {
-        serverErrorRedirect(accessToken, pathname);
+        redirectOnServerError(accessToken, pathname);
       }
 
       setFetched(true);

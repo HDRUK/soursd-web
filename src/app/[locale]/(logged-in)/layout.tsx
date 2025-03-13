@@ -1,9 +1,8 @@
 "use client";
 
 import { UserGroup } from "@/consts/user";
-import { PageContainer } from "@/modules";
+import { PageContainer, ApplicationRedirect } from "@/modules";
 import Application from "@/modules/Application";
-import ApplicationRedirect from "@/modules/ApplicationRedirect";
 import { getCustodianUser } from "@/services/custodian_users";
 import { User } from "@/types/application";
 import { PropsWithChildren, useState } from "react";
@@ -38,6 +37,8 @@ export default function Layout({ children }: LayoutProps) {
       setMe(user);
     }
   };
+
+  console.log("custodianId", custodianId);
 
   return (
     <ApplicationRedirect onMeFetched={handleMeFetched}>

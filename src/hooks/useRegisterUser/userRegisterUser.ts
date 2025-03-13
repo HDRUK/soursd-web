@@ -7,6 +7,7 @@ import { AccountType } from "@/types/accounts";
 import { getCombinedQueryState } from "@/utils/query";
 import { useMutation } from "@tanstack/react-query";
 import useAuth from "../useAuth";
+import { getProfilePathByEntity } from "@/utils/requests";
 
 interface UseRegisterUserArgs {
   selected: AccountType | null;
@@ -55,17 +56,7 @@ export default function useRegisterUser({ selected }: UseRegisterUserArgs) {
       account_type: selected,
       organisation_id: organisationId,
     }).then(() => {
-      switch (selected) {
-        case AccountType.ORGANISATION:
-          router.replace(routes.profileOrganisation.path);
-          break;
-        case AccountType.USER:
-          router.replace(routes.profileResearcher.path);
-          break;
-        default:
-          router.replace(routes.homepage.path);
-          break;
-      }
+      router.replace(getProfilePathByEntity(selected));
     });
   };
 

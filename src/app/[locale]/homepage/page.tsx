@@ -1,7 +1,4 @@
-"use client";
-
 import { Footer, Header } from "@/modules";
-import ApplicationRedirect from "@/modules/ApplicationRedirect";
 import KeyFeatures from "./components/KeyFeatures";
 import SoursdInfo from "./components/SoursdInfo";
 import SoursdUsages from "./components/SoursdUsages";
@@ -10,7 +7,7 @@ import { StyledWrapper } from "./homepage.styles";
 
 export default function Page() {
   return (
-    <ApplicationRedirect>
+    <>
       <Header />
       <StyledWrapper>
         <section>
@@ -27,6 +24,6 @@ export default function Page() {
         </section>
       </StyledWrapper>
       <Footer />
-    </ApplicationRedirect>
+    </>
   );
 }

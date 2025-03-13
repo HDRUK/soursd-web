@@ -1,5 +1,4 @@
-import { PageContainer } from "@/modules";
-import ApplicationRedirect from "@/modules/ApplicationRedirect";
+import { PageContainer, ApplicationRedirect } from "@/modules";
 import { PropsWithChildren } from "react";
 
 export default function Layout({ children }: PropsWithChildren) {

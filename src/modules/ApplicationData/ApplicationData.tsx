@@ -18,6 +18,7 @@ import {
   User,
 } from "@/types/application";
 import { parseSystemConfig } from "@/utils/application";
+import { useRouter } from "next/navigation";
 import { ReactNode, useEffect } from "react";
 
 interface ApplicationDataProps {
@@ -56,6 +57,7 @@ export default function ApplicationData({
   children,
 }: ApplicationDataProps) {
   const path = usePathname();
+  const router = useRouter();
 
   const useStoreValues = useStore(state => ({
     addUrlToHistory: state.addUrlToHistory,

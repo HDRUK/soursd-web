@@ -69,7 +69,7 @@ interface Routes {
   profileOrganisationUserAdministrationEmployeeStudent: RouteConfig;
   profileOrganisationProjects: RouteConfig;
   profileOrganisationProjectsSafeProject: RouteConfig;
-  admin: RouteConfig;
+  profileAdmin: RouteConfig;
 }
 
 export type { RoutePermissions, RouteConfig, Routes, RouteParams };
