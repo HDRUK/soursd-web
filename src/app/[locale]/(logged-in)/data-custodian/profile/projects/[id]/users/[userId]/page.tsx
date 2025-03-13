@@ -10,8 +10,8 @@ function CustodianProjectUserPage({ params: { id: projectId, userId } }) {
   return (
     <PageBodyContainer heading={"title!"}>
       <PageColumns>
-        <PageColumnBody lg={7}>Content!</PageColumnBody>
-        <PageColumnDetails lg={5}>
+        <PageColumnBody lg={8}>Content!</PageColumnBody>
+        <PageColumnDetails lg={4}>
           <CustodianProjectUser projectId={projectId} userId={userId} />
         </PageColumnDetails>
       </PageColumns>

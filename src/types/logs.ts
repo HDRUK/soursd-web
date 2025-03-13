@@ -17,7 +17,7 @@ interface ValidationLog {
   tertiary_entity_id: number;
   name: string;
   completed_at: string | null;
-  manually_confirmed: boolean;
+  manually_confirmed: number;
   comments: Comment[];
 }
 

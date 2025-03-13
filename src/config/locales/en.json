@@ -527,7 +527,9 @@
       "noCertificationUploaded": "No files have been uploaded yet",
       "certificationUploadFailed": "Certificate upload failed",
       "done": "Done"
-    }
+    },
+    "comment": "Add any further comment",
+    "commentPlaceholder": "Type your comment here..."
   },
   "ProfessionalRegistrations": {
     "title": "Professional Registrations",
