@@ -58,7 +58,7 @@ export default function NotificationsMenu() {
     if (!notificationsCount?.data.total) return;
     // if the polled total count changes, refetch the notification data
     refetchNotifications();
-  }, [notificationsCount?.data.total]);
+  }, [notificationsCount?.data]);
 
   const { mutateAsync: mutateNotification } = usePatchNotification(
     user?.id as number

@@ -18,10 +18,17 @@ import {
   Tooltip,
   Paper,
   useTheme,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
 } from "@mui/material";
+import CheckIcon from "@mui/icons-material/Check";
+import PendingIcon from "@mui/icons-material/Pending";
 import MarkEmailUnreadIcon from "@mui/icons-material/MarkEmailUnread";
 import { Notification } from "@/types/notifications";
 import { formatDBDate } from "@/utils/date";
+import { toTitleCase } from "@/utils/string";
 import { formatNotificationType } from "@/utils/notifications";
 import { useTranslations } from "next-intl";
 
@@ -124,32 +131,61 @@ export default function NotificationModal({
             </Box>
           )}
 
-          <TableContainer
-            component={Paper}
-            sx={{ marginTop: 0, width: "100%" }}>
-            <Table size="small">
-              <TableHead>
-                <TableRow>
-                  <TableCell>{t("col1")}</TableCell>
-                  <TableCell align="right">{t("col2")}</TableCell>
-                  <TableCell align="right">{t("col3")}</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {Object.entries(notification.data.details).map(
-                  ([key, value]) => (
-                    <TableRow key={key}>
-                      <TableCell component="th" scope="row">
-                        {key}
-                      </TableCell>
-                      <TableCell align="right">{value.old}</TableCell>
-                      <TableCell align="right">{value.new}</TableCell>
-                    </TableRow>
-                  )
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
+          {Array.isArray(notification.data.actions) && (
+            <List
+              sx={{
+                width: "100%",
+                maxWidth: 360,
+                bgcolor: "background.paper",
+              }}>
+              {notification.data.actions.map(action => (
+                <ListItem>
+                  <ListItemIcon>
+                    {action.completed_at ? (
+                      <CheckIcon color="success" />
+                    ) : (
+                      <PendingIcon />
+                    )}
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={toTitleCase(action.action)}
+                    secondary={
+                      action.completed_at && formatDBDate(action.completed_at)
+                    }
+                  />
+                </ListItem>
+              ))}
+            </List>
+          )}
+
+          {Array.isArray(notification.data.details) && (
+            <TableContainer
+              component={Paper}
+              sx={{ marginTop: 0, width: "100%" }}>
+              <Table size="small">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>{t("col1")}</TableCell>
+                    <TableCell align="right">{t("col2")}</TableCell>
+                    <TableCell align="right">{t("col3")}</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {notification.data.details.map(
+                    ({ key, old, new: newValue }) => (
+                      <TableRow key={key}>
+                        <TableCell component="th" scope="row">
+                          {key}
+                        </TableCell>
+                        <TableCell align="right">{old}</TableCell>
+                        <TableCell align="right">{newValue}</TableCell>
+                      </TableRow>
+                    )
+                  )}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          )}
         </CardContent>
       </Card>
     </Modal>
