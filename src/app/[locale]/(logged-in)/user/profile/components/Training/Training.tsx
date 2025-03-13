@@ -44,7 +44,10 @@ export default function Training() {
     data: trainingsData,
     refetch: refetchTrainings,
     ...trainingDataQueryState
-  } = useQuery(getTrainingByRegistryIdQuery(user?.registry_id));
+  } = useQuery({
+    ...getTrainingByRegistryIdQuery(user?.registry_id),
+    enabled: !!user?.registry_id,
+  });
 
   useEffect(() => {
     try {
