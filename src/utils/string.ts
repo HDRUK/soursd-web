@@ -11,4 +11,11 @@ const anyIncludes = (value: string | null, list: string[]) => {
   );
 };
 
-export { capitaliseFirstLetter, toCamelCase, anyIncludes };
+function toTitleCase(str: string): string {
+  return str
+    .split("_")
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
+export { capitaliseFirstLetter, toTitleCase, toCamelCase, anyIncludes };
