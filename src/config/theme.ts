@@ -104,6 +104,7 @@ const PALETTE_THEME_PURPLE_BLUE = {
       main: "#f7f3fb",
     },
     textSecondary: createColor("#585754"),
+    menuList1: createColor("#5769B2"),
     textPrimary: createColor("#1E1E1E"),
     midGrey: createColor("#687078"),
   },

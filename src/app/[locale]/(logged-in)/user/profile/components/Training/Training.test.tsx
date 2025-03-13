@@ -1,5 +1,5 @@
 import { useStore } from "@/data/store";
-import { mockedUser } from "@/mocks/data/user";
+import { mockedTraining, mockedUser } from "@/mocks/data/user";
 import { getTrainingByRegistryId, postTrainings } from "@/services/trainings";
 import {
   act,
@@ -34,7 +34,9 @@ const defaultUser = mockedUser({
 
 (useStore as unknown as jest.Mock).mockReturnValue([defaultUser, mockSetUser]);
 
-(getTrainingByRegistryId as jest.Mock).mockResolvedValue({ data: [] });
+(getTrainingByRegistryId as jest.Mock).mockResolvedValue({
+  data: [mockedTraining],
+});
 (postTrainings as unknown as jest.Mock).mockResolvedValue(
   mock200Json(1).json()
 );
