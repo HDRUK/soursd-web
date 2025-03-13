@@ -2,25 +2,26 @@
 
 import {
   FormControl,
-  FormLabel,
-  FormHelperText,
   FormControlLabelProps,
-  Typography,
+  FormHelperText,
+  FormLabel,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import {
-  useFormContext,
-  Controller,
   Control,
+  Controller,
   FieldValues,
+  useFormContext,
 } from "react-hook-form";
 import { ExtendedUseFormReturn } from "../Form";
+import FormControlDescription from "../FormControlDescription";
 
 export interface FormControlProps
   extends Omit<FormControlLabelProps, "control" | "label"> {
   renderField: (fieldProps: FieldValues & { error?: boolean }) => ReactNode;
   name: string;
+  description?: ReactNode;
   label?: string;
   control?: Control;
   placeholder?: string;
@@ -86,10 +87,8 @@ export default function FormControlWrapper({
             "aria-labelledby": `${field.name}-label`,
             ...field,
           })}
-          {description && (
-            <Typography variant="subtitle2" sx={{ pt: 1 }}>
-              {description}
-            </Typography>
+          {!!description && (
+            <FormControlDescription>{description}</FormControlDescription>
           )}
           {error && <FormHelperText>{error.message}</FormHelperText>}
         </FormControl>

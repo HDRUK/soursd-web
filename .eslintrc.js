@@ -43,6 +43,7 @@ module.exports = {
     "plugin:storybook/recommended",
   ],
   rules: {
+    "react/no-unstable-nested-components": "warn",
     "no-shadow": "off",
     "@typescript-eslint/no-shadow": ["off"],
     "security/detect-object-injection": "off",
@@ -82,7 +83,7 @@ module.exports = {
       },
     ],
     "jsx-a11y/anchor-is-valid": [
-      "error",
+      "warn",
       {
         components: ["Link"],
         specialLink: ["hrefLeft", "hrefRight"],
