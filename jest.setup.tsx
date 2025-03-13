@@ -297,6 +297,9 @@ async function mockFetch(url: string, init?: RequestInit) {
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/organisations/2/projects`: {
       return mock200Json(mockPagedResults(mockedProjects(10)));
     }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/users/1/projects`: {
+      return mock200Json(mockPagedResults(mockedProjects(7)));
+    }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/projects/1`: {
       return mock200Json(
         mockPagedResults([
