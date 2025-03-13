@@ -9,7 +9,20 @@ export async function getAccessToken(): Promise<string | undefined> {
   });
 
   if (!response.ok) {
-    handleResponseError(response);
+    return undefined;
+  }
+
+  const data = await response.json();
+  return data.access_token;
+}
+
+async function getRefreshAccessToken(): Promise<string | undefined> {
+  const response = await fetch("/api/auth/refresh", {
+    method: "POST",
+    credentials: "include",
+  });
+
+  if (!response.ok) {
     return undefined;
   }
 
@@ -94,4 +107,5 @@ export {
   handleJsonResponse,
   getHeadersWithAuthorization,
   createEmptyErrorResponse,
+  getRefreshAccessToken,
 };

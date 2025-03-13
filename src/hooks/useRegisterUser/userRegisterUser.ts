@@ -51,7 +51,7 @@ export default function useRegisterUser({ selected }: UseRegisterUserArgs) {
       organisationId = data;
     }
 
-    mutateAsync({
+    await mutateAsync({
       account_type: selected,
       organisation_id: organisationId,
     }).then(() => {
