@@ -173,7 +173,12 @@ const createMuiTableStyles = (ownerState: TableCellProps) => {
 
 const createMuiChipStyles = () => {
   return {
-    borderRadius: 3,
+    paddingLeft: "4px",
+    paddingRight: "4px",
+    background: "midGrey.main",
+    "& > .MuiChip-label": {
+      color: "midGrey.contrastText",
+    },
   };
 };
 
@@ -294,6 +299,7 @@ const theme = createTheme(
         styleOverrides: {
           root: {
             fontSize: "1em",
+            fontWeight: "500",
           },
         },
       },
@@ -390,7 +396,8 @@ const theme = createTheme(
       MuiFormLabel: {
         styleOverrides: {
           root: {
-            fontWeight: "bold",
+            fontWeight: "500",
+            color: paletteTheme.palette.textPrimary.main,
           },
         },
       },

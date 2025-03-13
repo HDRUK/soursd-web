@@ -25,7 +25,7 @@ describe("<Affiliations />", () => {
       expect(screen.getByText(/Organisation 1/i)).toBeInTheDocument();
     });
 
-    expect(screen.getByText(/Previous employer/i)).toBeInTheDocument();
+    expect(screen.getByText("employee")).toBeInTheDocument();
     expect(screen.getByText(/A1234567/i)).toBeInTheDocument();
   });
 
