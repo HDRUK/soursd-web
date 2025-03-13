@@ -143,7 +143,7 @@ export default function Affiliations() {
     });
   }, [affiliationsData?.data?.data]);
 
-  const ocrIdBannerToAppear = affiliationsData.data.some(affiliation => {
+  const ocrIdBannerToAppear = affiliationsData?.data.data.some(affiliation => {
     return affiliation.organisation_id === null || affiliation.email === null;
   });
 
