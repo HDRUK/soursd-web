@@ -1008,5 +1008,24 @@
     "alertText": "If you decline, you will not be able to access SOURSD.",
     "alertConfirm": "Confirm. Back to homepage",
     "alertCancel": "Cancel"
+  },
+  "ActionValidationPanel": {
+    "title": "Validation Checks"
+  },
+  "ActionValidationMakeDecision": {
+    "pass": "Pass",
+    "fail": "Fail"
+  },
+  "ActionValidationCommentForm": {
+    "confirm": "Confirm {action}",
+    "cancel": "Cancel"
+  },
+  "ChangeDecisionChip": {
+    "changeDecision": "Change Decision",
+    "passed": "Passed",
+    "failed": "Failed"
+  },
+  "CustodianProjectUser": {
+    "title": "User for {projectTitle}"
   }
 }

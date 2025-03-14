@@ -1,7 +1,7 @@
 import { ResponseJson, ResponseOptions } from "@/types/requests";
+import { Comment } from "@/types/logs";
 import { postRequest } from "../requests";
 import { handleJsonResponse } from "../requestHelpers";
-import { Comment } from "@/types/logs";
 import { PostValidationLogCommentPayload } from "./types";
 
 export default async (

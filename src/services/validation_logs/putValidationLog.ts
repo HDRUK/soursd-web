@@ -1,7 +1,7 @@
 import { ResponseJson, ResponseOptions } from "@/types/requests";
+import { ValidationLog } from "@/types/logs";
 import { putRequest } from "../requests";
 import { handleJsonResponse } from "../requestHelpers";
-import { ValidationLog } from "@/types/logs";
 import { ValidationLogAction } from "./types";
 
 export default async (

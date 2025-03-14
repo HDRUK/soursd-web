@@ -1,6 +1,5 @@
-import { getElementHeightWithMargins } from "@/utils/dom";
-import { Box, Button, Collapse, CollapseProps } from "@mui/material";
-import React, { ReactNode, useEffect, useRef, useState } from "react";
+import { Box, Button, CollapseProps } from "@mui/material";
+import React, { ReactNode, useState } from "react";
 
 interface ViewMoreProps extends CollapseProps {
   collapseNumRows: number;

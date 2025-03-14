@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { mockedVerifications } from "@/mocks/data/static";
-import ActionsPanelValidationChecks from "./ActionsPanelValidationChecks";
+import ActionsPanelValidationCheck from "./ActionsPanelValidationCheck";
 
 const meta = {
-  title: "components/ActionsPanelValidationChecks",
-  component: ActionsPanelValidationChecks,
+  title: "components/ActionsPanelValidationCheck",
+  component: ActionsPanelValidationCheck,
   tags: ["autodocs"],
-} satisfies Meta<typeof ActionsPanelValidationChecks>;
+} satisfies Meta<typeof ActionsPanelValidationCheck>;
 
 export default meta;
 

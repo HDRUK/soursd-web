@@ -1,12 +1,12 @@
 import ActionsPanel from "@/components/ActionsPanel";
-import ActionsPanelValidationChecks from "@/components/ActionsPanelValidationChecks";
+import ActionsPanelValidationCheck from "@/modules/ActionsPanelValidationCheck";
 import { RejectIcon, VerifyIcon } from "@/consts/icons";
 import { Link } from "@/i18n/routing";
 import { Button } from "@mui/material";
 
 const mockedVerifications = () => (
   <ActionsPanel heading="Validation checks">
-    <ActionsPanelValidationChecks
+    <ActionsPanelValidationCheck
       heading="Has all Network mandatory training and awareness been completed"
       history={[
         {

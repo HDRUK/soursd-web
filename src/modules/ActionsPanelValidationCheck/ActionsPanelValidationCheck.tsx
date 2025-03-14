@@ -3,18 +3,17 @@ import { useQuery } from "@tanstack/react-query";
 import { getValidationLogCommentsQuery } from "@/services/validation_logs";
 import { ValidationLog } from "@/types/logs";
 import { toTitleCase } from "@/utils/string";
+import ActionValidationMakeDecision from "@/modules/ActionValidationMakeDecision";
+import ViewMore from "@/components/ViewMore";
+import ActionValidationLogComment from "@/components/ActionValidationLogComment";
 
-import ViewMore from "../ViewMore";
-import ActionValidationMakeDecision from "../ActionValidationMakeDecision";
-import ActionValidationLogComment from "../ActionValidationLogComment";
-
-interface ActionsPanelValidationChecksProps {
+interface ActionsPanelValidationCheckProps {
   log: ValidationLog;
 }
 
-export default function ActionsPanelValidationChecks({
+export default function ActionsPanelValidationCheck({
   log,
-}: ActionsPanelValidationChecksProps) {
+}: ActionsPanelValidationCheckProps) {
   const { data: comments, refetch: refetchComments } = useQuery({
     ...getValidationLogCommentsQuery(log.id),
     enabled: !!log.id,

@@ -5,13 +5,13 @@ import { getDaysSince } from "@/utils/date";
 import { capitaliseFirstLetter } from "@/utils/string";
 import { Comment } from "@/types/logs";
 
-interface ActionValidationLogComment {
+interface ActionValidationLogCommentProps {
   comment: Comment;
 }
 
 const ActionValidationLogComment = ({
   comment,
-}: ActionValidationLogComment) => {
+}: ActionValidationLogCommentProps) => {
   const { id, user_id, comment: text, updated_at } = comment;
   const { data: userData } = useQuery(getUserQuery(user_id as number));
 
