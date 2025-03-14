@@ -36,7 +36,7 @@ function CustodianProjectUser({
 
   const { registry_id: registryId } = userData?.data || {};
 
-  const { data: validationLogs, isLoading } = useQuery({
+  const { data: validationLogs, ...queryState } = useQuery({
     ...getCustodianProjectUserValidationLogsQuery(
       custodian?.id as number,
       projectId,
@@ -69,7 +69,7 @@ function CustodianProjectUser({
         <PageColumnBody lg={7}>Content!</PageColumnBody>
         <PageColumnDetails lg={5}>
           <ActionValidationPanel
-            isLoading={isLoading}
+            queryState={queryState}
             logs={validationLogs?.data || []}
           />
         </PageColumnDetails>
