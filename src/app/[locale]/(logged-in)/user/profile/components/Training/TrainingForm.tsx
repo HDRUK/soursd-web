@@ -1,30 +1,24 @@
-import React, {
-  useCallback,
-  useMemo,
-  useState,
-  useEffect,
-  ChangeEvent,
-} from "react";
-import { useForm } from "react-hook-form";
-import { TextField, Button, Grid, Typography } from "@mui/material";
-import { useTranslations } from "next-intl";
-import Form from "@/components/Form";
-import FormControl from "@/components/FormControlWrapper";
-import FormActions from "@/components/FormActions";
 import ButtonSave from "@/components/ButtonSave";
 import DateInput from "@/components/DateInput";
-import { FileType, MAX_UPLOAD_SIZE_BYTES } from "@/consts/files";
+import Form from "@/components/Form";
+import FormActions from "@/components/FormActions";
+import FormControl from "@/components/FormControlWrapper";
 import yup from "@/config/yup";
-import dayjs from "dayjs";
-import { formatDBDate } from "@/utils/date";
-import { PostTrainingsPayload } from "@/services/trainings/types";
+import { FileType, MAX_UPLOAD_SIZE_BYTES } from "@/consts/files";
+import { useStore } from "@/data/store";
 import useFileUpload from "@/hooks/useFileUpload";
 import useUserFileUpload from "@/hooks/useUserFileUpload";
-import { useStore } from "@/data/store";
-import UploadIcon from "@mui/icons-material/Upload";
+import { PostTrainingsPayload } from "@/services/trainings/types";
 import { File as ApplicationFile } from "@/types/application";
-import CertificateUploadModal from "./CertificateUploadModal";
+import { formatDBDate } from "@/utils/date";
+import UploadIcon from "@mui/icons-material/Upload";
+import { Button, Grid, TextField, Typography } from "@mui/material";
+import dayjs from "dayjs";
+import { useTranslations } from "next-intl";
 import prettyBytes from "pretty-bytes";
+import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
+import { useForm } from "react-hook-form";
+import CertificateUploadModal from "./CertificateUploadModal";
 
 const NAMESPACE_TRANSLATION_FORM = "Form.Training";
 const NAMESPACE_TRANSLATION_FILE = "File";

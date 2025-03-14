@@ -1,31 +1,30 @@
 import { useStore } from "@/data/store";
 
-import postTrainingsQuery from "@/services/trainings/postTrainingsQuery";
-import { PostTrainingsPayload } from "@/services/trainings/types";
-import { Button, Typography } from "@mui/material";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { useTranslations } from "next-intl";
-import { useCallback, useState, useEffect } from "react";
-import ReactDOMServer from "react-dom/server";
-import FormModal from "@/components/FormModal";
-import ContactLink from "@/components/ContactLink";
-import Table from "@/components/Table";
-import { formatShortDate } from "@/utils/date";
-import useQueryAlerts from "@/hooks/useQueryAlerts";
-import { ResearcherTraining } from "@/types/application";
 import { ActionMenu, ActionMenuItem } from "@/components/ActionMenu";
-import TaskAltIcon from "@mui/icons-material/TaskAlt";
+import ContactLink from "@/components/ContactLink";
+import FormModal from "@/components/FormModal";
+import Table from "@/components/Table";
+import { TrashIcon } from "@/consts/icons";
 import useFileDownload from "@/hooks/useFileDownload";
-import { showAlert } from "@/utils/showAlert";
+import useQueryAlerts from "@/hooks/useQueryAlerts";
+import useQueryConfirmAlerts from "@/hooks/useQueryConfirmAlerts";
 import {
   deleteTrainingQuery,
   getTrainingByRegistryIdQuery,
 } from "@/services/trainings";
+import postTrainingsQuery from "@/services/trainings/postTrainingsQuery";
+import { PostTrainingsPayload } from "@/services/trainings/types";
+import { ResearcherTraining } from "@/types/application";
+import { formatShortDate } from "@/utils/date";
+import { showAlert } from "@/utils/showAlert";
 import AddIcon from "@mui/icons-material/Add";
+import TaskAltIcon from "@mui/icons-material/TaskAlt";
+import { Button, Typography } from "@mui/material";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
+import { useCallback, useEffect, useState } from "react";
+import ReactDOMServer from "react-dom/server";
 import TrainingForm from "./TrainingForm";
-import VerifiedOutlinedIcon from "@mui/icons-material/VerifiedOutlined";
-import { TrashIcon, VerifiedIcon } from "@/consts/icons";
-import useQueryConfirmAlerts from "@/hooks/useQueryConfirmAlerts";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Training";
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
