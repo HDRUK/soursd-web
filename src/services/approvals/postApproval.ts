@@ -9,9 +9,6 @@ export default async (
   entityType: EntityType,
   options: ResponseOptions
 ): Promise<ResponseJson<boolean>> => {
-  console.log(payload);
-  console.log(`${process.env.NEXT_PUBLIC_API_V1_URL}/approvals/${entityType}`);
-
   const response = await postRequest(
     `${process.env.NEXT_PUBLIC_API_V1_URL}/approvals/${entityType}`,
     payload
