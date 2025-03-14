@@ -17,7 +17,6 @@ export default function ActionsPanelValidationCheck({
   const { data: comments, refetch: refetchComments } = useQuery({
     ...getValidationLogCommentsQuery(log.id),
     enabled: !!log.id,
-    initialData: { data: log.comments || [] },
   });
 
   return (
