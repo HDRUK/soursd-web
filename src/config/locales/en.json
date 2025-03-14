@@ -4,14 +4,13 @@
     "hide": "Hide {name}"
   },
   "File": {
-    "maxSizeText": "{size} limit.",
+    "maxSizeText": "Max size: {size} limit per file",
     "inputLabelText": "File input",
     "fileTypesText": "File types: PDF, DOC, and DOCX",
     "maxSizeErrorText": "Your file must be under {size}",
     "scanningText": "Scanning file for viruses...",
     "scanOkText": "File was successfully scanned",
-    "scanErrorText": "Your file file may have a virus",
-    "fileTypesText": "PDF, DOC, and DOCX"
+    "scanErrorText": "Your file file may have a virus"
   },
   "Application": {
     "period": "Period",
@@ -505,6 +504,7 @@
     "subsidiaryWebsite": "Subsidiary website",
     "subsidiaryWebsitePlaceholder": "Subsidiary website",
     "Training": {
+      "uploadCertificateDescription": "Upload your training certificate to provide Data Custodians with up-to-date information on mandatory training and accreditations.",
       "provider": "Training provider",
       "trainingProviderRequiredInvalid": "Training provider is required",
       "trainingNameRequiredInvalid": "Training name is required",
@@ -714,6 +714,7 @@
     "missingOrcIdMessage": "There’s some missing information from your ORCID that we need you to complete"
   },
   "Training": {
+    "deleteTrainingError": "An error occurred while deleting the training course. Please try again or <contactLink>contact support</contactLink> if the problem persists.",
     "title": "Training",
     "trainingHistoryTitle": "Training history",
     "trainingHistoryColumnProvider": "Training provider",

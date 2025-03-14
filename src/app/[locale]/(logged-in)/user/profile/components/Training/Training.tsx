@@ -17,14 +17,22 @@ import { ActionMenu, ActionMenuItem } from "@/components/ActionMenu";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import useFileDownload from "@/hooks/useFileDownload";
 import { showAlert } from "@/utils/showAlert";
-import { getTrainingByRegistryIdQuery } from "@/services/trainings";
+import {
+  deleteTrainingQuery,
+  getTrainingByRegistryIdQuery,
+} from "@/services/trainings";
 import AddIcon from "@mui/icons-material/Add";
 import TrainingForm from "./TrainingForm";
+import VerifiedOutlinedIcon from "@mui/icons-material/VerifiedOutlined";
+import { TrashIcon, VerifiedIcon } from "@/consts/icons";
+import useQueryConfirmAlerts from "@/hooks/useQueryConfirmAlerts";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Training";
+const NAMESPACE_TRANSLATION_APPLICATION = "Application";
 
 export default function Training() {
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
+  const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
   const user = useStore(store => store.config.user);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -49,6 +57,22 @@ export default function Training() {
     enabled: !!user?.registry_id,
   });
 
+  const { mutateAsync: deleteTrainingAsync, ...deleteTrainingQueryState } =
+    useMutation(deleteTrainingQuery());
+
+  const showDeleteConfirm = useQueryConfirmAlerts<number>(
+    deleteTrainingQueryState,
+    {
+      confirmAlertProps: {
+        willClose: async (id: number) => {
+          await deleteTrainingAsync(id);
+
+          refetchTrainings();
+        },
+      },
+    }
+  );
+
   useEffect(() => {
     try {
       if (fileIdToDownload) {
@@ -72,6 +96,7 @@ export default function Training() {
 
   const renderActions = (training: ResearcherTraining) => {
     const certificateFile = user?.registry?.files[0];
+
     return (
       <ActionMenu aria-label={`Actions for ${training.training_name}`}>
         <ActionMenuItem
@@ -80,6 +105,14 @@ export default function Training() {
           onClick={() => certificateFile && downloadFile(certificateFile.id)}
           disabled={!certificateFile}>
           {t("viewCertificate")}
+        </ActionMenuItem>
+        <ActionMenuItem
+          icon={<TrashIcon />}
+          sx={{ color: "error.main" }}
+          onClick={() => {
+            showDeleteConfirm(training.id);
+          }}>
+          {tApplication("delete")}
         </ActionMenuItem>
       </ActionMenu>
     );
@@ -159,15 +192,15 @@ export default function Training() {
       <Typography variant="h6" sx={{ mb: 1 }}>
         {t("trainingHistoryTitle")}
       </Typography>
-      {!!trainingsData?.data.length && (
-        <Table
-          data={trainingsData.data}
-          columns={columns}
-          queryState={trainingDataQueryState}
-          total={trainingsData.data.length}
-          noResultsMessage={t("NoResultsMessage")}
-        />
-      )}
+
+      <Table
+        data={trainingsData?.data || []}
+        columns={columns}
+        queryState={trainingDataQueryState}
+        total={trainingsData?.data.length}
+        noResultsMessage={t("noResultsMessage")}
+      />
+
       <Button
         onClick={handleOpenModal}
         variant="outlined"

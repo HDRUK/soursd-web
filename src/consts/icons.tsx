@@ -1,7 +1,7 @@
 import StatusIndicator from "@/components/StatusIndicator";
 import BlockIcon from "@mui/icons-material/BlockOutlined";
 import BusinessIcon from "@mui/icons-material/Business";
-import DeleteIcon from "@mui/icons-material/Delete";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import GppBadOutlinedIcon from "@mui/icons-material/GppBadOutlined";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
@@ -9,6 +9,7 @@ import ShieldOutlinedIcon from "@mui/icons-material/ShieldOutlined";
 import TaskAltOutlinedIcon from "@mui/icons-material/TaskAltOutlined";
 import VerifiedUserOutlinedIcon from "@mui/icons-material/VerifiedUserOutlined";
 import WorkspacePremiumOutlinedIcon from "@mui/icons-material/WorkspacePremiumOutlined";
+import VerifiedOutlinedIcon from "@mui/icons-material/VerifiedOutlined";
 import StarIcon from "@mui/icons-material/Star";
 import { SvgIconProps } from "@mui/material";
 import { yellow } from "@mui/material/colors";
@@ -21,7 +22,7 @@ const IdentityVerifiedIcon = (props: SvgIconProps) => {
   );
 };
 
-const VerifyIcon = (props: SvgIconProps) => {
+const VerifiedUserIcon = (props: SvgIconProps) => {
   const { sx, ...restProps } = props;
 
   return (
@@ -31,6 +32,10 @@ const VerifyIcon = (props: SvgIconProps) => {
     />
   );
 };
+
+const VerifiedIcon = (props: SvgIconProps) => (
+  <VerifiedOutlinedIcon {...props} />
+);
 
 const RejectIcon = (props: SvgIconProps) => {
   const { sx, ...restProps } = props;
@@ -61,7 +66,7 @@ const DecoupleIcon = (props: SvgIconProps) => (
 );
 
 const TrashIcon = (props: SvgIconProps) => (
-  <DeleteIcon {...props} sx={{ color: "error.main" }} />
+  <DeleteOutlineOutlinedIcon {...props} sx={{ color: "error.main" }} />
 );
 
 const EditIcon = (props: SvgIconProps) => (
@@ -88,6 +93,7 @@ export {
   PendingIcon,
   RejectIcon,
   TrashIcon,
-  VerifyIcon,
+  VerifiedUserIcon,
   PrimaryContactIcon,
+  VerifiedIcon,
 };

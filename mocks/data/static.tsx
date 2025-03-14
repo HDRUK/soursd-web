@@ -1,6 +1,6 @@
 import ActionsPanel from "@/components/ActionsPanel";
 import ActionsPanelValidationChecks from "@/components/ActionsPanelValidationChecks";
-import { RejectIcon, VerifyIcon } from "@/consts/icons";
+import { RejectIcon, VerifiedUserIcon } from "@/consts/icons";
 import { Link } from "@/i18n/routing";
 import { Button } from "@mui/material";
 
@@ -29,7 +29,7 @@ const mockedVerifications = () => (
         <>
           <Button
             variant="outlined"
-            startIcon={<VerifyIcon fill="inherit" color="inherit" />}>
+            startIcon={<VerifiedUserIcon fill="inherit" color="inherit" />}>
             Pass
           </Button>
           <Button variant="outlined" startIcon={<RejectIcon />}>

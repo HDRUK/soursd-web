@@ -94,9 +94,15 @@ export default function FormModal({
               <CircularProgress />
             </Box>
           )}
-          <Typography gutterBottom variant="h3" component="div" sx={{ mb: 3 }}>
-            {heading}
-          </Typography>
+          {heading && (
+            <Typography
+              gutterBottom
+              variant="h3"
+              component="div"
+              sx={{ mb: 3 }}>
+              {heading}
+            </Typography>
+          )}
           {children}
         </CardContent>
       </Card>

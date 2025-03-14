@@ -13,7 +13,7 @@ import FormControl from "@/components/FormControlWrapper";
 import FormActions from "@/components/FormActions";
 import ButtonSave from "@/components/ButtonSave";
 import DateInput from "@/components/DateInput";
-import { FileType } from "@/consts/files";
+import { FileType, MAX_UPLOAD_SIZE_BYTES } from "@/consts/files";
 import yup from "@/config/yup";
 import dayjs from "dayjs";
 import { formatDBDate } from "@/utils/date";
@@ -24,8 +24,10 @@ import { useStore } from "@/data/store";
 import UploadIcon from "@mui/icons-material/Upload";
 import { File as ApplicationFile } from "@/types/application";
 import CertificateUploadModal from "./CertificateUploadModal";
+import prettyBytes from "pretty-bytes";
 
 const NAMESPACE_TRANSLATION_FORM = "Form.Training";
+const NAMESPACE_TRANSLATION_FILE = "File";
 
 export interface TrainingFormValues {
   provider: string;
@@ -46,8 +48,14 @@ export default function TrainingForm({
   onCancel,
 }: TrainingFormProps) {
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
+  const tFile = useTranslations(NAMESPACE_TRANSLATION_FILE);
+
   const [user, setUser] = useStore(store => [store.config.user, store.setUser]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const translationsMaxSize = {
+    size: prettyBytes(MAX_UPLOAD_SIZE_BYTES),
+  };
 
   const calculateYearsRemaining = (expirationDate: string): number => {
     const now = dayjs();
@@ -172,24 +180,35 @@ export default function TrainingForm({
             renderField={props => <TextField {...props} />}
           />
         </Grid>
-        <Grid item xs={7} key="awarded_at">
-          <FormControl
-            name="awarded_at"
-            label={tForm("awardedAt")}
-            renderField={props => <DateInput {...props} />}
-          />
-        </Grid>
-        <Grid item xs={7} key="expires_at">
-          <FormControl
-            name="expires_at"
-            label={tForm("expiresAt")}
-            renderField={props => <DateInput {...props} />}
-          />
+        <Grid item xs={12} key="awarded_at">
+          <Grid container columnSpacing={2} rowSpacing={2}>
+            <Grid item md={6}>
+              <FormControl
+                name="awarded_at"
+                label={tForm("awardedAt")}
+                renderField={props => <DateInput {...props} />}
+              />
+            </Grid>
+            <Grid item md={6}>
+              <FormControl
+                name="expires_at"
+                label={tForm("expiresAt")}
+                renderField={props => <DateInput {...props} />}
+              />
+            </Grid>
+          </Grid>
         </Grid>
         <Grid item xs={12} key="certification_upload">
           <FormControl
             name="certification_upload"
             label={tForm("certificationUpload")}
+            description={
+              <>
+                <div>{tForm("uploadCertificateDescription")}</div>
+                <div>{tFile("fileTypesText")}</div>
+                <div>{tFile("maxSizeText", translationsMaxSize)}</div>
+              </>
+            }
             renderField={props => (
               <>
                 <Button
