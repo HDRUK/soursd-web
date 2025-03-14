@@ -46,18 +46,24 @@ export default function ActionValidationCommentForm({
           name="comment"
           renderField={fieldProps => (
             <TextareaAutosize
-              defaultValue={fieldProps.value}
+              data-testid="validation-log-comment-field"
+              value={fieldProps.value}
+              onChange={fieldProps.onChange}
+              placeholder={fieldProps?.placeholder}
               style={{ width: "100%" }}
               minRows={8}
-              {...fieldProps}
             />
           )}
         />
         <Box sx={{ display: "flex", gap: 1, justifyContent: "space-between" }}>
-          <Button variant="outlined" onClick={() => setSelectedAction(null)}>
+          <Button
+            data-testid="validation-log-cancel-confirm-button"
+            variant="outlined"
+            onClick={() => setSelectedAction(null)}>
             {t("cancel")}
           </Button>
           <LoadingButton
+            data-testid="validation-log-confirm-button"
             loading={isLoading}
             type="submit"
             variant="contained"

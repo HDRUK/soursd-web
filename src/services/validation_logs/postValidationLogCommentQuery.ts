@@ -3,11 +3,11 @@ import { PostValidationLogCommentPayload } from "./types";
 
 export default function postValidationLogCommentQuery() {
   return {
-    mutationKey: ["postValidationLogCommnet"],
+    mutationKey: ["postValidationLogComment"],
     mutationFn: (payload: PostValidationLogCommentPayload) =>
       postValidationLogComment(payload, {
         error: {
-          message: "postValidationLogCommnetError",
+          message: "postValidationLogCommentError",
         },
       }),
   };

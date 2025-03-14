@@ -87,12 +87,14 @@ export default function ActionValidationMakeDecision({
   return (
     <Box sx={{ display: "flex", gap: 1, mt: 4 }}>
       <Button
+        data-testid="validation-log-initial-pass"
         onClick={() => setSelectedAction(ValidationLogAction.PASS)}
         variant="outlined"
         startIcon={<VerifyIcon fill="inherit" color="inherit" />}>
         {t("pass")}
       </Button>
       <Button
+        data-testid="validation-log-initial-fail"
         onClick={() => setSelectedAction(ValidationLogAction.FAIL)}
         variant="outlined"
         startIcon={<RejectIcon />}>

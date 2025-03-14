@@ -18,7 +18,7 @@ interface ValidationLog {
   name: string;
   completed_at: string | null;
   manually_confirmed: number;
-  comments: Comment[];
+  comments?: Comment[];
 }
 
 export type { ValidationLog, Comment };

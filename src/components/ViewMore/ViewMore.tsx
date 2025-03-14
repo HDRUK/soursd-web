@@ -33,7 +33,10 @@ export default function ViewMore({
           onClick: toggleExpand,
         }) || (
           <Box sx={{ mt: 1 }}>
-            <Button variant="text" onClick={toggleExpand}>
+            <Button
+              data-testid="view-more-button"
+              variant="text"
+              onClick={toggleExpand}>
               {expanded ? "View Less" : "View All"}
             </Button>
           </Box>

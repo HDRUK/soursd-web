@@ -28,7 +28,10 @@ const ChangeDecisionChip = ({
         label={completed ? t("passed") : t("failed")}
         color={completed ? "success" : "error"}
       />
-      <Button variant="outlined" onClick={onClick}>
+      <Button
+        data-testid="validation-log-change-decision"
+        variant="outlined"
+        onClick={onClick}>
         {t("changeDecision")}
       </Button>
     </Box>
