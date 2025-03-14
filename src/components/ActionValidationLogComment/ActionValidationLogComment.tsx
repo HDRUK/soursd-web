@@ -23,13 +23,12 @@ const ActionValidationLogComment = ({
 
   return (
     <div key={`validation_log_comment${id}`}>
-      <Typography fontWeight="bold">
+      <Typography sx={{ fontWeight: "bold" }}>
         {first_name} {last_name} (
         {capitaliseFirstLetter(user_group?.toLowerCase().slice(0, -1) || "")}),{" "}
         {t("daysSince", { days: getDaysSince(updated_at) })}
       </Typography>
       <Typography>{text}</Typography>
-      {}
     </div>
   );
 };
