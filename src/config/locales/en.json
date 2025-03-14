@@ -1027,5 +1027,8 @@
   },
   "CustodianProjectUser": {
     "title": "User for {projectTitle}"
+  },
+  "ActionValidationLogComment": {
+    "daysSince": "{days} days ago"
   }
 }
