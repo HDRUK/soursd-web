@@ -78,14 +78,13 @@ export default function Affiliations() {
     },
   });
 
+  const handleDeleteAffiliation = () => console.log("delete");
+
   const renderActionMenuCell = useCallback(() => {
     return (
       <ActionMenu>
-        <ActionMenuItem
-          onClick={() => {
-            // Placeholder
-          }}>
-          Delete affiliation
+        <ActionMenuItem onClick={handleDeleteAffiliation}>
+          {tApplication("deleteAffiliation")}
         </ActionMenuItem>
       </ActionMenu>
     );
@@ -124,6 +123,7 @@ export default function Affiliations() {
 
   const handleDetailsSubmit = useCallback(
     async (fields: PostAffiliationPayload) => {
+      console.log(fields);
       await mutateAsync({
         ...fields,
         to: fields.current_employer ? null : fields.to,
