@@ -1,14 +1,13 @@
 import { ROUTES } from "@/consts/router";
-import { postRegister } from "@/services/auth";
+import { getRefreshAccessToken, postRegister } from "@/services/auth";
 import { User } from "@/types/application";
 import { Routes } from "@/types/router";
 import Cookies from "js-cookie";
+import { redirect } from "next/navigation";
 import { getAccessToken } from "./auth";
 import { handleLogin } from "./keycloak";
-import { capitaliseFirstLetter } from "./string";
-
 import { getLocalePath } from "./language";
-import { redirect } from "next/navigation";
+import { capitaliseFirstLetter } from "./string";
 
 function objectToQuerystring(
   params: Record<string, string | number | boolean | null | undefined>
@@ -79,21 +78,6 @@ const registerAndRedirect = async (pathname: string) => {
     redirectToProfile(user.data, pathname);
   }
 };
-
-async function getRefreshAccessToken(): Promise<string | undefined> {
-  const response = await fetch("/api/auth/refresh", {
-    method: "POST",
-    credentials: "include",
-  });
-
-  if (!response.ok) {
-    return undefined;
-  }
-
-  const data = await response.json();
-
-  return data.access_token;
-}
 
 async function redirectRefreshToken() {
   const accessToken = await getRefreshAccessToken();

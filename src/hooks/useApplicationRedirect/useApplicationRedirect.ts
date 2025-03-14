@@ -1,5 +1,6 @@
 "use server";
 
+import { ROUTES } from "@/consts/router";
 import usePathServerSide from "@/hooks/usePathServerSide";
 import { getMe } from "@/services/auth";
 import {
@@ -9,30 +10,36 @@ import {
   redirectWithoutAccessToken,
   registerAndRedirect,
 } from "@/utils/requests";
+import { redirect } from "next/navigation";
 
 export default async function useApplicationRedirect() {
   const pathname = usePathServerSide();
-  const accessToken = await redirectWithoutAccessToken(pathname);
 
-  let me;
+  if (!!pathname) {
+    const accessToken = await redirectWithoutAccessToken(pathname);
 
-  if (Boolean(accessToken)) {
-    const response = await getMe({
-      suppressThrow: true,
-    });
+    let me;
 
-    me = response.data;
+    if (!!accessToken) {
+      const response = await getMe({
+        suppressThrow: true,
+      });
 
-    if (response.status === 200) {
-      redirectToProfile(me, pathname);
-    } else if (response.status === 401) {
-      redirectRefreshToken();
-    } else if (response.status === 404) {
-      registerAndRedirect(pathname);
-    } else if (response.status === 500) {
-      redirectOnServerError(accessToken, pathname);
+      me = response.data;
+
+      if (response.status === 200) {
+        redirectToProfile(me, pathname);
+      } else if (response.status === 401) {
+        redirectRefreshToken();
+      } else if (response.status === 404) {
+        registerAndRedirect(pathname);
+      } else if (response.status === 500) {
+        redirectOnServerError(accessToken, pathname);
+      }
     }
+
+    return me;
   }
 
-  return me;
+  redirect(ROUTES.homepage.path);
 }
