@@ -27,6 +27,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
 import ReactDOMServer from "react-dom/server";
+import { Message } from "@/components/Message";
 import AffiliationsForm from "../AffiliationsForm";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
@@ -142,6 +143,10 @@ export default function Affiliations() {
     });
   }, [affiliationsData?.data?.data]);
 
+  const ocrIdBannerToAppear = affiliationsData?.data.data.some(affiliation => {
+    return affiliation.organisation_id === null || affiliation.email === null;
+  });
+
   return (
     <PageBodyContainer heading={tProfile("affiliationsTitle")}>
       <PageGuidance {...mockedResearcherAffiliationsGuidance}>
@@ -159,6 +164,12 @@ export default function Affiliations() {
             <Typography sx={{ mb: 2 }}>
               {tProfile("affiliationsDescription")}
             </Typography>
+            {!!ocrIdBannerToAppear && (
+              <Message severity="warning" sx={{ mb: 2 }}>
+                {/* This contains a link in the designs that should link to the first entry that needed to be edited, this can be implemented once edit affiliations is implemented */}
+                {tProfile("missingOrcIdMessage")}
+              </Message>
+            )}{" "}
             <Table
               noResultsMessage={tProfile("affiliationsNoResultsMessage")}
               errorMessage={tProfile.rich("affiliationsErrorMessage", {

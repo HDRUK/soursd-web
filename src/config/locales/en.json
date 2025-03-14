@@ -712,7 +712,8 @@
     "orcidDescription": "Please enter your ORCID, if you have one, as this can help Data Custodians identify you.",
     "orcidFormDescription": "Please provide your ORCID if you have one. If this information is not up-to-date or you do not have an ORCID, please upload a CV with the same relevant information. We can automatically pull in your publicly visible employment history from your ORCID profile. We recommend that you do this only if the information is correct and up-to-date. You will be able to edit the information after we’ve automatically pulled it in from ORCID. However please note if synchronisation is turned on, some of these edits maybe overwritten.",
     "cvUpload": "CV Upload",
-    "cvUploadDescription": "Please upload an up-to-date CV , including your professional employment, education and qualifications, and publication record."
+    "cvUploadDescription": "Please upload an up-to-date CV , including your professional employment, education and qualifications, and publication record.",
+    "missingOrcIdMessage": "There’s some missing information from your ORCID that we need you to complete"
   },
   "Training": {
     "title": "Training",
@@ -725,7 +726,10 @@
     "postTrainingSuccess": "Training course added successfully",
     "closeButton": "Close",
     "postTrainingError": "An error occurred while adding the training course. Please try again or <contactLink>contact support</contactLink> if the problem persists.",
-    "errorButton": "OK"
+    "errorButton": "OK",
+    "viewCertificate": "View Certificate",
+    "fileDownloadError": "An error occurred while downloading the certificate. Please try again or <contactLink>contact support</contactLink> if the problem persists.",
+    "noResultsMessage": "You currently have no training history"
   },
   "ProfileCompleteStatus": {
     "profileComplete": "Profile complete",

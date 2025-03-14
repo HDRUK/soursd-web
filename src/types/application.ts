@@ -280,6 +280,7 @@ interface ResearcherAffiliation {
   organisation: {
     organisation_name: string;
   };
+  email?: string;
 }
 
 interface ResearcherProjectApproval {
