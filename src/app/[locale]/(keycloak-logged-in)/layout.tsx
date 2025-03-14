@@ -1,10 +1,9 @@
-import { PageContainer, ApplicationRedirect } from "@/modules";
+import useApplicationRedirect from "@/hooks/useApplicationRedirect";
+import { PageContainer } from "@/modules";
 import { PropsWithChildren } from "react";
 
-export default function Layout({ children }: PropsWithChildren) {
-  return (
-    <ApplicationRedirect>
-      <PageContainer>{children}</PageContainer>
-    </ApplicationRedirect>
-  );
+export default async function Layout({ children }: PropsWithChildren) {
+  await useApplicationRedirect();
+
+  return <PageContainer>{children}</PageContainer>;
 }

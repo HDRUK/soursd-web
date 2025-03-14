@@ -6,4 +6,10 @@ async function getLocale(): Promise<string> {
   return cookies().get("NEXT_LOCALE")?.value || "en";
 }
 
-export { getLocale };
+async function getLocalePath(path: string): Promise<string> {
+  const locale = await getLocale();
+
+  return `/${locale}${path}`;
+}
+
+export { getLocale, getLocalePath };

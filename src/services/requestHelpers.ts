@@ -1,20 +1,7 @@
 import { ResponseMessageType } from "@/consts/requests";
 import { ResponseEmptyError } from "@/types/query";
 import { ResponseJson, ResponseOptions } from "@/types/requests";
-
-export async function getAccessToken(): Promise<string | undefined> {
-  const response = await fetch("/api/auth/token", {
-    method: "GET",
-    credentials: "include",
-  });
-
-  if (!response.ok) {
-    return undefined;
-  }
-
-  const data = await response.json();
-  return data.access_token;
-}
+import { getAccessToken } from "@/utils/auth";
 
 async function getHeadersWithAuthorization(headers?: HeadersInit) {
   const accessToken = await getAccessToken();
@@ -62,32 +49,43 @@ async function handleJsonResponse(
   response: Response | ResponseEmptyError,
   options?: ResponseOptions
 ) {
-  const responseError = handleResponseError(response, options);
+  try {
+    const responseError = handleResponseError(response, options);
 
-  if (!options?.suppressThrow && responseError)
-    return Promise.reject(responseError);
+    if (!options?.suppressThrow && responseError)
+      return Promise.reject(responseError);
 
-  const data = await response.json();
-  const dataError = handleDataError(data, options);
+    const data = await response.json();
+    const dataError = handleDataError(data, options);
 
-  if (!options?.suppressThrow && dataError) return Promise.reject(dataError);
+    if (!options?.suppressThrow && dataError) return Promise.reject(dataError);
 
-  return Promise.resolve({
-    ...data,
-    status: response.status,
-  });
+    return Promise.resolve({
+      ...data,
+      status: response.status,
+    });
+  } catch (_) {
+    return Promise.resolve({
+      ...createEmptyErrorJson(),
+      status: response.status,
+    });
+  }
+}
+
+function createEmptyErrorJson() {
+  return {
+    message: "failed",
+    data: null,
+  };
 }
 
 async function createEmptyErrorResponse(
-  status: 500 | 404 | 400 = 500
+  status: number = 500
 ): Promise<ResponseEmptyError> {
   return Promise.resolve({
     ok: false,
     status,
-    json: async () => ({
-      message: "failed",
-      data: null,
-    }),
+    json: async () => createEmptyErrorJson(),
   });
 }
 

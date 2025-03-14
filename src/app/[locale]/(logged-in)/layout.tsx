@@ -1,11 +1,10 @@
-"use client";
-
 import { UserGroup } from "@/consts/user";
-import { PageContainer, ApplicationRedirect } from "@/modules";
+import useApplicationRedirect from "@/hooks/useApplicationRedirect";
+import { PageContainer } from "@/modules";
 import Application from "@/modules/Application";
 import { getCustodianUser } from "@/services/custodian_users";
 import { User } from "@/types/application";
-import { PropsWithChildren, useState } from "react";
+import { PropsWithChildren } from "react";
 
 type LayoutProps = PropsWithChildren;
 
@@ -21,33 +20,26 @@ async function getCustodianId(user: User) {
   return custodian_id;
 }
 
-export default function Layout({ children }: LayoutProps) {
-  const [me, setMe] = useState<User>();
-  const [custodianId, setCustodianId] = useState<number>();
-  const [organisationId, setOrganisationId] = useState<number>();
+export default async function Layout({ children }: LayoutProps) {
+  let custodianId;
+  let organisationId;
 
-  const handleMeFetched = async (user: User | undefined) => {
-    if (user) {
-      if (user.user_group === UserGroup.CUSTODIANS) {
-        setCustodianId(await getCustodianId(user));
-      } else if (user.user_group === UserGroup.ORGANISATIONS) {
-        setOrganisationId(user.organisation_id);
-      }
+  const me = await useApplicationRedirect();
 
-      setMe(user);
+  if (me) {
+    if (me.user_group === UserGroup.CUSTODIANS) {
+      custodianId = await getCustodianId(me);
+    } else if (me.user_group === UserGroup.ORGANISATIONS) {
+      organisationId = me.organisation_id;
     }
-  };
-
-  console.log("custodianId", custodianId);
+  }
 
   return (
-    <ApplicationRedirect onMeFetched={handleMeFetched}>
-      <Application
-        custodianId={custodianId}
-        organisationId={organisationId}
-        me={me}>
-        <PageContainer>{children}</PageContainer>
-      </Application>
-    </ApplicationRedirect>
+    <Application
+      custodianId={custodianId}
+      organisationId={organisationId}
+      me={me}>
+      <PageContainer>{children}</PageContainer>
+    </Application>
   );
 }

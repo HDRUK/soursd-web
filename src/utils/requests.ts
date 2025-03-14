@@ -1,12 +1,14 @@
 import { ROUTES } from "@/consts/router";
 import { postRegister } from "@/services/auth";
-import { getAccessToken } from "@/services/requestHelpers";
 import { User } from "@/types/application";
 import { Routes } from "@/types/router";
 import Cookies from "js-cookie";
-import { useRouter } from "next/navigation";
+import { getAccessToken } from "./auth";
 import { handleLogin } from "./keycloak";
 import { capitaliseFirstLetter } from "./string";
+
+import { getLocalePath } from "./language";
+import { redirect } from "next/navigation";
 
 function objectToQuerystring(
   params: Record<string, string | number | boolean | null | undefined>
@@ -56,12 +58,12 @@ function getProfilePathByEntity(user: User | string, path?: string) {
   return null;
 }
 
-const redirectToProfile = (user: User, path: string) => {
+const redirectToProfile = async (user: User, path: string) => {
   const redirectPath = getProfilePathByEntity(user, path);
 
   if (redirectPath) {
-    // This resolves an issue with a flash of content before replacing the route
-    window.location.href = redirectPath;
+    const localePath = await getLocalePath(redirectPath);
+    redirect(localePath);
   }
 };
 
@@ -71,7 +73,8 @@ const registerAndRedirect = async (pathname: string) => {
   });
 
   if (!user.data) {
-    window.location.href = ROUTES.register.path;
+    const localePath = await getLocalePath(ROUTES.register.path);
+    redirect(localePath);
   } else {
     redirectToProfile(user.data, pathname);
   }
@@ -92,25 +95,24 @@ async function getRefreshAccessToken(): Promise<string | undefined> {
   return data.access_token;
 }
 
-async function redirectRefreshToken(router: ReturnType<typeof useRouter>) {
+async function redirectRefreshToken() {
   const accessToken = await getRefreshAccessToken();
 
   if (!accessToken) {
     Cookies.remove("access_token");
     Cookies.remove("refresh_token");
 
-    router.push(ROUTES.homepage.path);
+    const localePath = await getLocalePath(ROUTES.homepage.path);
+    redirect(localePath);
   }
 }
 
-async function redirectWithoutAccessToken(
-  router: ReturnType<typeof useRouter>,
-  pathname: string
-) {
+async function redirectWithoutAccessToken(pathname: string) {
   const accessToken = await getAccessToken();
 
   if (!accessToken && !pathname.includes(ROUTES.homepage.path)) {
-    router.replace(ROUTES.homepage.path);
+    const localePath = await getLocalePath(ROUTES.homepage.path);
+    redirect(localePath);
   }
 
   return accessToken;

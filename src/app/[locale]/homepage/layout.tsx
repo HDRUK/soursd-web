@@ -1,8 +1,8 @@
-"use client";
-
-import { ApplicationRedirect } from "@/modules";
+import useApplicationRedirect from "@/hooks/useApplicationRedirect";
 import { PropsWithChildren } from "react";
 
-export default function Layout({ children }: PropsWithChildren) {
-  return <ApplicationRedirect>{children}</ApplicationRedirect>;
+export default async function Layout({ children }: PropsWithChildren) {
+  await useApplicationRedirect();
+
+  return children;
 }
