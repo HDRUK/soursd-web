@@ -6,4 +6,26 @@ type ProjectResponse = ResearcherProject;
 
 type ProjectUsersResponse = ProjectUser[];
 
-export type { ProjectsResponse, ProjectUsersResponse, ProjectResponse };
+type DeleteProjectUserPayload = {
+  projectId: number;
+  registryId: number;
+};
+
+interface PutPrimaryContactQuery {
+  projectId: number;
+  registryId: number;
+  primaryContact: boolean;
+}
+
+interface PutPrimaryContactPayload {
+  primary_contact: boolean;
+}
+
+export type {
+  ProjectsResponse,
+  ProjectUsersResponse,
+  ProjectResponse,
+  DeleteProjectUserPayload,
+  PutPrimaryContactPayload,
+  PutPrimaryContactQuery,
+};

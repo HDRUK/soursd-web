@@ -22,7 +22,11 @@ const nextConfig = withNextIntl({
     return [
       {
         source: "/:locale/user/profile",
-        destination: `/:locale/user/profile/details`,
+        destination: `/:locale/user/profile/home`,
+      },
+      {
+        source: "/:locale/user/profile/projects/:id",
+        destination: `/:locale/user/profile/projects/:id/safe-project`,
       },
       {
         source: "/:locale/data-custodian/profile",
@@ -39,10 +43,6 @@ const nextConfig = withNextIntl({
       {
         source: "/:locale/data-custodian/profile/projects/:id",
         destination: `/:locale/data-custodian/profile/projects/:id/safe-project`,
-      },
-      {
-        source: "/:locale/organisation/profile",
-        destination: `/:locale/organisation/profile/home`,
       },
       {
         source: "/:locale/organisation/profile",

@@ -14,7 +14,7 @@ export const StyledInfo = styled("div")<{
   infoWidth: number | string;
 }>(
   ({ theme, positionVertical, infoWidth }) => css`
-    padding: ${theme.spacing(4)} ${theme.spacing(6)};
+    padding: ${theme.spacing(4)};
     color: ${theme.palette.neutralPink.contrastText};
     background-color: ${theme.palette.neutralPink.main};
     position: relative;

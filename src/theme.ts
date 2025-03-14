@@ -171,6 +171,17 @@ const createMuiTableStyles = (ownerState: TableCellProps) => {
   };
 };
 
+const createMuiChipStyles = () => {
+  return {
+    paddingLeft: "4px",
+    paddingRight: "4px",
+    background: "midGrey.main",
+    "& > .MuiChip-label": {
+      color: "midGrey.contrastText",
+    },
+  };
+};
+
 const createSwitchStyles = () => {
   return {
     ".MuiSwitch-switchBase.Mui-checked": {
@@ -288,6 +299,7 @@ const theme = createTheme(
         styleOverrides: {
           root: {
             fontSize: "1em",
+            fontWeight: "500",
           },
         },
       },
@@ -301,6 +313,11 @@ const theme = createTheme(
       MuiCard: {
         styleOverrides: {
           root: ({ ownerState }) => createBoxStyles(ownerState),
+        },
+      },
+      MuiChip: {
+        styleOverrides: {
+          root: createMuiChipStyles,
         },
       },
       MuiSwitch: {
@@ -379,7 +396,8 @@ const theme = createTheme(
       MuiFormLabel: {
         styleOverrides: {
           root: {
-            fontWeight: "bold",
+            fontWeight: "500",
+            color: paletteTheme.palette.textPrimary.main,
           },
         },
       },

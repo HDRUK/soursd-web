@@ -12,16 +12,28 @@ export type ProfileNavigationFooterProps = {
   nextStepText?: string;
   isLoading?: boolean;
   previousHref?: string;
+  nextHref?: string;
   isDisabled?: boolean;
+  isLastStep?: boolean;
+  onClick?: () => void;
 };
 
 export default function ProfileNavigationFooter({
   previousHref,
+  nextHref,
   nextStepText,
   isLoading,
   isDisabled = false,
+  isLastStep = false,
+  onClick,
 }: ProfileNavigationFooterProps) {
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
+
+  const nextButtonText = isLastStep
+    ? tProfile("finishLinkText")
+    : nextStepText
+      ? tProfile("submitAndContinueButton")
+      : tProfile("submitButton");
 
   return (
     <Grid container spacing={2} alignItems="center">
@@ -54,11 +66,23 @@ export default function ProfileNavigationFooter({
         )}
       </Grid>
       <Grid item xs={3} sx={{ display: "flex", justifyContent: "flex-end" }}>
-        <ButtonSave isLoading={isLoading} sx={{ my: 1 }} disabled={isDisabled}>
-          {nextStepText
-            ? tProfile("submitAndContinueButton")
-            : tProfile("submitButton")}
-        </ButtonSave>
+        {!nextHref ? (
+          <ButtonSave
+            isLoading={isLoading}
+            sx={{ my: 1 }}
+            disabled={isDisabled}
+            onClick={onClick && (() => onClick())}>
+            {nextButtonText}
+          </ButtonSave>
+        ) : (
+          <ButtonSave
+            href={nextHref}
+            component="a"
+            sx={{ my: 1 }}
+            disabled={isDisabled}>
+            {nextButtonText}
+          </ButtonSave>
+        )}
       </Grid>
     </Grid>
   );

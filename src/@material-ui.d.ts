@@ -19,8 +19,11 @@ interface ColorOverrides {
   greys: true;
   lightPurple: true;
   neutralPink: true;
+  neutralGrey: true;
   grey700: true;
   textSecondary: true;
+  textPrimary: true;
+  midGrey: true;
 }
 
 declare module "@mui/material/styles/createPalette" {
@@ -38,8 +41,11 @@ declare module "@mui/material/styles/createPalette" {
     mint: SimplePaletteColorOptions;
     lightPurple: SimplePaletteColorOptions;
     neutralPink: SimplePaletteColorOptions;
+    neutralGrey: SimplePaletteColorOptions;
     grey700: string;
     textSecondary: SimplePaletteColorOptions;
+    textPrimary: SimplePaletteColorOptions;
+    midGrey: SimplePaletteColorOptions;
   }
 
   interface Palette extends CustomPalette {}
@@ -58,6 +64,13 @@ declare module "@mui/material/CircularProgress" {
     import("@mui/material/styles/createPalette").AugmentedColorPaletteOptions;
 
   interface CircularProgressPropsColorOverrides extends ColorOverrides {}
+}
+
+declare module "@mui/material/Chip" {
+  type AugmentedColorPaletteOptions =
+    import("@mui/material/styles/createPalette").AugmentedColorPaletteOptions;
+
+  interface ChipPropsColorOverrides extends ColorOverrides {}
 }
 
 declare module "@mui/material/Card" {

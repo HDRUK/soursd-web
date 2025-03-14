@@ -1,3 +1,5 @@
+import { Action } from "./action";
+
 export interface Notification {
   id: string;
   type: string;
@@ -7,6 +9,7 @@ export interface Notification {
     message: string;
     time: string;
     details: Record<string, { old: string; new: string }>;
+    actions?: Action[];
   };
   read_at: string | null;
   created_at: string;

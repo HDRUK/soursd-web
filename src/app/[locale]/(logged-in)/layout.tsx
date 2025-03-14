@@ -22,7 +22,6 @@ async function refreshAccessToken(): Promise<string | undefined> {
   });
 
   if (!response.ok) {
-    console.error("Token refresh failed");
     return undefined;
   }
 
@@ -53,7 +52,7 @@ async function validateAccessToken(
     if (!accessToken) {
       Cookies.remove("access_token");
       Cookies.remove("refresh_token");
-      router.push(ROUTES.login.path);
+      router.push(ROUTES.homepage.path);
     }
   }
 

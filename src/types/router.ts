@@ -15,8 +15,6 @@ interface RouteConfig {
 }
 
 interface Routes {
-  login: RouteConfig;
-  logout: RouteConfig;
   register: RouteConfig;
   homepage: RouteConfig;
   usersCustodian: RouteConfig;
@@ -54,6 +52,11 @@ interface Routes {
   profileResearcherAffiliations: RouteConfig;
   profileResearcherHome: RouteConfig;
   profileResearcherProjects: RouteConfig;
+  profileResearcherProjectsSafeProject: RouteConfig;
+  profileResearcherProjectsSafeData: RouteConfig;
+  profileResearcherProjectsSafePeople: RouteConfig;
+  profileResearcherProjectsSafeSettings: RouteConfig;
+  profileResearcherProjectsSafeOutputs: RouteConfig;
   profileOrganisation: RouteConfig;
   profileOrganisationActions: RouteConfig;
   profileOrganisationDetails: RouteConfig;
@@ -65,6 +68,7 @@ interface Routes {
   profileOrganisationUserAdministrationDelegates: RouteConfig;
   profileOrganisationUserAdministrationEmployeeStudent: RouteConfig;
   profileOrganisationProjects: RouteConfig;
+  profileOrganisationProjectsSafeProject: RouteConfig;
   admin: RouteConfig;
 }
 
