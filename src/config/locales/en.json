@@ -4,7 +4,7 @@
     "hide": "Hide {name}"
   },
   "File": {
-    "maxSizeText": "Max size: {size} limit per file",
+    "maxSizeText": "{size} limit per file",
     "inputLabelText": "File input",
     "fileTypesText": "File types: PDF, DOC, and DOCX",
     "maxSizeErrorText": "Your file must be under {size}",
