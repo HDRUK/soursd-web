@@ -25,8 +25,8 @@ import {
 import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 import WarningIcon from "@mui/icons-material/Warning";
-import AskOrganisationModal from "../AskOrganisation";
 import SelectDepartments from "@/components/SelectDepartments";
+import AskOrganisationModal from "../AskOrganisation";
 
 export interface AffiliationsFormProps {
   onSubmit: (affiliation: ResearcherAffiliation) => void;
@@ -66,7 +66,6 @@ export default function AffiliationsForm({
   const schema = useMemo(
     () =>
       yup.object().shape({
-        current_employer: yup.boolean(),
         member_id: yup.string().required(tForm("memberIdRequiredInvalid")),
         from: yup.date().required(tForm("fromRequiredInvalid")),
         to: yup.date().when("current_employer", {
@@ -80,35 +79,18 @@ export default function AffiliationsForm({
         relationship: yup
           .string()
           .required(tForm("relationshipRequiredInvalid")),
-<<<<<<< HEAD
-        role: yup.string().required(tForm("positionRequiredInvalid")),
-        email: yup.string().email(tForm("professionalEmailFormatInvalid")),
-=======
         current_employer: yup.boolean(),
         role: yup.string().required(tForm("roleRequiredInvalid")),
         email: yup
           .string()
           .required(tForm("emailRequiredInvalid"))
           .email(tForm("professionalEmailFormatInvalid")),
->>>>>>> origin/feature/SOURSD-830
       }),
     [tForm]
   );
 
   const formOptions = {
     defaultValues: {
-<<<<<<< HEAD
-      member_id: "",
-      organisation_id: "",
-      current_employer: false,
-      relationship: "",
-      from: null,
-      to: null,
-      role: "",
-      email: "",
-      ror: "", // keeping this blank for now
-      department: "", // keeping this blank for now
-=======
       member_id: initialValues?.member_id || "",
       organisation_id: initialValues?.organisation_id || "",
       current_employer: initialValues?.current_employer || false,
@@ -117,7 +99,8 @@ export default function AffiliationsForm({
       to: initialValues?.to || null,
       role: initialValues?.role || "",
       email: initialValues?.email || "",
->>>>>>> origin/feature/SOURSD-830
+      ror: "", // keeping this blank for now
+      department: "", // keeping this blank for now
     },
   };
 
@@ -138,12 +121,9 @@ export default function AffiliationsForm({
       <Form onSubmit={onSubmit} schema={schema} {...formOptions} sx={{ mb: 3 }}>
         {({ watch }) => {
           const isCurrent = watch("current_employer");
-<<<<<<< HEAD
           const organisation_id = watch("organisation_id");
           setSelectedOrganisationId(organisation_id);
 
-=======
->>>>>>> origin/feature/SOURSD-830
           return (
             <>
               <Grid container rowSpacing={3}>
@@ -205,7 +185,7 @@ export default function AffiliationsForm({
                       name="department"
                       renderField={fieldProps => (
                         <SelectDepartments
-                          organisation={selectedOrganisation?.data || []}
+                          organisation={selectedOrganisation?.data}
                           {...fieldProps}
                         />
                       )}
