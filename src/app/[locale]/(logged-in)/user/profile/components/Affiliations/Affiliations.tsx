@@ -35,7 +35,6 @@ import ReactDOMServer from "react-dom/server";
 import { Message } from "@/components/Message";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
-import { original } from "immer";
 import AffiliationsForm from "../AffiliationsForm";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
