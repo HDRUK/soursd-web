@@ -4,6 +4,13 @@ import {
   UseQueryOptions,
 } from "@tanstack/react-query";
 
+interface RefreshTokenResponse {
+  access_token: string | undefined;
+  refresh_token: string;
+  expires_in: number;
+  refresh_expires_in: number;
+}
+
 interface ResponseTranslation {
   message: string;
 }
@@ -57,4 +64,5 @@ export type {
   QueryOptions,
   MutationOptions,
   QueryFunctionContextDefault,
+  RefreshTokenResponse,
 };

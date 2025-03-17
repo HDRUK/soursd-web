@@ -1,13 +1,17 @@
 import createIntlMiddleware from "next-intl/middleware";
 import type { NextRequest } from "next/server";
+import middlewareRedirects from "./middlewareRedirects";
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const handleI18nRouting = createIntlMiddleware({
     locales: ["en"],
     defaultLocale: "en",
   });
 
   const response = handleI18nRouting(request);
+  const nextUrl = await middlewareRedirects(request);
+
+  request.nextUrl.pathname = nextUrl;
 
   response.headers.set("x-current-path", request.nextUrl.pathname);
 

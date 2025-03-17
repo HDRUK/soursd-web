@@ -44,9 +44,13 @@ export async function POST() {
       ...COOKIE_OPTIONS,
       maxAge: refresh_expires_in,
     });
-    return NextResponse.json({ access_token });
+    return NextResponse.json(response.data);
   } catch (_) {
     const errorType = encodeURIComponent("register");
+
+    cookieStore.delete("access_token");
+    cookieStore.delete("refresh_token");
+
     return NextResponse.redirect(
       encodeURI(
         `${process.env.NEXT_PUBLIC_LOCAL_ENV}/en/error?type=${errorType}`

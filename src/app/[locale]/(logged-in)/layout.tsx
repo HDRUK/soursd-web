@@ -1,7 +1,7 @@
 import { UserGroup } from "@/consts/user";
-import useApplicationRedirect from "@/hooks/useApplicationRedirect";
 import { PageContainer } from "@/modules";
 import Application from "@/modules/Application";
+import { getMe } from "@/services/auth";
 import { getCustodianUser } from "@/services/custodian_users";
 import { User } from "@/types/application";
 import { PropsWithChildren } from "react";
@@ -24,7 +24,7 @@ export default async function Layout({ children }: LayoutProps) {
   let custodianId;
   let organisationId;
 
-  const me = await useApplicationRedirect();
+  const { data: me } = await getMe();
 
   if (me) {
     if (me.user_group === UserGroup.CUSTODIANS) {

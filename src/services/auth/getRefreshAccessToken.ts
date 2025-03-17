@@ -1,6 +1,9 @@
+import { RefreshTokenResponse } from "@/types/requests";
 import { postRequest } from "../requests";
 
-export async function getRefreshAccessToken(): Promise<string | undefined> {
+export async function getRefreshAccessToken(): Promise<
+  RefreshTokenResponse | undefined
+> {
   const response = await postRequest(
     `${process.env.NEXT_PUBLIC_LOCAL_ENV}/api/auth/refresh`
   );
@@ -11,5 +14,5 @@ export async function getRefreshAccessToken(): Promise<string | undefined> {
 
   const data = await response.json();
 
-  return data.access_token;
+  return data;
 }

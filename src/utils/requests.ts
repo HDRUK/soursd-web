@@ -1,11 +1,12 @@
+"use server";
+
 import { ROUTES } from "@/consts/router";
 import { getRefreshAccessToken, postRegister } from "@/services/auth";
 import { User } from "@/types/application";
 import { Routes } from "@/types/router";
-import Cookies from "js-cookie";
-import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 import { getAccessToken } from "./auth";
-import { handleLogin } from "./keycloak";
+import { getLoginUrl } from "./keycloak";
 import { getLocalePath } from "./language";
 import { capitaliseFirstLetter } from "./string";
 
@@ -57,70 +58,66 @@ function getProfilePathByEntity(user: User | string, path?: string) {
   return null;
 }
 
-const redirectToProfile = async (user: User, path: string) => {
+const getProfilePath = async (user: User, path: string) => {
   const redirectPath = getProfilePathByEntity(user, path);
 
   if (redirectPath) {
     const localePath = await getLocalePath(redirectPath);
-    redirect(localePath);
+    return localePath;
   }
 };
 
-const registerAndRedirect = async (pathname: string) => {
+const getRegisterPath = async (pathname: string) => {
   const user = await postRegister(undefined, {
     suppressThrow: true,
   });
 
   if (!user.data) {
     const localePath = await getLocalePath(ROUTES.register.path);
-    redirect(localePath);
+    return localePath;
   } else {
-    redirectToProfile(user.data, pathname);
+    return getProfilePath(user.data, pathname);
   }
 };
 
-async function redirectRefreshToken() {
+async function getRefreshTokenPath() {
   const accessToken = await getRefreshAccessToken();
 
   if (!accessToken) {
-    Cookies.remove("access_token");
-    Cookies.remove("refresh_token");
-
-    const localePath = await getLocalePath(ROUTES.homepage.path);
-    redirect(localePath);
+    return getLoginUrl();
   }
 }
 
-async function redirectWithoutAccessToken(pathname: string) {
+async function getNoAccessTokenPath(pathname: string) {
   const accessToken = await getAccessToken();
 
   if (!accessToken && !pathname.includes(ROUTES.homepage.path)) {
     const localePath = await getLocalePath(ROUTES.homepage.path);
-    redirect(localePath);
+    return localePath;
   }
 
   return accessToken;
 }
 
-function redirectOnServerError(
+function getOnServerErrorPath(
   accessToken: string | undefined,
   pathname: string | null
 ) {
-  if (!accessToken) {
-    Cookies.set("redirectPath", pathname ?? "/", { path: "/" });
+  const cookieStore = cookies();
 
-    handleLogin();
+  if (!accessToken) {
+    cookieStore.set("redirectPath", pathname ?? "/");
   }
 }
 
 export {
   createFetchInterceptor,
+  getNoAccessTokenPath,
+  getOnServerErrorPath,
+  getProfilePath,
   getProfilePathByEntity,
+  getRefreshTokenPath,
+  getRegisterPath,
   mockedRequest,
   objectToQuerystring,
-  redirectOnServerError,
-  redirectRefreshToken,
-  redirectToProfile,
-  redirectWithoutAccessToken,
-  registerAndRedirect,
 };
