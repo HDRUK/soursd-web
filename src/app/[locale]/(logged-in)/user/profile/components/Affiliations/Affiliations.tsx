@@ -48,14 +48,11 @@ export default function Affiliations() {
   >(undefined);
   const routes = useStore(state => state.getApplication().routes);
 
-  const { affiliations, getHistories, setHistories, user } = useStore(
-    state => ({
-      user: state.config.user,
-      affiliations: state.config.histories?.affiliations || [],
-      getHistories: state.getHistories,
-      setHistories: state.setHistories,
-    })
-  );
+  const { getHistories, setHistories, user } = useStore(state => ({
+    user: state.config.user,
+    getHistories: state.getHistories,
+    setHistories: state.setHistories,
+  }));
 
   const {
     data: affiliationsData,
@@ -236,8 +233,8 @@ export default function Affiliations() {
               errorMessage={tProfile.rich("affiliationsErrorMessage", {
                 contactLink: ContactLink,
               })}
-              total={affiliations.length}
-              data={affiliations || []}
+              total={affiliationsData?.data.data.length}
+              data={affiliationsData?.data.data || []}
               columns={columns}
               queryState={getAffiliationsQueryState}
             />

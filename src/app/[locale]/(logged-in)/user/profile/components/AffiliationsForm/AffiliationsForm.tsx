@@ -95,7 +95,7 @@ export default function AffiliationsForm({
     },
     { label: tApplication("student"), value: AffiliationRelationship.STUDENT },
   ];
-
+  console.log(initialValues);
   return (
     <>
       <Form onSubmit={onSubmit} schema={schema} {...formOptions} sx={{ mb: 3 }}>
@@ -122,7 +122,7 @@ export default function AffiliationsForm({
                       </Select>
                     )}
                     description={
-                      !initialValues?.organisation_id ? (
+                      !!initialValues && !initialValues?.organisation_id ? (
                         <Box sx={{ display: "flex", color: "warning.main" }}>
                           <WarningIcon />
                           <Typography sx={{ color: "warning.main" }}>
@@ -212,6 +212,7 @@ export default function AffiliationsForm({
                     name="email"
                     renderField={fieldProps => <TextField {...fieldProps} />}
                     description={
+                      !!initialValues &&
                       !initialValues?.email && (
                         <Box sx={{ display: "flex", color: "warning.main" }}>
                           <WarningIcon />
