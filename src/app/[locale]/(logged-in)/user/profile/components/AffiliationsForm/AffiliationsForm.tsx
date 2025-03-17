@@ -93,12 +93,12 @@ export default function AffiliationsForm({
     defaultValues: {
       member_id: initialValues?.member_id || "",
       organisation_id: initialValues?.organisation_id || "",
-      current_employer: initialValues?.current_employer || false,
       relationship: initialValues?.relationship || "",
       from: initialValues?.from || null,
       to: initialValues?.to || null,
       role: initialValues?.role || "",
       email: initialValues?.email || "",
+      current_employer: (!!initialValues?.from && !initialValues?.to) || false,
       ror: "", // keeping this blank for now
       department: "", // keeping this blank for now
     },
