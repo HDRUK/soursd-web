@@ -16,7 +16,7 @@ import {
 } from "@/modules";
 import {
   getAffiliationsQuery,
-  patchAffiliationsQuery,
+  patchAffiliationQuery,
   postAffiliationQuery,
   deleteAffiliationQuery,
 } from "@/services/affiliations";
@@ -64,8 +64,12 @@ export default function Affiliations() {
   const { mutateAsync: postAffiliations, ...postAffiliationQueryState } =
     useMutation(postAffiliationQuery(user));
 
-  const { mutateAsync: patchAffiliations, ...patchAffiliationQueryState } =
-    useMutation(patchAffiliationsQuery(user));
+  const { mutateAsync: patchAffiliation, ...patchAffiliationQueryState } =
+    useMutation(patchAffiliationQuery());
+
+  const { mutateAsync: deleteAffiliation } = useMutation(
+    deleteAffiliationQuery()
+  );
 
   useQueryAlerts(
     selectedAffiliation
@@ -94,29 +98,6 @@ export default function Affiliations() {
       },
     }
   );
-
-  const { mutateAsync: deleteAffiliation, ...deleteAffiliationQueryState } =
-    useMutation(deleteAffiliationQuery());
-
-  useQueryAlerts(postAffiliationQueryState, {
-    commonAlertProps: {
-      willClose: () => {
-        setOpen(false);
-      },
-    },
-    successAlertProps: {
-      confirmButtonText: tProfile("postAffiliationSuccessButton"),
-      text: tProfile("postAffiliationSuccess"),
-    },
-    errorAlertProps: {
-      text: ReactDOMServer.renderToString(
-        tProfile.rich("postAffiliationError", {
-          contactLink: ContactLink,
-        })
-      ),
-      confirmButtonText: tProfile("postAffiliationErrorButton"),
-    },
-  });
 
   const renderRelationship = (
     info: CellContext<ResearcherAffiliation, unknown>
@@ -191,22 +172,18 @@ export default function Affiliations() {
     async (fields: PostAffiliationPayload) => {
       if (selectedAffiliation) {
         // Update existing affiliation
-        await patchAffiliations({
-          ...fields,
-          id: selectedAffiliation.id,
-          to: fields.current_employer ? null : fields.to,
+        await patchAffiliation({
+          affiliationId: selectedAffiliation.id,
+          payload: fields,
         });
       } else {
         // Create new affiliation
-        await postAffiliations({
-          ...fields,
-          to: fields.current_employer ? null : fields.to,
-        });
+        await postAffiliations(fields);
       }
       // setSelectedAffiliation(undefined);
       refetch();
     },
-    [selectedAffiliation, postAffiliations, patchAffiliations]
+    [selectedAffiliation, postAffiliations, patchAffiliation]
   );
 
   useEffect(() => {

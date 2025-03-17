@@ -115,14 +115,19 @@ export default function AffiliationsForm({
     },
     { label: tApplication("student"), value: AffiliationRelationship.STUDENT },
   ];
-  console.log(initialValues);
+
   return (
     <>
       <Form onSubmit={onSubmit} schema={schema} {...formOptions} sx={{ mb: 3 }}>
-        {({ watch }) => {
+        {({ watch, setValue }) => {
           const isCurrent = watch("current_employer");
           const organisation_id = watch("organisation_id");
+          const to = watch("to");
           setSelectedOrganisationId(organisation_id);
+
+          if (isCurrent && to) {
+            setValue("to", null);
+          }
 
           return (
             <>

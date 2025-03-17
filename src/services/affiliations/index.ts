@@ -3,15 +3,15 @@ import postAffiliation from "./postAffiliation";
 import getAffiliationsQuery from "./getAffiliationsQuery";
 import postAffiliationQuery from "./postAffiliationQuery";
 import deleteAffiliationQuery from "./deleteAffiliationQuery";
-import patchAffiliationsQuery from "./patchAffiliationsQuery";
-import patchAffiliations from "./patchAffiliations";
+import patchAffiliationQuery from "./patchAffiliationQuery";
+import patchAffiliation from "./patchAffiliation";
 
 export {
   getAffiliations,
   postAffiliation,
-  patchAffiliations,
+  patchAffiliation,
   getAffiliationsQuery,
   postAffiliationQuery,
   deleteAffiliationQuery,
-  patchAffiliationsQuery,
+  patchAffiliationQuery,
 };
