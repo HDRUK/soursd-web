@@ -33,7 +33,7 @@ export interface FormProps<T extends AnyObject>
   canLeave?: boolean;
   shouldReset?: boolean;
   isModal?: boolean;
-  modalProps: Omit<FormModalProps, "formState">;
+  modalProps?: Omit<FormModalProps, "formState">;
 }
 
 export default function Form<T extends FieldValues>({

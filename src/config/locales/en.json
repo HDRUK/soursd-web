@@ -527,7 +527,9 @@
       "noCertificationUploaded": "No files have been uploaded yet",
       "certificationUploadFailed": "Certificate upload failed",
       "done": "Done"
-    }
+    },
+    "comment": "Add any further comment",
+    "commentPlaceholder": "Type your comment here..."
   },
   "ProfessionalRegistrations": {
     "title": "Professional Registrations",
@@ -1020,5 +1022,27 @@
     "alertText": "If you decline, you will not be able to access SOURSD.",
     "alertConfirm": "Confirm. Back to homepage",
     "alertCancel": "Cancel"
+  },
+  "ActionValidationPanel": {
+    "title": "Validation Checks"
+  },
+  "ActionValidationMakeDecision": {
+    "pass": "Pass",
+    "fail": "Fail"
+  },
+  "ActionValidationCommentForm": {
+    "confirm": "Confirm {action}",
+    "cancel": "Cancel"
+  },
+  "ChangeDecisionChip": {
+    "changeDecision": "Change Decision",
+    "passed": "Passed",
+    "failed": "Failed"
+  },
+  "CustodianProjectUser": {
+    "title": "User for {projectTitle}"
+  },
+  "ActionValidationLogComment": {
+    "daysSince": "{days} days ago"
   }
 }
