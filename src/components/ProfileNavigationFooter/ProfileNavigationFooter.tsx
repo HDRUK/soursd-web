@@ -58,7 +58,10 @@ export default function ProfileNavigationFooter({
               justifyContent: "center",
             }}>
             <SoursdLogo size={50} />
-            <Typography variant="h6" sx={{ mr: 1 }}>
+            <Typography
+              variant="subtitle1"
+              component="p"
+              sx={{ fontWeight: "bold", mr: 1 }}>
               Next Step:
             </Typography>
             <Typography>{nextStepText}</Typography>
