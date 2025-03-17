@@ -71,11 +71,13 @@ const registerAndRedirect = async (pathname: string) => {
     suppressThrow: true,
   });
 
-  if (!user.data) {
-    const localePath = await getLocalePath(ROUTES.register.path);
-    redirect(localePath);
-  } else {
-    redirectToProfile(user.data, pathname);
+  if (!pathname.includes(ROUTES.register.path)) {
+    if (!user.data) {
+      const localePath = await getLocalePath(ROUTES.register.path);
+      redirect(localePath);
+    } else {
+      redirectToProfile(user.data, pathname);
+    }
   }
 };
 
@@ -106,11 +108,11 @@ function redirectOnServerError(
   accessToken: string | undefined,
   pathname: string | null
 ) {
-  if (!accessToken) {
-    Cookies.set("redirectPath", pathname ?? "/", { path: "/" });
+  // if (!accessToken) {
+  Cookies.set("redirectPath", pathname ?? "/", { path: "/" });
 
-    handleLogin();
-  }
+  // handleLogin();
+  // }
 }
 
 export {

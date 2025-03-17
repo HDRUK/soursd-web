@@ -40,7 +40,7 @@ async function request<T>(
     });
 
     return response;
-  } catch (_) {
+  } catch (e) {
     return createEmptyErrorResponse();
   }
 }

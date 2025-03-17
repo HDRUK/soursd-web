@@ -17,7 +17,6 @@ export default async function useApplicationRedirect() {
 
   if (!!pathname) {
     const accessToken = await redirectWithoutAccessToken(pathname);
-
     let me;
 
     if (!!accessToken) {
@@ -26,15 +25,14 @@ export default async function useApplicationRedirect() {
       });
 
       me = response.data;
-
       if (response.status === 200) {
-        redirectToProfile(me, pathname);
+        await redirectToProfile(me, pathname);
       } else if (response.status === 401) {
-        redirectRefreshToken();
+        await redirectRefreshToken();
       } else if (response.status === 404) {
-        registerAndRedirect(pathname);
+        await registerAndRedirect(pathname);
       } else if (response.status === 500) {
-        redirectOnServerError(accessToken, pathname);
+        await redirectOnServerError(accessToken, pathname);
       }
     }
 
