@@ -46,6 +46,7 @@ export default function ActionValidationCommentForm({
           name="comment"
           renderField={fieldProps => (
             <TextareaAutosize
+              id="comment"
               data-testid="validation-log-comment-field"
               value={fieldProps.value}
               onChange={fieldProps.onChange}
