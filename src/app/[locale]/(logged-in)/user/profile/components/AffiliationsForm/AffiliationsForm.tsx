@@ -7,6 +7,8 @@ import SelectInput from "@/components/SelectInput";
 import yup from "@/config/yup";
 import { AffiliationRelationship } from "@/consts/user";
 import useOrganisationsQuery from "@/services/organisations/useOrganisationsQuery";
+import { useQuery } from "@tanstack/react-query";
+import { getOrganisationQuery } from "@/services/organisations";
 import { ResearcherAffiliation } from "@/types/application";
 import { MutationState } from "@/types/form";
 import { LoadingButton } from "@mui/lab";
@@ -23,6 +25,7 @@ import {
 import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 import WarningIcon from "@mui/icons-material/Warning";
+import SelectDepartments from "@/components/SelectDepartments";
 import AskOrganisationModal from "../AskOrganisation";
 
 export interface AffiliationsFormProps {
@@ -46,15 +49,30 @@ export default function AffiliationsForm({
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
   const [inviteOpen, setInviteOpen] = useState(false);
+  const [selectedOrganisationId, setSelectedOrganisationId] = useState<
+    number | null
+  >();
 
   const { data: organisationsData } = useOrganisationsQuery();
+
+  // keeping in some department code..
+  // - this is not used, but incase we want to turn it on..
+  const useDepartment = false;
+  const { data: selectedOrganisation } = useQuery({
+    ...getOrganisationQuery(selectedOrganisationId || 1),
+    enabled: useDepartment && !!selectedOrganisationId,
+  });
 
   const schema = useMemo(
     () =>
       yup.object().shape({
         member_id: yup.string().required(tForm("memberIdRequiredInvalid")),
-        from: yup.date().nullable(),
-        to: yup.date().nullable(),
+        from: yup.date().required(tForm("fromRequiredInvalid")),
+        to: yup.date().when("current_employer", {
+          is: (value: boolean) => !!value,
+          otherwise: schema => schema.required(tForm("toRequiredInvalid")),
+          then: schema => schema.notRequired(),
+        }),
         organisation_id: yup
           .string()
           .required(tForm("organisationRequiredInvalid")),
@@ -75,12 +93,14 @@ export default function AffiliationsForm({
     defaultValues: {
       member_id: initialValues?.member_id || "",
       organisation_id: initialValues?.organisation_id || "",
-      current_employer: initialValues?.current_employer || false,
+      current_employer: (!!initialValues?.from && !initialValues?.to) || false,
       relationship: initialValues?.relationship || "",
       from: initialValues?.from || null,
       to: initialValues?.to || null,
       role: initialValues?.role || "",
       email: initialValues?.email || "",
+      ror: "", // keeping this blank for now
+      department: "", // keeping this blank for now
     },
   };
 
@@ -95,12 +115,20 @@ export default function AffiliationsForm({
     },
     { label: tApplication("student"), value: AffiliationRelationship.STUDENT },
   ];
-  console.log(initialValues);
+
   return (
     <>
       <Form onSubmit={onSubmit} schema={schema} {...formOptions} sx={{ mb: 3 }}>
-        {({ watch }) => {
+        {({ watch, setValue }) => {
           const isCurrent = watch("current_employer");
+          const organisation_id = watch("organisation_id");
+          const to = watch("to");
+          setSelectedOrganisationId(organisation_id);
+
+          if (isCurrent && to) {
+            setValue("to", null);
+          }
+
           return (
             <>
               <Grid container rowSpacing={3}>
@@ -156,6 +184,19 @@ export default function AffiliationsForm({
                     }
                   />
                 </Grid>
+                {useDepartment && (
+                  <Grid item xs={12}>
+                    <FormControlWrapper
+                      name="department"
+                      renderField={fieldProps => (
+                        <SelectDepartments
+                          organisation={selectedOrganisation?.data}
+                          {...fieldProps}
+                        />
+                      )}
+                    />
+                  </Grid>
+                )}
                 <Grid item xs={12}>
                   <Grid container columnSpacing={3}>
                     <Grid item xs={6}>

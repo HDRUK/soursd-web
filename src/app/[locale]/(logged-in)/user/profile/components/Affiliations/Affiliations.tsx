@@ -16,8 +16,9 @@ import {
 } from "@/modules";
 import {
   getAffiliationsQuery,
-  patchAffiliationsQuery,
+  patchAffiliationQuery,
   postAffiliationQuery,
+  deleteAffiliationQuery,
 } from "@/services/affiliations";
 import { PostAffiliationPayload } from "@/services/affiliations/types";
 import { ResearcherAffiliation } from "@/types/application";
@@ -27,7 +28,7 @@ import {
 } from "@/utils/cells";
 import { Button, Typography } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { ColumnDef } from "@tanstack/react-table";
+import { CellContext, ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
 import ReactDOMServer from "react-dom/server";
@@ -63,8 +64,12 @@ export default function Affiliations() {
   const { mutateAsync: postAffiliations, ...postAffiliationQueryState } =
     useMutation(postAffiliationQuery(user));
 
-  const { mutateAsync: patchAffiliations, ...patchAffiliationQueryState } =
-    useMutation(patchAffiliationsQuery(user));
+  const { mutateAsync: patchAffiliation, ...patchAffiliationQueryState } =
+    useMutation(patchAffiliationQuery());
+
+  const { mutateAsync: deleteAffiliation } = useMutation(
+    deleteAffiliationQuery()
+  );
 
   useQueryAlerts(
     selectedAffiliation
@@ -94,15 +99,19 @@ export default function Affiliations() {
     }
   );
 
+  const renderRelationship = (
+    info: CellContext<ResearcherAffiliation, unknown>
+  ) => tApplication(info.getValue());
+
   const renderActionMenuCell = useCallback(
     (info: { row: { original: ResearcherAffiliation } }) => {
       const affiliation = info.row.original;
       return (
         <ActionMenu>
           <ActionMenuItem
-            onClick={() => {
-              // Placeholder for delete action
-            }}
+            onClick={() =>
+              deleteAffiliation(affiliation.id).then(() => refetch())
+            }
             sx={{ color: "error.main" }}
             icon={<DeleteOutlineOutlinedIcon sx={{ color: "error.main" }} />}>
             {tProfile("delete")}
@@ -141,6 +150,7 @@ export default function Affiliations() {
     {
       accessorKey: "relationship",
       header: tApplication("relationship"),
+      cell: renderRelationship,
     },
     {
       accessorKey: "member_id",
@@ -162,22 +172,18 @@ export default function Affiliations() {
     async (fields: PostAffiliationPayload) => {
       if (selectedAffiliation) {
         // Update existing affiliation
-        await patchAffiliations({
-          ...fields,
-          id: selectedAffiliation.id,
-          to: fields.current_employer ? null : fields.to,
+        await patchAffiliation({
+          affiliationId: selectedAffiliation.id,
+          payload: fields,
         });
       } else {
         // Create new affiliation
-        await postAffiliations({
-          ...fields,
-          to: fields.current_employer ? null : fields.to,
-        });
+        await postAffiliations(fields);
       }
       // setSelectedAffiliation(undefined);
       refetch();
     },
-    [selectedAffiliation, postAffiliations, patchAffiliations]
+    [selectedAffiliation, postAffiliations, patchAffiliation]
   );
 
   useEffect(() => {
@@ -200,6 +206,10 @@ export default function Affiliations() {
           <PageSection>
             <FormModal
               open={open}
+              isDismissable
+              onClose={() => {
+                setOpen(false);
+              }}
               heading={
                 selectedAffiliation
                   ? tProfile("editAffiliationForm")

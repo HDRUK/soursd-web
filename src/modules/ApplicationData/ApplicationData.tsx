@@ -32,7 +32,7 @@ interface ApplicationDataProps {
   trainingData: ResearcherTraining[];
   projectsData: ResearcherProject[];
   affiliationData: ResearcherAffiliation[];
-  professionalRegistratonsData: ResearcherProfessionalRegistration[];
+  professionalRegistrationsData: ResearcherProfessionalRegistration[];
   isOrganisation: boolean;
   isCustodian: boolean;
   children: ReactNode;
@@ -50,7 +50,7 @@ export default function ApplicationData({
   trainingData,
   projectsData,
   affiliationData,
-  professionalRegistratonsData,
+  professionalRegistrationsData,
   isOrganisation,
   isCustodian,
   children,
@@ -114,7 +114,7 @@ export default function ApplicationData({
       employments: [],
       approvedProjects: projectsData,
       affiliations: affiliationData,
-      professionalRegistrations: professionalRegistratonsData,
+      professionalRegistrations: professionalRegistrationsData,
     });
   }, []);
 

@@ -4,7 +4,7 @@ import getOrganisation from "./getOrganisation";
 
 export default function getOrganisationQuery(
   organisationId: number,
-  options: QueryOptions
+  options?: QueryOptions
 ) {
   return {
     queryKey: [
