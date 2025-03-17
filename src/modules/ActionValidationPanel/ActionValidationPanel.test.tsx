@@ -90,14 +90,10 @@ describe("<ActionValidationPanel/>", () => {
     const errorMessage = screen.getByText(/comment is a required field/i);
     expect(errorMessage).toBeInTheDocument();
 
-<<<<<<< HEAD
-    const commentInput = screen.getByTestId("validation-log-comment-field");
-=======
     const commentInput = screen.getByRole("textbox", {
       name: /add any further comment/i,
     });
 
->>>>>>> origin
     expect(commentInput).toBeInTheDocument();
     await userEvent.type(commentInput, "This is a test comment");
 
@@ -119,14 +115,10 @@ describe("<ActionValidationPanel/>", () => {
 
     await userEvent.click(failButton);
 
-<<<<<<< HEAD
-    const commentInput = screen.getByTestId("validation-log-comment-field");
-=======
     const commentInput = screen.getByRole("textbox", {
       name: /add any further comment/i,
     });
 
->>>>>>> origin
     expect(commentInput).toBeInTheDocument();
     await userEvent.type(commentInput, "This is a test comment");
 
@@ -151,13 +143,9 @@ describe("<ActionValidationPanel/>", () => {
 
     await userEvent.click(failButton);
 
-<<<<<<< HEAD
-    let commentInput = screen.getByTestId("validation-log-comment-field");
-=======
     let commentInput = screen.getByRole("textbox", {
       name: /add any further comment/i,
     });
->>>>>>> origin
     expect(commentInput).toBeInTheDocument();
     await userEvent.type(commentInput, "This is a test comment");
 
@@ -178,13 +166,9 @@ describe("<ActionValidationPanel/>", () => {
 
     await userEvent.click(changeDecisionButton);
 
-<<<<<<< HEAD
-    commentInput = screen.getByTestId("validation-log-comment-field");
-=======
     commentInput = screen.getByRole("textbox", {
       name: /add any further comment/i,
     });
->>>>>>> origin
     expect(commentInput).toBeInTheDocument();
     await userEvent.type(commentInput, "Changing my descision");
 

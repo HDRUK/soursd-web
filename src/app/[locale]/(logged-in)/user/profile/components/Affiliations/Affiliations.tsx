@@ -16,12 +16,16 @@ import {
 } from "@/modules";
 import {
   getAffiliationsQuery,
+  patchAffiliationsQuery,
   postAffiliationQuery,
   deleteAffiliationQuery,
 } from "@/services/affiliations";
 import { PostAffiliationPayload } from "@/services/affiliations/types";
 import { ResearcherAffiliation } from "@/types/application";
-import { renderAffiliationDateRangeCell } from "@/utils/cells";
+import {
+  renderAffiliationDateRangeCell,
+  renderWarningCell,
+} from "@/utils/cells";
 import { Button, Typography } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { CellContext, ColumnDef } from "@tanstack/react-table";
@@ -29,6 +33,9 @@ import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
 import ReactDOMServer from "react-dom/server";
 import { Message } from "@/components/Message";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
+import { original } from "immer";
 import AffiliationsForm from "../AffiliationsForm";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
@@ -38,16 +45,16 @@ export default function Affiliations() {
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
   const [open, setOpen] = useState(false);
+  const [selectedAffiliation, setSelectedAffiliation] = useState<
+    ResearcherAffiliation | undefined
+  >(undefined);
   const routes = useStore(state => state.getApplication().routes);
 
-  const { affiliations, getHistories, setHistories, user } = useStore(
-    state => ({
-      user: state.config.user,
-      affiliations: state.config.histories?.affiliations || [],
-      getHistories: state.getHistories,
-      setHistories: state.setHistories,
-    })
-  );
+  const { getHistories, setHistories, user } = useStore(state => ({
+    user: state.config.user,
+    getHistories: state.getHistories,
+    setHistories: state.setHistories,
+  }));
 
   const {
     data: affiliationsData,
@@ -55,8 +62,38 @@ export default function Affiliations() {
     ...getAffiliationsQueryState
   } = useQuery(getAffiliationsQuery(user?.registry_id));
 
-  const { mutateAsync, ...postAffiliationQueryState } = useMutation(
-    postAffiliationQuery(user)
+  const { mutateAsync: postAffiliations, ...postAffiliationQueryState } =
+    useMutation(postAffiliationQuery(user));
+
+  const { mutateAsync: patchAffiliations, ...patchAffiliationQueryState } =
+    useMutation(patchAffiliationsQuery(user));
+
+  useQueryAlerts(
+    selectedAffiliation
+      ? patchAffiliationQueryState
+      : postAffiliationQueryState,
+    {
+      commonAlertProps: {
+        willClose: () => {
+          setOpen(false);
+          setSelectedAffiliation(undefined);
+        },
+      },
+      successAlertProps: {
+        confirmButtonText: tProfile("affiliationActionSuccessButton"),
+        text: selectedAffiliation
+          ? tProfile("patchAffiliationSuccess")
+          : tProfile("postAffiliationSuccess"),
+      },
+      errorAlertProps: {
+        text: ReactDOMServer.renderToString(
+          tProfile.rich("affiliationActionError", {
+            contactLink: ContactLink,
+          })
+        ),
+        confirmButtonText: tProfile("affiliationActionErrorButton"),
+      },
+    }
   );
 
   const { mutateAsync: deleteAffiliation, ...deleteAffiliationQueryState } =
@@ -82,25 +119,44 @@ export default function Affiliations() {
     },
   });
 
-  const renderActionMenuCell = (
-    info: CellContext<ResearcherAffiliation, unknown>
-  ) => {
-    const { id } = info.row.original;
-    return (
-      <ActionMenu>
-        <ActionMenuItem
-          onClick={() => deleteAffiliation(id).then(() => refetch())}>
-          {tApplication("deleteAffiliation")}
-        </ActionMenuItem>
-      </ActionMenu>
-    );
-  };
-
   const renderRelationship = (
     info: CellContext<ResearcherAffiliation, unknown>
   ) => tApplication(info.getValue());
 
+  const renderActionMenuCell = useCallback(
+    (info: { row: { original: ResearcherAffiliation } }) => {
+      const affiliation = info.row.original;
+      return (
+        <ActionMenu>
+          <ActionMenuItem
+            onClick={() =>
+              deleteAffiliation(affiliation.id).then(() => refetch())
+            }
+            sx={{ color: "error.main" }}
+            icon={<DeleteOutlineOutlinedIcon sx={{ color: "error.main" }} />}>
+            {tProfile("delete")}
+          </ActionMenuItem>
+          <ActionMenuItem
+            onClick={() => {
+              setSelectedAffiliation(affiliation);
+              setOpen(true);
+            }}
+            sx={{ color: "menuList1.main" }}
+            icon={<CreateOutlinedIcon sx={{ color: "menuList1.main" }} />}>
+            {tProfile("viewOrEdit")}
+          </ActionMenuItem>
+        </ActionMenu>
+      );
+    },
+    []
+  );
+
   const columns: ColumnDef<ResearcherAffiliation>[] = [
+    {
+      accessorKey: "warning",
+      header: "",
+      cell: renderWarningCell,
+    },
     {
       accessorKey: "date",
       header: tApplication("period"),
@@ -134,14 +190,24 @@ export default function Affiliations() {
 
   const handleDetailsSubmit = useCallback(
     async (fields: PostAffiliationPayload) => {
-      await mutateAsync({
-        ...fields,
-        to: fields.current_employer ? null : fields.to,
-      });
-
+      if (selectedAffiliation) {
+        // Update existing affiliation
+        await patchAffiliations({
+          ...fields,
+          id: selectedAffiliation.id,
+          to: fields.current_employer ? null : fields.to,
+        });
+      } else {
+        // Create new affiliation
+        await postAffiliations({
+          ...fields,
+          to: fields.current_employer ? null : fields.to,
+        });
+      }
+      // setSelectedAffiliation(undefined);
       refetch();
     },
-    [mutateAsync]
+    [selectedAffiliation, postAffiliations, patchAffiliations]
   );
 
   useEffect(() => {
@@ -163,18 +229,28 @@ export default function Affiliations() {
         <PageBody>
           <PageSection>
             <FormModal
-              isDismissable={true}
+              open={open}
+              isDismissable
               onClose={() => {
                 setOpen(false);
               }}
-              open={open}
-              heading={tProfile("affiliationsForm")}>
+              heading={
+                selectedAffiliation
+                  ? tProfile("editAffiliationForm")
+                  : tProfile("addAffiliationForm")
+              }>
               <AffiliationsForm
                 onClose={() => {
                   setOpen(false);
+                  setSelectedAffiliation(undefined);
                 }}
                 onSubmit={handleDetailsSubmit}
-                queryState={postAffiliationQueryState}
+                queryState={
+                  selectedAffiliation
+                    ? patchAffiliationQueryState
+                    : postAffiliationQueryState
+                }
+                initialValues={selectedAffiliation}
               />
             </FormModal>
             <Typography sx={{ mb: 2 }}>
@@ -191,8 +267,8 @@ export default function Affiliations() {
               errorMessage={tProfile.rich("affiliationsErrorMessage", {
                 contactLink: ContactLink,
               })}
-              total={affiliations.length}
-              data={affiliations || []}
+              total={affiliationsData?.data.data.length}
+              data={affiliationsData?.data.data || []}
               columns={columns}
               queryState={getAffiliationsQueryState}
             />
@@ -201,6 +277,7 @@ export default function Affiliations() {
             <Button
               variant="outlined"
               onClick={() => {
+                setSelectedAffiliation(undefined);
                 setOpen(true);
               }}>
               {tProfile("addAffiliation")}

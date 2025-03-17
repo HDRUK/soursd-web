@@ -12,9 +12,19 @@ import { getOrganisationQuery } from "@/services/organisations";
 import { ResearcherAffiliation } from "@/types/application";
 import { MutationState } from "@/types/form";
 import { LoadingButton } from "@mui/lab";
-import { Button, Grid, Link, MenuItem, Select, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  Grid,
+  Link,
+  MenuItem,
+  Select,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
+import WarningIcon from "@mui/icons-material/Warning";
 import AskOrganisationModal from "../AskOrganisation";
 import SelectDepartments from "@/components/SelectDepartments";
 
@@ -22,6 +32,7 @@ export interface AffiliationsFormProps {
   onSubmit: (affiliation: ResearcherAffiliation) => void;
   onClose: () => void;
   queryState: MutationState;
+  initialValues?: ResearcherAffiliation;
 }
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
@@ -32,6 +43,7 @@ export default function AffiliationsForm({
   onSubmit,
   onClose,
   queryState,
+  initialValues,
 }: AffiliationsFormProps) {
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
@@ -68,14 +80,24 @@ export default function AffiliationsForm({
         relationship: yup
           .string()
           .required(tForm("relationshipRequiredInvalid")),
+<<<<<<< HEAD
         role: yup.string().required(tForm("positionRequiredInvalid")),
         email: yup.string().email(tForm("professionalEmailFormatInvalid")),
+=======
+        current_employer: yup.boolean(),
+        role: yup.string().required(tForm("roleRequiredInvalid")),
+        email: yup
+          .string()
+          .required(tForm("emailRequiredInvalid"))
+          .email(tForm("professionalEmailFormatInvalid")),
+>>>>>>> origin/feature/SOURSD-830
       }),
     [tForm]
   );
 
   const formOptions = {
     defaultValues: {
+<<<<<<< HEAD
       member_id: "",
       organisation_id: "",
       current_employer: false,
@@ -86,6 +108,16 @@ export default function AffiliationsForm({
       email: "",
       ror: "", // keeping this blank for now
       department: "", // keeping this blank for now
+=======
+      member_id: initialValues?.member_id || "",
+      organisation_id: initialValues?.organisation_id || "",
+      current_employer: initialValues?.current_employer || false,
+      relationship: initialValues?.relationship || "",
+      from: initialValues?.from || null,
+      to: initialValues?.to || null,
+      role: initialValues?.role || "",
+      email: initialValues?.email || "",
+>>>>>>> origin/feature/SOURSD-830
     },
   };
 
@@ -100,15 +132,18 @@ export default function AffiliationsForm({
     },
     { label: tApplication("student"), value: AffiliationRelationship.STUDENT },
   ];
-
+  console.log(initialValues);
   return (
     <>
       <Form onSubmit={onSubmit} schema={schema} {...formOptions} sx={{ mb: 3 }}>
         {({ watch }) => {
           const isCurrent = watch("current_employer");
+<<<<<<< HEAD
           const organisation_id = watch("organisation_id");
           setSelectedOrganisationId(organisation_id);
 
+=======
+>>>>>>> origin/feature/SOURSD-830
           return (
             <>
               <Grid container rowSpacing={3}>
@@ -130,16 +165,37 @@ export default function AffiliationsForm({
                       </Select>
                     )}
                     description={
-                      <>
-                        {tProfile("organisationNotListed")}{" "}
-                        <Link
-                          component="button"
-                          onClick={() => {
-                            setInviteOpen(true);
-                          }}>
-                          {tProfile("organisationRegister")}
-                        </Link>
-                      </>
+                      !!initialValues && !initialValues?.organisation_id ? (
+                        <Box sx={{ display: "flex", color: "warning.main" }}>
+                          <WarningIcon />
+                          <Typography sx={{ color: "warning.main" }}>
+                            {tProfile.rich(
+                              "affiliationOrganisationWarningMessage",
+                              {
+                                link: chunks => (
+                                  <Link
+                                    component="button"
+                                    onClick={() => setInviteOpen(true)}
+                                    sx={{ pb: 0.4 }}>
+                                    {chunks}
+                                  </Link>
+                                ),
+                              }
+                            )}
+                          </Typography>
+                        </Box>
+                      ) : (
+                        tProfile.rich("organisationNotListed", {
+                          link: chunks => (
+                            <Link
+                              component="button"
+                              onClick={() => setInviteOpen(true)}
+                              sx={{ pb: 0.25 }}>
+                              {chunks}
+                            </Link>
+                          ),
+                        })
+                      )
                     }
                   />
                 </Grid>
@@ -211,6 +267,17 @@ export default function AffiliationsForm({
                   <FormControlWrapper
                     name="email"
                     renderField={fieldProps => <TextField {...fieldProps} />}
+                    description={
+                      !!initialValues &&
+                      !initialValues?.email && (
+                        <Box sx={{ display: "flex", color: "warning.main" }}>
+                          <WarningIcon />
+                          <Typography>
+                            {tProfile("affiliationsEmailWarningMessage")}
+                          </Typography>
+                        </Box>
+                      )
+                    }
                   />
                 </Grid>
               </Grid>
@@ -219,7 +286,7 @@ export default function AffiliationsForm({
                   {tApplication("cancel")}
                 </Button>
                 <LoadingButton loading={queryState.isPending} type="submit">
-                  {tProfile("addAffiliation")}
+                  {tForm("save")}
                 </LoadingButton>
               </FormActions>
             </>

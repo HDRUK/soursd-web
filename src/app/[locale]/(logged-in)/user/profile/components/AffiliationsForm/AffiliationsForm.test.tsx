@@ -10,6 +10,7 @@ import { faker } from "@faker-js/faker";
 import AffiliationsForm from "./AffiliationsForm";
 
 const mockSubmit = jest.fn();
+const mockOnClose = jest.fn();
 
 const renderAffiliationsComponent = () => {
   const rendered = render(
@@ -20,10 +21,11 @@ const renderAffiliationsComponent = () => {
         isError: false,
         error: "",
       }}
+      onClose={mockOnClose}
     />
   );
 
-  const button = screen.getByRole("button", { name: /add affiliation/i });
+  const button = screen.getByRole("button", { name: /save/i });
 
   act(() => {
     fireEvent.click(button);
@@ -43,7 +45,7 @@ describe("<AffiliationsForm />", () => {
       if (input) {
         fireEvent.change(input, { target: { value: faker.string.sample() } });
 
-        const button = screen.getByRole("button", { name: /add affiliation/i });
+        const button = screen.getByRole("button", { name: /save/i });
 
         await act(() => {
           fireEvent.submit(button);

@@ -276,7 +276,7 @@ interface ResearcherAffiliation {
   current_employer: boolean;
   from?: string | null;
   to?: string | null;
-  position?: string;
+  role?: string;
   organisation: {
     organisation_name: string;
   };
