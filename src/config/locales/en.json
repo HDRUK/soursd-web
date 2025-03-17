@@ -73,7 +73,8 @@
     "notFound": "We couldn't find the page you were looking for. Please try again or contact us at <contactLink></contactLink>",
     "loadingAriaLabel": "Application loading",
     "saveButton": "Save",
-    "continueButton": "Continue"
+    "continueButton": "Continue",
+    "deleteAffiliation": "Delete Affiliation"
   },
   "CustodianProfile": {
     "searchPlaceholder": "Search",

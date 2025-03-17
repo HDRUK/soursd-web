@@ -17,13 +17,14 @@ import {
 import {
   getAffiliationsQuery,
   postAffiliationQuery,
+  deleteAffiliationQuery,
 } from "@/services/affiliations";
 import { PostAffiliationPayload } from "@/services/affiliations/types";
 import { ResearcherAffiliation } from "@/types/application";
 import { renderAffiliationDateRangeCell } from "@/utils/cells";
 import { Button, Typography } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { ColumnDef } from "@tanstack/react-table";
+import { CellContext, ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
 import ReactDOMServer from "react-dom/server";
@@ -58,6 +59,9 @@ export default function Affiliations() {
     postAffiliationQuery(user)
   );
 
+  const { mutateAsync: deleteAffiliation, ...deleteAffiliationQueryState } =
+    useMutation(deleteAffiliationQuery());
+
   useQueryAlerts(postAffiliationQueryState, {
     commonAlertProps: {
       willClose: () => {
@@ -78,17 +82,23 @@ export default function Affiliations() {
     },
   });
 
-  const handleDeleteAffiliation = () => console.log("delete");
-
-  const renderActionMenuCell = useCallback(() => {
+  const renderActionMenuCell = (
+    info: CellContext<ResearcherAffiliation, unknown>
+  ) => {
+    const { id } = info.row.original;
     return (
       <ActionMenu>
-        <ActionMenuItem onClick={handleDeleteAffiliation}>
+        <ActionMenuItem
+          onClick={() => deleteAffiliation(id).then(() => refetch())}>
           {tApplication("deleteAffiliation")}
         </ActionMenuItem>
       </ActionMenu>
     );
-  }, []);
+  };
+
+  const renderRelationship = (
+    info: CellContext<ResearcherAffiliation, unknown>
+  ) => tApplication(info.getValue());
 
   const columns: ColumnDef<ResearcherAffiliation>[] = [
     {
@@ -104,6 +114,7 @@ export default function Affiliations() {
     {
       accessorKey: "relationship",
       header: tApplication("relationship"),
+      cell: renderRelationship,
     },
     {
       accessorKey: "member_id",
@@ -123,7 +134,6 @@ export default function Affiliations() {
 
   const handleDetailsSubmit = useCallback(
     async (fields: PostAffiliationPayload) => {
-      console.log(fields);
       await mutateAsync({
         ...fields,
         to: fields.current_employer ? null : fields.to,
@@ -152,7 +162,13 @@ export default function Affiliations() {
       <PageGuidance {...mockedResearcherAffiliationsGuidance}>
         <PageBody>
           <PageSection>
-            <FormModal open={open} heading={tProfile("affiliationsForm")}>
+            <FormModal
+              isDismissable={true}
+              onClose={() => {
+                setOpen(false);
+              }}
+              open={open}
+              heading={tProfile("affiliationsForm")}>
               <AffiliationsForm
                 onClose={() => {
                   setOpen(false);
