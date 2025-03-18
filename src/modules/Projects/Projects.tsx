@@ -16,7 +16,6 @@ import { ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
 import Table from "@/components/Table";
 import PageBody from "../PageBody";
-import ProjectsLegend from "../ProjectsLegend";
 import SearchActionMenu from "../SearchActionMenu";
 
 const NAMESPACE_TRANSLATIONS_PROJECTS = "Projects";
@@ -184,8 +183,7 @@ export default function Projects({ variant }: ProjectsProps) {
       <PageSection>
         <SearchBar
           updateQueryParam={(text: string) => updateQueryParam("title[]", text)}
-          placeholder={t("searchPlaceholder")}
-          legend={<ProjectsLegend />}>
+          placeholder={t("searchPlaceholder")}>
           <SearchActionMenu
             actions={sortActions}
             startIcon={<SortIcon />}
