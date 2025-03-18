@@ -2,7 +2,6 @@
 
 import { ActionMenu, ActionMenuItem } from "@/components/ActionMenu";
 import ContactLink from "@/components/ContactLink";
-import Results from "@/components/Results";
 import { useStore } from "@/data/store";
 import useQueryAlerts from "@/hooks/useQueryAlerts";
 import useQueryConfirmAlerts from "@/hooks/useQueryConfirmAlerts";
@@ -10,23 +9,20 @@ import useMutationUpdateProfessionalRegistration from "@/queries/useMutationUpda
 import {
   deleteProfessionalRegistrationQuery,
   getProfessionalRegistrationsQuery,
+  putProfessionalRegistrationQuery,
 } from "@/services/professional_registrations";
 import { PostProfessionalRegistrationPayload } from "@/services/professional_registrations/types";
 import { ResearcherProfessionalRegistration } from "@/types/application";
 import AddIcon from "@mui/icons-material/Add";
-import {
-  Button,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  Typography,
-} from "@mui/material";
+import { Button, Typography } from "@mui/material";
+import Table from "@/components/Table";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useMemo } from "react";
 import ReactDOMServer from "react-dom/server";
+import { ColumnDef } from "@tanstack/react-table";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import ProfessionalRegistrationsFormModal from "./ProfessionalRegistrationsFormModal";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfessionalRegistrations";
@@ -34,8 +30,10 @@ const NAMESPACE_TRANSLATION_APPLICATION = "Application";
 
 export default function ProfessionalRegistrations() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editRecord, setEditRecord] =
-    useState<ResearcherProfessionalRegistration>();
+  const [editRecord, setEditRecord] = useState<
+    ResearcherProfessionalRegistration | undefined
+  >(undefined);
+  const [isEditMode, setIsEditMode] = useState(false);
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
 
@@ -54,40 +52,64 @@ export default function ProfessionalRegistrations() {
     ...getProfessionalRegistrationsQueryState
   } = useQuery(getProfessionalRegistrationsQuery(user?.registry_id));
 
-  const { mutateAsync, reset, ...postProfessionalRegistrationQueryState } =
-    useMutationUpdateProfessionalRegistration(user?.registry_id);
+  const {
+    mutateAsync,
+    reset: resetPost,
+    ...postProfessionalRegistrationQueryState
+  } = useMutationUpdateProfessionalRegistration(user?.registry_id);
 
   const {
     mutateAsync: mutateDeleteAsync,
     ...deleteProfessionalRegistrationQueryState
   } = useMutation(deleteProfessionalRegistrationQuery());
 
-  useQueryAlerts(postProfessionalRegistrationQueryState, {
-    commonAlertProps: {
-      willClose: () => {
-        reset();
-      },
-    },
-    errorAlertProps: {
-      text: ReactDOMServer.renderToString(
-        tProfile.rich("errorCreateMessage", {
-          contactLink: ContactLink,
-        })
-      ),
-    },
-    successAlertProps: {
-      text: tProfile("successCreateMessage"),
-    },
-  });
+  const {
+    mutateAsync: mutatePutAsync,
+    ...putProfessionalRegistrationQueryState
+  } = useMutation(putProfessionalRegistrationQuery(user?.registry_id));
 
-  // Confirm for delete
+  useQueryAlerts(
+    isEditMode
+      ? putProfessionalRegistrationQueryState
+      : postProfessionalRegistrationQueryState,
+    {
+      commonAlertProps: {
+        willClose: () => {
+          if (!isEditMode) {
+            resetPost();
+          }
+          setIsModalOpen(false);
+          setEditRecord(undefined);
+          setIsEditMode(false);
+        },
+      },
+      errorAlertProps: {
+        text: isEditMode
+          ? ReactDOMServer.renderToString(
+              tProfile.rich("errorPutMessage", {
+                contactLink: ContactLink,
+              })
+            )
+          : ReactDOMServer.renderToString(
+              tProfile.rich("errorCreateMessage", {
+                contactLink: ContactLink,
+              })
+            ),
+      },
+      successAlertProps: {
+        text: isEditMode
+          ? tProfile("successEditMessage")
+          : tProfile("successCreateMessage"),
+      },
+    }
+  );
+
   const showDeleteConfirm = useQueryConfirmAlerts<number>(
     deleteProfessionalRegistrationQueryState,
     {
       confirmAlertProps: {
         willClose: async (id: number) => {
           await mutateDeleteAsync(id);
-
           refetch();
         },
       },
@@ -109,12 +131,21 @@ export default function ProfessionalRegistrations() {
       fields: PostProfessionalRegistrationPayload &
         ResearcherProfessionalRegistration
     ) => {
-      await mutateAsync(fields);
+      if (isEditMode) {
+        await mutatePutAsync({
+          id: editRecord!.id,
+          member_id: fields.member_id,
+          name: fields.name,
+        });
+      } else {
+        await mutateAsync(fields);
+      }
+      await refetch();
       setIsModalOpen(false);
-
-      refetch();
+      setEditRecord(undefined);
+      setIsEditMode(false);
     },
-    [mutateAsync, user?.registry_id]
+    [isEditMode, editRecord, mutatePutAsync, mutateAsync, refetch]
   );
 
   const handleDelete = async (id: number) => {
@@ -126,7 +157,6 @@ export default function ProfessionalRegistrations() {
   useEffect(() => {
     if (data) {
       const storeHistories = getHistories();
-
       setHistories({
         ...storeHistories,
         professionalRegistrations: data,
@@ -134,77 +164,87 @@ export default function ProfessionalRegistrations() {
     }
   }, [data, getHistories, setHistories]);
 
-  useEffect(() => {
-    if (editRecord) setIsModalOpen(true);
-  }, [editRecord]);
-
+  const columns = useMemo<ColumnDef<ResearcherProfessionalRegistration>[]>(
+    () => [
+      {
+        accessorKey: "name",
+        header: tProfile("name"),
+        cell: info => info.getValue(),
+      },
+      {
+        accessorKey: "member_id",
+        header: tProfile("id"),
+        cell: info => info.getValue(),
+      },
+      {
+        id: "actions",
+        cell: ({ row }) => (
+          <ActionMenu aria-label={`Action for ${row.original.name}`}>
+            <ActionMenuItem
+              onClick={() => {
+                setEditRecord(row.original);
+                setIsEditMode(true);
+                setIsModalOpen(true);
+              }}
+              sx={{ color: "menuList1.main" }}
+              icon={<CreateOutlinedIcon sx={{ color: "menuList1.main" }} />}>
+              {tApplication("edit")}
+            </ActionMenuItem>
+            <ActionMenuItem
+              onClick={() => {
+                handleDelete(row.original.id);
+              }}
+              sx={{ color: "error.main" }}
+              icon={<DeleteOutlineOutlinedIcon sx={{ color: "error.main" }} />}>
+              {tApplication("delete")}
+            </ActionMenuItem>
+          </ActionMenu>
+        ),
+      },
+    ],
+    [tProfile, tApplication, handleDelete]
+  );
   return (
     <>
       <ProfessionalRegistrationsFormModal
         open={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        onClose={() => {
+          setIsModalOpen(false);
+          setEditRecord(undefined);
+          setIsEditMode(false);
+        }}
         onSubmit={handleDetailsSubmit}
-        queryState={postProfessionalRegistrationQueryState}
-        data={editRecord}
+        queryState={
+          isEditMode
+            ? putProfessionalRegistrationQueryState
+            : postProfessionalRegistrationQueryState
+        }
+        initialValues={editRecord}
+        isEdit={isEditMode}
       />
       <Typography variant="h6" sx={{ mb: 1 }}>
         {tProfile("resultsTitle")}
       </Typography>
-      <Results
+      <Table
+        columns={columns}
+        data={professionalRegistrations}
         queryState={getProfessionalRegistrationsQueryState}
         noResultsMessage={tProfile("professionalRegistrationsNoResultsMessage")}
         errorMessage={tProfile.rich("professionalRegsitrationsErrorMessage", {
           contactLink: ContactLink,
         })}
+        total={professionalRegistrations.length}
         sx={{ maxWidth: "50%" }}
-        total={professionalRegistrations.length}>
-        <Table>
-          <TableHead sx={{ backgroundColor: "lightPurple.main" }}>
-            <TableRow>
-              <TableCell scope="col">{tProfile("name")}</TableCell>
-              <TableCell scope="col">{tProfile("id")}</TableCell>
-              <TableCell scope="col" />
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {professionalRegistrations.map(
-              (
-                professionalRegistration: ResearcherProfessionalRegistration
-              ) => {
-                const { member_id, name, id } = professionalRegistration;
-
-                return (
-                  <TableRow key={name}>
-                    <TableCell>{name}</TableCell>
-                    <TableCell>{member_id}</TableCell>
-                    <TableCell>
-                      <ActionMenu aria-label={`Action for ${name}`}>
-                        <ActionMenuItem
-                          onClick={() => {
-                            setEditRecord(professionalRegistration);
-                          }}>
-                          {tApplication("edit")}
-                        </ActionMenuItem>
-                        <ActionMenuItem
-                          onClick={() => {
-                            handleDelete(id);
-                          }}>
-                          {tApplication("delete")}
-                        </ActionMenuItem>
-                      </ActionMenu>
-                    </TableCell>
-                  </TableRow>
-                );
-              }
-            )}
-          </TableBody>
-        </Table>
-      </Results>
+      />
       <Button
         startIcon={<AddIcon />}
         variant="outlined"
         color="primary"
-        onClick={() => setIsModalOpen(true)}
+        onClick={() => {
+          setEditRecord(undefined);
+          setIsEditMode(false);
+          setIsModalOpen(true);
+        }}
         sx={{ mt: 2 }}>
         {tProfile("addProfessionalRegistration")}
       </Button>

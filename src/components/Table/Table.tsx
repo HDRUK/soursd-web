@@ -31,6 +31,7 @@ interface TableProps<T> {
   errorMessage?: ReactNode;
   noResultsMessage?: ReactNode;
   total?: number;
+  sx?: React.CSSProperties;
 }
 
 const Table = <T,>({
@@ -46,6 +47,7 @@ const Table = <T,>({
   errorMessage = "Error",
   noResultsMessage = "No results",
   total,
+  sx,
 }: TableProps<T>) => {
   const table = useReactTable({
     data: data || [],
@@ -72,7 +74,7 @@ const Table = <T,>({
           />
         )
       }>
-      <TableContainer sx={{ my: 1 }}>
+      <TableContainer sx={{ my: 1, ...sx }}>
         <MuiTable size={dense ? "small" : "medium"}>
           {showHeader && (
             <TableHead

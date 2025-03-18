@@ -136,6 +136,8 @@ interface User {
   role?: string;
   location?: string;
   status: Status;
+  declaration_signed?: boolean;
+  uksa_registered?: boolean;
 }
 interface AddressFields {
   postcode?: string;

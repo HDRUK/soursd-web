@@ -534,7 +534,7 @@
   },
   "ProfessionalRegistrations": {
     "title": "Professional Registrations",
-    "resultsTitle": "Professional registrations history",
+    "resultsTitle": "Professional registration history",
     "addProfessionalRegistration": "Add professional registrations",
     "id": "ID",
     "name": "Professional registration",
@@ -547,7 +547,9 @@
     "professionalRegistrationsNoResultsMessage": "You currently have no professional registrations",
     "professionalRegsitrationsErrorMessage": "There was an error getting your professional registrations. Please try again or contact us at <contactLink></contactLink>",
     "errorCreateMessage": "There was an error creating your professional registrations. Please try again or contact us at <contactLink></contactLink>",
-    "successCreateMessage": "Your professional registration was successfully create",
+    "errorPutMessage": "There was an error updating your professional registration. Please try again or contact us at <contactLink></contactLink>",
+    "successCreateMessage": "Your professional registration was successfully created",
+    "successEditMessage": "Your professional registration was successfully updated",
     "errorDeleteMessage": "There was an error delete your professional registration. Please try again or contact us at <contactLink></contactLink>",
     "successDeleteMessage": "Your professional registration was successfully deleted",
     "cancel": "Cancel"
@@ -661,6 +663,7 @@
     "experience": "Experience",
     "experienceTitle": "Complete your experience information",
     "experienceForm": "Employment and publication history",
+    "trainingTitle": "Complete your training and accreditation history",
     "trainingAndAccreditations": "Training and Accreditations",
     "homeTitle": "Your actions",
     "approvedProjects": "Projects",
