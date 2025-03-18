@@ -19,13 +19,13 @@ import UserHistory from "../UserHistory";
 import UserIdentity from "../UserIdentity";
 import UserProjects from "../UserProjects";
 import UserTrainingAccreditations from "../UserTrainingAccreditations";
-import ValidationChecks from "../ValidationChecks";
-import Webhooks from "../Webhooks";
+import { ResearcherProject } from "@/types/application";
 
 interface TabsContentsProps {
   tabId: PageTabs;
   subTabId: ConfigurationSubTabs | UserSubTabs | ProjectsSubTabs;
   id?: number;
+  data?: ResearcherProject;
 }
 
 export default function SubTabsContents({
