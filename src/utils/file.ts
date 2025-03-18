@@ -45,9 +45,8 @@ const getFileFromEvent = ({ target }: ChangeEvent<HTMLInputElement>) => {
 
 const resetFileFromEvent = ({ target }: ChangeEvent<HTMLInputElement>) => {
   if (target && target.files && target.files.length > 0) {
-    setTimeout(() => {
-      target.value = "";
-    }, 0);
+    console.log("here i am");
+    target.value = "";
   }
 };
 
