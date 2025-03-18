@@ -3,6 +3,7 @@ import {
   act,
   commonAccessibilityTests,
   fireEvent,
+  userEvent,
   render,
   screen,
 } from "@/utils/testUtils";
@@ -104,8 +105,14 @@ describe("<FileUploadDetails />", () => {
         fileType,
       });
 
+      const scanErrorIcon = screen.getByTestId("GppBadIcon");
+      expect(scanErrorIcon).toBeInTheDocument();
+
+      await userEvent.hover(scanErrorIcon);
+
+      await userEvent.hover(scanErrorIcon);
       expect(
-        screen.getByTitle(
+        await screen.findByText(
           `Your ${capitaliseFirstLetter(fileType.toLowerCase())} file may have a virus`
         )
       ).toBeInTheDocument();
@@ -118,8 +125,12 @@ describe("<FileUploadDetails />", () => {
       fileType,
     });
 
+    const scanGoodIcon = screen.getByTestId("GppGoodIcon");
+    expect(scanGoodIcon).toBeInTheDocument();
+
+    await userEvent.hover(scanGoodIcon);
     expect(
-      screen.getByTitle(
+      await screen.findByText(
         `${capitaliseFirstLetter(fileType.toLowerCase())} was successfully scanned`
       )
     ).toBeInTheDocument();

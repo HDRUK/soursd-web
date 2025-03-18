@@ -2,6 +2,7 @@ import {
   act,
   commonAccessibilityTests,
   fireEvent,
+  userEvent,
   render,
   screen,
 } from "@/utils/testUtils";
@@ -84,7 +85,11 @@ describe("<FileLink />", () => {
       isScanFailed: true,
     });
 
-    expect(screen.getByTitle("Scan failed")).toBeInTheDocument();
+    const scanErrorIcon = screen.getByTestId("GppBadIcon");
+    expect(scanErrorIcon).toBeInTheDocument();
+
+    await userEvent.hover(scanErrorIcon);
+    expect(await screen.findByText("Scan failed")).toBeInTheDocument();
   });
 
   it("shows the succeed virus state", async () => {
@@ -92,7 +97,11 @@ describe("<FileLink />", () => {
       isScanComplete: true,
     });
 
-    expect(screen.getByTitle("Scan complete")).toBeInTheDocument();
+    const scanGoodIcon = screen.getByTestId("GppGoodIcon");
+    expect(scanGoodIcon).toBeInTheDocument();
+
+    await userEvent.hover(scanGoodIcon);
+    expect(await screen.findByText("Scan complete")).toBeInTheDocument();
   });
 
   it("is not downloadable", async () => {
