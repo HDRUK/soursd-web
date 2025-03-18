@@ -102,9 +102,6 @@ export default function FileLink({
             {fileButtonText}
           </LoadingButton>
         </Grid>
-        <Grid item xs={2} sx={{ alignContent: "center" }}>
-          {!fileNameText && includeStatus && statusIcons}
-        </Grid>
       </Grid>
       <Grid item xs={12}>
         {fileNameText && (
