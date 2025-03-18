@@ -43,12 +43,21 @@ const getFileFromEvent = ({ target }: ChangeEvent<HTMLInputElement>) => {
   return null;
 };
 
+const resetFileFromEvent = ({ target }: ChangeEvent<HTMLInputElement>) => {
+  if (target && target.files && target.files.length > 0) {
+    setTimeout(() => {
+      target.value = "";
+    }, 0);
+  }
+};
+
 export {
   getFileExtension,
   getFileFromEvent,
   getFileHref,
   getLatestCV,
   getUploadedCertification,
+  resetFileFromEvent,
   isFileScanComplete,
   isFileScanFailed,
   isFileScanning,

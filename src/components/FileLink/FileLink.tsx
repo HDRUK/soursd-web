@@ -114,7 +114,11 @@ export default function FileLink({
             data-testid="download-file"
             variant="body2"
             component="button"
-            onClick={e => onDownload?.(e)}
+            onClick={e => {
+              e.preventDefault();
+              e.stopPropagation();
+              onDownload?.(e);
+            }}
             disabled={!onDownload}>
             {includeStatus ? (
               <Text endIcon={statusIcons}>{fileNameText}</Text>
