@@ -13,6 +13,7 @@ import {
   Grid,
   Button,
   Tooltip,
+  Link,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import prettyBytes from "pretty-bytes";
@@ -108,9 +109,11 @@ export default function FileLink({
       </Grid>
       <Grid item xs={12}>
         {fileNameText && (
-          <Button
+          /* eslint-disable jsx-a11y/anchor-is-valid */
+          <Link
             data-testid="download-file"
-            variant="text"
+            variant="body2"
+            component="button"
             onClick={e => onDownload?.(e)}
             disabled={!onDownload}>
             {includeStatus ? (
@@ -118,7 +121,7 @@ export default function FileLink({
             ) : (
               fileNameText
             )}
-          </Button>
+          </Link>
         )}
         <Typography variant="caption" color="caption.main" component="div">
           {fileTypesText || t("fileTypesText")}
