@@ -15,6 +15,7 @@ interface RouteConfig {
 }
 
 interface Routes {
+  invite: RouteConfig;
   register: RouteConfig;
   homepage: RouteConfig;
   usersCustodian: RouteConfig;

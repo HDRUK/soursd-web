@@ -6,9 +6,7 @@ import { Rules } from "./types";
 export default async (
   options: ResponseOptions
 ): Promise<ResponseJson<Rules[]>> => {
-  const response = await getRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/rules`
-  );
+  const response = await getRequest(`/rules`);
 
   return handleJsonResponse(response, options);
 };

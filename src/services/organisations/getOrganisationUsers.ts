@@ -15,7 +15,7 @@ export default async (
   );
 
   const response = await getRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/organisations/${id}/users?${params.toString()}`,
+    `/organisations/${id}/users?${params.toString()}`,
     undefined
   );
 

@@ -13,7 +13,7 @@ export default async (
   options: ResponseOptions
 ): Promise<ResponseJson<Paged<ProjectsResponse>>> => {
   const response = await getRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/${entity}s/${id}/projects${getSearchQuerystring(searchParams)}`
+    `/${entity}s/${id}/projects${getSearchQuerystring(searchParams)}`
   );
 
   return handleJsonResponse(response, options);

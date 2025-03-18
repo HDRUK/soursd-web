@@ -10,7 +10,7 @@ export default async (
   options: ResponseOptions
 ): Promise<ResponseJson<null>> => {
   const response = await deleteRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/approvals/${entityType}/${payload.user_id}/custodian/${payload.custodian_id}`
+    `/approvals/${entityType}/${payload.user_id}/custodian/${payload.custodian_id}`
   );
 
   return handleJsonResponse(response, options);

@@ -10,7 +10,7 @@ export default async (
   options: ResponseOptions
 ) => {
   const response = await patchRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/users/${userId}/notifications/${notificationId}/${type}`,
+    `/users/${userId}/notifications/${notificationId}/${type}`,
     {}
   );
 

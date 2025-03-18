@@ -7,9 +7,7 @@ export default async (
   id: number,
   options: ResponseOptions
 ): Promise<ResponseJson<FileResponse>> => {
-  const response = await getRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/files/${id}`
-  );
+  const response = await getRequest(`/files/${id}`);
 
   return handleJsonResponse(response, options);
 };

@@ -10,7 +10,7 @@ export default async (
   options: ResponseOptions
 ): Promise<ResponseJson<boolean>> => {
   const response = await getRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/approvals/${entityType}/${id}/custodian/${custodianId}`
+    `/approvals/${entityType}/${id}/custodian/${custodianId}`
   );
 
   return handleJsonResponse(response, options);

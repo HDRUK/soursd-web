@@ -1,7 +1,6 @@
 "use server";
 
-import { ROUTES } from "@/consts/router";
-import usePathServerSide from "@/hooks/usePathServerSide";
+import { EXCLUDE_REDIRECT_URLS } from "@/consts/router";
 import { getMe } from "@/services/auth";
 import {
   redirectOnServerError,
@@ -10,12 +9,10 @@ import {
   redirectWithoutAccessToken,
   registerAndRedirect,
 } from "@/utils/requests";
-import { redirect } from "next/navigation";
+import { anyIncludes } from "./utils/string";
 
-export default async function useApplicationRedirect() {
-  const pathname = usePathServerSide();
-
-  if (!!pathname) {
+export default async function middlewareRedirects(pathname: string) {
+  if (!!pathname && !anyIncludes(pathname, EXCLUDE_REDIRECT_URLS)) {
     const accessToken = await redirectWithoutAccessToken(pathname);
     let me;
 
@@ -26,19 +23,19 @@ export default async function useApplicationRedirect() {
 
       me = response.data;
 
+      let redirectUrl;
+
       if (response.status === 200) {
-        await redirectToProfile(me, pathname);
+        redirectUrl = await redirectToProfile(me, pathname);
       } else if (response.status === 401) {
-        await redirectRefreshToken();
+        redirectUrl = await redirectRefreshToken();
       } else if (response.status === 404) {
-        await registerAndRedirect(pathname);
+        redirectUrl = await registerAndRedirect(pathname);
       } else if (response.status === 500) {
-        await redirectOnServerError(accessToken, pathname);
+        redirectUrl = await redirectOnServerError(accessToken, pathname);
       }
+
+      return redirectUrl;
     }
-
-    return me;
   }
-
-  redirect(ROUTES.homepage.path);
 }

@@ -5,9 +5,9 @@ import { Routes } from "@/types/router";
 import Cookies from "js-cookie";
 import { redirect } from "next/navigation";
 import { getAccessToken } from "./auth";
-import { getLoginUrl, handleLogin } from "./keycloak";
+import { getLoginUrl, getRegisterUrl } from "./keycloak";
 import { getLocalePath } from "./language";
-import { capitaliseFirstLetter } from "./string";
+import { anyIncludes, capitaliseFirstLetter } from "./string";
 
 function objectToQuerystring(
   params: Record<string, string | number | boolean | null | undefined>
@@ -62,7 +62,7 @@ const redirectToProfile = async (user: User, path: string) => {
 
   if (redirectPath) {
     const localePath = await getLocalePath(redirectPath);
-    redirect(localePath);
+    return localePath;
   }
 };
 
@@ -71,13 +71,11 @@ const registerAndRedirect = async (pathname: string) => {
     suppressThrow: true,
   });
 
-  if (!pathname.includes(ROUTES.register.path)) {
-    if (!user.data) {
-      const localePath = await getLocalePath(ROUTES.register.path);
-      redirect(localePath);
-    } else {
-      redirectToProfile(user.data, pathname);
-    }
+  if (!!user.data) {
+    return redirectToProfile(user.data, pathname);
+  } else if (!pathname.includes(ROUTES.register.path)) {
+    const localePath = await getLocalePath(ROUTES.register.path);
+    return localePath;
   }
 };
 
@@ -88,19 +86,27 @@ async function redirectRefreshToken() {
     Cookies.remove("access_token");
     Cookies.remove("refresh_token");
 
-    redirect(getLoginUrl());
+    return getLoginUrl();
   }
 }
 
 async function redirectWithoutAccessToken(pathname: string) {
   const accessToken = await getAccessToken();
 
-  if (!accessToken && !pathname.includes(ROUTES.homepage.path)) {
+  if (
+    !accessToken &&
+    !anyIncludes(pathname, [ROUTES.homepage.path, "/invite"])
+  ) {
     const localePath = await getLocalePath(ROUTES.homepage.path);
-    redirect(localePath);
+
+    return localePath;
   }
 
   return accessToken;
+}
+
+async function redirectInvite() {
+  return getRegisterUrl();
 }
 
 async function redirectOnServerError(
@@ -113,7 +119,7 @@ async function redirectOnServerError(
 
   if (!pathname.includes(ROUTES.homepage.path)) {
     const localePath = await getLocalePath(ROUTES.homepage.path);
-    redirect(localePath);
+    return localePath;
   }
 }
 
@@ -127,4 +133,5 @@ export {
   redirectToProfile,
   redirectWithoutAccessToken,
   registerAndRedirect,
+  redirectInvite,
 };

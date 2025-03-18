@@ -9,7 +9,7 @@ export default async (
   options: ResponseOptions
 ): Promise<ResponseJson<GetCustodianEntityModelResponse[]>> => {
   const response = await getRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/custodian_config/${id}/entity_models?entity_model_type=${entity_type}`
+    `/custodian_config/${id}/entity_models?entity_model_type=${entity_type}`
   );
 
   return handleJsonResponse(response, options);

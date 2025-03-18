@@ -10,7 +10,7 @@ export default async (
   options?: ResponseOptions
 ): Promise<ResponseJson<ResearcherProfessionalRegistration>> => {
   const response = await putRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/professional_registrations/${id}`,
+    `/professional_registrations/${id}`,
     payload
   );
 
