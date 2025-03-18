@@ -184,8 +184,7 @@ export default function Projects({ variant }: ProjectsProps) {
       <PageSection>
         <SearchBar
           updateQueryParam={(text: string) => updateQueryParam("title[]", text)}
-          placeholder={t("searchPlaceholder")}
-          legend={<ProjectsLegend />}>
+          placeholder={t("searchPlaceholder")}>
           <SearchActionMenu
             actions={sortActions}
             startIcon={<SortIcon />}
