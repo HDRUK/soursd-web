@@ -5,7 +5,7 @@ import { Routes } from "@/types/router";
 import Cookies from "js-cookie";
 import { redirect } from "next/navigation";
 import { getAccessToken } from "./auth";
-import { handleLogin } from "./keycloak";
+import { getLoginUrl, handleLogin } from "./keycloak";
 import { getLocalePath } from "./language";
 import { capitaliseFirstLetter } from "./string";
 
@@ -88,8 +88,7 @@ async function redirectRefreshToken() {
     Cookies.remove("access_token");
     Cookies.remove("refresh_token");
 
-    const localePath = await getLocalePath(ROUTES.homepage.path);
-    redirect(localePath);
+    redirect(getLoginUrl());
   }
 }
 
@@ -104,15 +103,16 @@ async function redirectWithoutAccessToken(pathname: string) {
   return accessToken;
 }
 
-function redirectOnServerError(
+async function redirectOnServerError(
   accessToken: string | undefined,
   pathname: string | null
 ) {
-  // if (!accessToken) {
-  Cookies.set("redirectPath", pathname ?? "/", { path: "/" });
+  if (!accessToken) {
+    Cookies.set("redirectPath", pathname ?? "/", { path: "/" });
 
-  // handleLogin();
-  // }
+    const localePath = await getLocalePath(ROUTES.homepage.path);
+    redirect(localePath);
+  }
 }
 
 export {

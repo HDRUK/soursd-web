@@ -1,6 +1,6 @@
 import keycloakConfig from "@/config/keycloak";
 
-const handleLogin = () => {
+const getLoginUrl = () => {
   const authUrl = `${keycloakConfig.authServerUrl}/realms/${keycloakConfig.realm}/protocol/openid-connect/auth`;
   const params = new URLSearchParams({
     client_id: keycloakConfig.clientId,
@@ -8,20 +8,29 @@ const handleLogin = () => {
     redirect_uri: keycloakConfig.redirectUriLogin,
     scope: "openid profile email",
   });
-  window.location.href = `${authUrl}?${params.toString()}`;
+
+  return `${authUrl}?${params.toString()}`;
 };
 
-const handleLogout = () => {
+const handleLogin = () => {
+  window.location.href = getLoginUrl();
+};
+
+const getLogoutUrl = () => {
   const logoutUrl = `${keycloakConfig.authServerUrl}/realms/${keycloakConfig.realm}/protocol/openid-connect/logout`;
   const params = new URLSearchParams({
     client_id: keycloakConfig.clientId,
     post_logout_redirect_uri: keycloakConfig.redirectUriLogout,
   });
 
-  window.location.href = `${logoutUrl}?${params.toString()}`;
+  return `${logoutUrl}?${params.toString()}`;
 };
 
-const handleRegister = () => {
+const handleLogout = () => {
+  window.location.href = getLogoutUrl();
+};
+
+const getRegisterUrl = () => {
   const registerUrl = `${keycloakConfig.authServerUrl}/realms/${keycloakConfig.realm}/protocol/openid-connect/registrations`;
   const params = new URLSearchParams({
     client_id: keycloakConfig.clientId,
@@ -30,7 +39,18 @@ const handleRegister = () => {
     response_type: "code",
   });
 
-  window.location.href = `${registerUrl}?${params.toString()}`;
+  return `${registerUrl}?${params.toString()}`;
 };
 
-export { handleLogin, handleLogout, handleRegister };
+const handleRegister = () => {
+  window.location.href = getRegisterUrl();
+};
+
+export {
+  handleLogin,
+  handleLogout,
+  handleRegister,
+  getRegisterUrl,
+  getLoginUrl,
+  getLogoutUrl,
+};

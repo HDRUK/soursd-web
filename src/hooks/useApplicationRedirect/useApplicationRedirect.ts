@@ -25,6 +25,7 @@ export default async function useApplicationRedirect() {
       });
 
       me = response.data;
+
       if (response.status === 200) {
         await redirectToProfile(me, pathname);
       } else if (response.status === 401) {
