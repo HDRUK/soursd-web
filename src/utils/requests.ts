@@ -105,11 +105,13 @@ async function redirectWithoutAccessToken(pathname: string) {
 
 async function redirectOnServerError(
   accessToken: string | undefined,
-  pathname: string | null
+  pathname: string
 ) {
   if (!accessToken) {
     Cookies.set("redirectPath", pathname ?? "/", { path: "/" });
+  }
 
+  if (!pathname.includes(ROUTES.homepage.path)) {
     const localePath = await getLocalePath(ROUTES.homepage.path);
     redirect(localePath);
   }

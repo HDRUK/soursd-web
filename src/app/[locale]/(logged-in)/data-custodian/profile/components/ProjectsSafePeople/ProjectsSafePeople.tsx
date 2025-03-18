@@ -66,7 +66,7 @@ export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
           users.push({
             organisation_name,
             ...user,
-            project_role: role.name,
+            project_role: role?.name,
             primary_contact,
           });
         });
@@ -177,7 +177,9 @@ export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
     <>
       <Box component="form" role="search">
         <SearchBar
-          updateQueryParam={(text: string) => updateQueryParam("name[]", text)}
+          updateQueryParam={(text: string) =>
+            updateQueryParam("first_name", text)
+          }
           placeholder={t("searchPlaceholder")}>
           <SearchActionMenu
             actions={filterActions}
