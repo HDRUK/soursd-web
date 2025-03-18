@@ -12,7 +12,8 @@ interface ProfessionalRegistrationsFormModalProps {
       ResearcherProfessionalRegistration
   ) => Promise<void>;
   queryState: QueryState | MutationState;
-  data?: ResearcherProfessionalRegistration;
+  initialValues?: ResearcherProfessionalRegistration;
+  isEdit: boolean;
 }
 
 export default function ProfessionalRegistrationsFormModal({
@@ -20,15 +21,23 @@ export default function ProfessionalRegistrationsFormModal({
   onSubmit,
   onClose,
   queryState,
-  data,
+  initialValues,
+  isEdit,
 }: ProfessionalRegistrationsFormModalProps) {
   return (
-    <FormModal open={open} title="Add Professional Registration">
+    <FormModal
+      open={open}
+      title={
+        isEdit
+          ? "Edit Professional Registration"
+          : "Add Professional Registration"
+      }>
       <ProfessionalRegistrationsForm
         onClose={onClose}
         onSubmit={onSubmit}
         queryState={queryState}
-        data={data}
+        data={initialValues}
+        isEdit={isEdit}
       />
     </FormModal>
   );

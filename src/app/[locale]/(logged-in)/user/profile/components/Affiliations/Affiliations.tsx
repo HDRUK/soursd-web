@@ -180,7 +180,6 @@ export default function Affiliations() {
         // Create new affiliation
         await postAffiliations(fields);
       }
-      // setSelectedAffiliation(undefined);
       refetch();
     },
     [selectedAffiliation, postAffiliations, patchAffiliation]
