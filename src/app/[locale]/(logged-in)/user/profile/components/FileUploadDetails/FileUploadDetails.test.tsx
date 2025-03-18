@@ -109,8 +109,6 @@ describe("<FileUploadDetails />", () => {
       expect(scanErrorIcon).toBeInTheDocument();
 
       await userEvent.hover(scanErrorIcon);
-
-      await userEvent.hover(scanErrorIcon);
       expect(
         await screen.findByText(
           `Your ${capitaliseFirstLetter(fileType.toLowerCase())} file may have a virus`
