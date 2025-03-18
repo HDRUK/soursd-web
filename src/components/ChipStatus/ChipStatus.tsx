@@ -1,4 +1,4 @@
-import { Chip, ChipProps } from "@mui/material";
+import { Chip, ChipProps, useTheme } from "@mui/material";
 import { useTranslations } from "next-intl";
 
 export enum Status {
@@ -7,6 +7,8 @@ export enum Status {
   INVITED = "invited",
   REGISTERED = "registered",
   INVITE_SENT = "invite_sent",
+  APPROVED = "approved",
+  COMPLETED = "completed",
 }
 
 interface ChipStatusProps extends ChipProps {
@@ -17,11 +19,26 @@ const NAMESPACE_TRANSLATION = "Application";
 
 export default function ChipStatus({ status, ...restProps }: ChipStatusProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION);
-  let color = "midGrey";
+  const theme = useTheme();
 
-  if (status === Status.AFFILIATED) {
-    color = "success";
+  let chipProps: ChipProps["sx"] = {
+    color: "midGrey",
+  };
+
+  if (status === Status.AFFILIATED || status === Status.APPROVED) {
+    chipProps = {
+      color: "success",
+    };
+  } else if (status === Status.COMPLETED) {
+    chipProps = {
+      color: "white",
+      border: "1px solid",
+      borderColor: "midGrey",
+    };
   }
+
+  const { color, ...restChipSxProps } = chipProps;
+
   return (
     <Chip
       label={t(`status_${status}`)}
@@ -32,6 +49,7 @@ export default function ChipStatus({ status, ...restProps }: ChipStatusProps) {
         "& > .MuiChip-label": {
           color: `${color}.contrastText`,
         },
+        ...restChipSxProps,
         ...restProps.sx,
       }}
     />

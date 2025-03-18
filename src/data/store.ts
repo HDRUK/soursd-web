@@ -61,9 +61,12 @@ interface StoreState {
     permissions: Permission[];
     custodian?: Custodian;
     histories?: StoreUserHistories;
+    project?: ResearcherProject;
   };
   application: StoreApplication;
   setRoutes: (routes: Routes) => void;
+  getProject: () => ResearcherProject;
+  setProject: (project: ResearcherProject) => void;
   getUser: () => User | undefined;
   setUser: (user: User) => void;
   getSectors: () => Sector[];
@@ -96,6 +99,15 @@ const storeMethods = (set: StoreSet, get: StoreGet) => ({
         state.config.entries = routes;
       })
     ),
+  setProject: (project: ResearcherProject) =>
+    set(
+      produce(state => {
+        state.project = project;
+      })
+    ),
+  getProject: () => {
+    return get().project;
+  },
   setUser: (user: User) =>
     set(
       produce(state => {
