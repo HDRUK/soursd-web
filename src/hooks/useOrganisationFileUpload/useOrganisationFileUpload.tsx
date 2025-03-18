@@ -1,7 +1,7 @@
 import { FileType } from "@/consts/files";
 import { EntityType } from "@/types/api";
 import { File, Organisation } from "@/types/application";
-import { getFileFromEvent } from "@/utils/file";
+import { getFileFromEvent, resetFileFromEvent } from "@/utils/file";
 import { ChangeEvent, useCallback } from "react";
 
 export interface UseOrganisationFileUploadProps {
@@ -27,6 +27,7 @@ export default function useOrganisationFileUpload({
         formData.append("organisation_id", `${organisation?.id}`);
 
         const fileFromApi = await upload(formData);
+        resetFileFromEvent(e);
         return fileFromApi;
       }
 
