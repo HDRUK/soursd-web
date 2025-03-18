@@ -20,11 +20,14 @@ import UserProjects from "../UserProjects";
 import UserCustodianOrgInfo from "../UserCustodianOrgInfo";
 import UserAffiliations from "../UserAffiliations";
 import ProjectsSafePeople from "../ProjectsSafePeople";
+import ProjectsSafeProject from "../ProjectsSafeProject";
+import { ResearcherProject } from "@/types/application";
 
 interface TabsContentsProps {
   tabId: PageTabs;
   subTabId: ConfigurationSubTabs | UserSubTabs | ProjectsSubTabs;
   id?: number;
+  data?: ResearcherProject;
 }
 
 export default function SubTabsContents({
@@ -76,6 +79,10 @@ export default function SubTabsContents({
     case ProjectsSubTabs.SAFE_PEOPLE:
       content = <ProjectsSafePeople id={id} />;
       break;
+    case ProjectsSubTabs.SAFE_PROJECT:
+      content = <ProjectsSafeProject />;
+      break;
+
     default:
       content = null;
   }

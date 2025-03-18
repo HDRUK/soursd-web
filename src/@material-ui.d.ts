@@ -24,6 +24,7 @@ interface ColorOverrides {
   textSecondary: true;
   textPrimary: true;
   midGrey: true;
+  white: true;
 }
 
 declare module "@mui/material/styles/createPalette" {
@@ -46,6 +47,7 @@ declare module "@mui/material/styles/createPalette" {
     textSecondary: SimplePaletteColorOptions;
     textPrimary: SimplePaletteColorOptions;
     midGrey: SimplePaletteColorOptions;
+    white: SimplePaletteColorOptions;
   }
 
   interface Palette extends CustomPalette {}
