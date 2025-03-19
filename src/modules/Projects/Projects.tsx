@@ -66,7 +66,8 @@ export default function Projects({ variant }: ProjectsProps) {
     last_page,
     total,
     setPage,
-    updateQueryParam,
+    updateQueryParams,
+    resetQueryParams,
     handleSortToggle,
     handleFieldToggle,
     queryParams,
@@ -182,7 +183,12 @@ export default function Projects({ variant }: ProjectsProps) {
     <PageBody>
       <PageSection>
         <SearchBar
-          updateQueryParam={(text: string) => updateQueryParam("title[]", text)}
+          onClear={resetQueryParams}
+          onSearch={(text: string) => {
+            updateQueryParams({
+              "title[]": text,
+            });
+          }}
           placeholder={t("searchPlaceholder")}>
           <SearchActionMenu
             actions={sortActions}

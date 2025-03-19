@@ -8,10 +8,16 @@ import IconButton from "../../components/IconButton";
 
 type SearchFieldProps = Omit<TextFieldProps, "change"> & {
   onSearch: (query: string) => void;
+  onClear?: () => void;
   placeholder?: string;
 };
 
-const SearchField = ({ onSearch, placeholder, ...rest }: SearchFieldProps) => {
+const SearchField = ({
+  onSearch,
+  onClear,
+  placeholder,
+  ...rest
+}: SearchFieldProps) => {
   const [searchQuery, setSearchQuery] = useState<string | null>(null);
   const [searchQueryDebounced] = useDebounce(searchQuery, 500);
 
@@ -27,6 +33,7 @@ const SearchField = ({ onSearch, placeholder, ...rest }: SearchFieldProps) => {
 
   const handleClearSearch = () => {
     setSearchQuery("");
+    onClear?.();
   };
 
   return (
