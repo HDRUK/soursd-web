@@ -38,12 +38,14 @@ interface TrainingFormProps {
   onSubmit: (values: PostTrainingsPayload) => void;
   isPending: boolean;
   onCancel: () => void;
+  initialValues?: TrainingFormValues;
 }
 
 export default function TrainingForm({
   onSubmit,
   isPending,
   onCancel,
+  initialValues,
 }: TrainingFormProps) {
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const [user, setUser] = useStore(store => [store.config.user, store.setUser]);
@@ -132,10 +134,10 @@ export default function TrainingForm({
 
   const formOptions = {
     defaultValues: {
-      provider: "",
-      training_name: "",
-      awarded_at: "",
-      expires_at: "",
+      provider: initialValues?.provider || "",
+      training_name: initialValues?.training_name || "",
+      awarded_at: initialValues?.awarded_at || "",
+      expires_at: initialValues?.expires_at || "",
     },
   };
 

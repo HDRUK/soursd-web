@@ -247,7 +247,7 @@ interface ResearcherTraining {
   awarding_body_ror: string;
   expires_at: string;
   training_name: string;
-  expires_in_years: boolean;
+  expires_in_years: number;
   id: number;
   certification_id: number | null;
 }
