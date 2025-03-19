@@ -9,11 +9,12 @@ export async function middleware(request: NextRequest) {
   });
 
   const response = handleI18nRouting(request);
-  const redirectUrl = await middlewareRedirects(request.nextUrl.pathname);
+  const pathname = request.nextUrl.pathname;
+  const redirectUrl = await middlewareRedirects(pathname);
 
-  response.headers.set("x-current-path", request.nextUrl.pathname);
+  response.headers.set("x-current-path", pathname);
 
-  if (redirectUrl) {
+  if (redirectUrl && !pathname.includes(redirectUrl)) {
     return NextResponse.redirect(
       `${process.env.NEXT_PUBLIC_LOCAL_ENV?.replace(/\/*$/g, "")}${redirectUrl}`
     );

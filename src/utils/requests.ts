@@ -48,22 +48,14 @@ function getProfilePathByEntity(user: User | string, path?: string) {
       .toLowerCase()
   );
 
-  const redirectRoute = ROUTES[`profile${profileEntity}` as keyof Routes].path;
-
-  if (!path || !path?.includes(redirectRoute)) {
-    return redirectRoute;
-  }
-
-  return null;
+  return ROUTES[`profile${profileEntity}` as keyof Routes].path;
 }
 
 const getProfileRedirectPath = async (user: User, path: string) => {
   const redirectPath = getProfilePathByEntity(user, path);
+  const localePath = await getLocalePath(redirectPath);
 
-  if (redirectPath) {
-    const localePath = await getLocalePath(redirectPath);
-    return localePath;
-  }
+  return localePath;
 };
 
 const getRegisterRedirectPath = async (pathname: string) => {
@@ -73,10 +65,10 @@ const getRegisterRedirectPath = async (pathname: string) => {
 
   if (!!user.data) {
     return getProfileRedirectPath(user.data, pathname);
-  } else if (!pathname.includes(ROUTES.register.path)) {
-    const localePath = await getLocalePath(ROUTES.register.path);
-    return localePath;
   }
+
+  const localePath = await getLocalePath(ROUTES.register.path);
+  return localePath;
 };
 
 async function getRefreshTokenRedirectPath() {
@@ -90,19 +82,9 @@ async function getRefreshTokenRedirectPath() {
   }
 }
 
-async function redirectWithoutAccessToken(pathname: string) {
-  const accessToken = await getAccessToken();
-
-  if (
-    !accessToken &&
-    !anyIncludes(pathname, [ROUTES.homepage.path, "/invite"])
-  ) {
-    const localePath = await getLocalePath(ROUTES.homepage.path);
-
-    return localePath;
-  }
-
-  return accessToken;
+async function getHomepageRedirectPath() {
+  const localePath = await getLocalePath(ROUTES.homepage.path);
+  return localePath;
 }
 
 async function redirectInvite() {
@@ -117,10 +99,7 @@ async function getSeverErrorRedirectPath(
     Cookies.set("redirectPath", pathname ?? "/", { path: "/" });
   }
 
-  if (!pathname.includes(ROUTES.homepage.path)) {
-    const localePath = await getLocalePath(ROUTES.homepage.path);
-    return localePath;
-  }
+  return getHomepageRedirectPath();
 }
 
 export {
@@ -131,7 +110,7 @@ export {
   getSeverErrorRedirectPath,
   getRefreshTokenRedirectPath,
   getProfileRedirectPath,
-  redirectWithoutAccessToken,
+  getHomepageRedirectPath,
   getRegisterRedirectPath,
   redirectInvite,
 };

@@ -6,14 +6,15 @@ import {
   getSeverErrorRedirectPath,
   getRefreshTokenRedirectPath,
   getProfileRedirectPath,
-  redirectWithoutAccessToken,
+  getHomepageRedirectPath,
   getRegisterRedirectPath,
 } from "@/utils/requests";
 import { anyIncludes } from "./utils/string";
+import { getAccessToken } from "./utils/auth";
 
 export default async function middlewareRedirects(pathname: string) {
   if (!!pathname && !anyIncludes(pathname, EXCLUDE_REDIRECT_URLS)) {
-    const accessToken = await redirectWithoutAccessToken(pathname);
+    const accessToken = await getAccessToken();
     let me;
 
     if (!!accessToken) {
@@ -36,6 +37,8 @@ export default async function middlewareRedirects(pathname: string) {
       }
 
       return redirectUrl;
+    } else {
+      return getHomepageRedirectPath();
     }
   }
 }
