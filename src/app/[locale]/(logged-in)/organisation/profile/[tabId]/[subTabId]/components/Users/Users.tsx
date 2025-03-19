@@ -111,10 +111,6 @@ export default function Users() {
             <SearchBar
               onClear={resetQueryParams}
               onSearch={(text: string) => {
-                if (!text || text.length < 1) {
-                  resetQueryParams();
-                  return;
-                }
                 updateQueryParams({
                   "first_name[]": text,
                   "last_name[]": text,

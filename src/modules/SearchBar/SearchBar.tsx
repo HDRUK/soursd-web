@@ -36,7 +36,13 @@ export default function SearchBar({
           },
         }}>
         <SearchField
-          onSearch={onSearch}
+          onSearch={(text: string) => {
+            if (!text || text.length < 1) {
+              onClear?.();
+              return;
+            }
+            onSearch(text);
+          }}
           onClear={onClear}
           placeholder={placeholder}
           sx={{ flexGrow: 1 }}
