@@ -64,9 +64,8 @@ async function handleJsonResponse(
 ) {
   const responseError = handleResponseError(response, options);
 
-  if (!options?.suppressThrow && responseError) {
+  if (!options?.suppressThrow && responseError)
     return Promise.reject(responseError);
-  }
 
   const data = await response.json();
   const dataError = handleDataError(data, options);

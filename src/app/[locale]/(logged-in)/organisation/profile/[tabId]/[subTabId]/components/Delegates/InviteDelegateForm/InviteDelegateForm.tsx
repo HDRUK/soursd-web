@@ -40,7 +40,7 @@ export default function InviteDelegateForm({
   const t = useTranslations(NAMESPACE_TRANSLATION_DELEGATES);
   const organisation = useStore(state => state.config.organisation);
 
-  const { mutateAsync, error, isPending } = useMutation({
+  const { mutateAsync, isPending } = useMutation({
     mutationKey: ["inviteUser", organisation?.id],
     mutationFn: (payload: PostOrganisationInviteUserPayload) => {
       return postOrganisationInviteUser(organisation?.id, payload, {

@@ -12,11 +12,10 @@ import { Box, Button } from "@mui/material";
 import ContactLink from "@/components/ContactLink";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import { useTranslations } from "next-intl";
-import { ActionMenu, ActionMenuItem } from "@/components/ActionMenu";
+import { ActionMenu } from "@/components/ActionMenu";
 import EditDelegate from "../EditDelegate";
 import DecoupleUser from "../DecoupleDelegate";
 import InviteDelegateForm from "../InviteDelegateForm";
-import { set } from "date-fns";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
 
