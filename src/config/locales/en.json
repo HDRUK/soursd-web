@@ -745,7 +745,6 @@
     "noResultsMessage": "You currently have no training history",
     "errorDeleteMessage": "There was an error delete your training entry. Please try again or contact us at <contactLink></contactLink>",
     "successDeleteMessage": "Your training entry was successfully deleted",
-    "NoResultsMessage": "No training courses found",
     "editTrainingCourse": "Edit Training Course",
     "updateTrainingError": "There was an error updating the training course. Please <contactLink>contact support</contactLink> if the problem persists.",
     "updateTrainingSuccess": "Training course updated successfully"

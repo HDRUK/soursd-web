@@ -254,16 +254,14 @@ export default function Training() {
       <Typography variant="h6" sx={{ mb: 1 }}>
         {t("trainingHistoryTitle")}
       </Typography>
-      {!!trainingsData?.data.length && (
-        <Table
-          data={trainingsData.data}
-          columns={columns}
-          queryState={trainingDataQueryState}
-          total={trainingsData.data.length}
-          noResultsMessage={t("NoResultsMessage")}
-          sx={{ maxWidth: "75%" }}
-        />
-      )}
+      <Table
+        data={trainingsData?.data}
+        columns={columns}
+        queryState={trainingDataQueryState}
+        total={trainingsData?.data.length}
+        noResultsMessage={t("noResultsMessage")}
+        sx={{ maxWidth: "75%" }}
+      />
       <Button
         onClick={handleAddTraining}
         variant="outlined"
