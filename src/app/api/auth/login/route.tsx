@@ -8,7 +8,6 @@ export async function GET(req: Request) {
   const cookieStore = cookies();
   const { searchParams } = new URL(req.url);
   const code = searchParams.get("code");
-  const redirectPath = cookieStore.get("redirectPath") ?? { value: "/" };
 
   cookieStore.delete("redirectPath");
 
@@ -48,7 +47,7 @@ export async function GET(req: Request) {
     });
 
     return NextResponse.redirect(
-      encodeURI(`${process.env.NEXT_PUBLIC_LOCAL_ENV}${redirectPath.value}`)
+      encodeURI(`${process.env.NEXT_PUBLIC_LOCAL_ENV}`)
     );
   } catch (_) {
     const errorType = encodeURIComponent("login");

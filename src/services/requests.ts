@@ -40,7 +40,7 @@ async function request<T>(
 
     const hasHostName = url?.match(/^http(s*):\/\//i);
 
-    if (!!hasHostName) {
+    if (hasHostName) {
       host = "";
     } else if (isServer()) {
       host = `${process.env.NEXT_PUBLIC_API_V1_SERVER_URL}`;
@@ -56,7 +56,7 @@ async function request<T>(
     });
 
     return response;
-  } catch (e) {
+  } catch (_) {
     return createEmptyErrorResponse();
   }
 }

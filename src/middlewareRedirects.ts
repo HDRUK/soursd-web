@@ -1,23 +1,23 @@
 "use server";
 
 import { EXCLUDE_REDIRECT_URLS } from "@/consts/router";
-import { getMe } from "@/services/auth";
+import getMe from "@/services/auth/getMe";
 import {
-  getSeverErrorRedirectPath,
-  getRefreshTokenRedirectPath,
-  getProfileRedirectPath,
   getHomepageRedirectPath,
+  getProfileRedirectPath,
+  getRefreshTokenRedirectPath,
   getRegisterRedirectPath,
-} from "@/utils/requests";
-import { anyIncludes } from "./utils/string";
+  getSeverErrorRedirectPath,
+  isInPath,
+} from "@/utils/redirects";
 import { getAccessToken } from "./utils/auth";
 
 export default async function middlewareRedirects(pathname: string) {
-  if (!!pathname && !anyIncludes(pathname, EXCLUDE_REDIRECT_URLS)) {
+  if (!isInPath(pathname, EXCLUDE_REDIRECT_URLS)) {
     const accessToken = await getAccessToken();
     let me;
 
-    if (!!accessToken) {
+    if (accessToken) {
       const response = await getMe({
         suppressThrow: true,
       });
@@ -27,18 +27,20 @@ export default async function middlewareRedirects(pathname: string) {
       let redirectUrl;
 
       if (response.status === 200) {
-        redirectUrl = await getProfileRedirectPath(me, pathname);
+        redirectUrl = await getProfileRedirectPath(me);
       } else if (response.status === 401) {
         redirectUrl = await getRefreshTokenRedirectPath();
       } else if (response.status === 404) {
-        redirectUrl = await getRegisterRedirectPath(pathname);
+        redirectUrl = await getRegisterRedirectPath();
       } else if (response.status === 500) {
         redirectUrl = await getSeverErrorRedirectPath(accessToken, pathname);
       }
 
       return redirectUrl;
-    } else {
-      return getHomepageRedirectPath();
     }
+
+    return getHomepageRedirectPath();
   }
+
+  return null;
 }

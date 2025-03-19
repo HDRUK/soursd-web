@@ -3,20 +3,15 @@
 import SectionHeading, {
   SectionHeadingProps,
 } from "@/components/SectionHeading";
-import { User } from "@/types/application";
 import { Box, BoxProps } from "@mui/material";
 
-type PageSectionProps = BoxProps &
-  SectionHeadingProps & {
-    me: User;
-  };
+type PageSectionProps = BoxProps & SectionHeadingProps;
 
 export default function PageSection({
   children,
   heading,
   description,
   sx,
-  me,
   ...restProps
 }: PageSectionProps) {
   return (

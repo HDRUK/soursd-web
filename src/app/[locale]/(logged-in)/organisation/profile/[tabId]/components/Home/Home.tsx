@@ -3,15 +3,15 @@ import ActionsPanelItem from "@/components/ActionsPanelItem";
 import { OrganisationIcon } from "@/consts/icons";
 import { useStore } from "@/data/store";
 import { Link } from "@/i18n/routing";
-import { PageSection } from "@/modules";
 import {
   PageBody,
   PageColumnBody,
   PageColumnDetails,
   PageColumns,
+  PageSection,
 } from "@/modules";
-import { Button } from "@mui/material";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import { Button } from "@mui/material";
 
 const Home = () => {
   const routes = useStore(state => state.getApplication().routes);
