@@ -605,7 +605,9 @@
     "fileScanOk": "Certification was successfully scanned",
     "fileScanError": "Your Certification file may have a virus",
     "fileNamePlaceholder": "No Certification uploaded",
-    "noFilesUploaded": "No files have been uploaded yet"
+    "noFilesUploaded": "No files have been uploaded yet",
+    "downloading": "Downloading...",
+    "downloadFile": "Download file"
   },
   "NotificationsMenu": {
     "noNotifications": "You have no notifications!",

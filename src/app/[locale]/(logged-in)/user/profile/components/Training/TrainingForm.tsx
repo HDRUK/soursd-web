@@ -1,12 +1,6 @@
-import React, {
-  useCallback,
-  useMemo,
-  useState,
-  useEffect,
-  ChangeEvent,
-} from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
-import { TextField, Button, Grid, Typography } from "@mui/material";
+import { TextField, Button, Grid, Typography, Divider } from "@mui/material";
 import { useTranslations } from "next-intl";
 import Form from "@/components/Form";
 import FormControl from "@/components/FormControlWrapper";
@@ -21,11 +15,11 @@ import { PostTrainingsPayload } from "@/services/trainings/types";
 import useFileUpload from "@/hooks/useFileUpload";
 import useUserFileUpload from "@/hooks/useUserFileUpload";
 import { useStore } from "@/data/store";
-import UploadIcon from "@mui/icons-material/Upload";
 import { File as ApplicationFile } from "@/types/application";
-import CertificateUploadModal from "./CertificateUploadModal";
+import FileUploadDetails from "../FileUploadDetails/FileUploadDetails";
 
 const NAMESPACE_TRANSLATION_FORM = "Form.Training";
+const NAMESPACE_TRANSLATION_FILE_UPLOAD = "Certification";
 
 export interface TrainingFormValues {
   provider: string;
@@ -48,8 +42,8 @@ export default function TrainingForm({
   initialValues,
 }: TrainingFormProps) {
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
+  const tUpload = useTranslations(NAMESPACE_TRANSLATION_FILE_UPLOAD);
   const [user, setUser] = useStore(store => [store.config.user, store.setUser]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const calculateYearsRemaining = (expirationDate: string): number => {
     const now = dayjs();
@@ -84,15 +78,19 @@ export default function TrainingForm({
     upload,
   });
 
-  const handleOpenModal = () => setIsModalOpen(true);
-  const handleCloseModal = () => setIsModalOpen(false);
-
   const handleFileUpload = useCallback(
-    async (e: ChangeEvent<HTMLInputElement>) => {
-      const updatedUser = await uploadFile(e);
-      if (updatedUser) setUser(updatedUser);
+    async (e: React.ChangeEvent<HTMLInputElement>) => {
+      try {
+        const updatedUser = await uploadFile(e);
+        if (updatedUser) {
+          setUser(updatedUser);
+          setValue("certification_upload", file);
+        }
+      } catch (error) {
+        console.error("File upload failed:", error);
+      }
     },
-    [user?.registry_id]
+    [user?.registry_id, uploadFile, setUser, setValue, file]
   );
 
   const schema = useMemo(
@@ -192,35 +190,40 @@ export default function TrainingForm({
           <FormControl
             name="certification_upload"
             label={tForm("certificationUpload")}
-            renderField={props => (
+            renderField={() => (
               <>
-                <Button
-                  startIcon={<UploadIcon />}
-                  variant="outlined"
-                  onClick={handleOpenModal}>
-                  {tForm("uploadCertification")}
-                </Button>
-                {file && (
-                  <Typography variant="body2" sx={{ mt: 1 }} {...props}>
-                    {file.name}
+                <Typography variant="body2" gutterBottom>
+                  {tForm("uploadInstructions")}
+                </Typography>
+                <Divider sx={{ mb: 2, backgroundColor: "grey" }} />
+                <Typography variant="subtitle1" gutterBottom>
+                  {tForm("fileUpload")}
+                </Typography>
+                <FileUploadDetails
+                  fileButtonText={tForm("uploadCertification")}
+                  fileType={FileType.CERTIFICATION}
+                  fileTypesText={tUpload("fileTypesText")}
+                  fileNameText={file?.name || tForm("noCertificationUploaded")}
+                  isSizeInvalid={isSizeInvalid}
+                  isScanning={isScanning}
+                  isScanComplete={isScanComplete}
+                  isScanFailed={isScanFailed}
+                  isUploading={isUploading}
+                  onFileChange={handleFileUpload}
+                  message="certificationUploadFailed"
+                />
+
+                {!file && (
+                  <Typography
+                    variant="body2"
+                    sx={{ mt: 2, color: "text.secondary" }}>
+                    {tUpload("noFilesUploaded")}
                   </Typography>
                 )}
               </>
             )}
           />
         </Grid>
-
-        <CertificateUploadModal
-          open={isModalOpen}
-          onClose={handleCloseModal}
-          onUpload={handleFileUpload}
-          file={file}
-          isSizeInvalid={isSizeInvalid}
-          isScanning={isScanning}
-          isScanComplete={isScanComplete}
-          isScanFailed={isScanFailed}
-          isUploading={isUploading}
-        />
       </Grid>
       <FormActions sx={{ display: "flex", justifyContent: "space-between" }}>
         <Button onClick={onCancel} variant="outlined">
