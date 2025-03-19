@@ -10,8 +10,7 @@
     "maxSizeErrorText": "Your file must be under {size}",
     "scanningText": "Scanning file for viruses...",
     "scanOkText": "File was successfully scanned",
-    "scanErrorText": "Your file file may have a virus",
-    "fileTypesText": "PDF, DOC, and DOCX"
+    "scanErrorText": "Your file file may have a virus"
   },
   "Application": {
     "period": "Period",
@@ -743,7 +742,12 @@
     "errorButton": "OK",
     "viewCertificate": "View Certificate",
     "fileDownloadError": "An error occurred while downloading the certificate. Please try again or <contactLink>contact support</contactLink> if the problem persists.",
-    "noResultsMessage": "You currently have no training history"
+    "noResultsMessage": "You currently have no training history",
+    "errorDeleteMessage": "There was an error delete your training entry. Please try again or contact us at <contactLink></contactLink>",
+    "successDeleteMessage": "Your training entry was successfully deleted",
+    "editTrainingCourse": "Edit Training Course",
+    "updateTrainingError": "There was an error updating the training course. Please <contactLink>contact support</contactLink> if the problem persists.",
+    "updateTrainingSuccess": "Training course updated successfully"
   },
   "ProfileCompleteStatus": {
     "profileComplete": "Profile complete",
