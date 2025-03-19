@@ -987,6 +987,7 @@
     "title": "Accreditations"
   },
   "DecoupleUser": {
+    "title": "Decouple",
     "toolTip": "Decouple this user from your organisation",
     "alertTitle": "Decouple User?",
     "alertText": "Are you sure you want to remove {first_name} {last_name} from your organisation ({organisation_name})",
