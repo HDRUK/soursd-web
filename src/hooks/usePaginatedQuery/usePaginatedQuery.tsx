@@ -49,7 +49,9 @@ const usePaginatedQuery = <T,>({
   const initialSearchParams = searchParams
     ? Object.fromEntries(searchParams.entries())
     : {};
-  const [page, setPage] = useState<number>(initialPage);
+  const [page, setPage] = useState<number>(
+    (searchParams?.get("page") as unknown as number) || initialPage
+  );
 
   const [queryParams, setQueryParams] = useState<QueryParams>({
     page,
@@ -81,15 +83,17 @@ const usePaginatedQuery = <T,>({
   }, [page]);
 
   const updateQueryParams = (newParams: QueryParams) => {
-    setQueryParams(
-      (prevParams: QueryParams) =>
-        ({
-          page: initialPage,
-          ...prevParams,
-          ...newParams,
-        }) as QueryParams
-    );
-    setPage(initialPage);
+    setPage(() => {
+      setQueryParams(
+        (prevParams: QueryParams) =>
+          ({
+            page: initialPage,
+            ...prevParams,
+            ...newParams,
+          }) as QueryParams
+      );
+      return initialPage;
+    });
   };
 
   const resetQueryParams = () => {
