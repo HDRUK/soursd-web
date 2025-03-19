@@ -66,7 +66,6 @@ export default function InviteDelegateForm({
         is_delegate: 1,
         identifier: EMAIL_TEMPLATE.DELEGATE_INVITE,
       };
-      console.log(payload);
       await mutateAsync(payload)
         .then(() => {
           showAlert("success", {
