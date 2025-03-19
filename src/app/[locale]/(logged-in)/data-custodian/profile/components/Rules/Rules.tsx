@@ -19,7 +19,6 @@ import {
   putCustodianActiveEntityModelQuery,
 } from "@/services/custodians";
 import { Rule } from "@/types/rules";
-import LoadingWrapper from "@/components/LoadingWrapper";
 import { useStore } from "@/data/store";
 import ButtonSave from "@/components/ButtonSave";
 
@@ -85,25 +84,27 @@ export default function Rules() {
   const UserRulesCheckboxList = useCallback(
     () => (
       <CheckboxList
+        isLoading={isLoadingUserRules}
         items={formattedUserRules}
         title={t("userRulesTitle")}
         checked={userRules}
         setChecked={setUserRules}
       />
     ),
-    [formattedUserRules, userRules, setUserRules, t]
+    [isLoadingUserRules, formattedUserRules, userRules, setUserRules, t]
   );
 
   const OrgRulesCheckboxList = useCallback(
     () => (
       <CheckboxList
+        isLoading={isLoadingOrgRules}
         items={formattedOrgRules}
         title={t("organisationRulesTitle")}
         checked={orgRules}
         setChecked={setOrgRules}
       />
     ),
-    [formattedOrgRules, orgRules, setOrgRules, t]
+    [isLoadingOrgRules, formattedOrgRules, orgRules, setOrgRules, t]
   );
 
   const handleSubmit = async () => {
@@ -152,22 +153,20 @@ export default function Rules() {
   };
 
   return (
-    <LoadingWrapper loading={isLoadingUserRules || isLoadingOrgRules}>
-      <PageGuidance {...mockedConfigurationRulesGuidanceProps}>
-        <PageBody>
-          <Form onSubmit={handleSubmit} {...formOptions}>
-            <PageSection
-              heading={t("configurationRulesTitle")}
-              description={mockedConfigurationRulesDescription}>
-              <UserRulesCheckboxList />
-              <OrgRulesCheckboxList />
-            </PageSection>
-            <FormActions>
-              <ButtonSave isLoading={isPending} />
-            </FormActions>
-          </Form>
-        </PageBody>
-      </PageGuidance>
-    </LoadingWrapper>
+    <PageGuidance {...mockedConfigurationRulesGuidanceProps}>
+      <PageBody>
+        <Form onSubmit={handleSubmit} {...formOptions}>
+          <PageSection
+            heading={t("configurationRulesTitle")}
+            description={mockedConfigurationRulesDescription}>
+            <UserRulesCheckboxList />
+            <OrgRulesCheckboxList />
+          </PageSection>
+          <FormActions>
+            <ButtonSave isLoading={isPending} />
+          </FormActions>
+        </Form>
+      </PageBody>
+    </PageGuidance>
   );
 }
