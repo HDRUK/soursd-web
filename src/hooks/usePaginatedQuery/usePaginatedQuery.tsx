@@ -38,8 +38,8 @@ export type PaginatedQueryReturn<T> = UseQueryResult<ResponseJson<Paged<T>>> &
 const usePaginatedQuery = <T,>({
   queryKeyBase,
   queryFn,
-  defaultQueryParams = {},
   initialPage = 1,
+  defaultQueryParams = {},
   enabled = true,
   refetchInterval,
 }: PaginatedQueryProps<T>): PaginatedQueryReturn<T> => {
