@@ -1,6 +1,7 @@
 import { Project, ResearcherAffiliation, User } from "@/types/application";
 import { Link, Typography } from "@mui/material";
 import { CellContext } from "@tanstack/react-table";
+import WarningAmberOutlinedIcon from "@mui/icons-material/WarningAmberOutlined";
 import { injectParamsIntoPath } from "./application";
 import { formatShortDate } from "./date";
 
@@ -54,8 +55,20 @@ function renderUserNameCell<T extends User>(
   );
 }
 
+function renderWarningCell<T extends ResearcherAffiliation>(
+  info: CellContext<T, unknown>
+) {
+  const { organisation_id, email } = info.row.original;
+
+  if (!organisation_id || !email) {
+    return <WarningAmberOutlinedIcon sx={{ color: "warning.main" }} />;
+  }
+  return null;
+}
+
 export {
   renderProjectNameCell,
   renderUserNameCell,
   renderAffiliationDateRangeCell,
+  renderWarningCell,
 };

@@ -136,6 +136,8 @@ interface User {
   role?: string;
   location?: string;
   status: Status;
+  declaration_signed?: boolean;
+  uksa_registered?: boolean;
 }
 interface AddressFields {
   postcode?: string;
@@ -245,7 +247,7 @@ interface ResearcherTraining {
   awarding_body_ror: string;
   expires_at: string;
   training_name: string;
-  expires_in_years: boolean;
+  expires_in_years: number;
   id: number;
   certification_id: number | null;
 }
@@ -276,10 +278,11 @@ interface ResearcherAffiliation {
   current_employer: boolean;
   from?: string | null;
   to?: string | null;
-  position?: string;
+  role?: string;
   organisation: {
     organisation_name: string;
   };
+  email?: string;
 }
 
 interface ResearcherProjectApproval {

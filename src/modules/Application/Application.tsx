@@ -56,7 +56,7 @@ export default function Application({
     getTrainings: trainingData,
     getUserApprovedProjects: projectsData,
     getAffiliations: affiliationData,
-    getProfessionalRegistrations: professionalRegistratonsData,
+    getProfessionalRegistrations: professionalRegistrationsData,
   } = historiesData;
 
   const {
@@ -97,7 +97,9 @@ export default function Application({
         trainingData={trainingData?.data}
         projectsData={projectsData?.data}
         affiliationData={affiliationData?.data.data}
-        professionalRegistratonsData={professionalRegistratonsData?.data?.data}>
+        professionalRegistrationsData={
+          professionalRegistrationsData?.data?.data
+        }>
         {children}
       </ApplicationData>
     </LoadingWrapper>

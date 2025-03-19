@@ -11,6 +11,7 @@ import { mockedJwt } from "./mocks/data/auth";
 import { mockedCustodian, mockedCustodianUser } from "./mocks/data/custodian";
 import { mockedNotification } from "./mocks/data/notification";
 import { mockedOrganisation } from "./mocks/data/organisation";
+import { mockedValidationComment } from "./mocks/data/validation_log";
 import { mockedPermission } from "./mocks/data/permission";
 import { mockedProject, mockedProjects } from "./mocks/data/project";
 import { mockedApiPermissions, mockedStoreState } from "./mocks/data/store";
@@ -56,6 +57,7 @@ jest.mock("@/i18n/routing", () => ({
   ...jest.requireActual("@/i18n/routing"),
   useRouter: jest.fn().mockReturnValue({
     push: jest.fn(),
+    replace: jest.fn(),
   }),
   usePathname: jest.fn(),
 }));
@@ -71,6 +73,7 @@ jest.mock("next/navigation", () => {
     }),
     useSearchParams: () => ({
       get: () => {},
+      entries: () => [],
     }),
     redirect: jest.fn(),
   };
@@ -436,6 +439,10 @@ async function mockFetch(url: string, init?: RequestInit) {
       };
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/files/1/download`:
       return mockDownloadFile();
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/validation_logs/1/comments`:
+      return mock200Json(
+        Array.from({ length: 10 }, () => mockedValidationComment())
+      );
     case `/api/auth/token`:
       return {
         ok: true,

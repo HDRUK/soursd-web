@@ -1,40 +1,198 @@
 import { useStore } from "@/data/store";
 
-import postTrainingsQuery from "@/services/trainings/postTrainingsQuery";
 import { PostTrainingsPayload } from "@/services/trainings/types";
-import {
-  Button,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  Typography,
-} from "@mui/material";
-import { useMutation } from "@tanstack/react-query";
+import { Button, Typography } from "@mui/material";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect } from "react";
 import ReactDOMServer from "react-dom/server";
 import FormModal from "@/components/FormModal";
 import ContactLink from "@/components/ContactLink";
-import AddIcon from "@mui/icons-material/Add";
+import Table from "@/components/Table";
 import { formatShortDate } from "@/utils/date";
 import useQueryAlerts from "@/hooks/useQueryAlerts";
+import { ResearcherTraining } from "@/types/application";
+import { ActionMenu, ActionMenuItem } from "@/components/ActionMenu";
+import TaskAltIcon from "@mui/icons-material/TaskAlt";
+import useFileDownload from "@/hooks/useFileDownload";
+import { showAlert } from "@/utils/showAlert";
+import {
+  getTrainingByRegistryIdQuery,
+  postTrainingsQuery,
+  deleteTrainingsQuery,
+  putTrainingsQuery,
+} from "@/services/trainings";
+import AddIcon from "@mui/icons-material/Add";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import useQueryConfirmAlerts from "@/hooks/useQueryConfirmAlerts";
+import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import TrainingForm from "./TrainingForm";
 
-const NAMESPACE_TRANSLATION_PROFILE = "Training";
+const NAMESPACE_TRANSLATION_TRAINING = "Training";
+const NAMESPACE_TRANSLATION_APPLICATION = "Application";
+const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
 export default function Training() {
-  const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
+  const t = useTranslations(NAMESPACE_TRANSLATION_TRAINING);
+  const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
+  const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const user = useStore(store => store.config.user);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedTraining, setSelectedTraining] = useState<
+    ResearcherTraining | undefined
+  >(undefined);
 
-  const histories = useStore(state => state.config.histories);
   const setHistories = useStore(state => state.setHistories);
   const getHistories = useStore(state => state.getHistories);
 
-  const handleOpenModal = () => setIsModalOpen(true);
-  const handleCloseModal = () => setIsModalOpen(false);
+  const [fileIdToDownload, setFileIdToDownload] = useState<
+    number | undefined
+  >();
+  const { downloadFile: fileDownload } = useFileDownload(fileIdToDownload);
+
+  const downloadFile = useCallback((fileId: number) => {
+    setFileIdToDownload(fileId);
+  }, []);
+
+  const handleDelete = async (id: number) => {
+    showDeleteConfirm(id);
+  };
+
+  const { mutateAsync: mutateUpdateAsync, ...putTrainingsQueryState } =
+    useMutation(putTrainingsQuery(selectedTraining?.id));
+
+  const {
+    data: trainingsData,
+    refetch: refetchTrainings,
+    ...trainingDataQueryState
+  } = useQuery({
+    ...getTrainingByRegistryIdQuery(user?.registry_id),
+    enabled: !!user?.registry_id,
+  });
+
+  const { mutateAsync, isPending, ...postTrainingsQueryState } = useMutation(
+    postTrainingsQuery(user?.registry_id)
+  );
+
+  const {
+    mutateAsync: mutateDeleteAsync,
+    ...deleteProfessionalRegistrationQueryState
+  } = useMutation(deleteTrainingsQuery());
+
+  useEffect(() => {
+    try {
+      if (fileIdToDownload) {
+        fileDownload();
+        setFileIdToDownload(undefined);
+      }
+    } catch (_) {
+      showAlert("error", {
+        text: ReactDOMServer.renderToString(
+          t.rich("fileDownloadError", {
+            contactLink: ContactLink,
+          })
+        ),
+        confirmButtonText: t("errorButton"),
+      });
+    }
+  }, [fileIdToDownload, fileDownload]);
+
+  const handleOpenModal = useCallback((training?: ResearcherTraining) => {
+    setSelectedTraining(training);
+    setIsModalOpen(true);
+  }, []);
+
+  const handleAddTraining = useCallback(() => {
+    handleOpenModal();
+  }, [handleOpenModal]);
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedTraining(undefined);
+  };
+
+  useQueryAlerts(
+    selectedTraining ? putTrainingsQueryState : postTrainingsQueryState,
+    {
+      commonAlertProps: {
+        willClose: () => {
+          handleCloseModal();
+        },
+      },
+      errorAlertProps: {
+        text: selectedTraining
+          ? ReactDOMServer.renderToString(
+              t.rich("updateTrainingError", {
+                contactLink: ContactLink,
+              })
+            )
+          : ReactDOMServer.renderToString(
+              t.rich("postTrainingError", {
+                contactLink: ContactLink,
+              })
+            ),
+      },
+      successAlertProps: {
+        text: selectedTraining
+          ? t("updateTrainingSuccess")
+          : t("postTrainingSuccess"),
+      },
+    }
+  );
+
+  const showDeleteConfirm = useQueryConfirmAlerts<number>(
+    deleteProfessionalRegistrationQueryState,
+    {
+      confirmAlertProps: {
+        willClose: async (id: number) => {
+          await mutateDeleteAsync(id);
+          refetchTrainings();
+        },
+      },
+      errorAlertProps: {
+        text: ReactDOMServer.renderToString(
+          t.rich("errorDeleteMessage", {
+            contactLink: ContactLink,
+          })
+        ),
+      },
+      successAlertProps: {
+        text: t("successDeleteMessage"),
+      },
+    }
+  );
+
+  const renderActions = useCallback(
+    (training: ResearcherTraining) => {
+      const certificateFile = user?.registry?.files[0];
+      return (
+        <ActionMenu aria-label={`Actions for ${training.training_name}`}>
+          <ActionMenuItem
+            onClick={() => handleOpenModal(training)}
+            sx={{ color: "menuList1.main" }}
+            icon={<CreateOutlinedIcon sx={{ color: "menuList1.main" }} />}>
+            {tProfile("viewOrEdit")}
+          </ActionMenuItem>
+          <ActionMenuItem
+            icon={<TaskAltIcon sx={{ color: "menuList1.main" }} />}
+            sx={{ color: "menuList1.main" }}
+            onClick={() => certificateFile && downloadFile(certificateFile.id)}
+            disabled={!certificateFile}>
+            {t("viewCertificate")}
+          </ActionMenuItem>
+          <ActionMenuItem
+            onClick={() => {
+              handleDelete(training.id);
+            }}
+            sx={{ color: "error.main" }}
+            icon={<DeleteOutlineOutlinedIcon sx={{ color: "error.main" }} />}>
+            {tApplication("delete")}
+          </ActionMenuItem>
+        </ActionMenu>
+      );
+    },
+    [user, downloadFile, handleDelete, t, tProfile, tApplication]
+  );
 
   const onSubmit = useCallback(
     async (training: PostTrainingsPayload) => {
@@ -53,71 +211,59 @@ export default function Training() {
     },
     [getHistories, setHistories]
   );
-  const { mutateAsync, isPending, ...postTrainingsQueryState } = useMutation(
-    postTrainingsQuery(user?.registry_id)
-  );
-
-  useQueryAlerts(postTrainingsQueryState, {
-    errorAlertProps: {
-      text: ReactDOMServer.renderToString(
-        t.rich("postTrainingError", {
-          contactLink: ContactLink,
-        })
-      ),
-    },
-    successAlertProps: {
-      text: t("postTrainingSuccess"),
-    },
-  });
 
   const handleSubmit = useCallback(
     async (training: PostTrainingsPayload) => {
-      await mutateAsync(training);
-      await onSubmit(training);
-      handleCloseModal();
+      if (selectedTraining) {
+        // Update existing training
+        await mutateUpdateAsync({ id: selectedTraining.id, ...training });
+      } else {
+        // Create new training
+        await mutateAsync(training);
+        await onSubmit(training);
+      }
+      refetchTrainings();
     },
-    [mutateAsync, onSubmit]
+    [mutateAsync, mutateUpdateAsync, onSubmit, selectedTraining]
   );
 
+  const columns = [
+    {
+      header: t("trainingHistoryColumnProvider"),
+      accessorKey: "provider",
+    },
+    {
+      header: t("trainingHistoryColumnName"),
+      accessorKey: "training_name",
+    },
+    {
+      header: t("trainingHistoryColumnAwardedAt"),
+      accessorKey: "awarded_at",
+      cell: ({ row }: { row: { original: ResearcherTraining } }) =>
+        formatShortDate(row.original.awarded_at),
+    },
+    {
+      header: "",
+      accessorKey: "actions",
+      cell: ({ row }: { row: { original: ResearcherTraining } }) =>
+        renderActions(row.original),
+    },
+  ];
   return (
     <>
       <Typography variant="h6" sx={{ mb: 1 }}>
         {t("trainingHistoryTitle")}
       </Typography>
-      {!!histories?.training.length && (
-        <Table>
-          <TableHead sx={{ backgroundColor: "lightPurple.main" }}>
-            <TableRow>
-              <TableCell scope="col">
-                {t("trainingHistoryColumnProvider")}
-              </TableCell>
-              <TableCell scope="col">
-                {t("trainingHistoryColumnName")}
-              </TableCell>
-              <TableCell scope="col">
-                {t("trainingHistoryColumnAwardedAt")}
-              </TableCell>
-              <TableCell scope="col">
-                {t("trainingHistoryColumnExpiresAt")}
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {histories?.training.map(
-              ({ training_name, provider, awarded_at, expires_at }) => (
-                <TableRow key={provider}>
-                  <TableCell>{provider}</TableCell>
-                  <TableCell>{training_name}</TableCell>
-                  <TableCell>{formatShortDate(awarded_at)}</TableCell>
-                  <TableCell>{formatShortDate(expires_at)}</TableCell>
-                </TableRow>
-              )
-            )}
-          </TableBody>
-        </Table>
-      )}
+      <Table
+        data={trainingsData?.data}
+        columns={columns}
+        queryState={trainingDataQueryState}
+        total={trainingsData?.data.length}
+        noResultsMessage={t("noResultsMessage")}
+        sx={{ maxWidth: "75%" }}
+      />
       <Button
-        onClick={handleOpenModal}
+        onClick={handleAddTraining}
         variant="outlined"
         color="primary"
         startIcon={<AddIcon />}
@@ -125,11 +271,16 @@ export default function Training() {
         {t("addTrainingCourse")}
       </Button>
 
-      <FormModal open={isModalOpen} title={t("addTrainingCourse")}>
+      <FormModal
+        open={isModalOpen}
+        title={
+          selectedTraining ? t("editTrainingCourse") : t("addTrainingCourse")
+        }>
         <TrainingForm
           onSubmit={handleSubmit}
-          isPending={isPending}
+          isPending={isPending || putTrainingsQueryState.isPending}
           onCancel={handleCloseModal}
+          initialValues={selectedTraining}
         />
       </FormModal>
     </>

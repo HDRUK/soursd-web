@@ -46,7 +46,7 @@ export const mockedResearcherAffiliationsGuidance = {
         manually. Being affiliated by an Organisation is especially important
         for Organisations who are the host for a project you plan to work on.
       </Typography>
-      <Typography variant="h6" mb={2}>
+      <Typography variant="h4" mb={2}>
         The statuses
       </Typography>
       <ChipStatus status={Status.AFFILIATED} color="success" sx={{ mb: 2 }} />

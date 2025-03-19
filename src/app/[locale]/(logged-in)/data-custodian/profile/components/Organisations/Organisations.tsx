@@ -34,7 +34,8 @@ export default function Sections() {
     data,
     page,
     setPage,
-    updateQueryParam,
+    updateQueryParams,
+    resetQueryParams,
     handleSortToggle,
     handleFieldToggle,
     queryParams,
@@ -111,9 +112,12 @@ export default function Sections() {
     <PageBody>
       <PageSection>
         <SearchBar
-          updateQueryParam={(text: string) =>
-            updateQueryParam("organisation_name[]", text)
-          }
+          onClear={resetQueryParams}
+          onSearch={(text: string) => {
+            updateQueryParams({
+              "organisation_name[]": text,
+            });
+          }}
           placeholder={t("searchPlaceholder")}
           legend={<OrganisationsLegend />}>
           <SearchActionMenu
