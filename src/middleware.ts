@@ -9,13 +9,14 @@ export async function middleware(request: NextRequest) {
   });
 
   const response = handleI18nRouting(request);
+  const redirectUrl = await middlewareRedirects(request.nextUrl.pathname);
 
   response.headers.set("x-current-path", request.nextUrl.pathname);
 
-  const redirectUrl = await middlewareRedirects(request.nextUrl.pathname);
-
   if (redirectUrl) {
-    return NextResponse.redirect(`http://localhost:3000${redirectUrl}`);
+    return NextResponse.redirect(
+      `${process.env.NEXT_PUBLIC_LOCAL_ENV?.replace(/\/*$/g, "")}${redirectUrl}`
+    );
   }
 
   return response;

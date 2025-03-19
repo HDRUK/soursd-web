@@ -3,11 +3,11 @@
 import { EXCLUDE_REDIRECT_URLS } from "@/consts/router";
 import { getMe } from "@/services/auth";
 import {
-  redirectOnServerError,
-  redirectRefreshToken,
-  redirectToProfile,
+  getSeverErrorRedirectPath,
+  getRefreshTokenRedirectPath,
+  getProfileRedirectPath,
   redirectWithoutAccessToken,
-  registerAndRedirect,
+  getRegisterRedirectPath,
 } from "@/utils/requests";
 import { anyIncludes } from "./utils/string";
 
@@ -26,13 +26,13 @@ export default async function middlewareRedirects(pathname: string) {
       let redirectUrl;
 
       if (response.status === 200) {
-        redirectUrl = await redirectToProfile(me, pathname);
+        redirectUrl = await getProfileRedirectPath(me, pathname);
       } else if (response.status === 401) {
-        redirectUrl = await redirectRefreshToken();
+        redirectUrl = await getRefreshTokenRedirectPath();
       } else if (response.status === 404) {
-        redirectUrl = await registerAndRedirect(pathname);
+        redirectUrl = await getRegisterRedirectPath(pathname);
       } else if (response.status === 500) {
-        redirectUrl = await redirectOnServerError(accessToken, pathname);
+        redirectUrl = await getSeverErrorRedirectPath(accessToken, pathname);
       }
 
       return redirectUrl;

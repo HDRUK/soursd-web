@@ -57,7 +57,7 @@ function getProfilePathByEntity(user: User | string, path?: string) {
   return null;
 }
 
-const redirectToProfile = async (user: User, path: string) => {
+const getProfileRedirectPath = async (user: User, path: string) => {
   const redirectPath = getProfilePathByEntity(user, path);
 
   if (redirectPath) {
@@ -66,20 +66,20 @@ const redirectToProfile = async (user: User, path: string) => {
   }
 };
 
-const registerAndRedirect = async (pathname: string) => {
+const getRegisterRedirectPath = async (pathname: string) => {
   const user = await postRegister(undefined, {
     suppressThrow: true,
   });
 
   if (!!user.data) {
-    return redirectToProfile(user.data, pathname);
+    return getProfileRedirectPath(user.data, pathname);
   } else if (!pathname.includes(ROUTES.register.path)) {
     const localePath = await getLocalePath(ROUTES.register.path);
     return localePath;
   }
 };
 
-async function redirectRefreshToken() {
+async function getRefreshTokenRedirectPath() {
   const accessToken = await getRefreshAccessToken();
 
   if (!accessToken) {
@@ -109,7 +109,7 @@ async function redirectInvite() {
   return getRegisterUrl();
 }
 
-async function redirectOnServerError(
+async function getSeverErrorRedirectPath(
   accessToken: string | undefined,
   pathname: string
 ) {
@@ -128,10 +128,10 @@ export {
   getProfilePathByEntity,
   mockedRequest,
   objectToQuerystring,
-  redirectOnServerError,
-  redirectRefreshToken,
-  redirectToProfile,
+  getSeverErrorRedirectPath,
+  getRefreshTokenRedirectPath,
+  getProfileRedirectPath,
   redirectWithoutAccessToken,
-  registerAndRedirect,
+  getRegisterRedirectPath,
   redirectInvite,
 };

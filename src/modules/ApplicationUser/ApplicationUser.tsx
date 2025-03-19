@@ -13,7 +13,11 @@ export default function ApplicationUser({ children }: ApplicationUserProps) {
   const setUser = useStore(state => state.setUser);
 
   useEffect(() => {
-    if (user?.data) setUser(user.data);
+    if (user?.data) {
+      setUser(user.data);
+    } else {
+      setUser({});
+    }
   }, [user?.data]);
 
   return (
