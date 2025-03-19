@@ -2,7 +2,7 @@ import { styled } from "@mui/material/styles";
 import { ListItem, ListItemText } from "@mui/material";
 
 export const StyledListItem = styled(ListItem)(({ theme }) => ({
-  borderBottom: "1px solid #ddd",
+  borderBottom: `1px solid ${theme.palette.greys.light}`,
   backgroundColor: "white",
   borderRadius: theme.shape.borderRadius,
   marginTop: theme.spacing(1),
