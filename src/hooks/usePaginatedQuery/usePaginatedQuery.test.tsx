@@ -8,6 +8,7 @@ jest.mock("@/data/store");
 jest.mock("@/i18n/routing");
 
 const mockedPush = jest.fn();
+const mockedReplace = jest.fn();
 
 type CurrentResult = PaginatedQueryReturn<ProjectsResponse>;
 
@@ -36,6 +37,7 @@ describe("usePaginatedQuery", () => {
     jest.clearAllMocks();
     (useRouter as jest.Mock).mockReturnValue({
       push: mockedPush,
+      replace: mockedReplace,
     });
   });
 
@@ -80,14 +82,14 @@ describe("usePaginatedQuery", () => {
     const { result } = renderTest({ params: { per_page: 5 } });
 
     act(() => {
-      (result.current as CurrentResult).updateQueryParam("per_page", "2");
+      (result.current as CurrentResult).updateQueryParams({ per_page: "2" });
     });
     await waitFor(() => {
       expect((result.current as CurrentResult).data.length).toBe(2);
     });
 
     act(() => {
-      (result.current as CurrentResult).updateQueryParam("sort", "name:asc");
+      (result.current as CurrentResult).updateQueryParams({ sort: "name:asc" });
     });
 
     await waitFor(() => {
@@ -97,7 +99,7 @@ describe("usePaginatedQuery", () => {
     });
 
     act(() => {
-      (result.current as CurrentResult).updateQueryParam("filter", "active");
+      (result.current as CurrentResult).updateQueryParams({ filter: "active" });
     });
 
     await waitFor(() => {

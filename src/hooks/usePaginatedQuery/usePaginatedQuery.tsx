@@ -9,28 +9,27 @@ import { useSearchParams, useRouter, usePathname } from "@/i18n/routing";
 
 const API_SORT_KEY = "sort";
 
-export type PaginatedQueryProps<T> = {
-  queryKeyBase: unknown[];
-  queryFn: (
-    queryParams: Record<string, string | number | undefined>
-  ) => Promise<ResponseJson<Paged<T>>>;
-  initialPage?: number;
-  enabled?: boolean;
-  refetchInterval?: number;
-  defaultQueryParams?: Record<string, string | number | undefined>;
-};
+type QueryParams = Record<string, string | number | undefined>;
 
 export interface PaginatedQueryHelpers {
   page: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
-  updateQueryParam: (key: string, value: string) => void;
+  updateQueryParams: (newParams: QueryParams) => void;
+  resetQueryParams: () => void;
   handleSortToggle: (field: string, direction: string) => void;
   handleFieldToggle: (field: string, options: [string, string]) => void;
-  queryParams: Record<string, string | number | undefined>;
-  setQueryParams: React.Dispatch<
-    React.SetStateAction<Record<string, string | number | undefined>>
-  >;
+  queryParams: QueryParams;
+  setQueryParams: React.Dispatch<React.SetStateAction<QueryParams>>;
 }
+
+export type PaginatedQueryProps<T> = {
+  queryKeyBase: unknown[];
+  queryFn: (queryParams: QueryParams) => Promise<ResponseJson<Paged<T>>>;
+  initialPage?: number;
+  enabled?: boolean;
+  refetchInterval?: number;
+  defaultQueryParams?: QueryParams;
+};
 
 export type PaginatedQueryReturn<T> = UseQueryResult<ResponseJson<Paged<T>>> &
   Paged<T> &
@@ -47,21 +46,59 @@ const usePaginatedQuery = <T,>({
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const [page, setPage] = useState<number>(initialPage);
+  const initialSearchParams = searchParams
+    ? Object.fromEntries(searchParams.entries())
+    : {};
+  const [page, setPage] = useState<number>(
+    (searchParams?.get("page") as unknown as number) || initialPage
+  );
 
-  const [queryParams, setQueryParams] = useState<
-    Record<string, string | number | undefined>
-  >({
+  const [queryParams, setQueryParams] = useState<QueryParams>({
     page,
     ...defaultQueryParams,
+    ...initialSearchParams,
   });
 
   useEffect(() => {
-    setQueryParams(prev => ({
-      ...prev,
-      page,
-    }));
+    // change the router URL depending on the queryParams
+    const params = new URLSearchParams();
+
+    Object.entries(queryParams).forEach(([key, value]) => {
+      if (value !== undefined && value !== null) {
+        params.set(key, String(value));
+      }
+    });
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+  }, [queryParams, pathname, router]);
+
+  useEffect(() => {
+    if (queryParams.page === page) return;
+    setQueryParams(
+      (prevParams: QueryParams) =>
+        ({
+          ...prevParams,
+          page,
+        }) as QueryParams
+    );
   }, [page]);
+
+  const updateQueryParams = (newParams: QueryParams) => {
+    setPage(() => {
+      setQueryParams(
+        (prevParams: QueryParams) =>
+          ({
+            page: initialPage,
+            ...prevParams,
+            ...newParams,
+          }) as QueryParams
+      );
+      return initialPage;
+    });
+  };
+
+  const resetQueryParams = () => {
+    setQueryParams({ page: initialPage, ...defaultQueryParams });
+  };
 
   const queryResult = useQuery({
     queryKey: [...queryKeyBase, queryParams],
@@ -73,29 +110,6 @@ const usePaginatedQuery = <T,>({
 
   const { data: queryData, ...restQueryResult } = queryResult;
   const pagedData = queryData?.data || {};
-
-  const updateQueryString = useCallback(
-    (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams?.toString());
-      params.set(name, value);
-      return params.toString();
-    },
-    [searchParams]
-  );
-
-  const updateQueryParam = useCallback(
-    (key: string, value: string) => {
-      router.push(`${pathname}?${updateQueryString(key, value)}`, {
-        scroll: false,
-      });
-      setPage(1);
-      setQueryParams({
-        ...queryParams,
-        [key]: value,
-      });
-    },
-    [pathname, router, updateQueryString]
-  );
 
   const handleSortToggle = useCallback(
     (field: string, direction: string) => {
@@ -147,7 +161,8 @@ const usePaginatedQuery = <T,>({
     setQueryParams,
     page,
     setPage,
-    updateQueryParam,
+    updateQueryParams,
+    resetQueryParams,
     handleSortToggle,
     handleFieldToggle,
   } as PaginatedQueryReturn<T>;
