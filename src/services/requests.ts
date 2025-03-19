@@ -6,7 +6,7 @@ import {
 } from "./requestHelpers";
 
 function isServer() {
-  return !typeof window;
+  return typeof window === "undefined";
 }
 
 async function request<T>(

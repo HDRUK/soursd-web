@@ -4,7 +4,6 @@ import { User } from "@/types/application";
 import { Routes } from "@/types/router";
 import Cookies from "js-cookie";
 import { getLoginUrl, getRegisterUrl } from "./keycloak";
-import { getLocalePath } from "./language";
 import { capitaliseFirstLetter } from "./string";
 
 function getProfilePathByEntity(user: User | string) {
@@ -22,9 +21,8 @@ function getProfilePathByEntity(user: User | string) {
 
 const getProfileRedirectPath = async (user: User) => {
   const redirectPath = getProfilePathByEntity(user);
-  const localePath = await getLocalePath(redirectPath);
 
-  return localePath;
+  return redirectPath;
 };
 
 const getRegisterRedirectPath = async () => {
@@ -36,8 +34,7 @@ const getRegisterRedirectPath = async () => {
     return getProfileRedirectPath(user.data);
   }
 
-  const localePath = await getLocalePath(ROUTES.register.path);
-  return localePath;
+  return ROUTES.register.path;
 };
 
 async function getRefreshTokenRedirectPath() {
@@ -53,9 +50,8 @@ async function getRefreshTokenRedirectPath() {
   return null;
 }
 
-async function getHomepageRedirectPath() {
-  const localePath = await getLocalePath(ROUTES.homepage.path);
-  return localePath;
+function getHomepageRedirectPath() {
+  return ROUTES.homepage.path;
 }
 
 async function redirectInvite() {
@@ -75,10 +71,10 @@ async function getSeverErrorRedirectPath(
 
 function isInPath(pathname: string, pathToCompare: string | string[]) {
   if (Array.isArray(pathToCompare)) {
-    return pathToCompare.some(item => pathname.includes(item));
+    return pathToCompare.some(item => item.includes(pathname));
   }
 
-  return pathname.includes(pathToCompare);
+  return pathToCompare.includes(pathname);
 }
 
 export {

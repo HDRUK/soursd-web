@@ -1,4 +1,5 @@
 import { UserGroup } from "@/consts/user";
+import useApplicationRedirects from "@/hooks/useApplicationRedirects";
 import { PageContainer } from "@/modules";
 import Application from "@/modules/Application";
 import { getMe } from "@/services/auth";
@@ -23,6 +24,8 @@ async function getCustodianId(user: User) {
 export default async function Layout({ children }: LayoutProps) {
   let custodianId;
   let organisationId;
+
+  await useApplicationRedirects();
 
   const { data } = await getMe();
 
