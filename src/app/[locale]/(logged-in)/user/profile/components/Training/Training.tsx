@@ -1,6 +1,5 @@
 import { useStore } from "@/data/store";
 
-import postTrainingsQuery from "@/services/trainings/postTrainingsQuery";
 import { PostTrainingsPayload } from "@/services/trainings/types";
 import { Button, Typography } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -17,13 +16,16 @@ import { ActionMenu, ActionMenuItem } from "@/components/ActionMenu";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import useFileDownload from "@/hooks/useFileDownload";
 import { showAlert } from "@/utils/showAlert";
-import { getTrainingByRegistryIdQuery } from "@/services/trainings";
+import {
+  getTrainingByRegistryIdQuery,
+  postTrainingsQuery,
+  deleteTrainingsQuery,
+  putTrainingsQuery,
+} from "@/services/trainings";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import useQueryConfirmAlerts from "@/hooks/useQueryConfirmAlerts";
-import deleteTrainingsQuery from "@/services/trainings/deleteTrainingsQuery";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
-import putTrainingsQuery from "@/services/trainings/putTrainingsQuery";
 import TrainingForm from "./TrainingForm";
 
 const NAMESPACE_TRANSLATION_TRAINING = "Training";
