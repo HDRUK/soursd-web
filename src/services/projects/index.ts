@@ -9,6 +9,8 @@ import deleteProjectUser from "./deleteProjectUser";
 import deleteProjectUserQuery from "./deleteProjectUserQuery";
 import putProjectUserPrimaryContact from "./putProjectUserPrimaryContact";
 import putProjectUserPrimaryContactQuery from "./putProjectUserPrimaryContactQuery";
+import putProjectQuery from "./putProjectQuery";
+import putProject from "./putProject";
 
 export {
   getProjects,
@@ -22,4 +24,6 @@ export {
   deleteProjectUserQuery,
   putProjectUserPrimaryContact,
   putProjectUserPrimaryContactQuery,
+  putProjectQuery,
+  putProject,
 };
