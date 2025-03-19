@@ -1,20 +1,14 @@
+import ButtonSave from "@/components/ButtonSave";
+import ChipStatus, { Status } from "@/components/ChipStatus";
+import DateInput from "@/components/DateInput";
 import Form from "@/components/Form";
-import FormControlHorizontal from "@/components/FormControlHorizontal";
+import FormControlWrapper from "@/components/FormControlWrapper";
 import FormModalActions from "@/components/FormModalActions";
 import FormModalBody from "@/components/FormModalBody";
-import FormModalHeader from "@/components/FormModalHeader";
-import FormControlCheckbox from "@/components/FormControlCheckbox";
 import yup from "@/config/yup";
-import { CustodianUserRoles } from "@/consts/custodian";
-import { useStore } from "@/data/store";
-import { CustodianUser, Project } from "@/types/application";
+import { ResearcherProject } from "@/types/application";
 import { QueryState } from "@/types/form";
-import {
-  isCustodianAdministrator,
-  isCustodianApprover,
-} from "@/utils/custodian";
 import CheckIcon from "@mui/icons-material/Check";
-import { LoadingButton } from "@mui/lab";
 import {
   Button,
   FormControlLabel,
@@ -22,16 +16,10 @@ import {
   Paper,
   Radio,
   RadioGroup,
-  TextareaAutosize,
   TextField,
-  Typography,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { ChangeEvent, useMemo } from "react";
-import FormControlWrapper from "@/components/FormControlWrapper";
-import DateInput from "@/components/DateInput";
-import ChipStatus, { Status } from "@/components/ChipStatus";
-import ButtonSave from "@/components/ButtonSave";
+import { useMemo } from "react";
 
 export interface CustodianUserFields {
   first_name: string;
@@ -43,22 +31,20 @@ export interface CustodianUserFields {
 
 export interface UserModalDetailsProps {
   queryState: QueryState;
-  onSubmit: (payload: CustodianUserFields) => void;
-  onClose: () => void;
+  project: ResearcherProject;
+  onSubmit: (payload: ResearcherProject) => void;
 }
 
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
 const NAMESPACE_TRANSLATION_FORM = "Form.SafeProject";
 
 export default function UserModalDetails({
-  onClose,
   queryState,
   onSubmit,
+  project,
 }: UserModalDetailsProps) {
   const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
-
-  const project = useStore(state => state.getProject());
 
   const schema = useMemo(
     () =>
@@ -188,7 +174,7 @@ export default function UserModalDetails({
             </Grid>
           </FormModalBody>
           <FormModalActions>
-            <Button variant="outlined" onClick={onClose}>
+            <Button variant="outlined" onClick={() => {}}>
               {tApplication("previousButton")}
             </Button>
             <ButtonSave
@@ -216,21 +202,22 @@ export default function UserModalDetails({
                 <RadioGroup
                   aria-labelledby="demo-radio-buttons-group-label"
                   defaultValue={fieldProps.status}
-                  name="status">
+                  name="status"
+                  {...fieldProps}>
                   <FormControlLabel
                     value="approved"
                     control={<Radio />}
-                    label={<ChipStatus status={Status.APPROVED}></ChipStatus>}
+                    label={<ChipStatus status={Status.APPROVED} />}
                   />
                   <FormControlLabel
                     value="pending"
                     control={<Radio />}
-                    label={<ChipStatus status={Status.PENDING}></ChipStatus>}
+                    label={<ChipStatus status={Status.PENDING} />}
                   />
                   <FormControlLabel
                     value="completed"
                     control={<Radio />}
-                    label={<ChipStatus status={Status.COMPLETED}></ChipStatus>}
+                    label={<ChipStatus status={Status.COMPLETED} />}
                   />
                 </RadioGroup>
               )}

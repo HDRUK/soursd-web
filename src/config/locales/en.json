@@ -514,6 +514,7 @@
     "subsidiaryWebsitePlaceholder": "Subsidiary website",
     "SafeProject": {
       "status": "Status",
+      "statusRequiredInvalid": "Status is required",
       "uniqueId": "ID",
       "uniqueIdPlaceholder": "ID",
       "title": "Project name",

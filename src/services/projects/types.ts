@@ -21,6 +21,8 @@ interface PutPrimaryContactPayload {
   primary_contact: boolean;
 }
 
+type PutProjectPayload = ResearcherProject;
+
 export type {
   ProjectsResponse,
   ProjectUsersResponse,
@@ -28,4 +30,5 @@ export type {
   DeleteProjectUserPayload,
   PutPrimaryContactPayload,
   PutPrimaryContactQuery,
+  PutProjectPayload,
 };
