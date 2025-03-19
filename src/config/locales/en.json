@@ -10,8 +10,7 @@
     "maxSizeErrorText": "Your file must be under {size}",
     "scanningText": "Scanning file for viruses...",
     "scanOkText": "File was successfully scanned",
-    "scanErrorText": "Your file file may have a virus",
-    "fileTypesText": "PDF, DOC, and DOCX"
+    "scanErrorText": "Your file file may have a virus"
   },
   "Application": {
     "period": "Period",
@@ -73,7 +72,8 @@
     "notFound": "We couldn't find the page you were looking for. Please try again or contact us at <contactLink></contactLink>",
     "loadingAriaLabel": "Application loading",
     "saveButton": "Save",
-    "continueButton": "Continue"
+    "continueButton": "Continue",
+    "deleteAffiliation": "Delete Affiliation"
   },
   "CustodianProfile": {
     "searchPlaceholder": "Search",
@@ -527,11 +527,13 @@
       "noCertificationUploaded": "No files have been uploaded yet",
       "certificationUploadFailed": "Certificate upload failed",
       "done": "Done"
-    }
+    },
+    "comment": "Add any further comment",
+    "commentPlaceholder": "Type your comment here..."
   },
   "ProfessionalRegistrations": {
     "title": "Professional Registrations",
-    "resultsTitle": "Professional registrations history",
+    "resultsTitle": "Professional registration history",
     "addProfessionalRegistration": "Add professional registrations",
     "id": "ID",
     "name": "Professional registration",
@@ -544,7 +546,9 @@
     "professionalRegistrationsNoResultsMessage": "You currently have no professional registrations",
     "professionalRegsitrationsErrorMessage": "There was an error getting your professional registrations. Please try again or contact us at <contactLink></contactLink>",
     "errorCreateMessage": "There was an error creating your professional registrations. Please try again or contact us at <contactLink></contactLink>",
-    "successCreateMessage": "Your professional registration was successfully create",
+    "errorPutMessage": "There was an error updating your professional registration. Please try again or contact us at <contactLink></contactLink>",
+    "successCreateMessage": "Your professional registration was successfully created",
+    "successEditMessage": "Your professional registration was successfully updated",
     "errorDeleteMessage": "There was an error delete your professional registration. Please try again or contact us at <contactLink></contactLink>",
     "successDeleteMessage": "Your professional registration was successfully deleted",
     "cancel": "Cancel"
@@ -627,8 +631,8 @@
   "Profile": {
     "memberIdDescription": "Depending on your selected relationship with the Organisation",
     "home": "Home",
-    "organisationRegister": "Ask them to register",
-    "organisationNotListed": "Organisation not listed?",
+    "inviteThemHere": "Invite them here",
+    "organisationNotListed": "Organisation not listed? <link> Ask them to register </link>",
     "affiliationsDescription": "Please provide information for each Organisation you are currently affiliated with. An affiliation can either be an employment or enrolment as a student at a higher education institute. Please provide current affiliations even if this information has been provided in your CV as this is needed for your organisations to confirm your affiliation.",
     "postAffiliationSuccess": "You have successfully created an affiliation",
     "postAffiliationError": "There was an error creating your affiliation. Please try again or contact us at <contactLink></contactLink>",
@@ -658,6 +662,7 @@
     "experience": "Experience",
     "experienceTitle": "Complete your experience information",
     "experienceForm": "Employment and publication history",
+    "trainingTitle": "Complete your training and accreditation history",
     "trainingAndAccreditations": "Training and Accreditations",
     "homeTitle": "Your actions",
     "approvedProjects": "Projects",
@@ -710,7 +715,18 @@
     "orcidDescription": "Please enter your ORCID, if you have one, as this can help Data Custodians identify you.",
     "orcidFormDescription": "Please provide your ORCID if you have one. If this information is not up-to-date or you do not have an ORCID, please upload a CV with the same relevant information. We can automatically pull in your publicly visible employment history from your ORCID profile. We recommend that you do this only if the information is correct and up-to-date. You will be able to edit the information after we’ve automatically pulled it in from ORCID. However please note if synchronisation is turned on, some of these edits maybe overwritten.",
     "cvUpload": "CV Upload",
-    "cvUploadDescription": "Please upload an up-to-date CV , including your professional employment, education and qualifications, and publication record."
+    "cvUploadDescription": "Please upload an up-to-date CV , including your professional employment, education and qualifications, and publication record.",
+    "affiliationActionSuccessButton": "OK",
+    "patchAffiliationSuccess": "Affiliation updated successfully",
+    "affiliationActionError": "An error occurred. Please try again or <contactLink>contact us</contactLink> if the problem persists.",
+    "affiliationActionErrorButton": "Close",
+    "editAffiliationForm": "Edit Affiliation",
+    "addAffiliationForm": "Add Affiliation",
+    "viewOrEdit": "View or edit",
+    "delete": "Delete",
+    "missingOrcIdMessage": "There’s some missing information from your ORCID that we need you to complete",
+    "affiliationOrganisationWarningMessage": "Please complete this field as we couldn’t match the information. Sometimes the identifier of an Organisation within an ORCID profile does not exactly match the identifier of an Organisation registered within SOURSD therefore please select an Organisation from the dropdown box. If the Organisation is not listed, please <link> invite them here </link>",
+    "affiliationsEmailWarningMessage": "Please complete this field as we couldn’t match the information."
   },
   "Training": {
     "title": "Training",
@@ -723,7 +739,15 @@
     "postTrainingSuccess": "Training course added successfully",
     "closeButton": "Close",
     "postTrainingError": "An error occurred while adding the training course. Please try again or <contactLink>contact support</contactLink> if the problem persists.",
-    "errorButton": "OK"
+    "errorButton": "OK",
+    "viewCertificate": "View Certificate",
+    "fileDownloadError": "An error occurred while downloading the certificate. Please try again or <contactLink>contact support</contactLink> if the problem persists.",
+    "noResultsMessage": "You currently have no training history",
+    "errorDeleteMessage": "There was an error delete your training entry. Please try again or contact us at <contactLink></contactLink>",
+    "successDeleteMessage": "Your training entry was successfully deleted",
+    "editTrainingCourse": "Edit Training Course",
+    "updateTrainingError": "There was an error updating the training course. Please <contactLink>contact support</contactLink> if the problem persists.",
+    "updateTrainingSuccess": "Training course updated successfully"
   },
   "ProfileCompleteStatus": {
     "profileComplete": "Profile complete",
@@ -1006,5 +1030,27 @@
     "alertText": "If you decline, you will not be able to access SOURSD.",
     "alertConfirm": "Confirm. Back to homepage",
     "alertCancel": "Cancel"
+  },
+  "ActionValidationPanel": {
+    "title": "Validation Checks"
+  },
+  "ActionValidationMakeDecision": {
+    "pass": "Pass",
+    "fail": "Fail"
+  },
+  "ActionValidationCommentForm": {
+    "confirm": "Confirm {action}",
+    "cancel": "Cancel"
+  },
+  "ChangeDecisionChip": {
+    "changeDecision": "Change Decision",
+    "passed": "Passed",
+    "failed": "Failed"
+  },
+  "CustodianProjectUser": {
+    "title": "User for {projectTitle}"
+  },
+  "ActionValidationLogComment": {
+    "daysSince": "{days} days ago"
   }
 }

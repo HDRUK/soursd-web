@@ -2,6 +2,7 @@ import React from "react";
 import {
   render,
   screen,
+  userEvent,
   fireEvent,
   commonAccessibilityTests,
 } from "@/utils/testUtils";
@@ -68,9 +69,13 @@ describe("<CertificateUploadModal />", () => {
     expect(screen.getByText("noFilesUploaded")).toBeInTheDocument();
   });
 
-  it("displays scan failed status correctly", () => {
+  it("displays scan failed status correctly", async () => {
     render(<CertificateUploadModal {...defaultProps} isScanFailed />);
-    expect(screen.getByText("fileScanError")).toBeInTheDocument();
+    const scanErrorIcon = screen.getByTestId("GppBadIcon");
+    expect(scanErrorIcon).toBeInTheDocument();
+
+    await userEvent.hover(scanErrorIcon);
+    expect(await screen.findByText("fileScanError")).toBeInTheDocument();
   });
 
   it("has no accessibility violations", async () => {

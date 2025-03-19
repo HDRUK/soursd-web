@@ -20,15 +20,16 @@ export interface ProfessionalRegistrationsFormProps {
   queryState: MutationState;
   onClose: () => void;
   data?: ResearcherProfessionalRegistration;
+  isEdit: boolean;
 }
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfessionalRegistrations";
-
 export default function ProfessionalRegistrationsForm({
   onSubmit,
   onClose,
   queryState,
   data,
+  isEdit,
 }: ProfessionalRegistrationsFormProps) {
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
@@ -43,19 +44,18 @@ export default function ProfessionalRegistrationsForm({
 
   const formOptions = {
     defaultValues: {
-      member_id: "",
-      name: "",
+      member_id: data?.member_id || "",
+      name: data?.name || "",
       ...data,
     },
   };
-
   return (
     <Form
       onSubmit={onSubmit}
       schema={schema}
       {...formOptions}
       sx={{ mb: 3 }}
-      shouldReset>
+      shouldReset={!isEdit}>
       <FormSection heading={tProfile("title")}>
         <Grid container rowSpacing={3}>
           <Grid item xs={12}>
