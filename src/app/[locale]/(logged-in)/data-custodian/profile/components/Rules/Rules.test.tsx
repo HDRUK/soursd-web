@@ -83,10 +83,12 @@ describe("<Rules />", () => {
       isLoading: true,
     });
 
-    render(<Rules />);
+    const { container } = render(<Rules />);
 
     await waitFor(() => {
-      expect(screen.getByText(/loading/i)).toBeInTheDocument();
+      expect(
+        container.querySelectorAll(".MuiSkeleton-root").length
+      ).toBeGreaterThan(0);
     });
   });
 });
