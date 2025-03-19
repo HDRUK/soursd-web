@@ -12,9 +12,11 @@ import { Box, Button } from "@mui/material";
 import ContactLink from "@/components/ContactLink";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import { useTranslations } from "next-intl";
+import { ActionMenu, ActionMenuItem } from "@/components/ActionMenu";
 import EditDelegate from "../EditDelegate";
 import DecoupleUser from "../DecoupleDelegate";
 import InviteDelegateForm from "../InviteDelegateForm";
+import { set } from "date-fns";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
 
@@ -41,7 +43,7 @@ const DelegateTable = () => {
     );
 
   const renderActions = (info: CellContext<User, unknown>) => (
-    <>
+    <ActionMenu>
       <EditDelegate user={info.row.original} onSuccess={refetchDelegates} />
       <DecoupleUser
         user={info.row.original}
@@ -49,7 +51,7 @@ const DelegateTable = () => {
         payload={{ is_delegate: 0 }}
         namespace="DecoupleDelegate"
       />
-    </>
+    </ActionMenu>
   );
 
   const columns: ColumnDef<User>[] = [
@@ -103,6 +105,7 @@ const DelegateTable = () => {
         open={openInviteModal}
         onClose={() => setOpenInviteModal(false)}>
         <InviteDelegateForm
+          onCancel={() => setOpenInviteModal(false)}
           onSuccess={() => {
             setOpenInviteModal(false);
             refetchDelegates();

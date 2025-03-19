@@ -7,7 +7,7 @@ import yup from "@/config/yup";
 import { useStore } from "@/data/store";
 import { showAlert } from "@/utils/showAlert";
 import { LoadingButton } from "@mui/lab";
-import { Grid, TextField } from "@mui/material";
+import { Button, Grid, TextField } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo } from "react";
@@ -29,50 +29,58 @@ export interface DelegatesFormValues {
 
 export interface InvitedDelegatesFormProps {
   onSuccess: () => void;
+  onCancel: () => void;
 }
 
 const NAMESPACE_TRANSLATION_DELEGATES = "Form";
 export default function InviteDelegateForm({
   onSuccess,
+  onCancel,
 }: InvitedDelegatesFormProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_DELEGATES);
   const organisation = useStore(state => state.config.organisation);
 
-  const { mutateAsync, isPending } = useMutation({
+  const { mutateAsync, error, isPending } = useMutation({
     mutationKey: ["inviteUser", organisation?.id],
     mutationFn: (payload: PostOrganisationInviteUserPayload) => {
       return postOrganisationInviteUser(organisation?.id, payload, {
-        error: { message: "inviteUserError" },
+        409: {
+          message: "inviteUserConflict",
+        },
+        error: {
+          message: "postDelegatesError",
+        },
       });
     },
   });
 
   const handleDetailsSubmit = useCallback(
     async (fields: DelegatesFormValues) => {
-      try {
-        const payload: PostOrganisationInviteUserPayload = {
-          email: fields.delegate_email,
-          department_id: Number(fields.department_name) ?? null,
-          first_name: fields.delegate_first_name,
-          last_name: fields.delegate_last_name,
-          role: fields.delegate_job_title,
-          user_group: "ORGANISATION",
-          is_delegate: 1,
-          identifier: EMAIL_TEMPLATE.DELEGATE_INVITE,
-        };
-        await mutateAsync(payload);
-
-        showAlert("success", {
-          text: t("postDelegatesSuccess"),
-          confirmButtonText: t("closeButton"),
+      const payload: PostOrganisationInviteUserPayload = {
+        email: fields.delegate_email,
+        department_id: Number(fields.department_name) ?? null,
+        first_name: fields.delegate_first_name,
+        last_name: fields.delegate_last_name,
+        role: fields.delegate_job_title,
+        user_group: "ORGANISATION",
+        is_delegate: 1,
+        identifier: EMAIL_TEMPLATE.DELEGATE_INVITE,
+      };
+      console.log(payload);
+      await mutateAsync(payload)
+        .then(() => {
+          showAlert("success", {
+            text: t("postDelegatesSuccess"),
+            confirmButtonText: t("closeButton"),
+          });
+          onSuccess();
+        })
+        .catch(error => {
+          showAlert("error", {
+            text: error ? t(error) : t("postDelegatesError"),
+            confirmButtonText: t("errorButton"),
+          });
         });
-        onSuccess();
-      } catch (_) {
-        showAlert("error", {
-          text: t("postDelegatesError"),
-          confirmButtonText: t("errorButton"),
-        });
-      }
     },
     [mutateAsync, onSuccess, t]
   );
@@ -163,6 +171,9 @@ export default function InviteDelegateForm({
           </Grid>
         </FormSection>
         <FormActions>
+          <Button variant="outlined" onClick={onCancel}>
+            {t("cancelButton")}
+          </Button>
           <LoadingButton loading={isPending} type="submit">
             {t("inviteButton")}
           </LoadingButton>

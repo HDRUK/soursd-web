@@ -37,7 +37,9 @@ function handleResponseError(response: Response, options?: ResponseOptions) {
     return new Error(
       response?.status === 401
         ? options["401"]?.message
-        : options.error?.message
+        : response?.status === 409
+          ? options["409"]?.message
+          : options.error?.message
     ).message;
   }
 
@@ -62,8 +64,9 @@ async function handleJsonResponse(
 ) {
   const responseError = handleResponseError(response, options);
 
-  if (!options?.suppressThrow && responseError)
+  if (!options?.suppressThrow && responseError) {
     return Promise.reject(responseError);
+  }
 
   const data = await response.json();
   const dataError = handleDataError(data, options);
