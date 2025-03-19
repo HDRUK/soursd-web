@@ -1,4 +1,3 @@
-import Pagination from "@/components/Pagination";
 import { useStore } from "@/data/store";
 import usePaginatedQuery from "@/hooks/usePaginatedQuery";
 import { PageBody, PageSection } from "@/modules";
