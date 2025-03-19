@@ -39,7 +39,6 @@ export default function Users() {
   } = usePaginatedQuery({
     ...getOrganisationRegistriesQuery(organisation?.id as number),
     defaultQueryParams: {
-      page: "1",
       sort: `last_name:${SearchDirections.ASC}`,
     },
     enabled: !!organisation,

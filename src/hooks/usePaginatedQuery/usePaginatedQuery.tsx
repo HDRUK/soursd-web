@@ -58,6 +58,7 @@ const usePaginatedQuery = <T,>({
   });
 
   useEffect(() => {
+    // change the router URL depending on the queryParams
     const params = new URLSearchParams();
 
     Object.entries(queryParams).forEach(([key, value]) => {
@@ -68,8 +69,18 @@ const usePaginatedQuery = <T,>({
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   }, [queryParams, pathname, router]);
 
+  useEffect(() => {
+    if (queryParams.page === page) return;
+    setQueryParams(
+      (prevParams: QueryParams) =>
+        ({
+          ...prevParams,
+          page,
+        }) as QueryParams
+    );
+  }, [page]);
+
   const updateQueryParams = (newParams: QueryParams) => {
-    setPage(initialPage);
     setQueryParams(
       (prevParams: QueryParams) =>
         ({
@@ -78,6 +89,7 @@ const usePaginatedQuery = <T,>({
           ...newParams,
         }) as QueryParams
     );
+    setPage(initialPage);
   };
 
   const resetQueryParams = () => {
