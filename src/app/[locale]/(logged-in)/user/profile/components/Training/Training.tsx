@@ -176,11 +176,6 @@ export default function Training() {
       cell: ({ row }) => formatShortDate(row.original.awarded_at),
     },
     {
-      header: t("trainingHistoryColumnExpiresAt"),
-      accessorKey: "expires_at",
-      cell: ({ row }) => formatShortDate(row.original.expires_at),
-    },
-    {
       header: "",
       accessorKey: "actions",
       cell: ({ row }) => renderActions(row.original),
@@ -198,6 +193,7 @@ export default function Training() {
         queryState={trainingDataQueryState}
         total={trainingsData?.data.length}
         noResultsMessage={t("noResultsMessage")}
+        sx={{ maxWidth: "75%" }}
       />
 
       <Button

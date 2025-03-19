@@ -1,4 +1,3 @@
-import { mockedVerifications } from "@/mocks/data/static";
 import {
   PageBodyContainer,
   PageColumnBody,
@@ -31,7 +30,7 @@ function SubPageUsers({ params }: PageProps) {
           <SubTabsSections tabId={tabId} {...params} />
           <SubTabsContents tabId={tabId} {...params} />
         </PageColumnBody>
-        <PageColumnDetails>{mockedVerifications()}</PageColumnDetails>
+        <PageColumnDetails>Placeholder</PageColumnDetails>
       </PageColumns>
     </PageBodyContainer>
   );

@@ -136,6 +136,8 @@ interface User {
   role?: string;
   location?: string;
   status: Status;
+  declaration_signed?: boolean;
+  uksa_registered?: boolean;
 }
 interface AddressFields {
   postcode?: string;
@@ -276,7 +278,7 @@ interface ResearcherAffiliation {
   current_employer: boolean;
   from?: string | null;
   to?: string | null;
-  position?: string;
+  role?: string;
   organisation: {
     organisation_name: string;
   };
