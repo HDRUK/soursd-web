@@ -12,24 +12,24 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CheckIcon from "@mui/icons-material/Check";
-import generateActions from "./config";
+import generateActions, { ActionConfig } from "./utils";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ActionLogs";
 
+type ActionLogVariant = "user" | "organisation" | "custodian";
+
 interface ActionLogProps {
+  variant: ActionLogVariant;
   panelProps: Omit<ActionsPanelProps, "children">;
 }
 
-export default function ActionLogs({ panelProps }: ActionLogProps) {
+export default function ActionLogs({ variant, panelProps }: ActionLogProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
-  const { user, routes } = useStore(state => ({
+  const { routes } = useStore(state => ({
     routes: state.getApplication().routes,
-    user: state.getUser(),
   }));
 
-  const { data: actionLogData } = useQuery(
-    getActionLogsQuery(user?.id as number)
-  );
+  const { data: actionLogData } = useQuery(getActionLogsQuery(variant));
 
   const completedActions =
     actionLogData?.data.filter(action => !!action.completed_at) || [];
@@ -37,10 +37,10 @@ export default function ActionLogs({ panelProps }: ActionLogProps) {
   const inCompletedActions =
     actionLogData?.data.filter(action => !action.completed_at) || [];
 
-  const actions = generateActions(routes) as ActionConfig;
+  const actions: Record<string, ActionConfig> = generateActions(routes);
 
   const hydratedInCompletedActions = inCompletedActions?.map(({ action }) => {
-    const { icon, path } = actions[action as keyof typeof actions];
+    const { icon, path } = actions[action as keyof typeof actions] ?? {};
 
     const name = toCamelCase(action);
     return {

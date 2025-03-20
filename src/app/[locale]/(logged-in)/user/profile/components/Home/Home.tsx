@@ -1,26 +1,11 @@
-import ActionsPanel from "@/components/ActionsPanel";
-import ActionsPanelItem from "@/components/ActionsPanelItem";
 import { useStore } from "@/data/store";
 import {
-  PageBody,
   PageBodyContainer,
   PageColumnBody,
   PageColumnDetails,
   PageColumns,
 } from "@/modules";
-import {
-  Button,
-  Checkbox,
-  Link,
-  List,
-  ListItem,
-  Typography,
-} from "@mui/material";
 import { useTranslations } from "next-intl";
-import BadgeOutlinedIcon from "@mui/icons-material/BadgeOutlined";
-import { useQuery } from "@tanstack/react-query";
-import { getActionLogsQuery } from "@/services/action_logs";
-import { toCamelCase } from "@/utils/string";
 import ActionLogs from "@/modules/ActionLogs";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
@@ -37,6 +22,7 @@ export default function Home() {
       <PageColumns>
         <PageColumnBody>
           <ActionLogs
+            variant="user"
             panelProps={{
               heading: "Before you get started (5)",
               description: (

@@ -1,5 +1,3 @@
-import ActionsPanel from "@/components/ActionsPanel";
-import ActionsPanelItem from "@/components/ActionsPanelItem";
 import { OrganisationIcon } from "@/consts/icons";
 import { useStore } from "@/data/store";
 import { Link } from "@/i18n/routing";
@@ -11,6 +9,7 @@ import {
 } from "@/modules";
 import { Button } from "@mui/material";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import ActionLogs from "@/modules/ActionLogs";
 
 const Home = () => {
   const routes = useStore(state => state.getApplication().routes);
@@ -106,24 +105,25 @@ const Home = () => {
     <PageColumns>
       <PageColumnBody>
         <PageBody>
-          <ActionsPanel
-            description={
-              <>
-                Welcome to Sourced! You’ll see a list of tasks below we’ve
-                assigned to you to complete your profile. To help you do that as
-                quickly as possible here’s a list of things you’ll need before
-                you dive in:
-                <ul>
-                  <li>Prerequisite 1</li>
-                  <li>Prerequisite 2</li>
-                  <li>Prerequisite 3</li>
-                </ul>
-              </>
-            }>
-            {actions.map(action => (
-              <ActionsPanelItem {...action} />
-            ))}
-          </ActionsPanel>
+          <ActionLogs
+            variant="organisation"
+            panelProps={{
+              heading: "Before you get started (5)",
+              description: (
+                <>
+                  Welcome to Sourced! You’ll see a list of tasks below we’ve
+                  assigned to you to complete your profile. To help you do that
+                  as quickly as possible here’s a list of things you’ll need
+                  before you dive in:
+                  <ul>
+                    <li>Prerequisite 1</li>
+                    <li>Prerequisite 2</li>
+                    <li>Prerequisite 3</li>
+                  </ul>
+                </>
+              ),
+            }}
+          />
         </PageBody>
       </PageColumnBody>
       <PageColumnDetails>
