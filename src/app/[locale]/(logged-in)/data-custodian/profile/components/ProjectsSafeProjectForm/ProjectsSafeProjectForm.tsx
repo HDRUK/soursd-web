@@ -53,12 +53,16 @@ export default function UserModalDetails({
         title: yup.string().required(tForm("titleRequiredInvalid")),
         request_category_type: yup
           .string()
-          .required(tForm("titleRequiredInvalid")),
-        start_date: yup.string().required(tForm("titleRequiredInvalid")),
-        end_date: yup.string().required(tForm("titleRequiredInvalid")),
-        lay_summary: yup.string().required(tForm("titleRequiredInvalid")),
-        public_benefit: yup.string().required(tForm("titleRequiredInvalid")),
-        technical_summary: yup.string().required(tForm("titleRequiredInvalid")),
+          .required(tForm("requestCategoryTypeRequiredInvalid")),
+        start_date: yup.string().required(tForm("startDateRequiredInvalid")),
+        end_date: yup.string().required(tForm("endDateRequiredInvalid")),
+        lay_summary: yup.string().required(tForm("laySummaryRequiredInvalid")),
+        public_benefit: yup
+          .string()
+          .required(tForm("publicBenefitRequiredInvalid")),
+        technical_summary: yup
+          .string()
+          .required(tForm("technicalSummaryRequiredInvalid")),
         status: yup.string().required(tForm("statusRequiredInvalid")),
       }),
     []
