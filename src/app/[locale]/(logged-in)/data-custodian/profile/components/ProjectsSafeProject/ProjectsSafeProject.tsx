@@ -9,9 +9,14 @@ import { useTranslations } from "next-intl";
 import ProjectsSafeProjectForm from "../ProjectsSafeProjectForm";
 import { useMutation } from "@tanstack/react-query";
 import { putProjectQuery } from "@/services/projects";
-import { useStore } from "@/data/store";
-import useQueryConfirmAlerts from "@/hooks/useQueryConfirmAlerts";
 import { PutProjectPayload } from "@/services/projects/types";
+import {
+  QueryClient,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
+import ProjectsSafeProjectForm from "../ProjectsSafeProjectForm";
+import { useTranslations } from "next-intl";
 
 const NAMESPACE_TRANSLATION = "CustodianProfile";
 
