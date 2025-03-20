@@ -62,17 +62,12 @@ export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
     const users: FilteredUser[] = [];
 
     usersData?.forEach(
-      ({
-        primary_contact,
-        role,
-        model_state,
-        registry: { user, organisations },
-      }) => {
+      ({ primary_contact, model_state, registry: { user, organisations } }) => {
         organisations?.forEach(({ organisation_name }) => {
           users.push({
             organisation_name,
             ...user,
-            project_role: role?.name,
+            project_role: user.role || tApplication("status_notSet"),
             primary_contact,
             status: model_state?.state.slug,
           });

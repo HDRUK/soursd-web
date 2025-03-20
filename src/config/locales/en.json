@@ -27,6 +27,7 @@
     "status_invite_sent": "Invite sent",
     "status_affiliated": "Affiliated",
     "status_pending": "Pending",
+    "status_notSet": "Not Set",
     "projectStatus": "Project status",
     "projectRole": "Project role",
     "actions": "Actions",
