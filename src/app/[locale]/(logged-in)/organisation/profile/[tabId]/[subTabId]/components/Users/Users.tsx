@@ -14,10 +14,10 @@ import { User } from "@/types/application";
 import Table from "@/components/Table";
 import Markdown from "@/components/Markdown";
 import { ColumnDef, CellContext } from "@tanstack/react-table";
+import { ActionMenu } from "@/components/ActionMenu";
 import DecoupleUser from "../Delegates/DecoupleDelegate";
 import UserModal from "../UserModal";
 import UserBulkInvite from "../UserBulkInvite";
-import { ActionMenu } from "@/components/ActionMenu";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
 
