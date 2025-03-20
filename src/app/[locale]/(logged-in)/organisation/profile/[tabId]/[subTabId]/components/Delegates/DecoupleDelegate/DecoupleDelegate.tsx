@@ -1,9 +1,9 @@
 import { TrashIcon } from "@/consts/icons";
-import { Tooltip, IconButton } from "@mui/material";
 import { PatchUserPayload, patchUser } from "@/services/users";
 import { useMutation } from "@tanstack/react-query";
 import { showAlert, showLoadingAlertWithPromise } from "@/utils/showAlert";
 import { User } from "@/types/application";
+import { ActionMenuItem } from "@/components/ActionMenu";
 import { useTranslations } from "next-intl";
 import { useStore } from "@/data/store";
 
@@ -57,15 +57,12 @@ const DecoupleDelegate = ({
   };
 
   return (
-    <Tooltip title={t("toolTip")}>
-      <IconButton
-        onClick={handleDecoupleUser}
-        size="small"
-        color="inherit"
-        aria-label="icon-button">
-        <TrashIcon />
-      </IconButton>
-    </Tooltip>
+    <ActionMenuItem
+      sx={{ color: "error.main" }}
+      onClick={handleDecoupleUser}
+      icon={<TrashIcon />}>
+      {t("title")}
+    </ActionMenuItem>
   );
 };
 

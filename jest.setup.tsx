@@ -56,6 +56,7 @@ jest.mock("@/i18n/routing", () => ({
   ...jest.requireActual("@/i18n/routing"),
   useRouter: jest.fn().mockReturnValue({
     push: jest.fn(),
+    replace: jest.fn(),
   }),
   usePathname: jest.fn(),
 }));
@@ -71,6 +72,7 @@ jest.mock("next/navigation", () => {
     }),
     useSearchParams: () => ({
       get: () => {},
+      entries: () => [],
     }),
     redirect: jest.fn(),
   };

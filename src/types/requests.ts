@@ -24,6 +24,7 @@ interface ResponseOptions {
   "401"?: ResponseTranslation;
   "403"?: ResponseTranslation;
   "404"?: ResponseTranslation;
+  "409"?: ResponseTranslation;
   "500"?: ResponseTranslation;
   error?: ResponseTranslation;
   suppressThrow?: boolean;
