@@ -1,6 +1,5 @@
 import { EditIcon } from "@/consts/icons";
-import { Tooltip, IconButton } from "@mui/material";
-
+import { ActionMenuItem } from "@/components/ActionMenu";
 import { User } from "@/types/application";
 import { useTranslations } from "next-intl";
 import FormModal from "@/components/FormModal";
@@ -19,21 +18,21 @@ const EditDelegate = ({ user, onSuccess }: DecoupleUserProps) => {
 
   return (
     <>
-      <Tooltip title={t("toolTip")}>
-        <IconButton
-          onClick={() => setOpenModal(true)}
-          size="small"
-          color="inherit"
-          aria-label="icon-button">
-          <EditIcon />
-        </IconButton>
-      </Tooltip>
+      <ActionMenuItem
+        sx={{ color: "menuList1.main" }}
+        onClick={() => setOpenModal(true)}
+        icon={<EditIcon />}>
+        {t("title")}
+      </ActionMenuItem>
       <FormModal
         variant="form"
         open={openModal}
         onClose={() => setOpenModal(false)}>
         <EditDelegateForm
           delegate={user}
+          onCancel={() => {
+            setOpenModal(false);
+          }}
           onSuccess={() => {
             setOpenModal(false);
             onSuccess();
