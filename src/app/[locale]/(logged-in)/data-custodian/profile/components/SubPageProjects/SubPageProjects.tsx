@@ -5,8 +5,6 @@ import { useEffect } from "react";
 import { PageTabs, ProjectsSubTabs } from "../../consts/tabs";
 import SubTabsSections from "../SubTabSections";
 import SubTabsContents from "../SubsTabContents";
-import { useStore } from "@/data/store";
-import { useEffect } from "react";
 
 interface PageProps {
   projectData: ResearcherProject;

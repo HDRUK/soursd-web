@@ -2,7 +2,6 @@ import { QueryOptions } from "@/types/requests";
 import { UseMutationOptions } from "@tanstack/react-query";
 import putProject from "./putProject";
 import { PutProjectPayload } from "./types";
-import { UseMutationOptions } from "@tanstack/react-query";
 
 export default function putProjectQuery(id: number, options?: QueryOptions) {
   return {

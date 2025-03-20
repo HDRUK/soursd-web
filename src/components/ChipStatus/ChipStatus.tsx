@@ -1,4 +1,4 @@
-import { Chip, ChipProps, useTheme } from "@mui/material";
+import { Chip, ChipProps } from "@mui/material";
 import { useTranslations } from "next-intl";
 
 export enum Status {

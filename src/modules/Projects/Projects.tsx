@@ -18,7 +18,6 @@ import { ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
 import PageBody from "../PageBody";
 import SearchActionMenu from "../SearchActionMenu";
-import ChipStatus from "@/components/ChipStatus";
 
 const NAMESPACE_TRANSLATIONS_PROJECTS = "Projects";
 const NAMESPACE_TRANSLATIONS_APPLICATION = "Application";
