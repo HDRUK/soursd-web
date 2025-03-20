@@ -62,13 +62,14 @@ export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
     const users: FilteredUser[] = [];
 
     usersData?.forEach(
-      ({ primary_contact, role, registry: { user, organisations } }) => {
+      ({ primary_contact, model_state, registry: { user, organisations } }) => {
         organisations?.forEach(({ organisation_name }) => {
           users.push({
             organisation_name,
             ...user,
-            project_role: role?.name,
+            project_role: user.role || tApplication("status_notSet"),
             primary_contact,
+            status: model_state?.state.slug,
           });
         });
       }
@@ -144,7 +145,7 @@ export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
   const filterActions = [
     {
       label: tApplication("status_registered"),
-      onClick: () => handleFieldToggle("status", ["registered", ""]),
+      onClick: () => handleFieldToggle("status", ["registered", ""]), // Status' to be added
       checked: queryParams.status === "registered",
     },
   ];
@@ -181,7 +182,9 @@ export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
           onClear={resetQueryParams}
           onSearch={(text: string) => {
             updateQueryParams({
-              "name[]": text,
+              "first_name[]": text,
+              "last_name[]": text,
+              "email[]": text,
             });
           }}
           placeholder={t("searchPlaceholder")}>

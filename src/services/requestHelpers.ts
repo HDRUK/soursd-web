@@ -26,7 +26,9 @@ function handleResponseError(
     return new Error(
       response?.status === 401
         ? options["401"]?.message
-        : options.error?.message
+        : response?.status === 409
+          ? options["409"]?.message
+          : options.error?.message
     ).message;
   }
 

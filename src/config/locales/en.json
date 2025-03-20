@@ -27,6 +27,7 @@
     "status_invite_sent": "Invite sent",
     "status_affiliated": "Affiliated",
     "status_pending": "Pending",
+    "status_notSet": "Not Set",
     "projectStatus": "Project status",
     "projectRole": "Project role",
     "actions": "Actions",
@@ -212,7 +213,7 @@
     "cancelButton": "Cancel",
     "closeButton": "Close",
     "profileUpdateMessage": "Your profile was successfully updated!",
-    "inviteAnotherDelegate": "Invite another delegate",
+    "inviteAnotherDelegate": "Add Delegate",
     "addAnotherSubsidiary": "Add a subsidiary",
     "showPendingInvites": "Show pending invites",
     "clearAll": "clear all",
@@ -381,6 +382,8 @@
     "rorPlaceholder": "ROR ID",
     "department": "Department",
     "departmentPlaceholder": "Department",
+    "departmentId": "Department",
+    "departmentIdPlaceholder": "Department",
     "digitalToolkitCodePlaceholder": "Dsptk ods code",
     "digitalToolkitCode": "Dsptk ods code",
     "whatIsTheOrcId": "Your ORCiD is a value which identifies you to Data Custodians (although in general anyone) and provides information to them such as your research outputs and activities. If you don't have one of these you can signup at https://orcid.org/register. Although it is recommended to provide this, it is not required for the registry, however it is required for the content scrape.",
@@ -456,6 +459,7 @@
     "departmentRequiredInvalid": "Department is required",
     "postDelegatesSuccess": "Delegate invited successfully. They should have recieved an email to register",
     "postDelegatesError": "There was a problem with inviting this delegate. Please try again",
+    "inviteUserConflict": "The email for this user has already been invited or already has an account!",
     "roleRequiredInvalid": "Role is required",
     "fromRequiredInvalid": "From date is required",
     "toRequiredInvalid": "To date is required",
@@ -605,7 +609,9 @@
     "fileScanOk": "Certification was successfully scanned",
     "fileScanError": "Your Certification file may have a virus",
     "fileNamePlaceholder": "No Certification uploaded",
-    "noFilesUploaded": "No files have been uploaded yet"
+    "noFilesUploaded": "No files have been uploaded yet",
+    "downloading": "Downloading...",
+    "downloadFile": "Download file"
   },
   "NotificationsMenu": {
     "noNotifications": "You have no notifications!",
@@ -984,6 +990,7 @@
     "title": "Accreditations"
   },
   "DecoupleUser": {
+    "title": "Decouple",
     "toolTip": "Decouple this user from your organisation",
     "alertTitle": "Decouple User?",
     "alertText": "Are you sure you want to remove {first_name} {last_name} from your organisation ({organisation_name})",
@@ -991,6 +998,7 @@
     "alertCancel": "Cancel"
   },
   "DecoupleDelegate": {
+    "title": "Delete",
     "toolTip": "Decouple this user as a delegate from your organisation",
     "alertTitle": "Decouple Delegate User?",
     "alertText": "Are you sure you want to remove {first_name} {last_name} as a delegate from your organisation ({organisation_name})",
@@ -998,6 +1006,7 @@
     "alertCancel": "Cancel"
   },
   "EditDelegate": {
+    "title": "Edit",
     "toolTip": "Edit details for this delegate"
   },
   "UsePatchOrganisation": {
