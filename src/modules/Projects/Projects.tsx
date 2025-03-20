@@ -13,13 +13,11 @@ import { ResearcherProject } from "@/types/application";
 import { renderProjectNameCell } from "@/utils/cells";
 import { formatDisplayLongDate } from "@/utils/date";
 import { getSearchSortOrder } from "@/utils/query";
-import { Organisation, ResearcherProject, User } from "@/types/application";
 import SortIcon from "@mui/icons-material/Sort";
 import { ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
 import PageBody from "../PageBody";
 import SearchActionMenu from "../SearchActionMenu";
-import ChipStatus from "@/components/ChipStatus";
 
 const NAMESPACE_TRANSLATIONS_PROJECTS = "Projects";
 const NAMESPACE_TRANSLATIONS_APPLICATION = "Application";
