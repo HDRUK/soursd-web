@@ -145,7 +145,7 @@ export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
   const filterActions = [
     {
       label: tApplication("status_registered"),
-      onClick: () => handleFieldToggle("status", ["registered", ""]), //Status' to be added
+      onClick: () => handleFieldToggle("status", ["registered", ""]), // Status' to be added
       checked: queryParams.status === "registered",
     },
   ];
