@@ -1,17 +1,20 @@
 import { ResponseJson, ResponseOptions } from "@/types/requests";
 import { handleJsonResponse } from "../requestHelpers";
 import { putRequest } from "../requests";
-import { PutProjectPayload } from "./types";
+import { PutProjectPayload, PutProjectResponse } from "./types";
 
 export default async (
   id: number,
   payload: PutProjectPayload,
   options?: ResponseOptions
-): Promise<ResponseJson<null>> => {
+): Promise<ResponseJson<PutProjectResponse>> => {
   const response = await putRequest(
     `${process.env.NEXT_PUBLIC_API_V1_URL}/projects/${id}`,
     payload
   );
 
-  return handleJsonResponse(response, options);
+  const json = await handleJsonResponse(response, options);
+  console.log("after response", json);
+
+  return json;
 };

@@ -6,6 +6,12 @@ import {
   UserProfileCompletionCategories,
 } from "@/consts/user";
 
+interface ModelState {
+  state: {
+    slug: Status;
+  };
+}
+
 interface File {
   id: number;
   name: string;
@@ -304,6 +310,7 @@ interface ResearcherProject {
   unique_id: string;
   approvals: ResearcherProjectApproval[];
   organisations: Organisation[];
+  model_state?: ModelState;
 }
 
 interface Registry {

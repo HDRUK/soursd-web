@@ -24,7 +24,7 @@ export default function SubPageProjects({ params, projectData }: PageProps) {
 
   useEffect(() => {
     setProject(projectData);
-  }, []);
+  }, [projectData]);
 
   return (
     project && (

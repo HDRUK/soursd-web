@@ -65,7 +65,10 @@ export default function UserModalDetails({
   );
 
   const formOptions = {
-    defaultValues: project,
+    defaultValues: {
+      ...project,
+      status: project.model_state?.state.slug || Status.PROJECT_PENDING,
+    },
     disabled: queryState.isLoading,
   };
 
@@ -74,9 +77,8 @@ export default function UserModalDetails({
       schema={schema}
       {...formOptions}
       onSubmit={onSubmit}
-      shouldReset
       autoComplete="off">
-      <Grid container>
+      <Grid container rowGap={3}>
         <Grid
           md={8}
           order={{
@@ -187,6 +189,7 @@ export default function UserModalDetails({
         </Grid>
         <Grid
           md={4}
+          xs={12}
           order={{
             md: 2,
             xs: 1,
@@ -201,23 +204,23 @@ export default function UserModalDetails({
               renderField={fieldProps => (
                 <RadioGroup
                   aria-labelledby="demo-radio-buttons-group-label"
-                  defaultValue={fieldProps.status}
+                  value={fieldProps.status}
                   name="status"
                   {...fieldProps}>
                   <FormControlLabel
-                    value="approved"
+                    value={Status.PROJECT_APPROVED}
                     control={<Radio />}
-                    label={<ChipStatus status={Status.APPROVED} />}
+                    label={<ChipStatus status={Status.PROJECT_APPROVED} />}
                   />
                   <FormControlLabel
-                    value="pending"
+                    value={Status.PROJECT_PENDING}
                     control={<Radio />}
-                    label={<ChipStatus status={Status.PENDING} />}
+                    label={<ChipStatus status={Status.PROJECT_PENDING} />}
                   />
                   <FormControlLabel
-                    value="completed"
+                    value={Status.PROJECT_COMPLETED}
                     control={<Radio />}
-                    label={<ChipStatus status={Status.COMPLETED} />}
+                    label={<ChipStatus status={Status.PROJECT_COMPLETED} />}
                   />
                 </RadioGroup>
               )}
