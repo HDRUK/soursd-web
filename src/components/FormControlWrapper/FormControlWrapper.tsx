@@ -52,7 +52,11 @@ export default function FormControlWrapper({
     alignItems: "flex-start",
   },
 }: FormControlProps) {
-  const tForm = t || useTranslations(NAMESPACE_TRANSLATION_FORM);
+  let tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
+
+  if (t) {
+    tForm = t;
+  }
 
   const tKey = name?.replace(/_([a-zA-Z0-9])/g, g => g[1].toUpperCase());
 

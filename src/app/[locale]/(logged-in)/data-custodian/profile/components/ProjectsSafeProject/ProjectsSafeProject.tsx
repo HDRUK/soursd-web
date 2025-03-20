@@ -4,13 +4,9 @@ import { mockedSafeProjectGuidanceProps } from "@/mocks/data/cms";
 import { PageGuidance } from "@/modules";
 import { putProjectQuery } from "@/services/projects";
 import { PutProjectPayload } from "@/services/projects/types";
-import {
-  QueryClient,
-  useMutation,
-  useQueryClient,
-} from "@tanstack/react-query";
-import ProjectsSafeProjectForm from "../ProjectsSafeProjectForm";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
+import ProjectsSafeProjectForm from "../ProjectsSafeProjectForm";
 
 const NAMESPACE_TRANSLATION = "CustodianProfile";
 

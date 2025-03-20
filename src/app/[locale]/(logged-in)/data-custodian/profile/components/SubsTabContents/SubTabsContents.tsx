@@ -4,30 +4,28 @@ import { useStore } from "@/data/store";
 import { PageBody } from "@/modules";
 import { notFound } from "next/navigation";
 import {
-  getSubTabs,
   ConfigurationSubTabs,
+  getSubTabs,
   PageTabs,
-  UserSubTabs,
   ProjectsSubTabs,
+  UserSubTabs,
 } from "../../consts/tabs";
-import Rules from "../Rules";
-import ValidationChecks from "../ValidationChecks";
-import Webhooks from "../Webhooks";
-import UserHistory from "../UserHistory";
-import UserIdentity from "../UserIdentity";
-import UserTrainingAccreditations from "../UserTrainingAccreditations";
-import UserProjects from "../UserProjects";
-import UserCustodianOrgInfo from "../UserCustodianOrgInfo";
-import UserAffiliations from "../UserAffiliations";
 import ProjectsSafePeople from "../ProjectsSafePeople";
 import ProjectsSafeProject from "../ProjectsSafeProject";
-import { ResearcherProject } from "@/types/application";
+import Rules from "../Rules";
+import UserAffiliations from "../UserAffiliations";
+import UserCustodianOrgInfo from "../UserCustodianOrgInfo";
+import UserHistory from "../UserHistory";
+import UserIdentity from "../UserIdentity";
+import UserProjects from "../UserProjects";
+import UserTrainingAccreditations from "../UserTrainingAccreditations";
+import ValidationChecks from "../ValidationChecks";
+import Webhooks from "../Webhooks";
 
 interface TabsContentsProps {
   tabId: PageTabs;
   subTabId: ConfigurationSubTabs | UserSubTabs | ProjectsSubTabs;
   id?: number;
-  data?: ResearcherProject;
 }
 
 export default function SubTabsContents({
