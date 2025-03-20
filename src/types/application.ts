@@ -312,6 +312,7 @@ interface ResearcherProject {
   unique_id: string;
   approvals: ResearcherProjectApproval[];
   organisations: Organisation[];
+  model_state?: ModelState;
 }
 
 interface Registry {

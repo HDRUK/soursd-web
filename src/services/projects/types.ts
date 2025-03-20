@@ -1,3 +1,4 @@
+import { Status } from "@/components/ChipStatus";
 import { ResearcherProject, ProjectUser } from "@/types/application";
 
 type ProjectsResponse = ResearcherProject[];
@@ -21,7 +22,11 @@ interface PutPrimaryContactPayload {
   primary_contact: boolean;
 }
 
-type PutProjectPayload = ResearcherProject;
+interface PutProjectPayload extends Omit<ResearcherProject, "model_state"> {
+  status?: Status;
+}
+
+type PutProjectResponse = ResearcherProject;
 
 export type {
   ProjectsResponse,
@@ -31,4 +36,5 @@ export type {
   PutPrimaryContactPayload,
   PutPrimaryContactQuery,
   PutProjectPayload,
+  PutProjectResponse,
 };

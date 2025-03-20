@@ -9,10 +9,13 @@ export enum Status {
   INVITE_SENT = "invite_sent",
   APPROVED = "approved",
   COMPLETED = "completed",
+  PROJECT_APPROVED = "project_approved",
+  PROJECT_COMPLETED = "project_completed",
+  PROJECT_PENDING = "project_pending",
 }
 
 interface ChipStatusProps extends ChipProps {
-  status: Status;
+  status: Status | undefined;
 }
 
 const NAMESPACE_TRANSLATION = "Application";
@@ -25,15 +28,26 @@ export default function ChipStatus({ status, ...restProps }: ChipStatusProps) {
     color: "midGrey",
   };
 
-  if (status === Status.AFFILIATED || status === Status.APPROVED) {
+  if (
+    status === Status.AFFILIATED ||
+    status === Status.APPROVED ||
+    status === Status.PROJECT_APPROVED
+  ) {
     chipProps = {
       color: "success",
     };
-  } else if (status === Status.COMPLETED) {
+  } else if (
+    status === Status.COMPLETED ||
+    status === Status.PROJECT_COMPLETED
+  ) {
     chipProps = {
       color: "white",
       border: "1px solid",
       borderColor: "midGrey",
+    };
+  } else if (!status) {
+    chipProps = {
+      color: "warning",
     };
   }
 

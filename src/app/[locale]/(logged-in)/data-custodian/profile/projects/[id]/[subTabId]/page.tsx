@@ -15,7 +15,11 @@ interface SubPageProjectsProps {
 }
 
 function ProjectsSubPage({ params: { subTabId, id } }: SubPageProjectsProps) {
-  const { data: project, isPending, isFetched } = useQuery(getProjectQuery(id));
+  const {
+    data: project,
+    isPending,
+    isFetched,
+  } = useQuery(getProjectQuery(+id));
 
   if (!project?.data && isFetched) {
     notFound();
