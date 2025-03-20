@@ -1,16 +1,20 @@
 import React, { useEffect } from "react";
-import { List, ListItem, ListItemText, Typography, Box } from "@mui/material";
+import { List, Typography, Box } from "@mui/material";
 import { Rule } from "@/types/rules";
 import FormControlCheckbox from "../FormControlCheckbox";
+import { StyledListItem, StyledListItemText } from "./CheckboxList.styles";
+import SkeletonCheckboxList from "./Skeleton";
 
 interface CheckboxListType {
   items: Rule[];
+  isLoading?: boolean;
   title: string;
   checked: boolean[];
   setChecked: (checked: boolean[]) => void;
 }
 
 const CheckboxList = ({
+  isLoading = false,
   items,
   title,
   checked,
@@ -30,33 +34,26 @@ const CheckboxList = ({
         {title}
       </Typography>
       <Box sx={{ bgcolor: "#f2f2f2", padding: 1, borderRadius: 1 }}>
-        {items.map((rule, index) => (
-          <ListItem
-            key={rule.id}
-            sx={{
-              borderBottom:
-                index !== items.length - 1 ? "1px solid #ddd" : "none",
-              bgcolor: "white",
-              borderRadius: 1,
-              mt: index !== 0 ? 1 : 0,
-            }}>
-            <FormControlCheckbox
-              name={`checkbox-${rule.id}`}
-              checked={checked[index] || false}
-              onChange={handleChange(index)}
-              value={rule.id}
-              label={
-                <ListItemText
-                  sx={{ display: "flex", alignItems: "center", gap: 1 }}
-                  primary={
-                    <Typography fontWeight="bold">{rule.label}:</Typography>
-                  }
-                  secondary={rule.text}
-                />
-              }
-            />
-          </ListItem>
-        ))}
+        {isLoading ? (
+          <SkeletonCheckboxList />
+        ) : (
+          items.map((rule, index) => (
+            <StyledListItem key={rule.id}>
+              <FormControlCheckbox
+                name={`checkbox-${rule.id}`}
+                checked={checked[index] || false}
+                onChange={handleChange(index)}
+                value={rule.id}
+                label={
+                  <StyledListItemText
+                    primary={<Typography>{rule.label}:</Typography>}
+                    secondary={rule.text}
+                  />
+                }
+              />
+            </StyledListItem>
+          ))
+        )}
       </Box>
     </List>
   );

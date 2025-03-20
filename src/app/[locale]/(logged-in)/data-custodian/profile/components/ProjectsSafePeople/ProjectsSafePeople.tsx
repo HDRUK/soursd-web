@@ -37,7 +37,8 @@ const NAMESPACE_TRANSLATION_APPLICATION = "Application";
 export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
   const {
     data: usersData,
-    updateQueryParam,
+    updateQueryParams,
+    resetQueryParams,
     last_page,
     total,
     setPage,
@@ -177,7 +178,12 @@ export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
     <>
       <Box component="form" role="search">
         <SearchBar
-          updateQueryParam={(text: string) => updateQueryParam("name[]", text)}
+          onClear={resetQueryParams}
+          onSearch={(text: string) => {
+            updateQueryParams({
+              "name[]": text,
+            });
+          }}
           placeholder={t("searchPlaceholder")}>
           <SearchActionMenu
             actions={filterActions}

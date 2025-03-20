@@ -13,4 +13,14 @@ interface PostTrainingsPayload {
 
 type PostTrainingsResponse = number;
 
-export type { TrainingsResponse, PostTrainingsPayload, PostTrainingsResponse };
+type PutTrainingsPayload = Partial<ResearcherTraining>;
+
+type PutTrainingsResponse = ResearcherTraining;
+
+export type {
+  TrainingsResponse,
+  PostTrainingsPayload,
+  PostTrainingsResponse,
+  PutTrainingsPayload,
+  PutTrainingsResponse,
+};
