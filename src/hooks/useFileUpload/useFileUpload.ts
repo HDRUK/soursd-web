@@ -9,7 +9,7 @@ import {
   isFileScanning,
 } from "@/utils/file";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import useQueryAlerts from "../useQueryAlerts";
 import useQueryRefetch from "../useQueryRefetch";
 
@@ -18,20 +18,23 @@ export interface FileUploadState {
   isScanComplete: boolean;
   isScanFailed: boolean;
   message: string;
+  initialFileId?: number;
 }
 
-export default function useFileUpload(message: string) {
+export default function useFileUpload(message: string, initialFileId?: number) {
   const [file, setFile] = useState<ApplicationFile>();
   const [isSizeInvalid, setIsSizeInvalid] = useState<boolean>();
 
   const postFileState = useMutation(postFileQuery(message));
-  const getFileState = useQuery({
-    ...getFileQuery(file?.id),
-    queryKey: [`getFile${message}`],
-  });
 
+  const fileId = file?.id || initialFileId;
+  const { data: fileData, isLoading } = useQuery({
+    ...getFileQuery(fileId),
+    queryKey: [`getFile${message}`, fileId],
+    enabled: !!fileId,
+  });
   const { refetch: refetchFile, cancel: refetchFileCancel } = useQueryRefetch({
-    options: { queryKey: [`getFile${message}`, file?.id] },
+    options: { queryKey: [`getFile${message}`, fileId] },
   });
 
   useQueryAlerts(postFileState, {
@@ -42,28 +45,32 @@ export default function useFileUpload(message: string) {
     },
   });
 
-  const upload = async (formData: FormData) => {
-    setIsSizeInvalid(false);
+  const upload = useCallback(
+    async (formData: FormData) => {
+      setIsSizeInvalid(false);
 
-    const file = formData.get("file") as File;
+      const file = formData.get("file") as File;
 
-    if (file.size <= MAX_UPLOAD_SIZE_BYTES) {
-      const { data } = await postFileState.mutateAsync(formData);
+      if (file.size <= MAX_UPLOAD_SIZE_BYTES) {
+        const { data } = await postFileState.mutateAsync(formData);
+        setFile(data);
+        return data;
+      }
 
-      setFile(data);
-
-      return data;
-    }
-
-    setIsSizeInvalid(true);
-
-    return null;
-  };
-
-  const fileData = getFileState.data?.data;
+      setIsSizeInvalid(true);
+      return null;
+    },
+    [postFileState]
+  );
 
   useEffect(() => {
-    if (file?.id && (!fileData || isFileScanning(fileData))) {
+    if (initialFileId && fileData?.data) {
+      setFile(fileData.data);
+    }
+  }, [initialFileId, fileData]);
+
+  useEffect(() => {
+    if (fileId && (!fileData?.data || isFileScanning(fileData.data))) {
       refetchFile();
     } else {
       refetchFileCancel();
@@ -72,15 +79,15 @@ export default function useFileUpload(message: string) {
     return () => {
       refetchFileCancel();
     };
-  }, [file?.id, fileData]);
+  }, [fileId, fileData, refetchFile, refetchFileCancel]);
 
   return {
     upload,
-    isScanning: isFileScanning(fileData),
-    isScanComplete: isFileScanComplete(fileData),
-    isScanFailed: isFileScanFailed(fileData),
+    isScanning: isFileScanning(fileData?.data),
+    isScanComplete: isFileScanComplete(fileData?.data),
+    isScanFailed: isFileScanFailed(fileData?.data),
     isSizeInvalid,
-    isUploading: getFileState.isLoading,
+    isUploading: isLoading,
     fileHref: getFileHref(file),
     file,
   };

@@ -164,7 +164,7 @@ export default function Training() {
 
   const renderActions = useCallback(
     (training: ResearcherTraining) => {
-      const certificateFile = user?.registry?.files[0];
+      const certificateFileId = training.certification_id;
       return (
         <ActionMenu aria-label={`Actions for ${training.training_name}`}>
           <ActionMenuItem
@@ -176,8 +176,10 @@ export default function Training() {
           <ActionMenuItem
             icon={<TaskAltIcon sx={{ color: "menuList1.main" }} />}
             sx={{ color: "menuList1.main" }}
-            onClick={() => certificateFile && downloadFile(certificateFile.id)}
-            disabled={!certificateFile}>
+            onClick={() =>
+              !!certificateFileId && downloadFile(certificateFileId)
+            }
+            disabled={!certificateFileId}>
             {t("viewCertificate")}
           </ActionMenuItem>
           <ActionMenuItem
