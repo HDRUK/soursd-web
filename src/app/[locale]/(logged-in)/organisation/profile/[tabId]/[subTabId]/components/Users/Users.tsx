@@ -14,6 +14,7 @@ import { User } from "@/types/application";
 import Table from "@/components/Table";
 import Markdown from "@/components/Markdown";
 import { ColumnDef, CellContext } from "@tanstack/react-table";
+import { ActionMenu } from "@/components/ActionMenu";
 import DecoupleUser from "../Delegates/DecoupleDelegate";
 import UserModal from "../UserModal";
 import UserBulkInvite from "../UserBulkInvite";
@@ -54,12 +55,14 @@ export default function Users() {
   );
 
   const renderActions = (info: CellContext<User, unknown>) => (
-    <DecoupleUser
-      user={info.row.original}
-      onSuccess={refetchOrganisationUsers}
-      payload={{ organisation_id: null }}
-      namespace="DecoupleUser"
-    />
+    <ActionMenu>
+      <DecoupleUser
+        user={info.row.original}
+        onSuccess={refetchOrganisationUsers}
+        payload={{ organisation_id: null }}
+        namespace="DecoupleUser"
+      />
+    </ActionMenu>
   );
 
   // task coming for this
