@@ -1058,5 +1058,23 @@
   },
   "ActionValidationLogComment": {
     "daysSince": "{days} days ago"
+  },
+  "ActionLogs": {
+    "profileCompleted": {
+      "title": "Add your personal details",
+      "buttonText": "Add personal details"
+    },
+    "affiliationsComplete": {
+      "title": "Add your affiliations",
+      "buttonText": "Add affiliations"
+    },
+    "trainingComplete": {
+      "title": "Add your training",
+      "buttonText": "Add training"
+    },
+    "projectsReview": {
+      "title": "Review your projects",
+      "buttonText": "Review"
+    }
   }
 }

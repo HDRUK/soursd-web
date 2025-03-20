@@ -1,23 +1,9 @@
-import ActionsPanel from "@/components/ActionsPanel";
+import ActionsPanel, { ActionsPanelProps } from "@/components/ActionsPanel";
 import ActionsPanelItem from "@/components/ActionsPanelItem";
 import { useStore } from "@/data/store";
-import {
-  PageBody,
-  PageBodyContainer,
-  PageColumnBody,
-  PageColumnDetails,
-  PageColumns,
-} from "@/modules";
-import {
-  Button,
-  Checkbox,
-  Link,
-  List,
-  ListItem,
-  Typography,
-} from "@mui/material";
+import { PageBody } from "@/modules";
+import { Button, Link, List, ListItem, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-import BadgeOutlinedIcon from "@mui/icons-material/BadgeOutlined";
 import { useQuery } from "@tanstack/react-query";
 import { getActionLogsQuery } from "@/services/action_logs";
 import { toCamelCase } from "@/utils/string";
@@ -26,12 +12,16 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CheckIcon from "@mui/icons-material/Check";
-import { CheckBox } from "@mui/icons-material";
+import generateActions, { ActionConfig } from "./config";
 
-const NAMESPACE_TRANSLATION_PROFILE = "Profile";
+const NAMESPACE_TRANSLATION_PROFILE = "ActionLogs";
 
-export default function Home() {
-  const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
+interface ActionLogProps {
+  panelProps: Omit<ActionsPanelProps, "children">;
+}
+
+export default function ActionLogs({ panelProps }: ActionLogProps) {
+  const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const { user, routes } = useStore(state => ({
     routes: state.getApplication().routes,
     user: state.getUser(),
@@ -47,87 +37,30 @@ export default function Home() {
   const inCompletedActions =
     actionLogData?.data.filter(action => !action.completed_at) || [];
 
-  const hydratedCompletedActions = inCompletedActions?.map(action => ({
-    heading: toCamelCase(action.action),
-    icon: <BadgeOutlinedIcon />,
-    action: (
-      <Button component={Link} href={routes.profileResearcherIdentity.path}>
-        Get started
-      </Button>
-    ),
-  }));
+  const actions = generateActions(routes) as ActionConfig;
 
-  const _actions = [
-    {
-      heading: "Add your personal details",
-      icon: <BadgeOutlinedIcon />,
+  const hydratedInCompletedActions = inCompletedActions?.map(({ action }) => {
+    const { icon, path } = actions[action as keyof typeof actions];
+
+    const name = toCamelCase(action);
+    return {
+      heading: t(`${name}.title`),
+      icon: icon,
       action: (
-        <Button component={Link} href={routes.profileResearcherIdentity.path}>
-          Get started
+        <Button component={Link} variant="outlined" href={path}>
+          {t(`${name}.buttonText`)}
         </Button>
       ),
-    },
-    {
-      heading: "Add your affiliations",
-      icon: <BadgeOutlinedIcon />,
-      action: (
-        <Button
-          component={Link}
-          variant="outlined"
-          href={routes.profileResearcherAffiliations.path}>
-          Add affiliations
-        </Button>
-      ),
-    },
-    {
-      heading: "Add your training",
-      icon: <BadgeOutlinedIcon />,
-      action: (
-        <Button
-          component={Link}
-          variant="outlined"
-          href={routes.profileResearcherTraining.path}>
-          Add training
-        </Button>
-      ),
-    },
-    {
-      heading: "Review your projects",
-      icon: <BadgeOutlinedIcon />,
-      action: (
-        <Button
-          component={Link}
-          variant="outlined"
-          href={routes.profileResearcherProjects.path}>
-          Review
-        </Button>
-      ),
-    },
-  ];
+    };
+  });
 
   return (
     <>
       <PageBody>
-        <ActionsPanel
-          variant="plain"
-          heading="Before you get started (5)"
-          description={
-            <>
-              Welcome to Sourced! You’ll see a list of tasks below we’ve
-              assigned to you to complete your profile. To help you do that as
-              quickly as possible here’s a list of things you’ll need before you
-              dive in:
-              <ul>
-                <li>Prerequisite 1</li>
-                <li>Prerequisite 2</li>
-                <li>Prerequisite 3</li>
-              </ul>
-            </>
-          }>
-          {false &&
-            hydratedCompletedActions.map(action => (
-              <ActionsPanelItem {...action} />
-            ))}
+        <ActionsPanel variant="plain" {...panelProps}>
+          {hydratedInCompletedActions.map(action => (
+            <ActionsPanelItem {...action} />
+          ))}
         </ActionsPanel>
       </PageBody>
       <PageBody>
@@ -145,24 +78,22 @@ export default function Home() {
           </AccordionSummary>
           <AccordionDetails>
             <List disablePadding>
-              {completedActions.map((action, index) => (
+              {completedActions.map(({ action, completed_at }, index) => (
                 <ListItem key={index} disableGutters>
-                  {!!action.completed_at && (
+                  {!!completed_at && (
                     <CheckIcon
                       sx={{
                         mx: 1,
-                        color: action.completed_at ? "success.main" : "gray",
+                        color: completed_at ? "success.main" : "gray",
                       }}
                     />
                   )}
                   <Typography
                     sx={{
-                      color: action.completed_at ? "success.main" : "inherit",
-                      textDecoration: !!action.completed_at
-                        ? "line-through"
-                        : "none",
+                      color: completed_at ? "success.main" : "inherit",
+                      textDecoration: !!completed_at ? "line-through" : "none",
                     }}>
-                    {tProfile(toCamelCase(action.action))}
+                    {t(toCamelCase(`${action}.title`))}
                   </Typography>
                 </ListItem>
               ))}

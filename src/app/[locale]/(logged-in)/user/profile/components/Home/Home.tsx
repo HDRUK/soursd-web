@@ -26,7 +26,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CheckIcon from "@mui/icons-material/Check";
-import { CheckBox } from "@mui/icons-material";
+import ActionLogs from "@/modules/ActionLogs";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
@@ -109,11 +109,10 @@ export default function Home() {
     <PageBodyContainer heading={tProfile("homeTitle")}>
       <PageColumns>
         <PageColumnBody>
-          <PageBody>
-            <ActionsPanel
-              variant="plain"
-              heading="Before you get started (5)"
-              description={
+          <ActionLogs
+            panelProps={{
+              heading: "Before you get started (5)",
+              description: (
                 <>
                   Welcome to Sourced! You’ll see a list of tasks below we’ve
                   assigned to you to complete your profile. To help you do that
@@ -125,57 +124,9 @@ export default function Home() {
                     <li>Prerequisite 3</li>
                   </ul>
                 </>
-              }>
-              {false &&
-                hydratedCompletedActions.map(action => (
-                  <ActionsPanelItem {...action} />
-                ))}
-            </ActionsPanel>
-          </PageBody>
-          <PageBody>
-            <Accordion
-              disableGutters
-              elevation={0}
-              sx={{
-                backgroundColor: "transparent",
-                boxShadow: "none",
-                border: 0,
-              }}>
-              <AccordionSummary>
-                <Typography variant="h3">Completed actions</Typography>
-                <ExpandMoreIcon sx={{ ml: 2 }} />
-              </AccordionSummary>
-              <AccordionDetails>
-                <List disablePadding>
-                  {completedActions.map((action, index) => (
-                    <ListItem key={index} disableGutters>
-                      {!!action.completed_at && (
-                        <CheckIcon
-                          sx={{
-                            mx: 1,
-                            color: action.completed_at
-                              ? "success.main"
-                              : "gray",
-                          }}
-                        />
-                      )}
-                      <Typography
-                        sx={{
-                          color: action.completed_at
-                            ? "success.main"
-                            : "inherit",
-                          textDecoration: !!action.completed_at
-                            ? "line-through"
-                            : "none",
-                        }}>
-                        {tProfile(toCamelCase(action.action))}
-                      </Typography>
-                    </ListItem>
-                  ))}
-                </List>
-              </AccordionDetails>
-            </Accordion>
-          </PageBody>
+              ),
+            }}
+          />
         </PageColumnBody>
         <PageColumnDetails>
           {user?.first_name} {user?.last_name}
