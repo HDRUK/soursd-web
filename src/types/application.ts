@@ -249,7 +249,7 @@ interface ResearcherTraining {
   training_name: string;
   expires_in_years: number;
   id: number;
-  certification_id: number | null;
+  certification_id?: number;
 }
 
 interface ResearcherEmployment {

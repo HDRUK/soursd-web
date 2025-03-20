@@ -15,7 +15,10 @@ import { PostTrainingsPayload } from "@/services/trainings/types";
 import useFileUpload from "@/hooks/useFileUpload";
 import useUserFileUpload from "@/hooks/useUserFileUpload";
 import { useStore } from "@/data/store";
-import { File as ApplicationFile } from "@/types/application";
+import {
+  File as ApplicationFile,
+  ResearcherTraining,
+} from "@/types/application";
 import FileUploadDetails from "../FileUploadDetails/FileUploadDetails";
 
 const NAMESPACE_TRANSLATION_FORM = "Form.Training";
@@ -32,7 +35,7 @@ interface TrainingFormProps {
   onSubmit: (values: PostTrainingsPayload) => void;
   isPending: boolean;
   onCancel: () => void;
-  initialValues?: TrainingFormValues;
+  initialValues?: ResearcherTraining;
 }
 
 export default function TrainingForm({
@@ -62,7 +65,10 @@ export default function TrainingForm({
     isUploading,
     isScanning,
     file,
-  } = useFileUpload("certificationUploadFailed");
+  } = useFileUpload(
+    "certificationUploadFailed",
+    initialValues?.certification_id
+  );
 
   const { setValue } = useForm();
 
