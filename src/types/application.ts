@@ -6,6 +6,14 @@ import {
   UserProfileCompletionCategories,
 } from "@/consts/user";
 
+type ModelState<T> = T & {
+  model_state: {
+    state: {
+      slug: Status;
+    };
+  };
+};
+
 interface File {
   id: number;
   name: string;
@@ -335,14 +343,14 @@ interface Project {
   end_date: string;
 }
 
-interface ProjectUser {
+type ProjectUser = ModelState<{
   project_id: number;
   user_digital_ident: string;
   project_role_id: number;
   registry: Registry;
   role: Role;
   primary_contact: number;
-}
+}>;
 
 interface Department {
   category: string;

@@ -21,7 +21,7 @@ export default function useProjectUsersQuery(
   return usePaginatedQuery({
     queryKeyBase: queryKey,
     defaultQueryParams: {
-      sort: `name:${SearchDirections.ASC}`,
+      sort: `last_name:${SearchDirections.ASC}`,
       ...defaultQueryParams,
     },
     queryFn: queryParams =>
