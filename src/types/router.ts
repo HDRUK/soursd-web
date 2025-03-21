@@ -15,6 +15,7 @@ interface RouteConfig {
 }
 
 interface Routes {
+  invite: RouteConfig;
   register: RouteConfig;
   homepage: RouteConfig;
   usersCustodian: RouteConfig;
@@ -69,7 +70,7 @@ interface Routes {
   profileOrganisationUserAdministrationEmployeeStudent: RouteConfig;
   profileOrganisationProjects: RouteConfig;
   profileOrganisationProjectsSafeProject: RouteConfig;
-  admin: RouteConfig;
+  profileAdmin: RouteConfig;
 }
 
 export type { RoutePermissions, RouteConfig, Routes, RouteParams };

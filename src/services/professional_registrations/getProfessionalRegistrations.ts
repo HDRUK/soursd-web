@@ -8,7 +8,7 @@ export default async (
   options?: ResponseOptions
 ): Promise<ResponseJson<Paged<GetProfessionalRegistrationsResponse>>> => {
   const response = await getRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/professional_registrations/registry/${registry_id}`
+    `/professional_registrations/registry/${registry_id}`
   );
 
   return handleJsonResponse(response, options);

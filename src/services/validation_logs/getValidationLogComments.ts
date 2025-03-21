@@ -8,7 +8,7 @@ export default async (
   options: ResponseOptions
 ): Promise<ResponseJson<Comment[]>> => {
   const response = await getRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/validation_logs/${validationLogId}/comments`
+    `/validation_logs/${validationLogId}/comments`
   );
 
   return handleJsonResponse(response, options);

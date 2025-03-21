@@ -6,9 +6,7 @@ import { UsersResponse } from "./types";
 export default async (
   options?: ResponseOptions
 ): Promise<ResponseJson<Paged<UsersResponse>>> => {
-  const response = await getRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/users`
-  );
+  const response = await getRequest(`/users`);
 
   return handleJsonResponse(response, options);
 };

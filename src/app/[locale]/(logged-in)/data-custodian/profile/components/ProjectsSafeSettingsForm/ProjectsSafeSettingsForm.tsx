@@ -1,6 +1,7 @@
 import ButtonSave from "@/components/ButtonSave";
 import ChipStatus, { Status } from "@/components/ChipStatus";
 import Form from "@/components/Form";
+import FormActions from "@/components/FormActions";
 import FormControlWrapper from "@/components/FormControlWrapper";
 import FormModalActions from "@/components/FormModalActions";
 import FormModalBody from "@/components/FormModalBody";
@@ -70,49 +71,47 @@ export default function ProjectSafeSettingsForm({
       {...formOptions}
       onSubmit={onSubmit}
       autoComplete="off">
-      <FormModalBody>
-        <Grid container rowSpacing={3}>
-          <Grid item xs={12}>
-            <FormControlWrapper
-              fullWidth
-              name="access_type"
-              t={tForm}
-              renderField={fieldProps => (
-                <RadioGroup
-                  value={fieldProps.status}
-                  name="access_type"
-                  {...fieldProps}>
-                  <FormControlLabel
-                    value={Status.PROJECT_APPROVED}
-                    control={<Radio />}
-                    label={tForm("accessTypeSde")}
-                  />
-                  <FormControlLabel
-                    value={Status.PROJECT_PENDING}
-                    control={<Radio />}
-                    label={tForm("accessTypeDataRelease")}
-                  />
-                </RadioGroup>
-              )}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <FormControlWrapper
-              name="data_privacy"
-              t={tForm}
-              renderField={fieldProps => (
-                <TextField
-                  {...fieldProps}
-                  multiline
-                  style={{ width: "100%" }}
-                  minRows={6}
+      <Grid container rowSpacing={3}>
+        <Grid item xs={12}>
+          <FormControlWrapper
+            fullWidth
+            name="access_type"
+            t={tForm}
+            renderField={fieldProps => (
+              <RadioGroup
+                value={fieldProps.status}
+                name="access_type"
+                {...fieldProps}>
+                <FormControlLabel
+                  value={Status.PROJECT_APPROVED}
+                  control={<Radio />}
+                  label={tForm("accessTypeSde")}
                 />
-              )}
-            />
-          </Grid>
+                <FormControlLabel
+                  value={Status.PROJECT_PENDING}
+                  control={<Radio />}
+                  label={tForm("accessTypeDataRelease")}
+                />
+              </RadioGroup>
+            )}
+          />
         </Grid>
-      </FormModalBody>
-      <FormModalActions>
+        <Grid item xs={12}>
+          <FormControlWrapper
+            name="data_privacy"
+            t={tForm}
+            renderField={fieldProps => (
+              <TextField
+                {...fieldProps}
+                multiline
+                style={{ width: "100%" }}
+                minRows={6}
+              />
+            )}
+          />
+        </Grid>
+      </Grid>
+      <FormActions>
         <Button variant="outlined" onClick={() => {}}>
           {tApplication("previousButton")}
         </Button>
@@ -122,7 +121,7 @@ export default function ProjectSafeSettingsForm({
           loading={queryState.isLoading}>
           {tApplication("saveButton")}
         </ButtonSave>
-      </FormModalActions>
+      </FormActions>
     </Form>
   );
 }

@@ -15,10 +15,7 @@ export default async (
   payload: PatchCustodianRulesPayload,
   options: ResponseOptions
 ): Promise<ResponseJson<PatchCustodianRulesResponse>> => {
-  const response = await patchRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/custodians/${id}/rules`,
-    payload
-  );
+  const response = await patchRequest(`/custodians/${id}/rules`, payload);
 
   return handleJsonResponse(response, options);
 };

@@ -9,7 +9,7 @@ export default async (
   options?: ResponseOptions
 ): Promise<ResponseJson<PostTrainingsResponse>> => {
   const response = await postRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/training`,
+    `/training`,
     {
       ...payload,
       registry_id: id,

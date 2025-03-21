@@ -8,7 +8,7 @@ export default async (
   options: ResponseOptions
 ): Promise<ResponseJson<null>> => {
   const response = await deleteRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/webhooks/receivers/${custodianId}`,
+    `/webhooks/receivers/${custodianId}`,
     payload
   );
 

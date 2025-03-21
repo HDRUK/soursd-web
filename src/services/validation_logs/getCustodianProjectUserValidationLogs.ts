@@ -10,7 +10,7 @@ export default async (
   options: ResponseOptions
 ): Promise<ResponseJson<ValidationLog[]>> => {
   const response = await getRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/custodians/${custodianId}/projects/${projectId}/registries/${registryId}/validation_logs`
+    `/custodians/${custodianId}/projects/${projectId}/registries/${registryId}/validation_logs`
   );
 
   return handleJsonResponse(response, options);

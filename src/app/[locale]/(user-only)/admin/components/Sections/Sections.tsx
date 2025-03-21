@@ -5,11 +5,11 @@ import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 
-import { Typography } from "@mui/material";
-import { useTranslations } from "next-intl";
 import SendInviteCustodian from "@/modules/SendInviteCustodian";
 import SendInviteOrganisation from "@/modules/SendInviteOrganistion";
 import SendInviteUser from "@/modules/SendInviteUser";
+import { Typography } from "@mui/material";
+import { useTranslations } from "next-intl";
 
 const NAMESPACE_TRANSLATIONS_ADMINISTRATION = "Administration";
 

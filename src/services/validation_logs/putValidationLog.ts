@@ -9,8 +9,6 @@ export default async (
   action: ValidationLogAction,
   options?: ResponseOptions
 ): Promise<ResponseJson<ValidationLog>> => {
-  const response = await putRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/validation_logs/${logId}?${action}`
-  );
+  const response = await putRequest(`/validation_logs/${logId}?${action}`);
   return handleJsonResponse(response, options);
 };

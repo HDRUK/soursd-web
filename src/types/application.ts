@@ -6,11 +6,13 @@ import {
   UserProfileCompletionCategories,
 } from "@/consts/user";
 
-interface ModelState {
-  state: {
-    slug: Status;
+type ModelState<T> = T & {
+  model_state: {
+    state: {
+      slug: Status;
+    };
   };
-}
+};
 
 interface File {
   id: number;
@@ -296,7 +298,7 @@ interface ResearcherProjectApproval {
   custodian_id: number;
 }
 
-interface ResearcherProject {
+type ResearcherProject = ModelState<{
   id: number;
   title: string;
   lay_summary: string;
@@ -310,8 +312,7 @@ interface ResearcherProject {
   unique_id: string;
   approvals: ResearcherProjectApproval[];
   organisations: Organisation[];
-  model_state?: ModelState;
-}
+}>;
 
 interface ProjectDetails {
   access_type: string;
@@ -348,14 +349,14 @@ interface Project {
   end_date: string;
 }
 
-interface ProjectUser {
+type ProjectUser = ModelState<{
   project_id: number;
   user_digital_ident: string;
   project_role_id: number;
   registry: Registry;
   role: Role;
   primary_contact: number;
-}
+}>;
 
 interface Department {
   category: string;

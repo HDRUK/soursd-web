@@ -8,10 +8,7 @@ export default async (
   payload: PutUserPayload,
   options: ResponseOptions
 ): Promise<ResponseJson<PutUserResponse>> => {
-  const response = await putRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/users/${id}`,
-    payload
-  );
+  const response = await putRequest(`/users/${id}`, payload);
 
   return handleJsonResponse(response, options);
 };

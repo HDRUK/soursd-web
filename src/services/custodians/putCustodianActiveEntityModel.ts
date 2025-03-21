@@ -12,7 +12,7 @@ export default async (
   options?: ResponseOptions
 ): Promise<ResponseJson<PutCustodianActiveEntityModelResponse>> => {
   const response = await putRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/custodian_config/update-active/${id}`,
+    `/custodian_config/update-active/${id}`,
     payload
   );
 

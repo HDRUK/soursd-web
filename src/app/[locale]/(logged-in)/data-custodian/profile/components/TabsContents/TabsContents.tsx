@@ -15,6 +15,7 @@ interface TabsContentsProps {
 
 export default function TabsContents({ tabId }: TabsContentsProps) {
   const custodian = useStore(state => state.getCustodian());
+
   if (!custodian) notFound();
 
   return (

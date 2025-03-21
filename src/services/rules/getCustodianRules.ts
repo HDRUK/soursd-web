@@ -7,9 +7,7 @@ export default async (
   id: number | string,
   options: ResponseOptions
 ): Promise<ResponseJson<Rules[]>> => {
-  const response = await getRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/custodians/${id}/rules`
-  );
+  const response = await getRequest(`/custodians/${id}/rules`);
 
   return handleJsonResponse(response, options);
 };

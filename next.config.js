@@ -18,6 +18,15 @@ const nextConfig = withNextIntl({
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/about",
+        destination: "/",
+        permanent: true,
+      },
+    ];
+  },
   async rewrites() {
     return [
       {
@@ -30,7 +39,7 @@ const nextConfig = withNextIntl({
       },
       {
         source: "/:locale/data-custodian/profile",
-        destination: `/:locale/user/data-custodian/profile/home`,
+        destination: `/:locale/data-custodian/profile/home`,
       },
       {
         source: "/:locale/data-custodian/profile/users/:id",

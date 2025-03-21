@@ -10,10 +10,7 @@ export default async (
   payload: UpdateOrganisationPermissonsPayload,
   options: ResponseOptions
 ): Promise<ResponseJson<UpdateOrganisationPermissionsResponse>> => {
-  const response = await postRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/organisations/permissions`,
-    payload
-  );
+  const response = await postRequest(`/organisations/permissions`, payload);
 
   return handleJsonResponse(response, options);
 };

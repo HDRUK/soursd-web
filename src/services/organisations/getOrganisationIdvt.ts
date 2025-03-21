@@ -7,10 +7,7 @@ export default async (
   id: string | number,
   options: ResponseOptions
 ): Promise<ResponseJson<OrganisationResponse>> => {
-  const response = await getRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/organisations/${id}/idvt`,
-    undefined
-  );
+  const response = await getRequest(`/organisations/${id}/idvt`, undefined);
 
   return handleJsonResponse(response, options);
 };
