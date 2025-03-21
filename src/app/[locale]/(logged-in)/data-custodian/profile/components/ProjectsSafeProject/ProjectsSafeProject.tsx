@@ -1,7 +1,7 @@
 import { useStore } from "@/data/store";
 import useQueryAlerts from "@/hooks/useQueryAlerts";
 import { mockedSafeProjectGuidanceProps } from "@/mocks/data/cms";
-import { PageGuidance } from "@/modules";
+import { PageBody, PageGuidance, PageSection } from "@/modules";
 import { putProjectQuery } from "@/services/projects";
 import { PutProjectPayload } from "@/services/projects/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -33,11 +33,15 @@ export default function ProjectsSafeProject() {
 
   return (
     <PageGuidance {...mockedSafeProjectGuidanceProps}>
-      <ProjectsSafeProjectForm
-        queryState={restPutQueryState}
-        project={project}
-        onSubmit={handleSubmit}
-      />
+      <PageBody heading={t("safeProject")}>
+        <PageSection>
+          <ProjectsSafeProjectForm
+            queryState={restPutQueryState}
+            project={project}
+            onSubmit={handleSubmit}
+          />
+        </PageSection>
+      </PageBody>
     </PageGuidance>
   );
 }

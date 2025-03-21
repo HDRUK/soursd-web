@@ -6,12 +6,6 @@ import { useQuery } from "@tanstack/react-query";
 import { notFound } from "next/navigation";
 import SubPageProjects from "../../../components/SubPageProjects";
 import { ProjectsSubTabs } from "../../../consts/tabs";
-import useQueriesCombined from "@/hooks/useQueriesCombined";
-import {
-  getProject,
-  getProjectDetails,
-  getProjectDetailsQuery,
-} from "@/services/projects";
 
 interface SubPageProjectsProps {
   params: {
@@ -20,30 +14,24 @@ interface SubPageProjectsProps {
   };
 }
 
-interface QueriesCombined {
-  getProject: Awaited<ReturnType<typeof getProject>>;
-  getProjectDetails: Awaited<ReturnType<typeof getProjectDetails>>;
-}
-
 function ProjectsSubPage({ params: { subTabId, id } }: SubPageProjectsProps) {
-  const { data, isLoading, isFetched } = useQueriesCombined<QueriesCombined>([
-    getProjectQuery(+id),
-    getProjectDetailsQuery(+id),
-  ]);
+  const {
+    data: project,
+    isPending,
+    isFetched,
+  } = useQuery(getProjectQuery(+id));
 
-  const projectData = data?.getProject?.data;
-  const projectDetailsData = data?.getProjectDetails?.data;
+  console.log("***** project", project);
 
-  if (!projectData && isFetched) {
+  if (!project?.data && isFetched) {
     notFound();
   }
 
   return (
-    <LoadingWrapper variant="basic" loading={isLoading}>
-      {projectData && (
+    <LoadingWrapper variant="basic" loading={isPending}>
+      {project?.data && (
         <SubPageProjects
-          projectData={projectData}
-          projectDetailsData={projectDetailsData}
+          projectData={project.data}
           params={{
             subTabId,
             id,

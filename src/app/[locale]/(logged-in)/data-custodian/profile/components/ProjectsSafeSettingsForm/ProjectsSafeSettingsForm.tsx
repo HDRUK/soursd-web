@@ -49,17 +49,15 @@ export default function ProjectSafeSettingsForm({
   const schema = useMemo(
     () =>
       yup.object().shape({
-        access_type: yup.string().required(tForm("accessTypeRequiredInvalid")),
-        data_privacy: yup
-          .string()
-          .required(tForm("dataPrivacyRequiredInvalid")),
+        access_type: yup.string(),
+        data_privacy: yup.string(),
       }),
     []
   );
 
   const formOptions = {
     defaultValues: {
-      access_type: projectDetails?.id || "",
+      access_type: projectDetails?.access_type || "",
       data_privacy: projectDetails?.data_privacy || "",
     },
     disabled: queryState.isLoading,

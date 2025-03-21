@@ -20,11 +20,9 @@ function SubPage({ params }: PageProps) {
 
   return (
     <PageBodyContainer heading={t(toCamelCase(params.tabId))}>
-      x
       <PageBody>
-        x
-        <SubTabsSections {...params} />d
-        <SubTabsContents {...params} />d
+        <SubTabsSections {...params} />
+        <SubTabsContents {...params} />
       </PageBody>
     </PageBodyContainer>
   );
