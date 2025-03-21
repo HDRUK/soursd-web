@@ -545,6 +545,13 @@
       "otherApprovalCommittees": "Other approval committees",
       "otherApprovalCommitteesPlaceholder": "Other approval committees"
     },
+    "SafeSettings": {
+      "accessType": "Access Type",
+      "dataPrivacy": "How has data been processed to enhance privacy?",
+      "dataPrivacyPlaceholder": "",
+      "accessTypeSde": "Within a Trusted Research Enviornment or Secure Data Enviornment (SDE)",
+      "accessTypeDataRelease": "Via a data release model"
+    },
     "Training": {
       "provider": "Training provider",
       "trainingProviderRequiredInvalid": "Training provider is required",

@@ -313,6 +313,12 @@ interface ResearcherProject {
   model_state?: ModelState;
 }
 
+interface ProjectDetails {
+  access_type: string;
+  data_privacy: string;
+  id: number;
+}
+
 interface Registry {
   id: number;
   created_at: string;
@@ -395,4 +401,5 @@ export type {
   UserProfileCompletionFields,
   UserProfileCompletionJson,
   UserProfileCompletionSchema,
+  ProjectDetails,
 };

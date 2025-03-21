@@ -144,7 +144,7 @@ export default function UserModalDetails({
               </Grid>
               <Grid item xs={12}>
                 <FormControlWrapper
-                  name="public_benefit_statement"
+                  name="public_benefit"
                   t={tForm}
                   renderField={fieldProps => (
                     <TextField
