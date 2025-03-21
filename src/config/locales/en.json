@@ -33,6 +33,7 @@
     "status_project_pending": "Pending",
     "status_project_completed": "Completed",
     "status_project_approved": "Approved",
+    "status_notSet": "Not Set",
     "projectStatus": "Project status",
     "projectRole": "Project role",
     "actions": "Actions",
