@@ -10,7 +10,7 @@ export default async (
   options: ResponseOptions
 ): Promise<ResponseJson<Paged<ProjectUsersResponse>>> => {
   const response = await getRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/projects/${projectId}/users/filter${getSearchQuerystring(searchParams)}`
+    `/projects/${projectId}/users/filter${getSearchQuerystring(searchParams)}`
   );
 
   return handleJsonResponse(response, options);

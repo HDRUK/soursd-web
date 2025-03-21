@@ -7,9 +7,7 @@ export default async (
   registryId: number | string,
   options: ResponseOptions
 ): Promise<ResponseJson<ProjectsResponse>> => {
-  const response = await getRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/projects`
-  );
+  const response = await getRequest(`/projects`);
 
   return handleJsonResponse(response, options);
 };

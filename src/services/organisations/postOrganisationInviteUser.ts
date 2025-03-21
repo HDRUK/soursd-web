@@ -12,7 +12,7 @@ export default async (
   options?: ResponseOptions
 ): Promise<ResponseJson<PostOrganisationInviteUserResponse>> => {
   const response = await postRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/organisations/${id}/invite_user`,
+    `/organisations/${id}/invite_user`,
     payload
   );
 

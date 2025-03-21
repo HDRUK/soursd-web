@@ -1,10 +1,10 @@
-import { useStore } from "@/data/store";
 import { useRouter } from "@/i18n/routing";
 import { postRegister, PostRegisterPayload } from "@/services/auth";
 import { PostOrganisationPayload } from "@/services/organisations";
 import postOrganisationUnclaimed from "@/services/organisations/postOrganisationUnclaimed";
 import { AccountType } from "@/types/accounts";
 import { getCombinedQueryState } from "@/utils/query";
+import { getProfilePathByEntity } from "@/utils/redirects";
 import { useMutation } from "@tanstack/react-query";
 import useAuth from "../useAuth";
 
@@ -13,7 +13,6 @@ interface UseRegisterUserArgs {
 }
 
 export default function useRegisterUser({ selected }: UseRegisterUserArgs) {
-  const routes = useStore(store => store.application.routes);
   const router = useRouter();
   const auth = useAuth();
 
@@ -51,21 +50,11 @@ export default function useRegisterUser({ selected }: UseRegisterUserArgs) {
       organisationId = data;
     }
 
-    mutateAsync({
+    await mutateAsync({
       account_type: selected,
       organisation_id: organisationId,
     }).then(() => {
-      switch (selected) {
-        case AccountType.ORGANISATION:
-          router.replace(routes.profileOrganisation.path);
-          break;
-        case AccountType.USER:
-          router.replace(routes.profileResearcher.path);
-          break;
-        default:
-          router.replace(routes.homepage.path);
-          break;
-      }
+      router.replace(getProfilePathByEntity(selected));
     });
   };
 

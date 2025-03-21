@@ -7,6 +7,7 @@ import * as matchers from "jest-extended";
 import { forwardRef, useImperativeHandle } from "react";
 import { TextEncoder } from "util";
 import { mock200Json, mockDownloadFile, mockPagedResults } from "./jest.utils";
+import { mockedJwt } from "./mocks/data/auth";
 import { mockedCustodian, mockedCustodianUser } from "./mocks/data/custodian";
 import { mockedNotification } from "./mocks/data/notification";
 import { mockedOrganisation } from "./mocks/data/organisation";
@@ -115,6 +116,15 @@ global.matchMedia = () => {
     removeListener: () => {},
   };
 };
+
+jest.mock("@/utils/auth", () => ({
+  ...jest.requireActual("@/utils/auth"),
+  getAccessToken: () => ({
+    get: () => ({
+      value: mockedJwt,
+    }),
+  }),
+}));
 
 jest.mock("@/data/store", () => ({
   useStore: jest.fn(),

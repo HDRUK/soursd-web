@@ -8,7 +8,7 @@ function Page() {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_ADMINISTRATION);
 
   return (
-    <PageBodyContainer heading={t("title")}>
+    <PageBodyContainer heading={t("title")} sx={{ mt: 3 }}>
       <PageBody>
         <PageSection>
           <Sections />

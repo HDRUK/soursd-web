@@ -8,10 +8,7 @@ export default async (
   payload: PatchOrganisationPayload,
   options: ResponseOptions
 ): Promise<ResponseJson<OrganisationResponse>> => {
-  const response = await patchRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/organisations/${id}`,
-    payload
-  );
+  const response = await patchRequest(`/organisations/${id}`, payload);
 
   return handleJsonResponse(response, options);
 };

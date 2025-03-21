@@ -6,9 +6,7 @@ import { SectorsResponse } from "./types";
 export default async (
   options: ResponseOptions
 ): Promise<ResponseJson<Paged<SectorsResponse>>> => {
-  const response = await getRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/sectors`
-  );
+  const response = await getRequest(`/sectors`);
 
   return handleJsonResponse(response, options);
 };

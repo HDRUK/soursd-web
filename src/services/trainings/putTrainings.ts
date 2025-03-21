@@ -8,10 +8,7 @@ export default async (
   payload: PutTrainingsPayload,
   options: ResponseOptions
 ): Promise<ResponseJson<PutTrainingsResponse>> => {
-  const response = await putRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/training/${id}`,
-    payload
-  );
+  const response = await putRequest(`/training/${id}`, payload);
 
   return handleJsonResponse(response, options);
 };

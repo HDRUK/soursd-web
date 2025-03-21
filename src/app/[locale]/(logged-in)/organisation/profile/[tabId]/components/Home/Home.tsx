@@ -8,9 +8,10 @@ import {
   PageColumnBody,
   PageColumnDetails,
   PageColumns,
+  PageSection,
 } from "@/modules";
-import { Button } from "@mui/material";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import { Button } from "@mui/material";
 
 const Home = () => {
   const routes = useStore(state => state.getApplication().routes);
@@ -106,24 +107,26 @@ const Home = () => {
     <PageColumns>
       <PageColumnBody>
         <PageBody>
-          <ActionsPanel
-            description={
-              <>
-                Welcome to Sourced! You’ll see a list of tasks below we’ve
-                assigned to you to complete your profile. To help you do that as
-                quickly as possible here’s a list of things you’ll need before
-                you dive in:
-                <ul>
-                  <li>Prerequisite 1</li>
-                  <li>Prerequisite 2</li>
-                  <li>Prerequisite 3</li>
-                </ul>
-              </>
-            }>
-            {actions.map(action => (
-              <ActionsPanelItem {...action} />
-            ))}
-          </ActionsPanel>
+          <PageSection>
+            <ActionsPanel
+              description={
+                <>
+                  Welcome to Sourced! You’ll see a list of tasks below we’ve
+                  assigned to you to complete your profile. To help you do that
+                  as quickly as possible here’s a list of things you’ll need
+                  before you dive in:
+                  <ul>
+                    <li>Prerequisite 1</li>
+                    <li>Prerequisite 2</li>
+                    <li>Prerequisite 3</li>
+                  </ul>
+                </>
+              }>
+              {actions.map(action => (
+                <ActionsPanelItem {...action} />
+              ))}
+            </ActionsPanel>
+          </PageSection>
         </PageBody>
       </PageColumnBody>
       <PageColumnDetails>

@@ -6,9 +6,7 @@ export default async (
   id: number,
   options: ResponseOptions
 ): Promise<ResponseJson<null>> => {
-  const response = await deleteRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/professional_registrations/${id}`
-  );
+  const response = await deleteRequest(`/professional_registrations/${id}`);
 
   return handleJsonResponse(response, options);
 };

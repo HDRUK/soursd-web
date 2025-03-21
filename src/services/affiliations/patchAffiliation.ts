@@ -9,7 +9,7 @@ export default async (
   options?: ResponseOptions
 ): Promise<ResponseJson<PatchAffiliationsResponse>> => {
   const response = await patchRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/affiliations/${affiliationId}`,
+    `/affiliations/${affiliationId}`,
     payload
   );
 

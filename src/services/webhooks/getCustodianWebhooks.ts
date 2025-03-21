@@ -7,9 +7,7 @@ export default async (
   custodianId: number,
   options?: ResponseOptions
 ): Promise<ResponseJson<Webhook[]>> => {
-  const response = await getRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/webhooks/receivers/${custodianId}`
-  );
+  const response = await getRequest(`/webhooks/receivers/${custodianId}`);
 
   return handleJsonResponse(response, options);
 };

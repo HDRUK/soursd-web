@@ -8,10 +8,7 @@ export default async (
   payload: PostAffiliationPayload,
   options?: ResponseOptions
 ): Promise<ResponseJson<PostAffiliationsResponse>> => {
-  const response = await postRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/affiliations/${registryId}`,
-    payload
-  );
+  const response = await postRequest(`/affiliations/${registryId}`, payload);
 
   return handleJsonResponse(response, options);
 };

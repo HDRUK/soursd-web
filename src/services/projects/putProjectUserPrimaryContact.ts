@@ -11,7 +11,7 @@ export default async (
   options: ResponseOptions
 ): Promise<ResponseJson<ProjectUser>> => {
   const response = await putRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/projects/${projectId}/users/${registryId}/primary_contact`,
+    `/projects/${projectId}/users/${registryId}/primary_contact`,
     payload
   );
 

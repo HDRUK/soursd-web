@@ -7,9 +7,7 @@ export default async (
   id: number,
   options: ResponseOptions
 ): Promise<ResponseJson<EmploymentsResponse>> => {
-  const response = await getRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/employments/${id}`
-  );
+  const response = await getRequest(`/employments/${id}`);
 
   return handleJsonResponse(response, options);
 };
