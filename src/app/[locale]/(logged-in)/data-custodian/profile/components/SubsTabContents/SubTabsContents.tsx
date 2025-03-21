@@ -1,7 +1,6 @@
 "use client";
 
 import { useStore } from "@/data/store";
-import { PageBody } from "@/modules";
 import { notFound } from "next/navigation";
 import {
   ConfigurationSubTabs,
@@ -22,20 +21,17 @@ import UserProjects from "../UserProjects";
 import UserTrainingAccreditations from "../UserTrainingAccreditations";
 import ValidationChecks from "../ValidationChecks";
 import Webhooks from "../Webhooks";
-import { ReactNode } from "react";
 
 interface TabsContentsProps {
   tabId: PageTabs;
   subTabId: ConfigurationSubTabs | UserSubTabs | ProjectsSubTabs;
   id?: number;
-  heading?: ReactNode;
 }
 
 export default function SubTabsContents({
   tabId,
   subTabId,
   id,
-  heading,
 }: TabsContentsProps) {
   const [user, custodian] = useStore(state => [
     state.getUser(),

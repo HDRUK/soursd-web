@@ -21,8 +21,6 @@ function ProjectsSubPage({ params: { subTabId, id } }: SubPageProjectsProps) {
     isFetched,
   } = useQuery(getProjectQuery(+id));
 
-  console.log("***** project", project);
-
   if (!project?.data && isFetched) {
     notFound();
   }
