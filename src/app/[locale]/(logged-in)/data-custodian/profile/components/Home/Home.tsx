@@ -6,6 +6,7 @@ import {
   PageColumnBody,
   PageColumnDetails,
   PageColumns,
+  PageSection,
 } from "@/modules";
 import { Custodian } from "@/types/application";
 import { Typography, useTheme } from "@mui/material";
@@ -32,25 +33,27 @@ export default function Home({ custodian }: HomeProps) {
     <PageColumns>
       <PageColumnBody>
         <PageBody>
-          <ActionLogs
-            variant="custodian"
-            panelProps={{
-              heading: "Before you get started (5)",
-              description: (
-                <>
-                  Welcome to Sourced! You’ll see a list of tasks below we’ve
-                  assigned to you to complete your profile. To help you do that
-                  as quickly as possible here’s a list of things you’ll need
-                  before you dive in:
-                  <ul>
-                    <li>Prerequisite 1</li>
-                    <li>Prerequisite 2</li>
-                    <li>Prerequisite 3</li>
-                  </ul>
-                </>
-              ),
-            }}
-          />
+          <PageSection>
+            <ActionLogs
+              variant="custodian"
+              panelProps={{
+                heading: "Before you get started (5)",
+                description: (
+                  <>
+                    Welcome to Sourced! You’ll see a list of tasks below we’ve
+                    assigned to you to complete your profile. To help you do
+                    that as quickly as possible here’s a list of things you’ll
+                    need before you dive in:
+                    <ul>
+                      <li>Prerequisite 1</li>
+                      <li>Prerequisite 2</li>
+                      <li>Prerequisite 3</li>
+                    </ul>
+                  </>
+                ),
+              }}
+            />
+          </PageSection>
         </PageBody>
       </PageColumnBody>
       <PageColumnDetails>
