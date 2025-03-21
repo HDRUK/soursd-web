@@ -7,6 +7,14 @@ interface Comment {
   updated_at: string;
 }
 
+interface ActionLog {
+  id: number;
+  entity_type: string;
+  entity_id: number;
+  action: string;
+  completed_at: string | null;
+}
+
 interface ValidationLog {
   id: number;
   entity_type: string;
@@ -21,4 +29,6 @@ interface ValidationLog {
   comments?: Comment[];
 }
 
-export type { ValidationLog, Comment };
+type ActionLogEntity = "user" | "organisation" | "custodian";
+
+export type { ActionLog, ActionLogEntity, ValidationLog, Comment };
