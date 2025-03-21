@@ -20,7 +20,7 @@ export default function ProjectsSafeProject() {
   const handleSubmit = async (payload: PutProjectDetailsPayload) => {
     await mutateAsync({
       ...payload,
-      ...project.projectDetails,
+      ...project.project_detail,
     });
 
     queryClient.refetchQueries({
@@ -36,7 +36,7 @@ export default function ProjectsSafeProject() {
         <PageSection>
           <ProjectsSafeSettingsForm
             queryState={queryState}
-            projectDetails={project.projectDetails}
+            projectDetails={project.project_detail}
             onSubmit={handleSubmit}
           />
         </PageSection>

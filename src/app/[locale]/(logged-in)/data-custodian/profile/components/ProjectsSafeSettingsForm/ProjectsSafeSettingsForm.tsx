@@ -1,10 +1,8 @@
 import ButtonSave from "@/components/ButtonSave";
-import ChipStatus, { Status } from "@/components/ChipStatus";
+import { Status } from "@/components/ChipStatus";
 import Form from "@/components/Form";
 import FormActions from "@/components/FormActions";
 import FormControlWrapper from "@/components/FormControlWrapper";
-import FormModalActions from "@/components/FormModalActions";
-import FormModalBody from "@/components/FormModalBody";
 import yup from "@/config/yup";
 import { PutProjectDetailsPayload } from "@/services/projects";
 import { ProjectDetails } from "@/types/application";

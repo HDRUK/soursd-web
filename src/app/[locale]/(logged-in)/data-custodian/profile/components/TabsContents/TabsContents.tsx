@@ -1,16 +1,16 @@
 "use client";
 
 import { useStore } from "@/data/store";
-import { notFound } from "next/navigation";
+import { PageBodyContainer } from "@/modules";
 import Projects from "@/modules/Projects";
-import Home from "../Home";
-import Users from "../Users";
-import Organisations from "../Organisations";
+import { toCamelCase } from "@/utils/string";
+import { useTranslations } from "next-intl";
+import { notFound } from "next/navigation";
 import { PageTabs } from "../../consts/tabs";
 import Contacts from "../Contacts";
-import { toCamelCase } from "@/utils/string";
-import { PageBodyContainer } from "@/modules";
-import { useTranslations } from "next-intl";
+import Home from "../Home";
+import Organisations from "../Organisations";
+import Users from "../Users";
 
 interface TabsContentsProps {
   tabId: PageTabs;

@@ -70,7 +70,6 @@ export default function useQueryAlerts(
     alertOptions?.enabled === undefined || alertOptions?.enabled === true;
 
   if (!defaultRef?.current && isEnabled) {
-    console.log("QUERY ALERT", query);
     if (query.isError) {
       defaultRef.current = showAlert(
         alertOptions?.errorAlertType || "error",

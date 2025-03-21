@@ -13,8 +13,5 @@ export default async (
     payload
   );
 
-  const json = await handleJsonResponse(response, options);
-  console.log("after response", json);
-
-  return json;
+  return handleJsonResponse(response, options);
 };
