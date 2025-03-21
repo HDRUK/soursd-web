@@ -11,6 +11,10 @@ import putProjectUserPrimaryContact from "./putProjectUserPrimaryContact";
 import putProjectUserPrimaryContactQuery from "./putProjectUserPrimaryContactQuery";
 import putProjectQuery from "./putProjectQuery";
 import putProject from "./putProject";
+import putProjectDetailsQuery from "./putProjectDetailsQuery";
+import putProjectDetails from "./putProjectDetails";
+import getProjectDetailsQuery from "./getProjectDetailsQuery";
+import getProjectDetails from "./getProjectDetails";
 
 export {
   getProjects,
@@ -26,4 +30,10 @@ export {
   putProjectUserPrimaryContactQuery,
   putProjectQuery,
   putProject,
+  putProjectDetailsQuery,
+  putProjectDetails,
+  getProjectDetailsQuery,
+  getProjectDetails,
 };
+
+export type * from "./types";

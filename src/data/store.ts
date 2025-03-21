@@ -14,6 +14,7 @@ import {
   Sector,
   User,
   ResearcherProfessionalRegistration,
+  ProjectDetails,
 } from "@/types/application";
 import { Routes } from "@/types/router";
 import { produce } from "immer";
@@ -62,11 +63,14 @@ interface StoreState {
     custodian?: Custodian;
     histories?: StoreUserHistories;
     project?: ResearcherProject;
+    projectDetails?: ProjectDetails;
   };
   application: StoreApplication;
   setRoutes: (routes: Routes) => void;
   getProject: () => ResearcherProject;
   setProject: (project: ResearcherProject) => void;
+  getProjectDetails: () => ProjectDetails;
+  setProjectDetails: (project: ProjectDetails) => void;
   getUser: () => User | undefined;
   setUser: (user: User) => void;
   getSectors: () => Sector[];
@@ -107,6 +111,15 @@ const storeMethods = (set: StoreSet, get: StoreGet) => ({
     ),
   getProject: () => {
     return get().config.project;
+  },
+  setProjectDetails: (projectDetails: ProjectDetails) =>
+    set(
+      produce(state => {
+        state.config.projectDetails = projectDetails;
+      })
+    ),
+  getProjectDetails: () => {
+    return get().config.projectDetails;
   },
   setUser: (user: User) =>
     set(
