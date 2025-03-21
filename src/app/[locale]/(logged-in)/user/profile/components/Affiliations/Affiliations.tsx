@@ -101,7 +101,10 @@ export default function Affiliations() {
 
   const renderRelationship = (
     info: CellContext<ResearcherAffiliation, unknown>
-  ) => tApplication(info.getValue());
+  ) => {
+    const value = info.getValue() as string;
+    return value?.length > 0 ? tApplication(info.getValue()) : null;
+  };
 
   const renderActionMenuCell = useCallback(
     (info: { row: { original: ResearcherAffiliation } }) => {
