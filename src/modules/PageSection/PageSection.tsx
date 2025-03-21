@@ -15,16 +15,14 @@ export default function PageSection({
   ...restProps
 }: PageSectionProps) {
   return (
-    <Box
-      {...restProps}
-      sx={{ position: "relative", zIndex: 1, pr: 2, py: 2, ...sx }}>
+    <Box {...restProps} sx={{ position: "relative", zIndex: 1, pr: 2, ...sx }}>
       {(!!heading || !!description) && (
         <SectionHeading
           type="content"
           heading={heading}
           description={description}
           variant="h3"
-          sx={{ mb: 4 }}
+          sx={{ mb: 3 }}
         />
       )}
       {children}

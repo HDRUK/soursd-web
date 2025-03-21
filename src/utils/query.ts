@@ -16,6 +16,10 @@ function isQueriesFetched<T extends MutationState & QueryState>(queries: T[]) {
   );
 }
 
+function isQueriesSuccess<T extends MutationState & QueryState>(queries: T[]) {
+  return queries.filter(query => query.isSuccess).length === queries.length;
+}
+
 function getSearchQuerystring(searchParams: SearchParams) {
   const params = new URLSearchParams(
     Object.entries(searchParams)
@@ -58,6 +62,7 @@ function getCombinedQueryState<T extends MutationState & QueryState>(
     isError: isQueriesError(queries),
     error: getQueriesError(queries),
     isFetched: isQueriesFetched(queries),
+    isSuccess: isQueriesSuccess(queries),
   };
 }
 
@@ -67,6 +72,7 @@ export {
   isQueriesError,
   isQueriesFetched,
   isQueriesLoading,
+  isQueriesSuccess,
   getSearchQuerystring,
   getSearchSortOrder,
 };

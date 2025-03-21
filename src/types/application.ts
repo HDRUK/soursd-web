@@ -312,12 +312,14 @@ type ResearcherProject = ModelState<{
   unique_id: string;
   approvals: ResearcherProjectApproval[];
   organisations: Organisation[];
+  projectDetails: ProjectDetails;
 }>;
 
 interface ProjectDetails {
   access_type: string;
   data_privacy: string;
   id: number;
+  project_id: number;
 }
 
 interface Registry {

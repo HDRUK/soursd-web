@@ -1,16 +1,15 @@
 import { useStore } from "@/data/store";
-import { PageBody, PageBodyContainer } from "@/modules";
-import { ProjectDetails, ResearcherProject } from "@/types/application";
+import { PageBodyContainer } from "@/modules";
+import { ResearcherProject } from "@/types/application";
+import { toCamelCase } from "@/utils/string";
+import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 import { PageTabs, ProjectsSubTabs } from "../../consts/tabs";
 import SubTabsSections from "../SubTabSections";
 import SubTabsContents from "../SubsTabContents";
-import { useTranslations } from "next-intl";
-import { toCamelCase } from "@/utils/string";
 
 interface PageProps {
   projectData: ResearcherProject;
-  projectDetailsData: ProjectDetails;
   params: {
     subTabId: ProjectsSubTabs;
     id?: number;
@@ -19,27 +18,18 @@ interface PageProps {
 
 const NAMESPACE_TRANSLATION = "CustodianProfile";
 
-export default function SubPageProjects({
-  params,
-  projectData,
-  projectDetailsData,
-}: PageProps) {
-  const tabId = PageTabs.PROJECTS;
+export default function SubPageProjects({ params, projectData }: PageProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION);
+  const tabId = PageTabs.PROJECTS;
 
-  const { project, setProject, projectDetails, setProjectDetails } = useStore(
-    ({ getProject, setProject, getProjectDetails, setProjectDetails }) => ({
-      project: getProject(),
-      setProject,
-      projectDetails: getProjectDetails(),
-      setProjectDetails,
-    })
-  );
+  const [project, setProject] = useStore(state => [
+    state.getProject(),
+    state.setProject,
+  ]);
 
   useEffect(() => {
     setProject(projectData);
-    setProjectDetails(projectDetailsData);
-  }, [projectData, projectDetails]);
+  }, [projectData]);
 
   return (
     project && (

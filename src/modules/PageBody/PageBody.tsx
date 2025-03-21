@@ -13,7 +13,7 @@ export default function PageBody({
   return (
     <>
       {heading && (
-        <Typography variant="h2" sx={{ mb: 2 }}>
+        <Typography variant="h2" sx={{ mb: 3 }}>
           {heading}
         </Typography>
       )}

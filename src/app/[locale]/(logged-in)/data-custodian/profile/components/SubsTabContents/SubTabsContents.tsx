@@ -93,5 +93,5 @@ export default function SubTabsContents({
       content = null;
   }
 
-  return <PageBody heading={heading}>{content}</PageBody>;
+  return content;
 }

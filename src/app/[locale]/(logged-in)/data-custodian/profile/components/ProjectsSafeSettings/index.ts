@@ -1,3 +1,3 @@
-import ProjectsSafeProject from "./ProjectsSafeProject";
+import ProjectsSafeSettings from "./ProjectsSafeSettings";
 
-export default ProjectsSafeProject;
+export default ProjectsSafeSettings;
