@@ -45,6 +45,7 @@ export default function ActionLogs({ variant, panelProps }: ActionLogProps) {
     const name = toCamelCase(action);
     return {
       heading: t(`${name}.title`),
+      description: t(`${name}.description`),
       icon: icon,
       action: (
         <Button component={Link} variant="outlined" href={path}>
@@ -73,7 +74,7 @@ export default function ActionLogs({ variant, panelProps }: ActionLogProps) {
             border: 0,
           }}>
           <AccordionSummary>
-            <Typography variant="h3">Completed actions</Typography>
+            <Typography variant="h3">{t("completedActions")}</Typography>
             <ExpandMoreIcon sx={{ ml: 2 }} />
           </AccordionSummary>
           <AccordionDetails>

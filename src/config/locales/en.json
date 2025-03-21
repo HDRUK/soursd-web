@@ -1060,49 +1060,86 @@
     "daysSince": "{days} days ago"
   },
   "ActionLogs": {
+    "completedActions": "Completed Actions",
     "profileCompleted": {
       "title": "Add your personal details",
+      "description": "",
       "buttonText": "Add personal details"
     },
     "affiliationsComplete": {
       "title": "Add your affiliations",
+      "description": "",
       "buttonText": "Add affiliations"
     },
     "trainingComplete": {
       "title": "Add your training",
+      "description": "",
       "buttonText": "Add training"
     },
     "projectsReview": {
       "title": "Review your projects",
+      "description": "",
       "buttonText": "Review"
     },
     "nameAddressCompleted": {
       "title": "Complete your Organisation name & address",
+      "description": "",
       "buttonText": "Complete this section"
     },
     "digitalIdentifiersCompleted": {
       "title": "Complete your Organisation digital identifiers",
+      "description": "",
       "buttonText": "Complete this section"
     },
     "sectorSizeCompleted": {
       "title": "Complete your Organisation sector, size & website details",
+      "description": "",
       "buttonText": "Complete this section"
     },
     "addSubsidiaryCompleted": {
       "title": "Add your Organisation’s UK subsidiaries",
+      "description": "",
       "buttonText": "Complete this section"
     },
     "dataSecurityCompleted": {
       "title": "Complete your Organisation’s data security compliance",
+      "description": "",
       "buttonText": "Complete this section"
     },
     "addSroCompleted": {
       "title": "Add a Senior Responsible Officer (SRO) and Delegates from your Organisation",
+      "description": "",
       "buttonText": "Add SRO/delegates"
     },
     "affiliateEmployeesCompleted": {
       "title": "Affiliate employees or students with your Organisation",
+      "description": "",
       "buttonText": "Add employees/students"
+    },
+    "completeConfiguration": {
+      "title": "Complete your configuration",
+      "description": "This is where we need you to setup things like IDV technology and decision models...",
+      "buttonText": "Complete your configuration"
+    },
+    "addContactsCompleted": {
+      "title": "Add your contacts",
+      "description": "As well as yourself, it’s a good idea to set up your colleagues who will help administer the system and approve Users, projects and Organisations",
+      "buttonText": "Add contacts"
+    },
+    "addUsersCompleted": {
+      "title": "Add your Users",
+      "description": "",
+      "buttonText": "Add users"
+    },
+    "addProjectsCompleted": {
+      "title": "Add your projects",
+      "description": "",
+      "buttonText": "Add projects"
+    },
+    "addOrganisationsCompleted": {
+      "title": "Add Organisations",
+      "description": "",
+      "buttonText": "Add Organisations"
     }
   }
 }
