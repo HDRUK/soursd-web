@@ -1,13 +1,11 @@
 import { ResponseJson, ResponseOptions } from "@/types/requests";
-import { ActionLog } from "@/types/logs";
+import { ActionLog, ActionLogEntity } from "@/types/logs";
 import { getRequest } from "../requests";
 import { handleJsonResponse } from "../requestHelpers";
 
-type Entity = "user" | "organisation" | "custodian";
-
 export default async (
   userId: number,
-  entity: Entity,
+  entity: ActionLogEntity,
   options: ResponseOptions
 ): Promise<ResponseJson<ActionLog[]>> => {
   const response = await getRequest(

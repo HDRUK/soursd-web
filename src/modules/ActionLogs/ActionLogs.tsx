@@ -12,14 +12,13 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CheckIcon from "@mui/icons-material/Check";
+import { ActionLogEntity } from "@/types/logs";
 import generateActions, { ActionConfig } from "./utils";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ActionLogs";
 
-type ActionLogVariant = "user" | "organisation" | "custodian";
-
 interface ActionLogProps {
-  variant: ActionLogVariant;
+  variant: ActionLogEntity;
   panelProps: Omit<ActionsPanelProps, "children">;
 }
 
@@ -29,7 +28,21 @@ export default function ActionLogs({ variant, panelProps }: ActionLogProps) {
     routes: state.getApplication().routes,
   }));
 
-  const { data: actionLogData } = useQuery(getActionLogsQuery(variant));
+  const { id: entityId } = useStore(state => {
+    switch (variant) {
+      case "user":
+        return { id: state.getUser()?.id || 1 };
+      case "organisation":
+        return { id: state.getOrganisation()?.id || 1 };
+      case "custodian":
+        return { id: state.getCustodian()?.id || 1 };
+      default:
+        return { id: 1 };
+    }
+  });
+  const { data: actionLogData } = useQuery(
+    getActionLogsQuery(entityId, variant)
+  );
 
   const completedActions =
     actionLogData?.data.filter(action => !!action.completed_at) || [];
@@ -46,7 +59,7 @@ export default function ActionLogs({ variant, panelProps }: ActionLogProps) {
     return {
       heading: t(`${name}.title`),
       description: t(`${name}.description`),
-      icon: icon,
+      icon,
       action: (
         <Button component={Link} variant="outlined" href={path}>
           {t(`${name}.buttonText`)}
@@ -79,8 +92,8 @@ export default function ActionLogs({ variant, panelProps }: ActionLogProps) {
           </AccordionSummary>
           <AccordionDetails>
             <List disablePadding>
-              {completedActions.map(({ action, completed_at }, index) => (
-                <ListItem key={index} disableGutters>
+              {completedActions.map(({ id, action, completed_at }) => (
+                <ListItem key={id} disableGutters>
                   {!!completed_at && (
                     <CheckIcon
                       sx={{
@@ -92,7 +105,7 @@ export default function ActionLogs({ variant, panelProps }: ActionLogProps) {
                   <Typography
                     sx={{
                       color: completed_at ? "success.main" : "inherit",
-                      textDecoration: !!completed_at ? "line-through" : "none",
+                      textDecoration: completed_at ? "line-through" : "none",
                     }}>
                     {t(toCamelCase(`${action}.title`))}
                   </Typography>

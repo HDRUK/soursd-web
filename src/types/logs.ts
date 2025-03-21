@@ -29,4 +29,6 @@ interface ValidationLog {
   comments?: Comment[];
 }
 
-export type { ActionLog, ValidationLog, Comment };
+type ActionLogEntity = "user" | "organisation" | "custodian";
+
+export type { ActionLog, ActionLogEntity, ValidationLog, Comment };

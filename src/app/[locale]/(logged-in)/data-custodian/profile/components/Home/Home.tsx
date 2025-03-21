@@ -1,10 +1,6 @@
 "use client";
 
-import ActionsPanel from "@/components/ActionsPanel";
-import ActionsPanelItem from "@/components/ActionsPanelItem";
 import Postit from "@/components/Postit";
-import { useStore } from "@/data/store";
-import { Link } from "@/i18n/routing";
 import {
   PageBody,
   PageColumnBody,
@@ -12,7 +8,7 @@ import {
   PageColumns,
 } from "@/modules";
 import { Custodian } from "@/types/application";
-import { Button, Typography, useTheme } from "@mui/material";
+import { Typography, useTheme } from "@mui/material";
 import { useTranslations } from "next-intl";
 import ActionLogs from "@/modules/ActionLogs";
 
