@@ -8,10 +8,7 @@ export default async (
   payload: PatchUserPayload,
   options: ResponseOptions
 ): Promise<ResponseJson<PatchUserResponse>> => {
-  const response = await patchRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/users/${id}`,
-    payload
-  );
+  const response = await patchRequest(`/users/${id}`, payload);
 
   return handleJsonResponse(response, options);
 };

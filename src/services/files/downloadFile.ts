@@ -2,9 +2,7 @@ import { getRequest } from "../requests";
 
 export default async (id: number) => {
   try {
-    const response = (await getRequest(
-      `${process.env.NEXT_PUBLIC_API_V1_URL}/files/${id}/download`
-    )) as Response;
+    const response = (await getRequest(`/files/${id}/download`)) as Response;
 
     if (!response.ok) {
       throw new Error("Failed to download file");

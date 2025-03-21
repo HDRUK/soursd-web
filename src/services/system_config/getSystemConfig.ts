@@ -6,9 +6,7 @@ import { GetSystemConfigResponse } from "./types";
 export default async (
   options: ResponseOptions
 ): Promise<ResponseJson<GetSystemConfigResponse>> => {
-  const response = await getRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/system_config`
-  );
+  const response = await getRequest(`/system_config`);
 
   return handleJsonResponse(response, options);
 };

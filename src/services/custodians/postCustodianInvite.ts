@@ -7,9 +7,7 @@ export default async (
   id: number,
   options?: ResponseOptions
 ): Promise<ResponseJson<PostCustodianInviteResponse>> => {
-  const response = await postRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/custodians/${id}/invite`
-  );
+  const response = await postRequest(`/custodians/${id}/invite`);
 
   return handleJsonResponse(response, options);
 };

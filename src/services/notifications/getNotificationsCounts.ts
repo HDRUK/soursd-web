@@ -13,7 +13,7 @@ export default async (
   options: ResponseOptions
 ): Promise<ResponseJson<NotificationCountResponse>> => {
   const response = await getRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/users/${userId}/notifications/count`,
+    `/users/${userId}/notifications/count`,
     undefined
   );
 

@@ -4,6 +4,9 @@ import { UserGroup } from "./user";
 const PROTECTED_ROUTES: RoutePermissions[] = [];
 
 const ROUTES: Routes = {
+  invite: {
+    path: "/invite",
+  },
   register: {
     path: "/register",
   },
@@ -218,10 +221,12 @@ const ROUTES: Routes = {
     path: "/organisation/profile/projects/{id}/safe-project",
     permissions: [UserGroup.ORGANISATIONS],
   },
-  admin: {
+  profileAdmin: {
     path: "/admin",
     permissions: [UserGroup.ADMINS],
   },
 };
 
-export { PROTECTED_ROUTES, ROUTES };
+const EXCLUDE_REDIRECT_URLS: string[] = [ROUTES.invite.path];
+
+export { PROTECTED_ROUTES, ROUTES, EXCLUDE_REDIRECT_URLS };

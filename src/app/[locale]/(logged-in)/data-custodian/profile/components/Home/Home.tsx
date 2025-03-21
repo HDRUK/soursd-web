@@ -6,6 +6,7 @@ import {
   PageColumnBody,
   PageColumnDetails,
   PageColumns,
+  PageSection,
 } from "@/modules";
 import { Custodian } from "@/types/application";
 import { Typography, useTheme } from "@mui/material";

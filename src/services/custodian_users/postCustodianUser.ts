@@ -7,10 +7,7 @@ export default async (
   payload: PostCustodianUserPayload,
   options: ResponseOptions
 ): Promise<ResponseJson<PostCustodianUserResponse>> => {
-  const response = await postRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/custodian_users`,
-    payload
-  );
+  const response = await postRequest(`/custodian_users`, payload);
 
   return handleJsonResponse(response, options);
 };

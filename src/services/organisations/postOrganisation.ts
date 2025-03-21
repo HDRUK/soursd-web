@@ -7,10 +7,7 @@ export default async (
   payload: PostOrganisationPayload,
   options: ResponseOptions
 ): Promise<ResponseJson<PostOrganisationResponse>> => {
-  const response = await postRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/organisations`,
-    payload
-  );
+  const response = await postRequest(`/organisations`, payload);
 
   return handleJsonResponse(response, options);
 };

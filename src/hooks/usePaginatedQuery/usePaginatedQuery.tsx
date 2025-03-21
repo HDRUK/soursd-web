@@ -1,11 +1,12 @@
-import { useState, useEffect, useCallback } from "react";
+import { useSearchParams } from "@/i18n/routing";
+import { Paged, ResponseJson } from "@/types/requests";
 import {
-  useQuery,
   keepPreviousData,
+  useQuery,
   UseQueryResult,
 } from "@tanstack/react-query";
-import { Paged, ResponseJson } from "@/types/requests";
-import { useSearchParams, useRouter, usePathname } from "@/i18n/routing";
+import { usePathname } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
 
 const API_SORT_KEY = "sort";
 
@@ -43,7 +44,6 @@ const usePaginatedQuery = <T,>({
   enabled = true,
   refetchInterval,
 }: PaginatedQueryProps<T>): PaginatedQueryReturn<T> => {
-  const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const initialSearchParams = searchParams
@@ -68,8 +68,13 @@ const usePaginatedQuery = <T,>({
         params.set(key, String(value));
       }
     });
-    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
-  }, [queryParams, pathname, router]);
+
+    window.history.replaceState(
+      window.history.state,
+      "",
+      `${pathname}?${params.toString()}`
+    );
+  }, [queryParams, pathname]);
 
   useEffect(() => {
     if (queryParams.page === page) return;

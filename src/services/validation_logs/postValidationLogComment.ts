@@ -8,9 +8,6 @@ export default async (
   payload: PostValidationLogCommentPayload,
   options?: ResponseOptions
 ): Promise<ResponseJson<Comment>> => {
-  const response = await postRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/validation_log_comments`,
-    payload
-  );
+  const response = await postRequest(`/validation_log_comments`, payload);
   return handleJsonResponse(response, options);
 };
