@@ -1,9 +1,8 @@
-import Pagination from "@/components/Pagination";
 import { useStore } from "@/data/store";
 import usePaginatedQuery from "@/hooks/usePaginatedQuery";
 import { PageBody, PageSection } from "@/modules";
 import SearchBar from "@/modules/SearchBar";
-import { getOrganisationRegistries } from "@/services/organisations";
+import { getOrganisationRegistriesQuery } from "@/services/organisations";
 import { formatShortDate } from "@/utils/date";
 import { Box, Button, Checkbox, FormControlLabel } from "@mui/material";
 import { useTranslations } from "next-intl";
@@ -15,6 +14,7 @@ import { User } from "@/types/application";
 import Table from "@/components/Table";
 import Markdown from "@/components/Markdown";
 import { ColumnDef, CellContext } from "@tanstack/react-table";
+import { ActionMenu } from "@/components/ActionMenu";
 import DecoupleUser from "../Delegates/DecoupleDelegate";
 import UserModal from "../UserModal";
 import UserBulkInvite from "../UserBulkInvite";
@@ -29,22 +29,17 @@ export default function Users() {
   const {
     data: usersData,
     refetch: refetchOrganisationUsers,
+    total,
     last_page,
     page,
     setPage,
-    updateQueryParam,
+    updateQueryParams,
+    resetQueryParams,
     ...userDataQueryState
   } = usePaginatedQuery({
-    queryKeyBase: ["getOrganisationRegistries", organisation?.id],
+    ...getOrganisationRegistriesQuery(organisation?.id as number),
     defaultQueryParams: {
       sort: `last_name:${SearchDirections.ASC}`,
-    },
-    queryFn: queryParams => {
-      return getOrganisationRegistries(organisation?.id, queryParams, {
-        error: {
-          message: "getUsersError",
-        },
-      });
     },
     enabled: !!organisation,
   });
@@ -60,12 +55,14 @@ export default function Users() {
   );
 
   const renderActions = (info: CellContext<User, unknown>) => (
-    <DecoupleUser
-      user={info.row.original}
-      onSuccess={refetchOrganisationUsers}
-      payload={{ organisation_id: null }}
-      namespace="DecoupleUser"
-    />
+    <ActionMenu>
+      <DecoupleUser
+        user={info.row.original}
+        onSuccess={refetchOrganisationUsers}
+        payload={{ organisation_id: null }}
+        namespace="DecoupleUser"
+      />
+    </ActionMenu>
   );
 
   // task coming for this
@@ -115,18 +112,35 @@ export default function Users() {
         <Box sx={{ display: "flex", gap: 3, mb: 3 }}>
           <Box component="form" role="search">
             <SearchBar
-              fullWidth={false}
-              onSearch={text => updateQueryParam("first_name[]", text)}
+              onClear={resetQueryParams}
+              onSearch={(text: string) => {
+                updateQueryParams({
+                  "first_name[]": text,
+                  "last_name[]": text,
+                  "email[]": text,
+                });
+              }}
             />
           </Box>
           <FormControlLabel
             label={t("showPendingInvites")}
-            control={<Checkbox value />}
+            control={
+              <Checkbox
+                value
+                onChange={event => {
+                  updateQueryParams({
+                    // doesnt do anything as BE not in place
+                    showPending: event.target.checked ? 1 : 0,
+                  });
+                }}
+              />
+            }
           />
           <Button variant="text">{t("clearAll")} </Button>
         </Box>
 
         <Table
+          total={total}
           isPaginated
           page={page}
           setPage={setPage}
@@ -147,21 +161,6 @@ export default function Users() {
           </div>
           <UserBulkInvite organisation_id={organisation?.id as number} />
         </Box>
-      </PageSection>
-      <PageSection
-        sx={{
-          flexGrow: 1,
-          display: "flex",
-          justifyContent: "center",
-        }}>
-        <Pagination
-          isLoading={userDataQueryState.isLoading}
-          page={page}
-          count={last_page}
-          onChange={(e: React.ChangeEvent<unknown>, page: number) =>
-            setPage(page)
-          }
-        />
       </PageSection>
       {!!organisation && (
         <UserModal

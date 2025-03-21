@@ -2,6 +2,7 @@ import {
   FORMAT_DATE_DB,
   FORMAT_DISPLAY_SHORT_DATE,
   FORMAT_SHORT_DATE,
+  FORMAT_DISPLAY_LONG_DATE,
 } from "@/consts/date";
 import { format } from "date-fns";
 import dayjs from "dayjs";
@@ -30,6 +31,12 @@ function formatDisplayShortDate(date?: string) {
   return djsDate.isValid() ? djsDate.format(FORMAT_DISPLAY_SHORT_DATE) : date;
 }
 
+function formatDisplayLongDate(date?: string) {
+  const djsDate = dayjs(date);
+
+  return djsDate.isValid() ? djsDate.format(FORMAT_DISPLAY_LONG_DATE) : date;
+}
+
 function formatNowDBDate() {
   return dayjs().format(FORMAT_DATE_DB);
 }
@@ -49,13 +56,20 @@ function isExpiredInvite(invite_sent_at?: string) {
   );
 }
 
+function getDaysSince(dateString: string) {
+  const date = dayjs(dateString);
+  return date.isValid() ? dayjs().diff(date, "day") : undefined;
+}
+
 export {
   isExpired,
   isExpiredInvite,
   formatShortDate,
   formatNowDBDate,
   formatDisplayShortDate,
+  formatDisplayLongDate,
   formatDBDate,
   dateToString,
   getDate,
+  getDaysSince,
 };

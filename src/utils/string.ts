@@ -3,7 +3,7 @@ function capitaliseFirstLetter(str: string): string {
 }
 
 const toCamelCase = (str: string) =>
-  str.replace(/-([a-z])/g, (_, char) => char.toUpperCase());
+  str.replace(/[-_]+([a-z])/g, (_, char) => char.toUpperCase());
 
 const anyIncludes = (value: string | null, list: string[]) => {
   return !!(
@@ -11,4 +11,11 @@ const anyIncludes = (value: string | null, list: string[]) => {
   );
 };
 
-export { capitaliseFirstLetter, toCamelCase, anyIncludes };
+function toTitleCase(str: string): string {
+  return str
+    .split("_")
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
+export { capitaliseFirstLetter, toTitleCase, toCamelCase, anyIncludes };

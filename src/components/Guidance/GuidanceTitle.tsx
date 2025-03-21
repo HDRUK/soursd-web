@@ -1,7 +1,6 @@
 "use client";
 
 import { ReactNode } from "react";
-import SoursdLogo from "../SoursdLogo";
 import Text, { TextProps } from "../Text";
 
 export interface GuidanceTitleProps extends TextProps {
@@ -16,13 +15,8 @@ export default function GuidanceTitle({
   return (
     <Text
       variant="h3"
-      startIcon={
-        infoTitleIcon || <SoursdLogo sx={{ backgroundColor: "transparent" }} />
-      }
+      startIcon={infoTitleIcon}
       sx={{
-        textAlign: "right",
-        display: "flex",
-        justifyContent: "flex-end",
         mb: 4,
       }}
       {...restProps}>

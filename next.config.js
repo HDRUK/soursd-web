@@ -18,23 +18,44 @@ const nextConfig = withNextIntl({
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/about",
+        destination: "/",
+        permanent: true,
+      },
+    ];
+  },
   async rewrites() {
     return [
       {
         source: "/:locale/user/profile",
-        destination: `/:locale/user/profile/details`,
+        destination: `/:locale/user/profile/home`,
+      },
+      {
+        source: "/:locale/user/profile/projects/:id",
+        destination: `/:locale/user/profile/projects/:id/safe-project`,
       },
       {
         source: "/:locale/data-custodian/profile",
-        destination: `/:locale/user/data-custodian/details`,
+        destination: `/:locale/data-custodian/profile/home`,
+      },
+      {
+        source: "/:locale/data-custodian/profile/users/:id",
+        destination: `/:locale/data-custodian/profile/users/:id/identity`,
+      },
+      {
+        source: "/:locale/data-custodian/profile/configuration",
+        destination: `/:locale/data-custodian/profile/configuration/webhooks`,
+      },
+      {
+        source: "/:locale/data-custodian/profile/projects/:id",
+        destination: `/:locale/data-custodian/profile/projects/:id/safe-project`,
       },
       {
         source: "/:locale/organisation/profile",
-        destination: `/:locale/organisation/profile/details`,
-      },
-      {
-        source: "/:locale/organisation/profile",
-        destination: `/:locale/organisation/profile/user`,
+        destination: `/:locale/organisation/profile/home`,
       },
       {
         source: "/:locale",

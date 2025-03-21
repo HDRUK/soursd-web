@@ -5,16 +5,18 @@ import { ReactNode } from "react";
 import SearchField from "../SearchField";
 
 export interface SearchBarProps {
-  updateQueryParam: (text: string) => void;
-  placeholder: string;
-  legend: ReactNode;
-  children: ReactNode;
+  onSearch: (text: string) => void;
+  onClear?: () => void;
+  placeholder?: string;
+  legend?: ReactNode;
+  children?: ReactNode;
 }
 
 export default function SearchBar({
   placeholder,
   legend,
-  updateQueryParam,
+  onSearch,
+  onClear,
   children,
 }: SearchBarProps) {
   return (
@@ -34,7 +36,14 @@ export default function SearchBar({
           },
         }}>
         <SearchField
-          onSearch={(text: string) => updateQueryParam(text)}
+          onSearch={(text: string) => {
+            if (!text || text.length < 1) {
+              onClear?.();
+              return;
+            }
+            onSearch(text);
+          }}
+          onClear={onClear}
           placeholder={placeholder}
           sx={{ flexGrow: 1 }}
         />

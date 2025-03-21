@@ -1,3 +1,4 @@
+import { Status } from "@/components/ChipStatus";
 import { FileStatus, FileType } from "@/consts/files";
 import {
   UserFeedSource,
@@ -5,9 +6,18 @@ import {
   UserProfileCompletionCategories,
 } from "@/consts/user";
 
+type ModelState<T> = T & {
+  model_state: {
+    state: {
+      slug: Status;
+    };
+  };
+};
+
 interface File {
   id: number;
   name: string;
+  path: string;
   status: keyof typeof FileStatus;
   type: keyof typeof FileType;
   created_at: string;
@@ -133,6 +143,9 @@ interface User {
   departments?: Department[];
   role?: string;
   location?: string;
+  status: Status;
+  declaration_signed?: boolean;
+  uksa_registered?: boolean;
 }
 interface AddressFields {
   postcode?: string;
@@ -191,15 +204,19 @@ interface Organisation extends OrganisationIdvt, AddressFields {
   ce_certified: boolean;
   ce_certification_num: string;
   ce_expiry_date: string;
+  ce_expiry_evidence: File | null;
   ce_plus_certified: boolean;
   ce_plus_certification_num: string;
   ce_plus_expiry_date: string;
+  ce_plus_expiry_evidence: File | null;
   iso_27001_certified: boolean;
   iso_27001_certification_num: string;
   iso_expiry_date: string;
+  iso_expiry_evidence: File | null;
   dsptk_certified: boolean;
   dsptk_ods_code: string;
   dsptk_expiry_date: string;
+  dsptk_expiry_evidence: File | null;
   subsidiaries?: Subsidiary[];
   departments: Department[];
   unclaimed: number;
@@ -238,9 +255,9 @@ interface ResearcherTraining {
   awarding_body_ror: string;
   expires_at: string;
   training_name: string;
-  expires_in_years: boolean;
+  expires_in_years: number;
   id: number;
-  certification_id: number | null;
+  certification_id?: number;
 }
 
 interface ResearcherEmployment {
@@ -267,12 +284,13 @@ interface ResearcherAffiliation {
   organisation_id: number;
   relationship?: string;
   current_employer: boolean;
-  start_date?: string;
-  end_date?: string;
-  position?: string;
+  from?: string | null;
+  to?: string | null;
+  role?: string;
   organisation: {
     organisation_name: string;
   };
+  email?: string;
 }
 
 interface ResearcherProjectApproval {
@@ -293,6 +311,7 @@ interface ResearcherProject {
   affiliate_id: number;
   unique_id: string;
   approvals: ResearcherProjectApproval[];
+  organisations: Organisation[];
 }
 
 interface Registry {
@@ -317,13 +336,21 @@ interface Role {
   name: string;
 }
 
-interface ProjectUser {
+interface Project {
+  id: number;
+  title: string;
+  start_date: string;
+  end_date: string;
+}
+
+type ProjectUser = ModelState<{
   project_id: number;
   user_digital_ident: string;
   project_role_id: number;
   registry: Registry;
   role: Role;
-}
+  primary_contact: number;
+}>;
 
 interface Department {
   category: string;
@@ -352,6 +379,7 @@ export type {
   Organisation,
   OrganisationIdvt,
   Permission,
+  Project,
   ProjectUser,
   ResearcherAccreditation,
   ResearcherAffiliation,

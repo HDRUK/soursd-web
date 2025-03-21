@@ -15,15 +15,20 @@ interface RouteConfig {
 }
 
 interface Routes {
-  login: RouteConfig;
-  logout: RouteConfig;
+  invite: RouteConfig;
   register: RouteConfig;
   homepage: RouteConfig;
   usersCustodian: RouteConfig;
   profileCustodian: RouteConfig;
+  profileCustodianUserById: RouteConfig;
   profileCustodianHome: RouteConfig;
   profileCustodianContacts: RouteConfig;
   profileCustodianProjects: RouteConfig;
+  profileCustodianProjectsSafeProject: RouteConfig;
+  profileCustodianProjectsSafeData: RouteConfig;
+  profileCustodianProjectsSafePeople: RouteConfig;
+  profileCustodianProjectsSafeSettings: RouteConfig;
+  profileCustodianProjectsSafeOutputs: RouteConfig;
   profileCustodianOrganisations: RouteConfig;
   profileCustodianConfiguration: RouteConfig;
   profileCustodianConfigurationWebhooks: RouteConfig;
@@ -31,9 +36,15 @@ interface Routes {
   profileCustodianConfigurationValidationChecks: RouteConfig;
   profileCustodianKeycards: RouteConfig;
   profileCustodianUsers: RouteConfig;
+  profileCustodianUsersProjects: RouteConfig;
+  profileCustodianUsersHistory: RouteConfig;
+  profileCustodianUsersTrainingAccreditations: RouteConfig;
+  profileCustodianUsersCustodianOrgInfo: RouteConfig;
+  profileCustodianUsersIdentity: RouteConfig;
+  profileCustodianUsersAffiliations: RouteConfig;
   permissionsOrganisationCustodian: RouteConfig;
   permissionsResearcherCustodian: RouteConfig;
-  permissionsOrganisationCustodian: RouteConfig;
+  profileOrganisationHome: RouteConfig;
   profileResearcher: RouteConfig;
   profileResearcherCompletion: RouteConfig;
   profileResearcherTraining: RouteConfig;
@@ -42,6 +53,11 @@ interface Routes {
   profileResearcherAffiliations: RouteConfig;
   profileResearcherHome: RouteConfig;
   profileResearcherProjects: RouteConfig;
+  profileResearcherProjectsSafeProject: RouteConfig;
+  profileResearcherProjectsSafeData: RouteConfig;
+  profileResearcherProjectsSafePeople: RouteConfig;
+  profileResearcherProjectsSafeSettings: RouteConfig;
+  profileResearcherProjectsSafeOutputs: RouteConfig;
   profileOrganisation: RouteConfig;
   profileOrganisationActions: RouteConfig;
   profileOrganisationDetails: RouteConfig;
@@ -53,7 +69,8 @@ interface Routes {
   profileOrganisationUserAdministrationDelegates: RouteConfig;
   profileOrganisationUserAdministrationEmployeeStudent: RouteConfig;
   profileOrganisationProjects: RouteConfig;
-  admin: RouteConfig;
+  profileOrganisationProjectsSafeProject: RouteConfig;
+  profileAdmin: RouteConfig;
 }
 
 export type { RoutePermissions, RouteConfig, Routes, RouteParams };

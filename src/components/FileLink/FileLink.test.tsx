@@ -2,6 +2,7 @@ import {
   act,
   commonAccessibilityTests,
   fireEvent,
+  userEvent,
   render,
   screen,
 } from "@/utils/testUtils";
@@ -23,8 +24,8 @@ jest.mock("react", () => ({
 const renderFileLinkTest = (props?: Partial<FileLinkProps>) => {
   return render(
     <FileLink
+      message="test"
       fileButtonText="Upload"
-      fileHref="/"
       fileNameText="cv.pdf"
       fileScanOkText="Scan complete"
       fileScanErrorText="Scan failed"
@@ -51,9 +52,8 @@ describe("<FileLink />", () => {
 
   it("calls file input", async () => {
     renderFileLinkTest();
-
     await act(() => {
-      fireEvent.click(screen.getByRole("button"));
+      fireEvent.click(screen.getByTestId("upload-file"));
     });
 
     expect(mockUploadClick).toHaveBeenCalled();
@@ -85,7 +85,11 @@ describe("<FileLink />", () => {
       isScanFailed: true,
     });
 
-    expect(screen.getByTitle("Scan failed")).toBeInTheDocument();
+    const scanErrorIcon = screen.getByTestId("GppBadIcon");
+    expect(scanErrorIcon).toBeInTheDocument();
+
+    await userEvent.hover(scanErrorIcon);
+    expect(await screen.findByText("Scan failed")).toBeInTheDocument();
   });
 
   it("shows the succeed virus state", async () => {
@@ -93,21 +97,33 @@ describe("<FileLink />", () => {
       isScanComplete: true,
     });
 
-    expect(screen.getByTitle("Scan complete")).toBeInTheDocument();
+    const scanGoodIcon = screen.getByTestId("GppGoodIcon");
+    expect(scanGoodIcon).toBeInTheDocument();
+
+    await userEvent.hover(scanGoodIcon);
+    expect(await screen.findByText("Scan complete")).toBeInTheDocument();
   });
 
   it("is not downloadable", async () => {
     renderFileLinkTest({
-      canDownload: false,
+      onDownload: undefined,
     });
 
-    const link = screen.getByRole("link", {
-      name: /cv.pdf/i,
-    });
+    const link = screen.getByTestId("download-file");
 
     fireEvent.click(link);
 
     expect(mockOnDownload).not.toHaveBeenCalled();
+  });
+
+  it("is downloadable", async () => {
+    renderFileLinkTest();
+
+    const link = screen.getByTestId("download-file");
+
+    fireEvent.click(link);
+
+    expect(mockOnDownload).toHaveBeenCalled();
   });
 
   it("has no accessibility violations", async () => {

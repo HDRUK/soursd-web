@@ -15,6 +15,7 @@ import { AnyObject } from "yup";
 import { isFieldRequired } from "@/utils/form";
 import FormCanLeave from "../FormCanLeave";
 import { Message } from "../Message";
+import FormModal, { FormModalProps } from "../FormModal";
 
 export type ExtendedUseFormReturn<T extends FieldValues> = UseFormReturn<T> & {
   isFieldRequired: (fieldName: keyof T) => boolean;
@@ -31,6 +32,8 @@ export interface FormProps<T extends AnyObject>
   schema?: yup.ObjectSchema<T>;
   canLeave?: boolean;
   shouldReset?: boolean;
+  isModal?: boolean;
+  modalProps?: Omit<FormModalProps, "formState">;
 }
 
 export default function Form<T extends FieldValues>({
@@ -41,6 +44,8 @@ export default function Form<T extends FieldValues>({
   onSubmit = () => {},
   canLeave = false,
   shouldReset = false,
+  isModal,
+  modalProps,
   ...restProps
 }: FormProps<T>) {
   const formOptions: UseFormProps<T> = {
@@ -62,12 +67,13 @@ export default function Form<T extends FieldValues>({
 
   const handleFormSubmit = (values: T) => {
     onSubmit(values);
+
     if (shouldReset) {
       reset(defaultValues);
     }
   };
 
-  return (
+  const form = (
     <FormProvider {...extendedMethods}>
       <FormCanLeave canLeave={canLeave}>
         <Box
@@ -99,4 +105,6 @@ export default function Form<T extends FieldValues>({
       </FormCanLeave>
     </FormProvider>
   );
+
+  return isModal ? <FormModal {...modalProps}>{form}</FormModal> : form;
 }

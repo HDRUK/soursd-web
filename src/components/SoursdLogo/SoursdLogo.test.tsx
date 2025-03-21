@@ -21,7 +21,7 @@ describe("SoursdLogo", () => {
     (useTranslations as jest.Mock).mockReturnValue(mockT);
 
     render(<SoursdLogo variant="titled" />);
-    const title = screen.getByRole("heading", { name: /SOURSD/i });
+    const title = screen.getByText("SOURSD");
     expect(title).toBeInTheDocument();
   });
 });

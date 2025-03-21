@@ -46,6 +46,5 @@ export default function useApplicationDependencies(
         getPermissionsQuery(options),
       ]
     : [];
-
   return useQueriesCombined<ApplicationDependenciesCombinedData>(queries);
 }

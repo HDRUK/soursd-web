@@ -4,11 +4,8 @@ import { UserGroup } from "./user";
 const PROTECTED_ROUTES: RoutePermissions[] = [];
 
 const ROUTES: Routes = {
-  login: {
-    path: "/login",
-  },
-  logout: {
-    path: "/logout",
+  invite: {
+    path: "/invite",
   },
   register: {
     path: "/register",
@@ -64,6 +61,54 @@ const ROUTES: Routes = {
     path: "/data-custodian/profile/keycards",
     permissions: [UserGroup.CUSTODIANS],
   },
+  profileCustodianUserById: {
+    path: "/data-custodian/profile/users/{id}",
+    permissions: [UserGroup.CUSTODIANS],
+  },
+  profileCustodianProjectsSafeProject: {
+    path: "/data-custodian/profile/projects/{id}/safe-project",
+    permissions: [UserGroup.CUSTODIANS],
+  },
+  profileCustodianProjectsSafeData: {
+    path: "/data-custodian/profile/projects/{id}/safe-data",
+    permissions: [UserGroup.CUSTODIANS],
+  },
+  profileCustodianProjectsSafePeople: {
+    path: "/data-custodian/profile/projects/{id}/safe-people",
+    permissions: [UserGroup.CUSTODIANS],
+  },
+  profileCustodianProjectsSafeSettings: {
+    path: "/data-custodian/profile/projects/{id}/safe-settings",
+    permissions: [UserGroup.CUSTODIANS],
+  },
+  profileCustodianProjectsSafeOutputs: {
+    path: "/data-custodian/profile/projects/{id}/safe-outputs",
+    permissions: [UserGroup.CUSTODIANS],
+  },
+  profileCustodianUsersHistory: {
+    path: "/data-custodian/profile/users/{id}/history",
+    permissions: [UserGroup.CUSTODIANS],
+  },
+  profileCustodianUsersTrainingAccreditations: {
+    path: "/data-custodian/profile/users/{id}/training_accreditations",
+    permissions: [UserGroup.CUSTODIANS],
+  },
+  profileCustodianUsersIdentity: {
+    path: "/data-custodian/profile/users/{id}/identity",
+    permissions: [UserGroup.CUSTODIANS],
+  },
+  profileCustodianUsersProjects: {
+    path: "/data-custodian/profile/users/{id}/projects",
+    permissions: [UserGroup.CUSTODIANS],
+  },
+  profileCustodianUsersCustodianOrgInfo: {
+    path: "/data-custodian/profile/users/{id}/custodian_org_info",
+    permissions: [UserGroup.CUSTODIANS],
+  },
+  profileCustodianUsersAffiliations: {
+    path: "/data-custodian/profile/users/{id}/affiliations",
+    permissions: [UserGroup.CUSTODIANS],
+  },
   permissionsResearcherCustodian: {
     path: "/data-custodian/permissions/user",
     permissions: [UserGroup.CUSTODIANS],
@@ -100,6 +145,26 @@ const ROUTES: Routes = {
     path: "/user/profile/projects",
     permissions: [UserGroup.USERS],
   },
+  profileResearcherProjectsSafeProject: {
+    path: "/user/profile/projects/{id}/safe-project",
+    permissions: [UserGroup.USERS],
+  },
+  profileResearcherProjectsSafeData: {
+    path: "/user/profile/projects/{id}/safe-data",
+    permissions: [UserGroup.USERS],
+  },
+  profileResearcherProjectsSafePeople: {
+    path: "/user/profile/projects/{id}/safe-people",
+    permissions: [UserGroup.USERS],
+  },
+  profileResearcherProjectsSafeSettings: {
+    path: "/user/profile/projects/{id}/safe-settings",
+    permissions: [UserGroup.USERS],
+  },
+  profileResearcherProjectsSafeOutputs: {
+    path: "/user/profile/projects/{id}/safe-outputs",
+    permissions: [UserGroup.USERS],
+  },
   profileResearcher: {
     path: "/user/profile",
     permissions: [UserGroup.USERS],
@@ -114,6 +179,10 @@ const ROUTES: Routes = {
   },
   profileOrganisationDetails: {
     path: "/organisation/profile/details",
+    permissions: [UserGroup.ORGANISATIONS],
+  },
+  profileOrganisationHome: {
+    path: "/organisation/profile/home",
     permissions: [UserGroup.ORGANISATIONS],
   },
   profileOrganisationDetailsNameAndAddress: {
@@ -148,10 +217,16 @@ const ROUTES: Routes = {
     path: "/organisation/profile/projects",
     permissions: [UserGroup.ORGANISATIONS],
   },
-  admin: {
+  profileOrganisationProjectsSafeProject: {
+    path: "/organisation/profile/projects/{id}/safe-project",
+    permissions: [UserGroup.ORGANISATIONS],
+  },
+  profileAdmin: {
     path: "/admin",
     permissions: [UserGroup.ADMINS],
   },
 };
 
-export { PROTECTED_ROUTES, ROUTES };
+const EXCLUDE_REDIRECT_URLS: string[] = [ROUTES.invite.path];
+
+export { PROTECTED_ROUTES, ROUTES, EXCLUDE_REDIRECT_URLS };

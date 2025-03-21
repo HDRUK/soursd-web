@@ -4,20 +4,40 @@
     "hide": "Hide {name}"
   },
   "File": {
-    "maxSizeText": "{size} Max size",
+    "maxSizeText": "{size} limit.",
     "inputLabelText": "File input",
+    "fileTypesText": "File types: PDF, DOC, and DOCX",
     "maxSizeErrorText": "Your file must be under {size}",
     "scanningText": "Scanning file for viruses...",
     "scanOkText": "File was successfully scanned",
     "scanErrorText": "Your file file may have a virus"
   },
   "Application": {
+    "period": "Period",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "status": "Status",
+    "makePrimaryContact": "Make primary contact",
+    "removeAsPrimaryContact": "Remove as primary contact",
+    "removeUserFromProject": "Remove from project",
+    "name": "Name",
+    "status_registered": "SOURSD account created",
+    "status_invited": "Invited",
+    "status_invite_sent": "Invite sent",
+    "status_affiliated": "Affiliated",
+    "status_pending": "Pending",
+    "status_notSet": "Not Set",
+    "projectStatus": "Project status",
+    "projectRole": "Project role",
+    "actions": "Actions",
     "sortBy": "Sort by",
     "sortedBy": "Sorted by",
     "filterBy": "Filter by",
     "filteredBy": "Filtered by",
     "filterByDate": "Filter by date",
     "filterByProjectStatus": "Filter by status",
+    "filterByUserStatus": "Filter by status",
     "alertSuccessConfirmButton": "Close",
     "alertErrorConfirmButton": "Close",
     "alertDeleteConfirmButton": "Delete",
@@ -53,9 +73,19 @@
     "notFound": "We couldn't find the page you were looking for. Please try again or contact us at <contactLink></contactLink>",
     "loadingAriaLabel": "Application loading",
     "saveButton": "Save",
-    "continueButton": "Continue"
+    "continueButton": "Continue",
+    "deleteAffiliation": "Delete Affiliation"
   },
   "CustodianProfile": {
+    "searchPlaceholder": "Search",
+    "safeProject": "Safe Project",
+    "filterBy": "Filter by status",
+    "filteredBy": "Filtered by",
+    "statusLive": "Live",
+    "safeOutputs": "Safe Outputs",
+    "safePeople": "Safe People",
+    "safeData": "Safe Data",
+    "safeSettings": "Safe Settings",
     "home": "Home",
     "contacts": "Contacts",
     "uniqueIdentifierTitle": "SOURSD Identifier",
@@ -65,6 +95,11 @@
     "configuration": "Configuration",
     "keycards": "Keycards",
     "projects": "Projects",
+    "affiliations": "Affiliations",
+    "custodianOrgInfo": "CustodianOrg information",
+    "history": "History",
+    "identity": "Identity",
+    "trainingAccreditations": "Training and Accreditations",
     "organisations": "Organisations",
     "approvedProject": "Approved Project",
     "pendingProject": "Pending Project",
@@ -106,9 +141,16 @@
     "CUSTODIAN_APPROVER": "Approver",
     "postCustodianUserInviteError": "There was a problem inviting this user. Please contact them directly or contact us at <contactLink></contactLink>",
     "configurationRules": "Rules",
+    "configurationRulesTitle": "Rules Configuration",
     "configurationValidationChecks": "Validation Checks",
     "configurationWebhooks": "Webhooks",
-    "webhookError": "There was a problem with the webhook configuration. Please try again or contact us at <contactLink></contactLink>"
+    "webhookError": "There was a problem with the webhook configuration. Please try again or contact us at <contactLink></contactLink>",
+    "userRulesTitle": "User Rules",
+    "organisationRulesTitle": "Organisation Rules",
+    "updateRulesSuccess": "Rules configuration updated successfully",
+    "updateRulesError": "There was a problem updating your rules configuration. Please try again or contact us at <contactLink></contactLink>",
+    "successButton": "OK",
+    "errorButton": "Try Again"
   },
   "OrganisationStats": {
     "affiliatedUsers": "Affiliated Users",
@@ -138,7 +180,7 @@
     "manageDelegates": "Manage Delegates",
     "delegateAdminDescription": "### Organisation administrative Delegates \n\n As a Key Contact for your Organisation, you can invited nominated Delegates from your Organisation to create a SOURSD account. A Delegate could be a Human Resources (HR) representative, Information Governance (IG) representative e.g. Data Protection Officer (DPO), Contracts representative or Legal representative.",
     "userAdmin": "User Administration",
-    "actions": "Actions",
+    "home": "Home",
     "projects": "Projects",
     "manageResearchers": "Manage Researchers",
     "manageResearchersTitle": "Administration | Users",
@@ -171,7 +213,7 @@
     "cancelButton": "Cancel",
     "closeButton": "Close",
     "profileUpdateMessage": "Your profile was successfully updated!",
-    "inviteAnotherDelegate": "Invite another delegate",
+    "inviteAnotherDelegate": "Add Delegate",
     "addAnotherSubsidiary": "Add a subsidiary",
     "showPendingInvites": "Show pending invites",
     "clearAll": "clear all",
@@ -195,15 +237,18 @@
     "leadApplicantEmailPlaceholder": "Email",
     "leadApplicantEmailRequiredInvalid": "Email is required",
     "inviteButton": "Invite",
-    "relationship": "Relationship",
-    "relationshipPlaceholder": "Relationship",
-    "relationshipRequiredInvalid": "Relationship is required",
+    "professionalEmail": "Email address at employer or institute",
+    "professionalEmailPlaceholder": "Email address at employer or institute",
+    "professionalEmailFormatInvalid": "Email address must be a valid format",
+    "relationship": "Relationship with Organisation",
+    "relationshipPlaceholder": "Relationship with Organisation",
+    "relationshipRequiredInvalid": "Relationship with Organisation is required",
     "currentEmployerPlaceholder": "Current employer?",
     "memberId": "Staff / Student Id",
     "memberIdPlaceholder": "Staff / Student Id",
     "memberIdRequiredInvalid": "Staff / Student Id is required",
     "organisationRequiredInvalid": "Organisation name is required",
-    "currentEmployer": "Current employer?",
+    "currentEmployer": "This is my current employer or higher education institute",
     "cancelButton": "Cancel",
     "contactEmailPlaceholder": "Contact email",
     "name": "Name",
@@ -337,6 +382,8 @@
     "rorPlaceholder": "ROR ID",
     "department": "Department",
     "departmentPlaceholder": "Department",
+    "departmentId": "Department",
+    "departmentIdPlaceholder": "Department",
     "digitalToolkitCodePlaceholder": "Dsptk ods code",
     "digitalToolkitCode": "Dsptk ods code",
     "whatIsTheOrcId": "Your ORCiD is a value which identifies you to Data Custodians (although in general anyone) and provides information to them such as your research outputs and activities. If you don't have one of these you can signup at https://orcid.org/register. Although it is recommended to provide this, it is not required for the registry, however it is required for the content scrape.",
@@ -352,24 +399,28 @@
     "ceCertificationNumberInvalid": "Certification number must be exactly 4 alphanumeric characters.",
     "ceExpiryDate": "Expiry date",
     "ceExpiryDateRequired": "An expiry date for your code needs to be set.",
+    "ceExpiryEvidenceRequired": "Evidence of your cyber essentials certification is required",
     "cePlusCertified": "Cyber Essentials Plus Certified",
     "cePlusCertificationNum": "Cyber Essentials Plus Certified ID",
     "cePlusCertificationNumPlaceholder": "e.g. X1Y2",
     "cePlusCertificationNumberInvalid": "Certification number must be exactly 4 alphanumeric characters.",
     "cePlusExpiryDate": "Expiry date",
     "cePlusExpiryDateRequired": "An expiry date for your code needs to be set.",
+    "cePlusExpiryEvidenceRequired": "Evidence of your cyber essentials plus certification is required",
     "iso27001Certified": "ISO27001 Accredited",
     "iso27001CertificationNum": "ISO27001 Accredited",
     "iso27001CertificationNumPlaceholder": "e.g. AB123C",
-    "iso27001CertificationNumInvalid": "ISO27001 identifier is invalid",
+    "iso27001CertificationNumInvalid": "ISO27001 identifier is invalid, it should be of the form, e.g: AB12",
     "isoExpiryDate": "Expiry date",
     "isoExpiryDateRequired": "An expiry date for your code needs to be set.",
+    "isoExpiryEvidenceRequired": "Evidence of your ISO27001 certification is required",
     "dsptkCertified": "DSPT Certified",
     "dsptkOdsCode": "DSPT Certified  ID",
     "dsptkOdsCodePlaceholder": "e.g. DSPTK-2025-12345",
-    "dsptkOdsCodeInvalid": "DSPTK identifier is invalid, it must be in the form, e.g.: e.g. DSPTK-2025-12345",
+    "dsptkOdsCodeInvalid": "DSPTK identifier is invalid, it must be in the form, e.g.: DSPTK-2025-12345",
     "dsptkExpiryDate": "Expiry date",
     "dsptkExpiryDateRequired": "An expiry date for your code needs to be set.",
+    "dsptkExpiryEvidenceRequired": "Evidence of your DSPTK certification is required",
     "organisationSubsidiaries": "UK subsidiaries",
     "address": "Address search",
     "addressPlaceholder": "Start typing an address to search",
@@ -408,6 +459,7 @@
     "departmentRequiredInvalid": "Department is required",
     "postDelegatesSuccess": "Delegate invited successfully. They should have recieved an email to register",
     "postDelegatesError": "There was a problem with inviting this delegate. Please try again",
+    "inviteUserConflict": "The email for this user has already been invited or already has an account!",
     "roleRequiredInvalid": "Role is required",
     "fromRequiredInvalid": "From date is required",
     "toRequiredInvalid": "To date is required",
@@ -425,8 +477,6 @@
     "awardedAtPlaceholder": "Awarded at",
     "expiresAt": "Expires at",
     "expiresAtPlaceholder": "Expires at",
-    "trainingProviderRequiredInvalid": "Training provider is required",
-    "trainingNameRequiredInvalid": "Training name is required",
     "awardedAtRequiredInvalid": "Awarded at is required",
     "awardedAtFutureInvalid": "Awarded at date cannot be in the future",
     "expiresAtRequiredInvalid": "Expires at is required",
@@ -440,8 +490,9 @@
     "errorButton": "Try Again",
     "certificationUpload": "Certification",
     "cvUpload": "CV",
-    "position": "Position",
-    "positionRequiredInvalid": "Position is required",
+    "position": "Job title",
+    "positionPlaceholder": "Job title",
+    "positionRequiredInvalid": "Job title is required",
     "textFieldPlaceholder": "Start typing...",
     "selectPlaceholder": "Select from options",
     "startDate": "Start date",
@@ -456,23 +507,55 @@
     "subsidiaryAddressPlaceholder": "Start typing an address to search",
     "subsidiaryAddressRequired": "Subsidiary address is required",
     "subsidiaryWebsite": "Subsidiary website",
-    "subsidiaryWebsitePlaceholder": "Subsidiary website"
+    "subsidiaryWebsitePlaceholder": "Subsidiary website",
+    "Training": {
+      "provider": "Training provider",
+      "trainingProviderRequiredInvalid": "Training provider is required",
+      "trainingNameRequiredInvalid": "Training name is required",
+      "awardedAtRequiredInvalid": "Award date is required",
+      "awardedAtFutureInvalid": "Award date cannot be in the future",
+      "expiresAtRequiredInvalid": "Expiration date is required",
+      "expiresAtBeforeAwardedAtInvalid": "Expiration date must be after the award date",
+      "expiresAtPastInvalid": "Expiration date must be in the future",
+      "certificationUploadRequiredInvalid": "Certification is required",
+      "trainingName": "Training course name",
+      "awardedAt": "Date of issue",
+      "expiresAt": "Expiry date",
+      "cancel": "Cancel",
+      "certificationUpload": "Training certificate upload",
+      "certificationUploadButton": "Upload certificate",
+      "trainingCertificateUpload": "Training certificate upload",
+      "uploadInstructions": "Please upload your training certificate in the recommended format to provide Data Custodians with up-to-date information on mandatory training and accreditations.",
+      "fileUpload": "File upload",
+      "uploadCertification": "Upload Certificate",
+      "noCertificationUploaded": "No files have been uploaded yet",
+      "certificationUploadFailed": "Certificate upload failed",
+      "done": "Done"
+    },
+    "comment": "Add any further comment",
+    "commentPlaceholder": "Type your comment here..."
   },
   "ProfessionalRegistrations": {
     "title": "Professional Registrations",
-    "resultsTitle": "Professional Registrations records",
+    "resultsTitle": "Professional registration history",
+    "addProfessionalRegistration": "Add professional registrations",
     "id": "ID",
-    "name": "Name",
+    "name": "Professional registration",
     "namePlaceholder": "Name",
-    "nameInvalid": "Name is required",
-    "memberId": "ID",
+    "nameRequiredInvalid": "Name is required",
+    "memberId": "Professional Registration ID",
     "memberIdPlaceholder": "ID",
     "memberIdRequiredInvalid": "ID is required",
     "professionalRegistrationsRecords": "Professional Registrations records",
     "professionalRegistrationsNoResultsMessage": "You currently have no professional registrations",
     "professionalRegsitrationsErrorMessage": "There was an error getting your professional registrations. Please try again or contact us at <contactLink></contactLink>",
     "errorCreateMessage": "There was an error creating your professional registrations. Please try again or contact us at <contactLink></contactLink>",
-    "successCreateMessage": "Your professional registration was successfully create"
+    "errorPutMessage": "There was an error updating your professional registration. Please try again or contact us at <contactLink></contactLink>",
+    "successCreateMessage": "Your professional registration was successfully created",
+    "successEditMessage": "Your professional registration was successfully updated",
+    "errorDeleteMessage": "There was an error delete your professional registration. Please try again or contact us at <contactLink></contactLink>",
+    "successDeleteMessage": "Your professional registration was successfully deleted",
+    "cancel": "Cancel"
   },
   "Buttons": {
     "register": "Register",
@@ -485,12 +568,17 @@
     "previous": "previous slide"
   },
   "Footer": {
+    "dsitLogoAlt": "Department for Science, Innovation & Technology",
+    "mrcLogoAlt": "Medical Research Council logo",
+    "copyright": "Copyright (C) 2025 Health Data Research UK",
     "contactFormTitle": "Contact Us",
     "contactFormSubtitle": "Some subtitle here",
     "fundedByTitle": "Funded by",
     "partnershipTitle": "In partnership with",
-    "privacyPolicyLink": "Privacy policy",
-    "termsAndConditionsLink": "Terms and Conditions"
+    "privacyCookieLink": "Privacy policy",
+    "termsAndConditionsLink": "Terms and Conditions",
+    "aboutUsLink": "About Us",
+    "contactUsLink": "Contact Us"
   },
   "ContactForm": {
     "namePlaceholder": "Name",
@@ -510,7 +598,9 @@
     "fileNamePlaceholder": "No Cv uploaded"
   },
   "Certification": {
-    "fileMaxSize": "{size} Max size",
+    "fileUpload": "Select File",
+    "fileMaxSize": "Max size: {size} per file",
+    "fileTypesText": "File types: PDF, Word",
     "fileDownload": "Download Certification",
     "fileButtonUpload": "Upload Certification",
     "fileInputLabel": "Certification file input",
@@ -518,7 +608,10 @@
     "fileScanning": "Scanning Certification...",
     "fileScanOk": "Certification was successfully scanned",
     "fileScanError": "Your Certification file may have a virus",
-    "fileNamePlaceholder": "No Certification uploaded"
+    "fileNamePlaceholder": "No Certification uploaded",
+    "noFilesUploaded": "No files have been uploaded yet",
+    "downloading": "Downloading...",
+    "downloadFile": "Download file"
   },
   "NotificationsMenu": {
     "noNotifications": "You have no notifications!",
@@ -542,9 +635,10 @@
     "inviteOrganisationSuccess": "You have successfully invited the Organisation. Bear in mind before you can select them they will need to accept the invite"
   },
   "Profile": {
+    "memberIdDescription": "Depending on your selected relationship with the Organisation",
     "home": "Home",
-    "organisationRegister": "Ask them to register",
-    "organisationNotListed": "Is your organisation not listed?",
+    "inviteThemHere": "Invite them here",
+    "organisationNotListed": "Organisation not listed? <link> Ask them to register </link>",
     "affiliationsDescription": "Please provide information for each Organisation you are currently affiliated with. An affiliation can either be an employment or enrolment as a student at a higher education institute. Please provide current affiliations even if this information has been provided in your CV as this is needed for your organisations to confirm your affiliation.",
     "postAffiliationSuccess": "You have successfully created an affiliation",
     "postAffiliationError": "There was an error creating your affiliation. Please try again or contact us at <contactLink></contactLink>",
@@ -553,7 +647,13 @@
     "affiliationsRecords": "Affiliation records",
     "affiliationsNoResultsMessage": "You currently have no affiliations",
     "affiliationsErrorMessage": "There was an error getting your affiliations. Please try again or contact us at <contactLink></contactLink>",
+    "addAffiliation": "Add affiliation",
     "projects": "Projects",
+    "safeProject": "Safe Project",
+    "safeData": "Safe Data",
+    "safePeople": "Safe People",
+    "safeSettings": "Safe Settings",
+    "safeOutputs": "Safe Outputs",
     "organisations": "Organisations",
     "completedScore": "{score}% complete",
     "noHistoryResults": "There are currently no {type} that have been entered",
@@ -564,11 +664,11 @@
     "identityTitle": "Complete your personal identity",
     "affiliations": "Affiliations",
     "affiliationsTitle": "Complete your employer or institute information",
-    "affiliationsForm": "Current employer or institute",
+    "affiliationsForm": "Add an employer or institute",
     "experience": "Experience",
     "experienceTitle": "Complete your experience information",
     "experienceForm": "Employment and publication history",
-    "training": "Training",
+    "trainingTitle": "Complete your training and accreditation history",
     "trainingAndAccreditations": "Training and Accreditations",
     "homeTitle": "Your actions",
     "approvedProjects": "Projects",
@@ -592,8 +692,11 @@
     "noCvUploaded": "No CV uploaded",
     "noCertificationUploaded": "No Certification Uploaded",
     "profileCompletedTitle": "Your profile has been completed",
+    "training": "Training",
     "profileCompletedDescription": "You have completed all the mandatory fields required for your profile to be considered 'complete'. This will be flagged to Data Custodians when they view your user details.",
     "continueLinkText": "Continue",
+    "finishLinkText": "Finish",
+    "completeYourProfile": "Complete Your Profile",
     "profileCompleteWarningMessage": "You have not yet completed your profile. This may mean that some data custodians will not grant access to you. It is advised that you complete this process. Please navigate to your profile",
     "addAnother": "Add Another",
     "postTrainingError": "There was a problem submitting your training experience. Please try again or contact us at <contactLink></contactLink>",
@@ -608,7 +711,49 @@
     "postUserErrorButton": "Try Again",
     "previousButton": "Previous",
     "emailDescription": "Your personal email is used to set up a SOURSD account so that your account stays with you, regardless of your employment or enrolment at a higher education institute. You can also recover your account using your personal email.",
-    "locationDescription": "Some data custodians need to know the country that you will be accessing data from as different countries adhere to different laws regarding data sharing and data confidentiality."
+    "locationDescription": "Some data custodians need to know the country that you will be accessing data from as different countries adhere to different laws regarding data sharing and data confidentiality.",
+    "accreditedResearcherCheckboxLabel": "I am a registered Accredited Researcher as published on the UK Statistics Authority website.",
+    "accreditedResearcherLinkHref": "https://www.gov.uk/government/consultations/digital-economy-act-part-5-data-sharing-codes-and-regulations/research-code-of-practice-and-accreditation-criteria",
+    "userDeclarationCheckboxLabel": "I have signed a User declaration for accessing Digital Economy Act accredited environments.",
+    "userDeclarationLinkHref": "https://www.gov.uk/government/consultations/digital-economy-act-part-5-data-sharing-codes-and-regulations/research-code-of-practice-and-accreditation-criteria",
+    "findOutMore": "Find out more",
+    "employmentEducationPublicationRecord": "Employment, education and publication record",
+    "orcidDescription": "Please enter your ORCID, if you have one, as this can help Data Custodians identify you.",
+    "orcidFormDescription": "Please provide your ORCID if you have one. If this information is not up-to-date or you do not have an ORCID, please upload a CV with the same relevant information. We can automatically pull in your publicly visible employment history from your ORCID profile. We recommend that you do this only if the information is correct and up-to-date. You will be able to edit the information after we’ve automatically pulled it in from ORCID. However please note if synchronisation is turned on, some of these edits maybe overwritten.",
+    "cvUpload": "CV Upload",
+    "cvUploadDescription": "Please upload an up-to-date CV , including your professional employment, education and qualifications, and publication record.",
+    "affiliationActionSuccessButton": "OK",
+    "patchAffiliationSuccess": "Affiliation updated successfully",
+    "affiliationActionError": "An error occurred. Please try again or <contactLink>contact us</contactLink> if the problem persists.",
+    "affiliationActionErrorButton": "Close",
+    "editAffiliationForm": "Edit Affiliation",
+    "addAffiliationForm": "Add Affiliation",
+    "viewOrEdit": "View or edit",
+    "delete": "Delete",
+    "missingOrcIdMessage": "There’s some missing information from your ORCID that we need you to complete",
+    "affiliationOrganisationWarningMessage": "Please complete this field as we couldn’t match the information. Sometimes the identifier of an Organisation within an ORCID profile does not exactly match the identifier of an Organisation registered within SOURSD therefore please select an Organisation from the dropdown box. If the Organisation is not listed, please <link> invite them here </link>",
+    "affiliationsEmailWarningMessage": "Please complete this field as we couldn’t match the information."
+  },
+  "Training": {
+    "title": "Training",
+    "trainingHistoryTitle": "Training history",
+    "trainingHistoryColumnProvider": "Training provider",
+    "trainingHistoryColumnName": "Training course",
+    "trainingHistoryColumnAwardedAt": "Date of issue",
+    "trainingHistoryColumnExpiresAt": "Date of expiry",
+    "addTrainingCourse": "Add training course",
+    "postTrainingSuccess": "Training course added successfully",
+    "closeButton": "Close",
+    "postTrainingError": "An error occurred while adding the training course. Please try again or <contactLink>contact support</contactLink> if the problem persists.",
+    "errorButton": "OK",
+    "viewCertificate": "View Certificate",
+    "fileDownloadError": "An error occurred while downloading the certificate. Please try again or <contactLink>contact support</contactLink> if the problem persists.",
+    "noResultsMessage": "You currently have no training history",
+    "errorDeleteMessage": "There was an error delete your training entry. Please try again or contact us at <contactLink></contactLink>",
+    "successDeleteMessage": "Your training entry was successfully deleted",
+    "editTrainingCourse": "Edit Training Course",
+    "updateTrainingError": "There was an error updating the training course. Please <contactLink>contact support</contactLink> if the problem persists.",
+    "updateTrainingSuccess": "Training course updated successfully"
   },
   "ProfileCompleteStatus": {
     "profileComplete": "Profile complete",
@@ -786,10 +931,11 @@
       "hasSoursdId": "Is Registered"
     }
   },
-  "ProjectList": {
+  "Projects": {
     "getOrganisationProjectsError": "No projects found",
     "loadingAriaLabel": "Loading project data",
-    "title": "Projects",
+    "title": "Project Name",
+    "laySummary": "Summary",
     "approvedKey": "Approved Project",
     "unapprovedKey": "Project Pending Approval",
     "searchPlaceholder": "Search Projects",
@@ -797,6 +943,11 @@
       "AZ": "Sort Alphabetical A-Z",
       "ZA": "Sort Alphabetical Z-A"
     },
+    "endDate": "End date",
+    "startDate": "Start date",
+    "users": "Users",
+    "organisations": "Organisation(s)",
+    "status": "Status",
     "filterActions": {
       "approved": "Approved",
       "pending": "Pending",
@@ -839,6 +990,7 @@
     "title": "Accreditations"
   },
   "DecoupleUser": {
+    "title": "Decouple",
     "toolTip": "Decouple this user from your organisation",
     "alertTitle": "Decouple User?",
     "alertText": "Are you sure you want to remove {first_name} {last_name} from your organisation ({organisation_name})",
@@ -846,6 +998,7 @@
     "alertCancel": "Cancel"
   },
   "DecoupleDelegate": {
+    "title": "Delete",
     "toolTip": "Decouple this user as a delegate from your organisation",
     "alertTitle": "Decouple Delegate User?",
     "alertText": "Are you sure you want to remove {first_name} {last_name} as a delegate from your organisation ({organisation_name})",
@@ -853,6 +1006,7 @@
     "alertCancel": "Cancel"
   },
   "EditDelegate": {
+    "title": "Edit",
     "toolTip": "Edit details for this delegate"
   },
   "UsePatchOrganisation": {
@@ -861,6 +1015,134 @@
   },
   "CertificationUpload": {
     "buttonText": "Upload evidence",
+    "buttonTextAlt": "Re-upload evidence",
     "evidence": "evidence"
+  },
+  "TermsAndConditions": {
+    "title": "Terms and Conditions",
+    "description": "Please note that you will not be allowed access to Cohort Discovery unless you have agreed to our Terms and Conditions.",
+    "acceptingTerms": "Accepting the terms",
+    "changesToTerms": "Changes to Terms",
+    "usingOurProduct": "Using Our Product",
+    "generalRestrictions": "General Restrictions",
+    "contentPolicy": "Content Policy",
+    "yourRights": "Your Rights",
+    "copyrightPolicy": "Copyright Policy",
+    "relationshipGuidelines": "Relationship Guidelines",
+    "liabilityPolicy": "Liability Policy",
+    "generalLegalTerms": "General Legal Terms",
+    "sendCopy": "Send a copy to my email",
+    "accept": "Accept Terms and Conditions",
+    "decline": "Decline",
+    "termsAndConditionsInfo": "You must accept the terms and conditions to proceed. If you decline, you will not be able to access SOURSD.",
+    "alertTitle": "Are you sure you want to decline?",
+    "alertText": "If you decline, you will not be able to access SOURSD.",
+    "alertConfirm": "Confirm. Back to homepage",
+    "alertCancel": "Cancel"
+  },
+  "ActionValidationPanel": {
+    "title": "Validation Checks"
+  },
+  "ActionValidationMakeDecision": {
+    "pass": "Pass",
+    "fail": "Fail"
+  },
+  "ActionValidationCommentForm": {
+    "confirm": "Confirm {action}",
+    "cancel": "Cancel"
+  },
+  "ChangeDecisionChip": {
+    "changeDecision": "Change Decision",
+    "passed": "Passed",
+    "failed": "Failed"
+  },
+  "CustodianProjectUser": {
+    "title": "User for {projectTitle}"
+  },
+  "ActionValidationLogComment": {
+    "daysSince": "{days} days ago"
+  },
+  "ActionLogs": {
+    "completedActions": "Completed Actions",
+    "profileCompleted": {
+      "title": "Add your personal details",
+      "description": "",
+      "buttonText": "Add personal details"
+    },
+    "affiliationsComplete": {
+      "title": "Add your affiliations",
+      "description": "",
+      "buttonText": "Add affiliations"
+    },
+    "trainingComplete": {
+      "title": "Add your training",
+      "description": "",
+      "buttonText": "Add training"
+    },
+    "projectsReview": {
+      "title": "Review your projects",
+      "description": "",
+      "buttonText": "Review"
+    },
+    "nameAddressCompleted": {
+      "title": "Complete your Organisation name & address",
+      "description": "",
+      "buttonText": "Complete this section"
+    },
+    "digitalIdentifiersCompleted": {
+      "title": "Complete your Organisation digital identifiers",
+      "description": "",
+      "buttonText": "Complete this section"
+    },
+    "sectorSizeCompleted": {
+      "title": "Complete your Organisation sector, size & website details",
+      "description": "",
+      "buttonText": "Complete this section"
+    },
+    "addSubsidiaryCompleted": {
+      "title": "Add your Organisation’s UK subsidiaries",
+      "description": "",
+      "buttonText": "Complete this section"
+    },
+    "dataSecurityCompleted": {
+      "title": "Complete your Organisation’s data security compliance",
+      "description": "",
+      "buttonText": "Complete this section"
+    },
+    "addSroCompleted": {
+      "title": "Add a Senior Responsible Officer (SRO) and Delegates from your Organisation",
+      "description": "",
+      "buttonText": "Add SRO/delegates"
+    },
+    "affiliateEmployeesCompleted": {
+      "title": "Affiliate employees or students with your Organisation",
+      "description": "",
+      "buttonText": "Add employees/students"
+    },
+    "completeConfiguration": {
+      "title": "Complete your configuration",
+      "description": "This is where we need you to setup things like IDV technology and decision models...",
+      "buttonText": "Complete your configuration"
+    },
+    "addContactsCompleted": {
+      "title": "Add your contacts",
+      "description": "As well as yourself, it’s a good idea to set up your colleagues who will help administer the system and approve Users, projects and Organisations",
+      "buttonText": "Add contacts"
+    },
+    "addUsersCompleted": {
+      "title": "Add your Users",
+      "description": "",
+      "buttonText": "Add users"
+    },
+    "addProjectsCompleted": {
+      "title": "Add your projects",
+      "description": "",
+      "buttonText": "Add projects"
+    },
+    "addOrganisationsCompleted": {
+      "title": "Add Organisations",
+      "description": "",
+      "buttonText": "Add Organisations"
+    }
   }
 }

@@ -1,4 +1,5 @@
 import { FileStatus, FileType } from "@/consts/files";
+import { File } from "@/types/application";
 import { FileResponse } from "@/services/files/types";
 import { ChangeEvent } from "react";
 
@@ -24,10 +25,10 @@ function isFileScanFailed(file: FileResponse | undefined) {
   return file?.status === FileStatus.FAILED;
 }
 
-function getFileHref(fileName: string | undefined) {
-  if (!fileName) return "";
-
-  return `${process.env.NEXT_PUBLIC_FILE_DOWNLOAD_URL}/${fileName}`;
+function getFileHref(file: File | undefined) {
+  if (!file) return "";
+  const path = `${process.env.NEXT_PUBLIC_API_V1_URL}/files`;
+  return `${path}/${file.id}/download`;
 }
 
 function getFileExtension(file: File) {
@@ -42,12 +43,19 @@ const getFileFromEvent = ({ target }: ChangeEvent<HTMLInputElement>) => {
   return null;
 };
 
+const resetFileFromEvent = ({ target }: ChangeEvent<HTMLInputElement>) => {
+  if (target && target.files && target.files.length > 0) {
+    target.value = "";
+  }
+};
+
 export {
   getFileExtension,
   getFileFromEvent,
   getFileHref,
   getLatestCV,
   getUploadedCertification,
+  resetFileFromEvent,
   isFileScanComplete,
   isFileScanFailed,
   isFileScanning,

@@ -1,4 +1,8 @@
-import { QueryFunctionContext, UseQueryOptions } from "@tanstack/react-query";
+import {
+  QueryFunctionContext,
+  UseMutationOptions,
+  UseQueryOptions,
+} from "@tanstack/react-query";
 
 interface ResponseTranslation {
   message: string;
@@ -9,12 +13,18 @@ interface QueryOptions extends Partial<UseQueryOptions> {
   responseOptions?: ResponseOptions;
 }
 
+interface MutationOptions extends Partial<UseMutationOptions> {
+  mutationKeySuffix?: (string | number)[];
+  responseOptions?: ResponseOptions;
+}
+
 type QueryFunctionContextDefault = QueryFunctionContext<[string, number]>;
 
 interface ResponseOptions {
   "401"?: ResponseTranslation;
   "403"?: ResponseTranslation;
   "404"?: ResponseTranslation;
+  "409"?: ResponseTranslation;
   "500"?: ResponseTranslation;
   error?: ResponseTranslation;
   suppressThrow?: boolean;
@@ -46,5 +56,6 @@ export type {
   ResponseOptions,
   QueryPayload,
   QueryOptions,
+  MutationOptions,
   QueryFunctionContextDefault,
 };

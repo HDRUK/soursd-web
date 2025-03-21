@@ -7,9 +7,7 @@ export default async (
   resgitryId: number,
   options: ResponseOptions
 ): Promise<ResponseJson<Paged<GetAffiliationsResponse>>> => {
-  const response = await getRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/affiliations/${resgitryId}`
-  );
+  const response = await getRequest(`/affiliations/${resgitryId}`);
 
   return handleJsonResponse(response, options);
 };

@@ -26,4 +26,17 @@ function isProduction() {
   return process.env.NODE_ENV === "production";
 }
 
-export { parseSystemConfig, isProduction };
+function injectParamsIntoPath(
+  path: string,
+  params: Record<string, string | number>
+) {
+  let replacedPath = path;
+
+  Object.keys(params).forEach(name => {
+    replacedPath = replacedPath.replace(`{${name}}`, params[name]?.toString());
+  });
+
+  return replacedPath;
+}
+
+export { parseSystemConfig, isProduction, injectParamsIntoPath };

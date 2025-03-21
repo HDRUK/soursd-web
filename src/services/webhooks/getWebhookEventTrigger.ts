@@ -6,9 +6,7 @@ import { WebhookEventTriggers } from "./types";
 export default async (
   options?: ResponseOptions
 ): Promise<ResponseJson<WebhookEventTriggers[]>> => {
-  const response = await getRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/webhooks/event-triggers`
-  );
+  const response = await getRequest(`/webhooks/event-triggers`);
 
   return handleJsonResponse(response, options);
 };

@@ -1,0 +1,102 @@
+import { useRouter } from "@/i18n/routing";
+import { mockedJwt } from "@/mocks/data/auth";
+import { postRegister } from "@/services/auth";
+import {
+  commonAccessibilityTests,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from "@/utils/testUtils";
+import AccountConfirm from "./AccountConfirm";
+
+jest.mock("@/i18n/routing", () => ({
+  useParams: jest.fn(),
+  useRouter: jest.fn(() => ({
+    replace: jest.fn(),
+  })),
+}));
+
+jest.mock("@/services/auth", () => ({
+  postRegister: jest.fn(),
+}));
+
+jest.mock("js-cookie", () => ({
+  get: () => mockedJwt,
+}));
+
+const mockedReplace = jest.fn();
+
+const TestComponent = () => {
+  return <AccountConfirm />;
+};
+
+describe("<AccountConfirm />", () => {
+  beforeEach(() => {
+    (useRouter as jest.Mock).mockReturnValue({
+      replace: mockedReplace,
+    });
+
+    (postRegister as jest.Mock).mockReset();
+  });
+
+  // Existing tests...
+
+  it("should open terms and conditions modal when clicking on the terms link", async () => {
+    render(<AccountConfirm />);
+    const termsLink = screen.getByRole("button", {
+      name: "Terms and Conditions",
+    });
+    fireEvent.click(termsLink);
+
+    await waitFor(() => {
+      expect(screen.getByRole("dialog")).toBeInTheDocument();
+    });
+  });
+
+  it("should enable checkbox after accepting terms", async () => {
+    render(<AccountConfirm />);
+    const termsLink = screen.getByText("Terms and Conditions");
+    fireEvent.click(termsLink);
+
+    const acceptButton = screen.getByRole("button", {
+      name: /accept terms and conditions/i,
+    });
+    fireEvent.click(acceptButton);
+
+    await waitFor(() => {
+      const termsCheckbox = screen.getByRole("checkbox");
+      expect(termsCheckbox).not.toBeDisabled();
+    });
+  });
+
+  it("should not enable checkbox after declining terms", async () => {
+    render(<AccountConfirm />);
+    const termsLink = screen.getByText("Terms and Conditions");
+    fireEvent.click(termsLink);
+
+    const declineButton = screen.getByRole("button", { name: /decline/i });
+    fireEvent.click(declineButton);
+
+    await waitFor(() => {
+      const termsCheckbox = screen.getByRole("checkbox");
+      expect(termsCheckbox).toBeDisabled();
+    });
+  });
+
+  it("should disable continue button when terms are not accepted", async () => {
+    render(<AccountConfirm />);
+
+    const optionMyself = screen.getByRole("button", {
+      name: /represent myself/i,
+    });
+    fireEvent.click(optionMyself);
+
+    const continueButton = screen.getByRole("button", { name: /continue/i });
+    expect(continueButton).toBeDisabled();
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(render(<TestComponent />));
+  });
+});

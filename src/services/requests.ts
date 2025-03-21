@@ -1,6 +1,13 @@
 import { QueryPayload } from "@/types/requests";
 import { objectToQuerystring } from "@/utils/requests";
-import { getHeadersWithAuthorization } from "./requestHelpers";
+import {
+  createEmptyErrorResponse,
+  getHeadersWithAuthorization,
+} from "./requestHelpers";
+
+function isServer() {
+  return typeof window === "undefined";
+}
 
 async function request<T>(
   method: string,
@@ -8,34 +15,50 @@ async function request<T>(
   payload?: QueryPayload<T>,
   options?: RequestInit
 ) {
-  let defaultContentType;
+  try {
+    let defaultContentType;
 
-  if (!(payload instanceof FormData)) {
-    defaultContentType = "application/json;charset=UTF-8";
+    if (!(payload instanceof FormData)) {
+      defaultContentType = "application/json;charset=UTF-8";
+    }
+
+    const headers = await getHeadersWithAuthorization({
+      ...(defaultContentType && {
+        "content-type": defaultContentType,
+      }),
+      ...options?.headers,
+    });
+
+    const body =
+      payload instanceof Function
+        ? payload()
+        : payload instanceof FormData
+          ? payload
+          : JSON.stringify(payload);
+
+    let host = "";
+
+    const hasHostName = url?.match(/^http(s*):\/\//i);
+
+    if (hasHostName) {
+      host = "";
+    } else if (isServer()) {
+      host = `${process.env.NEXT_PUBLIC_API_V1_SERVER_URL}`;
+    } else {
+      host = `${process.env.NEXT_PUBLIC_API_V1_URL}`;
+    }
+
+    const response = await fetch(`${host}${url}`, {
+      ...options,
+      method,
+      headers,
+      body,
+    });
+
+    return response;
+  } catch (_) {
+    return createEmptyErrorResponse();
   }
-
-  const headers = await getHeadersWithAuthorization({
-    ...(defaultContentType && {
-      "content-type": defaultContentType,
-    }),
-    ...options?.headers,
-  });
-
-  const body =
-    payload instanceof Function
-      ? payload()
-      : payload instanceof FormData
-        ? payload
-        : JSON.stringify(payload);
-
-  const response = await fetch(url, {
-    ...options,
-    method,
-    headers,
-    body,
-  });
-
-  return response;
 }
 
 async function getRequest<T>(url: string, payload?: T, options?: RequestInit) {
@@ -45,6 +68,7 @@ async function getRequest<T>(url: string, payload?: T, options?: RequestInit) {
     payload,
     options
   );
+
   return response;
 }
 
@@ -85,4 +109,11 @@ async function deleteRequest<T>(
   return response;
 }
 
-export { deleteRequest, getRequest, patchRequest, postRequest, putRequest };
+export {
+  deleteRequest,
+  getRequest,
+  patchRequest,
+  postRequest,
+  putRequest,
+  isServer,
+};

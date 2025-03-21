@@ -1,13 +1,8 @@
-"use client";
-
-import { useEffect } from "react";
-
-import { handleRegister } from "@/utils/keycloak";
+import { getRegisterUrl } from "@/utils/keycloak";
+import { redirect } from "next/navigation";
 
 export default function Page() {
-  useEffect(() => {
-    handleRegister();
-  }, []);
+  redirect(getRegisterUrl());
 
   return null;
 }

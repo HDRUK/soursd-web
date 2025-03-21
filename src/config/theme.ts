@@ -1,6 +1,6 @@
 import { colorToRgba } from "@/utils/theme";
 import { createTheme } from "@mui/material";
-import { blue, blueGrey, green, grey, orange, red } from "@mui/material/colors";
+import { blue, blueGrey, grey, orange, red } from "@mui/material/colors";
 
 const MODE = "light";
 
@@ -52,6 +52,7 @@ const PALETTE_THEME_PURPLE_BLUE = {
       main: "#1e1e1e",
       contrastText: "#fff",
     },
+    grey700: "#53575A",
     greys: {
       extraLight: grey["100"],
       light: grey["300"],
@@ -72,7 +73,7 @@ const PALETTE_THEME_PURPLE_BLUE = {
     warning: createColor(orange["300"]),
     info: createColor(blue["200"]),
     error: createColor(red["400"]),
-    success: createColor(green["600"]),
+    success: createColor("#0C695D"),
     highlight: createColor(colorToRgba(grey["400"], 0.25)),
     default: createColor("#7A89C2"),
     inactive: createColor(grey["300"]),
@@ -87,6 +88,12 @@ const PALETTE_THEME_PURPLE_BLUE = {
       main: "#F6EBF8",
       contrastText: "#000",
     },
+    neutralGrey: {
+      light: "#F2F2F2",
+      dark: "#F2F2F2",
+      main: "#F2F2F2",
+      contrastText: "#3C3C3B",
+    },
     postitYellow: {
       light: "#faf3e2",
       dark: "#faf3e2",
@@ -96,6 +103,10 @@ const PALETTE_THEME_PURPLE_BLUE = {
     lightPurple: {
       main: "#f7f3fb",
     },
+    textSecondary: createColor("#585754"),
+    menuList1: createColor("#5769B2"),
+    textPrimary: createColor("#1E1E1E"),
+    midGrey: createColor("#687078"),
   },
 };
 

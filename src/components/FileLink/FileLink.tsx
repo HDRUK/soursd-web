@@ -7,7 +7,13 @@ import GppBadIcon from "@mui/icons-material/GppBad";
 import GppGoodIcon from "@mui/icons-material/GppGood";
 import UploadIcon from "@mui/icons-material/Upload";
 import { LoadingButton } from "@mui/lab";
-import { CircularProgress, Link, Typography, Grid } from "@mui/material";
+import {
+  CircularProgress,
+  Typography,
+  Grid,
+  Tooltip,
+  Link,
+} from "@mui/material";
 import { useTranslations } from "next-intl";
 import prettyBytes from "pretty-bytes";
 import { ChangeEventHandler, ReactNode, useCallback, useRef } from "react";
@@ -15,21 +21,19 @@ import { ChangeEventHandler, ReactNode, useCallback, useRef } from "react";
 export interface FileLinkProps extends FileUploadState {
   fileButtonText: ReactNode;
   onFileChange: ChangeEventHandler<HTMLInputElement>;
-  onDownload?: (e: MouseEvent) => void;
+  onDownload?: (e?: React.MouseEvent<HTMLButtonElement>) => void;
   accept?: string;
   fileScanOkText?: string;
   fileScanErrorText?: string;
   fileScanningText?: string;
   fileMaxSizeText?: ReactNode;
   fileMaxSizeErrorText?: ReactNode;
+  fileTypesText?: ReactNode;
   fileNameText?: ReactNode;
   fileInputLabelText?: string;
-  fileHref?: string;
   isUploading?: boolean;
   includeStatus?: boolean;
   isSizeInvalid?: boolean;
-  canDownload?: boolean;
-  disableDownload?: boolean;
 }
 
 const NAMESPACE_TRANSLATION_FILE = "File";
@@ -42,8 +46,8 @@ export default function FileLink({
   fileButtonText,
   fileMaxSizeText,
   fileMaxSizeErrorText,
+  fileTypesText,
   fileNameText,
-  fileHref,
   fileInputLabelText,
   isScanning,
   isScanComplete,
@@ -51,15 +55,11 @@ export default function FileLink({
   isUploading,
   isSizeInvalid,
   includeStatus,
-  canDownload,
-  disableDownload,
   onFileChange,
   onDownload,
 }: FileLinkProps) {
   const ref = useRef<HTMLInputElement>(null);
-
   const t = useTranslations(NAMESPACE_TRANSLATION_FILE);
-
   const translationsMaxSize = {
     size: prettyBytes(MAX_UPLOAD_SIZE_BYTES),
   };
@@ -71,29 +71,22 @@ export default function FileLink({
   const statusIcons = (
     <>
       {isScanComplete && (
-        <GppGoodIcon
-          color="success"
-          titleAccess={fileScanOkText || t("scanOkText")}
-        />
+        <Tooltip title={fileScanOkText || t("scanOkText")}>
+          <GppGoodIcon color="success" />
+        </Tooltip>
       )}
       {isScanFailed && (
-        <GppBadIcon
-          color="error"
-          titleAccess={fileScanErrorText || t("scanErrorText")}
-        />
+        <Tooltip title={fileScanErrorText || t("scanErrorText")}>
+          <GppBadIcon color="error" />
+        </Tooltip>
       )}
       {isScanning && (
-        <CircularProgress
-          color="info"
-          size="1em"
-          title={fileScanningText || t("scanningText")}
-          role="progressbar"
-        />
+        <Tooltip title={fileScanningText || t("scanningText")}>
+          <CircularProgress color="info" size="1em" role="progressbar" />
+        </Tooltip>
       )}
     </>
   );
-
-  const showLink = fileNameText && fileHref;
 
   return (
     <Grid container item spacing={0}>
@@ -102,29 +95,27 @@ export default function FileLink({
           <LoadingButton
             color="primary"
             variant="outlined"
+            data-testid="upload-file"
             onClick={handleFileSelectorOpen}
             startIcon={<UploadIcon />}
             loading={isUploading && !isScanning}>
             {fileButtonText}
           </LoadingButton>
         </Grid>
-        <Grid item xs={2} sx={{ alignContent: "center" }}>
-          {!showLink && includeStatus && statusIcons}
-        </Grid>
       </Grid>
       <Grid item xs={12}>
-        {showLink && (
+        {fileNameText && (
+          /* eslint-disable jsx-a11y/anchor-is-valid */
           <Link
-            href={fileHref}
-            onClick={(e: MouseEvent) =>
-              (disableDownload || canDownload) && onDownload?.(e)
-            }
-            sx={{
-              ...((disableDownload || canDownload) && {
-                pointerEvents: "none",
-                cursor: "default",
-              }),
-            }}>
+            data-testid="download-file"
+            variant="body2"
+            component="button"
+            onClick={e => {
+              e.preventDefault();
+              e.stopPropagation();
+              onDownload?.(e);
+            }}
+            disabled={!onDownload}>
             {includeStatus ? (
               <Text endIcon={statusIcons}>{fileNameText}</Text>
             ) : (
@@ -132,10 +123,9 @@ export default function FileLink({
             )}
           </Link>
         )}
-        <Typography
-          variant="caption"
-          color="caption.main"
-          sx={{ display: "block" }}>
+        <Typography variant="caption" color="caption.main" component="div">
+          {fileTypesText || t("fileTypesText")}
+          {". "}
           {fileMaxSizeText || t("maxSizeText", translationsMaxSize)}
         </Typography>
         {isSizeInvalid &&

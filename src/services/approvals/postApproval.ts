@@ -9,10 +9,7 @@ export default async (
   entityType: EntityType,
   options: ResponseOptions
 ): Promise<ResponseJson<boolean>> => {
-  const response = await postRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/approvals/${entityType}`,
-    payload
-  );
+  const response = await postRequest(`/approvals/${entityType}`, payload);
 
   return handleJsonResponse(response, options);
 };

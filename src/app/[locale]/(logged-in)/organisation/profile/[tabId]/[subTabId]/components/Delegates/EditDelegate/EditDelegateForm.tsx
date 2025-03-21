@@ -6,7 +6,7 @@ import FormSection from "@/components/FormSection";
 import yup from "@/config/yup";
 import { useStore } from "@/data/store";
 import { LoadingButton } from "@mui/lab";
-import { Grid, TextField } from "@mui/material";
+import { Button, Grid, TextField } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo } from "react";
@@ -18,33 +18,33 @@ import { User } from "@/types/application";
 export interface DelegatesFormValues {
   first_name: string;
   last_name: string;
-  department: number;
+  department_id: number;
 }
 
 export interface EditDelegateFormProps {
   delegate: User;
   onSuccess: () => void;
+  onCancel: () => void;
 }
 
 const NAMESPACE_TRANSLATION_DELEGATES = "Form";
 export default function EditDelegateForm({
   delegate,
   onSuccess,
+  onCancel,
 }: EditDelegateFormProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_DELEGATES);
   const organisation = useStore(state => state.config.organisation);
 
-  const { mutateAsync, isPending } = useMutation(
+  const { mutateAsync: mutateDelegate, isPending } = useMutation(
     patchUserQuery(delegate?.id as number)
   );
 
   const handleSubmit = useCallback(
     async (fields: DelegatesFormValues) => {
-      // this is coming in another task
-      console.log(fields);
-      onSuccess();
+      mutateDelegate(fields).then(() => onSuccess());
     },
-    [mutateAsync, onSuccess, t]
+    [mutateDelegate, onSuccess, t]
   );
   const schema = useMemo(
     () =>
@@ -53,7 +53,7 @@ export default function EditDelegateForm({
           .string()
           .required(t("delegateFirstNameRequiredInvalid")),
         last_name: yup.string().required(t("delegateLastNameRequiredInvalid")),
-        department: yup.number().required(t("departmentRequiredInvalid")),
+        department_id: yup.number().required(t("departmentRequiredInvalid")),
       }),
     [t]
   );
@@ -62,7 +62,7 @@ export default function EditDelegateForm({
     defaultValues: {
       first_name: delegate?.first_name,
       last_name: delegate?.last_name,
-      department: delegate?.departments?.[0]?.id,
+      department_id: delegate?.departments?.[0]?.id,
     },
   };
 
@@ -94,7 +94,7 @@ export default function EditDelegateForm({
 
             <Grid item xs={12}>
               <FormControl
-                name="department"
+                name="department_id"
                 renderField={fieldProps => (
                   <SelectDepartments
                     organisation={organisation}
@@ -109,6 +109,9 @@ export default function EditDelegateForm({
           </Grid>
         </FormSection>
         <FormActions>
+          <Button variant="outlined" onClick={onCancel}>
+            {t("cancelButton")}
+          </Button>
           <LoadingButton loading={isPending} type="submit">
             {t("save")}
           </LoadingButton>

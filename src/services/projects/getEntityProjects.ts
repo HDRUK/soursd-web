@@ -4,7 +4,7 @@ import { handleJsonResponse } from "../requestHelpers";
 import { getRequest } from "../requests";
 import { ProjectsResponse } from "./types";
 
-export type ProjectEntities = "organisation" | "custodian";
+export type ProjectEntities = "organisation" | "custodian" | "user";
 
 export default async (
   entity: ProjectEntities,
@@ -13,7 +13,7 @@ export default async (
   options: ResponseOptions
 ): Promise<ResponseJson<Paged<ProjectsResponse>>> => {
   const response = await getRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/${entity}s/${id}/projects${getSearchQuerystring(searchParams)}`
+    `/${entity}s/${id}/projects${getSearchQuerystring(searchParams)}`
   );
 
   return handleJsonResponse(response, options);
