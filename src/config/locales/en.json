@@ -410,14 +410,14 @@
     "iso27001Certified": "ISO27001 Accredited",
     "iso27001CertificationNum": "ISO27001 Accredited",
     "iso27001CertificationNumPlaceholder": "e.g. AB123C",
-    "iso27001CertificationNumInvalid": "ISO27001 identifier is invalid",
+    "iso27001CertificationNumInvalid": "ISO27001 identifier is invalid, it should be of the form, e.g: AB12",
     "isoExpiryDate": "Expiry date",
     "isoExpiryDateRequired": "An expiry date for your code needs to be set.",
     "isoExpiryEvidenceRequired": "Evidence of your ISO27001 certification is required",
     "dsptkCertified": "DSPT Certified",
     "dsptkOdsCode": "DSPT Certified  ID",
     "dsptkOdsCodePlaceholder": "e.g. DSPTK-2025-12345",
-    "dsptkOdsCodeInvalid": "DSPTK identifier is invalid, it must be in the form, e.g.: e.g. DSPTK-2025-12345",
+    "dsptkOdsCodeInvalid": "DSPTK identifier is invalid, it must be in the form, e.g.: DSPTK-2025-12345",
     "dsptkExpiryDate": "Expiry date",
     "dsptkExpiryDateRequired": "An expiry date for your code needs to be set.",
     "dsptkExpiryEvidenceRequired": "Evidence of your DSPTK certification is required",
@@ -1061,5 +1061,88 @@
   },
   "ActionValidationLogComment": {
     "daysSince": "{days} days ago"
+  },
+  "ActionLogs": {
+    "completedActions": "Completed Actions",
+    "profileCompleted": {
+      "title": "Add your personal details",
+      "description": "",
+      "buttonText": "Add personal details"
+    },
+    "affiliationsComplete": {
+      "title": "Add your affiliations",
+      "description": "",
+      "buttonText": "Add affiliations"
+    },
+    "trainingComplete": {
+      "title": "Add your training",
+      "description": "",
+      "buttonText": "Add training"
+    },
+    "projectsReview": {
+      "title": "Review your projects",
+      "description": "",
+      "buttonText": "Review"
+    },
+    "nameAddressCompleted": {
+      "title": "Complete your Organisation name & address",
+      "description": "",
+      "buttonText": "Complete this section"
+    },
+    "digitalIdentifiersCompleted": {
+      "title": "Complete your Organisation digital identifiers",
+      "description": "",
+      "buttonText": "Complete this section"
+    },
+    "sectorSizeCompleted": {
+      "title": "Complete your Organisation sector, size & website details",
+      "description": "",
+      "buttonText": "Complete this section"
+    },
+    "addSubsidiaryCompleted": {
+      "title": "Add your Organisation’s UK subsidiaries",
+      "description": "",
+      "buttonText": "Complete this section"
+    },
+    "dataSecurityCompleted": {
+      "title": "Complete your Organisation’s data security compliance",
+      "description": "",
+      "buttonText": "Complete this section"
+    },
+    "addSroCompleted": {
+      "title": "Add a Senior Responsible Officer (SRO) and Delegates from your Organisation",
+      "description": "",
+      "buttonText": "Add SRO/delegates"
+    },
+    "affiliateEmployeesCompleted": {
+      "title": "Affiliate employees or students with your Organisation",
+      "description": "",
+      "buttonText": "Add employees/students"
+    },
+    "completeConfiguration": {
+      "title": "Complete your configuration",
+      "description": "This is where we need you to setup things like IDV technology and decision models...",
+      "buttonText": "Complete your configuration"
+    },
+    "addContactsCompleted": {
+      "title": "Add your contacts",
+      "description": "As well as yourself, it’s a good idea to set up your colleagues who will help administer the system and approve Users, projects and Organisations",
+      "buttonText": "Add contacts"
+    },
+    "addUsersCompleted": {
+      "title": "Add your Users",
+      "description": "",
+      "buttonText": "Add users"
+    },
+    "addProjectsCompleted": {
+      "title": "Add your projects",
+      "description": "",
+      "buttonText": "Add projects"
+    },
+    "addOrganisationsCompleted": {
+      "title": "Add Organisations",
+      "description": "",
+      "buttonText": "Add Organisations"
+    }
   }
 }

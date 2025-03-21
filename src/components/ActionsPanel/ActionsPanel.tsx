@@ -3,7 +3,7 @@
 import { Box, Typography, useTheme } from "@mui/material";
 import { ReactNode } from "react";
 
-interface ActionsPanelProps {
+export interface ActionsPanelProps {
   children: ReactNode;
   description?: ReactNode;
   heading?: ReactNode;
