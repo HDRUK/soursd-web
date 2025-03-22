@@ -83,7 +83,7 @@ export default function SubTabsContents({
       content = <ProjectsSafeProject />;
       break;
     case ProjectsSubTabs.SAFE_SETTINGS:
-      content = <ProjectsSafeSettings id={id} />;
+      content = <ProjectsSafeSettings />;
       break;
     default:
       content = null;
