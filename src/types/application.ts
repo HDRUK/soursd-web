@@ -298,7 +298,7 @@ interface ResearcherProjectApproval {
   custodian_id: number;
 }
 
-interface ResearcherProject {
+type ResearcherProject = ModelState<{
   id: number;
   title: string;
   lay_summary: string;
@@ -312,8 +312,7 @@ interface ResearcherProject {
   unique_id: string;
   approvals: ResearcherProjectApproval[];
   organisations: Organisation[];
-  model_state?: ModelState;
-}
+}>;
 
 interface Registry {
   id: number;
