@@ -25,6 +25,7 @@ export default function Users() {
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const [open, setOpen] = useState(false);
   const organisation = useStore(state => state.config.organisation);
+  const [showPendingInvites, setShowPendingInvites] = useState(0);
 
   const {
     data: usersData,
@@ -40,6 +41,7 @@ export default function Users() {
     ...getOrganisationRegistriesQuery(organisation?.id as number),
     defaultQueryParams: {
       sort: `last_name:${SearchDirections.ASC}`,
+      show_pending: showPendingInvites,
     },
     enabled: !!organisation,
   });
@@ -112,7 +114,9 @@ export default function Users() {
         <Box sx={{ display: "flex", gap: 3, mb: 3 }}>
           <Box component="form" role="search">
             <SearchBar
-              onClear={resetQueryParams}
+              onClear={() =>
+                resetQueryParams({ show_pending: showPendingInvites })
+              }
               onSearch={(text: string) => {
                 updateQueryParams({
                   "first_name[]": text,
@@ -128,8 +132,10 @@ export default function Users() {
               <Checkbox
                 value
                 onChange={event => {
+                  const showPending = event.target.checked ? 1 : 0;
+                  setShowPendingInvites(showPending);
                   updateQueryParams({
-                    show_pending: event.target.checked ? 1 : 0,
+                    show_pending: showPending,
                   });
                 }}
               />

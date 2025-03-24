@@ -16,7 +16,7 @@ export interface PaginatedQueryHelpers {
   page: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
   updateQueryParams: (newParams: QueryParams) => void;
-  resetQueryParams: () => void;
+  resetQueryParams: (overideParams?: QueryParams) => void;
   handleSortToggle: (field: string, direction: string) => void;
   handleFieldToggle: (field: string, options: [string, string]) => void;
   queryParams: QueryParams;
@@ -101,8 +101,12 @@ const usePaginatedQuery = <T,>({
     });
   };
 
-  const resetQueryParams = () => {
-    setQueryParams({ page: initialPage, ...defaultQueryParams });
+  const resetQueryParams = (overideParams?: QueryParams) => {
+    setQueryParams({
+      page: initialPage,
+      ...defaultQueryParams,
+      ...overideParams,
+    });
   };
 
   const queryResult = useQuery({
