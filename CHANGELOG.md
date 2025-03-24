@@ -1,3 +1,46 @@
+## [1.1.0](https://github.com/HDRUK/speedi-as-web/compare/v1.0.0...v1.1.0) (2025-03-21)
+
+### ✨ Features
+
+* **SOURSD-121:** responsive footer (#176) ([8d12ea7](https://github.com/HDRUK/speedi-as-web/commit/8d12ea70a279a09b6b345ee32ac93aece0c12c5e))
+* **SOURSD-654:** restructure data custodian tabs (#183) ([ef6e931](https://github.com/HDRUK/speedi-as-web/commit/ef6e931816184a2cc4ffb640eae98ae3986b71a8))
+* **SOURSD-726:** Terms & Conditions Modal (#182) ([d4c806d](https://github.com/HDRUK/speedi-as-web/commit/d4c806db79386a48849f0163b7027e0fabfc9ec9))
+* **SOURSD-730:** static completion screens (#181) ([8990d0a](https://github.com/HDRUK/speedi-as-web/commit/8990d0a052a5f49390a38ad875e7574a655dbe41))
+* **SOURSD-743:** Training Page Updates (#186) ([2589157](https://github.com/HDRUK/speedi-as-web/commit/2589157b6d4e2c61c100dee806d146e83cc32bfd))
+* **SOURSD-749:** Add Rules Configuration Page (#178) ([d9fe8c3](https://github.com/HDRUK/speedi-as-web/commit/d9fe8c3e015697bd1000d203afce497546478e60))
+* **SOURSD-759:** Sort out affiliations page (#185) ([60db071](https://github.com/HDRUK/speedi-as-web/commit/60db0712773af25f9a1bec9f91722ea3455c54fd))
+* **SOURSD-777:** Move ORCiD to Experience (#193) ([a296af6](https://github.com/HDRUK/speedi-as-web/commit/a296af685569bdd94166878352fc53c339d06550))
+* **SOURSD-813:** edit and delete personal registrations (#191) ([15444cb](https://github.com/HDRUK/speedi-as-web/commit/15444cb0f2518b63233222bcc8154fda1808f0a3))
+* **SOURSD-814:** View Training Certificate (#195) ([c1b063d](https://github.com/HDRUK/speedi-as-web/commit/c1b063d1bbb715e2d87f05968b42b6abb3a95fa6))
+* **SOURSD-819:** Add ORCiD Banner to Affiliations Page (#198) ([9e8e6bd](https://github.com/HDRUK/speedi-as-web/commit/9e8e6bd5fd01808b70a9bdcba10abcae85bbead4))
+* **SOURSD-828:** affiliations layout (#197) ([117d9fd](https://github.com/HDRUK/speedi-as-web/commit/117d9fd346b53c94a02f00598e4bf07084726adc))
+* **SOURSD-830:** View/Edit Affiliations & ORCiD Warnings (#202) ([b15e207](https://github.com/HDRUK/speedi-as-web/commit/b15e20734ec1dee8d7f34bc83cf29c323ecf8567))
+* **SOURSD-832:** Implement Project Tables across all user types (#194) ([da65562](https://github.com/HDRUK/speedi-as-web/commit/da65562bf581873bf6fd118872bb014e50a96c8b))
+* **SOURSD-833:** Restructure User tabs and set up pages for individual projects (#188) ([7930ba7](https://github.com/HDRUK/speedi-as-web/commit/7930ba72b76cb9d03f07495dddbef939820a64a7))
+* **SOURSD-840:** Updating FileLink to download (#192) ([e252963](https://github.com/HDRUK/speedi-as-web/commit/e252963cd3af6a9952d7e93bd87246c40a90e42e))
+* **SOURSD-843:** Changes necessary for action log notifications (#196) ([0954d08](https://github.com/HDRUK/speedi-as-web/commit/0954d082c44150286c6504db8a7976fcb1a90a1e))
+* **SOURSD-844:** Custodian Project User Validation checks (#200) ([1d7fb27](https://github.com/HDRUK/speedi-as-web/commit/1d7fb27106ee4ad4b314180738413c5bd1de9a06))
+* **SOURSD-867:** set project user as primary contact (#190) ([8157d90](https://github.com/HDRUK/speedi-as-web/commit/8157d9003cf62ddae3b8c4d281baf398bc60689c))
+* **SOURSD-868:** search and filter ([d4e5ae4](https://github.com/HDRUK/speedi-as-web/commit/d4e5ae41e1ad9b46c87ea488719a1dcaa444d09c))
+* **SOURSD-869:** add delete project user (#187) ([dd42859](https://github.com/HDRUK/speedi-as-web/commit/dd4285985936a33c67cdcef0d28816aa388b174d))
+* **SOURSD-872:** table of project users (#184) ([332a105](https://github.com/HDRUK/speedi-as-web/commit/332a105dc73b992c5e29cef456a2408cc46a8720))
+* **SOURSD-881:** Fix re-upload behaviour (#205) ([d5fc92c](https://github.com/HDRUK/speedi-as-web/commit/d5fc92c5512d22bf12c9c3f910fbe46712096e3f))
+* **SOURSD-889:** remove project legend (#204) ([813ad33](https://github.com/HDRUK/speedi-as-web/commit/813ad33986ec0280b45f0e27f4720dbb38493123))
+* **SOURSD-890:** View/Edit/Delete Training (#209) ([541ca7d](https://github.com/HDRUK/speedi-as-web/commit/541ca7d150e30b0710149c4bfece093ae1600bca))
+* **SOURSD-8970:** user status (#189) ([732ae2a](https://github.com/HDRUK/speedi-as-web/commit/732ae2a9fbe480392b6be5e850e820114f993569))
+* **SOURSD-903:** Implementing ActionLog Home Screen (#215) ([685e36a](https://github.com/HDRUK/speedi-as-web/commit/685e36a450861f800db9486b90c7264998239614))
+* **SOURSD-915:** add email banner logo (#203) ([29c16d8](https://github.com/HDRUK/speedi-as-web/commit/29c16d84623364b54b541e632b5f672c3d402f96))
+* **SOURSD-918:** fix redirects (#199) ([a639012](https://github.com/HDRUK/speedi-as-web/commit/a639012c4c886884938039176452aff796144e29))
+
+### 🐛 Bug Fixes
+
+* **SOURSD-883:** Edit/invite delegates modal (#211) ([b5665cc](https://github.com/HDRUK/speedi-as-web/commit/b5665cc392ad9205166012f5edeb92f97deb53b6))
+* **SOURSD-884:** Employee & Student page and usePaginatedQuery (#208) ([677d378](https://github.com/HDRUK/speedi-as-web/commit/677d378cb9ab9c1ea089641c56640f5d44374838))
+* **SOURSD-887:** Replace loader with skeleton for rules (#210) ([431f0c5](https://github.com/HDRUK/speedi-as-web/commit/431f0c52bef88d0edd45a015fbb1fd9f6ed8990f))
+* **SOURSD-887:** Replace loader with skeleton for rules (#210) ([f41a73d](https://github.com/HDRUK/speedi-as-web/commit/f41a73d8656902cb5b28d50836dfdd25250e9623))
+* **SOURSD-892:** Professional Registration Fixes (#207) ([e716863](https://github.com/HDRUK/speedi-as-web/commit/e7168633dc4d1633d0e8c5924339d630ac9b7248))
+* **SOURSD-896:** File Upload Changes on Training page (#212) ([7346740](https://github.com/HDRUK/speedi-as-web/commit/7346740ad72cf83f983e73e34d5ac688e559c6e8))
+
 ## 1.0.0 (2025-02-26)
 
 ### 🐛 Bug Fixes
