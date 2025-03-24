@@ -1,6 +1,18 @@
 import ChipStatus, { Status } from "@/components/ChipStatus";
 import { Typography } from "@mui/material";
 
+export const mockedSafeProjectGuidanceProps = {
+  infoTitle: "Did you know?",
+  info: (
+    <>
+      <Typography>
+        The project properties are following the data use register transparency
+        standard.
+      </Typography>
+    </>
+  ),
+};
+
 export const mockedPersonalDetailsGuidanceProps = {
   infoTitle: "Guidance",
   info: (
