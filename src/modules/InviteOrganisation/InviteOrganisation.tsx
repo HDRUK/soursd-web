@@ -4,15 +4,21 @@ import FormControlHorizontal from "@/components/FormControlHorizontal";
 import FormSection from "@/components/FormSection";
 import yup from "@/config/yup";
 import { MAX_FORM_WIDTH } from "@/consts/form";
-import { PostOrganisationUnclaimedPayload } from "@/services/organisations";
+import {
+  getOrganisationQuery,
+  PostOrganisationUnclaimedPayload,
+} from "@/services/organisations";
 import { MutationState } from "@/types/form";
 import SaveIcon from "@mui/icons-material/Save";
 import { LoadingButton } from "@mui/lab";
 import { Grid, TextField } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
+import { useQuery } from "@tanstack/react-query";
+import LoadingWrapper from "@/components/LoadingWrapper";
 
 export interface InviteOrganisationFormProps {
+  organisationId?: number;
   onSubmit: (organisation: PostOrganisationUnclaimedPayload) => void;
   queryState: MutationState;
 }
@@ -21,11 +27,18 @@ const NAMESPACE_TRANSLATION_FORM = "Form";
 const NAMESPACE_TRANSLATION_ORGANISATION = "Organisation";
 
 export default function InviteOrganisationForm({
+  organisationId,
   onSubmit,
   queryState,
 }: InviteOrganisationFormProps) {
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const tOrganisation = useTranslations(NAMESPACE_TRANSLATION_ORGANISATION);
+
+  const { data: organisation, isLoading } = useQuery(
+    getOrganisationQuery(organisationId as number, {
+      enabled: !!organisationId,
+    })
+  );
 
   const schema = useMemo(
     () =>
@@ -41,47 +54,52 @@ export default function InviteOrganisationForm({
     [tForm]
   );
 
-  const formOptions = {
-    defaultValues: {
-      organisation_name: "",
-      lead_applicant_email: "",
-    },
-  };
+  const formOptions = useMemo(
+    () => ({
+      defaultValues: {
+        organisation_name: organisation?.data.organisation_name || "",
+        lead_applicant_email: organisation?.data.lead_applicant_email || "",
+      },
+    }),
+    [organisation?.data]
+  );
 
   const formFields = ["organisation_name", "lead_applicant_email"];
 
   return (
-    <Form
-      onSubmit={onSubmit}
-      schema={schema}
-      {...formOptions}
-      sx={{ mb: 3, maxWidth: MAX_FORM_WIDTH }}
-      shouldReset>
-      {() => (
-        <>
-          <FormSection subtitle={tOrganisation("inviteOrganisationTitle")}>
-            <Grid container rowSpacing={3}>
-              {formFields.map((name: string) => (
-                <Grid item xs={12} key={name}>
-                  <FormControlHorizontal
-                    name={name}
-                    renderField={fieldProps => <TextField {...fieldProps} />}
-                  />
-                </Grid>
-              ))}
-            </Grid>
-          </FormSection>
-          <FormActions>
-            <LoadingButton
-              type="submit"
-              endIcon={<SaveIcon />}
-              loading={queryState.isPending}
-              sx={{ display: "flex", justifySelf: "end" }}>
-              {tForm(`inviteButton`)}
-            </LoadingButton>
-          </FormActions>
-        </>
-      )}
-    </Form>
+    <LoadingWrapper loading={isLoading} variant="basic">
+      <Form
+        onSubmit={onSubmit}
+        schema={schema}
+        {...formOptions}
+        sx={{ mb: 3, maxWidth: MAX_FORM_WIDTH }}
+        shouldReset>
+        {() => (
+          <>
+            <FormSection subtitle={tOrganisation("inviteOrganisationTitle")}>
+              <Grid container rowSpacing={3}>
+                {formFields.map((name: string) => (
+                  <Grid item xs={12} key={name}>
+                    <FormControlHorizontal
+                      name={name}
+                      renderField={fieldProps => <TextField {...fieldProps} />}
+                    />
+                  </Grid>
+                ))}
+              </Grid>
+            </FormSection>
+            <FormActions>
+              <LoadingButton
+                type="submit"
+                endIcon={<SaveIcon />}
+                loading={queryState.isPending}
+                sx={{ display: "flex", justifySelf: "end" }}>
+                {tForm(`inviteButton`)}
+              </LoadingButton>
+            </FormActions>
+          </>
+        )}
+      </Form>
+    </LoadingWrapper>
   );
 }
