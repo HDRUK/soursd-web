@@ -81,11 +81,6 @@ export default function Application({
     );
   };
 
-  console.log(
-    "hasMissingDepedencyInformation",
-    hasMissingDepedencyInformation()
-  );
-
   return isError || hasMissingDepedencyInformation() ? (
     <PageBodyContainer>
       <OverlayCenterAlert>

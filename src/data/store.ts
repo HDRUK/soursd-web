@@ -102,11 +102,11 @@ const storeMethods = (set: StoreSet, get: StoreGet) => ({
   setProject: (project: ResearcherProject) =>
     set(
       produce(state => {
-        state.project = project;
+        state.config.project = project;
       })
     ),
   getProject: () => {
-    return get().project;
+    return get().config.project;
   },
   setUser: (user: User) =>
     set(

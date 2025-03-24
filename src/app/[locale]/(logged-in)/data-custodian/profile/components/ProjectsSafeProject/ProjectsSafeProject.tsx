@@ -7,17 +7,6 @@ import { PutProjectPayload } from "@/services/projects/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import ProjectsSafeProjectForm from "../ProjectsSafeProjectForm";
-import { useMutation } from "@tanstack/react-query";
-import { putProjectQuery } from "@/services/projects";
-import { PutProjectPayload } from "@/services/projects/types";
-import {
-  QueryClient,
-  useMutation,
-  useQueryClient,
-} from "@tanstack/react-query";
-import ProjectsSafeProjectForm from "../ProjectsSafeProjectForm";
-import { useTranslations } from "next-intl";
-import ProjectsSafeProjectForm from "../ProjectsSafeProjectForm";
 
 const NAMESPACE_TRANSLATION = "CustodianProfile";
 
