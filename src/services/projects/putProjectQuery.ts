@@ -7,7 +7,7 @@ export default function putProjectQuery(id: number, options?: QueryOptions) {
   return {
     mutationKey: ["putProject", id, ...(options?.queryKeySuffix || [])],
     mutationFn: (payload: PutProjectPayload) => {
-      return putProject(payload.id, payload, {
+      return putProject(id, payload, {
         error: { message: "putProjectError" },
         ...options?.responseOptions,
       });

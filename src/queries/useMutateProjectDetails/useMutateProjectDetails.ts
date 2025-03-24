@@ -2,11 +2,11 @@ import {
   postProjectDetailsQuery,
   putProjectDetailsQuery,
 } from "@/services/project_details";
-import { ProjectDetails } from "@/types/application";
+import { ProjectDetails, ResearcherProject } from "@/types/application";
 import { MutationState } from "@/types/form";
 import { getCombinedQueryState } from "@/utils/query";
 import { useMutation } from "@tanstack/react-query";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo } from "react";
 
 interface UseCustodianInviteProps {
   onSuccess?: () => void;
@@ -14,17 +14,15 @@ interface UseCustodianInviteProps {
 }
 
 export default function useMutateProjectDetails(
-  id: number,
+  project: ResearcherProject,
   callbacks?: UseCustodianInviteProps
 ) {
-  const [data, setData] = useState(null);
-
   const { mutateAsync: mutatePostDetails, ...postQueryState } = useMutation(
     postProjectDetailsQuery()
   );
 
   const { mutateAsync: mutatePutDetails, ...putQueryState } = useMutation(
-    putProjectDetailsQuery(id)
+    putProjectDetailsQuery(project?.project_detail?.id)
   );
 
   const mutateAsync = useCallback(async (projectDetails: ProjectDetails) => {
@@ -36,11 +34,9 @@ export default function useMutateProjectDetails(
       } else {
         response = await mutatePostDetails({
           ...projectDetails,
-          project_id: id,
+          project_id: project.id,
         });
       }
-
-      setData(response.data);
 
       callbacks?.onSuccess?.();
     } catch (_) {
@@ -57,7 +53,9 @@ export default function useMutateProjectDetails(
     () => ({
       queryState: {
         ...queryState,
-        isSuccess: !!data,
+        isSuccess: project?.project_detail?.id
+          ? putQueryState.isSuccess
+          : postQueryState.isSuccess,
       },
       mutateAsync,
     }),
