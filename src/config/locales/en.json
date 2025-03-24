@@ -245,6 +245,7 @@
     "leadApplicantEmailPlaceholder": "Email",
     "leadApplicantEmailRequiredInvalid": "Email is required",
     "inviteButton": "Invite",
+    "resentInviteButton": "Resend Invite",
     "professionalEmail": "Email address at employer or institute",
     "professionalEmailPlaceholder": "Email address at employer or institute",
     "professionalEmailFormatInvalid": "Email address must be a valid format",

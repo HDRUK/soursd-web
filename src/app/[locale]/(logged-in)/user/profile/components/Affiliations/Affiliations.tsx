@@ -106,7 +106,7 @@ export default function Affiliations() {
     const {
       organisation: { unclaimed },
     } = info.row.original;
-
+    // will be more status' to implement in other tickets...
     const status = unclaimed ? Status.INVITE_SENT : Status.PENDING;
 
     return status;
@@ -156,10 +156,9 @@ export default function Affiliations() {
     []
   );
 
-  const renderStatus = (info: CellContext<ResearcherAffiliation, unknown>) => {
-    const status = getStatus(info);
-    return <ChipStatus status={status} color="success" />;
-  };
+  const renderStatus = (info: CellContext<ResearcherAffiliation, unknown>) => (
+    <ChipStatus status={getStatus(info)} color="success" />
+  );
 
   const columns: ColumnDef<ResearcherAffiliation>[] = [
     {

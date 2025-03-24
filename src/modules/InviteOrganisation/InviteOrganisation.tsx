@@ -94,7 +94,9 @@ export default function InviteOrganisationForm({
                 endIcon={<SaveIcon />}
                 loading={queryState.isPending}
                 sx={{ display: "flex", justifySelf: "end" }}>
-                {tForm(`inviteButton`)}
+                {organisationId
+                  ? tForm(`resendInviteButton`)
+                  : tForm(`inviteButton`)}
               </LoadingButton>
             </FormActions>
           </>
