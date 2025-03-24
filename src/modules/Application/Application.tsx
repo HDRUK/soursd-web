@@ -73,7 +73,20 @@ export default function Application({
     applicationQueryState,
   ]);
 
-  return isError ? (
+  const hasMissingDepedencyInformation = () => {
+    return (
+      sectorsData?.data.data?.length === 0 ||
+      permissionsData?.data.data?.length === 0 ||
+      systemConfigData?.data?.length === 0
+    );
+  };
+
+  console.log(
+    "hasMissingDepedencyInformation",
+    hasMissingDepedencyInformation()
+  );
+
+  return isError || hasMissingDepedencyInformation() ? (
     <PageBodyContainer>
       <OverlayCenterAlert>
         {t.rich("getDependenciesError", {
