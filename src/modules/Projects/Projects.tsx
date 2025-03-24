@@ -1,5 +1,7 @@
 "use client";
 
+import ChipStatus from "@/components/ChipStatus";
+import Table from "@/components/Table";
 import { FilterIcon } from "@/consts/icons";
 import { SearchDirections } from "@/consts/search";
 import { StoreState, useStore } from "@/data/store";
@@ -7,21 +9,18 @@ import PageSection from "@/modules/PageSection";
 import SearchBar from "@/modules/SearchBar";
 import { ProjectEntities } from "@/services/projects/getEntityProjects";
 import useEntityProjectsQuery from "@/services/projects/useEntityProjectsQuery";
+import { ResearcherProject } from "@/types/application";
 import { renderProjectNameCell } from "@/utils/cells";
 import { formatDisplayLongDate } from "@/utils/date";
 import { getSearchSortOrder } from "@/utils/query";
-import { Organisation, User } from "@/types/application";
 import SortIcon from "@mui/icons-material/Sort";
 import { ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
-import Table from "@/components/Table";
 import PageBody from "../PageBody";
 import SearchActionMenu from "../SearchActionMenu";
 
 const NAMESPACE_TRANSLATIONS_PROJECTS = "Projects";
 const NAMESPACE_TRANSLATIONS_APPLICATION = "Application";
-
-type FilteredUser = User & Pick<Organisation, "organisation_name">;
 
 type VariantConfig = {
   getId: (store: StoreState) => string | number | undefined;
@@ -124,7 +123,7 @@ export default function Projects({ variant }: ProjectsProps) {
     },
   ];
 
-  const columns: ColumnDef<FilteredUser>[] = [
+  const columns: ColumnDef<ResearcherProject>[] = [
     {
       cell: info => {
         let route = null;
@@ -176,6 +175,9 @@ export default function Projects({ variant }: ProjectsProps) {
     {
       accessorKey: "status",
       header: t("status"),
+      cell: info => (
+        <ChipStatus status={info.row.original.model_state?.state.slug} />
+      ),
     },
   ];
 
