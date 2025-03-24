@@ -127,7 +127,9 @@ export default function ApplicationData({
     user &&
     ((isOrganisation && organisation) || !isOrganisation) &&
     ((user.registry_id && histories) || !user.registry_id) &&
-    ((custodian && isCustodian) || !isCustodian);
+    ((custodian && isCustodian) || !isCustodian) &&
+    !!sectors?.length &&
+    !!permissions?.length;
 
   return isAllSet && children;
 }
