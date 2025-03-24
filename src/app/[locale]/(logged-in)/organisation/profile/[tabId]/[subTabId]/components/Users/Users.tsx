@@ -129,8 +129,7 @@ export default function Users() {
                 value
                 onChange={event => {
                   updateQueryParams({
-                    // doesnt do anything as BE not in place
-                    showPending: event.target.checked ? 1 : 0,
+                    show_pending: event.target.checked ? 1 : 0,
                   });
                 }}
               />
