@@ -4,6 +4,7 @@ import Form from "@/components/Form";
 import FormActions from "@/components/FormActions";
 import FormControlWrapper from "@/components/FormControlWrapper";
 import yup from "@/config/yup";
+import { ProjectDetailsAccessType } from "@/consts/projects";
 import { PutProjectDetailsPayload } from "@/services/projects";
 import { ProjectDetails } from "@/types/application";
 import { QueryState } from "@/types/form";
@@ -75,16 +76,16 @@ export default function ProjectSafeSettingsForm({
             t={tForm}
             renderField={fieldProps => (
               <RadioGroup
-                value={fieldProps.status}
+                value={fieldProps.access_type}
                 name="access_type"
                 {...fieldProps}>
                 <FormControlLabel
-                  value={Status.PROJECT_APPROVED}
+                  value={ProjectDetailsAccessType.TRE}
                   control={<Radio />}
                   label={tForm("accessTypeSde")}
                 />
                 <FormControlLabel
-                  value={Status.PROJECT_PENDING}
+                  value={ProjectDetailsAccessType.RELEASE}
                   control={<Radio />}
                   label={tForm("accessTypeDataRelease")}
                 />
