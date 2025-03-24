@@ -19,8 +19,6 @@ import UserHistory from "../UserHistory";
 import UserIdentity from "../UserIdentity";
 import UserProjects from "../UserProjects";
 import UserTrainingAccreditations from "../UserTrainingAccreditations";
-import { ResearcherProject } from "@/types/application";
-import UserTrainingAccreditations from "../UserTrainingAccreditations";
 import ValidationChecks from "../ValidationChecks";
 import Webhooks from "../Webhooks";
 
