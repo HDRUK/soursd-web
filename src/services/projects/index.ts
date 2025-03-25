@@ -27,3 +27,5 @@ export {
   putProjectQuery,
   putProject,
 };
+
+export type * from "./types";

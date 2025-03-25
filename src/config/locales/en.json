@@ -33,6 +33,7 @@
     "status_project_pending": "Pending",
     "status_project_completed": "Completed",
     "status_project_approved": "Approved",
+    "status_notSet": "Not Set",
     "projectStatus": "Project status",
     "projectRole": "Project role",
     "actions": "Actions",
@@ -545,6 +546,13 @@
       "technicalSummaryRequiredInvalid": "Technical summary is required",
       "otherApprovalCommittees": "Other approval committees",
       "otherApprovalCommitteesPlaceholder": "Other approval committees"
+    },
+    "SafeSettings": {
+      "accessType": "Access Type",
+      "dataPrivacy": "How has data been processed to enhance privacy?",
+      "dataPrivacyPlaceholder": "",
+      "accessTypeSde": "Within a Trusted Research Enviornment or Secure Data Enviornment (SDE)",
+      "accessTypeDataRelease": "Via a data release model"
     },
     "Training": {
       "provider": "Training provider",
