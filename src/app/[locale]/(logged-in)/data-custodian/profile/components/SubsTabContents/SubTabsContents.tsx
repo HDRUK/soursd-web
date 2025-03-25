@@ -20,6 +20,7 @@ import UserIdentity from "../UserIdentity";
 import UserProjects from "../UserProjects";
 import UserTrainingAccreditations from "../UserTrainingAccreditations";
 import ValidationChecks from "../ValidationChecks";
+import Integrations from "../Integrations";
 import Webhooks from "../Webhooks";
 
 interface TabsContentsProps {
@@ -55,6 +56,9 @@ export default function SubTabsContents({
       break;
     case ConfigurationSubTabs.WEBHOOKS:
       content = <Webhooks />;
+      break;
+    case ConfigurationSubTabs.INTEGRATIONS:
+      content = <Integrations />;
       break;
     case UserSubTabs.HISTORY:
       content = <UserHistory />;
