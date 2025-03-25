@@ -287,9 +287,7 @@ interface ResearcherAffiliation {
   from?: string | null;
   to?: string | null;
   role?: string;
-  organisation: {
-    organisation_name: string;
-  };
+  organisation: Partial<Organisation>;
   email?: string;
 }
 
