@@ -14,7 +14,7 @@ interface UseCustodianInviteProps {
 }
 
 export default function useMutateProjectDetails(
-  project: ResearcherProject,
+  projectId: number,
   callbacks?: UseCustodianInviteProps
 ) {
   const { mutateAsync: mutatePostDetails, ...postQueryState } = useMutation(
@@ -22,7 +22,7 @@ export default function useMutateProjectDetails(
   );
 
   const { mutateAsync: mutatePutDetails, ...putQueryState } = useMutation(
-    putProjectDetailsQuery(project?.project_detail?.id)
+    putProjectDetailsQuery()
   );
 
   const mutateAsync = useCallback(async (projectDetails: ProjectDetails) => {
@@ -30,11 +30,16 @@ export default function useMutateProjectDetails(
       let response;
 
       if (projectDetails?.id) {
-        response = await mutatePutDetails(projectDetails);
+        response = await mutatePutDetails({
+          params: {
+            id: projectDetails?.id,
+          },
+          payload: projectDetails,
+        });
       } else {
         response = await mutatePostDetails({
           ...projectDetails,
-          project_id: project.id,
+          project_id: projectId,
         });
       }
 

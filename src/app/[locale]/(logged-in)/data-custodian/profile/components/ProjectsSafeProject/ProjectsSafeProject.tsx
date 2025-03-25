@@ -1,7 +1,7 @@
 import { useStore } from "@/data/store";
 import useQueryAlerts from "@/hooks/useQueryAlerts";
 import { mockedSafeProjectGuidanceProps } from "@/mocks/data/cms";
-import { PageBody, PageGuidance, PageSection } from "@/modules";
+import { PageGuidance } from "@/modules";
 import { putProjectQuery } from "@/services/projects";
 import { PutProjectPayload } from "@/services/projects/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -15,12 +15,16 @@ export default function ProjectsSafeProject() {
   const queryClient = useQueryClient();
   const project = useStore(state => state.getProject());
 
-  const { mutateAsync: mutatePutAsync, ...restPutQueryState } = useMutation(
-    putProjectQuery(project.id)
-  );
+  const { mutateAsync: mutatePutAsync, ...restPutQueryState } =
+    useMutation(putProjectQuery());
 
   const handleSubmit = async (payload: PutProjectPayload) => {
-    await mutatePutAsync(payload);
+    await mutatePutAsync({
+      params: {
+        id: payload.id,
+      },
+      payload,
+    });
 
     queryClient.refetchQueries({ queryKey: ["getProject", project.id] });
   };
@@ -33,15 +37,11 @@ export default function ProjectsSafeProject() {
 
   return (
     <PageGuidance {...mockedSafeProjectGuidanceProps}>
-      <PageBody heading={t("safeProject")}>
-        <PageSection>
-          <ProjectsSafeProjectForm
-            queryState={restPutQueryState}
-            project={project}
-            onSubmit={handleSubmit}
-          />
-        </PageSection>
-      </PageBody>
+      <ProjectsSafeProjectForm
+        queryState={restPutQueryState}
+        project={project}
+        onSubmit={handleSubmit}
+      />
     </PageGuidance>
   );
 }
