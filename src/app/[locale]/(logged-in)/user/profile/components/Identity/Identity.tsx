@@ -5,6 +5,7 @@ import Form from "@/components/Form";
 import FormActions from "@/components/FormActions";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
 import FormSection from "@/components/FormSection";
+import Markdown from "@/components/Markdown";
 import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
 import SelectCountry from "@/components/SelectCountry";
 import yup from "@/config/yup";
@@ -19,7 +20,7 @@ import {
 } from "@/modules";
 import { putUserQuery } from "@/services/users";
 import { showAlert } from "@/utils/showAlert";
-import { Grid, TextField } from "@mui/material";
+import { Button, Grid, TextField, Typography } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -161,6 +162,20 @@ export default function Identity() {
                           />
                         )}
                       />
+                    </Grid>
+                  </Grid>
+                </FormSection>
+                <FormSection heading={tProfile("idvtCheckSection")}>
+                  <Grid container spacing={3}>
+                    <Grid container item spacing={3}>
+                      <Grid item xs={8}>
+                        <Button variant="outlined">
+                          {tProfile("idvtCheckButton")}
+                        </Button>
+                        <Markdown variant="subtitle">
+                          {tProfile("idvtCheckDescription")}
+                        </Markdown>
+                      </Grid>
                     </Grid>
                   </Grid>
                 </FormSection>
