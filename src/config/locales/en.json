@@ -1186,5 +1186,11 @@
       "description": "",
       "buttonText": "Add Organisations"
     }
+  },
+  "VeriffTermsAndConditions": {
+    "title": "This will take you to Veriff’s website to verify your identity.",
+    "descriptionPart1": "For more information on how we process your data see our <ourLink>privacy policy</ourLink>.",
+    "descriptionPart2": "For more information on how Veriff will process your data see their <theirLink>privacy policy</theirLink>.",
+    "checkboxLabel": "I consent to the above terms and conditions"
   }
 }

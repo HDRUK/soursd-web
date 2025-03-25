@@ -24,8 +24,9 @@ import { Button, Grid, TextField, Typography } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import ReactDOMServer from "react-dom/server";
+import VeriffTermsAndConditions from "../VeriffTermsAndConditions";
 
 export interface IdentityFormValues {
   first_name: string;
@@ -45,6 +46,8 @@ export default function Identity() {
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
   const updateUser = useMutation(putUserQuery(user?.id));
+
+  const [showModal, setShowModal] = useState(false);
 
   const handleDetailsSubmit = useCallback(
     async (fields: IdentityFormValues) => {
@@ -169,7 +172,9 @@ export default function Identity() {
                   <Grid container spacing={3}>
                     <Grid container item spacing={3}>
                       <Grid item xs={8}>
-                        <Button variant="outlined">
+                        <Button
+                          variant="outlined"
+                          onClick={() => setShowModal(true)}>
                           {tProfile("idvtCheckButton")}
                         </Button>
                         <Markdown variant="subtitle">
@@ -187,6 +192,10 @@ export default function Identity() {
                 </FormActions>
               </>
             </Form>
+            <VeriffTermsAndConditions
+              open={showModal}
+              onClose={() => setShowModal(false)}
+            />
           </PageSection>
         </PageBody>
       </PageGuidance>
