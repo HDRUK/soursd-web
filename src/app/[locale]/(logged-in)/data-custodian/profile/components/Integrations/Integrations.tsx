@@ -28,7 +28,7 @@ export default function Integrations() {
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
 
   const { custodian } = useStore(state => ({
-    custodian: state.config.custodian,
+    custodian: state.getCustodian(),
   }));
 
   const { mutateAsync: updateCustodian, isPending } = useMutation(
