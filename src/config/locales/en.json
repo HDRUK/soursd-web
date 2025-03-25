@@ -154,6 +154,7 @@
     "configurationWebhooks": "Webhooks",
     "webhookError": "There was a problem with the webhook configuration. Please try again or contact us at <contactLink></contactLink>",
     "configurationIntegrations": "Integrations",
+    "integrationsDescription": "Link your Gateway Team profile via a custom integration to SOURSD so that you can populate your project information and synch the information without needing to enter it in two places.",
     "userRulesTitle": "User Rules",
     "organisationRulesTitle": "Organisation Rules",
     "updateRulesSuccess": "Rules configuration updated successfully",

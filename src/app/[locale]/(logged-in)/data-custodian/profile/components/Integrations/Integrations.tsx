@@ -1,31 +1,19 @@
 import React, { useMemo } from "react";
 import { useTranslations } from "next-intl";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { Box, Grid, MenuItem, Select, TextField } from "@mui/material";
-import ReactDOMServer from "react-dom/server";
+import { useMutation } from "@tanstack/react-query";
+import { Grid, TextField, Typography } from "@mui/material";
 import FormActions from "@/components/FormActions";
-import FormControlHorizontal from "@/components/FormControlHorizontal";
-import FormFieldArray from "@/components/FormFieldArray";
 import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
 import Form from "@/components/Form";
-import LoadingWrapper from "@/components/LoadingWrapper";
-import ContactLink from "@/components/ContactLink";
 import yup from "@/config/yup";
-import { VALIDATION_URL, VALIDATION_INTEGRATION_ID } from "@/consts/form";
+import { VALIDATION_INTEGRATION_ID } from "@/consts/form";
 import { ROUTES } from "@/consts/router";
 import { useStore } from "@/data/store";
 import { PageBody, PageSection } from "@/modules";
-import {
-  getWebhookEventTriggerQuery,
-  getCustodianWebhooksQuery,
-  postCustodianWebhookQuery,
-  deleteCustodianWebhookQuery,
-} from "@/services/webhooks/index";
-import { Webhook } from "@/services/webhooks/types";
 import { showAlert } from "@/utils/showAlert";
-import { mockedWebhookDescription } from "@/mocks/data/cms";
 import FormControlWrapper from "@/components/FormControlWrapper";
 import { patchCustodianQuery } from "@/services/custodians";
+import Image from "next/image";
 
 const NAMESPACE_TRANSLATION_CUSTODIAN_PROFILE = "CustodianProfile";
 const NAMESPACE_TRANSLATION_FORM = "Form";
@@ -61,7 +49,7 @@ export default function Integrations() {
   const defaultValues = useMemo(
     () => ({
       gateway_app_id: custodian?.gateway_app_id || "",
-      gateway_client_id: custodian?.gateway_client || "",
+      gateway_client_id: custodian?.gateway_client_id || "",
     }),
     [custodian]
   );
@@ -85,6 +73,19 @@ export default function Integrations() {
           key={`${custodian?.id}-integrations`}>
           <>
             <Grid container spacing={3}>
+              <Grid container item spacing={3}>
+                <Grid item xs={6}>
+                  <Image
+                    src="/images/logos/gateway-main.svg"
+                    width={228}
+                    height={122}
+                    alt={t("dsitLogoAlt")}
+                  />
+                  <Typography sx={{ my: 1 }}>
+                    {t("integrationsDescription")}
+                  </Typography>
+                </Grid>
+              </Grid>
               <Grid container item spacing={3}>
                 <Grid item xs={6}>
                   <FormControlWrapper
