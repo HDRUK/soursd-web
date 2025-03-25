@@ -7,13 +7,7 @@ import GppBadIcon from "@mui/icons-material/GppBad";
 import GppGoodIcon from "@mui/icons-material/GppGood";
 import UploadIcon from "@mui/icons-material/Upload";
 import { LoadingButton } from "@mui/lab";
-import {
-  CircularProgress,
-  Typography,
-  Grid,
-  Tooltip,
-  Link,
-} from "@mui/material";
+import { CircularProgress, Typography, Grid, Button } from "@mui/material";
 import { useTranslations } from "next-intl";
 import prettyBytes from "pretty-bytes";
 import { ChangeEventHandler, ReactNode, useCallback, useRef } from "react";
@@ -71,24 +65,27 @@ export default function FileLink({
   const statusIcons = (
     <>
       {isScanComplete && (
-        <Tooltip title={fileScanOkText || t("scanOkText")}>
-          <GppGoodIcon color="success" />
-        </Tooltip>
+        <GppGoodIcon
+          color="success"
+          titleAccess={fileScanOkText || t("scanOkText")}
+        />
       )}
       {isScanFailed && (
-        <Tooltip title={fileScanErrorText || t("scanErrorText")}>
-          <GppBadIcon color="error" />
-        </Tooltip>
+        <GppBadIcon
+          color="error"
+          titleAccess={fileScanErrorText || t("scanErrorText")}
+        />
       )}
       {isScanning && (
-        <Tooltip title={fileScanningText || t("scanningText")}>
-          <CircularProgress color="info" size="1em" role="progressbar" />
-        </Tooltip>
+        <CircularProgress
+          color="info"
+          size="1em"
+          title={fileScanningText || t("scanningText")}
+          role="progressbar"
+        />
       )}
     </>
   );
-
-  console.log(`${isScanComplete} ${isScanFailed} ${isScanning}`);
 
   return (
     <Grid container item spacing={0}>
@@ -104,28 +101,23 @@ export default function FileLink({
             {fileButtonText}
           </LoadingButton>
         </Grid>
+        <Grid item xs={2} sx={{ alignContent: "center" }}>
+          {!fileNameText && includeStatus && statusIcons}
+        </Grid>
       </Grid>
       <Grid item xs={12}>
         {fileNameText && (
-          /* eslint-disable jsx-a11y/anchor-is-valid */
-          <Link
+          <Button
             data-testid="download-file"
-            variant="body2"
-            component="button"
-            onClick={e => {
-              e.preventDefault();
-              e.stopPropagation();
-              onDownload?.(e);
-            }}
+            variant="text"
+            onClick={e => onDownload?.(e)}
             disabled={!onDownload}>
             {includeStatus ? (
-              <Text endIcon={statusIcons}>
-                {statusIcons} {fileNameText}
-              </Text>
+              <Text endIcon={statusIcons}>{fileNameText}</Text>
             ) : (
               fileNameText
             )}
-          </Link>
+          </Button>
         )}
         <Typography variant="caption" color="caption.main" component="div">
           {fileTypesText || t("fileTypesText")}
