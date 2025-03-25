@@ -54,6 +54,8 @@ const CertificationUploader = ({
     }
   };
 
+  console.log(`${isScanComplete} ${isScanFailed} ${isScanning}`);
+
   return (
     <Grid container item spacing={3} sx={{ mt: 1 }}>
       <Grid item xs={4}>

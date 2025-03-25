@@ -88,6 +88,8 @@ export default function FileLink({
     </>
   );
 
+  console.log(`${isScanComplete} ${isScanFailed} ${isScanning}`);
+
   return (
     <Grid container item spacing={0}>
       <Grid container item>
@@ -117,7 +119,9 @@ export default function FileLink({
             }}
             disabled={!onDownload}>
             {includeStatus ? (
-              <Text endIcon={statusIcons}>{fileNameText}</Text>
+              <Text endIcon={statusIcons}>
+                {statusIcons} {fileNameText}
+              </Text>
             ) : (
               fileNameText
             )}
