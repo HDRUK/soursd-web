@@ -74,6 +74,8 @@ export default function useFileUpload(message: string) {
     };
   }, [file?.id, fileData]);
 
+  console.log(isFileScanComplete(fileData));
+
   return {
     upload,
     isScanning: isFileScanning(fileData),
