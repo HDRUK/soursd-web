@@ -4,13 +4,17 @@ import { useTranslations } from "next-intl";
 
 interface OrganisationDetailsModalProps {
   open?: boolean;
+  onSuccess?(): void;
   onClose(): void;
+  organisationId?: number;
 }
 
 const NAMESPACE_TRANSLATIONS_ORGANISATION = "Organisation";
 
 export default function OrganisationDetailsModal({
+  organisationId,
   open = true,
+  onSuccess,
   onClose,
 }: OrganisationDetailsModalProps) {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_ORGANISATION);
@@ -21,7 +25,11 @@ export default function OrganisationDetailsModal({
       variant="content"
       open={open}
       onClose={onClose}>
-      <SendInviteOrganisation onClose={onClose} />
+      <SendInviteOrganisation
+        onSuccess={onSuccess}
+        onClose={onClose}
+        organisationId={organisationId}
+      />
     </FormModal>
   );
 }
