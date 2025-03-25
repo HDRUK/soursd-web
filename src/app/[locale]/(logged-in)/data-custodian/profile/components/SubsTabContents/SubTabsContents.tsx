@@ -4,23 +4,24 @@ import { useStore } from "@/data/store";
 import { PageBody } from "@/modules";
 import { notFound } from "next/navigation";
 import {
-  getSubTabs,
   ConfigurationSubTabs,
+  getSubTabs,
   PageTabs,
-  UserSubTabs,
   ProjectsSubTabs,
+  UserSubTabs,
 } from "../../consts/tabs";
+import ProjectsSafePeople from "../ProjectsSafePeople";
+import ProjectsSafeProject from "../ProjectsSafeProject";
+import ProjectsSafeData from "../ProjectsSafeData";
 import Rules from "../Rules";
-import ValidationChecks from "../ValidationChecks";
-import Webhooks from "../Webhooks";
+import UserAffiliations from "../UserAffiliations";
+import UserCustodianOrgInfo from "../UserCustodianOrgInfo";
 import UserHistory from "../UserHistory";
 import UserIdentity from "../UserIdentity";
-import UserTrainingAccreditations from "../UserTrainingAccreditations";
 import UserProjects from "../UserProjects";
-import UserCustodianOrgInfo from "../UserCustodianOrgInfo";
-import UserAffiliations from "../UserAffiliations";
-import ProjectsSafePeople from "../ProjectsSafePeople";
-import ProjectsSafeData from "../ProjectsSafeData";
+import UserTrainingAccreditations from "../UserTrainingAccreditations";
+import ValidationChecks from "../ValidationChecks";
+import Webhooks from "../Webhooks";
 
 interface TabsContentsProps {
   tabId: PageTabs;
@@ -80,6 +81,10 @@ export default function SubTabsContents({
     case ProjectsSubTabs.SAFE_DATA:
       content = <ProjectsSafeData id={id} />;
       break;
+    case ProjectsSubTabs.SAFE_PROJECT:
+      content = <ProjectsSafeProject />;
+      break;
+
     default:
       content = null;
   }

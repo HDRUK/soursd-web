@@ -29,6 +29,7 @@ export interface FormControlProps
   displayPlaceholder?: boolean;
   fullWidth?: boolean;
   description?: string;
+  t?: ReturnType<typeof useTranslations>;
 }
 
 const NAMESPACE_TRANSLATION_FORM = "Form";
@@ -43,6 +44,7 @@ export default function FormControlWrapper({
   renderField,
   fullWidth = true,
   description,
+  t,
   sx = {
     m: 0,
     width: "100%",
@@ -50,7 +52,11 @@ export default function FormControlWrapper({
     alignItems: "flex-start",
   },
 }: FormControlProps) {
-  const t = useTranslations(NAMESPACE_TRANSLATION_FORM);
+  let tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
+
+  if (t) {
+    tForm = t;
+  }
 
   const tKey = name?.replace(/_([a-zA-Z0-9])/g, g => g[1].toUpperCase());
 
@@ -71,7 +77,7 @@ export default function FormControlWrapper({
         <FormControl sx={sx} fullWidth={fullWidth} error={invalid}>
           {displayLabel && (
             <FormLabel htmlFor={field.name} sx={{ pb: 1 }}>
-              {label || t(tKey)}
+              {label || tForm(tKey)}
               {isRequired && <span style={{ color: "red" }}>*</span>}
             </FormLabel>
           )}
@@ -80,7 +86,7 @@ export default function FormControlWrapper({
             inputRef: ref,
             error: invalid,
             placeholder: displayPlaceholder
-              ? placeholder || t(`${tKey}Placeholder`)
+              ? placeholder || tForm(`${tKey}Placeholder`)
               : "",
             fullWidth,
             "data-testid": field.name,
