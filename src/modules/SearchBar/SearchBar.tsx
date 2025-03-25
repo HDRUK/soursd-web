@@ -25,6 +25,7 @@ export default function SearchBar({
         display: "flex",
         flexDirection: "column",
         gap: 2,
+        flexGrow: 1,
       }}>
       <Box
         sx={{

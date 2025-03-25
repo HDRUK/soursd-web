@@ -82,103 +82,102 @@ export default function UserModalDetails({
       {...formOptions}
       onSubmit={onSubmit}
       autoComplete="off">
-      <Grid container rowGap={3}>
+      <Grid container columnSpacing={5}>
         <Grid
+          item
           md={8}
           order={{
             md: 1,
             xs: 2,
           }}>
-          <FormModalBody>
-            <Grid container rowSpacing={3}>
-              <Grid item xs={12}>
-                <FormControlWrapper
-                  name="unique_id"
-                  t={tForm}
-                  renderField={fieldProps => <TextField {...fieldProps} />}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlWrapper
-                  name="title"
-                  t={tForm}
-                  renderField={fieldProps => <TextField {...fieldProps} />}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlWrapper
-                  name="request_category_type"
-                  t={tForm}
-                  renderField={fieldProps => <TextField {...fieldProps} />}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Grid container columnSpacing={3}>
-                  <Grid item xs={6}>
-                    <FormControlWrapper
-                      name="start_date"
-                      renderField={fieldProps => <DateInput {...fieldProps} />}
-                    />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <FormControlWrapper
-                      name="end_date"
-                      renderField={fieldProps => <DateInput {...fieldProps} />}
-                    />
-                  </Grid>
+          <Grid container rowSpacing={3}>
+            <Grid item xs={12}>
+              <FormControlWrapper
+                name="unique_id"
+                t={tForm}
+                renderField={fieldProps => <TextField {...fieldProps} />}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControlWrapper
+                name="title"
+                t={tForm}
+                renderField={fieldProps => <TextField {...fieldProps} />}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControlWrapper
+                name="request_category_type"
+                t={tForm}
+                renderField={fieldProps => <TextField {...fieldProps} />}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Grid container columnSpacing={3}>
+                <Grid item xs={6}>
+                  <FormControlWrapper
+                    name="start_date"
+                    renderField={fieldProps => <DateInput {...fieldProps} />}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <FormControlWrapper
+                    name="end_date"
+                    renderField={fieldProps => <DateInput {...fieldProps} />}
+                  />
                 </Grid>
               </Grid>
-              <Grid item xs={12}>
-                <FormControlWrapper
-                  name="lay_summary"
-                  t={tForm}
-                  renderField={fieldProps => (
-                    <TextField
-                      {...fieldProps}
-                      multiline
-                      style={{ width: "100%" }}
-                      minRows={6}
-                    />
-                  )}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlWrapper
-                  name="public_benefit_statement"
-                  t={tForm}
-                  renderField={fieldProps => (
-                    <TextField
-                      {...fieldProps}
-                      style={{ width: "100%" }}
-                      multiline
-                      minRows={6}
-                    />
-                  )}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlWrapper
-                  name="technical_summary"
-                  t={tForm}
-                  renderField={fieldProps => (
-                    <TextField
-                      {...fieldProps}
-                      style={{ width: "100%" }}
-                      multiline
-                      minRows={6}
-                    />
-                  )}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlWrapper
-                  name="other_approval_committees"
-                  t={tForm}
-                  renderField={fieldProps => <TextField {...fieldProps} />}
-                />
-              </Grid>
             </Grid>
-          </FormModalBody>
+            <Grid item xs={12}>
+              <FormControlWrapper
+                name="lay_summary"
+                t={tForm}
+                renderField={fieldProps => (
+                  <TextField
+                    {...fieldProps}
+                    multiline
+                    style={{ width: "100%" }}
+                    minRows={6}
+                  />
+                )}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControlWrapper
+                name="public_benefit_statement"
+                t={tForm}
+                renderField={fieldProps => (
+                  <TextField
+                    {...fieldProps}
+                    style={{ width: "100%" }}
+                    multiline
+                    minRows={6}
+                  />
+                )}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControlWrapper
+                name="technical_summary"
+                t={tForm}
+                renderField={fieldProps => (
+                  <TextField
+                    {...fieldProps}
+                    style={{ width: "100%" }}
+                    multiline
+                    minRows={6}
+                  />
+                )}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControlWrapper
+                name="other_approval_committees"
+                t={tForm}
+                renderField={fieldProps => <TextField {...fieldProps} />}
+              />
+            </Grid>
+          </Grid>
           <FormModalActions>
             <Button variant="outlined" onClick={() => {}}>
               {tApplication("previousButton")}
@@ -192,6 +191,7 @@ export default function UserModalDetails({
           </FormModalActions>
         </Grid>
         <Grid
+          item
           md={4}
           xs={12}
           order={{

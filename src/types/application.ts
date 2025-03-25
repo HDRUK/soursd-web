@@ -138,6 +138,7 @@ interface User {
     organisations?: Organisation[];
     verified: boolean;
     training?: ResearcherTraining[];
+    affiliations?: ResearcherAffiliation[];
   };
   is_delegate: number;
   departments?: Department[];
@@ -298,6 +299,11 @@ interface ResearcherProjectApproval {
   custodian_id: number;
 }
 
+interface ProjectRole {
+  id: number;
+  name: string;
+}
+
 type ResearcherProject = ModelState<{
   id: number;
   title: string;
@@ -343,14 +349,7 @@ interface Project {
   end_date: string;
 }
 
-type ProjectUser = ModelState<{
-  project_id: number;
-  user_digital_ident: string;
-  project_role_id: number;
-  registry: Registry;
-  role: Role;
-  primary_contact: number;
-}>;
+type ProjectUser = ModelState<User>;
 
 interface Department {
   category: string;
@@ -396,4 +395,5 @@ export type {
   UserProfileCompletionFields,
   UserProfileCompletionJson,
   UserProfileCompletionSchema,
+  ProjectRole,
 };

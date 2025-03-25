@@ -37,13 +37,16 @@ function renderProjectNameCell<T extends Project>(
   );
 }
 
-function renderUserNameCell<T extends User>(
-  info: CellContext<T, unknown>,
-  route: string
-) {
+function renderUserNameCell<
+  T extends {
+    first_name: string;
+    last_name: string;
+    id?: number;
+  },
+>(info: CellContext<T, unknown>, route?: string) {
   const { first_name, last_name, id } = info.row.original;
 
-  return (
+  return route && id ? (
     <Typography color="primary">
       <Link
         href={injectParamsIntoPath(route, {
@@ -52,6 +55,8 @@ function renderUserNameCell<T extends User>(
         {first_name} {last_name}
       </Link>
     </Typography>
+  ) : (
+    `${first_name} ${last_name}`
   );
 }
 

@@ -10,7 +10,7 @@ export default function FormModalBody({
   ...restProps
 }: FormModalBodyProps) {
   return (
-    <Box {...restProps} sx={{ px: 4, mb: 3, ...restProps.sx }}>
+    <Box {...restProps} sx={{ mb: 3, ...restProps.sx }}>
       {children}
     </Box>
   );

@@ -28,6 +28,12 @@ interface PutProjectPayload extends Omit<ResearcherProject, "model_state"> {
 
 type PutProjectResponse = ResearcherProject;
 
+type PostProjectUsersResponse = ResearcherProject;
+
+interface PostProjectUsersPayload {
+  users: { user_digital_ident: string; project_role_id: number }[];
+}
+
 export type {
   ProjectsResponse,
   ProjectUsersResponse,
@@ -37,4 +43,6 @@ export type {
   PutPrimaryContactQuery,
   PutProjectPayload,
   PutProjectResponse,
+  PostProjectUsersPayload,
+  PostProjectUsersResponse,
 };
