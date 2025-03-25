@@ -2,11 +2,11 @@ import {
   postProjectDetailsQuery,
   putProjectDetailsQuery,
 } from "@/services/project_details";
-import { ProjectDetails, ResearcherProject } from "@/types/application";
+import { ProjectDetails } from "@/types/application";
 import { MutationState } from "@/types/form";
 import { getCombinedQueryState } from "@/utils/query";
 import { useMutation } from "@tanstack/react-query";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 interface UseCustodianInviteProps {
   onSuccess?: () => void;
@@ -17,6 +17,8 @@ export default function useMutateProjectDetails(
   projectId: number,
   callbacks?: UseCustodianInviteProps
 ) {
+  const [type, setType] = useState("");
+
   const { mutateAsync: mutatePostDetails, ...postQueryState } = useMutation(
     postProjectDetailsQuery()
   );
@@ -27,20 +29,22 @@ export default function useMutateProjectDetails(
 
   const mutateAsync = useCallback(async (projectDetails: ProjectDetails) => {
     try {
-      let response;
-
       if (projectDetails?.id) {
-        response = await mutatePutDetails({
+        await mutatePutDetails({
           params: {
             id: projectDetails?.id,
           },
           payload: projectDetails,
         });
+
+        setType("PUT");
       } else {
-        response = await mutatePostDetails({
+        await mutatePostDetails({
           ...projectDetails,
           project_id: projectId,
         });
+
+        setType("POST");
       }
 
       callbacks?.onSuccess?.();
@@ -49,19 +53,11 @@ export default function useMutateProjectDetails(
     }
   }, []);
 
-  const queryState = getCombinedQueryState<MutationState>([
-    putQueryState,
-    postQueryState,
-  ]);
+  const queryState = type === "PUT" ? putQueryState : postQueryState;
 
   return useMemo(
     () => ({
-      queryState: {
-        ...queryState,
-        isSuccess: project?.project_detail?.id
-          ? putQueryState.isSuccess
-          : postQueryState.isSuccess,
-      },
+      queryState,
       mutateAsync,
     }),
     [queryState]

@@ -15,7 +15,7 @@ export default function ProjectsSafeProject() {
   const queryClient = useQueryClient();
   const project = useStore(state => state.getProject());
 
-  const { mutateAsync, queryState } = useMutateProjectDetails(project);
+  const { mutateAsync, queryState } = useMutateProjectDetails(project.id);
 
   const handleSubmit = async (payload: PutProjectDetailsPayload) => {
     await mutateAsync({
