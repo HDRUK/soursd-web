@@ -20,7 +20,7 @@ import {
 } from "@/modules";
 import { putUserQuery } from "@/services/users";
 import { showAlert } from "@/utils/showAlert";
-import { Button, Grid, TextField, Typography } from "@mui/material";
+import { Button, Grid, TextField } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
