@@ -1,6 +1,6 @@
 import React from "react";
 import ReactMarkdown, { Components } from "react-markdown";
-import { Typography } from "@mui/material";
+import FormControlDescription from "../FormControlDescription";
 
 interface MarkdownProps {
   children: string;
@@ -10,11 +10,7 @@ interface MarkdownProps {
 
 const subtitleComponents: Components = {
   p({ children }) {
-    return (
-      <Typography variant="subtitle2" sx={{ my: 2, whiteSpace: "pre-line" }}>
-        {children}
-      </Typography>
-    );
+    return <FormControlDescription>{children}</FormControlDescription>;
   },
 };
 
