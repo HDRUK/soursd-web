@@ -287,9 +287,7 @@ interface ResearcherAffiliation {
   from?: string | null;
   to?: string | null;
   role?: string;
-  organisation: {
-    organisation_name: string;
-  };
+  organisation: Partial<Organisation>;
   email?: string;
 }
 
@@ -298,7 +296,7 @@ interface ResearcherProjectApproval {
   custodian_id: number;
 }
 
-interface ResearcherProject {
+type ResearcherProject = ModelState<{
   id: number;
   title: string;
   lay_summary: string;
@@ -312,6 +310,14 @@ interface ResearcherProject {
   unique_id: string;
   approvals: ResearcherProjectApproval[];
   organisations: Organisation[];
+  project_detail: ProjectDetails;
+}>;
+
+interface ProjectDetails {
+  access_type: string;
+  data_privacy: string;
+  id: number;
+  project_id: number;
 }
 
 interface Registry {
@@ -396,4 +402,5 @@ export type {
   UserProfileCompletionFields,
   UserProfileCompletionJson,
   UserProfileCompletionSchema,
+  ProjectDetails,
 };

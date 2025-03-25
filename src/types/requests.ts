@@ -36,6 +36,11 @@ type ResponseJson<T> = Response & {
   status: number;
 };
 
+type MutateWithArgs<T, P> = {
+  params: T;
+  payload: P;
+};
+
 interface Paged<T> {
   current_page: number;
   last_page: number;
@@ -58,4 +63,5 @@ export type {
   QueryOptions,
   MutationOptions,
   QueryFunctionContextDefault,
+  MutateWithArgs,
 };

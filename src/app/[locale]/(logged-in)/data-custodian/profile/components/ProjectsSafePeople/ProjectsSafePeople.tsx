@@ -5,6 +5,7 @@ import { FilterIcon, PrimaryContactIcon } from "@/consts/icons";
 import { useStore } from "@/data/store";
 import useQueryAlerts from "@/hooks/useQueryAlerts";
 import useQueryConfirmAlerts from "@/hooks/useQueryConfirmAlerts";
+import { PageBody, PageSection } from "@/modules";
 import SearchActionMenu from "@/modules/SearchActionMenu";
 import SearchBar from "@/modules/SearchBar";
 import {
@@ -176,37 +177,41 @@ export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
   ];
 
   return (
-    <>
-      <Box component="form" role="search">
-        <SearchBar
-          onClear={resetQueryParams}
-          onSearch={(text: string) => {
-            updateQueryParams({
-              "first_name[]": text,
-              "last_name[]": text,
-              "email[]": text,
-            });
-          }}
-          placeholder={t("searchPlaceholder")}>
-          <SearchActionMenu
-            actions={filterActions}
-            startIcon={<FilterIcon />}
-            renderedSelectedLabel={tApplication("filteredBy")}
-            renderedDefaultLabel={tApplication("filterByUserStatus")}
-            aria-label={tApplication("filterBy")}
-            multiple
-          />
-        </SearchBar>
-      </Box>
-      <Table
-        total={total}
-        last_page={last_page}
-        setPage={setPage}
-        data={users}
-        columns={columns}
-        queryState={queryState}
-        isPaginated
-      />
-    </>
+    <PageBody heading={t("safeProject")}>
+      <PageSection>
+        <Box component="form" role="search">
+          <SearchBar
+            onClear={resetQueryParams}
+            onSearch={(text: string) => {
+              updateQueryParams({
+                "first_name[]": text,
+                "last_name[]": text,
+                "email[]": text,
+              });
+            }}
+            placeholder={t("searchPlaceholder")}>
+            <SearchActionMenu
+              actions={filterActions}
+              startIcon={<FilterIcon />}
+              renderedSelectedLabel={tApplication("filteredBy")}
+              renderedDefaultLabel={tApplication("filterByUserStatus")}
+              aria-label={tApplication("filterBy")}
+              multiple
+            />
+          </SearchBar>
+        </Box>
+      </PageSection>
+      <PageSection>
+        <Table
+          total={total}
+          last_page={last_page}
+          setPage={setPage}
+          data={users}
+          columns={columns}
+          queryState={queryState}
+          isPaginated
+        />
+      </PageSection>
+    </PageBody>
   );
 }

@@ -53,7 +53,8 @@ export default function AffiliationsForm({
     number | null
   >();
 
-  const { data: organisationsData } = useOrganisationsQuery();
+  const { data: organisationsData, refetch: refetchOrganisations } =
+    useOrganisationsQuery();
 
   // keeping in some department code..
   // - this is not used, but incase we want to turn it on..
@@ -116,6 +117,18 @@ export default function AffiliationsForm({
     { label: tApplication("student"), value: AffiliationRelationship.STUDENT },
   ];
 
+  const hydratedOrganisationMenu = useMemo(
+    () =>
+      (organisationsData ?? []).map(
+        (org: { organisation_name: string; id: string }) => (
+          <MenuItem value={org.id} key={org.id} id={org.organisation_name}>
+            {org.organisation_name}
+          </MenuItem>
+        )
+      ),
+    [organisationsData]
+  );
+
   return (
     <>
       <Form onSubmit={onSubmit} schema={schema} {...formOptions} sx={{ mb: 3 }}>
@@ -137,16 +150,7 @@ export default function AffiliationsForm({
                     name="organisation_id"
                     renderField={fieldProps => (
                       <Select {...fieldProps}>
-                        {(organisationsData ?? []).map(
-                          (org: { organisation_name: string; id: string }) => (
-                            <MenuItem
-                              value={org.id}
-                              key={org.id}
-                              id={org.organisation_name}>
-                              {org.organisation_name}
-                            </MenuItem>
-                          )
-                        )}
+                        {hydratedOrganisationMenu}
                       </Select>
                     )}
                     description={
@@ -280,6 +284,7 @@ export default function AffiliationsForm({
       </Form>
       <AskOrganisationModal
         open={inviteOpen}
+        onSuccess={refetchOrganisations}
         onClose={() => setInviteOpen(false)}
       />
     </>

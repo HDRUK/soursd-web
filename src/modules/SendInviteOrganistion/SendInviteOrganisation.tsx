@@ -8,10 +8,14 @@ import ReactDOMServer from "react-dom/server";
 const NAMESPACE_TRANSLATIONS_ORGANISATION = "Organisation";
 
 interface SendInviteOrganisationProps {
+  organisationId?: number;
   onClose?: () => void;
+  onSuccess?: () => void;
 }
 
 export default function SendInviteOrganisation({
+  organisationId,
+  onSuccess,
   onClose,
 }: SendInviteOrganisationProps) {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_ORGANISATION);
@@ -29,6 +33,7 @@ export default function SendInviteOrganisation({
   };
 
   const handleSuccessAlert = () => {
+    onSuccess?.();
     onClose?.();
     showAlert("success", {
       text: t("inviteOrganisationSuccess"),
@@ -41,5 +46,11 @@ export default function SendInviteOrganisation({
     onSuccess: handleSuccessAlert,
   });
 
-  return <InviteOrganisation onSubmit={handleSubmit} queryState={queryState} />;
+  return (
+    <InviteOrganisation
+      organisationId={organisationId}
+      onSubmit={handleSubmit}
+      queryState={queryState}
+    />
+  );
 }
