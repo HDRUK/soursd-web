@@ -20,6 +20,7 @@ import UserProjects from "../UserProjects";
 import UserCustodianOrgInfo from "../UserCustodianOrgInfo";
 import UserAffiliations from "../UserAffiliations";
 import ProjectsSafePeople from "../ProjectsSafePeople";
+import ProjectsSafeData from "../ProjectsSafeData";
 
 interface TabsContentsProps {
   tabId: PageTabs;
@@ -75,6 +76,9 @@ export default function SubTabsContents({
       break;
     case ProjectsSubTabs.SAFE_PEOPLE:
       content = <ProjectsSafePeople id={id} />;
+      break;
+    case ProjectsSubTabs.SAFE_DATA:
+      content = <ProjectsSafeData id={id} />;
       break;
     default:
       content = null;

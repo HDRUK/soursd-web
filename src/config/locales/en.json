@@ -150,7 +150,33 @@
     "updateRulesSuccess": "Rules configuration updated successfully",
     "updateRulesError": "There was a problem updating your rules configuration. Please try again or contact us at <contactLink></contactLink>",
     "successButton": "OK",
-    "errorButton": "Try Again"
+    "errorButton": "Try Again",
+    "importFromHealthDataResearchGateway": "Import from the Health Data Research Gateway",
+    "datasetName": "Dataset name",
+    "addAnother": "Add another",
+    "dataSensitivityLevel": "Data sensitivity level",
+    "lawfulCondition": "Lawful condition for provision of data under <link>Article 6</link>",
+    "lawfulBasisConfirmation": "I confirm there is a lawful basis to hold and use this data in accordance with the <link>common law duty of confidentiality</link>",
+    "nationalDataOptOut": "National data opt-out preferences have been applied to this data",
+    "requestFrequency": "Request frequency",
+    "oneOffRequest": "One-off request",
+    "recurringDataset": "Recurring dataset",
+    "linkedDatasets": "For linked datasets, specify how the linkage will take place",
+    "dataMinimisation": "Approach to data minimisation",
+    "dataDescription": "Description of the data being used",
+    "releaseDate": "Release / access date",
+    "releaseDateDescription": "The date the data access was granted and active research started",
+    "save": "Save",
+    "datasetNameRequired": "Dataset name is required",
+    "dataSensitivityLevelRequired": "Data sensitivity level is required",
+    "lawfulConditionRequired": "Lawful condition is required",
+    "lawfulBasisConfirmationRequired": "You must confirm the lawful basis",
+    "requestFrequencyRequired": "Request frequency is required",
+    "dataMinimisationRequired": "Approach to data minimisation is required",
+    "dataDescriptionRequired": "Data description is required",
+    "releaseDateRequired": "Release date is required",
+    "datasetsPlaceholder": "Dataset name",
+    "dataSensitivityLevelPlaceholder": "Select data sensitivity level"
   },
   "OrganisationStats": {
     "affiliatedUsers": "Affiliated Users",
@@ -533,7 +559,11 @@
       "done": "Done"
     },
     "comment": "Add any further comment",
-    "commentPlaceholder": "Type your comment here..."
+    "commentPlaceholder": "Type your comment here...",
+    "legalBasisForDataArticle6Placeholder": "Lawful condition",
+    "datasetLinkageDescriptionPlaceholder": "Linked datasets",
+    "dataMinimisationPlaceholder": "Data minimisation",
+    "dataUseDescriptionPlaceholder": "Data description"
   },
   "ProfessionalRegistrations": {
     "title": "Professional Registrations",
