@@ -1,7 +1,6 @@
 import FormActions from "@/components/FormActions";
 import ButtonSave from "@/components/ButtonSave";
 import FormModal from "@/components/FormModal";
-import Markdown from "@/components/Markdown";
 import { Checkbox, Button } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
@@ -23,7 +22,8 @@ export default function VeriffTermsAndConditions({
   const [value, setValue] = useState(false);
 
   const handleSave = () => {
-    // something needs to happen?
+    // something needs to happen here
+    // - no BE in place so will come in another ticket
     onClose();
   };
 
