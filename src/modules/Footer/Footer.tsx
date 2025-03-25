@@ -57,7 +57,7 @@ export default function Footer(props: FooterProps) {
                 },
               }}>
               {footerLinkPages.map(({ label, ...linkProps }) => (
-                <li>
+                <li key={label}>
                   <Box
                     component={Link}
                     sx={{

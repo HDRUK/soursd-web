@@ -1,14 +1,24 @@
 import { Box, styled } from "@mui/material";
+import theme from "@/theme";
 import { motion } from "motion/react";
 
+const StyledOuterContent = styled(motion.div)`
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  background: ${theme.palette.homepageUsage.light};
+  color: ${theme.palette.homepageUsage.contrastText};
+`;
+
 const StyledContainer = styled(Box)`
-  border-radius: 40px;
-  background: #ffffff;
-  box-shadow:
-    13px 13px 31px #c2c2c2,
-    -13px -13px 31px #ffffff;
-  margin: 50px;
-  margin-bottom: 100px;
+  border-radius: 24px;
+  background: ${theme.palette.homepageUsage.dark};
+  color: ${theme.palette.homepageUsage.contrastText};
+  padding-top: 24px;
+  padding-bottom: 24px;
 `;
 
 const StyledContent = styled("div")`
@@ -17,7 +27,6 @@ const StyledContent = styled("div")`
   text-align: center;
   display: flex;
   flex-direction: column;
-  padding: 50px;
 `;
 
 const StyledGrid = styled("div")`
@@ -26,13 +35,11 @@ const StyledGrid = styled("div")`
   text-align: center;
   display: inline-grid;
   grid-template-columns: auto auto auto;
-  column-gap: 15%;
-  padding: 20px;
 `;
 
 const StyledBox = styled(motion.div)`
-  padding-top: 24px;
+  padding: 24px;
   display: flex;
 `;
 
-export { StyledContent, StyledContainer, StyledGrid, StyledBox };
+export { StyledOuterContent, StyledContent, StyledContainer, StyledGrid, StyledBox };

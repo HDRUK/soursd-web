@@ -1,70 +1,66 @@
 "use client";
 
 import { Typography } from "@mui/material";
-import KeyOutlinedIcon from "@mui/icons-material/KeyOutlined";
-import AssignmentIndOutlinedIcon from "@mui/icons-material/AssignmentIndOutlined";
-import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Carousel } from "@/components/Carousel";
-
-import { StyledContent, StyledCarouselItem } from "./KeyFeatures.styles";
+import theme from "@/theme";
+import { StyledContent, StyledGrid, StyledContainer } from "./KeyFeatures.styles";
 
 export default function KeyFeatures() {
-  const settings = {
-    className: "center",
-    centerMode: true,
-    infinite: true,
-    centerPadding: "0",
-    slidesToShow: 2,
-    speed: 500,
-    dots: true,
-  };
+  // const settings = {
+  //   className: "center",
+  //   centerMode: true,
+  //   infinite: true,
+  //   centerPadding: "0",
+  //   slidesToShow: 2,
+  //   speed: 500,
+  //   dots: true,
+  // };
 
   return (
     <StyledContent>
-      <Typography variant="h2" sx={{ padding: "10px", mb: "20px" }}>
+      <Typography variant="h1" sx={{ mb: "16px" }}>
         Key Features
       </Typography>
-      <Typography variant="h6">
+      <Typography variant="h3" sx={{ fontWeight: "light", color: theme.palette.homepageKeyFeatures.textSecondary }}>
         Capabilities for Users, Organisations, and Data Custodians
       </Typography>
-      <Carousel width="100%" sx={{ padding: "100px" }} settings={settings}>
-        <StyledCarouselItem>
-          <AssignmentIndOutlinedIcon sx={{ fontSize: "100px" }} />
-          <Typography variant="h4" sx={{ marginBottom: "20px" }}>
-            User &amp; Organisation Registers
+      <StyledGrid width="100%">
+        <StyledContainer>
+          <Typography variant="h5" sx={{ marginBottom: "16px", fontWeight: "500" }}>
+            User and Organisation Registers
           </Typography>
-          <Typography variant="body1">
-            A centralised ‘Know Your User and Organisation’ system for
-            individual Researchers and Organisations to create profiles and
-            share relevant information for Data Custodians to assess if a person
-            is ‘Safe’{" "}
+          <Typography variant="body1" color="text.secondary">
+            A platform for Users (researchers, analysts, students, others who access 
+            sensitive data) and Organisations to create profiles and share relevant 
+            information for Data Custodians to assess if a person is ‘Safe’.
           </Typography>
-        </StyledCarouselItem>
-        <StyledCarouselItem>
-          <VisibilityOutlinedIcon sx={{ fontSize: "100px" }} />
-          <Typography variant="h4" sx={{ marginBottom: "20px" }}>
+        </StyledContainer>
+        <StyledContainer>
+          <Typography variant="h5" sx={{ marginBottom: "16px", fontWeight: "500" }}>
             Visibility across Data Custodians
           </Typography>
-          <Typography variant="body1">
-            Records Data Custodian approvals for previous and current projects
+          <Typography variant="body1" color="text.secondary">
+            SOURSD records Data Custodian approvals for previous and current projects
             as well as approvals for other functionality in complementary
             systems.
           </Typography>
-        </StyledCarouselItem>
-        <StyledCarouselItem>
-          <KeyOutlinedIcon sx={{ fontSize: "100px" }} />
-          <Typography variant="h4" sx={{ marginBottom: "20px" }}>
-            Single Sign-On through multiple authentication routes
+        </StyledContainer>
+        <StyledContainer>
+          <Typography variant="h5" sx={{ marginBottom: "16px", fontWeight: "500" }}>
+            Multiple authentication routes
           </Typography>
-          <Typography variant="body1">
-            Provides a mechanism to associate a SOURSD account with other
-            accounts e.g. Health Data research Gateway account.
+          <Typography variant="body1" color="text.secondary">
+            SOURSD provides Single Sign-On (SSO) through multiple providers, such as; 
+            Google, LinkedIn and LSRI via Keycloak. This enables users to easily 
+            associate their SOURSD account with existing credentials.
           </Typography>
-        </StyledCarouselItem>
-      </Carousel>
+        </StyledContainer>
+      </StyledGrid>
+      <Typography variant="h4" color="primary">
+        <a href="">Register for an account to get started</a> or <a href="">sign in here</a>
+      </Typography>
     </StyledContent>
   );
 }
