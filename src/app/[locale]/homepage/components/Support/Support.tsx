@@ -16,7 +16,11 @@ export default function Support() {
       </Typography>
       <StyledGrid>
         <StyledContainer>
-          <Image src={image1} alt="image_1" width={0} height={0} sizes="100vw" style={{ width: '100%', height: 'auto' }} />
+          <Image
+            src={image1}
+            alt="image_1" 
+            width={0} 
+            height={0} sizes="100vw" style={{ width: '100%', height: 'auto' }} />
           <Button variant="outlined" sx={{ padding: "16px", my: "12px", fontSize: "small" }}>
             Individual Users
           </Button>

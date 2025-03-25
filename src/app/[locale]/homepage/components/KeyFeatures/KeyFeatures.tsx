@@ -8,15 +8,7 @@ import theme from "@/theme";
 import { StyledContent, StyledGrid, StyledContainer } from "./KeyFeatures.styles";
 
 export default function KeyFeatures() {
-  // const settings = {
-  //   className: "center",
-  //   centerMode: true,
-  //   infinite: true,
-  //   centerPadding: "0",
-  //   slidesToShow: 2,
-  //   speed: 500,
-  //   dots: true,
-  // };
+
 
   return (
     <StyledContent>
@@ -32,8 +24,8 @@ export default function KeyFeatures() {
             User and Organisation Registers
           </Typography>
           <Typography variant="body1" color="text.secondary">
-            A platform for Users (researchers, analysts, students, others who access 
-            sensitive data) and Organisations to create profiles and share relevant 
+            A platform for Users (researchers, analysts, students, others who access
+            sensitive data) and Organisations to create profiles and share relevant
             information for Data Custodians to assess if a person is ‘Safe’.
           </Typography>
         </StyledContainer>
@@ -52,8 +44,8 @@ export default function KeyFeatures() {
             Multiple authentication routes
           </Typography>
           <Typography variant="body1" color="text.secondary">
-            SOURSD provides Single Sign-On (SSO) through multiple providers, such as; 
-            Google, LinkedIn and LSRI via Keycloak. This enables users to easily 
+            SOURSD provides Single Sign-On (SSO) through multiple providers, such as;
+            Google, LinkedIn and LSRI via Keycloak. This enables users to easily
             associate their SOURSD account with existing credentials.
           </Typography>
         </StyledContainer>

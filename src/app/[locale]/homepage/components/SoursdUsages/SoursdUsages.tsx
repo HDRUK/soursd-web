@@ -1,6 +1,6 @@
 "use client";
 
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { mockedSoursdHomepageUsages } from "@/mocks/data/cms";
 import FastForwardOutlinedIcon from "@mui/icons-material/FastForwardOutlined";
 import GppGoodOutlinedIcon from '@mui/icons-material/GppGoodOutlined';
@@ -24,26 +24,47 @@ export default function SoursdUsages() {
             <StyledBox
               {...framerFadeIn}
               transition={{ ...framerFadeIn.transition, delay: 0 }}>
-              <TrendingUpIcon color="white" fontSize="large" />
-              <Typography variant="h4" sx={{ fontWeight: "500", marginLeft: "10px", textAlign: "left" }}>
-                Accelerate ‘Safe People’ data access
-              </Typography>
+              <Box sx={{
+                display: "flex",
+                flexDirection: "row",
+                width: "100%",
+                alignItems: "center"
+              }}>
+                <TrendingUpIcon color="white" style={{ fontSize: "70px" }} />
+                <Typography variant="h4" align="center" sx={{ fontWeight: "500", marginLeft: "24px", textAlign: "left" }}>
+                  Accelerate ‘Safe People’ data access
+                </Typography>
+              </Box>
             </StyledBox>
             <StyledBox
               {...framerFadeIn}
               transition={{ ...framerFadeIn.transition, delay: 0.5 }}>
-              <FastForwardOutlinedIcon color="white" fontSize="large" />
-              <Typography variant="h4" sx={{ fontWeight: "500", marginLeft: "10px", textAlign: "left" }}>
-                Reduce duplication of effort for Users and Organisations
-              </Typography>
+              <Box sx={{
+                display: "flex",
+                flexDirection: "row",
+                width: "100%",
+                alignItems: "center"
+              }}>
+                <FastForwardOutlinedIcon color="white" style={{ fontSize: "70px" }} />
+                <Typography variant="h4" sx={{ fontWeight: "500", marginLeft: "24px", textAlign: "left" }}>
+                  Reduce duplication of effort for Users and Organisations
+                </Typography>
+              </Box>
             </StyledBox>
             <StyledBox
               {...framerFadeIn}
               transition={{ ...framerFadeIn.transition, delay: 1 }}>
-              <GppGoodOutlinedIcon color="white" fontSize="large" />
-              <Typography variant="h4" sx={{ fontWeight: "500", marginLeft: "10px", textAlign: "left" }}>
-                Enable shared intelligence across Data Custodians
-              </Typography>
+              <Box sx={{
+                display: "flex",
+                flexDirection: "row",
+                width: "100%",
+                alignItems: "center"
+              }}>
+                <GppGoodOutlinedIcon color="white" style={{ fontSize: "70px" }} />
+                <Typography variant="h4" sx={{ fontWeight: "500", marginLeft: "24px", textAlign: "left" }}>
+                  Enable shared intelligence across Data Custodians
+                </Typography>
+              </Box>
             </StyledBox>
           </StyledGrid>
         </StyledContent>
