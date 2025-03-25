@@ -4,10 +4,12 @@ import { Typography } from "@mui/material";
 export const mockedSafeProjectGuidanceProps = {
   infoTitle: "Did you know?",
   info: (
-    <Typography>
-      The project properties are following the data use register transparency
-      standard.
-    </Typography>
+    <>
+      <Typography>
+        The project properties are following the data use register transparency
+        standard.
+      </Typography>
+    </>
   ),
 };
 
@@ -113,9 +115,11 @@ export const mockedSoursdHomepageInfo = {
 export const mockedSoursdHomepageUsages = {
   infoTitle: "SoursdUsages",
   infoHeader: (
-    <Typography variant="h4" mb={3}>
-      With SOURSD you can...
-    </Typography>
+    <>
+      <Typography variant="h4" mb={3}>
+        With SOURSD you can...
+      </Typography>
+    </>
   ),
 };
 
@@ -245,25 +249,6 @@ export const mockedConfigurationRulesGuidanceProps = {
           <li>Likeness check against ID. (Identity)</li>
           <li>Liveness check. (Identity)</li>
           <li>Sanctions. (AML)</li>
-        </ol>
-      </Typography>
-      <Typography mb={5}>
-        This feature is supplied as part of SOURSD and is entirely up to you, as
-        a Data Custodian, whether you want these additional security checks
-        carried out, above and beyond what an employer would do.
-      </Typography>
-    </>
-  ),
-};
-
-export const mockedConfigurationGuidanceProps = {
-  infoTitle: "Guidance",
-  info: (
-    <>
-      <Typography mb={5}>Configure...</Typography>
-      <Typography mb={5}>
-        <ol>
-          <li>Test </li>
         </ol>
       </Typography>
       <Typography mb={5}>
