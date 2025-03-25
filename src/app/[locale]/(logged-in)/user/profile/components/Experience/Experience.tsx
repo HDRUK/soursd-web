@@ -43,7 +43,6 @@ export default function Experience() {
   );
 
   const latestCV = getLatestCV(user?.registry?.files || []);
-  //console.log(latestCV);
 
   const {
     upload,
@@ -54,8 +53,6 @@ export default function Experience() {
     isScanning,
     file,
   } = useFileUpload("cvUploadFailed", latestCV?.id);
-
-  console.log(`${isScanComplete} ${isScanFailed} ${isScanning}`);
 
   const uploadFile = useUserFileUpload({
     user,
@@ -192,6 +189,7 @@ export default function Experience() {
                   <Grid item xs={12}>
                     <FileUploadDetails
                       fileButtonText={tProfile("cvUpload")}
+                      fileHref={getFileHref(latestCV?.name)}
                       fileType={FileType.CV}
                       fileNameText={file?.name || tProfile("noCvUploaded")}
                       isSizeInvalid={isSizeInvalid}
@@ -201,7 +199,6 @@ export default function Experience() {
                       isUploading={isUploading}
                       onFileChange={handleFileChange}
                       message="cvUploadFailed"
-                      includeStatus
                     />
                   </Grid>
                 </Grid>
