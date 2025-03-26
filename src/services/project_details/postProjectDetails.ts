@@ -7,10 +7,7 @@ export default async (
   payload: PostProjectDetailsPayload,
   options?: ResponseOptions
 ): Promise<ResponseJson<PostProjectDetailsResponse>> => {
-  const response = await postRequest(
-    `/project_details`,
-    payload
-  );
+  const response = await postRequest(`/project_details`, payload);
 
   return handleJsonResponse(response, options);
 };

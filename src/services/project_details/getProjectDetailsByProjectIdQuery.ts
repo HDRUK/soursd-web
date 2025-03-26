@@ -2,7 +2,10 @@ import { QueryOptions } from "@/types/requests";
 import { UseQueryOptions } from "@tanstack/react-query";
 import getProjectDetails from "./getProjectDetailsByProjectId";
 
-export default function getProjectDetailsQuery(id: number, options?: QueryOptions) {
+export default function getProjectDetailsQuery(
+  id: number,
+  options?: QueryOptions
+) {
   return {
     queryKey: ["getProjectDetails", id, ...(options?.queryKeySuffix || [])],
     queryFn: ({ queryKey }) =>

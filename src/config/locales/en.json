@@ -184,7 +184,14 @@
     "dataDescriptionRequired": "Data description is required",
     "releaseDateRequired": "Release date is required",
     "datasetsPlaceholder": "Dataset name",
-    "dataSensitivityLevelPlaceholder": "Select data sensitivity level"
+    "dataSensitivityLevelPlaceholder": "Select data sensitivity level",
+    "openData": "Open Data",
+    "restrictedData": "Restricted Data",
+    "protectedData": "Protected Data",
+    "errorUpdateSafeDataMessage": "An error occurred while updating the safe data. Please try again or <contactLink>contact support</contactLink> if the problem persists.",
+    "errorCreateSafeDataMessage": "An error occurred while creating the safe data. Please try again or <contactLink>contact support</contactLink> if the problem persists.",
+    "successUpdateSafeDataMessage": "Safe data updated successfully.",
+    "successCreateSafeDataMessage": "Safe data created successfully."
   },
   "OrganisationStats": {
     "affiliatedUsers": "Affiliated Users",
@@ -601,7 +608,11 @@
     "legalBasisForDataArticle6Placeholder": "Lawful condition",
     "datasetLinkageDescriptionPlaceholder": "Linked datasets",
     "dataMinimisationPlaceholder": "Data minimisation",
-    "dataUseDescriptionPlaceholder": "Data description"
+    "dataUseDescriptionPlaceholder": "Data description",
+    "accessDatePlaceholder": "Access date",
+    "requestFrequencyPlaceholder": "Request frequency",
+    "dataSensitivityLevelPlaceholder": "Data sensitivity level",
+    
   },
   "ProfessionalRegistrations": {
     "title": "Professional Registrations",

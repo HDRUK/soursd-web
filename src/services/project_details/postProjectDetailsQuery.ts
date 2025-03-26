@@ -1,4 +1,4 @@
-import { PostProjectDetailsPayload } from "./types"
+import { PostProjectDetailsPayload } from "./types";
 import postProjectDetails from "./postProjectDetails";
 
 export default function postProjectDetailsQuery() {
