@@ -1,14 +1,11 @@
 import React, { useEffect, useMemo, useState, useCallback } from "react";
 import { useTranslations } from "next-intl";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { PageGuidance, PageBody, PageSection } from "@/modules";
+import { PageSection } from "@/modules";
 import Form from "@/components/Form";
 import FormActions from "@/components/FormActions";
 import CheckboxList from "@/components/CheckboxList";
-import {
-  mockedConfigurationRulesDescription,
-  mockedConfigurationRulesGuidanceProps,
-} from "@/mocks/data/cms";
+import { mockedConfigurationRulesDescription } from "@/mocks/data/cms";
 import { showAlert } from "@/utils/showAlert";
 import ContactLink from "@/components/ContactLink";
 import ReactDOMServer from "react-dom/server";
@@ -153,20 +150,16 @@ export default function Rules() {
   };
 
   return (
-    <PageGuidance {...mockedConfigurationRulesGuidanceProps}>
-      <PageBody>
-        <Form onSubmit={handleSubmit} {...formOptions}>
-          <PageSection
-            heading={t("configurationRulesTitle")}
-            description={mockedConfigurationRulesDescription}>
-            <UserRulesCheckboxList />
-            <OrgRulesCheckboxList />
-          </PageSection>
-          <FormActions>
-            <ButtonSave isLoading={isPending} />
-          </FormActions>
-        </Form>
-      </PageBody>
-    </PageGuidance>
+    <Form onSubmit={handleSubmit} {...formOptions}>
+      <PageSection
+        heading={t("configurationRulesTitle")}
+        description={mockedConfigurationRulesDescription}>
+        <UserRulesCheckboxList />
+        <OrgRulesCheckboxList />
+      </PageSection>
+      <FormActions>
+        <ButtonSave isLoading={isPending} />
+      </FormActions>
+    </Form>
   );
 }
