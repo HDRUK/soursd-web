@@ -1,9 +1,10 @@
 import FormActions from "@/components/FormActions";
 import ButtonSave from "@/components/ButtonSave";
 import FormModal from "@/components/FormModal";
-import { Checkbox, Button } from "@mui/material";
+import { Checkbox, Button, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import FormModalBody from "@/components/FormModalBody";
 
 interface VeriffTermsAndConditionsProps {
   open: boolean;
@@ -34,28 +35,30 @@ export default function VeriffTermsAndConditions({
       variant="content"
       open={open}
       onClose={onClose}>
-      <p>
-        {t.rich("descriptionPart1", {
-          ourLink: chunks => (
-            <a target="_blank" href="#">
-              {chunks}
-            </a>
-          ),
-        })}
-      </p>
+      <FormModalBody>
+        <Typography>
+          {t.rich("descriptionPart1", {
+            ourLink: chunks => (
+              <a target="_blank" href="#">
+                {chunks}
+              </a>
+            ),
+          })}
+        </Typography>
 
-      <p>
-        {t.rich("descriptionPart2", {
-          theirLink: chunks => (
-            <a target="_blank" href="#">
-              {chunks}
-            </a>
-          ),
-        })}
-      </p>
+        <Typography>
+          {t.rich("descriptionPart2", {
+            theirLink: chunks => (
+              <a target="_blank" href="#">
+                {chunks}
+              </a>
+            ),
+          })}
+        </Typography>
 
-      <Checkbox value={value} onChange={e => setValue(e.target.checked)} />
-      {t("checkboxLabel")}
+        <Checkbox value={value} onChange={e => setValue(e.target.checked)} />
+        {t("checkboxLabel")}
+      </FormModalBody>
       <FormActions sx={{ display: "flex", justifyContent: "space-between" }}>
         <Button onClick={onClose} variant="outlined">
           {tForm("cancelButton")}
