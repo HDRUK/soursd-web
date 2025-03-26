@@ -33,7 +33,7 @@ describe("KeyFeatures Component", () => {
 
     // Check the first carousel item
     expect(
-      screen.getByRole("heading", { name: /User & Organisation Registers/i })
+      screen.getByRole("heading", { name: /User and Organisation Registers/i })
     ).toBeInTheDocument();
     expect(
       screen.queryAllByText(

@@ -11,7 +11,7 @@ describe("Support Component", () => {
   it("renders all buttons with correct text", () => {
     render(<Support />);
     const individualButton = screen.getByRole("button", {
-      name: /individuals/i,
+      name: /individual users/i,
     });
     const organisationButton = screen.getByRole("button", {
       name: /organisations/i,
