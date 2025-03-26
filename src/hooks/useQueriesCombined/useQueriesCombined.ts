@@ -4,6 +4,7 @@ import { UseQueryOptions, useQueries } from "@tanstack/react-query";
 interface CombinedResults<T = unknown> {
   isLoading: boolean;
   isError: boolean;
+  isFetched: boolean;
   error: Record<string, Error | null>;
   data: T;
 }
