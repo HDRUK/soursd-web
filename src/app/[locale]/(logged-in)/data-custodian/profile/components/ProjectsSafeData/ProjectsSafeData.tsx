@@ -32,7 +32,7 @@ import {
   postProjectDetailsQuery,
   putProjectDetailsQuery,
 } from "@/services/project_details";
-import { RequestFrequency } from "@/services/project_details/types";
+import { RequestFrequency } from "@/consts/projects";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
 import FormFieldArray from "@/components/FormFieldArray";
 import getProjectQuery from "@/services/projects/getProjectQuery";

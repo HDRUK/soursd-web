@@ -6,6 +6,8 @@ import postProjectDetailsFromGateway from "./postProjectDetailsFromGateway";
 import postProjectDetailsFromGatewayQuery from "./postProjectDetailsFromGatewayQuery";
 import putProjectDetailsQuery from "./putProjectDetailsQuery";
 import putProjectDetails from "./putProjectDetails";
+import getProjectDetailsQuery from "./getProjectDetailsQuery";
+import getProjectDetails from "./getProjectDetails";
 
 export {
   getProjectDetailsByProjectId,
@@ -16,4 +18,8 @@ export {
   postProjectDetailsFromGatewayQuery,
   putProjectDetailsQuery,
   putProjectDetails,
+  getProjectDetailsQuery,
+  getProjectDetails,
 };
+
+export type * from "./types";
