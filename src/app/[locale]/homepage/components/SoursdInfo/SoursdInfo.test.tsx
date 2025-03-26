@@ -15,7 +15,7 @@ describe("SoursdInfo Component", () => {
 
     // Assert the mocked info is displayed
     expect(screen.getByTestId("styled-content")).toHaveTextContent(
-      "Safe Organisation and User Registry for Sensitive DataA centralised tool to enable Safe People decision making"
+      "Safe Organisation and User Registry for Sensitive DataA platform to enable Safe People decision making"
     );
   });
 });

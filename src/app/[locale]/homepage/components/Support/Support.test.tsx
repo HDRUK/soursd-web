@@ -31,7 +31,7 @@ describe("Support Component", () => {
       name: /data custodians/i,
     });
 
-    // Mocked test to check the secondary button style
-    expect(custodianButton).toHaveClass("MuiButton-containedSecondary"); // Check for Material-UI styles
+    // Mocked test to check the primary button style
+    expect(custodianButton).toHaveClass("MuiButton-outlinedPrimary"); // Check for Material-UI styles
   });
 });

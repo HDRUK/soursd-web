@@ -37,7 +37,7 @@ describe("KeyFeatures Component", () => {
     ).toBeInTheDocument();
     expect(
       screen.queryAllByText(
-        /A centralised ‘Know Your User and Organisation’ system for individual Researchers and Organisations to create profiles and share relevant information for Data Custodians to assess if a person is ‘Safe’/i
+        /A platform for Users (researchers, analysts, students, others who access sensitive data) and Organisations to create profiles and share relevant information for Data Custodians to assess if a person is ‘Safe’./i
       )[0]
     ).toBeInTheDocument();
 
@@ -49,19 +49,19 @@ describe("KeyFeatures Component", () => {
     ).toBeInTheDocument();
     expect(
       screen.queryAllByText(
-        /Records Data Custodian approvals for previous and current projects as well as approvals for other functionality in complementary systems./i
+        /SOURSD records Data Custodian approvals for previous and current projects as well as approvals for other functionality in complementary systems./i
       )[0]
     ).toBeInTheDocument();
 
     // Check the third carousel item
     expect(
       screen.getByRole("heading", {
-        name: /Single Sign-On through multiple authentication routes/i,
+        name: /Multiple authentication routes/i,
       })
     ).toBeInTheDocument();
     expect(
       screen.queryAllByText(
-        /Provides a mechanism to associate a SOURSD account with other accounts e.g. Health Data research Gateway account./i
+        /SOURSD provides Single Sign-On (SSO) through multiple providers, such as; Google, LinkedIn and LSRI via Keycloak. This enables users to easily associate their SOURSD account with existing credentials./i
       )[0]
     ).toBeInTheDocument();
   });
