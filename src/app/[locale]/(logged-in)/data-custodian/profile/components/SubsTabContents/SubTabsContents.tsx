@@ -1,7 +1,6 @@
 "use client";
 
 import { useStore } from "@/data/store";
-import { PageBody } from "@/modules";
 import { notFound } from "next/navigation";
 import {
   ConfigurationSubTabs,
@@ -12,6 +11,7 @@ import {
 } from "../../consts/tabs";
 import ProjectsSafePeople from "../ProjectsSafePeople";
 import ProjectsSafeProject from "../ProjectsSafeProject";
+import ProjectsSafeSettings from "../ProjectsSafeSettings";
 import Rules from "../Rules";
 import UserAffiliations from "../UserAffiliations";
 import UserCustodianOrgInfo from "../UserCustodianOrgInfo";
@@ -84,10 +84,12 @@ export default function SubTabsContents({
     case ProjectsSubTabs.SAFE_PROJECT:
       content = <ProjectsSafeProject />;
       break;
-
+    case ProjectsSubTabs.SAFE_SETTINGS:
+      content = <ProjectsSafeSettings />;
+      break;
     default:
       content = null;
   }
 
-  return <PageBody>{content}</PageBody>;
+  return content;
 }

@@ -1,5 +1,9 @@
 import { Status } from "@/components/ChipStatus";
-import { ResearcherProject, ProjectUser } from "@/types/application";
+import {
+  ResearcherProject,
+  ProjectUser,
+  ProjectDetails,
+} from "@/types/application";
 
 type ProjectsResponse = ResearcherProject[];
 
@@ -28,6 +32,11 @@ interface PutProjectPayload extends Omit<ResearcherProject, "model_state"> {
 
 type PutProjectResponse = ResearcherProject;
 
+type PutProjectDetailsPayload = ProjectDetails;
+type PutProjectDetailsResponse = number;
+
+type ProjectDetailsResponse = ProjectDetails;
+
 export type {
   ProjectsResponse,
   ProjectUsersResponse,
@@ -37,4 +46,7 @@ export type {
   PutPrimaryContactQuery,
   PutProjectPayload,
   PutProjectResponse,
+  PutProjectDetailsPayload,
+  PutProjectDetailsResponse,
+  ProjectDetailsResponse,
 };
