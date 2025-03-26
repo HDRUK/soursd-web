@@ -6,7 +6,7 @@ import image2 from "public/images/homepage/Image2.png";
 
 import Image from "next/image";
 
-import { StyledContent, StyledContainer, StyledGrid } from "./Support.styles";
+import { StyledContent, StyledContainer, StyledFlex } from "./Support.styles";
 
 export default function Support() {
   return (
@@ -14,7 +14,7 @@ export default function Support() {
       <Typography variant="h3" sx={{ mb: "24px" }}>
         Support
       </Typography>
-      <StyledGrid>
+      <StyledFlex width="100%">
         <StyledContainer>
           <Image
             src={image1}
@@ -37,7 +37,7 @@ export default function Support() {
             Data Custodians
           </Button>
         </StyledContainer>
-      </StyledGrid>
+      </StyledFlex>
     </StyledContent>
   );
 }

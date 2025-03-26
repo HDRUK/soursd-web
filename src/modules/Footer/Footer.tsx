@@ -8,7 +8,7 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { HTMLAttributes } from "react";
 import PageCenter from "../PageCenter";
-import { StyledFooter } from "./Footer.styles";
+import { StyledFooter, StyledBox } from "./Footer.styles";
 
 type FooterProps = HTMLAttributes<HTMLDivElement>;
 
@@ -79,11 +79,7 @@ export default function Footer(props: FooterProps) {
               sx={{ fontWeight: "bold" }}>
               {t("fundedByTitle")}
             </Typography>
-            <Box
-              sx={{
-                alignItems: "flex-end",
-                display: "flex",
-              }}>
+            <StyledBox>
               <Image
                 src="/images/logos/mrc.svg"
                 width={207}
@@ -99,7 +95,7 @@ export default function Footer(props: FooterProps) {
                   alt={t("dsitLogoAlt")}
                 />
               </Box>
-            </Box>
+            </StyledBox>
           </Box>
         </StyledFooter>
       </PageCenter>

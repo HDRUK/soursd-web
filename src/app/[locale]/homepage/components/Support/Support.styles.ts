@@ -1,11 +1,5 @@
 import { Box, styled } from "@mui/material";
 
-const StyledContainer = styled("div")`
-  background: #ffffff;
-  display: flex;
-  flex-direction: column;
-  padding: 12px;
-`;
 
 const StyledContent = styled("div")`
   background: #ffffff;
@@ -19,17 +13,19 @@ const StyledContent = styled("div")`
   color: black;
 `;
 
-const StyledGrid = styled("div")`
+const StyledFlex = styled("div")`
   justify-content: space-around;
   text-align: center;
-  display: inline-grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  display: flex;
+  flex-wrap: wrap;
   column-gap: 24px;
 `;
 
-const StyledBox = styled(Box)`
-  padding-top: 24px;
+const StyledContainer = styled("div")`
+  background: #ffffff;
   display: flex;
+  flex-direction: column;
+  padding: 12px;
 `;
 
-export { StyledContent, StyledContainer, StyledGrid, StyledBox };
+export { StyledContent, StyledFlex, StyledContainer };

@@ -10,7 +10,7 @@ import {
   StyledOuterContent,
   StyledContent,
   StyledContainer,
-  StyledGrid,
+  StyledFlex,
   StyledBox,
 } from "./SoursdUsages.styles";
 
@@ -20,7 +20,7 @@ export default function SoursdUsages() {
       <StyledContainer>
         <StyledContent>
           {mockedSoursdHomepageUsages.infoHeader}
-          <StyledGrid>
+          <StyledFlex>
             <StyledBox
               {...framerFadeIn}
               transition={{ ...framerFadeIn.transition, delay: 0 }}>
@@ -66,7 +66,7 @@ export default function SoursdUsages() {
                 </Typography>
               </Box>
             </StyledBox>
-          </StyledGrid>
+          </StyledFlex>
         </StyledContent>
       </StyledContainer>
     </StyledOuterContent>

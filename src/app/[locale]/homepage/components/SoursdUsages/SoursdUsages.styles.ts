@@ -33,18 +33,20 @@ const StyledContent = styled("div")`
   width: 100%;
 `;
 
-const StyledGrid = styled("div")`
+const StyledFlex = styled("div")`
   justify-content: center;
   align-items: center;
   text-align: center;
-  display: inline-grid;
+  display: flex;
+  flex-wrap: wrap;
   width: min(1300px, 100%);
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 `;
 
 const StyledBox = styled(motion.div)`
   padding: 24px;
-  display: flex;
+  display: flex;  
+  max-width: 430px;
+
 `;
 
-export { StyledOuterContent, StyledContent, StyledContainer, StyledGrid, StyledBox };
+export { StyledOuterContent, StyledContent, StyledContainer, StyledFlex, StyledBox };

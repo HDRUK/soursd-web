@@ -14,14 +14,14 @@ const StyledContent = styled("div")`
   color: ${theme.palette.homepageKeyFeatures.contrastText};
 `;
 
-const StyledGrid = styled("div")`
+const StyledFlex = styled("div")`
   justify-content: space-around;
   text-align: left;
-  display: inline-grid;
-  grid-template-columns: auto auto auto;
+  display: flex;
+  flex-wrap: wrap;
   column-gap: 24px;
   padding: 0px;
-  margin-bottom: 24px;
+  margin-bottom: 12px;
   margin-top: 24px;
 `;
 
@@ -30,8 +30,10 @@ const StyledContainer = styled("div")`
   display: flex;
   flex-direction: column;
   padding: 24px;
+  margin-bottom: 12px;
   box-shadow: 0px 0px 8px rgb(0 0 0 / 5%);
   min-height: 240px;
+  max-width: 400px;
 `;
 
-export { StyledContent, StyledGrid, StyledContainer };
+export { StyledContent, StyledFlex, StyledContainer };

@@ -5,7 +5,7 @@ import { Typography } from "@mui/material";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import theme from "@/theme";
-import { StyledContent, StyledGrid, StyledContainer } from "./KeyFeatures.styles";
+import { StyledContent, StyledFlex, StyledContainer } from "./KeyFeatures.styles";
 
 export default function KeyFeatures() {
 
@@ -18,7 +18,7 @@ export default function KeyFeatures() {
       <Typography variant="h3" sx={{ fontWeight: "light", color: theme.palette.homepageKeyFeatures.textSecondary }}>
         Capabilities for Users, Organisations, and Data Custodians
       </Typography>
-      <StyledGrid width="100%">
+      <StyledFlex width="100%">
         <StyledContainer>
           <Typography variant="h5" sx={{ marginBottom: "16px", fontWeight: "500" }}>
             User and Organisation Registers
@@ -49,7 +49,7 @@ export default function KeyFeatures() {
             associate their SOURSD account with existing credentials.
           </Typography>
         </StyledContainer>
-      </StyledGrid>
+      </StyledFlex>
       <Typography variant="h4" color="primary">
         <a href="">Register for an account to get started</a> or <a href="">sign in here</a>
       </Typography>

@@ -1,6 +1,6 @@
-import { css, styled } from "@mui/material";
+import { Box, css, styled } from "@mui/material";
 
-export const StyledFooter = styled("div")(
+const StyledFooter = styled("div")(
   ({ theme }) => css`
     width: 100%;
     position: relative;
@@ -18,4 +18,17 @@ export const StyledFooter = styled("div")(
       align-items: flex-end;
     }
   `
-);
+)
+
+const StyledBox = styled(Box)(
+  ({ theme }) => css`
+    align-items: flex-end;
+    display: flex;
+
+    ${theme.breakpoints.down("sm")} {
+      flex-wrap: wrap;
+    }
+`
+)
+
+export { StyledFooter, StyledBox };
