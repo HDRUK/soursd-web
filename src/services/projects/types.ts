@@ -31,7 +31,11 @@ type PutProjectResponse = ResearcherProject;
 type PostProjectUsersResponse = ResearcherProject;
 
 interface PostProjectUsersPayload {
-  users: { user_digital_ident: string; project_role_id: number }[];
+  users: {
+    user_digital_ident: string;
+    project_role_id: number;
+    affiliation_id: number;
+  }[];
 }
 
 export type {

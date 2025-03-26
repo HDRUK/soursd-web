@@ -1,7 +1,7 @@
 import FormModal, { FormModalProps } from "@/components/FormModal";
 import postProjectUsersQuery from "@/services/projects/postProjectUsersQuery";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import ProjectsAddUserForm, { SelectedUsers } from "../ProjectsAddUserForm";
+import ProjectsAddUserForm, { RowUserState } from "../ProjectsAddUserForm";
 import useQueryAlerts from "@/hooks/useQueryAlerts";
 
 interface ProjectsSafePeopleModalProps
@@ -19,12 +19,7 @@ export default function ProjectsSafePeopleModal({
     postProjectUsersQuery()
   );
 
-  const handleSave = async (selected: SelectedUsers) => {
-    const users = Object.keys(selected).map(user_digital_ident => ({
-      user_digital_ident,
-      project_role_id: selected[user_digital_ident],
-    }));
-
+  const handleSave = async (users: RowUserState) => {
     await mutateAsync({
       params: {
         id: projectId,

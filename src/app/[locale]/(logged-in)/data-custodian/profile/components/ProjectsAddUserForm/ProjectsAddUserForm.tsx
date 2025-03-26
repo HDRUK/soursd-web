@@ -7,11 +7,13 @@ import SelectInput from "@/components/SelectInput";
 import Table from "@/components/Table";
 import { UserGroup } from "@/consts/user";
 import { useStore } from "@/data/store";
-import { useGetPaginatedUsers } from "@/services/users";
+import SearchBar from "@/modules/SearchBar";
+import { getUsersQuery, useGetPaginatedUsers } from "@/services/users";
 import { ProjectRole, ResearcherAffiliation } from "@/types/application";
 import { MutationState } from "@/types/form";
 import { renderUserNameCell } from "@/utils/cells";
 import { LoadingButton } from "@mui/lab";
+import { useQuery } from "@tanstack/react-query";
 import { CellContext, ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -19,17 +21,22 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 const NAMESPACE_TRANSLATION = "CustodianProfile";
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
 
-type UserByAffiliation = ResearcherAffiliation & {
+type UserByAffiliation = {
   first_name: string;
+  user_digital_ident: string;
+  affiliation_id: number;
   last_name: string;
-  digi_ident: string;
 };
 
-export type SelectedUsers = Record<string, number>;
+export type RowUserState = {
+  user_digital_ident: string;
+  project_role_id: number;
+  affiliation_id: number;
+}[];
 
 interface ProjectsAddUserProps {
   mutationState: MutationState;
-  onSave: (users: SelectedUsers) => void;
+  onSave: (users: RowUserState) => void;
 }
 
 export default function ProjectsAddUser({
@@ -41,33 +48,35 @@ export default function ProjectsAddUser({
   // const queryClient = useQueryClient();
   // const project = useStore(state => state.getProject());
 
-  const [selected, setSelected] = useState<Record<string, number>>({});
+  const [selected, setSelected] = useState<RowUserState>([]);
 
-  const {
-    data: usersData,
-    total,
-    ...getUserQueryState
-  } = useGetPaginatedUsers({
-    defaultQueryParams: { "user_group[]": UserGroup.USERS },
-  });
+  const { data: usersData, ...getUserQueryState } = useQuery(getUsersQuery());
 
   const projectRoles = useStore(state => state.getProjectRoles());
 
   const handleSelectRole = (row: UserByAffiliation, roleId: number) => {
-    setSelected({
+    const { user_digital_ident, affiliation_id } = row;
+
+    setSelected([
       ...selected,
-      [row.digi_ident]: roleId,
-    });
+      {
+        user_digital_ident,
+        affiliation_id,
+        project_role_id: roleId,
+      },
+    ]);
   };
 
   const getUsersByAffiliations = () => {
     let usersByAffiliation: UserByAffiliation[] = [];
 
-    usersData?.forEach(({ first_name, last_name, registry }) => {
+    usersData?.data.data.forEach(({ first_name, last_name, registry }) => {
       registry?.affiliations?.map(affiliation => {
         usersByAffiliation.push({
           ...affiliation,
-          digi_ident: registry.digi_ident,
+          affiliation_id: affiliation.id,
+          organisation_name: affiliation.organisation.organisation_name,
+          user_digital_ident: registry.digi_ident,
           first_name,
           last_name,
         });
@@ -89,9 +98,23 @@ export default function ProjectsAddUser({
   //   },
   // });
 
+  const getSelectedRoleId = ({
+    affiliation_id,
+    user_digital_ident,
+  }: UserByAffiliation) => {
+    const selectedRow = selected.find(
+      row =>
+        row.affiliation_id === affiliation_id &&
+        row.user_digital_ident === user_digital_ident
+    );
+
+    return selectedRow?.project_role_id;
+  };
+
   const renderRoleSelectorCell = useCallback(
     (info: CellContext<UserByAffiliation, unknown>) => (
       <SelectInput
+        value={getSelectedRoleId(info.row.original)?.toString() || ""}
         size="small"
         options={projectRoles.map(({ id, name }) => ({
           label: name,
@@ -117,7 +140,7 @@ export default function ProjectsAddUser({
         header: tApplication("email"),
       },
       {
-        accessorKey: "organisation_id",
+        accessorKey: "organisation_name",
         header: tApplication("organisation"),
       },
       {
@@ -129,18 +152,20 @@ export default function ProjectsAddUser({
     [selected]
   );
 
+  const tableData = getUsersByAffiliations();
+
   return (
     <>
       <FormModalBody>
         <Table
           columns={columns}
-          data={getUsersByAffiliations()}
+          data={tableData}
           queryState={getUserQueryState}
           noResultsMessage={t("professionalRegistrationsNoResultsMessage")}
           errorMessage={t.rich("professionalRegsitrationsErrorMessage", {
             contactLink: ContactLink,
           })}
-          total={total}
+          total={tableData.length}
         />
       </FormModalBody>
       <FormActions>
