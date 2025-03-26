@@ -1,12 +1,13 @@
 {
   "name": "speedi-as-web",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "private": true,
   "scripts": {
     "dev": "NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "lint:quiet": "next lint --quiet",
     "test": "jest --transformIgnorePatterns \"node_modules/(?!pretty-bytes)/\" --env=jsdom",
     "test:watch": "TZ=UTC jest --watch --transformIgnorePatterns \"node_modules/(?!pretty-bytes)/\"  --env=jsdom",
     "test:coverage": "jest --coverage",

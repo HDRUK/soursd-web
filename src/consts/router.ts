@@ -45,6 +45,10 @@ const ROUTES: Routes = {
     path: "/data-custodian/profile/configuration/webhooks",
     permissions: [UserGroup.CUSTODIANS],
   },
+  profileCustodianConfigurationIntegrations: {
+    path: "/data-custodian/profile/configuration/integrations",
+    permissions: [UserGroup.CUSTODIANS],
+  },
   profileCustodianConfigurationRules: {
     path: "/data-custodian/profile/configuration/rules",
     permissions: [UserGroup.CUSTODIANS],

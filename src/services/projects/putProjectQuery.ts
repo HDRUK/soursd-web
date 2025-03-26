@@ -1,13 +1,15 @@
-import { QueryOptions } from "@/types/requests";
+import { MutateWithArgs, QueryOptions } from "@/types/requests";
 import { UseMutationOptions } from "@tanstack/react-query";
 import putProject from "./putProject";
 import { PutProjectPayload } from "./types";
 
-export default function putProjectQuery(id: number, options?: QueryOptions) {
+type PutProjectMutationArgs = MutateWithArgs<{ id: number }, PutProjectPayload>;
+
+export default function putProjectQuery(options?: QueryOptions) {
   return {
-    mutationKey: ["putProject", id, ...(options?.queryKeySuffix || [])],
-    mutationFn: (payload: PutProjectPayload) => {
-      return putProject(payload.id, payload, {
+    mutationKey: ["putProject", ...(options?.queryKeySuffix || [])],
+    mutationFn: ({ params, payload }: PutProjectMutationArgs) => {
+      return putProject(params.id, payload, {
         error: { message: "putProjectError" },
         ...options?.responseOptions,
       });
@@ -16,6 +18,6 @@ export default function putProjectQuery(id: number, options?: QueryOptions) {
   } as UseMutationOptions<
     Awaited<ReturnType<typeof putProject>>,
     Error,
-    PutProjectPayload
+    PutProjectMutationArgs
   >;
 }

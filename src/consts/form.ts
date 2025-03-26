@@ -23,6 +23,8 @@ const VALIDATION_URL = /^(https?:\/\/)([\w-]+\.)+[\w-]+(\/[\w-]*)*$/;
 
 const VALIDATION_CHARITY_ID = /^[A-Za-z0-9]{8}/;
 
+const VALIDATION_INTEGRATION_ID = /^[A-Za-z0-9]{40}$/;
+
 const VALIDATION_EMAIL = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$/;
 
 const ORGANISATION_SIZE_OPTIONS = [
@@ -52,6 +54,7 @@ export {
   VALIDATION_ROR_ID,
   VALIDATION_URL,
   VALIDATION_CHARITY_ID,
+  VALIDATION_INTEGRATION_ID,
   VALIDATION_EMAIL,
   ORGANISATION_SIZE_OPTIONS,
   MAX_FORM_WIDTH,

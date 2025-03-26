@@ -15,12 +15,16 @@ export default function ProjectsSafeProject() {
   const queryClient = useQueryClient();
   const project = useStore(state => state.getProject());
 
-  const { mutateAsync: mutatePutAsync, ...restPutQueryState } = useMutation(
-    putProjectQuery(project.id)
-  );
+  const { mutateAsync: mutatePutAsync, ...restPutQueryState } =
+    useMutation(putProjectQuery());
 
   const handleSubmit = async (payload: PutProjectPayload) => {
-    await mutatePutAsync(payload);
+    await mutatePutAsync({
+      params: {
+        id: payload.id,
+      },
+      payload,
+    });
 
     queryClient.refetchQueries({ queryKey: ["getProject", project.id] });
   };
