@@ -28,20 +28,20 @@ describe("KeyFeatures Component", () => {
     ).toBeInTheDocument();
   });
 
-  it("renders all carousel items", () => {
+  it("renders all cards", () => {
     render(<KeyFeatures />);
 
-    // Check the first carousel item
+    // Check the first item
     expect(
       screen.getByRole("heading", { name: /User and Organisation Registers/i })
     ).toBeInTheDocument();
     expect(
       screen.queryAllByText(
-        /A platform for Users (researchers, analysts, students, others who access sensitive data) and Organisations to create profiles and share relevant information for Data Custodians to assess if a person is ‘Safe’./i
+        /A platform for Users \(researchers, analysts, students, others who access sensitive data\) and Organisations to create profiles and share relevant information for Data Custodians to assess if a person is ‘Safe’./i
       )[0]
     ).toBeInTheDocument();
 
-    // Check the second carousel item
+    // Check the second item
     expect(
       screen.getByRole("heading", {
         name: /Visibility across Data Custodians/i,
@@ -53,7 +53,7 @@ describe("KeyFeatures Component", () => {
       )[0]
     ).toBeInTheDocument();
 
-    // Check the third carousel item
+    // Check the third item
     expect(
       screen.getByRole("heading", {
         name: /Multiple authentication routes/i,
@@ -61,7 +61,7 @@ describe("KeyFeatures Component", () => {
     ).toBeInTheDocument();
     expect(
       screen.queryAllByText(
-        /SOURSD provides Single Sign-On (SSO) through multiple providers, such as; Google, LinkedIn and LSRI via Keycloak. This enables users to easily associate their SOURSD account with existing credentials./i
+        /SOURSD provides Single Sign-On \(SSO\) through multiple providers, such as; Google, LinkedIn and LSRI via Keycloak. This enables users to easily associate their SOURSD account with existing credentials./i
       )[0]
     ).toBeInTheDocument();
   });

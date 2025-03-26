@@ -16,14 +16,17 @@ jest.mock("@mui/icons-material/DoneAllOutlined", () => () => (
 
 // Mock the styled components
 jest.mock("./SoursdUsages.styles", () => ({
+  StyledOuterContent: ({ children }: { children: React.ReactNode }) => (
+    <div data-testid="styled-outer-content">{children}</div>
+  ),
   StyledContent: ({ children }: { children: React.ReactNode }) => (
     <div data-testid="styled-content">{children}</div>
   ),
   StyledContainer: ({ children }: { children: React.ReactNode }) => (
     <div data-testid="styled-container">{children}</div>
   ),
-  StyledGrid: ({ children }: { children: React.ReactNode }) => (
-    <div data-testid="styled-grid">{children}</div>
+  StyledFlex: ({ children }: { children: React.ReactNode }) => (
+    <div data-testid="styled-flex">{children}</div>
   ),
   StyledBox: ({ children }: { children: React.ReactNode }) => (
     <div data-testid="styled-box">{children}</div>
@@ -40,8 +43,8 @@ describe("SoursdUsages Component", () => {
     // Verify the header content
     expect(screen.getByText("With SOURSD you can...")).toBeInTheDocument();
 
-    // Verify the grid container
-    expect(screen.getByTestId("styled-grid")).toBeInTheDocument();
+    // Verify the flex container
+    expect(screen.getByTestId("styled-flex")).toBeInTheDocument();
 
     // Verify each usage item
     const usageTexts = [
@@ -54,7 +57,7 @@ describe("SoursdUsages Component", () => {
     });
 
     // Verify icons are present
-    const icons = screen.getAllByTestId("done-icon");
+    const icons = screen.getAllByTestId(/icon/i);
     expect(icons).toHaveLength(3); // Ensure three icons are rendered
   });
 });
