@@ -40,7 +40,7 @@ export default function Footer(props: FooterProps) {
     <Box
       {...props}
       component="footer"
-      sx={{ backgroundColor: "footer.main", mt: 3 }}>
+      sx={{ backgroundColor: "footer.main" }}>
       <PageCenter>
         <StyledFooter>
           <SoursdLogo variant="titled" color="white" />
