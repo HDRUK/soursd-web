@@ -72,14 +72,7 @@ export default function ProjectsSafeOutputsForm({
           <FormControlWrapper
             name="research_outputs"
             t={tForm}
-            renderField={fieldProps => (
-              <TextField
-                {...fieldProps}
-                multiline
-                style={{ width: "100%" }}
-                minRows={6}
-              />
-            )}
+            renderField={fieldProps => <TextField {...fieldProps} />}
           />
         </Grid>
         <Grid item xs={12}>
