@@ -9,7 +9,7 @@ import {
   isFileScanning,
 } from "@/utils/file";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import useQueryAlerts from "../useQueryAlerts";
 import useQueryRefetch from "../useQueryRefetch";
 
@@ -62,24 +62,27 @@ export default function useFileUpload(
     },
   });
 
-  const upload = async (formData: FormData) => {
-    setIsSizeInvalid(false);
-    setIsUploading(true);
+  const upload = useCallback(
+    async (formData: FormData) => {
+      setIsSizeInvalid(false);
+      setIsUploading(true);
 
-    const file = formData.get("file") as File;
+      const file = formData.get("file") as File;
 
-    if (file.size <= MAX_UPLOAD_SIZE_BYTES) {
-      const { data } = await postFileState.mutateAsync(formData);
+      if (file.size <= MAX_UPLOAD_SIZE_BYTES) {
+        const { data } = await postFileState.mutateAsync(formData);
 
-      setFile(data);
+        setFile(data);
+        setIsUploading(false);
+        return data;
+      }
+
+      setIsSizeInvalid(true);
       setIsUploading(false);
-      return data;
-    }
-
-    setIsSizeInvalid(true);
-    setIsUploading(false);
-    return null;
-  };
+      return null;
+    },
+    [fileId, fileData]
+  );
 
   useEffect(() => {
     if (file?.id && (!file || isFileScanning(file))) {
