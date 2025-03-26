@@ -53,6 +53,8 @@ interface Custodian {
   permissions: Permission[];
   unique_identifier: string;
   idvt_required: boolean;
+  gateway_app_id: string | null;
+  gateway_client_id: string | null;
 }
 
 type Approval = {
@@ -310,7 +312,15 @@ type ResearcherProject = ModelState<{
   unique_id: string;
   approvals: ResearcherProjectApproval[];
   organisations: Organisation[];
+  project_detail: ProjectDetails;
 }>;
+
+interface ProjectDetails {
+  access_type: string;
+  data_privacy: string;
+  id: number;
+  project_id: number;
+}
 
 interface Registry {
   id: number;
@@ -394,4 +404,5 @@ export type {
   UserProfileCompletionFields,
   UserProfileCompletionJson,
   UserProfileCompletionSchema,
+  ProjectDetails,
 };

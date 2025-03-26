@@ -1,11 +1,20 @@
 import React from "react";
 import ReactMarkdown, { Components } from "react-markdown";
+import FormControlDescription from "../FormControlDescription";
 
 interface MarkdownProps {
   children: string;
+  components?: Components;
+  variant?: "plain" | "subtitle";
 }
 
-const customComponents: Components = {
+const subtitleComponents: Components = {
+  p({ children }) {
+    return <FormControlDescription>{children}</FormControlDescription>;
+  },
+};
+
+const defaultComponents: Components = {
   h3({ node: _node, children, ...rest }) {
     return (
       <h3 style={{ fontWeight: "normal" }} {...rest}>
@@ -15,9 +24,18 @@ const customComponents: Components = {
   },
 };
 
-export default function Markdown({ children, ...props }: MarkdownProps) {
+export default function Markdown({
+  children,
+  variant = "plain",
+  ...props
+}: MarkdownProps) {
+  const selectedComponents =
+    variant === "subtitle"
+      ? { ...defaultComponents, ...subtitleComponents }
+      : { ...defaultComponents };
+
   return (
-    <ReactMarkdown components={customComponents} {...props}>
+    <ReactMarkdown components={selectedComponents} {...props}>
       {children}
     </ReactMarkdown>
   );

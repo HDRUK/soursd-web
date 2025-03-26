@@ -1,3 +1,11 @@
+## [1.2.0](https://github.com/HDRUK/speedi-as-web/compare/v1.1.0...v1.2.0) (2025-03-25)
+
+### ✨ Features
+
+* **SOURSD-804:** Save project with status (#213) ([33aeb7f](https://github.com/HDRUK/speedi-as-web/commit/33aeb7f3f81b646578169df0e2e2847d116223b8))
+* **SOURSD-808:** update safe settings for project (#220) ([90d8eb5](https://github.com/HDRUK/speedi-as-web/commit/90d8eb547d477e3c996bf7ddf136966d43f36dd5))
+* **SOURSD-824:** Implement resend invite for an organisation (#221) ([1d7e425](https://github.com/HDRUK/speedi-as-web/commit/1d7e42528bc012f05e022d00b2cef07346fae95d))
+
 ## [1.1.0](https://github.com/HDRUK/speedi-as-web/compare/v1.0.0...v1.1.0) (2025-03-21)
 
 ### ✨ Features
