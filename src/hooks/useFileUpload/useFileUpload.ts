@@ -39,7 +39,6 @@ export default function useFileUpload(
 
   useEffect(() => {
     if (fileData?.data) {
-      console.log("file data updated");
       setFile(fileData?.data);
     }
   }, [fileData]);
@@ -85,9 +84,10 @@ export default function useFileUpload(
   );
 
   useEffect(() => {
-    if (file?.id && (!file || isFileScanning(file))) {
+    const isScanning = isFileScanning(file);
+    if (file?.id && (!file || isScanning)) {
       refetchFile();
-    } else {
+    } else if (file) {
       refetchFileCancel();
     }
 

@@ -25,7 +25,7 @@ export default function useOrganisationFileUpload({
         formData.append("file_type", `${fileType}_${name.toUpperCase()}`);
         formData.append("entity_type", EntityType.ORGANISATION);
         formData.append("organisation_id", `${organisation?.id}`);
-
+        console.log("here i am");
         const fileFromApi = await upload(formData);
         resetFileFromEvent(e);
         return fileFromApi;

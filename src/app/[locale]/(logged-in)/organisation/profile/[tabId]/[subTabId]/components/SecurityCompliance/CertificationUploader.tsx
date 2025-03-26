@@ -33,7 +33,9 @@ const CertificationUploader = ({
     isUploading,
     isScanning,
     file,
-  } = useFileUpload(`certification${capitaliseFirstLetter(name)}UploadFailed`);
+  } = useFileUpload(`certification${capitaliseFirstLetter(name)}UploadFailed`, {
+    initialFileId: value,
+  });
 
   const uploadFile = useOrganisationFileUpload({
     organisation: organisation!,
