@@ -1,8 +1,6 @@
 import React, { ChangeEvent } from "react";
 import useFileUpload from "@/hooks/useFileUpload";
 import FileLink from "@/components/FileLink";
-import getFileQuery from "@/services/files/getFileQuery";
-import { useQuery } from "@tanstack/react-query";
 import { FileType } from "@/consts/files";
 import { Grid } from "@mui/material";
 import useOrganisationFileUpload from "@/hooks/useOrganisationFileUpload";
