@@ -192,7 +192,6 @@ export default function NavBar() {
           </MenuList>
         </HorizontalDrawer>
       </Box>
-      <Divider sx={{ height: "6px", padding: "0" }} />
     </StyledContainer>
   );
 }

@@ -41,11 +41,10 @@ export default function Footer(props: FooterProps) {
       {...props}
       component="footer"
       sx={{ backgroundColor: "footer.main", mt: 3 }}>
-      <Divider sx={{ height: "6px" }} />
       <PageCenter>
         <StyledFooter>
           <SoursdLogo variant="titled" color="white" />
-          <Box sx={{ flexGrow: 1 }}>
+          <Box sx={{ flexGrow: 1, fontSize: "medium" }}>
             <UL
               sx={{
                 mb: 1,
@@ -64,6 +63,7 @@ export default function Footer(props: FooterProps) {
                       color: "#fff",
                       textDecoration: "none",
                       fontWeight: "bold",
+                      fontSize: "medium",
                     }}
                     {...linkProps}>
                     {label}
@@ -76,7 +76,7 @@ export default function Footer(props: FooterProps) {
           <Box>
             <Typography
               color="white"
-              sx={{ marginBottom: "5px", fontWeight: "bold" }}>
+              sx={{ fontWeight: "bold" }}>
               {t("fundedByTitle")}
             </Typography>
             <Box
