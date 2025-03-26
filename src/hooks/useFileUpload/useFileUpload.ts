@@ -20,19 +20,39 @@ export interface FileUploadState {
   message: string;
 }
 
-export default function useFileUpload(message: string) {
+interface UseFileUploadOptions {
+  initialFileId?: number;
+}
+
+export default function useFileUpload(
+  message: string,
+  options?: UseFileUploadOptions
+) {
   const [file, setFile] = useState<ApplicationFile>();
+
+  const fileId = file?.id || options?.initialFileId;
+  const { data: fileData } = useQuery({
+    ...getFileQuery(fileId),
+    queryKey: [`getFile${message}`],
+    enabled: !!fileId,
+  });
+
+  useEffect(() => {
+    if (fileData?.data) {
+      console.log("file data updated");
+      setFile(fileData?.data);
+    }
+  }, [fileData]);
+
+  const { refetch: refetchFile, cancel: refetchFileCancel } = useQueryRefetch({
+    options: { queryKey: [`getFile${message}`] },
+  });
+
   const [isSizeInvalid, setIsSizeInvalid] = useState<boolean>();
 
   const postFileState = useMutation(postFileQuery(message));
-  const getFileState = useQuery({
-    ...getFileQuery(file?.id),
-    queryKey: [`getFile${message}`],
-  });
 
-  const { refetch: refetchFile, cancel: refetchFileCancel } = useQueryRefetch({
-    options: { queryKey: [`getFile${message}`, file?.id] },
-  });
+  const [isUploading, setIsUploading] = useState(false);
 
   useQueryAlerts(postFileState, {
     commonAlertProps: {
@@ -44,6 +64,7 @@ export default function useFileUpload(message: string) {
 
   const upload = async (formData: FormData) => {
     setIsSizeInvalid(false);
+    setIsUploading(true);
 
     const file = formData.get("file") as File;
 
@@ -51,19 +72,17 @@ export default function useFileUpload(message: string) {
       const { data } = await postFileState.mutateAsync(formData);
 
       setFile(data);
-
+      setIsUploading(false);
       return data;
     }
 
     setIsSizeInvalid(true);
-
+    setIsUploading(false);
     return null;
   };
 
-  const fileData = getFileState.data?.data;
-
   useEffect(() => {
-    if (file?.id && (!fileData || isFileScanning(fileData))) {
+    if (file?.id && (!file || isFileScanning(file))) {
       refetchFile();
     } else {
       refetchFileCancel();
@@ -72,15 +91,15 @@ export default function useFileUpload(message: string) {
     return () => {
       refetchFileCancel();
     };
-  }, [file?.id, fileData]);
+  }, [file?.id, file]);
 
   return {
     upload,
-    isScanning: isFileScanning(fileData),
-    isScanComplete: isFileScanComplete(fileData),
-    isScanFailed: isFileScanFailed(fileData),
+    isScanning: isFileScanning(file),
+    isScanComplete: isFileScanComplete(file),
+    isScanFailed: isFileScanFailed(file),
     isSizeInvalid,
-    isUploading: getFileState.isLoading,
+    isUploading,
     fileHref: getFileHref(file),
     file,
   };
