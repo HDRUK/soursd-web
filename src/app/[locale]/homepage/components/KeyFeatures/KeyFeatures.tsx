@@ -6,6 +6,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import theme from "@/theme";
 import { StyledContent, StyledFlex, StyledContainer } from "./KeyFeatures.styles";
+import { getLoginUrl, getRegisterUrl } from "@/utils/keycloak";
 
 export default function KeyFeatures() {
 
@@ -51,7 +52,7 @@ export default function KeyFeatures() {
         </StyledContainer>
       </StyledFlex>
       <Typography variant="h4" color="primary">
-        <a href="">Register for an account to get started</a> or <a href="">sign in here</a>
+        <a href={getRegisterUrl()}>Register for an account to get started</a> or <a href={getLoginUrl()}>sign in here</a>
       </Typography>
     </StyledContent>
   );
