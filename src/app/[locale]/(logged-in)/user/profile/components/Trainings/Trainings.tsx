@@ -1,5 +1,8 @@
 import { ROUTES } from "@/consts/router";
-import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
+import {
+  mockedPersonalDetailsGuidanceProps,
+  mockedUserTrainingGuidanceProps,
+} from "@/mocks/data/cms";
 import {
   PageBody,
   PageBodyContainer,
@@ -77,7 +80,7 @@ export default function Trainings() {
     <LoadingWrapper variant="basic" loading={isLoading}>
       <Form {...formOptions} onSubmit={handleSubmit} key={userData?.data?.id}>
         <PageBodyContainer heading={tProfile("trainingTitle")}>
-          <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
+          <PageGuidance {...mockedUserTrainingGuidanceProps}>
             <PageBody>
               <PageSection>
                 <Training />
