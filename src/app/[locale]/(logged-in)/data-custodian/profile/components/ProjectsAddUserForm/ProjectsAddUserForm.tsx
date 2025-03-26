@@ -8,12 +8,11 @@ import Table from "@/components/Table";
 import { UserGroup } from "@/consts/user";
 import { useStore } from "@/data/store";
 import SearchBar from "@/modules/SearchBar";
-import { getUsersQuery, useGetPaginatedUsers } from "@/services/users";
+import { useGetPaginatedUsers } from "@/services/users";
 import { ProjectRole, ResearcherAffiliation } from "@/types/application";
 import { MutationState } from "@/types/form";
 import { renderUserNameCell } from "@/utils/cells";
 import { LoadingButton } from "@mui/lab";
-import { useQuery } from "@tanstack/react-query";
 import { CellContext, ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -50,7 +49,12 @@ export default function ProjectsAddUser({
 
   const [selected, setSelected] = useState<RowUserState>([]);
 
-  const { data: usersData, ...getUserQueryState } = useQuery(getUsersQuery());
+  const {
+    data: usersData,
+    total,
+    updateQueryParams,
+    ...getUserQueryState
+  } = useGetPaginatedUsers();
 
   const projectRoles = useStore(state => state.getProjectRoles());
 
@@ -70,7 +74,7 @@ export default function ProjectsAddUser({
   const getUsersByAffiliations = () => {
     let usersByAffiliation: UserByAffiliation[] = [];
 
-    usersData?.data.data.forEach(({ first_name, last_name, registry }) => {
+    usersData?.forEach(({ first_name, last_name, registry }) => {
       registry?.affiliations?.map(affiliation => {
         usersByAffiliation.push({
           ...affiliation,
@@ -152,20 +156,28 @@ export default function ProjectsAddUser({
     [selected]
   );
 
-  const tableData = getUsersByAffiliations();
-
   return (
     <>
       <FormModalBody>
+        <SearchBar
+          onSearch={(text: string) => {
+            updateQueryParams({
+              "first_name[]": text,
+              "last_name[]": text,
+              "email[]": text,
+            });
+          }}
+          placeholder={t("searchPlaceholder")}
+        />
         <Table
           columns={columns}
-          data={tableData}
+          data={getUsersByAffiliations()}
           queryState={getUserQueryState}
           noResultsMessage={t("professionalRegistrationsNoResultsMessage")}
           errorMessage={t.rich("professionalRegsitrationsErrorMessage", {
             contactLink: ContactLink,
           })}
-          total={tableData.length}
+          total={total}
         />
       </FormModalBody>
       <FormActions>

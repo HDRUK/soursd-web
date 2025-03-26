@@ -32,6 +32,7 @@ export type PaginatedQueryProps<T> = {
   enabled?: boolean;
   refetchInterval?: number;
   defaultQueryParams?: QueryParams;
+  shouldUpdateQuerystring?: boolean;
 };
 
 export type PaginatedQueryReturn<T> = UseQueryResult<ResponseJson<Paged<T>>> &
@@ -45,6 +46,7 @@ const usePaginatedQuery = <T,>({
   defaultQueryParams = {},
   enabled = true,
   refetchInterval,
+  shouldUpdateQuerystring,
 }: PaginatedQueryProps<T>): PaginatedQueryReturn<T> => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -62,24 +64,27 @@ const usePaginatedQuery = <T,>({
   });
 
   useEffect(() => {
-    // change the router URL depending on the queryParams
-    const params = new URLSearchParams();
+    if (shouldUpdateQuerystring) {
+      // change the router URL depending on the queryParams
+      const params = new URLSearchParams();
 
-    Object.entries(queryParams).forEach(([key, value]) => {
-      if (value !== undefined && value !== null) {
-        params.set(key, String(value));
-      }
-    });
+      Object.entries(queryParams).forEach(([key, value]) => {
+        if (value !== undefined && value !== null) {
+          params.set(key, String(value));
+        }
+      });
 
-    window.history.replaceState(
-      window.history.state,
-      "",
-      `${pathname}?${params.toString()}`
-    );
-  }, [queryParams, pathname]);
+      window.history.replaceState(
+        window.history.state,
+        "",
+        `${pathname}?${params.toString()}`
+      );
+    }
+  }, [queryParams, pathname, shouldUpdateQuerystring]);
 
   useEffect(() => {
     if (queryParams.page === page) return;
+
     setQueryParams(
       (prevParams: QueryParams) =>
         ({
