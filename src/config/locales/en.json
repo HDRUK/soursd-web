@@ -759,7 +759,7 @@
     "emailDescription": "Your personal email is used to set up a SOURSD account so that your account stays with you, regardless of your employment or enrolment at a higher education institute. You can also recover your account using your personal email.",
     "locationDescription": "Some data custodians need to know the country that you will be accessing data from as different countries adhere to different laws regarding data sharing and data confidentiality.",
     "idvtCheckSection": "Identification Verification Technology (IDVT)",
-    "idvtCheckButton": "Start IDBT check",
+    "idvtCheckButton": "Start IDVT check",
     "idvtCheckDescription": "Not all Data Custodians require this check to be completed. Those Data Custodians that do, can request that this check is completed prior to project approval. To work across the breadth of UK Data Custodians, we recommend that you complete this check as it may streamline approval processes. \n\nIDVT checks are carried out by a 3rd party supplier against the following criteria: valid government issued identification (fraud), likeness check against ID (identity), liveness check (identity), sanctions check (anti money laundering). Please note neither SOURSD nor the 3rd party supplier store a copy of your identity documents",
     "accreditedResearcherCheckboxLabel": "I am a registered Accredited Researcher as published on the UK Statistics Authority website.",
     "accreditedResearcherLinkHref": "https://www.gov.uk/government/consultations/digital-economy-act-part-5-data-sharing-codes-and-regulations/research-code-of-practice-and-accreditation-criteria",
