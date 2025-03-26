@@ -49,6 +49,11 @@ export default function SubTabsSections({
         value: ConfigurationSubTabs.WEBHOOKS,
         href: routes.profileCustodianConfigurationWebhooks.path,
       },
+      {
+        label: t("configurationIntegrations"),
+        value: ConfigurationSubTabs.INTEGRATIONS,
+        href: routes.profileCustodianConfigurationIntegrations.path,
+      },
     ],
     [PageTabs.USERS]: [
       {
