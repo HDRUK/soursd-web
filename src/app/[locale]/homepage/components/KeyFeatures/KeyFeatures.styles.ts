@@ -1,7 +1,6 @@
 import { styled } from "@mui/material";
 import theme from "@/theme";
 
-
 const StyledContent = styled("div")`
   background: linear-gradient(180deg, #f6ebf8, #ffffff 100%);
   justify-content: center;

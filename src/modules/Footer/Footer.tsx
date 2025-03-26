@@ -3,7 +3,7 @@
 import SoursdLogo from "@/components/SoursdLogo";
 import UL from "@/components/UL";
 import { Link } from "@/i18n/routing";
-import { Box, Divider, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { HTMLAttributes } from "react";
@@ -37,10 +37,7 @@ export default function Footer(props: FooterProps) {
   ];
 
   return (
-    <Box
-      {...props}
-      component="footer"
-      sx={{ backgroundColor: "footer.main" }}>
+    <Box {...props} component="footer" sx={{ backgroundColor: "footer.main" }}>
       <PageCenter>
         <StyledFooter>
           <SoursdLogo variant="titled" color="white" />
@@ -74,9 +71,7 @@ export default function Footer(props: FooterProps) {
             {t("copyright")}
           </Box>
           <Box>
-            <Typography
-              color="white"
-              sx={{ fontWeight: "bold" }}>
+            <Typography color="white" sx={{ fontWeight: "bold" }}>
               {t("fundedByTitle")}
             </Typography>
             <StyledBox>

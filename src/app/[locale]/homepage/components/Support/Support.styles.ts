@@ -1,5 +1,4 @@
-import { Box, styled } from "@mui/material";
-
+import { styled } from "@mui/material";
 
 const StyledContent = styled("div")`
   background: #ffffff;

@@ -44,9 +44,14 @@ const StyledFlex = styled("div")`
 
 const StyledBox = styled(motion.div)`
   padding: 24px;
-  display: flex;  
+  display: flex;
   max-width: 430px;
-
 `;
 
-export { StyledOuterContent, StyledContent, StyledContainer, StyledFlex, StyledBox };
+export {
+  StyledOuterContent,
+  StyledContent,
+  StyledContainer,
+  StyledFlex,
+  StyledBox,
+};

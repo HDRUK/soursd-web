@@ -7,7 +7,7 @@ const StyledFooter = styled("div")(
     color: #fff;
     display: flex;
     gap: ${theme.spacing(3)};
-    padding: ${theme.spacing(2)} ${theme.spacing(8)} ${theme.spacing(3)} ;
+    padding: ${theme.spacing(2)} ${theme.spacing(8)} ${theme.spacing(3)};
     flex-direction: column;
     align-items: flex-start;
 
@@ -18,7 +18,7 @@ const StyledFooter = styled("div")(
       align-items: flex-end;
     }
   `
-)
+);
 
 const StyledBox = styled(Box)(
   ({ theme }) => css`
@@ -28,7 +28,7 @@ const StyledBox = styled(Box)(
     ${theme.breakpoints.down("sm")} {
       flex-wrap: wrap;
     }
-`
-)
+  `
+);
 
 export { StyledFooter, StyledBox };
