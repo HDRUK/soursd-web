@@ -19,9 +19,9 @@ import {
 import { useTranslations } from "next-intl";
 import { LinkProps } from "next/link";
 import { MouseEvent, useEffect, useState } from "react";
+import MaskLabel from "@/components/MaskLabel";
 import PageCenter from "../PageCenter";
 import { StyledContainer, StyledHeader } from "./NavBar.styles";
-import MaskLabel from "@/components/MaskLabel";
 
 const NAMESPACE_TRANSLATIONS_NAVBAR = "NavBar";
 

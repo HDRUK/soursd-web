@@ -139,7 +139,11 @@ export default function NotificationsMenu() {
     <Box>
       <IconButton
         data-testid="notifications-button"
-        color={notificationsCount?.data.unread ? "notificationActive" : "notification"}
+        color={
+          notificationsCount?.data.unread
+            ? "notificationActive"
+            : "notification"
+        }
         onClick={handleOpen}
         sx={{
           height: "30px",
