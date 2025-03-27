@@ -235,6 +235,25 @@ export default function NavBar() {
                 </Button>
               </MenuItem>
             ))}
+            {right_buttons.map(({ text, ...restProps }) => (
+              <MenuItem
+                key={text}
+                sx={{ "&:hover": { backgroundColor: "transparent" } }}>
+                <Button component={Link} fullWidth {...restProps}>
+                  {text}
+                </Button>
+              </MenuItem>
+            ))}
+            {storedUser && (
+              <MenuItem
+                key={"Notifications"}
+                sx={{
+                  "&:hover": { backgroundColor: "transparent" },
+                  justifyContent: "center",
+                }}>
+                <NotificationsMenu />{" "}
+              </MenuItem>
+            )}
           </MenuList>
         </HorizontalDrawer>
       </Box>
