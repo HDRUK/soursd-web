@@ -49,7 +49,7 @@ export default function ProjectsSafeOutputsForm({
     () =>
       yup.object().shape({
         data_assets: yup.string(),
-        data_access: yup.array().of(
+        research_outputs: yup.array().of(
           yup.object({
             value: yup.string(),
           })
@@ -61,7 +61,7 @@ export default function ProjectsSafeOutputsForm({
   const formOptions = {
     defaultValues: {
       data_assets: projectDetails?.data_assets || "",
-      data_access: projectDetails?.data_access?.split(";") || [],
+      research_outputss: projectDetails?.research_outputs?.split(";") || [],
     },
     disabled: queryState.isLoading,
   };
