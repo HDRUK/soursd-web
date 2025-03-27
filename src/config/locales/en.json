@@ -13,6 +13,8 @@
     "scanErrorText": "Your file file may have a virus"
   },
   "Application": {
+    "link": "Link",
+    "addLink": "Add link",
     "period": "Period",
     "cancel": "Cancel",
     "delete": "Delete",

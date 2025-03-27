@@ -3,10 +3,11 @@ import useQueryAlerts from "@/hooks/useQueryAlerts";
 import { mockedSafeProjectGuidanceProps } from "@/mocks/data/cms";
 import { PageBody, PageGuidance, PageSection } from "@/modules";
 import useMutateProjectDetails from "@/queries/useMutateProjectDetails";
-import { PutProjectDetailsPayload } from "@/services/project_details";
+import { toFieldArrayString } from "@/utils/form";
 import { useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import ProjectsSafeOutputsForm from "../ProjectsSafeOutputsForm";
+import { ProjectsSafeOutputsFormFieldValues } from "../ProjectsSafeOutputsForm/ProjectsSafeOutputsForm";
 
 const NAMESPACE_TRANSLATION = "CustodianProfile";
 
@@ -17,28 +18,11 @@ export default function ProjectsSafeOutputs() {
 
   const { mutateAsync, queryState } = useMutateProjectDetails(project.id);
 
-  // const handleSubmit = async (fields: WebhookFormData) => {
-
-  //   await Promise.all([
-  //     ...webhooksToDelete.map(webhook =>
-  //       handleWebhookOperation("delete", webhook)
-  //     ),
-  //     ...webhooksToAdd.map(webhook => handleWebhookOperation("add", webhook)),
-  //   ]);
-
-  //   await refetchWebhookData();
-  // };
-
-  const handleSubmit = async (payload: PutProjectDetailsPayload) => {
-    console.log({
-      ...project.project_detail,
-      ...payload,
-      data_access: payload.data_access?.map(({ url }) => url).join(";"),
-    });
+  const handleSubmit = async (payload: ProjectsSafeOutputsFormFieldValues) => {
     await mutateAsync({
       ...project.project_detail,
       ...payload,
-      data_access: payload.data_access?.map(({ url }) => url).join(";"),
+      research_outputs: toFieldArrayString(payload.research_outputs),
     });
 
     queryClient.refetchQueries({
@@ -50,7 +34,7 @@ export default function ProjectsSafeOutputs() {
 
   return (
     <PageGuidance {...mockedSafeProjectGuidanceProps}>
-      <PageBody heading={t("safeOutput")}>
+      <PageBody heading={t("safeOutputs")}>
         <PageSection>
           <ProjectsSafeOutputsForm
             queryState={queryState}

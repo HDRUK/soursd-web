@@ -4,19 +4,11 @@ import FormActions from "@/components/FormActions";
 import FormControlWrapper from "@/components/FormControlWrapper";
 import FormFieldArray from "@/components/FormFieldArray";
 import yup from "@/config/yup";
-import { ProjectDetailsAccessType } from "@/consts/projects";
-import { PutProjectDetailsPayload } from "@/services/projects";
 import { ProjectDetails } from "@/types/application";
 import { QueryState } from "@/types/form";
+import { toFieldArrayData } from "@/utils/form";
 import CheckIcon from "@mui/icons-material/Check";
-import {
-  Button,
-  FormControlLabel,
-  Grid,
-  Radio,
-  RadioGroup,
-  TextField,
-} from "@mui/material";
+import { Button, Grid, TextField, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
 
@@ -28,10 +20,15 @@ export interface CustodianUserFields {
   approver: boolean;
 }
 
+export interface ProjectsSafeOutputsFormFieldValues {
+  data_assets: string;
+  research_outputs: { value: string }[];
+}
+
 export interface ProjectsSafeOutputsFormProps {
   queryState: QueryState;
   projectDetails: ProjectDetails;
-  onSubmit: (payload: PutProjectDetailsPayload) => void;
+  onSubmit: (fields: ProjectsSafeOutputsFormFieldValues) => void;
 }
 
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
@@ -61,7 +58,7 @@ export default function ProjectsSafeOutputsForm({
   const formOptions = {
     defaultValues: {
       data_assets: projectDetails?.data_assets || "",
-      research_outputss: projectDetails?.research_outputs?.split(";") || [],
+      research_outputs: toFieldArrayData(projectDetails?.research_outputs),
     },
     disabled: queryState.isLoading,
   };
@@ -74,18 +71,18 @@ export default function ProjectsSafeOutputsForm({
       autoComplete="off">
       <Grid container rowSpacing={3}>
         <Grid item xs={12}>
+          <Typography mb={1}>Links to research outputs</Typography>
           <FormFieldArray
-            name={"research_outputs"}
+            name="research_outputs"
+            addButtonLabel={tApplication("addLink")}
             createNewRow={() => ({
               url: "",
             })}
-            renderField={(field, index) => (
+            renderField={(_, index) => (
               <FormControlWrapper
-                key={field.url}
-                label="Receiver URL"
-                required
-                name={`research_outputs.${index}.url`}
-                placeholder={"Link"}
+                displayLabel={false}
+                name={`research_outputs.${index}.value`}
+                placeholder={tApplication("link")}
                 renderField={fieldProps => <TextField {...fieldProps} />}
               />
             )}

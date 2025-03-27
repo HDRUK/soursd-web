@@ -320,6 +320,8 @@ interface ProjectDetails {
   data_privacy: string;
   id: number;
   project_id: number;
+  research_outputs: string;
+  data_assets: string;
 }
 
 interface Registry {
