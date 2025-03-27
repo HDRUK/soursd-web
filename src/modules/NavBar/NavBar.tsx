@@ -180,7 +180,7 @@ export default function NavBar() {
               {storedUser && <NotificationsMenu />}
               {storedUser && (
                 <MaskLabel
-                  initials={`${storedUser.first_name.charAt(0)}${storedUser.last_name.charAt(0)}`}
+                  initials={`${storedUser?.first_name?.charAt(0)}${storedUser?.last_name?.charAt(0)}`}
                   label=""
                   size="small"
                 />

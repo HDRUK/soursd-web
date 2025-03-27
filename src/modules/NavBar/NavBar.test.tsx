@@ -133,7 +133,7 @@ describe("NavBar Component", () => {
     ).toBeInTheDocument();
 
     expect(
-      screen.getByRole("button", {
+      screen.getByRole("link", {
         name: "My Account",
       })
     ).toBeInTheDocument();
