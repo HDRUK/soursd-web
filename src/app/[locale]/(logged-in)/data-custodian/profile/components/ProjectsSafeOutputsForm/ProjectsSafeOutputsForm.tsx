@@ -2,6 +2,7 @@ import ButtonSave from "@/components/ButtonSave";
 import Form from "@/components/Form";
 import FormActions from "@/components/FormActions";
 import FormControlWrapper from "@/components/FormControlWrapper";
+import FormFieldArray from "@/components/FormFieldArray";
 import yup from "@/config/yup";
 import { ProjectDetailsAccessType } from "@/consts/projects";
 import { PutProjectDetailsPayload } from "@/services/projects";
@@ -47,16 +48,20 @@ export default function ProjectsSafeOutputsForm({
   const schema = useMemo(
     () =>
       yup.object().shape({
-        access_type: yup.string(),
-        data_privacy: yup.string(),
+        data_assets: yup.string(),
+        data_access: yup.array().of(
+          yup.object({
+            value: yup.string(),
+          })
+        ),
       }),
     []
   );
 
   const formOptions = {
     defaultValues: {
-      access_type: projectDetails?.access_type || "",
-      data_privacy: projectDetails?.data_privacy || "",
+      data_assets: projectDetails?.data_assets || "",
+      data_access: projectDetails?.data_access?.split(";") || [],
     },
     disabled: queryState.isLoading,
   };
@@ -69,10 +74,21 @@ export default function ProjectsSafeOutputsForm({
       autoComplete="off">
       <Grid container rowSpacing={3}>
         <Grid item xs={12}>
-          <FormControlWrapper
-            name="research_outputs"
-            t={tForm}
-            renderField={fieldProps => <TextField {...fieldProps} />}
+          <FormFieldArray
+            name={"research_outputs"}
+            createNewRow={() => ({
+              url: "",
+            })}
+            renderField={(field, index) => (
+              <FormControlWrapper
+                key={field.url}
+                label="Receiver URL"
+                required
+                name={`research_outputs.${index}.url`}
+                placeholder={"Link"}
+                renderField={fieldProps => <TextField {...fieldProps} />}
+              />
+            )}
           />
         </Grid>
         <Grid item xs={12}>

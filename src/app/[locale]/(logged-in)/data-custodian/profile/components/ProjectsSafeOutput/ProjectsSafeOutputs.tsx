@@ -17,10 +17,28 @@ export default function ProjectsSafeOutputs() {
 
   const { mutateAsync, queryState } = useMutateProjectDetails(project.id);
 
+  // const handleSubmit = async (fields: WebhookFormData) => {
+
+  //   await Promise.all([
+  //     ...webhooksToDelete.map(webhook =>
+  //       handleWebhookOperation("delete", webhook)
+  //     ),
+  //     ...webhooksToAdd.map(webhook => handleWebhookOperation("add", webhook)),
+  //   ]);
+
+  //   await refetchWebhookData();
+  // };
+
   const handleSubmit = async (payload: PutProjectDetailsPayload) => {
+    console.log({
+      ...project.project_detail,
+      ...payload,
+      data_access: payload.data_access?.map(({ url }) => url).join(";"),
+    });
     await mutateAsync({
       ...project.project_detail,
       ...payload,
+      data_access: payload.data_access?.map(({ url }) => url).join(";"),
     });
 
     queryClient.refetchQueries({
