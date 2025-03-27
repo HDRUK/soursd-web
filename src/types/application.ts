@@ -111,7 +111,7 @@ interface Auth {
   email: string;
 }
 
-interface User {
+type User = ModelState<{
   id: number;
   registry_id: number;
   first_name: string;
@@ -147,7 +147,7 @@ interface User {
   status: Status;
   declaration_signed?: boolean;
   uksa_registered?: boolean;
-}
+}>;
 interface AddressFields {
   postcode?: string;
   address_1?: string;
@@ -292,6 +292,8 @@ interface ResearcherAffiliation {
     organisation_name: string;
   };
   email?: string;
+  project_role_id?: number;
+  primary_contact?: boolean;
 }
 
 interface ResearcherProjectApproval {

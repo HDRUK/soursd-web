@@ -7,11 +7,11 @@ import useQueryAlerts from "@/hooks/useQueryAlerts";
 import useQueryConfirmAlerts from "@/hooks/useQueryConfirmAlerts";
 import SearchActionMenu from "@/modules/SearchActionMenu";
 import SearchBar from "@/modules/SearchBar";
+import { useGetCustodianProjectUsers } from "@/services/custodians";
 import {
   deleteProjectUserQuery,
   putProjectUserPrimaryContactQuery,
 } from "@/services/projects";
-import useProjectUsersQuery from "@/services/projects/getProjectUsersQuery";
 import { DeleteProjectUserPayload } from "@/services/projects/types";
 import { Organisation, ProjectUser, User } from "@/types/application";
 import { renderUserNameCell } from "@/utils/cells";
@@ -22,21 +22,31 @@ import { CellContext, ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
 import ProjectsAddUserModal from "../ProjectsAddUserModal";
+import { UserGroup } from "@/consts/user";
 
 interface ProjectsSafePeopleProps {
   id: number;
 }
 
-type FilteredUser = User &
-  Pick<Organisation, "organisation_name"> & {
-    project_role: string;
-    primary_contact: number;
-  };
+type FilteredUser = {
+  affiliation_id: number;
+  organisation_name: string;
+  first_name: string;
+  last_name: string;
+  status: string;
+  project_role_id?: number;
+  primary_contact?: boolean;
+};
 
 const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
 
-export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
+export default function ProjectsSafePeople() {
+  const { project, custodian } = useStore(state => ({
+    project: state.getProject(),
+    custodian: state.getCustodian(),
+  }));
+
   const {
     data: usersData,
     updateQueryParams,
@@ -48,7 +58,12 @@ export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
     queryParams,
     refetch,
     ...queryState
-  } = useProjectUsersQuery(id);
+  } = useGetCustodianProjectUsers(custodian.id, project.id, {
+    defaultQueryParams: {
+      "user_group[]": UserGroup.USERS,
+    },
+  });
+
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
   const routes = useStore(state => state.getApplication().routes);
@@ -61,29 +76,26 @@ export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
   const { mutateAsync: makePrimaryContactAsync, ...primaryContactQueryState } =
     useMutation(putProjectUserPrimaryContactQuery());
 
-  const getUsersFromResponse = (usersData: ProjectUser[]) => {
+  const getUsersFromResponse = (usersData: User[]) => {
     const users: FilteredUser[] = [];
 
+    console.log("**** usersData", usersData);
+
     usersData?.forEach(
-      ({
-        model_state,
-        registry_id,
-        first_name,
-        last_name,
-        registry: { affiliations },
-      }) => {
+      ({ model_state, first_name, last_name, registry: { affiliations } }) => {
         affiliations?.forEach(
           ({
+            id,
             primary_contact,
-            project_role,
+            project_role_id,
             organisation: { organisation_name },
           }) => {
             users.push({
-              registry_id,
+              affiliation_id: id,
               organisation_name,
               first_name,
               last_name,
-              project_role,
+              project_role_id,
               primary_contact,
               status: model_state?.state.slug,
             });
@@ -130,7 +142,7 @@ export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
 
   const renderActionMenuCell = useCallback(
     <T extends FilteredUser>(info: CellContext<T, unknown>) => {
-      const { registry_id, primary_contact } = info.row.original;
+      const { affiliation_id, primary_contact } = info.row.original;
 
       console.log("info.row.original", info.row.original);
 
@@ -139,8 +151,8 @@ export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
           <ActionMenuItem
             onClick={() => {
               showDeleteConfirm({
-                projectId: id,
-                registryId: registry_id,
+                projectId: project.id,
+                affiliationId: affiliation_id,
               });
             }}>
             {tApplication("removeUserFromProject")}
@@ -148,8 +160,8 @@ export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
           <ActionMenuItem
             onClick={async () => {
               await makePrimaryContactAsync({
-                projectId: id,
-                registryId: registry_id,
+                projectId: project.id,
+                affiliation_id: affiliation_id,
                 primaryContact: !primary_contact,
               });
 
@@ -238,7 +250,8 @@ export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
         </Grid>
       </Grid>
       <ProjectsAddUserModal
-        projectId={id}
+        projectId={project.id}
+        custodianId={custodian.id}
         open={showAddModal}
         onClose={() => setShowAddModal(false)}
       />

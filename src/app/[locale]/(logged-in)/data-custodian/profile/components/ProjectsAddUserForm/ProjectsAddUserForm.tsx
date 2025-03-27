@@ -25,6 +25,7 @@ type UserByAffiliation = {
   user_digital_ident: string;
   affiliation_id: number;
   last_name: string;
+  organisation_name: string;
 };
 
 export type RowUserState = {
@@ -77,7 +78,6 @@ export default function ProjectsAddUser({
     usersData?.forEach(({ first_name, last_name, registry }) => {
       registry?.affiliations?.map(affiliation => {
         usersByAffiliation.push({
-          ...affiliation,
           affiliation_id: affiliation.id,
           organisation_name: affiliation.organisation.organisation_name,
           user_digital_ident: registry.digi_ident,
@@ -137,7 +137,7 @@ export default function ProjectsAddUser({
       {
         accessorKey: "name",
         header: tApplication("name"),
-        cell: row => renderUserNameCell(row),
+        cell: renderUserNameCell,
       },
       {
         accessorKey: "email",

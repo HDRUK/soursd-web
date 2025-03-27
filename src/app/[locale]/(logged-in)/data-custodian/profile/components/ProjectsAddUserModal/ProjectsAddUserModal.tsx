@@ -6,10 +6,12 @@ import useQueryAlerts from "@/hooks/useQueryAlerts";
 
 interface ProjectsSafePeopleModalProps
   extends Omit<FormModalProps, "children"> {
+  custodianId: number;
   projectId: number;
 }
 
 export default function ProjectsSafePeopleModal({
+  custodianId,
   projectId,
   onClose,
   ...restProps
@@ -29,10 +31,10 @@ export default function ProjectsSafePeopleModal({
   };
 
   useQueryAlerts(putProjectUsersMutationState, {
-    commonAlertProps: {
+    successAlertProps: {
       willClose: () => {
         queryClient.refetchQueries({
-          queryKey: ["getProjectUsers", projectId],
+          queryKey: ["getCustodianProjectUsers", custodianId, projectId],
         });
 
         onClose?.();
