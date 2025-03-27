@@ -7,7 +7,11 @@ export default function getProjectDetailsQuery(
   options?: QueryOptions
 ) {
   return {
-    queryKey: ["getProjectDetails", id, ...(options?.queryKeySuffix || [])],
+    queryKey: [
+      "getProjectDetailsByProjectId",
+      id,
+      ...(options?.queryKeySuffix || []),
+    ],
     queryFn: ({ queryKey }) =>
       getProjectDetails(queryKey[1] as number, {
         error: { message: "getProjectDetailsError" },

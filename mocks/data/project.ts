@@ -27,7 +27,7 @@ const mockedProjects = (count: number): ResearcherProject[] => {
 const mockedProjectDetails = (projectDetails?: Partial<ProjectDetails>): ProjectDetails => ({
   id: 1,
   project_id: 4,
-  datasets: "[\"dataset1\", \"dataset2\"]",
+  datasets: "[\"dataset1\"]",
   data_sensitivity_level: "Protected Data",
   legal_basis_for_data_article6: "Legal Basis",
   duty_of_confidentiality: true,

@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from "react";
+import React, { useMemo, useCallback, useState } from "react";
 import { useStore } from "@/data/store";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
@@ -25,20 +25,20 @@ import FormModalHeader from "@/components/FormModalHeader";
 import CloudDownloadOutlinedIcon from "@mui/icons-material/CloudDownloadOutlined";
 import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
 import { injectParamsIntoPath } from "@/utils/application";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
-  getProjectDetailsByProjectIdQuery,
   postProjectDetailsFromGatewayQuery,
-  postProjectDetailsQuery,
-  putProjectDetailsQuery,
+  PutProjectDetailsPayload,
 } from "@/services/project_details";
 import { RequestFrequency } from "@/consts/projects";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
 import FormFieldArray from "@/components/FormFieldArray";
-import getProjectQuery from "@/services/projects/getProjectQuery";
 import { formatStringToISO } from "@/utils/date";
 import useQueryAlerts from "@/hooks/useQueryAlerts";
 import ReactDOMServer from "react-dom/server";
+import useMutateProjectDetails from "@/queries/useMutateProjectDetails";
+import { showAlert } from "@/utils/showAlert";
+import ContactLink from "@/components/ContactLink";
 
 interface ProjectsSafeDataProps {
   id: number;
@@ -49,141 +49,11 @@ const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 export default function ProjectsSafeData({ id }: ProjectsSafeDataProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const routes = useStore(state => state.getApplication().routes);
-  const { custodian } = useStore(state => ({
+  const { custodian, project, projectDetail } = useStore(state => ({
     custodian: state.getCustodian(),
+    project: state.getProject(),
+    projectDetail: state.getProject().project_detail,
   }));
-
-  const { data: detailsData, refetch } = useQuery(
-    getProjectDetailsByProjectIdQuery(id)
-  );
-
-  const projectDetailsId = detailsData?.data?.id;
-  console.log(detailsData);
-  const { data: projectsData } = useQuery(getProjectQuery(id));
-
-  const { mutateAsync: getGatewayData, ...postGatewayDataQueryState } =
-    useMutation(postProjectDetailsFromGatewayQuery());
-
-  const { mutateAsync: postProjectDetails, ...postProjectDetailsQueryState } =
-    useMutation(postProjectDetailsQuery());
-
-  const { mutateAsync: putProjectDetails, ...putProjectDetailsQueryState } =
-    useMutation(putProjectDetailsQuery(projectDetailsId));
-
-  const isEditMode = !!detailsData?.data;
-
-  useQueryAlerts(
-    isEditMode ? putProjectDetailsQueryState : postProjectDetailsQueryState,
-    {
-      errorAlertProps: {
-        text: isEditMode
-          ? ReactDOMServer.renderToString(
-              t.rich("errorUpdateSafeDataMessage", {
-                contactLink: chunks => <a href="/contact">{chunks}</a>,
-              })
-            )
-          : ReactDOMServer.renderToString(
-              t.rich("errorCreateSafeDataMessage", {
-                contactLink: chunks => <a href="/contact">{chunks}</a>,
-              })
-            ),
-      },
-      successAlertProps: {
-        text: isEditMode
-          ? t("successUpdateSafeDataMessage")
-          : t("successCreateSafeDataMessage"),
-      },
-    }
-  );
-
-  const formMethods = useForm();
-  const { setValue } = formMethods;
-
-  const handleImportFromGateway = useCallback(async () => {
-    if (custodian?.id && projectsData?.data.unique_id) {
-      try {
-        const result = await getGatewayData({
-          custodian_id: Number(custodian.id),
-          project_id: Number(id),
-        });
-
-        setValue("datasets", formatDatasets(result.data?.datasets) || [""]);
-        setValue(
-          "data_sensitivity_level",
-          result.data?.data_sensitivity_level || ""
-        );
-        setValue(
-          "legal_basis_for_data_article6",
-          result.data?.legal_basis_for_data_article6 || ""
-        );
-        setValue(
-          "duty_of_confidentiality",
-          result.data?.duty_of_confidentiality || false
-        );
-        setValue(
-          "national_data_optout",
-          result.data?.national_data_optout || false
-        );
-        setValue(
-          "request_frequency",
-          result.data?.request_frequency || RequestFrequency.ONE_OFF
-        );
-        setValue(
-          "dataset_linkage_description",
-          result.data?.dataset_linkage_description || ""
-        );
-        setValue("data_minimisation", result.data?.data_minimisation || "");
-        setValue(
-          "data_use_description",
-          result.data?.data_use_description || ""
-        );
-        setValue(
-          "access_date",
-          formatStringToISO(result.data?.access_date) || ""
-        );
-      } catch (error) {
-        console.error("Error importing data from gateway:", error);
-        // Handle error, maybe show an error message to the user
-      }
-    } else {
-      console.error("Custodian ID or Project Unique ID is missing");
-      // Handle the case where custodian ID or project unique ID is missing
-    }
-  }, [custodian?.id, projectsData?.data.unique_id, getGatewayData]);
-
-  const schema = useMemo(
-    () =>
-      yup.object().shape({
-        datasets: yup.array().of(yup.string()),
-        data_sensitivity_level: yup.string(),
-        legal_basis_for_data_article6: yup
-          .string()
-          .required(t("lawfulConditionRequired")),
-        duty_of_confidentiality: yup
-          .boolean()
-          .oneOf([true], t("lawfulBasisConfirmationRequired")),
-        national_data_optout: yup.boolean(),
-        request_frequency: yup.string(),
-        dataset_linkage_description: yup.string(),
-        data_minimisation: yup.string(),
-        data_use_description: yup.string(),
-        access_date: yup.string(),
-      }),
-    [t]
-  );
-
-  const handleSubmit = async fields => {
-    const payload = {
-      ...fields,
-      project_id: Number(id),
-    };
-
-    if (detailsData?.data) {
-      await putProjectDetails(payload).then(() => refetch());
-    } else {
-      await postProjectDetails(payload).then(() => refetch());
-    }
-  };
 
   const formatDatasets = (datasets: string | undefined) => {
     if (datasets) {
@@ -198,21 +68,115 @@ export default function ProjectsSafeData({ id }: ProjectsSafeDataProps) {
 
   const formOptions = {
     defaultValues: {
-      datasets: formatDatasets(detailsData?.data.datasets) || [""],
-      data_sensitivity_level: detailsData?.data.data_sensitivity_level || "",
+      datasets: formatDatasets(projectDetail?.datasets) || [""],
+      data_sensitivity_level: projectDetail?.data_sensitivity_level || "",
       legal_basis_for_data_article6:
-        detailsData?.data.legal_basis_for_data_article6 || "",
-      duty_of_confidentiality:
-        detailsData?.data.duty_of_confidentiality || false,
-      national_data_optout: detailsData?.data.national_data_optout || false,
+        projectDetail?.legal_basis_for_data_article6 || "",
+      duty_of_confidentiality: projectDetail?.duty_of_confidentiality || false,
+      national_data_optout: projectDetail?.national_data_optout || false,
       request_frequency:
-        detailsData?.data.request_frequency || RequestFrequency.ONE_OFF,
+        projectDetail?.request_frequency || RequestFrequency.ONE_OFF,
       dataset_linkage_description:
-        detailsData?.data.dataset_linkage_description || "",
-      data_minimisation: detailsData?.data.data_minimisation || "",
-      data_use_description: detailsData?.data.data_use_description || "",
-      access_date: formatStringToISO(detailsData?.data.access_date) || "",
+        projectDetail?.dataset_linkage_description || "",
+      data_minimisation: projectDetail?.data_minimisation || "",
+      data_use_description: projectDetail?.data_use_description || "",
+      access_date: formatStringToISO(projectDetail?.access_date) || "",
     },
+  };
+
+  const queryClient = useQueryClient();
+
+  const { mutateAsync, queryState } = useMutateProjectDetails(project.id);
+  useQueryAlerts(queryState);
+
+  const { mutateAsync: getGatewayData, ...postGatewayDataQueryState } =
+    useMutation(postProjectDetailsFromGatewayQuery());
+
+  const formMethods = useForm();
+  const { reset } = formMethods;
+
+  const [formValues, setFormValues] = useState(formOptions.defaultValues);
+  const handleImportFromGateway = useCallback(async () => {
+    try {
+      const result = await getGatewayData({
+        custodian_id: Number(custodian?.id),
+        project_id: Number(id),
+      });
+      if (result.data.length === 1) {
+        const newValues = {
+          datasets: result.data[0].datasets.map(dataset => dataset.name) || [
+            "",
+          ],
+          data_sensitivity_level: result.data[0].data_sensitivity_level || "",
+          legal_basis_for_data_article6:
+            result.data[0].legal_basis_for_data_article6 || "",
+          duty_of_confidentiality:
+            result.data[0].duty_of_confidentiality || false,
+          national_data_optout: result.data[0].national_data_optout || false,
+          request_frequency:
+            result.data[0].request_frequency || RequestFrequency.ONE_OFF,
+          dataset_linkage_description:
+            result.data[0].dataset_linkage_description || "",
+          data_minimisation: result.data[0].data_minimisation || "",
+          data_use_description: result.data[0].data_use_description || "",
+          access_date: formatStringToISO(result.data[0].access_date) || "",
+        };
+
+        setFormValues(newValues);
+        showAlert("success", {
+          text: t("gatewayImportSuccess"),
+          confirmButtonText: t("okButton"),
+        });
+      } else {
+        showAlert("error", {
+          text: ReactDOMServer.renderToString(
+            t.rich("gatewayImportError", {
+              contactLink: ContactLink,
+            })
+          ),
+          confirmButtonText: t("errorButton"),
+        });
+      }
+    } catch (_) {
+      showAlert("error", {
+        text: ReactDOMServer.renderToString(
+          t.rich("gatewayImportError", {
+            contactLink: ContactLink,
+          })
+        ),
+        confirmButtonText: t("errorButton"),
+      });
+    }
+  }, [custodian?.id, id, getGatewayData, reset, t]);
+
+  const schema = useMemo(
+    () =>
+      yup.object().shape({
+        datasets: yup.array().of(yup.string()),
+        data_sensitivity_level: yup.string(),
+        legal_basis_for_data_article6: yup
+          .string()
+          .required(t("lawfulConditionRequired")),
+        duty_of_confidentiality: yup.boolean(),
+        national_data_optout: yup.boolean(),
+        request_frequency: yup.string(),
+        dataset_linkage_description: yup.string(),
+        data_minimisation: yup.string(),
+        data_use_description: yup.string(),
+        access_date: yup.string(),
+      }),
+    [t]
+  );
+
+  const handleSubmit = async (payload: PutProjectDetailsPayload) => {
+    await mutateAsync({
+      ...projectDetail,
+      ...payload,
+    });
+
+    queryClient.refetchQueries({
+      queryKey: ["getProject", project.id],
+    });
   };
 
   return (
@@ -225,13 +189,11 @@ export default function ProjectsSafeData({ id }: ProjectsSafeDataProps) {
           color="primary"
           startIcon={<CloudDownloadOutlinedIcon />}
           onClick={handleImportFromGateway}
-          disabled={
-            !projectsData?.data.unique_id || postGatewayDataQueryState.isPending
-          }>
+          disabled={!project?.unique_id || postGatewayDataQueryState.isPending}>
           {t("importFromHealthDataResearchGateway")}
         </Button>
       </FormModalHeader>
-      <Form onSubmit={handleSubmit} schema={schema} {...formOptions}>
+      <Form onSubmit={handleSubmit} schema={schema} defaultValues={formValues}>
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <FormControlHorizontal
@@ -272,13 +234,13 @@ export default function ProjectsSafeData({ id }: ProjectsSafeDataProps) {
               sx={{ maxWidth: "33%" }}
               renderField={props => (
                 <Select {...props} fullWidth>
-                  <MenuItem value="Open Data">{t("openData")}</MenuItem>
-                  <MenuItem value="Protected Data">
-                    {t("protectedData")}
+                  <MenuItem value="De-Personalised">
+                    {t("dePersonalised")}
                   </MenuItem>
-                  <MenuItem value="Restricted Data">
-                    {t("restrictedData")}
+                  <MenuItem value="Personally Identifiable">
+                    {t("personallyIdentifiable")}
                   </MenuItem>
+                  <MenuItem value="Anonymous">{t("anonymous")}</MenuItem>
                 </Select>
               )}
             />
@@ -386,10 +348,7 @@ export default function ProjectsSafeData({ id }: ProjectsSafeDataProps) {
                   id,
                 }
               )}
-              isLoading={
-                postProjectDetailsQueryState.isPending ||
-                putProjectDetailsQueryState.isPending
-              }
+              isLoading={queryState.isPending}
             />
           </Grid>
         </Grid>

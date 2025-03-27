@@ -15,7 +15,6 @@ type PostProjectDetailsResponse = { id: number };
 
 type PutProjectDetailsResponse = { id: number };
 
-
 type ProjectDetailsResponse = ProjectDetails;
 
 export type {
