@@ -8,6 +8,7 @@ enum PageTabs {
 }
 
 enum ConfigurationSubTabs {
+  INTEGRATIONS = "integrations",
   WEBHOOKS = "webhooks",
   RULES = "rules",
   VALIDATION_CHECKS = "validation-checks",

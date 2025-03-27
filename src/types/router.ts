@@ -32,6 +32,7 @@ interface Routes {
   profileCustodianOrganisations: RouteConfig;
   profileCustodianConfiguration: RouteConfig;
   profileCustodianConfigurationWebhooks: RouteConfig;
+  profileCustodianConfigurationIntegrations: RouteConfig;
   profileCustodianConfigurationRules: RouteConfig;
   profileCustodianConfigurationValidationChecks: RouteConfig;
   profileCustodianKeycards: RouteConfig;

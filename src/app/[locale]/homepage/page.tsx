@@ -3,13 +3,12 @@ import KeyFeatures from "./components/KeyFeatures";
 import SoursdInfo from "./components/SoursdInfo";
 import SoursdUsages from "./components/SoursdUsages";
 import Support from "./components/Support";
-import { StyledWrapper } from "./homepage.styles";
 
 export default function Page() {
   return (
     <>
       <Header />
-      <StyledWrapper>
+      <div>
         <section>
           <SoursdInfo />
         </section>
@@ -22,7 +21,7 @@ export default function Page() {
         <section>
           <Support />
         </section>
-      </StyledWrapper>
+      </div>
       <Footer />
     </>
   );

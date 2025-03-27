@@ -154,6 +154,8 @@
     "configurationValidationChecks": "Validation Checks",
     "configurationWebhooks": "Webhooks",
     "webhookError": "There was a problem with the webhook configuration. Please try again or contact us at <contactLink></contactLink>",
+    "configurationIntegrations": "Integrations",
+    "integrationsDescription": "Link your Gateway Team profile via a custom integration to SOURSD so that you can populate your project information and synch the information without needing to enter it in two places.",
     "userRulesTitle": "User Rules",
     "organisationRulesTitle": "Organisation Rules",
     "updateRulesSuccess": "Rules configuration updated successfully",
@@ -621,7 +623,12 @@
     "dataUseDescriptionPlaceholder": "Data description",
     "accessDatePlaceholder": "Access date",
     "requestFrequencyPlaceholder": "Request frequency",
-    "dataSensitivityLevelPlaceholder": "Data sensitivity level"
+    "dataSensitivityLevelPlaceholder": "Data sensitivity level",
+    "gatewayAppId": "Application ID",
+    "gatewayAppIdPlaceholder": "Enter your 40 character App ID",
+    "gatewayClientId": "Client ID",
+    "gatewayClientIdPlaceholder": "Enter your 40 character Client ID",
+    "integrationIdFormatInvalid": "Not in the correct format, the ID should be a 40 character string of letters and numbers."
   },
   "ProfessionalRegistrations": {
     "title": "Professional Registrations",
@@ -658,15 +665,15 @@
   "Footer": {
     "dsitLogoAlt": "Department for Science, Innovation & Technology",
     "mrcLogoAlt": "Medical Research Council logo",
-    "copyright": "Copyright (C) 2025 Health Data Research UK",
+    "copyright": "Copyright© 2025 Health Data Research UK",
     "contactFormTitle": "Contact Us",
     "contactFormSubtitle": "Some subtitle here",
     "fundedByTitle": "Funded by",
     "partnershipTitle": "In partnership with",
-    "privacyCookieLink": "Privacy policy",
-    "termsAndConditionsLink": "Terms and Conditions",
+    "privacyCookieLink": "Privacy & Cookie Policy",
+    "termsAndConditionsLink": "Terms and conditions",
     "aboutUsLink": "About Us",
-    "contactUsLink": "Contact Us"
+    "contactUsLink": "Contact"
   },
   "ContactForm": {
     "namePlaceholder": "Name",
@@ -800,6 +807,9 @@
     "previousButton": "Previous",
     "emailDescription": "Your personal email is used to set up a SOURSD account so that your account stays with you, regardless of your employment or enrolment at a higher education institute. You can also recover your account using your personal email.",
     "locationDescription": "Some data custodians need to know the country that you will be accessing data from as different countries adhere to different laws regarding data sharing and data confidentiality.",
+    "idvtCheckSection": "Identification Verification Technology (IDVT)",
+    "idvtCheckButton": "Start IDVT check",
+    "idvtCheckDescription": "Not all Data Custodians require this check to be completed. Those Data Custodians that do, can request that this check is completed prior to project approval. To work across the breadth of UK Data Custodians, we recommend that you complete this check as it may streamline approval processes. \n\nIDVT checks are carried out by a 3rd party supplier against the following criteria: valid government issued identification (fraud), likeness check against ID (identity), liveness check (identity), sanctions check (anti money laundering). Please note neither SOURSD nor the 3rd party supplier store a copy of your identity documents",
     "accreditedResearcherCheckboxLabel": "I am a registered Accredited Researcher as published on the UK Statistics Authority website.",
     "accreditedResearcherLinkHref": "https://www.gov.uk/government/consultations/digital-economy-act-part-5-data-sharing-codes-and-regulations/research-code-of-practice-and-accreditation-criteria",
     "userDeclarationCheckboxLabel": "I have signed a User declaration for accessing Digital Economy Act accredited environments.",
@@ -1233,5 +1243,11 @@
       "description": "",
       "buttonText": "Add Organisations"
     }
+  },
+  "VeriffTermsAndConditions": {
+    "title": "This will take you to Veriff’s website to verify your identity.",
+    "descriptionPart1": "For more information on how we process your data see our <ourLink>privacy policy</ourLink>.",
+    "descriptionPart2": "For more information on how Veriff will process your data see their <theirLink>privacy policy</theirLink>.",
+    "checkboxLabel": "I consent to the above terms and conditions"
   }
 }

@@ -54,6 +54,8 @@ interface Custodian {
   permissions: Permission[];
   unique_identifier: string;
   idvt_required: boolean;
+  gateway_app_id: string | null;
+  gateway_client_id: string | null;
 }
 
 type Approval = {
