@@ -1,3 +1,5 @@
+import { PageBody } from "@/modules";
+
 export default function ProjectsSafePeople() {
-  return <>Safe people</>;
+  return <PageBody>Safe people</PageBody>;
 }
