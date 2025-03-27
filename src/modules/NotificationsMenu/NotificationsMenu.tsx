@@ -13,7 +13,8 @@ import {
 
 import { formatDBDate } from "@/utils/date";
 import { useTranslations } from "next-intl";
-import NotificationsIcon from "@mui/icons-material/Notifications";
+import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
+import NotificationsActiveOutlinedIcon from "@mui/icons-material/NotificationsActiveOutlined";
 import { NotificationPatchType } from "@/services/notifications/types";
 import { NotificationModal } from "@/modules/NotifcationModal";
 import { Notification } from "@/types/notifications";
@@ -138,7 +139,7 @@ export default function NotificationsMenu() {
     <Box>
       <IconButton
         data-testid="notifications-button"
-        color="primary"
+        color={notificationsCount?.data.unread ? "fail" : "notification"}
         onClick={handleOpen}
         sx={{
           height: "30px",
@@ -150,7 +151,11 @@ export default function NotificationsMenu() {
           data-testid="notifications-badge"
           badgeContent={notificationsCount?.data.unread}
           color="error">
-          <NotificationsIcon />
+          {notificationsCount?.data.unread ? (
+            <NotificationsActiveOutlinedIcon />
+          ) : (
+            <NotificationsOutlinedIcon />
+          )}
         </Badge>
       </IconButton>
 

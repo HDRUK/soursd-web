@@ -946,10 +946,12 @@
   },
   "NavBar": {
     "homeButton": "Home",
+    "myAccountButton": "My Account",
     "aboutButton": "About",
     "featuresButton": "Features",
-    "supportButton": "Support",
+    "resourcesButton": "Resources",
     "contactButton": "Contact",
+    "helpButton": "Help",
     "signInButton": "Sign In",
     "registerButton": "Register",
     "ariaOpenMobileMenu": "open mobile menu",

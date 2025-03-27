@@ -21,6 +21,7 @@ import { LinkProps } from "next/link";
 import { MouseEvent, useEffect, useState } from "react";
 import PageCenter from "../PageCenter";
 import { StyledContainer, StyledHeader } from "./NavBar.styles";
+import MaskLabel from "@/components/MaskLabel";
 
 const NAMESPACE_TRANSLATIONS_NAVBAR = "NavBar";
 
@@ -33,6 +34,7 @@ export enum ButtonColor {
 export enum ButtonVariant {
   Contained = "contained",
   Text = "text",
+  Outlined = "outlined",
 }
 
 export default function NavBar() {
@@ -49,7 +51,7 @@ export default function NavBar() {
     }
   }, [isDesktop, isDrawerOpen]);
 
-  const buttons: {
+  const left_buttons: {
     color: ButtonColor;
     variant: ButtonVariant;
     text?: string;
@@ -58,12 +60,23 @@ export default function NavBar() {
     onClick?: LinkProps["onClick"];
     href?: string;
   }[] = [
-    {
-      color: ButtonColor.Inherit,
-      variant: ButtonVariant.Text,
-      text: t("homeButton"),
-      href: "/",
-    },
+    ...(storedUser
+      ? [
+          {
+            color: ButtonColor.Inherit,
+            variant: ButtonVariant.Text,
+            text: t("myAccountButton"),
+            href: "/",
+          },
+        ]
+      : [
+          {
+            color: ButtonColor.Inherit,
+            variant: ButtonVariant.Text,
+            text: t("homeButton"),
+            href: "/",
+          },
+        ]),
     {
       color: ButtonColor.Inherit,
       variant: ButtonVariant.Text,
@@ -79,7 +92,7 @@ export default function NavBar() {
     {
       color: ButtonColor.Inherit,
       variant: ButtonVariant.Text,
-      text: t("supportButton"),
+      text: t("resourcesButton"),
       href: "#",
     },
     {
@@ -89,12 +102,28 @@ export default function NavBar() {
       href: "#",
     },
     {
-      color: ButtonColor.Secondary,
-      variant: ButtonVariant.Contained,
+      color: ButtonColor.Inherit,
+      variant: ButtonVariant.Text,
+      text: t("helpButton"),
+      href: "#",
+    },
+  ];
+  const right_buttons: {
+    color: ButtonColor;
+    variant: ButtonVariant;
+    text?: string;
+    icon?: React.ReactNode;
+    isSign?: boolean;
+    onClick?: LinkProps["onClick"];
+    href?: string;
+  }[] = [
+    {
+      color: ButtonColor.Primary,
+      variant: ButtonVariant.Outlined,
       text: storedUser ? t("signOutButton") : t("signInButton"),
       onClick: (e: MouseEvent<HTMLAnchorElement>) => {
         e.preventDefault();
-
+        console.log("storedUser", storedUser);
         if (storedUser) {
           handleLogout();
         } else {
@@ -130,14 +159,32 @@ export default function NavBar() {
         data-testid="header-desktop-menu">
         <PageCenter>
           <StyledHeader>
-            <SoursdLogo variant="titled" sx={{ mt: "-9px" }} />
-            <Box sx={{ display: "flex", gap: 1 }}>
-              {buttons.map(({ text, icon, ...restProps }) => (
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+              <SoursdLogo variant="titled" sx={{ mt: "-9px", mr: "40px" }} />
+              {left_buttons.map(({ text, icon, ...restProps }) => (
+                <Button
+                  component={Link}
+                  sx={{ minWidth: 0 }}
+                  {...restProps}
+                  key={text}>
+                  {text || icon}
+                </Button>
+              ))}
+            </Box>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+              {right_buttons.map(({ text, icon, ...restProps }) => (
                 <Button component={Link} {...restProps} key={text}>
                   {text || icon}
                 </Button>
               ))}
               {storedUser && <NotificationsMenu />}
+              {storedUser && (
+                <MaskLabel
+                  initials={`${storedUser.first_name.charAt(0)}${storedUser.last_name.charAt(0)}`}
+                  label=""
+                  size="small"
+                />
+              )}
             </Box>
           </StyledHeader>
         </PageCenter>
@@ -179,7 +226,7 @@ export default function NavBar() {
           dismissAriaLabel={t("ariaCloseMobileMenu")}
           isDismissable>
           <MenuList>
-            {buttons.map(({ text, ...restProps }) => (
+            {left_buttons.map(({ text, ...restProps }) => (
               <MenuItem
                 key={text}
                 sx={{ "&:hover": { backgroundColor: "transparent" } }}>
