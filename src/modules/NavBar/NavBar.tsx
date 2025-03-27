@@ -246,7 +246,7 @@ export default function NavBar() {
             ))}
             {storedUser && (
               <MenuItem
-                key={"Notifications"}
+                key="Notifications"
                 sx={{
                   "&:hover": { backgroundColor: "transparent" },
                   justifyContent: "center",

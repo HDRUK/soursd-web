@@ -34,7 +34,7 @@ const mockUseStore = useStore as jest.MockedFunction<typeof useStore>;
 
 (get as jest.Mock).mockReturnValue(undefined);
 
-const linksText = ["Home", "About", "Features", "Support", "Contact"];
+const linksText = ["Home", "About", "Features", "Resources", "Contact", "Help"];
 
 const renderMobileMenuTest = () => {
   defineMatchMedia(theme.breakpoints.values.xs);
@@ -113,7 +113,7 @@ describe("NavBar Component", () => {
     expect(handleLogout).toHaveBeenCalled();
   });
 
-  it("displays 'Sign Out' if the user is authenticated", () => {
+  it("displays 'My Account' and 'Sign Out' if the user is authenticated", () => {
     mockUseStore.mockReturnValue({
       config: {
         user: mockedUser({
@@ -129,6 +129,12 @@ describe("NavBar Component", () => {
     expect(
       screen.getByRole("button", {
         name: "Sign Out",
+      })
+    ).toBeInTheDocument();
+
+    expect(
+      screen.getByRole("button", {
+        name: "My Account",
       })
     ).toBeInTheDocument();
   });
