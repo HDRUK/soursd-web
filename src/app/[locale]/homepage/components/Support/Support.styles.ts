@@ -1,38 +1,30 @@
-import { Box, styled } from "@mui/material";
-import { motion } from "motion/react";
-
-const StyledContainer = styled(motion.div)`
-  padding: 10px;
-  background: #ffffff;
-  box-shadow:
-    0 5px 10px #bebebe,
-    0 -5px 10px #ffffff;
-  display: flex;
-  flex-direction: column;
-  margin: 10px;
-`;
+import { styled } from "@mui/material";
 
 const StyledContent = styled("div")`
+  background: #ffffff;
   justify-content: center;
   align-items: center;
   text-align: center;
   display: flex;
   flex-direction: column;
-  padding: 50px;
+  padding: 24px;
   width: auto;
+  color: black;
 `;
 
-const StyledGrid = styled("div")`
+const StyledFlex = styled("div")`
   justify-content: space-around;
   text-align: center;
-  display: inline-grid;
-  grid-template-columns: auto auto auto;
-  column-gap: 20px;
-`;
-
-const StyledBox = styled(Box)`
-  padding-top: 24px;
   display: flex;
+  flex-wrap: wrap;
+  column-gap: 24px;
 `;
 
-export { StyledContent, StyledContainer, StyledGrid, StyledBox };
+const StyledContainer = styled("div")`
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+`;
+
+export { StyledContent, StyledFlex, StyledContainer };

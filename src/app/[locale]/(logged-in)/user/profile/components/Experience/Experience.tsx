@@ -52,7 +52,7 @@ export default function Experience() {
     isUploading,
     isScanning,
     file,
-  } = useFileUpload("cvUploadFailed", latestCV?.id);
+  } = useFileUpload("cvUpload", { initialFileId: latestCV?.id });
 
   const uploadFile = useUserFileUpload({
     user,

@@ -10,7 +10,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import {
   Box,
   Button,
-  Divider,
   IconButton,
   MenuItem,
   MenuList,
@@ -192,7 +191,6 @@ export default function NavBar() {
           </MenuList>
         </HorizontalDrawer>
       </Box>
-      <Divider sx={{ height: "6px", padding: "0" }} />
     </StyledContainer>
   );
 }
