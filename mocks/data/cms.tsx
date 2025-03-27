@@ -1,5 +1,5 @@
 import ChipStatus, { Status } from "@/components/ChipStatus";
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 export const mockedSafeProjectGuidanceProps = {
   infoTitle: "Did you know?",
@@ -102,11 +102,16 @@ export const mockedSoursdHomepageInfo = {
   infoTitle: "SoursdInfo",
   info: (
     <>
-      <Typography variant="h1" mb={3}>
-        Safe Organisation and User Registry for Sensitive Data (SOURSD)
+      <Typography fontSize="48px" fontWeight="400" mb={1}>
+        <Box component="span" fontWeight="bold">S</Box>afe{" "} 
+        <Box component="span" fontWeight="bold">O</Box>rganisation and{" "}
+        <Box component="span" fontWeight="bold">U</Box>ser{" "}
+        <Box component="span" fontWeight="bold">R</Box>egistry for{" "}
+        <Box component="span" fontWeight="bold">S</Box>ensitive{" "}
+        <Box component="span" fontWeight="bold">D</Box>ata
       </Typography>
-      <Typography variant="h5" fontWeight="light" sx={{ mt: "30px" }}>
-        A centralised tool to enable Safe People decision making
+      <Typography variant="h1" fontWeight="normal" >
+        A platform to enable Safe People decision making
       </Typography>
     </>
   ),
@@ -116,7 +121,7 @@ export const mockedSoursdHomepageUsages = {
   infoTitle: "SoursdUsages",
   infoHeader: (
     <>
-      <Typography variant="h4" mb={3}>
+      <Typography variant="h2" mb={2}>
         With SOURSD you can...
       </Typography>
     </>
