@@ -1,3 +1,4 @@
+import { TEXT_LIST_SEPARATOR } from "@/config/db";
 import yup from "@/config/yup";
 
 function getCheckboxFormValuesFromIntersection(
@@ -37,4 +38,26 @@ function isFieldRequired(
   return currentSchema ? !currentSchema.optional : false;
 }
 
-export { getCheckboxFormValuesFromIntersection, isFieldRequired };
+function toFieldArrayData(data: string) {
+  return data
+    ? decodeURIComponent(data)
+        .split(TEXT_LIST_SEPARATOR)
+        .map((value: string) => ({
+          value,
+        }))
+    : [];
+}
+
+function toFieldArrayString(data: { value: string }[]) {
+  return data
+    .map(({ value }) => value && encodeURIComponent(value))
+    .filter(value => !!value)
+    .join(TEXT_LIST_SEPARATOR);
+}
+
+export {
+  getCheckboxFormValuesFromIntersection,
+  isFieldRequired,
+  toFieldArrayData,
+  toFieldArrayString,
+};
