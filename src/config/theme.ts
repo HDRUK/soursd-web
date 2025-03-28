@@ -123,7 +123,7 @@ const PALETTE_THEME_PURPLE_BLUE = {
       contrastText: "#fff",
     },
     notificationActive: createColor("#DC3645"),
-    notification: createColor("#4552a3"),
+    notification: createColor("#5769B2"),
   },
 };
 
