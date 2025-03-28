@@ -3,7 +3,7 @@
 import Guidance from "@/components/Guidance";
 import { Message } from "@/components/Message";
 import SoursdLogo from "@/components/SoursdLogo";
-import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
+import { mockedRegisterGuidanceProps } from "@/mocks/data/cms";
 import { AccountType } from "@/types/accounts";
 import PeopleIcon from "@mui/icons-material/People";
 import PersonIcon from "@mui/icons-material/Person";
@@ -100,7 +100,7 @@ export default function AccountConfirm() {
   const { isPending, isError, error } = registerUserState;
 
   return (
-    <Guidance {...mockedPersonalDetailsGuidanceProps}>
+    <Guidance {...mockedRegisterGuidanceProps}>
       <Box
         sx={{
           display: "flex",
