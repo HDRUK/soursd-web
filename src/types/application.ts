@@ -292,6 +292,7 @@ interface ResearcherAffiliation {
   role?: string;
   organisation: Partial<Organisation>;
   email?: string;
+  registryAffiliationState?: string;
 }
 
 interface ResearcherProjectApproval {

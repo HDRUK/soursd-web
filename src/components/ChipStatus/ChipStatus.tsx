@@ -12,6 +12,10 @@ export enum Status {
   PROJECT_APPROVED = "project_approved",
   PROJECT_COMPLETED = "project_completed",
   PROJECT_PENDING = "project_pending",
+  AFFILIATION_INVITED = "affiliation_invited",
+  AFFILIATION_PENDING = "affiliation_pending",
+  AFFILIATION_APPROVED = "affiliation_approved",
+  AFFILIATION_REJECTED = "affiliation_rejected",
 }
 
 interface ChipStatusProps extends ChipProps {
@@ -30,10 +34,15 @@ export default function ChipStatus({ status, ...restProps }: ChipStatusProps) {
   if (
     status === Status.AFFILIATED ||
     status === Status.APPROVED ||
-    status === Status.PROJECT_APPROVED
+    status === Status.PROJECT_APPROVED ||
+    status === Status.AFFILIATION_APPROVED
   ) {
     chipProps = {
       color: "success",
+    };
+  } else if (status === Status.AFFILIATION_REJECTED) {
+    chipProps = {
+      color: "error",
     };
   } else if (
     status === Status.COMPLETED ||
