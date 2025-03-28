@@ -1,7 +1,7 @@
 import yup from "@/config/yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, BoxProps, Grid } from "@mui/material";
-import { HTMLAttributes, ReactNode } from "react";
+import { HTMLAttributes, ReactNode, useEffect } from "react";
 import {
   DefaultValues,
   FieldValues,
@@ -58,6 +58,12 @@ export default function Form<T extends FieldValues>({
 
   const methods = useForm<T>(formOptions);
   const { handleSubmit, reset } = methods;
+
+  useEffect(() => {
+    if (defaultValues) {
+      reset(defaultValues);
+    }
+  }, [defaultValues, reset]);
 
   const extendedMethods: ExtendedUseFormReturn<T> = {
     ...methods,

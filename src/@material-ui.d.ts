@@ -48,6 +48,9 @@ declare module "@mui/material/styles/createPalette" {
     textPrimary: SimplePaletteColorOptions;
     midGrey: SimplePaletteColorOptions;
     clear: SimplePaletteColorOptions;
+    homepageInfo: SimplePaletteColorOptions;
+    homepageKeyFeature: SimplePaletteColorOptions;
+    homepageUsage: SimplePaletteColorOptions;
   }
 
   interface Palette extends CustomPalette {}

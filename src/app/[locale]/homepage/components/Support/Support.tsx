@@ -6,35 +6,61 @@ import image2 from "public/images/homepage/Image2.png";
 
 import Image from "next/image";
 
-import { framerHover } from "@/utils/framer";
-import { StyledContent, StyledContainer, StyledGrid } from "./Support.styles";
+import { StyledContent, StyledContainer, StyledFlex } from "./Support.styles";
 
 export default function Support() {
   return (
     <StyledContent>
-      <Typography variant="h2" sx={{ mb: "50px" }}>
+      <Typography variant="h3" sx={{ mb: "24px" }}>
         Support
       </Typography>
-      <StyledGrid>
-        <StyledContainer {...framerHover}>
-          <Image src={image1} alt="image_1" width={300} height={160} />
-          <Button variant="contained" color="secondary" sx={{ margin: "20px" }}>
-            Individuals
+      <StyledFlex width="100%">
+        <StyledContainer>
+          <Image
+            src={image1}
+            alt="image_1"
+            width={0}
+            height={0}
+            sizes="100vw"
+            style={{ width: "100%", height: "auto" }}
+          />
+          <Button
+            variant="outlined"
+            sx={{ padding: "16px", my: "12px", fontSize: "small" }}>
+            Individual Users
           </Button>
         </StyledContainer>
-        <StyledContainer {...framerHover}>
-          <Image src={image1} alt="image_2" width={300} height={160} />
-          <Button variant="contained" sx={{ margin: "20px" }}>
+        <StyledContainer>
+          <Image
+            src={image1}
+            alt="image_2"
+            width={0}
+            height={0}
+            sizes="100vw"
+            style={{ width: "100%", height: "auto" }}
+          />
+          <Button
+            variant="outlined"
+            sx={{ padding: "16px", my: "12px", fontSize: "small" }}>
             Organisations
           </Button>
         </StyledContainer>
-        <StyledContainer {...framerHover}>
-          <Image src={image2} alt="image_3" width={300} height={160} />
-          <Button variant="contained" color="secondary" sx={{ margin: "20px" }}>
+        <StyledContainer>
+          <Image
+            src={image2}
+            alt="image_3"
+            width={0}
+            height={0}
+            sizes="100vw"
+            style={{ width: "100%", height: "auto" }}
+          />
+          <Button
+            variant="outlined"
+            sx={{ padding: "16px", my: "12px", fontSize: "small" }}>
             Data Custodians
           </Button>
         </StyledContainer>
-      </StyledGrid>
+      </StyledFlex>
     </StyledContent>
   );
 }
