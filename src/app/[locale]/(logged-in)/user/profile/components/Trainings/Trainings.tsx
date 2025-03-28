@@ -1,28 +1,28 @@
+import ContactLink from "@/components/ContactLink";
+import Form from "@/components/Form";
+import FormControlCheckbox from "@/components/FormControlCheckbox";
+import LoadingWrapper from "@/components/LoadingWrapper";
+import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
 import { ROUTES } from "@/consts/router";
-import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
+import { useStore } from "@/data/store";
+import useQueryAlerts from "@/hooks/useQueryAlerts";
+import { mockedUserTrainingGuidanceProps } from "@/mocks/data/cms";
 import {
   PageBody,
   PageBodyContainer,
   PageGuidance,
   PageSection,
 } from "@/modules";
+import { getUserQuery, patchUserQuery } from "@/services/users";
+import { User } from "@/types/application";
 import { Box, Link } from "@mui/material";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
-import FormControlCheckbox from "@/components/FormControlCheckbox";
-import { useStore } from "@/data/store";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { patchUserQuery, getUserQuery } from "@/services/users";
-import useQueryAlerts from "@/hooks/useQueryAlerts";
-import { User } from "@/types/application";
-import ReactDOMServer from "react-dom/server";
-import ContactLink from "@/components/ContactLink";
-import LoadingWrapper from "@/components/LoadingWrapper";
-import Form from "@/components/Form";
 import { useMemo } from "react";
-import Training from "../Training";
+import ReactDOMServer from "react-dom/server";
 import ProfessionalsRegistration from "../ProfessionalRegistrations";
+import Training from "../Training";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
@@ -77,7 +77,7 @@ export default function Trainings() {
     <LoadingWrapper variant="basic" loading={isLoading}>
       <Form {...formOptions} onSubmit={handleSubmit} key={userData?.data?.id}>
         <PageBodyContainer heading={tProfile("trainingTitle")}>
-          <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
+          <PageGuidance {...mockedUserTrainingGuidanceProps}>
             <PageBody>
               <PageSection>
                 <Training />
