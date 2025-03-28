@@ -60,23 +60,12 @@ export default function NavBar() {
     onClick?: LinkProps["onClick"];
     href?: string;
   }[] = [
-    ...(storedUser
-      ? [
-          {
-            color: ButtonColor.Inherit,
-            variant: ButtonVariant.Text,
-            text: t("myAccountButton"),
-            href: "/",
-          },
-        ]
-      : [
-          {
-            color: ButtonColor.Inherit,
-            variant: ButtonVariant.Text,
-            text: t("homeButton"),
-            href: "/",
-          },
-        ]),
+    {
+      color: ButtonColor.Inherit,
+      variant: ButtonVariant.Text,
+      text: storedUser ? t("myAccountButton") : t("homeButton"),
+      href: "/",
+    },
     {
       color: ButtonColor.Inherit,
       variant: ButtonVariant.Text,
