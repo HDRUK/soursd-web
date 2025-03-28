@@ -1033,6 +1033,7 @@
   "Projects": {
     "getOrganisationProjectsError": "No projects found",
     "loadingAriaLabel": "Loading project data",
+    "dataCustodians": "Data custodians",
     "title": "Project Name",
     "period": "Project period",
     "laySummary": "Summary",

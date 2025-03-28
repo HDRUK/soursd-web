@@ -313,6 +313,7 @@ type ResearcherProject = ModelState<{
   unique_id: string;
   approvals: ResearcherProjectApproval[];
   organisations: Organisation[];
+  custodians?: Custodian[];
   project_detail: ProjectDetails;
 }>;
 

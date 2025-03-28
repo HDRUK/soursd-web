@@ -1,14 +1,11 @@
 import FieldsToText from "@/components/FieldsToText";
-import { mockedSafeProjectGuidanceProps } from "@/mocks/data/cms";
-import { PageBody, PageGuidance, PageSection } from "@/modules";
-import { Project } from "@/types/application";
+import { ResearcherProject } from "@/types/application";
 import { formatDisplayLongDate } from "@/utils/date";
-import { toCamelCase } from "@/utils/string";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 
 interface SafeProjectDetailsProps {
-  projectData: Project;
+  projectData: ResearcherProject;
 }
 
 const NAMESPACE_TRANSLATION = "Projects";
@@ -28,6 +25,12 @@ export default function SafeProjectDetails({
           <Typography>
             {formatDisplayLongDate(projectData.start_date)} to{" "}
             {formatDisplayLongDate(projectData.end_date)}
+          </Typography>,
+        ],
+        [
+          "dataCustodians",
+          <Typography component="ul">
+            {projectData.custodians?.map(({ name }) => <li>{name}</li>)}
           </Typography>,
         ],
         "lay_summary",
