@@ -1,7 +1,7 @@
 import { FileType } from "@/consts/files";
 import { EntityType } from "@/types/api";
 import { File, User } from "@/types/application";
-import { getFileFromEvent } from "@/utils/file";
+import { getFileFromEvent, resetFileFromEvent } from "@/utils/file";
 import { ChangeEvent, useCallback } from "react";
 
 export interface UseUserFileUploadProps {
@@ -27,6 +27,7 @@ export default function useUserFileUpload({
         formData.append("registry_id", `${user?.registry_id}`);
 
         const fileFromApi = await upload(formData);
+        resetFileFromEvent(e);
 
         if (fileFromApi) {
           const updatedUser = {

@@ -1,8 +1,6 @@
 import React, { ChangeEvent } from "react";
 import useFileUpload from "@/hooks/useFileUpload";
 import FileLink from "@/components/FileLink";
-import getFileQuery from "@/services/files/getFileQuery";
-import { useQuery } from "@tanstack/react-query";
 import { FileType } from "@/consts/files";
 import { Grid } from "@mui/material";
 import useOrganisationFileUpload from "@/hooks/useOrganisationFileUpload";
@@ -25,12 +23,6 @@ const CertificationUploader = ({
   const organisation = useStore(state => state.config.organisation);
   const t = useTranslations(NAMESPACE_TRANSLATION_CERT);
 
-  const { data: fileData } = useQuery({
-    ...getFileQuery(value as number),
-    queryKey: [`getFile${value}`],
-    enabled: !!value,
-  });
-
   const {
     upload,
     isScanComplete,
@@ -39,7 +31,9 @@ const CertificationUploader = ({
     isUploading,
     isScanning,
     file,
-  } = useFileUpload(`certification${capitaliseFirstLetter(name)}UploadFailed`);
+  } = useFileUpload(`certification${capitaliseFirstLetter(name)}UploadFailed`, {
+    initialFileId: value,
+  });
 
   const uploadFile = useOrganisationFileUpload({
     organisation: organisation!,
@@ -58,20 +52,16 @@ const CertificationUploader = ({
     <Grid container item spacing={3} sx={{ mt: 1 }}>
       <Grid item xs={4}>
         <FileLink
-          fileButtonText={
-            file?.name || fileData?.data.name
-              ? t("buttonTextAlt")
-              : t("buttonText")
-          }
+          fileButtonText={file?.name ? t("buttonTextAlt") : t("buttonText")}
           message={`${FileType.CERTIFICATION}${name.toUpperCase()}`}
-          fileNameText={file?.name || fileData?.data.name}
+          fileNameText={file?.name}
           isSizeInvalid={isSizeInvalid}
           isScanning={isScanning}
           isScanComplete={isScanComplete}
           isScanFailed={isScanFailed}
           isUploading={isUploading}
           onFileChange={handleFileChange}
-          onDownload={() => downloadFile(fileData?.data?.id as number)}
+          onDownload={() => downloadFile(file?.id as number)}
           includeStatus
         />
       </Grid>

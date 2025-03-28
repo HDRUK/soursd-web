@@ -11,6 +11,7 @@ import {
 } from "../../consts/tabs";
 import ProjectsSafePeople from "../ProjectsSafePeople";
 import ProjectsSafeProject from "../ProjectsSafeProject";
+import ProjectsSafeData from "../ProjectsSafeData";
 import ProjectsSafeSettings from "../ProjectsSafeSettings";
 import Rules from "../Rules";
 import UserAffiliations from "../UserAffiliations";
@@ -81,6 +82,9 @@ export default function SubTabsContents({
       break;
     case ProjectsSubTabs.SAFE_PEOPLE:
       content = <ProjectsSafePeople id={id} />;
+      break;
+    case ProjectsSubTabs.SAFE_DATA:
+      content = <ProjectsSafeData id={id} />;
       break;
     case ProjectsSubTabs.SAFE_PROJECT:
       content = <ProjectsSafeProject />;

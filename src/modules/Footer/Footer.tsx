@@ -3,12 +3,12 @@
 import SoursdLogo from "@/components/SoursdLogo";
 import UL from "@/components/UL";
 import { Link } from "@/i18n/routing";
-import { Box, Divider, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { HTMLAttributes } from "react";
 import PageCenter from "../PageCenter";
-import { StyledFooter } from "./Footer.styles";
+import { StyledFooter, StyledBox } from "./Footer.styles";
 
 type FooterProps = HTMLAttributes<HTMLDivElement>;
 
@@ -37,15 +37,11 @@ export default function Footer(props: FooterProps) {
   ];
 
   return (
-    <Box
-      {...props}
-      component="footer"
-      sx={{ backgroundColor: "footer.main", mt: 3 }}>
-      <Divider sx={{ height: "6px" }} />
+    <Box {...props} component="footer" sx={{ backgroundColor: "footer.main" }}>
       <PageCenter>
         <StyledFooter>
           <SoursdLogo variant="titled" color="white" />
-          <Box sx={{ flexGrow: 1 }}>
+          <Box sx={{ flexGrow: 1, fontSize: "medium" }}>
             <UL
               sx={{
                 mb: 1,
@@ -57,13 +53,14 @@ export default function Footer(props: FooterProps) {
                 },
               }}>
               {footerLinkPages.map(({ label, ...linkProps }) => (
-                <li>
+                <li key={label}>
                   <Box
                     component={Link}
                     sx={{
                       color: "#fff",
                       textDecoration: "none",
                       fontWeight: "bold",
+                      fontSize: "medium",
                     }}
                     {...linkProps}>
                     {label}
@@ -74,16 +71,10 @@ export default function Footer(props: FooterProps) {
             {t("copyright")}
           </Box>
           <Box>
-            <Typography
-              color="white"
-              sx={{ marginBottom: "5px", fontWeight: "bold" }}>
+            <Typography color="white" sx={{ fontWeight: "bold" }}>
               {t("fundedByTitle")}
             </Typography>
-            <Box
-              sx={{
-                alignItems: "flex-end",
-                display: "flex",
-              }}>
+            <StyledBox>
               <Image
                 src="/images/logos/mrc.svg"
                 width={207}
@@ -99,7 +90,7 @@ export default function Footer(props: FooterProps) {
                   alt={t("dsitLogoAlt")}
                 />
               </Box>
-            </Box>
+            </StyledBox>
           </Box>
         </StyledFooter>
       </PageCenter>

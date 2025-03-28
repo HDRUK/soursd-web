@@ -12,6 +12,7 @@ docker_build(
     live_update=[
         sync("./src", "/usr/src/src"),
         sync("./public", "/usr/src/public"),
+        sync("./mocks", "/usr/src/mocks"),
         run("npm install", trigger="./package-lock.json"),
     ],
     dockerfile="./Dockerfile.dev",
