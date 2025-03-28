@@ -1,0 +1,3 @@
+const TEXT_LIST_SEPARATOR = ",";
+
+export { TEXT_LIST_SEPARATOR };

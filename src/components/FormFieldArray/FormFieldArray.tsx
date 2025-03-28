@@ -75,13 +75,12 @@ const FormFieldArray = <T extends FieldValues>({
   return (
     <Box sx={{ pb: 1, gap: 2, display: "flex", flexDirection: "column" }}>
       {fieldsArray.map((field, index) => (
-        <Box key={field.id} sx={{ gap: 2, ...boxSx }}>
+        <Box key={field.id} sx={{ gap: 3, ...boxSx }}>
           {renderField(field, index)}
           <Box
             sx={{
               display: "flex",
               alignItems: "center",
-              mt: 1,
               justifyContent: "flex-end",
             }}>
             <Tooltip title={removeButtonLabel || t("arrayRemoveButton")}>
