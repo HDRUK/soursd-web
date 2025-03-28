@@ -17,35 +17,30 @@ export default function MaskLabel({
 
   const sizeMap = {
     small: {
-      width: "25px",
-      height: "25px",
+      sizePx: "30px",
       fontSize: theme.typography.caption.fontSize,
     },
     medium: {
-      width: "40px",
-      height: "40px",
+      sizePx: "40px",
       fontSize: theme.typography.body1.fontSize,
     },
     large: {
-      width: "55px",
-      height: "55px",
+      sizePx: "55px",
       fontSize: theme.typography.h6.fontSize,
     },
   };
 
-  const { width, height, fontSize } = sizeMap[size];
-
+  const { sizePx, fontSize } = sizeMap[size];
   return (
     <Box
       sx={{
         display: "flex",
-        mb: 2,
         gap: 1,
         alignItems: "center",
         flexGrow: 1,
         justifyContent: "flex-end",
       }}>
-      <Mask width={width} height={height} sx={{ fontSize }}>
+      <Mask size={sizePx} sx={{ fontSize }}>
         {initials}
       </Mask>
       <Typography sx={{ fontSize }}>{label}</Typography>
