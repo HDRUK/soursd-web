@@ -17,6 +17,10 @@ function dateToString(date?: Date, formatString: string = "yyyy-MM-dd") {
   return date ? format(date, formatString) : undefined;
 }
 
+function formatStringToISO(date?: string) {
+  return date ? format(date, "yyyy-MM-dd") : undefined;
+}
+
 function getDate(date?: string) {
   return date ? new Date(date) : undefined;
 }
@@ -72,4 +76,5 @@ export {
   dateToString,
   getDate,
   getDaysSince,
+  formatStringToISO,
 };

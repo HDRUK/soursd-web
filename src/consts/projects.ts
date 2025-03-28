@@ -3,4 +3,9 @@ enum ProjectDetailsAccessType {
   RELEASE = "RELEASE",
 }
 
-export { ProjectDetailsAccessType };
+enum RequestFrequency {
+  ONE_OFF = "ONE-OFF",
+  RECURRING = "RECURRING",
+}
+
+export { ProjectDetailsAccessType, RequestFrequency };

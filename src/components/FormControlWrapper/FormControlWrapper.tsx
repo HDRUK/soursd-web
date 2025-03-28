@@ -22,7 +22,7 @@ export interface FormControlProps
   renderField: (fieldProps: FieldValues & { error?: boolean }) => ReactNode;
   name: string;
   description?: ReactNode;
-  label?: string;
+  label?: string | ReactNode;
   control?: Control;
   placeholder?: string;
   displayLabel?: boolean;
