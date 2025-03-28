@@ -288,9 +288,7 @@ interface ResearcherAffiliation {
   from?: string | null;
   to?: string | null;
   role?: string;
-  organisation: {
-    organisation_name: string;
-  };
+  organisation: Partial<Organisation>;
   email?: string;
   project_role_id?: number;
   primary_contact?: boolean;
@@ -351,7 +349,15 @@ interface Project {
   end_date: string;
 }
 
-type ProjectUser = ModelState<User>;
+interface ProjectUser {
+  project_id: number;
+  project_role_id: number;
+  primary_contact: boolean;
+  user_digital_ident: string;
+  role: Partial<Role>;
+  affiliation: Partial<ResearcherAffiliation>;
+  registry: Registry;
+}
 
 interface Department {
   category: string;

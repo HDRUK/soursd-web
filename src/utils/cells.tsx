@@ -37,14 +37,8 @@ function renderProjectNameCell<T extends Project>(
   );
 }
 
-function renderUserNameCell<
-  T extends {
-    first_name: string;
-    last_name: string;
-    id?: number;
-  },
->(info: CellContext<T, unknown>, route?: string) {
-  const { first_name, last_name, id } = info.row.original;
+function renderUserNameCell(user: User, route?: string) {
+  const { first_name, last_name, id } = user;
 
   return route && id ? (
     <Typography color="primary">

@@ -1,5 +1,5 @@
 import { ActionMenu, ActionMenuItem } from "@/components/ActionMenu";
-import ChipStatus from "@/components/ChipStatus";
+import ChipStatus, { Status } from "@/components/ChipStatus";
 import Table from "@/components/Table";
 import { FilterIcon, PrimaryContactIcon } from "@/consts/icons";
 import { useStore } from "@/data/store";
@@ -7,13 +7,13 @@ import useQueryAlerts from "@/hooks/useQueryAlerts";
 import useQueryConfirmAlerts from "@/hooks/useQueryConfirmAlerts";
 import SearchActionMenu from "@/modules/SearchActionMenu";
 import SearchBar from "@/modules/SearchBar";
-import { useGetCustodianProjectUsers } from "@/services/custodians";
 import {
+  useGetProjectUsers,
   deleteProjectUserQuery,
   putProjectUserPrimaryContactQuery,
 } from "@/services/projects";
 import { DeleteProjectUserPayload } from "@/services/projects/types";
-import { Organisation, ProjectUser, User } from "@/types/application";
+import { ProjectUser, User } from "@/types/application";
 import { renderUserNameCell } from "@/utils/cells";
 import { Add } from "@mui/icons-material";
 import { Box, Button, Grid } from "@mui/material";
@@ -22,21 +22,6 @@ import { CellContext, ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
 import ProjectsAddUserModal from "../ProjectsAddUserModal";
-import { UserGroup } from "@/consts/user";
-
-interface ProjectsSafePeopleProps {
-  id: number;
-}
-
-type FilteredUser = {
-  affiliation_id: number;
-  organisation_name: string;
-  first_name: string;
-  last_name: string;
-  status: string;
-  project_role_id?: number;
-  primary_contact?: boolean;
-};
 
 const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
@@ -48,7 +33,7 @@ export default function ProjectsSafePeople() {
   }));
 
   const {
-    data: usersData,
+    data: projectUsers,
     updateQueryParams,
     resetQueryParams,
     last_page,
@@ -58,11 +43,7 @@ export default function ProjectsSafePeople() {
     queryParams,
     refetch,
     ...queryState
-  } = useGetCustodianProjectUsers(custodian.id, project.id, {
-    defaultQueryParams: {
-      "user_group[]": UserGroup.USERS,
-    },
-  });
+  } = useGetProjectUsers(project.id);
 
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
@@ -75,43 +56,6 @@ export default function ProjectsSafePeople() {
 
   const { mutateAsync: makePrimaryContactAsync, ...primaryContactQueryState } =
     useMutation(putProjectUserPrimaryContactQuery());
-
-  const getUsersFromResponse = (usersData: User[]) => {
-    const users: FilteredUser[] = [];
-
-    console.log("**** usersData", usersData);
-
-    usersData?.forEach(
-      ({ model_state, first_name, last_name, registry: { affiliations } }) => {
-        affiliations?.forEach(
-          ({
-            id,
-            primary_contact,
-            project_role_id,
-            organisation: { organisation_name },
-          }) => {
-            users.push({
-              affiliation_id: id,
-              organisation_name,
-              first_name,
-              last_name,
-              project_role_id,
-              primary_contact,
-              status: model_state?.state.slug,
-            });
-          }
-        );
-      }
-    );
-
-    return users;
-  };
-
-  console.log("*****usersData", usersData);
-
-  const users = getUsersFromResponse(usersData);
-
-  console.log("*****users", users);
 
   const showDeleteConfirm = useQueryConfirmAlerts<DeleteProjectUserPayload>(
     deleteQueryState,
@@ -129,22 +73,23 @@ export default function ProjectsSafePeople() {
   useQueryAlerts(primaryContactQueryState);
 
   const renderNameCell = useCallback(
-    <T extends FilteredUser>(info: CellContext<T, unknown>) => {
+    <T extends ProjectUser>(info: CellContext<T, unknown>) => {
       return (
         <Box sx={{ display: "flex" }}>
-          {renderUserNameCell(info, routes.profileCustodianUsersIdentity.path)}
+          {renderUserNameCell(
+            info.getValue() as User,
+            routes.profileCustodianUsersIdentity.path
+          )}
           {!!info.row.original.primary_contact && <PrimaryContactIcon />}
         </Box>
       );
     },
-    []
+    [routes]
   );
 
   const renderActionMenuCell = useCallback(
-    <T extends FilteredUser>(info: CellContext<T, unknown>) => {
-      const { affiliation_id, primary_contact } = info.row.original;
-
-      console.log("info.row.original", info.row.original);
+    <T extends ProjectUser>(info: CellContext<T, unknown>) => {
+      const { affiliation, primary_contact } = info.row.original;
 
       return (
         <ActionMenu>
@@ -152,7 +97,7 @@ export default function ProjectsSafePeople() {
             onClick={() => {
               showDeleteConfirm({
                 projectId: project.id,
-                affiliationId: affiliation_id,
+                affiliationId: affiliation.id,
               });
             }}>
             {tApplication("removeUserFromProject")}
@@ -161,7 +106,7 @@ export default function ProjectsSafePeople() {
             onClick={async () => {
               await makePrimaryContactAsync({
                 projectId: project.id,
-                affiliation_id: affiliation_id,
+                affiliationId: affiliation.id,
                 primaryContact: !primary_contact,
               });
 
@@ -177,6 +122,10 @@ export default function ProjectsSafePeople() {
     []
   );
 
+  const renderStatus = (info: CellContext<ProjectUser, unknown>) => (
+    <ChipStatus status={info.getValue() as Status} />
+  );
+
   const filterActions = [
     {
       label: tApplication("status_registered"),
@@ -185,24 +134,24 @@ export default function ProjectsSafePeople() {
     },
   ];
 
-  const columns: ColumnDef<FilteredUser>[] = [
+  const columns: ColumnDef<ProjectUser>[] = [
     {
       cell: renderNameCell,
-      accessorKey: "name",
+      accessorKey: "registry.user",
       header: tApplication("name"),
     },
     {
-      accessorKey: "project_role",
+      accessorKey: "role.name",
       header: tApplication("projectRole"),
     },
     {
-      accessorKey: "organisation_name",
+      accessorKey: "affiliation.organisation.organisation_name",
       header: tApplication("organisationName"),
     },
     {
-      accessorKey: "status",
+      accessorKey: "registry.user.status",
       header: tApplication("status"),
-      cell: info => <ChipStatus status={info.row.original.status} />,
+      cell: renderStatus,
     },
     {
       header: tApplication("actions"),
@@ -251,7 +200,7 @@ export default function ProjectsSafePeople() {
       </Grid>
       <ProjectsAddUserModal
         projectId={project.id}
-        custodianId={custodian.id}
+        custodianId={custodian?.id as number}
         open={showAddModal}
         onClose={() => setShowAddModal(false)}
       />
@@ -259,7 +208,7 @@ export default function ProjectsSafePeople() {
         total={total}
         last_page={last_page}
         setPage={setPage}
-        data={users}
+        data={projectUsers}
         columns={columns}
         queryState={queryState}
         isPaginated

@@ -34,8 +34,6 @@ export default async function useApplicationRedirects() {
         suppressThrow: true,
       });
 
-      console.log("***** response", response);
-
       me = response.data;
 
       if (response.status === 200) {

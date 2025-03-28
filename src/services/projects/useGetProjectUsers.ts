@@ -2,15 +2,13 @@ import { SearchDirections } from "@/consts/search";
 import usePaginatedQuery, {
   PaginatedQueryProps,
 } from "@/hooks/usePaginatedQuery";
-import getCustodianProjectUsers from "./getCustodianProjectUsers";
-import { CustodianProjectUsersResponse } from "./types";
+import getProjectUsers from "./getProjectUsers";
+import { ProjectUsersResponse } from "./types";
 
-interface GetPaginatedCustodianProjectUsersQuery<
-  T = CustodianProjectUsersResponse,
-> extends Partial<PaginatedQueryProps<T>> {}
+interface GetPaginatedCustodianProjectUsersQuery<T = ProjectUsersResponse>
+  extends Partial<PaginatedQueryProps<T>> {}
 
-export default function useGetPaginatedUsers(
-  custodianId: number,
+export default function useGetProjectUsers(
   projectId: number,
   {
     queryKeyBase,
@@ -18,11 +16,7 @@ export default function useGetPaginatedUsers(
     ...restParams
   }: GetPaginatedCustodianProjectUsersQuery = {}
 ) {
-  const queryKey = [
-    queryKeyBase || "getCustodianProjectUsers",
-    custodianId,
-    projectId,
-  ];
+  const queryKey = [queryKeyBase || "getProjectUsers", projectId];
 
   return usePaginatedQuery({
     queryKeyBase: queryKey,
@@ -31,7 +25,7 @@ export default function useGetPaginatedUsers(
       ...defaultQueryParams,
     },
     queryFn: queryParams =>
-      getCustodianProjectUsers(custodianId, projectId, queryParams, {
+      getProjectUsers(projectId, queryParams, {
         error: {
           message: `${queryKey}Error`,
         },
