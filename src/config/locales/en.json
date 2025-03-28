@@ -220,6 +220,7 @@
     "companyValidating": "Organisation is being validated",
     "identity": "Identity",
     "profile": "Profile",
+    "homeTitle": "Your actions",
     "details": "Complete your Organisation Profile",
     "detailsNameAndAddress": "Name and Address",
     "detailsDigitalIdentifiers": "Digital Identifiers",
