@@ -2,7 +2,6 @@ import FieldsToText from "@/components/FieldsToText";
 import { ResearcherProject } from "@/types/application";
 import { formatDisplayLongDate } from "@/utils/date";
 import { Typography } from "@mui/material";
-import { useTranslations } from "next-intl";
 
 interface SafeProjectDetailsProps {
   projectData: ResearcherProject;
@@ -13,8 +12,6 @@ const NAMESPACE_TRANSLATION = "Projects";
 export default function SafeProjectDetails({
   projectData,
 }: SafeProjectDetailsProps) {
-  const t = useTranslations();
-
   return (
     <FieldsToText
       data={projectData}

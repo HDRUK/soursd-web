@@ -1,7 +1,6 @@
 import { toCamelCase } from "@/utils/string";
 import { Box, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { ReactNode } from "react";
 
 interface FieldsToTextProps<T> {
   data: T;

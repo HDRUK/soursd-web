@@ -1,5 +1,5 @@
 import { useStore } from "@/data/store";
-import { PageBody, PageBodyContainer } from "@/modules";
+import { PageBodyContainer } from "@/modules";
 import { ResearcherProject } from "@/types/application";
 import { useEffect } from "react";
 import { PageTabs, ProjectsSubTabs } from "../../consts/tabs";

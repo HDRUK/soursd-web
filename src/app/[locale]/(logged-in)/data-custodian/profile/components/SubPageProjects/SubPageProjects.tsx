@@ -1,8 +1,6 @@
 import { useStore } from "@/data/store";
 import { PageBodyContainer } from "@/modules";
 import { ResearcherProject } from "@/types/application";
-import { toCamelCase } from "@/utils/string";
-import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 import { PageTabs, ProjectsSubTabs } from "../../consts/tabs";
 import SubTabsSections from "../SubTabSections";
@@ -15,8 +13,6 @@ interface PageProps {
     id?: number;
   };
 }
-
-const NAMESPACE_TRANSLATION = "CustodianProfile";
 
 export default function SubPageProjects({ params, projectData }: PageProps) {
   const tabId = PageTabs.PROJECTS;
