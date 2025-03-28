@@ -23,6 +23,7 @@ import UserTrainingAccreditations from "../UserTrainingAccreditations";
 import ValidationChecks from "../ValidationChecks";
 import Integrations from "../Integrations";
 import Webhooks from "../Webhooks";
+import ProjectsSafeOutputs from "../ProjectsSafeOutput";
 
 interface TabsContentsProps {
   tabId: PageTabs;
@@ -90,6 +91,9 @@ export default function SubTabsContents({
       break;
     case ProjectsSubTabs.SAFE_SETTINGS:
       content = <ProjectsSafeSettings />;
+      break;
+    case ProjectsSubTabs.SAFE_OUTPUTS:
+      content = <ProjectsSafeOutputs />;
       break;
     default:
       content = null;
