@@ -8,7 +8,6 @@ interface DetailsPageProps {
 }
 
 function DetailsPage({ params: { subTabId } }: DetailsPageProps) {
-  console.log('DetailsPage');
   return (
     <SubPage
       params={{

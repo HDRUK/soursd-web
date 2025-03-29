@@ -11,7 +11,6 @@ interface LayoutProps extends ConfigProps {
 }
 
 function Layout({ children, params: { tabId } }: LayoutProps) {
-  console.log('Layout tabId', tabId);
   return (
     <>
       <TabsSections tabId={tabId} />

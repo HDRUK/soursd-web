@@ -8,7 +8,6 @@ interface UserAdminPageProps {
 }
 
 function UserAdminPage({ params: { subTabId } }: UserAdminPageProps) {
-  console.log('UserAdminPage');
   return (
     <SubPage
       params={{

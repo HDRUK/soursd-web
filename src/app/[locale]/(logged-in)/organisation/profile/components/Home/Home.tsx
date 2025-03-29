@@ -4,7 +4,6 @@ import {
   PageColumnBody,
   PageColumnDetails,
   PageColumns,
-  PageContainer,
   PageSection,
 } from "@/modules";
 import { useTranslations } from "next-intl";

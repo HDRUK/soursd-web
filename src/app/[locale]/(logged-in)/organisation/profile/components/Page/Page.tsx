@@ -10,7 +10,6 @@ interface PageProps {
 }
 
 function Page({ params: { tabId }, pageTitle }: PageProps) {
-  console.log('Page');
   return (
     <PageBodyContainer heading={pageTitle ?? ""}>
       <TabsContents tabId={tabId} />

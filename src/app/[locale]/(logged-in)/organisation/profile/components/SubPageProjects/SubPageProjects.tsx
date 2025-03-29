@@ -21,7 +21,7 @@ const NAMESPACE_TRANSLATION = "ProfileOrganisation";
 export default function SubPageProjects({ params, projectData }: PageProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION);
   const tabId = PageTabs.PROJECTS;
-  console.log('SubPageProjects');
+
   const [project, setProject] = useStore(state => [
     state.getProject(),
     state.setProject,

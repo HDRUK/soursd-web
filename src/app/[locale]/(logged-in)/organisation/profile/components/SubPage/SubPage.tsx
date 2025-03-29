@@ -18,7 +18,6 @@ const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
 
 function SubPage({ params }: PageProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
-  console.log('SubPage params.tabId', params.tabId);
 
   return (
     <PageBodyContainer heading={t(toCamelCase(`${params.tabId}Title`))}>

@@ -12,7 +12,7 @@ interface SubTabsProps extends TabsProps {
 export default function SubTabs({ tabs, current, ...restProps }: SubTabsProps) {
   const [firstTab] = tabs;
   const defaultValue = firstTab.value;
-  console.log('SubTabs current', current);
+
   return (
     <Tabs value={current || defaultValue} {...restProps} variant="fullWidth">
       {tabs.map(({ label, value, href }) => (

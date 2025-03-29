@@ -31,7 +31,6 @@ export default function SubTabsSections({
 }: SubTabsSectionsProps) {
   const routes = useStore(store => store.application.routes);
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
-  console.log('SubTabSections');
 
   const subTabs: SubTabsMap = {
     [PageTabs.DETAILS]: [
@@ -43,7 +42,7 @@ export default function SubTabsSections({
           {
             id,
           }
-        )
+        ),
       },
       {
         label: t("detailsDigitalIdentifiers"),
@@ -53,7 +52,7 @@ export default function SubTabsSections({
           {
             id,
           }
-        )
+        ),
       },
       {
         label: t("detailsSectorSizeAndWebsite"),
@@ -63,7 +62,7 @@ export default function SubTabsSections({
           {
             id,
           }
-        )
+        ),
       },
       {
         label: t("detailsSecurityCompliance"),
@@ -73,7 +72,7 @@ export default function SubTabsSections({
           {
             id,
           }
-        )
+        ),
       },
     ],
     [PageTabs.USER_ADMINISTRATION]: [
@@ -85,7 +84,7 @@ export default function SubTabsSections({
           {
             id,
           }
-        )
+        ),
       },
       {
         label: t("userAdminDelegates"),
@@ -95,61 +94,61 @@ export default function SubTabsSections({
           {
             id,
           }
-        )
+        ),
       },
     ],
     [PageTabs.PROJECTS]: [
+      {
+        label: t("safeProject"),
+        value: ProjectsSubTabs.SAFE_PROJECT,
+        href: injectParamsIntoPath(
+          routes.profileOrganisationProjectsSafeProject.path,
           {
-            label: t("safeProject"),
-            value: ProjectsSubTabs.SAFE_PROJECT,
-            href: injectParamsIntoPath(
-              routes.profileOrganisationProjectsSafeProject.path,
-              {
-                id,
-              }
-            ),
-          },
+            id,
+          }
+        ),
+      },
+      {
+        label: t("safeData"),
+        value: ProjectsSubTabs.SAFE_DATA,
+        href: injectParamsIntoPath(
+          routes.profileOrganisationProjectsSafeData.path,
           {
-            label: t("safeData"),
-            value: ProjectsSubTabs.SAFE_DATA,
-            href: injectParamsIntoPath(
-              routes.profileOrganisationProjectsSafeData.path,
-              {
-                id,
-              }
-            ),
-          },
+            id,
+          }
+        ),
+      },
+      {
+        label: t("safePeople"),
+        value: ProjectsSubTabs.SAFE_PEOPLE,
+        href: injectParamsIntoPath(
+          routes.profileOrganisationProjectsSafePeople.path,
           {
-            label: t("safePeople"),
-            value: ProjectsSubTabs.SAFE_PEOPLE,
-            href: injectParamsIntoPath(
-              routes.profileOrganisationProjectsSafePeople.path,
-              {
-                id,
-              }
-            ),
-          },
+            id,
+          }
+        ),
+      },
+      {
+        label: t("safeSettings"),
+        value: ProjectsSubTabs.SAFE_SETTINGS,
+        href: injectParamsIntoPath(
+          routes.profileOrganisationProjectsSafeSettings.path,
           {
-            label: t("safeSettings"),
-            value: ProjectsSubTabs.SAFE_SETTINGS,
-            href: injectParamsIntoPath(
-              routes.profileOrganisationProjectsSafeSettings.path,
-              {
-                id,
-              }
-            ),
-          },
+            id,
+          }
+        ),
+      },
+      {
+        label: t("safeOutputs"),
+        value: ProjectsSubTabs.SAFE_OUTPUTS,
+        href: injectParamsIntoPath(
+          routes.profileOrganisationProjectsSafeOutputs.path,
           {
-            label: t("safeOutputs"),
-            value: ProjectsSubTabs.SAFE_OUTPUTS,
-            href: injectParamsIntoPath(
-              routes.profileOrganisationProjectsSafeOutputs.path,
-              {
-                id,
-              }
-            ),
-          },
-        ],
+            id,
+          }
+        ),
+      },
+    ],
   };
 
   const selectedTabs = subTabs[tabId];

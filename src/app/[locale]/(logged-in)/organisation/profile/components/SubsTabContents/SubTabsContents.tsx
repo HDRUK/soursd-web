@@ -39,7 +39,6 @@ export default function SubTabsContents({
     state.getOrganisation(),
   ]);
 
-  console.log('SubTabContents');
   const availableSubTabs = getSubTabs(tabId as PageTabs) || [];
 
   if (
