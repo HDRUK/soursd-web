@@ -177,7 +177,7 @@ export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
   ];
 
   return (
-    <PageBody heading={t("safeProject")}>
+    <PageBody heading={t("safePeople")}>
       <PageSection>
         <Box component="form" role="search">
           <SearchBar

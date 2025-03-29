@@ -8,6 +8,7 @@ import {
   getSubTabs,
   PageSubTabs,
   PageTabs,
+  ProjectsSubTabs,
   UserAdminPageSubTabs,
 } from "../../consts/tabs";
 import Delegates from "../Delegates";
@@ -16,15 +17,22 @@ import NameAndAddress from "../NameAndAddress";
 import SectorSizeAndWebsite from "../SectorSizeAndWebsite";
 import SecurityCompliance from "../SecurityCompliance";
 import Users from "../Users";
+import ProjectsSafePeople from "../ProjectsSafePeople";
+import ProjectsSafeData from "../ProjectsSafeData";
+import ProjectsSafeProject from "../ProjectsSafeProject";
+import ProjectsSafeSettings from "../ProjectsSafeSettings";
+import ProjectsSafeOutputs from "@/app/[locale]/(logged-in)/data-custodian/profile/components/ProjectsSafeOutput";
 
 interface TabsContentsProps {
   tabId: string;
   subTabId: string;
+  id?: number;
 }
 
 export default function SubTabsContents({
   tabId,
   subTabId,
+  id,
 }: TabsContentsProps) {
   const [user, organisation] = useStore(state => [
     state.getUser(),
@@ -61,6 +69,21 @@ export default function SubTabsContents({
       break;
     case UserAdminPageSubTabs.EMPLOYEE_STUDENT_ADMINISTRATION:
       content = <Users />;
+      break;
+    case ProjectsSubTabs.SAFE_PEOPLE:
+      content = <ProjectsSafePeople id={id} />;
+      break;
+    case ProjectsSubTabs.SAFE_DATA:
+      content = <ProjectsSafeData id={id} />;
+      break;
+    case ProjectsSubTabs.SAFE_PROJECT:
+      content = <ProjectsSafeProject />;
+      break;
+    case ProjectsSubTabs.SAFE_SETTINGS:
+      content = <ProjectsSafeSettings />;
+      break;
+    case ProjectsSubTabs.SAFE_OUTPUTS:
+      content = <ProjectsSafeOutputs />;
       break;
     default:
       content = null;

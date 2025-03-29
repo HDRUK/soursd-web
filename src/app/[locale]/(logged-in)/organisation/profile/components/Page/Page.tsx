@@ -6,12 +6,13 @@ interface PageProps {
   params: {
     tabId: PageTabs;
   };
+  pageTitle?: string;
 }
 
-function Page({ params: { tabId } }: PageProps) {
+function Page({ params: { tabId }, pageTitle }: PageProps) {
   console.log('Page');
   return (
-    <PageBodyContainer>
+    <PageBodyContainer heading={pageTitle ?? ""}>
       <TabsContents tabId={tabId} />
     </PageBodyContainer>
   );

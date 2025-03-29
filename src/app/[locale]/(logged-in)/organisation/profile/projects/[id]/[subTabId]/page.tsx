@@ -24,7 +24,7 @@ function ProjectsSubPage({ params: { subTabId, id } }: SubPageProjectsProps) {
   if (!project?.data && isFetched) {
     notFound();
   }
-
+  console.log('projects/id/subTabId/page', id, subTabId, project?.data)
   return (
     <LoadingWrapper variant="basic" loading={isPending}>
       {project?.data && (

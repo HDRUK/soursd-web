@@ -20,7 +20,7 @@ export interface SubTabsMap {
 
 interface SubTabsSectionsProps {
   tabId: PageTabs;
-  subTabId: ProjectsSubTabs;
+  subTabId: DetailsPageSubTabs | ProjectsSubTabs | UserAdminPageSubTabs;
   id?: number;
 }
 
@@ -78,7 +78,7 @@ export default function SubTabsSections({
     ],
     [PageTabs.USER_ADMINISTRATION]: [
       {
-        label: t("userAdminDeletgates"),
+        label: t("userAdminDelegates"),
         value: UserAdminPageSubTabs.DELEGATE_ADMINISTRATION,
         href: injectParamsIntoPath(
           routes.profileOrganisationUserAdministrationDelegates.path,
@@ -98,6 +98,58 @@ export default function SubTabsSections({
         )
       },
     ],
+    [PageTabs.PROJECTS]: [
+          {
+            label: t("safeProject"),
+            value: ProjectsSubTabs.SAFE_PROJECT,
+            href: injectParamsIntoPath(
+              routes.profileOrganisationProjectsSafeProject.path,
+              {
+                id,
+              }
+            ),
+          },
+          {
+            label: t("safeData"),
+            value: ProjectsSubTabs.SAFE_DATA,
+            href: injectParamsIntoPath(
+              routes.profileOrganisationProjectsSafeData.path,
+              {
+                id,
+              }
+            ),
+          },
+          {
+            label: t("safePeople"),
+            value: ProjectsSubTabs.SAFE_PEOPLE,
+            href: injectParamsIntoPath(
+              routes.profileOrganisationProjectsSafePeople.path,
+              {
+                id,
+              }
+            ),
+          },
+          {
+            label: t("safeSettings"),
+            value: ProjectsSubTabs.SAFE_SETTINGS,
+            href: injectParamsIntoPath(
+              routes.profileOrganisationProjectsSafeSettings.path,
+              {
+                id,
+              }
+            ),
+          },
+          {
+            label: t("safeOutputs"),
+            value: ProjectsSubTabs.SAFE_OUTPUTS,
+            href: injectParamsIntoPath(
+              routes.profileOrganisationProjectsSafeOutputs.path,
+              {
+                id,
+              }
+            ),
+          },
+        ],
   };
 
   const selectedTabs = subTabs[tabId];
