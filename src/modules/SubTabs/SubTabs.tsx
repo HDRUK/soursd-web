@@ -22,6 +22,7 @@ export default function SubTabs({ tabs, current, ...restProps }: SubTabsProps) {
           href={href}
           component={Link}
           iconPosition="start"
+          sx={{ fontWeight: 400, fontSize: "14px" }}
         />
       ))}
     </Tabs>

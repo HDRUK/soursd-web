@@ -78,20 +78,20 @@ export default function SubTabsSections({
     ],
     [PageTabs.USER_ADMINISTRATION]: [
       {
-        label: t("userAdminDelegates"),
-        value: UserAdminPageSubTabs.DELEGATE_ADMINISTRATION,
+        label: t("userAdminEmployeeStudents"),
+        value: UserAdminPageSubTabs.EMPLOYEE_STUDENT_ADMINISTRATION,
         href: injectParamsIntoPath(
-          routes.profileOrganisationUserAdministrationDelegates.path,
+          routes.profileOrganisationUserAdministrationEmployeeStudent.path,
           {
             id,
           }
         )
       },
       {
-        label: t("userAdminEmployeeStudents"),
-        value: UserAdminPageSubTabs.EMPLOYEE_STUDENT_ADMINISTRATION,
+        label: t("userAdminDelegates"),
+        value: UserAdminPageSubTabs.DELEGATE_ADMINISTRATION,
         href: injectParamsIntoPath(
-          routes.profileOrganisationUserAdministrationEmployeeStudent.path,
+          routes.profileOrganisationUserAdministrationDelegates.path,
           {
             id,
           }

@@ -61,7 +61,7 @@ export default function TabsSections({ tabId }: TabsSectionsProps) {
         />
         <Tab
           icon={<AssignmentOutlinedIcon />}
-          label={t("projects")}
+          label={<Text>{t("projects")}</Text>}
           href={routes.profileOrganisationProjects.path}
           component={Link}
           value={PageTabs.PROJECTS}

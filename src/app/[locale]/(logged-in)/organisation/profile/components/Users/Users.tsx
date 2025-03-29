@@ -107,10 +107,7 @@ export default function Users() {
 
   return (
     <PageBody>
-      <PageSection heading="Employee or student administration">
-        <Box sx={{ marginBottom: "30px" }}>
-          <Markdown>{t("manageResearchersDescription")}</Markdown>
-        </Box>
+      <PageSection heading={t("employeeStudentAdminTitle")}>
         <Box sx={{ display: "flex", gap: 3, mb: 3 }}>
           <Box component="form" role="search">
             <SearchBar
