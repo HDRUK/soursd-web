@@ -10,7 +10,6 @@ interface TabsContentsProps {
   tabId: string;
 }
 
-
 export default function TabsContents({ tabId }: TabsContentsProps) {
   const [user, organisation] = useStore(state => [
     state.getUser(),

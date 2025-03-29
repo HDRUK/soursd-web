@@ -4,13 +4,13 @@ import { useStore } from "@/data/store";
 import { useTranslations } from "next-intl";
 import SubTabs from "@/modules/SubTabs";
 import { Option } from "@/types/common";
+import { injectParamsIntoPath } from "@/utils/application";
 import {
   PageTabs,
   ProjectsSubTabs,
   DetailsPageSubTabs,
   UserAdminPageSubTabs,
 } from "../../consts/tabs";
-import { injectParamsIntoPath } from "@/utils/application";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
 

@@ -5,7 +5,5 @@ interface ProjectsSafeDataProps {
 }
 
 export default function ProjectsSafeData({ id }: ProjectsSafeDataProps) {
-  return (
-    <>{id}</>
-  );
+  return id;
 }

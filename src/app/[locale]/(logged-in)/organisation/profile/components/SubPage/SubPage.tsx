@@ -2,7 +2,11 @@ import { PageBody, PageGuidance, PageBodyContainer } from "@/modules";
 import { mockedConfigurationRulesGuidanceProps } from "@/mocks/data/cms";
 import { toCamelCase } from "@/utils/string";
 import { useTranslations } from "next-intl";
-import { DetailsPageSubTabs, PageTabs, UserAdminPageSubTabs } from "../../consts/tabs";
+import {
+  DetailsPageSubTabs,
+  PageTabs,
+  UserAdminPageSubTabs,
+} from "../../consts/tabs";
 import SubTabsSections from "../SubTabSections";
 import SubTabsContents from "../SubsTabContents";
 

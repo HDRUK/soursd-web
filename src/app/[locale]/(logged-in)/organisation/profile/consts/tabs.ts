@@ -25,7 +25,10 @@ enum ProjectsSubTabs {
   SAFE_OUTPUTS = "safe-outputs",
 }
 
-export type PageSubTabs = DetailsPageSubTabs | UserAdminPageSubTabs | ProjectsSubTabs;
+export type PageSubTabs =
+  | DetailsPageSubTabs
+  | UserAdminPageSubTabs
+  | ProjectsSubTabs;
 
 type TabStructure = {
   [key in PageTabs]?: PageSubTabs[];
@@ -41,4 +44,10 @@ function getSubTabs(tab: PageTabs): PageSubTabs[] | undefined {
   return tabHierarchy[tab];
 }
 
-export { PageTabs, DetailsPageSubTabs, ProjectsSubTabs, UserAdminPageSubTabs, getSubTabs };
+export {
+  PageTabs,
+  DetailsPageSubTabs,
+  ProjectsSubTabs,
+  UserAdminPageSubTabs,
+  getSubTabs,
+};

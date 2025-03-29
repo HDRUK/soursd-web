@@ -12,7 +12,6 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import { SearchDirections } from "@/consts/search";
 import { User } from "@/types/application";
 import Table from "@/components/Table";
-import Markdown from "@/components/Markdown";
 import { ColumnDef, CellContext } from "@tanstack/react-table";
 import { ActionMenu } from "@/components/ActionMenu";
 import DecoupleUser from "../Delegates/DecoupleDelegate";
