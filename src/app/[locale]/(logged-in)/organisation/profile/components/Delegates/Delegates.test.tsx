@@ -20,7 +20,7 @@ jest.mock("@tanstack/react-query", () => ({
 
 const mockSetOrganisation = jest.fn();
 
-jest.mock("../../../hooks/usePatchOrganisation");
+jest.mock("../../hooks/usePatchOrganisation");
 
 const mockOrganisation = mockedOrganisation();
 const mockUser = mockedUser();
