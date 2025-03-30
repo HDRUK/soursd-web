@@ -1,4 +1,5 @@
 import { ProjectDetails } from "@/types/application";
+import { DataUse } from "@/types/gateway";
 
 type PostProjectDetailsFromGatewayPayload = {
   custodian_id: number;
@@ -9,7 +10,7 @@ type PostProjectDetailsPayload = Omit<ProjectDetails, "id">;
 
 type PutProjectDetailsPayload = Partial<ProjectDetails>;
 
-type PostProjectDetailsFromGatewayResponse = ProjectDetails;
+type PostProjectDetailsFromGatewayResponse = DataUse[];
 
 type PostProjectDetailsResponse = { id: number };
 

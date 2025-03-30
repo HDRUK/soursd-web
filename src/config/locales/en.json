@@ -168,7 +168,6 @@
     "updateRulesError": "There was a problem updating your rules configuration. Please try again or contact us at <contactLink></contactLink>",
     "successButton": "OK",
     "errorButton": "Try Again",
-    "importFromHealthDataResearchGateway": "Import from the Health Data Research Gateway",
     "datasetName": "Dataset name",
     "addAnother": "Add another",
     "dataSensitivityLevel": "Data sensitivity level",
@@ -200,9 +199,7 @@
     "errorUpdateSafeDataMessage": "An error occurred while updating the safe data. Please try again or <contactLink>contact support</contactLink> if the problem persists.",
     "errorCreateSafeDataMessage": "An error occurred while creating the safe data. Please try again or <contactLink>contact support</contactLink> if the problem persists.",
     "successUpdateSafeDataMessage": "Safe data updated successfully.",
-    "successCreateSafeDataMessage": "Safe data created successfully.",
-    "gatewayImportSuccess": "Data imported successfully from the Health Data Research Gateway",
-    "gatewayImportError": "An error occurred while importing data from the Health Data Research Gateway. Please try again or <contactLink>contact support</contactLink> if the problem persists."
+    "successCreateSafeDataMessage": "Safe data created successfully."
   },
   "OrganisationStats": {
     "affiliatedUsers": "Affiliated Users",
@@ -566,6 +563,7 @@
     "subsidiaryWebsite": "Subsidiary website",
     "subsidiaryWebsitePlaceholder": "Subsidiary website",
     "SafeProject": {
+      "add": "Add",
       "status": "Status",
       "statusPlaceholder": "Status",
       "statusRequiredInvalid": "Status is required",
@@ -1042,6 +1040,10 @@
     }
   },
   "Projects": {
+    "okButton": "OK",
+    "gatewayImportSuccess": "Data imported successfully from the Health Data Research Gateway",
+    "gatewayImportError": "An error occurred while importing data from the Health Data Research Gateway. Please try again or <contactLink>contact support</contactLink> if the problem persists.",
+    "importFromHealthDataResearchGateway": "Import from the Health Data Research Gateway",
     "getOrganisationProjectsError": "No projects found",
     "loadingAriaLabel": "Loading project data",
     "title": "Project Name",

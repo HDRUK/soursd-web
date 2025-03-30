@@ -51,13 +51,13 @@ export default function useMutateProjectDetails(
     }
   }, []);
 
-  const queryState = type === "PUT" ? putQueryState : postQueryState;
+  const mutateState = type === "PUT" ? putQueryState : postQueryState;
 
   return useMemo(
     () => ({
-      queryState,
+      mutateState,
       mutateAsync,
     }),
-    [queryState]
+    [mutateState]
   );
 }

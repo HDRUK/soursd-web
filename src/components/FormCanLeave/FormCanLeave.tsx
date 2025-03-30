@@ -17,6 +17,7 @@ export default function FormCanLeave({
 }: FormCanLeaveProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const formState = useFormState();
+  console.log("formState.dirtyFields", formState.dirtyFields);
   const isDirty = !!Object.keys(formState.dirtyFields).length;
   useWatch();
 

@@ -3,19 +3,24 @@ import { ReactNode } from "react";
 
 interface PageBodyProps extends BoxProps {
   heading?: ReactNode;
+  actions?: ReactNode;
 }
 
 export default function PageBody({
   children,
   heading,
+  actions,
   ...restProps
 }: PageBodyProps) {
   return (
     <>
       {heading && (
-        <Typography variant="h2" sx={{ mb: 3 }}>
-          {heading}
-        </Typography>
+        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+          <Typography variant="h2" sx={{ mb: 3 }}>
+            {heading}
+          </Typography>
+          <div>{actions}</div>
+        </Box>
       )}
       <Box
         {...restProps}

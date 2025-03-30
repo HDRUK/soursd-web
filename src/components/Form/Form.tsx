@@ -6,6 +6,7 @@ import {
   DefaultValues,
   FieldValues,
   FormProvider,
+  Path,
   Resolver,
   useForm,
   UseFormProps,
@@ -29,6 +30,7 @@ export interface FormProps<T extends AnyObject>
   onSubmit?: (values: T) => void;
   sx?: BoxProps["sx"];
   defaultValues?: DefaultValues<T>;
+  values?: DefaultValues<T>;
   schema?: yup.ObjectSchema<T>;
   canLeave?: boolean;
   shouldReset?: boolean;
@@ -39,6 +41,7 @@ export interface FormProps<T extends AnyObject>
 export default function Form<T extends FieldValues>({
   children,
   defaultValues,
+  values,
   schema,
   error,
   onSubmit = () => {},
@@ -59,11 +62,22 @@ export default function Form<T extends FieldValues>({
   const methods = useForm<T>(formOptions);
   const { handleSubmit, reset } = methods;
 
+  // useEffect(() => {
+  //   if (defaultValues) {
+  //     reset(defaultValues);
+  //   }
+  // }, [defaultValues, reset]);
+
   useEffect(() => {
-    if (defaultValues) {
-      reset(defaultValues);
+    if (values) {
+      console.log("***** values", values);
+      Object.entries(values).forEach(([key, value]) => {
+        methods.setValue(key as Path<T>, value, {
+          shouldDirty: true,
+        });
+      });
     }
-  }, [defaultValues, reset]);
+  }, [values, reset]);
 
   const extendedMethods: ExtendedUseFormReturn<T> = {
     ...methods,
