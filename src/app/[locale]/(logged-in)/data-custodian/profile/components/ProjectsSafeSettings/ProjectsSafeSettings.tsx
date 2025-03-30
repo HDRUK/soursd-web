@@ -4,14 +4,14 @@ import { mockedSafeProjectGuidanceProps } from "@/mocks/data/cms";
 import { PageBody, PageGuidance, PageSection } from "@/modules";
 import useMutateProjectDetails from "@/queries/useMutateProjectDetails";
 import { PutProjectDetailsPayload } from "@/services/project_details";
+import { ProjectDetails } from "@/types/application";
+import { createProjectDetailDefaultValues } from "@/utils/form";
+import { pick } from "@/utils/json";
 import { useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import ProjectsSafeSettingsForm from "../ProjectsSafeSettingsForm";
-import { pick } from "@/utils/json";
-import { ProjectDetails } from "@/types/application";
 import { useState } from "react";
-import { createProjectDetailDefaultValues } from "@/utils/form";
 import ProjectImport from "../ProjectImport";
+import ProjectsSafeSettingsForm from "../ProjectsSafeSettingsForm";
 
 const NAMESPACE_TRANSLATION = "CustodianProfile";
 
@@ -28,15 +28,15 @@ export default function ProjectsSafeProject() {
 
   const { mutateAsync, mutateState } = useMutateProjectDetails(project.id);
 
-  const defaultValues = pick(
-    createProjectDetailDefaultValues(project.project_detail || {}),
-    PAYLOAD_FIELDS
+  const [defaultValues, setDefaultValues] = useState(
+    pick(
+      createProjectDetailDefaultValues(project.project_detail || {}),
+      PAYLOAD_FIELDS
+    )
   );
 
-  const [values, setValues] = useState();
-
   const handleGatewayProjectImport = (data: ProjectDetails) => {
-    setValues(pick(data, PAYLOAD_FIELDS));
+    setDefaultValues(pick(data, PAYLOAD_FIELDS));
   };
 
   const handleSubmit = async (payload: PutProjectDetailsPayload) => {
@@ -67,7 +67,6 @@ export default function ProjectsSafeProject() {
         <PageSection>
           <ProjectsSafeSettingsForm
             defaultValues={defaultValues}
-            values={values}
             mutateState={mutateState}
             projectId={project.id}
             onSubmit={handleSubmit}

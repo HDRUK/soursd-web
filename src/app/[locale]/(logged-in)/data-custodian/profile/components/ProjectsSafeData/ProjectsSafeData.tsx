@@ -65,23 +65,24 @@ export default function ProjectsSafeData({ id }: ProjectsSafeDataProps) {
   const queryClient = useQueryClient();
 
   const { mutateAsync, mutateState } = useMutateProjectDetails(project.id);
-  const defaultValues = pick(
-    createProjectDetailDefaultValues(project.project_detail || {}),
-    PAYLOAD_FIELDS
-  );
 
-  const [values, setValues] = useState();
+  const [defaultValues, setDefaultValues] = useState(
+    pick(
+      createProjectDetailDefaultValues(project.project_detail || {}),
+      PAYLOAD_FIELDS
+    )
+  );
 
   useQueryAlerts(mutateState);
 
   const handleGatewayProjectImport = (data: ProjectDetails) => {
-    setValues(pick(data, PAYLOAD_FIELDS));
+    setDefaultValues(pick(data, PAYLOAD_FIELDS));
   };
 
   const formOptions = {
     defaultValues,
-    values,
     disabled: mutateState.isPending,
+    shouldResetKeep: true,
   };
 
   const schema = useMemo(

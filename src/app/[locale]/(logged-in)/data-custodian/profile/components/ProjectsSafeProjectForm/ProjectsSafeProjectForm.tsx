@@ -25,14 +25,12 @@ export interface UserModalDetailsProps extends FormProps<ResearcherProject> {
   project: ResearcherProject;
 }
 
-const NAMESPACE_TRANSLATION_APPLICATION = "Application";
 const NAMESPACE_TRANSLATION_FORM = "Form.SafeProject";
 
 export default function UserModalDetails({
   mutateState,
   ...restProps
 }: UserModalDetailsProps) {
-  const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
 
   const schema = useMemo(
@@ -59,6 +57,7 @@ export default function UserModalDetails({
 
   const formOptions = {
     disabled: mutateState.isPending,
+    shouldResetKeep: true,
   };
 
   return (

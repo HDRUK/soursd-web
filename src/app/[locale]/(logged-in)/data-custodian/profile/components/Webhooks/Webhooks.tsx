@@ -153,6 +153,7 @@ export default function Webhooks() {
             schema={schema}
             defaultValues={defaultValues}
             onSubmit={handleSubmit}
+            shouldResetKeep
             key={`${custodian?.id}-${webhooksData ? "webhooks" : "loading"}`}>
             {({ watch }) => {
               const watchedWebhooks = watch("webhooks");

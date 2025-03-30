@@ -4,6 +4,7 @@ import FormControlWrapper from "@/components/FormControlWrapper";
 import FormFieldArray from "@/components/FormFieldArray";
 import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
 import yup from "@/config/yup";
+import { VALIDATION_URL } from "@/consts/form";
 import { useStore } from "@/data/store";
 import { ProjectDetails } from "@/types/application";
 import { MutationState } from "@/types/form";
@@ -39,13 +40,16 @@ export default function ProjectsSafeOutputsForm({
     () =>
       yup.object().shape({
         data_assets: yup.string(),
-        research_outputs: yup.array().of(yup.string()),
+        research_outputs: yup
+          .array()
+          .of(yup.string().matches(VALIDATION_URL, tForm("urlFormatInvalid"))),
       }),
     []
   );
 
   const formOptions = {
     disabled: mutateState.isPending,
+    shouldResetKeep: true,
   };
 
   return (

@@ -39,19 +39,12 @@ export default function ProjectsSafeProject() {
   const { mutateAsync: mutatePutAsync, ...mutateState } =
     useMutation(putProjectQuery());
 
-  const defaultValues = pick(
-    createProjectDefaultValues(project),
-    PAYLOAD_FIELDS
+  const [defaultValues, setDefaultValues] = useState(
+    pick(createProjectDefaultValues(project), PAYLOAD_FIELDS)
   );
-  const [values, setValues] = useState();
-
-  const formOptions = {
-    defaultValues,
-    values,
-  };
 
   const handleGatewayProjectImport = (data: ResearcherProject) => {
-    setValues(pick(data, PAYLOAD_FIELDS));
+    setDefaultValues(pick(data, PAYLOAD_FIELDS));
   };
 
   const handleSubmit = async (payload: PutProjectPayload) => {
@@ -84,8 +77,7 @@ export default function ProjectsSafeProject() {
           />
         }>
         <ProjectsSafeProjectForm
-          {...formOptions}
-          values={values}
+          defaultValues={defaultValues}
           mutateState={mutateState}
           project={project}
           onSubmit={handleSubmit}

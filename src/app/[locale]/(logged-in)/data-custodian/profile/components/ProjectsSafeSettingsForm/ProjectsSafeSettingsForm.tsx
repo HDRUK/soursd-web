@@ -48,6 +48,7 @@ export default function ProjectSafeSettingsForm({
 
   const formOptions = {
     disabled: mutateState.isPending,
+    shouldResetKeep: true,
   };
 
   return (
