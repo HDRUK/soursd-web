@@ -276,6 +276,8 @@
     "profileUpdateMessage": "Your profile was successfully updated!",
     "inviteAnotherDelegate": "Add Delegate",
     "addAnotherSubsidiary": "Add a subsidiary",
+    "removeSubsidiaryToolTip": "Remove this subsidiary",
+    "editSubsidiaryToolTip": "Edit this subsidiary",
     "showPendingInvites": "Show pending invites",
     "clearAll": "clear all",
     "nameAndAddressTitle": "Your organisation name and contact details",
