@@ -1,3 +1,20 @@
+## [1.3.0](https://github.com/HDRUK/speedi-as-web/compare/v1.2.0...v1.3.0) (2025-03-31)
+
+### ✨ Features
+
+* **SOURSD-741:** guidance panel text for users (#227) ([7d2b0a4](https://github.com/HDRUK/speedi-as-web/commit/7d2b0a4de429371031fde97e0b1338aab929bfee))
+* **SOURSD-744:** Get file upload working again (#225) ([4533fe1](https://github.com/HDRUK/speedi-as-web/commit/4533fe1083bca116bf5c7eb7f4a77c43e57a7997))
+* **SOURSD-746:** Veriff terms and conditions (#224) ([3bc2327](https://github.com/HDRUK/speedi-as-web/commit/3bc23277a3264391638871fb9472fcdfbed8c51f))
+* **SOURSD-805:** Projects Safe Data (#229) ([5361c9e](https://github.com/HDRUK/speedi-as-web/commit/5361c9e5b7f0a3267d639004bea13b60520f4e45))
+* **SOURSD-809:** safe outputs (#231) ([068875b](https://github.com/HDRUK/speedi-as-web/commit/068875b027993170e86751c2771e0be7d6f32e01))
+* **SOURSD-827:** Affiliation Status  (#233) ([b3a7b80](https://github.com/HDRUK/speedi-as-web/commit/b3a7b8052ade4b0934ada977044ad377c69c5455))
+* **SOURSD-831:** project info (#232) ([a3dd53a](https://github.com/HDRUK/speedi-as-web/commit/a3dd53af99c8bafe65b41613a578f1ceb7307379))
+* **SOURSD-882:** Move organisation profile pages to new tabs pattern (#235) ([a50b871](https://github.com/HDRUK/speedi-as-web/commit/a50b871ab62e6af28fc46704e4e6edea34256528))
+* **SOURSD-886:** Adding a gateway integration page (#222) ([a837631](https://github.com/HDRUK/speedi-as-web/commit/a837631fb66f0b6fac7ed79e7492037806a7b5f7))
+* **SOURSD-901:** Homepage redesign (#226) ([e79e980](https://github.com/HDRUK/speedi-as-web/commit/e79e980c26bdb0af9055fc9c12aa95c744d19de4))
+* **SOURSD-917:** Fixing filtering researchers/students  (#218) ([0a1d914](https://github.com/HDRUK/speedi-as-web/commit/0a1d9145ceaf400e9f31d82d894ae927ba17082e))
+* **SOURSD-928:** update nav bar (#230) ([7eca600](https://github.com/HDRUK/speedi-as-web/commit/7eca6005fe9019a7e6614bd6ce54b245bea58f96))
+
 ## [1.2.0](https://github.com/HDRUK/speedi-as-web/compare/v1.1.0...v1.2.0) (2025-03-25)
 
 ### ✨ Features
