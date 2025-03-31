@@ -1,3 +1,5 @@
+"use client";
+
 import { useStore } from "@/data/store";
 import { mockedSafeProjectGuidanceProps } from "@/mocks/data/cms";
 import { PageBody, PageGuidance, PageSection } from "@/modules";
@@ -18,10 +20,11 @@ export default function ProjectsSafeOutputs() {
   const project = useStore(state => state.getProject());
 
   const defaultValues = useMemo<ProjectDetails>(
-    pick(
-      createProjectDetailDefaultValues(project.project_detail || {}),
-      PAYLOAD_FIELDS
-    ),
+    () =>
+      pick(
+        createProjectDetailDefaultValues(project.project_detail || {}),
+        PAYLOAD_FIELDS
+      ),
     []
   );
 
@@ -29,7 +32,7 @@ export default function ProjectsSafeOutputs() {
     <PageGuidance {...mockedSafeProjectGuidanceProps}>
       <PageBody heading={t("safeOutputs")}>
         <PageSection>
-          <ProjectsSafeOutputsForm defaultValues={defaultValues} isReadOnly />
+          <ProjectsSafeOutputsForm defaultValues={defaultValues} disabled />
         </PageSection>
       </PageBody>
     </PageGuidance>

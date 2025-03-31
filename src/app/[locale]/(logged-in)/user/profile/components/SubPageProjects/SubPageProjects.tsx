@@ -1,5 +1,7 @@
-import { PageBody, PageBodyContainer } from "@/modules";
+import { useStore } from "@/data/store";
+import { PageBodyContainer } from "@/modules";
 import { ResearcherProject } from "@/types/application";
+import { useEffect } from "react";
 import { PageTabs, ProjectsSubTabs } from "../../consts/tabs";
 import SubTabsSections from "../SubTabSections";
 import SubTabsContents from "../SubsTabContents";
@@ -15,12 +17,21 @@ interface PageProps {
 export default function SubPageProjects({ params, projectData }: PageProps) {
   const tabId = PageTabs.PROJECTS;
 
+  const [project, setProject] = useStore(state => [
+    state.getProject(),
+    state.setProject,
+  ]);
+
+  useEffect(() => {
+    setProject(projectData);
+  }, [projectData]);
+
   return (
-    <PageBodyContainer heading={projectData.title}>
-      <PageBody>
-        <SubTabsSections tabId={tabId} {...params} />
+    project && (
+      <PageBodyContainer heading={projectData.title}>
+        <SubTabsSections id={project.id} tabId={tabId} {...params} />
         <SubTabsContents tabId={tabId} {...params} />
-      </PageBody>
-    </PageBodyContainer>
+      </PageBodyContainer>
+    )
   );
 }

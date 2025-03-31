@@ -179,6 +179,7 @@
     "recurringDataset": "Recurring dataset",
     "linkedDatasets": "For linked datasets, specify how the linkage will take place",
     "dataMinimisation": "Approach to data minimisation",
+    "dataMinimisationPlaceholder": "Approach to data minimisation",
     "dataDescription": "Description of the data being used",
     "releaseDate": "Release / access date",
     "releaseDateDescription": "The date the data access was granted and active research started",
@@ -199,7 +200,11 @@
     "errorUpdateSafeDataMessage": "An error occurred while updating the safe data. Please try again or <contactLink>contact support</contactLink> if the problem persists.",
     "errorCreateSafeDataMessage": "An error occurred while creating the safe data. Please try again or <contactLink>contact support</contactLink> if the problem persists.",
     "successUpdateSafeDataMessage": "Safe data updated successfully.",
-    "successCreateSafeDataMessage": "Safe data created successfully."
+    "successCreateSafeDataMessage": "Safe data created successfully.",
+    "datasetLinkageDescription": "Linked datasets",
+    "datasetLinkageDescriptionPlaceholder": "Linked datasets",
+    "dataUseDescription": "Data description",
+    "dataUseDescriptionPlaceholder": "Data description"
   },
   "OrganisationStats": {
     "affiliatedUsers": "Affiliated Users",
@@ -627,8 +632,10 @@
     "comment": "Add any further comment",
     "commentPlaceholder": "Type your comment here...",
     "legalBasisForDataArticle6Placeholder": "Lawful condition",
+    "datasetLinkageDescription": "Linked datasets",
     "datasetLinkageDescriptionPlaceholder": "Linked datasets",
     "dataMinimisationPlaceholder": "Data minimisation",
+    "dataUseDescription": "Data description",
     "dataUseDescriptionPlaceholder": "Data description",
     "accessDatePlaceholder": "Access date",
     "requestFrequencyPlaceholder": "Request frequency",

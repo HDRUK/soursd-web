@@ -28,7 +28,6 @@ export interface FormControlProps
   displayLabel?: boolean;
   displayPlaceholder?: boolean;
   fullWidth?: boolean;
-  description?: string;
   t?: ReturnType<typeof useTranslations>;
 }
 

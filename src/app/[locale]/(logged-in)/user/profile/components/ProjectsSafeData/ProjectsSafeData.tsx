@@ -1,8 +1,10 @@
+"use client";
+
 import { useStore } from "@/data/store";
 import { mockedSafeProjectGuidanceProps } from "@/mocks/data/cms";
 import { PageBody, PageSection } from "@/modules";
 import PageGuidance from "@/modules/PageGuidance";
-import ProjectsSafeOutputsForm from "@/modules/ProjectsSafeOutputsForm";
+import ProjectsSafeDataForm from "@/modules/ProjectsSafeDataForm";
 import { ProjectDetails } from "@/types/application";
 import { createProjectDetailDefaultValues } from "@/utils/form";
 import { pick } from "@/utils/json";
@@ -24,16 +26,17 @@ const PAYLOAD_FIELDS = [
   "access_date",
 ];
 
-export default function ProjectsSafeOutputs() {
+export default function ProjectsSafeData() {
   const t = useTranslations(NAMESPACE_TRANSLATION);
 
   const project = useStore(state => state.getProject());
 
   const defaultValues = useMemo<ProjectDetails>(
-    pick(
-      createProjectDetailDefaultValues(project.project_detail || {}),
-      PAYLOAD_FIELDS
-    ),
+    () =>
+      pick(
+        createProjectDetailDefaultValues(project.project_detail || {}),
+        PAYLOAD_FIELDS
+      ),
     []
   );
 
@@ -41,7 +44,7 @@ export default function ProjectsSafeOutputs() {
     <PageGuidance {...mockedSafeProjectGuidanceProps}>
       <PageBody heading={t("safeData")}>
         <PageSection>
-          <ProjectsSafeOutputsForm defaultValues={defaultValues} isReadOnly />
+          <ProjectsSafeDataForm defaultValues={defaultValues} disabled />
         </PageSection>
       </PageBody>
     </PageGuidance>

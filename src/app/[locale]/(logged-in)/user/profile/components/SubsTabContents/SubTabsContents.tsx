@@ -1,10 +1,12 @@
 "use client";
 
 import { useStore } from "@/data/store";
-import { PageBody } from "@/modules";
 import { notFound } from "next/navigation";
 import { getSubTabs, PageTabs, ProjectsSubTabs } from "../../consts/tabs";
+import ProjectsSafeData from "../ProjectsSafeData";
+import ProjectsSafeOutputs from "../ProjectsSafeOutputs";
 import ProjectsSafePeople from "../ProjectsSafePeople";
+import ProjectsSafeSettings from "../ProjectsSafeSettings";
 
 interface TabsContentsProps {
   tabId: PageTabs;
@@ -31,9 +33,18 @@ export default function SubTabsContents({
     case ProjectsSubTabs.SAFE_PEOPLE:
       content = <ProjectsSafePeople id={id} />;
       break;
+    case ProjectsSubTabs.SAFE_SETTINGS:
+      content = <ProjectsSafeSettings />;
+      break;
+    case ProjectsSubTabs.SAFE_OUTPUTS:
+      content = <ProjectsSafeOutputs />;
+      break;
+    case ProjectsSubTabs.SAFE_DATA:
+      content = <ProjectsSafeData />;
+      break;
     default:
       content = null;
   }
 
-  return <PageBody>{content}</PageBody>;
+  return content;
 }

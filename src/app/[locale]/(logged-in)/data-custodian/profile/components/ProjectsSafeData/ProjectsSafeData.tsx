@@ -3,7 +3,7 @@ import useQueryAlerts from "@/hooks/useQueryAlerts";
 import { mockedSafeProjectGuidanceProps } from "@/mocks/data/cms";
 import { PageBody, PageSection } from "@/modules";
 import PageGuidance from "@/modules/PageGuidance";
-import ProjectsSafeOutputsForm from "@/modules/ProjectsSafeOutputsForm";
+import ProjectsSafeDataForm from "@/modules/ProjectsSafeDataForm";
 import useMutateProjectDetails from "@/queries/useMutateProjectDetails";
 import { PutProjectDetailsPayload } from "@/services/project_details";
 import { ProjectDetails } from "@/types/application";
@@ -76,7 +76,7 @@ export default function ProjectsSafeOutputs() {
           />
         }>
         <PageSection>
-          <ProjectsSafeOutputsForm
+          <ProjectsSafeDataForm
             projectId={project.id}
             defaultValues={defaultValues}
             mutateState={mutateState}

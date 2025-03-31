@@ -22,7 +22,6 @@ export interface ProjectSafeProjectFormProps
   extends Omit<FormProps<ProjectDetails>, "children"> {
   projectId?: number;
   mutateState?: MutationState;
-  isReadOnly?: boolean;
 }
 
 const NAMESPACE_TRANSLATION_FORM = "Form.SafeSettings";
@@ -30,7 +29,6 @@ const NAMESPACE_TRANSLATION_FORM = "Form.SafeSettings";
 export default function ProjectSafeSettingsForm({
   projectId,
   mutateState,
-  isReadOnly,
   ...restProps
 }: ProjectSafeProjectFormProps) {
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
@@ -46,7 +44,7 @@ export default function ProjectSafeSettingsForm({
   );
 
   const formOptions = {
-    disabled: mutateState?.isPending || isReadOnly,
+    disabled: mutateState?.isPending || restProps.disabled,
     shouldResetKeep: true,
   };
 
@@ -67,11 +65,13 @@ export default function ProjectSafeSettingsForm({
                   value={ProjectDetailsAccessType.TRE}
                   control={<Radio />}
                   label={tForm("accessTypeSde")}
+                  disabled={fieldProps.disabled}
                 />
                 <FormControlLabel
                   value={ProjectDetailsAccessType.RELEASE}
                   control={<Radio />}
                   label={tForm("accessTypeDataRelease")}
+                  disabled={fieldProps.disabled}
                 />
               </RadioGroup>
             )}
@@ -92,7 +92,7 @@ export default function ProjectSafeSettingsForm({
           />
         </Grid>
       </Grid>
-      {!isReadOnly && projectId && (
+      {!restProps.disabled && projectId && (
         <FormActions>
           <ProfileNavigationFooter
             previousHref={injectParamsIntoPath(

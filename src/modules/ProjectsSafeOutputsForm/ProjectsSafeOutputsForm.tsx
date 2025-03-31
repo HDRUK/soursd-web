@@ -22,7 +22,6 @@ export interface ProjectsSafeOutputsFormProps
   extends Omit<FormProps<ProjectDetails>, "children"> {
   projectId?: number;
   mutateState?: MutationState;
-  isReadOnly?: boolean;
 }
 
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
@@ -31,7 +30,6 @@ const NAMESPACE_TRANSLATION_FORM = "Form.SafeSettings";
 export default function ProjectsSafeOutputsForm({
   projectId,
   mutateState,
-  isReadOnly,
   ...restProps
 }: ProjectsSafeOutputsFormProps) {
   const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
@@ -50,7 +48,7 @@ export default function ProjectsSafeOutputsForm({
   );
 
   const formOptions = {
-    disabled: mutateState?.isPending || isReadOnly,
+    disabled: mutateState?.isPending || restProps.disabled,
     shouldResetKeep: true,
   };
 
@@ -88,7 +86,7 @@ export default function ProjectsSafeOutputsForm({
           />
         </Grid>
       </Grid>
-      {!isReadOnly && projectId && (
+      {!restProps.disabled && projectId && (
         <FormActions>
           <ProfileNavigationFooter
             previousHref={injectParamsIntoPath(

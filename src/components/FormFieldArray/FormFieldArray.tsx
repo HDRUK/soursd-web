@@ -1,17 +1,17 @@
 "use client";
 
-import { Button, Box, SxProps, Tooltip, IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { Box, Button, IconButton, SxProps, Tooltip } from "@mui/material";
+import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 import {
-  Control,
-  useFormContext,
-  FieldValues,
-  FieldArray,
   ArrayPath,
+  Control,
+  FieldArray,
+  FieldValues,
   useFieldArray,
+  useFormContext,
 } from "react-hook-form";
-import { useTranslations } from "next-intl";
 
 interface FormFieldArrayProps<
   T extends FieldValues,
@@ -26,6 +26,7 @@ interface FormFieldArrayProps<
   boxSx?: SxProps;
   minimumRows?: number;
   initialRowCount?: number;
+  disabled?: boolean;
 }
 
 const NAMESPACE_TRANSLATION_FORM = "Form";
@@ -45,6 +46,7 @@ const FormFieldArray = <T extends FieldValues>({
   },
   minimumRows,
   initialRowCount = 0,
+  disabled,
 }: FormFieldArrayProps<T>) => {
   const t = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const context = useFormContext<T>();
@@ -85,7 +87,11 @@ const FormFieldArray = <T extends FieldValues>({
             }}>
             <Tooltip title={removeButtonLabel || t("arrayRemoveButton")}>
               <IconButton
-                disabled={minimumRows && fieldsArray.length <= minimumRows}
+                disabled={
+                  context.formState.disabled ||
+                  disabled ||
+                  !!(minimumRows && fieldsArray.length <= minimumRows)
+                }
                 onClick={() => remove(index)}
                 data-testid="remove-from-field-array-button">
                 <DeleteIcon />
@@ -96,7 +102,11 @@ const FormFieldArray = <T extends FieldValues>({
       ))}
 
       <Box sx={{ mt: 1, display: "flex", justifyContent: "flex-start" }}>
-        <Button onClick={handleAddRow} variant="outlined" color="primary">
+        <Button
+          onClick={handleAddRow}
+          variant="outlined"
+          color="primary"
+          disabled={context.formState.disabled || disabled}>
           {addButtonLabel ||
             (fieldsArray.length === 0
               ? t("arrayAddButton")

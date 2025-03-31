@@ -3,9 +3,10 @@ import Form, { FormProps } from "@/components/Form";
 import FormActions from "@/components/FormActions";
 import FormControlCheckbox from "@/components/FormControlCheckbox";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
-import FormControl from "@/components/FormControlWrapper";
+import FormControlWrapper from "@/components/FormControlWrapper";
 import FormFieldArray from "@/components/FormFieldArray";
 import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
+import yup from "@/config/yup";
 import { RequestFrequency } from "@/consts/projects";
 import { useStore } from "@/data/store";
 import { ProjectDetails } from "@/types/application";
@@ -23,13 +24,11 @@ import {
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import React, { useMemo } from "react";
-import * as yup from "yup";
 
 export interface ProjectsSafeDataFormProps
   extends Omit<FormProps<ProjectDetails>, "children"> {
   projectId?: number;
   mutateState?: MutationState;
-  isReadOnly?: boolean;
 }
 
 const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
@@ -37,7 +36,6 @@ const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 export default function ProjectsSafeDataForm({
   projectId,
   mutateState,
-  isReadOnly,
   ...restProps
 }: ProjectsSafeDataFormProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
@@ -45,18 +43,15 @@ export default function ProjectsSafeDataForm({
   const routes = useStore(state => state.getApplication().routes);
 
   const formOptions = {
-    disabled: mutateState?.isPending || isReadOnly,
+    disabled: mutateState?.isPending || restProps.disabled,
     shouldResetKeep: true,
   };
 
   const schema = useMemo(
     () =>
       yup.object().shape({
-        datasets: yup.array().of(yup.string()),
         data_sensitivity_level: yup.string(),
-        legal_basis_for_data_article6: yup
-          .string()
-          .required(t("lawfulConditionRequired")),
+        legal_basis_for_data_article6: yup.string(),
         duty_of_confidentiality: yup.boolean(),
         national_data_optout: yup.boolean(),
         request_frequency: yup.string(),
@@ -104,9 +99,9 @@ export default function ProjectsSafeDataForm({
           />
         </Grid>
         <Grid item xs={12}>
-          <FormControl
+          <FormControlWrapper
             name="data_sensitivity_level"
-            label={t("dataSensitivityLevel")}
+            t={t}
             sx={{ maxWidth: "33%" }}
             renderField={props => (
               <Select {...props} fullWidth>
@@ -122,7 +117,7 @@ export default function ProjectsSafeDataForm({
           />
         </Grid>
         <Grid item xs={12}>
-          <FormControl
+          <FormControlWrapper
             name="legal_basis_for_data_article6"
             label={t.rich("lawfulCondition", {
               link: chunks => (
@@ -156,9 +151,9 @@ export default function ProjectsSafeDataForm({
           />
         </Grid>
         <Grid item xs={12}>
-          <FormControl
+          <FormControlWrapper
             name="request_frequency"
-            label={t("requestFrequency")}
+            t={t}
             placeholder=""
             renderField={props => (
               <RadioGroup {...props} row>
@@ -166,20 +161,22 @@ export default function ProjectsSafeDataForm({
                   value={RequestFrequency.ONE_OFF}
                   control={<Radio />}
                   label={t("oneOffRequest")}
+                  disabled={props.disabled}
                 />
                 <FormControlLabel
                   value={RequestFrequency.RECURRING}
                   control={<Radio />}
                   label={t("recurringDataset")}
+                  disabled={props.disabled}
                 />
               </RadioGroup>
             )}
           />
         </Grid>
         <Grid item xs={12}>
-          <FormControl
+          <FormControlWrapper
             name="dataset_linkage_description"
-            label={t("linkedDatasets")}
+            t={t}
             sx={{ maxWidth: "50%" }}
             renderField={props => (
               <TextField {...props} fullWidth multiline rows={4} />
@@ -187,9 +184,9 @@ export default function ProjectsSafeDataForm({
           />
         </Grid>
         <Grid item xs={12}>
-          <FormControl
+          <FormControlWrapper
             name="data_minimisation"
-            label={t("dataMinimisation")}
+            t={t}
             sx={{ maxWidth: "50%" }}
             renderField={props => (
               <TextField {...props} fullWidth multiline rows={4} />
@@ -197,9 +194,9 @@ export default function ProjectsSafeDataForm({
           />
         </Grid>
         <Grid item xs={12}>
-          <FormControl
+          <FormControlWrapper
             name="data_use_description"
-            label={t("dataDescription")}
+            t={t}
             sx={{ maxWidth: "50%" }}
             renderField={props => (
               <TextField {...props} fullWidth multiline rows={4} />
@@ -207,7 +204,7 @@ export default function ProjectsSafeDataForm({
           />
         </Grid>
         <Grid item xs={12}>
-          <FormControl
+          <FormControlWrapper
             name="access_date"
             label={t("releaseDate")}
             description={t("releaseDateDescription")}
@@ -217,7 +214,7 @@ export default function ProjectsSafeDataForm({
           />
         </Grid>
       </Grid>
-      {!isReadOnly && projectId && (
+      {!restProps.disabled && projectId && (
         <FormActions>
           <ProfileNavigationFooter
             previousHref={injectParamsIntoPath(
