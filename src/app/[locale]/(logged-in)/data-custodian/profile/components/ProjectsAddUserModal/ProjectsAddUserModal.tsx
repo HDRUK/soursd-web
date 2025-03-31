@@ -3,6 +3,7 @@ import { putProjectUsersQuery } from "@/services/projects";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import useQueryAlerts from "@/hooks/useQueryAlerts";
 import { ProjectAllUser } from "@/types/application";
+import { useTranslations } from "next-intl";
 import ProjectsAddUserForm from "../ProjectsAddUserForm";
 
 interface ProjectsAddUserModaProps extends Omit<FormModalProps, "children"> {
@@ -10,11 +11,14 @@ interface ProjectsAddUserModaProps extends Omit<FormModalProps, "children"> {
   onClose: () => void;
 }
 
+const NAMESPACE_TRANSLATION = "ProjectsAddUserModal";
+
 export default function ProjectsAddUserModal({
   projectId,
   onClose,
   ...restProps
 }: ProjectsAddUserModaProps) {
+  const t = useTranslations(NAMESPACE_TRANSLATION);
   const queryClient = useQueryClient();
   const { mutateAsync, ...putProjectUsersMutationState } = useMutation(
     putProjectUsersQuery()
@@ -43,8 +47,8 @@ export default function ProjectsAddUserModal({
   return (
     <FormModal
       variant="content"
-      heading="Add new team member"
-      description="Here’s where you can add a team member to your project. If you can't find them or they're listed under the wrong Organisation, invite them here. If they already have a SOURSD account, they’ll be able to select the correct Organisation. Otherwise, they'll be prompted to register for a SOURSD account."
+      heading={t("heading")}
+      description={t("description")}
       onClose={onClose}
       {...restProps}>
       <ProjectsAddUserForm
