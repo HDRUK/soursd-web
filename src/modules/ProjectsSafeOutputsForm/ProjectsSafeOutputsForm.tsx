@@ -19,9 +19,10 @@ export interface ProjectsSafeOutputsFormFieldValues {
 }
 
 export interface ProjectsSafeOutputsFormProps
-  extends FormProps<ProjectDetails> {
-  projectId: number;
-  mutateState: MutationState;
+  extends Omit<FormProps<ProjectDetails>, "children"> {
+  projectId?: number;
+  mutateState?: MutationState;
+  isReadOnly?: boolean;
 }
 
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
@@ -30,6 +31,7 @@ const NAMESPACE_TRANSLATION_FORM = "Form.SafeSettings";
 export default function ProjectsSafeOutputsForm({
   projectId,
   mutateState,
+  isReadOnly,
   ...restProps
 }: ProjectsSafeOutputsFormProps) {
   const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
@@ -48,7 +50,7 @@ export default function ProjectsSafeOutputsForm({
   );
 
   const formOptions = {
-    disabled: mutateState.isPending,
+    disabled: mutateState?.isPending || isReadOnly,
     shouldResetKeep: true,
   };
 
@@ -86,17 +88,19 @@ export default function ProjectsSafeOutputsForm({
           />
         </Grid>
       </Grid>
-      <FormActions>
-        <ProfileNavigationFooter
-          previousHref={injectParamsIntoPath(
-            routes.profileCustodianProjectsSafeSettings.path,
-            {
-              id: projectId,
-            }
-          )}
-          isLoading={mutateState.isPending}
-        />
-      </FormActions>
+      {!isReadOnly && projectId && (
+        <FormActions>
+          <ProfileNavigationFooter
+            previousHref={injectParamsIntoPath(
+              routes.profileCustodianProjectsSafeSettings.path,
+              {
+                id: projectId,
+              }
+            )}
+            isLoading={mutateState?.isPending}
+          />
+        </FormActions>
+      )}
     </Form>
   );
 }

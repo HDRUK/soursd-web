@@ -5,7 +5,6 @@ import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
 import yup from "@/config/yup";
 import { ProjectDetailsAccessType } from "@/consts/projects";
 import { useStore } from "@/data/store";
-import { PutProjectDetailsPayload } from "@/services/projects";
 import { ProjectDetails } from "@/types/application";
 import { MutationState } from "@/types/form";
 import { injectParamsIntoPath } from "@/utils/application";
@@ -19,10 +18,11 @@ import {
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
 
-export interface ProjectSafeProjectFormProps extends FormProps<ProjectDetails> {
-  projectId: number;
-  mutateState: MutationState;
-  onSubmit: (payload: PutProjectDetailsPayload) => void;
+export interface ProjectSafeProjectFormProps
+  extends Omit<FormProps<ProjectDetails>, "children"> {
+  projectId?: number;
+  mutateState?: MutationState;
+  isReadOnly?: boolean;
 }
 
 const NAMESPACE_TRANSLATION_FORM = "Form.SafeSettings";
@@ -30,6 +30,7 @@ const NAMESPACE_TRANSLATION_FORM = "Form.SafeSettings";
 export default function ProjectSafeSettingsForm({
   projectId,
   mutateState,
+  isReadOnly,
   ...restProps
 }: ProjectSafeProjectFormProps) {
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
@@ -45,7 +46,7 @@ export default function ProjectSafeSettingsForm({
   );
 
   const formOptions = {
-    disabled: mutateState.isPending,
+    disabled: mutateState?.isPending || isReadOnly,
     shouldResetKeep: true,
   };
 
@@ -91,17 +92,19 @@ export default function ProjectSafeSettingsForm({
           />
         </Grid>
       </Grid>
-      <FormActions>
-        <ProfileNavigationFooter
-          previousHref={injectParamsIntoPath(
-            routes.profileCustodianProjectsSafePeople.path,
-            {
-              id: projectId,
-            }
-          )}
-          isLoading={mutateState.isPending}
-        />
-      </FormActions>
+      {!isReadOnly && projectId && (
+        <FormActions>
+          <ProfileNavigationFooter
+            previousHref={injectParamsIntoPath(
+              routes.profileCustodianProjectsSafePeople.path,
+              {
+                id: projectId,
+              }
+            )}
+            isLoading={mutateState?.isPending}
+          />
+        </FormActions>
+      )}
     </Form>
   );
 }
