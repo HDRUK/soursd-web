@@ -14,7 +14,7 @@ import { User } from "@/types/application";
 import Table from "@/components/Table";
 import { ColumnDef, CellContext } from "@tanstack/react-table";
 import { ActionMenu } from "@/components/ActionMenu";
-import DecoupleUser from "../Delegates/DecoupleDelegate";
+import DecoupleUser from "../DecoupleDelegate";
 import UserModal from "../UserModal";
 import UserBulkInvite from "../UserBulkInvite";
 

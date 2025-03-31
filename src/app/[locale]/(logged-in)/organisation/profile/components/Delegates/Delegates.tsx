@@ -16,7 +16,7 @@ import { getUserQuery, patchUserQuery } from "@/services/users";
 import Form from "@/components/Form";
 import useQueryAlerts from "@/hooks/useQueryAlerts";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import DelegateTable from "./DelegateTable";
+import DelegateTable from "../DelegateTable";
 
 export interface KeyContactFormValues {
   first_name: string;
