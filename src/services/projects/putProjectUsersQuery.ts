@@ -3,7 +3,7 @@ import { UseMutationOptions } from "@tanstack/react-query";
 import putProjectUsers from "./putProjectUsers";
 import { PutProjectUsersPayload } from "./types";
 
-type PostProjectUsersMutationArgs = MutateWithArgs<
+type PutProjectUsersMutationArgs = MutateWithArgs<
   { id: number },
   PutProjectUsersPayload
 >;
@@ -11,7 +11,7 @@ type PostProjectUsersMutationArgs = MutateWithArgs<
 export default function putProjectUsersQuery(options?: QueryOptions) {
   return {
     mutationKey: ["postProjectUsers", ...(options?.queryKeySuffix || [])],
-    mutationFn: ({ params, payload }: PostProjectUsersMutationArgs) => {
+    mutationFn: ({ params, payload }: PutProjectUsersMutationArgs) => {
       return putProjectUsers(params.id, payload, {
         error: { message: "putProjectUsersError" },
         ...options?.responseOptions,
@@ -21,6 +21,6 @@ export default function putProjectUsersQuery(options?: QueryOptions) {
   } as UseMutationOptions<
     Awaited<ReturnType<typeof putProjectUsers>>,
     Error,
-    PostProjectUsersMutationArgs
+    PutProjectUsersMutationArgs
   >;
 }

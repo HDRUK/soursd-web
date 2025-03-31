@@ -87,43 +87,40 @@ export default function ProjectsSafePeople() {
     [routes]
   );
 
-  const renderActionMenuCell = useCallback(
-    <T extends ProjectUser>(info: CellContext<T, unknown>) => {
-      const {
-        primary_contact,
-        registry: { id: registryId },
-      } = info.row.original;
+  const renderActionMenuCell = (info: CellContext<T, unknown>) => {
+    const {
+      primary_contact,
+      registry: { id: registryId },
+    } = info.row.original;
 
-      return (
-        <ActionMenu>
-          <ActionMenuItem
-            onClick={() => {
-              showDeleteConfirm({
-                projectId: project.id,
-                registryId,
-              });
-            }}>
-            {tApplication("removeUserFromProject")}
-          </ActionMenuItem>
-          <ActionMenuItem
-            onClick={async () => {
-              await makePrimaryContactAsync({
-                projectId: project.id,
-                registryId,
-                primaryContact: !primary_contact,
-              });
+    return (
+      <ActionMenu>
+        <ActionMenuItem
+          onClick={() => {
+            showDeleteConfirm({
+              projectId: project.id,
+              registryId,
+            });
+          }}>
+          {tApplication("removeUserFromProject")}
+        </ActionMenuItem>
+        <ActionMenuItem
+          onClick={async () => {
+            await makePrimaryContactAsync({
+              projectId: project.id,
+              registryId,
+              primaryContact: !primary_contact,
+            });
 
-              refetch();
-            }}>
-            {!primary_contact
-              ? tApplication("makePrimaryContact")
-              : tApplication("removeAsPrimaryContact")}
-          </ActionMenuItem>
-        </ActionMenu>
-      );
-    },
-    []
-  );
+            refetch();
+          }}>
+          {!primary_contact
+            ? tApplication("makePrimaryContact")
+            : tApplication("removeAsPrimaryContact")}
+        </ActionMenuItem>
+      </ActionMenu>
+    );
+  };
 
   const renderStatus = (info: CellContext<ProjectUser, unknown>) => (
     <ChipStatus status={info.getValue() as Status} />
@@ -203,7 +200,6 @@ export default function ProjectsSafePeople() {
       </Grid>
       <ProjectsAddUserModal
         projectId={project.id}
-        custodianId={custodian?.id as number}
         open={showAddModal}
         onClose={() => setShowAddModal(false)}
       />

@@ -1,3 +1,3 @@
-import ProjectsSafePeopleModal from "./ProjectsAddUserModal";
+import ProjectsAddUserModal from "./ProjectsAddUserModal";
 
-export default ProjectsSafePeopleModal;
+export default ProjectsAddUserModal;

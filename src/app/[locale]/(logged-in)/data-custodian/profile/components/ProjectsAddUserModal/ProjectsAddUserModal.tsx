@@ -5,18 +5,16 @@ import useQueryAlerts from "@/hooks/useQueryAlerts";
 import { ProjectAllUser } from "@/types/application";
 import ProjectsAddUserForm from "../ProjectsAddUserForm";
 
-interface ProjectsSafePeopleModalProps
-  extends Omit<FormModalProps, "children"> {
-  custodianId: number;
+interface ProjectsAddUserModaProps extends Omit<FormModalProps, "children"> {
   projectId: number;
+  onClose: () => void;
 }
 
-export default function ProjectsSafePeopleModal({
-  custodianId,
+export default function ProjectsAddUserModal({
   projectId,
   onClose,
   ...restProps
-}: ProjectsSafePeopleModalProps) {
+}: ProjectsAddUserModaProps) {
   const queryClient = useQueryClient();
   const { mutateAsync, ...putProjectUsersMutationState } = useMutation(
     putProjectUsersQuery()
@@ -27,7 +25,7 @@ export default function ProjectsSafePeopleModal({
       params: {
         id: projectId,
       },
-      payload: { projectUsers },
+      payload: { users: projectUsers },
     });
   };
 
@@ -35,9 +33,8 @@ export default function ProjectsSafePeopleModal({
     successAlertProps: {
       willClose: () => {
         queryClient.refetchQueries({
-          queryKey: ["getCustodianProjectUsers", custodianId, projectId],
+          queryKey: ["getProjectUsers", projectId],
         });
-
         onClose?.();
       },
     },

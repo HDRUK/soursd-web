@@ -1,14 +1,14 @@
 import { ResponseJson, ResponseOptions } from "@/types/requests";
 import { handleJsonResponse } from "../requestHelpers";
-import { postRequest } from "../requests";
-import { PostProjectUsersPayload, PostProjectUsersResponse } from "./types";
+import { putRequest } from "../requests";
+import { PutProjectUsersPayload, PostProjectUsersResponse } from "./types";
 
 export default async (
   id: number,
-  payload: PostProjectUsersPayload,
+  payload: PutProjectUsersPayload,
   options?: ResponseOptions
 ): Promise<ResponseJson<PostProjectUsersResponse>> => {
-  const response = await postRequest(
+  const response = await putRequest(
     `${process.env.NEXT_PUBLIC_API_V1_URL}/projects/${id}/all_users`,
     payload
   );

@@ -35,7 +35,7 @@ type PutProjectResponse = ResearcherProject;
 type PostProjectUsersResponse = ResearcherProject;
 
 interface PutProjectUsersPayload {
-  projectUsers: ProjectAllUser[];
+  users: ProjectAllUser[];
 }
 
 type ProjectAllUserResponse = ProjectAllUser[];

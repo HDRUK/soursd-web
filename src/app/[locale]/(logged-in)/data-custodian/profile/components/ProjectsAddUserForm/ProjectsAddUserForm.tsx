@@ -38,8 +38,6 @@ export default function ProjectsAddUser({
 }: ProjectsAddUserProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION);
   const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
-  // const queryClient = useQueryClient();
-  // const project = useStore(state => state.getProject());
 
   const {
     data: usersData,
