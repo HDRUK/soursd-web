@@ -7,17 +7,16 @@ import ProjectsSafeData from "../ProjectsSafeData";
 import ProjectsSafeOutputs from "../ProjectsSafeOutputs";
 import ProjectsSafePeople from "../ProjectsSafePeople";
 import ProjectsSafeSettings from "../ProjectsSafeSettings";
+import ProjectsSafeProject from "../ProjectsSafeProject";
 
 interface TabsContentsProps {
   tabId: PageTabs;
   subTabId: ProjectsSubTabs;
-  id?: number;
 }
 
 export default function SubTabsContents({
   tabId,
   subTabId,
-  id,
 }: TabsContentsProps) {
   const user = useStore(state => state.getUser());
 
@@ -30,8 +29,11 @@ export default function SubTabsContents({
   let content = null;
 
   switch (subTabId) {
+    case ProjectsSubTabs.SAFE_PROJECT:
+      content = <ProjectsSafeProject />;
+      break;
     case ProjectsSubTabs.SAFE_PEOPLE:
-      content = <ProjectsSafePeople id={id} />;
+      content = <ProjectsSafePeople />;
       break;
     case ProjectsSubTabs.SAFE_SETTINGS:
       content = <ProjectsSafeSettings />;
