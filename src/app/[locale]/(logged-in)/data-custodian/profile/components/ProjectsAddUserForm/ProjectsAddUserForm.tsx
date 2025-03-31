@@ -42,6 +42,9 @@ export default function ProjectsAddUser({
   const {
     data: usersData,
     total,
+    last_page,
+    page,
+    setPage,
     updateQueryParams,
     resetQueryParams,
     ...getUserQueryState
@@ -132,6 +135,7 @@ export default function ProjectsAddUser({
           placeholder={t("searchPlaceholder")}
         />
         <Table
+          isPaginated
           columns={columns}
           data={projectUsers}
           queryState={getUserQueryState}
@@ -140,6 +144,9 @@ export default function ProjectsAddUser({
             contactLink: ContactLink,
           })}
           total={total}
+          page={page}
+          setPage={setPage}
+          last_page={last_page}
         />
       </FormModalBody>
       <FormActions>
