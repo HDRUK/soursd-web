@@ -105,7 +105,10 @@ export default function NameAndAddress() {
             <>
               <PageSection
                 heading={tOrgProfile("nameAndAddressTitle")}
-                description={tOrgProfile("nameAndAddressDescription")}>
+                description={tOrgProfile.rich("nameAndAddressDescription", {
+                  bold: (chunks) => <b>{chunks}</b>,
+                  br: () => <br />,
+                })}>
                 <Grid container rowSpacing={3}>
                   <Grid item xs={12}>
                     <FormControlHorizontal
