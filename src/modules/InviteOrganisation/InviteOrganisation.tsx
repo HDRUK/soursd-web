@@ -72,6 +72,7 @@ export default function InviteOrganisationForm({
             </Grid>
           </FormSection>
           <FormActions>
+            <div />
             <LoadingButton
               type="submit"
               endIcon={<SaveIcon />}

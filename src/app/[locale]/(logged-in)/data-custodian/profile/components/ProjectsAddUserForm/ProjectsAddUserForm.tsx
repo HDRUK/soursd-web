@@ -143,6 +143,7 @@ export default function ProjectsAddUser({
         />
       </FormModalBody>
       <FormActions>
+        <div />
         <LoadingButton
           loading={mutationState.isPending}
           onClick={() => onSave(selectedProjectUsers)}>
