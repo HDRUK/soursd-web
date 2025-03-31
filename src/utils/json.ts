@@ -14,4 +14,11 @@ function convertJwtToJSON(token: string) {
   return parseValidJSON(Buffer.from(token.split(".")[1], "base64").toString());
 }
 
-export { escapeAndParse, parseValidJSON, convertJwtToJSON };
+function pick<T>(data: T, keys: string[]) {
+  return Object.assign(
+    {},
+    ...keys.map(key => ({ [key]: data[key as Extract<keyof T, string>] }))
+  );
+}
+
+export { escapeAndParse, parseValidJSON, convertJwtToJSON, pick };

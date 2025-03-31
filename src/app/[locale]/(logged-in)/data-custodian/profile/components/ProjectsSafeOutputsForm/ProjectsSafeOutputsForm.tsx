@@ -1,87 +1,70 @@
-import ButtonSave from "@/components/ButtonSave";
-import Form from "@/components/Form";
+import Form, { FormProps } from "@/components/Form";
 import FormActions from "@/components/FormActions";
 import FormControlWrapper from "@/components/FormControlWrapper";
 import FormFieldArray from "@/components/FormFieldArray";
+import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
 import yup from "@/config/yup";
+import { VALIDATION_URL } from "@/consts/form";
+import { useStore } from "@/data/store";
 import { ProjectDetails } from "@/types/application";
-import { QueryState } from "@/types/form";
-import { toFieldArrayData } from "@/utils/form";
-import CheckIcon from "@mui/icons-material/Check";
-import { Button, Grid, TextField, Typography } from "@mui/material";
+import { MutationState } from "@/types/form";
+import { injectParamsIntoPath } from "@/utils/application";
+import { Grid, TextField, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
 
-export interface CustodianUserFields {
-  first_name: string;
-  last_name: string;
-  email: string;
-  administrator: boolean;
-  approver: boolean;
-}
-
 export interface ProjectsSafeOutputsFormFieldValues {
   data_assets: string;
-  research_outputs: { value: string }[];
+  research_outputs: string[];
 }
 
-export interface ProjectsSafeOutputsFormProps {
-  queryState: QueryState;
-  projectDetails: ProjectDetails;
-  onSubmit: (fields: ProjectsSafeOutputsFormFieldValues) => void;
+export interface ProjectsSafeOutputsFormProps
+  extends FormProps<ProjectDetails> {
+  projectId: number;
+  mutateState: MutationState;
 }
 
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
 const NAMESPACE_TRANSLATION_FORM = "Form.SafeSettings";
 
 export default function ProjectsSafeOutputsForm({
-  queryState,
-  onSubmit,
-  projectDetails,
+  projectId,
+  mutateState,
+  ...restProps
 }: ProjectsSafeOutputsFormProps) {
   const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
+  const routes = useStore(state => state.getApplication().routes);
 
   const schema = useMemo(
     () =>
       yup.object().shape({
         data_assets: yup.string(),
-        research_outputs: yup.array().of(
-          yup.object({
-            value: yup.string(),
-          })
-        ),
+        research_outputs: yup
+          .array()
+          .of(yup.string().matches(VALIDATION_URL, tForm("urlFormatInvalid"))),
       }),
     []
   );
 
   const formOptions = {
-    defaultValues: {
-      data_assets: projectDetails?.data_assets || "",
-      research_outputs: toFieldArrayData(projectDetails?.research_outputs),
-    },
-    disabled: queryState.isLoading,
+    disabled: mutateState.isPending,
+    shouldResetKeep: true,
   };
 
   return (
-    <Form
-      schema={schema}
-      {...formOptions}
-      onSubmit={onSubmit}
-      autoComplete="off">
+    <Form schema={schema} {...formOptions} {...restProps} autoComplete="off">
       <Grid container rowSpacing={3}>
         <Grid item xs={12}>
           <Typography mb={1}>Links to research outputs</Typography>
           <FormFieldArray
             name="research_outputs"
             addButtonLabel={tApplication("addLink")}
-            createNewRow={() => ({
-              url: "",
-            })}
+            createNewRow={() => ""}
             renderField={(_, index) => (
               <FormControlWrapper
                 displayLabel={false}
-                name={`research_outputs.${index}.value`}
+                name={`research_outputs.${index}`}
                 placeholder={tApplication("link")}
                 renderField={fieldProps => <TextField {...fieldProps} />}
               />
@@ -104,15 +87,15 @@ export default function ProjectsSafeOutputsForm({
         </Grid>
       </Grid>
       <FormActions>
-        <Button variant="outlined" onClick={() => {}}>
-          {tApplication("previousButton")}
-        </Button>
-        <ButtonSave
-          type="submit"
-          endIcon={<CheckIcon />}
-          loading={queryState.isLoading}>
-          {tApplication("saveButton")}
-        </ButtonSave>
+        <ProfileNavigationFooter
+          previousHref={injectParamsIntoPath(
+            routes.profileCustodianProjectsSafeSettings.path,
+            {
+              id: projectId,
+            }
+          )}
+          isLoading={mutateState.isPending}
+        />
       </FormActions>
     </Form>
   );

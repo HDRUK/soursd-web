@@ -1,15 +1,15 @@
-import ButtonSave from "@/components/ButtonSave";
-import Form from "@/components/Form";
+import Form, { FormProps } from "@/components/Form";
 import FormActions from "@/components/FormActions";
 import FormControlWrapper from "@/components/FormControlWrapper";
+import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
 import yup from "@/config/yup";
 import { ProjectDetailsAccessType } from "@/consts/projects";
+import { useStore } from "@/data/store";
 import { PutProjectDetailsPayload } from "@/services/projects";
 import { ProjectDetails } from "@/types/application";
-import { QueryState } from "@/types/form";
-import CheckIcon from "@mui/icons-material/Check";
+import { MutationState } from "@/types/form";
+import { injectParamsIntoPath } from "@/utils/application";
 import {
-  Button,
   FormControlLabel,
   Grid,
   Radio,
@@ -19,30 +19,21 @@ import {
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
 
-export interface CustodianUserFields {
-  first_name: string;
-  last_name: string;
-  email: string;
-  administrator: boolean;
-  approver: boolean;
-}
-
-export interface ProjectSafeProjectFormProps {
-  queryState: QueryState;
-  projectDetails: ProjectDetails;
+export interface ProjectSafeProjectFormProps extends FormProps<ProjectDetails> {
+  projectId: number;
+  mutateState: MutationState;
   onSubmit: (payload: PutProjectDetailsPayload) => void;
 }
 
-const NAMESPACE_TRANSLATION_APPLICATION = "Application";
 const NAMESPACE_TRANSLATION_FORM = "Form.SafeSettings";
 
 export default function ProjectSafeSettingsForm({
-  queryState,
-  onSubmit,
-  projectDetails,
+  projectId,
+  mutateState,
+  ...restProps
 }: ProjectSafeProjectFormProps) {
-  const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
+  const routes = useStore(state => state.getApplication().routes);
 
   const schema = useMemo(
     () =>
@@ -54,19 +45,12 @@ export default function ProjectSafeSettingsForm({
   );
 
   const formOptions = {
-    defaultValues: {
-      access_type: projectDetails?.access_type || "",
-      data_privacy: projectDetails?.data_privacy || "",
-    },
-    disabled: queryState.isLoading,
+    disabled: mutateState.isPending,
+    shouldResetKeep: true,
   };
 
   return (
-    <Form
-      schema={schema}
-      {...formOptions}
-      onSubmit={onSubmit}
-      autoComplete="off">
+    <Form schema={schema} {...formOptions} {...restProps} autoComplete="off">
       <Grid container rowSpacing={3}>
         <Grid item xs={12}>
           <FormControlWrapper
@@ -108,15 +92,15 @@ export default function ProjectSafeSettingsForm({
         </Grid>
       </Grid>
       <FormActions>
-        <Button variant="outlined" onClick={() => {}}>
-          {tApplication("previousButton")}
-        </Button>
-        <ButtonSave
-          type="submit"
-          endIcon={<CheckIcon />}
-          loading={queryState.isLoading}>
-          {tApplication("saveButton")}
-        </ButtonSave>
+        <ProfileNavigationFooter
+          previousHref={injectParamsIntoPath(
+            routes.profileCustodianProjectsSafePeople.path,
+            {
+              id: projectId,
+            }
+          )}
+          isLoading={mutateState.isPending}
+        />
       </FormActions>
     </Form>
   );

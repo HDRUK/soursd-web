@@ -1,48 +1,36 @@
-import ButtonSave from "@/components/ButtonSave";
 import ChipStatus, { Status } from "@/components/ChipStatus";
 import DateInput from "@/components/DateInput";
-import Form from "@/components/Form";
+import Form, { FormProps } from "@/components/Form";
 import FormActions from "@/components/FormActions";
 import FormControlWrapper from "@/components/FormControlWrapper";
+import FormFieldArray from "@/components/FormFieldArray";
+import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
 import yup from "@/config/yup";
 import { ResearcherProject } from "@/types/application";
-import { QueryState } from "@/types/form";
-import CheckIcon from "@mui/icons-material/Check";
+import { MutationState } from "@/types/form";
 import {
-  Button,
   FormControlLabel,
   Grid,
   Paper,
   Radio,
   RadioGroup,
   TextField,
+  Typography,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
 
-export interface CustodianUserFields {
-  first_name: string;
-  last_name: string;
-  email: string;
-  administrator: boolean;
-  approver: boolean;
-}
-
-export interface UserModalDetailsProps {
-  queryState: QueryState;
+export interface UserModalDetailsProps extends FormProps<ResearcherProject> {
+  mutateState: MutationState;
   project: ResearcherProject;
-  onSubmit: (payload: ResearcherProject) => void;
 }
 
-const NAMESPACE_TRANSLATION_APPLICATION = "Application";
 const NAMESPACE_TRANSLATION_FORM = "Form.SafeProject";
 
 export default function UserModalDetails({
-  queryState,
-  onSubmit,
-  project,
+  mutateState,
+  ...restProps
 }: UserModalDetailsProps) {
-  const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
 
   const schema = useMemo(
@@ -68,19 +56,12 @@ export default function UserModalDetails({
   );
 
   const formOptions = {
-    defaultValues: {
-      ...project,
-      status: project.model_state?.state.slug || Status.PROJECT_PENDING,
-    },
-    disabled: queryState.isLoading,
+    disabled: mutateState.isPending,
+    shouldResetKeep: true,
   };
 
   return (
-    <Form
-      schema={schema}
-      {...formOptions}
-      onSubmit={onSubmit}
-      autoComplete="off">
+    <Form schema={schema} {...formOptions} {...restProps} autoComplete="off">
       <Grid container columnSpacing={8}>
         <Grid
           item
@@ -171,24 +152,23 @@ export default function UserModalDetails({
               />
             </Grid>
             <Grid item xs={12}>
-              <FormControlWrapper
+              <Typography mb={1}>{tForm("otherApprovalCommittees")}</Typography>
+              <FormFieldArray
                 name="other_approval_committees"
-                t={tForm}
-                renderField={fieldProps => <TextField {...fieldProps} />}
+                addButtonLabel={tForm("add")}
+                createNewRow={() => ""}
+                renderField={(_, index) => (
+                  <FormControlWrapper
+                    displayLabel={false}
+                    name={`other_approval_committees.${index}`}
+                    renderField={fieldProps => <TextField {...fieldProps} />}
+                  />
+                )}
               />
             </Grid>
           </Grid>
-
           <FormActions>
-            <Button variant="outlined" onClick={() => {}}>
-              {tApplication("previousButton")}
-            </Button>
-            <ButtonSave
-              type="submit"
-              endIcon={<CheckIcon />}
-              loading={queryState.isLoading}>
-              {tApplication("saveButton")}
-            </ButtonSave>
+            <ProfileNavigationFooter isLoading={mutateState.isPending} />
           </FormActions>
         </Grid>
         <Grid
