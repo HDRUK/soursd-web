@@ -225,6 +225,22 @@ const ROUTES: Routes = {
     path: "/organisation/profile/projects/{id}/safe-project",
     permissions: [UserGroup.ORGANISATIONS],
   },
+  profileOrganisationProjectsSafeData: {
+    path: "/organisation/profile/projects/{id}/safe-data",
+    permissions: [UserGroup.ORGANISATIONS],
+  },
+  profileOrganisationProjectsSafePeople: {
+    path: "/organisation/profile/projects/{id}/safe-people",
+    permissions: [UserGroup.ORGANISATIONS],
+  },
+  profileOrganisationProjectsSafeSettings: {
+    path: "/organisation/profile/projects/{id}/safe-settings",
+    permissions: [UserGroup.ORGANISATIONS],
+  },
+  profileOrganisationProjectsSafeOutputs: {
+    path: "/organisation/profile/projects/{id}/safe-outputs",
+    permissions: [UserGroup.ORGANISATIONS],
+  },
   profileAdmin: {
     path: "/admin",
     permissions: [UserGroup.ADMINS],
