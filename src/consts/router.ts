@@ -45,6 +45,10 @@ const ROUTES: Routes = {
     path: "/data-custodian/profile/configuration/webhooks",
     permissions: [UserGroup.CUSTODIANS],
   },
+  profileCustodianConfigurationIntegrations: {
+    path: "/data-custodian/profile/configuration/integrations",
+    permissions: [UserGroup.CUSTODIANS],
+  },
   profileCustodianConfigurationRules: {
     path: "/data-custodian/profile/configuration/rules",
     permissions: [UserGroup.CUSTODIANS],
@@ -219,6 +223,22 @@ const ROUTES: Routes = {
   },
   profileOrganisationProjectsSafeProject: {
     path: "/organisation/profile/projects/{id}/safe-project",
+    permissions: [UserGroup.ORGANISATIONS],
+  },
+  profileOrganisationProjectsSafeData: {
+    path: "/organisation/profile/projects/{id}/safe-data",
+    permissions: [UserGroup.ORGANISATIONS],
+  },
+  profileOrganisationProjectsSafePeople: {
+    path: "/organisation/profile/projects/{id}/safe-people",
+    permissions: [UserGroup.ORGANISATIONS],
+  },
+  profileOrganisationProjectsSafeSettings: {
+    path: "/organisation/profile/projects/{id}/safe-settings",
+    permissions: [UserGroup.ORGANISATIONS],
+  },
+  profileOrganisationProjectsSafeOutputs: {
+    path: "/organisation/profile/projects/{id}/safe-outputs",
     permissions: [UserGroup.ORGANISATIONS],
   },
   profileAdmin: {

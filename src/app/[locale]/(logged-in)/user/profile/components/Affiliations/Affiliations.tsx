@@ -102,24 +102,17 @@ export default function Affiliations() {
     }
   );
 
-  const getStatus = (info: CellContext<ResearcherAffiliation, unknown>) => {
-    const {
-      organisation: { unclaimed },
-    } = info.row.original;
-    // will be more status' to implement in other tickets...
-    const status = unclaimed ? Status.INVITE_SENT : Status.PENDING;
-
-    return status;
-  };
-
   const renderRelationship = (
     info: CellContext<ResearcherAffiliation, unknown>
-  ) => tApplication(info.getValue());
+  ) => {
+    const value = info.getValue() as string;
+    return value?.length > 0 ? tApplication(info.getValue()) : null;
+  };
 
   const renderActionMenuCell = useCallback(
     (info: CellContext<ResearcherAffiliation, unknown>) => {
       const affiliation = info.row.original;
-      const status = getStatus(info);
+      const status = affiliation.registryAffiliationState;
       return (
         <ActionMenu>
           <ActionMenuItem
@@ -130,7 +123,7 @@ export default function Affiliations() {
             icon={<DeleteOutlineOutlinedIcon sx={{ color: "error.main" }} />}>
             {tProfile("delete")}
           </ActionMenuItem>
-          {status === Status.INVITE_SENT && (
+          {status === Status.AFFILIATION_INVITED && (
             <ActionMenuItem
               onClick={() => {
                 setSelectedAffiliation(affiliation);
@@ -157,7 +150,7 @@ export default function Affiliations() {
   );
 
   const renderStatus = (info: CellContext<ResearcherAffiliation, unknown>) => (
-    <ChipStatus status={getStatus(info)} color="success" />
+    <ChipStatus status={info.getValue() as Status} color="success" />
   );
 
   const columns: ColumnDef<ResearcherAffiliation>[] = [
@@ -186,7 +179,7 @@ export default function Affiliations() {
       header: tApplication("staffStudentId"),
     },
     {
-      accessorKey: "status",
+      accessorKey: "registryAffiliationState",
       header: tApplication("status"),
       cell: renderStatus,
     },

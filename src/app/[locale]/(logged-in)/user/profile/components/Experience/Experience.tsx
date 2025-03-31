@@ -4,7 +4,7 @@ import { ROUTES } from "@/consts/router";
 import { useStore } from "@/data/store";
 import useFileUpload from "@/hooks/useFileUpload";
 import useUserFileUpload from "@/hooks/useUserFileUpload";
-import { mockedPersonalDetailsGuidanceProps } from "@/mocks/data/cms";
+import { mockedUserExperienceGuidanceProps } from "@/mocks/data/cms";
 import { PageBody, PageBodyContainer, PageGuidance } from "@/modules";
 import { getFileHref, getLatestCV } from "@/utils/file";
 import { Grid, TextField, Typography } from "@mui/material";
@@ -52,7 +52,7 @@ export default function Experience() {
     isUploading,
     isScanning,
     file,
-  } = useFileUpload("cvUploadFailed", latestCV?.id);
+  } = useFileUpload("cvUpload", { initialFileId: latestCV?.id });
 
   const uploadFile = useUserFileUpload({
     user,
@@ -146,7 +146,7 @@ export default function Experience() {
 
   return (
     <PageBodyContainer heading={tProfile("experienceTitle")}>
-      <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
+      <PageGuidance {...mockedUserExperienceGuidanceProps}>
         <PageBody>
           <Form
             onSubmit={handleDetailsSubmit}

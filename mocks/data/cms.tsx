@@ -1,5 +1,5 @@
 import ChipStatus, { Status } from "@/components/ChipStatus";
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 export const mockedSafeProjectGuidanceProps = {
   infoTitle: "Did you know?",
@@ -14,28 +14,93 @@ export const mockedSafeProjectGuidanceProps = {
 };
 
 export const mockedPersonalDetailsGuidanceProps = {
-  infoTitle: "Guidance",
+  infoTitle: "This section relates to you as an individual",
   info: (
     <>
-      <Typography variant="h3" mb={3}>
-        Did you know?
-      </Typography>
-      <Typography mb={3}>
-        If you have consented to SOURSD accessing public information via ORCiD,
-        then this willalready be compiling a list of employment history for you!
-      </Typography>
-      <Typography mb={3}>
-        Providing SOURSD with a full employment/affilitation history helps Data
-        Custodian&apos;s better understand your suitability. Moreover, your
-        employment history provides exposure to other research projects, as well
-        as public benefit and impact. The more information you provide
-        ultimately leads to a far simpler data access approval process.
-      </Typography>
+      <Typography mb={3}>Q. Why do we require this information?</Typography>
       <Typography>
-        This section contains a list of the affiliations you’ve already told us
-        about. This is your information, and you can edit/remove at any point.
+        A. The primary purpose of SOURSD is to consolidate information about
+        researchers and organisations to allow Data Custodians efficiently
+        assess if a person/organisation is ‘Safe’. You can set up a profile in
+        SOURSD which shares relevant information with Data Custodian, providing
+        as much information about yourself as possible helps Data Custodians
+        assess you more quickly and easily.
       </Typography>
     </>
+  ),
+};
+
+export const mockedUserExperienceGuidanceProps = {
+  infoTitle: "This section relates to your individual research experience",
+  info: (
+    <>
+      <Typography mb={3}>
+        Through SOURSD you can provide Data Custodians with an up-to-date record
+        of your employment history, education, qualifications, and publication
+        record.
+      </Typography>
+      <Typography component="aside">
+        <Typography variant="subtitle1" fontWeight={700}>
+          Please note:
+        </Typography>
+        <ul>
+          <li>
+            Only requiring access to NHS SDE Network you <b>do not</b> need to
+            populate this page.
+          </li>
+          <li>
+            Want access to data from any other Data Custodian please do populate
+            this page.
+          </li>
+        </ul>
+      </Typography>
+    </>
+  ),
+};
+
+export const mockedUserTrainingGuidanceProps = {
+  infoTitle:
+    "This section relates to your training and accreditations for accessing sensitive data",
+  info: (
+    <>
+      <Typography mb={1}>
+        Suggested text: Different Data Custodians may require the completions of
+        different training courses. Please add all relevant safe researcher
+        training courses completed. Potential safe researcher training courses
+        to consider include:
+      </Typography>
+      <ul>
+        <li>
+          The{" "}
+          <a
+            href="https://www.scadr.ac.uk/administrative-data/training/ons-safe-researcher-training-course-ons-srt"
+            target="_blank">
+            ONS safe researcher training course
+          </a>{" "}
+          – delivered by ONS, SCADR, UKDS (required for researchers accessing
+          DEA accredited environments)
+        </li>
+        <li>
+          The Medical Research Council, regulatory support centre –{" "}
+          <a
+            href="https://bygsystems.net/mrcrsc-lms/enrol/index.php?id=72"
+            target="_blank">
+            Research, GDPR and confidentiality quiz
+          </a>
+        </li>
+        <li>Any mandatory Host Organisation specific training course</li>
+      </ul>
+    </>
+  ),
+};
+
+export const mockedRegisterGuidanceProps = {
+  infoTitle: "Guidance",
+  info: (
+    <Typography>
+      Hover over the options to the left to view more information about account
+      types.
+    </Typography>
   ),
 };
 
@@ -102,11 +167,16 @@ export const mockedSoursdHomepageInfo = {
   infoTitle: "SoursdInfo",
   info: (
     <>
-      <Typography variant="h1" mb={3}>
-        Safe Organisation and User Registry for Sensitive Data (SOURSD)
+      <Typography fontSize="48px" fontWeight="400" mb={1}>
+        <Box component="span" fontWeight="bold">S</Box>afe{" "} 
+        <Box component="span" fontWeight="bold">O</Box>rganisation and{" "}
+        <Box component="span" fontWeight="bold">U</Box>ser{" "}
+        <Box component="span" fontWeight="bold">R</Box>egistry for{" "}
+        <Box component="span" fontWeight="bold">S</Box>ensitive{" "}
+        <Box component="span" fontWeight="bold">D</Box>ata
       </Typography>
-      <Typography variant="h5" fontWeight="light" sx={{ mt: "30px" }}>
-        A centralised tool to enable Safe People decision making
+      <Typography variant="h1" fontWeight="normal" >
+        A platform to enable Safe People decision making
       </Typography>
     </>
   ),
@@ -116,7 +186,7 @@ export const mockedSoursdHomepageUsages = {
   infoTitle: "SoursdUsages",
   infoHeader: (
     <>
-      <Typography variant="h4" mb={3}>
+      <Typography variant="h2" mb={2}>
         With SOURSD you can...
       </Typography>
     </>

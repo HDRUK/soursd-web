@@ -1,48 +1,102 @@
 "use client";
 
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { mockedSoursdHomepageUsages } from "@/mocks/data/cms";
-import DoneAllOutlinedIcon from "@mui/icons-material/DoneAllOutlined";
+import FastForwardOutlinedIcon from "@mui/icons-material/FastForwardOutlined";
+import GppGoodOutlinedIcon from "@mui/icons-material/GppGoodOutlined";
+import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import { framerFadeIn } from "@/utils/framer";
 import {
+  StyledOuterContent,
   StyledContent,
   StyledContainer,
-  StyledGrid,
+  StyledFlex,
   StyledBox,
 } from "./SoursdUsages.styles";
 
 export default function SoursdUsages() {
   return (
-    <StyledContainer>
-      <StyledContent>
-        {mockedSoursdHomepageUsages.infoHeader}
-        <StyledGrid>
-          <StyledBox
-            {...framerFadeIn}
-            transition={{ ...framerFadeIn.transition, delay: 0 }}>
-            <DoneAllOutlinedIcon color="primary" />
-            <Typography variant="subtitle1" mb={3} sx={{ marginLeft: "10px" }}>
-              Accelerate ‘Safe People’ data access
-            </Typography>
-          </StyledBox>
-          <StyledBox
-            {...framerFadeIn}
-            transition={{ ...framerFadeIn.transition, delay: 0.5 }}>
-            <DoneAllOutlinedIcon color="primary" />
-            <Typography variant="subtitle1" mb={3} sx={{ marginLeft: "10px" }}>
-              Reduce duplication of effort for Users and Organisations
-            </Typography>
-          </StyledBox>
-          <StyledBox
-            {...framerFadeIn}
-            transition={{ ...framerFadeIn.transition, delay: 1 }}>
-            <DoneAllOutlinedIcon color="primary" />
-            <Typography variant="subtitle1" mb={3} sx={{ marginLeft: "10px" }}>
-              Enable shared intelligence across Data Custodians
-            </Typography>
-          </StyledBox>
-        </StyledGrid>
-      </StyledContent>
-    </StyledContainer>
+    <StyledOuterContent>
+      <StyledContainer>
+        <StyledContent>
+          {mockedSoursdHomepageUsages.infoHeader}
+          <StyledFlex>
+            <StyledBox
+              {...framerFadeIn}
+              transition={{ ...framerFadeIn.transition, delay: 0 }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  width: "100%",
+                  alignItems: "center",
+                }}>
+                <TrendingUpIcon color="white" style={{ fontSize: "70px" }} />
+                <Typography
+                  variant="h4"
+                  align="center"
+                  sx={{
+                    fontWeight: "500",
+                    marginLeft: "24px",
+                    textAlign: "left",
+                  }}>
+                  Accelerate ‘Safe People’ data access
+                </Typography>
+              </Box>
+            </StyledBox>
+            <StyledBox
+              {...framerFadeIn}
+              transition={{ ...framerFadeIn.transition, delay: 0.5 }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  width: "100%",
+                  alignItems: "center",
+                }}>
+                <FastForwardOutlinedIcon
+                  color="white"
+                  style={{ fontSize: "70px" }}
+                />
+                <Typography
+                  variant="h4"
+                  sx={{
+                    fontWeight: "500",
+                    marginLeft: "24px",
+                    textAlign: "left",
+                  }}>
+                  Reduce duplication of effort for Users and Organisations
+                </Typography>
+              </Box>
+            </StyledBox>
+            <StyledBox
+              {...framerFadeIn}
+              transition={{ ...framerFadeIn.transition, delay: 1 }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  width: "100%",
+                  alignItems: "center",
+                }}>
+                <GppGoodOutlinedIcon
+                  color="white"
+                  style={{ fontSize: "70px" }}
+                />
+                <Typography
+                  variant="h4"
+                  sx={{
+                    fontWeight: "500",
+                    marginLeft: "24px",
+                    textAlign: "left",
+                  }}>
+                  Enable shared intelligence across Data Custodians
+                </Typography>
+              </Box>
+            </StyledBox>
+          </StyledFlex>
+        </StyledContent>
+      </StyledContainer>
+    </StyledOuterContent>
   );
 }

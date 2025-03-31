@@ -21,27 +21,27 @@ const PALETTE_THEME_PURPLE_BLUE = {
     fontFamily: `"Inter", "Roboto", "Helvetica", "Arial", sans-serif`,
     h1: {
       ...headingStyles,
-      fontSize: "1.476rem",
+      fontSize: "2.027rem",
     },
     h2: {
       ...headingStyles,
-      fontSize: "1.383rem",
+      fontSize: "1.802rem",
     },
     h3: {
       ...headingStyles,
-      fontSize: "1.296rem",
+      fontSize: "1.602rem",
     },
     h4: {
       ...headingStyles,
-      fontSize: "1.215rem",
+      fontSize: "1.424rem",
     },
     h5: {
       ...headingStyles,
-      fontSize: "1.138rem",
+      fontSize: "1.266rem",
     },
     h6: {
       ...headingStyles,
-      fontSize: "1.067rem",
+      fontSize: "1.125rem",
     },
   },
   palette: {
@@ -108,6 +108,22 @@ const PALETTE_THEME_PURPLE_BLUE = {
     textPrimary: createColor("#1E1E1E"),
     midGrey: createColor("#687078"),
     clear: createColor("#fff"),
+    homepageInfo: {
+      light: "#5769B2",
+      dark: "#47579A",
+      contrastText: "#fff",
+    },
+    homepageKeyFeatures: {
+      textSecondary: "#585754",
+      contrastText: "#000",
+    },
+    homepageUsage: {
+      light: "#5769B2",
+      dark: "#47579A",
+      contrastText: "#fff",
+    },
+    notificationActive: createColor("#DC3645"),
+    notification: createColor("#5769B2"),
   },
 };
 
