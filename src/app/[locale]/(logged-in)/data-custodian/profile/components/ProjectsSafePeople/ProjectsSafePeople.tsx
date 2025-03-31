@@ -89,7 +89,10 @@ export default function ProjectsSafePeople() {
 
   const renderActionMenuCell = useCallback(
     <T extends ProjectUser>(info: CellContext<T, unknown>) => {
-      const { affiliation, primary_contact } = info.row.original;
+      const {
+        primary_contact,
+        registry: { id: registryId },
+      } = info.row.original;
 
       return (
         <ActionMenu>
@@ -97,7 +100,7 @@ export default function ProjectsSafePeople() {
             onClick={() => {
               showDeleteConfirm({
                 projectId: project.id,
-                affiliationId: affiliation.id,
+                registryId,
               });
             }}>
             {tApplication("removeUserFromProject")}
@@ -106,7 +109,7 @@ export default function ProjectsSafePeople() {
             onClick={async () => {
               await makePrimaryContactAsync({
                 projectId: project.id,
-                affiliationId: affiliation.id,
+                registryId,
                 primaryContact: !primary_contact,
               });
 

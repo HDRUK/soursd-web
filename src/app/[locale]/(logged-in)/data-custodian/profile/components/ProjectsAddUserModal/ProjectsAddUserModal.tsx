@@ -1,8 +1,9 @@
 import FormModal, { FormModalProps } from "@/components/FormModal";
-import postProjectUsersQuery from "@/services/projects/postProjectUsersQuery";
+import { putProjectUsersQuery } from "@/services/projects";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import ProjectsAddUserForm, { RowUserState } from "../ProjectsAddUserForm";
 import useQueryAlerts from "@/hooks/useQueryAlerts";
+import { ProjectAllUser } from "@/types/application";
+import ProjectsAddUserForm from "../ProjectsAddUserForm";
 
 interface ProjectsSafePeopleModalProps
   extends Omit<FormModalProps, "children"> {
@@ -18,15 +19,15 @@ export default function ProjectsSafePeopleModal({
 }: ProjectsSafePeopleModalProps) {
   const queryClient = useQueryClient();
   const { mutateAsync, ...putProjectUsersMutationState } = useMutation(
-    postProjectUsersQuery()
+    putProjectUsersQuery()
   );
 
-  const handleSave = async (users: RowUserState) => {
+  const handleSave = async (projectUsers: ProjectAllUser[]) => {
     await mutateAsync({
       params: {
         id: projectId,
       },
-      payload: { users },
+      payload: { projectUsers },
     });
   };
 
@@ -50,6 +51,7 @@ export default function ProjectsSafePeopleModal({
       onClose={onClose}
       {...restProps}>
       <ProjectsAddUserForm
+        projectId={projectId}
         mutationState={putProjectUsersMutationState}
         onSave={handleSave}
       />

@@ -1,5 +1,9 @@
 import { Status } from "@/components/ChipStatus";
-import { ResearcherProject, ProjectUser } from "@/types/application";
+import {
+  ResearcherProject,
+  ProjectUser,
+  ProjectAllUser,
+} from "@/types/application";
 
 type ProjectsResponse = ResearcherProject[];
 
@@ -30,16 +34,15 @@ type PutProjectResponse = ResearcherProject;
 
 type PostProjectUsersResponse = ResearcherProject;
 
-interface PostProjectUsersPayload {
-  users: {
-    user_digital_ident: string;
-    project_role_id: number;
-    affiliation_id: number;
-  }[];
+interface PutProjectUsersPayload {
+  projectUsers: ProjectAllUser[];
 }
+
+type ProjectAllUserResponse = ProjectAllUser[];
 
 export type {
   ProjectsResponse,
+  ProjectAllUserResponse,
   ProjectUsersResponse,
   ProjectResponse,
   DeleteProjectUserPayload,
@@ -47,6 +50,6 @@ export type {
   PutPrimaryContactQuery,
   PutProjectPayload,
   PutProjectResponse,
-  PostProjectUsersPayload,
+  PutProjectUsersPayload,
   PostProjectUsersResponse,
 };

@@ -359,6 +359,18 @@ interface ProjectUser {
   registry: Registry;
 }
 
+interface ProjectAllUser {
+  id: number;
+  user_id: number;
+  registry_id: number;
+  first_name: string;
+  last_name: string;
+  email: string;
+  affiliation_id: number;
+  organisation_name: string;
+  role: Partial<Role>;
+}
+
 interface Department {
   category: string;
   created_at: string;
@@ -388,6 +400,7 @@ export type {
   Permission,
   Project,
   ProjectUser,
+  ProjectAllUser,
   ResearcherAccreditation,
   ResearcherAffiliation,
   ResearcherEducation,
@@ -396,6 +409,7 @@ export type {
   ResearcherProfessionalRegistration,
   ResearcherProject,
   ResearcherTraining,
+  Role,
   Sector,
   Subsidiary,
   SystemConfig,

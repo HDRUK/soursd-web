@@ -2,15 +2,15 @@ import { Paged, ResponseJson, ResponseOptions } from "@/types/requests";
 import { getSearchQuerystring } from "@/utils/query";
 import { handleJsonResponse } from "../requestHelpers";
 import { getRequest } from "../requests";
-import { UsersResponse } from "./types";
+import { ProjectAllUserResponse } from "./types";
 
 export default async (
+  projectId: number,
   searchParams: Record<string, string | number | undefined>,
-  options?: ResponseOptions
-): Promise<ResponseJson<Paged<UsersResponse>>> => {
-  console.log(`/users${getSearchQuerystring(searchParams)}`);
+  options: ResponseOptions
+): Promise<ResponseJson<Paged<ProjectAllUserResponse>>> => {
   const response = await getRequest(
-    `/users${getSearchQuerystring(searchParams)}`
+    `/projects/${projectId}/all_users${getSearchQuerystring(searchParams)}`
   );
 
   return handleJsonResponse(response, options);

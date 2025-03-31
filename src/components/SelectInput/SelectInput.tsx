@@ -7,10 +7,10 @@ import {
   SelectProps,
 } from "@mui/material";
 
-export type SelectInputProps = SelectProps<string> & {
-  options: { label: string; value: string }[];
+export type SelectInputProps = SelectProps<string | number> & {
+  options: { label: string; value: string | number }[];
   label?: string;
-  value?: string;
+  value?: string | number;
   ariaLabel?: string;
 };
 
