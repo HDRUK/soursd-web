@@ -112,7 +112,7 @@ export default function NavBar() {
       text: storedUser ? t("signOutButton") : t("signInButton"),
       onClick: (e: MouseEvent<HTMLAnchorElement>) => {
         e.preventDefault();
-        console.log("storedUser", storedUser);
+
         if (storedUser) {
           handleLogout();
         } else {
