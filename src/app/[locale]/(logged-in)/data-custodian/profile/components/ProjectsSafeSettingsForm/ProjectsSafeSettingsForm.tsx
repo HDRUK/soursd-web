@@ -25,7 +25,6 @@ export interface ProjectSafeProjectFormProps extends FormProps<ProjectDetails> {
   onSubmit: (payload: PutProjectDetailsPayload) => void;
 }
 
-const NAMESPACE_TRANSLATION_APPLICATION = "Application";
 const NAMESPACE_TRANSLATION_FORM = "Form.SafeSettings";
 
 export default function ProjectSafeSettingsForm({
@@ -33,7 +32,6 @@ export default function ProjectSafeSettingsForm({
   mutateState,
   ...restProps
 }: ProjectSafeProjectFormProps) {
-  const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const routes = useStore(state => state.getApplication().routes);
 

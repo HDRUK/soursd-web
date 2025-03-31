@@ -1,13 +1,13 @@
+import ContactLink from "@/components/ContactLink";
 import { postProjectDetailsFromGatewayQuery } from "@/services/project_details";
 import { DataUse } from "@/types/gateway";
 import { ResponseJson } from "@/types/requests";
 import { createDataUseDefaultValues } from "@/utils/form";
 import { useMutation } from "@tanstack/react-query";
-import { useCallback, useState } from "react";
-import useQueryAlerts from "../useQueryAlerts";
-import ReactDOMServer from "react-dom/server";
-import ContactLink from "@/components/ContactLink";
 import { useTranslations } from "next-intl";
+import { useCallback, useState } from "react";
+import ReactDOMServer from "react-dom/server";
+import useQueryAlerts from "../useQueryAlerts";
 
 const NAMESPACE_TRANSLATION = "Projects";
 
@@ -27,7 +27,7 @@ export default function useGatewayProjectImport() {
   });
 
   const translateResponse = (data: DataUse) => {
-    const { id, ...restOfData } = createDataUseDefaultValues(data);
+    const { id: _, ...restOfData } = createDataUseDefaultValues(data);
 
     restOfData.access_type = restOfData.access_type.toUpperCase();
     restOfData.title = data.project_title;

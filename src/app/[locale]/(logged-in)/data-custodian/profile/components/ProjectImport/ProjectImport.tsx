@@ -25,7 +25,7 @@ export default function ProjectImport({
     useGatewayProjectImport();
 
   useEffect(() => {
-    if (!!importFromGatewayState.data) {
+    if (importFromGatewayState.data) {
       onImported(importFromGatewayState.data.data);
     }
   }, [importFromGatewayState.data]);

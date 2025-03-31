@@ -1,10 +1,10 @@
+import { Status } from "@/components/ChipStatus";
 import { TEXT_LIST_SEPARATOR } from "@/config/db";
 import yup from "@/config/yup";
 import { RequestFrequency } from "@/consts/projects";
 import { ProjectDetails, ResearcherProject } from "@/types/application";
-import { formatStringToISO } from "./date";
 import { DataUse } from "@/types/gateway";
-import { Status } from "@/components/ChipStatus";
+import { formatStringToISO } from "./date";
 import { parseValidJSON } from "./json";
 
 function getCheckboxFormValuesFromIntersection(
@@ -115,11 +115,11 @@ function createProjectDefaultValues(data: ResearcherProject) {
 }
 
 export {
+  createDataUseDefaultValues,
+  createProjectDefaultValues,
+  createProjectDetailDefaultValues,
   getCheckboxFormValuesFromIntersection,
   isFieldRequired,
   toFieldArrayData,
   toFieldArrayString,
-  createProjectDetailDefaultValues,
-  createDataUseDefaultValues,
-  createProjectDefaultValues,
 };

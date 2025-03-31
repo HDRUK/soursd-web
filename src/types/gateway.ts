@@ -1,5 +1,3 @@
-import { RequestFrequency } from "@/consts/projects";
-
 interface Dataset {
   id: number;
   name?: string;
