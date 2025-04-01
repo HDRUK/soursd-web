@@ -18,6 +18,7 @@ import { ReactNode } from "react";
 export interface FormModalProps extends Omit<ModalProps, "children"> {
   children: ReactNode;
   heading?: ReactNode;
+  description?: ReactNode;
   variant?: "form" | "content";
   isLoading?: boolean;
   isDismissable?: boolean;
@@ -33,6 +34,7 @@ export default function FormModal({
   onClose,
   sx,
   heading,
+  description,
   ...restProps
 }: FormModalProps) {
   const theme = useTheme();
@@ -94,9 +96,21 @@ export default function FormModal({
               <CircularProgress />
             </Box>
           )}
-          <Typography gutterBottom variant="h3" component="div" sx={{ mb: 3 }}>
-            {heading}
-          </Typography>
+          {(heading || description) && (
+            <Box
+              sx={{
+                mb: 3,
+              }}>
+              {heading && (
+                <Typography gutterBottom variant="h3">
+                  {heading}
+                </Typography>
+              )}
+              {description && (
+                <Typography sx={{ mb: 3 }}>{description}</Typography>
+              )}
+            </Box>
+          )}
           {children}
         </CardContent>
       </Card>

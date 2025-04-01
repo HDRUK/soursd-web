@@ -14,6 +14,7 @@ import {
   Sector,
   User,
   ResearcherProfessionalRegistration,
+  ProjectRole,
 } from "@/types/application";
 import { Routes } from "@/types/router";
 import { produce } from "immer";
@@ -62,6 +63,7 @@ interface StoreState {
     custodian?: Custodian;
     histories?: StoreUserHistories;
     project?: ResearcherProject;
+    projectRoles?: ProjectRole[];
   };
   application: StoreApplication;
   setRoutes: (routes: Routes) => void;
@@ -73,6 +75,8 @@ interface StoreState {
   setSectors: (sectors: Sector[]) => void;
   getPermissions: () => Permission[];
   setPermissions: (permissions: Permission[]) => void;
+  getProjectRoles: () => ProjectRole[];
+  setProjectRoles: (projectRoles: ProjectRole[]) => void;
   getHistories: () => StoreUserHistories | undefined;
   setHistories: (histories: StoreUserHistories) => void;
   getOrganisation: () => Organisation | undefined;
@@ -144,6 +148,15 @@ const storeMethods = (set: StoreSet, get: StoreGet) => ({
   getPermissions: () => {
     return get().config.permissions;
   },
+  setProjectRoles: (projectRoles: ProjectRole[]) =>
+    set(
+      produce(state => {
+        state.config.projectRoles = projectRoles;
+      })
+    ),
+  getProjectRoles: () => {
+    return get().config.projectRoles;
+  },
   setOrganisation: (organisation: Organisation | undefined) =>
     set(
       produce(state => {
@@ -187,6 +200,7 @@ const useStore = create<StoreState>((set, get) => ({
     },
     permissions: [],
     sectors: [],
+    roles: [],
   },
   application: { routes: ROUTES, system: {} },
   ...storeMethods(set, get),

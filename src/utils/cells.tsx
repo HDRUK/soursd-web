@@ -1,4 +1,9 @@
-import { Project, ResearcherAffiliation, User } from "@/types/application";
+import {
+  Project,
+  ResearcherAffiliation,
+  User,
+  ProjectAllUser,
+} from "@/types/application";
 import { Link, Typography } from "@mui/material";
 import { CellContext } from "@tanstack/react-table";
 import WarningAmberOutlinedIcon from "@mui/icons-material/WarningAmberOutlined";
@@ -37,13 +42,10 @@ function renderProjectNameCell<T extends Project>(
   );
 }
 
-function renderUserNameCell<T extends User>(
-  info: CellContext<T, unknown>,
-  route: string
-) {
-  const { first_name, last_name, id } = info.row.original;
+function renderUserNameCell(user: User | ProjectAllUser, route?: string) {
+  const { first_name, last_name, id } = user;
 
-  return (
+  return route && id ? (
     <Typography color="primary">
       <Link
         href={injectParamsIntoPath(route, {
@@ -52,6 +54,8 @@ function renderUserNameCell<T extends User>(
         {first_name} {last_name}
       </Link>
     </Typography>
+  ) : (
+    `${first_name} ${last_name}`
   );
 }
 

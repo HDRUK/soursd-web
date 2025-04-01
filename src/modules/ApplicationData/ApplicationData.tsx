@@ -7,6 +7,7 @@ import {
   Custodian,
   Organisation,
   Permission,
+  ProjectRole,
   ResearcherAccreditation,
   ResearcherAffiliation,
   ResearcherEducation,
@@ -25,6 +26,7 @@ interface ApplicationDataProps {
   userData: User;
   organisationData: Organisation;
   sectorsData: Sector[];
+  projectRolesData: ProjectRole[];
   permissionsData: Permission[];
   custodianData: Custodian;
   accreditationsData: ResearcherAccreditation[];
@@ -44,6 +46,7 @@ export default function ApplicationData({
   organisationData,
   sectorsData,
   permissionsData,
+  projectRolesData,
   custodianData,
   accreditationsData,
   educationData,
@@ -69,6 +72,8 @@ export default function ApplicationData({
     setSectors: state.setSectors,
     permissions: state.getPermissions(),
     setPermissions: state.setPermissions,
+    projectRoles: state.getProjectRoles(),
+    setProjectRoles: state.setProjectRoles,
     histories: state.getHistories(),
     setHistories: state.setHistories,
     application: state.getApplication(),
@@ -87,6 +92,8 @@ export default function ApplicationData({
     setSectors,
     permissions,
     setPermissions,
+    projectRoles,
+    setProjectRoles,
     histories,
     setHistories,
     application,
@@ -103,6 +110,7 @@ export default function ApplicationData({
 
     setPermissions(permissionsData);
     setSectors(sectorsData);
+    setProjectRoles(projectRolesData);
     setCustodian(custodianData);
     setOrganisation(organisationData);
     setUser(userData);
@@ -129,7 +137,8 @@ export default function ApplicationData({
     ((user.registry_id && histories) || !user.registry_id) &&
     ((custodian && isCustodian) || !isCustodian) &&
     !!sectors?.length &&
-    !!permissions?.length;
+    !!permissions?.length &&
+    !!projectRoles?.length;
 
   return isAllSet && children;
 }
