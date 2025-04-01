@@ -1,5 +1,5 @@
 import { useStore } from "@/data/store";
-import { PageBody, PageBodyContainer } from "@/modules";
+import { PageBodyContainer } from "@/modules";
 import { ResearcherProject } from "@/types/application";
 import { useEffect } from "react";
 import { PageTabs, ProjectsSubTabs } from "../../consts/tabs";
@@ -29,10 +29,8 @@ export default function SubPageProjects({ params, projectData }: PageProps) {
   return (
     project && (
       <PageBodyContainer heading={projectData.title}>
-        <PageBody>
-          <SubTabsSections tabId={tabId} {...params} />
-          <SubTabsContents tabId={tabId} {...params} />
-        </PageBody>
+        <SubTabsSections tabId={tabId} {...params} />
+        <SubTabsContents tabId={tabId} {...params} />
       </PageBodyContainer>
     )
   );

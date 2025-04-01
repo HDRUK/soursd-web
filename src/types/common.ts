@@ -1,5 +1,8 @@
 import { SweetAlertResult } from "sweetalert2";
 
+export type ArrayElement<ArrayType extends readonly unknown[]> =
+  ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
+
 export interface Option {
   label: string;
   value: string;

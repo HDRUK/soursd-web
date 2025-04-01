@@ -1,5 +1,6 @@
 import { Status } from "@/components/ChipStatus";
 import { FileStatus, FileType } from "@/consts/files";
+import { RequestFrequency } from "@/consts/projects";
 import {
   UserFeedSource,
   UserGroup,
@@ -53,6 +54,8 @@ interface Custodian {
   permissions: Permission[];
   unique_identifier: string;
   idvt_required: boolean;
+  gateway_app_id: string | null;
+  gateway_client_id: string | null;
 }
 
 type Approval = {
@@ -292,6 +295,7 @@ interface ResearcherAffiliation {
   email?: string;
   project_role_id?: number;
   primary_contact?: boolean;
+  registryAffiliationState?: string;
 }
 
 interface ResearcherProjectApproval {
@@ -318,7 +322,29 @@ type ResearcherProject = ModelState<{
   unique_id: string;
   approvals: ResearcherProjectApproval[];
   organisations: Organisation[];
+  custodians?: Custodian[];
+  project_detail: ProjectDetails;
 }>;
+
+interface ProjectDetails {
+  access_type: string;
+  id: number;
+  project_id: number;
+  datasets?: string[];
+  other_approval_committees?: string[];
+  data_sensitivity_level?: string;
+  legal_basis_for_data_article6?: string;
+  duty_of_confidentiality: boolean;
+  national_data_optout: boolean;
+  request_frequency?: RequestFrequency;
+  dataset_linkage_description?: string;
+  data_minimisation?: string;
+  data_use_description?: string;
+  access_date?: string;
+  data_privacy?: string;
+  research_outputs?: string[];
+  data_assets?: string;
+}
 
 interface Registry {
   id: number;
@@ -418,4 +444,5 @@ export type {
   UserProfileCompletionJson,
   UserProfileCompletionSchema,
   ProjectRole,
+  ProjectDetails,
 };

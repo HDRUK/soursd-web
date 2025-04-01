@@ -35,7 +35,9 @@ import ReactDOMServer from "react-dom/server";
 import { Message } from "@/components/Message";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
+import EmailIcon from "@mui/icons-material/Email";
 import AffiliationsForm from "../AffiliationsForm";
+import AskOrganisationModal from "../AskOrganisation";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
@@ -44,6 +46,7 @@ export default function Affiliations() {
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
   const [open, setOpen] = useState(false);
+  const [inviteOpen, setInviteOpen] = useState(false);
   const [selectedAffiliation, setSelectedAffiliation] = useState<
     ResearcherAffiliation | undefined
   >(undefined);
@@ -101,11 +104,15 @@ export default function Affiliations() {
 
   const renderRelationship = (
     info: CellContext<ResearcherAffiliation, unknown>
-  ) => tApplication(info.getValue());
+  ) => {
+    const value = info.getValue() as string;
+    return value?.length > 0 ? tApplication(info.getValue()) : null;
+  };
 
   const renderActionMenuCell = useCallback(
-    (info: { row: { original: ResearcherAffiliation } }) => {
+    (info: CellContext<ResearcherAffiliation, unknown>) => {
       const affiliation = info.row.original;
+      const status = affiliation.registryAffiliationState;
       return (
         <ActionMenu>
           <ActionMenuItem
@@ -116,6 +123,17 @@ export default function Affiliations() {
             icon={<DeleteOutlineOutlinedIcon sx={{ color: "error.main" }} />}>
             {tProfile("delete")}
           </ActionMenuItem>
+          {status === Status.AFFILIATION_INVITED && (
+            <ActionMenuItem
+              onClick={() => {
+                setSelectedAffiliation(affiliation);
+                setInviteOpen(true);
+              }}
+              sx={{ color: "menuList1.main" }}
+              icon={<EmailIcon sx={{ color: "menuList1.main" }} />}>
+              {tProfile("reinviteOrganisation")}
+            </ActionMenuItem>
+          )}
           <ActionMenuItem
             onClick={() => {
               setSelectedAffiliation(affiliation);
@@ -129,6 +147,10 @@ export default function Affiliations() {
       );
     },
     []
+  );
+
+  const renderStatus = (info: CellContext<ResearcherAffiliation, unknown>) => (
+    <ChipStatus status={info.getValue() as Status} color="success" />
   );
 
   const columns: ColumnDef<ResearcherAffiliation>[] = [
@@ -157,9 +179,9 @@ export default function Affiliations() {
       header: tApplication("staffStudentId"),
     },
     {
-      accessorKey: "status",
+      accessorKey: "registryAffiliationState",
       header: tApplication("status"),
-      cell: () => <ChipStatus status={Status.INVITE_SENT} color="success" />,
+      cell: renderStatus,
     },
     {
       accessorKey: "action",
@@ -258,6 +280,11 @@ export default function Affiliations() {
               {tProfile("addAffiliation")}
             </Button>
           </div>
+          <AskOrganisationModal
+            organisationId={selectedAffiliation?.organisation.id}
+            open={inviteOpen}
+            onClose={() => setInviteOpen(false)}
+          />
           <ProfileNavigationFooter
             previousHref={routes.profileResearcherIdentity.path}
             nextHref={routes.profileResearcherExperience.path}

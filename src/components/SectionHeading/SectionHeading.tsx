@@ -24,7 +24,6 @@ export default function SectionHeading({
     sx: {
       width: "100%",
       py: 1,
-      px: 2,
       border: "none",
       ...(size === "large" && {
         borderRadius: "10px",

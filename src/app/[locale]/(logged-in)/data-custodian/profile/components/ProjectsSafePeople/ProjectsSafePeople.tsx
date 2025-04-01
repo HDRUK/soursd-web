@@ -5,6 +5,7 @@ import { FilterIcon, PrimaryContactIcon } from "@/consts/icons";
 import { useStore } from "@/data/store";
 import useQueryAlerts from "@/hooks/useQueryAlerts";
 import useQueryConfirmAlerts from "@/hooks/useQueryConfirmAlerts";
+import { PageBody, PageSection } from "@/modules";
 import SearchActionMenu from "@/modules/SearchActionMenu";
 import SearchBar from "@/modules/SearchBar";
 import {
@@ -27,9 +28,8 @@ const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
 
 export default function ProjectsSafePeople() {
-  const { project, custodian } = useStore(state => ({
+  const { project } = useStore(state => ({
     project: state.getProject(),
-    custodian: state.getCustodian(),
   }));
 
   const {
@@ -63,7 +63,6 @@ export default function ProjectsSafePeople() {
       confirmAlertProps: {
         willClose: async payload => {
           await deleteUserAsync(payload as DeleteProjectUserPayload);
-
           refetch();
         },
       },
@@ -87,7 +86,7 @@ export default function ProjectsSafePeople() {
     [routes]
   );
 
-  const renderActionMenuCell = (info: CellContext<T, unknown>) => {
+  const renderActionMenuCell = (info: CellContext<ProjectUser, unknown>) => {
     const {
       primary_contact,
       registry: { id: registryId },
@@ -160,14 +159,9 @@ export default function ProjectsSafePeople() {
   ];
 
   return (
-    <>
-      <Grid
-        container
-        component="form"
-        role="search"
-        columnSpacing={5}
-        rowSpacing={2}>
-        <Grid item xs={12} md={10}>
+    <PageBody heading={t("safeProject")}>
+      <PageSection>
+        <Box component="form" role="search">
           <SearchBar
             onClear={resetQueryParams}
             onSearch={(text: string) => {
@@ -187,31 +181,34 @@ export default function ProjectsSafePeople() {
               multiple
             />
           </SearchBar>
-        </Grid>
-        <Grid item xs={12} md={2} sx={{ textAlign: "right" }}>
-          <Button
-            startIcon={<Add />}
-            onClick={() => {
-              setShowAddModal(true);
-            }}>
-            Add New Member
-          </Button>
-        </Grid>
-      </Grid>
-      <ProjectsAddUserModal
-        projectId={project.id}
-        open={showAddModal}
-        onClose={() => setShowAddModal(false)}
-      />
-      <Table
-        total={total}
-        last_page={last_page}
-        setPage={setPage}
-        data={projectUsers}
-        columns={columns}
-        queryState={queryState}
-        isPaginated
-      />
-    </>
+
+          <Grid item xs={12} md={2} sx={{ textAlign: "right" }}>
+            <Button
+              startIcon={<Add />}
+              onClick={() => {
+                setShowAddModal(true);
+              }}>
+              {t("addNewMemberButton")}
+            </Button>
+          </Grid>
+        </Box>
+      </PageSection>
+      <PageSection>
+        <ProjectsAddUserModal
+          projectId={project.id}
+          open={showAddModal}
+          onClose={() => setShowAddModal(false)}
+        />
+        <Table
+          total={total}
+          last_page={last_page}
+          setPage={setPage}
+          data={projectUsers}
+          columns={columns}
+          queryState={queryState}
+          isPaginated
+        />
+      </PageSection>
+    </PageBody>
   );
 }

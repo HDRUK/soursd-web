@@ -65,10 +65,9 @@ export default function TrainingForm({
     isUploading,
     isScanning,
     file,
-  } = useFileUpload(
-    "certificationUploadFailed",
-    initialValues?.certification_id
-  );
+  } = useFileUpload("certificationUploadFailed", {
+    initialFileId: initialValues?.certification_id,
+  });
 
   const { setValue } = useForm();
 

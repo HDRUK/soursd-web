@@ -3,6 +3,7 @@ import {
   ResearcherProject,
   ProjectUser,
   ProjectAllUser,
+  ProjectDetails,
 } from "@/types/application";
 
 type ProjectsResponse = ResearcherProject[];
@@ -39,6 +40,10 @@ interface PutProjectUsersPayload {
 }
 
 type ProjectAllUserResponse = ProjectAllUser[];
+type PutProjectDetailsPayload = ProjectDetails;
+type PutProjectDetailsResponse = number;
+
+type ProjectDetailsResponse = ProjectDetails;
 
 export type {
   ProjectsResponse,
@@ -52,4 +57,7 @@ export type {
   PutProjectResponse,
   PutProjectUsersPayload,
   PostProjectUsersResponse,
+  PutProjectDetailsPayload,
+  PutProjectDetailsResponse,
+  ProjectDetailsResponse,
 };

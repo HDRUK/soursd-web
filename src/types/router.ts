@@ -32,6 +32,7 @@ interface Routes {
   profileCustodianOrganisations: RouteConfig;
   profileCustodianConfiguration: RouteConfig;
   profileCustodianConfigurationWebhooks: RouteConfig;
+  profileCustodianConfigurationIntegrations: RouteConfig;
   profileCustodianConfigurationRules: RouteConfig;
   profileCustodianConfigurationValidationChecks: RouteConfig;
   profileCustodianKeycards: RouteConfig;
@@ -70,6 +71,10 @@ interface Routes {
   profileOrganisationUserAdministrationEmployeeStudent: RouteConfig;
   profileOrganisationProjects: RouteConfig;
   profileOrganisationProjectsSafeProject: RouteConfig;
+  profileOrganisationProjectsSafeData: RouteConfig;
+  profileOrganisationProjectsSafePeople: RouteConfig;
+  profileOrganisationProjectsSafeSettings: RouteConfig;
+  profileOrganisationProjectsSafeOutputs: RouteConfig;
   profileAdmin: RouteConfig;
 }
 

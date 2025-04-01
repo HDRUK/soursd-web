@@ -5,6 +5,7 @@ import Form from "@/components/Form";
 import FormActions from "@/components/FormActions";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
 import FormSection from "@/components/FormSection";
+import Markdown from "@/components/Markdown";
 import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
 import SelectCountry from "@/components/SelectCountry";
 import yup from "@/config/yup";
@@ -19,12 +20,13 @@ import {
 } from "@/modules";
 import { putUserQuery } from "@/services/users";
 import { showAlert } from "@/utils/showAlert";
-import { Grid, TextField } from "@mui/material";
+import { Button, Grid, TextField } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import ReactDOMServer from "react-dom/server";
+import VeriffTermsAndConditions from "../VeriffTermsAndConditions";
 
 export interface IdentityFormValues {
   first_name: string;
@@ -44,6 +46,8 @@ export default function Identity() {
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
   const updateUser = useMutation(putUserQuery(user?.id));
+
+  const [showModal, setShowModal] = useState(false);
 
   const handleDetailsSubmit = useCallback(
     async (fields: IdentityFormValues) => {
@@ -164,6 +168,22 @@ export default function Identity() {
                     </Grid>
                   </Grid>
                 </FormSection>
+                <FormSection heading={tProfile("idvtCheckSection")}>
+                  <Grid container spacing={3}>
+                    <Grid container item spacing={3}>
+                      <Grid item xs={8}>
+                        <Button
+                          variant="outlined"
+                          onClick={() => setShowModal(true)}>
+                          {tProfile("idvtCheckButton")}
+                        </Button>
+                        <Markdown variant="subtitle">
+                          {tProfile("idvtCheckDescription")}
+                        </Markdown>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </FormSection>
                 <FormActions>
                   <ProfileNavigationFooter
                     nextStepText={tProfile("affiliations")}
@@ -172,6 +192,10 @@ export default function Identity() {
                 </FormActions>
               </>
             </Form>
+            <VeriffTermsAndConditions
+              open={showModal}
+              onClose={() => setShowModal(false)}
+            />
           </PageSection>
         </PageBody>
       </PageGuidance>
