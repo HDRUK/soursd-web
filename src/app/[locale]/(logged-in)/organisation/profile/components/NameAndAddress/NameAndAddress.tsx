@@ -106,7 +106,7 @@ export default function NameAndAddress() {
               <PageSection
                 heading={tOrgProfile("nameAndAddressTitle")}
                 description={tOrgProfile.rich("nameAndAddressDescription", {
-                  bold: (chunks) => <b>{chunks}</b>,
+                  bold: chunks => <b>{chunks}</b>,
                   br: () => <br />,
                 })}>
                 <Grid container rowSpacing={3}>

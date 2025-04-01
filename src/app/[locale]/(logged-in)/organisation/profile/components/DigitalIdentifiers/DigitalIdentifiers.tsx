@@ -129,15 +129,18 @@ export default function DigitalIdentifiers() {
                     <FormControlHorizontal
                       name="companies_house_no"
                       renderField={fieldProps => <TextField {...fieldProps} />}
-                      description={tOrgProfile.rich("companiesHouseIdDescription", {
-                        link: chunks => (
-                          <Link
-                            href="https://find-and-update.company-information.service.gov.uk/"
-                            target="_blank">
-                            {chunks}
-                          </Link>
-                        ),
-                      })}
+                      description={tOrgProfile.rich(
+                        "companiesHouseIdDescription",
+                        {
+                          link: chunks => (
+                            <Link
+                              href="https://find-and-update.company-information.service.gov.uk/"
+                              target="_blank">
+                              {chunks}
+                            </Link>
+                          ),
+                        }
+                      )}
                     />
                   </Grid>
 
