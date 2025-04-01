@@ -275,7 +275,7 @@ export default function Training() {
 
       <FormModal
         open={isModalOpen}
-        title={
+        heading={
           selectedTraining ? t("editTrainingCourse") : t("addTrainingCourse")
         }>
         <TrainingForm

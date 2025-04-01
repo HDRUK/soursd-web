@@ -70,7 +70,7 @@ export default function ProjectsSafeProject() {
         heading={t("safeProject")}
         actions={
           <ProjectImport
-            custodianId={custodian.id}
+            custodianId={custodian?.id as number}
             projectId={project.id}
             onImported={handleGatewayProjectImport}
             isImportDisabled={!project?.unique_id}

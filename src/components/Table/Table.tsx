@@ -13,15 +13,17 @@ import {
   flexRender,
   getCoreRowModel,
   getPaginationRowModel,
+  TableOptions,
   useReactTable,
 } from "@tanstack/react-table";
 import React, { ReactNode } from "react";
 import Results from "../Results";
 
-interface TableProps<T> {
+interface TableProps<T> extends Partial<TableOptions<T>> {
   data: T[];
   columns: ColumnDef<T>[];
   isPaginated?: boolean;
+  isExpandable?: boolean;
   showHeader?: boolean;
   page?: number;
   setPage?: React.Dispatch<React.SetStateAction<number>>;
@@ -48,6 +50,7 @@ const Table = <T,>({
   noResultsMessage = "No results",
   total,
   sx,
+  ...restProps
 }: TableProps<T>) => {
   const table = useReactTable({
     data: data || [],
@@ -55,6 +58,7 @@ const Table = <T,>({
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     ...(isPaginated && { getPaginationRowModel: getPaginationRowModel() }),
+    ...restProps,
   });
 
   return (

@@ -11,6 +11,7 @@ export default async (
   payload: PostOrganisationInviteUserPayload,
   options?: ResponseOptions
 ): Promise<ResponseJson<PostOrganisationInviteUserResponse>> => {
+  console.log(payload);
   const response = await postRequest(
     `/organisations/${id}/invite_user`,
     payload

@@ -1,5 +1,5 @@
 import { ActionMenu, ActionMenuItem } from "@/components/ActionMenu";
-import ChipStatus from "@/components/ChipStatus";
+import ChipStatus, { Status } from "@/components/ChipStatus";
 import Table from "@/components/Table";
 import { FilterIcon, PrimaryContactIcon } from "@/consts/icons";
 import { useStore } from "@/data/store";
@@ -9,35 +9,31 @@ import { PageBody, PageSection } from "@/modules";
 import SearchActionMenu from "@/modules/SearchActionMenu";
 import SearchBar from "@/modules/SearchBar";
 import {
+  useGetProjectUsers,
   deleteProjectUserQuery,
   putProjectUserPrimaryContactQuery,
 } from "@/services/projects";
-import useProjectUsersQuery from "@/services/projects/getProjectUsersQuery";
 import { DeleteProjectUserPayload } from "@/services/projects/types";
-import { Organisation, ProjectUser, User } from "@/types/application";
+import { ProjectUser, User } from "@/types/application";
 import { renderUserNameCell } from "@/utils/cells";
-import { Box } from "@mui/material";
+import { Add } from "@mui/icons-material";
+import { Box, Button, Grid } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { CellContext, ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
-import { useCallback } from "react";
-
-interface ProjectsSafePeopleProps {
-  id: number;
-}
-
-type FilteredUser = User &
-  Pick<Organisation, "organisation_name"> & {
-    project_role: string;
-    primary_contact: number;
-  };
+import { useCallback, useState } from "react";
+import ProjectsAddUserModal from "../ProjectsAddUserModal";
 
 const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
 
-export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
+export default function ProjectsSafePeople() {
+  const { project } = useStore(state => ({
+    project: state.getProject(),
+  }));
+
   const {
-    data: usersData,
+    data: projectUsers,
     updateQueryParams,
     resetQueryParams,
     last_page,
@@ -47,10 +43,12 @@ export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
     queryParams,
     refetch,
     ...queryState
-  } = useProjectUsersQuery(id);
+  } = useGetProjectUsers(project.id);
+
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
   const routes = useStore(state => state.getApplication().routes);
+  const [showAddModal, setShowAddModal] = useState(false);
 
   const { mutateAsync: deleteUserAsync, ...deleteQueryState } = useMutation(
     deleteProjectUserQuery()
@@ -59,35 +57,12 @@ export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
   const { mutateAsync: makePrimaryContactAsync, ...primaryContactQueryState } =
     useMutation(putProjectUserPrimaryContactQuery());
 
-  const getUsersFromResponse = (usersData: ProjectUser[]) => {
-    const users: FilteredUser[] = [];
-
-    usersData?.forEach(
-      ({ primary_contact, model_state, registry: { user, organisations } }) => {
-        organisations?.forEach(({ organisation_name }) => {
-          users.push({
-            organisation_name,
-            ...user,
-            project_role: user.role || tApplication("status_notSet"),
-            primary_contact,
-            status: model_state?.state.slug,
-          });
-        });
-      }
-    );
-
-    return users;
-  };
-
-  const users = getUsersFromResponse(usersData);
-
   const showDeleteConfirm = useQueryConfirmAlerts<DeleteProjectUserPayload>(
     deleteQueryState,
     {
       confirmAlertProps: {
         willClose: async payload => {
           await deleteUserAsync(payload as DeleteProjectUserPayload);
-
           refetch();
         },
       },
@@ -97,50 +72,57 @@ export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
   useQueryAlerts(primaryContactQueryState);
 
   const renderNameCell = useCallback(
-    <T extends FilteredUser>(info: CellContext<T, unknown>) => {
+    <T extends ProjectUser>(info: CellContext<T, unknown>) => {
       return (
         <Box sx={{ display: "flex" }}>
-          {renderUserNameCell(info, routes.profileCustodianUsersIdentity.path)}
+          {renderUserNameCell(
+            info.getValue() as User,
+            routes.profileCustodianUsersIdentity.path
+          )}
           {!!info.row.original.primary_contact && <PrimaryContactIcon />}
         </Box>
       );
     },
-    []
+    [routes]
   );
 
-  const renderActionMenuCell = useCallback(
-    <T extends FilteredUser>(info: CellContext<T, unknown>) => {
-      const { registry_id, primary_contact } = info.row.original;
+  const renderActionMenuCell = (info: CellContext<ProjectUser, unknown>) => {
+    const {
+      primary_contact,
+      registry: { id: registryId },
+    } = info.row.original;
 
-      return (
-        <ActionMenu>
-          <ActionMenuItem
-            onClick={() => {
-              showDeleteConfirm({
-                projectId: id,
-                registryId: registry_id,
-              });
-            }}>
-            {tApplication("removeUserFromProject")}
-          </ActionMenuItem>
-          <ActionMenuItem
-            onClick={async () => {
-              await makePrimaryContactAsync({
-                projectId: id,
-                registryId: registry_id,
-                primaryContact: !primary_contact,
-              });
+    return (
+      <ActionMenu>
+        <ActionMenuItem
+          onClick={() => {
+            showDeleteConfirm({
+              projectId: project.id,
+              registryId,
+            });
+          }}>
+          {tApplication("removeUserFromProject")}
+        </ActionMenuItem>
+        <ActionMenuItem
+          onClick={async () => {
+            await makePrimaryContactAsync({
+              projectId: project.id,
+              registryId,
+              primaryContact: !primary_contact,
+            });
 
-              refetch();
-            }}>
-            {!primary_contact
-              ? tApplication("makePrimaryContact")
-              : tApplication("removeAsPrimaryContact")}
-          </ActionMenuItem>
-        </ActionMenu>
-      );
-    },
-    []
+            refetch();
+          }}>
+          {!primary_contact
+            ? tApplication("makePrimaryContact")
+            : tApplication("removeAsPrimaryContact")}
+        </ActionMenuItem>
+      </ActionMenu>
+    );
+  };
+
+  const renderStatus = (info: CellContext<ProjectUser, unknown>) => (
+    <ChipStatus status={info.getValue() as Status} />
   );
 
   const filterActions = [
@@ -151,24 +133,24 @@ export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
     },
   ];
 
-  const columns: ColumnDef<FilteredUser>[] = [
+  const columns: ColumnDef<ProjectUser>[] = [
     {
       cell: renderNameCell,
-      accessorKey: "name",
+      accessorKey: "registry.user",
       header: tApplication("name"),
     },
     {
-      accessorKey: "project_role",
+      accessorKey: "role.name",
       header: tApplication("projectRole"),
     },
     {
-      accessorKey: "organisation_name",
+      accessorKey: "affiliation.organisation.organisation_name",
       header: tApplication("organisationName"),
     },
     {
-      accessorKey: "status",
+      accessorKey: "registry.user.status",
       header: tApplication("status"),
-      cell: info => <ChipStatus status={info.row.original.status} />,
+      cell: renderStatus,
     },
     {
       header: tApplication("actions"),
@@ -198,15 +180,29 @@ export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
               aria-label={tApplication("filterBy")}
               multiple
             />
+            <Grid item xs={12} md={3} sx={{ textAlign: "right" }}>
+              <Button
+                startIcon={<Add />}
+                onClick={() => {
+                  setShowAddModal(true);
+                }}>
+                {t("addNewMemberButton")}
+              </Button>
+            </Grid>
           </SearchBar>
         </Box>
       </PageSection>
       <PageSection>
+        <ProjectsAddUserModal
+          projectId={project.id}
+          open={showAddModal}
+          onClose={() => setShowAddModal(false)}
+        />
         <Table
           total={total}
           last_page={last_page}
           setPage={setPage}
-          data={users}
+          data={projectUsers}
           columns={columns}
           queryState={queryState}
           isPaginated
