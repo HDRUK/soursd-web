@@ -26,7 +26,7 @@ import Text from "@/components/Text";
 import FormControlCheckbox from "@/components/FormControlCheckbox";
 import FileUploadDetails from "../FileUploadDetails/FileUploadDetails";
 
-const NAMESPACE_TRANSLATION_PROFILE = "Profile";
+const NAMESPACE_TRANSLATION = "Profile";
 const NAMESPACE_TRANSLATION_FORM = "Form";
 
 export interface ExperienceFormValues {
@@ -34,7 +34,7 @@ export interface ExperienceFormValues {
   consent_scrape?: boolean;
 }
 export default function Experience() {
-  const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
+  const tProfile = useTranslations(NAMESPACE_TRANSLATION);
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const [user, setUser] = useStore(store => [store.config.user, store.setUser]);
   const router = useRouter();

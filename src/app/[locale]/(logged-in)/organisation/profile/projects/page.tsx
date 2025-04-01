@@ -2,10 +2,10 @@ import { useTranslations } from "next-intl";
 import Page from "../components/Page";
 import { PageTabs } from "../consts/tabs";
 
-const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
+const NAMESPACE_TRANSLATION = "ProfileOrganisation";
 
 function ProjectsPage() {
-  const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
+  const tProfile = useTranslations(NAMESPACE_TRANSLATION);
   return (
     <Page
       params={{

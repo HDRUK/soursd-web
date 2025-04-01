@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import SoursdLogo from "@/components/SoursdLogo";
 import ButtonSave from "../ButtonSave";
 
-const NAMESPACE_TRANSLATION_PROFILE = "Profile";
+const NAMESPACE_TRANSLATION = "Profile";
 
 export type ProfileNavigationFooterProps = {
   nextStepText?: string;
@@ -27,7 +27,7 @@ export default function ProfileNavigationFooter({
   isLastStep = false,
   onClick,
 }: ProfileNavigationFooterProps) {
-  const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
+  const tProfile = useTranslations(NAMESPACE_TRANSLATION);
 
   const nextButtonText = isLastStep
     ? tProfile("finishLinkText")

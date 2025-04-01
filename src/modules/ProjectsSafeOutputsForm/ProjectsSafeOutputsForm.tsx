@@ -9,7 +9,7 @@ import { useStore } from "@/data/store";
 import { ProjectDetails } from "@/types/application";
 import { MutationState } from "@/types/form";
 import { injectParamsIntoPath } from "@/utils/application";
-import { Grid, TextField, Typography } from "@mui/material";
+import { Grid, TextField } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
 
@@ -25,7 +25,7 @@ export interface ProjectsSafeOutputsFormProps
 }
 
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
-const NAMESPACE_TRANSLATION_FORM = "Form.SafeSettings";
+const NAMESPACE_TRANSLATION_FORM = "Form.SafeOutputs";
 
 export default function ProjectsSafeOutputsForm({
   projectId,
@@ -56,8 +56,8 @@ export default function ProjectsSafeOutputsForm({
     <Form schema={schema} {...formOptions} {...restProps} autoComplete="off">
       <Grid container rowSpacing={3}>
         <Grid item xs={12}>
-          <Typography mb={1}>Links to research outputs</Typography>
           <FormFieldArray
+            tKey={NAMESPACE_TRANSLATION_FORM}
             name="research_outputs"
             addButtonLabel={tApplication("addLink")}
             createNewRow={() => ""}

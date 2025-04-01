@@ -1,7 +1,30 @@
-interface ProjectsSafeDataProps {
-  id: number;
-}
+"use client";
 
-export default function ProjectsSafeData({ id }: ProjectsSafeDataProps) {
-  return id;
+import { useStore } from "@/data/store";
+import { mockedSafeProjectGuidanceProps } from "@/mocks/data/cms";
+import { PageBody, PageSection } from "@/modules";
+import PageGuidance from "@/modules/PageGuidance";
+import ProjectsSafeDataDetails from "@/modules/ProjectsSafeDataDetails";
+import { useTranslations } from "next-intl";
+
+const NAMESPACE_TRANSLATION = "CustodianProfile";
+const NAMESPACE_TRANSLATION_FORM = "Form.SafeData";
+
+export default function ProjectsSafeData() {
+  const t = useTranslations(NAMESPACE_TRANSLATION);
+
+  const project = useStore(state => state.getProject());
+
+  return (
+    <PageGuidance {...mockedSafeProjectGuidanceProps}>
+      <PageBody heading={t("safeData")}>
+        <PageSection>
+          <ProjectsSafeDataDetails
+            projectDetailsData={project.project_detail}
+            tKey={NAMESPACE_TRANSLATION_FORM}
+          />
+        </PageSection>
+      </PageBody>
+    </PageGuidance>
+  );
 }

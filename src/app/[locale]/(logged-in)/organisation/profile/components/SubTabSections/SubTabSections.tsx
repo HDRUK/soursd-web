@@ -12,7 +12,7 @@ import {
   UserAdminPageSubTabs,
 } from "../../consts/tabs";
 
-const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
+const NAMESPACE_TRANSLATION = "ProfileOrganisation";
 
 export interface SubTabsMap {
   [key: string]: Option[];
@@ -30,7 +30,7 @@ export default function SubTabsSections({
   id,
 }: SubTabsSectionsProps) {
   const routes = useStore(store => store.application.routes);
-  const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
+  const t = useTranslations(NAMESPACE_TRANSLATION);
 
   const subTabs: SubTabsMap = {
     [PageTabs.DETAILS]: [

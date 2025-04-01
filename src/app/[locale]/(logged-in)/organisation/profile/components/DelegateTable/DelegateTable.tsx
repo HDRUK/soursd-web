@@ -17,10 +17,10 @@ import EditDelegate from "../EditDelegate";
 import DecoupleUser from "../DecoupleDelegate";
 import InviteDelegateForm from "../InviteDelegateForm";
 
-const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
+const NAMESPACE_TRANSLATION = "ProfileOrganisation";
 
 const DelegateTable = () => {
-  const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
+  const tProfile = useTranslations(NAMESPACE_TRANSLATION);
   const organisation = useStore(state => state.config.organisation);
 
   const {

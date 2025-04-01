@@ -2,37 +2,27 @@
 
 import { useStore } from "@/data/store";
 import { mockedSafeProjectGuidanceProps } from "@/mocks/data/cms";
-import { PageBody, PageGuidance, PageSection } from "@/modules";
-import ProjectsSafeSettingsForm from "@/modules/ProjectsSafeSettingsForm";
-import { ProjectDetails } from "@/types/application";
-import { createProjectDetailDefaultValues } from "@/utils/form";
-import { pick } from "@/utils/json";
+import { PageBody, PageSection } from "@/modules";
+import PageGuidance from "@/modules/PageGuidance";
+import ProjectsSafeSettingsDetails from "@/modules/ProjectsSafeSettingsDetails";
 import { useTranslations } from "next-intl";
-import { useMemo } from "react";
 
 const NAMESPACE_TRANSLATION = "CustodianProfile";
+const NAMESPACE_TRANSLATION_FORM = "Form.SafeSettings";
 
-const PAYLOAD_FIELDS = ["access_type", "data_privacy"];
-
-export default function ProjectsSafeProject() {
+export default function ProjectsSafeData() {
   const t = useTranslations(NAMESPACE_TRANSLATION);
 
   const project = useStore(state => state.getProject());
-
-  const defaultValues = useMemo<ProjectDetails>(
-    () =>
-      pick(
-        createProjectDetailDefaultValues(project.project_detail || {}),
-        PAYLOAD_FIELDS
-      ),
-    []
-  );
 
   return (
     <PageGuidance {...mockedSafeProjectGuidanceProps}>
       <PageBody heading={t("safeSettings")}>
         <PageSection>
-          <ProjectsSafeSettingsForm defaultValues={defaultValues} disabled />
+          <ProjectsSafeSettingsDetails
+            projectDetailsData={project.project_detail}
+            tKey={NAMESPACE_TRANSLATION_FORM}
+          />
         </PageSection>
       </PageBody>
     </PageGuidance>

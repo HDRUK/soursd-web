@@ -34,7 +34,7 @@ export interface UserModalDetailsProps {
   onClose: () => void;
 }
 
-const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
+const NAMESPACE_TRANSLATION = "CustodianProfile";
 const NAMESPACE_TRANSLATION_FORM = "Form";
 
 export default function UserModalDetails({
@@ -43,7 +43,7 @@ export default function UserModalDetails({
   queryState,
   onSubmit,
 }: UserModalDetailsProps) {
-  const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
+  const t = useTranslations(NAMESPACE_TRANSLATION);
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const permissions = useStore(state => state.config.permissions);
 

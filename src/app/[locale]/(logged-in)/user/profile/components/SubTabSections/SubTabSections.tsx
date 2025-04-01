@@ -7,7 +7,7 @@ import { injectParamsIntoPath } from "@/utils/application";
 import { useTranslations } from "next-intl";
 import { PageTabs, ProjectsSubTabs } from "../../consts/tabs";
 
-const NAMESPACE_TRANSLATION_PROFILE = "Profile";
+const NAMESPACE_TRANSLATION = "Profile";
 
 export interface SubTabsMap {
   [key: string]: Option[];
@@ -25,7 +25,7 @@ export default function SubTabsSections({
   id,
 }: SubTabsSectionsProps) {
   const routes = useStore(store => store.getApplication().routes);
-  const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
+  const t = useTranslations(NAMESPACE_TRANSLATION);
 
   const subTabs: SubTabsMap = {
     [PageTabs.PROJECTS]: [

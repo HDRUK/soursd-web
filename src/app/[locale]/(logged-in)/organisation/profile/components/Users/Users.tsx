@@ -18,10 +18,10 @@ import DecoupleUser from "../DecoupleDelegate";
 import UserModal from "../UserModal";
 import UserBulkInvite from "../UserBulkInvite";
 
-const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
+const NAMESPACE_TRANSLATION = "ProfileOrganisation";
 
 export default function Users() {
-  const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
+  const t = useTranslations(NAMESPACE_TRANSLATION);
   const [open, setOpen] = useState(false);
   const organisation = useStore(state => state.config.organisation);
   const [showPendingInvites, setShowPendingInvites] = useState(0);

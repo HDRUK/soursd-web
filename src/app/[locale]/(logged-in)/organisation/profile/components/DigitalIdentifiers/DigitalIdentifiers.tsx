@@ -28,7 +28,7 @@ export interface DigitalIdentifiersFormValues {
 }
 
 const NAMESPACE_TRANSLATION_FORM = "Form";
-const NAMESPACE_TRANSLATION_PROFILE = "Profile";
+const NAMESPACE_TRANSLATION = "Profile";
 const NAMESPACE_TRANSLATION_ORG_PROFILE = "ProfileOrganisation";
 
 export default function DigitalIdentifiers() {
@@ -45,7 +45,7 @@ export default function DigitalIdentifiers() {
   });
 
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
-  const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
+  const tProfile = useTranslations(NAMESPACE_TRANSLATION);
   const tOrgProfile = useTranslations(NAMESPACE_TRANSLATION_ORG_PROFILE);
 
   const schema = useMemo(

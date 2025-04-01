@@ -95,6 +95,7 @@ function createProjectDetailDefaultValues(data: ProjectDetails) {
     access_type: data?.access_type || "",
     data_privacy: data?.data_privacy || "",
     research_outputs: parseValidJSON(data?.research_outputs) || [],
+    data_assets: data?.data_assets || "",
   };
 }
 

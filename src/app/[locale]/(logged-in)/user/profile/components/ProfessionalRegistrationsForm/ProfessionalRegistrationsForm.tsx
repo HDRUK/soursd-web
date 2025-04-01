@@ -23,7 +23,7 @@ export interface ProfessionalRegistrationsFormProps {
   isEdit: boolean;
 }
 
-const NAMESPACE_TRANSLATION_PROFILE = "ProfessionalRegistrations";
+const NAMESPACE_TRANSLATION = "ProfessionalRegistrations";
 export default function ProfessionalRegistrationsForm({
   onSubmit,
   onClose,
@@ -31,7 +31,7 @@ export default function ProfessionalRegistrationsForm({
   data,
   isEdit,
 }: ProfessionalRegistrationsFormProps) {
-  const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
+  const tProfile = useTranslations(NAMESPACE_TRANSLATION);
 
   const schema = useMemo(
     () =>
@@ -61,14 +61,14 @@ export default function ProfessionalRegistrationsForm({
           <Grid item xs={12}>
             <FormControlHorizontal
               name="name"
-              tNamespace={NAMESPACE_TRANSLATION_PROFILE}
+              tNamespace={NAMESPACE_TRANSLATION}
               renderField={fieldProps => <TextField {...fieldProps} />}
             />
           </Grid>
           <Grid item xs={12}>
             <FormControlHorizontal
               name="member_id"
-              tNamespace={NAMESPACE_TRANSLATION_PROFILE}
+              tNamespace={NAMESPACE_TRANSLATION}
               renderField={fieldProps => <TextField {...fieldProps} />}
             />
           </Grid>

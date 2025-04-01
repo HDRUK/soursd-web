@@ -22,12 +22,12 @@ export interface HomeProps {
   custodian: Custodian;
 }
 
-const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
+const NAMESPACE_TRANSLATION = "CustodianProfile";
 
 export default function Home({ custodian }: HomeProps) {
   const theme = useTheme();
 
-  const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
+  const t = useTranslations(NAMESPACE_TRANSLATION);
 
   return (
     <PageColumns>

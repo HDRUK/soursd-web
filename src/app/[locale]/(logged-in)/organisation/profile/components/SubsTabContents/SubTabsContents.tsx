@@ -3,7 +3,6 @@
 import { useStore } from "@/data/store";
 import { PageBody } from "@/modules";
 import { notFound } from "next/navigation";
-import ProjectsSafeOutputs from "@/app/[locale]/(logged-in)/data-custodian/profile/components/ProjectsSafeOutput";
 import {
   DetailsPageSubTabs,
   getSubTabs,
@@ -22,6 +21,7 @@ import ProjectsSafePeople from "../ProjectsSafePeople";
 import ProjectsSafeData from "../ProjectsSafeData";
 import ProjectsSafeProject from "../ProjectsSafeProject";
 import ProjectsSafeSettings from "../ProjectsSafeSettings";
+import ProjectsSafeOutputs from "../ProjectsSafeOutputs";
 
 interface TabsContentsProps {
   tabId: string;

@@ -10,14 +10,14 @@ export interface UserModalProps extends Omit<FormModalProps, "children"> {
   onClose: () => void;
 }
 
-const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
+const NAMESPACE_TRANSLATION = "ProfileOrganisation";
 
 export default function UsersModal({
   organisation,
   onClose,
   ...restProps
 }: UserModalProps) {
-  const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
+  const t = useTranslations(NAMESPACE_TRANSLATION);
   const queryClient = useQueryClient();
 
   const handleOnSuccess = useCallback(() => {

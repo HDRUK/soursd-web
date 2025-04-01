@@ -18,10 +18,10 @@ interface PageProps {
   };
 }
 
-const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
+const NAMESPACE_TRANSLATION = "ProfileOrganisation";
 
 function SubPage({ params }: PageProps) {
-  const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
+  const t = useTranslations(NAMESPACE_TRANSLATION);
 
   return (
     <PageBodyContainer heading={t(toCamelCase(`${params.tabId}Title`))}>

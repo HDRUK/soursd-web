@@ -1,7 +1,5 @@
-interface ProjectsSafePeopleProps {
-  id: number;
-}
+import { PageBody } from "@/modules";
 
-export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
-  return { id };
+export default function ProjectsSafePeople() {
+  return <PageBody>Safe people</PageBody>;
 }

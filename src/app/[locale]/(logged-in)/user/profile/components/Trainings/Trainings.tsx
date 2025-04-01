@@ -24,10 +24,10 @@ import ReactDOMServer from "react-dom/server";
 import ProfessionalsRegistration from "../ProfessionalRegistrations";
 import Training from "../Training";
 
-const NAMESPACE_TRANSLATION_PROFILE = "Profile";
+const NAMESPACE_TRANSLATION = "Profile";
 
 export default function Trainings() {
-  const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
+  const tProfile = useTranslations(NAMESPACE_TRANSLATION);
   const router = useRouter();
 
   const { user } = useStore(state => ({

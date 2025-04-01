@@ -22,7 +22,7 @@ export interface UserModalProps extends Omit<FormModalProps, "children"> {
   onClose: () => void;
 }
 
-const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
+const NAMESPACE_TRANSLATION = "CustodianProfile";
 
 export default function UsersModal({
   custodianId,
@@ -30,7 +30,7 @@ export default function UsersModal({
   onClose,
   ...restProps
 }: UserModalProps) {
-  const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
+  const t = useTranslations(NAMESPACE_TRANSLATION);
   const permissions = useStore(state => state.config.permissions);
   const queryClient = useQueryClient();
 

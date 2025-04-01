@@ -14,10 +14,10 @@ interface PageProps {
   };
 }
 
-const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
+const NAMESPACE_TRANSLATION = "CustodianProfile";
 
 function SubPage({ params }: PageProps) {
-  const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
+  const t = useTranslations(NAMESPACE_TRANSLATION);
 
   return (
     <PageBodyContainer heading={t(toCamelCase(params.tabId))}>

@@ -31,14 +31,14 @@ export interface ProjectsSafeDataFormProps
   mutateState?: MutationState;
 }
 
-const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
+const NAMESPACE_TRANSLATION = "Form.SafeData";
 
 export default function ProjectsSafeDataForm({
   projectId,
   mutateState,
   ...restProps
 }: ProjectsSafeDataFormProps) {
-  const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
+  const t = useTranslations(NAMESPACE_TRANSLATION);
 
   const routes = useStore(state => state.getApplication().routes);
 
@@ -50,8 +50,11 @@ export default function ProjectsSafeDataForm({
   const schema = useMemo(
     () =>
       yup.object().shape({
+        datasets: yup.array().of(yup.string()),
         data_sensitivity_level: yup.string(),
-        legal_basis_for_data_article6: yup.string(),
+        legal_basis_for_data_article6: yup
+          .string()
+          .required(t("lawfulConditionRequired")),
         duty_of_confidentiality: yup.boolean(),
         national_data_optout: yup.boolean(),
         request_frequency: yup.string(),
@@ -67,32 +70,21 @@ export default function ProjectsSafeDataForm({
     <Form schema={schema} {...formOptions} {...restProps}>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <FormControlHorizontal
-            displayPlaceholder={false}
-            label={t("datasetName")}
-            labelMd={0}
-            contentMd={12}
+          <FormFieldArray<FormData>
             name="datasets"
-            sx={{ maxWidth: "55%" }}
-            renderField={fieldProps => (
-              <FormFieldArray<FormData>
-                name={fieldProps.name}
-                initialRowCount={1}
-                minimumRows={1}
-                createNewRow={() => ""}
-                renderField={(field, index) => (
-                  <React.Fragment key={field.name}>
-                    <FormControlHorizontal
-                      displayLabel={false}
-                      labelMd={0}
-                      contentMd={12}
-                      name={`datasets.${index}`}
-                      placeholder={t("datasetsPlaceholder")}
-                      renderField={fieldProps => (
-                        <TextField {...fieldProps} fullWidth />
-                      )}
-                    />
-                  </React.Fragment>
+            initialRowCount={1}
+            minimumRows={1}
+            createNewRow={() => ""}
+            tKey={NAMESPACE_TRANSLATION}
+            renderField={(_, index) => (
+              <FormControlHorizontal
+                displayLabel={false}
+                labelMd={0}
+                contentMd={12}
+                name={`datasets.${index}`}
+                placeholder={t("datasetsPlaceholder")}
+                renderField={fieldProps => (
+                  <TextField {...fieldProps} fullWidth />
                 )}
               />
             )}
@@ -119,7 +111,8 @@ export default function ProjectsSafeDataForm({
         <Grid item xs={12}>
           <FormControlWrapper
             name="legal_basis_for_data_article6"
-            label={t.rich("lawfulCondition", {
+            t={t}
+            label={t.rich("legalBasisForDataArticle6", {
               link: chunks => (
                 <Link href="https://gdpr-info.eu/art-6-gdpr/" target="_blank">
                   {chunks}
@@ -133,6 +126,7 @@ export default function ProjectsSafeDataForm({
         <Grid item xs={12}>
           <FormControlCheckbox
             name="duty_of_confidentiality"
+            t={t}
             label={t.rich("lawfulBasisConfirmation", {
               link: chunks => (
                 <Link
