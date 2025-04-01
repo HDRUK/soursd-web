@@ -7,13 +7,15 @@ interface ProjectsSafeSettingsDetailsProps {
   tKey?: string;
 }
 
-const NAMESPACE_TRANSLATION = "Projects";
+const NAMESPACE_TRANSLATION = "Projects.SafeSettings";
 
-export default function ProjectsSafeSettingsDetailsDetails({
+export default function ProjectsSafeSettingsDetails({
   projectDetailsData,
   tKey = NAMESPACE_TRANSLATION,
 }: ProjectsSafeSettingsDetailsProps) {
-  const data = createProjectDetailDefaultValues(projectDetailsData);
+  const data = createProjectDetailDefaultValues(projectDetailsData, {
+    transformToReadable: true,
+  });
 
   return (
     <FieldsToText

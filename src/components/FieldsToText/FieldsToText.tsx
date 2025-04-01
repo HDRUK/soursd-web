@@ -7,16 +7,11 @@ interface FieldsToTextProps<T> {
   data: T;
   keys: (
     | Extract<keyof T, string>
-    | [
-        string,
-        (
-          | JSX.Element
-          | ((t: ReturnType<typeof useTranslations>) => {
-              heading: ReactNode;
-              content?: ReactNode;
-            })
-        ),
-      ]
+    | {
+        column_id: Extract<keyof T, string>;
+        heading?: ReactNode;
+        content?: ReactNode;
+      }
   )[];
   tKey: string;
 }
@@ -30,17 +25,13 @@ export default function FieldsToText<T>({
 
   const filteredKeys = useMemo(() => {
     return keys.filter(key => {
-      if (Array.isArray(key)) {
-        if (typeof key[1] === "function") {
-          return !!key[1](t).content;
-        }
-
-        return true;
-      } else if (Array.isArray(data[key])) {
-        return !!data[key].length;
+      if (typeof key !== "string") {
+        return Array.isArray(data[key.column_id])
+          ? data[key.column_id].length
+          : data[key.column_id] !== "";
       }
 
-      return !!data[key];
+      return Array.isArray(data[key]) ? !!data[key].length : data[key] !== "";
     });
   }, [data]);
 
@@ -55,26 +46,19 @@ export default function FieldsToText<T>({
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
       {filteredKeys.map(key =>
-        Array.isArray(key) ? (
-          typeof key[1] === "function" ? (
-            <div>
-              <Typography variant="h6">
-                {key[1](t).heading || t(toCamelCase(key[0]))}
-              </Typography>
-              <Typography>
-                {renderItems(key[1](t).content || key[1])}
-              </Typography>
-            </div>
-          ) : (
-            <div>
-              <Typography variant="h6">{t(toCamelCase(key[0]))}</Typography>
-              {key[1]}
-            </div>
-          )
-        ) : (
+        typeof key === "string" ? (
           <div>
             <Typography variant="h6">{t(toCamelCase(key))}</Typography>
             <Typography>{renderItems(data[key])}</Typography>
+          </div>
+        ) : (
+          <div>
+            <Typography variant="h6">
+              {key.heading || t(toCamelCase(key.column_id))}
+            </Typography>
+            <Typography>
+              {key.content || renderItems(data[key.column_id])}
+            </Typography>
           </div>
         )
       )}

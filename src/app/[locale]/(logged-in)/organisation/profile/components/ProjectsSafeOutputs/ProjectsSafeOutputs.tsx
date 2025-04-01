@@ -8,7 +8,6 @@ import ProjectsSafeOutputsDetails from "@/modules/ProjectsSafeOutputsDetails";
 import { useTranslations } from "next-intl";
 
 const NAMESPACE_TRANSLATION = "CustodianProfile";
-const NAMESPACE_TRANSLATION_FORM = "Form.SafeOutputs";
 
 export default function ProjectsSafeData() {
   const t = useTranslations(NAMESPACE_TRANSLATION);
@@ -21,7 +20,6 @@ export default function ProjectsSafeData() {
         <PageSection>
           <ProjectsSafeOutputsDetails
             projectDetailsData={project.project_detail}
-            tKey={NAMESPACE_TRANSLATION_FORM}
           />
         </PageSection>
       </PageBody>

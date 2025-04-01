@@ -2,20 +2,22 @@ import FieldsToText from "@/components/FieldsToText";
 import { ProjectDetails } from "@/types/application";
 import { formatDisplayLongDate } from "@/utils/date";
 import { createProjectDetailDefaultValues } from "@/utils/form";
-import { Link, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 
 interface ProjectsSafeDataDetailsProps {
   projectDetailsData: ProjectDetails;
   tKey?: string;
 }
 
-const NAMESPACE_TRANSLATION = "Projects";
+const NAMESPACE_TRANSLATION = "Projects.SafeData";
 
-export default function ProjectsSafeDataDetailsDetails({
+export default function ProjectsSafeDataDetails({
   projectDetailsData,
   tKey = NAMESPACE_TRANSLATION,
 }: ProjectsSafeDataDetailsProps) {
-  const data = createProjectDetailDefaultValues(projectDetailsData);
+  const data = createProjectDetailDefaultValues(projectDetailsData, {
+    transformToReadable: true,
+  });
 
   return (
     <FieldsToText
@@ -23,28 +25,19 @@ export default function ProjectsSafeDataDetailsDetails({
       keys={[
         "datasets",
         "data_sensitivity_level",
-        [
-          "legal_basis_for_data_article6",
-          t => ({
-            heading: t.rich("legalBasisForDataArticle6", {
-              link: chunks => (
-                <Link href="https://gdpr-info.eu/art-6-gdpr/" target="_blank">
-                  {chunks}
-                </Link>
-              ),
-            }),
-          }),
-        ],
+        "legal_basis_for_data_article6",
         "duty_of_confidentiality",
         "national_data_optout",
         "request_frequency",
         "dataset_linkage_description",
         "data_minimisation",
         "data_use_description",
-        [
-          "access_date",
-          <Typography>{formatDisplayLongDate(data.access_date)}</Typography>,
-        ],
+        {
+          column_id: "access_date",
+          content: (
+            <Typography>{formatDisplayLongDate(data.access_date)}</Typography>
+          ),
+        },
       ]}
       tKey={tKey}
     />
