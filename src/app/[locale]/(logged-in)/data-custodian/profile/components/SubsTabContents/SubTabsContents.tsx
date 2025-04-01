@@ -2,6 +2,7 @@
 
 import { useStore } from "@/data/store";
 import { notFound } from "next/navigation";
+import ProjectsSafePeople from "@/modules/ProjectsSafePeople";
 import {
   ConfigurationSubTabs,
   getSubTabs,
@@ -9,7 +10,6 @@ import {
   ProjectsSubTabs,
   UserSubTabs,
 } from "../../consts/tabs";
-import ProjectsSafePeople from "../ProjectsSafePeople";
 import ProjectsSafeProject from "../ProjectsSafeProject";
 import ProjectsSafeData from "../ProjectsSafeData";
 import ProjectsSafeSettings from "../ProjectsSafeSettings";

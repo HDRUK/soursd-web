@@ -48,6 +48,9 @@ export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
     refetch,
     ...queryState
   } = useProjectUsersQuery(id);
+
+  return <b> {total} </b>;
+
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
   const routes = useStore(state => state.getApplication().routes);

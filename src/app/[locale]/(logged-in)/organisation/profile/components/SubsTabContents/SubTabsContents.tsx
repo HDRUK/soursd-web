@@ -4,6 +4,7 @@ import { useStore } from "@/data/store";
 import { PageBody } from "@/modules";
 import { notFound } from "next/navigation";
 import ProjectsSafeOutputs from "@/app/[locale]/(logged-in)/data-custodian/profile/components/ProjectsSafeOutput";
+import ProjectsSafePeople from "@/modules/ProjectsSafePeople";
 import {
   DetailsPageSubTabs,
   getSubTabs,
@@ -18,7 +19,6 @@ import NameAndAddress from "../NameAndAddress";
 import SectorSizeAndWebsite from "../SectorSizeAndWebsite";
 import SecurityCompliance from "../SecurityCompliance";
 import Users from "../Users";
-import ProjectsSafePeople from "../ProjectsSafePeople";
 import ProjectsSafeData from "../ProjectsSafeData";
 import ProjectsSafeProject from "../ProjectsSafeProject";
 import ProjectsSafeSettings from "../ProjectsSafeSettings";
