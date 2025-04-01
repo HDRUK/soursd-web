@@ -117,6 +117,7 @@ export default function Subsidiaries() {
         data={organisation?.subsidiaries || []}
         columns={columns}
         queryState={patchOrganisationQueryState}
+        total={organisation?.subsidiaries?.length || 0}
       />
 
       <ModalFormButton
