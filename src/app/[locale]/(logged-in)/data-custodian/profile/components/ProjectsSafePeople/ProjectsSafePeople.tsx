@@ -180,17 +180,16 @@ export default function ProjectsSafePeople() {
               aria-label={tApplication("filterBy")}
               multiple
             />
+            <Grid item xs={12} md={3} sx={{ textAlign: "right" }}>
+              <Button
+                startIcon={<Add />}
+                onClick={() => {
+                  setShowAddModal(true);
+                }}>
+                {t("addNewMemberButton")}
+              </Button>
+            </Grid>
           </SearchBar>
-
-          <Grid item xs={12} md={2} sx={{ textAlign: "right" }}>
-            <Button
-              startIcon={<Add />}
-              onClick={() => {
-                setShowAddModal(true);
-              }}>
-              {t("addNewMemberButton")}
-            </Button>
-          </Grid>
         </Box>
       </PageSection>
       <PageSection>
