@@ -3,5 +3,5 @@ interface ProjectsSafePeopleProps {
 }
 
 export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
-  return { id };
+  return <b> {id} </b>;
 }
