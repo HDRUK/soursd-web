@@ -86,7 +86,7 @@ export default function ProjectsSafeOutputsForm({
           />
         </Grid>
       </Grid>
-      {!restProps.disabled && projectId && (
+      {projectId && (
         <FormActions>
           <ProfileNavigationFooter
             previousHref={injectParamsIntoPath(

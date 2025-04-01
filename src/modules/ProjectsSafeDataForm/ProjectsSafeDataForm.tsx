@@ -23,7 +23,7 @@ import {
   TextField,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 
 export interface ProjectsSafeDataFormProps
   extends Omit<FormProps<ProjectDetails>, "children"> {
@@ -208,7 +208,7 @@ export default function ProjectsSafeDataForm({
           />
         </Grid>
       </Grid>
-      {!restProps.disabled && projectId && (
+      {projectId && (
         <FormActions>
           <ProfileNavigationFooter
             previousHref={injectParamsIntoPath(
