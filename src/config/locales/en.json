@@ -1082,6 +1082,7 @@
     },
     "endDate": "End date",
     "startDate": "Start date",
+    "projects": "Projects",
     "users": "Users",
     "organisations": "Organisation(s)",
     "status": "Status",
