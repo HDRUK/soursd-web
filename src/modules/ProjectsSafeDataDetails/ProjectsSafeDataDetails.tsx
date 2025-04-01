@@ -2,7 +2,7 @@ import FieldsToText from "@/components/FieldsToText";
 import { ProjectDetails } from "@/types/application";
 import { formatDisplayLongDate } from "@/utils/date";
 import { createProjectDetailDefaultValues } from "@/utils/form";
-import { Typography } from "@mui/material";
+import { Link, Typography } from "@mui/material";
 
 interface ProjectsSafeDataDetailsProps {
   projectDetailsData: ProjectDetails;
@@ -23,7 +23,18 @@ export default function ProjectsSafeDataDetailsDetails({
       keys={[
         "datasets",
         "data_sensitivity_level",
-        "legal_basis_for_data_article6",
+        [
+          "legal_basis_for_data_article6",
+          t => ({
+            heading: t.rich("legalBasisForDataArticle6", {
+              link: chunks => (
+                <Link href="https://gdpr-info.eu/art-6-gdpr/" target="_blank">
+                  {chunks}
+                </Link>
+              ),
+            }),
+          }),
+        ],
         "duty_of_confidentiality",
         "national_data_optout",
         "request_frequency",
