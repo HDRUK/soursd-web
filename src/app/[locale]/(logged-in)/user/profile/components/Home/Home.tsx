@@ -8,10 +8,10 @@ import {
 import { useTranslations } from "next-intl";
 import ActionLogs from "@/modules/ActionLogs";
 
-const NAMESPACE_TRANSLATION = "Profile";
+const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
 export default function Home() {
-  const tProfile = useTranslations(NAMESPACE_TRANSLATION);
+  const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const { user } = useStore(state => ({
     routes: state.getApplication().routes,
     user: state.getUser(),

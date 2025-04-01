@@ -8,10 +8,10 @@ import {
 } from "@/consts/icons";
 import { useTranslations } from "next-intl";
 
-const NAMESPACE_TRANSLATION = "CustodianProfile";
+const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 
 export default function OrganisationsLegend() {
-  const t = useTranslations(NAMESPACE_TRANSLATION);
+  const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
   const items = [
     {

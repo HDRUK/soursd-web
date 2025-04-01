@@ -29,7 +29,7 @@ export interface NameAndAddressFormValues {
 }
 
 const NAMESPACE_TRANSLATION_FORM = "Form";
-const NAMESPACE_TRANSLATION = "Profile";
+const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 const NAMESPACE_TRANSLATION_ORG_PROFILE = "ProfileOrganisation";
 
 export default function NameAndAddress() {
@@ -46,7 +46,7 @@ export default function NameAndAddress() {
   });
 
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
-  const tProfile = useTranslations(NAMESPACE_TRANSLATION);
+  const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const tOrgProfile = useTranslations(NAMESPACE_TRANSLATION_ORG_PROFILE);
 
   const schema = useMemo(

@@ -12,7 +12,7 @@ import {
   UserSubTabs,
 } from "../../consts/tabs";
 
-const NAMESPACE_TRANSLATION = "CustodianProfile";
+const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 
 export interface SubTabsMap {
   [key: string]: Option[];
@@ -30,7 +30,7 @@ export default function SubTabsSections({
   id,
 }: SubTabsSectionsProps) {
   const routes = useStore(store => store.getApplication().routes);
-  const t = useTranslations(NAMESPACE_TRANSLATION);
+  const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
   const subTabs: SubTabsMap = {
     [PageTabs.CONFIGURATION]: [

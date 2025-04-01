@@ -36,14 +36,14 @@ export interface IdentityFormValues {
 }
 
 const NAMESPACE_TRANSLATION_FORM = "Form";
-const NAMESPACE_TRANSLATION = "Profile";
+const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
 export default function Identity() {
   const router = useRouter();
   const user = useStore(state => state.config.user);
 
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
-  const tProfile = useTranslations(NAMESPACE_TRANSLATION);
+  const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
   const updateUser = useMutation(putUserQuery(user?.id));
 

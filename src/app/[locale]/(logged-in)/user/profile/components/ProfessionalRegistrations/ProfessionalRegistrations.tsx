@@ -25,7 +25,7 @@ import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import ProfessionalRegistrationsFormModal from "./ProfessionalRegistrationsFormModal";
 
-const NAMESPACE_TRANSLATION = "ProfessionalRegistrations";
+const NAMESPACE_TRANSLATION_PROFILE = "ProfessionalRegistrations";
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
 
 export default function ProfessionalRegistrations() {
@@ -34,7 +34,7 @@ export default function ProfessionalRegistrations() {
     ResearcherProfessionalRegistration | undefined
   >(undefined);
   const [isEditMode, setIsEditMode] = useState(false);
-  const tProfile = useTranslations(NAMESPACE_TRANSLATION);
+  const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
 
   const { user, professionalRegistrations, getHistories, setHistories } =

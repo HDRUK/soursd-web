@@ -39,11 +39,11 @@ import EmailIcon from "@mui/icons-material/Email";
 import AffiliationsForm from "../AffiliationsForm";
 import AskOrganisationModal from "../AskOrganisation";
 
-const NAMESPACE_TRANSLATION = "Profile";
+const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
 
 export default function Affiliations() {
-  const tProfile = useTranslations(NAMESPACE_TRANSLATION);
+  const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
   const [open, setOpen] = useState(false);
   const [inviteOpen, setInviteOpen] = useState(false);

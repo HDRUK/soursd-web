@@ -9,10 +9,10 @@ import {
 import { useTranslations } from "next-intl";
 import ActionLogs from "@/modules/ActionLogs";
 
-const NAMESPACE_TRANSLATION = "ProfileOrganisation";
+const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
 
 const Home = () => {
-  const tProfile = useTranslations(NAMESPACE_TRANSLATION);
+  const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
   return (
     <PageBodyContainer heading={tProfile("homeTitle")}>

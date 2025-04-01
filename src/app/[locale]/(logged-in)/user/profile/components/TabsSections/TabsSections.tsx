@@ -21,7 +21,7 @@ import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 import { PageTabs } from "../../consts/tabs";
 
-const NAMESPACE_TRANSLATION = "Profile";
+const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
 interface TabsSectionsProps {
   tabId: PageTabs;
@@ -33,7 +33,7 @@ export default function TabsSections({ tabId }: TabsSectionsProps) {
     routes: store.getApplication().routes,
   }));
 
-  const t = useTranslations(NAMESPACE_TRANSLATION);
+  const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const {
     affiliationsScore,
     experiencesScore,

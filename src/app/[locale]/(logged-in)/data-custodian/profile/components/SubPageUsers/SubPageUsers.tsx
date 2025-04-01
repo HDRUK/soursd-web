@@ -17,10 +17,10 @@ interface PageProps {
   };
 }
 
-const NAMESPACE_TRANSLATION = "CustodianProfile";
+const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 
 function SubPageUsers({ params }: PageProps) {
-  const t = useTranslations(NAMESPACE_TRANSLATION);
+  const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const tabId = PageTabs.USERS;
 
   return (

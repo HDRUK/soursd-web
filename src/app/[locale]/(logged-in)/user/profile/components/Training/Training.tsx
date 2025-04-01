@@ -30,12 +30,12 @@ import TrainingForm from "./TrainingForm";
 
 const NAMESPACE_TRANSLATION_TRAINING = "Training";
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
-const NAMESPACE_TRANSLATION = "Profile";
+const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
 export default function Training() {
   const t = useTranslations(NAMESPACE_TRANSLATION_TRAINING);
   const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
-  const tProfile = useTranslations(NAMESPACE_TRANSLATION);
+  const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const user = useStore(store => store.config.user);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTraining, setSelectedTraining] = useState<

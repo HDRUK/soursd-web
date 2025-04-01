@@ -7,10 +7,10 @@ import PersonIcon from "@mui/icons-material/Person";
 import { Box, Typography, useTheme } from "@mui/material";
 import { useTranslations } from "next-intl";
 
-const NAMESPACE_TRANSLATION = "Profile";
+const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
 export default function UserInfo() {
-  const tProfile = useTranslations(NAMESPACE_TRANSLATION);
+  const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const user = useStore(state => state.getUser());
   const theme = useTheme();
 

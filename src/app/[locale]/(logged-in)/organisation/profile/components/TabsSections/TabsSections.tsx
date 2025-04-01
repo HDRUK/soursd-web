@@ -11,7 +11,7 @@ import { Box, Tab, Tabs } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { PageTabs } from "../../consts/tabs";
 
-const NAMESPACE_TRANSLATION = "ProfileOrganisation";
+const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
 
 interface TabsSectionsProps {
   tabId: PageTabs;
@@ -22,7 +22,7 @@ export default function TabsSections({ tabId }: TabsSectionsProps) {
     routes: store.getApplication().routes,
   }));
 
-  const t = useTranslations(NAMESPACE_TRANSLATION);
+  const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
   return (
     <Box sx={{ width: "100%", mb: 4 }}>

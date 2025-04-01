@@ -32,7 +32,7 @@ type FilteredUser = User &
     primary_contact: number;
   };
 
-const NAMESPACE_TRANSLATION = "CustodianProfile";
+const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
 
 export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
@@ -48,7 +48,7 @@ export default function ProjectsSafePeople({ id }: ProjectsSafePeopleProps) {
     refetch,
     ...queryState
   } = useProjectUsersQuery(id);
-  const t = useTranslations(NAMESPACE_TRANSLATION);
+  const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
   const routes = useStore(state => state.getApplication().routes);
 

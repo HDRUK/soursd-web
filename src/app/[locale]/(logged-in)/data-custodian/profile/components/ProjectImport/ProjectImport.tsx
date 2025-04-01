@@ -5,7 +5,7 @@ import { Button } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 
-const NAMESPACE_TRANSLATION = "Projects";
+const NAMESPACE_TRANSLATION_PROFILE = "Projects";
 
 interface ProjectImportProps {
   custodianId: number;
@@ -20,7 +20,7 @@ export default function ProjectImport({
   isImportDisabled,
   onImported,
 }: ProjectImportProps) {
-  const t = useTranslations(NAMESPACE_TRANSLATION);
+  const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const { handleImportData, ...importFromGatewayState } =
     useGatewayProjectImport();
 

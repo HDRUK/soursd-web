@@ -44,6 +44,7 @@ export default function FormControlWrapper({
   fullWidth = true,
   description,
   t,
+  disabled,
   sx = {
     m: 0,
     width: "100%",
@@ -67,6 +68,7 @@ export default function FormControlWrapper({
 
   return (
     <Controller
+      disabled={context.formState.disabled || disabled}
       name={name}
       control={effectiveControl}
       render={({

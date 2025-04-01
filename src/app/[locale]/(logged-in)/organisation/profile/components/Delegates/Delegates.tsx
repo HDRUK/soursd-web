@@ -27,7 +27,7 @@ export interface KeyContactFormValues {
 }
 
 const NAMESPACE_TRANSLATION_DELEGATES = "Form";
-const NAMESPACE_TRANSLATION = "ProfileOrganisation";
+const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
 
 export default function Delegates() {
   const { organisation, user, setUser } = useStore(state => ({
@@ -37,7 +37,7 @@ export default function Delegates() {
   }));
 
   const t = useTranslations(NAMESPACE_TRANSLATION_DELEGATES);
-  const tProfile = useTranslations(NAMESPACE_TRANSLATION);
+  const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
   const { mutateAsync: mutateUser, ...patchUserQueryState } = useMutation(
     patchUserQuery(user?.id as number)

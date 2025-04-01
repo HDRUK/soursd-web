@@ -24,10 +24,10 @@ import { useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
 import UserModal from "../UserModal";
 
-const NAMESPACE_TRANSLATION = "CustodianProfile";
+const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 
 export default function Users() {
-  const t = useTranslations(NAMESPACE_TRANSLATION);
+  const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const queryClient = useQueryClient();
   const [modalProps, setModalProps] = useState<{
     open: boolean;

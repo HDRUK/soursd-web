@@ -10,14 +10,14 @@ interface HistoriesSectionProps {
   type: keyof StoreUserHistories;
 }
 
-const NAMESPACE_TRANSLATION = "Profile";
+const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
 export default function HistoriesSection({
   children,
   count,
   type,
 }: HistoriesSectionProps) {
-  const tProfile = useTranslations(NAMESPACE_TRANSLATION);
+  const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 5 }}>
