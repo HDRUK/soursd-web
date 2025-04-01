@@ -12,7 +12,7 @@ import { VALIDATION_CHARITY_ID, VALIDATION_ROR_ID } from "@/consts/form";
 
 import { useStore } from "@/data/store";
 import { PageBody, PageSection } from "@/modules";
-import { Grid, TextField } from "@mui/material";
+import { Grid, Link, TextField } from "@mui/material";
 import { useTranslations } from "next-intl";
 import React, { useMemo } from "react";
 import { ROUTES } from "@/consts/router";
@@ -109,7 +109,7 @@ export default function DigitalIdentifiers() {
   };
   return (
     <PageBody>
-      <PageSection heading={tOrgProfile("detailsDigitalIdentifiers")}>
+      <PageSection heading={tOrgProfile("detailsDigitalIdentifiersTitle")}>
         <Form
           schema={schema}
           onSubmit={handleSubmit}
@@ -129,7 +129,29 @@ export default function DigitalIdentifiers() {
                     <FormControlHorizontal
                       name="companies_house_no"
                       renderField={fieldProps => <TextField {...fieldProps} />}
-                      description={tOrgProfile("companiesHouseIdDescription")}
+                      description={tOrgProfile.rich("companiesHouseIdDescription", {
+                        link: chunks => (
+                          <Link
+                            href="https://find-and-update.company-information.service.gov.uk/"
+                            target="_blank">
+                            {chunks}
+                          </Link>
+                        ),
+                      })}
+                    />
+                  </Grid>
+
+                  <Grid item xs={12}>
+                    <FormControlHorizontal
+                      name="ror_id"
+                      renderField={fieldProps => <TextField {...fieldProps} />}
+                      description={tForm.rich("rorIdDescription", {
+                        link: chunks => (
+                          <Link href="https://ror.org/search" target="_blank">
+                            {chunks}
+                          </Link>
+                        ),
+                      })}
                     />
                   </Grid>
 
@@ -166,6 +188,7 @@ export default function DigitalIdentifiers() {
                               registration_id: "",
                               country: "United Kingdom",
                             })}
+                            addButtonLabel={tForm("addAnotherCharity")}
                             renderField={(field, index) => (
                               <React.Fragment key={field.name}>
                                 <FormControlHorizontal
@@ -206,13 +229,6 @@ export default function DigitalIdentifiers() {
                       />
                     </Grid>
                   )}
-                  <Grid item xs={12}>
-                    <FormControlHorizontal
-                      name="ror_id"
-                      renderField={fieldProps => <TextField {...fieldProps} />}
-                      description={tForm("rorIdDescription")}
-                    />
-                  </Grid>
                 </Grid>
                 <FormActions>
                   <ProfileNavigationFooter
