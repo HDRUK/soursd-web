@@ -13,12 +13,12 @@ interface ProfileCompleteStatusProps {
   user: User | undefined;
 }
 
-const NAMESPACE_TRANSLATION = "ProfileCompleteStatus";
+const NAMESPACE_TRANSLATION_PROFILE = "ProfileCompleteStatus";
 
 export default function ProfileCompleteStatus({
   user,
 }: ProfileCompleteStatusProps) {
-  const t = useTranslations(NAMESPACE_TRANSLATION);
+  const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
   return (
     <>

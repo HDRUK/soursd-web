@@ -16,7 +16,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import { ActionLogEntity } from "@/types/logs";
 import generateActions, { ActionConfig } from "./utils";
 
-const NAMESPACE_TRANSLATION = "ActionLogs";
+const NAMESPACE_TRANSLATION_PROFILE = "ActionLogs";
 
 interface ActionLogProps {
   variant: ActionLogEntity;
@@ -24,7 +24,7 @@ interface ActionLogProps {
 }
 
 export default function ActionLogs({ variant, panelProps }: ActionLogProps) {
-  const t = useTranslations(NAMESPACE_TRANSLATION);
+  const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const { routes } = useStore(state => ({
     routes: state.getApplication().routes,
   }));
