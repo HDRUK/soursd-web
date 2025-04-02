@@ -202,7 +202,8 @@
     "errorCreateSafeDataMessage": "An error occurred while creating the safe data. Please try again or <contactLink>contact support</contactLink> if the problem persists.",
     "successUpdateSafeDataMessage": "Safe data updated successfully.",
     "successCreateSafeDataMessage": "Safe data created successfully.",
-    "addNewMemberButton": "Add a new member"
+    "addNewMemberButton": "Add a new member",
+    "requestAddNewMemberButton": "Requests member is affiliated"
   },
   "OrganisationStats": {
     "affiliatedUsers": "Affiliated Users",

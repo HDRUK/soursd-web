@@ -5,6 +5,7 @@ import { PageBody } from "@/modules";
 import { notFound } from "next/navigation";
 import ProjectsSafeOutputs from "@/app/[locale]/(logged-in)/data-custodian/profile/components/ProjectsSafeOutput";
 import ProjectsSafePeople from "@/modules/ProjectsSafePeople";
+import { EntityType } from "@/types/api";
 import {
   DetailsPageSubTabs,
   getSubTabs,
@@ -70,7 +71,7 @@ export default function SubTabsContents({
       content = <Users />;
       break;
     case ProjectsSubTabs.SAFE_PEOPLE:
-      content = <ProjectsSafePeople id={id} />;
+      content = <ProjectsSafePeople variant={EntityType.ORGANISATION} />;
       break;
     case ProjectsSubTabs.SAFE_DATA:
       content = <ProjectsSafeData id={id} />;

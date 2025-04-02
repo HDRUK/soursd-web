@@ -23,11 +23,18 @@ import { CellContext, ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
 import ProjectsAddUserModal from "@/components/ProjectsAddUserModal";
+import { EntityType } from "@/types/api";
 
 const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
 
-export default function ProjectsSafePeople() {
+interface ProjectsSafePeopleProps {
+  variant: EntityType;
+}
+
+export default function ProjectsSafePeople({
+  variant,
+}: ProjectsSafePeopleProps) {
   const { project } = useStore(state => ({
     project: state.getProject(),
   }));
@@ -186,7 +193,9 @@ export default function ProjectsSafePeople() {
                 onClick={() => {
                   setShowAddModal(true);
                 }}>
-                {t("addNewMemberButton")}
+                {variant === EntityType.ORGANISATION
+                  ? t("requestAddNewMemberButton")
+                  : t("addNewMemberButton")}
               </Button>
             </Grid>
           </SearchBar>

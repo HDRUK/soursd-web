@@ -3,6 +3,7 @@
 import { useStore } from "@/data/store";
 import { notFound } from "next/navigation";
 import ProjectsSafePeople from "@/modules/ProjectsSafePeople";
+import { EntityType } from "@/types/api";
 import {
   ConfigurationSubTabs,
   getSubTabs,
@@ -81,7 +82,7 @@ export default function SubTabsContents({
       content = <UserAffiliations />;
       break;
     case ProjectsSubTabs.SAFE_PEOPLE:
-      content = <ProjectsSafePeople id={id} />;
+      content = <ProjectsSafePeople variant={EntityType.CUSTODIAN} />;
       break;
     case ProjectsSubTabs.SAFE_DATA:
       content = <ProjectsSafeData id={id} />;
