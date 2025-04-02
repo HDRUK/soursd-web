@@ -59,9 +59,9 @@ const Home = () => {
           <SoursdCard
             name={organisation.organisation_name}
             status={organisation.model_state?.state.slug}
-            identifier={organisation.organisation_unique_id}>
-            {tProfile("uniqueIdentifierCaption")}
-          </SoursdCard>
+            identifier={organisation.organisation_unique_id}
+            description={tProfile("uniqueIdentifierCaption")}
+          />
         </PageColumnDetails>
       </PageColumns>
     </PageBodyContainer>

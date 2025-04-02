@@ -4,11 +4,13 @@ import { Box, Paper, PaperProps, Typography } from "@mui/material";
 import ChipStatus, { Status } from "../ChipStatus";
 import MaskLabel from "../MaskLabel";
 import Text from "../Text";
+import { ReactNode } from "react";
 
 export interface SoursdCardProps extends PaperProps {
   name: string;
   identifier: string;
   status?: Status;
+  description?: ReactNode;
 }
 
 export default function SoursdCard({
@@ -18,6 +20,7 @@ export default function SoursdCard({
   status,
   identifier,
   sx,
+  description,
   ...restProps
 }: SoursdCardProps) {
   return (
@@ -42,18 +45,14 @@ export default function SoursdCard({
           {status && <ChipStatus status={status} />}
         </div>
       </Box>
-      <Typography fontWeight={700}>SOURSD identifier:</Typography>
-      <Text
-        color="primary"
-        sx={{
-          color: "primary.main",
-          textDecoration: "underline",
-          mb: 3,
-        }}
-        copyable>
-        {identifier}
-      </Text>
-      <Typography color="textSecondary.main">{children}</Typography>
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
+        <div>
+          <Typography fontWeight={700}>SOURSD identifier:</Typography>
+          <Text copyable>{identifier}</Text>
+        </div>
+        {children}
+        <Typography color="textSecondary.main">{description}</Typography>
+      </Box>
     </Paper>
   );
 }

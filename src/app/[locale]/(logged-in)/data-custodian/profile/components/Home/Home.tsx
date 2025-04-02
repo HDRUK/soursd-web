@@ -1,6 +1,6 @@
 "use client";
 
-import Postit from "@/components/Postit";
+import Text from "@/components/Text";
 import {
   PageBody,
   PageColumnBody,
@@ -61,8 +61,14 @@ export default function Home({ custodian }: HomeProps) {
         <SoursdCard
           name={custodian.name}
           status={custodian.model_state?.state.slug}
-          identifier={custodian.unique_identifier}>
-          {t("uniqueIdentifierCaption")}
+          identifier={custodian.unique_identifier}
+          description={t("uniqueIdentifierCaption")}>
+          {custodian.client_id && (
+            <>
+              <Typography fontWeight={700}>Client id:</Typography>
+              <Text copyable>{custodian.client_id}</Text>
+            </>
+          )}
         </SoursdCard>
       </PageColumnDetails>
     </PageColumns>

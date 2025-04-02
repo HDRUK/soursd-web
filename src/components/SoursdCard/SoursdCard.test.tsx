@@ -1,12 +1,19 @@
 import { render, screen } from "@/utils/testUtils";
-import Postit from "./Postit";
+import SoursdCard from "./SoursdCard";
 
-describe("<Postit />", () => {
+describe("<SoursdCard />", () => {
   it("has the correct content", async () => {
-    render(<Postit>Children</Postit>);
+    render(
+      <SoursdCard
+        name="Health Data"
+        identifier="identifier"
+        description="description">
+        Children
+      </SoursdCard>
+    );
 
-    const content = screen.getByText("Children");
-
-    expect(content).toBeInTheDocument();
+    expect(screen.getByText("HD")).toBeInTheDocument();
+    expect(screen.getByText("identifier")).toBeInTheDocument();
+    expect(screen.getByText("description")).toBeInTheDocument();
   });
 });

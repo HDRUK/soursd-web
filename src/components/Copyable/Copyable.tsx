@@ -2,7 +2,7 @@
 
 import { Box, Popover } from "@mui/material";
 import { BoxProps } from "@mui/system";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export type CopyableProps = BoxProps;
 
@@ -13,6 +13,7 @@ export default function Text({
   ...restProps
 }: CopyableProps) {
   const [hasCopied, setHasCopied] = useState(false);
+  const textRef = useRef();
 
   const handleCopy = (e: React.MouseEvent<HTMLSpanElement>) => {
     const text = (e.target as HTMLSpanElement).innerText;
@@ -39,6 +40,7 @@ export default function Text({
   return (
     <>
       <Popover
+        anchorEl={textRef?.current}
         open={hasCopied}
         onClose={() => {
           setHasCopied(false);
@@ -46,6 +48,7 @@ export default function Text({
         Copied to clipboard
       </Popover>
       <Box
+        ref={textRef}
         component="span"
         {...restProps}
         onClick={handleCopy}

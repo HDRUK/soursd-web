@@ -46,9 +46,9 @@ export default function Home() {
           <SoursdCard
             name={`${user?.first_name} ${user?.last_name}`}
             status={user?.model_state?.state.slug}
-            identifier={user?.registry.digi_ident}>
-            {tProfile("uniqueIdentifierCaption")}
-          </SoursdCard>
+            identifier={user?.registry.digi_ident}
+            description={tProfile("uniqueIdentifierCaption")}
+          />
         </PageColumnDetails>
       </PageColumns>
     </PageBodyContainer>

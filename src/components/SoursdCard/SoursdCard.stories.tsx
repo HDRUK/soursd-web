@@ -20,7 +20,7 @@ export const Basic: Story = {
     status: Status.PENDING,
     name: "Health Data Research",
     identifier: "kYBp5K52M5zIoTKtL785UpWgVCsjFZcbxYlKVX5C",
-    children:
+    description:
       "This ‘key’ represents you as an Organisation within SOURSD. This is unique to you! Your Organisation will have a unique SOURSD identifier associated with your account once your Organisation profile has been completed. This persistent unique identifier will be used to notify Data Custodians of any key changes to your Organisation profile that may impact data access decisions.",
   },
 };

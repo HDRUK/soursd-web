@@ -1,19 +1,16 @@
 "use client";
 
-import { Popover, Typography, TypographyProps } from "@mui/material";
-import { ReactNode, useEffect, useState } from "react";
-import CopyToClipboard from "react-copy-to-clipboard";
-import { renderToString } from "react-dom/server";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import { Typography, TypographyProps } from "@mui/material";
+import { ReactNode } from "react";
 import Copyable from "../Copyable";
 
-export interface TextProps extends Omit<TypographyProps, "onCopy"> {
+export interface TextProps extends TypographyProps {
   children: ReactNode;
   startIcon?: ReactNode;
   endIcon?: ReactNode;
   iconSize?: string;
   copyable?: boolean;
-  onCopy?: (text: string) => void;
 }
 
 export default function Text({
@@ -24,38 +21,8 @@ export default function Text({
   variant,
   iconSize = "1.25em",
   copyable,
-  onCopy,
   ...restProps
 }: TextProps) {
-  const [hasCopied, setHasCopied] = useState(false);
-
-  const handleCopy = (e: React.MouseEvent<HTMLSpanElement>) => {
-    const text = (e.target as HTMLSpanElement).innerText;
-
-    window.navigator.clipboard.writeText(text);
-
-    setHasCopied(true);
-    onCopy?.(text);
-  };
-
-  const copyText = (text: string) => {
-    return;
-  };
-
-  useEffect(() => {
-    let timeout;
-
-    if (hasCopied) {
-      setTimeout(() => {
-        setHasCopied(false);
-      }, 3000);
-    }
-
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [hasCopied]);
-
   return (
     <Typography
       {...restProps}
@@ -69,10 +36,6 @@ export default function Text({
           height: iconSize,
           width: iconSize,
         },
-        ...(copyable && {
-          textDecoration: "underline",
-          cursor: "pointer",
-        }),
         ...sx,
       }}>
       {startIcon}
