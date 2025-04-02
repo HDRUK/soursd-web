@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 
 export type SelectInputProps = SelectProps<string | number> & {
+  variant?: "outlined" | "standard";
   options: { label: string; value: string | number }[];
   label?: string;
   value?: string | number;
@@ -19,22 +20,27 @@ const SelectInput = ({
   label,
   value,
   ariaLabel,
+  variant = "outlined",
   ...restProps
 }: SelectInputProps) => {
   const [selectedValue, setSelectedValue] = useState(value || "");
 
+  const isStandard = variant === "standard";
+
   return (
-    <FormControl fullWidth variant="standard" size="small">
+    <FormControl fullWidth variant={variant} size="small">
       <InputLabel>{label}</InputLabel>
       <Select
-        disableUnderline
         value={value || selectedValue}
         size="small"
         onChange={event => setSelectedValue(event.target.value)}
         label={label}
+        disableUnderline={isStandard}
         sx={{
-          color: "primary.main",
-          textAlign: "left",
+          ...(isStandard && {
+            color: "primary.main",
+            textAlign: "left",
+          }),
           backgroundColor: "white",
         }}
         inputProps={{
