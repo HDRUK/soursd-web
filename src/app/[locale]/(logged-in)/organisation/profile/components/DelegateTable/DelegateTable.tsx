@@ -14,7 +14,7 @@ import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import { useTranslations } from "next-intl";
 import { ActionMenu } from "@/components/ActionMenu";
 import EditDelegate from "../EditDelegate";
-import DecoupleUser from "../DecoupleDelegate";
+import DecoupleUser from "../../../../../../../components/DecoupleDelegate";
 import InviteDelegateForm from "../InviteDelegateForm";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";

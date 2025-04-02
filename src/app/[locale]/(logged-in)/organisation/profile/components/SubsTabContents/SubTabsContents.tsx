@@ -19,7 +19,7 @@ import DigitalIdentifiers from "../DigitalIdentifiers";
 import NameAndAddress from "../NameAndAddress";
 import SectorSizeAndWebsite from "../SectorSizeAndWebsite";
 import SecurityCompliance from "../SecurityCompliance";
-import Users from "../Users";
+import Users from "../../../../../../../modules/Users";
 import ProjectsSafeData from "../ProjectsSafeData";
 import ProjectsSafeProject from "../ProjectsSafeProject";
 import ProjectsSafeSettings from "../ProjectsSafeSettings";
