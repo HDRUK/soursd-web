@@ -5,8 +5,8 @@ import { notFound } from "next/navigation";
 import { PageColumns, PageColumnBody } from "@/modules";
 import ProjectsSafePeople from "@/modules/ProjectsSafePeople";
 import { EntityType } from "@/types/api";
-import ProjectsSafeProject from "../ProjectsSafeProject";
 import { getSubTabs, PageTabs, ProjectsSubTabs } from "../../consts/tabs";
+import ProjectsSafeProject from "../ProjectsSafeProject";
 
 interface TabsContentsProps {
   tabId: PageTabs;
