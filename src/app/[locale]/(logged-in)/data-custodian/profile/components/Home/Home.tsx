@@ -12,6 +12,7 @@ import { Custodian } from "@/types/application";
 import { Typography, useTheme } from "@mui/material";
 import { useTranslations } from "next-intl";
 import ActionLogs from "@/modules/ActionLogs";
+import SoursdCard from "@/components/SoursdCard";
 
 export interface DetailsFormValues {
   name: string;
@@ -31,7 +32,7 @@ export default function Home({ custodian }: HomeProps) {
 
   return (
     <PageColumns>
-      <PageColumnBody>
+      <PageColumnBody lg={8}>
         <PageBody>
           <PageSection>
             <ActionLogs
@@ -56,23 +57,13 @@ export default function Home({ custodian }: HomeProps) {
           </PageSection>
         </PageBody>
       </PageColumnBody>
-      <PageColumnDetails>
-        <PageBody>
-          <Postit>
-            <Typography variant="h4" sx={{ mb: 1 }}>
-              {t("uniqueIdentifierTitle")}
-            </Typography>
-            <Typography
-              sx={{
-                fontSize: theme.typography.h4.fontSize,
-                fontWeight: 500,
-                mb: 1,
-              }}>
-              {custodian.unique_identifier}
-            </Typography>
-            <Typography>{t("uniqueIdentifierCaption")}</Typography>
-          </Postit>
-        </PageBody>
+      <PageColumnDetails lg={4}>
+        <SoursdCard
+          name={custodian.name}
+          status={custodian.model_state?.state.slug}
+          identifier={custodian.unique_identifier}>
+          {t("uniqueIdentifierCaption")}
+        </SoursdCard>
       </PageColumnDetails>
     </PageColumns>
   );

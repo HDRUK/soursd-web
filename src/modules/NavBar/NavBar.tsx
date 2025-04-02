@@ -22,6 +22,7 @@ import { MouseEvent, useEffect, useState } from "react";
 import MaskLabel from "@/components/MaskLabel";
 import PageCenter from "../PageCenter";
 import { StyledContainer, StyledHeader } from "./NavBar.styles";
+import { getInitials } from "@/utils/application";
 
 const NAMESPACE_TRANSLATIONS_NAVBAR = "NavBar";
 
@@ -169,7 +170,7 @@ export default function NavBar() {
               {storedUser && <NotificationsMenu />}
               {storedUser && (
                 <MaskLabel
-                  initials={`${storedUser?.first_name?.charAt(0)}${storedUser?.last_name?.charAt(0)}`}
+                  initials={`${getInitials(`${storedUser?.first_name} ${storedUser?.last_name}`)}`}
                   label=""
                   size="small"
                 />
