@@ -26,11 +26,7 @@ const NAMESPACE_TRANSLATIONS_USERS = "OrganisationsList";
 const NAMESPACE_TRANSLATIONS_PROFILE = "CustodianProfile";
 const NAMESPACE_TRANSLATIONS_APPLICATION = "Application";
 
-interface PageProps {
-  pageTitle?: string;
-}
-
-export default function Organisations({ pageTitle }: PageProps) {
+export default function Organisations() {
   const queryClient = useQueryClient();
   const t = useTranslations(NAMESPACE_TRANSLATIONS_USERS);
   const tProfile = useTranslations(NAMESPACE_TRANSLATIONS_PROFILE);
