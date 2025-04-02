@@ -18,8 +18,11 @@ export async function GET() {
         }),
         { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
       );
-    } catch (_) {
+    } catch (e) {
+      console.error(e);
+
       const errorType = encodeURIComponent("logout");
+
       return NextResponse.redirect(
         encodeURI(
           `${process.env.NEXT_PUBLIC_LOCAL_ENV}/en/error?type=${errorType}`
