@@ -8,6 +8,11 @@ const nextConfig = withNextIntl({
   env: {
     API_V1_URL: process.env.NEXT_PUBLIC_API_V1_URL,
   },
+  logging: {
+    fetches: {
+      fullUrl: true,
+    },
+  },
   images: {
     remotePatterns: [
       {

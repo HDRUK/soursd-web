@@ -4,6 +4,7 @@ export async function GET(req: NextRequest) {
   const cookies = req.cookies.get("access_token");
 
   if (!cookies) {
+    console.log("* NO COOKIES *");
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
