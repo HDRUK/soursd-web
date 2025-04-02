@@ -169,6 +169,10 @@ const ROUTES: Routes = {
     path: "/user/profile/projects/{id}/safe-outputs",
     permissions: [UserGroup.USERS],
   },
+  profileDelegate: {
+    path: "/organisation/delegate/profile",
+    permissions: [UserGroup.ORGANISATIONS],
+  },
   profileResearcher: {
     path: "/user/profile",
     permissions: [UserGroup.USERS],
