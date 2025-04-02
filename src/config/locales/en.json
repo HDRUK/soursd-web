@@ -183,7 +183,7 @@
     "datasetLinkageDescription": "Linked datasets",
     "datasetLinkageDescriptionPlaceholder": "Linked datasets",
     "dataUseDescription": "Data description",
-    "dataUseDescriptionPlaceholder": "Data description"
+    "dataUseDescriptionPlaceholder": "Data description",
     "addNewMemberButton": "Add a new member"
   },
   "OrganisationStats": {
