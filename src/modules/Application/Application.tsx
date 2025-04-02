@@ -66,6 +66,7 @@ export default function Application({
     getSectors: sectorsData,
     getPermissions: permissionsData,
     getCustodian: custodianData,
+    getProjectRoles: projectRolesData,
   } = applicationData;
 
   const { isLoading, isError } = getCombinedQueryState([
@@ -77,7 +78,8 @@ export default function Application({
     return (
       sectorsData?.data.data?.length === 0 ||
       permissionsData?.data.data?.length === 0 ||
-      systemConfigData?.data?.length === 0
+      systemConfigData?.data?.length === 0 ||
+      projectRolesData?.data.length === 0
     );
   };
 
@@ -99,6 +101,7 @@ export default function Application({
         organisationData={organisationData?.data}
         sectorsData={sectorsData?.data.data}
         permissionsData={permissionsData?.data.data}
+        projectRolesData={projectRolesData?.data}
         custodianData={custodianData?.data}
         accreditationsData={accreditationsData?.data.data}
         educationData={educationData?.data}

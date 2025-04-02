@@ -5,6 +5,8 @@ import {
   getOrganisationQuery,
 } from "@/services/organisations";
 import { getPermissions, getPermissionsQuery } from "@/services/permissions";
+import { getProjectRoles } from "@/services/project_roles";
+import getProjectRolesQuery from "@/services/project_roles/getProjectRolesQuery";
 import { getSectors, getSectorsQuery } from "@/services/sectors";
 import {
   getSystemConfig,
@@ -28,6 +30,7 @@ interface ApplicationDependenciesCombinedData {
   getSectors: Awaited<ReturnType<typeof getSectors>>;
   getPermissions: Awaited<ReturnType<typeof getPermissions>>;
   getCustodian: Awaited<ReturnType<typeof getCustodian>>;
+  getProjectRoles: Awaited<ReturnType<typeof getProjectRoles>>;
 }
 
 export default function useApplicationDependencies(
@@ -44,6 +47,7 @@ export default function useApplicationDependencies(
         ...(custodianId ? [getCustodianQuery(custodianId, options)] : []),
         getSectorsQuery(options),
         getPermissionsQuery(options),
+        getProjectRolesQuery(options),
       ]
     : [];
   return useQueriesCombined<ApplicationDependenciesCombinedData>(queries);

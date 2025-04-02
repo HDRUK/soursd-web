@@ -27,7 +27,7 @@ export default function ProfessionalRegistrationsFormModal({
   return (
     <FormModal
       open={open}
-      title={
+      heading={
         isEdit
           ? "Edit Professional Registration"
           : "Add Professional Registration"

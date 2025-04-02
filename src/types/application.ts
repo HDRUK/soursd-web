@@ -114,7 +114,7 @@ interface Auth {
   email: string;
 }
 
-interface User {
+type User = ModelState<{
   id: number;
   registry_id: number;
   first_name: string;
@@ -141,6 +141,7 @@ interface User {
     organisations?: Organisation[];
     verified: boolean;
     training?: ResearcherTraining[];
+    affiliations?: ResearcherAffiliation[];
   };
   is_delegate: number;
   departments?: Department[];
@@ -149,7 +150,7 @@ interface User {
   status: Status;
   declaration_signed?: boolean;
   uksa_registered?: boolean;
-}
+}>;
 interface AddressFields {
   postcode?: string;
   address_1?: string;
@@ -292,12 +293,19 @@ interface ResearcherAffiliation {
   role?: string;
   organisation: Partial<Organisation>;
   email?: string;
+  project_role_id?: number;
+  primary_contact?: boolean;
   registryAffiliationState?: string;
 }
 
 interface ResearcherProjectApproval {
   project_id: number;
   custodian_id: number;
+}
+
+interface ProjectRole {
+  id: number;
+  name: string;
 }
 
 type ResearcherProject = ModelState<{
@@ -367,14 +375,27 @@ interface Project {
   end_date: string;
 }
 
-type ProjectUser = ModelState<{
+interface ProjectUser {
   project_id: number;
-  user_digital_ident: string;
   project_role_id: number;
+  primary_contact: boolean;
+  user_digital_ident: string;
+  role: Partial<Role>;
+  affiliation: Partial<ResearcherAffiliation>;
   registry: Registry;
-  role: Role;
-  primary_contact: number;
-}>;
+}
+
+interface ProjectAllUser {
+  id: number;
+  user_id: number;
+  registry_id: number;
+  first_name: string;
+  last_name: string;
+  email: string;
+  affiliation_id: number;
+  organisation_name: string;
+  role: Partial<Role>;
+}
 
 interface Department {
   category: string;
@@ -405,6 +426,7 @@ export type {
   Permission,
   Project,
   ProjectUser,
+  ProjectAllUser,
   ResearcherAccreditation,
   ResearcherAffiliation,
   ResearcherEducation,
@@ -413,6 +435,7 @@ export type {
   ResearcherProfessionalRegistration,
   ResearcherProject,
   ResearcherTraining,
+  Role,
   Sector,
   Subsidiary,
   SystemConfig,
@@ -420,5 +443,6 @@ export type {
   UserProfileCompletionFields,
   UserProfileCompletionJson,
   UserProfileCompletionSchema,
+  ProjectRole,
   ProjectDetails,
 };
