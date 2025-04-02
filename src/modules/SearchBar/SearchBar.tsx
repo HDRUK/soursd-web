@@ -46,7 +46,7 @@ export default function SearchBar({
           }}
           onClear={onClear}
           placeholder={placeholder}
-          sx={{ flexGrow: 1, minWidth: "10%", width: "50%" }}
+          sx={{ flexGrow: 1, minWidth: "10%", width: "50%", maxWidth: "70%" }}
         />
         {children}
       </Box>
