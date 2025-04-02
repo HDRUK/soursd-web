@@ -1,3 +1,9 @@
+## [1.3.1](https://github.com/HDRUK/speedi-as-web/compare/v1.3.0...v1.3.1) (2025-04-02)
+
+### 🐛 Bug Fixes
+
+* temporary logging (#244) ([bb4c72e](https://github.com/HDRUK/speedi-as-web/commit/bb4c72e2df5bc6f36942b250ce9281cac4b819f7))
+
 ## [1.3.0](https://github.com/HDRUK/speedi-as-web/compare/v1.2.0...v1.3.0) (2025-03-31)
 
 ### ✨ Features
