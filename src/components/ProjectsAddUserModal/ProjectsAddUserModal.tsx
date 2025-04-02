@@ -4,9 +4,11 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import useQueryAlerts from "@/hooks/useQueryAlerts";
 import { ProjectAllUser } from "@/types/application";
 import { useTranslations } from "next-intl";
+import { showAlert } from "@/utils/showAlert";
 import ProjectsAddUserForm from "../ProjectsAddUserForm";
 
 interface ProjectsAddUserModaProps extends Omit<FormModalProps, "children"> {
+  request: boolean;
   projectId: number;
   onClose: () => void;
 }
@@ -14,6 +16,7 @@ interface ProjectsAddUserModaProps extends Omit<FormModalProps, "children"> {
 const NAMESPACE_TRANSLATION = "ProjectsAddUserModal";
 
 export default function ProjectsAddUserModal({
+  request = false,
   projectId,
   onClose,
   ...restProps
@@ -25,12 +28,19 @@ export default function ProjectsAddUserModal({
   );
 
   const handleSave = async (projectUsers: ProjectAllUser[]) => {
-    await mutateAsync({
-      params: {
-        id: projectId,
-      },
-      payload: { users: projectUsers },
-    });
+    if (request) {
+      // to be implemented - need a flow to requesting users are added to a project by an organisation
+      showAlert("warning", {
+        text: "This does nothing yet, this feature has not been implemented",
+      });
+    } else {
+      await mutateAsync({
+        params: {
+          id: projectId,
+        },
+        payload: { users: projectUsers },
+      });
+    }
   };
 
   useQueryAlerts(putProjectUsersMutationState, {
@@ -47,8 +57,8 @@ export default function ProjectsAddUserModal({
   return (
     <FormModal
       variant="content"
-      heading={t("heading")}
-      description={t("description")}
+      heading={request ? t("requestHeading") : t("heading")}
+      description={request ? t("requestDescription") : t("description")}
       onClose={onClose}
       {...restProps}>
       <ProjectsAddUserForm
