@@ -3,6 +3,7 @@
 import Postit from "@/components/Postit";
 import {
   PageBody,
+  PageBodyContainer,
   PageColumnBody,
   PageColumnDetails,
   PageColumns,
@@ -30,50 +31,52 @@ export default function Home({ custodian }: HomeProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
   return (
-    <PageColumns>
-      <PageColumnBody>
-        <PageBody>
-          <PageSection>
-            <ActionLogs
-              variant="custodian"
-              panelProps={{
-                heading: "Before you get started (5)",
-                description: (
-                  <>
-                    Welcome to Sourced! You’ll see a list of tasks below we’ve
-                    assigned to you to complete your profile. To help you do
-                    that as quickly as possible here’s a list of things you’ll
-                    need before you dive in:
-                    <ul>
-                      <li>Prerequisite 1</li>
-                      <li>Prerequisite 2</li>
-                      <li>Prerequisite 3</li>
-                    </ul>
-                  </>
-                ),
-              }}
-            />
-          </PageSection>
-        </PageBody>
-      </PageColumnBody>
-      <PageColumnDetails>
-        <PageBody>
-          <Postit>
-            <Typography variant="h4" sx={{ mb: 1 }}>
-              {t("uniqueIdentifierTitle")}
-            </Typography>
-            <Typography
-              sx={{
-                fontSize: theme.typography.h4.fontSize,
-                fontWeight: 500,
-                mb: 1,
-              }}>
-              {custodian.unique_identifier}
-            </Typography>
-            <Typography>{t("uniqueIdentifierCaption")}</Typography>
-          </Postit>
-        </PageBody>
-      </PageColumnDetails>
-    </PageColumns>
+    <PageBodyContainer heading={t("home")}>
+      <PageColumns>
+        <PageColumnBody>
+          <PageBody>
+            <PageSection>
+              <ActionLogs
+                variant="custodian"
+                panelProps={{
+                  heading: "Welcome to SOURSD",
+                  description: (
+                    <>
+                      You’ll see a list of tasks below we’ve assigned to you to
+                      complete your profile. To help you do that as quickly as
+                      possible here’s a list of things you’ll need before you
+                      dive in:
+                      <ul>
+                        <li>Prerequisite 1</li>
+                        <li>Prerequisite 2</li>
+                        <li>Prerequisite 3</li>
+                      </ul>
+                    </>
+                  ),
+                }}
+              />
+            </PageSection>
+          </PageBody>
+        </PageColumnBody>
+        <PageColumnDetails>
+          <PageBody>
+            <Postit>
+              <Typography variant="h4" sx={{ mb: 1 }}>
+                {t("uniqueIdentifierTitle")}
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: theme.typography.h4.fontSize,
+                  fontWeight: 500,
+                  mb: 1,
+                }}>
+                {custodian.unique_identifier}
+              </Typography>
+              <Typography>{t("uniqueIdentifierCaption")}</Typography>
+            </Postit>
+          </PageBody>
+        </PageColumnDetails>
+      </PageColumns>
+    </PageBodyContainer>
   );
 }

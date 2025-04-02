@@ -1,9 +1,7 @@
 "use client";
 
 import { useStore } from "@/data/store";
-import { PageBodyContainer } from "@/modules";
 import Projects from "@/modules/Projects";
-import { toCamelCase } from "@/utils/string";
 import { useTranslations } from "next-intl";
 import { notFound } from "next/navigation";
 import { PageTabs } from "../../consts/tabs";
@@ -25,12 +23,12 @@ export default function TabsContents({ tabId }: TabsContentsProps) {
   if (!custodian) notFound();
 
   return (
-    <PageBodyContainer heading={t(toCamelCase(tabId))}>
+    <>
       {tabId === PageTabs.HOME && <Home custodian={custodian} />}
       {tabId === PageTabs.PROJECTS && <Projects variant="custodian" />}
       {tabId === PageTabs.ORGANISATIONS && <Organisations />}
       {tabId === PageTabs.USERS && <Users />}
       {tabId === PageTabs.CONTACTS && <Contacts />}
-    </PageBodyContainer>
+    </>
   );
 }
