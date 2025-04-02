@@ -42,7 +42,7 @@ export default function SectionHeading({
   return (
     <Box {...restProps}>
       {heading && <Typography {...titleProps}>{heading}</Typography>}
-      {description && <Typography sx={{ p: 2 }}> {description}</Typography>}
+      {description && <Typography sx={{ py: 2 }}> {description}</Typography>}
     </Box>
   );
 }
