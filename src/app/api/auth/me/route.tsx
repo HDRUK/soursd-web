@@ -12,7 +12,9 @@ export async function GET(req: NextRequest) {
     const user = jwtDecode(accessToken);
 
     return NextResponse.json({ user });
-  } catch (_) {
+  } catch (e) {
+    console.error(e);
+
     return NextResponse.json({ error: "Invalid token" }, { status: 401 });
   }
 }
