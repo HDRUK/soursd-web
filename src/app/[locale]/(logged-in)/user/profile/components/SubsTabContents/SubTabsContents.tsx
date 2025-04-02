@@ -2,11 +2,11 @@
 
 import { useStore } from "@/data/store";
 import { notFound } from "next/navigation";
-import { getSubTabs, PageTabs, ProjectsSubTabs } from "../../consts/tabs";
 import { PageColumns, PageColumnBody } from "@/modules";
 import ProjectsSafePeople from "@/modules/ProjectsSafePeople";
-import ProjectsSafeProject from "../ProjectsSafeProject";
 import { EntityType } from "@/types/api";
+import ProjectsSafeProject from "../ProjectsSafeProject";
+import { getSubTabs, PageTabs, ProjectsSubTabs } from "../../consts/tabs";
 
 interface TabsContentsProps {
   tabId: PageTabs;
