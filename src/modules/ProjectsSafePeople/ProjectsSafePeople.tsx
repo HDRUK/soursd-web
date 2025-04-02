@@ -203,6 +203,7 @@ export default function ProjectsSafePeople({
       </PageSection>
       <PageSection>
         <ProjectsAddUserModal
+          request={variant === EntityType.ORGANISATION}
           projectId={project.id}
           open={showAddModal}
           onClose={() => setShowAddModal(false)}
