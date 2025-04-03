@@ -38,7 +38,7 @@ export default function TabsSections({ tabId }: TabsSectionsProps) {
         <Tab
           icon={<HomeOutlinedIcon />}
           label={<Text>{t("home")}</Text>}
-          href={routes.profileOrganisationHome.path}
+          href={routes.profileDelegate.path}
           component={Link}
           value={PageTabs.HOME}
           iconPosition="start"
