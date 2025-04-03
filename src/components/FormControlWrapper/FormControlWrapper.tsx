@@ -28,7 +28,6 @@ export interface FormControlProps
   displayLabel?: boolean;
   displayPlaceholder?: boolean;
   fullWidth?: boolean;
-  description?: string;
   t?: ReturnType<typeof useTranslations>;
 }
 
@@ -45,6 +44,7 @@ export default function FormControlWrapper({
   fullWidth = true,
   description,
   t,
+  disabled,
   sx = {
     m: 0,
     width: "100%",
@@ -68,6 +68,7 @@ export default function FormControlWrapper({
 
   return (
     <Controller
+      disabled={context.formState.disabled || disabled}
       name={name}
       control={effectiveControl}
       render={({
