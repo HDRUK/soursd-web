@@ -16,12 +16,12 @@ import {
 import Delegates from "../Delegates";
 import DigitalIdentifiers from "../DigitalIdentifiers";
 import NameAndAddress from "../NameAndAddress";
-import SectorSizeAndWebsite from "../SectorSizeAndWebsite";
-import SecurityCompliance from "../SecurityCompliance";
-import Users from "@/modules/Users";
 import ProjectsSafeData from "../ProjectsSafeData";
 import ProjectsSafeProject from "../ProjectsSafeProject";
 import ProjectsSafeSettings from "../ProjectsSafeSettings";
+import SectorSizeAndWebsite from "../SectorSizeAndWebsite";
+import SecurityCompliance from "../SecurityCompliance";
+import Users from "@/modules/Users";
 import ProjectsSafeOutputs from "../ProjectsSafeOutputs";
 
 interface TabsContentsProps {
