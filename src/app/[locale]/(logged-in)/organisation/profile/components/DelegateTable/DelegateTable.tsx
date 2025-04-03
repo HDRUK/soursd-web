@@ -11,10 +11,10 @@ import { useState } from "react";
 import { Box, Button } from "@mui/material";
 import ContactLink from "@/components/ContactLink";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
+import DecoupleUser from "@/components/DecoupleDelegate";
 import { useTranslations } from "next-intl";
 import { ActionMenu } from "@/components/ActionMenu";
 import EditDelegate from "../EditDelegate";
-import DecoupleUser from "@/components/DecoupleDelegate";
 import InviteDelegateForm from "../InviteDelegateForm";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
