@@ -3,7 +3,7 @@
 import { useStore } from "@/data/store";
 import { notFound } from "next/navigation";
 import { PageTabs } from "../../consts/tabs";
-import Users from "../../../../../../../../modules/Users";
+import Users from "@/modules/Users";
 
 interface TabsContentsProps {
   tabId: string;
