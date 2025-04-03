@@ -2,7 +2,9 @@ import { useStore } from "@/data/store";
 import useQueryAlerts from "@/hooks/useQueryAlerts";
 import { mockedSafeProjectGuidanceProps } from "@/mocks/data/cms";
 import { PageBody, PageGuidance, PageSection } from "@/modules";
+import ProjectsSafeOutputsForm from "@/modules/ProjectsSafeOutputsForm";
 import useMutateProjectDetails from "@/queries/useMutateProjectDetails";
+import { PutProjectDetailsPayload } from "@/services/projects";
 import { ProjectDetails } from "@/types/application";
 import { createProjectDetailDefaultValues } from "@/utils/form";
 import { pick } from "@/utils/json";
@@ -10,8 +12,6 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import ProjectImport from "../ProjectImport";
-import ProjectsSafeOutputsForm from "../ProjectsSafeOutputsForm";
-import { ProjectsSafeOutputsFormFieldValues } from "../ProjectsSafeOutputsForm/ProjectsSafeOutputsForm";
 
 const NAMESPACE_TRANSLATION = "CustodianProfile";
 
@@ -38,7 +38,7 @@ export default function ProjectsSafeOutputs() {
     setDefaultValues(pick(data, PAYLOAD_FIELDS));
   };
 
-  const handleSubmit = async (payload: ProjectsSafeOutputsFormFieldValues) => {
+  const handleSubmit = async (payload: PutProjectDetailsPayload) => {
     await mutateAsync({
       ...project.project_detail,
       ...payload,
