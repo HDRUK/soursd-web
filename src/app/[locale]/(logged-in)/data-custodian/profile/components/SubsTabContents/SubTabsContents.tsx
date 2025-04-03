@@ -29,13 +29,11 @@ import ProjectsSafeOutputs from "../ProjectsSafeOutputs";
 interface TabsContentsProps {
   tabId: PageTabs;
   subTabId: ConfigurationSubTabs | UserSubTabs | ProjectsSubTabs;
-  id?: number;
 }
 
 export default function SubTabsContents({
   tabId,
   subTabId,
-  id,
 }: TabsContentsProps) {
   const [user, custodian] = useStore(state => [
     state.getUser(),
