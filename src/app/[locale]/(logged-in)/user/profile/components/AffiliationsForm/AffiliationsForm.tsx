@@ -35,7 +35,7 @@ export interface AffiliationsFormProps {
   initialValues?: ResearcherAffiliation;
 }
 
-const NAMESPACE_TRANSLATION_PROFILE = "Profile";
+const NAMESPACE_TRANSLATION = "Profile";
 const NAMESPACE_TRANSLATION_FORM = "Form";
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
 
@@ -45,7 +45,7 @@ export default function AffiliationsForm({
   queryState,
   initialValues,
 }: AffiliationsFormProps) {
-  const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
+  const tProfile = useTranslations(NAMESPACE_TRANSLATION);
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
   const [inviteOpen, setInviteOpen] = useState(false);

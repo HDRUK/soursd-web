@@ -18,6 +18,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
 import PageBody from "../PageBody";
 import SearchActionMenu from "../SearchActionMenu";
+import PageBodyContainer from "../PageBodyContainer";
 
 const NAMESPACE_TRANSLATIONS_PROJECTS = "Projects";
 const NAMESPACE_TRANSLATIONS_APPLICATION = "Application";
@@ -182,51 +183,53 @@ export default function Projects({ variant }: ProjectsProps) {
   ];
 
   return (
-    <PageBody>
-      <PageSection>
-        <SearchBar
-          onClear={resetQueryParams}
-          onSearch={(text: string) => {
-            updateQueryParams({
-              "title[]": text,
-            });
-          }}
-          placeholder={t("searchPlaceholder")}>
-          <SearchActionMenu
-            actions={sortActions}
-            startIcon={<SortIcon />}
-            renderedSelectedLabel={tApplication("sortedBy")}
-            renderedDefaultLabel={tApplication("sortBy")}
-            aria-label={tApplication("sortBy")}
+    <PageBodyContainer heading={t("projects")}>
+      <PageBody>
+        <PageSection>
+          <SearchBar
+            onClear={resetQueryParams}
+            onSearch={(text: string) => {
+              updateQueryParams({
+                "title[]": text,
+              });
+            }}
+            placeholder={t("searchPlaceholder")}>
+            <SearchActionMenu
+              actions={sortActions}
+              startIcon={<SortIcon />}
+              renderedSelectedLabel={tApplication("sortedBy")}
+              renderedDefaultLabel={tApplication("sortBy")}
+              aria-label={tApplication("sortBy")}
+            />
+            <SearchActionMenu
+              actions={filterDateActions}
+              startIcon={<FilterIcon />}
+              renderedSelectedLabel={tApplication("filteredByDate")}
+              renderedDefaultLabel={tApplication("filterByDate")}
+              aria-label={tApplication("filterByDate")}
+            />
+            <SearchActionMenu
+              actions={filterStatusActions}
+              multiple
+              startIcon={<FilterIcon />}
+              renderedSelectedLabel={tApplication("filteredBy")}
+              renderedDefaultLabel={tApplication("filterByProjectStatus")}
+              aria-label={tApplication("filterByProjectStatus")}
+            />
+          </SearchBar>
+        </PageSection>
+        <PageSection>
+          <Table
+            total={total}
+            last_page={last_page}
+            setPage={setPage}
+            data={projectsData}
+            columns={columns}
+            queryState={queryState}
+            isPaginated
           />
-          <SearchActionMenu
-            actions={filterDateActions}
-            startIcon={<FilterIcon />}
-            renderedSelectedLabel={tApplication("filteredByDate")}
-            renderedDefaultLabel={tApplication("filterByDate")}
-            aria-label={tApplication("filterByDate")}
-          />
-          <SearchActionMenu
-            actions={filterStatusActions}
-            multiple
-            startIcon={<FilterIcon />}
-            renderedSelectedLabel={tApplication("filteredBy")}
-            renderedDefaultLabel={tApplication("filterByProjectStatus")}
-            aria-label={tApplication("filterByProjectStatus")}
-          />
-        </SearchBar>
-      </PageSection>
-      <PageSection>
-        <Table
-          total={total}
-          last_page={last_page}
-          setPage={setPage}
-          data={projectsData}
-          columns={columns}
-          queryState={queryState}
-          isPaginated
-        />
-      </PageSection>
-    </PageBody>
+        </PageSection>
+      </PageBody>
+    </PageBodyContainer>
   );
 }

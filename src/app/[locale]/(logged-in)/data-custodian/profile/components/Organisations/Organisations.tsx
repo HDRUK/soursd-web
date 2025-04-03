@@ -5,7 +5,7 @@ import Pagination from "@/components/Pagination";
 import Results from "@/components/Results";
 import { FilterIcon } from "@/consts/icons";
 import { SearchDirections } from "@/consts/search";
-import { PageBody, PageSection } from "@/modules";
+import { PageBody, PageBodyContainer, PageSection } from "@/modules";
 import SearchActionMenu from "@/modules/SearchActionMenu";
 import SearchBar from "@/modules/SearchBar";
 import {
@@ -23,11 +23,13 @@ import OrganisationsLegend from "../OrganisationsLegend";
 import OrganisationsList from "../OrganisationsList";
 
 const NAMESPACE_TRANSLATIONS_USERS = "OrganisationsList";
+const NAMESPACE_TRANSLATIONS_PROFILE = "CustodianProfile";
 const NAMESPACE_TRANSLATIONS_APPLICATION = "Application";
 
-export default function Sections() {
+export default function Organisations() {
   const queryClient = useQueryClient();
   const t = useTranslations(NAMESPACE_TRANSLATIONS_USERS);
+  const tProfile = useTranslations(NAMESPACE_TRANSLATIONS_PROFILE);
   const tApplication = useTranslations(NAMESPACE_TRANSLATIONS_APPLICATION);
 
   const {
@@ -109,54 +111,56 @@ export default function Sections() {
   );
 
   return (
-    <PageBody>
-      <PageSection>
-        <SearchBar
-          onClear={resetQueryParams}
-          onSearch={(text: string) => {
-            updateQueryParams({
-              "organisation_name[]": text,
-            });
-          }}
-          placeholder={t("searchPlaceholder")}
-          legend={<OrganisationsLegend />}>
-          <SearchActionMenu
-            actions={sortActions}
-            startIcon={<SortIcon />}
-            renderedSelectedLabel={tApplication("sortedBy")}
-            renderedDefaultLabel={tApplication("sortBy")}
-            aria-label={tApplication("sortBy")}
-          />
-          <SearchActionMenu
-            actions={filterActions}
-            startIcon={<FilterIcon />}
-            renderedSelectedLabel={tApplication("filteredBy")}
-            renderedDefaultLabel={tApplication("filterBy")}
-            aria-label={tApplication("filterBy")}
-            multiple
-          />
-        </SearchBar>
-      </PageSection>
-      <PageSection>
-        <Results
-          queryState={queryState}
-          noResultsMessage={t("noResultsOrganisations")}
-          pagination={pagination}
-          errorMessage={t.rich("errorResultsOrganisations", {
-            contactLink: ContactLink,
-          })}
-          total={queryState.total}>
-          <OrganisationsList
-            onApprove={handleApprove}
-            onUnapprove={handleUnapprove}
-            organisations={data}
-            queryState={getCombinedQueryState([
-              approvingQueryState,
-              deleteQueryState,
-            ])}
-          />
-        </Results>
-      </PageSection>
-    </PageBody>
+    <PageBodyContainer heading={tProfile("organisations")}>
+      <PageBody>
+        <PageSection>
+          <SearchBar
+            onClear={resetQueryParams}
+            onSearch={(text: string) => {
+              updateQueryParams({
+                "organisation_name[]": text,
+              });
+            }}
+            placeholder={t("searchPlaceholder")}
+            legend={<OrganisationsLegend />}>
+            <SearchActionMenu
+              actions={sortActions}
+              startIcon={<SortIcon />}
+              renderedSelectedLabel={tApplication("sortedBy")}
+              renderedDefaultLabel={tApplication("sortBy")}
+              aria-label={tApplication("sortBy")}
+            />
+            <SearchActionMenu
+              actions={filterActions}
+              startIcon={<FilterIcon />}
+              renderedSelectedLabel={tApplication("filteredBy")}
+              renderedDefaultLabel={tApplication("filterBy")}
+              aria-label={tApplication("filterBy")}
+              multiple
+            />
+          </SearchBar>
+        </PageSection>
+        <PageSection>
+          <Results
+            queryState={queryState}
+            noResultsMessage={t("noResultsOrganisations")}
+            pagination={pagination}
+            errorMessage={t.rich("errorResultsOrganisations", {
+              contactLink: ContactLink,
+            })}
+            total={queryState.total}>
+            <OrganisationsList
+              onApprove={handleApprove}
+              onUnapprove={handleUnapprove}
+              organisations={data}
+              queryState={getCombinedQueryState([
+                approvingQueryState,
+                deleteQueryState,
+              ])}
+            />
+          </Results>
+        </PageSection>
+      </PageBody>
+    </PageBodyContainer>
   );
 }
