@@ -17,5 +17,5 @@ export default function TabsContents({ tabId }: TabsContentsProps) {
 
   if (!user || !organisation) notFound();
 
-  return <>{tabId === PageTabs.HOME && <Users />}</>;
+  return tabId === PageTabs.HOME && <Users />;
 }
