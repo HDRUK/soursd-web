@@ -2,10 +2,9 @@
 
 import { useStore } from "@/data/store";
 import { PageBody } from "@/modules";
-import { notFound } from "next/navigation";
-import ProjectsSafeOutputs from "@/app/[locale]/(logged-in)/data-custodian/profile/components/ProjectsSafeOutput";
 import ProjectsSafePeople from "@/modules/ProjectsSafePeople";
 import { EntityType } from "@/types/api";
+import { notFound } from "next/navigation";
 import {
   DetailsPageSubTabs,
   getSubTabs,
@@ -17,12 +16,13 @@ import {
 import Delegates from "../Delegates";
 import DigitalIdentifiers from "../DigitalIdentifiers";
 import NameAndAddress from "../NameAndAddress";
-import SectorSizeAndWebsite from "../SectorSizeAndWebsite";
-import SecurityCompliance from "../SecurityCompliance";
-import Users from "../Users";
 import ProjectsSafeData from "../ProjectsSafeData";
 import ProjectsSafeProject from "../ProjectsSafeProject";
 import ProjectsSafeSettings from "../ProjectsSafeSettings";
+import SectorSizeAndWebsite from "../SectorSizeAndWebsite";
+import SecurityCompliance from "../SecurityCompliance";
+import Users from "../Users";
+import ProjectsSafeOutputs from "../ProjectsSafeOutputs";
 
 interface TabsContentsProps {
   tabId: string;

@@ -29,7 +29,7 @@ export default function SubPageProjects({ params, projectData }: PageProps) {
   return (
     project && (
       <PageBodyContainer heading={projectData.title}>
-        <SubTabsSections tabId={tabId} {...params} />
+        <SubTabsSections id={project.id} tabId={tabId} {...params} />
         <SubTabsContents tabId={tabId} {...params} />
       </PageBodyContainer>
     )

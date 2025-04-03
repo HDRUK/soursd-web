@@ -37,6 +37,7 @@ export interface FormProps<T extends AnyObject>
   shouldResetKeep?: boolean;
   isModal?: boolean;
   modalProps?: Omit<FormModalProps, "formState">;
+  disabled?: boolean;
 }
 
 export default function Form<T extends FieldValues>({
@@ -50,10 +51,12 @@ export default function Form<T extends FieldValues>({
   shouldResetKeep = false,
   isModal,
   modalProps,
+  disabled = false,
   ...restProps
 }: FormProps<T>) {
   const formOptions: UseFormProps<T> = {
     defaultValues,
+    disabled,
     ...(schema && {
       resolver: yupResolver(schema) as unknown as Resolver<T>,
     }),
@@ -63,12 +66,16 @@ export default function Form<T extends FieldValues>({
   const { handleSubmit, reset } = methods;
 
   useEffect(() => {
-    if (defaultValues && !deepEqual(defaultValues, methods.getValues())) {
-      Object.entries(defaultValues).forEach(([key, value]) => {
-        methods.setValue(key as Path<T>, value, {
-          shouldDirty: true,
+    if (defaultValues) {
+      if (!deepEqual(defaultValues, methods.getValues())) {
+        Object.entries(defaultValues).forEach(([key, value]) => {
+          methods.setValue(key as Path<T>, value, {
+            shouldDirty: true,
+          });
         });
-      });
+      } else {
+        reset(defaultValues);
+      }
     }
   }, [defaultValues]);
 
