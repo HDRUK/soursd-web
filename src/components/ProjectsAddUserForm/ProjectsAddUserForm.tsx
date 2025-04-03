@@ -86,6 +86,7 @@ export default function ProjectsAddUser({
     info: CellContext<ProjectAllUser, unknown>
   ) => (
     <SelectInput
+      variant="standard"
       value={info.getValue() as number}
       size="small"
       options={projectRoles.map(({ id, name }) => ({
