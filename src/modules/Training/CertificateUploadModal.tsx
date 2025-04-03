@@ -3,7 +3,7 @@ import { Modal, Typography, Button, Divider } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { FileType } from "@/consts/files";
 import { File as ApplicationFile } from "@/types/application";
-import FileUploadDetails from "../FileUploadDetails/FileUploadDetails";
+import FileUploadDetails from "../../app/[locale]/(logged-in)/user/profile/components/FileUploadDetails/FileUploadDetails";
 import {
   ModalContent,
   InstructionText,

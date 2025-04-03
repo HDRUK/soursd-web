@@ -1,3 +1,5 @@
+"use client";
+
 import { useStore } from "@/data/store";
 
 import { PostTrainingsPayload } from "@/services/trainings/types";
@@ -22,6 +24,7 @@ import {
   deleteTrainingsQuery,
   putTrainingsQuery,
 } from "@/services/trainings";
+import { EntityType } from "@/types/api";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import useQueryConfirmAlerts from "@/hooks/useQueryConfirmAlerts";
@@ -32,11 +35,22 @@ const NAMESPACE_TRANSLATION_TRAINING = "Training";
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
-export default function Training() {
+interface TrainingProps {
+  variant: EntityType;
+}
+
+export default function Training({ variant }: TrainingProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_TRAINING);
   const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
-  const user = useStore(store => store.config.user);
+  console.log(variant, variant === EntityType.USER);
+  console.log(useStore(store => store.config));
+  // if ( variant === EntityType.USER) {
+    const user = useStore(store => store.config.user);
+  // }
+  // if ( variant === EntityType.CUSTODIAN) {
+  //   const user = useStore(store => store.config.custodian.);
+  // }
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTraining, setSelectedTraining] = useState<
     ResearcherTraining | undefined
