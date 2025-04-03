@@ -22,12 +22,19 @@ import { useMutation } from "@tanstack/react-query";
 import { CellContext, ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
-import ProjectsAddUserModal from "../ProjectsAddUserModal";
+import ProjectsAddUserModal from "@/components/ProjectsAddUserModal";
+import { EntityType } from "@/types/api";
 
 const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
 
-export default function ProjectsSafePeople() {
+interface ProjectsSafePeopleProps {
+  variant: EntityType;
+}
+
+export default function ProjectsSafePeople({
+  variant,
+}: ProjectsSafePeopleProps) {
   const { project } = useStore(state => ({
     project: state.getProject(),
   }));
@@ -147,15 +154,19 @@ export default function ProjectsSafePeople() {
       accessorKey: "affiliation.organisation.organisation_name",
       header: tApplication("organisationName"),
     },
-    {
-      accessorKey: "registry.user.status",
-      header: tApplication("status"),
-      cell: renderStatus,
-    },
-    {
-      header: tApplication("actions"),
-      cell: renderActionMenuCell,
-    },
+    ...(variant !== EntityType.USER
+      ? [
+          {
+            accessorKey: "registry.user.status",
+            header: tApplication("status"),
+            cell: renderStatus,
+          },
+          {
+            header: tApplication("actions"),
+            cell: renderActionMenuCell,
+          },
+        ]
+      : []),
   ];
 
   return (
@@ -172,28 +183,36 @@ export default function ProjectsSafePeople() {
               });
             }}
             placeholder={t("searchPlaceholder")}>
-            <SearchActionMenu
-              actions={filterActions}
-              startIcon={<FilterIcon />}
-              renderedSelectedLabel={tApplication("filteredBy")}
-              renderedDefaultLabel={tApplication("filterByUserStatus")}
-              aria-label={tApplication("filterBy")}
-              multiple
-            />
-            <Grid item xs={12} md={3} sx={{ textAlign: "right" }}>
-              <Button
-                startIcon={<Add />}
-                onClick={() => {
-                  setShowAddModal(true);
-                }}>
-                {t("addNewMemberButton")}
-              </Button>
-            </Grid>
+            {variant !== EntityType.USER && (
+              <>
+                <SearchActionMenu
+                  actions={filterActions}
+                  startIcon={<FilterIcon />}
+                  renderedSelectedLabel={tApplication("filteredBy")}
+                  renderedDefaultLabel={tApplication("filterByUserStatus")}
+                  aria-label={tApplication("filterBy")}
+                  multiple
+                />
+
+                <Grid item xs={12} md={3} sx={{ textAlign: "right" }}>
+                  <Button
+                    startIcon={<Add />}
+                    onClick={() => {
+                      setShowAddModal(true);
+                    }}>
+                    {variant === EntityType.ORGANISATION
+                      ? t("requestAddNewMemberButton")
+                      : t("addNewMemberButton")}
+                  </Button>
+                </Grid>
+              </>
+            )}
           </SearchBar>
         </Box>
       </PageSection>
       <PageSection>
         <ProjectsAddUserModal
+          request={variant === EntityType.ORGANISATION}
           projectId={project.id}
           open={showAddModal}
           onClose={() => setShowAddModal(false)}

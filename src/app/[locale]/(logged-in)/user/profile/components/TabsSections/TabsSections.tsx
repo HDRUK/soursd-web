@@ -98,6 +98,19 @@ export default function TabsSections({ tabId }: TabsSectionsProps) {
           icon={<BusinessCenterOutlinedIcon />}
           label={
             <Text
+              startIcon={experiencesScore < 100 && <ErrorIcon color="error" />}>
+              {t("experience")}
+            </Text>
+          }
+          href={routes.profileResearcherExperience.path}
+          component={Link}
+          value={PageTabs.EXPERIENCE}
+          iconPosition="start"
+        />
+        <Tab
+          icon={<OrganisationIcon />}
+          label={
+            <Text
               startIcon={
                 affiliationsScore < 100 && <ErrorIcon color="error" />
               }>
@@ -107,19 +120,6 @@ export default function TabsSections({ tabId }: TabsSectionsProps) {
           href={routes.profileResearcherAffiliations.path}
           component={Link}
           value={PageTabs.AFFILIATIONS}
-          iconPosition="start"
-        />
-        <Tab
-          icon={<OrganisationIcon />}
-          label={
-            <Text
-              startIcon={experiencesScore < 100 && <ErrorIcon color="error" />}>
-              {t("experience")}
-            </Text>
-          }
-          href={routes.profileResearcherExperience.path}
-          component={Link}
-          value={PageTabs.EXPERIENCE}
           iconPosition="start"
         />
         <Tab

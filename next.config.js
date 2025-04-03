@@ -47,7 +47,7 @@ const nextConfig = withNextIntl({
       },
       {
         source: "/:locale/data-custodian/profile/configuration",
-        destination: `/:locale/data-custodian/profile/configuration/webhooks`,
+        destination: `/:locale/data-custodian/profile/configuration/rules`,
       },
       {
         source: "/:locale/data-custodian/profile/projects/:id",

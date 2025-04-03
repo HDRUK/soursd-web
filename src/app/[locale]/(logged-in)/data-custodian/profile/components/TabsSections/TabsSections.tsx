@@ -2,12 +2,12 @@
 
 import { useStore } from "@/data/store";
 import { Link } from "@/i18n/routing";
-import AssignmentIcon from "@mui/icons-material/Assignment";
-import ContactPageIcon from "@mui/icons-material/ContactPage";
+import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
+import ManageAccountsOutlinedIcon from "@mui/icons-material/ManageAccountsOutlined";
 import CorporateFareIcon from "@mui/icons-material/CorporateFare";
 import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined";
-import HomeIcon from "@mui/icons-material/Home";
-import SettingsIcon from "@mui/icons-material/Settings";
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import { Box, Tab, Tabs } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { PageTabs } from "../../consts/tabs";
@@ -33,7 +33,7 @@ export default function TabsSections({ tabId }: TabsSectionsProps) {
         textColor="inherit"
         allowScrollButtonsMobile>
         <Tab
-          icon={<HomeIcon />}
+          icon={<HomeOutlinedIcon />}
           label={t("home")}
           href={routes.profileCustodianHome.path}
           component={Link}
@@ -41,7 +41,7 @@ export default function TabsSections({ tabId }: TabsSectionsProps) {
           iconPosition="start"
         />
         <Tab
-          icon={<ContactPageIcon />}
+          icon={<ManageAccountsOutlinedIcon />}
           label={t("contacts")}
           href={routes.profileCustodianContacts.path}
           component={Link}
@@ -57,7 +57,7 @@ export default function TabsSections({ tabId }: TabsSectionsProps) {
           iconPosition="start"
         />
         <Tab
-          icon={<AssignmentIcon />}
+          icon={<AssignmentOutlinedIcon />}
           label={t("projects")}
           href={routes.profileCustodianProjects.path}
           component={Link}
@@ -73,7 +73,7 @@ export default function TabsSections({ tabId }: TabsSectionsProps) {
           iconPosition="start"
         />
         <Tab
-          icon={<SettingsIcon />}
+          icon={<SettingsOutlinedIcon />}
           label={t("configuration")}
           href={routes.profileCustodianConfiguration.path}
           component={Link}
