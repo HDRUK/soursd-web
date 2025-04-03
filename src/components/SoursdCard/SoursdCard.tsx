@@ -1,10 +1,9 @@
 import { getInitials } from "@/utils/application";
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { Box, Paper, PaperProps, Typography } from "@mui/material";
+import { ReactNode } from "react";
 import ChipStatus, { Status } from "../ChipStatus";
 import MaskLabel from "../MaskLabel";
 import Text from "../Text";
-import { ReactNode } from "react";
 
 export interface SoursdCardProps extends PaperProps {
   name: string;

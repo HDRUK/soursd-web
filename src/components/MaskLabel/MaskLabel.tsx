@@ -1,7 +1,6 @@
 import { Box, Typography, useTheme } from "@mui/material";
 import { ReactNode } from "react";
 import Mask from "../Mask";
-import { fontWeight } from "@mui/system";
 
 interface BasicUserInfoProps {
   initials: ReactNode;

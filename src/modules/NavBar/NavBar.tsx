@@ -1,10 +1,12 @@
 "use client";
 
 import HorizontalDrawer from "@/components/HorizontalDrawer";
+import MaskLabel from "@/components/MaskLabel";
 import SoursdLogo from "@/components/SoursdLogo";
 import { useStore } from "@/data/store";
 import { Link } from "@/i18n/routing";
 import NotificationsMenu from "@/modules/NotificationsMenu";
+import { getInitials } from "@/utils/application";
 import { handleLogin, handleLogout, handleRegister } from "@/utils/keycloak";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
@@ -19,10 +21,8 @@ import {
 import { useTranslations } from "next-intl";
 import { LinkProps } from "next/link";
 import { MouseEvent, useEffect, useState } from "react";
-import MaskLabel from "@/components/MaskLabel";
 import PageCenter from "../PageCenter";
 import { StyledContainer, StyledHeader } from "./NavBar.styles";
-import { getInitials } from "@/utils/application";
 
 const NAMESPACE_TRANSLATIONS_NAVBAR = "NavBar";
 

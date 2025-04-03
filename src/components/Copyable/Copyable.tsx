@@ -6,12 +6,7 @@ import { useEffect, useRef, useState } from "react";
 
 export type CopyableProps = BoxProps;
 
-export default function Text({
-  children,
-  onCopy,
-  sx,
-  ...restProps
-}: CopyableProps) {
+export default function Text({ children, sx, ...restProps }: CopyableProps) {
   const [hasCopied, setHasCopied] = useState(false);
   const textRef = useRef();
 

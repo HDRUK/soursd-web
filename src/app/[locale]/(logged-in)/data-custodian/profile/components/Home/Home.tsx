@@ -1,5 +1,6 @@
 "use client";
 
+import SoursdCard from "@/components/SoursdCard";
 import Text from "@/components/Text";
 import {
   PageBody,
@@ -8,11 +9,10 @@ import {
   PageColumns,
   PageSection,
 } from "@/modules";
-import { Custodian } from "@/types/application";
-import { Typography, useTheme } from "@mui/material";
-import { useTranslations } from "next-intl";
 import ActionLogs from "@/modules/ActionLogs";
-import SoursdCard from "@/components/SoursdCard";
+import { Custodian } from "@/types/application";
+import { Typography } from "@mui/material";
+import { useTranslations } from "next-intl";
 
 export interface DetailsFormValues {
   name: string;
@@ -26,8 +26,6 @@ export interface HomeProps {
 const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 
 export default function Home({ custodian }: HomeProps) {
-  const theme = useTheme();
-
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
   return (
