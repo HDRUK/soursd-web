@@ -49,8 +49,11 @@ export async function GET(req: Request) {
     return NextResponse.redirect(
       encodeURI(`${process.env.NEXT_PUBLIC_LOCAL_ENV}/en/register`)
     );
-  } catch (_) {
+  } catch (e) {
+    console.error(e);
+
     const errorType = encodeURIComponent("register");
+
     return NextResponse.redirect(
       encodeURI(
         `${process.env.NEXT_PUBLIC_LOCAL_ENV}/en/error?type=${errorType}`

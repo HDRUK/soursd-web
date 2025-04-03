@@ -105,6 +105,7 @@
     "safeSettings": "Safe Settings",
     "home": "Home",
     "contacts": "Contacts",
+    "contactsHeading": "Administrative Contacts",
     "uniqueIdentifierTitle": "SOURSD Identifier",
     "uniqueIdentifierCaption": "This ‘key’ represents you as a Data Custodian within SOURSD. This is unique to you! You may need this key if utilising SOURSD Application Programming Interfaces (APIs).",
     "details": "Profile",
@@ -202,7 +203,8 @@
     "errorCreateSafeDataMessage": "An error occurred while creating the safe data. Please try again or <contactLink>contact support</contactLink> if the problem persists.",
     "successUpdateSafeDataMessage": "Safe data updated successfully.",
     "successCreateSafeDataMessage": "Safe data created successfully.",
-    "addNewMemberButton": "Add a new member"
+    "addNewMemberButton": "Add a new member",
+    "requestAddNewMemberButton": "Request member is affiliated"
   },
   "OrganisationStats": {
     "affiliatedUsers": "Affiliated Users",
@@ -783,7 +785,7 @@
     "details": "Profile",
     "identity": "Identity",
     "identityForm": "Personal Identity",
-    "identityTitle": "Complete your personal identity",
+    "identityTitle": "Complete your personal details",
     "affiliations": "Affiliations",
     "affiliationsTitle": "Complete your employer or institute information",
     "affiliationsForm": "Add an employer or institute",
@@ -1083,6 +1085,7 @@
     },
     "endDate": "End date",
     "startDate": "Start date",
+    "projects": "Projects",
     "users": "Users",
     "organisations": "Organisation(s)",
     "status": "Status",
@@ -1285,7 +1288,9 @@
   },
   "ProjectsAddUserModal": {
     "heading": "Add new team member",
-    "description": "Here’s where you can add a team member to your project. If you can't find them or they're listed under the wrong Organisation, invite them here. If they already have a SOURSD account, they’ll be able to select the correct Organisation. Otherwise, they'll be prompted to register for a SOURSD account."
+    "requestHeading": "Request to add new team member",
+    "description": "Here’s where you can add a team member to your project. If you can't find them or they're listed under the wrong Organisation, invite them here. If they already have a SOURSD account, they’ll be able to select the correct Organisation. Otherwise, they'll be prompted to register for a SOURSD account.",
+    "requestDescription": "Here’s where you can request that a team member us added to this project. If you can't find them or they're listed under the wrong Organisation, invite them here. If they already have a SOURSD account, they’ll be able to select the correct Organisation. Otherwise, they'll be prompted to register for a SOURSD account."
   },
   "VeriffTermsAndConditions": {
     "title": "This will take you to Veriff’s website to verify your identity.",
