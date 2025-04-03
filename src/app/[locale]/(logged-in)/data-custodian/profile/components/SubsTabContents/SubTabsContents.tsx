@@ -7,6 +7,7 @@ import { EntityType } from "@/types/api";
 import {
   ConfigurationSubTabs,
   getSubTabs,
+  OrganisationsSubTabs,
   PageTabs,
   ProjectsSubTabs,
   UserSubTabs,
@@ -25,10 +26,21 @@ import ValidationChecks from "../ValidationChecks";
 import Integrations from "../Integrations";
 import Webhooks from "../Webhooks";
 import ProjectsSafeOutputs from "../ProjectsSafeOutputs";
+import OrganisationsPeople from "../OrganisationsPeople";
+import OrganisationsNameAddress from "../OrganisationsNameAddress";
+import OrganisationsDigitalIdentifiers from "../OrganisationsDigitalIdentifiers";
+import OrganisationsSectorWebsite from "../OrganisationsSectorWebsite";
+import OrganisationsSubsidiaries from "../OrganisationsSubsidiaries";
+import OrganisationsDataSecurity from "../OrganisationsDataSecurity";
 
 interface TabsContentsProps {
   tabId: PageTabs;
-  subTabId: ConfigurationSubTabs | UserSubTabs | ProjectsSubTabs;
+  subTabId:
+    | ConfigurationSubTabs
+    | UserSubTabs
+    | ProjectsSubTabs
+    | OrganisationsSubTabs;
+  id?: number;
 }
 
 export default function SubTabsContents({
@@ -93,6 +105,24 @@ export default function SubTabsContents({
       break;
     case ProjectsSubTabs.SAFE_OUTPUTS:
       content = <ProjectsSafeOutputs />;
+      break;
+    case OrganisationsSubTabs.PEOPLE:
+      content = <OrganisationsPeople />;
+      break;
+    case OrganisationsSubTabs.NAME_ADDRESS:
+      content = <OrganisationsNameAddress />;
+      break;
+    case OrganisationsSubTabs.DIGITAL_IDENTIFIERS:
+      content = <OrganisationsDigitalIdentifiers />;
+      break;
+    case OrganisationsSubTabs.SECTOR_WEBSITE:
+      content = <OrganisationsSectorWebsite />;
+      break;
+    case OrganisationsSubTabs.SUBSIDIARIES:
+      content = <OrganisationsSubsidiaries />;
+      break;
+    case OrganisationsSubTabs.DATA_SECURITY:
+      content = <OrganisationsDataSecurity />;
       break;
     default:
       content = null;

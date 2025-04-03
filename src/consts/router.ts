@@ -37,6 +37,30 @@ const ROUTES: Routes = {
     path: "/data-custodian/profile/organisations",
     permissions: [UserGroup.CUSTODIANS],
   },
+  profileCustodianOrganisationsPeople: {
+    path: "/data-custodian/profile/organisations/{id}/people",
+    permissions: [UserGroup.CUSTODIANS],
+  },
+  profileCustodianOrganisationsNameAddress: {
+    path: "/data-custodian/profile/organisations/{id}/name_address",
+    permissions: [UserGroup.CUSTODIANS],
+  },
+  profileCustodianOrganisationsDigitalIdentifiers: {
+    path: "/data-custodian/profile/organisations/{id}/digital_identifiers",
+    permissions: [UserGroup.CUSTODIANS],
+  },
+  profileCustodianOrganisationsSectorWebsite: {
+    path: "/data-custodian/profile/organisations/{id}/sector_website",
+    permissions: [UserGroup.CUSTODIANS],
+  },
+  profileCustodianOrganisationsSubsidiaries: {
+    path: "/data-custodian/profile/organisations/{id}/subsidiaries",
+    permissions: [UserGroup.CUSTODIANS],
+  },
+  profileCustodianOrganisationsDataSecurity: {
+    path: "/data-custodian/profile/organisations/{id}/data_security",
+    permissions: [UserGroup.CUSTODIANS],
+  },
   profileCustodianConfiguration: {
     path: "/data-custodian/profile/configuration",
     permissions: [UserGroup.CUSTODIANS],

@@ -93,6 +93,12 @@
     "deleteAffiliation": "Delete Affiliation"
   },
   "CustodianProfile": {
+    "organisationsPeople": "People",
+    "organisationsNameAddress": "Name & Address",
+    "organisationsDigitalIdentifiers": "Digital Identifiers",
+    "organisationsSectorWebsite": "Sector size & website",
+    "organisationsSubsidiaries": "UK subsidiaries",
+    "organisationsDataSecurity": "Data security compliance",
     "searchPlaceholder": "Search",
     "safeProject": "Safe Project",
     "safeProjectWorkflowStatusError": "The workflow process for setting status must be Pending -> Approved -> Completed. Please select a different status",
