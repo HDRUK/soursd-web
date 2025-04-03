@@ -3,7 +3,6 @@
 import SoursdCard from "@/components/SoursdCard";
 import Text from "@/components/Text";
 import {
-  PageBody,
   PageBodyContainer,
   PageColumnBody,
   PageColumnDetails,
@@ -33,27 +32,27 @@ export default function Home({ custodian }: HomeProps) {
     <PageBodyContainer heading={t("home")}>
       <PageColumns>
         <PageColumnBody lg={8}>
-            <PageSection>
-              <ActionLogs
-                variant="custodian"
-                panelProps={{
-                  heading: "Welcome to SOURSD",
-                  description: (
-                    <>
-                      You’ll see a list of tasks below we’ve assigned to you to
-                      complete your profile. To help you do that as quickly as
-                      possible here’s a list of things you’ll need before you
-                      dive in:
-                      <ul>
-                        <li>Prerequisite 1</li>
-                        <li>Prerequisite 2</li>
-                        <li>Prerequisite 3</li>
-                      </ul>
-                    </>
-                  ),
-                }}
-              />
-            </PageSection>
+          <PageSection>
+            <ActionLogs
+              variant="custodian"
+              panelProps={{
+                heading: "Welcome to SOURSD",
+                description: (
+                  <>
+                    You’ll see a list of tasks below we’ve assigned to you to
+                    complete your profile. To help you do that as quickly as
+                    possible here’s a list of things you’ll need before you dive
+                    in:
+                    <ul>
+                      <li>Prerequisite 1</li>
+                      <li>Prerequisite 2</li>
+                      <li>Prerequisite 3</li>
+                    </ul>
+                  </>
+                ),
+              }}
+            />
+          </PageSection>
         </PageColumnBody>
         <PageColumnDetails lg={4}>
           <SoursdCard
@@ -61,13 +60,13 @@ export default function Home({ custodian }: HomeProps) {
             status={custodian.model_state?.state.slug}
             identifier={custodian.unique_identifier}
             description={t("uniqueIdentifierCaption")}>
-              {custodian.client_id && (
-                <>
-                  <Typography fontWeight={700}>Client id:</Typography>
-                  <Text copyable>{custodian.client_id}</Text>
-                </>
-              )}
-            </SoursdCard>
+            {custodian.client_id && (
+              <>
+                <Typography fontWeight={700}>Client id:</Typography>
+                <Text copyable>{custodian.client_id}</Text>
+              </>
+            )}
+          </SoursdCard>
         </PageColumnDetails>
       </PageColumns>
     </PageBodyContainer>
