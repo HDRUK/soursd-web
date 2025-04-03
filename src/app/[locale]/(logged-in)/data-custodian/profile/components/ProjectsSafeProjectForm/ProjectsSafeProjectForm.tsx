@@ -15,7 +15,6 @@ import {
   Radio,
   RadioGroup,
   TextField,
-  Typography,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
@@ -152,14 +151,15 @@ export default function UserModalDetails({
               />
             </Grid>
             <Grid item xs={12}>
-              <Typography mb={1}>{tForm("otherApprovalCommittees")}</Typography>
               <FormFieldArray
+                tKey={NAMESPACE_TRANSLATION_FORM}
                 name="other_approval_committees"
                 addButtonLabel={tForm("add")}
                 createNewRow={() => ""}
                 renderField={(_, index) => (
                   <FormControlWrapper
                     displayLabel={false}
+                    placeholder={tForm("otherApprovalCommitteesPlaceholder")}
                     name={`other_approval_committees.${index}`}
                     renderField={fieldProps => <TextField {...fieldProps} />}
                   />

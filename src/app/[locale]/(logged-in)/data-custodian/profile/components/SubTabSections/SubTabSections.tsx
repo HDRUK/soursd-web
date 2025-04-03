@@ -20,7 +20,7 @@ export interface SubTabsMap {
 
 interface SubTabsSectionsProps {
   tabId: PageTabs;
-  subTabId: ConfigurationSubTabs | UserSubTabs;
+  subTabId: ConfigurationSubTabs | UserSubTabs | ProjectsSubTabs;
   id?: number;
 }
 

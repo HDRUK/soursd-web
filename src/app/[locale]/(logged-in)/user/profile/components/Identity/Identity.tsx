@@ -114,7 +114,7 @@ export default function Identity() {
   };
 
   return (
-    <PageBodyContainer>
+    <PageBodyContainer heading={tProfile("identityTitle")}>
       <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
         <PageBody>
           <PageSection>
