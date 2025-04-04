@@ -17,12 +17,14 @@ import {
   AccordionDetails,
   AccordionSummary,
   Button,
+  Link,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import OrganisationDetailsModal from "../OrganisationDetailsModal";
 import OrganisationUsersList from "../OrganisationUsersList";
 import OrganisationStats from "./OrganisationStats";
+import { injectParamsIntoPath } from "@/utils/application";
 
 interface OrganisationsListProps {
   organisations: Organisation[];
@@ -149,7 +151,14 @@ export default function OrganisationsList({
                       </ActionMenuItem>
                     </ActionMenu>
                   }>
-                  {organisation_name}
+                  <Link
+                    color="#fff"
+                    href={injectParamsIntoPath(
+                      routes.profileCustodianOrganisationsPeople.path,
+                      { id }
+                    )}>
+                    {organisation_name}
+                  </Link>
                 </AccordionTitle>
               </AccordionSummary>
               <AccordionDetails>
