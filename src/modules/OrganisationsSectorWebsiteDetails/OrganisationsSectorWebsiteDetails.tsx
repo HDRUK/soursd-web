@@ -2,17 +2,17 @@ import FieldsToText from "@/components/FieldsToText";
 import { Organisation } from "@/types/application";
 import { Box, Link } from "@mui/material";
 
-interface OrganisationsDigitalIdentifiersDetailsProps {
+interface OrganisationsSectorWebsiteDetailsProps {
   organisationData: Organisation;
   tKey?: string;
 }
 
 const NAMESPACE_TRANSLATION = "Organisations.SectorWebsite";
 
-export default function OrganisationsDigitalIdentifiersDetails({
+export default function OrganisationsSectorWebsiteDetails({
   organisationData,
   tKey = NAMESPACE_TRANSLATION,
-}: OrganisationsDigitalIdentifiersDetailsProps) {
+}: OrganisationsSectorWebsiteDetailsProps) {
   return (
     <FieldsToText
       data={organisationData}
