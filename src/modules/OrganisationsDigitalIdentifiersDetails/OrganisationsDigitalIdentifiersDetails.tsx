@@ -1,7 +1,7 @@
 import FieldsToText from "@/components/FieldsToText";
 import { Organisation } from "@/types/application";
-import OrganisationsCharitiesTable from "../OrganisationsCharitiesTable/OrganisationsCharitiesTable";
 import { Box } from "@mui/material";
+import CharitiesTable from "../CharitiesTable";
 
 interface OrganisationsDigitalIdentifiersDetailsProps {
   organisationData: Organisation;
@@ -33,9 +33,7 @@ export default function OrganisationsDigitalIdentifiersDetails({
                   xs: "100%",
                 },
               }}>
-              <OrganisationsCharitiesTable
-                charitiesData={organisationData.charities}
-              />
+              <CharitiesTable charitiesData={organisationData.charities} />
             </Box>
           ),
         },

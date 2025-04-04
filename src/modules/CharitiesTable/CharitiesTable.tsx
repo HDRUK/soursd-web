@@ -1,21 +1,21 @@
 import Table from "@/components/Table";
-import { Charity, Organisation } from "@/types/application";
+import { Charity } from "@/types/application";
 import { Link } from "@mui/material";
 import { ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
 
-interface OrganisationsCharitiesTableProps {
+interface CharitiesTableProps {
   charitiesData: Charity[];
   tKey?: string;
 }
 
-const NAMESPACE_TRANSLATION = "Organisations.Charities";
+const NAMESPACE_TRANSLATION = "Charities";
 
-export default function OrganisationsCharitiesTable({
+export default function CharitiesTable({
   charitiesData,
   tKey = NAMESPACE_TRANSLATION,
-}: OrganisationsCharitiesTableProps) {
-  const t = useTranslations(NAMESPACE_TRANSLATION);
+}: CharitiesTableProps) {
+  const t = useTranslations(tKey);
 
   const columns: ColumnDef<Charity>[] = [
     {
