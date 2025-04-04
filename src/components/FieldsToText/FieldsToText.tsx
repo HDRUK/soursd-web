@@ -8,7 +8,7 @@ interface FieldsToTextProps<T> {
   keys: (
     | Extract<keyof T, string>
     | {
-        column_id: Extract<keyof T, string>;
+        column_id?: Extract<keyof T, string>;
         heading?: ReactNode;
         content?: ReactNode;
       }
@@ -26,6 +26,8 @@ export default function FieldsToText<T>({
   const filteredKeys = useMemo(() => {
     return keys.filter(key => {
       if (typeof key !== "string") {
+        if (!key.column_id) return true;
+
         return Array.isArray(data[key.column_id])
           ? data[key.column_id].length
           : data[key.column_id] !== "";
@@ -54,7 +56,7 @@ export default function FieldsToText<T>({
         ) : (
           <div>
             <Typography variant="h6">
-              {key.heading || t(toCamelCase(key.column_id))}
+              {key.heading || t(toCamelCase(key.column_id as string))}
             </Typography>
             <Typography>
               {key.content || renderItems(data[key.column_id])}
