@@ -33,7 +33,7 @@
     "status_pending": "Pending",
     "status_completed": "Completed",
     "status_approved": "Approved",
-    "status_undefined": "Not Set",
+    "status_undefined": "None",
     "status_project_pending": "Pending",
     "status_project_completed": "Completed",
     "status_project_approved": "Approved",
@@ -41,7 +41,7 @@
     "status_affiliation_invited": "Invited",
     "status_affiliation_approved": "Approved",
     "status_affiliation_rejected": "Rejected",
-    "status_notSet": "Not Set",
+    "status_notSet": "None",
     "projectStatus": "Project status",
     "projectRole": "Project role",
     "actions": "Actions",
@@ -113,7 +113,7 @@
     "contacts": "Contacts",
     "contactsHeading": "Administrative Contacts",
     "uniqueIdentifierTitle": "SOURSD Identifier",
-    "uniqueIdentifierCaption": "This ‘key’ represents you as a Data Custodian within SOURSD. This is unique to you! Any time SOURSD sends information to you, or activates a callback, this identifier will be sent along with the payload. Meaning you can always trust the source of information.",
+    "uniqueIdentifierCaption": "This ‘key’ represents you as a Data Custodian within SOURSD. This is unique to you! You may need this key if utilising SOURSD Application Programming Interfaces (APIs).",
     "details": "Profile",
     "users": "Users",
     "configuration": "Configuration",
@@ -766,6 +766,7 @@
     "toolTipMarkAsUnread": "Mark message as unread and close!"
   },
   "Organisation": {
+    "uniqueIdentifierCaption": "This ‘key’ represents you as an Organisation within SOURSD. This is unique to you! Your Organisation will have a unique SOURSD identifier associated with your account once your Organisation profile has been completed. This persistent unique identifier will be used to notify Data Custodians of any key changes to your Organisation profile that may impact data access decisions.",
     "inviteOrganisationTitle": "Request Organisation to be invited to create a SOURSD account",
     "inviteOrganisation": "Invite Organisation",
     "postOrganisationUnclaimedError": "Unable to invite the Organisation",
@@ -776,6 +777,7 @@
     "inviteOrganisationSuccess": "You have successfully invited the Organisation. Bear in mind before you can select them they will need to accept the invite"
   },
   "Profile": {
+    "uniqueIdentifierCaption": "This ‘key’ represents you as a User within SOURSD. This is unique to you! Custodians may ask you for this to confirm your identity.",
     "memberIdDescription": "Depending on your selected relationship with the Organisation",
     "home": "Home",
     "inviteThemHere": "Invite them here",

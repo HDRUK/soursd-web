@@ -9,15 +9,13 @@ import { StyledMask } from "./Mask.styles";
 
 export interface QuoteProps extends Omit<BoxProps, "outlined"> {
   size?: string;
-  outlined?: boolean;
   color?: AugmentedColorPaletteOptions;
 }
 
 export default function Mask({
   children,
   size = "80px",
-  outlined = true,
-  color = "primary",
+  color = "lightGreen",
   ...restProps
 }: QuoteProps) {
   const theme = useTheme();
@@ -27,7 +25,6 @@ export default function Mask({
       {...restProps}
       width={size}
       height={size}
-      outlined={outlined}
       color={color}
       theme={theme}>
       <div>{children}</div>

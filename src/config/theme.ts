@@ -124,6 +124,8 @@ const PALETTE_THEME_PURPLE_BLUE = {
     },
     notificationActive: createColor("#DC3645"),
     notification: createColor("#5769B2"),
+    borderDefault: createColor("#D9D9D9"),
+    lightGreen: createColor("#B8E2D8"),
   },
 };
 
