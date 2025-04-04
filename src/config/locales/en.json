@@ -1065,6 +1065,12 @@
     },
     "alsoApprovedOn": "Also Approved On: {projects} "
   },
+  "Organisations": {
+    "NameAddress": {
+      "organisationName": "Name",
+      "address": "Address"
+    }
+  },
   "OrganisationsList": {
     "searchPlaceholder": "Search Organisations",
     "errorResultsProjects": "Unable to get a list of organisations. Please try again or contact us on <contact></contact>",
