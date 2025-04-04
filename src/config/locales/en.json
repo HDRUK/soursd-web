@@ -1080,6 +1080,13 @@
       "hasSoursdId": "Is Registered"
     }
   },
+  "Organisations": {
+    "SectorWebsite": {
+      "sectorName": "Organisation sector",
+      "website": "Organisation website",
+      "organisationSize": "Organisation size"
+    }
+  },
   "Projects": {
     "okButton": "OK",
     "gatewayImportSuccess": "Data imported successfully from the Health Data Research Gateway",
