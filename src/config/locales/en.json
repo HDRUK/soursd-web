@@ -1080,6 +1080,19 @@
       "hasSoursdId": "Is Registered"
     }
   },
+  "Organisations": {
+    "Charities": {
+      "name": "Name",
+      "registrationId": "Registration ID",
+      "website": "Website"
+    },
+    "DigitalIdentifiers": {
+      "companiesHouseNo": "Companies House ID",
+      "rorId": "ROR ID",
+      "charities": "Charities",
+      "organisationUniqueId": "SOURSD identifier"
+    }
+  },
   "Projects": {
     "okButton": "OK",
     "gatewayImportSuccess": "Data imported successfully from the Health Data Research Gateway",
