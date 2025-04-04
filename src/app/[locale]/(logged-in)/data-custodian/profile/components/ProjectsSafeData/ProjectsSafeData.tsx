@@ -29,13 +29,15 @@ const PAYLOAD_FIELDS = [
   "access_date",
 ];
 
-export default function ProjectsSafeOutputs() {
+export default function ProjectsSafeData() {
   const t = useTranslations(NAMESPACE_TRANSLATION);
-  const queryClient = useQueryClient();
-  const { project, custodian } = useStore(state => ({
-    project: state.getProject(),
+
+  const { custodian, project } = useStore(state => ({
     custodian: state.getCustodian(),
+    project: state.getCurrentProject(),
   }));
+
+  const queryClient = useQueryClient();
 
   const { mutateAsync, mutateState } = useMutateProjectDetails(project.id);
 

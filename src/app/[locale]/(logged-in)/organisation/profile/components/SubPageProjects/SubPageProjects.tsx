@@ -18,8 +18,8 @@ export default function SubPageProjects({ params, projectData }: PageProps) {
   const tabId = PageTabs.PROJECTS;
 
   const [project, setProject] = useStore(state => [
-    state.getProject(),
-    state.setProject,
+    state.getCurrentProject(),
+    state.setCurrentProject,
   ]);
 
   useEffect(() => {

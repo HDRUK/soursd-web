@@ -62,13 +62,21 @@ interface StoreState {
     permissions: Permission[];
     custodian?: Custodian;
     histories?: StoreUserHistories;
-    project?: ResearcherProject;
     projectRoles?: ProjectRole[];
+  };
+  current: {
+    project?: ResearcherProject;
+    organisation?: Organisation;
+    user?: User;
   };
   application: StoreApplication;
   setRoutes: (routes: Routes) => void;
-  getProject: () => ResearcherProject;
-  setProject: (project: ResearcherProject) => void;
+  getCurrentProject: () => ResearcherProject;
+  setCurrentProject: (project: ResearcherProject) => void;
+  getCurrentUser: () => User;
+  setCurrentUser: (user: User) => void;
+  getCurrentOrganisation: () => Organisation;
+  setCurrentOrganisation: (organisation: Organisation) => void;
   getUser: () => User | undefined;
   setUser: (user: User) => void;
   getSectors: () => Sector[];
@@ -103,14 +111,32 @@ const storeMethods = (set: StoreSet, get: StoreGet) => ({
         state.config.entries = routes;
       })
     ),
-  setProject: (project: ResearcherProject) =>
+  setCurrentProject: (project: ResearcherProject) =>
     set(
       produce(state => {
-        state.config.project = project;
+        state.current.project = project;
       })
     ),
-  getProject: () => {
-    return get().config.project;
+  getCurrentProject: () => {
+    return get().current.project;
+  },
+  setCurrentUser: (user: User) =>
+    set(
+      produce(state => {
+        state.current.user = user;
+      })
+    ),
+  getCurrentUser: () => {
+    return get().current.user;
+  },
+  setCurrentOrganisation: (organisation: Organisation) =>
+    set(
+      produce(state => {
+        state.current.organisation = organisation;
+      })
+    ),
+  getCurrentOrganisation: () => {
+    return get().current.organisation;
   },
   setUser: (user: User) =>
     set(
@@ -202,6 +228,7 @@ const useStore = create<StoreState>((set, get) => ({
     sectors: [],
     roles: [],
   },
+  current: {},
   application: { routes: ROUTES, system: {} },
   ...storeMethods(set, get),
 }));
