@@ -1,9 +1,9 @@
 "use client";
 
 import { useStore } from "@/data/store";
-import { notFound } from "next/navigation";
 import ProjectsSafePeople from "@/modules/ProjectsSafePeople";
 import { EntityType } from "@/types/api";
+import { notFound } from "next/navigation";
 import {
   ConfigurationSubTabs,
   getSubTabs,
@@ -12,8 +12,15 @@ import {
   ProjectsSubTabs,
   UserSubTabs,
 } from "../../consts/tabs";
-import ProjectsSafeProject from "../ProjectsSafeProject";
+import Integrations from "../Integrations";
+import OrganisationsDataSecurity from "../OrganisationsDataSecurity";
+import OrganisationsDigitalIdentifiers from "../OrganisationsDigitalIdentifiers";
+import OrganisationsNameAddress from "../OrganisationsNameAddress";
+import OrganisationsPeople from "../OrganisationsPeople";
+import OrganisationsSectorWebsite from "../OrganisationsSectorWebsite";
 import ProjectsSafeData from "../ProjectsSafeData";
+import ProjectsSafeOutputs from "../ProjectsSafeOutputs";
+import ProjectsSafeProject from "../ProjectsSafeProject";
 import ProjectsSafeSettings from "../ProjectsSafeSettings";
 import Rules from "../Rules";
 import UserAffiliations from "../UserAffiliations";
@@ -23,15 +30,7 @@ import UserIdentity from "../UserIdentity";
 import UserProjects from "../UserProjects";
 import UserTrainingAccreditations from "../UserTrainingAccreditations";
 import ValidationChecks from "../ValidationChecks";
-import Integrations from "../Integrations";
 import Webhooks from "../Webhooks";
-import ProjectsSafeOutputs from "../ProjectsSafeOutputs";
-import OrganisationsPeople from "../OrganisationsPeople";
-import OrganisationsNameAddress from "../OrganisationsNameAddress";
-import OrganisationsDigitalIdentifiers from "../OrganisationsDigitalIdentifiers";
-import OrganisationsSectorWebsite from "../OrganisationsSectorWebsite";
-import OrganisationsSubsidiaries from "../OrganisationsSubsidiaries";
-import OrganisationsDataSecurity from "../OrganisationsDataSecurity";
 
 interface TabsContentsProps {
   tabId: PageTabs;
@@ -117,9 +116,6 @@ export default function SubTabsContents({
       break;
     case OrganisationsSubTabs.SECTOR_WEBSITE:
       content = <OrganisationsSectorWebsite />;
-      break;
-    case OrganisationsSubTabs.SUBSIDIARIES:
-      content = <OrganisationsSubsidiaries />;
       break;
     case OrganisationsSubTabs.DATA_SECURITY:
       content = <OrganisationsDataSecurity />;

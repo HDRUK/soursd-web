@@ -8,7 +8,7 @@ interface OrganisationsDigitalIdentifiersDetailsProps {
   tKey?: string;
 }
 
-const NAMESPACE_TRANSLATION = "Organisations.DigitalIdentifiers";
+const NAMESPACE_TRANSLATION = "Organisations";
 
 export default function OrganisationsDigitalIdentifiersDetails({
   organisationData,
@@ -29,8 +29,7 @@ export default function OrganisationsDigitalIdentifiersDetails({
             <Box
               sx={{
                 maxWidth: {
-                  md: "50%",
-                  xs: "100%",
+                  lg: "50%",
                 },
               }}>
               <CharitiesTable charitiesData={organisationData.charities} />

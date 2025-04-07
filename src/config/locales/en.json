@@ -1067,12 +1067,6 @@
     },
     "alsoApprovedOn": "Also Approved On: {projects} "
   },
-  "Organisations": {
-    "NameAddress": {
-      "organisationName": "Name",
-      "address": "Address"
-    }
-  },
   "OrganisationsList": {
     "searchPlaceholder": "Search Organisations",
     "errorResultsProjects": "Unable to get a list of organisations. Please try again or contact us on <contact></contact>",
@@ -1086,23 +1080,26 @@
       "hasSoursdId": "Is Registered"
     }
   },
+  "Charities": {
+    "name": "Name",
+    "registrationId": "Registration ID",
+    "website": "Website"
+  },
+  "Subsidiaries": {
+    "name": "Name",
+    "address": "Address"
+  },
   "Organisations": {
-    "Charities": {
-      "name": "Name",
-      "registrationId": "Registration ID",
-      "website": "Website"
-    },
-    "DigitalIdentifiers": {
-      "companiesHouseNo": "Companies House ID",
-      "rorId": "ROR ID",
-      "charities": "Charities",
-      "organisationUniqueId": "SOURSD identifier"
-    },
-    "SectorWebsite": {
-      "sectorName": "Organisation sector",
-      "website": "Organisation website",
-      "organisationSize": "Organisation size"
-    }
+    "subsidiaries": "UK subsidiaries",
+    "organisationName": "Organisation name",
+    "address": "Address",
+    "companiesHouseNo": "Companies House ID",
+    "rorId": "ROR ID",
+    "charities": "Charities",
+    "organisationUniqueId": "SOURSD identifier",
+    "sectorName": "Organisation sector",
+    "website": "Organisation website",
+    "organisationSize": "Organisation size"
   },
   "Projects": {
     "okButton": "OK",
