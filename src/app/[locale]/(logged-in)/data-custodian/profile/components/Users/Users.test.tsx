@@ -20,7 +20,7 @@ const defaultUser = mockedUser();
 
 describe("<User />", () => {
   it("has the correct number of results", async () => {
-    render(<Users />);
+    render(<Users variant="custodian" />);
 
     const results = await screen.findAllByRole("listitem");
 
@@ -28,7 +28,7 @@ describe("<User />", () => {
   });
 
   it("has the correct content", async () => {
-    render(<Users />);
+    render(<Users variant="custodian" />);
 
     await waitFor(() => {
       expect(screen.getAllByText("Added on: 01/01/2024")[0]);
@@ -40,6 +40,6 @@ describe("<User />", () => {
   });
 
   it("has no accessibility violations", async () => {
-    commonAccessibilityTests(render(<Users />));
+    commonAccessibilityTests(render(<Users variant="custodian" />));
   });
 });
