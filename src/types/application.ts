@@ -91,7 +91,7 @@ interface CustodianUser {
   user_permissions: UserPermission[];
 }
 
-interface CustodianProjectUser {
+type CustodianProjectUser = ModelState<{
   user_id: number;
   first_name: string;
   last_name: string;
@@ -102,8 +102,7 @@ interface CustodianProjectUser {
   project_role: string;
   organisation_id: number;
   organisation_name: string;
-  model_state_slug: Status;
-}
+}>;
 
 interface UserProfileCompletionFields {
   name: string;

@@ -88,7 +88,7 @@ export default function Users({ variant }: ProjectsProps) {
     {
       accessorKey: "status",
       header: t("status"),
-      cell: info => <ChipStatus status={info.row.original.model_state_slug} />,
+      cell: info => <ChipStatus status={info.row.original.model_state?.state.slug} />,
     },
   ];
 
