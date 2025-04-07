@@ -61,10 +61,6 @@ export default function Users({ variant }: ProjectsProps) {
     last_page,
     total,
     setPage,
-    updateQueryParams,
-    resetQueryParams,
-    handleSortToggle,
-    handleFieldToggle,
     queryParams,
     ...queryState
   } = useProjectsUsersQuery(entityId, {
@@ -93,9 +89,7 @@ export default function Users({ variant }: ProjectsProps) {
     {
       accessorKey: "status",
       header: t("status"),
-      cell: info => (
-        <ChipStatus status={info.row.original.model_state_slug} />
-      ),
+      cell: info => <ChipStatus status={info.row.original.model_state_slug} />,
     },
   ];
 
