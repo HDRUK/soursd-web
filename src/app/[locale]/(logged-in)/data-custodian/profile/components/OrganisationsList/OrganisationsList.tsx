@@ -9,6 +9,7 @@ import { PostApprovalPayloadWithEntity } from "@/services/approvals";
 import { Organisation } from "@/services/organisations";
 import { EntityType } from "@/types/api";
 import { QueryState } from "@/types/form";
+import { injectParamsIntoPath } from "@/utils/application";
 import BusinessIcon from "@mui/icons-material/Business";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { LoadingButton } from "@mui/lab";
@@ -24,7 +25,6 @@ import { useState } from "react";
 import OrganisationDetailsModal from "../OrganisationDetailsModal";
 import OrganisationUsersList from "../OrganisationUsersList";
 import OrganisationStats from "./OrganisationStats";
-import { injectParamsIntoPath } from "@/utils/application";
 
 interface OrganisationsListProps {
   organisations: Organisation[];
