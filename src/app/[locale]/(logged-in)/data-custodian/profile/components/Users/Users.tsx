@@ -61,7 +61,6 @@ export default function Users({ variant }: ProjectsProps) {
     last_page,
     total,
     setPage,
-    queryParams,
     ...queryState
   } = useProjectsUsersQuery(entityId, {
     variant,
