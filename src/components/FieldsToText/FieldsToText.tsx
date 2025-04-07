@@ -10,7 +10,7 @@ interface FieldsToTextProps<T> {
   keys: (
     | string
     | {
-        column_id: string;
+        column_id?: string;
         heading?: ReactNode;
         content?: ReactNode;
       }
@@ -27,13 +27,8 @@ export default function FieldsToText<T>({
 
   const filteredKeys = useMemo(() => {
     return keys.filter(key => {
-      if (typeof key !== "string") {
-        const content = _get(data, key.column_id);
-
-        return Array.isArray(content) ? content.length : content !== "";
-      }
-
-      const content = _get(data, key);
+      const content =
+        key !== "string" ? _get(data, key.column_id) : _get(data, key);
 
       return Array.isArray(content) ? content.length : content !== "";
     });

@@ -61,10 +61,10 @@ export default function Home({ custodian }: HomeProps) {
             identifier={custodian.unique_identifier}
             description={t("uniqueIdentifierCaption")}>
             {custodian.client_id && (
-              <>
+              <div>
                 <Typography fontWeight={700}>Client id:</Typography>
                 <Text copyable>{custodian.client_id}</Text>
-              </>
+              </div>
             )}
           </SoursdCard>
         </PageColumnDetails>
