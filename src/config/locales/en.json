@@ -1087,6 +1087,17 @@
     }
   },
   "Organisations": {
+    "Charities": {
+      "name": "Name",
+      "registrationId": "Registration ID",
+      "website": "Website"
+    },
+    "DigitalIdentifiers": {
+      "companiesHouseNo": "Companies House ID",
+      "rorId": "ROR ID",
+      "charities": "Charities",
+      "organisationUniqueId": "SOURSD identifier"
+    },
     "SectorWebsite": {
       "sectorName": "Organisation sector",
       "website": "Organisation website",
