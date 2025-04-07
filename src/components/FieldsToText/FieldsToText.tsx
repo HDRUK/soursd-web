@@ -27,7 +27,8 @@ export default function FieldsToText<T>({
 
   const filteredKeys = useMemo(() => {
     return keys.filter(key => {
-      const content = key !== "string" ? _get(data, key.column_id) :  _get(data, key);
+      const content =
+        key !== "string" ? _get(data, key.column_id) : _get(data, key);
 
       return Array.isArray(content) ? content.length : content !== "";
     });
