@@ -1,5 +1,5 @@
 import { EMAIL_TEMPLATE } from "@/consts/application";
-import { Custodian } from "@/types/application";
+import { Custodian, ProjectAllUser } from "@/types/application";
 
 interface GetCustodianInviteResponse {
   name: string;
@@ -58,6 +58,8 @@ type PostCustodianPayload = Custodian;
 type PostCustodianResponse = number;
 type PostCustodianInviteResponse = Custodian;
 
+type GetCustodianProjectUserResponse = ProjectAllUser[];
+
 type EntityType =
   | "decision_models"
   | "user_validation_rules"
@@ -80,4 +82,5 @@ export type {
   GetCustodianEntityModelResponse,
   PutCustodianActiveEntityModelPayload,
   PutCustodianActiveEntityModelResponse,
+  GetCustodianProjectUserResponse,
 };
