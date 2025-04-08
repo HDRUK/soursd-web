@@ -10,12 +10,6 @@ const NAMESPACE_TRANSLATION = "Application";
 export default function UserTrainingAccreditations() {
   const t = useTranslations(NAMESPACE_TRANSLATION);
 
-  const { custodian, user } = useStore(state => ({
-    custodian: state.getCustodian(),
-    // project: state.getProject(),
-    user: state.getUser(),
-  }));
-
   return (
     <PageBodyContainer>
       <Typography variant="h2">{t("trainingAndAccreditations")}</Typography>
