@@ -25,7 +25,7 @@ export default function UserTrainingAccreditations() {
       <PageSection sx={{ my: 3 }}>
         <Training variant={EntityType.CUSTODIAN} />
       </PageSection>
-      <PageSection>
+      <PageSection sx={{ mb: 3 }}>
         <ProfessionalsRegistration variant={EntityType.CUSTODIAN} />
       </PageSection>
     </PageBodyContainer>
