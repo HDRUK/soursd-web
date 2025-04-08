@@ -7,7 +7,7 @@ interface OrganisationsSectorWebsiteDetailsProps {
   tKey?: string;
 }
 
-const NAMESPACE_TRANSLATION = "Organisations.SectorWebsite";
+const NAMESPACE_TRANSLATION = "Organisations";
 
 export default function OrganisationsSectorWebsiteDetails({
   organisationData,

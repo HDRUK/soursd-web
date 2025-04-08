@@ -53,10 +53,6 @@ const ROUTES: Routes = {
     path: "/data-custodian/profile/organisations/{id}/sector_website",
     permissions: [UserGroup.CUSTODIANS],
   },
-  profileCustodianOrganisationsSubsidiaries: {
-    path: "/data-custodian/profile/organisations/{id}/subsidiaries",
-    permissions: [UserGroup.CUSTODIANS],
-  },
   profileCustodianOrganisationsDataSecurity: {
     path: "/data-custodian/profile/organisations/{id}/data_security",
     permissions: [UserGroup.CUSTODIANS],
