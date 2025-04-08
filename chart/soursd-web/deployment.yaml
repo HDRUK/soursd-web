@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: speedi-web
+  name: soursd-web
   labels:
-    app: speedi-web
+    app: soursd-web
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: speedi-web
+      app: soursd-web
   template:
     metadata:
       labels:
-        app: speedi-web
+        app: soursd-web
     spec:
       containers:
-        - name: speedi-web
-          image: hdruk/speedi-web:latest
+        - name: soursd-web
+          image: hdruk/soursd-web:latest
           ports:
             - containerPort: 3000
