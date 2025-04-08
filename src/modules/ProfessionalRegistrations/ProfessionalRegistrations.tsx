@@ -24,11 +24,18 @@ import { ColumnDef } from "@tanstack/react-table";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import ProfessionalRegistrationsFormModal from "./ProfessionalRegistrationsFormModal";
+import { EntityType } from "@/types/api";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfessionalRegistrations";
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
 
-export default function ProfessionalRegistrations() {
+interface ProfessionalRegistrationsProps {
+  variant: EntityType;
+}
+
+export default function ProfessionalRegistrations({
+  variant,
+}: ProfessionalRegistrationsProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editRecord, setEditRecord] = useState<
     ResearcherProfessionalRegistration | undefined
@@ -176,31 +183,39 @@ export default function ProfessionalRegistrations() {
         header: tProfile("id"),
         cell: info => info.getValue(),
       },
-      {
-        id: "actions",
-        cell: ({ row }) => (
-          <ActionMenu aria-label={`Action for ${row.original.name}`}>
-            <ActionMenuItem
-              onClick={() => {
-                setEditRecord(row.original);
-                setIsEditMode(true);
-                setIsModalOpen(true);
-              }}
-              sx={{ color: "menuList1.main" }}
-              icon={<CreateOutlinedIcon sx={{ color: "menuList1.main" }} />}>
-              {tApplication("edit")}
-            </ActionMenuItem>
-            <ActionMenuItem
-              onClick={() => {
-                handleDelete(row.original.id);
-              }}
-              sx={{ color: "error.main" }}
-              icon={<DeleteOutlineOutlinedIcon sx={{ color: "error.main" }} />}>
-              {tApplication("delete")}
-            </ActionMenuItem>
-          </ActionMenu>
-        ),
-      },
+      ...(variant === EntityType.USER
+        ? [
+            {
+              id: "actions",
+              cell: ({ row }) => (
+                <ActionMenu aria-label={`Action for ${row.original.name}`}>
+                  <ActionMenuItem
+                    onClick={() => {
+                      setEditRecord(row.original);
+                      setIsEditMode(true);
+                      setIsModalOpen(true);
+                    }}
+                    sx={{ color: "menuList1.main" }}
+                    icon={
+                      <CreateOutlinedIcon sx={{ color: "menuList1.main" }} />
+                    }>
+                    {tApplication("edit")}
+                  </ActionMenuItem>
+                  <ActionMenuItem
+                    onClick={() => {
+                      handleDelete(row.original.id);
+                    }}
+                    sx={{ color: "error.main" }}
+                    icon={
+                      <DeleteOutlineOutlinedIcon sx={{ color: "error.main" }} />
+                    }>
+                    {tApplication("delete")}
+                  </ActionMenuItem>
+                </ActionMenu>
+              ),
+            },
+          ]
+        : []),
     ],
     [tProfile, tApplication, handleDelete]
   );
@@ -236,18 +251,20 @@ export default function ProfessionalRegistrations() {
         total={professionalRegistrations.length}
         sx={{ maxWidth: "50%" }}
       />
-      <Button
-        startIcon={<AddIcon />}
-        variant="outlined"
-        color="primary"
-        onClick={() => {
-          setEditRecord(undefined);
-          setIsEditMode(false);
-          setIsModalOpen(true);
-        }}
-        sx={{ mt: 2 }}>
-        {tProfile("addProfessionalRegistration")}
-      </Button>
+      {variant === EntityType.USER && (
+        <Button
+          startIcon={<AddIcon />}
+          variant="outlined"
+          color="primary"
+          onClick={() => {
+            setEditRecord(undefined);
+            setIsEditMode(false);
+            setIsModalOpen(true);
+          }}
+          sx={{ mt: 2 }}>
+          {tProfile("addProfessionalRegistration")}
+        </Button>
+      )}
     </>
   );
 }

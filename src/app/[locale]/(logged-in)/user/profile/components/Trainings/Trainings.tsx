@@ -25,7 +25,7 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useMemo } from "react";
 import ReactDOMServer from "react-dom/server";
-import ProfessionalsRegistration from "../ProfessionalRegistrations";
+import ProfessionalsRegistration from "@/modules/ProfessionalRegistrations";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
