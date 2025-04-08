@@ -2,6 +2,7 @@ import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
 import { locales } from "@/config";
 import { CookieProvider } from "@/context/CookieContext";
 import ToastProvider from "@/context/ToastProvider";
+import BannerMessage from "@/modules/BannerMessage";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import GlobalStyles from "@mui/material/GlobalStyles";
 import { Box } from "@mui/system";
@@ -12,7 +13,6 @@ import { notFound } from "next/navigation";
 import { PropsWithChildren } from "react";
 import "../global.css";
 import ReactQueryClientProvider from "./components/ReactQueryClientProvider";
-import BannerMessage from "@/modules/BannerMessage";
 
 const inter = Inter({ subsets: ["latin"] });
 
