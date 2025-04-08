@@ -1067,12 +1067,6 @@
     },
     "alsoApprovedOn": "Also Approved On: {projects} "
   },
-  "Organisations": {
-    "NameAddress": {
-      "organisationName": "Name",
-      "address": "Address"
-    }
-  },
   "OrganisationsList": {
     "searchPlaceholder": "Search Organisations",
     "errorResultsProjects": "Unable to get a list of organisations. Please try again or contact us on <contact></contact>",
@@ -1087,6 +1081,23 @@
     }
   },
   "Organisations": {
+    "DataSecurityCompliance": {
+      "info": "Information",
+      "name": "Name",
+      "number": "ID",
+      "id": "ID",
+      "expiryDate": "Expiry date",
+      "certificate": "Certificate",
+      "downloadEvidence": "Download signed declaration",
+      "ceCertification": "Cyber Essentials Certified",
+      "cePlusCertification": "Cyber Essentials Plus Certified",
+      "iso27001Certification": "ISO27001 Accredited",
+      "dsptkOdsCode": "DSPT Certified"
+    },
+    "NameAddress": {
+      "organisationName": "Name",
+      "address": "Address"
+    },
     "Charities": {
       "name": "Name",
       "registrationId": "Registration ID",

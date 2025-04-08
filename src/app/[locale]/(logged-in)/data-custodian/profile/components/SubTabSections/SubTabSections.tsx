@@ -220,7 +220,7 @@ export default function SubTabsSections({
         label: t("organisationsDataSecurity"),
         value: OrganisationsSubTabs.DATA_SECURITY,
         href: injectParamsIntoPath(
-          routes.profileCustodianOrganisationsDataSecurity.path,
+          routes.profileCustodianOrganisationsDataSecurityCompliance.path,
           {
             id,
           }

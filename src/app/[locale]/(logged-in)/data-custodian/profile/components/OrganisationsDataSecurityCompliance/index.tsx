@@ -1,0 +1,3 @@
+import OrganisationsDataSecurityCompliance from "./OrganisationsDataSecurityCompliance";
+
+export default OrganisationsDataSecurityCompliance;

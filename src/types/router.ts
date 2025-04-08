@@ -35,7 +35,7 @@ interface Routes {
   profileCustodianOrganisationsDigitalIdentifiers: RouteConfig;
   profileCustodianOrganisationsSectorWebsite: RouteConfig;
   profileCustodianOrganisationsSubsidiaries: RouteConfig;
-  profileCustodianOrganisationsDataSecurity: RouteConfig;
+  profileCustodianOrganisationsDataSecurityCompliance: RouteConfig;
   profileCustodianConfiguration: RouteConfig;
   profileCustodianConfigurationWebhooks: RouteConfig;
   profileCustodianConfigurationIntegrations: RouteConfig;
