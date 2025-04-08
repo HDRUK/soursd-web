@@ -207,16 +207,6 @@ export default function SubTabsSections({
         ),
       },
       {
-        label: t("organisationsSubsidiaries"),
-        value: OrganisationsSubTabs.SUBSIDIARIES,
-        href: injectParamsIntoPath(
-          routes.profileCustodianOrganisationsSubsidiaries.path,
-          {
-            id,
-          }
-        ),
-      },
-      {
         label: t("organisationsDataSecurity"),
         value: OrganisationsSubTabs.DATA_SECURITY_COMPLIANCE,
         href: injectParamsIntoPath(

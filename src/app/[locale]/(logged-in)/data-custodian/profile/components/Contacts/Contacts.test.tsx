@@ -6,7 +6,7 @@ import {
   screen,
   waitFor,
 } from "@/utils/testUtils";
-import Users from "./Users";
+import Contacts from "./Contacts";
 
 jest.mock("@/services/custodians");
 jest.mock("@/data/store");
@@ -18,9 +18,9 @@ const defaultUser = mockedUser();
   null,
 ]);
 
-describe("<User />", () => {
+describe("<Contacts />", () => {
   it("has the correct number of results", async () => {
-    render(<Users />);
+    render(<Contacts />);
 
     const results = await screen.findAllByRole("listitem");
 
@@ -28,7 +28,7 @@ describe("<User />", () => {
   });
 
   it("has the correct content", async () => {
-    render(<Users />);
+    render(<Contacts />);
 
     await waitFor(() => {
       expect(screen.getAllByText("Added on: 01/01/2024")[0]);
@@ -40,6 +40,6 @@ describe("<User />", () => {
   });
 
   it("has no accessibility violations", async () => {
-    commonAccessibilityTests(render(<Users />));
+    commonAccessibilityTests(render(<Contacts />));
   });
 });

@@ -18,7 +18,6 @@ import OrganisationsDigitalIdentifiers from "../OrganisationsDigitalIdentifiers"
 import OrganisationsNameAddress from "../OrganisationsNameAddress";
 import OrganisationsPeople from "../OrganisationsPeople";
 import OrganisationsSectorWebsite from "../OrganisationsSectorWebsite";
-import OrganisationsSubsidiaries from "../OrganisationsSubsidiaries";
 import ProjectsSafeData from "../ProjectsSafeData";
 import ProjectsSafeOutputs from "../ProjectsSafeOutputs";
 import ProjectsSafeProject from "../ProjectsSafeProject";
@@ -117,9 +116,6 @@ export default function SubTabsContents({
       break;
     case OrganisationsSubTabs.SECTOR_WEBSITE:
       content = <OrganisationsSectorWebsite />;
-      break;
-    case OrganisationsSubTabs.SUBSIDIARIES:
-      content = <OrganisationsSubsidiaries />;
       break;
     case OrganisationsSubTabs.DATA_SECURITY_COMPLIANCE:
       content = <OrganisationsDataSecurityCompliance />;

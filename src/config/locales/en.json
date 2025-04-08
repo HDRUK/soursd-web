@@ -43,7 +43,7 @@
     "status_affiliation_rejected": "Rejected",
     "status_notSet": "None",
     "projectStatus": "Project status",
-    "projectRole": "Project role",
+    "projectRole": "Project Role",
     "actions": "Actions",
     "sortBy": "Sort by",
     "sortedBy": "Sorted by",
@@ -192,7 +192,8 @@
     "dataUseDescription": "Data description",
     "dataUseDescriptionPlaceholder": "Data description",
     "addNewMemberButton": "Add a new member",
-    "requestAddNewMemberButton": "Request member is affiliated"
+    "requestAddNewMemberButton": "Request member is affiliated",
+    "userListDescription": "This table enables Validation Team members to track and manage application workflow from initial enquiry to project closure.  Clicking on a User will show you more information and next steps."
   },
   "OrganisationStats": {
     "affiliatedUsers": "Affiliated Users",
@@ -1080,6 +1081,15 @@
       "hasSoursdId": "Is Registered"
     }
   },
+  "Charities": {
+    "name": "Name",
+    "registrationId": "Registration ID",
+    "website": "Website"
+  },
+  "Subsidiaries": {
+    "name": "Name",
+    "address": "Address"
+  },
   "Organisations": {
     "DataSecurityCompliance": {
       "info": "Information",
@@ -1114,6 +1124,16 @@
       "website": "Organisation website",
       "organisationSize": "Organisation size"
     }
+    "subsidiaries": "UK subsidiaries",
+    "organisationName": "Organisation name",
+    "address": "Address",
+    "companiesHouseNo": "Companies House ID",
+    "rorId": "ROR ID",
+    "charities": "Charities",
+    "organisationUniqueId": "SOURSD identifier",
+    "sectorName": "Organisation sector",
+    "website": "Organisation website",
+    "organisationSize": "Organisation size"
   },
   "Projects": {
     "okButton": "OK",
@@ -1141,6 +1161,8 @@
     "startDate": "Start date",
     "projects": "Projects",
     "users": "Users",
+    "userName": "Name",
+    "organisation": "Organisation",
     "organisations": "Organisation(s)",
     "status": "Status",
     "filterActions": {
