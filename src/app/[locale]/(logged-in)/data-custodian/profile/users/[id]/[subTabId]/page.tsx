@@ -1,7 +1,7 @@
 "use client";
 
 import LoadingWrapper from "@/components/LoadingWrapper";
-import { getCustodianUserQuery } from "@/services/custodian_users";
+import { getUserQuery } from "@/services/users";
 import { useQuery } from "@tanstack/react-query";
 import { notFound } from "next/navigation";
 import SubPageUsers from "../../../components/SubPageUsers";
@@ -15,7 +15,7 @@ interface UsersSubPageProps {
 }
 
 function UsersSubPage({ params: { subTabId, id } }: UsersSubPageProps) {
-  const { data: user, isPending, isFetched } = useQuery(getCustodianUserQuery(+id));
+  const { data: user, isPending, isFetched } = useQuery(getUserQuery(+id));
 
   if (!user?.data && isFetched) {
     notFound();

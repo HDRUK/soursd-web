@@ -43,14 +43,9 @@ export default function Training({ variant }: TrainingProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_TRAINING);
   const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
-  console.log(variant, variant === EntityType.USER);
-  console.log(useStore(store => store.config));
-  // if ( variant === EntityType.USER) {
-    const user = useStore(store => store.config.user);
-  // }
-  // if ( variant === EntityType.CUSTODIAN) {
-  //   const user = useStore(store => store.config.custodian.);
-  // }
+
+  const user = useStore(store => store.config.user);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTraining, setSelectedTraining] = useState<
     ResearcherTraining | undefined
@@ -259,11 +254,21 @@ export default function Training({ variant }: TrainingProps) {
         formatShortDate(row.original.awarded_at),
     },
     {
-      header: "",
-      accessorKey: "actions",
+      header: t("trainingHistoryColumnExpiresAt"),
+      accessorKey: "expires_at",
       cell: ({ row }: { row: { original: ResearcherTraining } }) =>
-        renderActions(row.original),
+        formatShortDate(row.original.expires_at),
     },
+    ...(variant === EntityType.USER
+      ? [
+          {
+            header: "",
+            accessorKey: "actions",
+            cell: ({ row }: { row: { original: ResearcherTraining } }) =>
+              renderActions(row.original),
+          },
+        ]
+      : []),
   ];
   return (
     <>
@@ -278,27 +283,33 @@ export default function Training({ variant }: TrainingProps) {
         noResultsMessage={t("noResultsMessage")}
         sx={{ maxWidth: "75%" }}
       />
-      <Button
-        onClick={handleAddTraining}
-        variant="outlined"
-        color="primary"
-        startIcon={<AddIcon />}
-        sx={{ mt: 2 }}>
-        {t("addTrainingCourse")}
-      </Button>
+      {variant === EntityType.USER && (
+        <>
+          <Button
+            onClick={handleAddTraining}
+            variant="outlined"
+            color="primary"
+            startIcon={<AddIcon />}
+            sx={{ mt: 2 }}>
+            {t("addTrainingCourse")}
+          </Button>
 
-      <FormModal
-        open={isModalOpen}
-        heading={
-          selectedTraining ? t("editTrainingCourse") : t("addTrainingCourse")
-        }>
-        <TrainingForm
-          onSubmit={handleSubmit}
-          isPending={isPending || putTrainingsQueryState.isPending}
-          onCancel={handleCloseModal}
-          initialValues={selectedTraining}
-        />
-      </FormModal>
+          <FormModal
+            open={isModalOpen}
+            heading={
+              selectedTraining
+                ? t("editTrainingCourse")
+                : t("addTrainingCourse")
+            }>
+            <TrainingForm
+              onSubmit={handleSubmit}
+              isPending={isPending || putTrainingsQueryState.isPending}
+              onCancel={handleCloseModal}
+              initialValues={selectedTraining}
+            />
+          </FormModal>
+        </>
+      )}
     </>
   );
 }
