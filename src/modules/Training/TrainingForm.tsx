@@ -19,7 +19,7 @@ import {
   File as ApplicationFile,
   ResearcherTraining,
 } from "@/types/application";
-import FileUploadDetails from "../../app/[locale]/(logged-in)/user/profile/components/FileUploadDetails/FileUploadDetails";
+import FileUploadDetails from "../FileUploadDetails/FileUploadDetails";
 
 const NAMESPACE_TRANSLATION_FORM = "Form.Training";
 const NAMESPACE_TRANSLATION_FILE_UPLOAD = "Certification";
