@@ -33,11 +33,6 @@ export default function RootLayout({
 
   const messages = useMessages();
 
-  console.log(
-    "process.env.NEXT_PUBLIC_HIDE_BANNER",
-    process.env.NEXT_PUBLIC_HIDE_BANNER
-  );
-
   return (
     <html lang={locale}>
       <Box
