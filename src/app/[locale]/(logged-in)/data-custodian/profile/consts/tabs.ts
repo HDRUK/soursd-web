@@ -36,7 +36,7 @@ enum OrganisationsSubTabs {
   NAME_ADDRESS = "name_address",
   DIGITAL_IDENTIFIERS = "digital_identifiers",
   SECTOR_WEBSITE = "sector_website",
-  DATA_SECURITY = "data_security",
+  DATA_SECURITY_COMPLIANCE = "data_security_compliance",
 }
 
 type TabStructure = {

@@ -13,7 +13,7 @@ import {
   UserSubTabs,
 } from "../../consts/tabs";
 import Integrations from "../Integrations";
-import OrganisationsDataSecurity from "../OrganisationsDataSecurity";
+import OrganisationsDataSecurityCompliance from "../OrganisationsDataSecurityCompliance";
 import OrganisationsDigitalIdentifiers from "../OrganisationsDigitalIdentifiers";
 import OrganisationsNameAddress from "../OrganisationsNameAddress";
 import OrganisationsPeople from "../OrganisationsPeople";
@@ -117,8 +117,8 @@ export default function SubTabsContents({
     case OrganisationsSubTabs.SECTOR_WEBSITE:
       content = <OrganisationsSectorWebsite />;
       break;
-    case OrganisationsSubTabs.DATA_SECURITY:
-      content = <OrganisationsDataSecurity />;
+    case OrganisationsSubTabs.DATA_SECURITY_COMPLIANCE:
+      content = <OrganisationsDataSecurityCompliance />;
       break;
     default:
       content = null;
