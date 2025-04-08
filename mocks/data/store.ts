@@ -202,7 +202,11 @@ const mockedApiSectors = [
 const mockedStoreState = () => ({
   application: {
     routes: ROUTES,
-    system: {},
+    system: {
+      PER_PAGE: {
+        value: 25,
+      },
+    },
   },
   config: {
     histories: {

@@ -229,7 +229,7 @@ const useStore = create<StoreState>((set, get) => ({
     roles: [],
   },
   current: {},
-  application: { routes: ROUTES, system: {} },
+  application: { routes: ROUTES, system: { PER_PAGE: { value: 25 } } },
   ...storeMethods(set, get),
 }));
 

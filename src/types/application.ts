@@ -91,6 +91,19 @@ interface CustodianUser {
   user_permissions: UserPermission[];
 }
 
+type CustodianProjectUser = ModelState<{
+  user_id: number;
+  first_name: string;
+  last_name: string;
+  digi_ident: string;
+  registry_id: number;
+  project_id: number;
+  project_name: string;
+  project_role: string;
+  organisation_id: number;
+  organisation_name: string;
+}>;
+
 interface UserProfileCompletionFields {
   name: string;
   required?: boolean;
@@ -421,6 +434,7 @@ export type {
   Auth,
   Custodian,
   CustodianUser,
+  CustodianProjectUser,
   Charity,
   Department,
   File,
