@@ -70,7 +70,7 @@ const PALETTE_THEME_PURPLE_BLUE = {
     background2: createColor(blueGrey["800"]),
     primary: createColor("#CC51B4"),
     secondary: createColor("#E3E3E3"),
-    warning: createColor(orange["300"]),
+    warning: createColor("#F3C853"),
     info: createColor(blue["200"]),
     error: createColor(red["400"]),
     success: createColor("#0C695D"),

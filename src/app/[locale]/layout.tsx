@@ -12,6 +12,7 @@ import { notFound } from "next/navigation";
 import { PropsWithChildren } from "react";
 import "../global.css";
 import ReactQueryClientProvider from "./components/ReactQueryClientProvider";
+import BannerMessage from "@/modules/BannerMessage";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,6 +33,11 @@ export default function RootLayout({
 
   const messages = useMessages();
 
+  console.log(
+    "process.env.NEXT_PUBLIC_HIDE_BANNER",
+    process.env.NEXT_PUBLIC_HIDE_BANNER
+  );
+
   return (
     <html lang={locale}>
       <Box
@@ -51,6 +57,9 @@ export default function RootLayout({
                         },
                       }}
                     />
+                    {process.env.NEXT_PUBLIC_HIDE_BANNER !== "true" && (
+                      <BannerMessage />
+                    )}
                     {children}
                   </ToastProvider>
                 </ThemeRegistry>

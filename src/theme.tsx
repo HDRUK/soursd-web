@@ -7,6 +7,7 @@ import { createBreakpoints } from "@mui/system";
 import { Roboto } from "next/font/google";
 import { PALETTE_THEME_PURPLE_BLUE } from "./config/theme";
 import { colorToRgba, getAugmentedColor, isLightMode } from "./utils/theme";
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 
 const roboto = Roboto({
   weight: ["300", "400", "500", "700"],
@@ -277,6 +278,13 @@ const theme = createTheme(
       MuiLoadingButton: {
         defaultProps: {
           variant: "contained",
+        },
+      },
+      MuiAlert: {
+        defaultProps: {
+          iconMapping: {
+            warning: <ErrorOutlineIcon />,
+          },
         },
       },
       MuiToolbar: {
