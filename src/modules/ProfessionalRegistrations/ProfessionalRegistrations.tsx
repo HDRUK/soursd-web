@@ -23,8 +23,8 @@ import ReactDOMServer from "react-dom/server";
 import { ColumnDef } from "@tanstack/react-table";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
-import ProfessionalRegistrationsFormModal from "./ProfessionalRegistrationsFormModal";
 import { EntityType } from "@/types/api";
+import ProfessionalRegistrationsFormModal from "./ProfessionalRegistrationsFormModal";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfessionalRegistrations";
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";

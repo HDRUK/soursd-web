@@ -2,9 +2,16 @@ import { QueryOptions } from "@/types/requests";
 import { UseQueryOptions } from "@tanstack/react-query";
 import getCustodianUser from "./getCustodianUser";
 
-export default function getCustodianUserQuery(custodianUserId: number, options?: QueryOptions) {
+export default function getCustodianUserQuery(
+  custodianUserId: number,
+  options?: QueryOptions
+) {
   return {
-    queryKey: ["getCustodianUser", custodianUserId, ...(options?.queryKeySuffix || [])],
+    queryKey: [
+      "getCustodianUser",
+      custodianUserId,
+      ...(options?.queryKeySuffix || []),
+    ],
     queryFn: ({ queryKey }) =>
       getCustodianUser(queryKey[1] as number, {
         error: {

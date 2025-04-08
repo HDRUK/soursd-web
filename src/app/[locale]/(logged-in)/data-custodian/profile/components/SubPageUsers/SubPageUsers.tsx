@@ -6,12 +6,12 @@ import {
 } from "@/modules";
 import { toCamelCase } from "@/utils/string";
 import { useTranslations } from "next-intl";
-import { PageTabs, UserSubTabs } from "../../consts/tabs";
-import SubTabsSections from "../SubTabSections";
-import SubTabsContents from "../SubsTabContents";
 import { User } from "@/types/application";
 import { useStore } from "@/data/store";
 import { useEffect } from "react";
+import { PageTabs, UserSubTabs } from "../../consts/tabs";
+import SubTabsSections from "../SubTabSections";
+import SubTabsContents from "../SubsTabContents";
 
 interface PageProps {
   userData: User;

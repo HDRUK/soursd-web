@@ -16,9 +16,6 @@ export default function UserTrainingAccreditations() {
     user: state.getUser(),
   }));
 
-  console.log("custodian", custodian);
-  // console.log("project", project);
-  console.log("user", user);
   return (
     <PageBodyContainer>
       <Typography variant="h2">{t("trainingAndAccreditations")}</Typography>

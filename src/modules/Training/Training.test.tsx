@@ -12,8 +12,8 @@ import {
 import { faker } from "@faker-js/faker";
 import { mock200Json } from "jest.utils";
 import { useRouter } from "next/navigation";
-import Training from "./Training";
 import { EntityType } from "@/types/api";
+import Training from "./Training";
 
 const mockPush = jest.fn();
 
