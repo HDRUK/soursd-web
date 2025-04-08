@@ -1,5 +1,4 @@
 import { useTranslations } from "next-intl";
-import { useStore } from "@/data/store";
 import { PageBodyContainer, PageSection, Training } from "@/modules";
 import { EntityType } from "@/types/api";
 import { Typography } from "@mui/material";
