@@ -121,7 +121,7 @@ export default function SubTabsContents({
     case OrganisationsSubTabs.SUBSIDIARIES:
       content = <OrganisationsSubsidiaries />;
       break;
-    case OrganisationsSubTabs.DATA_SECURITY:
+    case OrganisationsSubTabs.DATA_SECURITY_COMPLIANCE:
       content = <OrganisationsDataSecurityCompliance />;
       break;
     default:
