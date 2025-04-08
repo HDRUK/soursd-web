@@ -6,12 +6,13 @@ import { StoreState, useStore } from "@/data/store";
 import PageSection from "@/modules/PageSection";
 import { ProjectEntities } from "@/services/projects/getEntityProjects";
 import useProjectsUsersQuery from "@/services/custodians/useCustodianProjectsUsersQuery";
-import { CustodianProjectUser } from "@/types/application";
+import { CustodianProjectUser, User } from "@/types/application";
 import { ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
 import PageBody from "@/modules/PageBody";
 import PageBodyContainer from "@/modules/PageBodyContainer";
 import { Box, Typography } from "@mui/material";
+import { renderUserNameCell } from "@/utils/cells";
 
 const NAMESPACE_TRANSLATIONS_PROJECTS = "Projects";
 const NAMESPACE_TRANSLATIONS_APPLICATION = "Application";
@@ -54,6 +55,7 @@ export default function Users({ variant }: ProjectsProps) {
   const store = useStore();
   const { getId } = variantConfig[variant];
   const entityId = getId(store);
+  const routes = useStore(state => state.getApplication().routes);
 
   const {
     data: projectsData,
@@ -70,8 +72,34 @@ export default function Users({ variant }: ProjectsProps) {
 
   const columns: ColumnDef<CustodianProjectUser>[] = [
     {
-      accessorFn: row => `${row.first_name} ${row.last_name}`,
+      accessorKey: "user_id",
       header: t("userName"),
+      cell: info => {
+        let route = null;
+
+        switch (variant) {
+          case "organisation":
+            route = null;
+            break;
+          case "custodian":
+            route = routes.profileCustodianUserById;
+            break;
+          case "user":
+            route = null;
+            break;
+          default:
+            route = null;
+        }
+
+        return renderUserNameCell(
+          {
+            first_name: info.row.original.first_name,
+            last_name: info.row.original.last_name,
+            id: info.getValue(),
+          } as User,
+          route.path
+        );
+      },
     },
     {
       accessorKey: "organisation_name",
