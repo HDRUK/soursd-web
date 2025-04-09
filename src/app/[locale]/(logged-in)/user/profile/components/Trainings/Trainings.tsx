@@ -23,7 +23,7 @@ import { Box, Link } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import ReactDOMServer from "react-dom/server";
 import ProfessionalsRegistration from "@/modules/ProfessionalRegistrations";
 
@@ -33,20 +33,15 @@ export default function Trainings() {
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const router = useRouter();
 
-  const [user, setCurrentUser] = useStore(state => [
-    state.getUser(),
-    state.setCurrentUser,
-  ]);
+  const { user } = useStore(state => ({
+    user: state.config.user,
+  }));
 
   const {
     data: userData,
     isLoading,
     refetch,
   } = useQuery(getUserQuery(user?.id));
-
-  useEffect(() => {
-    setCurrentUser(userData);
-  }, [userData]);
 
   const { mutateAsync: patchUser, ...patchUserQueryState } = useMutation(
     patchUserQuery(user?.id ?? -1)
@@ -88,7 +83,7 @@ export default function Trainings() {
           <PageGuidance {...mockedUserTrainingGuidanceProps}>
             <PageBody>
               <PageSection>
-                <Training variant={EntityType.USER} />
+                <Training variant={EntityType.USER} user={userData?.data} />
               </PageSection>
               <PageSection>
                 <ProfessionalsRegistration variant={EntityType.USER} />
