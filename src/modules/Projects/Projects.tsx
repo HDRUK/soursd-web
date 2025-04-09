@@ -50,16 +50,17 @@ const variantConfig: Record<ProjectEntities, VariantConfig> = {
 
 interface ProjectsProps {
   variant: ProjectEntities;
+  entityId?: number;
 }
 
-export default function Projects({ variant }: ProjectsProps) {
+export default function Projects({ variant, entityId }: ProjectsProps) {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_PROJECTS);
   const tApplication = useTranslations(NAMESPACE_TRANSLATIONS_APPLICATION);
   const routes = useStore(state => state.getApplication().routes);
 
   const store = useStore();
   const { getId } = variantConfig[variant];
-  const entityId = getId(store);
+  const defaultEntityId = entityId || getId(store);
 
   const {
     data: projectsData,
@@ -72,10 +73,10 @@ export default function Projects({ variant }: ProjectsProps) {
     handleFieldToggle,
     queryParams,
     ...queryState
-  } = useEntityProjectsQuery(entityId, {
+  } = useEntityProjectsQuery(defaultEntityId, {
     variant,
     queryKeyBase: ["getProjects"],
-    enabled: !!entityId,
+    enabled: !!defaultEntityId,
   });
 
   const sortDirection = getSearchSortOrder(queryParams);

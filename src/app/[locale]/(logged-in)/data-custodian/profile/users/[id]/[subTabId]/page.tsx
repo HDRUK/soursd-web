@@ -23,12 +23,15 @@ function UsersSubPage({ params: { subTabId, id } }: UsersSubPageProps) {
 
   return (
     <LoadingWrapper variant="basic" loading={isPending}>
-      <SubPageUsers
-        params={{
-          subTabId,
-          id,
-        }}
-      />
+      {user?.data && (
+        <SubPageUsers
+          userData={user.data}
+          params={{
+            subTabId,
+            id,
+          }}
+        />
+      )}
     </LoadingWrapper>
   );
 }
