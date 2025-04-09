@@ -1,6 +1,6 @@
 "use client";
 
-import { useStore } from "@/data/store";
+import { StoreUserHistories } from "@/data/store";
 
 import { PostTrainingsPayload } from "@/services/trainings/types";
 import { Button, Typography } from "@mui/material";
@@ -38,9 +38,16 @@ const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 interface TrainingProps {
   variant: EntityType;
   user: User;
+  setHistories?: (histories: StoreUserHistories) => void;
+  getHistories?: () => StoreUserHistories | undefined;
 }
 
-export default function Training({ variant, user }: TrainingProps) {
+export default function Training({
+  variant,
+  user,
+  setHistories,
+  getHistories,
+}: TrainingProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_TRAINING);
   const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
@@ -49,9 +56,6 @@ export default function Training({ variant, user }: TrainingProps) {
   const [selectedTraining, setSelectedTraining] = useState<
     ResearcherTraining | undefined
   >(undefined);
-
-  const setHistories = useStore(state => state.setHistories);
-  const getHistories = useStore(state => state.getHistories);
 
   const [fileIdToDownload, setFileIdToDownload] = useState<
     number | undefined

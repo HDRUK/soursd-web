@@ -2,7 +2,7 @@
 
 import { ActionMenu, ActionMenuItem } from "@/components/ActionMenu";
 import ContactLink from "@/components/ContactLink";
-import { useStore } from "@/data/store";
+import { StoreUserHistories, useStore } from "@/data/store";
 import useQueryAlerts from "@/hooks/useQueryAlerts";
 import useQueryConfirmAlerts from "@/hooks/useQueryConfirmAlerts";
 import useMutationUpdateProfessionalRegistration from "@/queries/useMutationUpdateProfessionalRegistration";
@@ -32,11 +32,15 @@ const NAMESPACE_TRANSLATION_APPLICATION = "Application";
 interface ProfessionalRegistrationsProps {
   variant: EntityType;
   user: User;
+  setHistories?: (histories: StoreUserHistories) => void;
+  getHistories?: () => StoreUserHistories | undefined;
 }
 
 export default function ProfessionalRegistrations({
   variant,
   user,
+  setHistories,
+  getHistories,
 }: ProfessionalRegistrationsProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editRecord, setEditRecord] = useState<
@@ -46,13 +50,10 @@ export default function ProfessionalRegistrations({
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
 
-  const { professionalRegistrations, getHistories, setHistories } =
-    useStore(state => ({
-      professionalRegistrations:
-        state.config.histories?.professionalRegistrations || [],
-      getHistories: state.getHistories,
-      setHistories: state.setHistories,
-    }));
+  const { professionalRegistrations } = useStore(state => ({
+    professionalRegistrations:
+      state.config.histories?.professionalRegistrations || [],
+  }));
 
   const {
     data: professionalRegistrationsData,

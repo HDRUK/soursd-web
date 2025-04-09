@@ -10,8 +10,10 @@ const NAMESPACE_TRANSLATION = "Application";
 export default function UserTrainingAccreditations() {
   const t = useTranslations(NAMESPACE_TRANSLATION);
 
-  const { user } = useStore(state => ({
+  const { user, setHistories, getHistories } = useStore(state => ({
     user: state.current.user,
+    setHistories: state.setHistories,
+    getHistories: state.getHistories,
   }));
 
   return (
@@ -21,7 +23,12 @@ export default function UserTrainingAccreditations() {
         <Training variant={EntityType.CUSTODIAN} user={user} />
       </PageSection>
       <PageSection sx={{ mb: 3 }}>
-        <ProfessionalsRegistration variant={EntityType.CUSTODIAN} user={user} />
+        <ProfessionalsRegistration
+          variant={EntityType.CUSTODIAN}
+          user={user}
+          setHistories={setHistories}
+          getHistories={getHistories}
+        />
       </PageSection>
     </PageBodyContainer>
   );
