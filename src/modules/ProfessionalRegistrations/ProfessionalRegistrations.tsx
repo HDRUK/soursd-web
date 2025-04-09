@@ -2,7 +2,7 @@
 
 import { ActionMenu, ActionMenuItem } from "@/components/ActionMenu";
 import ContactLink from "@/components/ContactLink";
-import { StoreUserHistories, useStore } from "@/data/store";
+import { StoreUserHistories } from "@/data/store";
 import useQueryAlerts from "@/hooks/useQueryAlerts";
 import useQueryConfirmAlerts from "@/hooks/useQueryConfirmAlerts";
 import useMutationUpdateProfessionalRegistration from "@/queries/useMutationUpdateProfessionalRegistration";
