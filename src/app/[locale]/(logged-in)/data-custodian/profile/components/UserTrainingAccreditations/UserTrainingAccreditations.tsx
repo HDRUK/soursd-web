@@ -10,11 +10,14 @@ const NAMESPACE_TRANSLATION = "Application";
 export default function UserTrainingAccreditations() {
   const t = useTranslations(NAMESPACE_TRANSLATION);
 
-  const { user, setHistories, getHistories } = useStore(state => ({
-    user: state.current.user,
-    setHistories: state.setHistories,
-    getHistories: state.getHistories,
-  }));
+  const { user, setHistories, getHistories, professionalRegistrations } =
+    useStore(state => ({
+      user: state.current.user,
+      setHistories: state.setHistories,
+      getHistories: state.getHistories,
+      professionalRegistrations:
+        state.config.histories?.professionalRegistrations || [],
+    }));
 
   return (
     <PageBodyContainer>
@@ -28,6 +31,7 @@ export default function UserTrainingAccreditations() {
           user={user}
           setHistories={setHistories}
           getHistories={getHistories}
+          professionalRegistrations={professionalRegistrations}
         />
       </PageSection>
     </PageBodyContainer>

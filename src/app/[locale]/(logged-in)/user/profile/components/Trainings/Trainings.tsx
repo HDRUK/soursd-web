@@ -40,6 +40,11 @@ export default function Trainings() {
   const setHistories = useStore(state => state.setHistories);
   const getHistories = useStore(state => state.getHistories);
 
+  const { professionalRegistrations } = useStore(state => ({
+    professionalRegistrations:
+      state.config.histories?.professionalRegistrations || [],
+  }));
+
   const {
     data: userData,
     isLoading,
@@ -99,6 +104,7 @@ export default function Trainings() {
                   user={userData?.data}
                   setHistories={setHistories}
                   getHistories={getHistories}
+                  professionalRegistrations={professionalRegistrations}
                 />
               </PageSection>
 
