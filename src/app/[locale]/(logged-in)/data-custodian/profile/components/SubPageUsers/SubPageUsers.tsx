@@ -27,7 +27,10 @@ function SubPageUsers({ params, userData }: PageProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const tabId = PageTabs.USERS;
 
-  const [user, setUser] = useStore(state => [state.getUser(), state.setUser]);
+  const [user, setUser] = useStore(state => [
+    state.getCurrentUser(),
+    state.setCurrentUser,
+  ]);
 
   useEffect(() => {
     setUser(userData);
