@@ -16,32 +16,35 @@ import {
   PageSection,
 } from "@/modules";
 import Training from "@/modules/Training";
-import { getUserQuery, patchUserQuery } from "@/services/users";
+import { patchUserQuery } from "@/services/users";
 import { User } from "@/types/application";
 import { EntityType } from "@/types/api";
 import { Box, Link } from "@mui/material";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import ReactDOMServer from "react-dom/server";
 import ProfessionalsRegistration from "@/modules/ProfessionalRegistrations";
 
+interface PageProps {
+  userData: User;
+}
+
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
-export default function Trainings() {
+export default function Trainings({ userData }: PageProps) {
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const router = useRouter();
 
-  const { user } = useStore(state => ({
-    user: state.config.user,
-  }));
+  const [user, setUser] = useStore(state => [
+    state.getCurrentUser(),
+    state.setCurrentUser,
+  ]);
 
-  const {
-    data: userData,
-    isLoading,
-    refetch,
-  } = useQuery(getUserQuery(user?.id));
+  useEffect(() => {
+    setUser(userData);
+  }, [userData]);
 
   const { mutateAsync: patchUser, ...patchUserQueryState } = useMutation(
     patchUserQuery(user?.id ?? -1)
@@ -77,7 +80,7 @@ export default function Trainings() {
   );
 
   return (
-    <LoadingWrapper variant="basic" loading={isLoading}>
+    <LoadingWrapper variant="basic">
       <Form {...formOptions} onSubmit={handleSubmit} key={userData?.data?.id}>
         <PageBodyContainer heading={tProfile("trainingTitle")}>
           <PageGuidance {...mockedUserTrainingGuidanceProps}>

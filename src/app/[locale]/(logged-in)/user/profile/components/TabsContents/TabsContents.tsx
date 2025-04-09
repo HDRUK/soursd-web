@@ -24,7 +24,7 @@ export default function TabsContents({ tabId }: TabsContentsProps) {
       {tabId === PageTabs.IDENTITY && <Identity />}
       {tabId === PageTabs.EXPERIENCE && <Experience />}
       {tabId === PageTabs.AFFILIATIONS && <Affiliations />}
-      {tabId === PageTabs.TRAINING && <Trainings />}
+      {tabId === PageTabs.TRAINING && <Trainings userData={user}/>}
       {tabId === PageTabs.HOME && <Home />}
       {tabId === PageTabs.PROJECTS && <Projects variant="user" />}
     </>
