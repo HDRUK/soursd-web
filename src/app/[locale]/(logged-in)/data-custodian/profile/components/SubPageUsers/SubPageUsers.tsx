@@ -1,3 +1,4 @@
+import { useStore } from "@/data/store";
 import {
   PageBodyContainer,
   PageColumnBody,
@@ -7,8 +8,6 @@ import {
 import { User } from "@/types/application";
 import { toCamelCase } from "@/utils/string";
 import { useTranslations } from "next-intl";
-import { User } from "@/types/application";
-import { useStore } from "@/data/store";
 import { useEffect } from "react";
 import { PageTabs, UserSubTabs } from "../../consts/tabs";
 import SubTabsSections from "../SubTabSections";
