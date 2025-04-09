@@ -44,7 +44,7 @@ export default function Training({ variant }: TrainingProps) {
   const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
-  const user = useStore(store => store.config.user);
+  const user = useStore(store => store.current.user);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTraining, setSelectedTraining] = useState<

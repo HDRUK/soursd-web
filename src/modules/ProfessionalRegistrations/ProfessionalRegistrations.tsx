@@ -46,7 +46,7 @@ export default function ProfessionalRegistrations({
 
   const { user, professionalRegistrations, getHistories, setHistories } =
     useStore(state => ({
-      user: state.config.user,
+      user: state.current.user,
       professionalRegistrations:
         state.config.histories?.professionalRegistrations || [],
       getHistories: state.getHistories,
