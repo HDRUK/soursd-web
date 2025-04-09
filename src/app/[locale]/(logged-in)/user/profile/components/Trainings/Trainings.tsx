@@ -1,3 +1,5 @@
+"use client";
+
 import ContactLink from "@/components/ContactLink";
 import Form from "@/components/Form";
 import FormControlCheckbox from "@/components/FormControlCheckbox";
@@ -13,16 +15,17 @@ import {
   PageGuidance,
   PageSection,
 } from "@/modules";
+import Training from "@/modules/Training";
 import { getUserQuery, patchUserQuery } from "@/services/users";
 import { User } from "@/types/application";
+import { EntityType } from "@/types/api";
 import { Box, Link } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useMemo } from "react";
 import ReactDOMServer from "react-dom/server";
-import ProfessionalsRegistration from "../ProfessionalRegistrations";
-import Training from "../Training";
+import ProfessionalsRegistration from "@/modules/ProfessionalRegistrations";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
@@ -80,10 +83,10 @@ export default function Trainings() {
           <PageGuidance {...mockedUserTrainingGuidanceProps}>
             <PageBody>
               <PageSection>
-                <Training />
+                <Training variant={EntityType.USER} />
               </PageSection>
               <PageSection>
-                <ProfessionalsRegistration />
+                <ProfessionalsRegistration variant={EntityType.USER} />
               </PageSection>
 
               <Box sx={{ mt: 1, maxWidth: "50%" }}>

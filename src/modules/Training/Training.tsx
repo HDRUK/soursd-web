@@ -1,3 +1,5 @@
+"use client";
+
 import { useStore } from "@/data/store";
 
 import { PostTrainingsPayload } from "@/services/trainings/types";
@@ -22,6 +24,7 @@ import {
   deleteTrainingsQuery,
   putTrainingsQuery,
 } from "@/services/trainings";
+import { EntityType } from "@/types/api";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import useQueryConfirmAlerts from "@/hooks/useQueryConfirmAlerts";
@@ -32,11 +35,17 @@ const NAMESPACE_TRANSLATION_TRAINING = "Training";
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
-export default function Training() {
+interface TrainingProps {
+  variant: EntityType;
+}
+
+export default function Training({ variant }: TrainingProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_TRAINING);
   const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
-  const user = useStore(store => store.config.user);
+
+  const user = useStore(store => store.current.user);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTraining, setSelectedTraining] = useState<
     ResearcherTraining | undefined
@@ -245,11 +254,21 @@ export default function Training() {
         formatShortDate(row.original.awarded_at),
     },
     {
-      header: "",
-      accessorKey: "actions",
+      header: t("trainingHistoryColumnExpiresAt"),
+      accessorKey: "expires_at",
       cell: ({ row }: { row: { original: ResearcherTraining } }) =>
-        renderActions(row.original),
+        formatShortDate(row.original.expires_at),
     },
+    ...(variant === EntityType.USER
+      ? [
+          {
+            header: "",
+            accessorKey: "actions",
+            cell: ({ row }: { row: { original: ResearcherTraining } }) =>
+              renderActions(row.original),
+          },
+        ]
+      : []),
   ];
   return (
     <>
@@ -264,27 +283,33 @@ export default function Training() {
         noResultsMessage={t("noResultsMessage")}
         sx={{ maxWidth: "75%" }}
       />
-      <Button
-        onClick={handleAddTraining}
-        variant="outlined"
-        color="primary"
-        startIcon={<AddIcon />}
-        sx={{ mt: 2 }}>
-        {t("addTrainingCourse")}
-      </Button>
+      {variant === EntityType.USER && (
+        <>
+          <Button
+            onClick={handleAddTraining}
+            variant="outlined"
+            color="primary"
+            startIcon={<AddIcon />}
+            sx={{ mt: 2 }}>
+            {t("addTrainingCourse")}
+          </Button>
 
-      <FormModal
-        open={isModalOpen}
-        heading={
-          selectedTraining ? t("editTrainingCourse") : t("addTrainingCourse")
-        }>
-        <TrainingForm
-          onSubmit={handleSubmit}
-          isPending={isPending || putTrainingsQueryState.isPending}
-          onCancel={handleCloseModal}
-          initialValues={selectedTraining}
-        />
-      </FormModal>
+          <FormModal
+            open={isModalOpen}
+            heading={
+              selectedTraining
+                ? t("editTrainingCourse")
+                : t("addTrainingCourse")
+            }>
+            <TrainingForm
+              onSubmit={handleSubmit}
+              isPending={isPending || putTrainingsQueryState.isPending}
+              onCancel={handleCloseModal}
+              initialValues={selectedTraining}
+            />
+          </FormModal>
+        </>
+      )}
     </>
   );
 }

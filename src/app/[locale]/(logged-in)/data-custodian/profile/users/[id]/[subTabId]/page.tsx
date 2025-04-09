@@ -16,7 +16,7 @@ interface UsersSubPageProps {
 }
 
 function UsersSubPage({ params: { subTabId, id } }: UsersSubPageProps) {
-  const { data: user, isPending, isFetched } = useQuery(getUserQuery(id));
+  const { data: user, isPending, isFetched } = useQuery(getUserQuery(+id));
 
   if (user?.data.user_group !== UserGroup.USERS && isFetched) {
     notFound();
