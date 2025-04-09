@@ -40,11 +40,13 @@ function SubPageUsers({ userData, params }: PageProps) {
     user && (
       <PageBodyContainer heading={t(toCamelCase(tabId))}>
         <PageColumns>
-          <PageColumnBody>
+          <PageColumnBody lg={8}>
             <SubTabsSections tabId={tabId} {...params} />
             <SubTabsContents tabId={tabId} {...params} />
           </PageColumnBody>
-          <PageColumnDetails>Placeholder</PageColumnDetails>
+          <PageColumnDetails lg={4}>
+            Validation checks go here
+          </PageColumnDetails>
         </PageColumns>
       </PageBodyContainer>
     )

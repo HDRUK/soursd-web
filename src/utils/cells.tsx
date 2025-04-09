@@ -3,6 +3,7 @@ import {
   ResearcherAffiliation,
   User,
   ProjectAllUser,
+  Organisation,
 } from "@/types/application";
 import { Link, Typography } from "@mui/material";
 import { CellContext } from "@tanstack/react-table";
@@ -70,9 +71,17 @@ function renderWarningCell<T extends ResearcherAffiliation>(
   return null;
 }
 
+function renderOrganisationsNameCell<T>(info: CellContext<T, Organisation[]>) {
+  return info
+    .getValue()
+    .map(({ organisation_name }) => organisation_name)
+    .join(", ");
+}
+
 export {
   renderProjectNameCell,
   renderUserNameCell,
   renderAffiliationDateRangeCell,
   renderWarningCell,
+  renderOrganisationsNameCell,
 };

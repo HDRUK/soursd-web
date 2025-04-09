@@ -2,8 +2,6 @@ import getUser from "./getUser";
 import getUserQuery from "./getUserQuery";
 import getUsers from "./getUsers";
 import getUsersQuery from "./getUsersQuery";
-import getUserProjects from "./getUserProjects";
-import getUserProjectsQuery from "./getUserProjectsQuery";
 import patchUser from "./patchUser";
 import postPermissions from "./postPermissions";
 import postUsers from "./postUsers";
@@ -16,8 +14,6 @@ import putUserQuery from "./putUserQuery";
 export {
   getUser,
   getUserQuery,
-  getUserProjects,
-  getUserProjectsQuery,
   getUsers,
   patchUser,
   postPermissions,

@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { notFound } from "next/navigation";
 import SubPageUsers from "../../../components/SubPageUsers";
 import { UserSubTabs } from "../../../consts/tabs";
+import { UserGroup } from "@/consts/user";
 
 interface UsersSubPageProps {
   params: {
@@ -17,7 +18,7 @@ interface UsersSubPageProps {
 function UsersSubPage({ params: { subTabId, id } }: UsersSubPageProps) {
   const { data: user, isPending, isFetched } = useQuery(getUserQuery(id));
 
-  if (!user?.data && isFetched) {
+  if (user?.data.user_group !== UserGroup.USERS && isFetched) {
     notFound();
   }
 

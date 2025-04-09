@@ -13,6 +13,7 @@ import PageBodyContainer from "./PageBodyContainer";
 import NavBar from "./NavBar";
 import Application from "./Application";
 import ApplicationData from "./ApplicationData";
+import ProjectsFilters from "./ProjectsFilters";
 
 export {
   ApplicationData,
@@ -25,6 +26,7 @@ export {
   PageSection,
   PageBody,
   PageTitle,
+  ProjectsFilters,
   UserDetailsModal,
   PageBodyContainer,
   PageColumns,

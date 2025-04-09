@@ -1,5 +1,9 @@
 import { EMAIL_TEMPLATE } from "@/consts/application";
-import { Custodian, ProjectAllUser } from "@/types/application";
+import {
+  Custodian,
+  ProjectAllUser,
+  ResearcherProject,
+} from "@/types/application";
 
 interface GetCustodianInviteResponse {
   name: string;
@@ -45,6 +49,8 @@ type GetCustodiansResponse = Custodian[];
 type PatchCustodianPayload = Partial<Custodian>;
 type PatchCustodianResponse = Custodian;
 
+type GetCustodiansUserProjectsResponse = ResearcherProject[];
+
 interface PostCustodianInviteUserPayload {
   first_name: string;
   last_name: string;
@@ -83,4 +89,5 @@ export type {
   PutCustodianActiveEntityModelPayload,
   PutCustodianActiveEntityModelResponse,
   GetCustodianProjectUserResponse,
+  GetCustodiansUserProjectsResponse,
 };
