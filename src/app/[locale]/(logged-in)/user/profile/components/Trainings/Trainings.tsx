@@ -16,31 +16,33 @@ import {
   PageSection,
 } from "@/modules";
 import Training from "@/modules/Training";
-import { patchUserQuery } from "@/services/users";
+import { getUserQuery, patchUserQuery } from "@/services/users";
 import { User } from "@/types/application";
 import { EntityType } from "@/types/api";
 import { Box, Link } from "@mui/material";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo } from "react";
 import ReactDOMServer from "react-dom/server";
 import ProfessionalsRegistration from "@/modules/ProfessionalRegistrations";
 
-interface PageProps {
-  userData: User;
-}
-
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
-export default function Trainings({ userData }: PageProps) {
+export default function Trainings() {
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const router = useRouter();
 
   const [user, setUser] = useStore(state => [
-    state.getCurrentUser(),
+    state.getUser(),
     state.setCurrentUser,
   ]);
+
+  const {
+    data: userData,
+    isLoading,
+    refetch,
+  } = useQuery(getUserQuery(user?.id));
 
   useEffect(() => {
     setUser(userData);
@@ -80,7 +82,7 @@ export default function Trainings({ userData }: PageProps) {
   );
 
   return (
-    <LoadingWrapper variant="basic">
+    <LoadingWrapper variant="basic" loading={isLoading}>
       <Form {...formOptions} onSubmit={handleSubmit} key={userData?.data?.id}>
         <PageBodyContainer heading={tProfile("trainingTitle")}>
           <PageGuidance {...mockedUserTrainingGuidanceProps}>
