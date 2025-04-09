@@ -1,5 +1,6 @@
 "use client";
 
+import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import { AugmentedColorPaletteOptions, Theme } from "@mui/material";
 import { TableCellProps } from "@mui/material/TableCell";
 import { createTheme, darken } from "@mui/material/styles";
@@ -277,6 +278,13 @@ const theme = createTheme(
       MuiLoadingButton: {
         defaultProps: {
           variant: "contained",
+        },
+      },
+      MuiAlert: {
+        defaultProps: {
+          iconMapping: {
+            warning: <ErrorOutlineIcon />,
+          },
         },
       },
       MuiToolbar: {

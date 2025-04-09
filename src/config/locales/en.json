@@ -1091,6 +1091,39 @@
     "address": "Address"
   },
   "Organisations": {
+    "DataSecurityCompliance": {
+      "info": "Information",
+      "name": "Name",
+      "number": "ID",
+      "id": "ID",
+      "expiryDate": "Expiry date",
+      "certificate": "Certificate",
+      "downloadEvidence": "Download signed declaration",
+      "ceCertification": "Cyber Essentials Certified",
+      "cePlusCertification": "Cyber Essentials Plus Certified",
+      "iso27001Certification": "ISO27001 Accredited",
+      "dsptkOdsCode": "DSPT Certified"
+    },
+    "NameAddress": {
+      "organisationName": "Name",
+      "address": "Address"
+    },
+    "Charities": {
+      "name": "Name",
+      "registrationId": "Registration ID",
+      "website": "Website"
+    },
+    "DigitalIdentifiers": {
+      "companiesHouseNo": "Companies House ID",
+      "rorId": "ROR ID",
+      "charities": "Charities",
+      "organisationUniqueId": "SOURSD identifier"
+    },
+    "SectorWebsite": {
+      "sectorName": "Organisation sector",
+      "website": "Organisation website",
+      "organisationSize": "Organisation size"
+    },
     "subsidiaries": "UK subsidiaries",
     "organisationName": "Organisation name",
     "address": "Address",
