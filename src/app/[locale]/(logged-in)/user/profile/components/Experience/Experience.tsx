@@ -24,7 +24,7 @@ import yup from "@/config/yup";
 import { VALIDATION_ORC_ID } from "@/consts/form";
 import Text from "@/components/Text";
 import FormControlCheckbox from "@/components/FormControlCheckbox";
-import FileUploadDetails from "../FileUploadDetails/FileUploadDetails";
+import FileUploadDetails from "@/modules/FileUploadDetails/FileUploadDetails";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 const NAMESPACE_TRANSLATION_FORM = "Form";

@@ -12,6 +12,7 @@ import {
 import { faker } from "@faker-js/faker";
 import { mock200Json } from "jest.utils";
 import { useRouter } from "next/navigation";
+import { EntityType } from "@/types/api";
 import Training from "./Training";
 
 const mockPush = jest.fn();
@@ -41,7 +42,7 @@ const defaultUser = mockedUser({
   mock200Json(1).json()
 );
 const renderTrainingComponent = () => {
-  return render(<Training />);
+  return render(<Training variant={EntityType.USER} />);
 };
 
 describe("<Training />", () => {

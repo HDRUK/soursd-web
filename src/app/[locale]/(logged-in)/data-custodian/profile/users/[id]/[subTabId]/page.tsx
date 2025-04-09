@@ -15,7 +15,7 @@ interface UsersSubPageProps {
 }
 
 function UsersSubPage({ params: { subTabId, id } }: UsersSubPageProps) {
-  const { data: user, isPending, isFetched } = useQuery(getUserQuery(id));
+  const { data: user, isPending, isFetched } = useQuery(getUserQuery(+id));
 
   if (!user?.data && isFetched) {
     notFound();
@@ -23,12 +23,15 @@ function UsersSubPage({ params: { subTabId, id } }: UsersSubPageProps) {
 
   return (
     <LoadingWrapper variant="basic" loading={isPending}>
-      <SubPageUsers
-        params={{
-          subTabId,
-          id,
-        }}
-      />
+      {user?.data && (
+        <SubPageUsers
+          userData={user.data}
+          params={{
+            subTabId,
+            id,
+          }}
+        />
+      )}
     </LoadingWrapper>
   );
 }
