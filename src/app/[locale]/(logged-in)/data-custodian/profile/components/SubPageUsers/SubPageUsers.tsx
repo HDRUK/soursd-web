@@ -1,17 +1,17 @@
+import { useStore } from "@/data/store";
 import {
   PageBodyContainer,
   PageColumnBody,
   PageColumnDetails,
   PageColumns,
 } from "@/modules";
+import { User } from "@/types/application";
 import { toCamelCase } from "@/utils/string";
 import { useTranslations } from "next-intl";
+import { useEffect } from "react";
 import { PageTabs, UserSubTabs } from "../../consts/tabs";
 import SubTabsSections from "../SubTabSections";
 import SubTabsContents from "../SubsTabContents";
-import { useStore } from "@/data/store";
-import { useEffect } from "react";
-import { User } from "@/types/application";
 
 interface PageProps {
   userData: User;
