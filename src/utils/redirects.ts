@@ -16,6 +16,10 @@ function getProfilePathByEntity(user: User | string) {
       .toLowerCase()
   );
 
+  if (typeof user !== "string" && user?.is_delegate) {
+    return ROUTES.profileDelegate.path;
+  }
+
   return ROUTES[`profile${profileEntity}` as keyof Routes].path;
 }
 
