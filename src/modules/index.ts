@@ -14,6 +14,7 @@ import NavBar from "./NavBar";
 import Application from "./Application";
 import ApplicationData from "./ApplicationData";
 import ProjectsFilters from "./ProjectsFilters";
+import Training from "./Training";
 
 export {
   ApplicationData,
@@ -32,4 +33,5 @@ export {
   PageColumns,
   PageColumnDetails,
   PageColumnBody,
+  Training,
 };

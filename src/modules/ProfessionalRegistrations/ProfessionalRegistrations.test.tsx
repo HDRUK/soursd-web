@@ -5,10 +5,11 @@ import {
   waitFor,
   within,
 } from "@/utils/testUtils";
+import { EntityType } from "@/types/api";
 import ProfessionalRegistrations from "./ProfessionalRegistrations";
 
 const renderProfessionalRegistrationsComponent = () => {
-  return render(<ProfessionalRegistrations />);
+  return render(<ProfessionalRegistrations variant={EntityType.CUSTODIAN} />);
 };
 
 describe("<ProfessionalRegistrations />", () => {
