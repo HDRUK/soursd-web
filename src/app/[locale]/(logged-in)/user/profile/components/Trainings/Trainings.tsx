@@ -86,7 +86,7 @@ export default function Trainings() {
                 <Training variant={EntityType.USER} user={userData?.data} />
               </PageSection>
               <PageSection>
-                <ProfessionalsRegistration variant={EntityType.USER} />
+                <ProfessionalsRegistration variant={EntityType.USER} user={userData?.data}/>
               </PageSection>
 
               <Box sx={{ mt: 1, maxWidth: "50%" }}>

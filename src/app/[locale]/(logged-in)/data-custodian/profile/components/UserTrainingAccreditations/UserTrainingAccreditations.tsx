@@ -11,8 +11,8 @@ export default function UserTrainingAccreditations() {
   const t = useTranslations(NAMESPACE_TRANSLATION);
 
   const { user } = useStore(state => ({
-      user: state.current.user,
-    }));
+    user: state.current.user,
+  }));
 
   return (
     <PageBodyContainer>
@@ -21,7 +21,7 @@ export default function UserTrainingAccreditations() {
         <Training variant={EntityType.CUSTODIAN} user={user} />
       </PageSection>
       <PageSection sx={{ mb: 3 }}>
-        <ProfessionalsRegistration variant={EntityType.CUSTODIAN} />
+        <ProfessionalsRegistration variant={EntityType.CUSTODIAN} user={user} />
       </PageSection>
     </PageBodyContainer>
   );

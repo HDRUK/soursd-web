@@ -12,7 +12,7 @@ import {
   putProfessionalRegistrationQuery,
 } from "@/services/professional_registrations";
 import { PostProfessionalRegistrationPayload } from "@/services/professional_registrations/types";
-import { ResearcherProfessionalRegistration } from "@/types/application";
+import { ResearcherProfessionalRegistration, User } from "@/types/application";
 import AddIcon from "@mui/icons-material/Add";
 import { Button, Typography } from "@mui/material";
 import Table from "@/components/Table";
@@ -31,10 +31,12 @@ const NAMESPACE_TRANSLATION_APPLICATION = "Application";
 
 interface ProfessionalRegistrationsProps {
   variant: EntityType;
+  user: User;
 }
 
 export default function ProfessionalRegistrations({
   variant,
+  user,
 }: ProfessionalRegistrationsProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editRecord, setEditRecord] = useState<
@@ -44,9 +46,8 @@ export default function ProfessionalRegistrations({
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
 
-  const { user, professionalRegistrations, getHistories, setHistories } =
+  const { professionalRegistrations, getHistories, setHistories } =
     useStore(state => ({
-      user: state.current.user,
       professionalRegistrations:
         state.config.histories?.professionalRegistrations || [],
       getHistories: state.getHistories,
