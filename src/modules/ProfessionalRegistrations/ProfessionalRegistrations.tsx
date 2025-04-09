@@ -34,7 +34,7 @@ interface ProfessionalRegistrationsProps {
   user: User;
   setHistories?: (histories: StoreUserHistories) => void;
   getHistories?: () => StoreUserHistories | undefined;
-  professionalRegistrations: ResearcherProfessionalRegistration[]
+  professionalRegistrations: ResearcherProfessionalRegistration[];
 }
 
 export default function ProfessionalRegistrations({
@@ -42,7 +42,7 @@ export default function ProfessionalRegistrations({
   user,
   setHistories,
   getHistories,
-  professionalRegistrations
+  professionalRegistrations,
 }: ProfessionalRegistrationsProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editRecord, setEditRecord] = useState<
