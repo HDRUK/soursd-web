@@ -33,7 +33,7 @@ export default function Trainings() {
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const router = useRouter();
 
-  const [user, setUser] = useStore(state => [
+  const [user, setCurrentUser] = useStore(state => [
     state.getUser(),
     state.setCurrentUser,
   ]);
@@ -45,7 +45,7 @@ export default function Trainings() {
   } = useQuery(getUserQuery(user?.id));
 
   useEffect(() => {
-    setUser(userData);
+    setCurrentUser(userData);
   }, [userData]);
 
   const { mutateAsync: patchUser, ...patchUserQueryState } = useMutation(
