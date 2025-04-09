@@ -1,9 +1,9 @@
-import { Paged, ResponseJson, ResponseOptions } from "@/types/requests";
-import { getRequest } from "../requests";
-import { handleJsonResponse } from "../requestHelpers";
-import { GetCustodiansUserProjectsResponse } from "./types";
 import { SearchParams } from "@/types/query";
+import { Paged, ResponseJson, ResponseOptions } from "@/types/requests";
 import { getSearchQuerystring } from "@/utils/query";
+import { handleJsonResponse } from "../requestHelpers";
+import { getRequest } from "../requests";
+import { GetCustodiansUserProjectsResponse } from "./types";
 
 export default async function getCustodiansUserProjects(
   custodianId: number,

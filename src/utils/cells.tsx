@@ -72,8 +72,7 @@ function renderWarningCell<T extends ResearcherAffiliation>(
 }
 
 function renderOrganisationsNameCell<T>(info: CellContext<T, Organisation[]>) {
-  return info
-    .getValue()
+  return (info.getValue() || [])
     .map(({ organisation_name }) => organisation_name)
     .join(", ");
 }

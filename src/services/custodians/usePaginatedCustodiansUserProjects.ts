@@ -2,9 +2,9 @@ import { SearchDirections } from "@/consts/search";
 import usePaginatedQuery, {
   PaginatedQueryProps,
 } from "@/hooks/usePaginatedQuery";
+import { omit } from "@/utils/json";
 import getCustodiansUserProjects from "./getCustodiansUserProjects";
 import { GetCustodiansUserProjectsResponse } from "./types";
-import { omit } from "@/utils/json";
 
 type GetCustodiansUserProjectsQuery = Partial<
   PaginatedQueryProps<GetCustodiansUserProjectsResponse>
