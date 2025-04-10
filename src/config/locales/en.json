@@ -1069,19 +1069,6 @@
     },
     "alsoApprovedOn": "Also Approved On: {projects} "
   },
-  "OrganisationsList": {
-    "searchPlaceholder": "Search Organisations",
-    "errorResultsProjects": "Unable to get a list of organisations. Please try again or contact us on <contact></contact>",
-    "noResultsProjects": "No organisations found for the search terms provided.",
-    "sortActions": {
-      "AZ": "Sort Alphabetical A-Z",
-      "ZA": "Sort Alphabetical Z-A"
-    },
-    "filterActions": {
-      "hasDelegates": "Has Delegates",
-      "hasSoursdId": "Is Registered"
-    }
-  },
   "Charities": {
     "name": "Name",
     "registrationId": "Registration ID",
@@ -1125,8 +1112,15 @@
       "website": "Organisation website",
       "organisationSize": "Organisation size"
     },
+    "Search": {
+      "sortActions_AZ": "Sort by Organisation Name A-Z",
+      "sortActions_ZA": "Sort by Organisation Name Z-A",
+      "filterByStatus": "Filter by status"
+    },
+    "sroOfficer": "Senior Responsible Officer",
     "subsidiaries": "UK subsidiaries",
     "organisationName": "Organisation name",
+    "projects": "Projects",
     "address": "Address",
     "companiesHouseNo": "Companies House ID",
     "rorId": "ROR ID",
@@ -1134,7 +1128,8 @@
     "organisationUniqueId": "SOURSD identifier",
     "sectorName": "Organisation sector",
     "website": "Organisation website",
-    "organisationSize": "Organisation size"
+    "organisationSize": "Organisation size",
+    "projectStatus": "Status"
   },
   "Projects": {
     "okButton": "OK",

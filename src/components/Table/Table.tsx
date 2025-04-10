@@ -20,7 +20,7 @@ import { useStore } from "@/data/store";
 import React, { ReactNode } from "react";
 import Results from "../Results";
 
-interface TableProps<T> extends Partial<TableOptions<T>> {
+export interface TableProps<T> extends Partial<TableOptions<T>> {
   data: T[];
   columns: ColumnDef<T>[];
   isPaginated?: boolean;

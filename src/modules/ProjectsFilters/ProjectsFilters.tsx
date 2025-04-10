@@ -27,7 +27,7 @@ export interface ProjectsProps
     | "handleFieldToggle"
     | "queryParams"
   > {
-  includeFilters: ProjectFilterKeys[];
+  includeFilters?: ProjectFilterKeys[];
 }
 
 export default function ProjectsFilters({
@@ -95,7 +95,6 @@ export default function ProjectsFilters({
     <SearchBar
       onClear={resetQueryParams}
       onSearch={(text: string) => {
-        console.log("UPDATING");
         updateQueryParams({
           "title[]": text,
         });

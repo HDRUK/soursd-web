@@ -4,10 +4,10 @@ import usePaginatedQuery, {
 } from "@/hooks/usePaginatedQuery";
 import { omit } from "@/utils/json";
 import getCustodianOrganisations from "./getCustodianOrganisations";
-import { GetCustodianOrganisationResponse } from "./types";
+import { GetCustodianOrganisationsResponse } from "./types";
 
 type GetCustodianOrganisationsQuery = Partial<
-  PaginatedQueryProps<GetCustodianOrganisationResponse>
+  PaginatedQueryProps<GetCustodianOrganisationsResponse>
 >;
 
 export default function usePaginatedCustodianOrganisations(
