@@ -14,8 +14,10 @@ import NavBar from "./NavBar";
 import Application from "./Application";
 import ApplicationData from "./ApplicationData";
 import Training from "./Training";
+import Affiliations from "./Affiliations";
 
 export {
+  Affiliations,
   ApplicationData,
   Application,
   NavBar,
