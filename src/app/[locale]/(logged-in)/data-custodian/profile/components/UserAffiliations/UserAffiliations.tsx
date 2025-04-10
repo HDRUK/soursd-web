@@ -16,10 +16,9 @@ export default function UserAffiliations() {
     getHistories: state.getHistories,
   }));
 
-  const {
-    data: affiliationsData,
-    ...getAffiliationsQueryState
-  } = useQuery(getAffiliationsQuery(user?.registry_id));
+  const { data: affiliationsData, ...getAffiliationsQueryState } = useQuery(
+    getAffiliationsQuery(user?.registry_id)
+  );
 
   return (
     <PageBodyContainer>
