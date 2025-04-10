@@ -18,7 +18,7 @@ export default function UserIdentity() {
     !!user?.registry?.identity?.idvt_completed_at &&
     user?.registry?.identity?.idvt_result === 1;
 
-    return (
+  return (
     <PageBodyContainer>
       <PageBody>
         <Typography variant="h2">{t("identity")}</Typography>

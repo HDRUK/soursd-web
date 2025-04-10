@@ -116,7 +116,7 @@ describe("<UserIdentity />", () => {
       current: {
         user: {
           registry: {
-            identity: identity,
+            identity,
           },
         },
       },
