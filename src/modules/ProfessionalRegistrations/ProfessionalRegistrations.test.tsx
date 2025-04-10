@@ -6,10 +6,25 @@ import {
   within,
 } from "@/utils/testUtils";
 import { EntityType } from "@/types/api";
+import { mockedProfessionalRegistration, mockedUser } from "@/mocks/data/user";
 import ProfessionalRegistrations from "./ProfessionalRegistrations";
 
 const renderProfessionalRegistrationsComponent = () => {
-  return render(<ProfessionalRegistrations variant={EntityType.CUSTODIAN} />);
+  const user = mockedUser();
+  const professionalRegistrations = [
+    mockedProfessionalRegistration({ id: 1 }),
+    mockedProfessionalRegistration({ id: 2 }),
+  ];
+
+  return render(
+    <ProfessionalRegistrations
+      variant={EntityType.CUSTODIAN}
+      user={user}
+      setHistories={undefined}
+      getHistories={undefined}
+      professionalRegistrations={professionalRegistrations}
+    />
+  );
 };
 
 describe("<ProfessionalRegistrations />", () => {
@@ -23,7 +38,7 @@ describe("<ProfessionalRegistrations />", () => {
       const rows = within(tbody).getAllByRole("row");
 
       await waitFor(() => {
-        expect(rows).toHaveLength(1);
+        expect(rows).toHaveLength(2);
       });
     } else {
       fail("Could not find table body");
