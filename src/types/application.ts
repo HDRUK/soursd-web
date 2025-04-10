@@ -241,6 +241,7 @@ type Organisation = OrganisationIdvt &
     departments: Department[];
     unclaimed: number;
     organisation_size?: number;
+    project?: ModelState<ResearcherProject>;
   }>;
 
 interface ResearcherEducation {

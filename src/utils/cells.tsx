@@ -4,6 +4,7 @@ import {
   User,
   ProjectAllUser,
   Organisation,
+  ResearcherProject,
 } from "@/types/application";
 import { Link, Typography } from "@mui/material";
 import { CellContext } from "@tanstack/react-table";
@@ -43,21 +44,27 @@ function renderProjectNameCell<T extends Project>(
   );
 }
 
-function renderUserNameCell(user: User | ProjectAllUser, route?: string) {
-  const { first_name, last_name, id } = user;
-
-  return route && id ? (
+function renderLinkNameCell(name: string, id: number, route: string) {
+  return (
     <Typography color="primary">
       <Link
         href={injectParamsIntoPath(route, {
           id,
         })}>
-        {first_name} {last_name}
+        {name}
       </Link>
     </Typography>
-  ) : (
-    `${first_name} ${last_name}`
   );
+}
+
+function renderUserNameCell(user: User | ProjectAllUser, route?: string) {
+  if (!user) return "";
+
+  const { first_name, last_name, id } = user;
+
+  return route && id
+    ? renderLinkNameCell(`${first_name} ${last_name}`, id, route)
+    : `${first_name} ${last_name}`;
 }
 
 function renderWarningCell<T extends ResearcherAffiliation>(
@@ -71,10 +78,18 @@ function renderWarningCell<T extends ResearcherAffiliation>(
   return null;
 }
 
-function renderOrganisationsNameCell<T>(info: CellContext<T, Organisation[]>) {
-  return (info.getValue() || [])
-    .map(({ organisation_name }) => organisation_name)
-    .join(", ");
+function renderListNameCell(values: string[] | undefined) {
+  return (values || []).map(value => value).join(", ");
+}
+
+function renderProjectsNameCell(values: ResearcherProject[]) {
+  return renderListNameCell((values || []).map(({ title }) => title));
+}
+
+function renderOrganisationsNameCell(values: Organisation[]) {
+  return renderListNameCell(
+    (values || []).map(({ organisation_name }) => organisation_name)
+  );
 }
 
 export {
@@ -82,5 +97,8 @@ export {
   renderUserNameCell,
   renderAffiliationDateRangeCell,
   renderWarningCell,
+  renderListNameCell,
+  renderLinkNameCell,
   renderOrganisationsNameCell,
+  renderProjectsNameCell,
 };

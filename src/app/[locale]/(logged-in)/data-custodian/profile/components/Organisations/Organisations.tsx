@@ -1,76 +1,51 @@
 "use client";
 
-import ContactLink from "@/components/ContactLink";
-import Pagination from "@/components/Pagination";
-import Results from "@/components/Results";
+import ChipStatus, { Status } from "@/components/ChipStatus";
+import Table from "@/components/Table";
 import { FilterIcon } from "@/consts/icons";
 import { SearchDirections } from "@/consts/search";
+import { useStore } from "@/data/store";
 import { PageBody, PageBodyContainer, PageSection } from "@/modules";
 import SearchActionMenu from "@/modules/SearchActionMenu";
 import SearchBar from "@/modules/SearchBar";
-import {
-  DeleteApprovalPayloadWithEntity,
-  PostApprovalPayloadWithEntity,
-} from "@/services/approvals";
-import { useOrganisationsQuery } from "@/services/organisations";
-import { getCombinedQueryState, getSearchSortOrder } from "@/utils/query";
+import { usePaginatedCustodianOrganisations } from "@/services/custodians";
+import { Organisation } from "@/types/application";
+import { renderLinkNameCell, renderUserNameCell } from "@/utils/cells";
+import { getSearchSortOrder } from "@/utils/query";
 import SortIcon from "@mui/icons-material/Sort";
-import { useQueryClient } from "@tanstack/react-query";
+import { ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
-import { useCallback } from "react";
-import { useMutationApproval, useMutationDeleteApproval } from "../../hooks";
-import OrganisationsLegend from "../OrganisationsLegend";
-import OrganisationsList from "../OrganisationsList";
 
-const NAMESPACE_TRANSLATIONS_USERS = "OrganisationsList";
+const NAMESPACE_TRANSLATIONS_ORGANISATIONS = "Organisations";
 const NAMESPACE_TRANSLATIONS_PROFILE = "CustodianProfile";
 const NAMESPACE_TRANSLATIONS_APPLICATION = "Application";
 
 export default function Organisations() {
-  const queryClient = useQueryClient();
-  const t = useTranslations(NAMESPACE_TRANSLATIONS_USERS);
+  const t = useTranslations(NAMESPACE_TRANSLATIONS_ORGANISATIONS);
   const tProfile = useTranslations(NAMESPACE_TRANSLATIONS_PROFILE);
   const tApplication = useTranslations(NAMESPACE_TRANSLATIONS_APPLICATION);
+  const { custodianId, routes } = useStore(state => ({
+    custodianId: state.getCustodian().id,
+    routes: state.getApplication().routes,
+  }));
 
   const {
     data,
     page,
+    total,
+    last_page,
     setPage,
     updateQueryParams,
     resetQueryParams,
     handleSortToggle,
     handleFieldToggle,
     queryParams,
-    ...queryState
-  } = useOrganisationsQuery();
-
-  const { mutateAsync: mutateUpdateAsync, ...approvingQueryState } =
-    useMutationApproval();
-
-  const { mutateAsync: mutateDeleteAsync, ...deleteQueryState } =
-    useMutationDeleteApproval();
-
-  const handleApprove = useCallback(
-    async (payload: PostApprovalPayloadWithEntity) => {
-      await mutateUpdateAsync(payload);
-
-      queryClient.refetchQueries({
-        queryKey: ["getOrganisations"],
-      });
-    },
-    []
-  );
-
-  const handleUnapprove = useCallback(
-    async (payload: DeleteApprovalPayloadWithEntity) => {
-      await mutateDeleteAsync(payload);
-
-      queryClient.refetchQueries({
-        queryKey: ["getOrganisations"],
-      });
-    },
-    []
-  );
+    isLoading,
+    isError,
+    isSuccess,
+  } = usePaginatedCustodianOrganisations(custodianId, {
+    shouldUpdateQuerystring: true,
+  });
 
   const sortDirection = getSearchSortOrder(queryParams);
 
@@ -91,24 +66,49 @@ export default function Organisations() {
 
   const filterActions = [
     {
-      label: t("filterActions.hasDelegates"),
-      onClick: () => handleFieldToggle("has_delegates", ["1", ""]),
-      checked: queryParams.has_delegates === "1",
+      label: tApplication("status_approved"),
+      onClick: () => handleFieldToggle("filter", [Status.PROJECT_APPROVED, ""]),
+      checked: queryParams.filter === Status.PROJECT_APPROVED,
     },
     {
-      label: t("filterActions.hasSoursdId"),
-      onClick: () => handleFieldToggle("has_soursd_id", ["1", ""]),
-      checked: queryParams.has_soursd_id === "1",
+      label: tApplication("status_pending"),
+      onClick: () => handleFieldToggle("filter", [Status.PROJECT_PENDING, ""]),
+      checked: queryParams.filter === Status.PROJECT_PENDING,
+    },
+    {
+      label: tApplication("status_completed"),
+      onClick: () =>
+        handleFieldToggle("filter", [Status.PROJECT_COMPLETED, ""]),
+      checked: queryParams.filter === Status.PROJECT_COMPLETED,
     },
   ];
 
-  const pagination = (
-    <Pagination
-      page={page}
-      count={queryState.last_page}
-      onChange={(_, page: number) => setPage(page)}
-    />
-  );
+  const columns: ColumnDef<Organisation>[] = [
+    {
+      accessorKey: "organisation_name",
+      header: t("name"),
+      cell: info =>
+        renderLinkNameCell(
+          info.getValue(),
+          info.row.original.id,
+          routes.profileCustodianOrganisationsPeople.path
+        ),
+    },
+    {
+      accessorKey: "project.title",
+      header: t("projects"),
+    },
+    {
+      accessorKey: "sro_officer",
+      header: t("sroOfficer"),
+      cell: info => renderUserNameCell(info.getValue()),
+    },
+    {
+      accessorKey: "project.model_state.state.slug",
+      header: t("status"),
+      cell: info => <ChipStatus status={info.getValue()} />,
+    },
+  ];
 
   return (
     <PageBodyContainer heading={tProfile("organisations")}>
@@ -121,8 +121,7 @@ export default function Organisations() {
                 "organisation_name[]": text,
               });
             }}
-            placeholder={t("searchPlaceholder")}
-            legend={<OrganisationsLegend />}>
+            placeholder={t("searchPlaceholder")}>
             <SearchActionMenu
               actions={sortActions}
               startIcon={<SortIcon />}
@@ -136,29 +135,24 @@ export default function Organisations() {
               renderedSelectedLabel={tApplication("filteredBy")}
               renderedDefaultLabel={tApplication("filterBy")}
               aria-label={tApplication("filterBy")}
-              multiple
             />
           </SearchBar>
         </PageSection>
         <PageSection>
-          <Results
-            queryState={queryState}
-            noResultsMessage={t("noResultsOrganisations")}
-            pagination={pagination}
-            errorMessage={t.rich("errorResultsOrganisations", {
-              contactLink: ContactLink,
-            })}
-            total={queryState.total}>
-            <OrganisationsList
-              onApprove={handleApprove}
-              onUnapprove={handleUnapprove}
-              organisations={data}
-              queryState={getCombinedQueryState([
-                approvingQueryState,
-                deleteQueryState,
-              ])}
-            />
-          </Results>
+          <Table
+            total={total}
+            last_page={last_page}
+            page={page}
+            setPage={setPage}
+            data={data}
+            columns={columns}
+            queryState={{
+              isLoading,
+              isError,
+              isSuccess,
+            }}
+            isPaginated
+          />
         </PageSection>
       </PageBody>
     </PageBodyContainer>
