@@ -6,8 +6,8 @@ import {
   within,
 } from "@/utils/testUtils";
 import { EntityType } from "@/types/api";
-import ProfessionalRegistrations from "./ProfessionalRegistrations";
 import { mockedProfessionalRegistration, mockedUser } from "@/mocks/data/user";
+import ProfessionalRegistrations from "./ProfessionalRegistrations";
 
 const renderProfessionalRegistrationsComponent = () => {
   const user = mockedUser();
