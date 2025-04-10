@@ -130,24 +130,24 @@ interface Auth {
 
 type Identity = {
   address_1: string;
-address_2: string;
-country: string;
-county: string;
-created_at: string;
-deleted_at?: string;
-dob: string;
-drivers_license_path: string;
-id: number;
-idvt_completed_at: string;
-idvt_errors?: string;
-idvt_result: number;
-idvt_result_perc: number;
-passport_path: string;
-postcode: string;
-registry_id: number;
-selfie_path: string;
-town: string;
-updated_at?: string;
+  address_2: string;
+  country: string;
+  county: string;
+  created_at: string;
+  deleted_at?: string;
+  dob: string;
+  drivers_license_path: string;
+  id: number;
+  idvt_completed_at: string;
+  idvt_errors?: string;
+  idvt_result: number;
+  idvt_result_perc: number;
+  passport_path: string;
+  postcode: string;
+  registry_id: number;
+  selfie_path: string;
+  town: string;
+  updated_at?: string;
 };
 
 type User = ModelState<{
