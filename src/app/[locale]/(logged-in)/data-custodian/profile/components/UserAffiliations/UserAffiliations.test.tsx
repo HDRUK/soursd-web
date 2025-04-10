@@ -30,7 +30,7 @@ describe("<UserAffiliations />", () => {
         histories: { affiliations: [testAffiliation] },
       },
       current: {
-        user: { registry_id: 123}
+        user: { registry_id: 123 },
       },
       getHistories: jest.fn(),
       setHistories: jest.fn(),

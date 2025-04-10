@@ -18,7 +18,6 @@ export default function UserAffiliations() {
 
   const {
     data: affiliationsData,
-    refetch,
     ...getAffiliationsQueryState
   } = useQuery(getAffiliationsQuery(user?.registry_id));
 
