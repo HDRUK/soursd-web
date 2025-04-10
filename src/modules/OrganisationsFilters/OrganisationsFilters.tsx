@@ -102,9 +102,9 @@ export default function OrganisationsFilters({
           actions={filterStatusActions}
           multiple
           startIcon={<FilterIcon />}
-          renderedSelectedLabel={t("filteredBy")}
-          renderedDefaultLabel={t("filterByProjectStatus")}
-          aria-label={t("filterByProjectStatus")}
+          renderedSelectedLabel={tApplication("filteredBy")}
+          renderedDefaultLabel={t("Search.filterByProjectStatus")}
+          aria-label={t("Search.filterByProjectStatus")}
         />
       )}
     </SearchBar>

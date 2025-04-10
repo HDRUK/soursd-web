@@ -1115,7 +1115,7 @@
     "Search": {
       "sortActions_AZ": "Sort by Organisation Name A-Z",
       "sortActions_ZA": "Sort by Organisation Name Z-A",
-      "filterByStatus": "Filter by status"
+      "filterByProjectStatus": "Filter by status"
     },
     "sroOfficer": "Senior Responsible Officer",
     "subsidiaries": "UK subsidiaries",
