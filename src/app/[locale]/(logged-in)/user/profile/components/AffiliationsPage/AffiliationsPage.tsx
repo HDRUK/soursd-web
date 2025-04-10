@@ -1,50 +1,46 @@
-import ContactLink from "@/components/ContactLink";
+"use client";
 
-import { ActionMenu, ActionMenuItem } from "@/components/ActionMenu";
-import ChipStatus, { Status } from "@/components/ChipStatus";
-import FormModal from "@/components/FormModal";
-import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
-import Table from "@/components/Table";
+import { useCallback, useState } from "react";
+import ReactDOMServer from "react-dom/server";
+import { useTranslations } from "next-intl";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { CellContext } from "@tanstack/react-table";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
+import EmailIcon from "@mui/icons-material/Email";
+import { Button, Typography } from "@mui/material";
 import { useStore } from "@/data/store";
-import useQueryAlerts from "@/hooks/useQueryAlerts";
 import { mockedResearcherAffiliationsGuidance } from "@/mocks/data/cms";
 import {
   PageBody,
   PageBodyContainer,
   PageGuidance,
+  Affiliations,
   PageSection,
 } from "@/modules";
+import useQueryAlerts from "@/hooks/useQueryAlerts";
+import { ResearcherAffiliation } from "@/types/application";
 import {
+  deleteAffiliationQuery,
   getAffiliationsQuery,
   patchAffiliationQuery,
   postAffiliationQuery,
-  deleteAffiliationQuery,
 } from "@/services/affiliations";
 import { PostAffiliationPayload } from "@/services/affiliations/types";
-import { ResearcherAffiliation } from "@/types/application";
-import {
-  renderAffiliationDateRangeCell,
-  renderWarningCell,
-} from "@/utils/cells";
-import { Button, Typography } from "@mui/material";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { CellContext, ColumnDef } from "@tanstack/react-table";
-import { useTranslations } from "next-intl";
-import { useCallback, useEffect, useState } from "react";
-import ReactDOMServer from "react-dom/server";
+import FormModal from "@/components/FormModal";
+import { ActionMenu, ActionMenuItem } from "@/components/ActionMenu";
 import { Message } from "@/components/Message";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
-import EmailIcon from "@mui/icons-material/Email";
+import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
+import ContactLink from "@/components/ContactLink";
+import { Status } from "@/components/ChipStatus";
 import AffiliationsForm from "../AffiliationsForm";
 import AskOrganisationModal from "../AskOrganisation";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
-const NAMESPACE_TRANSLATION_APPLICATION = "Application";
 
-export default function Affiliations() {
+export default function AffiliationsPage() {
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
-  const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
+
   const [open, setOpen] = useState(false);
   const [inviteOpen, setInviteOpen] = useState(false);
   const [selectedAffiliation, setSelectedAffiliation] = useState<
@@ -52,10 +48,10 @@ export default function Affiliations() {
   >(undefined);
   const routes = useStore(state => state.getApplication().routes);
 
-  const { getHistories, setHistories, user } = useStore(state => ({
+  const { user, setHistories, getHistories } = useStore(state => ({
     user: state.config.user,
-    getHistories: state.getHistories,
     setHistories: state.setHistories,
+    getHistories: state.getHistories,
   }));
 
   const {
@@ -102,13 +98,6 @@ export default function Affiliations() {
     }
   );
 
-  const renderRelationship = (
-    info: CellContext<ResearcherAffiliation, unknown>
-  ) => {
-    const value = info.getValue() as string;
-    return value?.length > 0 ? tApplication(info.getValue()) : null;
-  };
-
   const renderActionMenuCell = useCallback(
     (info: CellContext<ResearcherAffiliation, unknown>) => {
       const affiliation = info.row.original;
@@ -149,40 +138,7 @@ export default function Affiliations() {
     []
   );
 
-  const renderStatus = (info: CellContext<ResearcherAffiliation, unknown>) => (
-    <ChipStatus status={info.getValue() as Status} color="success" />
-  );
-
-  const columns: ColumnDef<ResearcherAffiliation>[] = [
-    {
-      accessorKey: "warning",
-      header: "",
-      cell: renderWarningCell,
-    },
-    {
-      accessorKey: "date",
-      header: tApplication("period"),
-      cell: renderAffiliationDateRangeCell,
-    },
-    {
-      accessorKey: "organisation_name",
-      header: tApplication("organisationName"),
-      cell: info => info.row.original.organisation.organisation_name,
-    },
-    {
-      accessorKey: "relationship",
-      header: tApplication("relationship"),
-      cell: renderRelationship,
-    },
-    {
-      accessorKey: "member_id",
-      header: tApplication("staffStudentId"),
-    },
-    {
-      accessorKey: "registryAffiliationState",
-      header: tApplication("status"),
-      cell: renderStatus,
-    },
+  const extraColumns = [
     {
       accessorKey: "action",
       header: "",
@@ -207,16 +163,7 @@ export default function Affiliations() {
     [selectedAffiliation, postAffiliations, patchAffiliation]
   );
 
-  useEffect(() => {
-    const storeHistories = getHistories();
-
-    setHistories({
-      ...storeHistories,
-      affiliations: affiliationsData?.data?.data,
-    });
-  }, [affiliationsData?.data?.data]);
-
-  const ocrIdBannerToAppear = affiliationsData?.data.data.some(affiliation => {
+  const orcIdBannerToAppear = affiliationsData?.data.data.some(affiliation => {
     return affiliation.organisation_id === null || affiliation.email === null;
   });
 
@@ -253,23 +200,23 @@ export default function Affiliations() {
             <Typography sx={{ mb: 2 }}>
               {tProfile("affiliationsDescription")}
             </Typography>
-            {!!ocrIdBannerToAppear && (
+            {!!orcIdBannerToAppear && (
               <Message severity="warning" sx={{ mb: 2 }}>
                 {/* This contains a link in the designs that should link to the first entry that needed to be edited, this can be implemented once edit affiliations is implemented */}
                 {tProfile("missingOrcIdMessage")}
               </Message>
             )}{" "}
-            <Table
-              noResultsMessage={tProfile("affiliationsNoResultsMessage")}
-              errorMessage={tProfile.rich("affiliationsErrorMessage", {
-                contactLink: ContactLink,
-              })}
-              total={affiliationsData?.data.data.length}
-              data={affiliationsData?.data.data || []}
-              columns={columns}
-              queryState={getAffiliationsQueryState}
-            />
+            {affiliationsData && (
+              <Affiliations
+                setHistories={setHistories}
+                getHistories={getHistories}
+                extraColumns={extraColumns}
+                affiliationsData={affiliationsData}
+                getAffiliationsQueryState={getAffiliationsQueryState}
+              />
+            )}
           </PageSection>
+
           <div>
             <Button
               variant="outlined"
