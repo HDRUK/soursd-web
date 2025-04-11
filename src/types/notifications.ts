@@ -9,6 +9,7 @@ export interface Notification {
     message: string;
     time: string;
     details: Record<string, { old: string; new: string }>;
+    buttonUrls?: Record<string, number>;
     actions?: Action[];
   };
   read_at: string | null;
