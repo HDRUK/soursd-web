@@ -1,7 +1,7 @@
 "use client";
 
 import { useStore } from "@/data/store";
-import { OrganisationPeopleTable, PageBody, PageSection } from "@/modules";
+import { OrganisationsPeopleTable, PageBody, PageSection } from "@/modules";
 import { usePaginatedCustodianOrganisationUsers } from "@/services/custodians";
 
 export default function OrganisationsPeople() {
@@ -31,7 +31,7 @@ export default function OrganisationsPeople() {
   return (
     <PageBody>
       <PageSection>
-        <OrganisationPeopleTable
+        <OrganisationsPeopleTable
           data={data}
           total={total}
           last_page={last_page}

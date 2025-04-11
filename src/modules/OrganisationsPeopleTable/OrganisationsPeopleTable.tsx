@@ -8,7 +8,7 @@ import { renderUserNameCell } from "@/utils/cells";
 import { ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
 
-interface OrganisationPeopleTableProps
+interface OrganisationsPeopleTableProps
   extends Omit<TableProps<User>, "columns"> {
   columns?: TableProps<User>["columns"];
   tKey?: string;
@@ -16,11 +16,11 @@ interface OrganisationPeopleTableProps
 
 const NAMESPACE_TRANSLATION = "Organisations.People";
 
-export default function OrganisationPeopleTable({
+export default function OrganisationsPeopleTable({
   tKey = NAMESPACE_TRANSLATION,
   columns,
   ...restProps
-}: OrganisationPeopleTableProps) {
+}: OrganisationsPeopleTableProps) {
   const t = useTranslations(tKey);
   const routes = useStore(state => state.getApplication().routes);
 
