@@ -22,6 +22,7 @@ import {
   ListItem,
   ListItemText,
   ListItemIcon,
+  Button,
 } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import PendingIcon from "@mui/icons-material/Pending";
@@ -31,6 +32,8 @@ import { formatDBDate } from "@/utils/date";
 import { toTitleCase } from "@/utils/string";
 import { formatNotificationType } from "@/utils/notifications";
 import { useTranslations } from "next-intl";
+import { useState } from "react";
+import usePatchReadRequest from "../NotificationsMenu/hooks/usePatchReadRequest";
 
 const NAMESPACE_TRANSLATIONS = "NotificationsModal";
 
@@ -54,6 +57,36 @@ export default function NotificationModal({
   const t = useTranslations(NAMESPACE_TRANSLATIONS);
   const theme = useTheme();
   const mobileMediaQuery = theme.breakpoints.down("sm");
+  const [status, setStatus] = useState<number | null>(null);
+  const [requestId, setRequestId] = useState<number | null>(null);
+
+  const { mutateAsync: mutateReadRequest } = usePatchReadRequest(
+    requestId as number,
+    status as number
+  );
+
+  const approveOrDenyRequest = (requestId: number, status: number) => {
+    if (!requestId || !status) return;
+
+    mutateReadRequest({
+      requestId,
+      status,
+    })
+      .then(() => {
+        setRequestId(null);
+        setStatus(null);
+      })
+      .catch(error => {
+        console.error("Error approving/denying request:", error);
+      });
+  };
+
+  const handleApproveOrDeny = (requestId: number, status: number) => {
+    setRequestId(requestId);
+    setStatus(status);
+
+    approveOrDenyRequest(requestId, status);
+  };
 
   return (
     <Modal
@@ -74,6 +107,7 @@ export default function NotificationModal({
             width: `calc(100% - ${theme.spacing(2)})`,
             minWidth: "auto",
           },
+          paddingTop: 4,
           ...sx,
         }}>
         <CardHeader
@@ -158,7 +192,7 @@ export default function NotificationModal({
             </List>
           )}
 
-          {Array.isArray(notification.data.details) && (
+          {Array.isArray(notification.data.details) ? (
             <TableContainer
               component={Paper}
               sx={{ marginTop: 0, width: "100%" }}>
@@ -185,6 +219,33 @@ export default function NotificationModal({
                 </TableBody>
               </Table>
             </TableContainer>
+          ) : (
+            <>
+              <Box sx={{ mb: 1 }}>
+                {notification.data.details || "No further details."}
+              </Box>
+              <Box
+                sx={{
+                  mb: 1,
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  gap: 1,
+                }}>
+                {Object.entries(notification.data.buttonUrls).map(
+                  ([name, id]) => (
+                    <Button
+                      key={id}
+                      variant="contained"
+                      color={name === "Approve" ? "primary" : "secondary"}
+                      onClick={() => {
+                        handleApproveOrDeny(id, name === "Approve" ? 1 : 2);
+                      }}>
+                      {name}
+                    </Button>
+                  )
+                )}
+              </Box>
+            </>
           )}
         </CardContent>
       </Card>

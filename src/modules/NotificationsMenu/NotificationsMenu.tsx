@@ -170,7 +170,7 @@ export default function NotificationsMenu() {
         onClose={handleClose}
         slotProps={{
           paper: {
-            sx: { width: "350px", maxHeight: "300px" },
+            sx: { width: "auto", maxHeight: "300px" },
             onScroll: (event: React.UIEvent<HTMLDivElement>) => {
               event.persist();
               const target = event.currentTarget;
