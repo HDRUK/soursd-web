@@ -17,6 +17,7 @@ import ProjectsFilters from "./ProjectsFilters";
 import Training from "./Training";
 import OrganisationsProjectsTable from "./OrganisationsProjectsTable";
 import OrganisationsFilters from "./OrganisationsFilters";
+import OrganisationPeopleTable from "./OrganisationsPeopleTable";
 
 export {
   ApplicationData,
@@ -38,4 +39,5 @@ export {
   Training,
   OrganisationsProjectsTable,
   OrganisationsFilters,
+  OrganisationPeopleTable,
 };

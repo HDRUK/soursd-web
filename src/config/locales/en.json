@@ -1079,6 +1079,11 @@
     "address": "Address"
   },
   "Organisations": {
+    "People": {
+      "name": "Employee / Student name",
+      "email": "Email",
+      "affiliationStatus": "Status"
+    },
     "DataSecurityCompliance": {
       "info": "Information",
       "name": "Name",
@@ -1132,6 +1137,7 @@
     "projectStatus": "Status"
   },
   "Projects": {
+    "custodians": "Data custodian",
     "okButton": "OK",
     "gatewayImportSuccess": "Data imported successfully from the Health Data Research Gateway",
     "gatewayImportError": "An error occurred while importing data from the Health Data Research Gateway. Please try again or <contactLink>contact support</contactLink> if the problem persists.",

@@ -4,6 +4,7 @@ import {
   Organisation,
   ProjectAllUser,
   ResearcherProject,
+  User,
 } from "@/types/application";
 
 interface GetCustodianInviteResponse {
@@ -69,6 +70,8 @@ type GetCustodianProjectUserResponse = ProjectAllUser[];
 
 type GetCustodianOrganisationsResponse = Organisation[];
 
+type GetCustodianOrganisationUsersResponse = User[];
+
 type EntityType =
   | "decision_models"
   | "user_validation_rules"
@@ -94,4 +97,5 @@ export type {
   GetCustodianProjectUserResponse,
   GetCustodiansUserProjectsResponse,
   GetCustodianOrganisationsResponse,
+  GetCustodianOrganisationUsersResponse,
 };
