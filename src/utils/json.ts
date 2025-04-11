@@ -15,10 +15,22 @@ function convertJwtToJSON(token: string) {
 }
 
 function pick<T>(data: T, keys: string[]) {
-  return Object.assign(
-    {},
-    ...keys.map(key => ({ [key]: data[key as Extract<keyof T, string>] }))
-  );
+  return keys.reduce(
+    (acc, value) => ({
+      ...acc,
+      [value]: data[value as Extract<keyof T, string>],
+    }),
+    {}
+  ) as Partial<T>;
 }
 
-export { escapeAndParse, parseValidJSON, convertJwtToJSON, pick };
+function omit<T>(data: T, keys: string[]) {
+  if (!data) return data;
+
+  return pick(
+    data,
+    Object.keys(data).filter(key => !keys.includes(key))
+  ) as Partial<T>;
+}
+
+export { escapeAndParse, parseValidJSON, convertJwtToJSON, pick, omit };

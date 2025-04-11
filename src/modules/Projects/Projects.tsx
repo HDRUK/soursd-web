@@ -2,26 +2,23 @@
 
 import ChipStatus from "@/components/ChipStatus";
 import Table from "@/components/Table";
-import { FilterIcon } from "@/consts/icons";
-import { SearchDirections } from "@/consts/search";
 import { StoreState, useStore } from "@/data/store";
 import PageSection from "@/modules/PageSection";
-import SearchBar from "@/modules/SearchBar";
 import { ProjectEntities } from "@/services/projects/getEntityProjects";
 import useEntityProjectsQuery from "@/services/projects/useEntityProjectsQuery";
 import { ResearcherProject } from "@/types/application";
-import { renderProjectNameCell } from "@/utils/cells";
+import {
+  renderOrganisationsNameCell,
+  renderProjectNameCell,
+} from "@/utils/cells";
 import { formatDisplayLongDate } from "@/utils/date";
-import { getSearchSortOrder } from "@/utils/query";
-import SortIcon from "@mui/icons-material/Sort";
 import { ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
 import PageBody from "../PageBody";
-import SearchActionMenu from "../SearchActionMenu";
 import PageBodyContainer from "../PageBodyContainer";
+import ProjectsFilters from "../ProjectsFilters";
 
 const NAMESPACE_TRANSLATIONS_PROJECTS = "Projects";
-const NAMESPACE_TRANSLATIONS_APPLICATION = "Application";
 
 type VariantConfig = {
   getId: (store: StoreState) => string | number | undefined;
@@ -50,16 +47,16 @@ const variantConfig: Record<ProjectEntities, VariantConfig> = {
 
 interface ProjectsProps {
   variant: ProjectEntities;
+  entityId?: number;
 }
 
-export default function Projects({ variant }: ProjectsProps) {
+export default function Projects({ variant, entityId }: ProjectsProps) {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_PROJECTS);
-  const tApplication = useTranslations(NAMESPACE_TRANSLATIONS_APPLICATION);
   const routes = useStore(state => state.getApplication().routes);
 
   const store = useStore();
   const { getId } = variantConfig[variant];
-  const entityId = getId(store);
+  const defaultEntityId = entityId || getId(store);
 
   const {
     data: projectsData,
@@ -72,57 +69,11 @@ export default function Projects({ variant }: ProjectsProps) {
     handleFieldToggle,
     queryParams,
     ...queryState
-  } = useEntityProjectsQuery(entityId, {
+  } = useEntityProjectsQuery(defaultEntityId, {
     variant,
     queryKeyBase: ["getProjects"],
-    enabled: !!entityId,
+    enabled: !!defaultEntityId,
   });
-
-  const sortDirection = getSearchSortOrder(queryParams);
-
-  const sortActions = [
-    {
-      label: t("sortActions.AZ"),
-      onClick: () => handleSortToggle("title", SearchDirections.ASC),
-      checked: sortDirection === SearchDirections.ASC,
-    },
-    {
-      label: t("sortActions.ZA"),
-      onClick: () => handleSortToggle("title", SearchDirections.DESC),
-      checked: sortDirection === SearchDirections.DESC,
-    },
-  ];
-
-  const filterDateActions = [
-    {
-      label: t("filterActions.pastProjects"),
-      onClick: () => handleFieldToggle("active", ["1", ""]),
-      checked: queryParams.approved === "1",
-    },
-    {
-      label: t("filterActions.activeProjects"),
-      onClick: () => handleFieldToggle("active", ["0", ""]),
-      checked: queryParams.approved === "0",
-    },
-  ];
-
-  const filterStatusActions = [
-    {
-      label: t("filterActions.approved"),
-      onClick: () => handleFieldToggle("approved", ["1", ""]),
-      checked: queryParams.approved === "1",
-    },
-    {
-      label: t("filterActions.pending"),
-      onClick: () => handleFieldToggle("pending", ["1", ""]),
-      checked: queryParams.pending === "1",
-    },
-    {
-      label: t("filterActions.completed"),
-      onClick: () => handleFieldToggle("completed", ["1", ""]),
-      checked: queryParams.active === "1",
-    },
-  ];
 
   const columns: ColumnDef<ResearcherProject>[] = [
     {
@@ -168,10 +119,7 @@ export default function Projects({ variant }: ProjectsProps) {
     {
       accessorKey: "organisations",
       header: t("organisations"),
-      cell: info =>
-        info.row.original.organisations
-          .map(org => org.organisation_name)
-          .join(),
+      cell: info => renderOrganisationsNameCell(info.getValue()),
     },
     {
       accessorKey: "status",
@@ -186,37 +134,13 @@ export default function Projects({ variant }: ProjectsProps) {
     <PageBodyContainer heading={t("projects")}>
       <PageBody>
         <PageSection>
-          <SearchBar
-            onClear={resetQueryParams}
-            onSearch={(text: string) => {
-              updateQueryParams({
-                "title[]": text,
-              });
-            }}
-            placeholder={t("searchPlaceholder")}>
-            <SearchActionMenu
-              actions={sortActions}
-              startIcon={<SortIcon />}
-              renderedSelectedLabel={tApplication("sortedBy")}
-              renderedDefaultLabel={tApplication("sortBy")}
-              aria-label={tApplication("sortBy")}
-            />
-            <SearchActionMenu
-              actions={filterDateActions}
-              startIcon={<FilterIcon />}
-              renderedSelectedLabel={tApplication("filteredByDate")}
-              renderedDefaultLabel={tApplication("filterByDate")}
-              aria-label={tApplication("filterByDate")}
-            />
-            <SearchActionMenu
-              actions={filterStatusActions}
-              multiple
-              startIcon={<FilterIcon />}
-              renderedSelectedLabel={tApplication("filteredBy")}
-              renderedDefaultLabel={tApplication("filterByProjectStatus")}
-              aria-label={tApplication("filterByProjectStatus")}
-            />
-          </SearchBar>
+          <ProjectsFilters
+            queryParams={queryParams}
+            updateQueryParams={updateQueryParams}
+            resetQueryParams={resetQueryParams}
+            handleSortToggle={handleSortToggle}
+            handleFieldToggle={handleFieldToggle}
+          />
         </PageSection>
         <PageSection>
           <Table

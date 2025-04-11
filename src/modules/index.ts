@@ -13,7 +13,10 @@ import PageBodyContainer from "./PageBodyContainer";
 import NavBar from "./NavBar";
 import Application from "./Application";
 import ApplicationData from "./ApplicationData";
+import ProjectsFilters from "./ProjectsFilters";
 import Training from "./Training";
+import OrganisationsProjectsTable from "./OrganisationsProjectsTable";
+import OrganisationsFilters from "./OrganisationsFilters";
 import Affiliations from "./Affiliations";
 
 export {
@@ -28,10 +31,13 @@ export {
   PageSection,
   PageBody,
   PageTitle,
+  ProjectsFilters,
   UserDetailsModal,
   PageBodyContainer,
   PageColumns,
   PageColumnDetails,
   PageColumnBody,
   Training,
+  OrganisationsProjectsTable,
+  OrganisationsFilters,
 };
