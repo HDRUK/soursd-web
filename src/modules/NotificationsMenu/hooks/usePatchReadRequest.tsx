@@ -3,7 +3,13 @@ import patchReadRequestNotificationQuery from "@/services/notifications/patchRea
 
 const usePatchReadRequest = () => {
   return useMutation({
-    mutationFn: ({ requestId, status }: {requestId: number, status: number}) => {
+    mutationFn: ({
+      requestId,
+      status,
+    }: {
+      requestId: number;
+      status: number;
+    }) => {
       return patchReadRequestNotificationQuery(requestId, status, {});
     },
   });

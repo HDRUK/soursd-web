@@ -62,20 +62,19 @@ export default function NotificationModal({
 
   const { mutateAsync: mutateReadRequest } = usePatchReadRequest();
 
-
   const approveOrDenyRequest = async (requestId: number, status: number) => {
-    if (!requestId || !status ) return;
+    if (!requestId || !status) return;
 
     try {
       await mutateReadRequest({
         requestId,
         status,
-      })
+      });
       setRequestId(null);
       setStatus(null);
     } catch (error) {
       console.error("Error approving/denying request:", error);
-    };
+    }
   };
 
   const handleApproveOrDeny = (requestId: number, status: number) => {
