@@ -32,6 +32,7 @@ const mockedOrganisation = (
   sector_id: 1,
   charity_registration_id: "12345678",
   smb_status: true,
+  organisation_size: 2,
   ror_id: "04a496k07",
   website: faker.internet.url(),
   departments: [

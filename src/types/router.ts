@@ -30,6 +30,11 @@ interface Routes {
   profileCustodianProjectsSafeSettings: RouteConfig;
   profileCustodianProjectsSafeOutputs: RouteConfig;
   profileCustodianOrganisations: RouteConfig;
+  profileCustodianOrganisationsPeople: RouteConfig;
+  profileCustodianOrganisationsNameAddress: RouteConfig;
+  profileCustodianOrganisationsDigitalIdentifiers: RouteConfig;
+  profileCustodianOrganisationsSectorWebsite: RouteConfig;
+  profileCustodianOrganisationsDataSecurityCompliance: RouteConfig;
   profileCustodianConfiguration: RouteConfig;
   profileCustodianConfigurationWebhooks: RouteConfig;
   profileCustodianConfigurationIntegrations: RouteConfig;

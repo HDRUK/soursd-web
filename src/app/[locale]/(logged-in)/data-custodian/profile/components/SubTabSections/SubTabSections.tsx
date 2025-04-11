@@ -7,6 +7,7 @@ import { injectParamsIntoPath } from "@/utils/application";
 import { useTranslations } from "next-intl";
 import {
   ConfigurationSubTabs,
+  OrganisationsSubTabs,
   PageTabs,
   ProjectsSubTabs,
   UserSubTabs,
@@ -20,7 +21,11 @@ export interface SubTabsMap {
 
 interface SubTabsSectionsProps {
   tabId: PageTabs;
-  subTabId: ConfigurationSubTabs | UserSubTabs;
+  subTabId:
+    | ConfigurationSubTabs
+    | UserSubTabs
+    | ProjectsSubTabs
+    | OrganisationsSubTabs;
   id?: number;
 }
 
@@ -154,6 +159,58 @@ export default function SubTabsSections({
         value: ProjectsSubTabs.SAFE_OUTPUTS,
         href: injectParamsIntoPath(
           routes.profileCustodianProjectsSafeOutputs.path,
+          {
+            id,
+          }
+        ),
+      },
+    ],
+    [PageTabs.ORGANISATIONS]: [
+      {
+        label: t("organisationsPeople"),
+        value: OrganisationsSubTabs.PEOPLE,
+        href: injectParamsIntoPath(
+          routes.profileCustodianOrganisationsNameAddress.path,
+          {
+            id,
+          }
+        ),
+      },
+      {
+        label: t("organisationsNameAddress"),
+        value: OrganisationsSubTabs.NAME_ADDRESS,
+        href: injectParamsIntoPath(
+          routes.profileCustodianOrganisationsNameAddress.path,
+          {
+            id,
+          }
+        ),
+      },
+      {
+        label: t("organisationsDigitalIdentifiers"),
+        value: OrganisationsSubTabs.DIGITAL_IDENTIFIERS,
+        href: injectParamsIntoPath(
+          routes.profileCustodianOrganisationsDigitalIdentifiers.path,
+          {
+            id,
+          }
+        ),
+      },
+      {
+        label: t("organisationsSectorWebsite"),
+        value: OrganisationsSubTabs.SECTOR_WEBSITE,
+        href: injectParamsIntoPath(
+          routes.profileCustodianOrganisationsSectorWebsite.path,
+          {
+            id,
+          }
+        ),
+      },
+      {
+        label: t("organisationsDataSecurity"),
+        value: OrganisationsSubTabs.DATA_SECURITY_COMPLIANCE,
+        href: injectParamsIntoPath(
+          routes.profileCustodianOrganisationsDataSecurityCompliance.path,
           {
             id,
           }

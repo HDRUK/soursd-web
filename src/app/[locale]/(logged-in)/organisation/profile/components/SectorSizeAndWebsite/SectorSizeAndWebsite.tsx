@@ -17,7 +17,6 @@ import { useMemo } from "react";
 import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
 import { ROUTES } from "@/consts/router";
 import { useRouter } from "next/navigation";
-import { Organisation } from "@/types/application";
 import usePatchOrganisation from "../../hooks/usePatchOrganisation";
 
 export interface SectorFormValues {
@@ -32,10 +31,9 @@ const NAMESPACE_TRANSLATION_ORG_PROFILE = "ProfileOrganisation";
 
 export default function SectorSizeAndWebsite() {
   const router = useRouter();
-  const { organisation, setOrganisation, sectors } = useStore(state => {
+  const { organisation, sectors } = useStore(state => {
     return {
       organisation: state.config.organisation,
-      setOrganisation: state.setOrganisation,
       sectors: state.config.sectors,
     };
   });
@@ -76,24 +74,15 @@ export default function SectorSizeAndWebsite() {
         contactLink: ContactLink,
       }),
   };
-  const getSmbStatus = (organisationSize: number | undefined) => {
-    if (!organisationSize) return undefined;
-    return !(organisationSize >= 3);
-  };
 
   const handleSubmit = (fields: Partial<SectorFormValues>) => {
     const payload = {
       website: fields.website,
       sector_id: Number(fields.sector_id),
-      smb_status: getSmbStatus(fields.organisation_size),
+      organisation_size: Number(fields.organisation_size),
     };
 
     onSubmit(payload).then(() => {
-      // We don't want organisation_size sent to the backend, but we want to update local state to store the option selected
-      setOrganisation({
-        ...organisation,
-        organisation_size: fields.organisation_size,
-      } as Organisation);
       router.push(ROUTES.profileOrganisationDetailsSecurityCompliance.path);
     });
   };

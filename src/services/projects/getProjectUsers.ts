@@ -10,7 +10,7 @@ export default async (
   options: ResponseOptions
 ): Promise<ResponseJson<Paged<ProjectUsersResponse>>> => {
   const response = await getRequest(
-    `/projects/${projectId}/users/filter${getSearchQuerystring(searchParams)}`
+    `/projects/${projectId}/users${getSearchQuerystring(searchParams)}`
   );
 
   return handleJsonResponse(response, options);

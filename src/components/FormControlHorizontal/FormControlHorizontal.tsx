@@ -99,7 +99,7 @@ export default function FormControlHorizontal({
 
   return (
     <FormControl
-      disabled={disabled}
+      disabled={context.formState.disabled || disabled}
       size="small"
       {...restProps}
       fullWidth={fullWidth}

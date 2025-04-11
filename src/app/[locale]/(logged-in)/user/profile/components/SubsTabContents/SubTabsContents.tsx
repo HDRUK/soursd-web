@@ -2,8 +2,13 @@
 
 import { useStore } from "@/data/store";
 import { notFound } from "next/navigation";
+import { PageColumns, PageColumnBody } from "@/modules";
+import ProjectsSafePeople from "@/modules/ProjectsSafePeople";
+import { EntityType } from "@/types/api";
 import { getSubTabs, PageTabs, ProjectsSubTabs } from "../../consts/tabs";
-import ProjectsSafePeople from "../ProjectsSafePeople";
+import ProjectsSafeData from "../ProjectsSafeData";
+import ProjectsSafeOutputs from "../ProjectsSafeOutputs";
+import ProjectsSafeSettings from "../ProjectsSafeSettings";
 import ProjectsSafeProject from "../ProjectsSafeProject";
 
 interface TabsContentsProps {
@@ -30,7 +35,22 @@ export default function SubTabsContents({
       content = <ProjectsSafeProject />;
       break;
     case ProjectsSubTabs.SAFE_PEOPLE:
-      content = <ProjectsSafePeople />;
+      content = (
+        <PageColumns>
+          <PageColumnBody lg={5}>
+            <ProjectsSafePeople variant={EntityType.USER} />{" "}
+          </PageColumnBody>
+        </PageColumns>
+      );
+      break;
+    case ProjectsSubTabs.SAFE_SETTINGS:
+      content = <ProjectsSafeSettings />;
+      break;
+    case ProjectsSubTabs.SAFE_OUTPUTS:
+      content = <ProjectsSafeOutputs />;
+      break;
+    case ProjectsSubTabs.SAFE_DATA:
+      content = <ProjectsSafeData />;
       break;
     default:
       content = null;

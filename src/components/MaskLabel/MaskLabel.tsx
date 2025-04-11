@@ -4,7 +4,7 @@ import Mask from "../Mask";
 
 interface BasicUserInfoProps {
   initials: ReactNode;
-  label: ReactNode;
+  label?: ReactNode;
   size?: "small" | "medium" | "large";
 }
 
@@ -25,12 +25,14 @@ export default function MaskLabel({
       fontSize: theme.typography.body1.fontSize,
     },
     large: {
-      sizePx: "55px",
-      fontSize: theme.typography.h6.fontSize,
+      sizePx: "90px",
+      fontSize: theme.typography.h1.fontSize,
+      fontWeight: "bold",
     },
   };
 
-  const { sizePx, fontSize } = sizeMap[size];
+  const { sizePx, ...restSx } = sizeMap[size];
+
   return (
     <Box
       sx={{
@@ -40,10 +42,12 @@ export default function MaskLabel({
         flexGrow: 1,
         justifyContent: "flex-end",
       }}>
-      <Mask size={sizePx} sx={{ fontSize }}>
+      <Mask size={sizePx} sx={restSx}>
         {initials}
       </Mask>
-      <Typography sx={{ fontSize }}>{label}</Typography>
+      {label && (
+        <Typography sx={{ fontSize: restSx.fontSize }}>{label}</Typography>
+      )}
     </Box>
   );
 }

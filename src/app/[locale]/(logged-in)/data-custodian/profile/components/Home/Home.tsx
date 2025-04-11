@@ -1,17 +1,18 @@
 "use client";
 
-import Postit from "@/components/Postit";
+import SoursdCard from "@/components/SoursdCard";
+import Text from "@/components/Text";
 import {
-  PageBody,
+  PageBodyContainer,
   PageColumnBody,
   PageColumnDetails,
   PageColumns,
   PageSection,
 } from "@/modules";
-import { Custodian } from "@/types/application";
-import { Typography, useTheme } from "@mui/material";
-import { useTranslations } from "next-intl";
 import ActionLogs from "@/modules/ActionLogs";
+import { Custodian } from "@/types/application";
+import { Typography } from "@mui/material";
+import { useTranslations } from "next-intl";
 
 export interface DetailsFormValues {
   name: string;
@@ -25,25 +26,23 @@ export interface HomeProps {
 const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 
 export default function Home({ custodian }: HomeProps) {
-  const theme = useTheme();
-
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
   return (
-    <PageColumns>
-      <PageColumnBody>
-        <PageBody>
+    <PageBodyContainer heading={t("home")}>
+      <PageColumns>
+        <PageColumnBody lg={8}>
           <PageSection>
             <ActionLogs
               variant="custodian"
               panelProps={{
-                heading: "Before you get started (5)",
+                heading: "Welcome to SOURSD",
                 description: (
                   <>
-                    Welcome to Sourced! You’ll see a list of tasks below we’ve
-                    assigned to you to complete your profile. To help you do
-                    that as quickly as possible here’s a list of things you’ll
-                    need before you dive in:
+                    You’ll see a list of tasks below we’ve assigned to you to
+                    complete your profile. To help you do that as quickly as
+                    possible here’s a list of things you’ll need before you dive
+                    in:
                     <ul>
                       <li>Prerequisite 1</li>
                       <li>Prerequisite 2</li>
@@ -54,26 +53,22 @@ export default function Home({ custodian }: HomeProps) {
               }}
             />
           </PageSection>
-        </PageBody>
-      </PageColumnBody>
-      <PageColumnDetails>
-        <PageBody>
-          <Postit>
-            <Typography variant="h4" sx={{ mb: 1 }}>
-              {t("uniqueIdentifierTitle")}
-            </Typography>
-            <Typography
-              sx={{
-                fontSize: theme.typography.h4.fontSize,
-                fontWeight: 500,
-                mb: 1,
-              }}>
-              {custodian.unique_identifier}
-            </Typography>
-            <Typography>{t("uniqueIdentifierCaption")}</Typography>
-          </Postit>
-        </PageBody>
-      </PageColumnDetails>
-    </PageColumns>
+        </PageColumnBody>
+        <PageColumnDetails lg={4}>
+          <SoursdCard
+            name={custodian.name}
+            status={custodian.model_state?.state.slug}
+            identifier={custodian.unique_identifier}
+            description={t("uniqueIdentifierCaption")}>
+            {custodian.client_id && (
+              <div>
+                <Typography fontWeight={700}>Client id:</Typography>
+                <Text copyable>{custodian.client_id}</Text>
+              </div>
+            )}
+          </SoursdCard>
+        </PageColumnDetails>
+      </PageColumns>
+    </PageBodyContainer>
   );
 }

@@ -1,6 +1,7 @@
 import getUser from "./getUser";
 import getUserQuery from "./getUserQuery";
 import getUsers from "./getUsers";
+import getUsersQuery from "./getUsersQuery";
 import patchUser from "./patchUser";
 import postPermissions from "./postPermissions";
 import postUsers from "./postUsers";
@@ -22,6 +23,7 @@ export {
   patchUserQuery,
   putUser,
   putUserQuery,
+  getUsersQuery,
 };
 
 export type * from "./types";

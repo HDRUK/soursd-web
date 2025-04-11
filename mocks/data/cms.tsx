@@ -1,5 +1,14 @@
 import ChipStatus, { Status } from "@/components/ChipStatus";
+import ContactLink from "@/components/ContactLink";
 import { Box, Typography } from "@mui/material";
+
+export const mockedBannerContent = () => (
+  <>
+    BETA Preview: Please contact HDR UK if you'd like to help drive
+    functionality during our initial preview phase: <ContactLink /> - Please be
+    aware that some pages/features aren't fully available.
+  </>
+);
 
 export const mockedSafeProjectGuidanceProps = {
   infoTitle: "Did you know?",
@@ -168,14 +177,32 @@ export const mockedSoursdHomepageInfo = {
   info: (
     <>
       <Typography fontSize="48px" fontWeight="400" mb={1}>
-        <Box component="span" fontWeight="bold">S</Box>afe{" "} 
-        <Box component="span" fontWeight="bold">O</Box>rganisation and{" "}
-        <Box component="span" fontWeight="bold">U</Box>ser{" "}
-        <Box component="span" fontWeight="bold">R</Box>egistry for{" "}
-        <Box component="span" fontWeight="bold">S</Box>ensitive{" "}
-        <Box component="span" fontWeight="bold">D</Box>ata
+        <Box component="span" fontWeight="bold">
+          S
+        </Box>
+        afe{" "}
+        <Box component="span" fontWeight="bold">
+          O
+        </Box>
+        rganisation and{" "}
+        <Box component="span" fontWeight="bold">
+          U
+        </Box>
+        ser{" "}
+        <Box component="span" fontWeight="bold">
+          R
+        </Box>
+        egistry for{" "}
+        <Box component="span" fontWeight="bold">
+          S
+        </Box>
+        ensitive{" "}
+        <Box component="span" fontWeight="bold">
+          D
+        </Box>
+        ata
       </Typography>
-      <Typography variant="h1" fontWeight="normal" >
+      <Typography variant="h1" fontWeight="normal">
         A platform to enable Safe People decision making
       </Typography>
     </>

@@ -1,5 +1,11 @@
+import { Status } from "@/components/ChipStatus";
 import { TEXT_LIST_SEPARATOR } from "@/config/db";
 import yup from "@/config/yup";
+import { RequestFrequency } from "@/consts/projects";
+import { ProjectDetails, ResearcherProject } from "@/types/application";
+import { DataUse } from "@/types/gateway";
+import { formatStringToISO } from "./date";
+import { parseValidJSON } from "./json";
 
 function getCheckboxFormValuesFromIntersection(
   parent: { label: string; id: number | string }[],
@@ -55,7 +61,79 @@ function toFieldArrayString(data: { value: string }[]) {
     .join(TEXT_LIST_SEPARATOR);
 }
 
+function transformBooleanToYesNo(value: boolean | null | undefined | number) {
+  return value ? "Yes" : "No";
+}
+
+function createDataUseDefaultValues(data: DataUse) {
+  return {
+    ...data,
+    datasets: data.datasets
+      ?.map(dataset => (typeof dataset === "string" ? dataset : dataset.name))
+      .filter(value => !!value) || [""],
+    data_sensitivity_level: data.data_sensitivity_level || "",
+    legal_basis_for_data_article6: data.legal_basis_for_data_article6 || "",
+    duty_of_confidentiality: data.duty_of_confidentiality || false,
+    national_data_optout: data.national_data_optout || false,
+    request_frequency: data.request_frequency || RequestFrequency.ONE_OFF,
+    dataset_linkage_description: data.dataset_linkage_description || "",
+    access_date: data.access_date ? formatStringToISO(data.access_date) : "",
+    request_category_type: data.request_category_type || "",
+    lay_summary: data.lay_summary || "",
+    technical_summary: data.technical_summary || "",
+  };
+}
+
+function createProjectDetailDefaultValues(
+  data: ProjectDetails,
+  options?: { transformToReadable: boolean }
+) {
+  const national_data_optout = data.national_data_optout || false;
+  const duty_of_confidentiality = data.duty_of_confidentiality || false;
+
+  return {
+    datasets: parseValidJSON(data.datasets) || [],
+    data_sensitivity_level: data.data_sensitivity_level || "",
+    legal_basis_for_data_article6: data.legal_basis_for_data_article6 || "",
+    duty_of_confidentiality: options?.transformToReadable
+      ? transformBooleanToYesNo(duty_of_confidentiality)
+      : duty_of_confidentiality,
+    national_data_optout: options?.transformToReadable
+      ? transformBooleanToYesNo(national_data_optout)
+      : national_data_optout,
+    request_frequency: data.request_frequency || RequestFrequency.ONE_OFF,
+    dataset_linkage_description: data.dataset_linkage_description || "",
+    access_date: data.access_date ? formatStringToISO(data.access_date) : "",
+    data_minimisation: data?.data_minimisation || "",
+    data_use_description: data?.data_use_description || "",
+    access_type: data?.access_type || "",
+    data_privacy: data?.data_privacy || "",
+    research_outputs: parseValidJSON(data?.research_outputs) || [],
+    data_assets: data?.data_assets || "",
+  };
+}
+
+function createProjectDefaultValues(data: ResearcherProject) {
+  return {
+    ...data,
+    unique_id: data.unique_id,
+    title: data.title || "",
+    request_category_type: data.request_category_type || "",
+    start_date: data.start_date || "",
+    end_date: data.end_date || "",
+    lay_summary: data.lay_summary || "",
+    public_benefit: data.public_benefit || "",
+    technical_summary: data.technical_summary || "",
+    status: data.model_state.state.slug || Status.PROJECT_PENDING,
+    other_approval_committees:
+      parseValidJSON(data.other_approval_committees) || [],
+  };
+}
+
 export {
+  createDataUseDefaultValues,
+  createProjectDefaultValues,
+  createProjectDetailDefaultValues,
   getCheckboxFormValuesFromIntersection,
   isFieldRequired,
   toFieldArrayData,

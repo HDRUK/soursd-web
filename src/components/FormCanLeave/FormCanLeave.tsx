@@ -18,6 +18,7 @@ export default function FormCanLeave({
   const t = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const formState = useFormState();
   const isDirty = !!Object.keys(formState.dirtyFields).length;
+
   useWatch();
 
   const { continueTo } = useRouteChange({

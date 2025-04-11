@@ -1,21 +1,23 @@
 import yup from "@/config/yup";
+import { isFieldRequired } from "@/utils/form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, BoxProps, Grid } from "@mui/material";
+import deepEqual from "deep-equal";
 import { HTMLAttributes, ReactNode, useEffect } from "react";
 import {
   DefaultValues,
   FieldValues,
   FormProvider,
+  Path,
   Resolver,
   useForm,
   UseFormProps,
   UseFormReturn,
 } from "react-hook-form";
 import { AnyObject } from "yup";
-import { isFieldRequired } from "@/utils/form";
 import FormCanLeave from "../FormCanLeave";
-import { Message } from "../Message";
 import FormModal, { FormModalProps } from "../FormModal";
+import { Message } from "../Message";
 
 export type ExtendedUseFormReturn<T extends FieldValues> = UseFormReturn<T> & {
   isFieldRequired: (fieldName: keyof T) => boolean;
@@ -32,8 +34,10 @@ export interface FormProps<T extends AnyObject>
   schema?: yup.ObjectSchema<T>;
   canLeave?: boolean;
   shouldReset?: boolean;
+  shouldResetKeep?: boolean;
   isModal?: boolean;
   modalProps?: Omit<FormModalProps, "formState">;
+  disabled?: boolean;
 }
 
 export default function Form<T extends FieldValues>({
@@ -44,26 +48,36 @@ export default function Form<T extends FieldValues>({
   onSubmit = () => {},
   canLeave = false,
   shouldReset = false,
+  shouldResetKeep = false,
   isModal,
   modalProps,
+  disabled = false,
   ...restProps
 }: FormProps<T>) {
   const formOptions: UseFormProps<T> = {
     defaultValues,
+    disabled,
+    ...(schema && {
+      resolver: yupResolver(schema) as unknown as Resolver<T>,
+    }),
   };
-
-  if (schema) {
-    formOptions.resolver = yupResolver(schema) as unknown as Resolver<T>;
-  }
 
   const methods = useForm<T>(formOptions);
   const { handleSubmit, reset } = methods;
 
   useEffect(() => {
     if (defaultValues) {
-      reset(defaultValues);
+      if (!deepEqual(defaultValues, methods.getValues())) {
+        Object.entries(defaultValues).forEach(([key, value]) => {
+          methods.setValue(key as Path<T>, value, {
+            shouldDirty: true,
+          });
+        });
+      } else {
+        reset(defaultValues);
+      }
     }
-  }, [defaultValues, reset]);
+  }, [defaultValues]);
 
   const extendedMethods: ExtendedUseFormReturn<T> = {
     ...methods,
@@ -74,7 +88,9 @@ export default function Form<T extends FieldValues>({
   const handleFormSubmit = (values: T) => {
     onSubmit(values);
 
-    if (shouldReset) {
+    if (shouldResetKeep) {
+      reset(values);
+    } else if (shouldReset) {
       reset(defaultValues);
     }
   };

@@ -4,7 +4,7 @@ import { useStore } from "@/data/store";
 import { notFound } from "next/navigation";
 import Projects from "@/modules/Projects";
 import { PageTabs } from "../../consts/tabs";
-import Affiliations from "../Affiliations";
+import AffiliationsPage from "../AffiliationsPage";
 import Identity from "../Identity";
 import Home from "../Home";
 import Experience from "../Experience";
@@ -23,7 +23,7 @@ export default function TabsContents({ tabId }: TabsContentsProps) {
     <>
       {tabId === PageTabs.IDENTITY && <Identity />}
       {tabId === PageTabs.EXPERIENCE && <Experience />}
-      {tabId === PageTabs.AFFILIATIONS && <Affiliations />}
+      {tabId === PageTabs.AFFILIATIONS && <AffiliationsPage />}
       {tabId === PageTabs.TRAINING && <Trainings />}
       {tabId === PageTabs.HOME && <Home />}
       {tabId === PageTabs.PROJECTS && <Projects variant="user" />}

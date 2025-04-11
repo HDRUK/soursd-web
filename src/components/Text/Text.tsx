@@ -1,11 +1,16 @@
+"use client";
+
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { Typography, TypographyProps } from "@mui/material";
 import { ReactNode } from "react";
+import Copyable from "../Copyable";
 
 export interface TextProps extends TypographyProps {
   children: ReactNode;
   startIcon?: ReactNode;
   endIcon?: ReactNode;
   iconSize?: string;
+  copyable?: boolean;
 }
 
 export default function Text({
@@ -15,6 +20,7 @@ export default function Text({
   sx,
   variant,
   iconSize = "1.25em",
+  copyable,
   ...restProps
 }: TextProps) {
   return (
@@ -33,8 +39,8 @@ export default function Text({
         ...sx,
       }}>
       {startIcon}
-      {children}
-      {endIcon}
+      {copyable ? <Copyable>{children}</Copyable> : children}
+      {endIcon || (copyable && <ContentCopyIcon />)}
     </Typography>
   );
 }
