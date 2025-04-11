@@ -100,7 +100,6 @@ export default function OrganisationsFilters({
       {hasFilter(OrganisationsFilterKeys.STATUS) && (
         <SearchActionMenu
           actions={filterStatusActions}
-          multiple
           startIcon={<FilterIcon />}
           renderedSelectedLabel={tApplication("filteredBy")}
           renderedDefaultLabel={t("Search.filterByProjectStatus")}
