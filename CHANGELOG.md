@@ -1,3 +1,31 @@
+## [1.4.0](https://github.com/HDRUK/soursd-web/compare/v1.3.1...v1.4.0) (2025-04-11)
+
+### ✨ Features
+
+* **SOURSD-882:** Further fixes to organisation pages (#239) ([7d21b94](https://github.com/HDRUK/soursd-web/commit/7d21b9404de8158377cfdcf26fc75bafebca4d23))
+* **SOURSD-929:** Make sure project users is working with BE changes (#234) ([4fb2362](https://github.com/HDRUK/soursd-web/commit/4fb23622fa374900b4551069a721c28eb7c4f4c3))
+* **SOURSD-931:** read only project pages (#238) ([5da3cca](https://github.com/HDRUK/soursd-web/commit/5da3cca88f1626917e10a2d80459cab32d196da0))
+* **SOURSD-933:** Implement module for project people (#240) ([d049608](https://github.com/HDRUK/soursd-web/commit/d049608675e0146067f7c9b82793bb4039c7b8e0))
+* **SOURSD-933:** Missed code being pushed (#241) ([ac72084](https://github.com/HDRUK/soursd-web/commit/ac720844dbd25970785b09cd9ce968f2cc160d41))
+* **SOURSD-947:** soursd panel (#245) ([99192b1](https://github.com/HDRUK/soursd-web/commit/99192b19f90d9d81d95928530447163dda153241))
+* **SOURSD-950:** Custodian User affiliations (#260) ([ad1d32a](https://github.com/HDRUK/soursd-web/commit/ad1d32afa1e63bb6de401b1a37c09e7098c8c7e4))
+* **SOURSD-951:** Custodian User Identity page (#261) ([5c33ce0](https://github.com/HDRUK/soursd-web/commit/5c33ce070b2c5099e0ad1be135190283227095ea))
+* **SOURSD-952:** Add Custodian User Training page (#257) ([2ade690](https://github.com/HDRUK/soursd-web/commit/2ade690b4c3a13dd190138882bf9769d2d0b5f30))
+* **SOURSD-960:** Custodian Users table, plus table component pagination (#252) ([f667661](https://github.com/HDRUK/soursd-web/commit/f6676613462b375e543304f656c45ac712225981))
+* **SOURSD-963:** name and address of org (#249) ([1436683](https://github.com/HDRUK/soursd-web/commit/1436683b63266768006e93120f441d4fb3df6eae))
+* **SOURSD-964:** digital identifiers (#250) ([4d830d7](https://github.com/HDRUK/soursd-web/commit/4d830d734cf0159446da0dd0c7ef3dd06d4fa39e))
+* **SOURSD-964:** subsidiaries table (#253) ([4222a60](https://github.com/HDRUK/soursd-web/commit/4222a604c17b549e22f786b55c79d45c81c97247))
+* **SOURSD-966:** sector info for org (#251) ([59f0c56](https://github.com/HDRUK/soursd-web/commit/59f0c56c6adf43119ef2da4d362d8feaaeafc197))
+* **SOURSD-967:** data security compliance (#255) ([3ac27ad](https://github.com/HDRUK/soursd-web/commit/3ac27ad18bf28ce9365effd9a5b439718e7d2706))
+* **SOURSD-974:** banner (#256) ([bd4313a](https://github.com/HDRUK/soursd-web/commit/bd4313aa1845e1b0d5468957f457ba46e701330b))
+
+### 🐛 Bug Fixes
+
+* remove old profile complete (#246) ([a2c71b8](https://github.com/HDRUK/soursd-web/commit/a2c71b805cd48bb76516ca7b0be8d857e2aa7d67))
+* **SOURSD-930:** project import issues (#236) ([7afb8d4](https://github.com/HDRUK/soursd-web/commit/7afb8d4f830a9de254dbc3a8c76284b107e0d151))
+* **SOURSD-932:** Fix custodian headers (#242) ([ea14b11](https://github.com/HDRUK/soursd-web/commit/ea14b118e0842cb2454de8ec5cf79b421808c030))
+* **SOURSD-952:** Pass user data to Trainings. (#259) ([fd8b4ca](https://github.com/HDRUK/soursd-web/commit/fd8b4ca06a719fa21c61a98b23868807d3944278))
+
 ## [1.3.1](https://github.com/HDRUK/soursd-web/compare/v1.3.0...v1.3.1) (2025-04-02)
 
 ### 🐛 Bug Fixes
