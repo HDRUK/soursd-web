@@ -34,7 +34,7 @@ export default function UserIdentity() {
         </Box>
         <Text
           sx={{ fontWeight: 600 }}
-          startIcon={idvtComplete ?? <ErrorIcon color="error" />}>
+          startIcon={idvtComplete ? null : <ErrorIcon color="error" />}>
           {idvtComplete ? t("idvtComplete") : t("idvtIncomplete")}
         </Text>
       </PageBody>
