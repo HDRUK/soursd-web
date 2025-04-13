@@ -12,7 +12,7 @@ const NAMESPACE_TRANSLATION = "CustodianProfile";
 export default function ProjectsSafeData() {
   const t = useTranslations(NAMESPACE_TRANSLATION);
 
-  const project = useStore(state => state.getProject());
+  const project = useStore(state => state.getCurrentProject());
 
   return (
     <PageGuidance {...mockedSafeProjectGuidanceProps}>
