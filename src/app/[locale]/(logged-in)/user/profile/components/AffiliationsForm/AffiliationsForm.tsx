@@ -23,7 +23,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useCallback } from "react";
 import WarningIcon from "@mui/icons-material/Warning";
 import SelectDepartments from "@/components/SelectDepartments";
 import AskOrganisationModal from "../AskOrganisation";
@@ -69,11 +69,14 @@ export default function AffiliationsForm({
       yup.object().shape({
         member_id: yup.string().required(tForm("memberIdRequiredInvalid")),
         from: yup.date().required(tForm("fromRequiredInvalid")),
-        to: yup.date().when("current_employer", {
-          is: (value: boolean) => !!value,
-          otherwise: schema => schema.required(tForm("toRequiredInvalid")),
-          then: schema => schema.notRequired(),
-        }),
+        to: yup
+          .date()
+          .when("current_employer", {
+            is: (value: boolean) => !!value,
+            otherwise: schema => schema.required(tForm("toRequiredInvalid")),
+            then: schema => schema.notRequired(),
+          })
+          .nullable(),
         organisation_id: yup
           .string()
           .required(tForm("organisationRequiredInvalid")),
@@ -129,18 +132,22 @@ export default function AffiliationsForm({
     [organisationsData]
   );
 
+  const handleSubmit = useCallback((fields: ResearcherAffiliation) => {
+    onSubmit({
+      to: null,
+      ...fields,
+    });
+  }, []);
+
   return (
     <>
-      <Form onSubmit={onSubmit} schema={schema} {...formOptions} sx={{ mb: 3 }}>
-        {({ watch, setValue }) => {
+      <Form
+        onSubmit={handleSubmit}
+        schema={schema}
+        {...formOptions}
+        sx={{ mb: 3 }}>
+        {({ watch }) => {
           const isCurrent = watch("current_employer");
-          const organisation_id = watch("organisation_id");
-          const to = watch("to");
-          setSelectedOrganisationId(organisation_id);
-
-          if (isCurrent && to) {
-            setValue("to", null);
-          }
 
           return (
             <>
