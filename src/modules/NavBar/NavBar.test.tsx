@@ -34,7 +34,7 @@ const mockUseStore = useStore as jest.MockedFunction<typeof useStore>;
 
 (get as jest.Mock).mockReturnValue(undefined);
 
-const linksText = ["Home", "About", "Features", "Resources", "Contact", "Help"];
+const linksText = ["Home", "About", "Features", "Contact", "Help"];
 
 const renderMobileMenuTest = () => {
   defineMatchMedia(theme.breakpoints.values.xs);

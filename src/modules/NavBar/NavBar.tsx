@@ -71,19 +71,13 @@ export default function NavBar() {
       color: ButtonColor.Inherit,
       variant: ButtonVariant.Text,
       text: t("aboutButton"),
-      href: "#",
+      href: "/about",
     },
     {
       color: ButtonColor.Inherit,
       variant: ButtonVariant.Text,
       text: t("featuresButton"),
-      href: "#",
-    },
-    {
-      color: ButtonColor.Inherit,
-      variant: ButtonVariant.Text,
-      text: t("resourcesButton"),
-      href: "#",
+      href: "/features",
     },
     {
       color: ButtonColor.Inherit,
