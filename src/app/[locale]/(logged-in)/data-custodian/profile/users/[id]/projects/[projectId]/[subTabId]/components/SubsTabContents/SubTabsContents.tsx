@@ -11,14 +11,10 @@ import UserTrainingAccreditations from "../../../../../../../components/UserTrai
 import { UserSubTabs } from "../../../../../../../consts/tabs";
 
 interface TabsContentsProps {
-  userId: number;
   subTabId: UserSubTabs;
 }
 
-export default function SubTabsContents({
-  userId,
-  subTabId,
-}: TabsContentsProps) {
+export default function SubTabsContents({ subTabId }: TabsContentsProps) {
   const custodian = useStore(state => state.getCustodian());
 
   const availableSubTabs = Object.values(UserSubTabs) || [];
