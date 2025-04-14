@@ -1,5 +1,9 @@
 import getCustodian from "./getCustodian";
 import getCustodianQuery from "./getCustodianQuery";
+import getCustodiansUserProjects from "./getCustodiansUserProjects";
+import usePaginatedCustodiansUserProjects from "./usePaginatedCustodiansUserProjects";
+import getCustodianOrganisations from "./getCustodianOrganisations";
+import usePaginatedCustodianOrganisations from "./usePaginatedCustodianOrganisations";
 import patchCustodian from "./patchCustodian";
 import patchCustodianQuery from "./patchCustodianQuery";
 import getCustodians from "./getCustodians";
@@ -28,6 +32,10 @@ export {
   putCustodianActiveEntityModelQuery,
   putCustodianActiveEntityModel,
   getCustodianProjectUsers,
+  getCustodiansUserProjects,
+  usePaginatedCustodiansUserProjects,
+  getCustodianOrganisations,
+  usePaginatedCustodianOrganisations,
 };
 
 export type * from "./types";
