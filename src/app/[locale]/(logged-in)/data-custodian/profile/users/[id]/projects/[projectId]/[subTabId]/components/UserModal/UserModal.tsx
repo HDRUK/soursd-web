@@ -16,7 +16,7 @@ import { useTranslations } from "next-intl";
 import { useCallback } from "react";
 import UserModalDetails, {
   CustodianUserFields,
-} from "../../../../../../components/UsersModalDetails";
+} from "../../../../../../../components/UsersModalDetails";
 
 export interface UserModalProps extends Omit<FormModalProps, "children"> {
   custodianId: number;

@@ -1,4 +1,4 @@
-import CustodianProjectUser from "./components";
+import CustodianProjectUser from "../../../../../users/[id]/projects/[projectId]/[subTabId]/components";
 
 interface PageProps {
   params: {
@@ -11,13 +11,6 @@ interface PageProps {
 function CustodianProjectUserPage({
   params: { id: projectId, userId, subTabId },
 }: PageProps) {
-  return (
-    <b>
-      {" "}
-      {projectId} {userId}{" "}
-    </b>
-  );
-
   return (
     <CustodianProjectUser
       projectId={projectId}
