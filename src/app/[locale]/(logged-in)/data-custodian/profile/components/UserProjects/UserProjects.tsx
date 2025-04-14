@@ -91,6 +91,4 @@ export default function UserProjects() {
       />
     </>
   );
-
-  // return <Projects variant="user" entityId={user.id} />;
 }
