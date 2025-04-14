@@ -10,6 +10,7 @@ import {
   OrganisationsSubTabs,
   PageTabs,
   ProjectsSubTabs,
+  UserSubTabs,
 } from "../../consts/tabs";
 
 const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
@@ -20,7 +21,11 @@ export interface SubTabsMap {
 
 interface SubTabsSectionsProps {
   tabId: PageTabs;
-  subTabId: ConfigurationSubTabs | ProjectsSubTabs | OrganisationsSubTabs;
+  subTabId:
+    | ConfigurationSubTabs
+    | UserSubTabs
+    | ProjectsSubTabs
+    | OrganisationsSubTabs;
   id?: number;
 }
 
@@ -53,6 +58,59 @@ export default function SubTabsSections({
         label: t("configurationIntegrations"),
         value: ConfigurationSubTabs.INTEGRATIONS,
         href: routes.profileCustodianConfigurationIntegrations.path,
+      },
+    ],
+    [PageTabs.USERS]: [
+      {
+        label: t("affiliations"),
+        value: UserSubTabs.AFFILIATIONS,
+        href: injectParamsIntoPath(
+          routes.profileCustodianUsersAffiliations.path,
+          {
+            id,
+          }
+        ),
+      },
+      {
+        label: t("projects"),
+        value: UserSubTabs.PROJECTS,
+        href: injectParamsIntoPath(routes.profileCustodianUsersProjects.path, {
+          id,
+        }),
+      },
+      {
+        label: t("identity"),
+        value: UserSubTabs.IDENTITY,
+        href: injectParamsIntoPath(routes.profileCustodianUsersIdentity.path, {
+          id,
+        }),
+      },
+      {
+        label: t("trainingAccreditations"),
+        value: UserSubTabs.TRAINING_ACCREDITATIONS,
+        href: injectParamsIntoPath(
+          routes.profileCustodianUsersTrainingAccreditations.path,
+          {
+            id,
+          }
+        ),
+      },
+      {
+        label: t("custodianOrgInfo"),
+        value: UserSubTabs.CUSTODIAN_ORG_INFO,
+        href: injectParamsIntoPath(
+          routes.profileCustodianUsersCustodianOrgInfo.path,
+          {
+            id,
+          }
+        ),
+      },
+      {
+        label: t("history"),
+        value: UserSubTabs.HISTORY,
+        href: injectParamsIntoPath(routes.profileCustodianUsersHistory.path, {
+          id,
+        }),
       },
     ],
     [PageTabs.PROJECTS]: [

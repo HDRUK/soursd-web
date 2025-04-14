@@ -10,6 +10,7 @@ import {
   OrganisationsSubTabs,
   PageTabs,
   ProjectsSubTabs,
+  UserSubTabs,
 } from "../../consts/tabs";
 import Integrations from "../Integrations";
 import OrganisationsDataSecurityCompliance from "../OrganisationsDataSecurityCompliance";
@@ -22,12 +23,22 @@ import ProjectsSafeOutputs from "../ProjectsSafeOutputs";
 import ProjectsSafeProject from "../ProjectsSafeProject";
 import ProjectsSafeSettings from "../ProjectsSafeSettings";
 import Rules from "../Rules";
+import UserAffiliations from "../UserAffiliations";
+import UserCustodianOrgInfo from "../UserCustodianOrgInfo";
+import UserHistory from "../UserHistory";
+import UserIdentity from "../UserIdentity";
+import UserProjects from "../UserProjects";
+import UserTrainingAccreditations from "../UserTrainingAccreditations";
 import ValidationChecks from "../ValidationChecks";
 import Webhooks from "../Webhooks";
 
 interface TabsContentsProps {
   tabId: PageTabs;
-  subTabId: ConfigurationSubTabs | ProjectsSubTabs | OrganisationsSubTabs;
+  subTabId:
+    | ConfigurationSubTabs
+    | UserSubTabs
+    | ProjectsSubTabs
+    | OrganisationsSubTabs;
   id?: number;
 }
 
@@ -60,6 +71,24 @@ export default function SubTabsContents({
       break;
     case ConfigurationSubTabs.INTEGRATIONS:
       content = <Integrations />;
+      break;
+    case UserSubTabs.HISTORY:
+      content = <UserHistory />;
+      break;
+    case UserSubTabs.IDENTITY:
+      content = <UserIdentity />;
+      break;
+    case UserSubTabs.TRAINING_ACCREDITATIONS:
+      content = <UserTrainingAccreditations />;
+      break;
+    case UserSubTabs.PROJECTS:
+      content = <UserProjects />;
+      break;
+    case UserSubTabs.CUSTODIAN_ORG_INFO:
+      content = <UserCustodianOrgInfo />;
+      break;
+    case UserSubTabs.AFFILIATIONS:
+      content = <UserAffiliations />;
       break;
     case ProjectsSubTabs.SAFE_PEOPLE:
       content = <ProjectsSafePeople variant={EntityType.CUSTODIAN} />;
