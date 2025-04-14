@@ -3,9 +3,9 @@
 import { useStore } from "@/data/store";
 import Projects from "@/modules/Projects";
 import { notFound } from "next/navigation";
+import useOrganisationStore from "@/queries/useOrganisationStore";
 import { PageTabs } from "../../consts/tabs";
 import Home from "../Home";
-import useOrganisationStore from "@/queries/useOrganisationStore";
 
 interface TabsContentsProps {
   tabId: string;

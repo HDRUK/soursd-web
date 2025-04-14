@@ -1,14 +1,13 @@
 "use client";
 
-import { useStore } from "@/data/store";
 import Projects from "@/modules/Projects";
 import { notFound } from "next/navigation";
+import useCustodianStore from "@/queries/useCustodianStore";
 import { PageTabs } from "../../consts/tabs";
 import Contacts from "../Contacts";
 import Home from "../Home";
 import Organisations from "../Organisations";
 import Users from "../Users";
-import useCustodianStore from "@/queries/useCustodianStore";
 
 interface TabsContentsProps {
   tabId: PageTabs;

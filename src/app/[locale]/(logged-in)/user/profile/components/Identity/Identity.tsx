@@ -19,15 +19,14 @@ import {
   PageSection,
 } from "@/modules";
 import { putUserQuery } from "@/services/users";
-import { showAlert } from "@/utils/showAlert";
 import { Button, Grid, TextField } from "@mui/material";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
 import ReactDOMServer from "react-dom/server";
-import VeriffTermsAndConditions from "../VeriffTermsAndConditions";
 import useQueryAlerts from "@/hooks/useQueryAlerts";
+import VeriffTermsAndConditions from "../VeriffTermsAndConditions";
 
 export interface IdentityFormValues {
   first_name: string;
