@@ -14,8 +14,6 @@ export default function UserIdentity() {
     user: state.current.user,
   }));
 
-  console.log(user);
-
   const idvtComplete =
     !!user?.registry?.identity?.idvt_completed_at &&
     user?.registry?.identity?.idvt_result === 1;
