@@ -170,7 +170,7 @@ export default function SubTabsSections({
         label: t("organisationsPeople"),
         value: OrganisationsSubTabs.PEOPLE,
         href: injectParamsIntoPath(
-          routes.profileCustodianOrganisationsNameAddress.path,
+          routes.profileCustodianOrganisationsPeople.path,
           {
             id,
           }
