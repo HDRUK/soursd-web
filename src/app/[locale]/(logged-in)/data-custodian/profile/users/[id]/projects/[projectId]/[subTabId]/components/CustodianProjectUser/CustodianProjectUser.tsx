@@ -16,7 +16,7 @@ import getProjectQuery from "@/services/projects/getProjectQuery";
 import { useTranslations } from "next-intl";
 import { notFound } from "next/navigation";
 import { useEffect } from "react";
-import { UserSubTabs } from "../../const/tabs";
+import { UserSubTabs } from "../../../../../../../consts/tabs";
 import SubTabsSections from "../SubTabSections";
 import SubTabsContents from "../SubsTabContents";
 
