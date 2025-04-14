@@ -18,6 +18,7 @@ interface Routes {
   invite: RouteConfig;
   register: RouteConfig;
   homepage: RouteConfig;
+  about: RouteConfig;
   usersCustodian: RouteConfig;
   profileCustodian: RouteConfig;
   profileCustodianUserById: RouteConfig;
