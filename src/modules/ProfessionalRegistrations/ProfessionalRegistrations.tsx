@@ -2,7 +2,7 @@
 
 import { ActionMenu, ActionMenuItem } from "@/components/ActionMenu";
 import ContactLink from "@/components/ContactLink";
-import { useStore } from "@/data/store";
+import { StoreUserHistories } from "@/data/store";
 import useQueryAlerts from "@/hooks/useQueryAlerts";
 import useQueryConfirmAlerts from "@/hooks/useQueryConfirmAlerts";
 import useMutationUpdateProfessionalRegistration from "@/queries/useMutationUpdateProfessionalRegistration";
@@ -12,7 +12,7 @@ import {
   putProfessionalRegistrationQuery,
 } from "@/services/professional_registrations";
 import { PostProfessionalRegistrationPayload } from "@/services/professional_registrations/types";
-import { ResearcherProfessionalRegistration } from "@/types/application";
+import { ResearcherProfessionalRegistration, User } from "@/types/application";
 import AddIcon from "@mui/icons-material/Add";
 import { Button, Typography } from "@mui/material";
 import Table from "@/components/Table";
@@ -31,10 +31,18 @@ const NAMESPACE_TRANSLATION_APPLICATION = "Application";
 
 interface ProfessionalRegistrationsProps {
   variant: EntityType;
+  user: User;
+  setHistories?: (histories: StoreUserHistories) => void;
+  getHistories?: () => StoreUserHistories | undefined;
+  professionalRegistrations: ResearcherProfessionalRegistration[];
 }
 
 export default function ProfessionalRegistrations({
   variant,
+  user,
+  setHistories,
+  getHistories,
+  professionalRegistrations,
 }: ProfessionalRegistrationsProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editRecord, setEditRecord] = useState<
@@ -43,15 +51,6 @@ export default function ProfessionalRegistrations({
   const [isEditMode, setIsEditMode] = useState(false);
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
-
-  const { user, professionalRegistrations, getHistories, setHistories } =
-    useStore(state => ({
-      user: state.current.user,
-      professionalRegistrations:
-        state.config.histories?.professionalRegistrations || [],
-      getHistories: state.getHistories,
-      setHistories: state.setHistories,
-    }));
 
   const {
     data: professionalRegistrationsData,

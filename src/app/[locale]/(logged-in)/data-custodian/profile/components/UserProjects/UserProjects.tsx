@@ -55,6 +55,7 @@ export default function UserProjects() {
       accessorKey: "organisations",
       header: t("organisations"),
       cell: renderOrganisationsNameCell,
+      cell: info => renderOrganisationsNameCell(info.getValue()),
     },
     {
       accessorKey: "status",
@@ -91,6 +92,4 @@ export default function UserProjects() {
       />
     </>
   );
-
-  // return <Projects variant="user" entityId={user.id} />;
 }

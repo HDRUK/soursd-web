@@ -119,7 +119,7 @@ export default function Projects({ variant, entityId }: ProjectsProps) {
     {
       accessorKey: "organisations",
       header: t("organisations"),
-      cell: renderOrganisationsNameCell,
+      cell: info => renderOrganisationsNameCell(info.getValue()),
     },
     {
       accessorKey: "status",

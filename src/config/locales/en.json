@@ -807,6 +807,7 @@
     "identity": "Identity",
     "identityForm": "Personal Identity",
     "identityTitle": "Complete your personal details",
+    "name": "Name",
     "affiliations": "Affiliations",
     "affiliationsTitle": "Complete your employer or institute information",
     "affiliationsForm": "Add an employer or institute",
@@ -857,9 +858,13 @@
     "previousButton": "Previous",
     "emailDescription": "Your personal email is used to set up a SOURSD account so that your account stays with you, regardless of your employment or enrolment at a higher education institute. You can also recover your account using your personal email.",
     "locationDescription": "Some data custodians need to know the country that you will be accessing data from as different countries adhere to different laws regarding data sharing and data confidentiality.",
+    "location": "Location",
+    "locationMissing": "Location not provided",
     "idvtCheckSection": "Identification Verification Technology (IDVT)",
     "idvtCheckButton": "Start IDVT check",
     "idvtCheckDescription": "Not all Data Custodians require this check to be completed. Those Data Custodians that do, can request that this check is completed prior to project approval. To work across the breadth of UK Data Custodians, we recommend that you complete this check as it may streamline approval processes. \n\nIDVT checks are carried out by a 3rd party supplier against the following criteria: valid government issued identification (fraud), likeness check against ID (identity), liveness check (identity), sanctions check (anti money laundering). Please note neither SOURSD nor the 3rd party supplier store a copy of your identity documents",
+    "idvtComplete": "IDVT checks complete",
+    "idvtIncomplete": "IDVT checks incomplete",
     "accreditedResearcherCheckboxLabel": "I am a registered Accredited Researcher as published on the UK Statistics Authority website.",
     "accreditedResearcherLinkHref": "https://www.gov.uk/government/consultations/digital-economy-act-part-5-data-sharing-codes-and-regulations/research-code-of-practice-and-accreditation-criteria",
     "userDeclarationCheckboxLabel": "I have signed a User declaration for accessing Digital Economy Act accredited environments.",
@@ -1069,19 +1074,6 @@
     },
     "alsoApprovedOn": "Also Approved On: {projects} "
   },
-  "OrganisationsList": {
-    "searchPlaceholder": "Search Organisations",
-    "errorResultsProjects": "Unable to get a list of organisations. Please try again or contact us on <contact></contact>",
-    "noResultsProjects": "No organisations found for the search terms provided.",
-    "sortActions": {
-      "AZ": "Sort Alphabetical A-Z",
-      "ZA": "Sort Alphabetical Z-A"
-    },
-    "filterActions": {
-      "hasDelegates": "Has Delegates",
-      "hasSoursdId": "Is Registered"
-    }
-  },
   "Charities": {
     "name": "Name",
     "registrationId": "Registration ID",
@@ -1125,8 +1117,15 @@
       "website": "Organisation website",
       "organisationSize": "Organisation size"
     },
+    "Search": {
+      "sortActions_AZ": "Sort by Organisation Name A-Z",
+      "sortActions_ZA": "Sort by Organisation Name Z-A",
+      "filterByProjectStatus": "Filter by status"
+    },
+    "sroOfficer": "Senior Responsible Officer",
     "subsidiaries": "UK subsidiaries",
     "organisationName": "Organisation name",
+    "projects": "Projects",
     "address": "Address",
     "companiesHouseNo": "Companies House ID",
     "rorId": "ROR ID",
@@ -1134,7 +1133,8 @@
     "organisationUniqueId": "SOURSD identifier",
     "sectorName": "Organisation sector",
     "website": "Organisation website",
-    "organisationSize": "Organisation size"
+    "organisationSize": "Organisation size",
+    "projectStatus": "Status"
   },
   "Projects": {
     "okButton": "OK",

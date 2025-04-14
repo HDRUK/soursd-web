@@ -15,8 +15,12 @@ import Application from "./Application";
 import ApplicationData from "./ApplicationData";
 import ProjectsFilters from "./ProjectsFilters";
 import Training from "./Training";
+import OrganisationsProjectsTable from "./OrganisationsProjectsTable";
+import OrganisationsFilters from "./OrganisationsFilters";
+import Affiliations from "./Affiliations";
 
 export {
+  Affiliations,
   ApplicationData,
   Application,
   NavBar,
@@ -34,4 +38,6 @@ export {
   PageColumnDetails,
   PageColumnBody,
   Training,
+  OrganisationsProjectsTable,
+  OrganisationsFilters,
 };
