@@ -27,7 +27,6 @@ import { useCallback, useMemo, useState } from "react";
 import ReactDOMServer from "react-dom/server";
 import useQueryAlerts from "@/hooks/useQueryAlerts";
 import VeriffTermsAndConditions from "../VeriffTermsAndConditions";
-import useQueryAlerts from "@/hooks/useQueryAlerts";
 
 export interface IdentityFormValues {
   first_name: string;
