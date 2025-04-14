@@ -32,6 +32,6 @@ describe("Support Component", () => {
     });
 
     // Mocked test to check the primary button style
-    expect(custodianButton).toHaveClass("MuiButton-outlinedPrimary"); // Check for Material-UI styles
+    expect(custodianLink).toHaveClass("MuiButton-outlinedPrimary"); // Check for Material-UI styles
   });
 });
