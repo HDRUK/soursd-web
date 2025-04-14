@@ -58,6 +58,10 @@ const nextConfig = withNextIntl({
         destination: `/:locale/organisation/profile/home`,
       },
       {
+        source: "/:locale/organisation/delegate/profile",
+        destination: `/:locale/organisation/delegate/profile/home`,
+      },
+      {
         source: "/:locale/organisation/profile/details",
         destination: `/:locale/organisation/profile/details/name-and-address`,
       },
