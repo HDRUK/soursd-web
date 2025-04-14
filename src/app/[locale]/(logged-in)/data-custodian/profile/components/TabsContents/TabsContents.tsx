@@ -8,13 +8,14 @@ import Contacts from "../Contacts";
 import Home from "../Home";
 import Organisations from "../Organisations";
 import Users from "../Users";
+import useCustodianStore from "@/queries/useCustodianStore";
 
 interface TabsContentsProps {
   tabId: PageTabs;
 }
 
 export default function TabsContents({ tabId }: TabsContentsProps) {
-  const custodian = useStore(state => state.getCustodian());
+  const custodian = useCustodianStore();
 
   if (!custodian) notFound();
 

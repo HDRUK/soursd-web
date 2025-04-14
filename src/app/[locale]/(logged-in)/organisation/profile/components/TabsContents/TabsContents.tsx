@@ -5,16 +5,15 @@ import Projects from "@/modules/Projects";
 import { notFound } from "next/navigation";
 import { PageTabs } from "../../consts/tabs";
 import Home from "../Home";
+import useOrganisationStore from "@/queries/useOrganisationStore";
 
 interface TabsContentsProps {
   tabId: string;
 }
 
 export default function TabsContents({ tabId }: TabsContentsProps) {
-  const [user, organisation] = useStore(state => [
-    state.getUser(),
-    state.getOrganisation(),
-  ]);
+  const user = useStore(state => state.getUser());
+  const organisation = useOrganisationStore();
 
   if (!user || !organisation) notFound();
 
