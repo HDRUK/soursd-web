@@ -1,8 +1,8 @@
 "use client";
 
-import { useStore } from "@/data/store";
 import Projects from "@/modules/Projects";
 import { notFound } from "next/navigation";
+import useCustodianStore from "@/queries/useCustodianStore";
 import { PageTabs } from "../../consts/tabs";
 import Contacts from "../Contacts";
 import Home from "../Home";
@@ -14,7 +14,7 @@ interface TabsContentsProps {
 }
 
 export default function TabsContents({ tabId }: TabsContentsProps) {
-  const custodian = useStore(state => state.getCustodian());
+  const custodian = useCustodianStore();
 
   if (!custodian) notFound();
 
