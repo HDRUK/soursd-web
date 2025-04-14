@@ -148,7 +148,6 @@ export default function AffiliationsPage() {
 
   const handleDetailsSubmit = useCallback(
     async (fields: PostAffiliationPayload) => {
-      console.log("**** payload fields", fields);
       if (selectedAffiliation) {
         // Update existing affiliation
         await patchAffiliation({
