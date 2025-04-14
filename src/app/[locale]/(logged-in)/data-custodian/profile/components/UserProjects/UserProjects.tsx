@@ -54,7 +54,6 @@ export default function UserProjects() {
     {
       accessorKey: "organisations",
       header: t("organisations"),
-      cell: renderOrganisationsNameCell,
       cell: info => renderOrganisationsNameCell(info.getValue()),
     },
     {
