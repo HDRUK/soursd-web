@@ -45,18 +45,14 @@ export default function ActionValidationMakeDecision({
 
   const onSubmit = async (data: ActionValidationCommentFormData) => {
     if (!selectedAction) return;
-
     const comment = data.comment;
-
     const res = await updateLog(selectedAction);
     setCurrentLog(res.data);
-
     await createComment({
       user_id: user?.id as number,
       validation_log_id: res.data.id,
       comment,
     });
-
     await onAction?.();
     setSelectedAction(null);
   };

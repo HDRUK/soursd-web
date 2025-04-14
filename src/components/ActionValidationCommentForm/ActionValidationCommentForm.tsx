@@ -39,8 +39,6 @@ export default function ActionValidationCommentForm({
     },
   };
 
-  console.log("called rerender");
-
   return (
     <Form onSubmit={onSubmit} schema={schema} {...formOptions}>
       <Box sx={{ display: "flex", flexDirection: "column", gap: 1, mt: 4 }}>
@@ -58,12 +56,7 @@ export default function ActionValidationCommentForm({
             />
           )}
         />
-        <Box
-          sx={{
-            display: "flex",
-            gap: 1,
-            justifyContent: "space-between",
-          }}>
+        <Box sx={{ display: "flex", gap: 1, justifyContent: "space-between" }}>
           <Button
             data-testid="validation-log-cancel-confirm-button"
             variant="outlined"
