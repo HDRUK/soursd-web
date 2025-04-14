@@ -20,8 +20,6 @@ const SelectCountry = ({
 }: SelectCountryProps) => {
   const countryOptions = getCountryOptions(useCountryCode);
 
-  console.log("value", value, countryOptions);
-
   return (
     <Autocomplete
       options={countryOptions}
