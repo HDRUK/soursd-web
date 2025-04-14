@@ -72,7 +72,6 @@ type GetCustodianOrganisationsResponse = Organisation[];
 
 type GetCustodianOrganisationUsersResponse = User[];
 
-
 type EntityType =
   | "decision_models"
   | "user_validation_rules"
