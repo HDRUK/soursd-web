@@ -8,7 +8,6 @@ export default async (
   searchParams: Record<string, string | number | undefined>,
   options?: ResponseOptions
 ): Promise<ResponseJson<Paged<UsersResponse>>> => {
-  console.log(`/users${getSearchQuerystring(searchParams)}`);
   const response = await getRequest(
     `/users${getSearchQuerystring(searchParams)}`
   );

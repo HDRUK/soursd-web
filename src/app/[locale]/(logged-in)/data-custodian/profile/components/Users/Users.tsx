@@ -1,211 +1,148 @@
-import ContactLink from "@/components/ContactLink";
-import Icon from "@/components/Icon";
-import Results from "@/components/Results";
-import ResultsCard from "@/components/ResultsCard";
-import { useStore } from "@/data/store";
-import { Link } from "@/i18n/routing";
-import { PageBody, PageBodyContainer, PageSection } from "@/modules";
-import SearchBar from "@/modules/SearchBar";
-import {
-  deleteCustodianUser,
-  getCustodianUsers,
-} from "@/services/custodian_users";
-import { CustodianUser } from "@/types/application";
-import { injectParamsIntoPath } from "@/utils/application";
-import { formatShortDate } from "@/utils/date";
-import { showAlert, showLoadingAlertWithPromise } from "@/utils/showAlert";
-import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
-import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
-import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
-import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
-import { Box, Button, IconButton, Typography } from "@mui/material";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+"use client";
+
+import ChipStatus from "@/components/ChipStatus";
+import Table from "@/components/Table";
+import { StoreState, useStore } from "@/data/store";
+import PageSection from "@/modules/PageSection";
+import { ProjectEntities } from "@/services/projects/getEntityProjects";
+import useProjectsUsersQuery from "@/services/custodians/useCustodianProjectsUsersQuery";
+import { CustodianProjectUser, User } from "@/types/application";
+import { ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
-import { useCallback, useState } from "react";
-import UserModal from "../UserModal";
+import PageBody from "@/modules/PageBody";
+import PageBodyContainer from "@/modules/PageBodyContainer";
+import { Box, Typography } from "@mui/material";
+import { renderUserNameCell } from "@/utils/cells";
 
-const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
+const NAMESPACE_TRANSLATIONS_PROJECTS = "Projects";
+const NAMESPACE_TRANSLATIONS_APPLICATION = "Application";
+const NAMESPACE_TRANSLATIONS_PROFILE = "CustodianProfile";
 
-export default function Users() {
-  const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
-  const queryClient = useQueryClient();
-  const [modalProps, setModalProps] = useState<{
-    open: boolean;
-    user?: Partial<CustodianUser>;
-  } | null>();
-  const { custodian, routes } = useStore(state => ({
-    custodian: state.getCustodian(),
-    routes: state.getApplication().routes,
-  }));
+type VariantConfig = {
+  getId: (store: StoreState) => string | number | undefined;
+};
+
+const variantConfig: Record<ProjectEntities, VariantConfig> = {
+  organisation: {
+    getId: store => {
+      const organisation = store.getOrganisation();
+      return organisation?.id;
+    },
+  },
+  custodian: {
+    getId: store => {
+      const custodian = store.getCustodian();
+      return custodian?.id;
+    },
+  },
+  user: {
+    getId: store => {
+      const user = store.getUser();
+      return user?.id;
+    },
+  },
+};
+
+interface ProjectsProps {
+  variant: ProjectEntities;
+}
+
+export default function Users({ variant }: ProjectsProps) {
+  const t = useTranslations(NAMESPACE_TRANSLATIONS_PROJECTS);
+  const tApplication = useTranslations(NAMESPACE_TRANSLATIONS_APPLICATION);
+  const tProfile = useTranslations(NAMESPACE_TRANSLATIONS_PROFILE);
+
+  const store = useStore();
+  const { getId } = variantConfig[variant];
+  const entityId = getId(store);
+  const routes = useStore(state => state.getApplication().routes);
 
   const {
-    isError: isGetCustodiansError,
-    isLoading: isGetCustodiansLoading,
-    data: custodiansData,
-  } = useQuery({
-    queryKey: ["getCustodianUsers", custodian?.id],
-    queryFn: ({ queryKey }) => getCustodianUsers(queryKey[1]),
+    data: projectsData,
+    page,
+    last_page,
+    total,
+    setPage,
+    ...queryState
+  } = useProjectsUsersQuery(entityId, {
+    variant,
+    queryKeyBase: ["getProjects"],
+    enabled: !!entityId,
   });
 
-  const { mutateAsync: deleteCustodianUserAsync } = useMutation({
-    mutationKey: ["deleteCustodianUser"],
-    mutationFn: (id: number) => {
-      return deleteCustodianUser(id, {
-        error: { message: "deleteUserError" },
-      });
-    },
-  });
+  const columns: ColumnDef<CustodianProjectUser>[] = [
+    {
+      accessorKey: "user_id",
+      header: t("userName"),
+      cell: info => {
+        let route = null;
 
-  const handleDelete = async (userId: number) => {
-    showAlert("warning", {
-      text: t("deleteWarningDescription"),
-      title: t("deleteWarningTitle"),
-      confirmButtonText: "Delete user",
-      cancelButtonText: "Cancel",
-      closeOnConfirm: true,
-      closeOnCancel: true,
-      preConfirm: () => {
-        showLoadingAlertWithPromise(deleteCustodianUserAsync(userId), {
-          onSuccess: () => {
-            queryClient.refetchQueries({
-              queryKey: ["getCustodianUsers", custodian?.id],
-            });
-          },
-        });
+        switch (variant) {
+          case "organisation":
+            route = null;
+            break;
+          case "custodian":
+            route = routes.profileCustodianUserById;
+            break;
+          case "user":
+            route = null;
+            break;
+          default:
+            route = null;
+        }
+
+        return renderUserNameCell(
+          {
+            first_name: info.row.original.first_name,
+            last_name: info.row.original.last_name,
+            id: info.getValue(),
+          } as User,
+          route.path
+        );
       },
-    });
-  };
-
-  const handleCloseModal = useCallback(() => {
-    setModalProps(null);
-  }, []);
+    },
+    {
+      accessorKey: "organisation_name",
+      header: t("organisation"),
+    },
+    {
+      accessorKey: "project_name",
+      header: t("title"),
+    },
+    {
+      accessorKey: "project_role",
+      header: tApplication("projectRole"),
+    },
+    {
+      accessorKey: "status",
+      header: t("status"),
+      cell: info => (
+        <ChipStatus status={info.row.original.model_state?.state.slug} />
+      ),
+    },
+  ];
 
   return (
     <PageBodyContainer heading={t("users")}>
       <PageBody>
         <PageSection>
-          <Box sx={{ display: "flex", gap: 1, mb: 3 }}>
-            <Box component="form" role="search" sx={{ flexGrow: 1 }}>
-              <SearchBar onSearch={() => {}} />
-            </Box>
-            <Button
-              endIcon={<AddCircleOutlineOutlinedIcon />}
-              variant="contained"
-              onClick={() => {
-                if (custodian?.id) {
-                  setModalProps({
-                    open: true,
-                    user: {
-                      first_name: "",
-                      last_name: "",
-                      email: "",
-                      custodian_id: custodian?.id,
-                    },
-                  });
-                }
-              }}>
-              {t("addNewUser")}
-            </Button>
+          <Box>
+            <Typography variant="body1">
+              {tProfile("userListDescription")}
+            </Typography>
           </Box>
-
-          <Results
-            noResultsMessage={t("noResults")}
-            errorMessage={t.rich("getError", {
-              contactLink: ContactLink,
-            })}
-            queryState={{
-              isLoading: isGetCustodiansLoading,
-              isError: isGetCustodiansError,
-            }}
-            total={custodiansData?.data?.length}>
-            {custodiansData?.data.map(custodianUser => {
-              const {
-                id,
-                first_name,
-                last_name,
-                email,
-                created_at,
-                user_permissions,
-              } = custodianUser;
-
-              const role = user_permissions?.[0]?.permission?.name;
-
-              return (
-                <ResultsCard
-                  key={email}
-                  icon={
-                    <Icon size="xlarge">
-                      <PersonOutlineOutlinedIcon />
-                    </Icon>
-                  }
-                  content={
-                    <>
-                      {" "}
-                      <Typography
-                        component={Link}
-                        href={injectParamsIntoPath(
-                          routes.profileCustodianUserById.path,
-                          {
-                            id,
-                          }
-                        )}
-                        variant="h6">
-                        {first_name} {last_name}
-                      </Typography>
-                      {/* Will be read from db */}
-                      <Typography>{role && t(role)}</Typography>
-                    </>
-                  }
-                  details={
-                    <>
-                      {" "}
-                      <Typography color="caption.main">
-                        {t("addedOn", {
-                          date: formatShortDate(created_at),
-                        })}
-                      </Typography>
-                      <Typography color="caption.main">
-                        {t("lastLoggedIn", {
-                          date: formatShortDate(),
-                        })}
-                      </Typography>
-                    </>
-                  }
-                  actions={
-                    <>
-                      <IconButton
-                        size="small"
-                        aria-label="Edit user"
-                        color="inherit"
-                        onClick={() =>
-                          setModalProps({
-                            open: true,
-                            user: custodianUser,
-                          })
-                        }>
-                        <CreateOutlinedIcon sx={{ color: "default.main" }} />
-                      </IconButton>
-                      <IconButton
-                        size="small"
-                        aria-label="Delete user"
-                        onClick={() => handleDelete(custodianUser?.id)}>
-                        <DeleteForeverOutlinedIcon
-                          sx={{ color: "error.main" }}
-                        />
-                      </IconButton>
-                    </>
-                  }
-                />
-              );
-            })}
-          </Results>
-          {modalProps?.user && custodian?.id && (
-            <UserModal
-              {...modalProps}
-              custodianId={custodian.id}
-              onClose={handleCloseModal}
-            />
-          )}
+        </PageSection>
+        <PageSection>
+          <Table
+            total={total}
+            last_page={last_page}
+            page={page}
+            setPage={setPage}
+            data={projectsData}
+            columns={columns}
+            queryState={queryState}
+            isPaginated
+          />
         </PageSection>
       </PageBody>
     </PageBodyContainer>

@@ -33,7 +33,7 @@ export default function ProjectsSafeProject() {
   const queryClient = useQueryClient();
   const { custodian, project } = useStore(state => ({
     custodian: state.getCustodian(),
-    project: state.getProject(),
+    project: state.getCurrentProject(),
   }));
 
   const { mutateAsync: mutatePutAsync, ...mutateState } =

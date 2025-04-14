@@ -23,7 +23,7 @@ export default function TabsContents({ tabId }: TabsContentsProps) {
       {tabId === PageTabs.HOME && <Home custodian={custodian} />}
       {tabId === PageTabs.PROJECTS && <Projects variant="custodian" />}
       {tabId === PageTabs.ORGANISATIONS && <Organisations />}
-      {tabId === PageTabs.USERS && <Users />}
+      {tabId === PageTabs.USERS && <Users variant="custodian" />}
       {tabId === PageTabs.CONTACTS && <Contacts />}
     </>
   );

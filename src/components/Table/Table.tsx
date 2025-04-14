@@ -16,6 +16,7 @@ import {
   TableOptions,
   useReactTable,
 } from "@tanstack/react-table";
+import { useStore } from "@/data/store";
 import React, { ReactNode } from "react";
 import Results from "../Results";
 
@@ -52,6 +53,8 @@ const Table = <T,>({
   sx,
   ...restProps
 }: TableProps<T>) => {
+  const perPage = useStore(state => state.getApplication().system.PER_PAGE);
+
   const table = useReactTable({
     data: data || [],
     columns,
@@ -59,6 +62,11 @@ const Table = <T,>({
     getPaginationRowModel: getPaginationRowModel(),
     ...(isPaginated && { getPaginationRowModel: getPaginationRowModel() }),
     ...restProps,
+    initialState: {
+      pagination: {
+        pageSize: +perPage.value,
+      },
+    },
   });
 
   return (

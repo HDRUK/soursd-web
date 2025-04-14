@@ -1,24 +1,16 @@
 "use client";
 
 import Text from "@/components/Text";
-import { DEFAULT_ALERT_DURATION_HRS } from "@/consts/application";
+import { OrganisationIcon } from "@/consts/icons";
 import { useStore } from "@/data/store";
-import useUserProfile from "@/hooks/useUserProfile";
 import { Link } from "@/i18n/routing";
-import { putUserQuery } from "@/services/users";
-import { formatNowDBDate } from "@/utils/date";
-import { showAlert } from "@/utils/showAlert";
-import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import BadgeOutlinedIcon from "@mui/icons-material/BadgeOutlined";
 import BusinessCenterOutlinedIcon from "@mui/icons-material/BusinessCenterOutlined";
-import { OrganisationIcon } from "@/consts/icons";
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import WorkspacePremiumOutlinedIcon from "@mui/icons-material/WorkspacePremiumOutlined";
-import ErrorIcon from "@mui/icons-material/Error";
 import { Box, Tab, Tabs } from "@mui/material";
-import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import { useEffect } from "react";
 import { PageTabs } from "../../consts/tabs";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
@@ -28,39 +20,8 @@ interface TabsSectionsProps {
 }
 
 export default function TabsSections({ tabId }: TabsSectionsProps) {
-  const { user, routes } = useStore(store => ({
-    user: store.getUser(),
-    routes: store.getApplication().routes,
-  }));
-
+  const routes = useStore(store => store.getApplication().routes);
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
-  const {
-    affiliationsScore,
-    experiencesScore,
-    identityScore,
-    trainingScore,
-    isComplete,
-  } = useUserProfile();
-
-  const updateUser = useMutation(putUserQuery(user?.id));
-
-  useEffect(() => {
-    const init = async () => {
-      await updateUser.mutateAsync({
-        profile_completed_at: isComplete ? formatNowDBDate() : null,
-      });
-    };
-
-    if (!isComplete) {
-      showAlert("warning", {
-        id: "profile_complete",
-        text: t("profileCompleteWarningMessage"),
-        untilDuration: DEFAULT_ALERT_DURATION_HRS,
-      });
-    }
-
-    init();
-  }, [isComplete]);
 
   return (
     <Box sx={{ width: "100%", mb: 4 }}>
@@ -83,12 +44,7 @@ export default function TabsSections({ tabId }: TabsSectionsProps) {
         />
         <Tab
           icon={<BadgeOutlinedIcon />}
-          label={
-            <Text
-              startIcon={identityScore < 100 && <ErrorIcon color="error" />}>
-              {t("identity")}
-            </Text>
-          }
+          label={t("identity")}
           href={routes.profileResearcherIdentity.path}
           component={Link}
           value={PageTabs.IDENTITY}
@@ -96,12 +52,7 @@ export default function TabsSections({ tabId }: TabsSectionsProps) {
         />
         <Tab
           icon={<BusinessCenterOutlinedIcon />}
-          label={
-            <Text
-              startIcon={experiencesScore < 100 && <ErrorIcon color="error" />}>
-              {t("experience")}
-            </Text>
-          }
+          label={t("experience")}
           href={routes.profileResearcherExperience.path}
           component={Link}
           value={PageTabs.EXPERIENCE}
@@ -109,14 +60,7 @@ export default function TabsSections({ tabId }: TabsSectionsProps) {
         />
         <Tab
           icon={<OrganisationIcon />}
-          label={
-            <Text
-              startIcon={
-                affiliationsScore < 100 && <ErrorIcon color="error" />
-              }>
-              {t("affiliations")}
-            </Text>
-          }
+          label={t("affiliations")}
           href={routes.profileResearcherAffiliations.path}
           component={Link}
           value={PageTabs.AFFILIATIONS}
@@ -124,12 +68,7 @@ export default function TabsSections({ tabId }: TabsSectionsProps) {
         />
         <Tab
           icon={<WorkspacePremiumOutlinedIcon />}
-          label={
-            <Text
-              startIcon={trainingScore < 100 && <ErrorIcon color="error" />}>
-              {t("training")}
-            </Text>
-          }
+          label={t("training")}
           href={routes.profileResearcherTraining.path}
           component={Link}
           value={PageTabs.TRAINING}

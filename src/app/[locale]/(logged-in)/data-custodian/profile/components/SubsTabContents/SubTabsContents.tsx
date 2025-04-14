@@ -1,18 +1,26 @@
 "use client";
 
 import { useStore } from "@/data/store";
-import { notFound } from "next/navigation";
 import ProjectsSafePeople from "@/modules/ProjectsSafePeople";
 import { EntityType } from "@/types/api";
+import { notFound } from "next/navigation";
 import {
   ConfigurationSubTabs,
   getSubTabs,
+  OrganisationsSubTabs,
   PageTabs,
   ProjectsSubTabs,
   UserSubTabs,
 } from "../../consts/tabs";
-import ProjectsSafeProject from "../ProjectsSafeProject";
+import Integrations from "../Integrations";
+import OrganisationsDataSecurityCompliance from "../OrganisationsDataSecurityCompliance";
+import OrganisationsDigitalIdentifiers from "../OrganisationsDigitalIdentifiers";
+import OrganisationsNameAddress from "../OrganisationsNameAddress";
+import OrganisationsPeople from "../OrganisationsPeople";
+import OrganisationsSectorWebsite from "../OrganisationsSectorWebsite";
 import ProjectsSafeData from "../ProjectsSafeData";
+import ProjectsSafeOutputs from "../ProjectsSafeOutputs";
+import ProjectsSafeProject from "../ProjectsSafeProject";
 import ProjectsSafeSettings from "../ProjectsSafeSettings";
 import Rules from "../Rules";
 import UserAffiliations from "../UserAffiliations";
@@ -22,13 +30,16 @@ import UserIdentity from "../UserIdentity";
 import UserProjects from "../UserProjects";
 import UserTrainingAccreditations from "../UserTrainingAccreditations";
 import ValidationChecks from "../ValidationChecks";
-import Integrations from "../Integrations";
 import Webhooks from "../Webhooks";
-import ProjectsSafeOutputs from "../ProjectsSafeOutputs";
 
 interface TabsContentsProps {
   tabId: PageTabs;
-  subTabId: ConfigurationSubTabs | UserSubTabs | ProjectsSubTabs;
+  subTabId:
+    | ConfigurationSubTabs
+    | UserSubTabs
+    | ProjectsSubTabs
+    | OrganisationsSubTabs;
+  id?: number;
 }
 
 export default function SubTabsContents({
@@ -93,6 +104,21 @@ export default function SubTabsContents({
       break;
     case ProjectsSubTabs.SAFE_OUTPUTS:
       content = <ProjectsSafeOutputs />;
+      break;
+    case OrganisationsSubTabs.PEOPLE:
+      content = <OrganisationsPeople />;
+      break;
+    case OrganisationsSubTabs.NAME_ADDRESS:
+      content = <OrganisationsNameAddress />;
+      break;
+    case OrganisationsSubTabs.DIGITAL_IDENTIFIERS:
+      content = <OrganisationsDigitalIdentifiers />;
+      break;
+    case OrganisationsSubTabs.SECTOR_WEBSITE:
+      content = <OrganisationsSectorWebsite />;
+      break;
+    case OrganisationsSubTabs.DATA_SECURITY_COMPLIANCE:
+      content = <OrganisationsDataSecurityCompliance />;
       break;
     default:
       content = null;

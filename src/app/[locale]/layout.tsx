@@ -2,6 +2,7 @@ import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
 import { locales } from "@/config";
 import { CookieProvider } from "@/context/CookieContext";
 import ToastProvider from "@/context/ToastProvider";
+import BannerMessage from "@/modules/BannerMessage";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import GlobalStyles from "@mui/material/GlobalStyles";
 import { Box } from "@mui/system";
@@ -51,6 +52,9 @@ export default function RootLayout({
                         },
                       }}
                     />
+                    {process.env.NEXT_PUBLIC_HIDE_BANNER !== "true" && (
+                      <BannerMessage />
+                    )}
                     {children}
                   </ToastProvider>
                 </ThemeRegistry>

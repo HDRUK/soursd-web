@@ -31,22 +31,37 @@ enum UserSubTabs {
   HISTORY = "history",
 }
 
+enum OrganisationsSubTabs {
+  PEOPLE = "people",
+  NAME_ADDRESS = "name_address",
+  DIGITAL_IDENTIFIERS = "digital_identifiers",
+  SECTOR_WEBSITE = "sector_website",
+  DATA_SECURITY_COMPLIANCE = "data_security_compliance",
+}
+
 type TabStructure = {
   [key in PageTabs]?:
     | ConfigurationSubTabs[]
     | UserSubTabs[]
-    | ProjectsSubTabs[];
+    | ProjectsSubTabs[]
+    | OrganisationsSubTabs[];
 };
 
 const tabHierarchy: TabStructure = {
   [PageTabs.CONFIGURATION]: Object.values(ConfigurationSubTabs),
   [PageTabs.USERS]: Object.values(UserSubTabs),
   [PageTabs.PROJECTS]: Object.values(ProjectsSubTabs),
+  [PageTabs.ORGANISATIONS]: Object.values(OrganisationsSubTabs),
 };
 
 function getSubTabs(
   tab: PageTabs
-): ConfigurationSubTabs[] | UserSubTabs[] | ProjectsSubTabs[] | undefined {
+):
+  | ConfigurationSubTabs[]
+  | UserSubTabs[]
+  | ProjectsSubTabs[]
+  | OrganisationsSubTabs[]
+  | undefined {
   return tabHierarchy[tab];
 }
 
@@ -55,5 +70,6 @@ export {
   PageTabs,
   ConfigurationSubTabs,
   ProjectsSubTabs,
+  OrganisationsSubTabs,
   getSubTabs,
 };

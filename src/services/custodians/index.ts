@@ -11,6 +11,7 @@ import getCustodianEntityModelQuery from "./getCustodianEntityModelQuery";
 import getCustodianEntityModel from "./getCustodianEntityModel";
 import putCustodianActiveEntityModelQuery from "./putCustodianActiveEntityModelQuery";
 import putCustodianActiveEntityModel from "./putCustodianActiveEntityModel";
+import getCustodianProjectUsers from "./getCustodianProjectUsers";
 
 export {
   getCustodian,
@@ -26,6 +27,7 @@ export {
   getCustodianEntityModel,
   putCustodianActiveEntityModelQuery,
   putCustodianActiveEntityModel,
+  getCustodianProjectUsers,
 };
 
 export type * from "./types";
