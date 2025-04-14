@@ -5,6 +5,7 @@ import { PageBody } from "@/modules";
 import ProjectsSafePeople from "@/modules/ProjectsSafePeople";
 import { EntityType } from "@/types/api";
 import { notFound } from "next/navigation";
+import Users from "@/modules/Users";
 import {
   DetailsPageSubTabs,
   getSubTabs,
@@ -21,7 +22,6 @@ import ProjectsSafeProject from "../ProjectsSafeProject";
 import ProjectsSafeSettings from "../ProjectsSafeSettings";
 import SectorSizeAndWebsite from "../SectorSizeAndWebsite";
 import SecurityCompliance from "../SecurityCompliance";
-import Users from "../Users";
 import ProjectsSafeOutputs from "../ProjectsSafeOutputs";
 
 interface TabsContentsProps {
