@@ -18,8 +18,10 @@ import Training from "./Training";
 import OrganisationsProjectsTable from "./OrganisationsProjectsTable";
 import OrganisationsFilters from "./OrganisationsFilters";
 import OrganisationsPeopleTable from "./OrganisationsPeopleTable";
+import Affiliations from "./Affiliations";
 
 export {
+  Affiliations,
   ApplicationData,
   Application,
   NavBar,

@@ -1,6 +1,6 @@
 "use client";
 
-import { useStore } from "@/data/store";
+import { StoreUserHistories } from "@/data/store";
 
 import { PostTrainingsPayload } from "@/services/trainings/types";
 import { Button, Typography } from "@mui/material";
@@ -13,7 +13,7 @@ import ContactLink from "@/components/ContactLink";
 import Table from "@/components/Table";
 import { formatShortDate } from "@/utils/date";
 import useQueryAlerts from "@/hooks/useQueryAlerts";
-import { ResearcherTraining } from "@/types/application";
+import { ResearcherTraining, User } from "@/types/application";
 import { ActionMenu, ActionMenuItem } from "@/components/ActionMenu";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import useFileDownload from "@/hooks/useFileDownload";
@@ -37,22 +37,25 @@ const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
 interface TrainingProps {
   variant: EntityType;
+  user: User;
+  setHistories?: (histories: StoreUserHistories) => void;
+  getHistories?: () => StoreUserHistories | undefined;
 }
 
-export default function Training({ variant }: TrainingProps) {
+export default function Training({
+  variant,
+  user,
+  setHistories,
+  getHistories,
+}: TrainingProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_TRAINING);
   const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
-
-  const user = useStore(store => store.current.user);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTraining, setSelectedTraining] = useState<
     ResearcherTraining | undefined
   >(undefined);
-
-  const setHistories = useStore(state => state.setHistories);
-  const getHistories = useStore(state => state.getHistories);
 
   const [fileIdToDownload, setFileIdToDownload] = useState<
     number | undefined
