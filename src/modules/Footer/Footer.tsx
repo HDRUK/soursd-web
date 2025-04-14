@@ -19,7 +19,7 @@ export default function Footer(props: FooterProps) {
 
   const footerLinkPages = [
     {
-      href: "#",
+      href: "/about",
       label: t("aboutUsLink"),
     },
     {
