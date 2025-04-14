@@ -14,9 +14,9 @@ import { User } from "@/types/application";
 import Table from "@/components/Table";
 import { ColumnDef, CellContext } from "@tanstack/react-table";
 import { ActionMenu } from "@/components/ActionMenu";
-import DecoupleUser from "@/components/DecoupleDelegate";
-import UserModal from "@/components/UserModal";
-import UserBulkInvite from "@/components/UserBulkInvite";
+import DecoupleUser from "../DecoupleDelegate";
+import UserModal from "../UserModal";
+import UserBulkInvite from "../UserBulkInvite";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
 
