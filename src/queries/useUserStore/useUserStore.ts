@@ -8,8 +8,8 @@ export default function useUserStore() {
   const { data: userData } = useQuery(getUserQuery(user?.id as number));
 
   useEffect(() => {
-    if (userData) setUser(userData.data);
-  }, [userData]);
+    if (userData?.data) setUser(userData.data);
+  }, [userData?.data]);
 
   return user;
 }

@@ -13,8 +13,8 @@ export default function useOrganisationStore() {
   );
 
   useEffect(() => {
-    if (organisationData) setOrganisation(organisationData.data);
-  }, [organisationData]);
+    if (organisationData?.data) setOrganisation(organisationData.data);
+  }, [organisationData?.data]);
 
   return organisation;
 }

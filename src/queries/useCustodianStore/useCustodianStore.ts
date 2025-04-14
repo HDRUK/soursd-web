@@ -13,8 +13,8 @@ export default function useCustodianStore() {
   );
 
   useEffect(() => {
-    if (custodianData) setCustodian(custodianData.data);
-  }, [custodianData]);
+    if (custodianData?.data) setCustodian(custodianData.data);
+  }, [custodianData?.data]);
 
   return custodian;
 }
