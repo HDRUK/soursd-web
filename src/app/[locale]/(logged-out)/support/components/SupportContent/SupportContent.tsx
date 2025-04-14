@@ -1,13 +1,13 @@
 "use client";
 
 import { Typography } from "@mui/material";
-import { PageBodyContainer, PageSection } from "@/modules";
+import { PageBodyContainer } from "@/modules";
 import InfoPageWrapper from "../../../components/InfoPageWrapper";
 
 export default function SupportContent() {
   return (
     <InfoPageWrapper>
-      <PageBodyContainer heading={"Support"} sx={{ width: "100%" }}>
+      <PageBodyContainer heading="Support" sx={{ width: "100%" }}>
         <Typography variant="h2" id="users">
           Users
         </Typography>
