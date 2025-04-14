@@ -9,6 +9,7 @@ import { PostApprovalPayloadWithEntity } from "@/services/approvals";
 import { Organisation } from "@/services/organisations";
 import { EntityType } from "@/types/api";
 import { QueryState } from "@/types/form";
+import { injectParamsIntoPath } from "@/utils/application";
 import BusinessIcon from "@mui/icons-material/Business";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { LoadingButton } from "@mui/lab";
@@ -17,6 +18,7 @@ import {
   AccordionDetails,
   AccordionSummary,
   Button,
+  Link,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
@@ -149,7 +151,14 @@ export default function OrganisationsList({
                       </ActionMenuItem>
                     </ActionMenu>
                   }>
-                  {organisation_name}
+                  <Link
+                    color="#fff"
+                    href={injectParamsIntoPath(
+                      routes.profileCustodianOrganisationsPeople.path,
+                      { id }
+                    )}>
+                    {organisation_name}
+                  </Link>
                 </AccordionTitle>
               </AccordionSummary>
               <AccordionDetails>

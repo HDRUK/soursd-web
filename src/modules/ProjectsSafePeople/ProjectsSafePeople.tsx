@@ -35,9 +35,7 @@ interface ProjectsSafePeopleProps {
 export default function ProjectsSafePeople({
   variant,
 }: ProjectsSafePeopleProps) {
-  const { project } = useStore(state => ({
-    project: state.getProject(),
-  }));
+  const project = useStore(state => state.getCurrentProject());
 
   const {
     data: projectUsers,

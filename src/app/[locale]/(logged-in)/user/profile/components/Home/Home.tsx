@@ -7,6 +7,7 @@ import {
 } from "@/modules";
 import { useTranslations } from "next-intl";
 import ActionLogs from "@/modules/ActionLogs";
+import SoursdCard from "@/components/SoursdCard";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
@@ -20,7 +21,7 @@ export default function Home() {
   return (
     <PageBodyContainer heading={tProfile("homeTitle")}>
       <PageColumns>
-        <PageColumnBody>
+        <PageColumnBody lg={8}>
           <ActionLogs
             variant="user"
             panelProps={{
@@ -41,9 +42,13 @@ export default function Home() {
             }}
           />
         </PageColumnBody>
-        <PageColumnDetails>
-          {user?.first_name} {user?.last_name}
-          {user?.registry.digi_ident}
+        <PageColumnDetails lg={4}>
+          <SoursdCard
+            name={`${user?.first_name} ${user?.last_name}`}
+            status={user?.model_state?.state.slug}
+            identifier={user?.registry.digi_ident}
+            description={tProfile("uniqueIdentifierCaption")}
+          />
         </PageColumnDetails>
       </PageColumns>
     </PageBodyContainer>

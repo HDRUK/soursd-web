@@ -33,7 +33,7 @@
     "status_pending": "Pending",
     "status_completed": "Completed",
     "status_approved": "Approved",
-    "status_undefined": "Not Set",
+    "status_undefined": "None",
     "status_project_pending": "Pending",
     "status_project_completed": "Completed",
     "status_project_approved": "Approved",
@@ -41,9 +41,9 @@
     "status_affiliation_invited": "Invited",
     "status_affiliation_approved": "Approved",
     "status_affiliation_rejected": "Rejected",
-    "status_notSet": "Not Set",
+    "status_notSet": "None",
     "projectStatus": "Project status",
-    "projectRole": "Project role",
+    "projectRole": "Project Role",
     "actions": "Actions",
     "sortBy": "Sort by",
     "sortedBy": "Sorted by",
@@ -69,6 +69,7 @@
     "previousEmployer": "Previous employer",
     "relationship": "Relationship",
     "affiliations": "Affiliations",
+    "trainingAndAccreditations": "Training and Accreditations",
     "professionalRegistrations": "Professional Registrations",
     "staffStudentId": "Staff / Student Id",
     "getDependenciesError": "There was a problem was a problem trying to preload dependencies for SOURSD. Please try again or contact us at <contactLink></contactLink>",
@@ -93,6 +94,12 @@
     "deleteAffiliation": "Delete Affiliation"
   },
   "CustodianProfile": {
+    "organisationsPeople": "People",
+    "organisationsNameAddress": "Name & Address",
+    "organisationsDigitalIdentifiers": "Digital Identifiers",
+    "organisationsSectorWebsite": "Sector size & website",
+    "organisationsSubsidiaries": "UK subsidiaries",
+    "organisationsDataSecurity": "Data security compliance",
     "searchPlaceholder": "Search",
     "safeProject": "Safe Project",
     "safeProjectWorkflowStatusError": "The workflow process for setting status must be Pending -> Approved -> Completed. Please select a different status",
@@ -107,7 +114,7 @@
     "contacts": "Contacts",
     "contactsHeading": "Administrative Contacts",
     "uniqueIdentifierTitle": "SOURSD Identifier",
-    "uniqueIdentifierCaption": "This ‘key’ represents you as a Data Custodian within SOURSD. This is unique to you! Any time SOURSD sends information to you, or activates a callback, this identifier will be sent along with the payload. Meaning you can always trust the source of information.",
+    "uniqueIdentifierCaption": "This ‘key’ represents you as a Data Custodian within SOURSD. This is unique to you! You may need this key if utilising SOURSD Application Programming Interfaces (APIs).",
     "details": "Profile",
     "users": "Users",
     "configuration": "Configuration",
@@ -186,7 +193,8 @@
     "dataUseDescription": "Data description",
     "dataUseDescriptionPlaceholder": "Data description",
     "addNewMemberButton": "Add a new member",
-    "requestAddNewMemberButton": "Request member is affiliated"
+    "requestAddNewMemberButton": "Request member is affiliated",
+    "userListDescription": "This table enables Validation Team members to track and manage application workflow from initial enquiry to project closure.  Clicking on a User will show you more information and next steps."
   },
   "OrganisationStats": {
     "affiliatedUsers": "Affiliated Users",
@@ -760,6 +768,7 @@
     "toolTipMarkAsUnread": "Mark message as unread and close!"
   },
   "Organisation": {
+    "uniqueIdentifierCaption": "This ‘key’ represents you as an Organisation within SOURSD. This is unique to you! Your Organisation will have a unique SOURSD identifier associated with your account once your Organisation profile has been completed. This persistent unique identifier will be used to notify Data Custodians of any key changes to your Organisation profile that may impact data access decisions.",
     "inviteOrganisationTitle": "Request Organisation to be invited to create a SOURSD account",
     "inviteOrganisation": "Invite Organisation",
     "postOrganisationUnclaimedError": "Unable to invite the Organisation",
@@ -770,6 +779,7 @@
     "inviteOrganisationSuccess": "You have successfully invited the Organisation. Bear in mind before you can select them they will need to accept the invite"
   },
   "Profile": {
+    "uniqueIdentifierCaption": "This ‘key’ represents you as a User within SOURSD. This is unique to you! Custodians may ask you for this to confirm your identity.",
     "memberIdDescription": "Depending on your selected relationship with the Organisation",
     "home": "Home",
     "inviteThemHere": "Invite them here",
@@ -797,6 +807,7 @@
     "identity": "Identity",
     "identityForm": "Personal Identity",
     "identityTitle": "Complete your personal details",
+    "name": "Name",
     "affiliations": "Affiliations",
     "affiliationsTitle": "Complete your employer or institute information",
     "affiliationsForm": "Add an employer or institute",
@@ -847,9 +858,13 @@
     "previousButton": "Previous",
     "emailDescription": "Your personal email is used to set up a SOURSD account so that your account stays with you, regardless of your employment or enrolment at a higher education institute. You can also recover your account using your personal email.",
     "locationDescription": "Some data custodians need to know the country that you will be accessing data from as different countries adhere to different laws regarding data sharing and data confidentiality.",
+    "location": "Location",
+    "locationMissing": "Location not provided",
     "idvtCheckSection": "Identification Verification Technology (IDVT)",
     "idvtCheckButton": "Start IDVT check",
     "idvtCheckDescription": "Not all Data Custodians require this check to be completed. Those Data Custodians that do, can request that this check is completed prior to project approval. To work across the breadth of UK Data Custodians, we recommend that you complete this check as it may streamline approval processes. \n\nIDVT checks are carried out by a 3rd party supplier against the following criteria: valid government issued identification (fraud), likeness check against ID (identity), liveness check (identity), sanctions check (anti money laundering). Please note neither SOURSD nor the 3rd party supplier store a copy of your identity documents",
+    "idvtComplete": "IDVT checks complete",
+    "idvtIncomplete": "IDVT checks incomplete",
     "accreditedResearcherCheckboxLabel": "I am a registered Accredited Researcher as published on the UK Statistics Authority website.",
     "accreditedResearcherLinkHref": "https://www.gov.uk/government/consultations/digital-economy-act-part-5-data-sharing-codes-and-regulations/research-code-of-practice-and-accreditation-criteria",
     "userDeclarationCheckboxLabel": "I have signed a User declaration for accessing Digital Economy Act accredited environments.",
@@ -1072,6 +1087,60 @@
       "hasSoursdId": "Is Registered"
     }
   },
+  "Charities": {
+    "name": "Name",
+    "registrationId": "Registration ID",
+    "website": "Website"
+  },
+  "Subsidiaries": {
+    "name": "Name",
+    "address": "Address"
+  },
+  "Organisations": {
+    "DataSecurityCompliance": {
+      "info": "Information",
+      "name": "Name",
+      "number": "ID",
+      "id": "ID",
+      "expiryDate": "Expiry date",
+      "certificate": "Certificate",
+      "downloadEvidence": "Download signed declaration",
+      "ceCertification": "Cyber Essentials Certified",
+      "cePlusCertification": "Cyber Essentials Plus Certified",
+      "iso27001Certification": "ISO27001 Accredited",
+      "dsptkOdsCode": "DSPT Certified"
+    },
+    "NameAddress": {
+      "organisationName": "Name",
+      "address": "Address"
+    },
+    "Charities": {
+      "name": "Name",
+      "registrationId": "Registration ID",
+      "website": "Website"
+    },
+    "DigitalIdentifiers": {
+      "companiesHouseNo": "Companies House ID",
+      "rorId": "ROR ID",
+      "charities": "Charities",
+      "organisationUniqueId": "SOURSD identifier"
+    },
+    "SectorWebsite": {
+      "sectorName": "Organisation sector",
+      "website": "Organisation website",
+      "organisationSize": "Organisation size"
+    },
+    "subsidiaries": "UK subsidiaries",
+    "organisationName": "Organisation name",
+    "address": "Address",
+    "companiesHouseNo": "Companies House ID",
+    "rorId": "ROR ID",
+    "charities": "Charities",
+    "organisationUniqueId": "SOURSD identifier",
+    "sectorName": "Organisation sector",
+    "website": "Organisation website",
+    "organisationSize": "Organisation size"
+  },
   "Projects": {
     "okButton": "OK",
     "gatewayImportSuccess": "Data imported successfully from the Health Data Research Gateway",
@@ -1098,6 +1167,8 @@
     "startDate": "Start date",
     "projects": "Projects",
     "users": "Users",
+    "userName": "Name",
+    "organisation": "Organisation",
     "organisations": "Organisation(s)",
     "status": "Status",
     "filterActions": {

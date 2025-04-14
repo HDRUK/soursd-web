@@ -8,15 +8,18 @@ import {
 } from "@/modules";
 import { useTranslations } from "next-intl";
 import ActionLogs from "@/modules/ActionLogs";
+import { useStore } from "@/data/store";
+import SoursdCard from "@/components/SoursdCard";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
 
 const Home = () => {
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
+  const organisation = useStore(state => state.getOrganisation());
 
   return (
     <PageBodyContainer heading={tProfile("homeTitle")}>
-      <PageColumns>
+      <PageColumns lg={8}>
         <PageColumnBody>
           <PageBody>
             <PageSection>
@@ -52,8 +55,13 @@ const Home = () => {
             </PageSection>
           </PageBody>
         </PageColumnBody>
-        <PageColumnDetails>
-          <PageBody>SOURSD</PageBody>
+        <PageColumnDetails lg={4}>
+          <SoursdCard
+            name={organisation.organisation_name}
+            status={organisation.model_state?.state.slug}
+            identifier={organisation.organisation_unique_id}
+            description={tProfile("uniqueIdentifierCaption")}
+          />
         </PageColumnDetails>
       </PageColumns>
     </PageBodyContainer>

@@ -7,7 +7,7 @@ if (!newVersion) {
     process.exit(1);
   }
 function updateChartYamlVersion(newVersion) {
-    const chartFilePath = path.resolve(__dirname, "chart/speedi-web/Chart.yaml");
+    const chartFilePath = path.resolve(__dirname, "chart/soursd-web/Chart.yaml");
     const chartContent = fs.readFileSync(chartFilePath, "utf8");
 
     const updatedContent = chartContent.replace(

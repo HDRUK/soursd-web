@@ -42,7 +42,7 @@ interface Permission {
   };
 }
 
-interface Custodian {
+type Custodian = ModelState<{
   id: number;
   created_at: string;
   updated_at: string;
@@ -56,7 +56,8 @@ interface Custodian {
   idvt_required: boolean;
   gateway_app_id: string | null;
   gateway_client_id: string | null;
-}
+  client_id: string | null;
+}>;
 
 type Approval = {
   id: number;
@@ -90,6 +91,19 @@ interface CustodianUser {
   user_permissions: UserPermission[];
 }
 
+type CustodianProjectUser = ModelState<{
+  user_id: number;
+  first_name: string;
+  last_name: string;
+  digi_ident: string;
+  registry_id: number;
+  project_id: number;
+  project_name: string;
+  project_role: string;
+  organisation_id: number;
+  organisation_name: string;
+}>;
+
 interface UserProfileCompletionFields {
   name: string;
   required?: boolean;
@@ -113,6 +127,28 @@ type UserProfileCompletionJson = Record<
 interface Auth {
   email: string;
 }
+
+type Identity = {
+  address_1: string;
+  address_2: string;
+  country: string;
+  county: string;
+  created_at: string;
+  deleted_at?: string;
+  dob: string;
+  drivers_license_path: string;
+  id: number;
+  idvt_completed_at: string;
+  idvt_errors?: string;
+  idvt_result: number;
+  idvt_result_perc: number;
+  passport_path: string;
+  postcode: string;
+  registry_id: number;
+  selfie_path: string;
+  town: string;
+  updated_at?: string;
+};
 
 type User = ModelState<{
   id: number;
@@ -142,6 +178,7 @@ type User = ModelState<{
     verified: boolean;
     training?: ResearcherTraining[];
     affiliations?: ResearcherAffiliation[];
+    identity?: Identity;
   };
   is_delegate: number;
   departments?: Department[];
@@ -183,49 +220,51 @@ interface OrganisationIdvt {
   idvt_errors: string;
 }
 
-interface Organisation extends OrganisationIdvt, AddressFields {
-  companies_house_no: string;
-  organisation_name: string;
-  organisation_unique_id: string;
-  dpo_name: string;
-  dpo_email: string;
-  hr_name: string;
-  hr_email: string;
-  id: number;
-  permissions: Permission[];
-  approvals: Approval[];
-  lead_applicant_email: string;
-  lead_applicant_organisation_name: string;
-  sector_id: number;
-  charities: Charity[];
-  ror_id: string;
-  website: string;
-  smb_status: boolean;
-  registries: {
-    user: User;
-    verified: boolean;
-  }[];
-  ce_certified: boolean;
-  ce_certification_num: string;
-  ce_expiry_date: string;
-  ce_expiry_evidence: File | null;
-  ce_plus_certified: boolean;
-  ce_plus_certification_num: string;
-  ce_plus_expiry_date: string;
-  ce_plus_expiry_evidence: File | null;
-  iso_27001_certified: boolean;
-  iso_27001_certification_num: string;
-  iso_expiry_date: string;
-  iso_expiry_evidence: File | null;
-  dsptk_certified: boolean;
-  dsptk_ods_code: string;
-  dsptk_expiry_date: string;
-  dsptk_expiry_evidence: File | null;
-  subsidiaries?: Subsidiary[];
-  departments: Department[];
-  unclaimed: number;
-  organisation_size?: number;
-}
+type Organisation = OrganisationIdvt &
+  AddressFields &
+  ModelState<{
+    companies_house_no: string;
+    organisation_name: string;
+    organisation_unique_id: string;
+    dpo_name: string;
+    dpo_email: string;
+    hr_name: string;
+    hr_email: string;
+    id: number;
+    permissions: Permission[];
+    approvals: Approval[];
+    lead_applicant_email: string;
+    lead_applicant_organisation_name: string;
+    sector_id: number;
+    charities: Charity[];
+    ror_id: string;
+    website: string;
+    smb_status: boolean;
+    registries: {
+      user: User;
+      verified: boolean;
+    }[];
+    ce_certified: boolean;
+    ce_certification_num: string;
+    ce_expiry_date: string;
+    ce_expiry_evidence: File | null;
+    ce_plus_certified: boolean;
+    ce_plus_certification_num: string;
+    ce_plus_expiry_date: string;
+    ce_plus_expiry_evidence: File | null;
+    iso_27001_certified: boolean;
+    iso_27001_certification_num: string;
+    iso_expiry_date: string;
+    iso_expiry_evidence: File | null;
+    dsptk_certified: boolean;
+    dsptk_ods_code: string;
+    dsptk_expiry_date: string;
+    dsptk_expiry_evidence: File | null;
+    subsidiaries?: Subsidiary[];
+    departments: Department[];
+    unclaimed: number;
+    organisation_size?: number;
+  }>;
 
 interface ResearcherEducation {
   institute_name: string;
@@ -418,6 +457,7 @@ export type {
   Auth,
   Custodian,
   CustodianUser,
+  CustodianProjectUser,
   Charity,
   Department,
   File,

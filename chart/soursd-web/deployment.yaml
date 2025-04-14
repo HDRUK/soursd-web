@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: soursd-web
+  labels:
+    app: soursd-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: soursd-web
+  template:
+    metadata:
+      labels:
+        app: soursd-web
+    spec:
+      containers:
+        - name: soursd-web
+          image: hdruk/soursd-web:latest
+          ports:
+            - containerPort: 3000

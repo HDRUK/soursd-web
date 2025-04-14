@@ -3,7 +3,7 @@ import { PageBody } from "@/modules";
 import SafeProjectDetails from "@/modules/SafeProjectDetails";
 
 export default function ProjectsSafeProject() {
-  const project = useStore(state => state.getProject());
+  const project = useStore(state => state.getCurrentProject());
 
   return (
     <PageBody heading={project.title}>

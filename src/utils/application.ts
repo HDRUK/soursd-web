@@ -39,4 +39,18 @@ function injectParamsIntoPath(
   return replacedPath;
 }
 
-export { parseSystemConfig, isProduction, injectParamsIntoPath };
+function getInitials(name: string) {
+  const nameParts = name.split(" ");
+
+  if (nameParts.length === 1) {
+    return nameParts[0].substring(0, 1);
+  }
+
+  return nameParts
+    .map(value => value.charAt(0))
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
+}
+
+export { parseSystemConfig, isProduction, injectParamsIntoPath, getInitials };
