@@ -1,5 +1,6 @@
 "use client";
 
+import { Box, Typography } from "@mui/material";
 import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined";
 import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
@@ -17,7 +18,6 @@ import {
 } from "@/modules";
 import InfoPageWrapper from "../../../components/InfoPageWrapper";
 import FeatureBox from "../../../components/FeatureBox";
-import { Box, Typography } from "@mui/material";
 
 export default function FeaturesContent() {
   return (
@@ -64,12 +64,12 @@ export default function FeaturesContent() {
               </Box>
               <Markdown>{mockedAbout.purpose}</Markdown>
               <Box display="flex" alignItems="center" gap={1} pt={2}>
-              <Typography variant="h2">{mockedAbout.commitmentTitle}</Typography>
+                <Typography variant="h2">
+                  {mockedAbout.commitmentTitle}
+                </Typography>
                 <HandshakeOutlinedIcon style={{ fontSize: 36 }} />
               </Box>
-              <Markdown>
-                {mockedAbout.commitment}
-              </Markdown>
+              <Markdown>{mockedAbout.commitment}</Markdown>
             </PageSection>
           </PageColumnDetails>
         </PageColumns>

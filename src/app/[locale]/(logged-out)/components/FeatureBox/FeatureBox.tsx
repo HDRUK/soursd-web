@@ -4,7 +4,7 @@ import Markdown from "@/components/Markdown";
 import Icon from "@/components/Icon";
 
 type IconProps = {
-  style: any;
+  style: object;
 };
 
 type ButtonProps = {
