@@ -46,7 +46,7 @@ export default function SubTabsContents({
       content = <UserCustodianOrgInfo />;
       break;
     case UserSubTabs.AFFILIATIONS:
-      content = <UserAffiliations userId={userId} />;
+      content = <UserAffiliations />;
       break;
     default:
       content = null;
