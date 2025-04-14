@@ -5,7 +5,7 @@ import SubTabs from "@/modules/SubTabs";
 import { Option } from "@/types/common";
 import { injectParamsIntoPath } from "@/utils/application";
 import { useTranslations } from "next-intl";
-import { UserSubTabs } from "../../const/tabs";
+import { UserSubTabs } from "../../../../../../../consts/tabs";
 
 const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 

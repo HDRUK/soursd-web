@@ -8,7 +8,7 @@ import UserHistory from "../../../../../../../components/UserHistory";
 import UserIdentity from "../../../../../../../components/UserIdentity";
 import UserProjects from "../../../../../../../components/UserProjects";
 import UserTrainingAccreditations from "../../../../../../../components/UserTrainingAccreditations";
-import { UserSubTabs } from "../../const/tabs";
+import { UserSubTabs } from "../../../../../../../consts/tabs";
 
 interface TabsContentsProps {
   userId: number;
