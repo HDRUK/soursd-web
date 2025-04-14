@@ -4,8 +4,8 @@ import LoadingWrapper from "@/components/LoadingWrapper";
 import getProjectQuery from "@/services/projects/getProjectQuery";
 import { useQuery } from "@tanstack/react-query";
 import { notFound } from "next/navigation";
-import SubPageProjects from "../../../components/SubPageProjects";
-import { ProjectsSubTabs } from "../../../consts/tabs";
+import SubPageProjects from "../../../../../components/SubPageProjects";
+import { ProjectsSubTabs } from "../../../../../consts/tabs";
 
 interface SubPageProjectsProps {
   params: {

@@ -110,27 +110,27 @@ const ROUTES: Routes = {
     permissions: [UserGroup.CUSTODIANS],
   },
   profileCustodianUsersHistory: {
-    path: "/data-custodian/profile/users/{id}/history",
+    path: "/data-custodian/profile/projects/{projectId}/users/{userId}/history",
     permissions: [UserGroup.CUSTODIANS],
   },
   profileCustodianUsersTrainingAccreditations: {
-    path: "/data-custodian/profile/users/{id}/training_accreditations",
+    path: "/data-custodian/profile/projects/{projectId}/users/{userId}/training_accreditations",
     permissions: [UserGroup.CUSTODIANS],
   },
   profileCustodianUsersIdentity: {
-    path: "/data-custodian/profile/users/{id}/identity",
+    path: "/data-custodian/profile/projects/{projectId}/users/{userId}/identity",
     permissions: [UserGroup.CUSTODIANS],
   },
   profileCustodianUsersProjects: {
-    path: "/data-custodian/profile/users/{id}/projects",
+    path: "/data-custodian/profile/projects/{projectId}/users/{userId}/projects",
     permissions: [UserGroup.CUSTODIANS],
   },
   profileCustodianUsersCustodianOrgInfo: {
-    path: "/data-custodian/profile/users/{id}/custodian_org_info",
+    path: "/data-custodian/profile/projects/{projectId}/users/{userId}/custodian_org_info",
     permissions: [UserGroup.CUSTODIANS],
   },
   profileCustodianUsersAffiliations: {
-    path: "/data-custodian/profile/users/{id}/affiliations",
+    path: "/data-custodian/profile/projects/{projectId}/users/{userId}/affiliations",
     permissions: [UserGroup.CUSTODIANS],
   },
   permissionsResearcherCustodian: {

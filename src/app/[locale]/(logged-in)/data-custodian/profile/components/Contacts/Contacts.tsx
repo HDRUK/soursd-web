@@ -22,7 +22,7 @@ import { Box, Button, IconButton, Typography } from "@mui/material";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
-import UserModal from "../UserModal";
+import UserModal from "../../users/[id]/projects/[projectId]/components/UserModal";
 
 const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 

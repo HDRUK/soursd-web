@@ -18,7 +18,7 @@ import ActionValidationCommentForm, {
 
 interface ActionValidationMakeDecisionProps {
   log: ValidationLog;
-  onAction?: () => void;
+  onAction?: () => Promise<void>;
 }
 
 const NAMESPACE_TRANSLATION_ACTION_VALIDATION_DECISION =
@@ -43,19 +43,22 @@ export default function ActionValidationMakeDecision({
   const [selectedAction, setSelectedAction] =
     useState<ValidationLogAction | null>(null);
 
-  const onSubmit = (data: ActionValidationCommentFormData) => {
+  const onSubmit = async (data: ActionValidationCommentFormData) => {
     if (!selectedAction) return;
-    updateLog(selectedAction).then(res => {
-      setCurrentLog(res.data);
-      createComment({
-        user_id: user?.id as number,
-        validation_log_id: currentLog.id,
-        comment: data.comment,
-      }).then(() => {
-        onAction?.();
-        setSelectedAction(null);
-      });
+
+    const comment = data.comment;
+
+    const res = await updateLog(selectedAction);
+    setCurrentLog(res.data);
+
+    await createComment({
+      user_id: user?.id as number,
+      validation_log_id: res.data.id,
+      comment,
     });
+
+    await onAction?.();
+    setSelectedAction(null);
   };
 
   if (selectedAction) {
