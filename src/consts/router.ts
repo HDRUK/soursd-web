@@ -13,6 +13,9 @@ const ROUTES: Routes = {
   homepage: {
     path: "/homepage",
   },
+  about: {
+    path: "/about",
+  },
   profileCustodian: {
     path: "/data-custodian/profile",
     permissions: [UserGroup.CUSTODIANS],

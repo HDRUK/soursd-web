@@ -19,13 +19,13 @@ import {
   PageSection,
 } from "@/modules";
 import { putUserQuery } from "@/services/users";
-import { showAlert } from "@/utils/showAlert";
 import { Button, Grid, TextField } from "@mui/material";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
 import ReactDOMServer from "react-dom/server";
+import useQueryAlerts from "@/hooks/useQueryAlerts";
 import VeriffTermsAndConditions from "../VeriffTermsAndConditions";
 
 export interface IdentityFormValues {
@@ -39,8 +39,9 @@ const NAMESPACE_TRANSLATION_FORM = "Form";
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
 export default function Identity() {
+  const queryClient = useQueryClient();
   const router = useRouter();
-  const user = useStore(state => state.config.user);
+  const user = useStore(state => state.getUser());
 
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
@@ -51,37 +52,40 @@ export default function Identity() {
 
   const handleDetailsSubmit = useCallback(
     async (fields: IdentityFormValues) => {
-      try {
-        if (user?.id) {
-          const request = {
-            ...user,
-            ...fields,
-            email: fields.personal_email,
-          };
+      if (user?.id) {
+        const request = {
+          ...user,
+          ...fields,
+          email: fields.personal_email,
+        };
 
-          await updateUser.mutateAsync(request);
-        }
+        await updateUser.mutateAsync(request);
 
-        showAlert("success", {
-          text: tProfile("postUserSuccess"),
-          confirmButtonText: tProfile("postUserSuccessButton"),
-          preConfirm: () => {
-            router.push(ROUTES.profileResearcherAffiliations.path);
-          },
-        });
-      } catch (_) {
-        showAlert("error", {
-          text: ReactDOMServer.renderToString(
-            tProfile.rich("postUserError", {
-              contactLink: ContactLink,
-            })
-          ),
-          confirmButtonText: tProfile("postUserErrorButton"),
+        queryClient.refetchQueries({
+          queryKey: ["getUser", user.id],
         });
       }
     },
     [user]
   );
+
+  useQueryAlerts(updateUser, {
+    errorAlertProps: {
+      text: ReactDOMServer.renderToString(
+        tProfile.rich("postUserError", {
+          contactLink: ContactLink,
+        })
+      ),
+      confirmButtonText: tProfile("postUserErrorButton"),
+    },
+    successAlertProps: {
+      text: tProfile("postUserSuccess"),
+      confirmButtonText: tProfile("postUserSuccessButton"),
+      preConfirm: () => {
+        router.push(ROUTES.profileResearcherAffiliations.path);
+      },
+    },
+  });
 
   const schema = useMemo(
     () =>

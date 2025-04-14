@@ -1,5 +1,10 @@
 import { useStore } from "@/data/store";
-import { PageBodyContainer } from "@/modules";
+import {
+  PageBodyContainer,
+  PageColumnBody,
+  PageColumnDetails,
+  PageColumns,
+} from "@/modules";
 import { Organisation } from "@/types/application";
 import { useEffect } from "react";
 import { PageTabs, OrganisationsSubTabs } from "../../consts/tabs";
@@ -32,8 +37,13 @@ export default function SubPageOrganisations({
   return (
     organisation && (
       <PageBodyContainer heading={organisation.organisation_name}>
-        <SubTabsSections id={organisation.id} tabId={tabId} {...params} />
-        <SubTabsContents tabId={tabId} {...params} />
+        <PageColumns>
+          <PageColumnBody lg={8}>
+            <SubTabsSections id={organisation.id} tabId={tabId} {...params} />
+            <SubTabsContents tabId={tabId} {...params} />
+          </PageColumnBody>
+          <PageColumnDetails lg={4}>Validation panels here</PageColumnDetails>
+        </PageColumns>
       </PageBodyContainer>
     )
   );
