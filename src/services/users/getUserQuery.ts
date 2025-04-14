@@ -3,6 +3,12 @@ import { UseQueryOptions } from "@tanstack/react-query";
 import getUser from "./getUser";
 
 export default function getUserQuery(userId: number, options?: QueryOptions) {
+  console.log("******************", [
+    "getUser",
+    userId,
+    ...(options?.queryKeySuffix || []),
+  ]);
+
   return {
     queryKey: ["getUser", userId, ...(options?.queryKeySuffix || [])],
     queryFn: ({ queryKey }) =>
