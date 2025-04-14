@@ -2,12 +2,12 @@
 
 import { useStore } from "@/data/store";
 import { notFound } from "next/navigation";
-import UserAffiliations from "../UserAffiliations";
-import UserCustodianOrgInfo from "../UserCustodianOrgInfo";
-import UserHistory from "../UserHistory";
-import UserIdentity from "../UserIdentity";
-import UserProjects from "../UserProjects";
-import UserTrainingAccreditations from "../UserTrainingAccreditations";
+import UserAffiliations from "../../../../../../../components/UserAffiliations";
+import UserCustodianOrgInfo from "../../../../../../../components/UserCustodianOrgInfo";
+import UserHistory from "../../../../../../../components/UserHistory";
+import UserIdentity from "../../../../../../../components/UserIdentity";
+import UserProjects from "../../../../../../../components/UserProjects";
+import UserTrainingAccreditations from "../../../../../../../components/UserTrainingAccreditations";
 import { UserSubTabs } from "../../const/tabs";
 
 interface TabsContentsProps {
