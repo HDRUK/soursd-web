@@ -1,6 +1,7 @@
 "use client";
 
 import LoadingWrapper from "@/components/LoadingWrapper";
+import { UserGroup } from "@/consts/user";
 import { getUserQuery } from "@/services/users";
 import { useQuery } from "@tanstack/react-query";
 import { notFound } from "next/navigation";
@@ -17,7 +18,7 @@ interface UsersSubPageProps {
 function UsersSubPage({ params: { subTabId, id } }: UsersSubPageProps) {
   const { data: user, isPending, isFetched } = useQuery(getUserQuery(+id));
 
-  if (!user?.data && isFetched) {
+  if (user?.data.user_group !== UserGroup.USERS && isFetched) {
     notFound();
   }
 

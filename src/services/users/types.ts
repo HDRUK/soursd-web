@@ -1,5 +1,5 @@
 import { UserProvider } from "@/consts/user";
-import { User } from "@/types/application";
+import { ResearcherProject, User } from "@/types/application";
 
 type PatchUserPayload = Partial<User>;
 type PutUserPayload = Partial<User>;
@@ -23,6 +23,8 @@ type PutUserResponse = User;
 type UserResponse = User;
 
 type UsersResponse = User[];
+
+type UserProjectsResponse = ResearcherProject[];
 
 interface PostUserPayload {
   first_name: string;
@@ -60,4 +62,5 @@ export type {
   PostUserInvitePayload,
   PutUserResponse,
   PutUserPayload,
+  UserProjectsResponse,
 };
