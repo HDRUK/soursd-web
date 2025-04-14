@@ -1182,6 +1182,7 @@
     "errorResultsProjects": "Unable to get a list of projects. Please try again or contact us on <contact></contact>",
     "noResultsProjects": "No projects found for the current search terms.",
     "SafeData": {
+      "noProjectDetails": "Data does not exist for this section yet",
       "datasets": "Linked datasets",
       "accessDate": "Release / access date",
       "dataSensitivityLevel": "Data sensitivity level",
@@ -1194,10 +1195,12 @@
       "requestFrequency": "Request frequency"
     },
     "SafeSettings": {
+      "noProjectDetails": "Data does not exist for this section yet",
       "accessType": "Access type",
       "dataPrivacy": "How has data been processed to enhance privacy?"
     },
     "SafeOutputs": {
+      "noProjectDetails": "Data does not exist for this section yet",
       "researchOutputs": "Link(s) to research outputs",
       "dataAssets": "New data assets created"
     },

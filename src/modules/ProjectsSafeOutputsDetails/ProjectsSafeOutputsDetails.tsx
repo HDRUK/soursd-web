@@ -1,7 +1,9 @@
 import FieldsToText from "@/components/FieldsToText";
+import { Message } from "@/components/Message";
 import { ProjectDetails } from "@/types/application";
 import { createProjectDetailDefaultValues } from "@/utils/form";
 import { Typography } from "@mui/material";
+import { useTranslations } from "next-intl";
 
 interface ProjectsSafeOuputsDetailsProps {
   projectDetailsData: ProjectDetails;
@@ -14,6 +16,11 @@ export default function ProjectsSafeOutputsDetails({
   projectDetailsData,
   tKey = NAMESPACE_TRANSLATION,
 }: ProjectsSafeOuputsDetailsProps) {
+  const t = useTranslations(tKey);
+
+  if (!projectDetailsData)
+    return <Message severity="warning">{t("noProjectDetails")}</Message>;
+
   const data = createProjectDetailDefaultValues(projectDetailsData, {
     transformToReadable: true,
   });
