@@ -7,15 +7,17 @@ import { getAffiliationsQuery } from "@/services/affiliations";
 
 const NAMESPACE_TRANSLATION = "Application";
 
-interface UserAffiliationsProps {
-  userId: number;
-}
-
-export default function UserAffiliations({ userId }: UserAffiliationsProps) {
+export default function UserAffiliations() {
   const t = useTranslations(NAMESPACE_TRANSLATION);
 
+  const { user, setHistories, getHistories } = useStore(state => ({
+    user: state.current.user,
+    setHistories: state.setHistories,
+    getHistories: state.getHistories,
+  }));
+
   const { data: affiliationsData, ...getAffiliationsQueryState } = useQuery(
-    getAffiliationsQuery(userId)
+    getAffiliationsQuery(user?.registry_id)
   );
 
   return (
@@ -23,6 +25,8 @@ export default function UserAffiliations({ userId }: UserAffiliationsProps) {
       <Typography variant="h2">{t("affiliations")}</Typography>
       <PageSection sx={{ my: 3 }}>
         <Affiliations
+          setHistories={setHistories}
+          getHistories={getHistories}
           affiliationsData={affiliationsData}
           getAffiliationsQueryState={getAffiliationsQueryState}
         />
