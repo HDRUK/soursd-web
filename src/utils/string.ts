@@ -30,10 +30,25 @@ function getRandomString(length: number = 40) {
   return result;
 }
 
+type TranslationFunction = {
+  (key: string): string;
+  raw: (key: string) => string;
+};
+
+function getTitleFromTranslation(
+  str: string,
+  t: TranslationFunction,
+  namespace: string
+) {
+  const hasTitle = t.raw(str) !== `${namespace}.${str}`;
+  return hasTitle ? t(str) : toTitleCase(str);
+}
+
 export {
   capitaliseFirstLetter,
   toTitleCase,
   toCamelCase,
   anyIncludes,
   getRandomString,
+  getTitleFromTranslation,
 };

@@ -1416,5 +1416,9 @@
     "descriptionPart1": "For more information on how we process your data see our <ourLink>privacy policy</ourLink>.",
     "descriptionPart2": "For more information on how Veriff will process your data see their <theirLink>privacy policy</theirLink>.",
     "checkboxLabel": "I consent to the above terms and conditions"
+  },
+  "ActionsPanelValidationCheck": {
+    "organisation_aligned_sde_network": "Is the Organisation aligned with the SDE network?",
+    "confident_cost_for_projects_will_be_met": "Are we confident costs would be met and profits realised for future projects?"
   }
 }

@@ -2,18 +2,22 @@ import { Paper, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { getValidationLogCommentsQuery } from "@/services/validation_logs";
 import { ValidationLog } from "@/types/logs";
-import { toTitleCase } from "@/utils/string";
+import { getTitleFromTranslation } from "@/utils/string";
 import ActionValidationMakeDecision from "@/modules/ActionValidationMakeDecision";
 import ViewMore from "@/components/ViewMore";
 import ActionValidationLogComment from "@/components/ActionValidationLogComment";
+import { useTranslations } from "next-intl";
 
 interface ActionsPanelValidationCheckProps {
   log: ValidationLog;
 }
 
+const NAMESPACE_TRANSLATION = "ActionsPanelValidationCheck";
+
 export default function ActionsPanelValidationCheck({
   log,
 }: ActionsPanelValidationCheckProps) {
+  const t = useTranslations(NAMESPACE_TRANSLATION);
   const { data: comments, refetch: refetchComments } = useQuery({
     ...getValidationLogCommentsQuery(log.id),
     enabled: !!log.id,
@@ -34,7 +38,7 @@ export default function ActionsPanelValidationCheck({
         borderRadius: 2,
       }}>
       <Typography variant="h5" sx={{ mb: 2 }}>
-        {toTitleCase(log.name)}
+        {getTitleFromTranslation(log.name, t, NAMESPACE_TRANSLATION)}
       </Typography>
 
       <ViewMore collapseNumRows={2}>
