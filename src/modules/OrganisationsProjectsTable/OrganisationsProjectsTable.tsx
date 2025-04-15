@@ -31,8 +31,8 @@ export default function OrganisationsProjectsTable({
       cell: info =>
         renderLinkNameCell(
           info.getValue(),
-          info.row.original.id,
-          routes.profileCustodianOrganisationsPeople.path
+          routes.profileCustodianOrganisationsPeople.path,
+          { id: info.row.original.id }
         ),
     },
     {
