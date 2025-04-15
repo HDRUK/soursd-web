@@ -89,7 +89,7 @@ export default function NavBar() {
       color: ButtonColor.Inherit,
       variant: ButtonVariant.Text,
       text: t("helpButton"),
-      href: "#",
+      href: "/support",
     },
   ];
   const right_buttons: {

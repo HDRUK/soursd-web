@@ -10,28 +10,28 @@ describe("Support Component", () => {
 
   it("renders all buttons with correct text", () => {
     render(<Support />);
-    const individualButton = screen.getByRole("button", {
+    const individualLink = screen.getByRole("link", {
       name: /individual users/i,
     });
-    const organisationButton = screen.getByRole("button", {
+    const organisationLink = screen.getByRole("link", {
       name: /organisations/i,
     });
-    const custodianButton = screen.getByRole("button", {
+    const custodianLink = screen.getByRole("link", {
       name: /data custodians/i,
     });
 
-    expect(individualButton).toBeInTheDocument();
-    expect(organisationButton).toBeInTheDocument();
-    expect(custodianButton).toBeInTheDocument();
+    expect(individualLink).toBeInTheDocument();
+    expect(organisationLink).toBeInTheDocument();
+    expect(custodianLink).toBeInTheDocument();
   });
 
   it("ensures buttons have correct styling", () => {
     render(<Support />);
-    const custodianButton = screen.getByRole("button", {
+    const custodianLink = screen.getByRole("link", {
       name: /data custodians/i,
     });
 
     // Mocked test to check the primary button style
-    expect(custodianButton).toHaveClass("MuiButton-outlinedPrimary"); // Check for Material-UI styles
+    expect(custodianLink).toHaveClass("MuiButton-outlinedPrimary"); // Check for Material-UI styles
   });
 });
