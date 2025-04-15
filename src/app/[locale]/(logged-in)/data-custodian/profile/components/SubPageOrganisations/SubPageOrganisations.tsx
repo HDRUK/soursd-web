@@ -7,6 +7,9 @@ import {
 } from "@/modules";
 import { Organisation } from "@/types/application";
 import { useEffect } from "react";
+import ActionValidationPanel from "@/modules/ActionValidationPanel";
+import { useQuery } from "@tanstack/react-query";
+import { getCustodianOrganisationValidationLogsQuery } from "@/services/validation_logs";
 import { PageTabs, OrganisationsSubTabs } from "../../consts/tabs";
 import SubTabsSections from "../SubTabSections";
 import SubTabsContents from "../SubsTabContents";
@@ -25,7 +28,8 @@ export default function SubPageOrganisations({
 }: PageProps) {
   const tabId = PageTabs.ORGANISATIONS;
 
-  const [organisation, setOrganisation] = useStore(state => [
+  const [custodian, organisation, setOrganisation] = useStore(state => [
+    state.getCustodian(),
     state.getCurrentOrganisation(),
     state.setCurrentOrganisation,
   ]);
@@ -34,15 +38,28 @@ export default function SubPageOrganisations({
     setOrganisation(organisationData);
   }, [organisationData]);
 
+  const { data: validationLogs, ...queryState } = useQuery({
+    ...getCustodianOrganisationValidationLogsQuery(
+      custodian?.id as number,
+      organisation?.id as number
+    ),
+    enabled: !!organisation?.id,
+  });
+
   return (
     organisation && (
       <PageBodyContainer heading={organisation.organisation_name}>
         <PageColumns>
-          <PageColumnBody lg={8}>
+          <PageColumnBody lg={7}>
             <SubTabsSections id={organisation.id} tabId={tabId} {...params} />
             <SubTabsContents tabId={tabId} {...params} />
           </PageColumnBody>
-          <PageColumnDetails lg={4}>Validation panels here</PageColumnDetails>
+          <PageColumnDetails lg={5}>
+            <ActionValidationPanel
+              queryState={queryState}
+              logs={validationLogs?.data || []}
+            />
+          </PageColumnDetails>
         </PageColumns>
       </PageBodyContainer>
     )
