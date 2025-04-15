@@ -27,11 +27,11 @@ export default function Footer(props: FooterProps) {
       label: t("contactUsLink"),
     },
     {
-      href: "#",
-      label: t("termsAndConditionsLink"),
+      href: "/terms-of-service",
+      label: t("termsOfServiceLink"),
     },
     {
-      href: "#",
+      href: "/privacy-and-cookie-policy",
       label: t("privacyCookieLink"),
     },
   ];

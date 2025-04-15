@@ -508,9 +508,11 @@ maintaining security and compliance.`,
   usersTitle: "Users (e.g. researchers & analysts)",
   users: "Easily verify credentials and gain approval for data access.",
   organisationsTitle: "Organisations",
-  organisations: "Maintain oversight of researchers’ credentials and approvals.",
+  organisations:
+    "Maintain oversight of researchers’ credentials and approvals.",
   custodiansTitle: "Data Custodians",
-  custodians: "Make informed decisions about granting access while ensuring compliance.",
+  custodians:
+    "Make informed decisions about granting access while ensuring compliance.",
   purposeTitle: "Our Purpose",
   purpose: `In today’s data-driven world, ensuring that the right people can access the right
 data responsibly is crucial. SOURSD streamlines this process by:
@@ -561,4 +563,16 @@ security while reducing administrative burden.`,
 - Enhances security with strong authentication methods.
 - Reduces administrative overhead for Organisations and Data Custodians.
 - Supports open, responsible research with transparent access processes.`,
+};
+
+export const mockedTermsOfService = {
+  infoTitle: "Terms of Service",
+};
+
+export const mockedCookiePolicy = {
+  infoTitle: "Cookie Policy",
+};
+
+export const mockedPrivacyPolicy = {
+  infoTitle: "Privacy Policy",
 };
