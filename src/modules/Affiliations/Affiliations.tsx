@@ -87,9 +87,9 @@ export default function Affiliations({
   ];
 
   useEffect(() => {
-    const storeHistories = getHistories();
+    const storeHistories = getHistories?.();
 
-    setHistories({
+    setHistories?.({
       ...storeHistories,
       affiliations: affiliationsData?.data?.data,
     });
