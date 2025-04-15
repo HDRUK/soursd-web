@@ -1416,5 +1416,14 @@
     "descriptionPart1": "For more information on how we process your data see our <ourLink>privacy policy</ourLink>.",
     "descriptionPart2": "For more information on how Veriff will process your data see their <theirLink>privacy policy</theirLink>.",
     "checkboxLabel": "I consent to the above terms and conditions"
+  },
+  "Rules": {
+    "passed": "Pass",
+    "failed": "Fail",
+    "IdentityVerification": "IDVT: This user has completed identity verification.",
+    "Training": "Training: A user must have completed mandatory NHS Research Secure Data Environment training before requesting data access.",
+    "DataSecurityCompliance": "Data security compliance: An Organisation must have Cyber Essentials and ISO27001 accreditations.",
+    "AffiliatedOrganisation": "Organisation: A user must be affiliated with an organisation.",
+    "UKDataProtection": "User location: A User should be located in a country which adheres to equivalent data protection law."
   }
 }
