@@ -83,9 +83,9 @@ const PALETTE_THEME_PURPLE_BLUE = {
     inverseSurface: createColor("#322e36"),
     mint: createColor("#00c7be"),
     neutralPink: {
-      light: "#F6EBF8",
-      dark: "#F6EBF8",
-      main: "#F6EBF8",
+      light: "#F6DFF1",
+      dark: "#F6DFF1",
+      main: "#F6DFF1",
       contrastText: "#000",
     },
     neutralGrey: {

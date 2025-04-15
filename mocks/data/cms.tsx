@@ -496,3 +496,69 @@ export const mockedTermsAndConditions = {
     ),
   },
 };
+
+export const mockedAbout = {
+  infoTitle: "About SOURSD",
+  aboutTitle: "Empowering Safe Data Access for Research and Innovation",
+  about: `SOURSD (Safe Organisation and User Registry for Sensitive Data) is a secure platform
+designed to facilitate responsible access to sensitive data. Our mission is to enable
+researchers, Organisations and Data Custodians to collaborate efficiently while
+maintaining security and compliance.`,
+  servingTitle: "## Who We Serve",
+  usersTitle: "Users (e.g. researchers & analysts)",
+  users: "Easily verify credentials and gain approval for data access.",
+  organisationsTitle: "Organisations",
+  organisations: "Maintain oversight of researchers’ credentials and approvals.",
+  custodiansTitle: "Data Custodians",
+  custodians: "Make informed decisions about granting access while ensuring compliance.",
+  purposeTitle: "Our Purpose",
+  purpose: `In today’s data-driven world, ensuring that the right people can access the right
+data responsibly is crucial. SOURSD streamlines this process by:
+
+- Providing a registry where Users and Organisations can establish their credentials
+for working with sensitive data.
+- Enhancing transparency by recording approvals across Data Custodians.
+- Reducing administrative burden by minimising duplication of effort.
+- Enabling seamless authentication with multiple identity providers.`,
+  commitmentTitle: "Our Commitment",
+  commitment: `SOURSD is built on principles of trust, security and efficiency. By fostering
+collaboration between Data Custodians and Users, we help accelerate innovation
+while safeguarding sensitive information.`,
+  footer: "Join us in transforming the way safe data access is managed.",
+};
+
+export const mockedFeatures = {
+  infoTitle: "Features",
+  info: `
+SOURSD is designed to streamline and secure access to sensitive data for researchers,
+Organisations and Data Custodians. Our platform ensures efficiency, compliance and
+security while reducing administrative burden.`,
+  features: `# Key Features`,
+  researchersTitle: `Researcher and Organisation Registry`,
+  researchers: `
+- Easily register as a researcher or Organisation to access and manage projects requiring sensitive data.
+- Maintain a verified profile with credentials and approvals in one place.`,
+  secureTitle: `Secure Access & Authentication`,
+  secure: `
+- Single sign-on (SSO) integration with multiple identity providers.
+- Multi-factor authentication (MFA) for enhanced security.`,
+  approvalsTitle: `Approval & Compliance tracking`,
+  approvals: `
+- Automatically log approvals and maintain a transparent history of data access requests.
+- Ensure compliance with data governance policies.`,
+  workflowTitle: `Streamlined Workflow for Data Custodians`,
+  workflow: `
+- Quickly verify researcher credentials and approve or deny access to projects.
+- Reduce duplication of effort by leveraging a centralised registry.`,
+  transparencyTitle: `Transparency & Oversight`,
+  transparency: `
+- Organisations can monitor researcher approvals and manage internal compliance.
+- Researchers can track the status of their project access in real-time.`,
+  footer: `SOURSD is your trusted partner in managing sensitive data access efficiently and securely.`,
+  detailsTitle: `Why Choose SOURSD?`,
+  details: `
+- Saves time with direct access to approval teams.
+- Enhances security with strong authentication methods.
+- Reduces administrative overhead for Organisations and Data Custodians.
+- Supports open, responsible research with transparent access processes.`,
+};
