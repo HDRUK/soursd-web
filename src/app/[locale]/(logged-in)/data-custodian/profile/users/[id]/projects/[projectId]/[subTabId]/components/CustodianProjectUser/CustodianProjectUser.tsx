@@ -6,6 +6,7 @@ import {
   PageColumnBody,
   PageColumns,
 } from "@/modules";
+import { UserGroup } from "@/consts/user";
 import { useStore } from "@/data/store";
 import { useQuery } from "@tanstack/react-query";
 import { getCustodianProjectUserValidationLogsQuery } from "@/services/validation_logs";
@@ -14,10 +15,15 @@ import ActionValidationPanel from "@/modules/ActionValidationPanel";
 import getProjectQuery from "@/services/projects/getProjectQuery";
 import { useTranslations } from "next-intl";
 import { notFound } from "next/navigation";
+import { useEffect } from "react";
+import { UserSubTabs } from "../../../../../../../consts/tabs";
+import SubTabsSections from "../SubTabSections";
+import SubTabsContents from "../SubsTabContents";
 
 interface CustodianProjectUserProps {
   projectId: number;
   userId: number;
+  subTabId: UserSubTabs;
 }
 
 const NAMESPACE_TRANSLATION_CUSTODIAN_PROJECT_USER = "CustodianProjectUser";
@@ -25,6 +31,7 @@ const NAMESPACE_TRANSLATION_CUSTODIAN_PROJECT_USER = "CustodianProjectUser";
 function CustodianProjectUser({
   projectId,
   userId,
+  subTabId,
 }: CustodianProjectUserProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_CUSTODIAN_PROJECT_USER);
   const custodian = useStore(state => state.getCustodian());
@@ -32,7 +39,11 @@ function CustodianProjectUser({
     getProjectQuery(projectId)
   );
 
-  const { data: userData } = useQuery(getUserQuery(userId));
+  const { data: userData, isFetched } = useQuery(getUserQuery(+userId));
+
+  if (userData?.data.user_group !== UserGroup.USERS && isFetched) {
+    notFound();
+  }
 
   const { registry_id: registryId } = userData?.data || {};
 
@@ -49,32 +60,37 @@ function CustodianProjectUser({
     notFound();
   }
 
-  /* To be implemented in another ticket... 
+  const [user, setUser] = useStore(state => [
+    state.getCurrentUser(),
+    state.setCurrentUser,
+  ]);
 
-  const allComplete = useMemo(
-    () => validationLogs?.data.every(log => !!log.completed_at),
-    [validationLogs]
-  );
-  const allPass = useMemo(
-    () => validationLogs?.data.every(log => !!log.manually_confirmed),
-    [validationLogs]
-  );
-
-  */
+  useEffect(() => {
+    if (userData?.data) setUser(userData?.data);
+  }, [userData]);
 
   return (
-    <PageBodyContainer
-      heading={t("title", { projectTitle: project?.data.title })}>
-      <PageColumns>
-        <PageColumnBody lg={7}>Content!</PageColumnBody>
-        <PageColumnDetails lg={5}>
-          <ActionValidationPanel
-            queryState={queryState}
-            logs={validationLogs?.data || []}
-          />
-        </PageColumnDetails>
-      </PageColumns>
-    </PageBodyContainer>
+    user && (
+      <PageBodyContainer
+        heading={t("title", { projectTitle: project?.data.title })}>
+        <PageColumns>
+          <PageColumnBody lg={7}>
+            <SubTabsSections
+              userId={userId}
+              projectId={projectId}
+              subTabId={subTabId}
+            />
+            <SubTabsContents userId={userId} subTabId={subTabId} />
+          </PageColumnBody>
+          <PageColumnDetails lg={5}>
+            <ActionValidationPanel
+              queryState={queryState}
+              logs={validationLogs?.data || []}
+            />
+          </PageColumnDetails>
+        </PageColumns>
+      </PageBodyContainer>
+    )
   );
 }
 

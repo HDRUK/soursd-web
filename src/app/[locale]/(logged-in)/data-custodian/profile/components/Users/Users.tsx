@@ -82,7 +82,7 @@ export default function Users({ variant }: ProjectsProps) {
             route = null;
             break;
           case "custodian":
-            route = routes.profileCustodianUserById;
+            route = routes.profileCustodianUsersIdentity;
             break;
           case "user":
             route = null;
@@ -97,7 +97,8 @@ export default function Users({ variant }: ProjectsProps) {
             last_name: info.row.original.last_name,
             id: info.getValue(),
           } as User,
-          route.path
+          route.path,
+          { projectId: info.row.original.project_id }
         );
       },
     },

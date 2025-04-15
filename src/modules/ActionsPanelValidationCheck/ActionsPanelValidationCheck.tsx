@@ -50,7 +50,12 @@ export default function ActionsPanelValidationCheck({
             </div>
           ))}
       </ViewMore>
-      <ActionValidationMakeDecision log={log} onAction={refetchComments} />
+      <ActionValidationMakeDecision
+        log={log}
+        onAction={async () => {
+          await refetchComments();
+        }}
+      />
     </Paper>
   );
 }

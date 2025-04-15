@@ -49,19 +49,6 @@ function CustodianProjectUser({
     notFound();
   }
 
-  /* To be implemented in another ticket... 
-
-  const allComplete = useMemo(
-    () => validationLogs?.data.every(log => !!log.completed_at),
-    [validationLogs]
-  );
-  const allPass = useMemo(
-    () => validationLogs?.data.every(log => !!log.manually_confirmed),
-    [validationLogs]
-  );
-
-  */
-
   return (
     <PageBodyContainer
       heading={t("title", { projectTitle: project?.data.title })}>
