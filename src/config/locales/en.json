@@ -1441,4 +1441,8 @@
       "certifications": "Data security compliance: An Organisation must have Cyber Essentials and ISO27001 accreditations."
     }
   }
+  "ActionsPanelValidationCheck": {
+    "organisation_aligned_sde_network": "Is the Organisation aligned with the SDE network?",
+    "confident_cost_for_projects_will_be_met": "Are we confident costs would be met and profits realised for future projects?"
+  }
 }
