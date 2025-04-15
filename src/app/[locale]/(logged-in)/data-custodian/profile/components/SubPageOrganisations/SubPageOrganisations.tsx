@@ -50,11 +50,11 @@ export default function SubPageOrganisations({
     organisation && (
       <PageBodyContainer heading={organisation.organisation_name}>
         <PageColumns>
-          <PageColumnBody lg={7}>
+          <PageColumnBody lg={8}>
             <SubTabsSections id={organisation.id} tabId={tabId} {...params} />
             <SubTabsContents tabId={tabId} {...params} />
           </PageColumnBody>
-          <PageColumnDetails lg={5}>
+          <PageColumnDetails lg={4}>
             <ActionValidationPanel
               queryState={queryState}
               logs={validationLogs?.data || []}

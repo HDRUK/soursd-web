@@ -74,7 +74,7 @@ function CustodianProjectUser({
       <PageBodyContainer
         heading={t("title", { projectTitle: project?.data.title })}>
         <PageColumns>
-          <PageColumnBody lg={7}>
+          <PageColumnBody lg={8}>
             <SubTabsSections
               userId={userId}
               projectId={projectId}
@@ -82,7 +82,7 @@ function CustodianProjectUser({
             />
             <SubTabsContents userId={userId} subTabId={subTabId} />
           </PageColumnBody>
-          <PageColumnDetails lg={5}>
+          <PageColumnDetails lg={4}>
             <ActionValidationPanel
               queryState={queryState}
               logs={validationLogs?.data || []}
