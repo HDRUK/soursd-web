@@ -25,7 +25,7 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useMemo } from "react";
 import ReactDOMServer from "react-dom/server";
-import ProfessionalsRegistration from "@/modules/ProfessionalRegistrations";
+import ProfessionalRegistrations from "@/modules/ProfessionalRegistrations";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
@@ -99,7 +99,7 @@ export default function Trainings() {
                 />
               </PageSection>
               <PageSection>
-                <ProfessionalsRegistration
+                <ProfessionalRegistrations
                   variant={EntityType.USER}
                   user={userData?.data}
                   setHistories={setHistories}
