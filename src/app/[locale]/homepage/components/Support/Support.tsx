@@ -26,6 +26,7 @@ export default function Support() {
           />
           <Button
             variant="outlined"
+            href="/support#users"
             sx={{ padding: "16px", my: "12px", fontSize: "small" }}>
             Individual Users
           </Button>
@@ -41,6 +42,7 @@ export default function Support() {
           />
           <Button
             variant="outlined"
+            href="/support#organisations"
             sx={{ padding: "16px", my: "12px", fontSize: "small" }}>
             Organisations
           </Button>
@@ -56,6 +58,7 @@ export default function Support() {
           />
           <Button
             variant="outlined"
+            href="/support#custodians"
             sx={{ padding: "16px", my: "12px", fontSize: "small" }}>
             Data Custodians
           </Button>
