@@ -33,8 +33,9 @@ export default function Trainings() {
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const router = useRouter();
 
-  const { user } = useStore(state => ({
+  const { user, routes } = useStore(state => ({
     user: state.config.user,
+    routes: state.getApplication().routes,
   }));
 
   const setHistories = useStore(state => state.setHistories);
@@ -141,6 +142,7 @@ export default function Trainings() {
               </Box>
               <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3 }}>
                 <ProfileNavigationFooter
+                  previousHref={routes.profileResearcherAffiliations.path}
                   nextStepText={tProfile("completeYourProfile")}
                   isLastStep
                   isLoading={patchUserQueryState.isPending}

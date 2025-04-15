@@ -5,7 +5,12 @@ import { useStore } from "@/data/store";
 import useFileUpload from "@/hooks/useFileUpload";
 import useUserFileUpload from "@/hooks/useUserFileUpload";
 import { mockedUserExperienceGuidanceProps } from "@/mocks/data/cms";
-import { PageBody, PageBodyContainer, PageGuidance } from "@/modules";
+import {
+  PageBody,
+  PageBodyContainer,
+  PageGuidance,
+  PageSection,
+} from "@/modules";
 import { getFileHref, getLatestCV } from "@/utils/file";
 import { Grid, TextField, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
@@ -84,7 +89,7 @@ export default function Experience() {
           text: tProfile("postUserSuccess"),
           confirmButtonText: tProfile("postUserSuccessButton"),
           preConfirm: () => {
-            router.push(ROUTES.profileResearcherTraining.path);
+            router.push(ROUTES.profileResearcherAffiliations.path);
           },
         });
       } catch (_) {
@@ -148,76 +153,79 @@ export default function Experience() {
     <PageBodyContainer heading={tProfile("experienceTitle")}>
       <PageGuidance {...mockedUserExperienceGuidanceProps}>
         <PageBody>
-          <Form
-            onSubmit={handleDetailsSubmit}
-            {...formOptions}
-            schema={schema}
-            key={user?.id}
-            canLeave>
-            <>
-              <FormSection
-                heading={tProfile("employmentEducationPublicationRecord")}
-                description={tProfile("orcidDescription")}>
-                <Typography variant="body1" gutterBottom />
-                <Grid container spacing={3}>
-                  <Grid item xs={12}>
-                    <FormControl
-                      name="orc_id"
-                      label="ORCID"
-                      description={tProfile("orcidFormDescription")}
-                      renderField={fieldProps => (
-                        <Text sx={{ maxWidth: "100%" }}>
-                          <TextField {...fieldProps} fullWidth />
-                        </Text>
-                      )}
-                    />
+          <PageSection
+            heading={tProfile("employmentEducationPublicationRecord")}>
+            <Form
+              onSubmit={handleDetailsSubmit}
+              {...formOptions}
+              schema={schema}
+              key={user?.id}
+              canLeave>
+              <>
+                <FormSection description={tProfile("orcidDescription")}>
+                  <Grid container spacing={3}>
+                    <Grid item xs={12}>
+                      <FormControl
+                        name="orc_id"
+                        label="ORCID"
+                        description={tProfile("orcidFormDescription")}
+                        renderField={fieldProps => (
+                          <Text sx={{ maxWidth: "100%" }}>
+                            <TextField {...fieldProps} fullWidth />
+                          </Text>
+                        )}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <FormControlCheckbox
+                        name="consent_scrape"
+                        color="primary"
+                        onChange={handleConsentScrapeChange}
+                        checked={consentScrape}
+                        label={tForm("consentScrapeDescription")}
+                      />
+                    </Grid>
                   </Grid>
-                  <Grid item xs={12}>
-                    <FormControlCheckbox
-                      name="consent_scrape"
-                      color="primary"
-                      onChange={handleConsentScrapeChange}
-                      checked={consentScrape}
-                      label={tForm("consentScrapeDescription")}
-                    />
-                  </Grid>
-                </Grid>
-              </FormSection>
+                </FormSection>
 
-              <FormSection heading={tProfile("cvUpload")}>
-                <Grid container spacing={3}>
-                  <Grid item xs={12}>
-                    <FileUploadDetails
-                      fileButtonText={tProfile("cvUpload")}
-                      fileHref={getFileHref(latestCV?.name)}
-                      fileType={FileType.CV}
-                      fileNameText={file?.name || tProfile("noCvUploaded")}
-                      isSizeInvalid={isSizeInvalid}
-                      isScanning={isScanning}
-                      isScanComplete={isScanComplete}
-                      isScanFailed={isScanFailed}
-                      isUploading={isUploading}
-                      onFileChange={handleFileChange}
-                      message="cvUploadFailed"
-                    />
-                  </Grid>
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography sx={{ py: 1 }}>
-                    {tProfile("cvUploadDescription")}
+                <FormSection>
+                  <Typography variant="subtitle1" gutterBottom>
+                    {tProfile("cvUpload")}
                   </Typography>
-                </Grid>
-              </FormSection>
+                  <Grid container spacing={3}>
+                    <Grid item xs={12}>
+                      <FileUploadDetails
+                        fileButtonText={tProfile("cvUpload")}
+                        fileHref={getFileHref(latestCV?.name)}
+                        fileType={FileType.CV}
+                        fileNameText={file?.name || tProfile("noCvUploaded")}
+                        isSizeInvalid={isSizeInvalid}
+                        isScanning={isScanning}
+                        isScanComplete={isScanComplete}
+                        isScanFailed={isScanFailed}
+                        isUploading={isUploading}
+                        onFileChange={handleFileChange}
+                        message="cvUploadFailed"
+                      />
+                    </Grid>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Typography variant="subtitle2" sx={{ color: "textSecondary.main", pt: 1 }}>
+                      {tProfile("cvUploadDescription")}
+                    </Typography>
+                  </Grid>
+                </FormSection>
 
-              <FormActions>
-                <ProfileNavigationFooter
-                  previousHref={ROUTES.profileResearcherAffiliations.path}
-                  nextStepText={tProfile("trainingAndAccreditations")}
-                  isLoading={updateUser.isPending}
-                />
-              </FormActions>
-            </>
-          </Form>
+                <FormActions>
+                  <ProfileNavigationFooter
+                    previousHref={ROUTES.profileResearcherIdentity.path}
+                    nextStepText={tProfile("affiliations")}
+                    isLoading={updateUser.isPending}
+                  />
+                </FormActions>
+              </>
+            </Form>
+          </PageSection>
         </PageBody>
       </PageGuidance>
     </PageBodyContainer>

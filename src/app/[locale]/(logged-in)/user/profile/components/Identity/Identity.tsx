@@ -82,7 +82,7 @@ export default function Identity() {
       text: tProfile("postUserSuccess"),
       confirmButtonText: tProfile("postUserSuccessButton"),
       preConfirm: () => {
-        router.push(ROUTES.profileResearcherAffiliations.path);
+        router.push(ROUTES.profileResearcherExperience.path);
       },
     },
   });
@@ -121,7 +121,7 @@ export default function Identity() {
     <PageBodyContainer heading={tProfile("identityTitle")}>
       <PageGuidance {...mockedPersonalDetailsGuidanceProps}>
         <PageBody>
-          <PageSection>
+          <PageSection heading={tProfile("identityForm")}>
             <Form
               onSubmit={handleDetailsSubmit}
               schema={schema}
@@ -129,7 +129,7 @@ export default function Identity() {
               key={user?.id}
               {...formOptions}>
               <>
-                <FormSection heading={tProfile("identityForm")}>
+                <FormSection>
                   <Grid container rowSpacing={3}>
                     <Grid item xs={12}>
                       <FormControlHorizontal
@@ -190,7 +190,7 @@ export default function Identity() {
                 </FormSection>
                 <FormActions>
                   <ProfileNavigationFooter
-                    nextStepText={tProfile("affiliations")}
+                    nextStepText={tProfile("experience")}
                     isLoading={updateUser.isPending}
                   />
                 </FormActions>
