@@ -718,7 +718,8 @@
     "contactFormSubtitle": "Some subtitle here",
     "fundedByTitle": "Funded by",
     "partnershipTitle": "In partnership with",
-    "privacyCookieLink": "Privacy & Cookie Policy",
+    "privacyLink": "Privacy Policy",
+    "cookieLink": "Cookie Policy",
     "termsOfServiceLink": "Terms of Service",
     "aboutUsLink": "About",
     "contactUsLink": "Contact"

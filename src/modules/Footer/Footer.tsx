@@ -31,8 +31,12 @@ export default function Footer(props: FooterProps) {
       label: t("termsOfServiceLink"),
     },
     {
-      href: "/privacy-and-cookie-policy",
-      label: t("privacyCookieLink"),
+      href: "/privacy-policy",
+      label: t("privacyLink"),
+    },
+    {
+      href: "/cookie-policy",
+      label: t("cookieLink"),
     },
   ];
 
