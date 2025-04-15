@@ -28,7 +28,7 @@ export default function SubPageProjects({ params, projectData }: PageProps) {
 
   return (
     project && (
-      <PageBodyContainer heading={projectData.title}>
+      <PageBodyContainer heading={`${projectData.title} (${projectData.unique_id})`}>
         <SubTabsSections id={project.id} tabId={tabId} {...params} />
         <SubTabsContents tabId={tabId} {...params} />
       </PageBodyContainer>
