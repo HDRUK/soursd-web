@@ -49,6 +49,7 @@ function renderLinkNameCell(
   route: string,
   options: Record<string, number>
 ) {
+  console.log("name", name, route);
   return (
     <Typography color="primary">
       <Link href={injectParamsIntoPath(route, options)}>{name}</Link>

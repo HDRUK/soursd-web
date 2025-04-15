@@ -32,6 +32,8 @@ function injectParamsIntoPath(
 ) {
   let replacedPath = path;
 
+  console.log("path", path, params);
+
   Object.keys(params).forEach(name => {
     replacedPath = replacedPath.replace(`{${name}}`, params[name]?.toString());
   });

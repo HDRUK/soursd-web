@@ -78,12 +78,14 @@ export default function ProjectsSafePeople({
 
   const renderNameCell = useCallback(
     <T extends ProjectUser>(info: CellContext<T, unknown>) => {
+      const user = info.getValue() as User;
+
       return (
         <Box sx={{ display: "flex" }}>
-          {renderUserNameCell(
-            info.getValue() as User,
-            routes.profileCustodianUsersIdentity.path
-          )}
+          {renderUserNameCell(user, routes.profileCustodianUsersProjects.path, {
+            userId: user.id,
+            projectId: project.id,
+          })}
           {!!info.row.original.primary_contact && <PrimaryContactIcon />}
         </Box>
       );
