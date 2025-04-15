@@ -19,7 +19,7 @@ function ActionValidationPanel({
 }: ActionValidationPanelProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_ACTION_VALIDATION);
   return (
-    <LoadingWrapper loading={queryState?.isLoading || false}>
+    <LoadingWrapper variant="basic" loading={queryState?.isLoading || false}>
       <ActionsPanel heading={t("title")}>
         {logs.map(log => (
           <ActionsPanelValidationCheck key={log.id} log={log} />

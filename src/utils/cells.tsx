@@ -44,26 +44,32 @@ function renderProjectNameCell<T extends Project>(
   );
 }
 
-function renderLinkNameCell(name: string, id: number, route: string) {
+function renderLinkNameCell(
+  name: string,
+  route: string,
+  options: Record<string, number>
+) {
   return (
     <Typography color="primary">
-      <Link
-        href={injectParamsIntoPath(route, {
-          id,
-        })}>
-        {name}
-      </Link>
+      <Link href={injectParamsIntoPath(route, options)}>{name}</Link>
     </Typography>
   );
 }
 
-function renderUserNameCell(user: User | ProjectAllUser, route?: string) {
+function renderUserNameCell(
+  user: User | ProjectAllUser,
+  route?: string,
+  options: Record<string, number> = {}
+) {
   if (!user) return "";
 
   const { first_name, last_name, id } = user;
 
   return route && id
-    ? renderLinkNameCell(`${first_name} ${last_name}`, id, route)
+    ? renderLinkNameCell(`${first_name} ${last_name}`, route, {
+        userId: id,
+        ...options,
+      })
     : `${first_name} ${last_name}`;
 }
 
