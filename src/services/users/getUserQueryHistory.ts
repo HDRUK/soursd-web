@@ -7,11 +7,11 @@ export default function getUserHistoryQuery(
   options?: QueryOptions
 ) {
   return {
-    queryKey: ["getUser", userId, ...(options?.queryKeySuffix || [])],
+    queryKey: ["getUserHistory", userId, ...(options?.queryKeySuffix || [])],
     queryFn: ({ queryKey }) =>
       getUserHistory(queryKey[1] as number, {
         error: {
-          message: "getUserError",
+          message: "getUserHistoryError",
         },
         ...options?.responseOptions,
       }),

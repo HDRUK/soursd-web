@@ -4,13 +4,13 @@ import { getInitials } from "@/utils/application";
 import { getUserHistoryQuery } from "@/services/users";
 import MaskLabel from "@/components/MaskLabel";
 import { getDaysSince } from "@/utils/date";
-import { Card, CardContent, Typography } from "@mui/material";
+import { Card, CardContent, Typography, Box } from "@mui/material";
 import { useTranslations } from "next-intl";
 
 const NAMESPACE_TRANSLATION = "UserHistory";
 
 export default function UserHistory() {
-  const user = useStore(state => state.getUser());
+  const user = useStore(state => state.getCurrentUser());
   const t = useTranslations(NAMESPACE_TRANSLATION);
 
   const { data: userHistory } = useQuery(
@@ -18,7 +18,7 @@ export default function UserHistory() {
   );
 
   return (
-    <>
+    <Box sx={{ gap: 2, display: "flex", flexDirection: "column" }}>
       {userHistory?.data?.map(item => (
         <Card
           key={item.message}
@@ -40,6 +40,6 @@ export default function UserHistory() {
           </CardContent>
         </Card>
       ))}
-    </>
+    </Box>
   );
 }
