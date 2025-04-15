@@ -28,10 +28,10 @@ export default function Home() {
               heading: "Welcome to SOURSD",
               description: (
                 <>
-                  You’ll see a list of tasks below we’ve
-                  assigned to you to complete your profile. To help you do that
-                  as quickly as possible here’s a list of things you’ll need
-                  before you dive in:
+                  You’ll see a list of tasks below we’ve assigned to you to
+                  complete your profile. To help you do that as quickly as
+                  possible here’s a list of things you’ll need before you dive
+                  in:
                   <ul>
                     <li>An ID such as a passport or driving licence</li>
                     <li>Your ORCID or CV</li>

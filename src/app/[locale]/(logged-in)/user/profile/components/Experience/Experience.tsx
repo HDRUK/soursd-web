@@ -210,7 +210,9 @@ export default function Experience() {
                     </Grid>
                   </Grid>
                   <Grid item xs={12}>
-                    <Typography variant="subtitle2" sx={{ color: "textSecondary.main", pt: 1 }}>
+                    <Typography
+                      variant="subtitle2"
+                      sx={{ color: "textSecondary.main", pt: 1 }}>
                       {tProfile("cvUploadDescription")}
                     </Typography>
                   </Grid>
