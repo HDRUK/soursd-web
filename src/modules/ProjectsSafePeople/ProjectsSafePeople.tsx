@@ -76,7 +76,7 @@ export default function ProjectsSafePeople({
 
   useQueryAlerts(primaryContactQueryState);
 
-  let userPath = undefined;
+  let userPath;
   switch (variant) {
     case EntityType.CUSTODIAN:
       userPath = routes.profileCustodianUsersIdentity.path;
@@ -87,6 +87,8 @@ export default function ProjectsSafePeople({
     case EntityType.USER:
       userPath = undefined;
       break;
+    default:
+      userPath = undefined;
   }
   const renderNameCell = useCallback(
     <T extends ProjectUser>(info: CellContext<T, unknown>) => {
