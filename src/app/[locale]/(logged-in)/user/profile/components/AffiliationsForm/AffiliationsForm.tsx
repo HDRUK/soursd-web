@@ -3,14 +3,15 @@ import Form from "@/components/Form";
 import FormActions from "@/components/FormActions";
 import FormControlCheckbox from "@/components/FormControlCheckbox";
 import FormControlWrapper from "@/components/FormControlWrapper";
+import SelectDepartments from "@/components/SelectDepartments";
 import SelectInput from "@/components/SelectInput";
 import yup from "@/config/yup";
 import { AffiliationRelationship } from "@/consts/user";
-import useOrganisationsQuery from "@/services/organisations/useOrganisationsQuery";
-import { useQuery } from "@tanstack/react-query";
 import { getOrganisationQuery } from "@/services/organisations";
+import useOrganisationsQuery from "@/services/organisations/useOrganisationsQuery";
 import { ResearcherAffiliation } from "@/types/application";
 import { MutationState } from "@/types/form";
+import WarningIcon from "@mui/icons-material/Warning";
 import { LoadingButton } from "@mui/lab";
 import {
   Box,
@@ -22,10 +23,9 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import { useMemo, useState, useCallback } from "react";
-import WarningIcon from "@mui/icons-material/Warning";
-import SelectDepartments from "@/components/SelectDepartments";
+import { useCallback, useMemo, useState } from "react";
 import AskOrganisationModal from "../AskOrganisation";
 
 export interface AffiliationsFormProps {
@@ -93,20 +93,24 @@ export default function AffiliationsForm({
     [tForm]
   );
 
-  const formOptions = {
-    defaultValues: {
-      member_id: initialValues?.member_id || "",
-      organisation_id: initialValues?.organisation_id || "",
-      current_employer: (!!initialValues?.from && !initialValues?.to) || false,
-      relationship: initialValues?.relationship || "",
-      from: initialValues?.from || null,
-      to: initialValues?.to || null,
-      role: initialValues?.role || "",
-      email: initialValues?.email || "",
-      ror: "", // keeping this blank for now
-      department: "", // keeping this blank for now
-    },
-  };
+  const formOptions = useMemo(
+    () => ({
+      defaultValues: {
+        member_id: initialValues?.member_id || "",
+        organisation_id: initialValues?.organisation_id || "",
+        current_employer:
+          (!!initialValues?.from && !initialValues?.to) || false,
+        relationship: initialValues?.relationship || "",
+        from: initialValues?.from || null,
+        to: initialValues?.to || null,
+        role: initialValues?.role || "",
+        email: initialValues?.email || "",
+        ror: "", // keeping this blank for now
+        department: "", // keeping this blank for now
+      },
+    }),
+    []
+  );
 
   const relationshipOptions = [
     {
@@ -155,8 +159,13 @@ export default function AffiliationsForm({
                 <Grid item xs={12}>
                   <FormControlWrapper
                     name="organisation_id"
-                    renderField={fieldProps => (
-                      <Select {...fieldProps}>
+                    renderField={({ onChange, ...fieldProps }) => (
+                      <Select
+                        onChange={e => {
+                          setSelectedOrganisationId(e.target.value as number);
+                          onChange(e);
+                        }}
+                        {...fieldProps}>
                         {hydratedOrganisationMenu}
                       </Select>
                     )}
