@@ -5,6 +5,7 @@ import {
   ProjectAllUser,
   Organisation,
   ResearcherProject,
+  CustodianUser,
 } from "@/types/application";
 import { Link, Typography } from "@mui/material";
 import { CellContext } from "@tanstack/react-table";
@@ -57,7 +58,7 @@ function renderLinkNameCell(
 }
 
 function renderUserNameCell(
-  user: User | ProjectAllUser,
+  user: User | ProjectAllUser | CustodianUser,
   route?: string,
   options: Record<string, number> = {}
 ) {

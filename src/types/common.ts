@@ -17,8 +17,8 @@ export interface ShowAlertOptions {
   cancelButtonText?: string | undefined;
   closeOnConfirm?: boolean;
   closeOnCancel?: boolean;
-  willClose?: <T>(payload: T | null | undefined) => void;
-  preConfirm?: () => void | undefined;
+  willClose?<T>(payload: T | null | undefined): Promise<void | undefined>;
+  preConfirm?<T>(payload: T | null | undefined): Promise<void | undefined>;
   preDeny?: () => void | undefined;
   untilDuration?: number;
 }

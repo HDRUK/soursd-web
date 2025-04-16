@@ -33,11 +33,18 @@ export default function useQueryConfirmAlerts<T>(
     title: t("alertDeleteTitle"),
     confirmButtonText: t("alertDeleteConfirmButton"),
     cancelButtonText: t("alertDeleteCancelButton"),
-    preConfirm: () => {
+    preConfirm: async () => {
+      await alertOptions?.confirmAlertProps?.preConfirm<T>?.(
+        refPayload.current
+      );
+
+      ref.current = null;
+      refPayload.current = null;
+
       setHasClosed(true);
     },
-    willClose: () => {
-      alertOptions?.confirmAlertProps?.willClose<T>?.(refPayload.current);
+    willClose: async () => {
+      await alertOptions?.confirmAlertProps?.willClose<T>?.(refPayload.current);
 
       ref.current = null;
       refPayload.current = null;

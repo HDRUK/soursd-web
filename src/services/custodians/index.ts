@@ -18,6 +18,8 @@ import putCustodianActiveEntityModel from "./putCustodianActiveEntityModel";
 import getCustodianProjectUsers from "./getCustodianProjectUsers";
 import usePaginatedCustodianOrganisationUsers from "./usePaginatedCustodianOrganisationUsers";
 import getCustodianOrganisationUsers from "./getCustodianOrganisationUsers";
+import getCustodianUsers from "./getCustodianUsers";
+import usePaginatedCustodianUsers from "./usePaginatedCustodianUsers";
 
 export {
   getCustodian,
@@ -40,6 +42,8 @@ export {
   usePaginatedCustodianOrganisations,
   usePaginatedCustodianOrganisationUsers,
   getCustodianOrganisationUsers,
+  getCustodianUsers,
+  usePaginatedCustodianUsers,
 };
 
 export type * from "./types";

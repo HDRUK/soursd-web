@@ -1,6 +1,7 @@
 import { EMAIL_TEMPLATE } from "@/consts/application";
 import {
   Custodian,
+  CustodianUser,
   Organisation,
   ProjectAllUser,
   ResearcherProject,
@@ -72,6 +73,8 @@ type GetCustodianOrganisationsResponse = Organisation[];
 
 type GetCustodianOrganisationUsersResponse = User[];
 
+type GetCustodianUsersResponse = CustodianUser[];
+
 type EntityType =
   | "decision_models"
   | "user_validation_rules"
@@ -98,4 +101,5 @@ export type {
   GetCustodiansUserProjectsResponse,
   GetCustodianOrganisationsResponse,
   GetCustodianOrganisationUsersResponse,
+  GetCustodianUsersResponse,
 };
