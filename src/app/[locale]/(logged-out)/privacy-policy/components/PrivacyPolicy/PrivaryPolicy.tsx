@@ -1,6 +1,5 @@
 "use client";
 
-import { mockedPrivacyPolicy } from "@/mocks/data/cms";
 import {
   PageBodyContainer,
   PageColumns,

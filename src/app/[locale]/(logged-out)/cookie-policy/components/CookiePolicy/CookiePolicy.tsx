@@ -14,7 +14,6 @@ export default function CookiePolicy() {
   return (
     <InfoPageWrapper>
       <PageBodyContainer
-        heading={""}
         sx={{ width: "100%", mx: 2, px: 2, background: "white" }}>
         <PageColumns>
           <PageColumnBody lg={12}>
