@@ -3,7 +3,7 @@ import { Typography, Button, Box, List } from "@mui/material";
 import FormModal, { FormModalProps } from "@/components/FormModal";
 import { useTranslations } from "next-intl";
 import { termsItems } from "@/consts/termsAndConditions";
-import { mockedTermsAndConditions } from "@/mocks/data/cms";
+import { mockedTermsAndConditions } from "@/mocks/data/terms_and_conditions";
 import {
   StyledListItemButton,
   StyledRadio,
