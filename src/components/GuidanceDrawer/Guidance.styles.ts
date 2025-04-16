@@ -24,7 +24,6 @@ export const StyledDrawerInfo = styled(Drawer)(
         ? `
           background-color: ${theme.palette.background1[MODE]};`
         : `
-          padding-bottom: 90px;
           background: linear-gradient(
             0deg,
             #fff 0,

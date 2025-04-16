@@ -76,14 +76,25 @@ export default function ProjectsSafePeople({
 
   useQueryAlerts(primaryContactQueryState);
 
+  let userPath;
+  switch (variant) {
+    case EntityType.CUSTODIAN:
+      userPath = routes.profileCustodianUsersIdentity.path;
+      break;
+    case EntityType.ORGANISATION:
+      userPath = routes.profileOrganisationUsersIdentity.path;
+      break;
+    case EntityType.USER:
+      userPath = undefined;
+      break;
+    default:
+      userPath = undefined;
+  }
   const renderNameCell = useCallback(
     <T extends ProjectUser>(info: CellContext<T, unknown>) => {
       return (
         <Box sx={{ display: "flex" }}>
-          {renderUserNameCell(
-            info.getValue() as User,
-            routes.profileCustodianUsersIdentity.path
-          )}
+          {renderUserNameCell(info.getValue() as User, userPath)}
           {!!info.row.original.primary_contact && <PrimaryContactIcon />}
         </Box>
       );
@@ -168,7 +179,7 @@ export default function ProjectsSafePeople({
   ];
 
   return (
-    <PageBody heading={t("safeProject")}>
+    <PageBody heading={t("safePeople")}>
       <PageSection>
         <Box component="form" role="search">
           <SearchBar

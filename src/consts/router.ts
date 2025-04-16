@@ -244,6 +244,10 @@ const ROUTES: Routes = {
     path: "/organisation/profile/user-administration/employees-and-students",
     permissions: [UserGroup.ORGANISATIONS],
   },
+  profileOrganisationUsersIdentity: {
+    path: "/organisation/profile/user-administration/employees-and-students/{id}/identity",
+    permissions: [UserGroup.CUSTODIANS],
+  },
   profileOrganisationProjects: {
     path: "/organisation/profile/projects",
     permissions: [UserGroup.ORGANISATIONS],

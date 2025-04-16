@@ -1,3 +1,3 @@
-import ProfessionalsRegistration from "./ProfessionalRegistrations";
+import ProfessionalRegistrations from "./ProfessionalRegistrations";
 
-export default ProfessionalsRegistration;
+export default ProfessionalRegistrations;
