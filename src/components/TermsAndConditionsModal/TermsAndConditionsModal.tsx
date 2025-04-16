@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Typography, Button, Box, List } from "@mui/material";
-import Markdown from "../Markdown";
+import Markdown from "@/components/Markdown";
 import FormModal, { FormModalProps } from "@/components/FormModal";
 import { useTranslations } from "next-intl";
 import {

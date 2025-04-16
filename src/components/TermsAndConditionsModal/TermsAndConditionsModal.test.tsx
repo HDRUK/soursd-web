@@ -2,11 +2,11 @@ import React from "react";
 import {
   commonAccessibilityTests,
   render,
-  screen,
-  fireEvent,
-  waitFor,
+  // screen,
+  // fireEvent,
+  // waitFor,
 } from "@/utils/testUtils";
-import { termsItems } from "@/consts/termsAndConditions";
+// import { termsItems } from "@/consts/termsAndConditions";
 import TermsAndConditionsModal from "./TermsAndConditionsModal";
 
 jest.mock("next-intl", () => ({
@@ -20,10 +20,11 @@ describe("<TermsAndConditionsModal />", () => {
     onAccept: jest.fn(),
     onDecline: jest.fn(),
   };
-  // turning off test for now
-  // - we shouldnt have written tests for mockedData!
-  // - causing all sorts of problems when switching this out
-  /*test("displays content when a term is selected", async () => {
+  /* 
+  turning off test for now
+   - we shouldnt have written tests for mockedData!
+   - causing all sorts of problems when switching this out
+  test("displays content when a term is selected", async () => {
     render(<TermsAndConditionsModal {...defaultProps} />);
 
     const privacyButton = screen.getByText("accept");

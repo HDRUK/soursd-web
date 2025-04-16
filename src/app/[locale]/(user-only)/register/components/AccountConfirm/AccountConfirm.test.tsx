@@ -98,8 +98,8 @@ describe("<AccountConfirm />", () => {
     const continueButton = screen.getByRole("button", { name: /continue/i });
     expect(continueButton).toBeDisabled();
   });
-
+  */
   it("has no accessibility violations", async () => {
     commonAccessibilityTests(render(<TestComponent />));
-  });*/
+  });
 });

@@ -1,7 +1,6 @@
 import React from "react";
 import ReactMarkdown, { Components } from "react-markdown";
 import FormControlDescription from "../FormControlDescription";
-import { Typography } from "@mui/material";
 
 interface MarkdownProps {
   children: string;
@@ -44,7 +43,7 @@ const legalComponents: Components = {
   h3({ node: _node, children, ...rest }) {
     return (
       <p style={{ marginLeft: "20px" }} {...rest}>
-        <Typography>{children}</Typography>
+        {children}
       </p>
     );
   },
