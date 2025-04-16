@@ -1,5 +1,6 @@
 import getUser from "./getUser";
 import getUserQuery from "./getUserQuery";
+import getUserHistoryQuery from "./getUserQueryHistory";
 import getUsers from "./getUsers";
 import getUsersQuery from "./getUsersQuery";
 import patchUser from "./patchUser";
@@ -14,6 +15,7 @@ import putUserQuery from "./putUserQuery";
 export {
   getUser,
   getUserQuery,
+  getUserHistoryQuery,
   getUsers,
   patchUser,
   postPermissions,

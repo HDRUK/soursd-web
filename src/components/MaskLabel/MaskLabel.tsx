@@ -1,4 +1,4 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Typography, useTheme, SxProps } from "@mui/material";
 import { ReactNode } from "react";
 import Mask from "../Mask";
 
@@ -6,12 +6,14 @@ interface BasicUserInfoProps {
   initials: ReactNode;
   label?: ReactNode;
   size?: "small" | "medium" | "large";
+  sx?: SxProps;
 }
 
 export default function MaskLabel({
   initials,
   label,
   size = "medium",
+  sx = {},
 }: BasicUserInfoProps) {
   const theme = useTheme();
 
@@ -41,6 +43,7 @@ export default function MaskLabel({
         alignItems: "center",
         flexGrow: 1,
         justifyContent: "flex-end",
+        ...sx,
       }}>
       <Mask size={sizePx} sx={restSx}>
         {initials}

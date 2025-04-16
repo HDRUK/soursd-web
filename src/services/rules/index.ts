@@ -13,3 +13,5 @@ export {
   getCustodianRulesQuery,
   patchCustodianRulesQuery,
 };
+
+export type * from "./types";
