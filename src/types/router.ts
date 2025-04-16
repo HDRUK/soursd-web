@@ -76,6 +76,7 @@ interface Routes {
   profileOrganisationUserAdministration: RouteConfig;
   profileOrganisationUserAdministrationDelegates: RouteConfig;
   profileOrganisationUserAdministrationEmployeeStudent: RouteConfig;
+  profileOrganisationUsersIdentity: RouteConfig;
   profileOrganisationProjects: RouteConfig;
   profileOrganisationProjectsSafeProject: RouteConfig;
   profileOrganisationProjectsSafeData: RouteConfig;
