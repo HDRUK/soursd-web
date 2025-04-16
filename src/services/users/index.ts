@@ -11,6 +11,7 @@ import postUserInviteQuery from "./postUserInviteQuery";
 import patchUserQuery from "./patchUserQuery";
 import putUser from "./putUser";
 import putUserQuery from "./putUserQuery";
+import usePaginatedUserProjects from "./usePaginatedUserProjects";
 
 export {
   getUser,
@@ -26,6 +27,7 @@ export {
   putUser,
   putUserQuery,
   getUsersQuery,
+  usePaginatedUserProjects,
 };
 
 export type * from "./types";

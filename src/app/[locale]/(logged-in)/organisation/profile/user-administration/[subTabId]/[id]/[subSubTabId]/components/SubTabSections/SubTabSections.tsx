@@ -22,7 +22,6 @@ export default function SubTabsSections({
   userId,
   subTabId,
 }: SubTabsSectionsProps) {
-  console.log('Org profile subsub SubTabsSections', userId, subTabId);
   const routes = useStore(store => store.getApplication().routes);
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
@@ -61,17 +60,6 @@ export default function SubTabsSections({
         }
       ),
     },
-    // {
-    //   label: t("custodianOrgInfo"),
-    //   value: UserSubTabs.CUSTODIAN_ORG_INFO,
-    //   href: injectParamsIntoPath(
-    //     routes.profileOrganisationUsersCus.path,
-    //     {
-    //       projectId,
-    //       userId,
-    //     }
-    //   ),
-    // },
     {
       label: t("history"),
       value: UserSubTabs.HISTORY,
@@ -80,6 +68,6 @@ export default function SubTabsSections({
       }),
     },
   ];
-  console.log('subTabId', subTabId, 'tabs', subTabs);
+
   return <SubTabs current={subTabId} tabs={subTabs} sx={{ mb: 4 }} />;
 }

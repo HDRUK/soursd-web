@@ -3,7 +3,7 @@ import Table from "@/components/Table";
 import { useStore } from "@/data/store";
 import { ProjectsFilters } from "@/modules";
 import { ProjectFilterKeys } from "@/modules/ProjectsFilters";
-import { usePaginatedCustodiansUserProjects } from "@/services/custodians";
+import { usePaginatedUserProjects } from "@/services/users";
 import { ResearcherProject } from "@/types/application";
 import {
   renderOrganisationsNameCell,
@@ -17,9 +17,8 @@ const NAMESPACE_TRANSLATIONS = "Projects";
 export default function UserProjects() {
   const t = useTranslations(NAMESPACE_TRANSLATIONS);
 
-  const { custodianId, userId, routes } = useStore(state => ({
+  const { userId, routes } = useStore(state => ({
     userId: state.getCurrentUser().id,
-    custodianId: state.getCustodian()?.id,
     routes: state.getApplication().routes,
   }));
 
@@ -37,7 +36,7 @@ export default function UserProjects() {
     isLoading,
     isError,
     isSuccess,
-  } = usePaginatedCustodiansUserProjects(custodianId, userId, {
+  } = usePaginatedUserProjects(userId, {
     shouldUpdateQuerystring: true,
   });
 

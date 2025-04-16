@@ -1,18 +1,20 @@
+import { useState } from "react";
+import { useTranslations } from "next-intl";
+import { ColumnDef, CellContext } from "@tanstack/react-table";
+import { Box, Button, Checkbox, FormControlLabel } from "@mui/material";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import CancelIcon from "@mui/icons-material/Cancel";
+import { SearchDirections } from "@/consts/search";
 import { useStore } from "@/data/store";
 import usePaginatedQuery from "@/hooks/usePaginatedQuery";
 import { PageBody, PageSection } from "@/modules";
 import SearchBar from "@/modules/SearchBar";
 import { getOrganisationRegistriesQuery } from "@/services/organisations";
-import { formatShortDate } from "@/utils/date";
-import { Box, Button, Checkbox, FormControlLabel } from "@mui/material";
-import { useTranslations } from "next-intl";
-import { useState } from "react";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import CancelIcon from "@mui/icons-material/Cancel";
-import { SearchDirections } from "@/consts/search";
+import { ProjectEntities } from "@/services/projects/getEntityProjects";
 import { User } from "@/types/application";
+import { formatShortDate } from "@/utils/date";
+import { renderUserNameCell } from "@/utils/cells";
 import Table from "@/components/Table";
-import { ColumnDef, CellContext } from "@tanstack/react-table";
 import { ActionMenu } from "@/components/ActionMenu";
 import DecoupleUser from "@/components/DecoupleDelegate";
 import UserModal from "@/components/UserModal";
@@ -20,10 +22,15 @@ import UserBulkInvite from "@/components/UserBulkInvite";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
 
-export default function Users() {
+interface ProjectsProps {
+  variant: ProjectEntities;
+}
+
+export default function Users({ variant }: ProjectsProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const [open, setOpen] = useState(false);
   const organisation = useStore(state => state.config.organisation);
+  const routes = useStore(state => state.getApplication().routes);
   const [showPendingInvites, setShowPendingInvites] = useState(0);
 
   const {
@@ -78,8 +85,31 @@ export default function Users() {
     {
       accessorKey: "name",
       header: "Employee / Student name",
-      cell: info =>
-        `${info.row.original.first_name} ${info.row.original.last_name}`,
+      cell: info => {
+        let route = null;
+
+        switch (variant) {
+          case "organisation":
+            route = routes.profileOrganisationUsersIdentity;
+            break;
+          case "custodian":
+            route = routes.profileCustodianUsersIdentity;
+            break;
+          case "user":
+            route = null;
+            break;
+          default:
+            route = null;
+        }
+        return renderUserNameCell(
+          {
+            first_name: info.row.original.first_name,
+            last_name: info.row.original.last_name,
+            id: info.row.original.id,
+          } as User,
+          route?.path
+        );
+      },
     },
     {
       accessorKey: "email",

@@ -1,6 +1,5 @@
 "use client";
 
-import { useStore } from "@/data/store";
 import { notFound } from "next/navigation";
 import UserAffiliations from "../../../../../../components/UserAffiliations";
 import UserCustodianOrgInfo from "../../../../../../components/UserCustodianOrgInfo";
@@ -15,13 +14,9 @@ interface TabsContentsProps {
 }
 
 export default function SubTabsContents({ subTabId }: TabsContentsProps) {
-  console.log('Org profile subsub SubTabsContents', subTabId);
-  // const custodian = useStore(state => state.getCustodian());
-
   const availableSubTabs = Object.values(UserSubTabs) || [];
 
   if (!availableSubTabs.includes(subTabId)) {
-    console.log('not found here');
     notFound();
   }
 
@@ -49,6 +44,6 @@ export default function SubTabsContents({ subTabId }: TabsContentsProps) {
     default:
       content = null;
   }
-  console.log('content', content?.key);
+
   return content;
 }

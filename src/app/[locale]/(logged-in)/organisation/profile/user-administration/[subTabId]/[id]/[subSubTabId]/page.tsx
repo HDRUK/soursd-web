@@ -11,12 +11,7 @@ interface PageProps {
 function OrganisationUserPage({
   params: { id: userId, subSubTabId },
 }: PageProps) {
-  return (
-    <OrganisationUser
-      userId={userId}
-      subSubTabId={subSubTabId}
-    />
-  );
+  return <OrganisationUser userId={userId} subSubTabId={subSubTabId} />;
 }
 
 export default OrganisationUserPage;

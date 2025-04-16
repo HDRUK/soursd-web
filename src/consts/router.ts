@@ -245,23 +245,23 @@ const ROUTES: Routes = {
     permissions: [UserGroup.ORGANISATIONS],
   },
   profileOrganisationUsersHistory: {
-    path: "/organisation/profile/user-administration/employees-and-students/{id}/history",
+    path: "/organisation/profile/user-administration/employees-and-students/{userId}/history",
     permissions: [UserGroup.ORGANISATIONS],
   },
   profileOrganisationUsersIdentity: {
-    path: "/organisation/profile/user-administration/employees-and-students/{id}/identity",
+    path: "/organisation/profile/user-administration/employees-and-students/{userId}/identity",
     permissions: [UserGroup.ORGANISATIONS],
   },
   profileOrganisationUsersTrainingAccreditations: {
-    path: "/organisation/profile/user-administration/employees-and-students/{id}/training_accreditations",
+    path: "/organisation/profile/user-administration/employees-and-students/{userId}/training_accreditations",
     permissions: [UserGroup.ORGANISATIONS],
   },
   profileOrganisationUsersProjects: {
-    path: "/organisation/profile/user-administration/employees-and-students/{id}/projects",
+    path: "/organisation/profile/user-administration/employees-and-students/{userId}/projects",
     permissions: [UserGroup.ORGANISATIONS],
   },
   profileOrganisationUsersAffiliations: {
-    path: "/organisation/profile/user-administration/employees-and-students/{id}/affiliations",
+    path: "/organisation/profile/user-administration/employees-and-students/{userId}/affiliations",
     permissions: [UserGroup.ORGANISATIONS],
   },
   profileOrganisationProjects: {

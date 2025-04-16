@@ -26,6 +26,8 @@ type UsersResponse = User[];
 
 type UserProjectsResponse = ResearcherProject[];
 
+type GetUserProjectsResponse = ResearcherProject[];
+
 interface PostUserPayload {
   first_name: string;
   last_name: string;
@@ -69,4 +71,5 @@ export type {
   PutUserPayload,
   UserProjectsResponse,
   UserHistory,
+  GetUserProjectsResponse,
 };

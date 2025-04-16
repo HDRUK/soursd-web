@@ -9,10 +9,9 @@ import {
 import { UserGroup } from "@/consts/user";
 import { useStore } from "@/data/store";
 import { useQuery } from "@tanstack/react-query";
-import { getCustodianProjectUserValidationLogsQuery } from "@/services/validation_logs";
+// import { getCustodianProjectUserValidationLogsQuery } from "@/services/validation_logs";
 import { getUserQuery } from "@/services/users";
-import ActionValidationPanel from "@/modules/ActionValidationPanel";
-import getProjectQuery from "@/services/projects/getProjectQuery";
+// import ActionValidationPanel from "@/modules/ActionValidationPanel";
 import { useTranslations } from "next-intl";
 import { notFound } from "next/navigation";
 import { useEffect } from "react";
@@ -25,38 +24,28 @@ interface OrganisationUserProps {
   subSubTabId: UserSubTabs;
 }
 
-const NAMESPACE_TRANSLATION_ORGANISATION_USER = "OrganisationUser";
+const NAMESPACE_TRANSLATION_ORGANISATION_PROFILE = "ProfileOrganisation";
 
-function OrganisationUser({
-  userId,
-  subSubTabId,
-}: OrganisationUserProps) {
-  const t = useTranslations(NAMESPACE_TRANSLATION_ORGANISATION_USER);
-  const custodian = useStore(state => state.getCustodian());
-  // const { data: project, isFetched: isFetchedProject } = useQuery(
-  //   getProjectQuery(projectId)
-  // );
+function OrganisationUser({ userId, subSubTabId }: OrganisationUserProps) {
+  const t = useTranslations(NAMESPACE_TRANSLATION_ORGANISATION_PROFILE);
 
   const { data: userData, isFetched } = useQuery(getUserQuery(+userId));
 
-  // if (userData?.data.user_group !== UserGroup.USERS && isFetched) {
-  //   notFound();
-  // }
+  if (userData?.data.user_group !== UserGroup.USERS && isFetched) {
+    notFound();
+  }
 
-  const { registry_id: registryId } = userData?.data || {};
+  // Commented out for now as the correct query is not available yet
+  // const { registry_id: registryId } = userData?.data || {};
 
-  const { data: validationLogs, ...queryState } = useQuery({
-    ...getCustodianProjectUserValidationLogsQuery(
-      custodian?.id as number,
-      // projectId,
-      registryId as number
-    ),
-    enabled: !!registryId,
-  });
-
-  // if (!project?.data && isFetchedProject) {
-  //   notFound();
-  // }
+  // const { data: validationLogs, ...queryState } = useQuery({
+  //   ...getCustodianProjectUserValidationLogsQuery(
+  //     custodian?.id as number,
+  //     // projectId,
+  //     registryId as number
+  //   ),
+  //   enabled: !!registryId,
+  // });
 
   const [user, setUser] = useStore(state => [
     state.getCurrentUser(),
@@ -69,21 +58,17 @@ function OrganisationUser({
 
   return (
     user && (
-      <PageBodyContainer
-        heading={t("title")}>
+      <PageBodyContainer heading={t("user")}>
         <PageColumns>
           <PageColumnBody lg={8}>
-            <SubTabsSections
-              userId={userId}
-              subTabId={subSubTabId}
-            />
+            <SubTabsSections userId={userId} subTabId={subSubTabId} />
             <SubTabsContents subTabId={subSubTabId} />
           </PageColumnBody>
           <PageColumnDetails lg={4}>
-            <ActionValidationPanel
+            {/* <ActionValidationPanel
               queryState={queryState}
               logs={validationLogs?.data || []}
-            />
+            /> */}
           </PageColumnDetails>
         </PageColumns>
       </PageBodyContainer>
