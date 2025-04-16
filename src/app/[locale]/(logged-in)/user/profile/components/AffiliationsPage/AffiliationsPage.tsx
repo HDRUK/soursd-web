@@ -233,9 +233,9 @@ export default function AffiliationsPage() {
             onClose={() => setInviteOpen(false)}
           />
           <ProfileNavigationFooter
-            previousHref={routes.profileResearcherIdentity.path}
-            nextHref={routes.profileResearcherExperience.path}
-            nextStepText={tProfile("experience")}
+            previousHref={routes.profileResearcherExperience.path}
+            nextHref={routes.profileResearcherTraining.path}
+            nextStepText={tProfile("training")}
             isLoading={postAffiliationQueryState.isPending}
           />
         </PageBody>

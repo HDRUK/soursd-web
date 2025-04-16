@@ -14,17 +14,18 @@ export default function FormSection({
       component="fieldset"
       {...restProps}
       sx={{ p: 0, border: "none", ...restProps.sx }}>
-      {heading && (
+      {(heading || description) && (
         <Box sx={{ mb: 2 }}>
           <SectionHeading
             type="form"
             heading={heading}
             description={description}
             variant="h4"
+            sx={{ pl: 0 }}
           />
         </Box>
       )}
-      <Box sx={{ px: 2 }}>{children}</Box>
+      <Box>{children}</Box>
     </Box>
   );
 }
