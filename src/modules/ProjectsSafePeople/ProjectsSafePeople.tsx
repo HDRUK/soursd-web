@@ -94,7 +94,7 @@ export default function ProjectsSafePeople({
     <T extends ProjectUser>(info: CellContext<T, unknown>) => {
       return (
         <Box sx={{ display: "flex" }}>
-          {renderUserNameCell(info.getValue() as User, userPath)}
+          {renderUserNameCell(info.getValue() as User, userPath, {projectId: project.id})}
           {!!info.row.original.primary_contact && <PrimaryContactIcon />}
         </Box>
       );
