@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import UserAffiliations from "../../../../../../components/UserAffiliations";
 import UserCustodianOrgInfo from "../../../../../../components/UserCustodianOrgInfo";
 import UserHistory from "../../../../../../components/UserHistory";
-import UserIdentity from "../../../../../../components/UserIdentity";
+import UserIdentity from "@/modules/UserIdentity";
 import UserProjects from "../../../../../../components/UserProjects";
 import UserTrainingAccreditations from "../../../../../../components/UserTrainingAccreditations";
 import { UserSubTabs } from "../../../../../../consts/tabs";
