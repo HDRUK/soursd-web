@@ -1426,6 +1426,30 @@
     "descriptionPart2": "For more information on how Veriff will process your data see their <theirLink>privacy policy</theirLink>.",
     "checkboxLabel": "I consent to the above terms and conditions"
   },
+  "Rules": {
+    "passed": "Pass",
+    "failed": "Fail",
+    "IdentityVerification": {
+      "registry": {
+        "identity": {
+          "idvt_result": "IDVT: This user has completed identity verification."
+        }
+      }
+    },
+    "UKDataProtection": {
+      "location": "User location: A User should be located in a country which adheres to equivalent data protection law."
+    },
+    "AffiliatedOrganisation": {
+      "registry": {
+        "affiliations": "Organisation: A user must be affiliated with an organisation."
+      }
+    },
+    "DataSecurityCompliance": {
+      "ceCertifiedPlus": "Data security compliance: Has Cyber Essentials Plus accreditation.",
+      "dsptkCertified": "Data security compliance: Is DSPTK certified.",
+      "certifications": "Data security compliance: An Organisation must have Cyber Essentials and ISO27001 accreditations."
+    }
+  },
   "ActionsPanelValidationCheck": {
     "organisation_aligned_sde_network": "Is the Organisation aligned with the SDE network?",
     "confident_cost_for_projects_will_be_met": "Are we confident costs would be met and profits realised for future projects?"
