@@ -244,9 +244,25 @@ const ROUTES: Routes = {
     path: "/organisation/profile/user-administration/employees-and-students",
     permissions: [UserGroup.ORGANISATIONS],
   },
+  profileOrganisationUsersHistory: {
+    path: "/organisation/profile/user-administration/employees-and-students/{id}/history",
+    permissions: [UserGroup.ORGANISATIONS],
+  },
   profileOrganisationUsersIdentity: {
     path: "/organisation/profile/user-administration/employees-and-students/{id}/identity",
-    permissions: [UserGroup.CUSTODIANS],
+    permissions: [UserGroup.ORGANISATIONS],
+  },
+  profileOrganisationUsersTrainingAccreditations: {
+    path: "/organisation/profile/user-administration/employees-and-students/{id}/training_accreditations",
+    permissions: [UserGroup.ORGANISATIONS],
+  },
+  profileOrganisationUsersProjects: {
+    path: "/organisation/profile/user-administration/employees-and-students/{id}/projects",
+    permissions: [UserGroup.ORGANISATIONS],
+  },
+  profileOrganisationUsersAffiliations: {
+    path: "/organisation/profile/user-administration/employees-and-students/{id}/affiliations",
+    permissions: [UserGroup.ORGANISATIONS],
   },
   profileOrganisationProjects: {
     path: "/organisation/profile/projects",
