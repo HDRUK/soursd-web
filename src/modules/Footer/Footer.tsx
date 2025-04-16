@@ -27,10 +27,6 @@ export default function Footer(props: FooterProps) {
       label: t("contactUsLink"),
     },
     {
-      href: "/terms-of-service",
-      label: t("termsOfServiceLink"),
-    },
-    {
       href: "/privacy-policy",
       label: t("privacyLink"),
     },
