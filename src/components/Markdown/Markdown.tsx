@@ -1,5 +1,6 @@
 import React from "react";
 import ReactMarkdown, { Components } from "react-markdown";
+import remarkGfm from "remark-gfm";
 import FormControlDescription from "../FormControlDescription";
 
 interface MarkdownProps {
@@ -75,7 +76,10 @@ export default function Markdown({
   }
 
   return (
-    <ReactMarkdown components={selectedComponents} {...props}>
+    <ReactMarkdown
+      remarkPlugins={[remarkGfm]}
+      components={selectedComponents}
+      {...props}>
       {children}
     </ReactMarkdown>
   );
