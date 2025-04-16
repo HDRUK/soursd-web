@@ -1,20 +1,20 @@
 import Markdown from "@/components/Markdown";
-import understandingContent from "./terms_and_conditions/business/1_understanding.md";
-import researcherUsageContent from "./terms_and_conditions/business/2_usage_researcher.md";
-import organisationUsageContent from "./terms_and_conditions/business/3_usage_org.md";
-import custodianUsageContent from "./terms_and_conditions/business/4_usage_custodian.md";
-import accountContent from "./terms_and_conditions/business/5_account.md";
-import acceptableUseContent from "./terms_and_conditions/business/6_acceptable_use.md";
-import intellectualPropertyContent from "./terms_and_conditions/business/7_intellectual_property.md";
-import inputDataContent from "./terms_and_conditions/business/8_input_data.md";
-import liabilityContent from "./terms_and_conditions/business/9_liability.md";
-import disclaimersContent from "./terms_and_conditions/business/10_disclaimers.md";
-import suspensionContent from "./terms_and_conditions/business/11_suspension.md";
-import changesContent from "./terms_and_conditions/business/12_changes.md";
-import thirdPartyContent from "./terms_and_conditions/business/13_third_party.md";
-import otherContent from "./terms_and_conditions/business/14_other.md";
-import lawContent from "./terms_and_conditions/business/15_law.md";
-import contactContent from "./terms_and_conditions/business/16_contact.md";
+import understandingContent from "./terms/business/1_understanding.md";
+import researcherUsageContent from "./terms/business/2_usage_researcher.md";
+import organisationUsageContent from "./terms/business/3_usage_org.md";
+import custodianUsageContent from "./terms/business/4_usage_custodian.md";
+import accountContent from "./terms/business/5_account.md";
+import acceptableUseContent from "./terms/business/6_acceptable_use.md";
+import intellectualPropertyContent from "./terms/business/7_intellectual_property.md";
+import inputDataContent from "./terms/business/8_input_data.md";
+import liabilityContent from "./terms/business/9_liability.md";
+import disclaimersContent from "./terms/business/10_disclaimers.md";
+import suspensionContent from "./terms/business/11_suspension.md";
+import changesContent from "./terms/business/12_changes.md";
+import thirdPartyContent from "./terms/business/13_third_party.md";
+import otherContent from "./terms/business/14_other.md";
+import lawContent from "./terms/business/15_law.md";
+import contactContent from "./terms/business/16_contact.md";
 
 export const mockedTermsAndConditions = {
   understanding: {

@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Typography, Button, Box, List } from "@mui/material";
+import Markdown from "../Markdown";
 import FormModal, { FormModalProps } from "@/components/FormModal";
 import { useTranslations } from "next-intl";
 import { termsItems } from "@/consts/termsAndConditions";
 import { mockedTermsAndConditions } from "@/mocks/data/terms_and_conditions";
+import descriptionContent from "@/mocks/data/terms_and_conditions/description.md";
 import {
   StyledListItemButton,
   StyledRadio,
@@ -84,7 +86,7 @@ export default function TermsAndConditionsModal({
               variant="body1"
               paragraph
               sx={{ borderBottom: 1, borderColor: "divider", pb: 1 }}>
-              {t("description")}
+              <Markdown>{descriptionContent}</Markdown>
             </Typography>
             {renderContent()}
           </>
