@@ -1,68 +1,151 @@
 import Markdown from "@/components/Markdown";
-import understandingContent from "./terms/business/1_understanding.md";
-import researcherUsageContent from "./terms/business/2_usage_researcher.md";
-import organisationUsageContent from "./terms/business/3_usage_org.md";
-import custodianUsageContent from "./terms/business/4_usage_custodian.md";
-import accountContent from "./terms/business/5_account.md";
-import acceptableUseContent from "./terms/business/6_acceptable_use.md";
-import intellectualPropertyContent from "./terms/business/7_intellectual_property.md";
-import inputDataContent from "./terms/business/8_input_data.md";
-import liabilityContent from "./terms/business/9_liability.md";
-import disclaimersContent from "./terms/business/10_disclaimers.md";
-import suspensionContent from "./terms/business/11_suspension.md";
-import changesContent from "./terms/business/12_changes.md";
-import thirdPartyContent from "./terms/business/13_third_party.md";
-import otherContent from "./terms/business/14_other.md";
-import lawContent from "./terms/business/15_law.md";
-import contactContent from "./terms/business/16_contact.md";
 
-export const mockedTermsAndConditions = {
+// Business terms
+import understandingBusinessContent from "./business/1_understanding.md";
+import researcherUsageBusinessContent from "./business/2_usage_researcher.md";
+import organisationUsageBusinessContent from "./business/3_usage_org.md";
+import custodianUsageBusinessContent from "./business/4_usage_custodian.md";
+import accountBusinessContent from "./business/5_account.md";
+import acceptableUseBusinessContent from "./business/6_acceptable_use.md";
+import intellectualPropertyBusinessContent from "./business/7_intellectual_property.md";
+import inputDataBusinessContent from "./business/8_input_data.md";
+import liabilityBusinessContent from "./business/9_liability.md";
+import disclaimersBusinessContent from "./business/10_disclaimers.md";
+import suspensionBusinessContent from "./business/11_suspension.md";
+import changesBusinessContent from "./business/12_changes.md";
+import thirdPartyBusinessContent from "./business/13_third_party.md";
+import otherBusinessContent from "./business/14_other.md";
+import lawBusinessContent from "./business/15_law.md";
+import contactBusinessContent from "./business/16_contact.md";
+
+// Consumer terms
+import understandingConsumerContent from "./consumer/1_understanding.md";
+import researcherUsageConsumerContent from "./consumer/2_usage_researcher.md";
+import accountConsumerContent from "./consumer/3_account.md";
+import acceptableUseConsumerContent from "./consumer/4_acceptable_use.md";
+import intellectualPropertyConsumerContent from "./consumer/5_intellectural_property.md";
+import inputDataConsumerContent from "./consumer/6_input_data.md";
+import liabilityConsumerContent from "./consumer/7_liability.md";
+import useConsumerContent from "./consumer/8_use.md";
+import suspensionConsumerContent from "./consumer/9_suspension.md";
+import changesConsumerContent from "./consumer/10_changes.md";
+import thirdPartyConsumerContent from "./consumer/11_third_party.md";
+import otherConsumerContent from "./consumer/12_other.md";
+import lawConsumerContent from "./consumer/13_law.md";
+import contactConsumerContent from "./consumer/14_contact.md";
+
+export const mockedTermsAndConditionsBusiness = {
   understanding: {
-    content: <Markdown variant="legal">{understandingContent}</Markdown>,
+    content: (
+      <Markdown variant="legal">{understandingBusinessContent}</Markdown>
+    ),
   },
   researcherUsage: {
-    content: <Markdown variant="legal">{researcherUsageContent}</Markdown>,
+    content: (
+      <Markdown variant="legal">{researcherUsageBusinessContent}</Markdown>
+    ),
   },
   organisationUsage: {
-    content: <Markdown variant="legal">{organisationUsageContent}</Markdown>,
+    content: (
+      <Markdown variant="legal">{organisationUsageBusinessContent}</Markdown>
+    ),
   },
   custodianUsage: {
-    content: <Markdown variant="legal">{custodianUsageContent}</Markdown>,
+    content: (
+      <Markdown variant="legal">{custodianUsageBusinessContent}</Markdown>
+    ),
   },
   account: {
-    content: <Markdown variant="legal">{accountContent}</Markdown>,
+    content: <Markdown variant="legal">{accountBusinessContent}</Markdown>,
   },
   acceptableUse: {
-    content: <Markdown variant="legal">{acceptableUseContent}</Markdown>,
+    content: (
+      <Markdown variant="legal">{acceptableUseBusinessContent}</Markdown>
+    ),
   },
   intellectualProperty: {
-    content: <Markdown variant="legal">{intellectualPropertyContent}</Markdown>,
+    content: (
+      <Markdown variant="legal">{intellectualPropertyBusinessContent}</Markdown>
+    ),
   },
   inputData: {
-    content: <Markdown variant="legal">{inputDataContent}</Markdown>,
+    content: <Markdown variant="legal">{inputDataBusinessContent}</Markdown>,
   },
   liability: {
-    content: <Markdown variant="legal">{liabilityContent}</Markdown>,
+    content: <Markdown variant="legal">{liabilityBusinessContent}</Markdown>,
   },
   disclaimers: {
-    content: <Markdown variant="legal">{disclaimersContent}</Markdown>,
+    content: <Markdown variant="legal">{disclaimersBusinessContent}</Markdown>,
   },
   suspension: {
-    content: <Markdown variant="legal">{suspensionContent}</Markdown>,
+    content: <Markdown variant="legal">{suspensionBusinessContent}</Markdown>,
   },
   changes: {
-    content: <Markdown variant="legal">{changesContent}</Markdown>,
+    content: <Markdown variant="legal">{changesBusinessContent}</Markdown>,
   },
   thirdParty: {
-    content: <Markdown variant="legal">{thirdPartyContent}</Markdown>,
+    content: <Markdown variant="legal">{thirdPartyBusinessContent}</Markdown>,
   },
   other: {
-    content: <Markdown variant="legal">{otherContent}</Markdown>,
+    content: <Markdown variant="legal">{otherBusinessContent}</Markdown>,
   },
   law: {
-    content: <Markdown variant="legal">{lawContent}</Markdown>,
+    content: <Markdown variant="legal">{lawBusinessContent}</Markdown>,
   },
   contact: {
-    content: <Markdown variant="legal">{contactContent}</Markdown>,
+    content: <Markdown variant="legal">{contactBusinessContent}</Markdown>,
+  },
+};
+
+export const mockedTermsAndConditionsConsumer = {
+  understanding: {
+    content: (
+      <Markdown variant="legal">{understandingConsumerContent}</Markdown>
+    ),
+  },
+  researcherUsage: {
+    content: (
+      <Markdown variant="legal">{researcherUsageConsumerContent}</Markdown>
+    ),
+  },
+  account: {
+    content: <Markdown variant="legal">{accountConsumerContent}</Markdown>,
+  },
+  acceptableUse: {
+    content: (
+      <Markdown variant="legal">{acceptableUseConsumerContent}</Markdown>
+    ),
+  },
+  intellectualProperty: {
+    content: (
+      <Markdown variant="legal">{intellectualPropertyConsumerContent}</Markdown>
+    ),
+  },
+  inputData: {
+    content: <Markdown variant="legal">{inputDataConsumerContent}</Markdown>,
+  },
+  liability: {
+    content: <Markdown variant="legal">{liabilityConsumerContent}</Markdown>,
+  },
+  use: {
+    content: <Markdown variant="legal">{useConsumerContent}</Markdown>,
+  },
+  suspension: {
+    content: <Markdown variant="legal">{suspensionConsumerContent}</Markdown>,
+  },
+  changes: {
+    content: <Markdown variant="legal">{changesConsumerContent}</Markdown>,
+  },
+  thirdParty: {
+    content: <Markdown variant="legal">{thirdPartyConsumerContent}</Markdown>,
+  },
+  other: {
+    content: <Markdown variant="legal">{otherConsumerContent}</Markdown>,
+  },
+  law: {
+    content: <Markdown variant="legal">{lawConsumerContent}</Markdown>,
+  },
+  contact: {
+    content: <Markdown variant="legal">{contactConsumerContent}</Markdown>,
   },
 };

@@ -3,8 +3,10 @@ import { Typography, Button, Box, List } from "@mui/material";
 import Markdown from "../Markdown";
 import FormModal, { FormModalProps } from "@/components/FormModal";
 import { useTranslations } from "next-intl";
-import { termsItems } from "@/consts/termsAndConditions";
-import { mockedTermsAndConditions } from "@/mocks/data/terms_and_conditions";
+import {
+  mockedTermsAndConditionsBusiness,
+  mockedTermsAndConditionsConsumer,
+} from "@/mocks/data/terms_and_conditions/index";
 import descriptionContent from "@/mocks/data/terms_and_conditions/description.md";
 import {
   StyledListItemButton,
@@ -14,14 +16,18 @@ import {
 
 export interface TermsAndConditionsModalProps
   extends Omit<FormModalProps, "children"> {
+  accountType: string | null;
   onAccept: () => void;
   onDecline: () => void;
 }
 
 const NAMESPACE_TRANSLATION_TERMS = "TermsAndConditions";
-type TermsKey = keyof typeof mockedTermsAndConditions;
+type TermsKey =
+  | keyof typeof mockedTermsAndConditionsConsumer
+  | keyof typeof mockedTermsAndConditionsBusiness;
 
 export default function TermsAndConditionsModal({
+  accountType,
   onAccept,
   onDecline,
   ...restProps
@@ -33,13 +39,33 @@ export default function TermsAndConditionsModal({
     setSelectedItem(item);
   };
 
+  const mockedTermsAndConditions =
+    accountType === "user"
+      ? mockedTermsAndConditionsConsumer
+      : mockedTermsAndConditionsBusiness;
+
   const renderContent = () => {
-    const item = mockedTermsAndConditions[selectedItem];
+    const item =
+      mockedTermsAndConditions[
+        selectedItem as keyof typeof mockedTermsAndConditions
+      ];
+
     if (!item || !item.content) {
       return null;
     }
     return item.content;
   };
+
+  const termsItems: TermsKey[] = Object.keys(
+    mockedTermsAndConditions
+  ) as TermsKey[];
+
+  if (accountType === null)
+    return (
+      <FormModal {...restProps} variant="content">
+        {t("pleaseSelect")}
+      </FormModal>
+    );
 
   return (
     <FormModal {...restProps} variant="content">
@@ -59,7 +85,7 @@ export default function TermsAndConditionsModal({
             overflowY: "scroll",
           }}>
           <List component="nav" sx={{ py: 0 }}>
-            {(termsItems as TermsKey[]).map(item => (
+            {termsItems.map((item, index) => (
               <StyledListItemButton
                 key={item}
                 selected={selectedItem === item}
@@ -69,7 +95,7 @@ export default function TermsAndConditionsModal({
                   onChange={() => handleListItemClick(item)}
                 />
                 <StyledListItemText
-                  primary={t(item)}
+                  primary={`${index + 1}. ${t(item)}`}
                   isSelected={selectedItem === item}
                 />
               </StyledListItemButton>

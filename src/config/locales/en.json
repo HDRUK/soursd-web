@@ -1281,6 +1281,7 @@
   },
   "TermsAndConditions": {
     "title": "Terms and Conditions",
+    "pleaseSelect": "Please first select an account type to view the Terms and Conditions",
     "description": "Please note that you will not be allowed access to Cohort Discovery unless you have agreed to our Terms and Conditions.",
     "understanding": "Understanding the Terms",
     "researcherUsage": "Researcher Usage",
@@ -1291,6 +1292,7 @@
     "intellectualProperty": "Intellectual Property",
     "inputData": "Input Data",
     "liability": "Liability",
+    "use": "Usage",
     "disclaimers": "Disclaimers",
     "suspension": "Suspension of Access",
     "changes": "Changes to Terms",
