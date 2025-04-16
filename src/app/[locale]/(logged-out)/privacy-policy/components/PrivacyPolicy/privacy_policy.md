@@ -4,8 +4,6 @@
 
 This privacy policy provides information on how Health Data Research UK (“HDR UK”, “we”, “us” or “our”) collects and processes your personal data. It also describes your data protection rights, including a right to object to some of the processing which HDR UK carries out. More information about your rights, and how to exercise them, is set out in the “What rights do I have?” section.
 
-This privacy policy provides information on how Health Data Research UK (“HDR UK” “we”, “us” or “our”) collects and processes your personal data through the Safe User and Organisation Registry for Sensitive Data (SOURSD) web-based tool. It also describes your data protection rights, including a right to opt out to some of the processing which HDR UK carries out.
-
 SOURSD is a cloud-based web-tool which we provide to validate information provided by Users (either on behalf of themselves as a Researcher or on behalf of a Research Organisation) who wish to access sensitive data held on Trusted Research Environments (“TREs”) and NHS Research Secure Data Environments (“SDEs”), which are managed by Data Custodians.
 
 For information on how SOURSD operates please see [video and tech spec].
