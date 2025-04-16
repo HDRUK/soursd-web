@@ -1,8 +1,8 @@
 import Table, { TableProps } from "@/components/Table";
-import { useStore } from "@/data/store";
 import { CustodianUser } from "@/types/application";
 import { renderUserNameCell } from "@/utils/cells";
 import { formatDisplayLongDate } from "@/utils/date";
+import { toCamelCase } from "@/utils/string";
 import { ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
 
@@ -19,7 +19,6 @@ export default function AdministrativeContacts({
   additionalColumns = [],
   ...restProps
 }: AdministrativeContactsProps) {
-  const routes = useStore(state => state.getApplication().routes);
   const t = useTranslations(tKey);
 
   const defaultColumns: ColumnDef<CustodianUser>[] = [
@@ -36,7 +35,7 @@ export default function AdministrativeContacts({
       accessorKey: "user_permissions",
       header: t("role"),
       cell: info => {
-        return info.getValue()?.[0]?.permission?.name;
+        return t(toCamelCase(info.getValue()?.[0]?.permission?.name));
       },
     },
     {

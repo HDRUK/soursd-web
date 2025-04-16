@@ -94,6 +94,10 @@
     "deleteAffiliation": "Delete Affiliation"
   },
   "CustodianProfile": {
+    "deleteUser": "Delete user",
+    "deleteUserButton": "Delete user",
+    "cancelButton": "Cancel",
+    "noDeleteUser": "You cannot delete your own user",
     "organisationsPeople": "People",
     "organisationsNameAddress": "Name & Address",
     "organisationsDigitalIdentifiers": "Digital Identifiers",
@@ -1425,6 +1429,8 @@
     "name": "Name",
     "email": "Email",
     "role": "Role",
-    "createdAt": "Created at"
+    "createdAt": "Created at",
+    "CUSTODIAN_APPROVER": "Approver",
+    "CUSTODIAN_ADMIN": "Admin"
   }
 }

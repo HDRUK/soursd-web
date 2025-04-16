@@ -9,8 +9,8 @@ import { CustodianUser } from "@/types/application";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
-import { Box, Button, IconButton } from "@mui/material";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Box, Button, IconButton, Tooltip } from "@mui/material";
+import { useMutation } from "@tanstack/react-query";
 import { CellContext } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
@@ -20,12 +20,14 @@ const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 
 export default function Contacts() {
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
-  const queryClient = useQueryClient();
   const [modalProps, setModalProps] = useState<{
     open: boolean;
     user?: Partial<CustodianUser>;
   } | null>();
-  const custodian = useStore(state => state.getCustodian());
+  const { custodian, user } = useStore(state => ({
+    custodian: state.getCustodian(),
+    user: state.getUser(),
+  }));
 
   const {
     data,
@@ -43,16 +45,20 @@ export default function Contacts() {
     shouldUpdateQuerystring: true,
   });
 
-  const { mutateAsync: deleteCustodianUserAsync, reset } = useMutation({
-    mutationKey: ["deleteCustodianUser"],
-    mutationFn: (id: number) => {
-      return deleteCustodianUser(id, {
-        error: { message: "deleteUserError" },
-      });
-    },
-  });
+  const { mutateAsync: deleteCustodianUserAsync, ...mutateState } = useMutation(
+    {
+      mutationKey: ["deleteCustodianUser"],
+      mutationFn: (id: number) => {
+        return deleteCustodianUser(id, {
+          error: { message: "deleteUserError" },
+        });
+      },
+    }
+  );
 
   const renderActionMenuCell = (info: CellContext<CustodianUser, unknown>) => {
+    const isDisabled = user?.custodian_user_id === info.row.original.id;
+
     return (
       <Box
         sx={{
@@ -72,12 +78,17 @@ export default function Contacts() {
           }>
           <CreateOutlinedIcon sx={{ color: "default.main" }} />
         </IconButton>
-        <IconButton
-          size="small"
-          aria-label="Delete user"
-          onClick={() => showModal(info.row.original.id)}>
-          <DeleteForeverOutlinedIcon sx={{ color: "error.main" }} />
-        </IconButton>
+        <Tooltip title={isDisabled ? t("noDeleteUser") : ""}>
+          <span>
+            <IconButton
+              size="small"
+              aria-label={t("deleteUser")}
+              disabled={isDisabled}
+              onClick={() => showModal(info.row.original.id)}>
+              <DeleteForeverOutlinedIcon sx={{ color: "error.main" }} />
+            </IconButton>
+          </span>
+        </Tooltip>
       </Box>
     );
   };
@@ -88,24 +99,23 @@ export default function Contacts() {
     isSuccess,
   };
 
-  const showModal = useQueryConfirmAlerts(
-    { ...queryState, reset },
-    {
-      confirmAlertProps: {
-        text: t("deleteWarningDescription"),
-        title: t("deleteWarningTitle"),
-        confirmButtonText: "Delete user",
-        cancelButtonText: "Cancel",
-        // preConfirm: async id => {
-        //   await deleteCustodianUserAsync(id as number);
-        //   refetch();
-        // },
+  const showModal = useQueryConfirmAlerts(mutateState, {
+    confirmAlertProps: {
+      text: t("deleteWarningDescription"),
+      title: t("deleteWarningTitle"),
+      confirmButtonText: t("deleteUserButton"),
+      cancelButtonText: t("cancelButton"),
+      preConfirm: async id => {
+        await deleteCustodianUserAsync(id as number);
+        refetch();
       },
-    }
-  );
+    },
+  });
 
   const handleCloseModal = useCallback(() => {
     setModalProps(null);
+
+    refetch();
   }, []);
 
   return (
