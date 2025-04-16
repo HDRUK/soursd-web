@@ -5,7 +5,6 @@ import { getRequest } from "../requests";
 import { handleJsonResponse } from "../requestHelpers";
 import { UserProjectsResponse } from "./types";
 
-
 export default async (
   id: string | number,
   searchParams: SearchParams,
