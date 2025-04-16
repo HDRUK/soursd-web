@@ -35,7 +35,7 @@ const customJestConfig = {
     "^@/utils/(.*)$": "<rootDir>/src/utils/$1",
     "^@/context/(.*)$": "<rootDir>/src/context/$1",
     "^@/i18n/(.*)$": "<rootDir>/src/i18n/$1",
-    "\\.md$": "<rootDir>/mocks/fileMock.js",
+    "\\.md$": "<rootDir>/mocks/markdownFileMock.js",
   },
   transformIgnorePatterns: ["<rootDir>/node_modules/(?!pretty-bytes)/)"],
   testPathIgnorePatterns: [
