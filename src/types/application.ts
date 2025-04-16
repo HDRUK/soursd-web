@@ -6,6 +6,7 @@ import {
   UserGroup,
   UserProfileCompletionCategories,
 } from "@/consts/user";
+import { RuleState } from "./rules";
 
 type ModelState<T> = T & {
   model_state: {
@@ -187,6 +188,7 @@ type User = ModelState<{
   status: Status;
   declaration_signed?: boolean;
   uksa_registered?: boolean;
+  rules?: RuleState;
 }>;
 interface AddressFields {
   postcode?: string;

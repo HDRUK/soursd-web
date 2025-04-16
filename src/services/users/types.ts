@@ -50,6 +50,11 @@ type PostUserResponse = any;
 
 type PostUserInviteResponse = User;
 
+interface UserHistory {
+  message: string;
+  created_at: string;
+}
+
 export type {
   PostUserPayload,
   PostUserResponse,
@@ -63,4 +68,5 @@ export type {
   PutUserResponse,
   PutUserPayload,
   UserProjectsResponse,
+  UserHistory,
 };
