@@ -25,7 +25,7 @@ export default function TermsAndConditionsModal({
   ...restProps
 }: TermsAndConditionsModalProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_TERMS);
-  const [selectedItem, setSelectedItem] = useState<TermsKey>("acceptingTerms");
+  const [selectedItem, setSelectedItem] = useState<TermsKey>("understanding");
 
   const handleListItemClick = (item: TermsKey) => {
     setSelectedItem(item);
