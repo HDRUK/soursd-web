@@ -240,6 +240,7 @@
     "safePeople": "Safe People",
     "safeData": "Safe Data",
     "safeSettings": "Safe Settings",
+    "uniqueIdentifierCaption": "This ‘key’ represents you as an Organisation within SOURSD. This is unique to you! Your Organisation will have a unique SOURSD identifier associated with your account once your Organisation profile has been completed. This persistent unique identifier will be used to notify Data Custodians of any key changes to your Organisation profile that may impact data access decisions.",
     "manageResearchers": "Manage Researchers",
     "manageResearchersTitle": "Administration | Users",
     "manageResearchersDescription": "As a representative of an Organisation, you have been given permission to associate your affiliated users (an employee or student of your Organisation) with your Organisation’s SOURSD account. Users are individuals involved in active research projects using sensitive data. \n \nIndividual users will create a SOURSD account for themselves and will affiliate themselves with an Organisation. \n\nAutomatically invite users to create a SOURSD account. Users will have one SOURSD account that will stay with them throughout their career. Select the user(s) you would like to invite to create a SOURSD account and select ‘Invite User to create a SOURSD account’ in the Actions below. ",
