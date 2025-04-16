@@ -47,7 +47,7 @@ export default function UserProjects() {
       cell: info =>
         renderProjectNameCell(
           info,
-          routes.profileCustodianProjectsSafeProject.path
+          routes.profileOrganisationProjectsSafeProject.path
         ),
     },
     {
