@@ -1,6 +1,5 @@
 import Markdown from "@/components/Markdown";
 
-// Business terms
 import understandingBusinessContent from "./business/1_understanding.md";
 import researcherUsageBusinessContent from "./business/2_usage_researcher.md";
 import organisationUsageBusinessContent from "./business/3_usage_org.md";
@@ -18,7 +17,6 @@ import otherBusinessContent from "./business/14_other.md";
 import lawBusinessContent from "./business/15_law.md";
 import contactBusinessContent from "./business/16_contact.md";
 
-// Consumer terms
 import understandingConsumerContent from "./consumer/1_understanding.md";
 import researcherUsageConsumerContent from "./consumer/2_usage_researcher.md";
 import accountConsumerContent from "./consumer/3_account.md";
