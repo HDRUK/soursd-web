@@ -284,7 +284,7 @@ export default function Training({
         queryState={trainingDataQueryState}
         total={trainingsData?.data.length}
         noResultsMessage={t("noResultsMessage")}
-        sx={{ maxWidth: "75%" }}
+        sx={{ maxWidth: "100%" }}
       />
       {variant === EntityType.USER && (
         <>

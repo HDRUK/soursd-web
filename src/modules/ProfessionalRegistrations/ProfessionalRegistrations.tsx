@@ -248,7 +248,7 @@ export default function ProfessionalRegistrations({
           contactLink: ContactLink,
         })}
         total={professionalRegistrations.length}
-        sx={{ maxWidth: "50%" }}
+        sx={{ maxWidth: "100%" }}
       />
       {variant === EntityType.USER && (
         <Button

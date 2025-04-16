@@ -25,7 +25,7 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useMemo } from "react";
 import ReactDOMServer from "react-dom/server";
-import ProfessionalsRegistration from "@/modules/ProfessionalRegistrations";
+import ProfessionalRegistrations from "@/modules/ProfessionalRegistrations";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
@@ -33,8 +33,9 @@ export default function Trainings() {
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const router = useRouter();
 
-  const { user } = useStore(state => ({
+  const { user, routes } = useStore(state => ({
     user: state.config.user,
+    routes: state.getApplication().routes,
   }));
 
   const setHistories = useStore(state => state.setHistories);
@@ -99,7 +100,7 @@ export default function Trainings() {
                 />
               </PageSection>
               <PageSection>
-                <ProfessionalsRegistration
+                <ProfessionalRegistrations
                   variant={EntityType.USER}
                   user={userData?.data}
                   setHistories={setHistories}
@@ -141,6 +142,7 @@ export default function Trainings() {
               </Box>
               <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3 }}>
                 <ProfileNavigationFooter
+                  previousHref={routes.profileResearcherAffiliations.path}
                   nextStepText={tProfile("completeYourProfile")}
                   isLastStep
                   isLoading={patchUserQueryState.isPending}

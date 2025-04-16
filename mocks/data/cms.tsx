@@ -118,35 +118,36 @@ export const mockedResearcherAffiliationsGuidance = {
     "This section relates to you as an employee or student of an Organisation",
   info: (
     <>
-      <Typography mb={3}>
-        Through the SOURSD platform, individuals are affiliated with
-        Organisations (employers or higher education institute).
+      <Typography mb={2}>
+        Through SOURSD individuals are affiliated with Organisations (employers 
+        or higher education institutions or honorary contracts).
       </Typography>
-      <Typography mb={3}>
-        If your particular employer or higher education institute isn’t known by
-        SOURSD, then you can ask them to register for an account!
+      <Typography mb={2}>
+        If your Organisation is not on SOURSD you can ask them to register for an
+        account. Affiliated Organisations that haven’t already confirmed your
+        status will be sent an invite to do so, when you click save. When you
+        click save affiliated organisation will be invited to confirm your
+        status, if they have not already do so.
       </Typography>
       <Typography mb={5}>
-        Affiliated Organisations that haven’t already confirmed your status will
-        be sent an invite to do so, when you click save. You can also do this
-        manually. Being affiliated by an Organisation is especially important
-        for Organisations who are the host for a project you plan to work on.
+        Being affiliated by an Organisation is especially important for
+        Organisations who are the host for a project you plan to work on.
       </Typography>
       <Typography variant="h4" mb={2}>
         The statuses
       </Typography>
       <ChipStatus status={Status.AFFILIATED} color="success" sx={{ mb: 2 }} />
-      <Typography mb={3}>
+      <Typography mb={3} sx={{ fontSize: "14px" }}>
         You have been affiliated by this Organisation
       </Typography>
       <ChipStatus status={Status.PENDING} sx={{ mb: 2 }} />
-      <Typography mb={3}>
+      <Typography mb={3} sx={{ fontSize: "14px" }}>
         The Organisation has been invited to confirm your affiliation, but has
         not yet done so. Once they have an account they will be automatically
         asked to confirm your affiliation
       </Typography>
       <ChipStatus status={Status.INVITE_SENT} sx={{ mb: 2 }} />
-      <Typography>
+      <Typography sx={{ fontSize: "14px" }}>
         The Organisation has been invited to set up an account, but has not yet
         done so
       </Typography>

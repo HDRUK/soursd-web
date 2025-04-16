@@ -30,7 +30,6 @@ export const StyledInfo = styled("div")<{
 
 
         width: ${infoWidth || "auto"};
-        padding-bottom: 90px;
       `}
 
     * {
