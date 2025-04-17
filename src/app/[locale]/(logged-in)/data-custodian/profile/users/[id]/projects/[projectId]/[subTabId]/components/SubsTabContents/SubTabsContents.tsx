@@ -2,10 +2,10 @@
 
 import { useStore } from "@/data/store";
 import { notFound } from "next/navigation";
-import UserIdentity from "@/modules/UserIdentity";
 import UserAffiliations from "@/modules/UserAffiliations";
+import UserHistory from "@/modules/UserHistory";
+import UserIdentity from "@/modules/UserIdentity";
 import UserCustodianOrgInfo from "../../../../../../../components/UserCustodianOrgInfo";
-import UserHistory from "../../../../../../../components/UserHistory";
 import UserProjects from "../../../../../../../components/UserProjects";
 import UserTrainingAccreditations from "../../../../../../../components/UserTrainingAccreditations";
 import { UserSubTabs } from "../../../../../../../consts/tabs";

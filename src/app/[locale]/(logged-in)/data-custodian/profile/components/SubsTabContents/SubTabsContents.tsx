@@ -5,6 +5,7 @@ import ProjectsSafePeople from "@/modules/ProjectsSafePeople";
 import { EntityType } from "@/types/api";
 import { notFound } from "next/navigation";
 import UserAffiliations from "@/modules/UserAffiliations";
+import UserHistory from "@/modules/UserHistory";
 import UserIdentity from "@/modules/UserIdentity";
 import {
   ConfigurationSubTabs,
@@ -26,7 +27,6 @@ import ProjectsSafeProject from "../ProjectsSafeProject";
 import ProjectsSafeSettings from "../ProjectsSafeSettings";
 import Rules from "../Rules";
 import UserCustodianOrgInfo from "../UserCustodianOrgInfo";
-import UserHistory from "../UserHistory";
 import UserProjects from "../UserProjects";
 import UserTrainingAccreditations from "../UserTrainingAccreditations";
 import ValidationChecks from "../ValidationChecks";
