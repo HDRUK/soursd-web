@@ -94,6 +94,10 @@
     "deleteAffiliation": "Delete Affiliation"
   },
   "CustodianProfile": {
+    "deleteUser": "Delete user",
+    "deleteUserButton": "Delete user",
+    "cancelButton": "Cancel",
+    "noDeleteUser": "You cannot delete your own user",
     "organisationsPeople": "People",
     "organisationsNameAddress": "Name & Address",
     "organisationsDigitalIdentifiers": "Digital Identifiers",
@@ -1453,6 +1457,14 @@
   "ActionsPanelValidationCheck": {
     "organisation_aligned_sde_network": "Is the Organisation aligned with the SDE network?",
     "confident_cost_for_projects_will_be_met": "Are we confident costs would be met and profits realised for future projects?"
+  },
+  "AdministrativeContacts": {
+    "name": "Name",
+    "email": "Email",
+    "role": "Role",
+    "createdAt": "Created at",
+    "CUSTODIAN_APPROVER": "Approver",
+    "CUSTODIAN_ADMIN": "Admin"
   },
   "UserHistory": {
     "affiliations_complete": "Affiliations completed",
