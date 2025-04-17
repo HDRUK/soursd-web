@@ -1,5 +1,6 @@
 import ChipStatus, { Status } from "@/components/ChipStatus";
 import ContactLink from "@/components/ContactLink";
+import Ol from "@/components/Ol";
 import { Box, Typography } from "@mui/material";
 
 export const mockedBannerContent = () => (
@@ -7,6 +8,31 @@ export const mockedBannerContent = () => (
     BETA Preview: Please contact HDR UK if you'd like to help drive
     functionality during our initial preview phase: <ContactLink /> - Please be
     aware that some pages/features aren't fully available.
+  </>
+);
+
+export const mockedPendingAffiliations = (
+  <>
+    <Typography mb={2}>
+      SOURSD stores records of Users who are research-active working on
+      sensitive data. As an Organisation you can confirm that a SOURSD User
+      profile corresponds to an employee or student at your Organisation. This
+      is called affiliating a User.
+    </Typography>
+    <Typography mb={2}>
+      When affiliating a User you are confirming that:
+    </Typography>
+    <Ol>
+      <li>The SOURSD User profile matches that of your employee / student</li>
+      <li>
+        The employee / student is an active researcher / data analyst needing to
+        work on sensitive data.
+      </li>
+      <li>
+        The Organisational email address of the User corresponds to the correct
+        email address in your Organisation.
+      </li>
+    </Ol>
   </>
 );
 
@@ -119,12 +145,12 @@ export const mockedResearcherAffiliationsGuidance = {
   info: (
     <>
       <Typography mb={2}>
-        Through SOURSD individuals are affiliated with Organisations (employers 
+        Through SOURSD individuals are affiliated with Organisations (employers
         or higher education institutions or honorary contracts).
       </Typography>
       <Typography mb={2}>
-        If your Organisation is not on SOURSD you can ask them to register for an
-        account. Affiliated Organisations that haven’t already confirmed your
+        If your Organisation is not on SOURSD you can ask them to register for
+        an account. Affiliated Organisations that haven’t already confirmed your
         status will be sent an invite to do so, when you click save. When you
         click save affiliated organisation will be invited to confirm your
         status, if they have not already do so.

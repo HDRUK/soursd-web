@@ -11,7 +11,6 @@ function ProjectsPage() {
       params={{
         tabId: PageTabs.PROJECTS,
       }}
-      pageTitle={tProfile("projectsTitle")}
     />
   );
 }

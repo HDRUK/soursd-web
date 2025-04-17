@@ -18,6 +18,7 @@ import { useEffect } from "react";
 import { UserSubTabs } from "../../../../../../consts/tabs";
 import SubTabsSections from "../SubTabSections";
 import SubTabsContents from "../SubsTabContents";
+import ConfirmAffiliation from "@/modules/ConfirmAffiliation";
 
 interface OrganisationUserProps {
   userId: number;
@@ -65,10 +66,7 @@ function OrganisationUser({ userId, subSubTabId }: OrganisationUserProps) {
             <SubTabsContents subTabId={subSubTabId} />
           </PageColumnBody>
           <PageColumnDetails lg={4}>
-            {/* <ActionValidationPanel
-              queryState={queryState}
-              logs={validationLogs?.data || []}
-            /> */}
+            <ConfirmAffiliation />
           </PageColumnDetails>
         </PageColumns>
       </PageBodyContainer>

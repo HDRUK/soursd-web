@@ -1472,5 +1472,10 @@
     "affiliations_complete": "Affiliations completed",
     "profile_created": "Profile Created",
     "daysSince": "{days} days ago"
+  },
+  "ConfirmAffiliation": {
+    "heading": "Pending affiliations",
+    "confirmAffiliationButton": "Confirm affiliation",
+    "declineAffiliationButton": "Decline affiliation"
   }
 }
