@@ -1,5 +1,8 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+import { notFound } from "next/navigation";
+import { useEffect } from "react";
 import {
   PageColumnDetails,
   PageBodyContainer,
@@ -13,9 +16,7 @@ import { getCustodianProjectUserValidationLogsQuery } from "@/services/validatio
 import { getUserQuery } from "@/services/users";
 import ActionValidationPanel from "@/modules/ActionValidationPanel";
 import getProjectQuery from "@/services/projects/getProjectQuery";
-import { useTranslations } from "next-intl";
-import { notFound } from "next/navigation";
-import { useEffect } from "react";
+import UserDetails from "@/components/UserDetails";
 import { UserSubTabs } from "../../../../../../../consts/tabs";
 import SubTabsSections from "../SubTabSections";
 import SubTabsContents from "../SubsTabContents";
@@ -75,6 +76,7 @@ function CustodianProjectUser({
         heading={t("title", { projectTitle: project?.data.title })}>
         <PageColumns>
           <PageColumnBody lg={8}>
+            <UserDetails user={user} />
             <SubTabsSections
               userId={userId}
               projectId={projectId}
