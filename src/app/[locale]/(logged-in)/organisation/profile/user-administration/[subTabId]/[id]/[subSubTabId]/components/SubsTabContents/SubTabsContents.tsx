@@ -4,9 +4,10 @@ import { notFound } from "next/navigation";
 import UserAffiliations from "@/modules/UserAffiliations";
 import UserHistory from "@/modules/UserHistory";
 import UserIdentity from "@/modules/UserIdentity";
+import UserTrainingAccreditations from "@/modules/UserTrainingAccreditations";
+import { EntityType } from "@/types/api";
 import UserCustodianOrgInfo from "../../../../../../components/UserCustodianOrgInfo";
 import UserProjects from "../../../../../../components/UserProjects";
-import UserTrainingAccreditations from "../../../../../../components/UserTrainingAccreditations";
 import { UserSubTabs } from "../../../../../../consts/tabs";
 
 interface TabsContentsProps {
@@ -30,7 +31,9 @@ export default function SubTabsContents({ subTabId }: TabsContentsProps) {
       content = <UserIdentity />;
       break;
     case UserSubTabs.TRAINING_ACCREDITATIONS:
-      content = <UserTrainingAccreditations />;
+      content = (
+        <UserTrainingAccreditations variant={EntityType.ORGANISATION} />
+      );
       break;
     case UserSubTabs.PROJECTS:
       content = <UserProjects />;
