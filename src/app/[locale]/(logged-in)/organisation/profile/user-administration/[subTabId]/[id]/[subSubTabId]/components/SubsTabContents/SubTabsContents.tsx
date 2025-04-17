@@ -6,7 +6,6 @@ import UserHistory from "@/modules/UserHistory";
 import UserIdentity from "@/modules/UserIdentity";
 import UserTrainingAccreditations from "@/modules/UserTrainingAccreditations";
 import { EntityType } from "@/types/api";
-import UserCustodianOrgInfo from "../../../../../../components/UserCustodianOrgInfo";
 import UserProjects from "../../../../../../components/UserProjects";
 import { UserSubTabs } from "../../../../../../consts/tabs";
 
@@ -37,9 +36,6 @@ export default function SubTabsContents({ subTabId }: TabsContentsProps) {
       break;
     case UserSubTabs.PROJECTS:
       content = <UserProjects />;
-      break;
-    case UserSubTabs.CUSTODIAN_ORG_INFO:
-      content = <UserCustodianOrgInfo />;
       break;
     case UserSubTabs.AFFILIATIONS:
       content = <UserAffiliations />;
