@@ -149,7 +149,8 @@
     "ts-node": "^10.9.2",
     "typescript": "^5",
     "typescript-eslint": "^7.4.0",
-    "url": "^0.11.3"
+    "url": "^0.11.3",
+    "webpack-cli": "^6.0.1"
   },
   "resolutions": {
     "@typescript-eslint/typescript-estree": "^8.16.0"
