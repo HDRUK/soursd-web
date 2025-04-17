@@ -7,7 +7,13 @@ import { useStore } from "@/data/store";
 
 const NAMESPACE_TRANSLATION = "Application";
 
-export default function UserTrainingAccreditations() {
+interface UserTrainingAccreditationsProps {
+  variant: EntityType;
+}
+
+export default function UserTrainingAccreditations({
+  variant,
+}: UserTrainingAccreditationsProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION);
 
   const { user, setHistories, getHistories, professionalRegistrations } =
@@ -23,11 +29,11 @@ export default function UserTrainingAccreditations() {
     <PageBodyContainer>
       <Typography variant="h2">{t("trainingAndAccreditations")}</Typography>
       <PageSection sx={{ my: 3 }}>
-        <Training variant={EntityType.CUSTODIAN} user={user} />
+        <Training variant={variant} user={user} />
       </PageSection>
       <PageSection sx={{ mb: 3 }}>
         <ProfessionalRegistrations
-          variant={EntityType.CUSTODIAN}
+          variant={variant}
           user={user}
           setHistories={setHistories}
           getHistories={getHistories}
