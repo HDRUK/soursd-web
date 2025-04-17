@@ -77,6 +77,7 @@ export default function AccountConfirm() {
   const renderBoldText = useCallback(
     (chunks: React.ReactNode) => (
       <Button
+        disabled={!!selected}
         onClick={handleOpenModal}
         variant="text"
         sx={{
@@ -174,6 +175,7 @@ export default function AccountConfirm() {
       </Box>
 
       <TermsAndConditionsModal
+        accountType={selected}
         open={isModalOpen}
         onClose={handleCloseModal}
         onAccept={handleAcceptTerms}
