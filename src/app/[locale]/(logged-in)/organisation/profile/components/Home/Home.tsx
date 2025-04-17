@@ -19,8 +19,8 @@ const Home = () => {
 
   return (
     <PageBodyContainer heading={tProfile("homeTitle")}>
-      <PageColumns lg={8}>
-        <PageColumnBody>
+      <PageColumns>
+        <PageColumnBody lg={8}>
           <PageBody>
             <PageSection>
               <ActionLogs

@@ -68,7 +68,7 @@ export default function SubTabsContents({
       content = <Delegates />;
       break;
     case UserAdminPageSubTabs.EMPLOYEE_STUDENT_ADMINISTRATION:
-      content = <Users />;
+      content = <Users variant="organisation" />;
       break;
     case ProjectsSubTabs.SAFE_PEOPLE:
       content = <ProjectsSafePeople variant={EntityType.ORGANISATION} />;
