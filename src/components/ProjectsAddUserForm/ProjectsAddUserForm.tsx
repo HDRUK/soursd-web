@@ -140,7 +140,7 @@ export default function ProjectsAddUser({
           columns={columns}
           data={projectUsers}
           queryState={getUserQueryState}
-          noResultsMessage={t("professionalRegistrationsNoResultsMessage")}
+          noResultsMessage={t("noResultsMessage")}
           errorMessage={t.rich("professionalRegsitrationsErrorMessage", {
             contactLink: ContactLink,
           })}

@@ -198,7 +198,8 @@
     "dataUseDescriptionPlaceholder": "Data description",
     "addNewMemberButton": "Add a new member",
     "requestAddNewMemberButton": "Request member is affiliated",
-    "userListDescription": "This table enables Validation Team members to track and manage application workflow from initial enquiry to project closure.  Clicking on a User will show you more information and next steps."
+    "userListDescription": "This table enables Validation Team members to track and manage application workflow from initial enquiry to project closure.  Clicking on a User will show you more information and next steps.",
+    "noResultsMessage": "No members found"
   },
   "OrganisationStats": {
     "affiliatedUsers": "Affiliated Users",
@@ -1469,6 +1470,7 @@
     "CUSTODIAN_ADMIN": "Admin"
   },
   "UserHistory": {
+    "profile_completed": "Profile completed",
     "affiliations_complete": "Affiliations completed",
     "profile_created": "Profile Created",
     "daysSince": "{days} days ago"
