@@ -10,6 +10,7 @@ import { UserGroup } from "@/consts/user";
 import { useStore } from "@/data/store";
 import { useQuery } from "@tanstack/react-query";
 // import { getCustodianProjectUserValidationLogsQuery } from "@/services/validation_logs";
+import UserDetails from "@/components/UserDetails";
 import { getUserQuery } from "@/services/users";
 // import ActionValidationPanel from "@/modules/ActionValidationPanel";
 import { useTranslations } from "next-intl";
@@ -62,6 +63,7 @@ function OrganisationUser({ userId, subSubTabId }: OrganisationUserProps) {
       <PageBodyContainer heading={t("user")}>
         <PageColumns>
           <PageColumnBody lg={8}>
+            <UserDetails user={user} />
             <SubTabsSections userId={userId} subTabId={subSubTabId} />
             <SubTabsContents subTabId={subSubTabId} />
           </PageColumnBody>
