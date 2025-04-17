@@ -2,7 +2,7 @@
 
 import { notFound } from "next/navigation";
 import UserIdentity from "@/modules/UserIdentity";
-import UserAffiliations from "../../../../../../components/UserAffiliations";
+import UserAffiliations from "@/modules/UserAffiliations";
 import UserCustodianOrgInfo from "../../../../../../components/UserCustodianOrgInfo";
 import UserHistory from "../../../../../../components/UserHistory";
 import UserProjects from "../../../../../../components/UserProjects";
