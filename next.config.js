@@ -94,6 +94,11 @@ const nextConfig = withNextIntl({
       };
     }
 
+    config.module.rules.push({
+      test: /\.md$/,
+      use: 'raw-loader',
+    });
+
     return config;
   },
   typescript: {
