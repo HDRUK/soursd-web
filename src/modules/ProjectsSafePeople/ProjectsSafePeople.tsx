@@ -66,7 +66,7 @@ export default function ProjectsSafePeople({
     deleteQueryState,
     {
       confirmAlertProps: {
-        willClose: async payload => {
+        preConfirm: async payload => {
           await deleteUserAsync(payload as DeleteProjectUserPayload);
           refetch();
         },

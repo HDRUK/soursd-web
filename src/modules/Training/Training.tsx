@@ -156,7 +156,7 @@ export default function Training({
     deleteProfessionalRegistrationQueryState,
     {
       confirmAlertProps: {
-        willClose: async (id: number) => {
+        preConfirm: async (id: number) => {
           await mutateDeleteAsync(id);
           refetchTrainings();
         },
