@@ -1,7 +1,7 @@
 import { Box, BoxProps, Link, Typography } from "@mui/material";
 import { getInitials } from "@/utils/application";
-import MaskLabel from "../MaskLabel";
 import { User } from "@/types/application";
+import MaskLabel from "../MaskLabel";
 
 export interface UserDetailsProps extends BoxProps {
   user: User;
@@ -27,9 +27,7 @@ export default function UserDetails({ user, ...restProps }: UserDetailsProps) {
         <Typography variant="h2" sx={{ flexWrap: 1 }}>
           {user?.first_name} {user?.last_name}
         </Typography>
-        <Link
-          href={`mailto:${user?.email}`}
-          sx={{ wordBreak: "break-all" }}>
+        <Link href={`mailto:${user?.email}`} sx={{ wordBreak: "break-all" }}>
           {user?.email}
         </Link>
       </Box>
