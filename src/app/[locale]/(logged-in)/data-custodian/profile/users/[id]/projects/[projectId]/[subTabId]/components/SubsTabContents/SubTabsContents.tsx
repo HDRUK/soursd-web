@@ -6,10 +6,10 @@ import UserAffiliations from "@/modules/UserAffiliations";
 import UserHistory from "@/modules/UserHistory";
 import UserIdentity from "@/modules/UserIdentity";
 import UserTrainingAccreditations from "@/modules/UserTrainingAccreditations";
+import { EntityType } from "@/types/api";
 import UserCustodianOrgInfo from "../../../../../../../components/UserCustodianOrgInfo";
 import UserProjects from "../../../../../../../components/UserProjects";
 import { UserSubTabs } from "../../../../../../../consts/tabs";
-import { EntityType } from "@/types/api";
 
 interface TabsContentsProps {
   subTabId: UserSubTabs;
