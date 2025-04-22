@@ -35,6 +35,8 @@ import ContactLink from "@/components/ContactLink";
 import { Status } from "@/components/ChipStatus";
 import AffiliationsForm from "../AffiliationsForm";
 import AskOrganisationModal from "../AskOrganisation";
+import useQueryConfirmAlerts from "@/hooks/useQueryConfirmAlerts";
+import { renderErrorToString } from "@/utils/translations";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
@@ -66,7 +68,7 @@ export default function AffiliationsPage() {
   const { mutateAsync: patchAffiliation, ...patchAffiliationQueryState } =
     useMutation(patchAffiliationQuery());
 
-  const { mutateAsync: deleteAffiliation } = useMutation(
+  const { mutateAsync: deleteAffiliation, ...restDeleteState } = useMutation(
     deleteAffiliationQuery()
   );
 
@@ -88,15 +90,27 @@ export default function AffiliationsPage() {
           : tProfile("postAffiliationSuccess"),
       },
       errorAlertProps: {
-        text: ReactDOMServer.renderToString(
-          tProfile.rich("affiliationActionError", {
-            contactLink: ContactLink,
-          })
-        ),
+        text: renderErrorToString(tProfile, "affiliationActionError"),
         confirmButtonText: tProfile("affiliationActionErrorButton"),
       },
     }
   );
+
+  const showConfirmDelete = useQueryConfirmAlerts(restDeleteState, {
+    confirmAlertProps: {
+      text: tProfile("affiliationsDeleteConfirmMessage"),
+      preConfirm: async (id: number) => {
+        await deleteAffiliation(id);
+        refetch();
+      },
+    },
+    successAlertProps: {
+      text: tProfile("affiliationsDeleteSuccessMessage"),
+    },
+    errorAlertProps: {
+      text: renderErrorToString(tProfile, "affiliationsDeleteErrorMessage"),
+    },
+  });
 
   const renderActionMenuCell = useCallback(
     (info: CellContext<ResearcherAffiliation, unknown>) => {
@@ -105,9 +119,7 @@ export default function AffiliationsPage() {
       return (
         <ActionMenu>
           <ActionMenuItem
-            onClick={() =>
-              deleteAffiliation(affiliation.id).then(() => refetch())
-            }
+            onClick={() => showConfirmDelete(affiliation.id)}
             sx={{ color: "error.main" }}
             icon={<DeleteOutlineOutlinedIcon sx={{ color: "error.main" }} />}>
             {tProfile("delete")}
