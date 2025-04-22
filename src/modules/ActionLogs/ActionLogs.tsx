@@ -72,6 +72,8 @@ export default function ActionLogs({ variant, panelProps }: ActionLogProps) {
 
   const isDelegate = user?.is_delegate;
 
+  if (isDelegate) return <> </>;
+
   return (
     <>
       <PageBody>

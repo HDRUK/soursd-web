@@ -59,13 +59,13 @@ export default function ConfirmAffiliation() {
         <Box sx={{ display: "flex", gap: 1 }}>
           <Button
             disabled={mutateState.isPending || queryState.isLoading}
-            onClick={() => handleClick("approved")}
+            onClick={() => handleClick(AffiliationStatus.Approved)}
             startIcon={<VerifyIcon sx={{ color: "#fff" }} />}>
             {t("confirmAffiliationButton")}
           </Button>
           <Button
             disabled={mutateState.isPending || queryState.isLoading}
-            onClick={() => handleClick("rejected")}
+            onClick={() => handleClick(AffiliationStatus.Rejected)}
             startIcon={<RejectIcon />}
             variant="outlined"
             sx={{ background: "#fff" }}>
