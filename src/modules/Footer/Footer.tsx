@@ -9,6 +9,7 @@ import Image from "next/image";
 import { HTMLAttributes } from "react";
 import PageCenter from "../PageCenter";
 import { StyledFooter, StyledBox } from "./Footer.styles";
+import { CONTACT_MAIL_ADDRESS } from "@/config/contacts";
 
 type FooterProps = HTMLAttributes<HTMLDivElement>;
 
@@ -23,7 +24,7 @@ export default function Footer(props: FooterProps) {
       label: t("aboutUsLink"),
     },
     {
-      href: "#",
+      href: `mailto:${CONTACT_MAIL_ADDRESS}`,
       label: t("contactUsLink"),
     },
     {

@@ -23,6 +23,7 @@ import { LinkProps } from "next/link";
 import { MouseEvent, useEffect, useState } from "react";
 import PageCenter from "../PageCenter";
 import { StyledContainer, StyledHeader } from "./NavBar.styles";
+import { CONTACT_MAIL_ADDRESS } from "@/config/contacts";
 
 const NAMESPACE_TRANSLATIONS_NAVBAR = "NavBar";
 
@@ -83,7 +84,7 @@ export default function NavBar() {
       color: ButtonColor.Inherit,
       variant: ButtonVariant.Text,
       text: t("contactButton"),
-      href: "#",
+      href: `mailto:${CONTACT_MAIL_ADDRESS}`,
     },
     {
       color: ButtonColor.Inherit,
