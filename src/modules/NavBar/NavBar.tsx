@@ -157,11 +157,7 @@ export default function NavBar() {
             </Box>
             <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
               {right_buttons.map(({ text, icon, ...restProps }) => (
-                <Button
-                  component={Link}
-                  {...restProps}
-                  key={text}
-                  role="button">
+                <Button component={Link} {...restProps} key={text}>
                   {text || icon}
                 </Button>
               ))}
