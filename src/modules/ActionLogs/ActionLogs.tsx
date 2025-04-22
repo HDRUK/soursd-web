@@ -25,8 +25,9 @@ interface ActionLogProps {
 
 export default function ActionLogs({ variant, panelProps }: ActionLogProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
-  const { routes } = useStore(state => ({
+  const { routes, user } = useStore(state => ({
     routes: state.getApplication().routes,
+    user: state.getUser(),
   }));
 
   const { id: entityId } = useStore(state => {
@@ -68,6 +69,8 @@ export default function ActionLogs({ variant, panelProps }: ActionLogProps) {
       ),
     };
   });
+
+  const isDelegate = user?.is_delegate;
 
   return (
     <>

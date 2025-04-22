@@ -3,26 +3,76 @@ import { RejectIcon, VerifyIcon } from "@/consts/icons";
 import { mockedPendingAffiliations } from "@/mocks/data/cms";
 import { Box, Button } from "@mui/material";
 import { useTranslations } from "next-intl";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import {
+  putRegistryHasAffiliationQuery,
+  getAffiliationsQuery,
+} from "@/services/affiliations";
+import { AffiliationStatus } from "@/services/affiliations/types";
+import { useStore } from "@/data/store";
+import { useMemo } from "react";
+import useQueryAlerts from "@/hooks/useQueryAlerts";
 
 const NAMESPACE_TRANSLATION = "ConfirmAffiliation";
 
 export default function ConfirmAffiliation() {
   const t = useTranslations(NAMESPACE_TRANSLATION);
+  const { currentUser, organisation } = useStore(state => ({
+    currentUser: state.getCurrentUser(),
+    organisation: state.getOrganisation(),
+  }));
+
+  const {
+    data: affiliationsData,
+    refetch,
+    ...queryState
+  } = useQuery(getAffiliationsQuery(currentUser?.registry_id as number));
+
+  const currentPendingAffiliation = useMemo(
+    () =>
+      affiliationsData?.data.data.find(
+        affiliation =>
+          affiliation.organisation_id === organisation?.id &&
+          affiliation.registryAffiliationState === "affiliation_pending"
+      ),
+    [affiliationsData, organisation]
+  );
+  const { mutateAsync: updateAffiliationStatus, ...mutateState } = useMutation(
+    putRegistryHasAffiliationQuery()
+  );
+
+  useQueryAlerts(mutateState);
+
+  const handleClick = async (status: AffiliationStatus) => {
+    await updateAffiliationStatus({
+      registryId: currentUser.registry_id,
+      affiliationId: currentPendingAffiliation?.id as number,
+      status,
+    });
+    refetch();
+  };
 
   return (
-    <ActionsPanel heading={t("heading")}>
-      {mockedPendingAffiliations}
-      <Box sx={{ display: "flex", gap: 1 }}>
-        <Button startIcon={<VerifyIcon sx={{ color: "#fff" }} />}>
-          {t("confirmAffiliationButton")}
-        </Button>
-        <Button
-          startIcon={<RejectIcon />}
-          variant="outlined"
-          sx={{ background: "#fff" }}>
-          {t("declineAffiliationButton")}
-        </Button>
-      </Box>
-    </ActionsPanel>
+    currentPendingAffiliation && (
+      <ActionsPanel heading={t("heading")}>
+        {mockedPendingAffiliations}
+        <Box sx={{ display: "flex", gap: 1 }}>
+          <Button
+            disabled={mutateState.isPending || queryState.isLoading}
+            onClick={() => handleClick("approved")}
+            startIcon={<VerifyIcon sx={{ color: "#fff" }} />}>
+            {t("confirmAffiliationButton")}
+          </Button>
+          <Button
+            disabled={mutateState.isPending || queryState.isLoading}
+            onClick={() => handleClick("rejected")}
+            startIcon={<RejectIcon />}
+            variant="outlined"
+            sx={{ background: "#fff" }}>
+            {t("declineAffiliationButton")}
+          </Button>
+        </Box>
+      </ActionsPanel>
+    )
   );
 }
