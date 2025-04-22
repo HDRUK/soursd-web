@@ -9,7 +9,9 @@ export default async (
   searchParams: Record<string, string | number | undefined>,
   options: ResponseOptions
 ): Promise<ResponseJson<Paged<GetAffiliationsResponse>>> => {
-  const response = await getRequest(`/affiliations/${registryId}${getSearchQuerystring(searchParams)}`);
+  const response = await getRequest(
+    `/affiliations/${registryId}${getSearchQuerystring(searchParams)}`
+  );
 
   return handleJsonResponse(response, options);
 };

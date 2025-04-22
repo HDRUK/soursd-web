@@ -2,7 +2,6 @@ import { useTranslations } from "next-intl";
 import { Typography } from "@mui/material";
 import { useStore } from "@/data/store";
 import { Affiliations, PageBodyContainer, PageSection } from "@/modules";
-import { useQuery } from "@tanstack/react-query";
 import { usePaginatedAffiliations } from "@/services/affiliations";
 
 const NAMESPACE_TRANSLATION = "Application";
