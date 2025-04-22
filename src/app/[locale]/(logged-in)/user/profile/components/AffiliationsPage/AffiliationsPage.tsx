@@ -21,9 +21,9 @@ import useQueryAlerts from "@/hooks/useQueryAlerts";
 import { ResearcherAffiliation } from "@/types/application";
 import {
   deleteAffiliationQuery,
-  getAffiliationsQuery,
   patchAffiliationQuery,
   postAffiliationQuery,
+  usePaginatedAffiliations,
 } from "@/services/affiliations";
 import { PostAffiliationPayload } from "@/services/affiliations/types";
 import FormModal from "@/components/FormModal";
@@ -56,9 +56,12 @@ export default function AffiliationsPage() {
 
   const {
     data: affiliationsData,
+    last_page,
+    total,
+    setPage,
     refetch,
     ...getAffiliationsQueryState
-  } = useQuery(getAffiliationsQuery(user?.registry_id));
+  } = usePaginatedAffiliations(user?.registry_id);
 
   const { mutateAsync: postAffiliations, ...postAffiliationQueryState } =
     useMutation(postAffiliationQuery(user));
@@ -173,7 +176,7 @@ export default function AffiliationsPage() {
     [selectedAffiliation, postAffiliations, patchAffiliation]
   );
 
-  const orcIdBannerToAppear = affiliationsData?.data.data.some(affiliation => {
+  const orcIdBannerToAppear = affiliationsData?.some(affiliation => {
     return affiliation.organisation_id === null || affiliation.email === null;
   });
 
@@ -223,6 +226,9 @@ export default function AffiliationsPage() {
                 extraColumns={extraColumns}
                 affiliationsData={affiliationsData}
                 getAffiliationsQueryState={getAffiliationsQueryState}
+                last_page={last_page}
+                total={total}
+                setPage={setPage}
               />
             )}
           </PageSection>

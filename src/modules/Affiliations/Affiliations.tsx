@@ -15,6 +15,7 @@ import {
   renderOrganisationsNameCell,
   renderWarningCell,
 } from "@/utils/cells";
+import { PaginatedQueryHelpers } from "@/hooks/usePaginatedQuery";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
@@ -23,14 +24,11 @@ interface AffiliationsProps {
   setHistories?: (histories: StoreUserHistories) => void;
   getHistories?: () => StoreUserHistories | undefined;
   extraColumns?: ColumnDef<ResearcherAffiliation>[];
-  affiliationsData:
-    | (Response & {
-        data: Paged<GetAffiliationsResponse>;
-        message: string;
-        status: number;
-      })
-    | undefined;
-  getAffiliationsQueryState;
+  affiliationsData: Paged<GetAffiliationsResponse> | undefined;
+  getAffiliationsQueryState: Partial<PaginatedQueryHelpers>;
+  last_page: number;
+  total: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export default function Affiliations({
@@ -39,6 +37,9 @@ export default function Affiliations({
   extraColumns,
   affiliationsData,
   getAffiliationsQueryState,
+  last_page,
+  total,
+  setPage,
 }: AffiliationsProps) {
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
@@ -92,9 +93,9 @@ export default function Affiliations({
 
     setHistories?.({
       ...storeHistories,
-      affiliations: affiliationsData?.data?.data,
+      affiliations: affiliationsData,
     });
-  }, [affiliationsData?.data?.data]);
+  }, [affiliationsData]);
 
   return (
     <Table
@@ -102,10 +103,13 @@ export default function Affiliations({
       errorMessage={tProfile.rich("affiliationsErrorMessage", {
         contactLink: ContactLink,
       })}
-      total={affiliationsData?.data.data.length}
-      data={affiliationsData?.data.data || []}
+      total={total}
+      last_page={last_page}
+      setPage={setPage}
+      data={affiliationsData || []}
       columns={columns}
       queryState={getAffiliationsQueryState}
+      isPaginated
     />
   );
 }

@@ -3,7 +3,7 @@ import { Typography } from "@mui/material";
 import { useStore } from "@/data/store";
 import { Affiliations, PageBodyContainer, PageSection } from "@/modules";
 import { useQuery } from "@tanstack/react-query";
-import { getAffiliationsQuery } from "@/services/affiliations";
+import { usePaginatedAffiliations } from "@/services/affiliations";
 
 const NAMESPACE_TRANSLATION = "Application";
 
@@ -16,9 +16,15 @@ export default function UserAffiliations() {
     getHistories: state.getHistories,
   }));
 
-  const { data: affiliationsData, ...getAffiliationsQueryState } = useQuery(
-    getAffiliationsQuery(user?.registry_id)
-  );
+  const {
+    data: affiliationsData,
+    last_page,
+    total,
+    setPage,
+    ...getAffiliationsQueryState
+  } = usePaginatedAffiliations(user?.registry_id, {
+    queryKeyBase: ["getProjects"],
+  });
 
   return (
     <PageBodyContainer>
@@ -29,6 +35,9 @@ export default function UserAffiliations() {
           getHistories={getHistories}
           affiliationsData={affiliationsData}
           getAffiliationsQueryState={getAffiliationsQueryState}
+          last_page={last_page}
+          total={total}
+          setPage={setPage}
         />
       </PageSection>
     </PageBodyContainer>
