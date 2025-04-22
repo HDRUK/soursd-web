@@ -21,9 +21,9 @@ import {
 import { useTranslations } from "next-intl";
 import { LinkProps } from "next/link";
 import { MouseEvent, useEffect, useState } from "react";
+import { CONTACT_MAIL_ADDRESS } from "@/config/contacts";
 import PageCenter from "../PageCenter";
 import { StyledContainer, StyledHeader } from "./NavBar.styles";
-import { CONTACT_MAIL_ADDRESS } from "@/config/contacts";
 
 const NAMESPACE_TRANSLATIONS_NAVBAR = "NavBar";
 

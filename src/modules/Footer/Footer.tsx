@@ -7,9 +7,9 @@ import { Box, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { HTMLAttributes } from "react";
+import { CONTACT_MAIL_ADDRESS } from "@/config/contacts";
 import PageCenter from "../PageCenter";
 import { StyledFooter, StyledBox } from "./Footer.styles";
-import { CONTACT_MAIL_ADDRESS } from "@/config/contacts";
 
 type FooterProps = HTMLAttributes<HTMLDivElement>;
 
