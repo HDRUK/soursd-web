@@ -7,7 +7,7 @@ const renderErrorToString = (
   key: string
 ) => {
   return ReactDOMServer.renderToString(
-    t.rich("affiliationsDeleteErrorMessage", {
+    t.rich(key, {
       contactLink: ContactLink,
     })
   );

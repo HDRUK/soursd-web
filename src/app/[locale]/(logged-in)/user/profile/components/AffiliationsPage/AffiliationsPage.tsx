@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import ReactDOMServer from "react-dom/server";
 import { useTranslations } from "next-intl";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { CellContext } from "@tanstack/react-table";
@@ -31,12 +30,11 @@ import FormModal from "@/components/FormModal";
 import { ActionMenu, ActionMenuItem } from "@/components/ActionMenu";
 import { Message } from "@/components/Message";
 import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
-import ContactLink from "@/components/ContactLink";
 import { Status } from "@/components/ChipStatus";
-import AffiliationsForm from "../AffiliationsForm";
-import AskOrganisationModal from "../AskOrganisation";
 import useQueryConfirmAlerts from "@/hooks/useQueryConfirmAlerts";
 import { renderErrorToString } from "@/utils/translations";
+import AffiliationsForm from "../AffiliationsForm";
+import AskOrganisationModal from "../AskOrganisation";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 

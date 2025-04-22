@@ -1,7 +1,7 @@
 import { mockedOrganisation } from "@/mocks/data/organisation";
 import { render, screen } from "@/utils/testUtils";
-import { renderOrganisationsNameCell } from "./cells";
 import { Organisation } from "@/types/application";
+import { renderOrganisationsNameCell } from "./cells";
 
 const CellTest = ({ orgs }: { orgs: Organisation | Organisation[] }) => {
   return renderOrganisationsNameCell(orgs);
