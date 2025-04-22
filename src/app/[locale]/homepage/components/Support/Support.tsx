@@ -1,8 +1,9 @@
 "use client";
 
 import { Typography, Button } from "@mui/material";
-import image1 from "public/images/homepage/Image1.png";
-import image2 from "public/images/homepage/Image2.png";
+import dataCustodianSupport from "public/images/homepage/DataCustodianSupport.png";
+import organisationSupport from "public/images/homepage/OrganisationSupport.png";
+import userSupport from "public/images/homepage/UserSupport.png";
 
 import Image from "next/image";
 
@@ -17,11 +18,11 @@ export default function Support() {
       <StyledFlex width="100%">
         <StyledContainer>
           <Image
-            src={image1}
-            alt="image_1"
+            src={userSupport}
+            alt="User support"
             width={0}
             height={0}
-            sizes="100vw"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             style={{ width: "100%", height: "auto" }}
           />
           <Button
@@ -33,11 +34,11 @@ export default function Support() {
         </StyledContainer>
         <StyledContainer>
           <Image
-            src={image1}
-            alt="image_2"
+            src={organisationSupport}
+            alt="Organisation support"
             width={0}
             height={0}
-            sizes="100vw"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             style={{ width: "100%", height: "auto" }}
           />
           <Button
@@ -49,11 +50,11 @@ export default function Support() {
         </StyledContainer>
         <StyledContainer>
           <Image
-            src={image2}
-            alt="image_3"
+            src={dataCustodianSupport}
+            alt="Data Custodian support"
             width={0}
             height={0}
-            sizes="100vw"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             style={{ width: "100%", height: "auto" }}
           />
           <Button
