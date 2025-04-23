@@ -28,11 +28,11 @@ export default function useQueryConfirmAlerts<T>(
   const [hasClosed, setHasClosed] = useState(false);
 
   const mergedConfirmAlertProps = {
-    ...alertOptions?.confirmAlertProps,
     text: t("alertDeleteDescription"),
     title: t("alertDeleteTitle"),
     confirmButtonText: t("alertDeleteConfirmButton"),
     cancelButtonText: t("alertDeleteCancelButton"),
+    ...alertOptions?.confirmAlertProps,
     preConfirm: async () => {
       await alertOptions?.confirmAlertProps?.preConfirm<T>?.(
         refPayload.current

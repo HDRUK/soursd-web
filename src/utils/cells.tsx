@@ -93,9 +93,23 @@ function renderProjectsNameCell(values: ResearcherProject[]) {
   return renderListNameCell((values || []).map(({ title }) => title));
 }
 
-function renderOrganisationsNameCell(values: Organisation[]) {
-  return renderListNameCell(
-    (values || []).map(({ organisation_name }) => organisation_name)
+function renderOrganisationsNameCell(values: Organisation | Organisation[]) {
+  let names;
+
+  if (Array.isArray(values)) {
+    names = renderListNameCell(
+      (values || []).map(({ organisation_name }) => organisation_name)
+    );
+  } else {
+    names = values?.organisation_name;
+  }
+
+  return (
+    names || (
+      <Typography component="span" color="error">
+        Not affiliated
+      </Typography>
+    )
   );
 }
 
