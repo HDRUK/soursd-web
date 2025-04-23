@@ -7,9 +7,7 @@ import ContactLink from "@/components/ContactLink";
 import ChipStatus, { Status } from "@/components/ChipStatus";
 import Table from "@/components/Table";
 import { StoreUserHistories } from "@/data/store";
-import { GetAffiliationsResponse } from "@/services/affiliations/types";
 import { ResearcherAffiliation } from "@/types/application";
-import { Paged } from "@/types/requests";
 import {
   renderAffiliationDateRangeCell,
   renderOrganisationsNameCell,
