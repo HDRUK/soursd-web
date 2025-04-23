@@ -12,6 +12,7 @@ import { ResearcherAffiliation } from "@/types/application";
 import { Paged } from "@/types/requests";
 import {
   renderAffiliationDateRangeCell,
+  renderOrganisationsNameCell,
   renderWarningCell,
 } from "@/utils/cells";
 
@@ -65,9 +66,9 @@ export default function Affiliations({
       cell: renderAffiliationDateRangeCell,
     },
     {
-      accessorKey: "organisation_name",
+      accessorKey: "organisation",
       header: tApplication("organisationName"),
-      cell: info => info.row.original.organisation.organisation_name,
+      cell: info => renderOrganisationsNameCell(info.getValue()),
     },
     {
       accessorKey: "relationship",

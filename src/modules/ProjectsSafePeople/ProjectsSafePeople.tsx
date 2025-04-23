@@ -15,7 +15,7 @@ import {
 } from "@/services/projects";
 import { DeleteProjectUserPayload } from "@/services/projects/types";
 import { ProjectUser, User } from "@/types/application";
-import { renderUserNameCell } from "@/utils/cells";
+import { renderOrganisationsNameCell, renderUserNameCell } from "@/utils/cells";
 import { Add } from "@mui/icons-material";
 import { Box, Button, Grid } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
@@ -162,8 +162,9 @@ export default function ProjectsSafePeople({
       header: tApplication("projectRole"),
     },
     {
-      accessorKey: "affiliation.organisation.organisation_name",
+      accessorKey: "affiliation.organisation",
       header: tApplication("organisationName"),
+      cell: info => renderOrganisationsNameCell(info.getValue()),
     },
     ...(variant !== EntityType.USER
       ? [
