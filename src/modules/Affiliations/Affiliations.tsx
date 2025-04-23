@@ -24,7 +24,7 @@ interface AffiliationsProps {
   setHistories?: (histories: StoreUserHistories) => void;
   getHistories?: () => StoreUserHistories | undefined;
   extraColumns?: ColumnDef<ResearcherAffiliation>[];
-  affiliationsData: Paged<GetAffiliationsResponse> | undefined;
+  affiliationsData: ResearcherAffiliation[] | undefined;
   getAffiliationsQueryState: Partial<PaginatedQueryHelpers>;
   last_page: number;
   total: number;

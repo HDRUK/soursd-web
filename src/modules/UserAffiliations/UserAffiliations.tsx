@@ -22,7 +22,7 @@ export default function UserAffiliations() {
     setPage,
     ...getAffiliationsQueryState
   } = usePaginatedAffiliations(user?.registry_id, {
-    queryKeyBase: ["getProjects"],
+    queryKeyBase: ["getAffiliations"],
   });
 
   return (
