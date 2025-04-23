@@ -95,22 +95,28 @@ const Table = <T,>({
               }}>
               {table.getHeaderGroups().map(headerGroup => (
                 <TableRow key={headerGroup.id}>
-                  {headerGroup.headers.map(header => (
-                    <TableCell
-                      key={header.id}
-                      sx={{
-                        color: "neutralGrey.contrastText",
-                        fontWeight: "600",
-                        py: 1,
-                      }}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableCell>
-                  ))}
+                  {headerGroup.headers.map(header => {
+                    console.log("header", header.column.getSize());
+                    return (
+                      <TableCell
+                        key={header.id}
+                        sx={{
+                          color: "neutralGrey.contrastText",
+                          fontWeight: "600",
+                          py: 1,
+                          width: "auto",
+                          minWidth:
+                            header.getSize() !== 150 && header.getSize(),
+                        }}>
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                      </TableCell>
+                    );
+                  })}
                 </TableRow>
               ))}
             </TableHead>
