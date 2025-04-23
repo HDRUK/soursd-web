@@ -34,6 +34,7 @@
     "status_completed": "Completed",
     "status_approved": "Approved",
     "status_undefined": "None",
+    "status_null": "None",
     "status_project_pending": "Pending",
     "status_project_completed": "Completed",
     "status_project_approved": "Approved",
