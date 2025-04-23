@@ -7,6 +7,7 @@ import { Box, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { HTMLAttributes } from "react";
+import { CONTACT_MAIL_ADDRESS } from "@/config/contacts";
 import PageCenter from "../PageCenter";
 import { StyledFooter, StyledBox } from "./Footer.styles";
 
@@ -23,7 +24,7 @@ export default function Footer(props: FooterProps) {
       label: t("aboutUsLink"),
     },
     {
-      href: "#",
+      href: `mailto:${CONTACT_MAIL_ADDRESS}`,
       label: t("contactUsLink"),
     },
     {
