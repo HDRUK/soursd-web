@@ -34,6 +34,7 @@
     "status_completed": "Completed",
     "status_approved": "Approved",
     "status_undefined": "None",
+    "status_null": "None",
     "status_project_pending": "Pending",
     "status_project_completed": "Completed",
     "status_project_approved": "Approved",
@@ -788,6 +789,9 @@
     "inviteOrganisationSuccess": "You have successfully invited the Organisation. Bear in mind before you can select them they will need to accept the invite"
   },
   "Profile": {
+    "affiliationsDeleteConfirmMessage": "Are you sure you want to delete this affiliation?",
+    "affiliationsDeleteSuccessMessage": "Affiliation successfully deleted",
+    "affiliationsDeleteErrorMessage": "There was a problem deleting your affiliation. Please try again or contact us at <contactLink></contactLink>",
     "uniqueIdentifierCaption": "This ‘key’ represents you as a User within SOURSD. This is unique to you! Custodians may ask you for this to confirm your identity.",
     "memberIdDescription": "Depending on your selected relationship with the Organisation",
     "home": "Home",
