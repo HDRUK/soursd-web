@@ -32,7 +32,6 @@ import { formatDBDate } from "@/utils/date";
 import { toTitleCase } from "@/utils/string";
 import { formatNotificationType } from "@/utils/notifications";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
 import usePatchReadRequest from "../NotificationsMenu/hooks/usePatchReadRequest";
 
 const NAMESPACE_TRANSLATIONS = "NotificationsModal";
@@ -57,8 +56,6 @@ export default function NotificationModal({
   const t = useTranslations(NAMESPACE_TRANSLATIONS);
   const theme = useTheme();
   const mobileMediaQuery = theme.breakpoints.down("sm");
-  const [status, setStatus] = useState<number | null>(null);
-  const [requestId, setRequestId] = useState<number | null>(null);
 
   const { mutateAsync: mutateReadRequest } = usePatchReadRequest();
 
@@ -70,17 +67,12 @@ export default function NotificationModal({
         requestId,
         status,
       });
-      setRequestId(null);
-      setStatus(null);
     } catch (error) {
       console.error("Error approving/denying request:", error);
     }
   };
 
   const handleApproveOrDeny = (requestId: number, status: number) => {
-    setRequestId(requestId);
-    setStatus(status);
-
     approveOrDenyRequest(requestId, status);
   };
 
@@ -217,9 +209,13 @@ export default function NotificationModal({
             </TableContainer>
           ) : (
             <>
-              <Box sx={{ mb: 1 }}>
-                {notification.data.details || "No further details."}
-              </Box>
+              <Box
+                sx={{ mb: 1 }}
+                /* This purposefully doesn't use DOMPurify as we explicitly control the content from the API */
+                dangerouslySetInnerHTML={{
+                  __html: notification.data.details || "No further details.",
+                }}
+              />
               <Box
                 sx={{
                   mb: 1,
