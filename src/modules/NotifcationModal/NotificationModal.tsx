@@ -223,7 +223,7 @@ export default function NotificationModal({
                   justifyContent: "flex-end",
                   gap: 1,
                 }}>
-                {Object.entries(notification.data.buttonUrls).map(
+                {Object.entries(notification.data.buttonUrls ?? {}).map(
                   ([name, id]) => (
                     <Button
                       key={id}
