@@ -12,6 +12,7 @@ import {
   ProjectsSubTabs,
   UserSubTabs,
 } from "../../consts/tabs";
+import { Modes } from "@/consts/router";
 
 const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 
@@ -26,7 +27,7 @@ interface SubTabsSectionsProps {
     | UserSubTabs
     | ProjectsSubTabs
     | OrganisationsSubTabs;
-  id?: number;
+  id?: number | Modes;
 }
 
 export default function SubTabsSections({

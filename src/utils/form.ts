@@ -6,6 +6,7 @@ import { ProjectDetails, ResearcherProject } from "@/types/application";
 import { DataUse } from "@/types/gateway";
 import { formatStringToISO } from "./date";
 import { parseValidJSON } from "./json";
+import { DefaultFormValuesMode } from "@/consts/form";
 
 function getCheckboxFormValuesFromIntersection(
   parent: { label: string; id: number | string }[],
@@ -113,9 +114,18 @@ function createProjectDetailDefaultValues(
   };
 }
 
-function createProjectDefaultValues(data?: Partial<ResearcherProject>) {
+function createProjectDefaultValues(
+  data?: Partial<ResearcherProject>,
+  mode: DefaultFormValuesMode = DefaultFormValuesMode.FORM
+) {
+  const otherApprovalCommittees =
+    (data?.other_approval_committees &&
+      parseValidJSON(data.other_approval_committees)) ||
+    [];
+
   return {
     ...data,
+    id: data?.id,
     unique_id: data?.unique_id,
     title: data?.title || "",
     request_category_type: data?.request_category_type || "",
@@ -126,9 +136,9 @@ function createProjectDefaultValues(data?: Partial<ResearcherProject>) {
     technical_summary: data?.technical_summary || "",
     status: data?.model_state?.state.slug || Status.PROJECT_PENDING,
     other_approval_committees:
-      (data?.other_approval_committees &&
-        parseValidJSON(data.other_approval_committees)) ||
-      [],
+      mode === DefaultFormValuesMode.DB
+        ? JSON.stringify(otherApprovalCommittees)
+        : otherApprovalCommittees,
   };
 }
 

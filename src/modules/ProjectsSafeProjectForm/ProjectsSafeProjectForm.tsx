@@ -103,7 +103,10 @@ export default function UserModalDetails({
                 <Grid item xs={6}>
                   <FormControlWrapper
                     name="end_date"
-                    renderField={fieldProps => <DateInput {...fieldProps} />}
+                    renderField={fieldProps => {
+                      console.log("fieldsProps", fieldProps.value);
+                      return <DateInput {...fieldProps} />;
+                    }}
                   />
                 </Grid>
               </Grid>

@@ -43,6 +43,8 @@ export default function ProjectsSafeProject() {
     pick(createProjectDefaultValues(project), PAYLOAD_FIELDS)
   );
 
+  console.log("DEFAULT VALUES", defaultValues);
+
   const handleGatewayProjectImport = (data: ResearcherProject) => {
     setDefaultValues(pick(data, PAYLOAD_FIELDS));
   };

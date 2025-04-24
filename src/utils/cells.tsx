@@ -93,6 +93,20 @@ function renderProjectsNameCell(values: ResearcherProject[]) {
   return renderListNameCell((values || []).map(({ title }) => title));
 }
 
+function renderUserOrganisationsNameCell(
+  values: Organisation | Organisation[]
+) {
+  let names = renderOrganisationsNameCell(values);
+
+  return (
+    names || (
+      <Typography component="span" color="error">
+        Not affiliated
+      </Typography>
+    )
+  );
+}
+
 function renderOrganisationsNameCell(values: Organisation | Organisation[]) {
   let names;
 
@@ -104,13 +118,7 @@ function renderOrganisationsNameCell(values: Organisation | Organisation[]) {
     names = values?.organisation_name;
   }
 
-  return (
-    names || (
-      <Typography component="span" color="error">
-        Not affiliated
-      </Typography>
-    )
-  );
+  return names;
 }
 
 export {
@@ -120,6 +128,7 @@ export {
   renderWarningCell,
   renderListNameCell,
   renderLinkNameCell,
+  renderUserOrganisationsNameCell,
   renderOrganisationsNameCell,
   renderProjectsNameCell,
 };

@@ -38,10 +38,16 @@ enum FormModes {
   EDIT = "edit",
 }
 
+enum DefaultFormValuesMode {
+  DB = 'db',
+  FORM = 'form'
+}
+
 const MAX_FORM_WIDTH = "600px";
 
 export {
   FormModes,
+  DefaultFormValuesMode,
   VALIDATION_CE_CERTIFICATION_NUMBER,
   VALIDATION_ISO_CERTIFICATION_NUMBER,
   VALIDATION_DSPTK_CERTIFICATION_NUMBER,

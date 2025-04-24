@@ -1,6 +1,7 @@
 "use client";
 
 import LoadingWrapper from "@/components/LoadingWrapper";
+import { Modes } from "@/consts/router";
 import getProjectQuery from "@/services/projects/getProjectQuery";
 import { useQuery } from "@tanstack/react-query";
 import { notFound } from "next/navigation";
@@ -10,7 +11,7 @@ import { ProjectsSubTabs } from "../../../consts/tabs";
 interface SubPageProjectsProps {
   params: {
     subTabId: ProjectsSubTabs;
-    id: number;
+    id: number | Modes;
   };
 }
 

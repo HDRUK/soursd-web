@@ -1,3 +1,4 @@
+import { Modes } from "@/consts/router";
 import { useStore } from "@/data/store";
 import { PageBodyContainer } from "@/modules";
 import { ResearcherProject } from "@/types/application";
@@ -10,7 +11,7 @@ interface PageProps {
   projectData: ResearcherProject;
   params: {
     subTabId: ProjectsSubTabs;
-    id?: number;
+    id: number | Modes;
   };
 }
 
@@ -23,13 +24,15 @@ export default function SubPageProjects({ params, projectData }: PageProps) {
   ]);
 
   useEffect(() => {
-    setProject(projectData);
+    if (projectData) {
+      setProject(projectData);
+    }
   }, [projectData]);
 
   return (
     project && (
       <PageBodyContainer heading={projectData.title}>
-        <SubTabsSections id={project.id} tabId={tabId} {...params} />
+        <SubTabsSections tabId={tabId} {...params} />
         <SubTabsContents tabId={tabId} {...params} />
       </PageBodyContainer>
     )
