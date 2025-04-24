@@ -14,6 +14,7 @@ import {
 import { formatDisplayLongDate } from "@/utils/date";
 import { ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
+import { ReactNode } from "react";
 import PageBody from "../PageBody";
 import PageBodyContainer from "../PageBodyContainer";
 import ProjectsFilters from "../ProjectsFilters";
@@ -48,9 +49,14 @@ const variantConfig: Record<ProjectEntities, VariantConfig> = {
 interface ProjectsProps {
   variant: ProjectEntities;
   entityId?: number;
+  actions?: ReactNode;
 }
 
-export default function Projects({ variant, entityId }: ProjectsProps) {
+export default function Projects({
+  variant,
+  entityId,
+  actions,
+}: ProjectsProps) {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_PROJECTS);
   const routes = useStore(state => state.getApplication().routes);
 
@@ -140,6 +146,7 @@ export default function Projects({ variant, entityId }: ProjectsProps) {
             resetQueryParams={resetQueryParams}
             handleSortToggle={handleSortToggle}
             handleFieldToggle={handleFieldToggle}
+            actions={actions}
           />
         </PageSection>
         <PageSection>

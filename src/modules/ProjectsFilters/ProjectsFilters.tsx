@@ -8,6 +8,7 @@ import { ResearcherProject } from "@/types/application";
 import { getSearchSortOrder } from "@/utils/query";
 import SortIcon from "@mui/icons-material/Sort";
 import { useTranslations } from "next-intl";
+import { ReactNode } from "react";
 import SearchActionMenu from "../SearchActionMenu";
 
 const NAMESPACE_TRANSLATIONS_PROJECTS = "Projects";
@@ -28,9 +29,11 @@ export interface ProjectsProps
     | "queryParams"
   > {
   includeFilters?: ProjectFilterKeys[];
+  actions?: ReactNode;
 }
 
 export default function ProjectsFilters({
+  actions,
   handleSortToggle,
   handleFieldToggle,
   resetQueryParams,
@@ -126,6 +129,7 @@ export default function ProjectsFilters({
           aria-label={tApplication("filterByProjectStatus")}
         />
       )}
+      {actions}
     </SearchBar>
   );
 }

@@ -25,11 +25,11 @@ import {
   putTrainingsQuery,
 } from "@/services/trainings";
 import { EntityType } from "@/types/api";
-import AddIcon from "@mui/icons-material/Add";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import useQueryConfirmAlerts from "@/hooks/useQueryConfirmAlerts";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import TrainingForm from "./TrainingForm";
+import { AddIcon } from "@/consts/icons";
 
 const NAMESPACE_TRANSLATION_TRAINING = "Training";
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";

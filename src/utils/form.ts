@@ -113,20 +113,22 @@ function createProjectDetailDefaultValues(
   };
 }
 
-function createProjectDefaultValues(data: ResearcherProject) {
+function createProjectDefaultValues(data?: Partial<ResearcherProject>) {
   return {
     ...data,
-    unique_id: data.unique_id,
-    title: data.title || "",
-    request_category_type: data.request_category_type || "",
-    start_date: data.start_date || "",
-    end_date: data.end_date || "",
-    lay_summary: data.lay_summary || "",
-    public_benefit: data.public_benefit || "",
-    technical_summary: data.technical_summary || "",
-    status: data.model_state.state.slug || Status.PROJECT_PENDING,
+    unique_id: data?.unique_id,
+    title: data?.title || "",
+    request_category_type: data?.request_category_type || "",
+    start_date: data?.start_date || "",
+    end_date: data?.end_date || "",
+    lay_summary: data?.lay_summary || "",
+    public_benefit: data?.public_benefit || "",
+    technical_summary: data?.technical_summary || "",
+    status: data?.model_state?.state.slug || Status.PROJECT_PENDING,
     other_approval_committees:
-      parseValidJSON(data.other_approval_committees) || [],
+      (data?.other_approval_committees &&
+        parseValidJSON(data.other_approval_committees)) ||
+      [],
   };
 }
 

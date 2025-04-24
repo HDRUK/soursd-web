@@ -13,7 +13,6 @@ import {
 } from "@/services/professional_registrations";
 import { PostProfessionalRegistrationPayload } from "@/services/professional_registrations/types";
 import { ResearcherProfessionalRegistration, User } from "@/types/application";
-import AddIcon from "@mui/icons-material/Add";
 import { Button, Typography } from "@mui/material";
 import Table from "@/components/Table";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -25,6 +24,7 @@ import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import { EntityType } from "@/types/api";
 import ProfessionalRegistrationsFormModal from "./ProfessionalRegistrationsFormModal";
+import { AddIcon } from "@/consts/icons";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfessionalRegistrations";
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
