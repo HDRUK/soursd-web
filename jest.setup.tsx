@@ -302,7 +302,11 @@ async function mockFetch(url: string, init?: RequestInit) {
       });
     }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/custodians/1/projects`: {
-      return mock200Json(mockPagedResults(mockedProjects(5)));
+      if (init?.method === "POST") {
+        return mock200Json(1);
+      } else {
+        return mock200Json(mockPagedResults(mockedProjects(5)));
+      }
     }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/organisations/1/projects`: {
       return mock200Json(mockPagedResults(mockedProjects(10)));

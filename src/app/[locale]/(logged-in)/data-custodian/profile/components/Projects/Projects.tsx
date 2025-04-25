@@ -32,7 +32,7 @@ export default function Projects() {
       },
       payload: createProjectDefaultValues(
         {
-          title: "New project",
+          title: t("addNewProjectTitle"),
         },
         DefaultFormValuesMode.DB
       ),

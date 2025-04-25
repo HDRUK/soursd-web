@@ -1163,6 +1163,7 @@
   },
   "Projects": {
     "createButton": "",
+    "addNewProjectTitle": "New project",
     "addNewProjectButton": "Add new project",
     "custodians": "Data custodian",
     "okButton": "OK",

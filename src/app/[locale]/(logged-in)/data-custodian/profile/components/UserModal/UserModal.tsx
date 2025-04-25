@@ -99,7 +99,6 @@ export default function UsersModal({
       });
 
       if (!user?.id && userResponse?.data) {
-        console.log("userResponse.data", userResponse.data);
         await mutateAsyncPostInvite(userResponse.data);
       }
 
