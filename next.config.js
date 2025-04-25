@@ -58,10 +58,6 @@ const nextConfig = withNextIntl({
         destination: `/:locale/organisation/profile/home`,
       },
       {
-        source: "/:locale/organisation/delegate/profile",
-        destination: `/:locale/organisation/delegate/profile/home`,
-      },
-      {
         source: "/:locale/organisation/profile/details",
         destination: `/:locale/organisation/profile/details/name-and-address`,
       },
@@ -70,7 +66,8 @@ const nextConfig = withNextIntl({
         destination: `/:locale/organisation/profile/user-administration/employees-and-students`,
       },
       {
-        source: "/:locale/organisation/profile/user-administration/employees-and-students/:id",
+        source:
+          "/:locale/organisation/profile/user-administration/employees-and-students/:id",
         destination: `/:locale/organisation/profile/user-administration/employees-and-students/:id/identity`,
       },
       {
@@ -100,7 +97,7 @@ const nextConfig = withNextIntl({
 
     config.module.rules.push({
       test: /\.md$/,
-      type: 'asset/source', 
+      type: "asset/source",
     });
 
     return config;

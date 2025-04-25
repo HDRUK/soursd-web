@@ -29,8 +29,11 @@ interface ProjectsProps {
 export default function Users({ variant }: ProjectsProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const [open, setOpen] = useState(false);
-  const organisation = useStore(state => state.config.organisation);
-  const routes = useStore(state => state.getApplication().routes);
+  const { organisation, user, routes } = useStore(state => ({
+    organisation: state.config.organisation,
+    user: state.getUser(),
+    routes: state.getApplication().routes,
+  }));
   const [showPendingInvites, setShowPendingInvites] = useState(0);
 
   const {
@@ -126,12 +129,15 @@ export default function Users({ variant }: ProjectsProps) {
       header: "Invite Sent",
       cell: info => formatShortDate(info.getValue() as string),
     },
-
-    {
-      accessorKey: "actions",
-      header: "Actions",
-      cell: renderActions,
-    },
+    ...(user?.is_delegate === 0
+      ? [
+          {
+            accessorKey: "actions",
+            header: "Actions",
+            cell: renderActions,
+          },
+        ]
+      : []),
   ];
 
   return (
@@ -181,17 +187,19 @@ export default function Users({ variant }: ProjectsProps) {
           queryState={userDataQueryState}
         />
 
-        <Box sx={{ display: "flex", gap: 2, flexDirection: "row" }}>
-          <div>
-            <Button
-              variant="outlined"
-              aria-label="modal-button"
-              onClick={() => setOpen(true)}>
-              {t("inviteNewUserButton")}
-            </Button>
-          </div>
-          <UserBulkInvite organisation_id={organisation?.id as number} />
-        </Box>
+        {user?.is_delegate === 0 && (
+          <Box sx={{ display: "flex", gap: 2, flexDirection: "row" }}>
+            <div>
+              <Button
+                variant="outlined"
+                aria-label="modal-button"
+                onClick={() => setOpen(true)}>
+                {t("inviteNewUserButton")}
+              </Button>
+            </div>
+            <UserBulkInvite organisation_id={organisation?.id as number} />
+          </Box>
+        )}
       </PageSection>
       {!!organisation && (
         <UserModal
