@@ -106,15 +106,18 @@ export default function Projects({ variant, entityId }: ProjectsProps) {
       accessorKey: "start_date",
       header: t("startDate"),
       cell: info => formatDisplayLongDate(info.getValue() as string),
+      minSize: 160,
     },
     {
       accessorKey: "end_date",
       header: t("endDate"),
       cell: info => formatDisplayLongDate(info.getValue() as string),
+      minSize: 160,
     },
     {
       accessorKey: "project_users_count",
       header: t("users"),
+      minSize: 50,
     },
     {
       accessorKey: "organisations",
