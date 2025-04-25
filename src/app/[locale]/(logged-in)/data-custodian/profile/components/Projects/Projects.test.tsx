@@ -16,7 +16,7 @@ jest.mock("@/i18n/routing", () => ({
   useRouter: () => ({
     push: mockPush,
   }),
-  useSearchParams: jest.fn().mockReturnValue(new URLSearchParams("title=test")),
+  useSearchParams: jest.fn().mockReturnValue(new URLSearchParams("")),
 }));
 
 const renderProjects = () => {
