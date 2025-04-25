@@ -8,7 +8,6 @@ import { ResearcherProject } from "@/types/application";
 import { getSearchSortOrder } from "@/utils/query";
 import SortIcon from "@mui/icons-material/Sort";
 import { useTranslations } from "next-intl";
-import { ReactNode } from "react";
 import SearchActionMenu from "../SearchActionMenu";
 
 const NAMESPACE_TRANSLATIONS_PROJECTS = "Projects";

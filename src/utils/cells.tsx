@@ -96,7 +96,7 @@ function renderProjectsNameCell(values: ResearcherProject[]) {
 function renderUserOrganisationsNameCell(
   values: Organisation | Organisation[]
 ) {
-  let names = renderOrganisationsNameCell(values);
+  const names = renderOrganisationsNameCell(values);
 
   return (
     names || (

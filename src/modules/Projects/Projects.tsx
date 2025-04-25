@@ -14,9 +14,6 @@ import {
 import { formatDisplayLongDate } from "@/utils/date";
 import { ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
-import { ReactNode } from "react";
-import PageBody from "../PageBody";
-import PageBodyContainer from "../PageBodyContainer";
 import ProjectsFilters from "../ProjectsFilters";
 
 const NAMESPACE_TRANSLATIONS_PROJECTS = "Projects";

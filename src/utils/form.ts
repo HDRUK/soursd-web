@@ -4,9 +4,9 @@ import yup from "@/config/yup";
 import { RequestFrequency } from "@/consts/projects";
 import { ProjectDetails, ResearcherProject } from "@/types/application";
 import { DataUse } from "@/types/gateway";
+import { DefaultFormValuesMode } from "@/consts/form";
 import { formatStringToISO } from "./date";
 import { parseValidJSON } from "./json";
-import { DefaultFormValuesMode } from "@/consts/form";
 
 function getCheckboxFormValuesFromIntersection(
   parent: { label: string; id: number | string }[],

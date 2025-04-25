@@ -1,9 +1,9 @@
 "use client";
 
 import { useStore } from "@/data/store";
-import Projects from "../Projects";
 import { notFound } from "next/navigation";
 import useOrganisationStore from "@/queries/useOrganisationStore";
+import Projects from "../Projects";
 import { PageTabs } from "../../consts/tabs";
 import Home from "../Home";
 

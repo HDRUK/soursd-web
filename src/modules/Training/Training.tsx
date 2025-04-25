@@ -28,8 +28,8 @@ import { EntityType } from "@/types/api";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import useQueryConfirmAlerts from "@/hooks/useQueryConfirmAlerts";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
-import TrainingForm from "./TrainingForm";
 import { AddIcon } from "@/consts/icons";
+import TrainingForm from "./TrainingForm";
 
 const NAMESPACE_TRANSLATION_TRAINING = "Training";
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";

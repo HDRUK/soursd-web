@@ -39,8 +39,8 @@ enum FormModes {
 }
 
 enum DefaultFormValuesMode {
-  DB = 'db',
-  FORM = 'form'
+  DB = "db",
+  FORM = "form",
 }
 
 const MAX_FORM_WIDTH = "600px";

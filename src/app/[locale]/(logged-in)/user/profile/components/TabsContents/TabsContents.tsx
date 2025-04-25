@@ -1,8 +1,8 @@
 "use client";
 
-import Projects from "../Projects";
 import useUserStore from "@/queries/useUserStore";
 import { notFound } from "next/navigation";
+import Projects from "../Projects";
 import { PageTabs } from "../../consts/tabs";
 import AffiliationsPage from "../AffiliationsPage";
 import Experience from "../Experience";
