@@ -219,9 +219,7 @@ export default function Training({
         if (updatedHistories) {
           setHistories(updatedHistories);
         }
-      } catch (error) {
-        console.log(error);
-      }
+      } 
     },
     [getHistories, setHistories]
   );
