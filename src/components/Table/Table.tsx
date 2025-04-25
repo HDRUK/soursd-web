@@ -102,6 +102,8 @@ const Table = <T,>({
                         color: "neutralGrey.contrastText",
                         fontWeight: "600",
                         py: 1,
+                        width: "auto",
+                        minWidth: header.getSize() !== 150 && header.getSize(),
                       }}>
                       {header.isPlaceholder
                         ? null
