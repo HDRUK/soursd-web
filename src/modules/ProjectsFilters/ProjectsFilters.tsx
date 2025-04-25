@@ -29,11 +29,9 @@ export interface ProjectsProps
     | "queryParams"
   > {
   includeFilters?: ProjectFilterKeys[];
-  actions?: ReactNode;
 }
 
 export default function ProjectsFilters({
-  actions,
   handleSortToggle,
   handleFieldToggle,
   resetQueryParams,
@@ -129,7 +127,6 @@ export default function ProjectsFilters({
           aria-label={tApplication("filterByProjectStatus")}
         />
       )}
-      {actions}
     </SearchBar>
   );
 }

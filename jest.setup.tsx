@@ -26,6 +26,7 @@ import {
   mockedUser,
 } from "./mocks/data/user";
 import { ResponseMessageType } from "./src/consts/requests";
+import { useSearchParams } from "next/navigation";
 
 const nextRouterMock = require("next-router-mock");
 
@@ -60,6 +61,7 @@ jest.mock("@/i18n/routing", () => ({
     replace: jest.fn(),
   }),
   usePathname: jest.fn(),
+  useSearchParams: jest.fn().mockReturnValue(new URLSearchParams("")),
 }));
 
 jest.mock("next/navigation", () => {

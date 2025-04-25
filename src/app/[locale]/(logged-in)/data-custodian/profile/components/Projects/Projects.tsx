@@ -3,11 +3,13 @@ import { AddIcon } from "@/consts/icons";
 import { useStore } from "@/data/store";
 import useQueryAlerts from "@/hooks/useQueryAlerts";
 import { useRouter } from "@/i18n/routing";
+import { mockedProjectsIntro } from "@/mocks/data/cms";
+import { PageBody, PageBodyContainer } from "@/modules";
 import ProjectsList from "@/modules/Projects";
 import { postCustodianProjectQuery } from "@/services/custodians";
 import { injectParamsIntoPath } from "@/utils/application";
 import { createProjectDefaultValues } from "@/utils/form";
-import { Button } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 
@@ -53,13 +55,19 @@ export default function Projects() {
   });
 
   return (
-    <ProjectsList
-      variant="custodian"
-      actions={
-        <Button startIcon={<AddIcon />} onClick={handleCreateProject}>
-          {t("addNewProjectButton")}
-        </Button>
-      }
-    />
+    <PageBodyContainer heading={t("projects")}>
+      <PageBody>
+        <Box sx={{ display: "flex", gap: 4 }}>
+          <Typography sx={{ flexGrow: 1 }}>{mockedProjectsIntro}</Typography>
+          <Button
+            startIcon={<AddIcon />}
+            onClick={handleCreateProject}
+            sx={{ flexShrink: 0 }}>
+            {t("addNewProjectButton")}
+          </Button>
+        </Box>
+        <ProjectsList variant="custodian" />
+      </PageBody>
+    </PageBodyContainer>
   );
 }

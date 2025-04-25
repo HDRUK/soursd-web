@@ -1,7 +1,7 @@
 "use client";
 
 import { useStore } from "@/data/store";
-import Projects from "@/modules/Projects";
+import Projects from "../Projects";
 import { notFound } from "next/navigation";
 import useOrganisationStore from "@/queries/useOrganisationStore";
 import { PageTabs } from "../../consts/tabs";
@@ -20,7 +20,7 @@ export default function TabsContents({ tabId }: TabsContentsProps) {
   return (
     <>
       {tabId === PageTabs.HOME && <Home />}
-      {tabId === PageTabs.PROJECTS && <Projects variant="organisation" />}
+      {tabId === PageTabs.PROJECTS && <Projects />}
     </>
   );
 }

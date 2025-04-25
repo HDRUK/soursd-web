@@ -49,14 +49,9 @@ const variantConfig: Record<ProjectEntities, VariantConfig> = {
 interface ProjectsProps {
   variant: ProjectEntities;
   entityId?: number;
-  actions?: ReactNode;
 }
 
-export default function Projects({
-  variant,
-  entityId,
-  actions,
-}: ProjectsProps) {
+export default function Projects({ variant, entityId }: ProjectsProps) {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_PROJECTS);
   const routes = useStore(state => state.getApplication().routes);
 
@@ -137,30 +132,27 @@ export default function Projects({
   ];
 
   return (
-    <PageBodyContainer heading={t("projects")}>
-      <PageBody>
-        <PageSection>
-          <ProjectsFilters
-            queryParams={queryParams}
-            updateQueryParams={updateQueryParams}
-            resetQueryParams={resetQueryParams}
-            handleSortToggle={handleSortToggle}
-            handleFieldToggle={handleFieldToggle}
-            actions={actions}
-          />
-        </PageSection>
-        <PageSection>
-          <Table
-            total={total}
-            last_page={last_page}
-            setPage={setPage}
-            data={projectsData}
-            columns={columns}
-            queryState={queryState}
-            isPaginated
-          />
-        </PageSection>
-      </PageBody>
-    </PageBodyContainer>
+    <>
+      <PageSection>
+        <ProjectsFilters
+          queryParams={queryParams}
+          updateQueryParams={updateQueryParams}
+          resetQueryParams={resetQueryParams}
+          handleSortToggle={handleSortToggle}
+          handleFieldToggle={handleFieldToggle}
+        />
+      </PageSection>
+      <PageSection>
+        <Table
+          total={total}
+          last_page={last_page}
+          setPage={setPage}
+          data={projectsData}
+          columns={columns}
+          queryState={queryState}
+          isPaginated
+        />
+      </PageSection>
+    </>
   );
 }

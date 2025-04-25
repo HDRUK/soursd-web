@@ -1,6 +1,6 @@
 "use client";
 
-import Projects from "@/modules/Projects";
+import Projects from "../Projects";
 import useUserStore from "@/queries/useUserStore";
 import { notFound } from "next/navigation";
 import { PageTabs } from "../../consts/tabs";
@@ -26,7 +26,7 @@ export default function TabsContents({ tabId }: TabsContentsProps) {
       {tabId === PageTabs.AFFILIATIONS && <AffiliationsPage />}
       {tabId === PageTabs.TRAINING && <Trainings />}
       {tabId === PageTabs.HOME && <Home />}
-      {tabId === PageTabs.PROJECTS && <Projects variant="user" />}
+      {tabId === PageTabs.PROJECTS && <Projects />}
     </>
   );
 }

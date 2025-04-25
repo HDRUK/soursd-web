@@ -11,6 +11,9 @@ export const mockedBannerContent = () => (
   </>
 );
 
+export const mockedProjectsIntro =
+  "The project list below outlines your projects pending approval, including validated Users and Organisations. Clicking on a project will show you more information and next steps.";
+
 export const mockedPendingAffiliations = (
   <>
     <Typography mb={2}>
