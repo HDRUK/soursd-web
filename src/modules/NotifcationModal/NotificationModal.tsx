@@ -22,6 +22,7 @@ import {
   ListItem,
   ListItemText,
   ListItemIcon,
+  Button,
 } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import PendingIcon from "@mui/icons-material/Pending";
@@ -31,6 +32,7 @@ import { formatDBDate } from "@/utils/date";
 import { toTitleCase } from "@/utils/string";
 import { formatNotificationType } from "@/utils/notifications";
 import { useTranslations } from "next-intl";
+import usePatchReadRequest from "../NotificationsMenu/hooks/usePatchReadRequest";
 
 const NAMESPACE_TRANSLATIONS = "NotificationsModal";
 
@@ -55,6 +57,25 @@ export default function NotificationModal({
   const theme = useTheme();
   const mobileMediaQuery = theme.breakpoints.down("sm");
 
+  const { mutateAsync: mutateReadRequest } = usePatchReadRequest();
+
+  const approveOrDenyRequest = async (requestId: number, status: number) => {
+    if (!requestId || !status) return;
+
+    try {
+      await mutateReadRequest({
+        requestId,
+        status,
+      });
+    } catch (error) {
+      console.error("Error approving/denying request:", error);
+    }
+  };
+
+  const handleApproveOrDeny = (requestId: number, status: number) => {
+    approveOrDenyRequest(requestId, status);
+  };
+
   return (
     <Modal
       data-testid="notification-modal"
@@ -74,6 +95,7 @@ export default function NotificationModal({
             width: `calc(100% - ${theme.spacing(2)})`,
             minWidth: "auto",
           },
+          paddingTop: 4,
           ...sx,
         }}>
         <CardHeader
@@ -158,7 +180,7 @@ export default function NotificationModal({
             </List>
           )}
 
-          {Array.isArray(notification.data.details) && (
+          {Array.isArray(notification.data.details) ? (
             <TableContainer
               component={Paper}
               sx={{ marginTop: 0, width: "100%" }}>
@@ -185,6 +207,37 @@ export default function NotificationModal({
                 </TableBody>
               </Table>
             </TableContainer>
+          ) : (
+            <>
+              <Box
+                sx={{ mb: 1 }}
+                /* This purposefully doesn't use DOMPurify as we explicitly control the content from the API */
+                dangerouslySetInnerHTML={{
+                  __html: notification.data.details || "No further details.",
+                }}
+              />
+              <Box
+                sx={{
+                  mb: 1,
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  gap: 1,
+                }}>
+                {Object.entries(notification.data.buttonUrls ?? {}).map(
+                  ([name, id]) => (
+                    <Button
+                      key={id}
+                      variant="contained"
+                      color={name === "Approve" ? "primary" : "secondary"}
+                      onClick={() => {
+                        handleApproveOrDeny(id, name === "Approve" ? 1 : 2);
+                      }}>
+                      {name}
+                    </Button>
+                  )
+                )}
+              </Box>
+            </>
           )}
         </CardContent>
       </Card>
