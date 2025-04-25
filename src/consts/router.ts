@@ -296,8 +296,4 @@ const ROUTES: Routes = {
 
 const EXCLUDE_REDIRECT_URLS: string[] = [ROUTES.invite.path];
 
-enum Modes {
-  CREATE = "create",
-}
-
-export { PROTECTED_ROUTES, ROUTES, EXCLUDE_REDIRECT_URLS, Modes };
+export { PROTECTED_ROUTES, ROUTES, EXCLUDE_REDIRECT_URLS };

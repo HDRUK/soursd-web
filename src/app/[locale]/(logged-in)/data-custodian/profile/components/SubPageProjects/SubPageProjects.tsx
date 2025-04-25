@@ -1,4 +1,3 @@
-import { Modes } from "@/consts/router";
 import { useStore } from "@/data/store";
 import { PageBodyContainer } from "@/modules";
 import { ResearcherProject } from "@/types/application";
@@ -11,7 +10,7 @@ interface PageProps {
   projectData: ResearcherProject;
   params: {
     subTabId: ProjectsSubTabs;
-    id: number | Modes;
+    id: number;
   };
 }
 

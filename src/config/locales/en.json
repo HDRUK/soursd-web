@@ -578,15 +578,6 @@
     "subsidiaryAddressRequired": "Subsidiary address is required",
     "subsidiaryWebsite": "Subsidiary website",
     "subsidiaryWebsitePlaceholder": "Subsidiary website",
-    "ProjectCreate": {
-      "heading": "Add new project",
-      "title": "Project name",
-      "titlePlaceholder": "Project name",
-      "titleRequiredInvalid": "Project name is required",
-      "createButton": "Create or import",
-      "uniqueId": "Import via Id",
-      "uniqueIdDescription": "This is the project id for an existing project within the Health Data Research Gateway"
-    },
     "SafeProject": {
       "add": "Add",
       "status": "Status",
@@ -1162,7 +1153,6 @@
     "projectStatus": "Status"
   },
   "Projects": {
-    "createButton": "",
     "addNewProjectTitle": "New project",
     "addNewProjectButton": "Add new project",
     "custodians": "Data custodian",

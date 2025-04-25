@@ -53,7 +53,7 @@ const DateInput = ({
         label={label}
         value={value}
         onChange={handleChange}
-        format={"dd/MM/yyyy"}
+        format={dateFormat}
         slotProps={{
           textField: {
             id,
