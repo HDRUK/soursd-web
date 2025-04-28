@@ -41,7 +41,8 @@ export default function AdministrativeContacts({
     {
       accessorKey: "created_at",
       header: t("createdAt"),
-      cell: info => formatDisplayLongDate(info.getValue()),
+      cell: info => formatDisplayLongDate(info.getValue() as string),
+      minSize: 160,
     },
     ...additionalColumns,
   ];

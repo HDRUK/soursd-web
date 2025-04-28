@@ -6,6 +6,7 @@ import {
 } from "@/utils/testUtils";
 import { mockedAffiliation } from "@/mocks/data/user";
 import { useQuery, useMutation } from "@tanstack/react-query";
+import { mockPagedResults } from "jest.utils";
 import AffiliationsPage from "./AffiliationsPage";
 
 jest.mock("@tanstack/react-query", () => ({
@@ -21,21 +22,28 @@ const mockUseQuery = useQuery as jest.MockedFunction<typeof useQuery>;
 const mockUseMutation = useMutation as jest.MockedFunction<typeof useMutation>;
 
 describe("<AffiliationsPage />", () => {
-  const testAffiliation = mockedAffiliation();
+  const testAffiliations = [
+    mockedAffiliation(),
+    mockedAffiliation({
+      organisation: {
+        organisation_name: "Second Organisation Name",
+      },
+    }),
+  ];
   beforeEach(() => {
     jest.clearAllMocks();
 
     mockUseStore({
       config: {
         user: { registry_id: 123 },
-        histories: { affiliations: [testAffiliation] },
+        histories: { affiliations: testAffiliations },
       },
       getHistories: jest.fn(),
       setHistories: jest.fn(),
     });
 
     mockUseQuery.mockReturnValue({
-      data: { data: { data: [testAffiliation] } },
+      data: { data: mockPagedResults(testAffiliations) },
       refetch: jest.fn(),
       isLoading: false,
       isError: false,
@@ -65,7 +73,7 @@ describe("<AffiliationsPage />", () => {
     render(<AffiliationsPage />);
     await waitFor(() => {
       expect(
-        screen.getByText(testAffiliation.organisation.organisation_name)
+        screen.getByText(testAffiliations[0].organisation.organisation_name)
       ).toBeInTheDocument();
     });
   });

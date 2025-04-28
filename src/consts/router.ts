@@ -196,10 +196,6 @@ const ROUTES: Routes = {
     path: "/user/profile",
     permissions: [UserGroup.USERS],
   },
-  profileDelegate: {
-    path: "/organisation/delegate/profile",
-    permissions: [UserGroup.ORGANISATIONS],
-  },
   profileOrganisation: {
     path: "/organisation/profile",
     permissions: [UserGroup.ORGANISATIONS],

@@ -65,7 +65,6 @@ interface Routes {
   profileResearcherProjectsSafePeople: RouteConfig;
   profileResearcherProjectsSafeSettings: RouteConfig;
   profileResearcherProjectsSafeOutputs: RouteConfig;
-  profileDelegate: RouteConfig;
   profileOrganisation: RouteConfig;
   profileOrganisationActions: RouteConfig;
   profileOrganisationDetails: RouteConfig;
