@@ -13,9 +13,9 @@
     "test:watch": "TZ=UTC jest --watch --transformIgnorePatterns \"node_modules/(?!pretty-bytes)/\"  --env=jsdom",
     "test:coverage": "jest --coverage",
     "pre-commit": "npx lint-staged",
-    "storybook": "GOOGLE_MAPS_API_KEY=1234 storybook dev -p 6006",
-    "build-storybook": "GOOGLE_MAPS_API_KEY=1234 storybook build",
-    "chromatic": "GOOGLE_MAPS_API_KEY=1234 npx chromatic --project-token=$CHROMATIC_PROJECT_TOKEN"
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "chromatic": "npx chromatic --project-token=$CHROMATIC_PROJECT_TOKEN"
   },
   "dependencies": {
     "@emotion/cache": "^11.11.0",

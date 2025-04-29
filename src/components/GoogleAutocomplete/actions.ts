@@ -9,13 +9,13 @@ const API_KEY = process.env.GOOGLE_MAPS_API_KEY;
 // temporary, will remove once finished debugging
 console.log("GOOGLE_MAPS_API_KEY=", API_KEY);
 
-if (!API_KEY) {
-  throw new Error(
-    "Missing one or more required environment variables: GOOGLE_MAPS_API_KEY"
-  );
-}
-
 export default async function fetchPredictions(input: string) {
+  if (!API_KEY) {
+    throw new Error(
+      "Missing one or more required environment variables: GOOGLE_MAPS_API_KEY"
+    );
+  }
+
   if (!input) {
     console.error("fetchPredictions called with empty input.");
     return [];
