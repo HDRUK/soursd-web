@@ -138,6 +138,7 @@ const GoogleAutocomplete: React.FC<GoogleAutocompleteProps> = ({
   }, [debouncedInputValue]);
 
   const handleInputChange = (_: SyntheticEvent, newInputValue: string) => {
+    console.log("TEST INPUT CHANGED");
     setInputValue(newInputValue);
   };
 
@@ -158,6 +159,8 @@ const GoogleAutocomplete: React.FC<GoogleAutocompleteProps> = ({
       onChange(onAddressSelected ? onAddressSelected(selected) : selected);
     }
   };
+
+  console.log("TEST", options);
 
   return (
     <MUIAutocomplete
