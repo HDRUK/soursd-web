@@ -9,5 +9,6 @@ export default async (
   options: ResponseOptions
 ): Promise<ResponseJson<PatchUserResponse>> => {
   const response = await patchRequest(`/users/${id}`, payload);
+
   return handleJsonResponse(response, options);
 };
