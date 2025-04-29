@@ -79,10 +79,6 @@ export default function EditDelegateForm({
             rowSpacing={3}
             sx={{ width: "70%", justifyContent: "flex-start" }}>
             <Grid item xs={12}>
-              {formOptions.defaultValues.first_name}
-            </Grid>
-
-            <Grid item xs={12}>
               <FormControl
                 name="first_name"
                 renderField={fieldProps => <TextField {...fieldProps} />}
