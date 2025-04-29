@@ -6,7 +6,7 @@ import { ProjectFilterKeys } from "@/modules/ProjectsFilters";
 import { usePaginatedCustodiansUserProjects } from "@/services/custodians";
 import { ResearcherProject } from "@/types/application";
 import {
-  renderOrganisationsNameCell,
+  renderUserOrganisationsNameCell,
   renderProjectNameCell,
 } from "@/utils/cells";
 import { ColumnDef } from "@tanstack/react-table";
@@ -54,7 +54,7 @@ export default function UserProjects() {
     {
       accessorKey: "organisations",
       header: t("organisations"),
-      cell: info => renderOrganisationsNameCell(info.getValue()),
+      cell: info => renderUserOrganisationsNameCell(info.getValue()),
     },
     {
       accessorKey: "status",

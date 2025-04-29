@@ -14,8 +14,6 @@ import {
 import { formatDisplayLongDate } from "@/utils/date";
 import { ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
-import PageBody from "../PageBody";
-import PageBodyContainer from "../PageBodyContainer";
 import ProjectsFilters from "../ProjectsFilters";
 
 const NAMESPACE_TRANSLATIONS_PROJECTS = "Projects";
@@ -134,29 +132,27 @@ export default function Projects({ variant, entityId }: ProjectsProps) {
   ];
 
   return (
-    <PageBodyContainer heading={t("projects")}>
-      <PageBody>
-        <PageSection>
-          <ProjectsFilters
-            queryParams={queryParams}
-            updateQueryParams={updateQueryParams}
-            resetQueryParams={resetQueryParams}
-            handleSortToggle={handleSortToggle}
-            handleFieldToggle={handleFieldToggle}
-          />
-        </PageSection>
-        <PageSection>
-          <Table
-            total={total}
-            last_page={last_page}
-            setPage={setPage}
-            data={projectsData}
-            columns={columns}
-            queryState={queryState}
-            isPaginated
-          />
-        </PageSection>
-      </PageBody>
-    </PageBodyContainer>
+    <>
+      <PageSection>
+        <ProjectsFilters
+          queryParams={queryParams}
+          updateQueryParams={updateQueryParams}
+          resetQueryParams={resetQueryParams}
+          handleSortToggle={handleSortToggle}
+          handleFieldToggle={handleFieldToggle}
+        />
+      </PageSection>
+      <PageSection>
+        <Table
+          total={total}
+          last_page={last_page}
+          setPage={setPage}
+          data={projectsData}
+          columns={columns}
+          queryState={queryState}
+          isPaginated
+        />
+      </PageSection>
+    </>
   );
 }

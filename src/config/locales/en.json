@@ -1155,6 +1155,8 @@
     "projectStatus": "Status"
   },
   "Projects": {
+    "addNewProjectTitle": "New project",
+    "addNewProjectButton": "Add new project",
     "custodians": "Data custodian",
     "okButton": "OK",
     "gatewayImportSuccess": "Data imported successfully from the Health Data Research Gateway",

@@ -18,6 +18,7 @@ export interface QueryAlertOptions {
   errorAlertType?: SweetAlertIcon;
   errorAlertProps?: ShowAlertOptions;
   enabled?: boolean;
+  showOnlyError?: boolean;
 }
 
 export default function useQueryAlerts(
@@ -75,7 +76,7 @@ export default function useQueryAlerts(
         alertOptions?.errorAlertType || "error",
         mergedErrorAlertProps
       );
-    } else if (query.isSuccess) {
+    } else if (query.isSuccess && !alertOptions?.showOnlyError) {
       defaultRef.current = showAlert(
         alertOptions?.successAlertType || "success",
         mergedSuccessAlertProps

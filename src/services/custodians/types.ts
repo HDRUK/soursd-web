@@ -80,6 +80,9 @@ type EntityType =
   | "user_validation_rules"
   | "org_validation_rules";
 
+type PostCustodianProjectResponse = number;
+type PostCustodianProjectPayload = ResearcherProject;
+
 export type {
   PostCustodianInviteUserPayload,
   PostCustodianInviteUserResponse,
@@ -102,4 +105,6 @@ export type {
   GetCustodianOrganisationsResponse,
   GetCustodianOrganisationUsersResponse,
   GetCustodianUsersResponse,
+  PostCustodianProjectResponse,
+  PostCustodianProjectPayload,
 };

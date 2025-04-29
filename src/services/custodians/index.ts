@@ -20,6 +20,8 @@ import usePaginatedCustodianOrganisationUsers from "./usePaginatedCustodianOrgan
 import getCustodianOrganisationUsers from "./getCustodianOrganisationUsers";
 import getCustodianUsers from "./getCustodianUsers";
 import usePaginatedCustodianUsers from "./usePaginatedCustodianUsers";
+import postCustodianProject from "./postCustodianProject";
+import postCustodianProjectQuery from "./postCustodianProjectQuery";
 
 export {
   getCustodian,
@@ -44,6 +46,8 @@ export {
   getCustodianOrganisationUsers,
   getCustodianUsers,
   usePaginatedCustodianUsers,
+  postCustodianProject,
+  postCustodianProjectQuery,
 };
 
 export type * from "./types";
