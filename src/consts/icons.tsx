@@ -12,6 +12,7 @@ import WorkspacePremiumOutlinedIcon from "@mui/icons-material/WorkspacePremiumOu
 import StarIcon from "@mui/icons-material/Star";
 import { SvgIconProps } from "@mui/material";
 import { yellow } from "@mui/material/colors";
+import Add from "@mui/icons-material/Add";
 
 const IdentityVerifiedIcon = (props: SvgIconProps) => {
   const { sx, ...restProps } = props;
@@ -38,6 +39,10 @@ const RejectIcon = (props: SvgIconProps) => {
   return (
     <GppBadOutlinedIcon {...restProps} sx={{ color: "primary.main", ...sx }} />
   );
+};
+
+const AddIcon = (props: SvgIconProps) => {
+  return <Add {...props} />;
 };
 
 const ApprovedUserIcon = (props: SvgIconProps) => (
@@ -90,4 +95,5 @@ export {
   TrashIcon,
   VerifyIcon,
   PrimaryContactIcon,
+  AddIcon,
 };

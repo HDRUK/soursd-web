@@ -1,12 +1,12 @@
 "use client";
 
-import Projects from "@/modules/Projects";
-import { notFound } from "next/navigation";
 import useCustodianStore from "@/queries/useCustodianStore";
+import { notFound } from "next/navigation";
 import { PageTabs } from "../../consts/tabs";
 import Contacts from "../Contacts";
 import Home from "../Home";
 import Organisations from "../Organisations";
+import Projects from "../Projects";
 import Users from "../Users";
 
 interface TabsContentsProps {
@@ -21,7 +21,7 @@ export default function TabsContents({ tabId }: TabsContentsProps) {
   return (
     <>
       {tabId === PageTabs.HOME && <Home custodian={custodian} />}
-      {tabId === PageTabs.PROJECTS && <Projects variant="custodian" />}
+      {tabId === PageTabs.PROJECTS && <Projects />}
       {tabId === PageTabs.ORGANISATIONS && <Organisations />}
       {tabId === PageTabs.USERS && <Users variant="custodian" />}
       {tabId === PageTabs.CONTACTS && <Contacts />}

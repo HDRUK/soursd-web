@@ -15,4 +15,12 @@ interface MutationState {
   reset?: () => void;
 }
 
-export type { QueryState, MutationState };
+type PropsWithMutation<T> = T & {
+  mutateState: MutationState;
+};
+
+type PropsWithQuery<T> = T & {
+  queryState: QueryState;
+};
+
+export type { QueryState, MutationState, PropsWithMutation, PropsWithQuery };

@@ -1,3 +1,4 @@
+import { AddIcon } from "@/consts/icons";
 import { useStore } from "@/data/store";
 import useQueryConfirmAlerts from "@/hooks/useQueryConfirmAlerts";
 import { PageBody, PageBodyContainer, PageSection } from "@/modules";
@@ -6,7 +7,6 @@ import SearchBar from "@/modules/SearchBar";
 import { deleteCustodianUser } from "@/services/custodian_users";
 import { usePaginatedCustodianUsers } from "@/services/custodians";
 import { CustodianUser } from "@/types/application";
-import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import { Box, Button, IconButton, Tooltip } from "@mui/material";
@@ -137,7 +137,7 @@ export default function Contacts() {
               />
             </Box>
             <Button
-              endIcon={<AddCircleOutlineOutlinedIcon />}
+              startIcon={<AddIcon />}
               variant="contained"
               onClick={() => {
                 if (custodian?.id) {
