@@ -68,7 +68,6 @@ export default function Form<T extends FieldValues>({
   useEffect(() => {
     if (defaultValues) {
       if (!deepEqual(defaultValues, methods.getValues())) {
-        console.log("DEFAULTS CHANGED", defaultValues, methods.getValues());
         Object.entries(defaultValues).forEach(([key, value]) => {
           methods.setValue(key as Path<T>, value, {
             shouldDirty: true,
