@@ -4,7 +4,6 @@ run-name: ${{ github.actor }} triggered deploy to DEV pipeline
 on:
   push:
     branches:
-      - "develop"
       - "fix/SOURSD-922"
 
 env:
@@ -25,7 +24,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          ref: "develop"
+          ref: "fix/SOURSD-922"
 
       - name: Read VERSION file
         id: getversion
@@ -74,7 +73,7 @@ jobs:
         id: checkout
         uses: actions/checkout@v4
         with:
-          ref: "develop"
+          ref: "fix/SOURSD-922"
 
       - name: Google Auth
         id: auth
