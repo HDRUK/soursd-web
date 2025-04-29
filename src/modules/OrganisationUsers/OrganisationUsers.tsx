@@ -15,10 +15,14 @@ import { User } from "@/types/application";
 import { formatShortDate } from "@/utils/date";
 import { renderUserNameCell } from "@/utils/cells";
 import Table from "@/components/Table";
-import { ActionMenu } from "@/components/ActionMenu";
+import { ActionMenu, ActionMenuItem } from "@/components/ActionMenu";
 import DecoupleUser from "@/components/DecoupleDelegate";
 import UserModal from "@/components/UserModal";
 import UserBulkInvite from "@/components/UserBulkInvite";
+import Text from "@/components/Text";
+import { TrashIcon } from "@/consts/icons";
+import useMutationWithConfirmation from "@/queries/useMutationWithConfirmation";
+import { deleteAffiliationQuery } from "@/services/affiliations";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
 
@@ -52,6 +56,17 @@ export default function Users({ variant }: ProjectsProps) {
     enabled: !!organisation,
   });
 
+  const { showConfirm } = useMutationWithConfirmation(
+    deleteAffiliationQuery(),
+    {
+      successAlertProps: {
+        willClose: () => {
+          refetchOrganisationUsers();
+        },
+      },
+    }
+  );
+
   const renderAccountCreated = (info: CellContext<User, unknown>) => (
     <Box sx={{ display: "flex", justifyContent: "center" }}>
       {info.getValue() ? (
@@ -64,12 +79,12 @@ export default function Users({ variant }: ProjectsProps) {
 
   const renderActions = (info: CellContext<User, unknown>) => (
     <ActionMenu>
-      <DecoupleUser
-        user={info.row.original}
-        onSuccess={refetchOrganisationUsers}
-        payload={{ organisation_id: null }}
-        namespace="DecoupleUser"
-      />
+      <ActionMenuItem
+        onClick={() =>
+          showConfirm(info.row.original.registry.affiliations[0].id)
+        }>
+        <Text startIcon={<TrashIcon />}>{t("removeAffiliationButton")}</Text>
+      </ActionMenuItem>
     </ActionMenu>
   );
 
@@ -86,28 +101,9 @@ export default function Users({ variant }: ProjectsProps) {
       accessorKey: "name",
       header: "Employee / Student name",
       cell: info => {
-        let route = null;
-
-        switch (variant) {
-          case "organisation":
-            route = routes.profileOrganisationUsersIdentity;
-            break;
-          case "custodian":
-            route = routes.profileCustodianUsersIdentity;
-            break;
-          case "user":
-            route = null;
-            break;
-          default:
-            route = null;
-        }
         return renderUserNameCell(
-          {
-            first_name: info.row.original.first_name,
-            last_name: info.row.original.last_name,
-            id: info.row.original.id,
-          } as User,
-          route?.path
+          info.row.original,
+          routes.profileOrganisationUsersIdentity?.path
         );
       },
     },

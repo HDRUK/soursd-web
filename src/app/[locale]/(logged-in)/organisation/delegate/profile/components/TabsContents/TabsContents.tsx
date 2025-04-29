@@ -2,7 +2,7 @@
 
 import { useStore } from "@/data/store";
 import { notFound } from "next/navigation";
-import Users from "@/modules/Users";
+import Users from "@/modules/OrganisationUsers";
 import { PageTabs } from "../../consts/tabs";
 
 interface TabsContentsProps {
