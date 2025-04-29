@@ -1,48 +1,92 @@
 "use server";
 
-export default async function fetchPredictions(input) {
-  const GOOGLE_PLACES_AUTOCOMPLETE_URL =
-    "https://maps.googleapis.com/maps/api/place/autocomplete/json";
-  const GOOGLE_PLACES_DETAILS_URL =
-    "https://maps.googleapis.com/maps/api/place/details/json";
-  const API_KEY = process.env.GOOGLE_MAPS_API_KEY;
+const GOOGLE_PLACES_AUTOCOMPLETE_URL =
+  "https://maps.googleapis.com/maps/api/place/autocomplete/json";
+const GOOGLE_PLACES_DETAILS_URL =
+  "https://maps.googleapis.com/maps/api/place/details/json";
+const API_KEY = process.env.GOOGLE_MAPS_API_KEY;
+
+// temporary, will remove once finished debugging
+console.log("GOOGLE_MAPS_API_KEY=", API_KEY);
+
+if (!API_KEY) {
+  throw new Error(
+    "Missing one or more required environment variables: GOOGLE_MAPS_API_KEY"
+  );
+}
+
+export default async function fetchPredictions(input: string) {
+  if (!input) {
+    console.error("fetchPredictions called with empty input.");
+    return [];
+  }
+
   try {
-    const autocompleteResponse = await fetch(
-      `${GOOGLE_PLACES_AUTOCOMPLETE_URL}?input=${encodeURIComponent(input)}&key=${API_KEY}&types=address`
-    );
+    const autocompleteData = await fetchAutocomplete(input);
+    const predictions = autocompleteData?.predictions || [];
 
-    if (!autocompleteResponse.ok) {
-      throw new Error(
-        `Error fetching autocomplete data: ${autocompleteResponse.statusText}`
-      );
-    }
-
-    const autocompleteData = await autocompleteResponse.json();
-    const predictions = autocompleteData.predictions || [];
     const detailedResults = await Promise.all(
-      predictions.map(async prediction => {
-        const detailsResponse = await fetch(
-          `${GOOGLE_PLACES_DETAILS_URL}?place_id=${prediction.place_id}&key=${API_KEY}`
-        );
-        if (!detailsResponse.ok) {
-          console.error(`Failed to fetch details for ${prediction.place_id}`);
-          return { description: prediction.description, county: null };
-        }
-        const detailsData = await detailsResponse.json();
-        const addressFields = extractCounty(detailsData.result);
-        return { description: prediction.description, addressFields };
-      })
+      predictions.map(prediction => fetchDetails(prediction))
     );
+
     return detailedResults;
   } catch (error) {
-    console.error("Failed to fetch predictions or details:", error);
+    console.error("[fetchPredictions] Unexpected error:", error);
     return [];
   }
 }
 
-function extractCounty(result) {
-  const addressComponents = result.address_components || [];
-  const results = {
+async function fetchAutocomplete(input: string) {
+  try {
+    const url = `${GOOGLE_PLACES_AUTOCOMPLETE_URL}?input=${encodeURIComponent(input)}&key=${API_KEY}&types=address`;
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      const message = `Autocomplete fetch failed: ${response.status} ${response.statusText}`;
+      console.error(message);
+      throw new Error(message);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("[fetchAutocomplete] Error:", error);
+    throw error;
+  }
+}
+
+async function fetchDetails(prediction) {
+  try {
+    const url = `${GOOGLE_PLACES_DETAILS_URL}?place_id=${prediction.place_id}&key=${API_KEY}`;
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      console.error(
+        `[fetchDetails] Failed to fetch details for place_id: ${prediction.place_id} (${response.status} ${response.statusText})`
+      );
+      return { description: prediction.description, addressFields: null };
+    }
+
+    const data = await response.json();
+    const addressFields = extractAddressFields(data.result);
+
+    return {
+      description: prediction.description,
+      addressFields,
+    };
+  } catch (error) {
+    console.error(
+      `[fetchDetails] Error fetching details for place_id ${prediction.place_id}:`,
+      error
+    );
+    return { description: prediction.description, addressFields: null };
+  }
+}
+
+function extractAddressFields(result) {
+  const components = result?.address_components || [];
+
+  const fields = {
     postcode: "",
     addressLine1: "",
     addressLine2: "",
@@ -51,26 +95,26 @@ function extractCounty(result) {
     country: "",
   };
 
-  addressComponents.forEach(component => {
+  components.forEach(component => {
     if (component.types.includes("postal_code")) {
-      results.postcode = component.long_name;
+      fields.postcode = component.long_name;
     }
     if (component.types.includes("street_number")) {
-      results.addressLine1 = component.short_name;
+      fields.addressLine1 = component.short_name;
     }
     if (component.types.includes("route")) {
-      results.addressLine1 =
-        `${results.addressLine1 || ""} ${component.long_name}`.trim();
+      fields.addressLine1 = `${fields.addressLine1 ? `${fields.addressLine1} ` : ""}${component.long_name}`;
     }
     if (component.types.includes("postal_town")) {
-      results.town = component.long_name;
+      fields.town = component.long_name;
     }
     if (component.types.includes("administrative_area_level_2")) {
-      results.county = component.long_name;
+      fields.county = component.long_name;
     }
     if (component.types.includes("country")) {
-      results.country = component.long_name;
+      fields.country = component.long_name;
     }
   });
-  return results;
+
+  return fields;
 }
