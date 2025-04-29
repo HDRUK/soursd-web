@@ -85,6 +85,7 @@ const GoogleAutocomplete: React.FC<GoogleAutocompleteProps> = ({
   }, []);
 
   useEffect(() => {
+    console.log("TEST ", debouncedInputValue);
     if (formatAddress(value) === debouncedInputValue) return;
     const fetchOptions = async () => {
       if (!debouncedInputValue) {
@@ -92,7 +93,9 @@ const GoogleAutocomplete: React.FC<GoogleAutocompleteProps> = ({
       }
       setLoading(true);
       try {
+        console.log("TEST calling fetch predictions");
         const predictions = await fetchPredictions(debouncedInputValue);
+        console.log("TEST ", predictions);
         setOptions(
           predictions
             .map((place: PredictionResponse) => {
