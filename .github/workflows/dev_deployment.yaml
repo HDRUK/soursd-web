@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - "develop"
+      - "fix/SOURSD-922"
 
 env:
   PROJECT_ID: "${{ secrets.PROJECT_ID }}"
