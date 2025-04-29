@@ -108,70 +108,77 @@ export default function Delegates() {
   return (
     <PageBody>
       <PageSection>
-        <Form schema={schema} onSubmit={handleSubmit} {...formOptions}>
-          <>
-            <FormSection type="form" heading={t("keyContactFormTitle")}>
-              <Markdown>{t("keyContactFormDescription")}</Markdown>
+        {user?.is_delegate === 0 ? (
+          <Form schema={schema} onSubmit={handleSubmit} {...formOptions}>
+            <>
+              <FormSection type="form" heading={t("keyContactFormTitle")}>
+                <Markdown>{t("keyContactFormDescription")}</Markdown>
 
-              <Grid
-                container
-                rowSpacing={3}
-                sx={{ width: "70%", justifyContent: "flex-start" }}>
-                <Grid item xs={12}>
-                  <FormControl
-                    name="first_name"
-                    renderField={fieldProps => <TextField {...fieldProps} />}
-                  />
-                </Grid>
+                <Grid
+                  container
+                  rowSpacing={3}
+                  sx={{ width: "70%", justifyContent: "flex-start" }}>
+                  <Grid item xs={12}>
+                    <FormControl
+                      name="first_name"
+                      renderField={fieldProps => <TextField {...fieldProps} />}
+                    />
+                  </Grid>
 
-                <Grid item xs={12}>
-                  <FormControl
-                    name="last_name"
-                    renderField={fieldProps => <TextField {...fieldProps} />}
-                  />
-                </Grid>
+                  <Grid item xs={12}>
+                    <FormControl
+                      name="last_name"
+                      renderField={fieldProps => <TextField {...fieldProps} />}
+                    />
+                  </Grid>
 
-                <Grid item xs={12}>
-                  <FormControl
-                    name="department"
-                    renderField={fieldProps => (
-                      <SelectDepartments
-                        organisation={organisation}
-                        {...fieldProps}
-                        inputProps={{
-                          "aria-label": t("departmentNameAriaLabel"),
-                        }}
-                      />
-                    )}
-                  />
+                  <Grid item xs={12}>
+                    <FormControl
+                      name="department"
+                      renderField={fieldProps => (
+                        <SelectDepartments
+                          organisation={organisation}
+                          {...fieldProps}
+                          inputProps={{
+                            "aria-label": t("departmentNameAriaLabel"),
+                          }}
+                        />
+                      )}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FormControl
+                      name="job_title"
+                      renderField={fieldProps => <TextField {...fieldProps} />}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FormControl
+                      name="email"
+                      renderField={fieldProps => <TextField {...fieldProps} />}
+                    />
+                  </Grid>
                 </Grid>
-                <Grid item xs={12}>
-                  <FormControl
-                    name="job_title"
-                    renderField={fieldProps => <TextField {...fieldProps} />}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <FormControl
-                    name="email"
-                    renderField={fieldProps => <TextField {...fieldProps} />}
-                  />
-                </Grid>
-              </Grid>
-            </FormSection>
-            <FormSection>
-              <Markdown>{tProfile("delegateAdminDescription")}</Markdown>
-              <DelegateTable />
-            </FormSection>
-            <FormActions>
-              <LoadingButton
-                loading={patchUserQueryState.isPending}
-                type="submit">
-                {t("save")}
-              </LoadingButton>
-            </FormActions>
-          </>
-        </Form>
+              </FormSection>
+              <FormSection>
+                <Markdown>{tProfile("delegateAdminDescription")}</Markdown>
+                <DelegateTable />
+              </FormSection>
+              <FormActions>
+                <LoadingButton
+                  loading={patchUserQueryState.isPending}
+                  type="submit">
+                  {t("save")}
+                </LoadingButton>
+              </FormActions>
+            </>
+          </Form>
+        ) : (
+          <FormSection>
+            <Markdown>{tProfile("delegateAdminDescriptionDelegate")}</Markdown>
+            <DelegateTable />
+          </FormSection>
+        )}
       </PageSection>
     </PageBody>
   );

@@ -21,7 +21,10 @@ const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
 
 const DelegateTable = () => {
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
-  const organisation = useStore(state => state.config.organisation);
+  const { organisation, user } = useStore(state => ({
+    organisation: state.config.organisation,
+    user: state.getUser(),
+  }));
 
   const {
     isLoading: isLoadingDelegates,
@@ -75,11 +78,15 @@ const DelegateTable = () => {
       header: "Account created",
       cell: renderAccountCreated,
     },
-    {
-      accessorKey: "actions",
-      header: "Actions",
-      cell: renderActions,
-    },
+    ...(user?.is_delegate === 0
+      ? [
+          {
+            accessorKey: "actions",
+            header: "Actions",
+            cell: renderActions,
+          },
+        ]
+      : []),
   ];
 
   return (
@@ -96,21 +103,24 @@ const DelegateTable = () => {
           isError: isErrorDelegates || delegatesData === undefined,
         }}
       />
-
-      <Button variant="outlined" onClick={() => setOpenInviteModal(true)}>
-        {tProfile("inviteAnotherDelegate")}
-      </Button>
-      <FormModal
-        open={openInviteModal}
-        onClose={() => setOpenInviteModal(false)}>
-        <InviteDelegateForm
-          onCancel={() => setOpenInviteModal(false)}
-          onSuccess={() => {
-            setOpenInviteModal(false);
-            refetchDelegates();
-          }}
-        />
-      </FormModal>
+      {user?.is_delegate === 0 && (
+        <>
+          <Button variant="outlined" onClick={() => setOpenInviteModal(true)}>
+            {tProfile("inviteAnotherDelegate")}
+          </Button>
+          <FormModal
+            open={openInviteModal}
+            onClose={() => setOpenInviteModal(false)}>
+            <InviteDelegateForm
+              onCancel={() => setOpenInviteModal(false)}
+              onSuccess={() => {
+                setOpenInviteModal(false);
+                refetchDelegates();
+              }}
+            />
+          </FormModal>
+        </>
+      )}
     </LoadingWrapper>
   );
 };

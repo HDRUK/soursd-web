@@ -4,7 +4,13 @@ type GetAffiliationsResponse = ResearcherAffiliation[];
 type PostAffiliationsResponse = ResearcherAffiliation;
 type PostAffiliationPayload = ResearcherAffiliation;
 type PatchAffiliationsResponse = ResearcherAffiliation;
+type PutAffiliationsResponse = ResearcherAffiliation;
 type PatchAffiliationsPayload = Partial<ResearcherAffiliation>;
+
+export enum AffiliationStatus {
+  Approved = "approved",
+  Rejected = "rejected",
+}
 
 export type {
   GetAffiliationsResponse,
@@ -12,4 +18,5 @@ export type {
   PostAffiliationsResponse,
   PatchAffiliationsPayload,
   PatchAffiliationsResponse,
+  PutAffiliationsResponse,
 };
