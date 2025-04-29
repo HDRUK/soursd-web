@@ -42,9 +42,9 @@ export default function EditDelegateForm({
 
   const handleSubmit = useCallback(
     async (fields: DelegatesFormValues) => {
-      mutateDelegate(fields).then(() => onSuccess());
+      mutateDelegate(fields); // .then(() => onSuccess());
     },
-    [mutateDelegate, onSuccess, t]
+    [mutateDelegate, onSuccess]
   );
   const schema = useMemo(
     () =>
@@ -78,6 +78,10 @@ export default function EditDelegateForm({
             container
             rowSpacing={3}
             sx={{ width: "70%", justifyContent: "flex-start" }}>
+            <Grid item xs={12}>
+              {delegate.email}
+            </Grid>
+
             <Grid item xs={12}>
               <FormControl
                 name="first_name"
