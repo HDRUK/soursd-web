@@ -42,7 +42,7 @@ export default function EditDelegateForm({
 
   const handleSubmit = useCallback(
     async (fields: DelegatesFormValues) => {
-      mutateDelegate(fields); // .then(() => onSuccess());
+      mutateDelegate({ ...fields }).then(() => onSuccess());
     },
     [mutateDelegate, onSuccess]
   );
@@ -79,7 +79,7 @@ export default function EditDelegateForm({
             rowSpacing={3}
             sx={{ width: "70%", justifyContent: "flex-start" }}>
             <Grid item xs={12}>
-              {delegate.email}
+              {formOptions.defaultValues.first_name}
             </Grid>
 
             <Grid item xs={12}>
