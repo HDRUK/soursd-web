@@ -14,11 +14,10 @@ export default function PrivaryPolicy() {
   return (
     <InfoPageWrapper>
       <PageBodyContainer
-        sx={{ width: "100%", mx: 2, px: 2, background: "white" }}>
+        sx={{ width: "100%", m: 2, px: 2, background: "white" }}>
         <PageColumns>
           <PageColumnBody lg={12}>
-            <PageSection fontSize={18}>
-              {" "}
+            <PageSection fontSize={18} sx={{ p: 2 }}>
               <Markdown>{privacyPolicyContent}</Markdown>
             </PageSection>
           </PageColumnBody>
