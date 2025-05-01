@@ -1,3 +1,3 @@
-import Users from "./Users";
+import OrganisationUsers from "./OrganisationUsers";
 
-export default Users;
+export default OrganisationUsers;

@@ -1,6 +1,6 @@
 import { UseMutationOptions } from "@tanstack/react-query";
-import deleteAffiliation from "./deleteAffiliation";
 import { MutationOptions } from "@/types/requests";
+import deleteAffiliation from "./deleteAffiliation";
 
 export default function deleteAffiliationQuery(options?: MutationOptions) {
   return {

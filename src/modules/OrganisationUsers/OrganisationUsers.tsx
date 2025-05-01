@@ -1,44 +1,33 @@
-import { useState } from "react";
-import { useTranslations } from "next-intl";
-import { ColumnDef, CellContext } from "@tanstack/react-table";
-import { Box, Button, Checkbox, FormControlLabel } from "@mui/material";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import CancelIcon from "@mui/icons-material/Cancel";
+import { ActionMenu, ActionMenuItem } from "@/components/ActionMenu";
+import Table from "@/components/Table";
+import Text from "@/components/Text";
+import { TrashIcon } from "@/consts/icons";
 import { SearchDirections } from "@/consts/search";
 import { useStore } from "@/data/store";
 import usePaginatedQuery from "@/hooks/usePaginatedQuery";
 import { PageBody, PageSection } from "@/modules";
-import SearchBar from "@/modules/SearchBar";
-import { getOrganisationRegistriesQuery } from "@/services/organisations";
-import { ProjectEntities } from "@/services/projects/getEntityProjects";
-import { User } from "@/types/application";
-import { formatShortDate } from "@/utils/date";
-import { renderUserNameCell } from "@/utils/cells";
-import Table from "@/components/Table";
-import { ActionMenu, ActionMenuItem } from "@/components/ActionMenu";
-import DecoupleUser from "@/components/DecoupleDelegate";
-import UserModal from "@/components/UserModal";
-import UserBulkInvite from "@/components/UserBulkInvite";
-import Text from "@/components/Text";
-import { TrashIcon } from "@/consts/icons";
 import useMutationWithConfirmation from "@/queries/useMutationWithConfirmation";
 import { deleteAffiliationQuery } from "@/services/affiliations";
+import { getOrganisationRegistriesQuery } from "@/services/organisations";
+import { User } from "@/types/application";
+import { renderUserNameCell } from "@/utils/cells";
+import { formatShortDate } from "@/utils/date";
+import CancelIcon from "@mui/icons-material/Cancel";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import { Box } from "@mui/material";
+import { CellContext, ColumnDef } from "@tanstack/react-table";
+import { useTranslations } from "next-intl";
+import OrganisationUsersBulkInvite from "../OrganisationUsersBulkInvite";
+import OrganisationUsersFilters from "../OrganisationUsersFilters";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
 
-interface ProjectsProps {
-  variant: ProjectEntities;
-}
-
-export default function Users({ variant }: ProjectsProps) {
+export default function OrganisationUsers() {
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
-  const [open, setOpen] = useState(false);
-  const { organisation, user, routes } = useStore(state => ({
+  const { organisation, routes } = useStore(state => ({
     organisation: state.config.organisation,
-    user: state.getUser(),
     routes: state.getApplication().routes,
   }));
-  const [showPendingInvites, setShowPendingInvites] = useState(0);
 
   const {
     data: usersData,
@@ -54,9 +43,9 @@ export default function Users({ variant }: ProjectsProps) {
     ...getOrganisationRegistriesQuery(organisation?.id as number),
     defaultQueryParams: {
       sort: `last_name:${SearchDirections.ASC}`,
-      show_pending: showPendingInvites,
     },
     enabled: !!organisation,
+    shouldUpdateQuerystring: true,
   });
 
   const { showConfirm } = useMutationWithConfirmation(
@@ -91,15 +80,7 @@ export default function Users({ variant }: ProjectsProps) {
     </ActionMenu>
   );
 
-  // task coming for this
-  const renderSelectColumn = () => <Checkbox value />;
-
   const columns: ColumnDef<User>[] = [
-    {
-      accessorKey: "id",
-      header: <Checkbox value />,
-      cell: renderSelectColumn,
-    },
     {
       accessorKey: "name",
       header: "Employee / Student name",
@@ -125,53 +106,20 @@ export default function Users({ variant }: ProjectsProps) {
       header: "Invite Sent",
       cell: info => formatShortDate(info.getValue() as string),
     },
-    ...(user?.is_delegate === 0
-      ? [
-          {
-            accessorKey: "actions",
-            header: "Actions",
-            cell: renderActions,
-          },
-        ]
-      : []),
+    {
+      accessorKey: "actions",
+      header: "Actions",
+      cell: renderActions,
+    },
   ];
 
   return (
     <PageBody>
       <PageSection heading={t("employeeStudentAdminTitle")}>
-        <Box sx={{ display: "flex", gap: 3, mb: 3 }}>
-          <Box component="form" role="search">
-            <SearchBar
-              onClear={() =>
-                resetQueryParams({ show_pending: showPendingInvites })
-              }
-              onSearch={(text: string) => {
-                updateQueryParams({
-                  "first_name[]": text,
-                  "last_name[]": text,
-                  "email[]": text,
-                });
-              }}
-            />
-          </Box>
-          <FormControlLabel
-            label={t("showPendingInvites")}
-            control={
-              <Checkbox
-                value
-                onChange={event => {
-                  const showPending = event.target.checked ? 1 : 0;
-                  setShowPendingInvites(showPending);
-                  updateQueryParams({
-                    show_pending: showPending,
-                  });
-                }}
-              />
-            }
-          />
-          <Button variant="text">{t("clearAll")} </Button>
-        </Box>
-
+        <OrganisationUsersFilters
+          updateQueryParams={updateQueryParams}
+          resetQueryParams={resetQueryParams}
+        />
         <Table
           total={total}
           isPaginated
@@ -182,28 +130,8 @@ export default function Users({ variant }: ProjectsProps) {
           columns={columns}
           queryState={userDataQueryState}
         />
-
-        {user?.is_delegate === 0 && (
-          <Box sx={{ display: "flex", gap: 2, flexDirection: "row" }}>
-            <div>
-              <Button
-                variant="outlined"
-                aria-label="modal-button"
-                onClick={() => setOpen(true)}>
-                {t("inviteNewUserButton")}
-              </Button>
-            </div>
-            <UserBulkInvite organisation_id={organisation?.id as number} />
-          </Box>
-        )}
+        <OrganisationUsersBulkInvite organisation={organisation} />
       </PageSection>
-      {!!organisation && (
-        <UserModal
-          organisation={organisation}
-          open={open}
-          onClose={() => setOpen(false)}
-        />
-      )}
     </PageBody>
   );
 }
