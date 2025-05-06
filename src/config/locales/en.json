@@ -209,6 +209,7 @@
     "dataSecurityCompliance": "Data Security Compliance"
   },
   "ProfileOrganisation": {
+    "removeAffiliationButton": "Remove affiliation",
     "title": "Profile",
     "userAdministration": "User Administration",
     "companyValid": "Organisation validated",
@@ -1486,5 +1487,17 @@
     "heading": "Pending affiliations",
     "confirmAffiliationButton": "Confirm affiliation",
     "declineAffiliationButton": "Decline affiliation"
+  },
+  "Mutations": {
+    "WithConfirmation": {
+      "confirmAlertTitle": "Delete",
+      "confirmAlertText": "You are about to permanently delete a record. Please click confirm if you still wish to continue...",
+      "confirmAlertConfirmButton": "Go ahead",
+      "confirmAlertCancelButton": "Cancel",
+      "successAlertTitle": "Success",
+      "successAlertText": "The data has been successfully deleted",
+      "errorAlertTitle": "Error",
+      "errorAlertText": "There has been a problem deleting this data. Please try again or contact us at <contactLink></contactLink>"
+    }
   }
 }

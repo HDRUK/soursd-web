@@ -5,7 +5,7 @@ import { PageBody } from "@/modules";
 import ProjectsSafePeople from "@/modules/ProjectsSafePeople";
 import { EntityType } from "@/types/api";
 import { notFound } from "next/navigation";
-import Users from "@/modules/Users";
+import OrganisationUsers from "@/modules/OrganisationUsers";
 import {
   DetailsPageSubTabs,
   getSubTabs,
@@ -68,7 +68,7 @@ export default function SubTabsContents({
       content = <Delegates />;
       break;
     case UserAdminPageSubTabs.EMPLOYEE_STUDENT_ADMINISTRATION:
-      content = <Users variant="organisation" />;
+      content = <OrganisationUsers />;
       break;
     case ProjectsSubTabs.SAFE_PEOPLE:
       content = <ProjectsSafePeople variant={EntityType.ORGANISATION} />;
