@@ -3,12 +3,11 @@ import { isFieldRequired } from "@/utils/form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, BoxProps, Grid } from "@mui/material";
 import deepEqual from "deep-equal";
-import { HTMLAttributes, ReactNode, useEffect } from "react";
+import { HTMLAttributes, ReactNode, useEffect, useRef } from "react";
 import {
   DefaultValues,
   FieldValues,
   FormProvider,
-  Path,
   Resolver,
   useForm,
   UseFormProps,
@@ -65,20 +64,14 @@ export default function Form<T extends FieldValues>({
   const methods = useForm<T>(formOptions);
   const { handleSubmit, reset } = methods;
 
+  const prevDefaultValues = useRef(defaultValues);
+
   useEffect(() => {
-    if (defaultValues) {
-      if (!deepEqual(defaultValues, methods.getValues())) {
-        console.log("DEFAULTS CHANGED", defaultValues, methods.getValues());
-        Object.entries(defaultValues).forEach(([key, value]) => {
-          methods.setValue(key as Path<T>, value, {
-            shouldDirty: true,
-          });
-        });
-      } else {
-        reset(defaultValues);
-      }
+    if (defaultValues && !deepEqual(defaultValues, prevDefaultValues.current)) {
+      reset(defaultValues);
+      prevDefaultValues.current = defaultValues;
     }
-  }, [defaultValues]);
+  }, [defaultValues, reset]);
 
   const extendedMethods: ExtendedUseFormReturn<T> = {
     ...methods,
