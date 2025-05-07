@@ -219,7 +219,7 @@ export default function Training({
         if (updatedHistories) {
           setHistories(updatedHistories);
         }
-      } 
+      } catch (_) {}
     },
     [getHistories, setHistories]
   );
