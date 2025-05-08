@@ -1,20 +1,22 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { projectUserCustodianApproval } from "@/services/approvals";
+import { organisationCustodianApproval } from "@/services/approvals";
 import { useEffect, useState } from "react";
 import useQueryAlerts from "@/hooks/useQueryAlerts";
 
 type CustodianParams = {
   custodianId: string | number;
-  projectId: string | number;
-  registryId: string | number;
+  organisationId: string | number;
 };
 
-export const useProjectUserCustodianApproval = ({
+export const useOrganisationCustodianApproval = ({
   custodianId,
-  projectId,
-  registryId,
+  organisationId,
 }: CustodianParams) => {
-  const queryKey = ["custodianApproval", custodianId, projectId, registryId];
+  const queryKey = [
+    "custodianOrganisationApproval",
+    custodianId,
+    organisationId,
+  ];
   const queryClient = useQueryClient();
 
   const [mutationState, setMutationState] = useState<{
@@ -35,18 +37,16 @@ export const useProjectUserCustodianApproval = ({
   } = useQuery({
     queryKey,
     queryFn: () =>
-      projectUserCustodianApproval(
+      organisationCustodianApproval(
         "GET",
         custodianId,
-        projectId,
-        registryId,
+        organisationId,
         undefined,
         {
           error: { message: "fetchApprovalError" },
         }
       ),
   });
-
   useEffect(() => {
     setMutationState(state => ({
       ...state,
@@ -62,11 +62,10 @@ export const useProjectUserCustodianApproval = ({
 
   const { mutateAsync: approve, isPending: isApproving } = useMutation({
     mutationFn: (comment: string) =>
-      projectUserCustodianApproval(
+      organisationCustodianApproval(
         "POST",
         custodianId,
-        projectId,
-        registryId,
+        organisationId,
         { approved: 1, comment },
         {
           error: { message: "approvalError" },
@@ -77,11 +76,10 @@ export const useProjectUserCustodianApproval = ({
 
   const { mutateAsync: reject, isPending: isRejecting } = useMutation({
     mutationFn: (comment: string) =>
-      projectUserCustodianApproval(
+      organisationCustodianApproval(
         "POST",
         custodianId,
-        projectId,
-        registryId,
+        organisationId,
         { approved: 0, comment },
         {
           error: { message: "rejectionError" },
@@ -89,7 +87,6 @@ export const useProjectUserCustodianApproval = ({
       ),
     onSuccess,
   });
-
   const isLoading = isFetching || isApproving || isRejecting;
 
   useQueryAlerts(mutationState);

@@ -1327,7 +1327,8 @@
     "alertCancel": "Cancel"
   },
   "ActionValidationPanel": {
-    "title": "Validation Checks"
+    "title": "Validation Checks",
+    "updateStatusButton": "Update status"
   },
   "ActionValidationMakeDecision": {
     "pass": "Pass",
@@ -1507,8 +1508,5 @@
   "SelectValidationActionStatus": {
     "notApproved": "Not approved",
     "approved": "Approved"
-  },
-  "ActionValidationStatus": {
-    "updateStatusButton": "Update status"
   }
 }

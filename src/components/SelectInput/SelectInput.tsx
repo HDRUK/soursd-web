@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   MenuItem,
   Select,
@@ -7,15 +7,12 @@ import {
   SelectProps,
 } from "@mui/material";
 
-import { SelectChangeEvent } from "@mui/material/Select";
-
 export type SelectInputProps = SelectProps<string | number> & {
   variant?: "outlined" | "standard";
   options: { label: string; value: string | number }[];
   label?: string;
   value?: string | number;
   ariaLabel?: string;
-  onChange?: (value: string | number) => void;
 };
 
 const SelectInput = ({
@@ -24,23 +21,11 @@ const SelectInput = ({
   value,
   ariaLabel,
   variant = "outlined",
-  onChange,
   ...restProps
 }: SelectInputProps) => {
-  const [selectedValue, setSelectedValue] = useState<string | number>("");
-  useEffect(() => {
-    console.log("hello, value changed", value);
-    setSelectedValue(value !== undefined ? value : "");
-  }, [value]);
-  console.log(value);
+  const [selectedValue, setSelectedValue] = useState(value || "");
 
   const isStandard = variant === "standard";
-
-  const handleChange = (event: SelectChangeEvent<string | number>) => {
-    const newValue = event.target.value;
-    setSelectedValue(newValue);
-    onChange?.(newValue);
-  };
 
   return (
     <FormControl fullWidth variant={variant} size="small">
@@ -48,7 +33,7 @@ const SelectInput = ({
       <Select
         value={value || selectedValue}
         size="small"
-        onChange={handleChange}
+        onChange={event => setSelectedValue(event.target.value)}
         label={label}
         disableUnderline={isStandard}
         sx={{

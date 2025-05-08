@@ -15,6 +15,8 @@ import { useQuery } from "@tanstack/react-query";
 import { getCustodianProjectUserValidationLogsQuery } from "@/services/validation_logs";
 import { getUserQuery } from "@/services/users";
 import ActionValidationPanel from "@/modules/ActionValidationPanel";
+import { ActionValidationVariants } from "@/modules/ActionValidationPanel/ActionValidationPanel";
+
 import getProjectQuery from "@/services/projects/getProjectQuery";
 import UserDetails from "@/components/UserDetails";
 import { UserSubTabs } from "../../../../../../../consts/tabs";
@@ -91,6 +93,7 @@ function CustodianProjectUser({
           </PageColumnBody>
           <PageColumnDetails lg={4}>
             <ActionValidationPanel
+              variant={ActionValidationVariants.ProjectUser}
               queryState={queryState}
               logs={validationLogs?.data || []}
             />

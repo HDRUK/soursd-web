@@ -13,12 +13,11 @@ interface PostApprovalPayload {
 export default async (
   method: RequestMethod,
   custodianId: string | number,
-  projectId: string | number,
-  registryId: string | number,
+  organisationId: string | number,
   payload: PostApprovalPayload | undefined,
   options: ResponseOptions
 ): Promise<ResponseJson<ApprovalResponse>> => {
-  const url = `/custodian_approvals/${custodianId}/projects/${projectId}/registry/${registryId}`;
+  const url = `/custodian_approvals/${custodianId}/organisation/${organisationId}`;
 
   const requestFn = {
     POST: postRequest,

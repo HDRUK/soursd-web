@@ -11,6 +11,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getCustodianProjectUserValidationLogsQuery } from "@/services/validation_logs";
 import { getUserQuery } from "@/services/users";
 import ActionValidationPanel from "@/modules/ActionValidationPanel";
+import { ActionValidationVariants } from "@/modules/ActionValidationPanel/ActionValidationPanel";
 import getProjectQuery from "@/services/projects/getProjectQuery";
 import { useTranslations } from "next-intl";
 import { notFound } from "next/navigation";
