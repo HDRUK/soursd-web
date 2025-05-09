@@ -24,10 +24,19 @@ interface DeleteApprovalPayloadWithEntity extends DeleteApprovalPayload {
   type: EntityType;
 }
 
+interface ApprovalResponse {
+  project_id: number;
+  user_id: number;
+  custodian_id: number;
+  approved: number;
+  comment: string;
+}
+
 export type {
   Approval,
   PostApprovalPayload,
   PostApprovalPayloadWithEntity,
   DeleteApprovalPayload,
   DeleteApprovalPayloadWithEntity,
+  ApprovalResponse,
 };

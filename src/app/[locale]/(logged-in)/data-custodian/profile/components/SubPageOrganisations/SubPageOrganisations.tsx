@@ -8,6 +8,7 @@ import {
 import { Organisation } from "@/types/application";
 import { useEffect } from "react";
 import ActionValidationPanel from "@/modules/ActionValidationPanel";
+import { ActionValidationVariants } from "@/modules/ActionValidationPanel/ActionValidationPanel";
 import { useQuery } from "@tanstack/react-query";
 import { getCustodianOrganisationValidationLogsQuery } from "@/services/validation_logs";
 import { PageTabs, OrganisationsSubTabs } from "../../consts/tabs";
@@ -56,6 +57,7 @@ export default function SubPageOrganisations({
           </PageColumnBody>
           <PageColumnDetails lg={4}>
             <ActionValidationPanel
+              variant={ActionValidationVariants.Organisation}
               queryState={queryState}
               logs={validationLogs?.data || []}
             />

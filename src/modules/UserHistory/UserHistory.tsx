@@ -34,6 +34,7 @@ export default function UserHistory() {
               size="small"
               sx={{ justifyContent: "flex-start" }}
             />
+            <Typography variant="body2">{item.details}</Typography>
             <Typography variant="caption" color="text.secondary">
               {t("daysSince", { days: getDaysSince(item.created_at) })}
             </Typography>
