@@ -1,6 +1,7 @@
 import { render, screen, userEvent } from "@/utils/testUtils";
-import ActionValidationStatus from "./ActionValidationStatus";
-import { UseApprovalHook } from "./ActionValidationStatus";
+import ActionValidationStatus, {
+  UseApprovalHook,
+} from "./ActionValidationStatus";
 
 describe("<ActionValidationStatus />", () => {
   const approveMock = jest.fn();
