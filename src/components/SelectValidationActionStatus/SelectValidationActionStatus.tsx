@@ -41,13 +41,11 @@ const SelectValidationActionStatus = ({
       disabled={isLoading}
       {...fieldProps}
       onChange={onChange}>
-      {isLoading
-        ? []
-        : statusOptions?.map(({ label, value }) => (
-            <MenuItem value={value} key={value}>
-              {label}
-            </MenuItem>
-          ))}
+      {statusOptions?.map(({ label, value }) => (
+        <MenuItem value={value} key={value}>
+          {label}
+        </MenuItem>
+      ))}
     </Select>
   );
 };
