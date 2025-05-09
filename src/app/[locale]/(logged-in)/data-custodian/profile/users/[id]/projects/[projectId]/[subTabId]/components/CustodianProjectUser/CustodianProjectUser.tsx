@@ -63,11 +63,11 @@ function CustodianProjectUser({
     notFound();
   }
 
-  const [user, setUser, setProject] = useStore(state => [
-    state.getCurrentUser(),
-    state.setCurrentUser,
-    state.setCurrentProject,
-  ]);
+  const { user, setUser, setProject } = useStore(state => ({
+    user: state.getCurrentUser(),
+    setUser: state.setCurrentUser,
+    setProject: state.setCurrentProject,
+  }));
 
   useEffect(() => {
     if (project) setProject(project?.data);
