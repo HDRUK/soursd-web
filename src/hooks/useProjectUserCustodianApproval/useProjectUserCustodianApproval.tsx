@@ -2,6 +2,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { projectUserCustodianApproval } from "@/services/approvals";
 import { useEffect, useState } from "react";
 import useQueryAlerts from "@/hooks/useQueryAlerts";
+import { MutationState } from "@/types/form";
 
 type CustodianParams = {
   custodianId: string | number;
@@ -17,11 +18,7 @@ export const useProjectUserCustodianApproval = ({
   const queryKey = ["custodianApproval", custodianId, projectId, registryId];
   const queryClient = useQueryClient();
 
-  const [mutationState, setMutationState] = useState<{
-    isError: boolean;
-    isSuccess: boolean;
-    isPending: boolean;
-  }>({
+  const [mutationState, setMutationState] = useState<MutationState>({
     isError: false,
     isSuccess: false,
     isPending: false,
