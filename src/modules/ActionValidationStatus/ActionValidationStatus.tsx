@@ -16,7 +16,7 @@ export interface ActionValidationStatusFormValues {
   comment: string;
 }
 
-type UseApprovalHook<TParams> = (params: TParams) => {
+export type UseApprovalHook<TParams> = (params: TParams) => {
   data?: ApprovalResponse;
   approve: (comment: string) => void;
   reject: (comment: string) => void;
