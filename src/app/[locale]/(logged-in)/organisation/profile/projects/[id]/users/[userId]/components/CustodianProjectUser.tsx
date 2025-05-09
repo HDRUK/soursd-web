@@ -56,10 +56,11 @@ function CustodianProjectUser({
       <PageColumns>
         <PageColumnBody lg={7}>Content!</PageColumnBody>
         <PageColumnDetails lg={5}>
+          {/* not sure this should be here... this is temporary anyway..
           <ActionValidationPanel
             queryState={queryState}
             logs={validationLogs?.data || []}
-          />
+          />*/}
         </PageColumnDetails>
       </PageColumns>
     </PageBodyContainer>
