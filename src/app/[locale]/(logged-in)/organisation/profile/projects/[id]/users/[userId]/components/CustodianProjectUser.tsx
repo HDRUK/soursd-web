@@ -6,33 +6,37 @@ import {
   PageColumnBody,
   PageColumns,
 } from "@/modules";
-import { useStore } from "@/data/store";
+
 import { useQuery } from "@tanstack/react-query";
-import { getCustodianProjectUserValidationLogsQuery } from "@/services/validation_logs";
-import { getUserQuery } from "@/services/users";
-import ActionValidationPanel from "@/modules/ActionValidationPanel";
-import { ActionValidationVariants } from "@/modules/ActionValidationPanel/ActionValidationPanel";
+
 import getProjectQuery from "@/services/projects/getProjectQuery";
 import { useTranslations } from "next-intl";
 import { notFound } from "next/navigation";
 
+/* turning off for now as not ready and probably not needed
+import { useStore } from "@/data/store";
+import { getCustodianProjectUserValidationLogsQuery } from "@/services/validation_logs";
+import { getUserQuery } from "@/services/users";
+*/
+
 interface CustodianProjectUserProps {
   projectId: number;
-  userId: number;
+  // userId: number;
 }
 
 const NAMESPACE_TRANSLATION_CUSTODIAN_PROJECT_USER = "CustodianProjectUser";
 
 function CustodianProjectUser({
   projectId,
-  userId,
+  // userId,
 }: CustodianProjectUserProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_CUSTODIAN_PROJECT_USER);
-  const custodian = useStore(state => state.getCustodian());
+  // const custodian = useStore(state => state.getCustodian());
   const { data: project, isFetched: isFetchedProject } = useQuery(
     getProjectQuery(projectId)
   );
 
+  /* not sure this should be here... this is temporary anyway..
   const { data: userData } = useQuery(getUserQuery(userId));
 
   const { registry_id: registryId } = userData?.data || {};
@@ -45,6 +49,7 @@ function CustodianProjectUser({
     ),
     enabled: !!registryId,
   });
+  */
 
   if (!project?.data && isFetchedProject) {
     notFound();
@@ -60,7 +65,7 @@ function CustodianProjectUser({
           <ActionValidationPanel
             queryState={queryState}
             logs={validationLogs?.data || []}
-          />*/}
+          /> */}
         </PageColumnDetails>
       </PageColumns>
     </PageBodyContainer>
