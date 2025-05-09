@@ -17,7 +17,7 @@ export default async (
   payload: PostApprovalPayload | undefined,
   options: ResponseOptions
 ): Promise<ResponseJson<ApprovalResponse>> => {
-  const url = `/custodian_approvals/${custodianId}/organisation/${organisationId}`;
+  const url = `/custodian_approvals/${custodianId}/organisations/${organisationId}`;
 
   const requestFn = {
     POST: postRequest,

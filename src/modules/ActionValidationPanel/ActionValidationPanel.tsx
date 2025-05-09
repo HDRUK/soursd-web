@@ -17,10 +17,8 @@ export const ActionValidationVariants = {
   Organisation: "Organisation",
 } as const;
 
-export type ActionValidationVariants = keyof typeof ActionValidationVariants;
-
 interface ActionValidationPanelProps {
-  variant: ActionValidationVariants;
+  variant: keyof typeof ActionValidationVariants;
   logs: ValidationLog[];
   queryState: QueryState;
 }
@@ -72,6 +70,8 @@ function ActionValidationPanel({
       );
       break;
     }
+    default:
+      break;
   }
 
   return (

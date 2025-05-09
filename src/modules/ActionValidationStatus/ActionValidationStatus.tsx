@@ -1,5 +1,4 @@
 import { useTranslations } from "next-intl";
-import { ValidationLog } from "@/types/logs";
 import yup from "@/config/yup";
 import Form from "@/components/Form";
 import { Grid, Box } from "@mui/material";
