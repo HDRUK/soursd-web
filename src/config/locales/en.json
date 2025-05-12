@@ -1100,7 +1100,7 @@
   "Organisations": {
     "People": {
       "name": "Employee / Student name",
-      "email": "Email",
+      "affiliationEmail": "Email",
       "affiliationStatus": "Status"
     },
     "DataSecurityCompliance": {

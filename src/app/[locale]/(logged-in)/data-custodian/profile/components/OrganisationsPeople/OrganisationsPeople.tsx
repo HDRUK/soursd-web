@@ -3,8 +3,12 @@
 import { useStore } from "@/data/store";
 import { OrganisationsPeopleTable, PageBody, PageSection } from "@/modules";
 import { usePaginatedCustodianOrganisationUsers } from "@/services/custodians";
+import { useTranslations } from "next-intl";
+
+const NAMESPACE_TRANSLATION = "Organisations.People";
 
 export default function OrganisationsPeople() {
+  const t = useTranslations(NAMESPACE_TRANSLATION);
   const { custodianId, organisationId } = useStore(state => ({
     custodianId: state.getCustodian().id,
     organisationId: state.getCurrentOrganisation().id,
@@ -48,6 +52,7 @@ export default function OrganisationsPeople() {
             isSuccess,
           }}
           isPaginated
+          t={t}
         />
       </PageSection>
     </PageBody>
