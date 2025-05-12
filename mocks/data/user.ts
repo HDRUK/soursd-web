@@ -30,31 +30,7 @@ const mockedUser = (user?: Partial<User>): User => ({
     files: [mockedFile()],
     verified: true,
 
-    affiliations: [
-      {
-        id: 4,
-        created_at: "2025-04-29T09:22:23.000000Z",
-        updated_at: "2025-04-29T09:22:23.000000Z",
-        organisation_id: 1,
-        member_id: "495690ca-2426-410d-9bce-b944f3704d2b",
-        relationship: "employee",
-        from: "2019-04-29",
-        to: "",
-        department: "Market Research and Analysis",
-        role: "Data Engineer",
-        email: "jayson80@hotmail.com",
-        ror: "0k7p0fa95",
-        registry_id: 3,
-        verdict_user_id: null,
-        verdict_date_actioned: null,
-        verdict_outcome: null,
-        registryAffiliationState: "affiliation_pending",
-        pivot: {
-          registry_id: 3,
-          affiliation_id: 4,
-        },
-      },
-    ],
+    affiliations: [mockedAffiliation()],
   },
   ...user,
 });
@@ -133,6 +109,7 @@ const mockedAffiliation = (
   from: faker.date.past().toUTCString(),
   to: "",
   department: faker.commerce.department(),
+  email: faker.internet.email(),
   ...affiliation,
 });
 
