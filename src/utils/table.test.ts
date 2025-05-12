@@ -1,4 +1,3 @@
-import { anyIncludes, capitaliseFirstLetter } from "./string";
 import { filterColumns } from "./table";
 
 describe("filterColumns", () => {
