@@ -1,12 +1,12 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useState, useMemo } from "react";
+import { useMemo } from "react";
+import { getCombinedQueryState } from "@/utils/query";
 import useQueryAlerts from "@/hooks/useQueryAlerts";
-import { MutationState } from "@/types/form";
-import { getOrganisationApprovalQuery } from "@/services/approvals";
+import { useMutation } from "@tanstack/react-query";
 import {
-  useApproveOrganisation,
-  useRejectOrganisation,
-} from "../useCustodianMutations";
+  getOrganisationApprovalQuery,
+  postOrganisationApprovalQuery,
+} from "@/services/approvals";
 
 type CustodianParams = {
   custodianId: string | number;
@@ -17,25 +17,14 @@ export const useOrganisationCustodianApproval = ({
   custodianId,
   organisationId,
 }: CustodianParams) => {
-  const [mutationState, setMutationState] = useState<MutationState>({
-    isError: false,
-    isSuccess: false,
-    isPending: false,
-  });
-
   const queryKey = useMemo(
     () => ["custodianOrganisationApproval", custodianId, organisationId],
     [custodianId, organisationId]
   );
 
-  const {
-    data,
-    isLoading: isFetching,
-    isError,
-    refetch,
-  } = useQuery(
+  const { data, refetch, ...queryState } = useQuery(
     getOrganisationApprovalQuery({
-      queryKey: queryKey[0] as string,
+      queryKey,
       custodianId,
       organisationId,
     })
@@ -43,41 +32,30 @@ export const useOrganisationCustodianApproval = ({
 
   const queryClient = useQueryClient();
 
-  const updateMutationState = (state: Partial<MutationState>) =>
-    setMutationState(prev => ({ ...prev, ...state }));
-
-  useEffect(() => {
-    updateMutationState({ isPending: isFetching, isSuccess: false });
-  }, [isFetching]);
-
   const onSuccess = () => {
-    updateMutationState({ isSuccess: true });
     queryClient.invalidateQueries({ queryKey });
   };
 
-  const { mutateAsync: approve, isPending: isApproving } =
-    useApproveOrganisation({
-      custodianId,
-      organisationId,
-      onSuccess,
-    });
+  const { mutateAsync: mutationApproval, ...mutationState } = useMutation({
+    ...postOrganisationApprovalQuery({ custodianId, organisationId }),
+    onSuccess,
+  });
 
-  const { mutateAsync: reject, isPending: isRejecting } = useRejectOrganisation(
-    {
-      custodianId,
-      organisationId,
-      onSuccess,
-    }
-  );
-
-  const isLoading = isFetching || isApproving || isRejecting;
+  const combinedQueryState = getCombinedQueryState([queryState, mutationState]);
 
   useQueryAlerts(mutationState);
 
+  const approve = (comment: string) => {
+    mutationApproval({ approved: 1, comment });
+  };
+
+  const reject = (comment: string) => {
+    mutationApproval({ approved: 0, comment });
+  };
+
   return {
     data: data?.data,
-    isLoading,
-    isError,
+    ...combinedQueryState,
     approve,
     reject,
     refetch,

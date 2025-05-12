@@ -3,7 +3,8 @@ import postApproval from "./postApproval";
 import getEntityApproval from "./getEntityApproval";
 import projectUserCustodianApproval from "./projectUserCustodianApproval";
 import organisationCustodianApproval from "./organisationCustodianApproval";
-import { getOrganisationApprovalQuery } from "./getOrganisationApprovalQuery";
+import getOrganisationApprovalQuery from "./getOrganisationApprovalQuery";
+import postOrganisationApprovalQuery from "./postOrganisationApprovalQuery";
 
 export {
   postApproval,
@@ -12,6 +13,7 @@ export {
   projectUserCustodianApproval,
   organisationCustodianApproval,
   getOrganisationApprovalQuery,
+  postOrganisationApprovalQuery,
 };
 
 export type * from "./types";

@@ -1,18 +1,18 @@
 import organisationCustodianApproval from "./organisationCustodianApproval";
 
 type UseCustodianApprovalQueryOptions = {
-  queryKey: string;
+  queryKey: (string | number)[];
   custodianId: string | number;
   organisationId: string | number;
 };
 
-export const getOrganisationApprovalQuery = ({
+const getOrganisationApprovalQuery = ({
   queryKey,
   custodianId,
   organisationId,
 }: UseCustodianApprovalQueryOptions) => {
   return {
-    queryKey: [queryKey, custodianId, organisationId],
+    queryKey,
     queryFn: () =>
       organisationCustodianApproval(
         "GET",
@@ -25,3 +25,5 @@ export const getOrganisationApprovalQuery = ({
       ),
   };
 };
+
+export default getOrganisationApprovalQuery;
