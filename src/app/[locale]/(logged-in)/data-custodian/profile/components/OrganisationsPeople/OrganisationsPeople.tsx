@@ -14,44 +14,21 @@ export default function OrganisationsPeople() {
     organisationId: state.getCurrentOrganisation().id,
   }));
 
-  const {
-    data,
-    page,
-    total,
-    last_page,
-    setPage,
-    updateQueryParams,
-    resetQueryParams,
-    handleSortToggle,
-    handleFieldToggle,
-    queryParams,
-    isLoading,
-    isError,
-    isSuccess,
-  } = usePaginatedCustodianOrganisationUsers(custodianId, organisationId, {
-    shouldUpdateQuerystring: true,
-  });
+  const { isLoading, isError, isSuccess, ...restPaginationProps } =
+    usePaginatedCustodianOrganisationUsers(custodianId, organisationId, {
+      shouldUpdateQuerystring: true,
+    });
 
   return (
     <PageBody>
       <PageSection>
         <OrganisationsPeopleTable
-          data={data}
-          total={total}
-          last_page={last_page}
-          page={page}
-          setPage={setPage}
-          updateQueryParams={updateQueryParams}
-          resetQueryParams={resetQueryParams}
-          handleSortToggle={handleSortToggle}
-          handleFieldToggle={handleFieldToggle}
-          queryParams={queryParams}
+          {...restPaginationProps}
           queryState={{
             isLoading,
             isError,
             isSuccess,
           }}
-          isPaginated
           t={t}
         />
       </PageSection>
