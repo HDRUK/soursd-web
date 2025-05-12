@@ -1,4 +1,4 @@
-import { organisationCustodianApproval } from "@/services/approvals";
+import organisationCustodianApproval from "./organisationCustodianApproval";
 
 type MutationOptions = {
   custodianId: number | string;
