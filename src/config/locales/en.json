@@ -581,6 +581,8 @@
     "subsidiaryAddressRequired": "Subsidiary address is required",
     "subsidiaryWebsite": "Subsidiary website",
     "subsidiaryWebsitePlaceholder": "Subsidiary website",
+    "status": "Change status",
+    "statusPlaceholder": "Select a status from the list",
     "SafeProject": {
       "add": "Add",
       "status": "Status",
@@ -1325,7 +1327,8 @@
     "alertCancel": "Cancel"
   },
   "ActionValidationPanel": {
-    "title": "Validation Checks"
+    "title": "Validation Checks",
+    "updateStatusButton": "Update status"
   },
   "ActionValidationMakeDecision": {
     "pass": "Pass",
@@ -1481,7 +1484,9 @@
     "profile_completed": "Profile completed",
     "affiliations_complete": "Affiliations completed",
     "profile_created": "Profile Created",
-    "daysSince": "{days} days ago"
+    "daysSince": "{days} days ago",
+    "custodian_rejected": "Custodian Rejected User",
+    "custodian_approved": "Custodian Approved User"
   },
   "ConfirmAffiliation": {
     "heading": "Pending affiliations",
@@ -1499,5 +1504,9 @@
       "errorAlertTitle": "Error",
       "errorAlertText": "There has been a problem deleting this data. Please try again or contact us at <contactLink></contactLink>"
     }
+  },
+  "SelectValidationActionStatus": {
+    "notApproved": "Not approved",
+    "approved": "Approved"
   }
 }
