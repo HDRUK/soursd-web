@@ -338,6 +338,7 @@ interface ResearcherAffiliation {
   project_role_id?: number;
   primary_contact?: boolean;
   registryAffiliationState?: string;
+  department: string;
 }
 
 interface ResearcherProjectApproval {
