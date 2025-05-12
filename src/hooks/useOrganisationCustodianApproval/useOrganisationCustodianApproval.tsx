@@ -1,8 +1,12 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { organisationCustodianApproval } from "@/services/approvals";
-import { useEffect, useState } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useEffect, useState, useMemo } from "react";
 import useQueryAlerts from "@/hooks/useQueryAlerts";
 import { MutationState } from "@/types/form";
+import { getOrganisationApprovalQuery } from "@/services/approvals";
+import {
+  useApproveOrganisation,
+  useRejectOrganisation,
+} from "../useCustodianMutations";
 
 type CustodianParams = {
   custodianId: string | number;
@@ -13,77 +17,59 @@ export const useOrganisationCustodianApproval = ({
   custodianId,
   organisationId,
 }: CustodianParams) => {
-  const queryKey = [
-    "custodianOrganisationApproval",
-    custodianId,
-    organisationId,
-  ];
-  const queryClient = useQueryClient();
-
   const [mutationState, setMutationState] = useState<MutationState>({
     isError: false,
     isSuccess: false,
     isPending: false,
   });
 
+  const queryKey = useMemo(
+    () => ["custodianOrganisationApproval", custodianId, organisationId],
+    [custodianId, organisationId]
+  );
+
   const {
     data,
     isLoading: isFetching,
     isError,
     refetch,
-  } = useQuery({
-    queryKey,
-    queryFn: () =>
-      organisationCustodianApproval(
-        "GET",
-        custodianId,
-        organisationId,
-        undefined,
-        {
-          error: { message: "fetchApprovalError" },
-        }
-      ),
-  });
+  } = useQuery(
+    getOrganisationApprovalQuery({
+      queryKey: queryKey[0] as string,
+      custodianId,
+      organisationId,
+    })
+  );
+
+  const queryClient = useQueryClient();
+
+  const updateMutationState = (state: Partial<MutationState>) =>
+    setMutationState(prev => ({ ...prev, ...state }));
+
   useEffect(() => {
-    setMutationState(state => ({
-      ...state,
-      isPending: isFetching,
-      isSuccess: false,
-    }));
-  }, [data]);
+    updateMutationState({ isPending: isFetching, isSuccess: false });
+  }, [isFetching]);
 
   const onSuccess = () => {
-    setMutationState(state => ({ ...state, isSuccess: true }));
+    updateMutationState({ isSuccess: true });
     queryClient.invalidateQueries({ queryKey });
   };
 
-  const { mutateAsync: approve, isPending: isApproving } = useMutation({
-    mutationFn: (comment: string) =>
-      organisationCustodianApproval(
-        "POST",
-        custodianId,
-        organisationId,
-        { approved: 1, comment },
-        {
-          error: { message: "approvalError" },
-        }
-      ),
-    onSuccess,
-  });
+  const { mutateAsync: approve, isPending: isApproving } =
+    useApproveOrganisation({
+      custodianId,
+      organisationId,
+      onSuccess,
+    });
 
-  const { mutateAsync: reject, isPending: isRejecting } = useMutation({
-    mutationFn: (comment: string) =>
-      organisationCustodianApproval(
-        "POST",
-        custodianId,
-        organisationId,
-        { approved: 0, comment },
-        {
-          error: { message: "rejectionError" },
-        }
-      ),
-    onSuccess,
-  });
+  const { mutateAsync: reject, isPending: isRejecting } = useRejectOrganisation(
+    {
+      custodianId,
+      organisationId,
+      onSuccess,
+    }
+  );
+
   const isLoading = isFetching || isApproving || isRejecting;
 
   useQueryAlerts(mutationState);
