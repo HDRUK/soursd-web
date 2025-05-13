@@ -1,12 +1,10 @@
-import { Box, css, styled } from "@mui/material";
+const paginationSx = {
+  position: "relative",
+  zIndex: 1,
+  padding: 2,
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+};
 
-export const StyledPagination = styled(Box)(
-  ({ theme }) => css`
-    position: relative;
-    z-index: 1;
-    padding: ${theme.spacing(2)};
-    display: flex; /
-    justify-content: center; 
-    align-items: center; 
-  `
-);
+export { paginationSx };

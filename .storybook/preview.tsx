@@ -3,7 +3,6 @@ import { CssBaseline } from "@mui/material";
 import type { Preview, StoryFn } from "@storybook/react";
 import { NextIntlClientProvider } from "next-intl";
 import ThemeRegistry from "../src/components/ThemeRegistry/ThemeRegistry";
-import { JSX, ReactElement } from "react";
 
 export const withMuiTheme = (Story: StoryFn) => {
   return (
@@ -23,6 +22,7 @@ const preview: Preview = {
         color: /(background|color)$/i,
         date: /Date$/i,
       },
+      expanded: true,
     },
   },
   decorators: [withMuiTheme],

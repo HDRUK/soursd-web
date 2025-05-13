@@ -29,6 +29,8 @@ const mockedUser = (user?: Partial<User>): User => ({
   registry: {
     files: [mockedFile()],
     verified: true,
+
+    affiliations: [mockedAffiliation()],
   },
   ...user,
 });
@@ -100,10 +102,14 @@ const mockedAffiliation = (
   member_id: faker.string.uuid(),
   organisation_id: 1,
   relationship: "employee",
-  current_employer: false,
+  current_employer: true,
   organisation: {
     organisation_name: faker.company.name(),
   },
+  from: faker.date.past().toUTCString(),
+  to: "",
+  department: faker.commerce.department(),
+  email: faker.internet.email(),
   ...affiliation,
 });
 
