@@ -1,7 +1,7 @@
 import os
 import re
+import json
 
-# Functions you're looking for
 target_functions = [
     "postRequest",
     "patchRequest",
@@ -100,6 +100,7 @@ def split_at_first_capital(s):
 if __name__ == "__main__":
     project_root = "./"  # Set to your project root
     matches = scan_directory(project_root)
+    output = {}
     for filepath, func, args in matches:
         target_function = filepath.split("/")[-1].split(".ts")[0]
         method = split_at_first_capital(target_function)[0].upper()
@@ -109,8 +110,11 @@ if __name__ == "__main__":
         used = len(matches) > 0
         if used:
             arg1 = args.split(",")[0]
-            root = arg1.split("/")[1]
-            print(method, root)
-            # print(
-            #    f"\nFile: {filepath}\nFunction: {func}\nArguments:\n{args}\n{'-' * 40}"
-            # )
+            root = "/" + arg1.split("/")[1]
+            if root not in output:
+                output[root] = set()
+            output[root].add(method)
+
+    output = {k: sorted(list(v)) for k, v in output.items()}
+    output = dict(sorted(output.items()))
+    print(json.dumps(output, indent=6))
