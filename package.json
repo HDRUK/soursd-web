@@ -15,7 +15,17 @@
     "pre-commit": "npx lint-staged",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "chromatic": "npx chromatic --project-token=$CHROMATIC_PROJECT_TOKEN"
+    "chromatic": "npx chromatic --project-token=$CHROMATIC_PROJECT_TOKEN",
+    "prepare": "husky install",
+    "build:tsc": "rm -rf dist && tsc -p tsconfig.build.json"
+  },
+  "main": "./dist/exports.ts",
+  "files": [
+    "./dist"
+  ],
+  "exports": {
+    ".": "./dist/exports.ts",
+    "./client": "./dist/export-client.ts"
   },
   "dependencies": {
     "@emotion/cache": "^11.11.0",
@@ -81,11 +91,17 @@
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.2",
     "@next/bundle-analyzer": "^15.0.3",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-commonjs": "^28.0.3",
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "@rollup/plugin-replace": "^6.0.2",
+    "@rollup/plugin-typescript": "^12.1.2",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/commit-analyzer": "^13.0.0",
     "@semantic-release/exec": "6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/github": "11.0.1",
+    "@semantic-release/gitlab": "^13.2.5",
     "@semantic-release/npm": "^12.0.1",
     "@semantic-release/release-notes-generator": "^14.0.1",
     "@storybook/addon-essentials": "^8.0.5",
@@ -144,7 +160,10 @@
     "prettier": "^3.2.5",
     "raw-loader": "^4.0.2",
     "react-syntax-highlighter": "^15.5.0",
-    "semantic-release": "^24.2.1",
+    "rollup": "^4.40.2",
+    "rollup-plugin-dts": "^6.2.1",
+    "rollup-plugin-postcss": "^4.0.2",
+    "semantic-release": "^24.2.3",
     "storybook": "^8.0.5",
     "ts-node": "^10.9.2",
     "typescript": "^5",
