@@ -189,8 +189,7 @@ export default function ProjectsSafePeople({
             onClear={resetQueryParams}
             onSearch={(text: string) => {
               updateQueryParams({
-                "first_name[]": text,
-                "last_name[]": text,
+                "name[]": text,
                 "email[]": text,
               });
             }}

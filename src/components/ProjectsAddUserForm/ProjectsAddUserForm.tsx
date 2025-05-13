@@ -129,8 +129,7 @@ export default function ProjectsAddUser({
           onClear={resetQueryParams}
           onSearch={(text: string) => {
             updateQueryParams({
-              "first_name[]": text,
-              "last_name[]": text,
+              "name[]": text,
             });
           }}
           placeholder={t("searchPlaceholder")}

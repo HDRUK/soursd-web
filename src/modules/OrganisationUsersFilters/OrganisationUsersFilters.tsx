@@ -37,8 +37,7 @@ export default function OrganisationUsersFilters({
         onClear={() => resetQueryParams({ show_pending: showPendingInvites })}
         onSearch={(text: string) => {
           updateQueryParams({
-            "first_name[]": text,
-            "last_name[]": text,
+            "name[]": text,
             "email[]": text,
           });
         }}
