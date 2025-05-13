@@ -75,11 +75,11 @@ export default function Webhooks() {
       .defined()
       .test("receiver_url", tForm("duplicateWebhookError"), (webhooks = []) => {
         const seen = new Set();
-        for (const { receiver_url } of webhooks) {
-          if (seen.has(receiver_url)) return false;
+        return !webhooks.some(({ receiver_url }) => {
+          if (seen.has(receiver_url)) return true;
           seen.add(receiver_url);
-        }
-        return true;
+          return false;
+        });
       }),
   });
 
