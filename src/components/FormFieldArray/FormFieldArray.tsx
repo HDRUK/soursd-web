@@ -19,7 +19,10 @@ import {
   FieldValues,
   useFieldArray,
   useFormContext,
+  Path,
 } from "react-hook-form";
+
+export type RootError = { type?: string; message?: string };
 
 interface FormFieldArrayProps<
   T extends FieldValues,
@@ -36,6 +39,7 @@ interface FormFieldArrayProps<
   initialRowCount?: number;
   disabled?: boolean;
   tKey?: string;
+  displayLabel?: boolean;
 }
 
 const NAMESPACE_TRANSLATION_FORM = "Form";
@@ -57,6 +61,7 @@ const FormFieldArray = <T extends FieldValues>({
   initialRowCount = 0,
   disabled,
   tKey = NAMESPACE_TRANSLATION_FORM,
+  displayLabel = true,
 }: FormFieldArrayProps<T>) => {
   const t = useTranslations(tKey);
   const context = useFormContext<T>();
@@ -86,18 +91,32 @@ const FormFieldArray = <T extends FieldValues>({
     }
   }, []);
 
+  const {
+    setError,
+    formState: { errors },
+  } = context;
+
+  const rootErrors = errors[name]?.root as RootError | undefined;
+  useEffect(() => {
+    if (!rootErrors) return;
+    const fieldName = rootErrors?.type as string;
+    fieldsArray.forEach((_, index) => {
+      setError(`${name}.${index}.${fieldName}` as Path<T>, {
+        type: "manual",
+      });
+    });
+  }, [rootErrors]);
+
   return (
     <div>
-      <Typography>{t(toCamelCase(name))}</Typography>
+      {displayLabel && <Typography>{t(toCamelCase(name))}</Typography>}
       <Box sx={{ pb: 1, gap: 2, display: "flex", flexDirection: "column" }}>
         {fieldsArray.map((field, index) => (
           <Box key={field.id} sx={{ gap: 3, ...boxSx }}>
             {renderField(field, index)}
             <Box
               sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "flex-end",
+                mt: 4,
               }}>
               <Tooltip title={removeButtonLabel || t("arrayRemoveButton")}>
                 <IconButton
@@ -113,6 +132,9 @@ const FormFieldArray = <T extends FieldValues>({
             </Box>
           </Box>
         ))}
+        {rootErrors?.message && (
+          <Typography color="error">{rootErrors.message}</Typography>
+        )}
 
         <Box sx={{ mt: 1, display: "flex", justifyContent: "flex-start" }}>
           <Button

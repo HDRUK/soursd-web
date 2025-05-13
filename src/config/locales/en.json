@@ -572,6 +572,7 @@
     "endDateRequiredInvalid": "End date is required",
     "webhookEventAriaLabel": "Webhook Event Trigger",
     "webhookRequiredInvalid": "Webhook event trigger is required",
+    "duplicateWebhookError": "Duplicate webhooks detected! Your webhook receiver URLs should be unique.",
     "addSubsidiary": "Add a subsidiary",
     "subsidiaryName": "Subsidiary name",
     "subsidiaryNamePlaceholder": "Subsidiary name",

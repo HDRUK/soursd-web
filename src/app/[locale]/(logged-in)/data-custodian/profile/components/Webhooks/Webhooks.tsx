@@ -72,7 +72,15 @@ export default function Webhooks() {
           event_trigger: yup.number().required(tForm("webhookRequiredInvalid")),
         })
       )
-      .defined(),
+      .defined()
+      .test("receiver_url", tForm("duplicateWebhookError"), (webhooks = []) => {
+        const seen = new Set();
+        for (const { receiver_url } of webhooks) {
+          if (seen.has(receiver_url)) return false;
+          seen.add(receiver_url);
+        }
+        return true;
+      }),
   });
 
   const defaultValues = useMemo(
@@ -167,54 +175,58 @@ export default function Webhooks() {
                     <Grid item xs={12}>
                       <FormFieldArray<WebhookFormData>
                         name="webhooks"
+                        displayLabel={false}
                         boxSx={{
                           display: "grid",
-                          gridTemplateColumns: "3fr 2fr 1fr",
-                          alignItems: "flex-end",
+                          gridTemplateColumns: "10fr 1fr",
                         }}
                         createNewRow={() => ({
                           receiver_url: "",
                           event_trigger: 1,
                         })}
                         renderField={(field, index) => (
-                          <React.Fragment key={field.receiver_url}>
-                            <FormControlHorizontal
-                              label="Receiver URL"
-                              required
-                              labelMd={0}
-                              contentMd={12}
-                              name={`webhooks.${index}.receiver_url`}
-                              placeholder={tForm("name")}
-                              renderField={fieldProps => (
-                                <TextField {...fieldProps} />
-                              )}
-                            />
-                            <FormControlHorizontal
-                              label="Event Trigger"
-                              required
-                              labelMd={0}
-                              contentMd={12}
-                              name={`webhooks.${index}.event_trigger`}
-                              placeholder={tForm("name")}
-                              renderField={fieldProps => (
-                                <Select
-                                  {...fieldProps}
-                                  inputProps={{
-                                    "aria-label": tForm(
-                                      "webhookEventAriaLabel"
-                                    ),
-                                  }}>
-                                  {webhookEventTriggers?.data.map(
-                                    ({ name, id }) => (
-                                      <MenuItem value={id} key={id}>
-                                        {name}
-                                      </MenuItem>
-                                    )
-                                  )}
-                                </Select>
-                              )}
-                            />
-                          </React.Fragment>
+                          <Grid container spacing={2} key={field.receiver_url}>
+                            <Grid item xs={6}>
+                              <FormControlHorizontal
+                                label="Receiver URL"
+                                required
+                                labelMd={0}
+                                contentMd={12}
+                                name={`webhooks.${index}.receiver_url`}
+                                placeholder={tForm("name")}
+                                renderField={fieldProps => (
+                                  <TextField {...fieldProps} />
+                                )}
+                              />
+                            </Grid>
+                            <Grid item xs={6}>
+                              <FormControlHorizontal
+                                label="Event Trigger"
+                                required
+                                labelMd={0}
+                                contentMd={12}
+                                name={`webhooks.${index}.event_trigger`}
+                                placeholder={tForm("name")}
+                                renderField={fieldProps => (
+                                  <Select
+                                    {...fieldProps}
+                                    inputProps={{
+                                      "aria-label": tForm(
+                                        "webhookEventAriaLabel"
+                                      ),
+                                    }}>
+                                    {webhookEventTriggers?.data.map(
+                                      ({ name, id }) => (
+                                        <MenuItem value={id} key={id}>
+                                          {name}
+                                        </MenuItem>
+                                      )
+                                    )}
+                                  </Select>
+                                )}
+                              />
+                            </Grid>
+                          </Grid>
                         )}
                       />
                     </Grid>
