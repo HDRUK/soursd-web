@@ -17,11 +17,7 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const Component = ({
-  data,
-  routes,
-  queryState,
-}: OrganisationsPeopleTableProps) => {
+const Component = ({ data, routes }: OrganisationsPeopleTableProps) => {
   const t = useTranslations("Organisations.People");
 
   return (
@@ -29,7 +25,6 @@ const Component = ({
       data={data}
       t={t}
       routes={routes}
-      queryState={queryState}
       {...mockedPaginationResults()}
     />
   );
@@ -42,11 +37,6 @@ export const Basic: Story = {
       name: {
         path: "/users",
       },
-    },
-    queryState: {
-      isError: false,
-      isLoading: false,
-      isSuccess: false,
     },
   },
   render: Component,
