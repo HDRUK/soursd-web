@@ -23,13 +23,15 @@ function handleResponseError(
       return new Error(`${response?.status}Error`).message;
     }
 
-    return new Error(
-      response?.status === 401
-        ? options["401"]?.message
-        : response?.status === 409
-          ? options["409"]?.message
-          : options.error?.message
-    ).message;
+    const statusKey = String(response.status) as keyof ResponseOptions;
+    const errorEntry = options[statusKey];
+
+    const message =
+      typeof errorEntry === "object" && errorEntry?.message
+        ? errorEntry?.message
+        : options.error?.message;
+
+    return new Error(message).message;
   }
 
   return null;
