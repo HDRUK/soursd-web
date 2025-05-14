@@ -9,6 +9,7 @@ import { ResearcherProject } from "@/types/application";
 import { getSearchSortOrder } from "@/utils/query";
 import SortIcon from "@mui/icons-material/Sort";
 import { useTranslations } from "next-intl";
+import { Status } from "@/components/ChipStatus";
 import SearchActionMenu from "../SearchActionMenu";
 
 const NAMESPACE_TRANSLATIONS_PROJECTS = "Projects";
@@ -77,20 +78,32 @@ export default function ProjectsFilters({
       {
         label: t("filterActions.approved"),
         onClick: () =>
-          handleFieldToggle("filter", ["project_approved", undefined], true),
-        checked: queryParams.filter === "project_approved",
+          handleFieldToggle(
+            "filter",
+            [Status.PROJECT_APPROVED, undefined],
+            true
+          ),
+        checked: queryParams.filter === Status.PROJECT_APPROVED,
       },
       {
         label: t("filterActions.pending"),
         onClick: () =>
-          handleFieldToggle("filter", ["project_pending", undefined], true),
-        checked: queryParams.filter === "project_pending",
+          handleFieldToggle(
+            "filter",
+            [Status.PROJECT_PENDING, undefined],
+            true
+          ),
+        checked: queryParams.filter === Status.PROJECT_PENDING,
       },
       {
         label: t("filterActions.completed"),
         onClick: () =>
-          handleFieldToggle("filter", ["project_completed", undefined], true),
-        checked: queryParams.filter === "project_completed",
+          handleFieldToggle(
+            "filter",
+            [Status.PROJECT_COMPLETED, undefined],
+            true
+          ),
+        checked: queryParams.filter === Status.PROJECT_COMPLETED,
       },
     ],
     [queryParams, handleFieldToggle, t]

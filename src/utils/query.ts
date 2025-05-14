@@ -35,7 +35,7 @@ function getSearchQuerystring(searchParams: SearchParams) {
     }
   });
 
-  return params.toString() ? `?${params.toString()}` : "";
+  return params ? `?${params.toString()}` : "";
 }
 
 function getSearchSortOrder(queryParams: SearchParams) {
