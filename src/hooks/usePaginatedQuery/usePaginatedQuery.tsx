@@ -21,7 +21,7 @@ export interface PaginatedQueryHelpers {
   handleSortToggle: (field: string, direction: string) => void;
   handleFieldToggle: (
     field: string,
-    options: [string, string | undefined],
+    options: [string | undefined, string | undefined],
     isMultiple?: boolean
   ) => void;
   queryParams: QueryParams;

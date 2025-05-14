@@ -128,7 +128,7 @@ export default function ProjectsFilters({
       {hasFilter(ProjectFilterKeys.DATE) && (
         <SearchActionMenu
           actions={filterDateActions}
-          onClear={() => handleFieldToggle("active", ["", undefined])}
+          onClear={() => handleFieldToggle("active", [undefined, undefined])}
           startIcon={<FilterIcon />}
           renderedSelectedLabel={tApplication("filteredBy")}
           renderedDefaultLabel={tApplication("filterByDate")}
