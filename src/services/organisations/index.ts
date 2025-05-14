@@ -2,7 +2,6 @@ import getOrganisations from "./getOrganisations";
 import getOrganisation from "./getOrganisation";
 import getOrganisationQuery from "./getOrganisationQuery";
 import getOrganisationIdvt from "./getOrganisationIdvt";
-import postPermissions from "./postPermissions";
 import patchOrganisation from "./patchOrganisation";
 import postOrganisationInviteUser from "./postOrganisationInviteUser";
 import postOrganisationInviteUserQuery from "./postOrganisationInviteUserQuery";
@@ -21,7 +20,6 @@ export {
   getOrganisations,
   getOrganisation,
   getOrganisationQuery,
-  postPermissions,
   getOrganisationIdvt,
   patchOrganisation,
   postOrganisationInviteUser,

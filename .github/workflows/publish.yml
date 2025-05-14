@@ -48,5 +48,5 @@ jobs:
 
       - name: Release
         env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: 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
         run: npm publish

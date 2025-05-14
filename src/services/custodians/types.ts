@@ -73,7 +73,7 @@ type GetCustodianOrganisationsResponse = Organisation[];
 
 type GetCustodianOrganisationUsersResponse = User[];
 
-type GetCustodianUsersResponse = CustodianUser[];
+type GetCustodianContactsResponse = CustodianUser[];
 
 type EntityType =
   | "decision_models"
@@ -104,7 +104,7 @@ export type {
   GetCustodiansUserProjectsResponse,
   GetCustodianOrganisationsResponse,
   GetCustodianOrganisationUsersResponse,
-  GetCustodianUsersResponse,
+  GetCustodianContactsResponse,
   PostCustodianProjectResponse,
   PostCustodianProjectPayload,
 };

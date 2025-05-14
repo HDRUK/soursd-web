@@ -4,7 +4,6 @@ import getUserHistoryQuery from "./getUserQueryHistory";
 import getUsers from "./getUsers";
 import getUsersQuery from "./getUsersQuery";
 import patchUser from "./patchUser";
-import postPermissions from "./postPermissions";
 import postUsers from "./postUsers";
 import postUserInvite from "./postUserInvite";
 import postUserInviteQuery from "./postUserInviteQuery";
@@ -19,7 +18,6 @@ export {
   getUserHistoryQuery,
   getUsers,
   patchUser,
-  postPermissions,
   postUsers,
   postUserInviteQuery,
   postUserInvite,

@@ -73,6 +73,7 @@
     "trainingAndAccreditations": "Training and Accreditations",
     "professionalRegistrations": "Professional Registrations",
     "staffStudentId": "Staff / Student Id",
+    "getCustodianContactsError": "There was a problem getting the contacts. Please try again or contact us at <contactLink></contactLink>",
     "getDependenciesError": "There was a problem was a problem trying to preload dependencies for SOURSD. Please try again or contact us at <contactLink></contactLink>",
     "getSystemConfigError": "There was a problem loading the application. Please try again or contact us at <contactLink></contactLink>",
     "getUserError": "Unable to load your user details. Please try again or contact us at <contactLink></contactLink>",

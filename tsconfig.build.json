@@ -17,5 +17,8 @@
     "outDir": "dist",
     "declaration": true
   },
-  "include": ["src/exports.ts", "src/export-client.ts"]
+  "include": ["src/exports.ts", "src/export-client.ts"],
+  "paths": {
+    "@/*": ["./*"]
+  }
 }

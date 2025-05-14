@@ -18,8 +18,8 @@ import putCustodianActiveEntityModel from "./putCustodianActiveEntityModel";
 import getCustodianProjectUsers from "./getCustodianProjectUsers";
 import usePaginatedCustodianOrganisationUsers from "./usePaginatedCustodianOrganisationUsers";
 import getCustodianOrganisationUsers from "./getCustodianOrganisationUsers";
-import getCustodianUsers from "./getCustodianUsers";
-import usePaginatedCustodianUsers from "./usePaginatedCustodianUsers";
+import getCustodianContacts from "./getCustodianContacts";
+import usePaginatedCustodianContacts from "./usePaginatedCustodianContacts";
 import postCustodianProject from "./postCustodianProject";
 import postCustodianProjectQuery from "./postCustodianProjectQuery";
 
@@ -44,8 +44,8 @@ export {
   usePaginatedCustodianOrganisations,
   usePaginatedCustodianOrganisationUsers,
   getCustodianOrganisationUsers,
-  getCustodianUsers,
-  usePaginatedCustodianUsers,
+  getCustodianContacts,
+  usePaginatedCustodianContacts,
   postCustodianProject,
   postCustodianProjectQuery,
 };

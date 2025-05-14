@@ -5,7 +5,7 @@ import { PageBody, PageBodyContainer, PageSection } from "@/modules";
 import AdministrativeContacts from "@/modules/AdministrativeContacts";
 import SearchBar from "@/modules/SearchBar";
 import { deleteCustodianUser } from "@/services/custodian_users";
-import { usePaginatedCustodianUsers } from "@/services/custodians";
+import { usePaginatedCustodianContacts } from "@/services/custodians";
 import { CustodianUser } from "@/types/application";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
@@ -41,7 +41,7 @@ export default function Contacts() {
     isError,
     isSuccess,
     refetch,
-  } = usePaginatedCustodianUsers(custodian?.id, {
+  } = usePaginatedCustodianContacts(custodian?.id, {
     shouldUpdateQuerystring: true,
   });
 

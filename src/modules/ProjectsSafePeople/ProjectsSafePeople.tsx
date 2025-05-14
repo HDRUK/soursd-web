@@ -5,7 +5,8 @@ import { FilterIcon, PrimaryContactIcon } from "@/consts/icons";
 import { useStore } from "@/data/store";
 import useQueryAlerts from "@/hooks/useQueryAlerts";
 import useQueryConfirmAlerts from "@/hooks/useQueryConfirmAlerts";
-import { PageBody, PageSection } from "@/modules";
+import PageBody from "@/modules/PageBody";
+import PageSection from "@/modules/PageSection";
 import SearchActionMenu from "@/modules/SearchActionMenu";
 import SearchBar from "@/modules/SearchBar";
 import {

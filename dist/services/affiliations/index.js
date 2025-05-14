@@ -1,0 +1,24 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.usePaginatedAffiliations = exports.putRegistryHasAffiliationQuery = exports.patchAffiliationQuery = exports.deleteAffiliationQuery = exports.postAffiliationQuery = exports.getAffiliationsQuery = exports.patchAffiliation = exports.postAffiliation = exports.getAffiliations = void 0;
+var getAffiliations_1 = __importDefault(require("./getAffiliations"));
+exports.getAffiliations = getAffiliations_1.default;
+var postAffiliation_1 = __importDefault(require("./postAffiliation"));
+exports.postAffiliation = postAffiliation_1.default;
+var getAffiliationsQuery_1 = __importDefault(require("./getAffiliationsQuery"));
+exports.getAffiliationsQuery = getAffiliationsQuery_1.default;
+var postAffiliationQuery_1 = __importDefault(require("./postAffiliationQuery"));
+exports.postAffiliationQuery = postAffiliationQuery_1.default;
+var deleteAffiliationQuery_1 = __importDefault(require("./deleteAffiliationQuery"));
+exports.deleteAffiliationQuery = deleteAffiliationQuery_1.default;
+var patchAffiliationQuery_1 = __importDefault(require("./patchAffiliationQuery"));
+exports.patchAffiliationQuery = patchAffiliationQuery_1.default;
+var patchAffiliation_1 = __importDefault(require("./patchAffiliation"));
+exports.patchAffiliation = patchAffiliation_1.default;
+var putRegistryHasAffiliationQuery_1 = __importDefault(require("./putRegistryHasAffiliationQuery"));
+exports.putRegistryHasAffiliationQuery = putRegistryHasAffiliationQuery_1.default;
+var usePaginatedAffiliations_1 = __importDefault(require("./usePaginatedAffiliations"));
+exports.usePaginatedAffiliations = usePaginatedAffiliations_1.default;

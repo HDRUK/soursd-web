@@ -1,5 +1,7 @@
 import { useTranslations } from "next-intl";
-import { PageBodyContainer, PageSection, Training } from "@/modules";
+import Training from "@/modules/Training";
+import PageSection from "@/modules/PageSection";
+import PageBodyContainer from "@/modules/PageBodyContainer";
 import { EntityType } from "@/types/api";
 import { Typography } from "@mui/material";
 import ProfessionalRegistrations from "@/modules/ProfessionalRegistrations";

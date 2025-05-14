@@ -16,7 +16,7 @@ import { useTranslations } from "next-intl";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import NotificationsActiveOutlinedIcon from "@mui/icons-material/NotificationsActiveOutlined";
 import { NotificationPatchType } from "@/services/notifications/types";
-import { NotificationModal } from "@/modules/NotifcationModal";
+import NotificationModal from "@/modules/NotifcationModal";
 import { Notification } from "@/types/notifications";
 import { formatNotificationType } from "@/utils/notifications";
 import { useState, useEffect, useRef } from "react";
