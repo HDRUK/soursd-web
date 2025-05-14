@@ -13,10 +13,6 @@ export default async (
   searchParams: SearchParams,
   options: ResponseOptions
 ): Promise<ResponseJson<Paged<ProjectsResponse>>> => {
-  console.log(
-    "Log",
-    `/${entity}s/${id}/projects${getSearchQuerystring(searchParams)}`
-  );
   const response = await getRequest(
     `/${entity}s/${id}/projects${getSearchQuerystring(searchParams)}`
   );

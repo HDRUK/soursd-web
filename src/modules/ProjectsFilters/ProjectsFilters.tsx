@@ -64,13 +64,11 @@ export default function ProjectsFilters({
   const filterDateActions = [
     {
       label: t("filterActions.pastProjects"),
-      // onClick: () => handleFieldToggle("active", ["1", ""]),
-      checked: queryParams.approved === "1",
+      onClick: () => handleFieldToggle("active", ["1", undefined]),
     },
     {
       label: t("filterActions.activeProjects"),
-      // onClick: () => handleFieldToggle("active", ["0", ""]),
-      checked: queryParams.approved === "0",
+      onClick: () => handleFieldToggle("active", ["0", undefined]),
     },
   ];
 
@@ -117,6 +115,7 @@ export default function ProjectsFilters({
       {hasFilter(ProjectFilterKeys.DATE) && (
         <SearchActionMenu
           actions={filterDateActions}
+          onClear={() => handleFieldToggle("active", ["", undefined])}
           startIcon={<FilterIcon />}
           renderedSelectedLabel={tApplication("filteredBy")}
           renderedDefaultLabel={tApplication("filterByDate")}

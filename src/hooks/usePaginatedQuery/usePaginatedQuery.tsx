@@ -22,7 +22,7 @@ export interface PaginatedQueryHelpers {
   handleFieldToggle: (
     field: string,
     options: [string, string | undefined],
-    isMultiple: boolean
+    isMultiple?: boolean
   ) => void;
   queryParams: QueryParams;
   setQueryParams: React.Dispatch<React.SetStateAction<QueryParams>>;
