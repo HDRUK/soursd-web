@@ -1,4 +1,9 @@
-export type SearchParams = Record<string, string | number | undefined>;
+export type SearchParams = Record<
+  string,
+  string | number | string[] | undefined
+>;
+
+export type QueryParams = SearchParams;
 
 export interface ResponseEmptyError {
   ok: boolean;

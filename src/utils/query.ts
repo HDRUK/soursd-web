@@ -21,11 +21,19 @@ function isQueriesSuccess<T extends MutationState & QueryState>(queries: T[]) {
 }
 
 function getSearchQuerystring(searchParams: SearchParams) {
-  const params = new URLSearchParams(
-    Object.entries(searchParams)
-      .filter(([, value]) => value !== undefined)
-      .map(([key, value]) => [key, String(value)])
-  );
+  const params = new URLSearchParams();
+
+  Object.entries(searchParams).forEach(([key, value]) => {
+    if (value === undefined) return;
+
+    if (Array.isArray(value)) {
+      value.forEach(item => {
+        params.append(`${key}[]`, String(item));
+      });
+    } else {
+      params.append(key, String(value));
+    }
+  });
 
   return params ? `?${params.toString()}` : "";
 }
