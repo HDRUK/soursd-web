@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import { FilterIcon } from "@/consts/icons";
 import { SearchDirections } from "@/consts/search";
 import { PaginatedQueryReturn } from "@/hooks/usePaginatedQuery";
@@ -8,6 +9,7 @@ import { ResearcherProject } from "@/types/application";
 import { getSearchSortOrder } from "@/utils/query";
 import SortIcon from "@mui/icons-material/Sort";
 import { useTranslations } from "next-intl";
+import { Status } from "@/components/ChipStatus";
 import SearchActionMenu from "../SearchActionMenu";
 
 const NAMESPACE_TRANSLATIONS_PROJECTS = "Projects";
@@ -63,33 +65,49 @@ export default function ProjectsFilters({
   const filterDateActions = [
     {
       label: t("filterActions.pastProjects"),
-      onClick: () => handleFieldToggle("active", ["1", ""]),
-      checked: queryParams.approved === "1",
+      onClick: () => handleFieldToggle("active", ["1", undefined]),
     },
     {
       label: t("filterActions.activeProjects"),
-      onClick: () => handleFieldToggle("active", ["0", ""]),
-      checked: queryParams.approved === "0",
+      onClick: () => handleFieldToggle("active", ["0", undefined]),
     },
   ];
 
-  const filterStatusActions = [
-    {
-      label: t("filterActions.approved"),
-      onClick: () => handleFieldToggle("approved", ["1", ""]),
-      checked: queryParams.approved === "1",
-    },
-    {
-      label: t("filterActions.pending"),
-      onClick: () => handleFieldToggle("pending", ["1", ""]),
-      checked: queryParams.pending === "1",
-    },
-    {
-      label: t("filterActions.completed"),
-      onClick: () => handleFieldToggle("completed", ["1", ""]),
-      checked: queryParams.active === "1",
-    },
-  ];
+  const filterStatusActions = useMemo(
+    () => [
+      {
+        label: t("filterActions.approved"),
+        onClick: () =>
+          handleFieldToggle(
+            "filter",
+            [Status.PROJECT_APPROVED, undefined],
+            true
+          ),
+        checked: queryParams.filter === Status.PROJECT_APPROVED,
+      },
+      {
+        label: t("filterActions.pending"),
+        onClick: () =>
+          handleFieldToggle(
+            "filter",
+            [Status.PROJECT_PENDING, undefined],
+            true
+          ),
+        checked: queryParams.filter === Status.PROJECT_PENDING,
+      },
+      {
+        label: t("filterActions.completed"),
+        onClick: () =>
+          handleFieldToggle(
+            "filter",
+            [Status.PROJECT_COMPLETED, undefined],
+            true
+          ),
+        checked: queryParams.filter === Status.PROJECT_COMPLETED,
+      },
+    ],
+    [queryParams, handleFieldToggle, t]
+  );
 
   return (
     <SearchBar
@@ -110,6 +128,7 @@ export default function ProjectsFilters({
       {hasFilter(ProjectFilterKeys.DATE) && (
         <SearchActionMenu
           actions={filterDateActions}
+          onClear={() => handleFieldToggle("active", [undefined, undefined])}
           startIcon={<FilterIcon />}
           renderedSelectedLabel={tApplication("filteredBy")}
           renderedDefaultLabel={tApplication("filterByDate")}
