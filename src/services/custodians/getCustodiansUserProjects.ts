@@ -11,6 +11,10 @@ export default async function getCustodiansUserProjects(
   searchParams: SearchParams,
   options?: ResponseOptions
 ): Promise<ResponseJson<Paged<GetCustodiansUserProjectsResponse>>> {
+  console.log(
+    "Log",
+    `/custodians/${custodianId}/users/${userId}/projects${getSearchQuerystring(searchParams)}`
+  );
   const response = await getRequest(
     `/custodians/${custodianId}/users/${userId}/projects${getSearchQuerystring(searchParams)}`
   );

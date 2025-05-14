@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import { FilterIcon } from "@/consts/icons";
 import { SearchDirections } from "@/consts/search";
 import { PaginatedQueryReturn } from "@/hooks/usePaginatedQuery";
@@ -63,33 +64,39 @@ export default function ProjectsFilters({
   const filterDateActions = [
     {
       label: t("filterActions.pastProjects"),
-      onClick: () => handleFieldToggle("active", ["1", ""]),
+      // onClick: () => handleFieldToggle("active", ["1", ""]),
       checked: queryParams.approved === "1",
     },
     {
       label: t("filterActions.activeProjects"),
-      onClick: () => handleFieldToggle("active", ["0", ""]),
+      // onClick: () => handleFieldToggle("active", ["0", ""]),
       checked: queryParams.approved === "0",
     },
   ];
 
-  const filterStatusActions = [
-    {
-      label: t("filterActions.approved"),
-      onClick: () => handleFieldToggle("approved", ["1", ""]),
-      checked: queryParams.approved === "1",
-    },
-    {
-      label: t("filterActions.pending"),
-      onClick: () => handleFieldToggle("pending", ["1", ""]),
-      checked: queryParams.pending === "1",
-    },
-    {
-      label: t("filterActions.completed"),
-      onClick: () => handleFieldToggle("completed", ["1", ""]),
-      checked: queryParams.active === "1",
-    },
-  ];
+  const filterStatusActions = useMemo(
+    () => [
+      {
+        label: t("filterActions.approved"),
+        onClick: () =>
+          handleFieldToggle("filter", ["project_approved", undefined], true),
+        checked: queryParams.filter === "project_approved",
+      },
+      {
+        label: t("filterActions.pending"),
+        onClick: () =>
+          handleFieldToggle("filter", ["project_pending", undefined], true),
+        checked: queryParams.filter === "project_pending",
+      },
+      {
+        label: t("filterActions.completed"),
+        onClick: () =>
+          handleFieldToggle("filter", ["project_completed", undefined], true),
+        checked: queryParams.filter === "project_completed",
+      },
+    ],
+    [queryParams, handleFieldToggle, t]
+  );
 
   return (
     <SearchBar
