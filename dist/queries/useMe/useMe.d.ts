@@ -1,1 +1,1 @@
-export default function useMe(): import("@tanstack/react-query").UseQueryResult<any, Error>;
+export default function useMe(): import("@tanstack/react-query").UseQueryResult<import("../../types/requests").ResponseJson<import("../../types/application").User>, Error>;

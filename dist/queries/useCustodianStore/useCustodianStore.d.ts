@@ -1,1 +1,1 @@
-export default function useCustodianStore(): any;
+export default function useCustodianStore(): import("../../types/application").Custodian | undefined;

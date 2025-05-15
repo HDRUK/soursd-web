@@ -1,7 +1,7 @@
 {
-  "name": "soursd-web",
-  "version": "1.4.0",
-  "private": true,
+  "name": "@hdruk/soursd-web",
+  "version": "1.4.5",
+  "private": false,
   "scripts": {
     "dev": "NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
@@ -17,15 +17,17 @@
     "build-storybook": "storybook build",
     "chromatic": "npx chromatic --project-token=$CHROMATIC_PROJECT_TOKEN",
     "prepare": "husky install",
-    "build:dist": "rm -rf dist/ && mkdir dist/ && cp package.json dist/ && cp README.md dist/ && tsc -p tsconfig.build.json"
+    "build:dist": "rm -rf dist/ && tsc -p tsconfig.build.json"
   },
   "main": "./dist/exports.ts",
   "files": [
     "./dist"
   ],
   "exports": {
-    ".": "./dist/exports.ts",
-    "./client": "./dist/export-client.ts"
+    "!(@/**)": {
+      "import": "./dist/exports.js",
+      "types": "./dist/exports.d.ts"
+    }
   },
   "dependencies": {
     "@emotion/cache": "^11.11.0",

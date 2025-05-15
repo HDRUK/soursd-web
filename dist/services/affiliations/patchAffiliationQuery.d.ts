@@ -4,5 +4,5 @@ export default function patchAffiliationQuery(): {
     mutationFn: ({ affiliationId, payload, }: {
         affiliationId: number;
         payload: PatchAffiliationsPayload;
-    }) => Promise<ResponseJson<ResearcherAffiliation>>;
+    }) => Promise<import("../../types/requests").ResponseJson<import("../../types/application").ResearcherAffiliation>>;
 };

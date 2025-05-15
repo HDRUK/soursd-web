@@ -15,10 +15,10 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "outDir": "dist",
-    "declaration": true
+    "declaration": true,
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
-  "include": ["src/exports.ts", "src/export-client.ts"],
-  "paths": {
-    "@/*": ["./*"]
-  }
+  "include": ["src/index.ts"]
 }

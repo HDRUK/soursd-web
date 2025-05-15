@@ -1,5 +1,5 @@
 import { PaginatedQueryProps } from "@/hooks/usePaginatedQuery";
 import { GetCustodianOrganisationsResponse } from "./types";
 type GetCustodianOrganisationsQuery = Partial<PaginatedQueryProps<GetCustodianOrganisationsResponse>>;
-export default function usePaginatedCustodianOrganisations(custodianId: number, options?: GetCustodianOrganisationsQuery): any;
+export default function usePaginatedCustodianOrganisations(custodianId: number, options?: GetCustodianOrganisationsQuery): (import("@tanstack/query-core").QueryObserverRefetchErrorResult<import("../../types/requests").ResponseJson<import("../../types/requests").Paged<GetCustodianOrganisationsResponse>>, Error> & import("../../types/requests").Paged<GetCustodianOrganisationsResponse> & import("@/hooks/usePaginatedQuery").PaginatedQueryHelpers) | (import("@tanstack/query-core").QueryObserverSuccessResult<import("../../types/requests").ResponseJson<import("../../types/requests").Paged<GetCustodianOrganisationsResponse>>, Error> & import("../../types/requests").Paged<GetCustodianOrganisationsResponse> & import("@/hooks/usePaginatedQuery").PaginatedQueryHelpers);
 export {};

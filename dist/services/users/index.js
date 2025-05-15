@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.usePaginatedUserProjects = exports.getUsersQuery = exports.putUserQuery = exports.putUser = exports.patchUserQuery = exports.postUserInvite = exports.postUserInviteQuery = exports.postUsers = exports.postPermissions = exports.patchUser = exports.getUsers = exports.getUserHistoryQuery = exports.getUserQuery = exports.getUser = void 0;
+exports.usePaginatedUserProjects = exports.getUsersQuery = exports.putUserQuery = exports.putUser = exports.patchUserQuery = exports.postUserInvite = exports.postUserInviteQuery = exports.postUsers = exports.patchUser = exports.getUsers = exports.getUserHistoryQuery = exports.getUserQuery = exports.getUser = void 0;
 var getUser_1 = __importDefault(require("./getUser"));
 exports.getUser = getUser_1.default;
 var getUserQuery_1 = __importDefault(require("./getUserQuery"));
@@ -16,8 +16,6 @@ var getUsersQuery_1 = __importDefault(require("./getUsersQuery"));
 exports.getUsersQuery = getUsersQuery_1.default;
 var patchUser_1 = __importDefault(require("./patchUser"));
 exports.patchUser = patchUser_1.default;
-var postPermissions_1 = __importDefault(require("./postPermissions"));
-exports.postPermissions = postPermissions_1.default;
 var postUsers_1 = __importDefault(require("./postUsers"));
 exports.postUsers = postUsers_1.default;
 var postUserInvite_1 = __importDefault(require("./postUserInvite"));

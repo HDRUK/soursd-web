@@ -18,5 +18,5 @@ interface ApplicationDataProps {
     isCustodian: boolean;
     children: ReactNode;
 }
-export default function ApplicationData({ systemConfigData, userData, organisationData, sectorsData, permissionsData, projectRolesData, custodianData, accreditationsData, educationData, trainingData, projectsData, affiliationData, professionalRegistrationsData, isOrganisation, isCustodian, children, }: ApplicationDataProps): any;
+export default function ApplicationData({ systemConfigData, userData, organisationData, sectorsData, permissionsData, projectRolesData, custodianData, accreditationsData, educationData, trainingData, projectsData, affiliationData, professionalRegistrationsData, isOrganisation, isCustodian, children, }: ApplicationDataProps): ReactNode;
 export {};

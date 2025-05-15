@@ -16,7 +16,7 @@ declare const useMutationWithConfirmation: <T extends UseMutationOptions<unknown
     failureReason: Error | null;
     isPaused: boolean;
     submittedAt: number;
-    showConfirm: any;
+    showConfirm: (payload: unknown) => void;
 } | {
     data: undefined;
     variables: void;
@@ -33,7 +33,7 @@ declare const useMutationWithConfirmation: <T extends UseMutationOptions<unknown
     failureReason: Error | null;
     isPaused: boolean;
     submittedAt: number;
-    showConfirm: any;
+    showConfirm: (payload: unknown) => void;
 } | {
     data: undefined;
     error: Error;
@@ -50,7 +50,7 @@ declare const useMutationWithConfirmation: <T extends UseMutationOptions<unknown
     failureReason: Error | null;
     isPaused: boolean;
     submittedAt: number;
-    showConfirm: any;
+    showConfirm: (payload: unknown) => void;
 } | {
     data: unknown;
     error: null;
@@ -67,6 +67,6 @@ declare const useMutationWithConfirmation: <T extends UseMutationOptions<unknown
     failureReason: Error | null;
     isPaused: boolean;
     submittedAt: number;
-    showConfirm: any;
+    showConfirm: (payload: unknown) => void;
 };
 export default useMutationWithConfirmation;

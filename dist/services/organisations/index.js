@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.useOrganisationsQuery = exports.postOrganisationInviteQuery = exports.postOrganisationInvite = exports.postOrganisationUnclaimed = exports.postOrganisationUnclaimedQuery = exports.getOrganisationRegistriesQuery = exports.getOrganisationRegistries = exports.getOrganisationDelegatesQuery = exports.getOrganisationDelegates = exports.getOrganisationUsers = exports.postOrganisationInviteUserQuery = exports.postOrganisationInviteUser = exports.patchOrganisation = exports.getOrganisationIdvt = exports.postPermissions = exports.getOrganisationQuery = exports.getOrganisation = exports.getOrganisations = void 0;
+exports.useOrganisationsQuery = exports.postOrganisationInviteQuery = exports.postOrganisationInvite = exports.postOrganisationUnclaimed = exports.postOrganisationUnclaimedQuery = exports.getOrganisationRegistriesQuery = exports.getOrganisationRegistries = exports.getOrganisationDelegatesQuery = exports.getOrganisationDelegates = exports.getOrganisationUsers = exports.postOrganisationInviteUserQuery = exports.postOrganisationInviteUser = exports.patchOrganisation = exports.getOrganisationIdvt = exports.getOrganisationQuery = exports.getOrganisation = exports.getOrganisations = void 0;
 var getOrganisations_1 = __importDefault(require("./getOrganisations"));
 exports.getOrganisations = getOrganisations_1.default;
 var getOrganisation_1 = __importDefault(require("./getOrganisation"));
@@ -12,8 +12,6 @@ var getOrganisationQuery_1 = __importDefault(require("./getOrganisationQuery"));
 exports.getOrganisationQuery = getOrganisationQuery_1.default;
 var getOrganisationIdvt_1 = __importDefault(require("./getOrganisationIdvt"));
 exports.getOrganisationIdvt = getOrganisationIdvt_1.default;
-var postPermissions_1 = __importDefault(require("./postPermissions"));
-exports.postPermissions = postPermissions_1.default;
 var patchOrganisation_1 = __importDefault(require("./patchOrganisation"));
 exports.patchOrganisation = patchOrganisation_1.default;
 var postOrganisationInviteUser_1 = __importDefault(require("./postOrganisationInviteUser"));

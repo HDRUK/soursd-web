@@ -16,8 +16,6 @@ export type * from "./educations";
 export * from "./educations";
 export type * from "./employments";
 export * from "./employments";
-export type * from "./endorsements";
-export * from "./endorsements";
 export type * from "./files";
 export * from "./files";
 export type * from "./notifications";

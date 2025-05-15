@@ -14,7 +14,7 @@ export default function useUserInvite({ organisationId, onSuccess, onError, }: U
         isPending: false;
         isSuccess: false;
         status: "idle";
-        mutate: import("@tanstack/react-query").UseMutateFunction<unknown, Error, void, unknown>;
+        mutate: import("@tanstack/react-query").UseMutateFunction<import("../../types/requests").ResponseJson<import("../../types/application").User>, Error, PostOrganisationInviteUserPayload, unknown>;
         reset: () => void;
         context: unknown;
         failureCount: number;
@@ -23,14 +23,14 @@ export default function useUserInvite({ organisationId, onSuccess, onError, }: U
         submittedAt: number;
     } | {
         data: undefined;
-        variables: void;
+        variables: PostOrganisationInviteUserPayload;
         error: null;
         isError: false;
         isIdle: false;
         isPending: true;
         isSuccess: false;
         status: "pending";
-        mutate: import("@tanstack/react-query").UseMutateFunction<unknown, Error, void, unknown>;
+        mutate: import("@tanstack/react-query").UseMutateFunction<import("../../types/requests").ResponseJson<import("../../types/application").User>, Error, PostOrganisationInviteUserPayload, unknown>;
         reset: () => void;
         context: unknown;
         failureCount: number;
@@ -40,13 +40,13 @@ export default function useUserInvite({ organisationId, onSuccess, onError, }: U
     } | {
         data: undefined;
         error: Error;
-        variables: void;
+        variables: PostOrganisationInviteUserPayload;
         isError: true;
         isIdle: false;
         isPending: false;
         isSuccess: false;
         status: "error";
-        mutate: import("@tanstack/react-query").UseMutateFunction<unknown, Error, void, unknown>;
+        mutate: import("@tanstack/react-query").UseMutateFunction<import("../../types/requests").ResponseJson<import("../../types/application").User>, Error, PostOrganisationInviteUserPayload, unknown>;
         reset: () => void;
         context: unknown;
         failureCount: number;
@@ -54,15 +54,15 @@ export default function useUserInvite({ organisationId, onSuccess, onError, }: U
         isPaused: boolean;
         submittedAt: number;
     } | {
-        data: unknown;
+        data: import("../../types/requests").ResponseJson<import("../../types/application").User>;
         error: null;
-        variables: void;
+        variables: PostOrganisationInviteUserPayload;
         isError: false;
         isIdle: false;
         isPending: false;
         isSuccess: true;
         status: "success";
-        mutate: import("@tanstack/react-query").UseMutateFunction<unknown, Error, void, unknown>;
+        mutate: import("@tanstack/react-query").UseMutateFunction<import("../../types/requests").ResponseJson<import("../../types/application").User>, Error, PostOrganisationInviteUserPayload, unknown>;
         reset: () => void;
         context: unknown;
         failureCount: number;

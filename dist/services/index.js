@@ -23,7 +23,6 @@ __exportStar(require("./custodian_users"), exports);
 __exportStar(require("./custodians"), exports);
 __exportStar(require("./educations"), exports);
 __exportStar(require("./employments"), exports);
-__exportStar(require("./endorsements"), exports);
 __exportStar(require("./files"), exports);
 __exportStar(require("./notifications"), exports);
 __exportStar(require("./organisations"), exports);

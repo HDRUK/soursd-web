@@ -4,11 +4,11 @@ type CustodianParams = {
     registryId: string | number;
 };
 export declare const useProjectUserCustodianApproval: ({ custodianId, projectId, registryId, }: CustodianParams) => {
-    data: any;
+    data: import("@/services/approvals").ApprovalResponse | undefined;
     isLoading: boolean;
     isError: boolean;
-    approve: import("@tanstack/react-query").UseMutateAsyncFunction<unknown, Error, string, unknown>;
-    reject: import("@tanstack/react-query").UseMutateAsyncFunction<unknown, Error, string, unknown>;
-    refetch: (options?: import("@tanstack/react-query").RefetchOptions) => Promise<import("@tanstack/react-query").QueryObserverResult<any, Error>>;
+    approve: import("@tanstack/react-query").UseMutateAsyncFunction<import("../../types/requests").ResponseJson<import("@/services/approvals").ApprovalResponse>, Error, string, unknown>;
+    reject: import("@tanstack/react-query").UseMutateAsyncFunction<import("../../types/requests").ResponseJson<import("@/services/approvals").ApprovalResponse>, Error, string, unknown>;
+    refetch: (options?: import("@tanstack/react-query").RefetchOptions) => Promise<import("@tanstack/react-query").QueryObserverResult<import("../../types/requests").ResponseJson<import("@/services/approvals").ApprovalResponse>, Error>>;
 };
 export {};

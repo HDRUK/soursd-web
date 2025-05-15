@@ -7,6 +7,6 @@ type ApprovalPayload = {
     comment: string;
 };
 declare const postOrganisationApprovalQuery: ({ custodianId, organisationId, }: MutationOptions) => {
-    mutationFn: ({ approved, comment }: ApprovalPayload) => Promise<ResponseJson<import("./types").ApprovalResponse>>;
+    mutationFn: ({ approved, comment }: ApprovalPayload) => Promise<import("../../types/requests").ResponseJson<import("./types").ApprovalResponse>>;
 };
 export default postOrganisationApprovalQuery;

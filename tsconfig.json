@@ -33,8 +33,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".storybook/*.tsx",
-    "src/exports.ts",
-    "src/export-client.ts"
+    "src/exports.ts"
   ],
   "exclude": ["node_modules"]
 }

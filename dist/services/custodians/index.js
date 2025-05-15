@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.postCustodianProjectQuery = exports.postCustodianProject = exports.usePaginatedCustodianUsers = exports.getCustodianUsers = exports.getCustodianOrganisationUsers = exports.usePaginatedCustodianOrganisationUsers = exports.usePaginatedCustodianOrganisations = exports.getCustodianOrganisations = exports.usePaginatedCustodiansUserProjects = exports.getCustodiansUserProjects = exports.getCustodianProjectUsers = exports.putCustodianActiveEntityModel = exports.putCustodianActiveEntityModelQuery = exports.getCustodianEntityModel = exports.getCustodianEntityModelQuery = exports.postCustodianQuery = exports.postCustodianInviteQuery = exports.postCustodianInvite = exports.postCustodian = exports.getCustodians = exports.patchCustodianQuery = exports.patchCustodian = exports.getCustodianQuery = exports.getCustodian = void 0;
+exports.postCustodianProjectQuery = exports.postCustodianProject = exports.usePaginatedCustodianContacts = exports.getCustodianContacts = exports.getCustodianOrganisationUsers = exports.usePaginatedCustodianOrganisationUsers = exports.usePaginatedCustodianOrganisations = exports.getCustodianOrganisations = exports.usePaginatedCustodiansUserProjects = exports.getCustodiansUserProjects = exports.getCustodianProjectUsers = exports.putCustodianActiveEntityModel = exports.putCustodianActiveEntityModelQuery = exports.getCustodianEntityModel = exports.getCustodianEntityModelQuery = exports.postCustodianQuery = exports.postCustodianInviteQuery = exports.postCustodianInvite = exports.postCustodian = exports.getCustodians = exports.patchCustodianQuery = exports.patchCustodian = exports.getCustodianQuery = exports.getCustodian = void 0;
 var getCustodian_1 = __importDefault(require("./getCustodian"));
 exports.getCustodian = getCustodian_1.default;
 var getCustodianQuery_1 = __importDefault(require("./getCustodianQuery"));
@@ -44,10 +44,10 @@ var usePaginatedCustodianOrganisationUsers_1 = __importDefault(require("./usePag
 exports.usePaginatedCustodianOrganisationUsers = usePaginatedCustodianOrganisationUsers_1.default;
 var getCustodianOrganisationUsers_1 = __importDefault(require("./getCustodianOrganisationUsers"));
 exports.getCustodianOrganisationUsers = getCustodianOrganisationUsers_1.default;
-var getCustodianUsers_1 = __importDefault(require("./getCustodianUsers"));
-exports.getCustodianUsers = getCustodianUsers_1.default;
-var usePaginatedCustodianUsers_1 = __importDefault(require("./usePaginatedCustodianUsers"));
-exports.usePaginatedCustodianUsers = usePaginatedCustodianUsers_1.default;
+var getCustodianContacts_1 = __importDefault(require("./getCustodianContacts"));
+exports.getCustodianContacts = getCustodianContacts_1.default;
+var usePaginatedCustodianContacts_1 = __importDefault(require("./usePaginatedCustodianContacts"));
+exports.usePaginatedCustodianContacts = usePaginatedCustodianContacts_1.default;
 var postCustodianProject_1 = __importDefault(require("./postCustodianProject"));
 exports.postCustodianProject = postCustodianProject_1.default;
 var postCustodianProjectQuery_1 = __importDefault(require("./postCustodianProjectQuery"));

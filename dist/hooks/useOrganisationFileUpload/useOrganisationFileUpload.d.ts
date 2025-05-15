@@ -6,4 +6,4 @@ export interface UseOrganisationFileUploadProps {
     organisation: Organisation;
     upload: (formData: FormData) => Promise<File | undefined>;
 }
-export default function useOrganisationFileUpload({ fileType, organisation, upload, }: UseOrganisationFileUploadProps): (name: string, e: ChangeEvent<HTMLInputElement>) => Promise<any>;
+export default function useOrganisationFileUpload({ fileType, organisation, upload, }: UseOrganisationFileUploadProps): (name: string, e: ChangeEvent<HTMLInputElement>) => Promise<File | null | undefined>;

@@ -5,6 +5,6 @@ type UseCustodianApprovalQueryOptions = {
 };
 declare const getOrganisationApprovalQuery: ({ queryKey, custodianId, organisationId, }: UseCustodianApprovalQueryOptions) => {
     queryKey: (string | number)[];
-    queryFn: () => Promise<ResponseJson<import("./types").ApprovalResponse>>;
+    queryFn: () => Promise<import("../../types/requests").ResponseJson<import("./types").ApprovalResponse>>;
 };
 export default getOrganisationApprovalQuery;

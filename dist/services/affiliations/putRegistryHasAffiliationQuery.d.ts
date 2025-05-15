@@ -5,5 +5,5 @@ export default function putRegistryHasAffiliationQuery(): {
         registryId: number;
         affiliationId: number;
         status: AffiliationStatus;
-    }) => Promise<ResponseJson<ResearcherAffiliation>>;
+    }) => Promise<import("../../types/requests").ResponseJson<import("../../types/application").ResearcherAffiliation>>;
 };

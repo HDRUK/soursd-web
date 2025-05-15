@@ -4,7 +4,13 @@ interface UseOrganisationInviteProps {
     onError: () => void;
 }
 export default function useOrganisationInvite({ onSuccess, onError, }: UseOrganisationInviteProps): {
-    queryState: any;
+    queryState: {
+        isLoading: boolean;
+        isError: boolean;
+        error: Error[];
+        isFetched: boolean;
+        isSuccess: boolean;
+    };
     handleSubmit: (organisation: PostOrganisationUnclaimedPayload) => Promise<void>;
 };
 export {};
