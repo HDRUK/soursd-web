@@ -27,6 +27,10 @@ export default function UserIdentity() {
           <Typography>{`${user?.first_name} ${user?.last_name}`}</Typography>
         </Box>
         <Box>
+          <Typography sx={{ fontWeight: 600 }}>{t("digiIdent")}</Typography>
+          <Text copyable>{`${user?.registry.digi_ident}`}</Text>
+        </Box>
+        <Box>
           <Typography sx={{ fontWeight: 600 }}>{t("location")}</Typography>
           <Text startIcon={user?.location ? null : <ErrorIcon color="error" />}>
             {user?.location || t("locationMissing")}
