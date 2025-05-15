@@ -1213,7 +1213,8 @@
       "datasetLinkageDescription": "For linked datasets, specify how the linkage will take place",
       "dataUseDescription": "Description of the data being used",
       "dataMinimisation": "Approach to data minimisation",
-      "requestFrequency": "Request frequency"
+      "requestFrequency": "Request frequency",
+      "notSet": "Not set"
     },
     "SafeSettings": {
       "noProjectDetails": "Data does not exist for this section yet",
