@@ -5,7 +5,7 @@ import { RequestFrequency } from "@/consts/projects";
 import { ProjectDetails, ResearcherProject } from "@/types/application";
 import { DataUse } from "@/types/gateway";
 import { DefaultFormValuesMode } from "@/consts/form";
-import { formatStringToISO } from "./date";
+import { formatStringToISO, getDate } from "./date";
 import { parseValidJSON } from "./json";
 
 function getCheckboxFormValuesFromIntersection(
@@ -78,7 +78,9 @@ function createDataUseDefaultValues(data: DataUse) {
     national_data_optout: data.national_data_optout || false,
     request_frequency: data.request_frequency || RequestFrequency.ONE_OFF,
     dataset_linkage_description: data.dataset_linkage_description || "",
-    access_date: data.access_date ? formatStringToISO(data.access_date) : "",
+    access_date: data.access_date
+      ? getDate(formatStringToISO(data.access_date))
+      : "",
     request_category_type: data.request_category_type || "",
     lay_summary: data.lay_summary || "",
     technical_summary: data.technical_summary || "",
@@ -104,7 +106,9 @@ function createProjectDetailDefaultValues(
       : national_data_optout,
     request_frequency: data.request_frequency || RequestFrequency.ONE_OFF,
     dataset_linkage_description: data.dataset_linkage_description || "",
-    access_date: data.access_date ? formatStringToISO(data.access_date) : "",
+    access_date: data.access_date
+      ? getDate(formatStringToISO(data.access_date))
+      : "",
     data_minimisation: data?.data_minimisation || "",
     data_use_description: data?.data_use_description || "",
     access_type: data?.access_type || "",

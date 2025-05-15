@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { ReactNode, useMemo } from "react";
 import _get from "lodash.get";
 import { ArrayElement } from "@/types/common";
+import { Message } from "../Message";
 
 interface FieldsToTextProps<T> {
   data: T;
@@ -39,7 +40,7 @@ export default function FieldsToText<T>({
       return <ul>{items?.map((value: string) => <li>{value}</li>)}</ul>;
     }
 
-    return items;
+    return items || <Message severity="warning">{t("notSet")}</Message>;
   };
 
   const getHeading = (key: ArrayElement<typeof keys>) => {
