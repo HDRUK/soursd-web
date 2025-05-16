@@ -1,9 +1,8 @@
-import React from "react";
-import { render, screen } from "../../utils/testUtils";
-import "@testing-library/jest-dom";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
+import "@testing-library/jest-dom";
 import { enGB } from "date-fns/locale/en-GB";
+import { render, screen } from "../../utils/testUtils";
 import DateInput, { DateInputProps } from "./DateInput";
 
 const renderInput = (props: DateInputProps) => {

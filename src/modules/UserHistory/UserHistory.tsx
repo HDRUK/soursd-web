@@ -1,11 +1,11 @@
 import { useTranslations } from "next-intl";
 import { useStore } from "@/data/store";
 import { useQuery } from "@tanstack/react-query";
+import { Card, CardContent, Typography, Box } from "@mui/material";
 import { getInitials } from "../../utils/application";
 import { getUserHistoryQuery } from "../../services/users";
 import MaskLabel from "../../components/MaskLabel";
 import { getDaysSince } from "../../utils/date";
-import { Card, CardContent, Typography, Box } from "@mui/material";
 
 const NAMESPACE_TRANSLATION = "UserHistory";
 

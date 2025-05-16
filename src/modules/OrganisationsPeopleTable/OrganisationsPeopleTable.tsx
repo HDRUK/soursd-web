@@ -1,9 +1,9 @@
 "use client";
 
 import { useStore } from "@/data/store";
-import { User } from "../../types/application";
 import { ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
+import { User } from "../../types/application";
 import ChipStatus from "../../components/ChipStatus";
 import Table, { TableProps } from "../../components/Table";
 import { renderUserNameCell } from "../../utils/cells";

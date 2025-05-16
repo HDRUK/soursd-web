@@ -1,8 +1,8 @@
 "use client";
 
-import { ResearcherProject } from "../../types/application";
 import SortIcon from "@mui/icons-material/Sort";
 import { useTranslations } from "next-intl";
+import { ResearcherProject } from "../../types/application";
 import { FilterIcon } from "../../consts/icons";
 import { SearchDirections } from "../../consts/search";
 import { PaginatedQueryReturn } from "../../hooks/usePaginatedQuery";

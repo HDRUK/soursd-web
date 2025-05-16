@@ -1,11 +1,11 @@
+import { useMutation } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
+import { useStore } from "@/data/store";
 import { TrashIcon } from "../../consts/icons";
 import { PatchUserPayload, patchUser } from "../../services/users";
-import { useMutation } from "@tanstack/react-query";
 import { showAlert, showLoadingAlertWithPromise } from "../../utils/showAlert";
 import { User } from "../../types/application";
 import { ActionMenuItem } from "../ActionMenu";
-import { useTranslations } from "next-intl";
-import { useStore } from "@/data/store";
 
 interface DecoupleUserProps {
   user: User;

@@ -1,8 +1,10 @@
-name: Release
+name: Publish
 on:
-  push:
+  workflow_run:
+    workflows: ["Release workflow"]
+    types: [completed]
     branches:
-      - main
+      - "develop"
 
 jobs:
   release:
@@ -15,7 +17,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GH_TOKEN }}
-          ref: main
+          ref: develop
           fetch-depth: 0
 
       - name: Set up Node.js
@@ -38,15 +40,7 @@ jobs:
       - name: Run lint
         run: npm run lint
 
-      # - name: Change package version
-      #   run: npm version ${{ steps.getversion.outputs.version }}
-
-      # - name: Commit package version
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-      #   run: git push — tags origin master
-
-      - name: Release
+      - name: Publish
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npm publish

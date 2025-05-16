@@ -1,5 +1,5 @@
-import { fireEvent, render, screen, waitFor } from "../../utils/testUtils";
 import { useFormState } from "react-hook-form";
+import { fireEvent, render, screen, waitFor } from "../../utils/testUtils";
 import FormCanLeave from ".";
 
 const renderFormCanLeave = () => {

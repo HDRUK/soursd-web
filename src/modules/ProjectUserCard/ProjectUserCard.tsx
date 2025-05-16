@@ -1,8 +1,6 @@
 "use client";
 
 import { useStore } from "@/data/store";
-import { EntityType } from "../../types/api";
-import { ProjectUser } from "../../types/application";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { Box, Card, CardContent, Typography } from "@mui/material";
 import {
@@ -12,6 +10,8 @@ import {
 } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
+import { ProjectUser } from "../../types/application";
+import { EntityType } from "../../types/api";
 import { ApprovedUserIcon } from "../../consts/icons";
 import { getEntityApproval } from "../../services/approvals";
 import { getUserApprovedProjects } from "../../services/projects";

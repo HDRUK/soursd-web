@@ -1,10 +1,10 @@
 "use client";
 
+import { Box, BoxProps } from "@mui/material";
+import { ReactNode } from "react";
 import useResponsiveProps, {
   ResponsiveProps,
 } from "../../hooks/useResponsiveProps";
-import { Box, BoxProps } from "@mui/material";
-import { ReactNode } from "react";
 
 export interface ULBaseProps extends BoxProps {
   children: ReactNode;

@@ -1,3 +1,4 @@
+import { QueryOptions } from "@/types/requests";
 import useQueriesCombined from "../../hooks/useQueriesCombined";
 import {
   getAccreditations,
@@ -18,7 +19,6 @@ import {
   getTrainingByRegistryId,
   getTrainingByRegistryIdQuery,
 } from "../../services/trainings";
-import { QueryOptions } from "@/types/requests";
 
 export interface HistoryCombinedData {
   getEducations: Awaited<ReturnType<typeof getEducations>>;

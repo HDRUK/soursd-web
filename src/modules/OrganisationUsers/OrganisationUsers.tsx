@@ -1,10 +1,10 @@
 import { useStore } from "@/data/store";
-import { User } from "../../types/application";
 import CancelIcon from "@mui/icons-material/Cancel";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { Box } from "@mui/material";
 import { CellContext, ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
+import { User } from "../../types/application";
 import { TrashIcon } from "../../consts/icons";
 import { SearchDirections } from "../../consts/search";
 import usePaginatedQuery from "../../hooks/usePaginatedQuery";

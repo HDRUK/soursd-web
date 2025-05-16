@@ -1,6 +1,6 @@
-import { CustodianUser } from "../../types/application";
 import { ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
+import { CustodianUser } from "../../types/application";
 import { renderUserNameCell } from "../../utils/cells";
 import { formatDisplayLongDate } from "../../utils/date";
 import { toCamelCase } from "../../utils/string";

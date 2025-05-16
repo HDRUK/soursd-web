@@ -1,8 +1,8 @@
-import { toCamelCase } from "../../utils/string";
 import { Box, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { ReactNode, useMemo } from "react";
 import _get from "lodash.get";
+import { toCamelCase } from "../../utils/string";
 import { ArrayElement } from "../../types/common";
 
 interface FieldsToTextProps<T> {

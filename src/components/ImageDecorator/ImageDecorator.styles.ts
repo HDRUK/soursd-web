@@ -1,4 +1,3 @@
-import { getAugmentedColor } from "../../utils/theme";
 import {
   AugmentedColorPaletteOptions,
   Box,
@@ -6,6 +5,7 @@ import {
   css,
   styled,
 } from "@mui/material";
+import { getAugmentedColor } from "../../utils/theme";
 
 export const StyledImageDecorator = styled(Box)(
   ({

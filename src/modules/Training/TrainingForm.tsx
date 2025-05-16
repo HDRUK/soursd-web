@@ -2,6 +2,8 @@ import React, { useCallback, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { TextField, Button, Grid, Typography, Divider } from "@mui/material";
 import { useTranslations } from "next-intl";
+import dayjs from "dayjs";
+import { useStore } from "@/data/store";
 import Form from "../../components/Form";
 import FormControl from "../../components/FormControlWrapper";
 import FormActions from "../../components/FormActions";
@@ -9,12 +11,10 @@ import ButtonSave from "../../components/ButtonSave";
 import DateInput from "../../components/DateInput";
 import { FileType } from "../../consts/files";
 import yup from "../../config/yup";
-import dayjs from "dayjs";
 import { formatDBDate } from "../../utils/date";
 import { PostTrainingsPayload } from "../../services/trainings/types";
 import useFileUpload from "../../hooks/useFileUpload";
 import useUserFileUpload from "../../hooks/useUserFileUpload";
-import { useStore } from "@/data/store";
 import {
   File as ApplicationFile,
   ResearcherTraining,

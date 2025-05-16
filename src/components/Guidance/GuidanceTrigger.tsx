@@ -1,12 +1,5 @@
 "use client";
 
-import { Position } from "../../consts/ui";
-import {
-  isPositionBottom,
-  isPositionLeft,
-  isPositionTop,
-  isPositionNone,
-} from "../../utils/styles";
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
@@ -14,6 +7,13 @@ import KeyboardDoubleArrowUpIcon from "@mui/icons-material/KeyboardDoubleArrowUp
 import { IconButton, IconButtonProps } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { ReactNode, useMemo } from "react";
+import {
+  isPositionBottom,
+  isPositionLeft,
+  isPositionTop,
+  isPositionNone,
+} from "../../utils/styles";
+import { Position } from "../../consts/ui";
 
 export interface GuidanceTriggerProps extends IconButtonProps {
   icon?: ReactNode;

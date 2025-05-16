@@ -5,8 +5,8 @@ import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 
 import { useStore } from "@/data/store";
-import { ValidationLog } from "../../types/logs";
 import { useTranslations } from "next-intl";
+import { ValidationLog } from "../../types/logs";
 import { RejectIcon, VerifyIcon } from "../../consts/icons";
 import {
   postValidationLogCommentQuery,

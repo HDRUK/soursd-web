@@ -1,9 +1,9 @@
 "use client";
 
-import { User } from "../../types/application";
 import { Box, Checkbox, FormControlLabel } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { User } from "../../types/application";
 import { PaginatedQueryReturn } from "../../hooks/usePaginatedQuery";
 import SearchBar from "../SearchBar";
 

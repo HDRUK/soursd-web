@@ -5,7 +5,6 @@ import {
   TextField,
   TextFieldProps,
 } from "@mui/material";
-import useDebounce from "../../hooks/useDebounce";
 import {
   Control,
   FieldValues,
@@ -13,6 +12,7 @@ import {
   useFormContext,
 } from "react-hook-form";
 import React, { SyntheticEvent, useState, useEffect, useRef } from "react";
+import useDebounce from "../../hooks/useDebounce";
 import { formatAddress } from "../../utils/address";
 import { AddressFields } from "../../types/application";
 import fetchPredictions from "./actions";

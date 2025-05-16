@@ -1,7 +1,5 @@
 "use client";
 
-import yup from "../../config/yup";
-import { isFieldRequired } from "../../utils/form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, BoxProps, Grid } from "@mui/material";
 import deepEqual from "deep-equal";
@@ -16,6 +14,8 @@ import {
   UseFormReturn,
 } from "react-hook-form";
 import { AnyObject } from "yup";
+import { isFieldRequired } from "../../utils/form";
+import yup from "../../config/yup";
 import FormCanLeave from "../FormCanLeave";
 import FormModal, { FormModalProps } from "../FormModal";
 import { Message } from "../Message";

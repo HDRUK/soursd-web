@@ -1,9 +1,8 @@
 import { useStore } from "@/data/store";
 import { mockedTraining, mockedUser } from "@/mocks/data/user";
-import {
-  getTrainingByRegistryId,
-  postTrainings,
-} from "../../services/trainings";
+import { faker } from "@faker-js/faker";
+import { mock200Json } from "jest.utils";
+import { useRouter } from "next/navigation";
 import {
   act,
   commonAccessibilityTests,
@@ -12,9 +11,10 @@ import {
   screen,
   waitFor,
 } from "../../utils/testUtils";
-import { faker } from "@faker-js/faker";
-import { mock200Json } from "jest.utils";
-import { useRouter } from "next/navigation";
+import {
+  getTrainingByRegistryId,
+  postTrainings,
+} from "../../services/trainings";
 import { EntityType } from "../../types/api";
 import Training from "./Training";
 

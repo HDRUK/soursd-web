@@ -1,3 +1,4 @@
+import { faker } from "@faker-js/faker";
 import {
   act,
   commonAccessibilityTests,
@@ -6,7 +7,6 @@ import {
   screen,
   waitFor,
 } from "../../utils/testUtils";
-import { faker } from "@faker-js/faker";
 import InviteCustodian from "./InviteCustodian";
 
 jest.mock("@/data/store");

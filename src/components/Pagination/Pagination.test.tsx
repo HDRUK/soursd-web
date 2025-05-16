@@ -1,4 +1,4 @@
-import Pagination from "../Pagination";
+import Pagination from ".";
 import { render, fireEvent, act } from "../../utils/testUtils";
 
 describe("Pagination", () => {

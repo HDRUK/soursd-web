@@ -3,7 +3,6 @@ import {
   ResearcherProject,
   ProjectUser,
   ProjectAllUser,
-  ProjectDetails,
 } from "../../types/application";
 
 type ProjectsResponse = ResearcherProject[];

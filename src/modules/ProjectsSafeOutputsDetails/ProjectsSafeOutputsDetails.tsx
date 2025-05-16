@@ -1,6 +1,6 @@
-import { ProjectDetails } from "../../types/application";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
+import { ProjectDetails } from "../../types/application";
 import { createProjectDetailDefaultValues } from "../../utils/form";
 import FieldsToText from "../../components/FieldsToText";
 import { Message } from "../../components/Message";

@@ -1,13 +1,13 @@
+import { mockedAffiliation } from "@/mocks/data/user";
+import { useQuery } from "@tanstack/react-query";
+import { mockPagedResults } from "jest.utils";
+import usePaginatedQuery from "../../hooks/usePaginatedQuery";
 import {
   commonAccessibilityTests,
   render,
   screen,
   waitFor,
 } from "../../utils/testUtils";
-import { mockedAffiliation } from "@/mocks/data/user";
-import { useQuery } from "@tanstack/react-query";
-import usePaginatedQuery from "../../hooks/usePaginatedQuery";
-import { mockPagedResults } from "jest.utils";
 import UserAffiliations from "./UserAffiliations";
 
 jest.mock("@tanstack/react-query", () => ({

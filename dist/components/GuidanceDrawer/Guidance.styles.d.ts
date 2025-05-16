@@ -1,1 +1,0 @@
-export declare const StyledDrawerInfo: import("@emotion/styled").StyledComponent<import("@mui/material").DrawerProps & import("@mui/system").MUIStyledCommonProps<import("@mui/material").Theme>, {}, {}>;

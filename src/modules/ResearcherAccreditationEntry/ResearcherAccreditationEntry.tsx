@@ -1,7 +1,7 @@
-import { ResearcherAccreditation } from "../../types/application";
 import ScheduleIcon from "@mui/icons-material/Schedule";
 import { Box, Link, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
+import { ResearcherAccreditation } from "../../types/application";
 import Text from "../../components/Text";
 import { formatDisplayShortDate } from "../../utils/date";
 import UserHistoryEntry from "../UserHistoryEntry";

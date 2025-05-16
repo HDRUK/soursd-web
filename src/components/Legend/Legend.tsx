@@ -1,7 +1,7 @@
-import Text from "../Text";
 import { Box, SxProps } from "@mui/material";
 import { ReactNode } from "react";
 import { v4 as uuidv4 } from "uuid";
+import Text from "../Text";
 
 export interface LegendProps {
   items: {

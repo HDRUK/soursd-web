@@ -1,5 +1,3 @@
-import Pagination from "../Pagination";
-import { QueryState } from "../../types/form";
 import {
   Table as MuiTable,
   TableBody,
@@ -18,6 +16,8 @@ import {
 } from "@tanstack/react-table";
 import { useStore } from "@/data/store";
 import React, { ReactNode } from "react";
+import { QueryState } from "../../types/form";
+import Pagination from "../Pagination";
 import Results from "../Results";
 
 export interface TableProps<T> extends Partial<TableOptions<T>> {

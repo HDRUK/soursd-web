@@ -1,5 +1,5 @@
-import { Organisation } from "../../types/application";
 import { Link } from "@mui/material";
+import { Organisation } from "../../types/application";
 import FieldsToText from "../../components/FieldsToText";
 
 interface OrganisationsSectorWebsiteDetailsProps {

@@ -1,7 +1,6 @@
 import { MAX_UPLOAD_SIZE_BYTES } from "@/consts/files";
 import getFileQuery from "@/services/files/getFileQuery";
 import postFileQuery from "@/services/files/postFileQuery";
-import { File as ApplicationFile } from "../../types/application";
 import {
   getFileHref,
   isFileScanComplete,
@@ -10,6 +9,7 @@ import {
 } from "@/utils/file";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect, useState, useCallback } from "react";
+import { File as ApplicationFile } from "../../types/application";
 import useQueryAlerts from "../useQueryAlerts";
 import useQueryRefetch from "../useQueryRefetch";
 

@@ -1,7 +1,7 @@
-import { RuleState } from "../../types/rules";
 import { Box, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
+import { RuleState } from "../../types/rules";
 
 export interface RulesCheckProps {
   rules: RuleState[];

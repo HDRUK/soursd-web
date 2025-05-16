@@ -1,11 +1,6 @@
 "use client";
 
 import { StoreUserHistories } from "@/data/store";
-import { EntityType } from "../../types/api";
-import {
-  ResearcherProfessionalRegistration,
-  User,
-} from "../../types/application";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { Button, Typography } from "@mui/material";
@@ -14,6 +9,11 @@ import { ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import ReactDOMServer from "react-dom/server";
+import {
+  ResearcherProfessionalRegistration,
+  User,
+} from "../../types/application";
+import { EntityType } from "../../types/api";
 import { AddIcon } from "../../consts/icons";
 import useQueryAlerts from "../../hooks/useQueryAlerts";
 import useQueryConfirmAlerts from "../../hooks/useQueryConfirmAlerts";

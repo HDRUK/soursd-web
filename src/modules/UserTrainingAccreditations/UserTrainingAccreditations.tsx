@@ -1,11 +1,11 @@
 import { useTranslations } from "next-intl";
-import Training from "../../modules/Training";
-import PageSection from "../../modules/PageSection";
-import PageBodyContainer from "../../modules/PageBodyContainer";
-import { EntityType } from "../../types/api";
 import { Typography } from "@mui/material";
-import ProfessionalRegistrations from "../../modules/ProfessionalRegistrations";
 import { useStore } from "@/data/store";
+import Training from "../Training";
+import PageSection from "../PageSection";
+import PageBodyContainer from "../PageBodyContainer";
+import { EntityType } from "../../types/api";
+import ProfessionalRegistrations from "../ProfessionalRegistrations";
 
 const NAMESPACE_TRANSLATION = "Application";
 

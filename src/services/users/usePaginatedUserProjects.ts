@@ -1,8 +1,8 @@
+import { omit } from "@/utils/json";
 import { SearchDirections } from "../../consts/search";
 import usePaginatedQuery, {
   PaginatedQueryProps,
 } from "../../hooks/usePaginatedQuery";
-import { omit } from "@/utils/json";
 import getUserProjects from "./getUserProjects";
 import { GetUserProjectsResponse } from "./types";
 

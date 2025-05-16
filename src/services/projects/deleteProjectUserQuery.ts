@@ -1,5 +1,5 @@
-import { MutationOptions } from "../../types/requests";
 import { UseMutationOptions } from "@tanstack/react-query";
+import { MutationOptions } from "../../types/requests";
 import deleteProjectUser from "./deleteProjectUser";
 import { DeleteProjectUserPayload } from "./types";
 

@@ -1,9 +1,9 @@
 "use client";
 
-import { Position } from "../../consts/ui";
 import { Collapse, useTheme } from "@mui/material";
 import { Box, useMediaQuery } from "@mui/system";
 import { ReactNode, useState } from "react";
+import { Position } from "../../consts/ui";
 import { StyledGuidance, StyledInfo } from "./Guidance.styles";
 import GuidanceTitle from "./GuidanceTitle";
 import GuidanceTrigger from "./GuidanceTrigger";

@@ -1,3 +1,4 @@
+import { mockedOrganisation } from "@/mocks/data/organisation";
 import {
   commonAccessibilityTests,
   render,
@@ -5,7 +6,6 @@ import {
   screen,
   fireEvent,
 } from "../../utils/testUtils";
-import { mockedOrganisation } from "@/mocks/data/organisation";
 import SelectDepartments from "./SelectDepartments";
 
 const mockOrganisation = mockedOrganisation();

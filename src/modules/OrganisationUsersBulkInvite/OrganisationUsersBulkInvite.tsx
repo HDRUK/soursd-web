@@ -1,9 +1,9 @@
 "use client";
 
-import { Organisation } from "../../types/application";
 import { Box, Button } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { Organisation } from "../../types/application";
 import UserBulkInvite from "../../components/UserBulkInvite";
 import UserModal from "../../components/UserModal";
 

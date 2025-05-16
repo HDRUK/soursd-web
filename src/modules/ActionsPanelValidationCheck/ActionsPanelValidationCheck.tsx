@@ -1,6 +1,6 @@
-import { ValidationLog } from "../../types/logs";
 import { Paper, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
+import { ValidationLog } from "../../types/logs";
 import useFallbackTranslations from "../../hooks/useFallbackTranslations";
 import { getValidationLogCommentsQuery } from "../../services/validation_logs";
 import ActionValidationLogComment from "../../components/ActionValidationLogComment";

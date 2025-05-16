@@ -1,6 +1,6 @@
 import { mockedOrganisation } from "@/mocks/data/organisation";
-import { render, screen } from "./testUtils";
 import { Organisation } from "@/types/application";
+import { render, screen } from "./testUtils";
 import {
   renderOrganisationsNameCell,
   renderUserOrganisationsNameCell,

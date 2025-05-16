@@ -1,11 +1,11 @@
 import ContactLink from "@/components/ContactLink";
-import useQueryConfirmAlerts, {
-  QueryAlertConfirmOptions,
-} from "../../hooks/useQueryConfirmAlerts";
 import { useMutation, UseMutationOptions } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import ReactDOMServer from "react-dom/server";
 import { useMemo } from "react";
+import useQueryConfirmAlerts, {
+  QueryAlertConfirmOptions,
+} from "../../hooks/useQueryConfirmAlerts";
 
 const useMutationWithConfirmation = <
   T extends UseMutationOptions<unknown, Error, void, unknown>,

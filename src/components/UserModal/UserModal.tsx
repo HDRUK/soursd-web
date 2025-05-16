@@ -1,7 +1,7 @@
-import { Organisation } from "../../types/application";
 import { useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback } from "react";
+import { Organisation } from "../../types/application";
 import FormModal, { FormModalProps } from "../FormModal";
 import SendInviteUser from "../../modules/SendInviteUser";
 

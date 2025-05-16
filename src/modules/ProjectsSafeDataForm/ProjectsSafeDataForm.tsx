@@ -1,6 +1,4 @@
 import { useStore } from "@/data/store";
-import { ProjectDetails } from "../../types/application";
-import { MutationState } from "../../types/form";
 import {
   FormControlLabel,
   Grid,
@@ -13,6 +11,8 @@ import {
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
+import { MutationState } from "../../types/form";
+import { ProjectDetails } from "../../types/application";
 import DateInput from "../../components/DateInput";
 import Form, { FormProps } from "../../components/Form";
 import FormActions from "../../components/FormActions";

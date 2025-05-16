@@ -1,13 +1,13 @@
 "use client";
 
-import { ActionList, ActionListItem } from "../ActionList";
-import { Permission } from "../../services/permissions/types";
-import { QueryState } from "../../types/form";
-import { getCheckboxFormValuesFromIntersection } from "../../utils/form";
 import SaveIcon from "@mui/icons-material/Save";
 import { LoadingButton } from "@mui/lab";
 import { Switch } from "@mui/material";
 import { FormProvider, useForm } from "react-hook-form";
+import { ActionList, ActionListItem } from "../ActionList";
+import { Permission } from "../../services/permissions/types";
+import { QueryState } from "../../types/form";
+import { getCheckboxFormValuesFromIntersection } from "../../utils/form";
 import { Message } from "../Message";
 
 export type AssignOptionsFormValues = Record<string, boolean>;

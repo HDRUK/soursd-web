@@ -1,3 +1,5 @@
+import { User } from "@/types/application";
+import { QueryOptions } from "@/types/requests";
 import useQueriesCombined from "../../hooks/useQueriesCombined";
 import { getCustodian, getCustodianQuery } from "../../services/custodians";
 import {
@@ -17,8 +19,6 @@ import {
 } from "../../services/system_config";
 import { getUser } from "../../services/users";
 import getUserQuery from "../../services/users/getUserQuery";
-import { User } from "@/types/application";
-import { QueryOptions } from "@/types/requests";
 
 interface UseApplicationDependenciesProps {
   user?: User;

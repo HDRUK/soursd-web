@@ -1,6 +1,6 @@
-import { ResearcherAffiliation } from "../../types/application";
 import PersonIcon from "@mui/icons-material/Person";
 import { Typography } from "@mui/material";
+import { ResearcherAffiliation } from "../../types/application";
 import Text from "../../components/Text";
 
 interface ResearcherAffiliationEntryProps {

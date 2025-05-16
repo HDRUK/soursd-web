@@ -1,6 +1,5 @@
 "use client";
 
-import { toCamelCase } from "../../utils/string";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {
   Box,
@@ -20,6 +19,7 @@ import {
   useFieldArray,
   useFormContext,
 } from "react-hook-form";
+import { toCamelCase } from "../../utils/string";
 
 interface FormFieldArrayProps<
   T extends FieldValues,

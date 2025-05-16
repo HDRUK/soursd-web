@@ -1,10 +1,10 @@
+import { useMutation } from "@tanstack/react-query";
+import { useCallback, useMemo } from "react";
 import {
   PostOrganisationInviteUserPayload,
   postOrganisationInviteUserQuery,
 } from "../../services/organisations";
 import { postUserInviteQuery } from "../../services/users";
-import { useMutation } from "@tanstack/react-query";
-import { useCallback, useMemo } from "react";
 
 interface UseUserInviteProps {
   organisationId?: number;

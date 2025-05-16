@@ -1,4 +1,3 @@
-import { getAugmentedColor } from "../../utils/theme";
 import {
   AugmentedColorPaletteOptions,
   Box,
@@ -7,6 +6,7 @@ import {
   lighten,
   styled,
 } from "@mui/material";
+import { getAugmentedColor } from "../../utils/theme";
 
 export const StyledMask = styled(Box)(
   ({

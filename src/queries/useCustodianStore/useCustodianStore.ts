@@ -1,7 +1,7 @@
 import { useStore } from "@/data/store";
-import { getCustodianQuery } from "../../services/custodians";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
+import { getCustodianQuery } from "../../services/custodians";
 
 export default function useCustodianStore() {
   const [custodian, setCustodian] = useStore(state => [

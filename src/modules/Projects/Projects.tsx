@@ -1,9 +1,9 @@
 "use client";
 
 import { StoreState, useStore } from "@/data/store";
-import { ResearcherProject } from "../../types/application";
 import { ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
+import { ResearcherProject } from "../../types/application";
 import { ProjectEntities } from "../../services/projects/getEntityProjects";
 import useEntityProjectsQuery from "../../services/projects/useEntityProjectsQuery";
 import {

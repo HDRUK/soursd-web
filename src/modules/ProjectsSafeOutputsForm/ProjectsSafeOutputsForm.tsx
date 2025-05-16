@@ -1,9 +1,9 @@
 import { useStore } from "@/data/store";
-import { ProjectDetails } from "../../types/application";
-import { MutationState } from "../../types/form";
 import { Grid, TextField } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
+import { MutationState } from "../../types/form";
+import { ProjectDetails } from "../../types/application";
 import yup from "../../config/yup";
 import { VALIDATION_URL } from "../../consts/form";
 import { injectParamsIntoPath } from "../../utils/application";

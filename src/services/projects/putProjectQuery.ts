@@ -1,5 +1,5 @@
-import { MutateWithArgs, QueryOptions } from "../../types/requests";
 import { UseMutationOptions } from "@tanstack/react-query";
+import { MutateWithArgs, QueryOptions } from "../../types/requests";
 import putProject from "./putProject";
 import { PutProjectPayload } from "./types";
 

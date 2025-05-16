@@ -1,12 +1,12 @@
+import { mockedAffiliation } from "@/mocks/data/user";
+import { useMutation } from "@tanstack/react-query";
+import { mockPagedResults } from "jest.utils";
 import {
   commonAccessibilityTests,
   render,
   screen,
   waitFor,
 } from "../../utils/testUtils";
-import { mockedAffiliation } from "@/mocks/data/user";
-import { useMutation } from "@tanstack/react-query";
-import { mockPagedResults } from "jest.utils";
 import Affiliations from "./Affiliations";
 
 jest.mock("@tanstack/react-query", () => ({

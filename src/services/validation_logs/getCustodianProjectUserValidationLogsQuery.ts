@@ -1,5 +1,5 @@
-import { QueryOptions } from "../../types/requests";
 import { UseQueryOptions } from "@tanstack/react-query";
+import { QueryOptions } from "../../types/requests";
 import getCustodianProjectUserValidationLogs from "./getCustodianProjectUserValidationLogs";
 
 export default function getCustodianProjectUserValidationLogsQuery(

@@ -1,16 +1,16 @@
+import { faker } from "@faker-js/faker";
+import {
+  mockedValidationLog,
+  mockedValidationComment,
+} from "@/mocks/data/validation_log";
+import { useMutation } from "@tanstack/react-query";
+import { ValidationLog } from "../../types/logs";
 import {
   commonAccessibilityTests,
   render,
   screen,
   userEvent,
 } from "../../utils/testUtils";
-import { faker } from "@faker-js/faker";
-import {
-  mockedValidationLog,
-  mockedValidationComment,
-} from "@/mocks/data/validation_log";
-import { ValidationLog } from "../../types/logs";
-import { useMutation } from "@tanstack/react-query";
 import ActionValidationPanel from "./ActionValidationPanel";
 
 jest.mock("@tanstack/react-query", () => ({

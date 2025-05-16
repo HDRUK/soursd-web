@@ -1,5 +1,5 @@
-import { ResearcherProject } from "../../types/application";
 import { Typography } from "@mui/material";
+import { ResearcherProject } from "../../types/application";
 import UserHistoryEntry from "../UserHistoryEntry";
 
 interface ResearcherProjectEntryProps {

@@ -1,6 +1,6 @@
-import yup from "../../config/yup";
 import { DefaultValues } from "react-hook-form";
 import { FormConfig } from "@/types/forms";
+import yup from "../config/yup";
 
 const generateSchema = (config: FormConfig) =>
   yup.object().shape(

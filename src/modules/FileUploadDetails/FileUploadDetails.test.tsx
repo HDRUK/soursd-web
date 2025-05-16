@@ -1,3 +1,4 @@
+import { faker } from "@faker-js/faker";
 import { MAX_UPLOAD_SIZE_BYTES, FileType } from "../../consts/files";
 import {
   act,
@@ -7,7 +8,6 @@ import {
   render,
   screen,
 } from "../../utils/testUtils";
-import { faker } from "@faker-js/faker";
 import { capitaliseFirstLetter } from "../../utils/string";
 import FileUploadDetails, { FileUploadDetailsProps } from "./FileUploadDetails";
 

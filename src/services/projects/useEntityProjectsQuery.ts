@@ -1,8 +1,8 @@
+import { capitaliseFirstLetter } from "@/utils/string";
 import { SearchDirections } from "../../consts/search";
 import usePaginatedQuery, {
   PaginatedQueryProps,
 } from "../../hooks/usePaginatedQuery";
-import { capitaliseFirstLetter } from "@/utils/string";
 import getEntityProjects, { ProjectEntities } from "./getEntityProjects";
 
 interface GetEntityProjectsQuery<T> extends Partial<PaginatedQueryProps<T>> {

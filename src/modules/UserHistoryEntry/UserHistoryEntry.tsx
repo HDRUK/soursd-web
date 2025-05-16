@@ -1,11 +1,11 @@
 "use client";
 
-import { formatDisplayShortDate } from "../../utils/date";
 import { Box, Typography } from "@mui/material";
 import { ReactNode } from "react";
-import { File as AppFile } from "../../types/application";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
+import { File as AppFile } from "../../types/application";
+import { formatDisplayShortDate } from "../../utils/date";
 import { getFileHref } from "../../utils/file";
 import { StyledCertificationLink } from "./UserHistoryEntry.styles";
 

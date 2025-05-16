@@ -1,5 +1,5 @@
-import { Organisation } from "../../types/application";
 import { Box } from "@mui/material";
+import { Organisation } from "../../types/application";
 import FieldsToText from "../../components/FieldsToText";
 import CharitiesTable from "../CharitiesTable";
 

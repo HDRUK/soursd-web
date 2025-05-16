@@ -1,5 +1,5 @@
-import { QueryOptions } from "../../types/requests";
 import { UseQueryOptions } from "@tanstack/react-query";
+import { QueryOptions } from "../../types/requests";
 import getCustodianWebhooks from "./getCustodianWebhooks";
 
 export default function getCustodianWebhooksQuery(

@@ -1,5 +1,5 @@
-import { QueryPayload } from "../../types/requests";
 import { objectToQuerystring } from "@/utils/requests";
+import { QueryPayload } from "../types/requests";
 import {
   createEmptyErrorResponse,
   getHeadersWithAuthorization,

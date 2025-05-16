@@ -1,9 +1,9 @@
 "use client";
 
+import { Box, BoxProps } from "@mui/material";
 import SectionHeading, {
   SectionHeadingProps,
 } from "../../components/SectionHeading";
-import { Box, BoxProps } from "@mui/material";
 
 type PageSectionProps = BoxProps & SectionHeadingProps;
 

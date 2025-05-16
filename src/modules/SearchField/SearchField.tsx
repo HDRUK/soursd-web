@@ -1,11 +1,11 @@
 "use client";
 
-import useDebounce from "../../hooks/useDebounce";
 import ClearIcon from "@mui/icons-material/Clear";
 import SearchIcon from "@mui/icons-material/Search";
 import { InputAdornment } from "@mui/material";
 import TextField, { TextFieldProps } from "@mui/material/TextField";
 import { ChangeEvent, useEffect, useState } from "react";
+import useDebounce from "../../hooks/useDebounce";
 import IconButton from "../../components/IconButton";
 
 type SearchFieldProps = Omit<TextFieldProps, "change"> & {

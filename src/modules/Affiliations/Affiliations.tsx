@@ -1,10 +1,10 @@
 "use client";
 
 import { StoreUserHistories } from "@/data/store";
-import { ResearcherAffiliation } from "../../types/application";
 import { CellContext, ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
 import { useEffect } from "react";
+import { ResearcherAffiliation } from "../../types/application";
 import { PaginatedQueryHelpers } from "../../hooks/usePaginatedQuery";
 import {
   renderAffiliationDateRangeCell,

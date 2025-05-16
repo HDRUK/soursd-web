@@ -1,3 +1,4 @@
+import { FormProvider, useForm } from "react-hook-form";
 import {
   act,
   commonAccessibilityTests,
@@ -5,7 +6,6 @@ import {
   render,
   screen,
 } from "../../utils/testUtils";
-import { FormProvider, useForm } from "react-hook-form";
 import PasswordTextField from ".";
 
 const PasswordTextFieldWithProvider = () => {

@@ -1,8 +1,8 @@
 "use client";
 
-import { User } from "../../types/application";
 import { useTranslations } from "next-intl";
 import { ReactNode } from "react";
+import { User } from "../../types/application";
 import useApplicationDependencies from "../../queries/useApplicationDependencies";
 import useQueriesHistories from "../../queries/useQueriesHistories";
 import { getCombinedQueryState } from "../../utils/query";

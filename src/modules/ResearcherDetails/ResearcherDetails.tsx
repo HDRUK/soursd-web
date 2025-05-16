@@ -1,7 +1,7 @@
-import { Organisation, User } from "../../types/application";
 import { Mail } from "@mui/icons-material";
 import BusinessIcon from "@mui/icons-material/Business";
 import { Link, Typography } from "@mui/material";
+import { Organisation, User } from "../../types/application";
 import { HistoryCombinedData } from "../../queries/useQueriesHistories";
 import ApprovalStatus from "../../components/ApprovalStatus";
 import Text from "../../components/Text";

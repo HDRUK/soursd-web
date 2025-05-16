@@ -1,5 +1,5 @@
-import NavBar from "../NavBar";
 import { DetailedHTMLProps, HTMLAttributes } from "react";
+import NavBar from "../NavBar";
 
 type HeaderProps = DetailedHTMLProps<
   HTMLAttributes<HTMLHeadElement>,

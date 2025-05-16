@@ -1,6 +1,6 @@
-import { commonAccessibilityTests } from "../../utils/testUtils";
 import { render } from "@testing-library/react";
 import React from "react";
+import { commonAccessibilityTests } from "../../utils/testUtils";
 import ListInfoItem from "./ListInfoItem";
 
 describe("<ListInfoItem />", () => {

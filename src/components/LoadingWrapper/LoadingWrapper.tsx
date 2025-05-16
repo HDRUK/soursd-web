@@ -1,6 +1,6 @@
-import theme from "../../theme";
 import { Box, BoxProps, CircularProgress } from "@mui/material";
 import React from "react";
+import theme from "../../theme";
 import OverlayCenter from "../OverlayCenter";
 
 export type LoadingWrapperProps = {

@@ -1,6 +1,5 @@
 import ReactQueryClientProvider from "@/app/[locale]/components/ReactQueryClientProvider";
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
-import messages from "../config/locales/en.json";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AppCacheProvider } from "@mui/material-nextjs/v14-pagesRouter";
 import {
@@ -19,6 +18,7 @@ import { CookieProvider } from "@/context/CookieContext";
 import userEvent, { UserEvent } from "@testing-library/user-event";
 import { axe } from "jest-axe";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import messages from "../config/locales/en.json";
 
 const defineMatchMedia = (width: number) => {
   Object.defineProperty(window, "matchMedia", {

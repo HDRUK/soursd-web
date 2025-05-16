@@ -2,8 +2,6 @@
 
 import { StoreUserHistories } from "@/data/store";
 
-import { EntityType } from "../../types/api";
-import { ResearcherTraining, User } from "../../types/application";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
@@ -12,6 +10,8 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
 import ReactDOMServer from "react-dom/server";
+import { ResearcherTraining, User } from "../../types/application";
+import { EntityType } from "../../types/api";
 import { AddIcon } from "../../consts/icons";
 import useFileDownload from "../../hooks/useFileDownload";
 import useQueryAlerts from "../../hooks/useQueryAlerts";

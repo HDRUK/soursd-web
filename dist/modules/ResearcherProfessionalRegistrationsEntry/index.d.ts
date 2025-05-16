@@ -1,2 +1,0 @@
-import ResearcherProfessionalRegistrationsEntry from "./ResearcherProfessionalRegistrationsEntry";
-export default ResearcherProfessionalRegistrationsEntry;

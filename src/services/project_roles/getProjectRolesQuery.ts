@@ -1,5 +1,5 @@
-import { QueryOptions } from "../../types/requests";
 import { UseQueryOptions } from "@tanstack/react-query";
+import { QueryOptions } from "../../types/requests";
 import getProjectRoles from "./getProjectRoles";
 
 export default function getProjectRolesQuery(options?: QueryOptions) {

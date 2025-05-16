@@ -11,11 +11,11 @@ import {
   Typography,
 } from "@mui/material";
 
-import { Notification } from "../../types/notifications";
 import NotificationsActiveOutlinedIcon from "@mui/icons-material/NotificationsActiveOutlined";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
+import { Notification } from "../../types/notifications";
 import useDebounce from "../../hooks/useDebounce";
 import usePatchNotification from "./hooks/usePatchNotification";
 import { NotificationPatchType } from "../../services/notifications/types";

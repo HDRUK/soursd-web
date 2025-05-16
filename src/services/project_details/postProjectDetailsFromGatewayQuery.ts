@@ -1,5 +1,5 @@
-import { MutationOptions } from "../../types/requests";
 import { UseMutationOptions } from "@tanstack/react-query";
+import { MutationOptions } from "../../types/requests";
 import postProjectDetailsFromGateway from "./postProjectDetailsFromGateway";
 import { PostProjectDetailsFromGatewayPayload } from "./types";
 

@@ -1,9 +1,9 @@
-import { Organisation } from "../../types/application";
 import BusinessIcon from "@mui/icons-material/Business";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import MailIcon from "@mui/icons-material/Mail";
 import { Box, Link, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
+import { Organisation } from "../../types/application";
 import { filterFalsy } from "../../utils/array";
 import ApprovalStatus from "../../components/ApprovalStatus";
 import Text from "../../components/Text";

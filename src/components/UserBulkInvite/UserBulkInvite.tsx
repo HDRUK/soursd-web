@@ -1,9 +1,9 @@
+import { Box } from "@mui/material";
+import { ChangeEvent, useCallback } from "react";
 import FileLink from "../FileLink";
 import { FileType } from "../../consts/files";
 import useFileUpload from "../../hooks/useFileUpload";
 import { getFileFromEvent } from "../../utils/file";
-import { Box } from "@mui/material";
-import { ChangeEvent, useCallback } from "react";
 
 interface UserBulkInviteProps {
   organisation_id: number;
