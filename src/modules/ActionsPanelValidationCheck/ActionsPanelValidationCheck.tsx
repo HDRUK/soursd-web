@@ -37,7 +37,7 @@ export default function ActionsPanelValidationCheck({
         borderRadius: 2,
       }}>
       <Typography variant="h5" sx={{ mb: 2 }}>
-        {t(log.name)}
+        {t(log.validation_check.name)}
       </Typography>
 
       <ViewMore collapseNumRows={2}>
