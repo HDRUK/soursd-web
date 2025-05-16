@@ -1,11 +1,11 @@
-import FormModal from "@/components/FormModal";
-import { Message } from "@/components/Message";
-import ResearcherDetails from "@/modules/ResearcherDetails";
-import useQueriesHistories from "@/queries/useQueriesHistories";
-import { getUserQuery } from "@/services/users";
-import { Organisation, User } from "@/types/application";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
+import FormModal from "../../components/FormModal";
+import { Message } from "../../components/Message";
+import useQueriesHistories from "../../queries/useQueriesHistories";
+import { getUserQuery } from "../../services/users";
+import { Organisation, User } from "../../types/application";
+import ResearcherDetails from "../ResearcherDetails";
 
 interface UserDetailsModalProps {
   isApproved: boolean;

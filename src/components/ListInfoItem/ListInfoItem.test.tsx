@@ -1,4 +1,4 @@
-import { commonAccessibilityTests } from "@/utils/testUtils";
+import { commonAccessibilityTests } from "../../utils/testUtils";
 import { render } from "@testing-library/react";
 import React from "react";
 import ListInfoItem from "./ListInfoItem";

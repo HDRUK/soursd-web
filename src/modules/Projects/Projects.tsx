@@ -1,19 +1,19 @@
 "use client";
 
-import ChipStatus from "@/components/ChipStatus";
-import Table from "@/components/Table";
 import { StoreState, useStore } from "@/data/store";
-import PageSection from "@/modules/PageSection";
-import { ProjectEntities } from "@/services/projects/getEntityProjects";
-import useEntityProjectsQuery from "@/services/projects/useEntityProjectsQuery";
-import { ResearcherProject } from "@/types/application";
+import { ResearcherProject } from "../../types/application";
+import { ColumnDef } from "@tanstack/react-table";
+import { useTranslations } from "next-intl";
+import { ProjectEntities } from "../../services/projects/getEntityProjects";
+import useEntityProjectsQuery from "../../services/projects/useEntityProjectsQuery";
 import {
   renderOrganisationsNameCell,
   renderProjectNameCell,
-} from "@/utils/cells";
-import { formatDisplayLongDate } from "@/utils/date";
-import { ColumnDef } from "@tanstack/react-table";
-import { useTranslations } from "next-intl";
+} from "../../utils/cells";
+import { formatDisplayLongDate } from "../../utils/date";
+import ChipStatus from "../../components/ChipStatus";
+import Table from "../../components/Table";
+import PageSection from "../PageSection";
 import ProjectsFilters from "../ProjectsFilters";
 
 const NAMESPACE_TRANSLATIONS_PROJECTS = "Projects";

@@ -1,8 +1,8 @@
 "use client";
 
-import Text from "@/components/Text";
-import { MAX_UPLOAD_SIZE_BYTES } from "@/consts/files";
-import { FileUploadState } from "@/hooks/useFileUpload";
+import Text from "../Text";
+import { MAX_UPLOAD_SIZE_BYTES } from "../../consts/files";
+import { FileUploadState } from "../../hooks/useFileUpload";
 import GppBadIcon from "@mui/icons-material/GppBad";
 import GppGoodIcon from "@mui/icons-material/GppGood";
 import UploadIcon from "@mui/icons-material/Upload";

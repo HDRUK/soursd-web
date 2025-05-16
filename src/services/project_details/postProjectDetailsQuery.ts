@@ -1,4 +1,4 @@
-import { QueryOptions } from "@/types/requests";
+import { QueryOptions } from "../../types/requests";
 import { UseMutationOptions } from "@tanstack/react-query";
 import postProjectDetails from "./postProjectDetails";
 import { PostProjectDetailsPayload } from "./types";

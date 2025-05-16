@@ -54,11 +54,11 @@ exports.default = ActionsPanelValidationCheck;
 var jsx_runtime_1 = require("react/jsx-runtime");
 var material_1 = require("@mui/material");
 var react_query_1 = require("@tanstack/react-query");
-var validation_logs_1 = require("@/services/validation_logs");
-var ActionValidationMakeDecision_1 = __importDefault(require("@/modules/ActionValidationMakeDecision"));
-var ViewMore_1 = __importDefault(require("@/components/ViewMore"));
-var ActionValidationLogComment_1 = __importDefault(require("@/components/ActionValidationLogComment"));
-var useFallbackTranslations_1 = __importDefault(require("@/hooks/useFallbackTranslations"));
+var validation_logs_1 = require("../../services/validation_logs");
+var ActionValidationMakeDecision_1 = __importDefault(require("../modules/ActionValidationMakeDecision"));
+var ViewMore_1 = __importDefault(require("../components/ViewMore"));
+var ActionValidationLogComment_1 = __importDefault(require("../components/ActionValidationLogComment"));
+var useFallbackTranslations_1 = __importDefault(require("../../hooks/useFallbackTranslations"));
 var NAMESPACE_TRANSLATION = "ActionsPanelValidationCheck";
 function ActionsPanelValidationCheck(_a) {
     var _this = this;

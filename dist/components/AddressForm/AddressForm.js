@@ -17,11 +17,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = AddressForm;
 var jsx_runtime_1 = require("react/jsx-runtime");
-var FormControlWrapper_1 = __importDefault(require("@/components/FormControlWrapper"));
+var FormControlWrapper_1 = __importDefault(require("../FormControlWrapper"));
 var material_1 = require("@mui/material");
 var next_intl_1 = require("next-intl");
-var GoogleAutocomplete_1 = __importDefault(require("@/components/GoogleAutocomplete"));
-var SelectCountry_1 = __importDefault(require("@/components/SelectCountry"));
+var GoogleAutocomplete_1 = __importDefault(require("../GoogleAutocomplete"));
+var SelectCountry_1 = __importDefault(require("../SelectCountry"));
 var react_hook_form_1 = require("react-hook-form");
 var NAMESPACE_TRANSLATION_FORM = "Form";
 function AddressForm(_a) {

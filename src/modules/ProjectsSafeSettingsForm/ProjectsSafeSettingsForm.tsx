@@ -1,13 +1,6 @@
-import Form, { FormProps } from "@/components/Form";
-import FormActions from "@/components/FormActions";
-import FormControlWrapper from "@/components/FormControlWrapper";
-import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
-import yup from "@/config/yup";
-import { ProjectDetailsAccessType } from "@/consts/projects";
 import { useStore } from "@/data/store";
-import { ProjectDetails } from "@/types/application";
-import { MutationState } from "@/types/form";
-import { injectParamsIntoPath } from "@/utils/application";
+import { ProjectDetails } from "../../types/application";
+import { MutationState } from "../../types/form";
 import {
   FormControlLabel,
   Grid,
@@ -17,6 +10,13 @@ import {
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
+import yup from "../../config/yup";
+import { ProjectDetailsAccessType } from "../../consts/projects";
+import { injectParamsIntoPath } from "../../utils/application";
+import Form, { FormProps } from "../../components/Form";
+import FormActions from "../../components/FormActions";
+import FormControlWrapper from "../../components/FormControlWrapper";
+import ProfileNavigationFooter from "../../components/ProfileNavigationFooter";
 
 export interface ProjectSafeProjectFormProps
   extends Omit<FormProps<ProjectDetails>, "children"> {

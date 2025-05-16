@@ -1,6 +1,6 @@
-import { EMAIL_TEMPLATE } from "@/consts/application";
-import { Organisation, OrganisationIdvt } from "@/types/application";
-import { Paged } from "@/types/requests";
+import { EMAIL_TEMPLATE } from "../../consts/application";
+import { Organisation, OrganisationIdvt } from "../../types/application";
+import { Paged } from "../../types/requests";
 
 type OrganisationResponse = Organisation;
 

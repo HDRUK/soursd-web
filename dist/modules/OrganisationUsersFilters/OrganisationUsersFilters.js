@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = OrganisationUsersFilters;
 var jsx_runtime_1 = require("react/jsx-runtime");
-var SearchBar_1 = __importDefault(require("@/modules/SearchBar"));
+var SearchBar_1 = __importDefault(require("../modules/SearchBar"));
 var material_1 = require("@mui/material");
 var next_intl_1 = require("next-intl");
 var react_1 = require("react");

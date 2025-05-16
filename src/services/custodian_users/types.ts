@@ -1,4 +1,4 @@
-import { CustodianUser } from "@/types/application";
+import { CustodianUser } from "../../types/application";
 
 type GetCustodiansUsersResponse = CustodianUser[];
 

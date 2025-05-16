@@ -1,4 +1,4 @@
-import { RuleState } from "@/types/rules";
+import { RuleState } from "../../types/rules";
 import { Box, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";

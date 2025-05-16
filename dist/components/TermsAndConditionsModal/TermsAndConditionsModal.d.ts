@@ -1,4 +1,4 @@
-import { FormModalProps } from "@/components/FormModal";
+import { FormModalProps } from "../FormModal";
 export interface TermsAndConditionsModalProps extends Omit<FormModalProps, "children"> {
     accountType: string | null;
     onAccept: () => void;

@@ -1,5 +1,5 @@
-import Pagination from "@/components/Pagination";
-import { QueryState } from "@/types/form";
+import Pagination from "../Pagination";
+import { QueryState } from "../../types/form";
 import {
   Table as MuiTable,
   TableBody,

@@ -1,4 +1,4 @@
-import { ResearcherProfessionalRegistration } from "@/types/application";
+import { ResearcherProfessionalRegistration } from "../../types/application";
 import putProfessionalRegistration from "./putProfessionalRegistration";
 
 export default function putProfessionalRegistrationQuery(registryId: number) {

@@ -1,4 +1,4 @@
-import { HistoryCombinedData } from "@/queries/useQueriesHistories";
+import { HistoryCombinedData } from "../../queries/useQueriesHistories";
 interface ResearcherHistoriesProps {
     data: HistoryCombinedData;
 }

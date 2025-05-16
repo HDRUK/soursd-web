@@ -1,4 +1,4 @@
-import { PostProfessionalRegistrationPayload } from "@/services/professional_registrations/types";
+import { PostProfessionalRegistrationPayload } from "../../services/professional_registrations/types";
 import { ResearcherProfessionalRegistration } from "@/types/application";
 import { MutationState, QueryState } from "@/types/form";
 interface ProfessionalRegistrationsFormModalProps {

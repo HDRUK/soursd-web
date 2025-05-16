@@ -2,9 +2,9 @@ import { useTranslations } from "next-intl";
 import { Box, Typography } from "@mui/material";
 import ErrorIcon from "@mui/icons-material/Error";
 import { useStore } from "@/data/store";
-import PageBodyContainer from "@/modules/PageBodyContainer";
-import PageBody from "@/modules/PageBody";
-import Text from "@/components/Text";
+import PageBodyContainer from "../../modules/PageBodyContainer";
+import PageBody from "../../modules/PageBody";
+import Text from "../../components/Text";
 
 const NAMESPACE_TRANSLATION = "Profile";
 

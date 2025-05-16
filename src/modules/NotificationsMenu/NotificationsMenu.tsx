@@ -2,28 +2,28 @@
 
 import { useStore } from "@/data/store";
 import {
+  Badge,
   Box,
+  CircularProgress,
   IconButton,
   Menu,
   MenuItem,
   Typography,
-  Badge,
-  CircularProgress,
 } from "@mui/material";
 
-import { formatDBDate } from "@/utils/date";
-import { useTranslations } from "next-intl";
-import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
+import { Notification } from "../../types/notifications";
 import NotificationsActiveOutlinedIcon from "@mui/icons-material/NotificationsActiveOutlined";
-import { NotificationPatchType } from "@/services/notifications/types";
-import NotificationModal from "@/modules/NotifcationModal";
-import { Notification } from "@/types/notifications";
-import { formatNotificationType } from "@/utils/notifications";
-import { useState, useEffect, useRef } from "react";
-import useDebounce from "@/hooks/useDebounce";
+import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
+import { useTranslations } from "next-intl";
+import { useEffect, useRef, useState } from "react";
+import useDebounce from "../../hooks/useDebounce";
 import usePatchNotification from "./hooks/usePatchNotification";
-import useGetNotifcations from "./hooks/useGetNotifications";
+import { NotificationPatchType } from "../../services/notifications/types";
+import { formatDBDate } from "../../utils/date";
+import { formatNotificationType } from "../../utils/notifications";
+import NotificationModal from "../NotifcationModal";
 import useGetNotificationsCount from "./hooks/useGetNotificationCounts";
+import useGetNotifcations from "./hooks/useGetNotifications";
 import { StyledMenuItem } from "./NotificationsMenu.styles";
 
 const NAMESPACE_TRANSLATIONS = "NotificationsMenu";

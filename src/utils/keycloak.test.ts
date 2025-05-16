@@ -1,4 +1,4 @@
-import { handleLogin, handleLogout } from "@/utils/keycloak";
+import { handleLogin, handleLogout } from "./keycloak";
 
 describe("Auth functions", () => {
   const originalEnv = process.env;

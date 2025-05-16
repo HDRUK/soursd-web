@@ -52,17 +52,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = ConfirmAffiliation;
 var jsx_runtime_1 = require("react/jsx-runtime");
-var ActionsPanel_1 = __importDefault(require("@/components/ActionsPanel"));
-var icons_1 = require("@/consts/icons");
+var ActionsPanel_1 = __importDefault(require("../components/ActionsPanel"));
+var icons_1 = require("../../consts/icons");
 var cms_1 = require("@/mocks/data/cms");
 var material_1 = require("@mui/material");
 var next_intl_1 = require("next-intl");
 var react_query_1 = require("@tanstack/react-query");
-var affiliations_1 = require("@/services/affiliations");
-var types_1 = require("@/services/affiliations/types");
+var affiliations_1 = require("../../services/affiliations");
+var types_1 = require("../../services/affiliations/types");
 var store_1 = require("@/data/store");
 var react_1 = require("react");
-var useQueryAlerts_1 = __importDefault(require("@/hooks/useQueryAlerts"));
+var useQueryAlerts_1 = __importDefault(require("../../hooks/useQueryAlerts"));
 var NAMESPACE_TRANSLATION = "ConfirmAffiliation";
 function ConfirmAffiliation() {
     var _this = this;

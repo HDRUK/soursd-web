@@ -5,7 +5,7 @@ import {
   render,
   waitFor,
   screen,
-} from "@/utils/testUtils";
+} from "../../utils/testUtils";
 import { useForm, FormProvider } from "react-hook-form";
 import AddressForm from "./AddressForm";
 

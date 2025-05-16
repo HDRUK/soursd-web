@@ -1,17 +1,17 @@
-import Form, { FormProps } from "@/components/Form";
-import FormActions from "@/components/FormActions";
-import FormControlWrapper from "@/components/FormControlWrapper";
-import FormFieldArray from "@/components/FormFieldArray";
-import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
-import yup from "@/config/yup";
-import { VALIDATION_URL } from "@/consts/form";
 import { useStore } from "@/data/store";
-import { ProjectDetails } from "@/types/application";
-import { MutationState } from "@/types/form";
-import { injectParamsIntoPath } from "@/utils/application";
+import { ProjectDetails } from "../../types/application";
+import { MutationState } from "../../types/form";
 import { Grid, TextField } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
+import yup from "../../config/yup";
+import { VALIDATION_URL } from "../../consts/form";
+import { injectParamsIntoPath } from "../../utils/application";
+import Form, { FormProps } from "../../components/Form";
+import FormActions from "../../components/FormActions";
+import FormControlWrapper from "../../components/FormControlWrapper";
+import FormFieldArray from "../../components/FormFieldArray";
+import ProfileNavigationFooter from "../../components/ProfileNavigationFooter";
 
 export interface ProjectsSafeOutputsFormFieldValues {
   data_assets: string;

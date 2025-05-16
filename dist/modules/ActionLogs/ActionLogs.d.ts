@@ -1,4 +1,4 @@
-import { ActionsPanelProps } from "@/components/ActionsPanel";
+import { ActionsPanelProps } from "../components/ActionsPanel";
 import { ActionLogEntity } from "@/types/logs";
 interface ActionLogProps {
     variant: ActionLogEntity;

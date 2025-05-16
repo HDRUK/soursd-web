@@ -24,7 +24,7 @@ var __rest = (this && this.__rest) || function (s, e) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var jsx_runtime_1 = require("react/jsx-runtime");
 var material_1 = require("@mui/material");
-var countries_1 = require("@/utils/countries");
+var countries_1 = require("../../utils/countries");
 var SelectCountry = function (_a) {
     var value = _a.value, onChange = _a.onChange, _b = _a.useCountryCode, useCountryCode = _b === void 0 ? true : _b, restProps = __rest(_a, ["value", "onChange", "useCountryCode"]);
     var countryOptions = (0, countries_1.getCountryOptions)(useCountryCode);

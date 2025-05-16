@@ -1,4 +1,4 @@
-import { ApprovalResponse } from "@/services/approvals";
+import { ApprovalResponse } from "../../services/approvals";
 export interface ActionValidationStatusFormValues {
     status: number;
     comment: string;

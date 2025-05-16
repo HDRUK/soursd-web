@@ -1,5 +1,5 @@
 import { FEATURES } from "@/config/features";
-import { Features } from "@/types/roles";
+import { Features } from "../../types/roles";
 import { isRoleValid } from "@/utils/roles";
 import { useEffect, useState } from "react";
 

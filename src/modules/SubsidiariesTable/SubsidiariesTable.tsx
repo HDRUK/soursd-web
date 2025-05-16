@@ -1,6 +1,6 @@
-import Table from "@/components/Table";
-import { Subsidiary } from "@/types/application";
-import { formatAddress } from "@/utils/address";
+import Table from "../../components/Table";
+import { Subsidiary } from "../../types/application";
+import { formatAddress } from "../../utils/address";
 import { ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
 

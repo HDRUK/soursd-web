@@ -1,9 +1,9 @@
-import Text from "@/components/Text";
-import { ResearcherTraining, File as AppFile } from "@/types/application";
-import { formatDisplayShortDate } from "@/utils/date";
+import { File as AppFile, ResearcherTraining } from "../../types/application";
 import ScheduleIcon from "@mui/icons-material/Schedule";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
+import { formatDisplayShortDate } from "../../utils/date";
+import Text from "../../components/Text";
 import UserHistoryEntry from "../UserHistoryEntry";
 
 interface ResearcherTrainingEntryProps {

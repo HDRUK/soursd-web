@@ -1,13 +1,7 @@
 "use client";
 
-import HorizontalDrawer from "@/components/HorizontalDrawer";
-import MaskLabel from "@/components/MaskLabel";
-import SoursdLogo from "@/components/SoursdLogo";
 import { useStore } from "@/data/store";
 import { Link } from "@/i18n/routing";
-import NotificationsMenu from "@/modules/NotificationsMenu";
-import { getInitials } from "@/utils/application";
-import { handleLogin, handleLogout, handleRegister } from "@/utils/keycloak";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
   Box,
@@ -21,7 +15,17 @@ import {
 import { useTranslations } from "next-intl";
 import { LinkProps } from "next/link";
 import { MouseEvent, useEffect, useState } from "react";
-import { CONTACT_MAIL_ADDRESS } from "@/config/contacts";
+import { CONTACT_MAIL_ADDRESS } from "../../config/contacts";
+import { getInitials } from "../../utils/application";
+import {
+  handleLogin,
+  handleLogout,
+  handleRegister,
+} from "../../utils/keycloak";
+import HorizontalDrawer from "../../components/HorizontalDrawer";
+import MaskLabel from "../../components/MaskLabel";
+import SoursdLogo from "../../components/SoursdLogo";
+import NotificationsMenu from "../NotificationsMenu";
 import PageCenter from "../PageCenter";
 import { StyledContainer, StyledHeader } from "./NavBar.styles";
 

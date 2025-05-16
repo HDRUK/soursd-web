@@ -1,4 +1,4 @@
-import { getCountryCode, getCountryOptions } from "@/utils/countries";
+import { getCountryCode, getCountryOptions } from "./countries";
 import { countries } from "countries-list";
 import { Option } from "@/types/common";
 

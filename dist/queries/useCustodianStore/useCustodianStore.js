@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = useCustodianStore;
 var store_1 = require("@/data/store");
-var custodians_1 = require("@/services/custodians");
+var custodians_1 = require("../../services/custodians");
 var react_query_1 = require("@tanstack/react-query");
 var react_1 = require("react");
 function useCustodianStore() {

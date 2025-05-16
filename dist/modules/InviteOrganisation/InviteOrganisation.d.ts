@@ -1,4 +1,4 @@
-import { PostOrganisationUnclaimedPayload } from "@/services/organisations";
+import { PostOrganisationUnclaimedPayload } from "../../services/organisations";
 import { MutationState } from "@/types/form";
 export interface InviteOrganisationFormProps {
     organisationId?: number;

@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = getNotificationsQuery;
-var notifications_1 = require("@/consts/notifications");
+var notifications_1 = require("../../consts/notifications");
 var getNotifications_1 = __importDefault(require("./getNotifications"));
 function getNotificationsQuery(userId) {
     return {

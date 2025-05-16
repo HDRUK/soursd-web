@@ -6,9 +6,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = ProjectUserList;
 var jsx_runtime_1 = require("react/jsx-runtime");
-var usePaginatedQuery_1 = __importDefault(require("@/hooks/usePaginatedQuery"));
-var projects_1 = require("@/services/projects");
-var Pagination_1 = __importDefault(require("@/components/Pagination"));
+var usePaginatedQuery_1 = __importDefault(require("../../hooks/usePaginatedQuery"));
+var projects_1 = require("../../services/projects");
+var Pagination_1 = __importDefault(require("../components/Pagination"));
 var ProjectUserCard_1 = __importDefault(require("../ProjectUserCard"));
 function ProjectUserList(_a) {
     var project = _a.project;

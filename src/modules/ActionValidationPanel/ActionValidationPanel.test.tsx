@@ -3,13 +3,13 @@ import {
   render,
   screen,
   userEvent,
-} from "@/utils/testUtils";
+} from "../../utils/testUtils";
 import { faker } from "@faker-js/faker";
 import {
   mockedValidationLog,
   mockedValidationComment,
 } from "@/mocks/data/validation_log";
-import { ValidationLog } from "@/types/logs";
+import { ValidationLog } from "../../types/logs";
 import { useMutation } from "@tanstack/react-query";
 import ActionValidationPanel from "./ActionValidationPanel";
 

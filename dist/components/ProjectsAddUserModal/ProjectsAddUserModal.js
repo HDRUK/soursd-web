@@ -63,12 +63,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = ProjectsAddUserModal;
 var jsx_runtime_1 = require("react/jsx-runtime");
-var FormModal_1 = __importDefault(require("@/components/FormModal"));
-var projects_1 = require("@/services/projects");
+var FormModal_1 = __importDefault(require("../FormModal"));
+var projects_1 = require("../../services/projects");
 var react_query_1 = require("@tanstack/react-query");
-var useQueryAlerts_1 = __importDefault(require("@/hooks/useQueryAlerts"));
+var useQueryAlerts_1 = __importDefault(require("../../hooks/useQueryAlerts"));
 var next_intl_1 = require("next-intl");
-var showAlert_1 = require("@/utils/showAlert");
+var showAlert_1 = require("../../utils/showAlert");
 var ProjectsAddUserForm_1 = __importDefault(require("../ProjectsAddUserForm"));
 var NAMESPACE_TRANSLATION = "ProjectsAddUserModal";
 function ProjectsAddUserModal(_a) {

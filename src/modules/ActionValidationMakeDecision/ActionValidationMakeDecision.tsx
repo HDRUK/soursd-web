@@ -1,20 +1,22 @@
-import { Box, Button } from "@mui/material";
-import { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
+"use client";
 
-import { ValidationLog } from "@/types/logs";
-import { VerifyIcon, RejectIcon } from "@/consts/icons";
+import { Box, Button } from "@mui/material";
+import { useMutation } from "@tanstack/react-query";
+import { useState } from "react";
+
+import { useStore } from "@/data/store";
+import { ValidationLog } from "../../types/logs";
+import { useTranslations } from "next-intl";
+import { RejectIcon, VerifyIcon } from "../../consts/icons";
 import {
   postValidationLogCommentQuery,
   putValidationLogQuery,
-} from "@/services/validation_logs";
-import { useStore } from "@/data/store";
-import { ValidationLogAction } from "@/services/validation_logs/types";
-import { useTranslations } from "next-intl";
-import ChangeDecisionChip from "@/components/ChangeDecisionChip";
+} from "../../services/validation_logs";
+import { ValidationLogAction } from "../../services/validation_logs/types";
 import ActionValidationCommentForm, {
   ActionValidationCommentFormData,
-} from "@/components/ActionValidationCommentForm";
+} from "../../components/ActionValidationCommentForm";
+import ChangeDecisionChip from "../../components/ChangeDecisionChip";
 
 interface ActionValidationMakeDecisionProps {
   log: ValidationLog;

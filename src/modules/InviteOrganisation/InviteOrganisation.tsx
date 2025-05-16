@@ -1,21 +1,21 @@
-import Form from "@/components/Form";
-import FormActions from "@/components/FormActions";
-import FormControlHorizontal from "@/components/FormControlHorizontal";
-import FormSection from "@/components/FormSection";
-import yup from "@/config/yup";
-import { MAX_FORM_WIDTH } from "@/consts/form";
-import {
-  getOrganisationQuery,
-  PostOrganisationUnclaimedPayload,
-} from "@/services/organisations";
-import { MutationState } from "@/types/form";
+import { MutationState } from "../../types/form";
 import SaveIcon from "@mui/icons-material/Save";
 import { LoadingButton } from "@mui/lab";
 import { Grid, TextField } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
-import { useQuery } from "@tanstack/react-query";
-import LoadingWrapper from "@/components/LoadingWrapper";
+import yup from "../../config/yup";
+import { MAX_FORM_WIDTH } from "../../consts/form";
+import {
+  getOrganisationQuery,
+  PostOrganisationUnclaimedPayload,
+} from "../../services/organisations";
+import Form from "../../components/Form";
+import FormActions from "../../components/FormActions";
+import FormControlHorizontal from "../../components/FormControlHorizontal";
+import FormSection from "../../components/FormSection";
+import LoadingWrapper from "../../components/LoadingWrapper";
 
 export interface InviteOrganisationFormProps {
   organisationId?: number;

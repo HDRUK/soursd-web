@@ -16,12 +16,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = ActionLogs;
 var jsx_runtime_1 = require("react/jsx-runtime");
-var ActionsPanel_1 = __importDefault(require("@/components/ActionsPanel"));
-var ActionsPanelItem_1 = __importDefault(require("@/components/ActionsPanelItem"));
+var ActionsPanel_1 = __importDefault(require("../components/ActionsPanel"));
+var ActionsPanelItem_1 = __importDefault(require("../components/ActionsPanelItem"));
 var store_1 = require("@/data/store");
 var routing_1 = require("@/i18n/routing");
-var action_logs_1 = require("@/services/action_logs");
-var string_1 = require("@/utils/string");
+var action_logs_1 = require("../../services/action_logs");
+var string_1 = require("../../utils/string");
 var Check_1 = __importDefault(require("@mui/icons-material/Check"));
 var ExpandMore_1 = __importDefault(require("@mui/icons-material/ExpandMore"));
 var material_1 = require("@mui/material");
@@ -30,7 +30,7 @@ var AccordionDetails_1 = __importDefault(require("@mui/material/AccordionDetails
 var AccordionSummary_1 = __importDefault(require("@mui/material/AccordionSummary"));
 var react_query_1 = require("@tanstack/react-query");
 var next_intl_1 = require("next-intl");
-var PageBody_1 = __importDefault(require("@/modules/PageBody"));
+var PageBody_1 = __importDefault(require("../modules/PageBody"));
 var utils_1 = __importDefault(require("./utils"));
 var NAMESPACE_TRANSLATION_PROFILE = "ActionLogs";
 function ActionLogs(_a) {

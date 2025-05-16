@@ -1,4 +1,4 @@
-import { ResearcherEmployment } from "@/types/application";
+import { ResearcherEmployment } from "../../types/application";
 
 interface PostEmploymentsPayload {
   employer_name: string;

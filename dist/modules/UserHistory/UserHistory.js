@@ -8,10 +8,10 @@ var jsx_runtime_1 = require("react/jsx-runtime");
 var next_intl_1 = require("next-intl");
 var store_1 = require("@/data/store");
 var react_query_1 = require("@tanstack/react-query");
-var application_1 = require("@/utils/application");
-var users_1 = require("@/services/users");
-var MaskLabel_1 = __importDefault(require("@/components/MaskLabel"));
-var date_1 = require("@/utils/date");
+var application_1 = require("../../utils/application");
+var users_1 = require("../../services/users");
+var MaskLabel_1 = __importDefault(require("../components/MaskLabel"));
+var date_1 = require("../../utils/date");
 var material_1 = require("@mui/material");
 var NAMESPACE_TRANSLATION = "UserHistory";
 function UserHistory() {

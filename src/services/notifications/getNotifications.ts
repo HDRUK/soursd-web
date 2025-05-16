@@ -1,5 +1,5 @@
-import { Paged, ResponseJson, ResponseOptions } from "@/types/requests";
-import { Notification } from "@/types/notifications";
+import { Paged, ResponseJson, ResponseOptions } from "../../types/requests";
+import { Notification } from "../../types/notifications";
 import { getRequest } from "../requests";
 import { handleJsonResponse } from "../requestHelpers";
 

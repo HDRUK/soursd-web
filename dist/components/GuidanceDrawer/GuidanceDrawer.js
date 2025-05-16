@@ -28,7 +28,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = GuidanceDrawer;
 var jsx_runtime_1 = require("react/jsx-runtime");
-var ui_1 = require("@/consts/ui");
+var ui_1 = require("../../consts/ui");
 var HelpOutline_1 = __importDefault(require("@mui/icons-material/HelpOutline"));
 var system_1 = require("@mui/system");
 var react_1 = require("react");

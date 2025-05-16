@@ -1,5 +1,5 @@
-import { ResponseJson, ResponseOptions } from "@/types/requests";
-import { ValidationLog } from "@/types/logs";
+import { ResponseJson, ResponseOptions } from "../../types/requests";
+import { ValidationLog } from "../../types/logs";
 import { putRequest } from "../requests";
 import { handleJsonResponse } from "../requestHelpers";
 import { ValidationLogAction } from "./types";

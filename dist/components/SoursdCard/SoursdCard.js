@@ -27,7 +27,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = SoursdCard;
 var jsx_runtime_1 = require("react/jsx-runtime");
-var application_1 = require("@/utils/application");
+var application_1 = require("../../utils/application");
 var material_1 = require("@mui/material");
 var ChipStatus_1 = __importDefault(require("../ChipStatus"));
 var MaskLabel_1 = __importDefault(require("../MaskLabel"));

@@ -28,7 +28,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = UL;
 var jsx_runtime_1 = require("react/jsx-runtime");
-var useResponsiveProps_1 = __importDefault(require("@/hooks/useResponsiveProps"));
+var useResponsiveProps_1 = __importDefault(require("../../hooks/useResponsiveProps"));
 var material_1 = require("@mui/material");
 function UL(_a) {
     var _b = _a.separator, separator = _b === void 0 ? "|" : _b, _c = _a.variant, variant = _c === void 0 ? "vertical" : _c, children = _a.children, responsiveProps = _a.responsiveProps, restProps = __rest(_a, ["separator", "variant", "children", "responsiveProps"]);

@@ -13,14 +13,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = useApplicationDependencies;
-var useQueriesCombined_1 = __importDefault(require("@/hooks/useQueriesCombined"));
-var custodians_1 = require("@/services/custodians");
-var organisations_1 = require("@/services/organisations");
-var permissions_1 = require("@/services/permissions");
-var getProjectRolesQuery_1 = __importDefault(require("@/services/project_roles/getProjectRolesQuery"));
-var sectors_1 = require("@/services/sectors");
-var system_config_1 = require("@/services/system_config");
-var getUserQuery_1 = __importDefault(require("@/services/users/getUserQuery"));
+var useQueriesCombined_1 = __importDefault(require("../../hooks/useQueriesCombined"));
+var custodians_1 = require("../../services/custodians");
+var organisations_1 = require("../../services/organisations");
+var permissions_1 = require("../../services/permissions");
+var getProjectRolesQuery_1 = __importDefault(require("../../services/project_roles/getProjectRolesQuery"));
+var sectors_1 = require("../../services/sectors");
+var system_config_1 = require("../../services/system_config");
+var getUserQuery_1 = __importDefault(require("../../services/users/getUserQuery"));
 function useApplicationDependencies(_a, options) {
     var user = _a.user, custodianId = _a.custodianId, organisationId = _a.organisationId;
     if (options === void 0) { options = {}; }

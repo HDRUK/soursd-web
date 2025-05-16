@@ -1,7 +1,7 @@
 import ContactLink from "@/components/ContactLink";
 import useQueryConfirmAlerts, {
   QueryAlertConfirmOptions,
-} from "@/hooks/useQueryConfirmAlerts";
+} from "../../hooks/useQueryConfirmAlerts";
 import { useMutation, UseMutationOptions } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import ReactDOMServer from "react-dom/server";

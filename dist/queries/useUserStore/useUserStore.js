@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = useUserStore;
 var store_1 = require("@/data/store");
-var users_1 = require("@/services/users");
+var users_1 = require("../../services/users");
 var react_query_1 = require("@tanstack/react-query");
 var react_1 = require("react");
 function useUserStore() {

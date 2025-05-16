@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { PALETTE_THEME_PURPLE_BLUE } from "@/config/theme";
+import { PALETTE_THEME_PURPLE_BLUE } from "../../config/theme";
 import {
   AugmentedColorPaletteOptions,
   Box,

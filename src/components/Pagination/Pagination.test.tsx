@@ -1,5 +1,5 @@
-import Pagination from "@/components/Pagination";
-import { render, fireEvent, act } from "@/utils/testUtils";
+import Pagination from "../Pagination";
+import { render, fireEvent, act } from "../../utils/testUtils";
 
 describe("Pagination", () => {
   it("calls onChange callback", async () => {

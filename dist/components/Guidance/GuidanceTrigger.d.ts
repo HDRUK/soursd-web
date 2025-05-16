@@ -1,4 +1,4 @@
-import { Position } from "@/consts/ui";
+import { Position } from "../../consts/ui";
 import { IconButtonProps } from "@mui/material";
 import { ReactNode } from "react";
 export interface GuidanceTriggerProps extends IconButtonProps {

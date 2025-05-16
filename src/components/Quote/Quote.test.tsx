@@ -1,4 +1,4 @@
-import { render, screen } from "@/utils/testUtils";
+import { render, screen } from "../../utils/testUtils";
 import Quote, { QuoteProps } from "./Quote";
 
 const renderTest = (props?: Partial<QuoteProps>) =>

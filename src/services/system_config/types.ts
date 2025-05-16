@@ -1,4 +1,4 @@
-import { SystemConfig } from "@/types/application";
+import { SystemConfig } from "../../types/application";
 
 type GetSystemConfigResponse = SystemConfig[];
 

@@ -1,4 +1,4 @@
-import { ResearcherProject } from "@/types/application";
+import { ResearcherProject } from "../../types/application";
 import { Typography } from "@mui/material";
 import UserHistoryEntry from "../UserHistoryEntry";
 

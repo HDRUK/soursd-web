@@ -14,10 +14,10 @@ export default function useMutateProjectDetails(projectId: number, callbacks?: U
         isSuccess: false;
         status: "idle";
         mutate: import("@tanstack/react-query").UseMutateFunction<Response & {
-            data: import("@/services/project_details").PostProjectDetailsResponse;
+            data: import("../../services/project_details").PostProjectDetailsResponse;
             message: string;
             status: number;
-        }, Error, import("@/services/project_details").PostProjectDetailsPayload, unknown>;
+        }, Error, import("../../services/project_details").PostProjectDetailsPayload, unknown>;
         reset: () => void;
         context: unknown;
         failureCount: number;
@@ -26,7 +26,7 @@ export default function useMutateProjectDetails(projectId: number, callbacks?: U
         submittedAt: number;
     } | {
         data: undefined;
-        variables: import("@/services/project_details").PostProjectDetailsPayload;
+        variables: import("../../services/project_details").PostProjectDetailsPayload;
         error: null;
         isError: false;
         isIdle: false;
@@ -34,10 +34,10 @@ export default function useMutateProjectDetails(projectId: number, callbacks?: U
         isSuccess: false;
         status: "pending";
         mutate: import("@tanstack/react-query").UseMutateFunction<Response & {
-            data: import("@/services/project_details").PostProjectDetailsResponse;
+            data: import("../../services/project_details").PostProjectDetailsResponse;
             message: string;
             status: number;
-        }, Error, import("@/services/project_details").PostProjectDetailsPayload, unknown>;
+        }, Error, import("../../services/project_details").PostProjectDetailsPayload, unknown>;
         reset: () => void;
         context: unknown;
         failureCount: number;
@@ -47,17 +47,17 @@ export default function useMutateProjectDetails(projectId: number, callbacks?: U
     } | {
         data: undefined;
         error: Error;
-        variables: import("@/services/project_details").PostProjectDetailsPayload;
+        variables: import("../../services/project_details").PostProjectDetailsPayload;
         isError: true;
         isIdle: false;
         isPending: false;
         isSuccess: false;
         status: "error";
         mutate: import("@tanstack/react-query").UseMutateFunction<Response & {
-            data: import("@/services/project_details").PostProjectDetailsResponse;
+            data: import("../../services/project_details").PostProjectDetailsResponse;
             message: string;
             status: number;
-        }, Error, import("@/services/project_details").PostProjectDetailsPayload, unknown>;
+        }, Error, import("../../services/project_details").PostProjectDetailsPayload, unknown>;
         reset: () => void;
         context: unknown;
         failureCount: number;
@@ -66,22 +66,22 @@ export default function useMutateProjectDetails(projectId: number, callbacks?: U
         submittedAt: number;
     } | {
         data: Response & {
-            data: import("@/services/project_details").PostProjectDetailsResponse;
+            data: import("../../services/project_details").PostProjectDetailsResponse;
             message: string;
             status: number;
         };
         error: null;
-        variables: import("@/services/project_details").PostProjectDetailsPayload;
+        variables: import("../../services/project_details").PostProjectDetailsPayload;
         isError: false;
         isIdle: false;
         isPending: false;
         isSuccess: true;
         status: "success";
         mutate: import("@tanstack/react-query").UseMutateFunction<Response & {
-            data: import("@/services/project_details").PostProjectDetailsResponse;
+            data: import("../../services/project_details").PostProjectDetailsResponse;
             message: string;
             status: number;
-        }, Error, import("@/services/project_details").PostProjectDetailsPayload, unknown>;
+        }, Error, import("../../services/project_details").PostProjectDetailsPayload, unknown>;
         reset: () => void;
         context: unknown;
         failureCount: number;
@@ -98,7 +98,7 @@ export default function useMutateProjectDetails(projectId: number, callbacks?: U
         isSuccess: false;
         status: "idle";
         mutate: import("@tanstack/react-query").UseMutateFunction<Response & {
-            data: import("@/services/project_details").PutProjectDetailsResponse;
+            data: import("../../services/project_details").PutProjectDetailsResponse;
             message: string;
             status: number;
         }, Error, {
@@ -128,7 +128,7 @@ export default function useMutateProjectDetails(projectId: number, callbacks?: U
         isSuccess: false;
         status: "pending";
         mutate: import("@tanstack/react-query").UseMutateFunction<Response & {
-            data: import("@/services/project_details").PutProjectDetailsResponse;
+            data: import("../../services/project_details").PutProjectDetailsResponse;
             message: string;
             status: number;
         }, Error, {
@@ -158,7 +158,7 @@ export default function useMutateProjectDetails(projectId: number, callbacks?: U
         isSuccess: false;
         status: "error";
         mutate: import("@tanstack/react-query").UseMutateFunction<Response & {
-            data: import("@/services/project_details").PutProjectDetailsResponse;
+            data: import("../../services/project_details").PutProjectDetailsResponse;
             message: string;
             status: number;
         }, Error, {
@@ -175,7 +175,7 @@ export default function useMutateProjectDetails(projectId: number, callbacks?: U
         submittedAt: number;
     } | {
         data: Response & {
-            data: import("@/services/project_details").PutProjectDetailsResponse;
+            data: import("../../services/project_details").PutProjectDetailsResponse;
             message: string;
             status: number;
         };
@@ -192,7 +192,7 @@ export default function useMutateProjectDetails(projectId: number, callbacks?: U
         isSuccess: true;
         status: "success";
         mutate: import("@tanstack/react-query").UseMutateFunction<Response & {
-            data: import("@/services/project_details").PutProjectDetailsResponse;
+            data: import("../../services/project_details").PutProjectDetailsResponse;
             message: string;
             status: number;
         }, Error, {

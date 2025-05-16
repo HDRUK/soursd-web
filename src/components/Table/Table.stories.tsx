@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { QueryState } from "@/types/form";
+import { QueryState } from "../../types/form";
 import { ColumnDef } from "@tanstack/react-table";
 import { Box, Select } from "@mui/material";
 import Table from "./Table";

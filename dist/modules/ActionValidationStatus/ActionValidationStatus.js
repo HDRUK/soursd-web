@@ -16,14 +16,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var jsx_runtime_1 = require("react/jsx-runtime");
 var next_intl_1 = require("next-intl");
-var yup_1 = __importDefault(require("@/config/yup"));
-var Form_1 = __importDefault(require("@/components/Form"));
+var yup_1 = __importDefault(require("../../config/yup"));
+var Form_1 = __importDefault(require("../components/Form"));
 var material_1 = require("@mui/material");
 var TextareaAutosize_1 = require("@mui/base/TextareaAutosize");
-var FormControlWrapper_1 = __importDefault(require("@/components/FormControlWrapper"));
+var FormControlWrapper_1 = __importDefault(require("../components/FormControlWrapper"));
 var lab_1 = require("@mui/lab");
 var react_1 = require("react");
-var SelectValidationActionStatus_1 = __importDefault(require("@/components/SelectValidationActionStatus"));
+var SelectValidationActionStatus_1 = __importDefault(require("../components/SelectValidationActionStatus"));
 var NAMESPACE_TRANSLATION_ACTION_VALIDATION = "ActionValidationPanel";
 var ActionValidationStatus = function (_a) {
     var useApprovalHook = _a.useApprovalHook, hookParams = _a.hookParams;

@@ -51,7 +51,7 @@ exports.createEmptyErrorResponse = createEmptyErrorResponse;
 exports.getHeadersWithAuthorization = getHeadersWithAuthorization;
 exports.handleJsonResponse = handleJsonResponse;
 exports.handleResponseError = handleResponseError;
-var requests_1 = require("@/consts/requests");
+var requests_1 = require("../../consts/requests");
 var auth_1 = require("@/utils/auth");
 function getHeadersWithAuthorization(headers) {
     return __awaiter(this, void 0, void 0, function () {

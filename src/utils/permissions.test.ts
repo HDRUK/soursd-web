@@ -1,4 +1,4 @@
-import { CustodianUserRoles } from "@/consts/custodian";
+import { CustodianUserRoles } from "../consts/custodian";
 import { mockedApiPermissions } from "@/mocks/data/store";
 import { getPermission } from "./permissions";
 

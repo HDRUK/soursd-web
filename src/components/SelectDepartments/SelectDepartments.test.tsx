@@ -4,7 +4,7 @@ import {
   waitFor,
   screen,
   fireEvent,
-} from "@/utils/testUtils";
+} from "../../utils/testUtils";
 import { mockedOrganisation } from "@/mocks/data/organisation";
 import SelectDepartments from "./SelectDepartments";
 

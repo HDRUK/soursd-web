@@ -5,8 +5,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = SubsidiariesTable;
 var jsx_runtime_1 = require("react/jsx-runtime");
-var Table_1 = __importDefault(require("@/components/Table"));
-var address_1 = require("@/utils/address");
+var Table_1 = __importDefault(require("../components/Table"));
+var address_1 = require("../../utils/address");
 var next_intl_1 = require("next-intl");
 var NAMESPACE_TRANSLATION = "Subsidiaries";
 function SubsidiariesTable(_a) {

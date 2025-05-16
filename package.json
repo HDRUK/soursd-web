@@ -19,14 +19,14 @@
     "prepare": "husky install",
     "build:dist": "rm -rf dist/ && tsc -p tsconfig.build.json"
   },
-  "main": "./dist/exports.ts",
+  "main": "./index.ts",
   "files": [
     "./dist"
   ],
   "exports": {
-    "!(@/**)": {
-      "import": "./dist/exports.js",
-      "types": "./dist/exports.d.ts"
+    ".": {
+      "import": "./index.js",
+      "types": "./index.d.ts"
     }
   },
   "dependencies": {
@@ -174,8 +174,9 @@
     "webpack-cli": "^6.0.1"
   },
   "peerDependencies": {
-    "react": "^18",
-    "react-dom": "^18.3.1"
+    "@types/react": "^17.0.0 || ^18.0.0 || ^19.0.0",
+    "react": "^17.0.0 || ^18.0.0 || ^19.0.0",
+    "react-dom": "^17.0.0 || ^18.0.0 || ^19.0.0"
   },
   "resolutions": {
     "@typescript-eslint/typescript-estree": "^8.16.0"

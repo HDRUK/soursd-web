@@ -1,2 +1,2 @@
-import { PostProfessionalRegistrationPayload } from "@/services/professional_registrations/types";
+import { PostProfessionalRegistrationPayload } from "../../services/professional_registrations/types";
 export default function useMutationUpdateProfessionalRegistration(registryId: number): import("@tanstack/react-query").UseMutationResult<import("../../types/requests").ResponseJson<import("../../types/application").ResearcherProfessionalRegistration>, Error, PostProfessionalRegistrationPayload & import("../../types/application").ResearcherProfessionalRegistration, unknown>;

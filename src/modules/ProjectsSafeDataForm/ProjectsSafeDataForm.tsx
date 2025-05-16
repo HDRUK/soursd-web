@@ -1,17 +1,6 @@
-import DateInput from "@/components/DateInput";
-import Form, { FormProps } from "@/components/Form";
-import FormActions from "@/components/FormActions";
-import FormControlCheckbox from "@/components/FormControlCheckbox";
-import FormControlHorizontal from "@/components/FormControlHorizontal";
-import FormControlWrapper from "@/components/FormControlWrapper";
-import FormFieldArray from "@/components/FormFieldArray";
-import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
-import yup from "@/config/yup";
-import { RequestFrequency } from "@/consts/projects";
 import { useStore } from "@/data/store";
-import { ProjectDetails } from "@/types/application";
-import { MutationState } from "@/types/form";
-import { injectParamsIntoPath } from "@/utils/application";
+import { ProjectDetails } from "../../types/application";
+import { MutationState } from "../../types/form";
 import {
   FormControlLabel,
   Grid,
@@ -24,6 +13,17 @@ import {
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
+import DateInput from "../../components/DateInput";
+import Form, { FormProps } from "../../components/Form";
+import FormActions from "../../components/FormActions";
+import FormControlCheckbox from "../../components/FormControlCheckbox";
+import FormControlHorizontal from "../../components/FormControlHorizontal";
+import FormControlWrapper from "../../components/FormControlWrapper";
+import FormFieldArray from "../../components/FormFieldArray";
+import ProfileNavigationFooter from "../../components/ProfileNavigationFooter";
+import yup from "../../config/yup";
+import { RequestFrequency } from "../../consts/projects";
+import { injectParamsIntoPath } from "../../utils/application";
 
 export interface ProjectsSafeDataFormProps
   extends Omit<FormProps<ProjectDetails>, "children"> {

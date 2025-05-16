@@ -17,7 +17,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = HomepageStats;
 var jsx_runtime_1 = require("react/jsx-runtime");
-var StatsBox_1 = __importDefault(require("@/components/StatsBox"));
+var StatsBox_1 = __importDefault(require("../components/StatsBox"));
 var HomepageStats_styles_1 = require("./HomepageStats.styles");
 function HomepageStats(_a) {
     var statsBoxProps = _a.statsBoxProps;

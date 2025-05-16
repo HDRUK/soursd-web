@@ -62,7 +62,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var ContactLink_1 = __importDefault(require("@/components/ContactLink"));
-var useQueryConfirmAlerts_1 = __importDefault(require("@/hooks/useQueryConfirmAlerts"));
+var useQueryConfirmAlerts_1 = __importDefault(require("../../hooks/useQueryConfirmAlerts"));
 var react_query_1 = require("@tanstack/react-query");
 var next_intl_1 = require("next-intl");
 var server_1 = __importDefault(require("react-dom/server"));

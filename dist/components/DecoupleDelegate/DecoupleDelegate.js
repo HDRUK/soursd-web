@@ -37,11 +37,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var jsx_runtime_1 = require("react/jsx-runtime");
-var icons_1 = require("@/consts/icons");
-var users_1 = require("@/services/users");
+var icons_1 = require("../../consts/icons");
+var users_1 = require("../../services/users");
 var react_query_1 = require("@tanstack/react-query");
-var showAlert_1 = require("@/utils/showAlert");
-var ActionMenu_1 = require("@/components/ActionMenu");
+var showAlert_1 = require("../../utils/showAlert");
+var ActionMenu_1 = require("../ActionMenu");
 var next_intl_1 = require("next-intl");
 var store_1 = require("@/data/store");
 var DecoupleDelegate = function (_a) {

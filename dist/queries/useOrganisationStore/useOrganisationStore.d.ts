@@ -1,1 +1,1 @@
-export default function useOrganisationStore(): import("@/services/organisations").Organisation | undefined;
+export default function useOrganisationStore(): import("../../types/application").Organisation | undefined;

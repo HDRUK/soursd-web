@@ -5,9 +5,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var jsx_runtime_1 = require("react/jsx-runtime");
-var AccordionTitle_1 = __importDefault(require("@/components/AccordionTitle"));
-var organisations_1 = require("@/services/organisations");
-var theme_1 = require("@/config/theme");
+var AccordionTitle_1 = __importDefault(require("../components/AccordionTitle"));
+var organisations_1 = require("../../services/organisations");
+var theme_1 = require("../../config/theme");
 var ExpandMore_1 = __importDefault(require("@mui/icons-material/ExpandMore"));
 var FolderOpen_1 = __importDefault(require("@mui/icons-material/FolderOpen"));
 var store_1 = require("@/data/store");

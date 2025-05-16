@@ -1,4 +1,4 @@
-import { GuidanceProps } from "@/components/Guidance";
+import { GuidanceProps } from "../components/Guidance";
 import { ReactNode } from "react";
 interface PageGuidanceProps extends GuidanceProps {
     subTabs?: ReactNode;

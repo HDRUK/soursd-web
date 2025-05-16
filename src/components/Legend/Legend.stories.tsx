@@ -6,7 +6,7 @@ import {
   ApprovedUserIcon,
   IdentityVerifiedIcon,
   PendingIcon,
-} from "@/consts/icons";
+} from "../../consts/icons";
 import Legend from ".";
 
 const meta = {

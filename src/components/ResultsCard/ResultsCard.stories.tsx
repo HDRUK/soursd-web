@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import Icon from "@/components/Icon";
-import { DecoupleIcon } from "@/consts/icons";
+import Icon from "../Icon";
+import { DecoupleIcon } from "../../consts/icons";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import { Typography } from "@mui/material";
 import ResultsCard from ".";

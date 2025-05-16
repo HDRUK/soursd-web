@@ -1,4 +1,4 @@
-import { ROLES, ROLES_STATE } from "@/consts/roles";
+import { ROLES, ROLES_STATE } from "../../consts/roles";
 import { isRoleValid } from "./roles";
 
 describe("isRoleValid", () => {

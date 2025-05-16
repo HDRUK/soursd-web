@@ -1,4 +1,4 @@
-import { PaginatedQueryReturn } from "@/hooks/usePaginatedQuery";
+import { PaginatedQueryReturn } from "../../hooks/usePaginatedQuery";
 import { Organisation } from "@/types/application";
 export declare enum OrganisationsFilterKeys {
     STATUS = "status"

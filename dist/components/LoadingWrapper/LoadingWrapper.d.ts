@@ -6,4 +6,4 @@ export type LoadingWrapperProps = {
     variant?: "rich" | "basic";
     additionalProps?: BoxProps["sx"];
 };
-export default function LoadingWrapper({ loading, children, variant, additionalProps, }: LoadingWrapperProps): string | number | bigint | boolean | Iterable<React.ReactNode> | Promise<React.AwaitedReactNode> | import("react/jsx-runtime").JSX.Element | null | undefined;
+export default function LoadingWrapper({ loading, children, variant, additionalProps, }: LoadingWrapperProps): string | number | bigint | boolean | import("react/jsx-runtime").JSX.Element | Iterable<React.ReactNode> | Promise<React.AwaitedReactNode> | null | undefined;

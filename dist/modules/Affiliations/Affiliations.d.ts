@@ -1,7 +1,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { StoreUserHistories } from "@/data/store";
 import { ResearcherAffiliation } from "@/types/application";
-import { PaginatedQueryHelpers } from "@/hooks/usePaginatedQuery";
+import { PaginatedQueryHelpers } from "../../hooks/usePaginatedQuery";
 interface AffiliationsProps {
     setHistories?: (histories: StoreUserHistories) => void;
     getHistories?: () => StoreUserHistories | undefined;

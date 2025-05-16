@@ -31,7 +31,7 @@ var AdapterDateFnsV3_1 = require("@mui/x-date-pickers/AdapterDateFnsV3");
 var DatePicker_1 = require("@mui/x-date-pickers/DatePicker");
 var next_intl_1 = require("next-intl");
 var en_GB_1 = require("date-fns/locale/en-GB");
-var date_1 = require("@/consts/date");
+var date_1 = require("../../consts/date");
 var dayjs_1 = __importDefault(require("dayjs"));
 var DateInput = function (_a) {
     var label = _a.label, value = _a.value, onChange = _a.onChange, id = _a.id, _b = _a.format, dateFormat = _b === void 0 ? "dd/MM/yyyy" : _b, rest = __rest(_a, ["label", "value", "onChange", "id", "format"]);

@@ -6,8 +6,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = FileLink;
 var jsx_runtime_1 = require("react/jsx-runtime");
-var Text_1 = __importDefault(require("@/components/Text"));
-var files_1 = require("@/consts/files");
+var Text_1 = __importDefault(require("../Text"));
+var files_1 = require("../../consts/files");
 var GppBad_1 = __importDefault(require("@mui/icons-material/GppBad"));
 var GppGood_1 = __importDefault(require("@mui/icons-material/GppGood"));
 var Upload_1 = __importDefault(require("@mui/icons-material/Upload"));

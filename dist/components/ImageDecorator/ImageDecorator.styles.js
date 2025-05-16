@@ -5,7 +5,7 @@ var __makeTemplateObject = (this && this.__makeTemplateObject) || function (cook
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.StyledImageDecorator = void 0;
-var theme_1 = require("@/utils/theme");
+var theme_1 = require("../../utils/theme");
 var material_1 = require("@mui/material");
 exports.StyledImageDecorator = (0, material_1.styled)(material_1.Box)(function (_a) {
     var theme = _a.theme, width = _a.width, height = _a.height, color = _a.color;

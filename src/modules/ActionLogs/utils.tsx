@@ -5,7 +5,7 @@ import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import SettingsIcon from "@mui/icons-material/Settings";
 import ContentPasteIcon from "@mui/icons-material/ContentPaste";
 import GroupIcon from "@mui/icons-material/Group";
-import { ROUTES } from "@/consts/router";
+import { ROUTES } from "../../consts/router";
 
 type Route = Record<
   keyof typeof ROUTES,

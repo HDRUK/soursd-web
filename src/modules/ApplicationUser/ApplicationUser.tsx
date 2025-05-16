@@ -1,10 +1,10 @@
 "use client";
 
-import LoadingWrapper from "@/components/LoadingWrapper";
 import { useStore } from "@/data/store";
-import getMeQuery from "@/services/auth/getMeQuery";
 import { useQuery } from "@tanstack/react-query";
 import { PropsWithChildren, useEffect } from "react";
+import LoadingWrapper from "../../components/LoadingWrapper";
+import getMeQuery from "../../services/auth/getMeQuery";
 
 type ApplicationUserProps = PropsWithChildren;
 

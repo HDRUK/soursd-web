@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = CharitiesTable;
 var jsx_runtime_1 = require("react/jsx-runtime");
-var Table_1 = __importDefault(require("@/components/Table"));
+var Table_1 = __importDefault(require("../components/Table"));
 var material_1 = require("@mui/material");
 var next_intl_1 = require("next-intl");
 var NAMESPACE_TRANSLATION = "Charities";

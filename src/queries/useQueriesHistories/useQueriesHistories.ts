@@ -1,23 +1,23 @@
-import useQueriesCombined from "@/hooks/useQueriesCombined";
+import useQueriesCombined from "../../hooks/useQueriesCombined";
 import {
   getAccreditations,
   getAccreditationsQuery,
-} from "@/services/accreditations";
-import getAffiliations from "@/services/affiliations/getAffiliations";
-import getAffiliationsQuery from "@/services/affiliations/getAffiliationsQuery";
-import { getEducations, getEducationsQuery } from "@/services/educations";
+} from "../../services/accreditations";
+import getAffiliations from "../../services/affiliations/getAffiliations";
+import getAffiliationsQuery from "../../services/affiliations/getAffiliationsQuery";
+import { getEducations, getEducationsQuery } from "../../services/educations";
 import {
   getProfessionalRegistrations,
   getProfessionalRegistrationsQuery,
-} from "@/services/professional_registrations";
+} from "../../services/professional_registrations";
 import {
   getUserApprovedProjects,
   getUserApprovedProjectsQuery,
-} from "@/services/projects";
+} from "../../services/projects";
 import {
   getTrainingByRegistryId,
   getTrainingByRegistryIdQuery,
-} from "@/services/trainings";
+} from "../../services/trainings";
 import { QueryOptions } from "@/types/requests";
 
 export interface HistoryCombinedData {

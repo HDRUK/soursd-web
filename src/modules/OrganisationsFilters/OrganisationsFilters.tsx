@@ -1,14 +1,14 @@
 "use client";
 
-import { Status } from "@/components/ChipStatus";
-import { FilterIcon } from "@/consts/icons";
-import { SearchDirections } from "@/consts/search";
-import { PaginatedQueryReturn } from "@/hooks/usePaginatedQuery";
-import SearchBar from "@/modules/SearchBar";
-import { Organisation } from "@/types/application";
-import { getSearchSortOrder } from "@/utils/query";
+import { Organisation } from "../../types/application";
 import SortIcon from "@mui/icons-material/Sort";
 import { useTranslations } from "next-intl";
+import { FilterIcon } from "../../consts/icons";
+import { SearchDirections } from "../../consts/search";
+import { PaginatedQueryReturn } from "../../hooks/usePaginatedQuery";
+import { getSearchSortOrder } from "../../utils/query";
+import { Status } from "../../components/ChipStatus";
+import SearchBar from "../SearchBar";
 import SearchActionMenu from "../SearchActionMenu";
 
 const NAMESPACE_TRANSLATIONS_PROJECTS = "Organisations";

@@ -1,6 +1,6 @@
 import usePaginatedQuery, {
   PaginatedQueryProps,
-} from "@/hooks/usePaginatedQuery";
+} from "../../hooks/usePaginatedQuery";
 import { omit } from "@/utils/json";
 import getAffiliations from "./getAffiliations";
 import { GetAffiliationsResponse } from "./types";

@@ -1,4 +1,4 @@
-import { PostOrganisationUnclaimedPayload } from "@/services/organisations";
+import { PostOrganisationUnclaimedPayload } from "../../services/organisations";
 interface UseOrganisationInviteProps {
     onSuccess: () => void;
     onError: () => void;

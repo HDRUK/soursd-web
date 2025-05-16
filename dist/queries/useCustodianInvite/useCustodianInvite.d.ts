@@ -1,4 +1,4 @@
-import { PostCustodianPayload } from "@/services/custodians";
+import { PostCustodianPayload } from "../../services/custodians";
 interface UseCustodianInviteProps {
     onSuccess: () => void;
     onError: () => void;

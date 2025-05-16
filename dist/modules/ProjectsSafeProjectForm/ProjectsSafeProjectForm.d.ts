@@ -1,4 +1,4 @@
-import { FormProps } from "@/components/Form";
+import { FormProps } from "../components/Form";
 import { ResearcherProject } from "@/types/application";
 import { MutationState } from "@/types/form";
 export interface UserModalDetailsProps extends FormProps<ResearcherProject> {

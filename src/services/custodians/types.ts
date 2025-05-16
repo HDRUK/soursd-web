@@ -1,4 +1,4 @@
-import { EMAIL_TEMPLATE } from "@/consts/application";
+import { EMAIL_TEMPLATE } from "../../consts/application";
 import {
   Custodian,
   CustodianUser,
@@ -6,7 +6,7 @@ import {
   ProjectAllUser,
   ResearcherProject,
   User,
-} from "@/types/application";
+} from "../../types/application";
 
 interface GetCustodianInviteResponse {
   name: string;

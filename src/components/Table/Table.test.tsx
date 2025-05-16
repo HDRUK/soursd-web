@@ -4,8 +4,8 @@ import {
   render,
   screen,
   fireEvent,
-} from "@/utils/testUtils";
-import Table from "@/components/Table";
+} from "../../utils/testUtils";
+import Table from "../Table";
 import { ColumnDef } from "@tanstack/react-table";
 
 interface TestData {

@@ -1,12 +1,12 @@
 "use client";
 
-import ChipStatus from "@/components/ChipStatus";
-import Table, { TableProps } from "@/components/Table";
 import { useStore } from "@/data/store";
-import { User } from "@/types/application";
-import { renderUserNameCell } from "@/utils/cells";
+import { User } from "../../types/application";
 import { ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
+import ChipStatus from "../../components/ChipStatus";
+import Table, { TableProps } from "../../components/Table";
+import { renderUserNameCell } from "../../utils/cells";
 
 interface OrganisationsPeopleTableProps
   extends Omit<TableProps<User>, "columns"> {

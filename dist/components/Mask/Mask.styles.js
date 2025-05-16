@@ -5,7 +5,7 @@ var __makeTemplateObject = (this && this.__makeTemplateObject) || function (cook
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.StyledMask = void 0;
-var theme_1 = require("@/utils/theme");
+var theme_1 = require("../../utils/theme");
 var material_1 = require("@mui/material");
 exports.StyledMask = (0, material_1.styled)(material_1.Box)(function (_a) {
     var theme = _a.theme, width = _a.width, height = _a.height, _b = _a.color, color = _b === void 0 ? "primary" : _b;

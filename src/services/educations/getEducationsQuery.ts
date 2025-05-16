@@ -1,4 +1,4 @@
-import { QueryOptions } from "@/types/requests";
+import { QueryOptions } from "../../types/requests";
 import { UseQueryOptions } from "@tanstack/react-query";
 import getEducations from "./getEducations";
 

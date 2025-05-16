@@ -2,7 +2,7 @@
 
 import useResponsiveProps, {
   ResponsiveProps,
-} from "@/hooks/useResponsiveProps";
+} from "../../hooks/useResponsiveProps";
 import { Box, BoxProps } from "@mui/material";
 import { ReactNode } from "react";
 

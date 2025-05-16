@@ -16,7 +16,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Header;
 var jsx_runtime_1 = require("react/jsx-runtime");
-var NavBar_1 = __importDefault(require("@/modules/NavBar"));
+var NavBar_1 = __importDefault(require("../modules/NavBar"));
 function Header(props) {
     return ((0, jsx_runtime_1.jsx)("header", __assign({}, props, { children: (0, jsx_runtime_1.jsx)(NavBar_1.default, {}) })));
 }

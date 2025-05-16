@@ -1,6 +1,6 @@
-import FieldsToText from "@/components/FieldsToText";
-import { Organisation } from "@/types/application";
+import { Organisation } from "../../types/application";
 import { Link } from "@mui/material";
+import FieldsToText from "../../components/FieldsToText";
 
 interface OrganisationsSectorWebsiteDetailsProps {
   organisationData: Organisation;

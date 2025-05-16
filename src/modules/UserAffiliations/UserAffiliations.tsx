@@ -1,10 +1,10 @@
 import { useTranslations } from "next-intl";
 import { Typography } from "@mui/material";
 import { useStore } from "@/data/store";
-import PageSection from "@/modules/PageSection";
-import PageBodyContainer from "@/modules/PageBodyContainer";
-import Affiliations from "@/modules/Affiliations";
-import { usePaginatedAffiliations } from "@/services/affiliations";
+import PageSection from "../../modules/PageSection";
+import PageBodyContainer from "../../modules/PageBodyContainer";
+import Affiliations from "../../modules/Affiliations";
+import { usePaginatedAffiliations } from "../../services/affiliations";
 
 const NAMESPACE_TRANSLATION = "Application";
 

@@ -1,9 +1,9 @@
-import ContactLink from "@/components/ContactLink";
-import InviteCustodian from "@/modules/InviteCustodian";
-import useCustodianInvite from "@/queries/useCustodianInvite";
-import { showAlert } from "@/utils/showAlert";
 import { useTranslations } from "next-intl";
 import ReactDOMServer from "react-dom/server";
+import useCustodianInvite from "../../queries/useCustodianInvite";
+import { showAlert } from "../../utils/showAlert";
+import ContactLink from "../../components/ContactLink";
+import InviteCustodian from "../InviteCustodian";
 
 const NAMESPACE_TRANSLATIONS_ORGANISATION = "Custodian";
 

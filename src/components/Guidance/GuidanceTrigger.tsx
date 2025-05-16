@@ -1,12 +1,12 @@
 "use client";
 
-import { Position } from "@/consts/ui";
+import { Position } from "../../consts/ui";
 import {
   isPositionBottom,
   isPositionLeft,
   isPositionTop,
   isPositionNone,
-} from "@/utils/styles";
+} from "../../utils/styles";
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";

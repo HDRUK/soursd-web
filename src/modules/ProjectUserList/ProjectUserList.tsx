@@ -1,9 +1,9 @@
 "use client";
 
-import { ResearcherProject } from "@/types/application";
-import usePaginatedQuery from "@/hooks/usePaginatedQuery";
-import { getProjectUsers } from "@/services/projects";
-import Pagination from "@/components/Pagination";
+import { ResearcherProject } from "../../types/application";
+import usePaginatedQuery from "../../hooks/usePaginatedQuery";
+import { getProjectUsers } from "../../services/projects";
+import Pagination from "../../components/Pagination";
 import ProjectUserCard from "../ProjectUserCard";
 
 interface ProjectUserListProps {

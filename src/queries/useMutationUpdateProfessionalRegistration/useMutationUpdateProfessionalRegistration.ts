@@ -1,11 +1,11 @@
 import {
   postProfessionalRegistration,
   putProfessionalRegistration,
-} from "@/services/professional_registrations";
+} from "../../services/professional_registrations";
 import {
   PostProfessionalRegistrationPayload,
   PutProfessionalRegistrationPayload,
-} from "@/services/professional_registrations/types";
+} from "../../services/professional_registrations/types";
 import { useMutation } from "@tanstack/react-query";
 
 export default function useMutationUpdateProfessionalRegistration(

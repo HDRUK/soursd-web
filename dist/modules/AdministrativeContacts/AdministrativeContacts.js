@@ -36,10 +36,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = AdministrativeContacts;
 var jsx_runtime_1 = require("react/jsx-runtime");
-var Table_1 = __importDefault(require("@/components/Table"));
-var cells_1 = require("@/utils/cells");
-var date_1 = require("@/utils/date");
-var string_1 = require("@/utils/string");
+var Table_1 = __importDefault(require("../components/Table"));
+var cells_1 = require("../../utils/cells");
+var date_1 = require("../../utils/date");
+var string_1 = require("../../utils/string");
 var next_intl_1 = require("next-intl");
 var NAMESPACE_TRANSLATION = "AdministrativeContacts";
 function AdministrativeContacts(_a) {

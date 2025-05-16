@@ -4,8 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = FormCanLeave;
-var useRouteChange_1 = __importDefault(require("@/hooks/useRouteChange"));
-var showAlert_1 = require("@/utils/showAlert");
+var useRouteChange_1 = __importDefault(require("../../hooks/useRouteChange"));
+var showAlert_1 = require("../../utils/showAlert");
 var next_intl_1 = require("next-intl");
 var react_hook_form_1 = require("react-hook-form");
 var NAMESPACE_TRANSLATION_FORM = "Form";

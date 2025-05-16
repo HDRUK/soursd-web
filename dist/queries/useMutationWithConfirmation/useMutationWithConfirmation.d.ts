@@ -1,4 +1,4 @@
-import { QueryAlertConfirmOptions } from "@/hooks/useQueryConfirmAlerts";
+import { QueryAlertConfirmOptions } from "../../hooks/useQueryConfirmAlerts";
 import { UseMutationOptions } from "@tanstack/react-query";
 declare const useMutationWithConfirmation: <T extends UseMutationOptions<unknown, Error, void, unknown>>(mutation: T, options?: QueryAlertConfirmOptions, tKey?: string) => {
     data: undefined;

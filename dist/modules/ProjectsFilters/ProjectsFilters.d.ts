@@ -1,4 +1,4 @@
-import { PaginatedQueryReturn } from "@/hooks/usePaginatedQuery";
+import { PaginatedQueryReturn } from "../../hooks/usePaginatedQuery";
 import { ResearcherProject } from "@/types/application";
 export declare enum ProjectFilterKeys {
     DATE = "date",

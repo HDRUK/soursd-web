@@ -1,5 +1,5 @@
 import { useStore } from "@/data/store";
-import { getCustodianQuery } from "@/services/custodians";
+import { getCustodianQuery } from "../../services/custodians";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 

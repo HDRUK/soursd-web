@@ -1,5 +1,5 @@
-import { UserProvider } from "@/consts/user";
-import { ResearcherProject, User } from "@/types/application";
+import { UserProvider } from "../../consts/user";
+import { ResearcherProject, User } from "../../types/application";
 
 type PatchUserPayload = Partial<User>;
 type PutUserPayload = Partial<User>;

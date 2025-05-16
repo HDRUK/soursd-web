@@ -1,6 +1,9 @@
 import { useStore } from "@/data/store";
 import { mockedTraining, mockedUser } from "@/mocks/data/user";
-import { getTrainingByRegistryId, postTrainings } from "@/services/trainings";
+import {
+  getTrainingByRegistryId,
+  postTrainings,
+} from "../../services/trainings";
 import {
   act,
   commonAccessibilityTests,
@@ -8,11 +11,11 @@ import {
   render,
   screen,
   waitFor,
-} from "@/utils/testUtils";
+} from "../../utils/testUtils";
 import { faker } from "@faker-js/faker";
 import { mock200Json } from "jest.utils";
 import { useRouter } from "next/navigation";
-import { EntityType } from "@/types/api";
+import { EntityType } from "../../types/api";
 import Training from "./Training";
 
 const mockPush = jest.fn();
@@ -21,7 +24,7 @@ const mockPush = jest.fn();
   push: mockPush,
 });
 
-jest.mock("@/services/trainings");
+jest.mock("../../services/trainings");
 jest.mock("@/data/store");
 
 const mockSetUser = jest.fn();

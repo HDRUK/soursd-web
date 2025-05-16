@@ -1,7 +1,7 @@
-import FormModal from "@/components/FormModal";
-import { PostProfessionalRegistrationPayload } from "@/services/professional_registrations/types";
-import { ResearcherProfessionalRegistration } from "@/types/application";
-import { MutationState, QueryState } from "@/types/form";
+import { ResearcherProfessionalRegistration } from "../../types/application";
+import { MutationState, QueryState } from "../../types/form";
+import { PostProfessionalRegistrationPayload } from "../../services/professional_registrations/types";
+import FormModal from "../../components/FormModal";
 import ProfessionalRegistrationsForm from "../ProfessionalRegistrationsForm";
 
 interface ProfessionalRegistrationsFormModalProps {

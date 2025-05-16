@@ -6,7 +6,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = ProfileCompleteStatus;
 var jsx_runtime_1 = require("react/jsx-runtime");
-var Text_1 = __importDefault(require("@/components/Text"));
+var Text_1 = __importDefault(require("../components/Text"));
 var CheckCircle_1 = __importDefault(require("@mui/icons-material/CheckCircle"));
 var ContentCopy_1 = __importDefault(require("@mui/icons-material/ContentCopy"));
 var Error_1 = __importDefault(require("@mui/icons-material/Error"));

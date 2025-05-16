@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = useOrganisationStore;
 var store_1 = require("@/data/store");
-var organisations_1 = require("@/services/organisations");
+var organisations_1 = require("../../services/organisations");
 var react_query_1 = require("@tanstack/react-query");
 var react_1 = require("react");
 function useOrganisationStore() {

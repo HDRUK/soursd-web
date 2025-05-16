@@ -3,9 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var jsx_runtime_1 = require("react/jsx-runtime");
 var material_1 = require("@mui/material");
 var react_query_1 = require("@tanstack/react-query");
-var users_1 = require("@/services/users");
-var date_1 = require("@/utils/date");
-var string_1 = require("@/utils/string");
+var users_1 = require("../../services/users");
+var date_1 = require("../../utils/date");
+var string_1 = require("../../utils/string");
 var next_intl_1 = require("next-intl");
 var NAMESPACE_TRANSLATION_ACTION_COMMENT = "ActionValidationLogComment";
 var ActionValidationLogComment = function (_a) {

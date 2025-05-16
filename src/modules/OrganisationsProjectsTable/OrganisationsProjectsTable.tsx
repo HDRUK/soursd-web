@@ -1,12 +1,12 @@
 "use client";
 
-import ChipStatus from "@/components/ChipStatus";
-import Table, { TableProps } from "@/components/Table";
 import { useStore } from "@/data/store";
-import { Organisation } from "@/types/application";
-import { renderLinkNameCell, renderUserNameCell } from "@/utils/cells";
+import { Organisation } from "../../types/application";
 import { ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
+import { renderLinkNameCell, renderUserNameCell } from "../../utils/cells";
+import ChipStatus from "../../components/ChipStatus";
+import Table, { TableProps } from "../../components/Table";
 
 interface OrganisationsProjectsTableProps
   extends Omit<TableProps<Organisation>, "columns"> {

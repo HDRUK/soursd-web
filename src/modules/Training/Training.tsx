@@ -2,33 +2,33 @@
 
 import { StoreUserHistories } from "@/data/store";
 
-import { PostTrainingsPayload } from "@/services/trainings/types";
+import { EntityType } from "../../types/api";
+import { ResearcherTraining, User } from "../../types/application";
+import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import { Button, Typography } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import { useCallback, useState, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import ReactDOMServer from "react-dom/server";
-import FormModal from "@/components/FormModal";
-import ContactLink from "@/components/ContactLink";
-import Table from "@/components/Table";
-import { formatShortDate } from "@/utils/date";
-import useQueryAlerts from "@/hooks/useQueryAlerts";
-import { ResearcherTraining, User } from "@/types/application";
-import { ActionMenu, ActionMenuItem } from "@/components/ActionMenu";
-import TaskAltIcon from "@mui/icons-material/TaskAlt";
-import useFileDownload from "@/hooks/useFileDownload";
-import { showAlert } from "@/utils/showAlert";
+import { AddIcon } from "../../consts/icons";
+import useFileDownload from "../../hooks/useFileDownload";
+import useQueryAlerts from "../../hooks/useQueryAlerts";
+import useQueryConfirmAlerts from "../../hooks/useQueryConfirmAlerts";
 import {
+  deleteTrainingsQuery,
   getTrainingByRegistryIdQuery,
   postTrainingsQuery,
-  deleteTrainingsQuery,
   putTrainingsQuery,
-} from "@/services/trainings";
-import { EntityType } from "@/types/api";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import useQueryConfirmAlerts from "@/hooks/useQueryConfirmAlerts";
-import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
-import { AddIcon } from "@/consts/icons";
+} from "../../services/trainings";
+import { PostTrainingsPayload } from "../../services/trainings/types";
+import { formatShortDate } from "../../utils/date";
+import { showAlert } from "../../utils/showAlert";
+import { ActionMenu, ActionMenuItem } from "../../components/ActionMenu";
+import ContactLink from "../../components/ContactLink";
+import FormModal from "../../components/FormModal";
+import Table from "../../components/Table";
 import TrainingForm from "./TrainingForm";
 
 const NAMESPACE_TRANSLATION_TRAINING = "Training";

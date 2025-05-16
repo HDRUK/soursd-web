@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var jsx_runtime_1 = require("react/jsx-runtime");
 var material_1 = require("@mui/material");
-var icons_1 = require("@/consts/icons");
+var icons_1 = require("../../consts/icons");
 var next_intl_1 = require("next-intl");
 var NAMESPACE_TRANSLATION_COMPLETED_CHIP = "ChangeDecisionChip";
 var ChangeDecisionChip = function (_a) {

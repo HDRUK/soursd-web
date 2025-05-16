@@ -8,9 +8,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.StyledDrawerInfo = void 0;
-var theme_1 = require("@/config/theme");
-var styles_1 = require("@/utils/styles");
-var theme_2 = require("@/utils/theme");
+var theme_1 = require("../../config/theme");
+var styles_1 = require("../../utils/styles");
+var theme_2 = require("../../utils/theme");
 var material_1 = require("@mui/material");
 var Drawer_1 = __importDefault(require("@mui/material/Drawer"));
 exports.StyledDrawerInfo = (0, material_1.styled)(Drawer_1.default)(function (_a) {

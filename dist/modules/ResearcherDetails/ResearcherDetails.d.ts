@@ -1,4 +1,4 @@
-import { HistoryCombinedData } from "@/queries/useQueriesHistories";
+import { HistoryCombinedData } from "../../queries/useQueriesHistories";
 import { Organisation, User } from "@/types/application";
 interface ResearcherDetailsProps {
     isApproved: boolean;

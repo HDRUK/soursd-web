@@ -1,8 +1,8 @@
 import { Box, Button } from "@mui/material";
 import { TextareaAutosize } from "@mui/base/TextareaAutosize";
-import { VerifyIcon, RejectIcon } from "@/consts/icons";
-import yup from "@/config/yup";
-import { ValidationLogAction } from "@/services/validation_logs/types";
+import { VerifyIcon, RejectIcon } from "../../consts/icons";
+import yup from "../../config/yup";
+import { ValidationLogAction } from "../../services/validation_logs/types";
 import { LoadingButton } from "@mui/lab";
 import { useTranslations } from "next-intl";
 import Form from "../Form";

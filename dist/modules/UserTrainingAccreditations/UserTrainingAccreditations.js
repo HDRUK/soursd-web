@@ -6,11 +6,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = UserTrainingAccreditations;
 var jsx_runtime_1 = require("react/jsx-runtime");
 var next_intl_1 = require("next-intl");
-var Training_1 = __importDefault(require("@/modules/Training"));
-var PageSection_1 = __importDefault(require("@/modules/PageSection"));
-var PageBodyContainer_1 = __importDefault(require("@/modules/PageBodyContainer"));
+var Training_1 = __importDefault(require("../modules/Training"));
+var PageSection_1 = __importDefault(require("../modules/PageSection"));
+var PageBodyContainer_1 = __importDefault(require("../modules/PageBodyContainer"));
 var material_1 = require("@mui/material");
-var ProfessionalRegistrations_1 = __importDefault(require("@/modules/ProfessionalRegistrations"));
+var ProfessionalRegistrations_1 = __importDefault(require("../modules/ProfessionalRegistrations"));
 var store_1 = require("@/data/store");
 var NAMESPACE_TRANSLATION = "Application";
 function UserTrainingAccreditations(_a) {

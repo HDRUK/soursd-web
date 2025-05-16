@@ -17,8 +17,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = PermissionsSection;
 var jsx_runtime_1 = require("react/jsx-runtime");
-var ActionList_1 = require("@/components/ActionList");
-var form_1 = require("@/utils/form");
+var ActionList_1 = require("../ActionList");
+var form_1 = require("../../utils/form");
 var Save_1 = __importDefault(require("@mui/icons-material/Save"));
 var lab_1 = require("@mui/lab");
 var material_1 = require("@mui/material");

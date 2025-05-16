@@ -27,7 +27,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = PageBodyContainer;
 var jsx_runtime_1 = require("react/jsx-runtime");
-var SectionHeading_1 = __importDefault(require("@/components/SectionHeading"));
+var SectionHeading_1 = __importDefault(require("../components/SectionHeading"));
 var material_1 = require("@mui/material");
 function PageBodyContainer(_a) {
     var children = _a.children, heading = _a.heading, description = _a.description, restProps = __rest(_a, ["children", "heading", "description"]);

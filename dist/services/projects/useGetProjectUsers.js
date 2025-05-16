@@ -26,8 +26,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = useGetProjectUsers;
-var search_1 = require("@/consts/search");
-var usePaginatedQuery_1 = __importDefault(require("@/hooks/usePaginatedQuery"));
+var search_1 = require("../../consts/search");
+var usePaginatedQuery_1 = __importDefault(require("../../hooks/usePaginatedQuery"));
 var getProjectUsers_1 = __importDefault(require("./getProjectUsers"));
 function useGetProjectUsers(projectId, _a) {
     if (_a === void 0) { _a = {}; }

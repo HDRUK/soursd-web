@@ -4,13 +4,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = useQueriesHistory;
-var useQueriesCombined_1 = __importDefault(require("@/hooks/useQueriesCombined"));
-var accreditations_1 = require("@/services/accreditations");
-var getAffiliationsQuery_1 = __importDefault(require("@/services/affiliations/getAffiliationsQuery"));
-var educations_1 = require("@/services/educations");
-var professional_registrations_1 = require("@/services/professional_registrations");
-var projects_1 = require("@/services/projects");
-var trainings_1 = require("@/services/trainings");
+var useQueriesCombined_1 = __importDefault(require("../../hooks/useQueriesCombined"));
+var accreditations_1 = require("../../services/accreditations");
+var getAffiliationsQuery_1 = __importDefault(require("../../services/affiliations/getAffiliationsQuery"));
+var educations_1 = require("../../services/educations");
+var professional_registrations_1 = require("../../services/professional_registrations");
+var projects_1 = require("../../services/projects");
+var trainings_1 = require("../../services/trainings");
 function useQueriesHistory(registryId, options) {
     if (options === void 0) { options = {}; }
     var queries = registryId

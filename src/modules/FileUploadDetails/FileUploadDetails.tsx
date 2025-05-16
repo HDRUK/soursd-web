@@ -1,8 +1,8 @@
 "use client";
 
-import FileLink, { FileLinkProps } from "@/components/FileLink";
-import { FileType } from "@/consts/files";
 import { useTranslations } from "next-intl";
+import { FileType } from "../../consts/files";
+import FileLink, { FileLinkProps } from "../../components/FileLink";
 
 export interface FileUploadDetailsProps extends FileLinkProps {
   fileType: FileType;

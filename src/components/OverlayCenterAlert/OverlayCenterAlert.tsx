@@ -1,4 +1,4 @@
-import { ScalingUp } from "@/consts/ui";
+import { ScalingUp } from "../../consts/ui";
 import { AlertColor } from "@mui/material";
 import { Message, MessageProps } from "../Message";
 import OverlayCenter, { OverlayCenterProps } from "../OverlayCenter";

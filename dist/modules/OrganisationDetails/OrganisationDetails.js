@@ -5,13 +5,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = OrganisationDetails;
 var jsx_runtime_1 = require("react/jsx-runtime");
-var ApprovalStatus_1 = __importDefault(require("@/components/ApprovalStatus"));
-var Text_1 = __importDefault(require("@/components/Text"));
+var ApprovalStatus_1 = __importDefault(require("../components/ApprovalStatus"));
+var Text_1 = __importDefault(require("../components/Text"));
 var Mail_1 = __importDefault(require("@mui/icons-material/Mail"));
 var LocationOn_1 = __importDefault(require("@mui/icons-material/LocationOn"));
 var Business_1 = __importDefault(require("@mui/icons-material/Business"));
 var material_1 = require("@mui/material");
-var array_1 = require("@/utils/array");
+var array_1 = require("../../utils/array");
 var next_intl_1 = require("next-intl");
 var NAMESPACE_TRANSLATION_APPLICATION = "Application";
 function OrganisationDetails(_a) {

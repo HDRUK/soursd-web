@@ -1,5 +1,5 @@
-import { ResponseJson, ResponseOptions } from "@/types/requests";
-import { Comment } from "@/types/logs";
+import { ResponseJson, ResponseOptions } from "../../types/requests";
+import { Comment } from "../../types/logs";
 import { postRequest } from "../requests";
 import { handleJsonResponse } from "../requestHelpers";
 import { PostValidationLogCommentPayload } from "./types";

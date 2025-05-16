@@ -8,7 +8,7 @@ exports.default = ThemeRegistry;
 var jsx_runtime_1 = require("react/jsx-runtime");
 var CssBaseline_1 = __importDefault(require("@mui/material/CssBaseline"));
 var styles_1 = require("@mui/material/styles");
-var theme_1 = __importDefault(require("@/theme"));
+var theme_1 = __importDefault(require("../../theme"));
 var EmotionCache_1 = __importDefault(require("./EmotionCache"));
 function ThemeRegistry(_a) {
     var children = _a.children;

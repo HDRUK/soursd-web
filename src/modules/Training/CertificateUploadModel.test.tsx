@@ -5,7 +5,7 @@ import {
   userEvent,
   fireEvent,
   commonAccessibilityTests,
-} from "@/utils/testUtils";
+} from "../../utils/testUtils";
 import CertificateUploadModal from "./CertificateUploadModal";
 
 jest.mock("next-intl", () => ({

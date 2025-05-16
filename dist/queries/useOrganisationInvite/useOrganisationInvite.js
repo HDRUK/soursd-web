@@ -48,7 +48,7 @@ var __rest = (this && this.__rest) || function (s, e) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = useOrganisationInvite;
-var organisations_1 = require("@/services/organisations");
+var organisations_1 = require("../../services/organisations");
 var query_1 = require("@/utils/query");
 var react_query_1 = require("@tanstack/react-query");
 var react_1 = require("react");

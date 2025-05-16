@@ -1,14 +1,14 @@
-import { useTranslations } from "next-intl";
-import ActionsPanel from "@/components/ActionsPanel";
-import LoadingWrapper from "@/components/LoadingWrapper";
-import { ValidationLog } from "@/types/logs";
-import { QueryState } from "@/types/form";
-import { Message } from "@/components/Message";
 import { useStore } from "@/data/store";
-import useProjectUserCustodianApproval from "@/hooks/useProjectUserCustodianApproval";
-import useOrganisationCustodianApproval from "@/hooks/useOrganisationCustodianApproval";
+import { QueryState } from "../../types/form";
+import { ValidationLog } from "../../types/logs";
+import { useTranslations } from "next-intl";
+import useOrganisationCustodianApproval from "../../hooks/useOrganisationCustodianApproval";
+import useProjectUserCustodianApproval from "../../hooks/useProjectUserCustodianApproval";
 import ActionValidationStatus from "../ActionValidationStatus";
 import ActionsPanelValidationCheck from "../ActionsPanelValidationCheck";
+import ActionsPanel from "../../components/ActionsPanel";
+import LoadingWrapper from "../../components/LoadingWrapper";
+import { Message } from "../../components/Message";
 
 const NAMESPACE_TRANSLATION_ACTION_VALIDATION = "ActionValidationPanel";
 

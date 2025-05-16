@@ -1,4 +1,4 @@
-import { getAugmentedColor } from "@/utils/theme";
+import { getAugmentedColor } from "../../utils/theme";
 import { AugmentedColorPaletteOptions, Box, css, styled } from "@mui/material";
 
 export const StyledScreenArrow = styled(Box)<{

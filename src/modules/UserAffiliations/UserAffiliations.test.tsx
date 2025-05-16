@@ -3,10 +3,10 @@ import {
   render,
   screen,
   waitFor,
-} from "@/utils/testUtils";
+} from "../../utils/testUtils";
 import { mockedAffiliation } from "@/mocks/data/user";
 import { useQuery } from "@tanstack/react-query";
-import usePaginatedQuery from "@/hooks/usePaginatedQuery";
+import usePaginatedQuery from "../../hooks/usePaginatedQuery";
 import { mockPagedResults } from "jest.utils";
 import UserAffiliations from "./UserAffiliations";
 

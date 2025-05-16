@@ -27,7 +27,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = PageGuidance;
 var jsx_runtime_1 = require("react/jsx-runtime");
-var Guidance_1 = __importDefault(require("@/components/Guidance"));
+var Guidance_1 = __importDefault(require("../components/Guidance"));
 var material_1 = require("@mui/material");
 function PageGuidance(_a) {
     var subTabs = _a.subTabs, children = _a.children, restProps = __rest(_a, ["subTabs", "children"]);

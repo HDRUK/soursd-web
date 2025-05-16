@@ -1,4 +1,4 @@
-import { ROUTES } from "@/consts/router";
+import { ROUTES } from "../../consts/router";
 type Route = Record<keyof typeof ROUTES, {
     path: string;
 }>;

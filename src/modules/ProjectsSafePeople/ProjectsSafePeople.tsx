@@ -1,30 +1,35 @@
-import { ActionMenu, ActionMenuItem } from "@/components/ActionMenu";
-import ChipStatus, { Status } from "@/components/ChipStatus";
-import Table from "@/components/Table";
-import { FilterIcon, PrimaryContactIcon } from "@/consts/icons";
+"use client";
+
+import { ActionMenu, ActionMenuItem } from "../../components/ActionMenu";
+import ChipStatus, { Status } from "../../components/ChipStatus";
+import Table from "../../components/Table";
+import { FilterIcon, PrimaryContactIcon } from "../../consts/icons";
 import { useStore } from "@/data/store";
-import useQueryAlerts from "@/hooks/useQueryAlerts";
-import useQueryConfirmAlerts from "@/hooks/useQueryConfirmAlerts";
-import PageBody from "@/modules/PageBody";
-import PageSection from "@/modules/PageSection";
-import SearchActionMenu from "@/modules/SearchActionMenu";
-import SearchBar from "@/modules/SearchBar";
+import useQueryAlerts from "../../hooks/useQueryAlerts";
+import useQueryConfirmAlerts from "../../hooks/useQueryConfirmAlerts";
+import PageBody from "../../modules/PageBody";
+import PageSection from "../../modules/PageSection";
+import SearchActionMenu from "../../modules/SearchActionMenu";
+import SearchBar from "../../modules/SearchBar";
 import {
   useGetProjectUsers,
   deleteProjectUserQuery,
   putProjectUserPrimaryContactQuery,
-} from "@/services/projects";
-import { DeleteProjectUserPayload } from "@/services/projects/types";
-import { ProjectUser, User } from "@/types/application";
-import { renderOrganisationsNameCell, renderUserNameCell } from "@/utils/cells";
+} from "../../services/projects";
+import { DeleteProjectUserPayload } from "../../services/projects/types";
+import { ProjectUser, User } from "../../types/application";
+import {
+  renderOrganisationsNameCell,
+  renderUserNameCell,
+} from "../../utils/cells";
 import { Add } from "@mui/icons-material";
 import { Box, Button, Grid } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { CellContext, ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
-import ProjectsAddUserModal from "@/components/ProjectsAddUserModal";
-import { EntityType } from "@/types/api";
+import ProjectsAddUserModal from "../../components/ProjectsAddUserModal";
+import { EntityType } from "../../types/api";
 
 const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";

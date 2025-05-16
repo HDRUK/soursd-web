@@ -27,7 +27,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = OverlayCenterAlert;
 var jsx_runtime_1 = require("react/jsx-runtime");
-var ui_1 = require("@/consts/ui");
+var ui_1 = require("../../consts/ui");
 var Message_1 = require("../Message");
 var OverlayCenter_1 = __importDefault(require("../OverlayCenter"));
 function OverlayCenterAlert(_a) {

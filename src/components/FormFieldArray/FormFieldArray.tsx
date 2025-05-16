@@ -1,6 +1,6 @@
 "use client";
 
-import { toCamelCase } from "@/utils/string";
+import { toCamelCase } from "../../utils/string";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {
   Box,

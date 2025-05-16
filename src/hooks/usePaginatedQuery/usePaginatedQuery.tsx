@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "@/i18n/routing";
-import { Paged, ResponseJson } from "@/types/requests";
+import { Paged, ResponseJson } from "../../types/requests";
 import {
   keepPreviousData,
   useQuery,

@@ -2,7 +2,7 @@
 
 import SectionHeading, {
   SectionHeadingProps,
-} from "@/components/SectionHeading";
+} from "../../components/SectionHeading";
 import { Box, BoxProps } from "@mui/material";
 
 type PageSectionProps = BoxProps & SectionHeadingProps;

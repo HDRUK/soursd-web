@@ -1,4 +1,4 @@
-import { Permission } from "@/services/permissions/types";
+import { Permission } from "../../services/permissions/types";
 import { QueryState } from "@/types/form";
 export type AssignOptionsFormValues = Record<string, boolean>;
 export interface AssignOptionsProps {

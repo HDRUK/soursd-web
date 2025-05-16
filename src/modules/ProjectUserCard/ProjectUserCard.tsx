@@ -1,23 +1,23 @@
 "use client";
 
-import { ProjectUser } from "@/types/application";
-import { Card, CardContent, Box, Typography } from "@mui/material";
-import { useTranslations } from "next-intl";
+import { useStore } from "@/data/store";
+import { EntityType } from "../../types/api";
+import { ProjectUser } from "../../types/application";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import { Box, Card, CardContent, Typography } from "@mui/material";
 import {
-  useQuery,
   QueryFunctionContext,
   QueryKey,
+  useQuery,
 } from "@tanstack/react-query";
-import IconButton from "@/components/IconButton";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import { getUserApprovedProjects } from "@/services/projects";
-import { useState, useCallback } from "react";
-import { UserDetailsModal } from "@/modules";
-import { EntityType } from "@/types/api";
-import { getEntityApproval } from "@/services/approvals";
-import { ApprovedUserIcon } from "@/consts/icons";
-import Text from "@/components/Text";
-import { useStore } from "@/data/store";
+import { useTranslations } from "next-intl";
+import { useCallback, useState } from "react";
+import { ApprovedUserIcon } from "../../consts/icons";
+import { getEntityApproval } from "../../services/approvals";
+import { getUserApprovedProjects } from "../../services/projects";
+import IconButton from "../../components/IconButton";
+import Text from "../../components/Text";
+import UserDetailsModal from "../UserDetailsModal";
 
 interface ProjectUserCardProps {
   projectUser: ProjectUser;

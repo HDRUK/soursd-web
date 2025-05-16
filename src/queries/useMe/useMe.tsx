@@ -1,4 +1,4 @@
-import { getMe } from "@/services/auth";
+import { getMe } from "../../services/auth";
 import { useQuery } from "@tanstack/react-query";
 
 export default function useMe() {

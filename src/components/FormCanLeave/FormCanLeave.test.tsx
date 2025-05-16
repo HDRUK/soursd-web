@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from "@/utils/testUtils";
+import { fireEvent, render, screen, waitFor } from "../../utils/testUtils";
 import { useFormState } from "react-hook-form";
 import FormCanLeave from ".";
 

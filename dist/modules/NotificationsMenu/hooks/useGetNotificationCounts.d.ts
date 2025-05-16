@@ -1,6 +1,2 @@
-declare const useGetNotificationsCount: (userId: number) => import("@tanstack/react-query").UseQueryResult<import("../../../types/requests").ResponseJson<{
-    total: number;
-    read: number;
-    unread: number;
-}>, Error>;
+declare const useGetNotificationsCount: (userId: number) => import("@tanstack/react-query").DefinedUseQueryResult<unknown, Error>;
 export default useGetNotificationsCount;

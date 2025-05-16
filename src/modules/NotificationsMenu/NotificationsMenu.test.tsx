@@ -6,10 +6,10 @@ import {
   waitFor,
   fireEvent,
   commonAccessibilityTests,
-} from "@/utils/testUtils";
-import { NotificationPatchType } from "@/services/notifications/types";
-import { NOTIFICATIONS_PER_PAGE } from "@/consts/notifications";
-import patchUserNotification from "@/services/notifications/patchUserNotification";
+} from "../../utils/testUtils";
+import { NotificationPatchType } from "../../services/notifications/types";
+import { NOTIFICATIONS_PER_PAGE } from "../../consts/notifications";
+import patchUserNotification from "../../services/notifications/patchUserNotification";
 import NotificationsMenu from "./NotificationsMenu";
 
 const defaultUser = mockedUser({
@@ -20,7 +20,7 @@ jest.mock("@/data/store");
 
 (useStore as unknown as jest.Mock).mockReturnValue(defaultUser);
 
-jest.mock("@/services/notifications/patchUserNotification", () => ({
+jest.mock("../../services/notifications/patchUserNotification", () => ({
   __esModule: true,
   default: jest.fn(),
 }));

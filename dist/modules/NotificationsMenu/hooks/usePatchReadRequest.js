@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var react_query_1 = require("@tanstack/react-query");
-var patchReadRequestNotificationQuery_1 = __importDefault(require("@/services/notifications/patchReadRequestNotificationQuery"));
+var patchReadRequestNotificationQuery_1 = __importDefault(require("../../services/notifications/patchReadRequestNotificationQuery"));
 var usePatchReadRequest = function () {
     return (0, react_query_1.useMutation)({
         mutationFn: function (_a) {

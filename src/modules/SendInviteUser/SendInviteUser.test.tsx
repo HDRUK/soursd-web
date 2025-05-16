@@ -5,7 +5,7 @@ import {
   render,
   screen,
   waitFor,
-} from "@/utils/testUtils";
+} from "../../utils/testUtils";
 import { faker } from "@faker-js/faker";
 import { mockFailedJson } from "jest.utils";
 import SendInviteUser from "./SendInviteUser";

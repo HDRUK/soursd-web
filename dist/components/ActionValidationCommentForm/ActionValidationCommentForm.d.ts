@@ -1,4 +1,4 @@
-import { ValidationLogAction } from "@/services/validation_logs/types";
+import { ValidationLogAction } from "../../services/validation_logs/types";
 export interface ActionValidationCommentFormData {
     comment: string;
 }

@@ -1,11 +1,11 @@
+import { ValidationLog } from "../../types/logs";
 import { Paper, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
-import { getValidationLogCommentsQuery } from "@/services/validation_logs";
-import { ValidationLog } from "@/types/logs";
-import ActionValidationMakeDecision from "@/modules/ActionValidationMakeDecision";
-import ViewMore from "@/components/ViewMore";
-import ActionValidationLogComment from "@/components/ActionValidationLogComment";
-import useFallbackTranslations from "@/hooks/useFallbackTranslations";
+import useFallbackTranslations from "../../hooks/useFallbackTranslations";
+import { getValidationLogCommentsQuery } from "../../services/validation_logs";
+import ActionValidationLogComment from "../../components/ActionValidationLogComment";
+import ViewMore from "../../components/ViewMore";
+import ActionValidationMakeDecision from "../ActionValidationMakeDecision";
 
 interface ActionsPanelValidationCheckProps {
   log: ValidationLog;

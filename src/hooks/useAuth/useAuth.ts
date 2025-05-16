@@ -1,4 +1,4 @@
-import { Auth } from "@/types/application";
+import { Auth } from "../../types/application";
 import { showAlert } from "@/utils/showAlert";
 import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";

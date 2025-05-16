@@ -19,10 +19,10 @@ var jsx_runtime_1 = require("react/jsx-runtime");
 var next_intl_1 = require("next-intl");
 var material_1 = require("@mui/material");
 var store_1 = require("@/data/store");
-var PageSection_1 = __importDefault(require("@/modules/PageSection"));
-var PageBodyContainer_1 = __importDefault(require("@/modules/PageBodyContainer"));
-var Affiliations_1 = __importDefault(require("@/modules/Affiliations"));
-var affiliations_1 = require("@/services/affiliations");
+var PageSection_1 = __importDefault(require("../modules/PageSection"));
+var PageBodyContainer_1 = __importDefault(require("../modules/PageBodyContainer"));
+var Affiliations_1 = __importDefault(require("../modules/Affiliations"));
+var affiliations_1 = require("../../services/affiliations");
 var NAMESPACE_TRANSLATION = "Application";
 function UserAffiliations() {
     var t = (0, next_intl_1.useTranslations)(NAMESPACE_TRANSLATION);

@@ -1,5 +1,5 @@
-import { ProjectUser } from "@/types/application";
-import { ResponseJson, ResponseOptions } from "@/types/requests";
+import { ProjectUser } from "../../types/application";
+import { ResponseJson, ResponseOptions } from "../../types/requests";
 import { handleJsonResponse } from "../requestHelpers";
 import { putRequest } from "../requests";
 import { PutPrimaryContactPayload } from "./types";

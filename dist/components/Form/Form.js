@@ -27,7 +27,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Form;
 var jsx_runtime_1 = require("react/jsx-runtime");
-var form_1 = require("@/utils/form");
+var form_1 = require("../../utils/form");
 var yup_1 = require("@hookform/resolvers/yup");
 var material_1 = require("@mui/material");
 var deep_equal_1 = __importDefault(require("deep-equal"));

@@ -1,4 +1,4 @@
-import { TableProps } from "@/components/Table";
+import { TableProps } from "../components/Table";
 import { User } from "@/types/application";
 interface OrganisationsPeopleTableProps extends Omit<TableProps<User>, "columns"> {
     columns?: TableProps<User>["columns"];

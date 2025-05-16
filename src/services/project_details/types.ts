@@ -1,5 +1,5 @@
-import { ProjectDetails } from "@/types/application";
-import { DataUse } from "@/types/gateway";
+import { ProjectDetails } from "../../types/application";
+import { DataUse } from "../../types/gateway";
 
 type PostProjectDetailsFromGatewayPayload = {
   custodian_id: number;

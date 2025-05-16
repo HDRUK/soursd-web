@@ -2,10 +2,10 @@
 "use client";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = ApplicationData;
-var router_1 = require("@/consts/router");
+var router_1 = require("../../consts/router");
 var store_1 = require("@/data/store");
 var routing_1 = require("@/i18n/routing");
-var application_1 = require("@/utils/application");
+var application_1 = require("../../utils/application");
 var react_1 = require("react");
 function ApplicationData(_a) {
     var systemConfigData = _a.systemConfigData, userData = _a.userData, organisationData = _a.organisationData, sectorsData = _a.sectorsData, permissionsData = _a.permissionsData, projectRolesData = _a.projectRolesData, custodianData = _a.custodianData, accreditationsData = _a.accreditationsData, educationData = _a.educationData, trainingData = _a.trainingData, projectsData = _a.projectsData, affiliationData = _a.affiliationData, professionalRegistrationsData = _a.professionalRegistrationsData, isOrganisation = _a.isOrganisation, isCustodian = _a.isCustodian, children = _a.children;

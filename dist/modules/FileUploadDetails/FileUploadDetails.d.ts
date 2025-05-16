@@ -1,5 +1,5 @@
-import { FileLinkProps } from "@/components/FileLink";
-import { FileType } from "@/consts/files";
+import { FileLinkProps } from "../components/FileLink";
+import { FileType } from "../../consts/files";
 export interface FileUploadDetailsProps extends FileLinkProps {
     fileType: FileType;
 }

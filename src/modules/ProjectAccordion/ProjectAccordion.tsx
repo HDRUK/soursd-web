@@ -1,10 +1,10 @@
 "use client";
 
-import AccordionTitle from "@/components/AccordionTitle";
-import { getOrganisationQuery } from "@/services/organisations";
+import AccordionTitle from "../../components/AccordionTitle";
+import { getOrganisationQuery } from "../../services/organisations";
 
-import { PALETTE_THEME_PURPLE_BLUE } from "@/config/theme";
-import { ResearcherProject } from "@/types/application";
+import { PALETTE_THEME_PURPLE_BLUE } from "../../config/theme";
+import { ResearcherProject } from "../../types/application";
 
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FolderOpenIcon from "@mui/icons-material/FolderOpen";

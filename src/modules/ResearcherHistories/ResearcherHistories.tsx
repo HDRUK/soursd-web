@@ -1,14 +1,13 @@
-import { Message } from "@/components/Message";
-import ResearcherAccreditationEntry from "@/modules/ResearcherAccreditationEntry";
-import ResearcherEducationEntry from "@/modules/ResearcherEducationEntry";
-// import ResearcherEmploymentEntry from "@/modules/ResearcherEmploymentEntry";
-import ResearcherProjectEntry from "@/modules/ResearcherProjectEntry";
-import ResearcherTrainingEntry from "@/modules/ResearcherTrainingEntry";
-import ResearcherProfessionalRegistrationsEntry from "@/modules/ResearcherProfessionalRegistrationsEntry";
-import { HistoryCombinedData } from "@/queries/useQueriesHistories";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 import { useTranslations } from "next-intl";
+import { Message } from "../../components/Message";
+import { HistoryCombinedData } from "../../queries/useQueriesHistories";
+import ResearcherAccreditationEntry from "../ResearcherAccreditationEntry";
+import ResearcherEducationEntry from "../ResearcherEducationEntry";
+import ResearcherProfessionalRegistrationsEntry from "../ResearcherProfessionalRegistrationsEntry";
+import ResearcherProjectEntry from "../ResearcherProjectEntry";
+import ResearcherTrainingEntry from "../ResearcherTrainingEntry";
 
 interface ResearcherHistoriesProps {
   data: HistoryCombinedData;
@@ -21,7 +20,6 @@ export default function ResearcherHistories({
 }: ResearcherHistoriesProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_HISTORIES);
   const accreditations = data.getAccreditations?.data?.data;
-  // const employments = data.getEmployments?.data;
   const educations = data.getEducations?.data;
   const projects = data.getUserApprovedProjects?.data;
   const trainings = data.getTrainings?.data;
@@ -64,23 +62,6 @@ export default function ResearcherHistories({
           )}
         </AccordionDetails>
       </Accordion>
-      {/* <Accordion>
-        <AccordionSummary
-          aria-controls="employments-content"
-          id="employments-header"
-          expandIcon={<ExpandMoreIcon />}>
-          {t("employment")}
-        </AccordionSummary>
-        <AccordionDetails>
-          {employments?.length ? (
-            employments.map(employment => (
-              <ResearcherEmploymentEntry data={employment} />
-            ))
-          ) : (
-            <Message severity="info">{t("noEmploymentsFound")}</Message>
-          )}
-        </AccordionDetails>
-      </Accordion> */}
       <Accordion>
         <AccordionSummary
           aria-controls="projects-content"

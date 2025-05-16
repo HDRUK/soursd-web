@@ -5,10 +5,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = SendInviteUser;
 var jsx_runtime_1 = require("react/jsx-runtime");
-var ContactLink_1 = __importDefault(require("@/components/ContactLink"));
-var InviteUser_1 = __importDefault(require("@/modules/InviteUser"));
-var useUserInvite_1 = __importDefault(require("@/queries/useUserInvite"));
-var showAlert_1 = require("@/utils/showAlert");
+var ContactLink_1 = __importDefault(require("../components/ContactLink"));
+var InviteUser_1 = __importDefault(require("../modules/InviteUser"));
+var useUserInvite_1 = __importDefault(require("../../queries/useUserInvite"));
+var showAlert_1 = require("../../utils/showAlert");
 var next_intl_1 = require("next-intl");
 var server_1 = __importDefault(require("react-dom/server"));
 var NAMESPACE_TRANSLATIONS_ORGANISATION = "User";

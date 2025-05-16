@@ -1,6 +1,6 @@
 "use client";
 
-import { Position } from "@/consts/ui";
+import { Position } from "../../consts/ui";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import { DrawerProps } from "@mui/material";
 import { Box, useMediaQuery, useTheme } from "@mui/system";

@@ -3,11 +3,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = UserHistoryEntry;
 var jsx_runtime_1 = require("react/jsx-runtime");
-var date_1 = require("@/utils/date");
+var date_1 = require("../../utils/date");
 var material_1 = require("@mui/material");
 var next_intl_1 = require("next-intl");
 var navigation_1 = require("next/navigation");
-var file_1 = require("@/utils/file");
+var file_1 = require("../../utils/file");
 var UserHistoryEntry_styles_1 = require("./UserHistoryEntry.styles");
 var NAMESPACE_TRANSLATION_HISTORIES = "ResearcherHistories";
 function UserHistoryEntry(_a) {

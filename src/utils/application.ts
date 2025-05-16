@@ -1,5 +1,5 @@
-import { VALIDATION_SCHEMA_KEY } from "@/consts/application";
-import { GetSystemConfigResponse } from "@/services/system_config/types";
+import { VALIDATION_SCHEMA_KEY } from "../consts/application";
+import { GetSystemConfigResponse } from "../services/system_config/types";
 import { escapeAndParse } from "./json";
 
 function parseSystemConfig(data: GetSystemConfigResponse | undefined) {
@@ -54,4 +54,4 @@ function getInitials(name: string) {
     .toUpperCase();
 }
 
-export { parseSystemConfig, isProduction, injectParamsIntoPath, getInitials };
+export { getInitials, injectParamsIntoPath, isProduction, parseSystemConfig };

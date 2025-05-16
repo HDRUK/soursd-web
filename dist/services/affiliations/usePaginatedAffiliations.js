@@ -15,7 +15,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = usePaginatedAffiliations;
-var usePaginatedQuery_1 = __importDefault(require("@/hooks/usePaginatedQuery"));
+var usePaginatedQuery_1 = __importDefault(require("../../hooks/usePaginatedQuery"));
 var json_1 = require("@/utils/json");
 var getAffiliations_1 = __importDefault(require("./getAffiliations"));
 function usePaginatedAffiliations(registryId, options) {

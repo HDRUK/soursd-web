@@ -1,13 +1,13 @@
 import { mockedJwt } from "@/mocks/data/auth";
 import theme from "@/theme";
-import { handleLogin, handleLogout } from "@/utils/keycloak";
+import { handleLogin, handleLogout } from "../../utils/keycloak";
 import {
   defineMatchMedia,
   fireEvent,
   render,
   screen,
   waitFor,
-} from "@/utils/testUtils";
+} from "../../utils/testUtils";
 import { get } from "js-cookie";
 import { useStore } from "@/data/store";
 import { mockedUser } from "@/mocks/data/user";
@@ -17,7 +17,7 @@ jest.mock("js-cookie", () => ({
   get: jest.fn(),
 }));
 
-jest.mock("@/utils/keycloak", () => ({
+jest.mock("../../utils/keycloak", () => ({
   handleLogin: jest.fn(),
   handleLogout: jest.fn(),
 }));

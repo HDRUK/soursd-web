@@ -1,4 +1,4 @@
-import { ResearcherProfessionalRegistration } from "@/types/application";
+import { ResearcherProfessionalRegistration } from "../../types/application";
 
 interface PostProfessionalRegistrationPayload {
   name: string;

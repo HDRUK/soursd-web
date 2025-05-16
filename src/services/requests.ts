@@ -1,4 +1,4 @@
-import { QueryPayload } from "@/types/requests";
+import { QueryPayload } from "../../types/requests";
 import { objectToQuerystring } from "@/utils/requests";
 import {
   createEmptyErrorResponse,

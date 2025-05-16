@@ -1,16 +1,16 @@
 "use client";
 
-import ContactLink from "@/components/ContactLink";
-import LoadingWrapper from "@/components/LoadingWrapper";
-import OverlayCenterAlert from "@/components/OverlayCenterAlert";
-import PageBodyContainer from "@/modules/PageBodyContainer";
-import useApplicationDependencies from "@/queries/useApplicationDependencies";
-import useQueriesHistories from "@/queries/useQueriesHistories";
-import { User } from "@/types/application";
-import { getCombinedQueryState } from "@/utils/query";
+import { User } from "../../types/application";
 import { useTranslations } from "next-intl";
 import { ReactNode } from "react";
+import useApplicationDependencies from "../../queries/useApplicationDependencies";
+import useQueriesHistories from "../../queries/useQueriesHistories";
+import { getCombinedQueryState } from "../../utils/query";
 import ApplicationData from "../ApplicationData";
+import ContactLink from "../../components/ContactLink";
+import LoadingWrapper from "../../components/LoadingWrapper";
+import OverlayCenterAlert from "../../components/OverlayCenterAlert";
+import PageBodyContainer from "../PageBodyContainer";
 
 interface ApplicationProps {
   children: ReactNode;

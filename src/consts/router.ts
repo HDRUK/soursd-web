@@ -1,4 +1,4 @@
-import { RoutePermissions, Routes } from "@/types/router";
+import { RoutePermissions, Routes } from "../../types/router";
 import { UserGroup } from "./user";
 
 const PROTECTED_ROUTES: RoutePermissions[] = [];

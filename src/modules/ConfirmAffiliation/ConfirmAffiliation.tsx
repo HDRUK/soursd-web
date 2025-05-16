@@ -1,17 +1,17 @@
-import ActionsPanel from "@/components/ActionsPanel";
-import { RejectIcon, VerifyIcon } from "@/consts/icons";
+import { useStore } from "@/data/store";
 import { mockedPendingAffiliations } from "@/mocks/data/cms";
 import { Box, Button } from "@mui/material";
-import { useTranslations } from "next-intl";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import {
-  putRegistryHasAffiliationQuery,
-  getAffiliationsQuery,
-} from "@/services/affiliations";
-import { AffiliationStatus } from "@/services/affiliations/types";
-import { useStore } from "@/data/store";
+import { useTranslations } from "next-intl";
 import { useMemo } from "react";
-import useQueryAlerts from "@/hooks/useQueryAlerts";
+import { RejectIcon, VerifyIcon } from "../../consts/icons";
+import useQueryAlerts from "../../hooks/useQueryAlerts";
+import {
+  getAffiliationsQuery,
+  putRegistryHasAffiliationQuery,
+} from "../../services/affiliations";
+import { AffiliationStatus } from "../../services/affiliations/types";
+import ActionsPanel from "../../components/ActionsPanel";
 
 const NAMESPACE_TRANSLATION = "ConfirmAffiliation";
 

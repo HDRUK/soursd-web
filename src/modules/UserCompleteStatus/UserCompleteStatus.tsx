@@ -1,7 +1,7 @@
 "use client";
 
-import Text from "@/components/Text";
-import { User } from "@/types/application";
+import Text from "../../components/Text";
+import { User } from "../../types/application";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import ErrorIcon from "@mui/icons-material/Error";
 import { Tooltip } from "@mui/material";

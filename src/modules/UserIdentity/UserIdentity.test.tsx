@@ -3,7 +3,7 @@ import {
   render,
   screen,
   waitFor,
-} from "@/utils/testUtils";
+} from "../../utils/testUtils";
 import UserIdentity from "./UserIdentity";
 
 jest.mock("@/data/store", () => ({

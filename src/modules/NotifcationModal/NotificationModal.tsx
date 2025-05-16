@@ -27,10 +27,10 @@ import {
 import CheckIcon from "@mui/icons-material/Check";
 import PendingIcon from "@mui/icons-material/Pending";
 import MarkEmailUnreadIcon from "@mui/icons-material/MarkEmailUnread";
-import { Notification } from "@/types/notifications";
-import { formatDBDate } from "@/utils/date";
-import { toTitleCase } from "@/utils/string";
-import { formatNotificationType } from "@/utils/notifications";
+import { Notification } from "../../types/notifications";
+import { formatDBDate } from "../../utils/date";
+import { toTitleCase } from "../../utils/string";
+import { formatNotificationType } from "../../utils/notifications";
 import { useTranslations } from "next-intl";
 import usePatchReadRequest from "../NotificationsMenu/hooks/usePatchReadRequest";
 

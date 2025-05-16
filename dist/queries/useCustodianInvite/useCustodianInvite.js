@@ -59,7 +59,7 @@ var __rest = (this && this.__rest) || function (s, e) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = useCustodianInvite;
-var custodians_1 = require("@/services/custodians");
+var custodians_1 = require("../../services/custodians");
 var query_1 = require("@/utils/query");
 var react_query_1 = require("@tanstack/react-query");
 var react_1 = require("react");

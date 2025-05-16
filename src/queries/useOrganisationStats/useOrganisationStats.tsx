@@ -1,5 +1,5 @@
-import useQueriesCombined from "@/hooks/useQueriesCombined";
-import getOrganisationStats from "@/services/organisations/getOrganisationStats";
+import useQueriesCombined from "../../hooks/useQueriesCombined";
+import getOrganisationStats from "../../services/organisations/getOrganisationStats";
 import { ResponseJson } from "@/types/requests";
 
 export default function useOrganisationStats(organisationId: number) {

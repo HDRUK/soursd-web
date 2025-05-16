@@ -1,13 +1,13 @@
 "use client";
 
-import { FilterIcon } from "@/consts/icons";
-import { SearchDirections } from "@/consts/search";
-import { PaginatedQueryReturn } from "@/hooks/usePaginatedQuery";
-import SearchBar from "@/modules/SearchBar";
-import { ResearcherProject } from "@/types/application";
-import { getSearchSortOrder } from "@/utils/query";
+import { ResearcherProject } from "../../types/application";
 import SortIcon from "@mui/icons-material/Sort";
 import { useTranslations } from "next-intl";
+import { FilterIcon } from "../../consts/icons";
+import { SearchDirections } from "../../consts/search";
+import { PaginatedQueryReturn } from "../../hooks/usePaginatedQuery";
+import { getSearchSortOrder } from "../../utils/query";
+import SearchBar from "../SearchBar";
 import SearchActionMenu from "../SearchActionMenu";
 
 const NAMESPACE_TRANSLATIONS_PROJECTS = "Projects";

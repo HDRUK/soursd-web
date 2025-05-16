@@ -12,7 +12,7 @@ var __assign = (this && this.__assign) || function () {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = useMutationWriteCustodianUser;
-var custodian_users_1 = require("@/services/custodian_users");
+var custodian_users_1 = require("../../services/custodian_users");
 var react_query_1 = require("@tanstack/react-query");
 function useMutationWriteCustodianUser(_a) {
     var user = _a.user, custodian_id = _a.custodianId;

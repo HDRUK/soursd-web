@@ -1,5 +1,5 @@
-import { AccountType } from "@/types/accounts";
-import { User } from "@/types/application";
+import { AccountType } from "../../types/accounts";
+import { User } from "../../types/application";
 
 type MeResponse = User;
 

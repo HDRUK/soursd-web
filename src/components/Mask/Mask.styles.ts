@@ -1,4 +1,4 @@
-import { getAugmentedColor } from "@/utils/theme";
+import { getAugmentedColor } from "../../utils/theme";
 import {
   AugmentedColorPaletteOptions,
   Box,

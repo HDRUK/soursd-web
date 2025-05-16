@@ -26,7 +26,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var jsx_runtime_1 = require("react/jsx-runtime");
-var Pagination_1 = __importDefault(require("@/components/Pagination"));
+var Pagination_1 = __importDefault(require("../Pagination"));
 var material_1 = require("@mui/material");
 var react_table_1 = require("@tanstack/react-table");
 var store_1 = require("@/data/store");

@@ -1,9 +1,9 @@
-import ContactLink from "@/components/ContactLink";
-import InviteUser from "@/modules/InviteUser";
-import useUserInvite from "@/queries/useUserInvite";
-import { showAlert } from "@/utils/showAlert";
 import { useTranslations } from "next-intl";
 import ReactDOMServer from "react-dom/server";
+import ContactLink from "../../components/ContactLink";
+import useUserInvite from "../../queries/useUserInvite";
+import { showAlert } from "../../utils/showAlert";
+import InviteUser from "../InviteUser";
 
 const NAMESPACE_TRANSLATIONS_ORGANISATION = "User";
 

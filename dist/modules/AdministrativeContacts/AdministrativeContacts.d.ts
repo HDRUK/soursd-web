@@ -1,4 +1,4 @@
-import { TableProps } from "@/components/Table";
+import { TableProps } from "../components/Table";
 import { CustodianUser } from "@/types/application";
 import { ColumnDef } from "@tanstack/react-table";
 interface AdministrativeContactsProps extends TableProps<CustodianUser> {

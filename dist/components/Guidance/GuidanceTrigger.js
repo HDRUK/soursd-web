@@ -28,7 +28,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = GuidanceTrigger;
 var jsx_runtime_1 = require("react/jsx-runtime");
-var styles_1 = require("@/utils/styles");
+var styles_1 = require("../../utils/styles");
 var KeyboardDoubleArrowDown_1 = __importDefault(require("@mui/icons-material/KeyboardDoubleArrowDown"));
 var KeyboardDoubleArrowLeft_1 = __importDefault(require("@mui/icons-material/KeyboardDoubleArrowLeft"));
 var KeyboardDoubleArrowRight_1 = __importDefault(require("@mui/icons-material/KeyboardDoubleArrowRight"));

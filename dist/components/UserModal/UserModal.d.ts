@@ -1,4 +1,4 @@
-import { FormModalProps } from "@/components/FormModal";
+import { FormModalProps } from "../FormModal";
 import { Organisation } from "@/types/application";
 export interface UserModalProps extends Omit<FormModalProps, "children"> {
     organisation: Organisation;

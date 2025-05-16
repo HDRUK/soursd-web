@@ -1,3 +1,5 @@
+"use client";
+
 import { Box, Button, CollapseProps } from "@mui/material";
 import React, { ReactNode, useState } from "react";
 

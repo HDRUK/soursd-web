@@ -8,7 +8,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
 import { DatePicker, DatePickerProps } from "@mui/x-date-pickers/DatePicker";
 import { useLocale } from "next-intl";
 import { enGB } from "date-fns/locale/en-GB";
-import { FORMAT_DATE_DB } from "@/consts/date";
+import { FORMAT_DATE_DB } from "../../consts/date";
 import dayjs from "dayjs";
 
 export interface DateInputProps

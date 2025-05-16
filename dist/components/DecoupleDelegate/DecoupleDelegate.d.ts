@@ -1,4 +1,4 @@
-import { PatchUserPayload } from "@/services/users";
+import { PatchUserPayload } from "../../services/users";
 import { User } from "@/types/application";
 interface DecoupleUserProps {
     user: User;

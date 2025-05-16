@@ -1,3 +1,5 @@
+"use client";
+
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { IconButton, Menu, MenuList } from "@mui/material";
 import { HTMLAttributes, ReactNode, useState } from "react";

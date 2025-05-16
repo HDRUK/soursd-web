@@ -1,6 +1,6 @@
 import ReactQueryClientProvider from "@/app/[locale]/components/ReactQueryClientProvider";
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
-import messages from "@/config/locales/en.json";
+import messages from "../config/locales/en.json";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AppCacheProvider } from "@mui/material-nextjs/v14-pagesRouter";
 import {

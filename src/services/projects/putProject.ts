@@ -1,4 +1,4 @@
-import { ResponseJson, ResponseOptions } from "@/types/requests";
+import { ResponseJson, ResponseOptions } from "../../types/requests";
 import { handleJsonResponse } from "../requestHelpers";
 import { putRequest } from "../requests";
 import { PutProjectPayload, PutProjectResponse } from "./types";

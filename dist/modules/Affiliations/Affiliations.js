@@ -28,10 +28,10 @@ exports.default = Affiliations;
 var jsx_runtime_1 = require("react/jsx-runtime");
 var react_1 = require("react");
 var next_intl_1 = require("next-intl");
-var ContactLink_1 = __importDefault(require("@/components/ContactLink"));
-var ChipStatus_1 = __importDefault(require("@/components/ChipStatus"));
-var Table_1 = __importDefault(require("@/components/Table"));
-var cells_1 = require("@/utils/cells");
+var ContactLink_1 = __importDefault(require("../components/ContactLink"));
+var ChipStatus_1 = __importDefault(require("../components/ChipStatus"));
+var Table_1 = __importDefault(require("../components/Table"));
+var cells_1 = require("../../utils/cells");
 var NAMESPACE_TRANSLATION_PROFILE = "Profile";
 var NAMESPACE_TRANSLATION_APPLICATION = "Application";
 function Affiliations(_a) {

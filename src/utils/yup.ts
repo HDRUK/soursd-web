@@ -1,4 +1,4 @@
-import yup from "@/config/yup";
+import yup from "../../config/yup";
 import { DefaultValues } from "react-hook-form";
 import { FormConfig } from "@/types/forms";
 

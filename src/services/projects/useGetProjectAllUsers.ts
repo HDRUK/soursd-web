@@ -1,6 +1,6 @@
 import usePaginatedQuery, {
   PaginatedQueryProps,
-} from "@/hooks/usePaginatedQuery";
+} from "../../hooks/usePaginatedQuery";
 import getProjectAllUsers from "./getProjectAllUsers";
 import { ProjectAllUserResponse } from "./types";
 

@@ -6,9 +6,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = ApplicationUser;
 var jsx_runtime_1 = require("react/jsx-runtime");
-var LoadingWrapper_1 = __importDefault(require("@/components/LoadingWrapper"));
+var LoadingWrapper_1 = __importDefault(require("../components/LoadingWrapper"));
 var store_1 = require("@/data/store");
-var getMeQuery_1 = __importDefault(require("@/services/auth/getMeQuery"));
+var getMeQuery_1 = __importDefault(require("../../services/auth/getMeQuery"));
 var react_query_1 = require("@tanstack/react-query");
 var react_1 = require("react");
 function ApplicationUser(_a) {

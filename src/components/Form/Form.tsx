@@ -1,5 +1,7 @@
-import yup from "@/config/yup";
-import { isFieldRequired } from "@/utils/form";
+"use client";
+
+import yup from "../../config/yup";
+import { isFieldRequired } from "../../utils/form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, BoxProps, Grid } from "@mui/material";
 import deepEqual from "deep-equal";

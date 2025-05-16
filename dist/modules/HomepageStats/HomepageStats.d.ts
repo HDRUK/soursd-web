@@ -1,4 +1,4 @@
-import { StatsBoxProps } from "@/components/StatsBox";
+import { StatsBoxProps } from "../components/StatsBox";
 interface HomepageStatsProps {
     statsBoxProps?: StatsBoxProps;
 }

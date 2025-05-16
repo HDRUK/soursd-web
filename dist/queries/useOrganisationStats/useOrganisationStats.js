@@ -4,8 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = useOrganisationStats;
-var useQueriesCombined_1 = __importDefault(require("@/hooks/useQueriesCombined"));
-var getOrganisationStats_1 = __importDefault(require("@/services/organisations/getOrganisationStats"));
+var useQueriesCombined_1 = __importDefault(require("../../hooks/useQueriesCombined"));
+var getOrganisationStats_1 = __importDefault(require("../../services/organisations/getOrganisationStats"));
 function useOrganisationStats(organisationId) {
     var queries = [
         {

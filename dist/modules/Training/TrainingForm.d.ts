@@ -1,4 +1,4 @@
-import { PostTrainingsPayload } from "@/services/trainings/types";
+import { PostTrainingsPayload } from "../../services/trainings/types";
 import { File as ApplicationFile, ResearcherTraining } from "@/types/application";
 export interface TrainingFormValues {
     provider: string;

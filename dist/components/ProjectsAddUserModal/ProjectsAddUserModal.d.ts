@@ -1,4 +1,4 @@
-import { FormModalProps } from "@/components/FormModal";
+import { FormModalProps } from "../FormModal";
 interface ProjectsAddUserModaProps extends Omit<FormModalProps, "children"> {
     request: boolean;
     projectId: number;

@@ -1,7 +1,7 @@
 import {
   patchCustodianUser,
   postCustodianUser,
-} from "@/services/custodian_users";
+} from "../../services/custodian_users";
 import { CustodianUser } from "@/types/application";
 import { useMutation } from "@tanstack/react-query";
 

@@ -1,4 +1,4 @@
-import { ResearcherAccreditation } from "@/types/application";
+import { ResearcherAccreditation } from "../../types/application";
 
 type AccreditationsResponse = ResearcherAccreditation[];
 

@@ -1,4 +1,4 @@
-import { CONTACT_MAIL_ADDRESS } from "@/config/contacts";
+import { CONTACT_MAIL_ADDRESS } from "../../config/contacts";
 import { PropsWithChildren } from "react";
 
 type ContactLinkProps = PropsWithChildren;

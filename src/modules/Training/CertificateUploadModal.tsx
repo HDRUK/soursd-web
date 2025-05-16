@@ -1,8 +1,8 @@
 import React, { ChangeEvent } from "react";
 import { Modal, Typography, Button, Divider } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { FileType } from "@/consts/files";
-import { File as ApplicationFile } from "@/types/application";
+import { FileType } from "../../consts/files";
+import { File as ApplicationFile } from "../../types/application";
 import FileUploadDetails from "../FileUploadDetails/FileUploadDetails";
 import {
   ModalContent,

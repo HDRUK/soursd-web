@@ -1,4 +1,4 @@
-import { MutationState, QueryState } from "@/types/form";
+import { MutationState, QueryState } from "../../types/form";
 import { fireEvent, renderHook, screen, waitFor } from "@/utils/testUtils";
 import useQueryConfirmAlerts from "./useQueryConfirmAlerts";
 

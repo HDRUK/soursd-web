@@ -41,10 +41,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = UserBulkInvite;
 var jsx_runtime_1 = require("react/jsx-runtime");
-var FileLink_1 = __importDefault(require("@/components/FileLink"));
-var files_1 = require("@/consts/files");
-var useFileUpload_1 = __importDefault(require("@/hooks/useFileUpload"));
-var file_1 = require("@/utils/file");
+var FileLink_1 = __importDefault(require("../FileLink"));
+var files_1 = require("../../consts/files");
+var useFileUpload_1 = __importDefault(require("../../hooks/useFileUpload"));
+var file_1 = require("../../utils/file");
 var material_1 = require("@mui/material");
 var react_1 = require("react");
 function UserBulkInvite(_a) {

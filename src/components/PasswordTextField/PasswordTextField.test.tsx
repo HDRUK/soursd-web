@@ -4,7 +4,7 @@ import {
   fireEvent,
   render,
   screen,
-} from "@/utils/testUtils";
+} from "../../utils/testUtils";
 import { FormProvider, useForm } from "react-hook-form";
 import PasswordTextField from ".";
 

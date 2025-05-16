@@ -48,8 +48,8 @@ var __rest = (this && this.__rest) || function (s, e) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = useUserInvite;
-var organisations_1 = require("@/services/organisations");
-var users_1 = require("@/services/users");
+var organisations_1 = require("../../services/organisations");
+var users_1 = require("../../services/users");
 var react_query_1 = require("@tanstack/react-query");
 var react_1 = require("react");
 function useUserInvite(_a) {

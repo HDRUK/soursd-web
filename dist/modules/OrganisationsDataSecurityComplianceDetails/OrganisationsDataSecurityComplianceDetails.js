@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = OrganisationsDataSecurityComplianceDetails;
 var jsx_runtime_1 = require("react/jsx-runtime");
-var files_1 = require("@/services/files");
-var date_1 = require("@/utils/date");
+var files_1 = require("../../services/files");
+var date_1 = require("../../utils/date");
 var material_1 = require("@mui/material");
 var next_intl_1 = require("next-intl");
 var NAMESPACE_TRANSLATION = "Organisations.DataSecurityCompliance";

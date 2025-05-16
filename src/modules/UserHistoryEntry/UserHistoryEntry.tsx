@@ -1,12 +1,12 @@
 "use client";
 
-import { formatDisplayShortDate } from "@/utils/date";
+import { formatDisplayShortDate } from "../../utils/date";
 import { Box, Typography } from "@mui/material";
 import { ReactNode } from "react";
-import { File as AppFile } from "@/types/application";
+import { File as AppFile } from "../../types/application";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { getFileHref } from "@/utils/file";
+import { getFileHref } from "../../utils/file";
 import { StyledCertificationLink } from "./UserHistoryEntry.styles";
 
 interface UserHistoryEntryProps {

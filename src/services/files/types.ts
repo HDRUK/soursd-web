@@ -1,4 +1,4 @@
-import { File } from "@/types/application";
+import { File } from "../../types/application";
 
 type FileResponse = File;
 

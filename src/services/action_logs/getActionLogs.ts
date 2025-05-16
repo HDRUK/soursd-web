@@ -1,5 +1,5 @@
-import { ResponseJson, ResponseOptions } from "@/types/requests";
-import { ActionLog, ActionLogEntity } from "@/types/logs";
+import { ResponseJson, ResponseOptions } from "../../types/requests";
+import { ActionLog, ActionLogEntity } from "../../types/logs";
 import { getRequest } from "../requests";
 import { handleJsonResponse } from "../requestHelpers";
 

@@ -9,9 +9,9 @@ var next_intl_1 = require("next-intl");
 var material_1 = require("@mui/material");
 var Error_1 = __importDefault(require("@mui/icons-material/Error"));
 var store_1 = require("@/data/store");
-var PageBodyContainer_1 = __importDefault(require("@/modules/PageBodyContainer"));
-var PageBody_1 = __importDefault(require("@/modules/PageBody"));
-var Text_1 = __importDefault(require("@/components/Text"));
+var PageBodyContainer_1 = __importDefault(require("../modules/PageBodyContainer"));
+var PageBody_1 = __importDefault(require("../modules/PageBody"));
+var Text_1 = __importDefault(require("../components/Text"));
 var NAMESPACE_TRANSLATION = "Profile";
 function UserIdentity() {
     var _a, _b, _c, _d;

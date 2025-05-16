@@ -1,5 +1,5 @@
 import { Box, Button, Chip } from "@mui/material";
-import { VerifyIcon, RejectIcon } from "@/consts/icons";
+import { VerifyIcon, RejectIcon } from "../../consts/icons";
 import { useTranslations } from "next-intl";
 
 interface ChangeDecisionChipProps {

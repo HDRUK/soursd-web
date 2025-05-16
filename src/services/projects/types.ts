@@ -4,7 +4,7 @@ import {
   ProjectUser,
   ProjectAllUser,
   ProjectDetails,
-} from "@/types/application";
+} from "../../types/application";
 
 type ProjectsResponse = ResearcherProject[];
 

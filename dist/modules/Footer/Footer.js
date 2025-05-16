@@ -28,13 +28,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Footer;
 var jsx_runtime_1 = require("react/jsx-runtime");
-var SoursdLogo_1 = __importDefault(require("@/components/SoursdLogo"));
-var UL_1 = __importDefault(require("@/components/UL"));
+var SoursdLogo_1 = __importDefault(require("../components/SoursdLogo"));
+var UL_1 = __importDefault(require("../components/UL"));
 var routing_1 = require("@/i18n/routing");
 var material_1 = require("@mui/material");
 var next_intl_1 = require("next-intl");
 var image_1 = __importDefault(require("next/image"));
-var contacts_1 = require("@/config/contacts");
+var contacts_1 = require("../../config/contacts");
 var PageCenter_1 = __importDefault(require("../PageCenter"));
 var Footer_styles_1 = require("./Footer.styles");
 var NAMESPACE_TRANSLATIONS_FOOTER = "Footer";

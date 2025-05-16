@@ -1,7 +1,7 @@
-import { SearchDirections } from "@/consts/search";
+import { SearchDirections } from "../../consts/search";
 import usePaginatedQuery, {
   PaginatedQueryProps,
-} from "@/hooks/usePaginatedQuery";
+} from "../../hooks/usePaginatedQuery";
 import getProjectUsers from "./getProjectUsers";
 import { ProjectUsersResponse } from "./types";
 

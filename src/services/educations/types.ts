@@ -1,4 +1,4 @@
-import { ResearcherEducation } from "@/types/application";
+import { ResearcherEducation } from "../../types/application";
 
 type EducationsResponse = ResearcherEducation[];
 

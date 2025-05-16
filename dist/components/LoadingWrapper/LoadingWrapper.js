@@ -16,7 +16,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = LoadingWrapper;
 var jsx_runtime_1 = require("react/jsx-runtime");
-var theme_1 = __importDefault(require("@/theme"));
+var theme_1 = __importDefault(require("../../theme"));
 var material_1 = require("@mui/material");
 var OverlayCenter_1 = __importDefault(require("../OverlayCenter"));
 function LoadingWrapper(_a) {

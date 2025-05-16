@@ -4,8 +4,8 @@ import {
   screen,
   waitFor,
   within,
-} from "@/utils/testUtils";
-import { EntityType } from "@/types/api";
+} from "../../utils/testUtils";
+import { EntityType } from "../../types/api";
 import { mockedProfessionalRegistration, mockedUser } from "@/mocks/data/user";
 import ProfessionalRegistrations from "./ProfessionalRegistrations";
 

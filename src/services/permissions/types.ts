@@ -1,4 +1,4 @@
-import { Permission } from "@/types/application";
+import { Permission } from "../../types/application";
 
 type PermissionResponse = Permission;
 

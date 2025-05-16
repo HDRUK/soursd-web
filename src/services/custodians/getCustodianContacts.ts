@@ -1,5 +1,5 @@
-import { SearchParams } from "@/types/query";
-import { Paged, ResponseJson, ResponseOptions } from "@/types/requests";
+import { SearchParams } from "../../types/query";
+import { Paged, ResponseJson, ResponseOptions } from "../../types/requests";
 import { getSearchQuerystring } from "@/utils/query";
 import { handleJsonResponse } from "../requestHelpers";
 import { getRequest } from "../requests";

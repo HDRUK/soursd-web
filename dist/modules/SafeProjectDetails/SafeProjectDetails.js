@@ -5,9 +5,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = SafeProjectDetails;
 var jsx_runtime_1 = require("react/jsx-runtime");
-var FieldsToText_1 = __importDefault(require("@/components/FieldsToText"));
-var date_1 = require("@/utils/date");
-var form_1 = require("@/utils/form");
+var FieldsToText_1 = __importDefault(require("../components/FieldsToText"));
+var date_1 = require("../../utils/date");
+var form_1 = require("../../utils/form");
 var material_1 = require("@mui/material");
 var NAMESPACE_TRANSLATION = "Projects";
 function SafeProjectDetails(_a) {

@@ -1,7 +1,7 @@
 import ContactLink from "@/components/ContactLink";
 import { postProjectDetailsFromGatewayQuery } from "@/services/project_details";
-import { DataUse } from "@/types/gateway";
-import { ResponseJson } from "@/types/requests";
+import { DataUse } from "../../types/gateway";
+import { ResponseJson } from "../../types/requests";
 import { createDataUseDefaultValues } from "@/utils/form";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";

@@ -1,4 +1,4 @@
-import { MAX_UPLOAD_SIZE_BYTES, FileType } from "@/consts/files";
+import { MAX_UPLOAD_SIZE_BYTES, FileType } from "../../consts/files";
 import {
   act,
   commonAccessibilityTests,
@@ -6,9 +6,9 @@ import {
   userEvent,
   render,
   screen,
-} from "@/utils/testUtils";
+} from "../../utils/testUtils";
 import { faker } from "@faker-js/faker";
-import { capitaliseFirstLetter } from "@/utils/string";
+import { capitaliseFirstLetter } from "../../utils/string";
 import FileUploadDetails, { FileUploadDetailsProps } from "./FileUploadDetails";
 
 const mockOnFileChange = jest.fn();

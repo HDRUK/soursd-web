@@ -1,10 +1,6 @@
-import ActionsPanel, { ActionsPanelProps } from "@/components/ActionsPanel";
-import ActionsPanelItem from "@/components/ActionsPanelItem";
 import { useStore } from "@/data/store";
 import { Link } from "@/i18n/routing";
-import { getActionLogsQuery } from "@/services/action_logs";
-import { ActionLogEntity } from "@/types/logs";
-import { toCamelCase } from "@/utils/string";
+import { ActionLogEntity } from "../../types/logs";
 import CheckIcon from "@mui/icons-material/Check";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Button, List, ListItem, Typography } from "@mui/material";
@@ -13,7 +9,11 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import PageBody from "@/modules/PageBody";
+import ActionsPanel, { ActionsPanelProps } from "../../components/ActionsPanel";
+import ActionsPanelItem from "../../components/ActionsPanelItem";
+import PageBody from "../PageBody";
+import { getActionLogsQuery } from "../../services/action_logs";
+import { toCamelCase } from "../../utils/string";
 import generateActions, { ActionConfig } from "./utils";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ActionLogs";

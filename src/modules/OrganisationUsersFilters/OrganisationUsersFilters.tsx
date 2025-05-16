@@ -1,9 +1,11 @@
-import { PaginatedQueryReturn } from "@/hooks/usePaginatedQuery";
-import SearchBar from "@/modules/SearchBar";
-import { User } from "@/types/application";
+"use client";
+
+import { User } from "../../types/application";
 import { Box, Checkbox, FormControlLabel } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { PaginatedQueryReturn } from "../../hooks/usePaginatedQuery";
+import SearchBar from "../SearchBar";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
 

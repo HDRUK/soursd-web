@@ -1,4 +1,4 @@
-import { Paged, ResponseJson, ResponseOptions } from "@/types/requests";
+import { Paged, ResponseJson, ResponseOptions } from "../../types/requests";
 import { getSearchQuerystring } from "@/utils/query";
 import { handleJsonResponse } from "../requestHelpers";
 import { getRequest } from "../requests";

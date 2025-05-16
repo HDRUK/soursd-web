@@ -1,4 +1,4 @@
-import { ProjectRole } from "@/types/application";
+import { ProjectRole } from "../../types/application";
 
 type GetProjectRolesResponse = ProjectRole[];
 

@@ -1,4 +1,4 @@
-import { ResponsiveProps } from "@/hooks/useResponsiveProps";
+import { ResponsiveProps } from "../../hooks/useResponsiveProps";
 import { BoxProps } from "@mui/material";
 import { ReactNode } from "react";
 export interface ULBaseProps extends BoxProps {

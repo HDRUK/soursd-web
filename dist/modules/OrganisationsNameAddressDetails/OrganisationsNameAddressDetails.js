@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = OrganisationsNameAddressDetails;
 var jsx_runtime_1 = require("react/jsx-runtime");
-var FieldsToText_1 = __importDefault(require("@/components/FieldsToText"));
+var FieldsToText_1 = __importDefault(require("../components/FieldsToText"));
 var material_1 = require("@mui/material");
 var SubsidiariesTable_1 = __importDefault(require("../SubsidiariesTable"));
 var NAMESPACE_TRANSLATION = "Organisations";

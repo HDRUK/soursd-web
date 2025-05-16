@@ -28,8 +28,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = FileUploadDetails;
 var jsx_runtime_1 = require("react/jsx-runtime");
-var FileLink_1 = __importDefault(require("@/components/FileLink"));
-var files_1 = require("@/consts/files");
+var FileLink_1 = __importDefault(require("../components/FileLink"));
+var files_1 = require("../../consts/files");
 var next_intl_1 = require("next-intl");
 function FileUploadDetails(_a) {
     var _b = _a.fileType, fileType = _b === void 0 ? files_1.FileType.CV : _b, fileLinkProps = __rest(_a, ["fileType"]);

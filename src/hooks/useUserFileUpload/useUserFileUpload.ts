@@ -1,6 +1,6 @@
 import { FileType } from "@/consts/files";
-import { EntityType } from "@/types/api";
-import { File, User } from "@/types/application";
+import { EntityType } from "../../types/api";
+import { File, User } from "../../types/application";
 import { getFileFromEvent, resetFileFromEvent } from "@/utils/file";
 import { ChangeEvent, useCallback } from "react";
 

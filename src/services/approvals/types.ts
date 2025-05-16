@@ -1,4 +1,4 @@
-import { EntityType } from "@/types/api";
+import { EntityType } from "../../types/api";
 
 interface Approval {
   custodian_id: number;

@@ -1,4 +1,4 @@
-import { PostUserInvitePayload } from "@/services/users";
+import { PostUserInvitePayload } from "../../services/users";
 import { MutationState } from "@/types/form";
 export interface InviteUserFormProps {
     onSubmit: (user: PostUserInvitePayload) => void;

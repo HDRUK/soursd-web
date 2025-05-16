@@ -59,7 +59,7 @@ var __rest = (this && this.__rest) || function (s, e) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = useMutateProjectDetails;
-var project_details_1 = require("@/services/project_details");
+var project_details_1 = require("../../services/project_details");
 var react_query_1 = require("@tanstack/react-query");
 var react_1 = require("react");
 function useMutateProjectDetails(projectId, callbacks) {

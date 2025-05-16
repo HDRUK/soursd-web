@@ -1,4 +1,4 @@
-import { ResponseMessageType } from "@/consts/requests";
+import { ResponseMessageType } from "../../consts/requests";
 import { faker } from "@faker-js/faker";
 import {
   deleteRequest,

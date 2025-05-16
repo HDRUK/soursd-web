@@ -1,4 +1,6 @@
-import useDebounce from "@/hooks/useDebounce";
+"use client";
+
+import useDebounce from "../../hooks/useDebounce";
 import ClearIcon from "@mui/icons-material/Clear";
 import SearchIcon from "@mui/icons-material/Search";
 import { InputAdornment } from "@mui/material";

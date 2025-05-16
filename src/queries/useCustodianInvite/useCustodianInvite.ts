@@ -2,7 +2,7 @@ import {
   postCustodianInviteQuery,
   PostCustodianPayload,
   postCustodianQuery,
-} from "@/services/custodians";
+} from "../../services/custodians";
 import { MutationState } from "@/types/form";
 import { getCombinedQueryState } from "@/utils/query";
 import { useMutation } from "@tanstack/react-query";

@@ -1,4 +1,4 @@
-import { ProjectEntities } from "@/services/projects/getEntityProjects";
+import { ProjectEntities } from "../../services/projects/getEntityProjects";
 interface ProjectsProps {
     variant: ProjectEntities;
     entityId?: number;

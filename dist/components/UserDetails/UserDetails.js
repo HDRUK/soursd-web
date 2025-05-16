@@ -28,7 +28,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = UserDetails;
 var jsx_runtime_1 = require("react/jsx-runtime");
 var material_1 = require("@mui/material");
-var application_1 = require("@/utils/application");
+var application_1 = require("../../utils/application");
 var MaskLabel_1 = __importDefault(require("../MaskLabel"));
 function UserDetails(_a) {
     var user = _a.user, restProps = __rest(_a, ["user"]);

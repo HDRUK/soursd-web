@@ -1,6 +1,6 @@
 import { useStore } from "@/data/store";
 import { mockedUser } from "@/mocks/data/user";
-import { postTrainings } from "@/services/trainings";
+import { postTrainings } from "../../services/trainings";
 import {
   act,
   commonAccessibilityTests,
@@ -8,12 +8,12 @@ import {
   render,
   screen,
   waitFor,
-} from "@/utils/testUtils";
+} from "../../utils/testUtils";
 import { faker } from "@faker-js/faker";
 import { mock200Json } from "jest.utils";
 import TrainingForm from "./TrainingForm";
 
-jest.mock("@/services/trainings");
+jest.mock("../../services/trainings");
 
 const mockSetUser = jest.fn();
 

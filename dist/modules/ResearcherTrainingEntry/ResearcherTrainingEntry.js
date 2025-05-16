@@ -5,8 +5,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = ResearcherTrainingEntry;
 var jsx_runtime_1 = require("react/jsx-runtime");
-var Text_1 = __importDefault(require("@/components/Text"));
-var date_1 = require("@/utils/date");
+var Text_1 = __importDefault(require("../components/Text"));
+var date_1 = require("../../utils/date");
 var Schedule_1 = __importDefault(require("@mui/icons-material/Schedule"));
 var material_1 = require("@mui/material");
 var next_intl_1 = require("next-intl");

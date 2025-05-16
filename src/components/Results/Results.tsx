@@ -1,4 +1,4 @@
-import { QueryState } from "@/types/form";
+import { QueryState } from "../../types/form";
 import { Box, BoxProps } from "@mui/material";
 import { ReactNode } from "react";
 import LoadingWrapper from "../LoadingWrapper";

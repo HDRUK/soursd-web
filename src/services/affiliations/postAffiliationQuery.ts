@@ -1,4 +1,4 @@
-import { User } from "@/types/application";
+import { User } from "../../types/application";
 import postAffiliation from "./postAffiliation";
 import { PostAffiliationPayload } from "./types";
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { ROUTES } from "@/consts/router";
+import { ROUTES } from "../../consts/router";
 import { useStore } from "@/data/store";
 import { usePathname } from "@/i18n/routing";
 import {
@@ -17,8 +17,8 @@ import {
   Sector,
   SystemConfig,
   User,
-} from "@/types/application";
-import { parseSystemConfig } from "@/utils/application";
+} from "../../types/application";
+import { parseSystemConfig } from "../../utils/application";
 import { ReactNode, useEffect } from "react";
 
 interface ApplicationDataProps {

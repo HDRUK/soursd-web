@@ -1,4 +1,4 @@
-import { getInitials } from "@/utils/application";
+import { getInitials } from "../../utils/application";
 import { Box, Paper, PaperProps, Typography } from "@mui/material";
 import { ReactNode } from "react";
 import ChipStatus, { Status } from "../ChipStatus";

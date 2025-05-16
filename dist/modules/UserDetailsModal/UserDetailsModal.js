@@ -5,11 +5,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = UserDetailsModal;
 var jsx_runtime_1 = require("react/jsx-runtime");
-var FormModal_1 = __importDefault(require("@/components/FormModal"));
-var Message_1 = require("@/components/Message");
-var ResearcherDetails_1 = __importDefault(require("@/modules/ResearcherDetails"));
-var useQueriesHistories_1 = __importDefault(require("@/queries/useQueriesHistories"));
-var users_1 = require("@/services/users");
+var FormModal_1 = __importDefault(require("../components/FormModal"));
+var Message_1 = require("../components/Message");
+var ResearcherDetails_1 = __importDefault(require("../modules/ResearcherDetails"));
+var useQueriesHistories_1 = __importDefault(require("../../queries/useQueriesHistories"));
+var users_1 = require("../../services/users");
 var react_query_1 = require("@tanstack/react-query");
 var next_intl_1 = require("next-intl");
 var NAMESPACE_TRANSLATIONS_DETAILS = "ResearcherDetails";

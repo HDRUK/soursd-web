@@ -1,5 +1,5 @@
-import { EntityType } from "@/types/api";
-import { ResponseJson, ResponseOptions } from "@/types/requests";
+import { EntityType } from "../../types/api";
+import { ResponseJson, ResponseOptions } from "../../types/requests";
 import { deleteRequest } from "../requests";
 import { handleJsonResponse } from "../requestHelpers";
 import { DeleteApprovalPayload } from "./types";

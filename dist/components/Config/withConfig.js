@@ -13,7 +13,7 @@ var __assign = (this && this.__assign) || function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = withConfig;
 var jsx_runtime_1 = require("react/jsx-runtime");
-var router_1 = require("@/consts/router");
+var router_1 = require("../../consts/router");
 function withConfig(WrappedComponent) {
     return function (props) {
         return ((0, jsx_runtime_1.jsx)(WrappedComponent, __assign({}, props, { config: { routes: router_1.ROUTES } })));

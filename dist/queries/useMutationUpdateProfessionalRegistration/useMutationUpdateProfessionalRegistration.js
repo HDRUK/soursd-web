@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = useMutationUpdateProfessionalRegistration;
-var professional_registrations_1 = require("@/services/professional_registrations");
+var professional_registrations_1 = require("../../services/professional_registrations");
 var react_query_1 = require("@tanstack/react-query");
 function useMutationUpdateProfessionalRegistration(registryId) {
     return (0, react_query_1.useMutation)({

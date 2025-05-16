@@ -1,4 +1,4 @@
-import { FileUploadState } from "@/hooks/useFileUpload";
+import { FileUploadState } from "../../hooks/useFileUpload";
 import { ChangeEventHandler, ReactNode } from "react";
 export interface FileLinkProps extends FileUploadState {
     fileButtonText: ReactNode;

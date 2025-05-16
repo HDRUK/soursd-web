@@ -9,7 +9,7 @@ var jsx_runtime_1 = require("react/jsx-runtime");
 var icons_material_1 = require("@mui/icons-material");
 var material_1 = require("@mui/material");
 var next_intl_1 = require("next-intl");
-var SoursdLogo_1 = __importDefault(require("@/components/SoursdLogo"));
+var SoursdLogo_1 = __importDefault(require("../SoursdLogo"));
 var ButtonSave_1 = __importDefault(require("../ButtonSave"));
 var NAMESPACE_TRANSLATION_PROFILE = "Profile";
 function ProfileNavigationFooter(_a) {

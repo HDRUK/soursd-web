@@ -1,7 +1,7 @@
-import { ResponseMessageType } from "@/consts/requests";
-import { ResponseEmptyError } from "@/types/query";
-import { ResponseJson, ResponseOptions } from "@/types/requests";
-import { getAccessToken } from "@/utils/auth";
+import { ResponseMessageType } from "../consts/requests";
+import { ResponseEmptyError } from "../types/query";
+import { ResponseJson, ResponseOptions } from "../types/requests";
+import { getAccessToken } from "../utils/auth";
 
 async function getHeadersWithAuthorization(headers?: HeadersInit) {
   const accessToken = await getAccessToken();

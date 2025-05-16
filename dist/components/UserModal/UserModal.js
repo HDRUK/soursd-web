@@ -27,8 +27,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = UsersModal;
 var jsx_runtime_1 = require("react/jsx-runtime");
-var FormModal_1 = __importDefault(require("@/components/FormModal"));
-var SendInviteUser_1 = __importDefault(require("@/modules/SendInviteUser"));
+var FormModal_1 = __importDefault(require("../FormModal"));
+var SendInviteUser_1 = __importDefault(require("../modules/SendInviteUser"));
 var react_query_1 = require("@tanstack/react-query");
 var next_intl_1 = require("next-intl");
 var react_1 = require("react");

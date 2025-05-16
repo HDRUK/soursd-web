@@ -1,5 +1,5 @@
-import { ShowAlert, ShowAlertOptions } from "@/types/common";
-import { MutationState, QueryState } from "@/types/form";
+import { ShowAlert, ShowAlertOptions } from "../../types/common";
+import { MutationState, QueryState } from "../../types/form";
 import { showAlert } from "@/utils/showAlert";
 import { useTranslations } from "next-intl";
 import { useCallback, useRef, useState } from "react";

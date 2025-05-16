@@ -1,8 +1,8 @@
-import FieldsToText from "@/components/FieldsToText";
-import { ResearcherProject } from "@/types/application";
-import { formatDisplayLongDate } from "@/utils/date";
-import { createProjectDefaultValues } from "@/utils/form";
+import { ResearcherProject } from "../../types/application";
 import { Typography } from "@mui/material";
+import { formatDisplayLongDate } from "../../utils/date";
+import { createProjectDefaultValues } from "../../utils/form";
+import FieldsToText from "../../components/FieldsToText";
 
 interface SafeProjectDetailsProps {
   projectData: ResearcherProject;

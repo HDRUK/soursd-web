@@ -1,4 +1,4 @@
-import yup from "@/config/yup";
+import yup from "../../config/yup";
 import { BoxProps } from "@mui/material";
 import { HTMLAttributes, ReactNode } from "react";
 import { DefaultValues, FieldValues, UseFormReturn } from "react-hook-form";

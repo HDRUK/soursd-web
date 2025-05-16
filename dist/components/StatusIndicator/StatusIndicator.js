@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var jsx_runtime_1 = require("react/jsx-runtime");
 var material_1 = require("@mui/material");
-var theme_1 = require("@/config/theme");
+var theme_1 = require("../../config/theme");
 var StatusIndicator = function (_a) {
     var _b = _a.variant, variant = _b === void 0 ? "success" : _b, _c = _a.size, size = _c === void 0 ? "medium" : _c, _d = _a.label, label = _d === void 0 ? "" : _d;
     var colors = {

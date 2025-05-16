@@ -1,4 +1,4 @@
-import { PostCustodianPayload } from "@/services/custodians";
+import { PostCustodianPayload } from "../../services/custodians";
 import { MutationState } from "@/types/form";
 export interface InviteCustodianFormProps {
     onSubmit: (custodian: PostCustodianPayload) => void;

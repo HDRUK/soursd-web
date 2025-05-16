@@ -1,4 +1,4 @@
-import { ResearcherEndorsement } from "@/types/application";
+import { ResearcherEndorsement } from "../../types/application";
 import { Typography } from "@mui/material";
 
 interface ResearcherEndorsementEntryProps {

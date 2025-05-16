@@ -1,7 +1,7 @@
 import React from "react";
 import { Meta, StoryObj } from "@storybook/react";
 import { useForm } from "react-hook-form";
-import { AddressFields } from "@/types/application";
+import { AddressFields } from "../../types/application";
 import GoogleAutocomplete, {
   GoogleAutocompleteProps,
 } from "./GoogleAutocomplete";

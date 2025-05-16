@@ -1,4 +1,4 @@
-import { ResponseJson, ResponseOptions } from "@/types/requests";
+import { ResponseJson, ResponseOptions } from "../../types/requests";
 import { postRequest } from "../requests";
 import { handleResponseError } from "../requestHelpers";
 import { FileResponse, FilePayload } from "./types";

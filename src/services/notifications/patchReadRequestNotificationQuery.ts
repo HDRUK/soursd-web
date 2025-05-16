@@ -1,4 +1,4 @@
-import { ResponseOptions } from "@/types/requests";
+import { ResponseOptions } from "../../types/requests";
 import { handleJsonResponse } from "../requestHelpers";
 import { patchRequest } from "../requests";
 

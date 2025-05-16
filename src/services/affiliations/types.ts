@@ -1,4 +1,4 @@
-import { ResearcherAffiliation } from "@/types/application";
+import { ResearcherAffiliation } from "../../types/application";
 
 type GetAffiliationsResponse = ResearcherAffiliation[];
 type PostAffiliationsResponse = ResearcherAffiliation;
