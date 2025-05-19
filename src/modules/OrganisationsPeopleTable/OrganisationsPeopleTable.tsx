@@ -1,5 +1,6 @@
 import ChipStatus from "@/components/ChipStatus";
 import Table from "@/components/Table";
+import useColumns from "@/hooks/useColumns";
 import { User } from "@/types/application";
 import { ModuleTables } from "@/types/modules";
 import { RouteConfig } from "@/types/router";
@@ -27,28 +28,23 @@ export default function OrganisationsPeopleTable({
   includeColumns = ["name", "affiliationEmail", "affiliationStatus"],
   ...restProps
 }: OrganisationsPeopleTableProps) {
+  const { createDefaultColumn } = useColumns<User>({ t });
+
   const columns = useMemo(() => {
     const initialColumns: ColumnDef<User>[] = [
-      {
-        id: "name",
-        accessorKey: "name",
-        header: t("name"),
+      createDefaultColumn("name", {
         cell: info => renderUserNameCell(info.row.original, routes?.name?.path),
-      },
-      {
-        id: "affiliationEmail",
+      }),
+      createDefaultColumn("affiliationEmail", {
         accessorKey: "registry.affiliations",
-        header: t("affiliationEmail"),
         cell: info => info.getValue()?.[0]?.email,
-      },
-      {
-        id: "affiliationStatus",
+      }),
+      createDefaultColumn("affiliationStatus", {
         accessorKey: "registry.affiliations",
-        header: t("affiliationStatus"),
         cell: info => (
           <ChipStatus status={info.getValue()?.[0]?.registryAffiliationState} />
         ),
-      },
+      }),
     ];
 
     return filterColumns(initialColumns, includeColumns, extraColumns || []);
