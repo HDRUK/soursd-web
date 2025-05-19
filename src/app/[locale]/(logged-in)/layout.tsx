@@ -1,7 +1,7 @@
 import { UserGroup } from "@/consts/user";
 import useApplicationRedirects from "@/hooks/useApplicationRedirects";
 import { PageContainer } from "@/modules";
-import Application from "@/modules/Application";
+import Application from "@/organisms/Application";
 import { getMe } from "@/services/auth";
 import { getCustodianUser } from "@/services/custodian_users";
 import { User } from "@/types/application";

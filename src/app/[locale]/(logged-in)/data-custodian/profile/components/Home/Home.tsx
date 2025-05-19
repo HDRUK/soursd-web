@@ -9,7 +9,7 @@ import {
   PageColumns,
   PageSection,
 } from "@/modules";
-import ActionLogs from "@/modules/ActionLogs";
+import ActionLogs from "@/organisms/ActionLogs";
 import { Custodian } from "@/types/application";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";

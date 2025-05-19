@@ -1,12 +1,12 @@
 import React from "react";
+import { ColumnDef } from "@tanstack/react-table";
 import {
   commonAccessibilityTests,
   render,
   screen,
   fireEvent,
-} from "@/utils/testUtils";
-import Table from "@/components/Table";
-import { ColumnDef } from "@tanstack/react-table";
+} from "../../utils/testUtils";
+import Table from ".";
 
 interface TestData {
   id: number;

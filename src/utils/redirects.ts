@@ -1,8 +1,8 @@
-import { ROUTES } from "@/consts/router";
-import { getRefreshAccessToken, postRegister } from "@/services/auth";
-import { User } from "@/types/application";
-import { Routes } from "@/types/router";
 import Cookies from "js-cookie";
+import { ROUTES } from "../consts/router";
+import { getRefreshAccessToken, postRegister } from "../services/auth";
+import { User } from "../types/application";
+import { Routes } from "../types/router";
 import { getLoginUrl, getRegisterUrl } from "./keycloak";
 import { capitaliseFirstLetter } from "./string";
 

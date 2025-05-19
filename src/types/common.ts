@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import { SweetAlertResult } from "sweetalert2";
 
 export type ArrayElement<ArrayType extends readonly unknown[]> =
@@ -22,5 +23,9 @@ export interface ShowAlertOptions {
   preDeny?: () => void | undefined;
   untilDuration?: number;
 }
+
+export type ModuleWithTranslations<T> = T & {
+  t?: (key: string) => ReactNode;
+};
 
 export type ShowAlert = Promise<SweetAlertResult> | null;

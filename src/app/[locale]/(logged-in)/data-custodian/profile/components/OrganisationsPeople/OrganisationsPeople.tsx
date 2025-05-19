@@ -1,7 +1,8 @@
 "use client";
 
 import { useStore } from "@/data/store";
-import { OrganisationsPeopleTable, PageBody, PageSection } from "@/modules";
+import { PageBody, PageSection } from "@/modules";
+import { OrganisationsPeopleTable } from "@/organisms";
 import { usePaginatedCustodianOrganisationUsers } from "@/services/custodians";
 
 export default function OrganisationsPeople() {

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { List, Typography, Box } from "@mui/material";
-import { Rule } from "@/types/rules";
+import { Rule } from "../../types/rules";
 import FormControlCheckbox from "../FormControlCheckbox";
 import { StyledListItem, StyledListItemText } from "./CheckboxList.styles";
 import SkeletonCheckboxList from "./Skeleton";

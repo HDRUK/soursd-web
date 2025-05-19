@@ -3,17 +3,17 @@
 import { useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { CellContext, ColumnDef } from "@tanstack/react-table";
-import ContactLink from "@/components/ContactLink";
-import ChipStatus, { Status } from "@/components/ChipStatus";
-import Table from "@/components/Table";
 import { StoreUserHistories } from "@/data/store";
-import { ResearcherAffiliation } from "@/types/application";
+import ContactLink from "../../components/ContactLink";
+import ChipStatus, { Status } from "../../components/ChipStatus";
+import Table from "../../components/Table";
+import { ResearcherAffiliation } from "../../types/application";
 import {
   renderAffiliationDateRangeCell,
   renderOrganisationsNameCell,
   renderWarningCell,
-} from "@/utils/cells";
-import { PaginatedQueryHelpers } from "@/hooks/usePaginatedQuery";
+} from "../../utils/cells";
+import { PaginatedQueryHelpers } from "../../hooks/usePaginatedQuery";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";

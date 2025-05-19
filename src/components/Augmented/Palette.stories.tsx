@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { PALETTE_THEME_PURPLE_BLUE } from "@/config/theme";
 import {
   AugmentedColorPaletteOptions,
   Box,
@@ -9,6 +8,7 @@ import {
   SimplePaletteColorOptions,
   Typography,
 } from "@mui/material";
+import { PALETTE_THEME_PURPLE_BLUE } from "../../config/theme";
 
 const meta = {
   title: "Palette",

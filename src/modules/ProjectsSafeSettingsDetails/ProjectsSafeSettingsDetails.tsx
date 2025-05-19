@@ -1,8 +1,8 @@
-import FieldsToText from "@/components/FieldsToText";
-import { Message } from "@/components/Message";
-import { ProjectDetails } from "@/types/application";
-import { createProjectDetailDefaultValues } from "@/utils/form";
 import { useTranslations } from "next-intl";
+import FieldsToText from "../../components/FieldsToText";
+import { Message } from "../../components/Message";
+import { ProjectDetails } from "../../types/application";
+import { createProjectDetailDefaultValues } from "../../utils/form";
 
 interface ProjectsSafeSettingsDetailsProps {
   projectDetailsData: ProjectDetails;
