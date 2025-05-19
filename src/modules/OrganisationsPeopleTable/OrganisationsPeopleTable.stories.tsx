@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { mockedUser } from "@/mocks/data/user";
+import { useTranslations } from "next-intl";
+import { mockedPaginationResults } from "@/mocks/data/requests";
 import OrganisationsPeopleTable, {
   OrganisationsPeopleTableProps,
 } from "./OrganisationsPeopleTable";
-import { useTranslations } from "next-intl";
-import { mockedPaginationResults } from "@/mocks/data/requests";
 
 const meta = {
   title: "modules/OrganisationsPeopleTable",
