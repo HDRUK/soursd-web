@@ -572,6 +572,7 @@
     "endDateRequiredInvalid": "End date is required",
     "webhookEventAriaLabel": "Webhook Event Trigger",
     "webhookRequiredInvalid": "Webhook event trigger is required",
+    "duplicateWebhookError": "Duplicate webhooks detected! Your webhook receiver URLs should be unique.",
     "addSubsidiary": "Add a subsidiary",
     "subsidiaryName": "Subsidiary name",
     "subsidiaryNamePlaceholder": "Subsidiary name",
@@ -876,6 +877,7 @@
     "locationDescription": "Some data custodians need to know the country that you will be accessing data from as different countries adhere to different laws regarding data sharing and data confidentiality.",
     "location": "Location",
     "locationMissing": "Location not provided",
+    "digiIdent": "Digital identifier",
     "idvtCheckSection": "Identification Verification Technology (IDVT)",
     "idvtCheckButton": "Start IDVT check",
     "idvtCheckDescription": "Not all Data Custodians require this check to be completed. Those Data Custodians that do, can request that this check is completed prior to project approval. To work across the breadth of UK Data Custodians, we recommend that you complete this check as it may streamline approval processes. \n\nIDVT checks are carried out by a 3rd party supplier against the following criteria: valid government issued identification (fraud), likeness check against ID (identity), liveness check (identity), sanctions check (anti money laundering). Please note neither SOURSD nor the 3rd party supplier store a copy of your identity documents",
@@ -902,7 +904,8 @@
     "reinviteOrganisation": "Resend invitiation",
     "missingOrcIdMessage": "There’s some missing information from your ORCID that we need you to complete",
     "affiliationOrganisationWarningMessage": "Please complete this field as we couldn’t match the information. Sometimes the identifier of an Organisation within an ORCID profile does not exactly match the identifier of an Organisation registered within SOURSD therefore please select an Organisation from the dropdown box. If the Organisation is not listed, please <link> invite them here </link>",
-    "affiliationsEmailWarningMessage": "Please complete this field as we couldn’t match the information."
+    "affiliationsEmailWarningMessage": "Please complete this field as we couldn’t match the information.",
+    "patchOrganisationForbidden": "Your account does not have permissions to perform this update"
   },
   "Training": {
     "title": "Training",
@@ -1210,7 +1213,8 @@
       "datasetLinkageDescription": "For linked datasets, specify how the linkage will take place",
       "dataUseDescription": "Description of the data being used",
       "dataMinimisation": "Approach to data minimisation",
-      "requestFrequency": "Request frequency"
+      "requestFrequency": "Request frequency",
+      "notSet": "Not set"
     },
     "SafeSettings": {
       "noProjectDetails": "Data does not exist for this section yet",
@@ -1508,5 +1512,10 @@
   "SelectValidationActionStatus": {
     "notApproved": "Not approved",
     "approved": "Approved"
+  },
+  "Copyable": {
+    "caption": "Copied to clipboard",
+    "copy": "Copy",
+    "copied": "Copied"
   }
 }

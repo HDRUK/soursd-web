@@ -6,7 +6,9 @@ import {
   MenuItem,
   Select,
   SelectChangeEvent,
+  IconButton,
 } from "@mui/material";
+import ClearIcon from "@mui/icons-material/Clear";
 import { ReactNode, useState } from "react";
 
 export interface Action {
@@ -19,6 +21,7 @@ interface SearchActionMenuProps extends BaseSelectProps<string | string[]> {
   renderedSelectedLabel: string;
   renderedDefaultLabel: string;
   startIcon?: ReactNode;
+  onClear?: () => void;
 }
 
 const SearchActionMenu = ({
@@ -27,6 +30,7 @@ const SearchActionMenu = ({
   startIcon,
   renderedSelectedLabel,
   renderedDefaultLabel,
+  onClear,
   ...restProps
 }: SearchActionMenuProps) => {
   const [values, setValues] = useState<string | string[]>(multiple ? [] : "");
@@ -42,6 +46,23 @@ const SearchActionMenu = ({
         startIcon && (
           <InputAdornment position="start">{startIcon}</InputAdornment>
         )
+      }
+      endAdornment={
+        !multiple && values && onClear ? (
+          <InputAdornment position="end">
+            <IconButton
+              size="small"
+              onClick={e => {
+                e.stopPropagation();
+                onClear();
+                setValues("");
+              }}
+              aria-label="clear selection"
+              tabIndex={-1}>
+              <ClearIcon fontSize="small" />
+            </IconButton>
+          </InputAdornment>
+        ) : null
       }
       multiple={multiple}
       displayEmpty

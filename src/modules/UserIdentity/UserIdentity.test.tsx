@@ -26,6 +26,7 @@ describe("<UserIdentity />", () => {
           first_name: "James",
           last_name: "Dean",
           registry: {
+            digi_ident: "$1234",
             identity: {
               idvt_completed_at: "04-04-2025T09:00:00",
               idvt_result: 1,
@@ -38,6 +39,7 @@ describe("<UserIdentity />", () => {
     render(<UserIdentity />);
     await waitFor(() => {
       expect(screen.getByText("Name")).toBeInTheDocument();
+      expect(screen.getByText("Digital identifier")).toBeInTheDocument();
     });
   });
 
@@ -46,6 +48,9 @@ describe("<UserIdentity />", () => {
       current: {
         user: {
           location: "London, UK",
+          registry: {
+            digi_ident: "$1234",
+          },
         },
       },
     });
@@ -60,6 +65,7 @@ describe("<UserIdentity />", () => {
       current: {
         user: {
           registry: {
+            digi_ident: "$1234",
             identity: {
               idvt_completed_at: "04-04-2025T09:00:02",
               idvt_result: 1,

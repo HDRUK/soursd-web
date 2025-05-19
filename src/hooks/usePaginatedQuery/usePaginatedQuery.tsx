@@ -1,5 +1,6 @@
 "use client";
 
+import { QueryParams } from "@/types/query";
 import { useSearchParams } from "@/i18n/routing";
 import { Paged, ResponseJson } from "@/types/requests";
 import {
@@ -12,15 +13,17 @@ import { useCallback, useEffect, useState } from "react";
 
 const API_SORT_KEY = "sort";
 
-type QueryParams = Record<string, string | number | undefined>;
-
 export interface PaginatedQueryHelpers {
   page: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
   updateQueryParams: (newParams: QueryParams) => void;
   resetQueryParams: (overideParams?: QueryParams) => void;
   handleSortToggle: (field: string, direction: string) => void;
-  handleFieldToggle: (field: string, options: [string, string]) => void;
+  handleFieldToggle: (
+    field: string,
+    options: [string | undefined, string | undefined],
+    isMultiple?: boolean
+  ) => void;
   queryParams: QueryParams;
   setQueryParams: React.Dispatch<React.SetStateAction<QueryParams>>;
 }
@@ -157,15 +160,29 @@ const usePaginatedQuery = <T,>({
   );
 
   const handleFieldToggle = useCallback(
-    (field: string, options: [string, string]) => {
+    (field: string, options: [string, string], isMultiple = false) => {
       const currentValue = queryParams[field];
 
-      const newValue = currentValue === options[0] ? options[1] : options[0];
+      if (isMultiple) {
+        const item = options[0];
+        const currentArray = Array.isArray(currentValue) ? currentValue : [];
 
-      setQueryParams({
-        ...queryParams,
-        [field]: newValue,
-      });
+        const newArray = currentArray.includes(item)
+          ? currentArray.filter(v => v !== item)
+          : [...currentArray, item];
+
+        setQueryParams({
+          ...queryParams,
+          [field]: newArray.length > 0 ? newArray : undefined,
+        });
+      } else {
+        const newValue = currentValue === options[0] ? options[1] : options[0];
+
+        setQueryParams({
+          ...queryParams,
+          [field]: newValue,
+        });
+      }
     },
     [queryParams]
   );
