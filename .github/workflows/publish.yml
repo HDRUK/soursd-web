@@ -1,7 +1,8 @@
 name: Publish
 on:
+  #Temporarily use dev to test task works
   workflow_run:
-    workflows: ["Release workflow"]
+    workflows: ["Build and deploy to DEV"]
     types: [completed]
     branches:
       - "develop"
