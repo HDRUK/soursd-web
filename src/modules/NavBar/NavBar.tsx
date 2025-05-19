@@ -21,6 +21,7 @@ import {
 import { useTranslations } from "next-intl";
 import { LinkProps } from "next/link";
 import { MouseEvent, useEffect, useState } from "react";
+import { CONTACT_MAIL_ADDRESS } from "@/config/contacts";
 import PageCenter from "../PageCenter";
 import { StyledContainer, StyledHeader } from "./NavBar.styles";
 
@@ -71,31 +72,25 @@ export default function NavBar() {
       color: ButtonColor.Inherit,
       variant: ButtonVariant.Text,
       text: t("aboutButton"),
-      href: "#",
+      href: "/about",
     },
     {
       color: ButtonColor.Inherit,
       variant: ButtonVariant.Text,
       text: t("featuresButton"),
-      href: "#",
-    },
-    {
-      color: ButtonColor.Inherit,
-      variant: ButtonVariant.Text,
-      text: t("resourcesButton"),
-      href: "#",
+      href: "/features",
     },
     {
       color: ButtonColor.Inherit,
       variant: ButtonVariant.Text,
       text: t("contactButton"),
-      href: "#",
+      href: `mailto:${CONTACT_MAIL_ADDRESS}`,
     },
     {
       color: ButtonColor.Inherit,
       variant: ButtonVariant.Text,
       text: t("helpButton"),
-      href: "#",
+      href: "/support",
     },
   ];
   const right_buttons: {

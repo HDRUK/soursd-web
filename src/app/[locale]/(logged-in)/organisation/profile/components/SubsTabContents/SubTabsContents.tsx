@@ -5,6 +5,7 @@ import { PageBody } from "@/modules";
 import ProjectsSafePeople from "@/modules/ProjectsSafePeople";
 import { EntityType } from "@/types/api";
 import { notFound } from "next/navigation";
+import OrganisationUsers from "@/modules/OrganisationUsers";
 import {
   DetailsPageSubTabs,
   getSubTabs,
@@ -21,7 +22,6 @@ import ProjectsSafeProject from "../ProjectsSafeProject";
 import ProjectsSafeSettings from "../ProjectsSafeSettings";
 import SectorSizeAndWebsite from "../SectorSizeAndWebsite";
 import SecurityCompliance from "../SecurityCompliance";
-import Users from "../Users";
 import ProjectsSafeOutputs from "../ProjectsSafeOutputs";
 
 interface TabsContentsProps {
@@ -68,7 +68,7 @@ export default function SubTabsContents({
       content = <Delegates />;
       break;
     case UserAdminPageSubTabs.EMPLOYEE_STUDENT_ADMINISTRATION:
-      content = <Users />;
+      content = <OrganisationUsers />;
       break;
     case ProjectsSubTabs.SAFE_PEOPLE:
       content = <ProjectsSafePeople variant={EntityType.ORGANISATION} />;

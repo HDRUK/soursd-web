@@ -1,9 +1,8 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import ReactDOMServer from "react-dom/server";
 import { useTranslations } from "next-intl";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { CellContext } from "@tanstack/react-table";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
@@ -22,17 +21,18 @@ import useQueryAlerts from "@/hooks/useQueryAlerts";
 import { ResearcherAffiliation } from "@/types/application";
 import {
   deleteAffiliationQuery,
-  getAffiliationsQuery,
   patchAffiliationQuery,
   postAffiliationQuery,
+  usePaginatedAffiliations,
 } from "@/services/affiliations";
 import { PostAffiliationPayload } from "@/services/affiliations/types";
 import FormModal from "@/components/FormModal";
 import { ActionMenu, ActionMenuItem } from "@/components/ActionMenu";
 import { Message } from "@/components/Message";
 import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
-import ContactLink from "@/components/ContactLink";
 import { Status } from "@/components/ChipStatus";
+import useQueryConfirmAlerts from "@/hooks/useQueryConfirmAlerts";
+import { renderErrorToString } from "@/utils/translations";
 import AffiliationsForm from "../AffiliationsForm";
 import AskOrganisationModal from "../AskOrganisation";
 
@@ -56,9 +56,12 @@ export default function AffiliationsPage() {
 
   const {
     data: affiliationsData,
+    last_page,
+    total,
+    setPage,
     refetch,
     ...getAffiliationsQueryState
-  } = useQuery(getAffiliationsQuery(user?.registry_id));
+  } = usePaginatedAffiliations(user?.registry_id);
 
   const { mutateAsync: postAffiliations, ...postAffiliationQueryState } =
     useMutation(postAffiliationQuery(user));
@@ -66,7 +69,7 @@ export default function AffiliationsPage() {
   const { mutateAsync: patchAffiliation, ...patchAffiliationQueryState } =
     useMutation(patchAffiliationQuery());
 
-  const { mutateAsync: deleteAffiliation } = useMutation(
+  const { mutateAsync: deleteAffiliation, ...restDeleteState } = useMutation(
     deleteAffiliationQuery()
   );
 
@@ -88,15 +91,27 @@ export default function AffiliationsPage() {
           : tProfile("postAffiliationSuccess"),
       },
       errorAlertProps: {
-        text: ReactDOMServer.renderToString(
-          tProfile.rich("affiliationActionError", {
-            contactLink: ContactLink,
-          })
-        ),
+        text: renderErrorToString(tProfile, "affiliationActionError"),
         confirmButtonText: tProfile("affiliationActionErrorButton"),
       },
     }
   );
+
+  const showConfirmDelete = useQueryConfirmAlerts(restDeleteState, {
+    confirmAlertProps: {
+      text: tProfile("affiliationsDeleteConfirmMessage"),
+      preConfirm: async (id: number) => {
+        await deleteAffiliation(id);
+        refetch();
+      },
+    },
+    successAlertProps: {
+      text: tProfile("affiliationsDeleteSuccessMessage"),
+    },
+    errorAlertProps: {
+      text: renderErrorToString(tProfile, "affiliationsDeleteErrorMessage"),
+    },
+  });
 
   const renderActionMenuCell = useCallback(
     (info: CellContext<ResearcherAffiliation, unknown>) => {
@@ -105,9 +120,7 @@ export default function AffiliationsPage() {
       return (
         <ActionMenu>
           <ActionMenuItem
-            onClick={() =>
-              deleteAffiliation(affiliation.id).then(() => refetch())
-            }
+            onClick={() => showConfirmDelete(affiliation.id)}
             sx={{ color: "error.main" }}
             icon={<DeleteOutlineOutlinedIcon sx={{ color: "error.main" }} />}>
             {tProfile("delete")}
@@ -163,7 +176,7 @@ export default function AffiliationsPage() {
     [selectedAffiliation, postAffiliations, patchAffiliation]
   );
 
-  const orcIdBannerToAppear = affiliationsData?.data.data.some(affiliation => {
+  const orcIdBannerToAppear = affiliationsData?.some(affiliation => {
     return affiliation.organisation_id === null || affiliation.email === null;
   });
 
@@ -213,6 +226,9 @@ export default function AffiliationsPage() {
                 extraColumns={extraColumns}
                 affiliationsData={affiliationsData}
                 getAffiliationsQueryState={getAffiliationsQueryState}
+                last_page={last_page}
+                total={total}
+                setPage={setPage}
               />
             )}
           </PageSection>
@@ -233,9 +249,9 @@ export default function AffiliationsPage() {
             onClose={() => setInviteOpen(false)}
           />
           <ProfileNavigationFooter
-            previousHref={routes.profileResearcherIdentity.path}
-            nextHref={routes.profileResearcherExperience.path}
-            nextStepText={tProfile("experience")}
+            previousHref={routes.profileResearcherExperience.path}
+            nextHref={routes.profileResearcherTraining.path}
+            nextStepText={tProfile("training")}
             isLoading={postAffiliationQueryState.isPending}
           />
         </PageBody>

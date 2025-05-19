@@ -11,7 +11,7 @@ import { CustodianUser } from "@/types/application";
 import { getPermission } from "@/utils/permissions";
 import { getCombinedQueryState } from "@/utils/query";
 import { showAlert } from "@/utils/showAlert";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback } from "react";
 import UserModalDetails, { CustodianUserFields } from "../UsersModalDetails";
@@ -32,7 +32,6 @@ export default function UsersModal({
 }: UserModalProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const permissions = useStore(state => state.config.permissions);
-  const queryClient = useQueryClient();
 
   const { mutateAsync: mutatePostUser, ...updateCustodianUserState } =
     useMutation({
@@ -112,11 +111,6 @@ export default function UsersModal({
         title: user?.id
           ? t("updateSuccessfulTitle")
           : t("createSuccessfulTitle"),
-        willClose: () => {
-          queryClient.refetchQueries({
-            queryKey: ["getCustodianUsers", user?.custodian_id],
-          });
-        },
       });
     },
     [custodianId]

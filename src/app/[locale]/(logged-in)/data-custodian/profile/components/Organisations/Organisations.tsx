@@ -1,164 +1,67 @@
 "use client";
 
-import ContactLink from "@/components/ContactLink";
-import Pagination from "@/components/Pagination";
-import Results from "@/components/Results";
-import { FilterIcon } from "@/consts/icons";
-import { SearchDirections } from "@/consts/search";
-import { PageBody, PageBodyContainer, PageSection } from "@/modules";
-import SearchActionMenu from "@/modules/SearchActionMenu";
-import SearchBar from "@/modules/SearchBar";
+import { useStore } from "@/data/store";
 import {
-  DeleteApprovalPayloadWithEntity,
-  PostApprovalPayloadWithEntity,
-} from "@/services/approvals";
-import { useOrganisationsQuery } from "@/services/organisations";
-import { getCombinedQueryState, getSearchSortOrder } from "@/utils/query";
-import SortIcon from "@mui/icons-material/Sort";
-import { useQueryClient } from "@tanstack/react-query";
+  OrganisationsFilters,
+  OrganisationsProjectsTable,
+  PageBody,
+  PageBodyContainer,
+  PageSection,
+} from "@/modules";
+import { usePaginatedCustodianOrganisations } from "@/services/custodians";
 import { useTranslations } from "next-intl";
-import { useCallback } from "react";
-import { useMutationApproval, useMutationDeleteApproval } from "../../hooks";
-import OrganisationsLegend from "../OrganisationsLegend";
-import OrganisationsList from "../OrganisationsList";
 
-const NAMESPACE_TRANSLATIONS_USERS = "OrganisationsList";
 const NAMESPACE_TRANSLATIONS_PROFILE = "CustodianProfile";
-const NAMESPACE_TRANSLATIONS_APPLICATION = "Application";
 
 export default function Organisations() {
-  const queryClient = useQueryClient();
-  const t = useTranslations(NAMESPACE_TRANSLATIONS_USERS);
   const tProfile = useTranslations(NAMESPACE_TRANSLATIONS_PROFILE);
-  const tApplication = useTranslations(NAMESPACE_TRANSLATIONS_APPLICATION);
+
+  const custodianId = useStore(state => state.getCustodian().id);
 
   const {
     data,
     page,
+    total,
+    last_page,
     setPage,
     updateQueryParams,
     resetQueryParams,
     handleSortToggle,
     handleFieldToggle,
     queryParams,
-    ...queryState
-  } = useOrganisationsQuery();
-
-  const { mutateAsync: mutateUpdateAsync, ...approvingQueryState } =
-    useMutationApproval();
-
-  const { mutateAsync: mutateDeleteAsync, ...deleteQueryState } =
-    useMutationDeleteApproval();
-
-  const handleApprove = useCallback(
-    async (payload: PostApprovalPayloadWithEntity) => {
-      await mutateUpdateAsync(payload);
-
-      queryClient.refetchQueries({
-        queryKey: ["getOrganisations"],
-      });
-    },
-    []
-  );
-
-  const handleUnapprove = useCallback(
-    async (payload: DeleteApprovalPayloadWithEntity) => {
-      await mutateDeleteAsync(payload);
-
-      queryClient.refetchQueries({
-        queryKey: ["getOrganisations"],
-      });
-    },
-    []
-  );
-
-  const sortDirection = getSearchSortOrder(queryParams);
-
-  const sortActions = [
-    {
-      label: t("sortActions.AZ"),
-      onClick: () =>
-        handleSortToggle("organisation_name", SearchDirections.ASC),
-      checked: sortDirection === SearchDirections.ASC,
-    },
-    {
-      label: t("sortActions.ZA"),
-      onClick: () =>
-        handleSortToggle("organisation_name", SearchDirections.DESC),
-      checked: sortDirection === SearchDirections.DESC,
-    },
-  ];
-
-  const filterActions = [
-    {
-      label: t("filterActions.hasDelegates"),
-      onClick: () => handleFieldToggle("has_delegates", ["1", ""]),
-      checked: queryParams.has_delegates === "1",
-    },
-    {
-      label: t("filterActions.hasSoursdId"),
-      onClick: () => handleFieldToggle("has_soursd_id", ["1", ""]),
-      checked: queryParams.has_soursd_id === "1",
-    },
-  ];
-
-  const pagination = (
-    <Pagination
-      page={page}
-      count={queryState.last_page}
-      onChange={(_, page: number) => setPage(page)}
-    />
-  );
+    isLoading,
+    isError,
+    isSuccess,
+  } = usePaginatedCustodianOrganisations(custodianId, {
+    shouldUpdateQuerystring: true,
+  });
 
   return (
     <PageBodyContainer heading={tProfile("organisations")}>
       <PageBody>
         <PageSection>
-          <SearchBar
-            onClear={resetQueryParams}
-            onSearch={(text: string) => {
-              updateQueryParams({
-                "organisation_name[]": text,
-              });
-            }}
-            placeholder={t("searchPlaceholder")}
-            legend={<OrganisationsLegend />}>
-            <SearchActionMenu
-              actions={sortActions}
-              startIcon={<SortIcon />}
-              renderedSelectedLabel={tApplication("sortedBy")}
-              renderedDefaultLabel={tApplication("sortBy")}
-              aria-label={tApplication("sortBy")}
-            />
-            <SearchActionMenu
-              actions={filterActions}
-              startIcon={<FilterIcon />}
-              renderedSelectedLabel={tApplication("filteredBy")}
-              renderedDefaultLabel={tApplication("filterBy")}
-              aria-label={tApplication("filterBy")}
-              multiple
-            />
-          </SearchBar>
+          <OrganisationsFilters
+            queryParams={queryParams}
+            updateQueryParams={updateQueryParams}
+            resetQueryParams={resetQueryParams}
+            handleSortToggle={handleSortToggle}
+            handleFieldToggle={handleFieldToggle}
+          />
         </PageSection>
         <PageSection>
-          <Results
-            queryState={queryState}
-            noResultsMessage={t("noResultsOrganisations")}
-            pagination={pagination}
-            errorMessage={t.rich("errorResultsOrganisations", {
-              contactLink: ContactLink,
-            })}
-            total={queryState.total}>
-            <OrganisationsList
-              onApprove={handleApprove}
-              onUnapprove={handleUnapprove}
-              organisations={data}
-              queryState={getCombinedQueryState([
-                approvingQueryState,
-                deleteQueryState,
-              ])}
-            />
-          </Results>
+          <OrganisationsProjectsTable
+            data={data}
+            total={total}
+            last_page={last_page}
+            page={page}
+            setPage={setPage}
+            queryState={{
+              isLoading,
+              isError,
+              isSuccess,
+            }}
+            isPaginated
+          />
         </PageSection>
       </PageBody>
     </PageBodyContainer>

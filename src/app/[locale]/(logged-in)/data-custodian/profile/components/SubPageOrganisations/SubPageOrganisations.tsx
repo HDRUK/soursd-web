@@ -1,7 +1,16 @@
 import { useStore } from "@/data/store";
-import { PageBodyContainer } from "@/modules";
+import {
+  PageBodyContainer,
+  PageColumnBody,
+  PageColumnDetails,
+  PageColumns,
+} from "@/modules";
 import { Organisation } from "@/types/application";
 import { useEffect } from "react";
+import ActionValidationPanel from "@/modules/ActionValidationPanel";
+import { ActionValidationVariants } from "@/modules/ActionValidationPanel/ActionValidationPanel";
+import { useQuery } from "@tanstack/react-query";
+import { getCustodianOrganisationValidationLogsQuery } from "@/services/validation_logs";
 import { PageTabs, OrganisationsSubTabs } from "../../consts/tabs";
 import SubTabsSections from "../SubTabSections";
 import SubTabsContents from "../SubsTabContents";
@@ -20,7 +29,8 @@ export default function SubPageOrganisations({
 }: PageProps) {
   const tabId = PageTabs.ORGANISATIONS;
 
-  const [organisation, setOrganisation] = useStore(state => [
+  const [custodian, organisation, setOrganisation] = useStore(state => [
+    state.getCustodian(),
     state.getCurrentOrganisation(),
     state.setCurrentOrganisation,
   ]);
@@ -29,11 +39,30 @@ export default function SubPageOrganisations({
     setOrganisation(organisationData);
   }, [organisationData]);
 
+  const { data: validationLogs, ...queryState } = useQuery({
+    ...getCustodianOrganisationValidationLogsQuery(
+      custodian?.id as number,
+      organisation?.id as number
+    ),
+    enabled: !!organisation?.id,
+  });
+
   return (
     organisation && (
       <PageBodyContainer heading={organisation.organisation_name}>
-        <SubTabsSections id={organisation.id} tabId={tabId} {...params} />
-        <SubTabsContents tabId={tabId} {...params} />
+        <PageColumns>
+          <PageColumnBody lg={8}>
+            <SubTabsSections id={organisation.id} tabId={tabId} {...params} />
+            <SubTabsContents tabId={tabId} {...params} />
+          </PageColumnBody>
+          <PageColumnDetails lg={4}>
+            <ActionValidationPanel
+              variant={ActionValidationVariants.Organisation}
+              queryState={queryState}
+              logs={validationLogs?.data || []}
+            />
+          </PageColumnDetails>
+        </PageColumns>
       </PageBodyContainer>
     )
   );

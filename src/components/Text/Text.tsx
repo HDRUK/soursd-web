@@ -1,6 +1,5 @@
 "use client";
 
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { Typography, TypographyProps } from "@mui/material";
 import { ReactNode } from "react";
 import Copyable from "../Copyable";
@@ -40,7 +39,7 @@ export default function Text({
       }}>
       {startIcon}
       {copyable ? <Copyable>{children}</Copyable> : children}
-      {endIcon || (copyable && <ContentCopyIcon />)}
+      {endIcon}
     </Typography>
   );
 }

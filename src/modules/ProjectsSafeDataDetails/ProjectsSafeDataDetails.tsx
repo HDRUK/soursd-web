@@ -1,11 +1,13 @@
 import FieldsToText from "@/components/FieldsToText";
+import { Message } from "@/components/Message";
 import { ProjectDetails } from "@/types/application";
 import { formatDisplayLongDate } from "@/utils/date";
 import { createProjectDetailDefaultValues } from "@/utils/form";
 import { Typography } from "@mui/material";
+import { useTranslations } from "next-intl";
 
 interface ProjectsSafeDataDetailsProps {
-  projectDetailsData: ProjectDetails;
+  projectDetailsData: ProjectDetails | null;
   tKey?: string;
 }
 
@@ -15,6 +17,11 @@ export default function ProjectsSafeDataDetails({
   projectDetailsData,
   tKey = NAMESPACE_TRANSLATION,
 }: ProjectsSafeDataDetailsProps) {
+  const t = useTranslations(tKey);
+
+  if (!projectDetailsData)
+    return <Message severity="warning">{t("noProjectDetails")}</Message>;
+
   const data = createProjectDetailDefaultValues(projectDetailsData, {
     transformToReadable: true,
   });

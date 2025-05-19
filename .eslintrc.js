@@ -30,6 +30,7 @@ module.exports = {
     "prettier",
     "import",
     "jsx-a11y",
+    "unused-imports",
   ],
   extends: [
     "next/core-web-vitals",
@@ -43,6 +44,7 @@ module.exports = {
     "plugin:storybook/recommended",
   ],
   rules: {
+    "unused-imports/no-unused-imports": "error",
     "react/no-unstable-nested-components": "warn",
     "no-shadow": "off",
     "@typescript-eslint/no-shadow": ["off"],

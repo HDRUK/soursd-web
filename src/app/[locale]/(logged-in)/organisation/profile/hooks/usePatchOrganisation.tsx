@@ -30,8 +30,8 @@ const usePatchOrganisation = ({
     mutationKey: ["patchOrganisation", id],
     mutationFn: (payload: Partial<PatchOrganisationPayload>) =>
       patchOrganisation(id as number, payload, {
-        error: {
-          message: "patchOrganisationError",
+        403: {
+          message: "patchOrganisationForbidden",
         },
       }),
   });

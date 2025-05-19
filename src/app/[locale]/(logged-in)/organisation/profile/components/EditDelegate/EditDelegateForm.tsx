@@ -42,9 +42,9 @@ export default function EditDelegateForm({
 
   const handleSubmit = useCallback(
     async (fields: DelegatesFormValues) => {
-      mutateDelegate(fields).then(() => onSuccess());
+      mutateDelegate({ ...fields }).then(() => onSuccess());
     },
-    [mutateDelegate, onSuccess, t]
+    [mutateDelegate, onSuccess]
   );
   const schema = useMemo(
     () =>

@@ -18,6 +18,7 @@ interface Routes {
   invite: RouteConfig;
   register: RouteConfig;
   homepage: RouteConfig;
+  about: RouteConfig;
   usersCustodian: RouteConfig;
   profileCustodian: RouteConfig;
   profileCustodianUserById: RouteConfig;
@@ -74,6 +75,11 @@ interface Routes {
   profileOrganisationUserAdministration: RouteConfig;
   profileOrganisationUserAdministrationDelegates: RouteConfig;
   profileOrganisationUserAdministrationEmployeeStudent: RouteConfig;
+  profileOrganisationUsersHistory: RouteConfig;
+  profileOrganisationUsersIdentity: RouteConfig;
+  profileOrganisationUsersTrainingAccreditations: RouteConfig;
+  profileOrganisationUsersProjects: RouteConfig;
+  profileOrganisationUsersAffiliations: RouteConfig;
   profileOrganisationProjects: RouteConfig;
   profileOrganisationProjectsSafeProject: RouteConfig;
   profileOrganisationProjectsSafeData: RouteConfig;

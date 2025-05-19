@@ -119,7 +119,7 @@ const createStepperStyles = <
   return null;
 };
 
-const createContainedStyles = <
+const createIconButtonStyles = <
   T extends {
     variant?: string;
     color?: AugmentedColorPaletteOptions | "inherit";
@@ -127,6 +127,8 @@ const createContainedStyles = <
 >(
   ownerState: T
 ) => {
+  const disabledColor = getAugmentedColor(paletteTheme, "inactive");
+
   if (
     ownerState.variant === "contained" &&
     ownerState.color &&
@@ -136,14 +138,20 @@ const createContainedStyles = <
 
     return {
       color: color.contrastText,
-      backgroundColor: color.main,
+      backgroundColor: "pink",
       "&:hover": {
         backgroundColor: darken(color.main, 0.125),
       },
+      "&:disabled > .MuiSvgIcon-root": {
+        color: disabledColor.dark,
+      },
     };
   }
-
-  return null;
+  return {
+    "&:disabled > .MuiSvgIcon-root": {
+      color: disabledColor.main,
+    },
+  };
 };
 
 const createMuiModalStyles = <T extends { outline?: boolean }>(
@@ -340,7 +348,7 @@ const theme = createTheme(
       },
       MuiIconButton: {
         styleOverrides: {
-          root: ({ ownerState }) => createContainedStyles(ownerState),
+          root: ({ ownerState }) => createIconButtonStyles(ownerState),
         },
       },
       MuiStepper: {

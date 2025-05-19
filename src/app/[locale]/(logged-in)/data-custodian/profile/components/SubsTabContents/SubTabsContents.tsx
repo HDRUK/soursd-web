@@ -4,6 +4,10 @@ import { useStore } from "@/data/store";
 import ProjectsSafePeople from "@/modules/ProjectsSafePeople";
 import { EntityType } from "@/types/api";
 import { notFound } from "next/navigation";
+import UserAffiliations from "@/modules/UserAffiliations";
+import UserHistory from "@/modules/UserHistory";
+import UserIdentity from "@/modules/UserIdentity";
+import UserTrainingAccreditations from "@/modules/UserTrainingAccreditations";
 import {
   ConfigurationSubTabs,
   getSubTabs,
@@ -23,12 +27,8 @@ import ProjectsSafeOutputs from "../ProjectsSafeOutputs";
 import ProjectsSafeProject from "../ProjectsSafeProject";
 import ProjectsSafeSettings from "../ProjectsSafeSettings";
 import Rules from "../Rules";
-import UserAffiliations from "../UserAffiliations";
 import UserCustodianOrgInfo from "../UserCustodianOrgInfo";
-import UserHistory from "../UserHistory";
-import UserIdentity from "../UserIdentity";
 import UserProjects from "../UserProjects";
-import UserTrainingAccreditations from "../UserTrainingAccreditations";
 import ValidationChecks from "../ValidationChecks";
 import Webhooks from "../Webhooks";
 
@@ -79,7 +79,7 @@ export default function SubTabsContents({
       content = <UserIdentity />;
       break;
     case UserSubTabs.TRAINING_ACCREDITATIONS:
-      content = <UserTrainingAccreditations />;
+      content = <UserTrainingAccreditations variant={EntityType.CUSTODIAN} />;
       break;
     case UserSubTabs.PROJECTS:
       content = <UserProjects />;

@@ -3,6 +3,9 @@ import {
   ResearcherAffiliation,
   User,
   ProjectAllUser,
+  Organisation,
+  ResearcherProject,
+  CustodianUser,
 } from "@/types/application";
 import { Link, Typography } from "@mui/material";
 import { CellContext } from "@tanstack/react-table";
@@ -42,21 +45,33 @@ function renderProjectNameCell<T extends Project>(
   );
 }
 
-function renderUserNameCell(user: User | ProjectAllUser, route?: string) {
+function renderLinkNameCell(
+  name: string,
+  route: string,
+  options: Record<string, number>
+) {
+  return (
+    <Typography color="primary">
+      <Link href={injectParamsIntoPath(route, options)}>{name}</Link>
+    </Typography>
+  );
+}
+
+function renderUserNameCell(
+  user: User | ProjectAllUser | CustodianUser,
+  route?: string,
+  options: Record<string, number> = {}
+) {
+  if (!user) return "";
+
   const { first_name, last_name, id } = user;
 
-  return route && id ? (
-    <Typography color="primary">
-      <Link
-        href={injectParamsIntoPath(route, {
-          id,
-        })}>
-        {first_name} {last_name}
-      </Link>
-    </Typography>
-  ) : (
-    `${first_name} ${last_name}`
-  );
+  return route && id
+    ? renderLinkNameCell(`${first_name} ${last_name}`, route, {
+        userId: id,
+        ...options,
+      })
+    : `${first_name} ${last_name}`;
 }
 
 function renderWarningCell<T extends ResearcherAffiliation>(
@@ -70,9 +85,50 @@ function renderWarningCell<T extends ResearcherAffiliation>(
   return null;
 }
 
+function renderListNameCell(values: string[] | undefined) {
+  return (values || []).map(value => value).join(", ");
+}
+
+function renderProjectsNameCell(values: ResearcherProject[]) {
+  return renderListNameCell((values || []).map(({ title }) => title));
+}
+
+function renderUserOrganisationsNameCell(
+  values: Organisation | Organisation[]
+) {
+  const names = renderOrganisationsNameCell(values);
+
+  return (
+    names || (
+      <Typography component="span" color="error">
+        Not affiliated
+      </Typography>
+    )
+  );
+}
+
+function renderOrganisationsNameCell(values: Organisation | Organisation[]) {
+  let names;
+
+  if (Array.isArray(values)) {
+    names = renderListNameCell(
+      (values || []).map(({ organisation_name }) => organisation_name)
+    );
+  } else {
+    names = values?.organisation_name;
+  }
+
+  return names;
+}
+
 export {
   renderProjectNameCell,
   renderUserNameCell,
   renderAffiliationDateRangeCell,
   renderWarningCell,
+  renderListNameCell,
+  renderLinkNameCell,
+  renderUserOrganisationsNameCell,
+  renderOrganisationsNameCell,
+  renderProjectsNameCell,
 };

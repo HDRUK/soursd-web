@@ -20,7 +20,7 @@ import { useStore } from "@/data/store";
 import React, { ReactNode } from "react";
 import Results from "../Results";
 
-interface TableProps<T> extends Partial<TableOptions<T>> {
+export interface TableProps<T> extends Partial<TableOptions<T>> {
   data: T[];
   columns: ColumnDef<T>[];
   isPaginated?: boolean;
@@ -102,6 +102,8 @@ const Table = <T,>({
                         color: "neutralGrey.contrastText",
                         fontWeight: "600",
                         py: 1,
+                        width: "auto",
+                        minWidth: header.getSize() !== 150 && header.getSize(),
                       }}>
                       {header.isPlaceholder
                         ? null

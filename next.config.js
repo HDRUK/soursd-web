@@ -66,6 +66,11 @@ const nextConfig = withNextIntl({
         destination: `/:locale/organisation/profile/user-administration/employees-and-students`,
       },
       {
+        source:
+          "/:locale/organisation/profile/user-administration/employees-and-students/:id",
+        destination: `/:locale/organisation/profile/user-administration/employees-and-students/:id/identity`,
+      },
+      {
         source: "/:locale/organisation/profile/projects/:id",
         destination: `/:locale/organisation/profile/projects/:id/safe-project`,
       },
@@ -89,6 +94,11 @@ const nextConfig = withNextIntl({
         "msw/node": false,
       };
     }
+
+    config.module.rules.push({
+      test: /\.md$/,
+      type: "asset/source",
+    });
 
     return config;
   },

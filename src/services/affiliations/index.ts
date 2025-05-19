@@ -5,6 +5,8 @@ import postAffiliationQuery from "./postAffiliationQuery";
 import deleteAffiliationQuery from "./deleteAffiliationQuery";
 import patchAffiliationQuery from "./patchAffiliationQuery";
 import patchAffiliation from "./patchAffiliation";
+import putRegistryHasAffiliationQuery from "./putRegistryHasAffiliationQuery";
+import usePaginatedAffiliations from "./usePaginatedAffiliations";
 
 export {
   getAffiliations,
@@ -14,4 +16,6 @@ export {
   postAffiliationQuery,
   deleteAffiliationQuery,
   patchAffiliationQuery,
+  putRegistryHasAffiliationQuery,
+  usePaginatedAffiliations,
 };

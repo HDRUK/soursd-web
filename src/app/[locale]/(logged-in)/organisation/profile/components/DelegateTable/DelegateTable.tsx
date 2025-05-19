@@ -11,17 +11,20 @@ import { useState } from "react";
 import { Box, Button } from "@mui/material";
 import ContactLink from "@/components/ContactLink";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
+import DecoupleUser from "@/components/DecoupleDelegate";
 import { useTranslations } from "next-intl";
 import { ActionMenu } from "@/components/ActionMenu";
 import EditDelegate from "../EditDelegate";
-import DecoupleUser from "../DecoupleDelegate";
 import InviteDelegateForm from "../InviteDelegateForm";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";
 
 const DelegateTable = () => {
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
-  const organisation = useStore(state => state.config.organisation);
+  const { organisation } = useStore(state => ({
+    organisation: state.config.organisation,
+    user: state.getUser(),
+  }));
 
   const {
     isLoading: isLoadingDelegates,
@@ -75,6 +78,7 @@ const DelegateTable = () => {
       header: "Account created",
       cell: renderAccountCreated,
     },
+
     {
       accessorKey: "actions",
       header: "Actions",
@@ -96,21 +100,22 @@ const DelegateTable = () => {
           isError: isErrorDelegates || delegatesData === undefined,
         }}
       />
-
-      <Button variant="outlined" onClick={() => setOpenInviteModal(true)}>
-        {tProfile("inviteAnotherDelegate")}
-      </Button>
-      <FormModal
-        open={openInviteModal}
-        onClose={() => setOpenInviteModal(false)}>
-        <InviteDelegateForm
-          onCancel={() => setOpenInviteModal(false)}
-          onSuccess={() => {
-            setOpenInviteModal(false);
-            refetchDelegates();
-          }}
-        />
-      </FormModal>
+      <>
+        <Button variant="outlined" onClick={() => setOpenInviteModal(true)}>
+          {tProfile("inviteAnotherDelegate")}
+        </Button>
+        <FormModal
+          open={openInviteModal}
+          onClose={() => setOpenInviteModal(false)}>
+          <InviteDelegateForm
+            onCancel={() => setOpenInviteModal(false)}
+            onSuccess={() => {
+              setOpenInviteModal(false);
+              refetchDelegates();
+            }}
+          />
+        </FormModal>
+      </>
     </LoadingWrapper>
   );
 };

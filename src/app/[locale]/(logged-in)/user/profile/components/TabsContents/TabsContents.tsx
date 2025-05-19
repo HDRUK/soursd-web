@@ -1,13 +1,13 @@
 "use client";
 
-import { useStore } from "@/data/store";
+import useUserStore from "@/queries/useUserStore";
 import { notFound } from "next/navigation";
-import Projects from "@/modules/Projects";
+import Projects from "../Projects";
 import { PageTabs } from "../../consts/tabs";
 import AffiliationsPage from "../AffiliationsPage";
-import Identity from "../Identity";
-import Home from "../Home";
 import Experience from "../Experience";
+import Home from "../Home";
+import Identity from "../Identity";
 import Trainings from "../Trainings";
 
 interface TabsContentsProps {
@@ -15,7 +15,7 @@ interface TabsContentsProps {
 }
 
 export default function TabsContents({ tabId }: TabsContentsProps) {
-  const user = useStore(state => state.config.user);
+  const user = useUserStore();
 
   if (!user) notFound();
 
@@ -26,7 +26,7 @@ export default function TabsContents({ tabId }: TabsContentsProps) {
       {tabId === PageTabs.AFFILIATIONS && <AffiliationsPage />}
       {tabId === PageTabs.TRAINING && <Trainings />}
       {tabId === PageTabs.HOME && <Home />}
-      {tabId === PageTabs.PROJECTS && <Projects variant="user" />}
+      {tabId === PageTabs.PROJECTS && <Projects />}
     </>
   );
 }

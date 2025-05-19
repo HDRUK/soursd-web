@@ -13,7 +13,6 @@ import {
 } from "@/services/professional_registrations";
 import { PostProfessionalRegistrationPayload } from "@/services/professional_registrations/types";
 import { ResearcherProfessionalRegistration, User } from "@/types/application";
-import AddIcon from "@mui/icons-material/Add";
 import { Button, Typography } from "@mui/material";
 import Table from "@/components/Table";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -24,6 +23,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import { EntityType } from "@/types/api";
+import { AddIcon } from "@/consts/icons";
 import ProfessionalRegistrationsFormModal from "./ProfessionalRegistrationsFormModal";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfessionalRegistrations";
@@ -114,7 +114,7 @@ export default function ProfessionalRegistrations({
     deleteProfessionalRegistrationQueryState,
     {
       confirmAlertProps: {
-        willClose: async (id: number) => {
+        preConfirm: async (id: number) => {
           await mutateDeleteAsync(id);
           refetch();
         },
@@ -248,7 +248,7 @@ export default function ProfessionalRegistrations({
           contactLink: ContactLink,
         })}
         total={professionalRegistrations.length}
-        sx={{ maxWidth: "50%" }}
+        sx={{ maxWidth: "100%" }}
       />
       {variant === EntityType.USER && (
         <Button

@@ -1,5 +1,6 @@
 import ChipStatus, { Status } from "@/components/ChipStatus";
 import ContactLink from "@/components/ContactLink";
+import Ol from "@/components/Ol";
 import { Box, Typography } from "@mui/material";
 
 export const mockedBannerContent = () => (
@@ -7,6 +8,34 @@ export const mockedBannerContent = () => (
     BETA Preview: Please contact HDR UK if you'd like to help drive
     functionality during our initial preview phase: <ContactLink /> - Please be
     aware that some pages/features aren't fully available.
+  </>
+);
+
+export const mockedProjectsIntro =
+  "The project list below outlines your projects pending approval, including validated Users and Organisations. Clicking on a project will show you more information and next steps.";
+
+export const mockedPendingAffiliations = (
+  <>
+    <Typography mb={2}>
+      SOURSD stores records of Users who are research-active working on
+      sensitive data. As an Organisation you can confirm that a SOURSD User
+      profile corresponds to an employee or student at your Organisation. This
+      is called affiliating a User.
+    </Typography>
+    <Typography mb={2}>
+      When affiliating a User you are confirming that:
+    </Typography>
+    <Ol>
+      <li>The SOURSD User profile matches that of your employee / student</li>
+      <li>
+        The employee / student is an active researcher / data analyst needing to
+        work on sensitive data.
+      </li>
+      <li>
+        The Organisational email address of the User corresponds to the correct
+        email address in your Organisation.
+      </li>
+    </Ol>
   </>
 );
 
@@ -118,35 +147,36 @@ export const mockedResearcherAffiliationsGuidance = {
     "This section relates to you as an employee or student of an Organisation",
   info: (
     <>
-      <Typography mb={3}>
-        Through the SOURSD platform, individuals are affiliated with
-        Organisations (employers or higher education institute).
+      <Typography mb={2}>
+        Through SOURSD individuals are affiliated with Organisations (employers
+        or higher education institutions or honorary contracts).
       </Typography>
-      <Typography mb={3}>
-        If your particular employer or higher education institute isn’t known by
-        SOURSD, then you can ask them to register for an account!
+      <Typography mb={2}>
+        If your Organisation is not on SOURSD you can ask them to register for
+        an account. Affiliated Organisations that haven’t already confirmed your
+        status will be sent an invite to do so, when you click save. When you
+        click save affiliated organisation will be invited to confirm your
+        status, if they have not already do so.
       </Typography>
       <Typography mb={5}>
-        Affiliated Organisations that haven’t already confirmed your status will
-        be sent an invite to do so, when you click save. You can also do this
-        manually. Being affiliated by an Organisation is especially important
-        for Organisations who are the host for a project you plan to work on.
+        Being affiliated by an Organisation is especially important for
+        Organisations who are the host for a project you plan to work on.
       </Typography>
       <Typography variant="h4" mb={2}>
         The statuses
       </Typography>
       <ChipStatus status={Status.AFFILIATED} color="success" sx={{ mb: 2 }} />
-      <Typography mb={3}>
+      <Typography mb={3} sx={{ fontSize: "14px" }}>
         You have been affiliated by this Organisation
       </Typography>
       <ChipStatus status={Status.PENDING} sx={{ mb: 2 }} />
-      <Typography mb={3}>
+      <Typography mb={3} sx={{ fontSize: "14px" }}>
         The Organisation has been invited to confirm your affiliation, but has
         not yet done so. Once they have an account they will be automatically
         asked to confirm your affiliation
       </Typography>
       <ChipStatus status={Status.INVITE_SENT} sx={{ mb: 2 }} />
-      <Typography>
+      <Typography sx={{ fontSize: "14px" }}>
         The Organisation has been invited to set up an account, but has not yet
         done so
       </Typography>
@@ -357,142 +387,82 @@ export const mockedConfigurationRulesGuidanceProps = {
   ),
 };
 
-export const mockedTermsAndConditions = {
-  acceptingTerms: {
-    content: (
-      <>
-        <Typography variant="h5" gutterBottom>
-          Accepting Terms and Conditions
-        </Typography>
-        <Typography>
-          By clicking on "Accept" below, you agree to the terms and conditions
-          outlined on this page.
-        </Typography>
-      </>
-    ),
-  },
-  changesToTerms: {
-    content: (
-      <>
-        <Typography variant="h5" gutterBottom>
-          Changes to Terms and Conditions
-        </Typography>
-        <Typography>
-          The terms and conditions for SOURSD may change from time to time.
-          Please review the latest version before using our product.
-        </Typography>
-      </>
-    ),
-  },
-  usingOurProduct: {
-    content: (
-      <>
-        <Typography variant="h5" gutterBottom>
-          Using Our Product
-        </Typography>
-        <Typography>
-          The SOURSD product is designed to help you manage your sensitive data
-          more effectively.
-        </Typography>
-      </>
-    ),
-  },
-  generalRestrictions: {
-    content: (
-      <>
-        <Typography variant="h5" gutterBottom>
-          General Restrictions
-        </Typography>
-        <Typography>
-          SOURSD is not a replacement for professional legal advice. You should
-          consult with a qualified legal professional before using the product.
-        </Typography>
-      </>
-    ),
-  },
-  contentPolicy: {
-    content: (
-      <>
-        <Typography variant="h5" gutterBottom>
-          Content Policy
-        </Typography>
-        <Typography>
-          SOURSD collects and stores personal data in accordance with the
-          General Data Protection Regulation (GDPR) and other relevant data
-          protection regulations. The data collected includes your name, email
-          address, research project details, and affiliated Users' details.
-        </Typography>
-      </>
-    ),
-  },
-  yourRights: {
-    content: (
-      <>
-        <Typography variant="h5" gutterBottom>
-          Your Rights
-        </Typography>
-        <Typography>
-          You have the right to access, correct, update, or delete your personal
-          data. You also have the right to object to processing your data. You
-          can exercise your rights under the GDPR by contacting the GDPR data
-          protection officer.
-        </Typography>
-      </>
-    ),
-  },
-  copyrightPolicy: {
-    content: (
-      <>
-        <Typography variant="h5" gutterBottom>
-          Copyright Policy
-        </Typography>
-        <Typography>
-          SOURSD is protected by copyright law and other intellectual property
-          rights. The SOURSD logo and any other trademarks or service marks used
-          on this website are owned by the SOURSD team.
-        </Typography>
-      </>
-    ),
-  },
-  relationshipGuidelines: {
-    content: (
-      <>
-        <Typography variant="h5" gutterBottom>
-          Relationship Guidelines
-        </Typography>
-        <Typography>
-          SOURSD encourages users to establish trust and relationships with each
-          other. By creating a SOURSD account, you are agreeing to the SOURSD
-          relationship guidelines.
-        </Typography>
-      </>
-    ),
-  },
-  liabilityPolicy: {
-    content: (
-      <>
-        <Typography variant="h5" gutterBottom>
-          Liability Policy
-        </Typography>
-        <Typography>
-          SOURSD is not liable for any loss, damage, or inconvenience caused by
-          your use of the SOURSD product.
-        </Typography>
-      </>
-    ),
-  },
-  generalLegalTerms: {
-    content: (
-      <>
-        <Typography variant="h5" gutterBottom>
-          General Legal Terms
-        </Typography>
-        <Typography>
-          These terms and conditions are governed by the laws of the United
-          Kingdom. If you have any questions or concerns about these terms and
-          conditions, please contact our support team at [support@soursd.com].
-        </Typography>
-      </>
-    ),
-  },
+export const mockedAbout = {
+  infoTitle: "About SOURSD",
+  aboutTitle: "Empowering Safe Data Access for Research and Innovation",
+  about: `SOURSD (Safe Organisation and User Registry for Sensitive Data) is a secure platform
+designed to facilitate responsible access to sensitive data. Our mission is to enable
+researchers, Organisations and Data Custodians to collaborate efficiently while
+maintaining security and compliance.`,
+  servingTitle: "## Who We Serve",
+  usersTitle: "Users (e.g. researchers & analysts)",
+  users: "Easily verify credentials and gain approval for data access.",
+  organisationsTitle: "Organisations",
+  organisations:
+    "Maintain oversight of researchers’ credentials and approvals.",
+  custodiansTitle: "Data Custodians",
+  custodians:
+    "Make informed decisions about granting access while ensuring compliance.",
+  purposeTitle: "Our Purpose",
+  purpose: `In today’s data-driven world, ensuring that the right people can access the right
+data responsibly is crucial. SOURSD streamlines this process by:
+
+- Providing a registry where Users and Organisations can establish their credentials
+for working with sensitive data.
+- Enhancing transparency by recording approvals across Data Custodians.
+- Reducing administrative burden by minimising duplication of effort.
+- Enabling seamless authentication with multiple identity providers.`,
+  commitmentTitle: "Our Commitment",
+  commitment: `SOURSD is built on principles of trust, security and efficiency. By fostering
+collaboration between Data Custodians and Users, we help accelerate innovation
+while safeguarding sensitive information.`,
+  footer: "Join us in transforming the way safe data access is managed.",
+};
+
+export const mockedFeatures = {
+  infoTitle: "Features",
+  info: `
+SOURSD is designed to streamline and secure access to sensitive data for researchers,
+Organisations and Data Custodians. Our platform ensures efficiency, compliance and
+security while reducing administrative burden.`,
+  features: `# Key Features`,
+  researchersTitle: `Researcher and Organisation Registry`,
+  researchers: `
+- Easily register as a researcher or Organisation to access and manage projects requiring sensitive data.
+- Maintain a verified profile with credentials and approvals in one place.`,
+  secureTitle: `Secure Access & Authentication`,
+  secure: `
+- Single sign-on (SSO) integration with multiple identity providers.
+- Multi-factor authentication (MFA) for enhanced security.`,
+  approvalsTitle: `Approval & Compliance tracking`,
+  approvals: `
+- Automatically log approvals and maintain a transparent history of data access requests.
+- Ensure compliance with data governance policies.`,
+  workflowTitle: `Streamlined Workflow for Data Custodians`,
+  workflow: `
+- Quickly verify researcher credentials and approve or deny access to projects.
+- Reduce duplication of effort by leveraging a centralised registry.`,
+  transparencyTitle: `Transparency & Oversight`,
+  transparency: `
+- Organisations can monitor researcher approvals and manage internal compliance.
+- Researchers can track the status of their project access in real-time.`,
+  footer: `SOURSD is your trusted partner in managing sensitive data access efficiently and securely.`,
+  detailsTitle: `Why Choose SOURSD?`,
+  details: `
+- Saves time with direct access to approval teams.
+- Enhances security with strong authentication methods.
+- Reduces administrative overhead for Organisations and Data Custodians.
+- Supports open, responsible research with transparent access processes.`,
+};
+
+export const mockedTermsOfService = {
+  infoTitle: "Terms of Service",
+};
+
+export const mockedCookiePolicy = {
+  infoTitle: "Cookie Policy",
+};
+
+export const mockedPrivacyPolicy = {
+  infoTitle: "Privacy Policy",
 };

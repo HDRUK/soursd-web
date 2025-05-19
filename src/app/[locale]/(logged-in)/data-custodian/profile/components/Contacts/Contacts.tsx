@@ -1,25 +1,17 @@
-import ContactLink from "@/components/ContactLink";
-import Icon from "@/components/Icon";
-import Results from "@/components/Results";
-import ResultsCard from "@/components/ResultsCard";
+import { AddIcon } from "@/consts/icons";
 import { useStore } from "@/data/store";
-import { Link } from "@/i18n/routing";
+import useQueryConfirmAlerts from "@/hooks/useQueryConfirmAlerts";
 import { PageBody, PageBodyContainer, PageSection } from "@/modules";
+import AdministrativeContacts from "@/modules/AdministrativeContacts";
 import SearchBar from "@/modules/SearchBar";
-import {
-  deleteCustodianUser,
-  getCustodianUsers,
-} from "@/services/custodian_users";
+import { deleteCustodianUser } from "@/services/custodian_users";
+import { usePaginatedCustodianUsers } from "@/services/custodians";
 import { CustodianUser } from "@/types/application";
-import { injectParamsIntoPath } from "@/utils/application";
-import { formatShortDate } from "@/utils/date";
-import { showAlert, showLoadingAlertWithPromise } from "@/utils/showAlert";
-import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
-import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
-import { Box, Button, IconButton, Typography } from "@mui/material";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { Box, Button, IconButton, Tooltip } from "@mui/material";
+import { useMutation } from "@tanstack/react-query";
+import { CellContext } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
 import UserModal from "../UserModal";
@@ -28,56 +20,102 @@ const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 
 export default function Contacts() {
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
-  const queryClient = useQueryClient();
   const [modalProps, setModalProps] = useState<{
     open: boolean;
     user?: Partial<CustodianUser>;
   } | null>();
-  const { custodian, routes } = useStore(state => ({
+  const { custodian, user } = useStore(state => ({
     custodian: state.getCustodian(),
-    routes: state.getApplication().routes,
+    user: state.getUser(),
   }));
 
   const {
-    isError: isGetCustodiansError,
-    isLoading: isGetCustodiansLoading,
-    data: custodiansData,
-  } = useQuery({
-    queryKey: ["getCustodianUsers", custodian?.id],
-    queryFn: ({ queryKey }) => getCustodianUsers(queryKey[1]),
+    data,
+    page,
+    total,
+    last_page,
+    setPage,
+    updateQueryParams,
+    resetQueryParams,
+    isLoading,
+    isError,
+    isSuccess,
+    refetch,
+  } = usePaginatedCustodianUsers(custodian?.id, {
+    shouldUpdateQuerystring: true,
   });
 
-  const { mutateAsync: deleteCustodianUserAsync } = useMutation({
-    mutationKey: ["deleteCustodianUser"],
-    mutationFn: (id: number) => {
-      return deleteCustodianUser(id, {
-        error: { message: "deleteUserError" },
-      });
+  const { mutateAsync: deleteCustodianUserAsync, ...mutateState } = useMutation(
+    {
+      mutationKey: ["deleteCustodianUser"],
+      mutationFn: (id: number) => {
+        return deleteCustodianUser(id, {
+          error: { message: "deleteUserError" },
+        });
+      },
+    }
+  );
+
+  const renderActionMenuCell = (info: CellContext<CustodianUser, unknown>) => {
+    const isDisabled = user?.custodian_user_id === info.row.original.id;
+
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          gap: 1,
+          justifyContent: "flex-end",
+        }}>
+        <IconButton
+          size="small"
+          aria-label="Edit user"
+          color="inherit"
+          onClick={() =>
+            setModalProps({
+              open: true,
+              user: info.row.original,
+            })
+          }>
+          <CreateOutlinedIcon sx={{ color: "default.main" }} />
+        </IconButton>
+        <Tooltip title={isDisabled ? t("noDeleteUser") : ""}>
+          <span>
+            <IconButton
+              size="small"
+              aria-label={t("deleteUser")}
+              disabled={isDisabled}
+              onClick={() => showModal(info.row.original.id)}>
+              <DeleteForeverOutlinedIcon sx={{ color: "error.main" }} />
+            </IconButton>
+          </span>
+        </Tooltip>
+      </Box>
+    );
+  };
+
+  const queryState = {
+    isLoading,
+    isError,
+    isSuccess,
+  };
+
+  const showModal = useQueryConfirmAlerts(mutateState, {
+    confirmAlertProps: {
+      text: t("deleteWarningDescription"),
+      title: t("deleteWarningTitle"),
+      confirmButtonText: t("deleteUserButton"),
+      cancelButtonText: t("cancelButton"),
+      preConfirm: async id => {
+        await deleteCustodianUserAsync(id as number);
+        refetch();
+      },
     },
   });
 
-  const handleDelete = async (userId: number) => {
-    showAlert("warning", {
-      text: t("deleteWarningDescription"),
-      title: t("deleteWarningTitle"),
-      confirmButtonText: "Delete user",
-      cancelButtonText: "Cancel",
-      closeOnConfirm: true,
-      closeOnCancel: true,
-      preConfirm: () => {
-        showLoadingAlertWithPromise(deleteCustodianUserAsync(userId), {
-          onSuccess: () => {
-            queryClient.refetchQueries({
-              queryKey: ["getCustodianUsers", custodian?.id],
-            });
-          },
-        });
-      },
-    });
-  };
-
   const handleCloseModal = useCallback(() => {
     setModalProps(null);
+
+    refetch();
   }, []);
 
   return (
@@ -86,10 +124,19 @@ export default function Contacts() {
         <PageSection>
           <Box sx={{ display: "flex", gap: 1, mb: 3 }}>
             <Box component="form" role="search" sx={{ flexGrow: 1 }}>
-              <SearchBar onSearch={() => {}} />
+              <SearchBar
+                onClear={resetQueryParams}
+                onSearch={(text: string) => {
+                  updateQueryParams({
+                    "name[]": text,
+                    "email[]": text,
+                  });
+                }}
+                placeholder={t("searchPlaceholder")}
+              />
             </Box>
             <Button
-              endIcon={<AddCircleOutlineOutlinedIcon />}
+              startIcon={<AddIcon />}
               variant="contained"
               onClick={() => {
                 if (custodian?.id) {
@@ -107,98 +154,22 @@ export default function Contacts() {
               {t("addNewUser")}
             </Button>
           </Box>
-
-          <Results
-            noResultsMessage={t("noResults")}
-            errorMessage={t.rich("getError", {
-              contactLink: ContactLink,
-            })}
-            queryState={{
-              isLoading: isGetCustodiansLoading,
-              isError: isGetCustodiansError,
-            }}
-            total={custodiansData?.data?.length}>
-            {custodiansData?.data.map(custodianUser => {
-              const {
-                id,
-                first_name,
-                last_name,
-                email,
-                created_at,
-                user_permissions,
-              } = custodianUser;
-
-              const role = user_permissions?.[0]?.permission?.name;
-
-              return (
-                <ResultsCard
-                  key={email}
-                  icon={
-                    <Icon size="xlarge">
-                      <PersonOutlineOutlinedIcon />
-                    </Icon>
-                  }
-                  content={
-                    <>
-                      {" "}
-                      <Typography
-                        component={Link}
-                        href={injectParamsIntoPath(
-                          routes.profileCustodianUserById.path,
-                          {
-                            id,
-                          }
-                        )}
-                        variant="h6">
-                        {first_name} {last_name}
-                      </Typography>
-                      {/* Will be read from db */}
-                      <Typography>{role && t(role)}</Typography>
-                    </>
-                  }
-                  details={
-                    <>
-                      {" "}
-                      <Typography color="caption.main">
-                        {t("addedOn", {
-                          date: formatShortDate(created_at),
-                        })}
-                      </Typography>
-                      <Typography color="caption.main">
-                        {t("lastLoggedIn", {
-                          date: formatShortDate(),
-                        })}
-                      </Typography>
-                    </>
-                  }
-                  actions={
-                    <>
-                      <IconButton
-                        size="small"
-                        aria-label="Edit user"
-                        color="inherit"
-                        onClick={() =>
-                          setModalProps({
-                            open: true,
-                            user: custodianUser,
-                          })
-                        }>
-                        <CreateOutlinedIcon sx={{ color: "default.main" }} />
-                      </IconButton>
-                      <IconButton
-                        size="small"
-                        aria-label="Delete user"
-                        onClick={() => handleDelete(custodianUser?.id)}>
-                        <DeleteForeverOutlinedIcon
-                          sx={{ color: "error.main" }}
-                        />
-                      </IconButton>
-                    </>
-                  }
-                />
-              );
-            })}
-          </Results>
+          <AdministrativeContacts
+            data={data || []}
+            additionalColumns={[
+              {
+                accessorKey: "action",
+                header: "",
+                cell: renderActionMenuCell,
+              },
+            ]}
+            total={total}
+            last_page={last_page}
+            page={page}
+            setPage={setPage}
+            queryState={queryState}
+            isPaginated
+          />
           {modalProps?.user && custodian?.id && (
             <UserModal
               {...modalProps}

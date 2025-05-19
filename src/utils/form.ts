@@ -4,7 +4,8 @@ import yup from "@/config/yup";
 import { RequestFrequency } from "@/consts/projects";
 import { ProjectDetails, ResearcherProject } from "@/types/application";
 import { DataUse } from "@/types/gateway";
-import { formatStringToISO } from "./date";
+import { DefaultFormValuesMode } from "@/consts/form";
+import { formatStringToISO, getDate } from "./date";
 import { parseValidJSON } from "./json";
 
 function getCheckboxFormValuesFromIntersection(
@@ -77,7 +78,9 @@ function createDataUseDefaultValues(data: DataUse) {
     national_data_optout: data.national_data_optout || false,
     request_frequency: data.request_frequency || RequestFrequency.ONE_OFF,
     dataset_linkage_description: data.dataset_linkage_description || "",
-    access_date: data.access_date ? formatStringToISO(data.access_date) : "",
+    access_date: data.access_date
+      ? getDate(formatStringToISO(data.access_date))
+      : "",
     request_category_type: data.request_category_type || "",
     lay_summary: data.lay_summary || "",
     technical_summary: data.technical_summary || "",
@@ -103,7 +106,9 @@ function createProjectDetailDefaultValues(
       : national_data_optout,
     request_frequency: data.request_frequency || RequestFrequency.ONE_OFF,
     dataset_linkage_description: data.dataset_linkage_description || "",
-    access_date: data.access_date ? formatStringToISO(data.access_date) : "",
+    access_date: data.access_date
+      ? getDate(formatStringToISO(data.access_date))
+      : "",
     data_minimisation: data?.data_minimisation || "",
     data_use_description: data?.data_use_description || "",
     access_type: data?.access_type || "",
@@ -113,20 +118,31 @@ function createProjectDetailDefaultValues(
   };
 }
 
-function createProjectDefaultValues(data: ResearcherProject) {
+function createProjectDefaultValues(
+  data?: Partial<ResearcherProject>,
+  mode: DefaultFormValuesMode = DefaultFormValuesMode.FORM
+) {
+  const otherApprovalCommittees =
+    (data?.other_approval_committees &&
+      parseValidJSON(data.other_approval_committees)) ||
+    [];
+
   return {
     ...data,
-    unique_id: data.unique_id,
-    title: data.title || "",
-    request_category_type: data.request_category_type || "",
-    start_date: data.start_date || "",
-    end_date: data.end_date || "",
-    lay_summary: data.lay_summary || "",
-    public_benefit: data.public_benefit || "",
-    technical_summary: data.technical_summary || "",
-    status: data.model_state.state.slug || Status.PROJECT_PENDING,
+    id: data?.id,
+    unique_id: data?.unique_id,
+    title: data?.title || "",
+    request_category_type: data?.request_category_type || "",
+    start_date: data?.start_date || "",
+    end_date: data?.end_date || "",
+    lay_summary: data?.lay_summary || "",
+    public_benefit: data?.public_benefit || "",
+    technical_summary: data?.technical_summary || "",
+    status: data?.model_state?.state.slug || Status.PROJECT_PENDING,
     other_approval_committees:
-      parseValidJSON(data.other_approval_committees) || [],
+      mode === DefaultFormValuesMode.DB
+        ? JSON.stringify(otherApprovalCommittees)
+        : otherApprovalCommittees,
   };
 }
 

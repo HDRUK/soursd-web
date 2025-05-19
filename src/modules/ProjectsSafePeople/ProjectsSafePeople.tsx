@@ -15,7 +15,7 @@ import {
 } from "@/services/projects";
 import { DeleteProjectUserPayload } from "@/services/projects/types";
 import { ProjectUser, User } from "@/types/application";
-import { renderUserNameCell } from "@/utils/cells";
+import { renderOrganisationsNameCell, renderUserNameCell } from "@/utils/cells";
 import { Add } from "@mui/icons-material";
 import { Box, Button, Grid } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
@@ -66,7 +66,7 @@ export default function ProjectsSafePeople({
     deleteQueryState,
     {
       confirmAlertProps: {
-        willClose: async payload => {
+        preConfirm: async payload => {
           await deleteUserAsync(payload as DeleteProjectUserPayload);
           refetch();
         },
@@ -76,14 +76,27 @@ export default function ProjectsSafePeople({
 
   useQueryAlerts(primaryContactQueryState);
 
+  let userPath;
+  switch (variant) {
+    case EntityType.CUSTODIAN:
+      userPath = routes.profileCustodianUsersIdentity.path;
+      break;
+    case EntityType.ORGANISATION:
+      userPath = routes.profileOrganisationUsersIdentity.path;
+      break;
+    case EntityType.USER:
+      userPath = undefined;
+      break;
+    default:
+      userPath = undefined;
+  }
   const renderNameCell = useCallback(
     <T extends ProjectUser>(info: CellContext<T, unknown>) => {
       return (
         <Box sx={{ display: "flex" }}>
-          {renderUserNameCell(
-            info.getValue() as User,
-            routes.profileCustodianUsersIdentity.path
-          )}
+          {renderUserNameCell(info.getValue() as User, userPath, {
+            projectId: project.id,
+          })}
           {!!info.row.original.primary_contact && <PrimaryContactIcon />}
         </Box>
       );
@@ -149,8 +162,9 @@ export default function ProjectsSafePeople({
       header: tApplication("projectRole"),
     },
     {
-      accessorKey: "affiliation.organisation.organisation_name",
+      accessorKey: "affiliation.organisation",
       header: tApplication("organisationName"),
+      cell: info => renderOrganisationsNameCell(info.getValue()),
     },
     ...(variant !== EntityType.USER
       ? [
@@ -168,15 +182,14 @@ export default function ProjectsSafePeople({
   ];
 
   return (
-    <PageBody heading={t("safeProject")}>
+    <PageBody heading={t("safePeople")}>
       <PageSection>
         <Box component="form" role="search">
           <SearchBar
             onClear={resetQueryParams}
             onSearch={(text: string) => {
               updateQueryParams({
-                "first_name[]": text,
-                "last_name[]": text,
+                "name[]": text,
                 "email[]": text,
               });
             }}

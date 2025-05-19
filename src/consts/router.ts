@@ -13,6 +13,9 @@ const ROUTES: Routes = {
   homepage: {
     path: "/homepage",
   },
+  about: {
+    path: "/about",
+  },
   profileCustodian: {
     path: "/data-custodian/profile",
     permissions: [UserGroup.CUSTODIANS],
@@ -110,27 +113,27 @@ const ROUTES: Routes = {
     permissions: [UserGroup.CUSTODIANS],
   },
   profileCustodianUsersHistory: {
-    path: "/data-custodian/profile/users/{id}/history",
+    path: "/data-custodian/profile/users/{userId}/projects/{projectId}/history",
     permissions: [UserGroup.CUSTODIANS],
   },
   profileCustodianUsersTrainingAccreditations: {
-    path: "/data-custodian/profile/users/{id}/training_accreditations",
+    path: "/data-custodian/profile/users/{userId}/projects/{projectId}/training_accreditations",
     permissions: [UserGroup.CUSTODIANS],
   },
   profileCustodianUsersIdentity: {
-    path: "/data-custodian/profile/users/{id}/identity",
+    path: "/data-custodian/profile/users/{userId}/projects/{projectId}/identity",
     permissions: [UserGroup.CUSTODIANS],
   },
   profileCustodianUsersProjects: {
-    path: "/data-custodian/profile/users/{id}/projects",
+    path: "/data-custodian/profile/users/{userId}/projects/{projectId}/projects",
     permissions: [UserGroup.CUSTODIANS],
   },
   profileCustodianUsersCustodianOrgInfo: {
-    path: "/data-custodian/profile/users/{id}/custodian_org_info",
+    path: "/data-custodian/profile/users/{userId}/projects/{projectId}/custodian_org_info",
     permissions: [UserGroup.CUSTODIANS],
   },
   profileCustodianUsersAffiliations: {
-    path: "/data-custodian/profile/users/{id}/affiliations",
+    path: "/data-custodian/profile/users/{userId}/projects/{projectId}/affiliations",
     permissions: [UserGroup.CUSTODIANS],
   },
   permissionsResearcherCustodian: {
@@ -235,6 +238,26 @@ const ROUTES: Routes = {
   },
   profileOrganisationUserAdministrationEmployeeStudent: {
     path: "/organisation/profile/user-administration/employees-and-students",
+    permissions: [UserGroup.ORGANISATIONS],
+  },
+  profileOrganisationUsersHistory: {
+    path: "/organisation/profile/user-administration/employees-and-students/{userId}/history",
+    permissions: [UserGroup.ORGANISATIONS],
+  },
+  profileOrganisationUsersIdentity: {
+    path: "/organisation/profile/user-administration/employees-and-students/{userId}/identity",
+    permissions: [UserGroup.ORGANISATIONS],
+  },
+  profileOrganisationUsersTrainingAccreditations: {
+    path: "/organisation/profile/user-administration/employees-and-students/{userId}/training_accreditations",
+    permissions: [UserGroup.ORGANISATIONS],
+  },
+  profileOrganisationUsersProjects: {
+    path: "/organisation/profile/user-administration/employees-and-students/{userId}/projects",
+    permissions: [UserGroup.ORGANISATIONS],
+  },
+  profileOrganisationUsersAffiliations: {
+    path: "/organisation/profile/user-administration/employees-and-students/{userId}/affiliations",
     permissions: [UserGroup.ORGANISATIONS],
   },
   profileOrganisationProjects: {

@@ -1,5 +1,12 @@
 import { EMAIL_TEMPLATE } from "@/consts/application";
-import { Custodian, ProjectAllUser } from "@/types/application";
+import {
+  Custodian,
+  CustodianUser,
+  Organisation,
+  ProjectAllUser,
+  ResearcherProject,
+  User,
+} from "@/types/application";
 
 interface GetCustodianInviteResponse {
   name: string;
@@ -45,6 +52,8 @@ type GetCustodiansResponse = Custodian[];
 type PatchCustodianPayload = Partial<Custodian>;
 type PatchCustodianResponse = Custodian;
 
+type GetCustodiansUserProjectsResponse = ResearcherProject[];
+
 interface PostCustodianInviteUserPayload {
   first_name: string;
   last_name: string;
@@ -60,10 +69,19 @@ type PostCustodianInviteResponse = Custodian;
 
 type GetCustodianProjectUserResponse = ProjectAllUser[];
 
+type GetCustodianOrganisationsResponse = Organisation[];
+
+type GetCustodianOrganisationUsersResponse = User[];
+
+type GetCustodianUsersResponse = CustodianUser[];
+
 type EntityType =
   | "decision_models"
   | "user_validation_rules"
   | "org_validation_rules";
+
+type PostCustodianProjectResponse = number;
+type PostCustodianProjectPayload = ResearcherProject;
 
 export type {
   PostCustodianInviteUserPayload,
@@ -83,4 +101,10 @@ export type {
   PutCustodianActiveEntityModelPayload,
   PutCustodianActiveEntityModelResponse,
   GetCustodianProjectUserResponse,
+  GetCustodiansUserProjectsResponse,
+  GetCustodianOrganisationsResponse,
+  GetCustodianOrganisationUsersResponse,
+  GetCustodianUsersResponse,
+  PostCustodianProjectResponse,
+  PostCustodianProjectPayload,
 };
