@@ -1,3 +1,5 @@
+"use client";
+
 import ContactLink from "@/components/ContactLink";
 import { useMutation, UseMutationOptions } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";

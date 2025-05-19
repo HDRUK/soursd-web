@@ -1,3 +1,5 @@
+"use client";
+
 import { colorToRgba } from "@/utils/theme";
 import { createTheme } from "@mui/material";
 import { blue, blueGrey, grey, red } from "@mui/material/colors";

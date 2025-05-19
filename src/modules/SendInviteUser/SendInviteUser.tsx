@@ -1,3 +1,5 @@
+"use client";
+
 import { useTranslations } from "next-intl";
 import ReactDOMServer from "react-dom/server";
 import ContactLink from "../../components/ContactLink";

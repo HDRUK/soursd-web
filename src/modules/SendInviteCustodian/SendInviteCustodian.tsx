@@ -1,3 +1,5 @@
+"use client";
+
 import { useTranslations } from "next-intl";
 import ReactDOMServer from "react-dom/server";
 import useCustodianInvite from "../../queries/useCustodianInvite";
