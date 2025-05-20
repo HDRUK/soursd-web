@@ -41,7 +41,7 @@ export default function RootLayout({
         sx={{ background: "#f2f2f2" }}>
         <CookieProvider>
           <NextIntlClientProvider locale={locale} messages={messages}>
-            <AppRouterCacheProvider>
+            <AppRouterCacheProvider options={{ enableCssLayer: true }}>
               <ReactQueryClientProvider>
                 <ThemeRegistry>
                   <ToastProvider>

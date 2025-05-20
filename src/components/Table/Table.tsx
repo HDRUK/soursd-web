@@ -30,7 +30,7 @@ export interface TableProps<T> extends Partial<TableOptions<T>> {
   setPage?: React.Dispatch<React.SetStateAction<number>>;
   last_page?: number;
   dense?: boolean;
-  queryState: QueryState;
+  queryState?: QueryState;
   errorMessage?: ReactNode;
   noResultsMessage?: ReactNode;
   total?: number;
