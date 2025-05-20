@@ -3,6 +3,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   getCustodianValidationChecksQuery,
   putValidationCheckQuery,
+  postValidationCheckQuery,
 } from "@/services/validation_checks";
 import { useStore } from "@/data/store";
 import { useTranslations } from "next-intl";
@@ -10,9 +11,18 @@ import { Rule } from "@/types/rules";
 import CheckboxList from "@/components/CheckboxList";
 import Form from "@/components/Form";
 import { getCombinedQueryState } from "@/utils/query";
+import { showAlert } from "@/utils/showAlert";
 import { ValidationCheck } from "@/services/validation_checks/types";
+import FormActions from "@/components/FormActions";
+import ButtonSave from "@/components/ButtonSave";
+import AddNewValidationCheck from "../AddNewValidationCheck";
 
 const NAMESPACE_TRANSLATION = "ValidationChecks";
+
+export enum AppliesTo {
+  ProjectHasUser = "ProjectHasUser",
+  Organisation = "Organisation",
+}
 
 export default function ValidationChecks() {
   const t = useTranslations(NAMESPACE_TRANSLATION);
@@ -23,30 +33,34 @@ export default function ValidationChecks() {
 
   const { data: userValidationChecks, ...queryStateProjectUser } = useQuery(
     getCustodianValidationChecksQuery(custodianId as number, {
-      "applies_to[]": "ProjectHasUser",
+      "applies_to[]": AppliesTo.ProjectHasUser,
     })
   );
 
   const { data: organisationValidationChecks, ...queryStateOrganisation } =
     useQuery(
       getCustodianValidationChecksQuery(custodianId as number, {
-        "applies_to[]": "Organisation",
+        "applies_to[]": AppliesTo.Organisation,
       })
     );
 
-  const refetch = () => {
+  const { mutateAsync: updateValidationCheck, ...mutateStateEditCheck } =
+    useMutation(putValidationCheckQuery());
+
+  const { mutateAsync: createValidationCheck, ...mutateStateCreateCheck } =
+    useMutation(postValidationCheckQuery());
+
+  const refetch = useCallback(async () => {
     queryStateProjectUser.refetch();
     queryStateOrganisation.refetch();
-  };
+  }, [queryStateOrganisation, queryStateProjectUser]);
 
   const { isLoading } = getCombinedQueryState([
     queryStateProjectUser,
     queryStateOrganisation,
+    mutateStateCreateCheck,
+    mutateStateEditCheck,
   ]);
-
-  const { mutateAsync: updateValidationCheck } = useMutation(
-    putValidationCheckQuery()
-  );
 
   const formatChecks = (checks: ValidationCheck[]): Rule[] => {
     return (
@@ -86,15 +100,47 @@ export default function ValidationChecks() {
     }
   }, [formattedOrganisationChecks]);
 
-  const onEdit = async (data: Partial<Rule>): Promise<void> => {
-    const { id, text } = data;
-    const payload = {
-      description: text,
-    };
-    if (!id) return;
-    await updateValidationCheck({ id, payload });
-    await refetch();
-  };
+  const onEdit = useCallback(
+    async (data: Rule): Promise<void> => {
+      const { id, text } = data;
+      const payload = {
+        description: text,
+      };
+      if (!id) return;
+
+      await updateValidationCheck({ id, payload }).then(() => refetch());
+    },
+    [updateValidationCheck, refetch]
+  );
+
+  const handleAddCheck = useCallback(
+    async (data: Rule, appliesTo: AppliesTo): Promise<void> => {
+      const { text } = data;
+      const payload = {
+        name: text,
+        description: text,
+        applies_to: appliesTo as string,
+        enabled: true,
+      };
+      await createValidationCheck(payload);
+      await refetch();
+    },
+    [refetch, createValidationCheck]
+  );
+
+  const handleAddNewUserCheck = useCallback(
+    async (data: Rule) => {
+      await handleAddCheck(data, AppliesTo.ProjectHasUser);
+    },
+    [handleAddCheck]
+  );
+
+  const handleAddOrganisationCheck = useCallback(
+    async (data: Rule) => {
+      await handleAddCheck(data, AppliesTo.Organisation);
+    },
+    [handleAddCheck]
+  );
 
   const UserRulesCheckboxList = useCallback(
     () => (
@@ -105,9 +151,23 @@ export default function ValidationChecks() {
         checked={userChecks}
         setChecked={setUserChecks}
         onEdit={onEdit}
+        onEditTitle={t("userEditTitle")}
+        rightButton={
+          <AddNewValidationCheck
+            title={t("userAddTitle")}
+            onSubmit={handleAddNewUserCheck}
+          />
+        }
       />
     ),
-    [onEdit, userChecks, formattedUserChecks, t]
+    [
+      onEdit,
+      handleAddNewUserCheck,
+      isLoading,
+      userChecks,
+      formattedUserChecks,
+      t,
+    ]
   );
 
   const OrganisationRulesCheckboxList = useCallback(
@@ -119,18 +179,72 @@ export default function ValidationChecks() {
         checked={orgChecks}
         setChecked={setOrgChecks}
         onEdit={onEdit}
+        onEditTitle={t("orgEditTitle")}
+        rightButton={
+          <AddNewValidationCheck
+            title={t("userAddTitle")}
+            onSubmit={handleAddOrganisationCheck}
+          />
+        }
       />
     ),
-    [onEdit, orgChecks, formattedOrganisationChecks, t]
+    [
+      onEdit,
+      handleAddOrganisationCheck,
+      isLoading,
+      orgChecks,
+      formattedOrganisationChecks,
+      t,
+    ]
   );
 
-  const handleSubmit = () => {};
+  const handleSubmit = async () => {
+    const changes: Promise<unknown>[] = [];
+
+    userValidationChecks?.data?.forEach((check, index) => {
+      const currentEnabled = !!userChecks[index];
+      if (check.enabled !== currentEnabled) {
+        changes.push(
+          updateValidationCheck({
+            id: check.id,
+            payload: { enabled: currentEnabled },
+          })
+        );
+      }
+    });
+
+    organisationValidationChecks?.data?.forEach((check, index) => {
+      const currentEnabled = !!orgChecks[index];
+      if (check.enabled !== currentEnabled) {
+        changes.push(
+          updateValidationCheck({
+            id: check.id,
+            payload: { enabled: currentEnabled },
+          })
+        );
+      }
+    });
+
+    await Promise.all(changes);
+    refetch();
+
+    showAlert("success", {
+      text: t("updateCheckSuccess"),
+      confirmButtonText: t("successButton"),
+    });
+  };
+
+  // leaving as a form template because we might want to switch to form update
+  // rather than auto update upon edit
   const formOptions = {};
 
   return (
     <Form onSubmit={handleSubmit} {...formOptions}>
       <UserRulesCheckboxList />
       <OrganisationRulesCheckboxList />
+      <FormActions>
+        <ButtonSave isLoading={isLoading} />
+      </FormActions>
     </Form>
   );
 }

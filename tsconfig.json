@@ -33,6 +33,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".storybook/*.tsx"
-  ],
+, "src/components/AddEditCheckboxItem"  ],
   "exclude": ["node_modules"]
 }

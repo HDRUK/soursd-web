@@ -1,16 +1,8 @@
-import React, { useEffect, useState, useMemo } from "react";
-import { List, Typography, Box, TextField } from "@mui/material";
+import React from "react";
+import { List, Typography, Box } from "@mui/material";
 import { Rule } from "@/types/rules";
-import * as yup from "yup";
-import Form from "@/components/Form";
-import FormControl from "@/components/FormControlWrapper";
-import FormActions from "@/components/FormActions";
-import { LoadingButton } from "@mui/lab";
-import { ActionMenu, ActionMenuItem } from "../ActionMenu";
 import SkeletonCheckboxList from "./Skeleton";
-import { StyledListItem, StyledListItemText } from "./CheckboxList.styles";
-import FormControlCheckbox from "../FormControlCheckbox";
-import FormModal from "../FormModal";
+import CheckboxItem from "../CheckboxItem";
 
 interface CheckboxListType {
   items: Rule[];
@@ -18,85 +10,10 @@ interface CheckboxListType {
   title: string;
   checked: boolean[];
   setChecked: (checked: boolean[]) => void;
-  onEdit?: (item: Partial<Rule>) => Promise<void>;
+  onEdit?: (updatedRule: Rule) => Promise<void>;
+  onEditTitle?: string;
+  rightButton?: React.ReactNode;
 }
-
-interface EditItemProps {
-  item: Rule;
-  onEdit: (item: Partial<Rule>) => Promise<void>;
-}
-
-const EditItem = ({ item, onEdit }: EditItemProps) => {
-  const [openModal, setOpenModal] = useState<boolean>(false);
-
-  const schema = useMemo(() => {
-    return yup.object().shape({
-      text: yup
-        .string()
-        .required("Text is required")
-        .max(255, "Max 255 characters"),
-    });
-  }, []);
-
-  const defaultValues = useMemo(
-    () => ({
-      text: item.text,
-    }),
-    [item.text]
-  );
-
-  const handleSubmit = async (formData: Partial<Rule>) => {
-    const payload = {
-      id: item.id,
-      ...formData,
-    };
-    await onEdit(payload);
-    setOpenModal(false);
-  };
-
-  return (
-    <ActionMenuItem
-      sx={{ color: "menuList1.main" }}
-      onClick={() => setOpenModal(true)}>
-      Edit
-      <FormModal
-        sx={{
-          minWidth: 600,
-        }}
-        open={openModal}
-        onClose={(e: React.SyntheticEvent) => {
-          e.preventDefault();
-          e.stopPropagation();
-          setOpenModal(false);
-        }}>
-        <Form
-          schema={schema}
-          onSubmit={handleSubmit}
-          defaultValues={defaultValues}>
-          <FormControl
-            name="text"
-            renderField={fieldProps => <TextField {...fieldProps} fullWidth />}
-          />
-
-          <FormActions>
-            <LoadingButton
-              variant="outlined"
-              onClick={(e: React.SyntheticEvent) => {
-                e.preventDefault();
-                e.stopPropagation();
-                setOpenModal(false);
-              }}>
-              Cancel
-            </LoadingButton>
-            <LoadingButton type="submit" variant="contained">
-              Save
-            </LoadingButton>
-          </FormActions>
-        </Form>
-      </FormModal>
-    </ActionMenuItem>
-  );
-};
 
 const CheckboxList = ({
   isLoading = false,
@@ -105,8 +22,9 @@ const CheckboxList = ({
   checked,
   setChecked,
   onEdit,
+  onEditTitle,
+  rightButton,
 }: CheckboxListType) => {
-  useEffect(() => {}, [title, checked]);
   const handleChange =
     (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
       const newChecked = [...checked];
@@ -116,36 +34,29 @@ const CheckboxList = ({
 
   return (
     <List>
-      <Typography variant="h6" sx={{ mb: 2 }}>
-        {title}
-      </Typography>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          mb: 2,
+        }}>
+        <Typography variant="h6">{title}</Typography>
+        {rightButton && <Box>{rightButton}</Box>}
+      </Box>
       <Box sx={{ bgcolor: "#f2f2f2", padding: 1, borderRadius: 1 }}>
         {isLoading ? (
-          <SkeletonCheckboxList />
+          <SkeletonCheckboxList n={items?.length} />
         ) : (
           items.map((rule, index) => (
-            <StyledListItem key={rule.id}>
-              <FormControlCheckbox
-                name={`checkbox-${rule.id}`}
-                checked={checked[index] || false}
-                onChange={handleChange(index)}
-                value={rule.id}
-                label={
-                  <StyledListItemText
-                    primary={
-                      rule.label && <Typography>{rule.label}:</Typography>
-                    }
-                    secondary={rule.text}
-                  />
-                }
-              />
-
-              {onEdit && (
-                <ActionMenu sx={{ ml: "auto" }}>
-                  <EditItem item={rule} onEdit={onEdit} />
-                </ActionMenu>
-              )}
-            </StyledListItem>
+            <CheckboxItem
+              key={rule.id}
+              item={rule}
+              checked={checked[index] || false}
+              onChange={handleChange(index)}
+              onEdit={onEdit}
+              heading={onEditTitle || ""}
+            />
           ))
         )}
       </Box>

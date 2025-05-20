@@ -584,6 +584,9 @@
     "subsidiaryWebsitePlaceholder": "Subsidiary website",
     "status": "Change status",
     "statusPlaceholder": "Select a status from the list",
+    "text": "Text",
+    "textPlaceholder": "Enter text here...",
+    "textRequired": "Required field",
     "SafeProject": {
       "add": "Add",
       "status": "Status",
@@ -1516,5 +1519,27 @@
     "caption": "Copied to clipboard",
     "copy": "Copy",
     "copied": "Copied"
+  },
+  "ValidationChecks": {
+    "userChecksTitle": "User validation checks",
+    "organisationChecksTitle": "Organisation validation checks",
+    "updateCheckSuccess": "Successfully updated which validation checks you have enabled",
+    "successButton": "OK",
+    "addUserValidationCheck": "Add validation check",
+    "addOrgValidationCheck": "Add validation check",
+    "userEditTitle": "Edit User validation check",
+    "orgEditTitle": "Edit Organisation validation check",
+    "userAddTitle": "Add User validation check",
+    "orgAddTitle": "Add Organisation validation check"
+  },
+  "CheckboxItem": {
+    "edit": "Edit"
+  },
+  "AddEditCheckboxItem": {
+    "cancel": "Cancel",
+    "save": "Save",
+    "label": "Description",
+    "text": "Text",
+    "textRequired": "Text is required"
   }
 }

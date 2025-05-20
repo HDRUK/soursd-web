@@ -2,9 +2,9 @@ import Skeleton from "@mui/material/Skeleton";
 import { v4 as uuidv4 } from "uuid";
 import { StyledListItem, StyledListItemText } from "./CheckboxList.styles";
 
-const SkeletonCheckboxList = () => (
+const SkeletonCheckboxList = ({ n = 4 }: { n?: number }) => (
   <>
-    {[...Array(4)].map(() => (
+    {[...Array(n)].map(() => (
       <StyledListItem key={`item${uuidv4()}`}>
         <Skeleton variant="rectangular" width={20} height={20} />
         <StyledListItemText
