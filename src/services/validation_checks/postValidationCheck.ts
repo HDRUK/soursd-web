@@ -4,9 +4,13 @@ import { postRequest } from "../requests";
 import { handleJsonResponse } from "../requestHelpers";
 
 export default async (
+  custodianId: number,
   payload: PostValidationCheck,
   options?: ResponseOptions
 ): Promise<ResponseJson<ValidationCheck>> => {
-  const response = await postRequest(`/validation_checks`, payload);
+  const response = await postRequest(
+    `/custodians/${custodianId}/validation_checks`,
+    payload
+  );
   return handleJsonResponse(response, options);
 };

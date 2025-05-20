@@ -46,7 +46,7 @@ const CheckboxList = ({
       </Box>
       <Box sx={{ bgcolor: "#f2f2f2", padding: 1, borderRadius: 1 }}>
         {isLoading ? (
-          <SkeletonCheckboxList n={items?.length} />
+          <SkeletonCheckboxList isLoading={isLoading} n={items?.length || 4} />
         ) : (
           items.map((rule, index) => (
             <CheckboxItem

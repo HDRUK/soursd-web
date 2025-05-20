@@ -48,7 +48,7 @@ export default function ValidationChecks() {
     useMutation(putValidationCheckQuery());
 
   const { mutateAsync: createValidationCheck, ...mutateStateCreateCheck } =
-    useMutation(postValidationCheckQuery());
+    useMutation(postValidationCheckQuery(custodianId as number));
 
   const refetch = useCallback(async () => {
     queryStateProjectUser.refetch();
@@ -119,7 +119,7 @@ export default function ValidationChecks() {
       const payload = {
         name: text,
         description: text,
-        applies_to: appliesTo as string,
+        applies_to: `App\\Models\\${appliesTo}` as string,
         enabled: true,
       };
       await createValidationCheck(payload);
@@ -140,62 +140,6 @@ export default function ValidationChecks() {
       await handleAddCheck(data, AppliesTo.Organisation);
     },
     [handleAddCheck]
-  );
-
-  const UserRulesCheckboxList = useCallback(
-    () => (
-      <CheckboxList
-        isLoading={isLoading}
-        items={formattedUserChecks}
-        title={t("userChecksTitle")}
-        checked={userChecks}
-        setChecked={setUserChecks}
-        onEdit={onEdit}
-        onEditTitle={t("userEditTitle")}
-        rightButton={
-          <AddNewValidationCheck
-            title={t("userAddTitle")}
-            onSubmit={handleAddNewUserCheck}
-          />
-        }
-      />
-    ),
-    [
-      onEdit,
-      handleAddNewUserCheck,
-      isLoading,
-      userChecks,
-      formattedUserChecks,
-      t,
-    ]
-  );
-
-  const OrganisationRulesCheckboxList = useCallback(
-    () => (
-      <CheckboxList
-        isLoading={isLoading}
-        items={formattedOrganisationChecks}
-        title={t("organisationChecksTitle")}
-        checked={orgChecks}
-        setChecked={setOrgChecks}
-        onEdit={onEdit}
-        onEditTitle={t("orgEditTitle")}
-        rightButton={
-          <AddNewValidationCheck
-            title={t("userAddTitle")}
-            onSubmit={handleAddOrganisationCheck}
-          />
-        }
-      />
-    ),
-    [
-      onEdit,
-      handleAddOrganisationCheck,
-      isLoading,
-      orgChecks,
-      formattedOrganisationChecks,
-      t,
-    ]
   );
 
   const handleSubmit = async () => {
@@ -240,8 +184,36 @@ export default function ValidationChecks() {
 
   return (
     <Form onSubmit={handleSubmit} {...formOptions}>
-      <UserRulesCheckboxList />
-      <OrganisationRulesCheckboxList />
+      <CheckboxList
+        isLoading={isLoading}
+        items={formattedUserChecks}
+        title={t("userChecksTitle")}
+        checked={userChecks}
+        setChecked={setUserChecks}
+        onEdit={onEdit}
+        onEditTitle={t("userEditTitle")}
+        rightButton={
+          <AddNewValidationCheck
+            title={t("userAddTitle")}
+            onSubmit={handleAddNewUserCheck}
+          />
+        }
+      />
+      <CheckboxList
+        isLoading={isLoading}
+        items={formattedOrganisationChecks}
+        title={t("organisationChecksTitle")}
+        checked={orgChecks}
+        setChecked={setOrgChecks}
+        onEdit={onEdit}
+        onEditTitle={t("orgEditTitle")}
+        rightButton={
+          <AddNewValidationCheck
+            title={t("userAddTitle")}
+            onSubmit={handleAddOrganisationCheck}
+          />
+        }
+      />
       <FormActions>
         <ButtonSave isLoading={isLoading} />
       </FormActions>

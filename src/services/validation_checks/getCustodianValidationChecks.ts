@@ -10,10 +10,6 @@ export default async (
   searchParams: SearchParams,
   options?: ResponseOptions
 ): Promise<ResponseJson<ValidationCheck[]>> => {
-  console.log(
-    "Log",
-    `/custodians/${custodianId}/validation_checks${getSearchQuerystring(searchParams)}`
-  );
   const response = await getRequest(
     `/custodians/${custodianId}/validation_checks${getSearchQuerystring(searchParams)}`
   );
