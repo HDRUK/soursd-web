@@ -24,3 +24,7 @@ export interface ShowAlertOptions {
 }
 
 export type ShowAlert = Promise<SweetAlertResult> | null;
+
+export type TranslationsProps<T> = T & {
+  t: (key: string) => string;
+};
