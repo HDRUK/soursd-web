@@ -1,12 +1,12 @@
 import React from "react";
+import { useForm, FormProvider } from "react-hook-form";
 import {
   commonAccessibilityTests,
   fireEvent,
   render,
   waitFor,
   screen,
-} from "@/utils/testUtils";
-import { useForm, FormProvider } from "react-hook-form";
+} from "../../utils/testUtils";
 import AddressForm from "./AddressForm";
 
 const Wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {

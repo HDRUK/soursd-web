@@ -1,7 +1,7 @@
-import { FileStatus, FileType } from "@/consts/files";
-import { File } from "@/types/application";
-import { FileResponse } from "@/services/files/types";
 import { ChangeEvent } from "react";
+import { FileStatus, FileType } from "../consts/files";
+import { FileResponse } from "../services/files/types";
+import { File } from "../types/application";
 
 function getLatestCV(files: FileResponse[] | undefined) {
   return [...(files || [])].reverse().find(file => file.type === FileType.CV);
@@ -55,8 +55,8 @@ export {
   getFileHref,
   getLatestCV,
   getUploadedCertification,
-  resetFileFromEvent,
   isFileScanComplete,
   isFileScanFailed,
   isFileScanning,
+  resetFileFromEvent,
 };

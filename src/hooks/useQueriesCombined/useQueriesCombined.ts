@@ -1,5 +1,5 @@
-import { getCombinedQueryState } from "@/utils/query";
 import { UseQueryOptions, useQueries } from "@tanstack/react-query";
+import { getCombinedQueryState } from "../../utils/query";
 
 interface CombinedResults<T = unknown> {
   isLoading: boolean;

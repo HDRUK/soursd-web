@@ -10,21 +10,13 @@ import PageColumnDetails from "./PageColumnDetails";
 import PageTitle from "./PageTitle";
 import UserDetailsModal from "./UserDetailsModal";
 import PageBodyContainer from "./PageBodyContainer";
-import NavBar from "./NavBar";
-import Application from "./Application";
-import ApplicationData from "./ApplicationData";
 import ProjectsFilters from "./ProjectsFilters";
-import Training from "./Training";
-import OrganisationsProjectsTable from "./OrganisationsProjectsTable";
 import OrganisationsFilters from "./OrganisationsFilters";
 import OrganisationsPeopleTable from "./OrganisationsPeopleTable";
 import Affiliations from "./Affiliations";
 
 export {
   Affiliations,
-  ApplicationData,
-  Application,
-  NavBar,
   Footer,
   Header,
   PageContainer,
@@ -38,8 +30,6 @@ export {
   PageColumns,
   PageColumnDetails,
   PageColumnBody,
-  Training,
-  OrganisationsProjectsTable,
   OrganisationsFilters,
   OrganisationsPeopleTable,
 };

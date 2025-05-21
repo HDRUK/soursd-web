@@ -1,4 +1,4 @@
-import { AddressFields } from "@/types/application";
+import { AddressFields } from "../types/application";
 
 const formatAddress = (a: AddressFields) => {
   if (!a?.address_1) {

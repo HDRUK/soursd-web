@@ -1,5 +1,5 @@
 import { useEffect, useState, Dispatch, SetStateAction } from "react";
-import { SEARCH_CHAR_LIMIT } from "@/consts/search";
+import { SEARCH_CHAR_LIMIT } from "../../consts/search";
 
 const useDebounce = <T>(
   value: T,

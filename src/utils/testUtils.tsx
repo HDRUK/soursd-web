@@ -1,8 +1,9 @@
 import ReactQueryClientProvider from "@/app/[locale]/components/ReactQueryClientProvider";
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
-import messages from "@/config/locales/en.json";
-import { LocalizationProvider } from "@mui/x-date-pickers";
+import { CookieProvider } from "@/context/CookieContext";
 import { AppCacheProvider } from "@mui/material-nextjs/v14-pagesRouter";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   RenderHookOptions,
   RenderHookResult,
@@ -12,13 +13,12 @@ import {
   render,
   renderHook,
 } from "@testing-library/react";
+import userEvent, { UserEvent } from "@testing-library/user-event";
 import mediaQuery from "css-mediaquery";
+import { axe } from "jest-axe";
 import { NextIntlClientProvider } from "next-intl";
 import React, { ReactNode } from "react";
-import { CookieProvider } from "@/context/CookieContext";
-import userEvent, { UserEvent } from "@testing-library/user-event";
-import { axe } from "jest-axe";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import messages from "../config/locales/en.json";
 
 const defineMatchMedia = (width: number) => {
   Object.defineProperty(window, "matchMedia", {
@@ -127,8 +127,8 @@ export * from "@testing-library/react";
 export * from "@testing-library/user-event";
 
 export {
+  commonAccessibilityTests,
   defineMatchMedia,
   customRender as render,
   customRenderHook as renderHook,
-  commonAccessibilityTests,
 };

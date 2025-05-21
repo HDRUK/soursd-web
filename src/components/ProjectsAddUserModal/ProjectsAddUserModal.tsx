@@ -1,10 +1,10 @@
-import FormModal, { FormModalProps } from "@/components/FormModal";
-import { putProjectUsersQuery } from "@/services/projects";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import useQueryAlerts from "@/hooks/useQueryAlerts";
-import { ProjectAllUser } from "@/types/application";
 import { useTranslations } from "next-intl";
-import { showAlert } from "@/utils/showAlert";
+import FormModal, { FormModalProps } from "../FormModal";
+import { putProjectUsersQuery } from "../../services/projects";
+import useQueryAlerts from "../../hooks/useQueryAlerts";
+import { ProjectAllUser } from "../../types/application";
+import { showAlert } from "../../utils/showAlert";
 import ProjectsAddUserForm from "../ProjectsAddUserForm";
 
 interface ProjectsAddUserModaProps extends Omit<FormModalProps, "children"> {

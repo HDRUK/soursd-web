@@ -1,12 +1,12 @@
+import { useMutation } from "@tanstack/react-query";
 import {
   postProfessionalRegistration,
   putProfessionalRegistration,
-} from "@/services/professional_registrations";
+} from "../../services/professional_registrations";
 import {
   PostProfessionalRegistrationPayload,
   PutProfessionalRegistrationPayload,
-} from "@/services/professional_registrations/types";
-import { useMutation } from "@tanstack/react-query";
+} from "../../services/professional_registrations/types";
 
 export default function useMutationUpdateProfessionalRegistration(
   registryId: number

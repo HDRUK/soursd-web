@@ -5,7 +5,7 @@ import {
   fireEvent,
   render,
   screen,
-} from "@/utils/testUtils";
+} from "../../utils/testUtils";
 import AssignOptions, { AssignOptionsProps } from "./AssignOptions";
 
 const mockSubmit = jest.fn();

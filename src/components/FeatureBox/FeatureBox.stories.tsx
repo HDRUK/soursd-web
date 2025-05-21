@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { MUI_AUGMENTED_COLOR_OPTIONS_ARG_TYPES } from "@/consts/storybook";
 import { Box, Typography } from "@mui/material";
+import { MUI_AUGMENTED_COLOR_OPTIONS_ARG_TYPES } from "../../consts/storybook";
 import { FeatureBox, FeatureBoxContent, FeatureBoxInfo } from ".";
 import Quote from "../Quote";
 

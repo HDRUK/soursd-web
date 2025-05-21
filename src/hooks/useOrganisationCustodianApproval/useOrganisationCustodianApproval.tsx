@@ -1,11 +1,11 @@
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import { useMemo } from "react";
-import { getCombinedQueryState } from "@/utils/query";
-import useQueryAlerts from "@/hooks/useQueryAlerts";
+import { getCombinedQueryState } from "../../utils/query";
+import useQueryAlerts from "../useQueryAlerts";
 import {
   getOrganisationApprovalQuery,
   postOrganisationApprovalQuery,
-} from "@/services/approvals";
+} from "../../services/approvals";
 
 type CustodianParams = {
   custodianId: string | number;

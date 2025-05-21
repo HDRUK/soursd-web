@@ -1,4 +1,4 @@
-import { renderHook, act } from "@/utils/testUtils";
+import { renderHook, act } from "../../utils/testUtils";
 import useDebounce from "./useDebounce";
 
 describe("useDebounce", () => {

@@ -3,7 +3,7 @@
 import { useStore } from "@/data/store";
 import { notFound } from "next/navigation";
 import { PageColumns, PageColumnBody } from "@/modules";
-import ProjectsSafePeople from "@/modules/ProjectsSafePeople";
+import ProjectsSafePeople from "@/organisms/ProjectsSafePeople";
 import { EntityType } from "@/types/api";
 import { getSubTabs, PageTabs, ProjectsSubTabs } from "../../consts/tabs";
 import ProjectsSafeData from "../ProjectsSafeData";

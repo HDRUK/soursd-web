@@ -1,5 +1,5 @@
-import { CustodianUserRoles } from "@/consts/custodian";
 import { mockedApiPermissions } from "@/mocks/data/store";
+import { CustodianUserRoles } from "../consts/custodian";
 import { getPermission } from "./permissions";
 
 describe("getPermission", () => {

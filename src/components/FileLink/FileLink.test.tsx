@@ -5,7 +5,7 @@ import {
   userEvent,
   render,
   screen,
-} from "@/utils/testUtils";
+} from "../../utils/testUtils";
 import FileLink, { FileLinkProps } from ".";
 
 const mockOnFileChange = jest.fn();

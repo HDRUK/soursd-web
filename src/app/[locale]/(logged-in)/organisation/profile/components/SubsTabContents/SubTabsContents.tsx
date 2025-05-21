@@ -2,10 +2,10 @@
 
 import { useStore } from "@/data/store";
 import { PageBody } from "@/modules";
-import ProjectsSafePeople from "@/modules/ProjectsSafePeople";
+import ProjectsSafePeople from "@/organisms/ProjectsSafePeople";
 import { EntityType } from "@/types/api";
 import { notFound } from "next/navigation";
-import OrganisationUsers from "@/modules/OrganisationUsers";
+import OrganisationUsers from "@/organisms/OrganisationUsers";
 import {
   DetailsPageSubTabs,
   getSubTabs,

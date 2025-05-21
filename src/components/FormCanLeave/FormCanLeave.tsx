@@ -1,8 +1,8 @@
-import useRouteChange from "@/hooks/useRouteChange";
-import { showAlert } from "@/utils/showAlert";
 import { useTranslations } from "next-intl";
 import { ReactNode } from "react";
 import { useFormState, useWatch } from "react-hook-form";
+import { showAlert } from "../../utils/showAlert";
+import useRouteChange from "../../hooks/useRouteChange";
 
 interface FormCanLeaveProps {
   children?: ReactNode;

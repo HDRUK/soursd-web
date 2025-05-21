@@ -16,7 +16,7 @@ import { getUserQuery } from "@/services/users";
 import { useTranslations } from "next-intl";
 import { notFound } from "next/navigation";
 import { useEffect } from "react";
-import ConfirmAffiliation from "@/modules/ConfirmAffiliation";
+import ConfirmAffiliation from "@/organisms/ConfirmAffiliation";
 import { UserSubTabs } from "../../../../../../consts/tabs";
 import SubTabsSections from "../SubTabSections";
 import SubTabsContents from "../SubsTabContents";

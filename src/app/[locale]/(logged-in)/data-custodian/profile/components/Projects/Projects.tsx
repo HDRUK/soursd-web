@@ -5,7 +5,7 @@ import useQueryAlerts from "@/hooks/useQueryAlerts";
 import { useRouter } from "@/i18n/routing";
 import { mockedProjectsIntro } from "@/mocks/data/cms";
 import { PageBody, PageBodyContainer } from "@/modules";
-import ProjectsList from "@/modules/Projects";
+import ProjectsList from "@/organisms/Projects";
 import { postCustodianProjectQuery } from "@/services/custodians";
 import { injectParamsIntoPath } from "@/utils/application";
 import { createProjectDefaultValues } from "@/utils/form";

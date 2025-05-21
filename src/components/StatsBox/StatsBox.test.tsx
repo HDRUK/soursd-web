@@ -1,4 +1,4 @@
-import { render, screen } from "@/utils/testUtils";
+import { render, screen } from "../../utils/testUtils";
 import StatsBox from "./StatsBox";
 
 describe("<Quote />", () => {

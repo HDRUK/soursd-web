@@ -1,6 +1,6 @@
-import Guidance, { GuidanceProps } from "@/components/Guidance";
 import { Box } from "@mui/material";
 import { ReactNode } from "react";
+import Guidance, { GuidanceProps } from "../../components/Guidance";
 
 interface PageGuidanceProps extends GuidanceProps {
   subTabs?: ReactNode;

@@ -1,11 +1,11 @@
-import ApprovalStatus from "@/components/ApprovalStatus";
-import Text from "@/components/Text";
-import ResearcherHistories from "@/modules/ResearcherHistories";
-import { HistoryCombinedData } from "@/queries/useQueriesHistories";
-import { Organisation, User } from "@/types/application";
 import { Mail } from "@mui/icons-material";
 import BusinessIcon from "@mui/icons-material/Business";
 import { Link, Typography } from "@mui/material";
+import ApprovalStatus from "../../components/ApprovalStatus";
+import Text from "../../components/Text";
+import ResearcherHistories from "../ResearcherHistories";
+import { HistoryCombinedData } from "../../queries/useQueriesHistories";
+import { Organisation, User } from "../../types/application";
 import UserCompleteStatus from "../UserCompleteStatus";
 
 interface ResearcherDetailsProps {

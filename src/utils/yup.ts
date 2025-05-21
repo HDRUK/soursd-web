@@ -1,6 +1,6 @@
-import yup from "@/config/yup";
 import { DefaultValues } from "react-hook-form";
-import { FormConfig } from "@/types/forms";
+import yup from "../config/yup";
+import { FormConfig } from "../types/forms";
 
 const generateSchema = (config: FormConfig) =>
   yup.object().shape(
@@ -30,4 +30,4 @@ const generateDefaultValues = <T>(
     {} as DefaultValues<Partial<T>>
   );
 
-export { generateSchema, generateDefaultValues };
+export { generateDefaultValues, generateSchema };

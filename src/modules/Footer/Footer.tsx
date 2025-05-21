@@ -1,13 +1,13 @@
 "use client";
 
-import SoursdLogo from "@/components/SoursdLogo";
-import UL from "@/components/UL";
 import { Link } from "@/i18n/routing";
 import { Box, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { HTMLAttributes } from "react";
-import { CONTACT_MAIL_ADDRESS } from "@/config/contacts";
+import UL from "../../components/UL";
+import SoursdLogo from "../../components/SoursdLogo";
+import { CONTACT_MAIL_ADDRESS } from "../../config/contacts";
 import PageCenter from "../PageCenter";
 import { StyledFooter, StyledBox } from "./Footer.styles";
 

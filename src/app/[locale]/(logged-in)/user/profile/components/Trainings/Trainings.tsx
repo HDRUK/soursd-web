@@ -15,7 +15,7 @@ import {
   PageGuidance,
   PageSection,
 } from "@/modules";
-import Training from "@/modules/Training";
+import Training from "@/organisms/Training";
 import { getUserQuery, patchUserQuery } from "@/services/users";
 import { User } from "@/types/application";
 import { EntityType } from "@/types/api";

@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from "@/utils/testUtils";
+import { fireEvent, render, screen, waitFor } from "../../utils/testUtils";
 import SearchActionMenu from "./SearchActionMenu";
 
 jest.mock("@mui/icons-material/FilterAlt", () => () => (

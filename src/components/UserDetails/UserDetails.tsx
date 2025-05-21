@@ -1,6 +1,6 @@
 import { Box, BoxProps, Link, Typography } from "@mui/material";
-import { getInitials } from "@/utils/application";
-import { User } from "@/types/application";
+import { getInitials } from "../../utils/application";
+import { User } from "../../types/application";
 import MaskLabel from "../MaskLabel";
 
 export interface UserDetailsProps extends BoxProps {

@@ -1,5 +1,5 @@
-import { ROUTES } from "@/consts/router";
-import { Routes } from "@/types/router";
+import { ROUTES } from "../../consts/router";
+import { Routes } from "../../types/router";
 
 export interface ConfigProps {
   config: {

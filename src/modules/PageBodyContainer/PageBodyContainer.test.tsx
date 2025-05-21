@@ -1,4 +1,8 @@
-import { commonAccessibilityTests, render, screen } from "@/utils/testUtils";
+import {
+  commonAccessibilityTests,
+  render,
+  screen,
+} from "../../utils/testUtils";
 import PageBodyContainer from "./PageBodyContainer";
 
 const renderTest = () =>

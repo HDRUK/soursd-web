@@ -1,7 +1,7 @@
-import { FEATURES } from "@/config/features";
 import { Features } from "@/types/roles";
-import { isRoleValid } from "@/utils/roles";
 import { useEffect, useState } from "react";
+import { FEATURES } from "../../config/features";
+import { isRoleValid } from "../../utils/roles";
 
 export default function useFeature(id: keyof Features) {
   const { permissions, enabled } = FEATURES[id];

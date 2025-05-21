@@ -1,5 +1,5 @@
 import { mockedUser } from "@/mocks/data/user";
-import { render, screen } from "@/utils/testUtils";
+import { render, screen } from "../../utils/testUtils";
 import UserCompleteStatus, {
   UserCompleteStatusProps,
 } from "./UserCompleteStatus";

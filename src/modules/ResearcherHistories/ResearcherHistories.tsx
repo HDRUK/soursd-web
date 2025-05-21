@@ -1,14 +1,14 @@
-import { Message } from "@/components/Message";
-import ResearcherAccreditationEntry from "@/modules/ResearcherAccreditationEntry";
-import ResearcherEducationEntry from "@/modules/ResearcherEducationEntry";
-// import ResearcherEmploymentEntry from "@/modules/ResearcherEmploymentEntry";
-import ResearcherProjectEntry from "@/modules/ResearcherProjectEntry";
-import ResearcherTrainingEntry from "@/modules/ResearcherTrainingEntry";
-import ResearcherProfessionalRegistrationsEntry from "@/modules/ResearcherProfessionalRegistrationsEntry";
-import { HistoryCombinedData } from "@/queries/useQueriesHistories";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 import { useTranslations } from "next-intl";
+import { Message } from "../../components/Message";
+import ResearcherAccreditationEntry from "../ResearcherAccreditationEntry";
+import ResearcherEducationEntry from "../ResearcherEducationEntry";
+// import ResearcherEmploymentEntry from "../../modules/ResearcherEmploymentEntry";
+import { HistoryCombinedData } from "../../queries/useQueriesHistories";
+import ResearcherProfessionalRegistrationsEntry from "../ResearcherProfessionalRegistrationsEntry";
+import ResearcherProjectEntry from "../ResearcherProjectEntry";
+import ResearcherTrainingEntry from "../ResearcherTrainingEntry";
 
 interface ResearcherHistoriesProps {
   data: HistoryCombinedData;

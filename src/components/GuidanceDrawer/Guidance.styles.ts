@@ -1,9 +1,9 @@
-import { MODE } from "@/config/theme";
-import { Position } from "@/consts/ui";
-import { isPositionVertical } from "@/utils/styles";
-import { colorToRgba } from "@/utils/theme";
 import { css, styled } from "@mui/material";
 import Drawer from "@mui/material/Drawer";
+import { MODE } from "../../config/theme";
+import { Position } from "../../consts/ui";
+import { isPositionVertical } from "../../utils/styles";
+import { colorToRgba } from "../../utils/theme";
 
 export const StyledDrawerInfo = styled(Drawer)(
   ({ theme, anchor }) => css`

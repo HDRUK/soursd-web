@@ -1,9 +1,9 @@
-import ContactLink from "@/components/ContactLink";
-import InviteOrganisation from "@/modules/InviteOrganisation";
-import useOrganisationInvite from "@/queries/useOrganisationInvite";
-import { showAlert } from "@/utils/showAlert";
 import { useTranslations } from "next-intl";
 import ReactDOMServer from "react-dom/server";
+import ContactLink from "../../components/ContactLink";
+import InviteOrganisation from "../InviteOrganisation";
+import useOrganisationInvite from "../../queries/useOrganisationInvite";
+import { showAlert } from "../../utils/showAlert";
 
 const NAMESPACE_TRANSLATIONS_ORGANISATION = "Organisation";
 

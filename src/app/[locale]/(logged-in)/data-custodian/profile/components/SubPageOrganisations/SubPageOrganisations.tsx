@@ -7,8 +7,8 @@ import {
 } from "@/modules";
 import { Organisation } from "@/types/application";
 import { useEffect } from "react";
-import ActionValidationPanel from "@/modules/ActionValidationPanel";
-import { ActionValidationVariants } from "@/modules/ActionValidationPanel/ActionValidationPanel";
+import ActionValidationPanel from "@/organisms/ActionValidationPanel";
+import { ActionValidationVariants } from "@/organisms/ActionValidationPanel/ActionValidationPanel";
 import { useQuery } from "@tanstack/react-query";
 import { getCustodianOrganisationValidationLogsQuery } from "@/services/validation_logs";
 import { PageTabs, OrganisationsSubTabs } from "../../consts/tabs";

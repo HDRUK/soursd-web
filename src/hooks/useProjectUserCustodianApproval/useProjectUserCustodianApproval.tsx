@@ -1,8 +1,8 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { projectUserCustodianApproval } from "@/services/approvals";
 import { useEffect, useState } from "react";
-import useQueryAlerts from "@/hooks/useQueryAlerts";
 import { MutationState } from "@/types/form";
+import { projectUserCustodianApproval } from "../../services/approvals";
+import useQueryAlerts from "../useQueryAlerts";
 
 type CustodianParams = {
   custodianId: string | number;

@@ -1,8 +1,5 @@
 "use client";
 
-import Text from "@/components/Text";
-import { MAX_UPLOAD_SIZE_BYTES } from "@/consts/files";
-import { FileUploadState } from "@/hooks/useFileUpload";
 import GppBadIcon from "@mui/icons-material/GppBad";
 import GppGoodIcon from "@mui/icons-material/GppGood";
 import UploadIcon from "@mui/icons-material/Upload";
@@ -17,6 +14,9 @@ import {
 import { useTranslations } from "next-intl";
 import prettyBytes from "pretty-bytes";
 import { ChangeEventHandler, ReactNode, useCallback, useRef } from "react";
+import { FileUploadState } from "../../hooks/useFileUpload";
+import { MAX_UPLOAD_SIZE_BYTES } from "../../consts/files";
+import Text from "../Text";
 
 export interface FileLinkProps extends FileUploadState {
   fileButtonText: ReactNode;

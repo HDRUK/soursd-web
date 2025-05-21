@@ -1,7 +1,7 @@
+import { Box, BoxProps } from "@mui/material";
 import SectionHeading, {
   SectionHeadingProps,
-} from "@/components/SectionHeading";
-import { Box, BoxProps } from "@mui/material";
+} from "../../components/SectionHeading";
 
 type PageBodyContainerProps = BoxProps & SectionHeadingProps;
 

@@ -3,11 +3,11 @@
 import { useStore } from "@/data/store";
 import {
   OrganisationsFilters,
-  OrganisationsProjectsTable,
   PageBody,
   PageBodyContainer,
   PageSection,
 } from "@/modules";
+import { OrganisationsProjectsTable } from "@/organisms";
 import { usePaginatedCustodianOrganisations } from "@/services/custodians";
 import { useTranslations } from "next-intl";
 

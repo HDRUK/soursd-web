@@ -1,7 +1,7 @@
 "use client";
 
 import { useStore } from "@/data/store";
-import { OrganisationsPeopleTable, PageBody, PageSection } from "@/modules";
+import { PageBody, PageSection, OrganisationsPeopleTable } from "@/modules";
 import { usePaginatedCustodianOrganisationUsers } from "@/services/custodians";
 import { useTranslations } from "next-intl";
 

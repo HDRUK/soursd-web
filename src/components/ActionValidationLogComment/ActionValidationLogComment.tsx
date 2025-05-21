@@ -1,10 +1,10 @@
 import { Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
-import { getUserQuery } from "@/services/users";
-import { getDaysSince } from "@/utils/date";
-import { capitaliseFirstLetter } from "@/utils/string";
-import { Comment } from "@/types/logs";
 import { useTranslations } from "next-intl";
+import { getUserQuery } from "../../services/users";
+import { getDaysSince } from "../../utils/date";
+import { capitaliseFirstLetter } from "../../utils/string";
+import { Comment } from "../../types/logs";
 
 interface ActionValidationLogCommentProps {
   comment: Comment;

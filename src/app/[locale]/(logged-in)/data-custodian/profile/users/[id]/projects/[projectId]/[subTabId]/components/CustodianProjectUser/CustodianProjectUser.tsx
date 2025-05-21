@@ -14,8 +14,8 @@ import { useStore } from "@/data/store";
 import { useQuery } from "@tanstack/react-query";
 import { getCustodianProjectUserValidationLogsQuery } from "@/services/validation_logs";
 import { getUserQuery } from "@/services/users";
-import ActionValidationPanel from "@/modules/ActionValidationPanel";
-import { ActionValidationVariants } from "@/modules/ActionValidationPanel/ActionValidationPanel";
+import ActionValidationPanel from "@/organisms/ActionValidationPanel";
+import { ActionValidationVariants } from "@/organisms/ActionValidationPanel/ActionValidationPanel";
 
 import getProjectQuery from "@/services/projects/getProjectQuery";
 import UserDetails from "@/components/UserDetails";

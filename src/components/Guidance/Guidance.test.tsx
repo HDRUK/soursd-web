@@ -4,7 +4,7 @@ import {
   render,
   screen,
   waitFor,
-} from "@/utils/testUtils";
+} from "../../utils/testUtils";
 import Guidance, { GuidanceProps } from "./Guidance";
 
 const renderGuidance = (props?: Partial<GuidanceProps>) => {

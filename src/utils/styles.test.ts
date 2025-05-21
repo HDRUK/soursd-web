@@ -1,4 +1,4 @@
-import { Position } from "@/consts/ui";
+import { Position } from "../consts/ui";
 import { isPositionHorizontal, isPositionVertical } from "./styles";
 
 describe("Style utils", () => {

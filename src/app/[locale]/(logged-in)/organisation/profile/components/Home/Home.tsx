@@ -7,7 +7,7 @@ import {
   PageSection,
 } from "@/modules";
 import { useTranslations } from "next-intl";
-import ActionLogs from "@/modules/ActionLogs";
+import ActionLogs from "@/organisms/ActionLogs";
 import { useStore } from "@/data/store";
 import SoursdCard from "@/components/SoursdCard";
 

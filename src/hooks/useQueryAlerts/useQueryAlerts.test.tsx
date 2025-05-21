@@ -1,5 +1,5 @@
 import { MutationState, QueryState } from "@/types/form";
-import { renderHook, screen, waitFor } from "@/utils/testUtils";
+import { renderHook, screen, waitFor } from "../../utils/testUtils";
 import useQueryAlerts, { QueryAlertOptions } from "./useQueryAlerts";
 
 const renderTest = (

@@ -1,4 +1,4 @@
-import { Organisation, User } from "@/types/application";
+import { Organisation, User } from "../types/application";
 
 function getInitialsFromUser({ first_name, last_name }: User) {
   const fullName = `${first_name} ${last_name}`;
