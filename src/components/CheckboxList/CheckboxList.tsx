@@ -1,9 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { List, Typography, Box } from "@mui/material";
 import { Rule } from "@/types/rules";
-import FormControlCheckbox from "../FormControlCheckbox";
-import { StyledListItem, StyledListItemText } from "./CheckboxList.styles";
 import SkeletonCheckboxList from "./Skeleton";
+import CheckboxItem from "../CheckboxItem";
 
 interface CheckboxListType {
   items: Rule[];
@@ -11,6 +10,9 @@ interface CheckboxListType {
   title: string;
   checked: boolean[];
   setChecked: (checked: boolean[]) => void;
+  onEdit?: (updatedRule: Rule) => Promise<void>;
+  onEditTitle?: string;
+  rightButton?: React.ReactNode;
 }
 
 const CheckboxList = ({
@@ -19,8 +21,10 @@ const CheckboxList = ({
   title,
   checked,
   setChecked,
+  onEdit,
+  onEditTitle,
+  rightButton,
 }: CheckboxListType) => {
-  useEffect(() => {}, [title, checked]);
   const handleChange =
     (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
       const newChecked = [...checked];
@@ -30,28 +34,29 @@ const CheckboxList = ({
 
   return (
     <List>
-      <Typography variant="h6" sx={{ mb: 2 }}>
-        {title}
-      </Typography>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          mb: 2,
+        }}>
+        <Typography variant="h6">{title}</Typography>
+        {rightButton && <Box>{rightButton}</Box>}
+      </Box>
       <Box sx={{ bgcolor: "#f2f2f2", padding: 1, borderRadius: 1 }}>
         {isLoading ? (
-          <SkeletonCheckboxList />
+          <SkeletonCheckboxList isLoading={isLoading} n={items?.length || 4} />
         ) : (
           items.map((rule, index) => (
-            <StyledListItem key={rule.id}>
-              <FormControlCheckbox
-                name={`checkbox-${rule.id}`}
-                checked={checked[index] || false}
-                onChange={handleChange(index)}
-                value={rule.id}
-                label={
-                  <StyledListItemText
-                    primary={<Typography>{rule.label}:</Typography>}
-                    secondary={rule.text}
-                  />
-                }
-              />
-            </StyledListItem>
+            <CheckboxItem
+              key={rule.id}
+              item={rule}
+              checked={checked[index] || false}
+              onChange={handleChange(index)}
+              onEdit={onEdit}
+              heading={onEditTitle || ""}
+            />
           ))
         )}
       </Box>

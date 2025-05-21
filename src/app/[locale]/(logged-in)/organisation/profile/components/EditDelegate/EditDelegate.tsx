@@ -27,7 +27,11 @@ const EditDelegate = ({ user, onSuccess }: DecoupleUserProps) => {
       <FormModal
         variant="form"
         open={openModal}
-        onClose={() => setOpenModal(false)}>
+        onClose={(e: React.SyntheticEvent) => {
+          e.preventDefault();
+          e.stopPropagation();
+          setOpenModal(false);
+        }}>
         <EditDelegateForm
           delegate={user}
           onCancel={() => {
