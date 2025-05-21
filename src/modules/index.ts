@@ -12,6 +12,7 @@ import UserDetailsModal from "./UserDetailsModal";
 import PageBodyContainer from "./PageBodyContainer";
 import ProjectsFilters from "./ProjectsFilters";
 import OrganisationsFilters from "./OrganisationsFilters";
+import OrganisationsPeopleTable from "./OrganisationsPeopleTable";
 import Affiliations from "./Affiliations";
 
 export {
@@ -30,4 +31,5 @@ export {
   PageColumnDetails,
   PageColumnBody,
   OrganisationsFilters,
+  OrganisationsPeopleTable,
 };

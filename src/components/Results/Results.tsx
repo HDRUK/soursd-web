@@ -5,10 +5,10 @@ import LoadingWrapper from "../LoadingWrapper";
 import { Message } from "../Message";
 
 interface ResultsProps extends BoxProps {
-  queryState: QueryState;
   noResultsMessage: ReactNode;
   errorMessage: ReactNode;
   total: number | undefined;
+  queryState?: QueryState;
   pagination?: ReactNode;
 }
 
@@ -21,8 +21,6 @@ export default function Results({
   pagination,
   ...restProps
 }: ResultsProps) {
-  const { isLoading, isError } = queryState;
-
   return (
     <Box
       {...restProps}
@@ -32,13 +30,15 @@ export default function Results({
         gap: 3,
         ...restProps.sx,
       }}>
-      {!isLoading && !total && !isError && (
+      {!queryState?.isLoading && !total && !queryState?.isError && (
         <Message severity="info">{noResultsMessage}</Message>
       )}
-      {isError && !isLoading && (
+      {queryState?.isError && !queryState?.isLoading && (
         <Message severity="error">{errorMessage}</Message>
       )}
-      <LoadingWrapper variant="basic" loading={isLoading && !isError}>
+      <LoadingWrapper
+        variant="basic"
+        loading={queryState?.isLoading && !queryState?.isError}>
         {!!total && <div role="list">{children}</div>}
       </LoadingWrapper>
       {pagination && (

@@ -4,18 +4,19 @@ import MuiPagination, {
 
 import PaginationItem from "@mui/material/PaginationItem";
 
-import { StyledPagination } from "./Pagination.styles";
-
+import { Box } from "@mui/material";
 import Next from "./Next";
 import Previous from "./Previous";
+import { paginationSx } from "./Pagination.styles";
 
 interface PaginationProps extends MuiPaginationProps {
   isLoading?: boolean;
 }
 const Pagination = ({ isLoading = false, ...rest }: PaginationProps) => {
   if (isLoading) return null;
+
   return (
-    <StyledPagination>
+    <Box sx={paginationSx}>
       <MuiPagination
         renderItem={item => (
           <PaginationItem
@@ -28,7 +29,7 @@ const Pagination = ({ isLoading = false, ...rest }: PaginationProps) => {
         )}
         {...rest}
       />
-    </StyledPagination>
+    </Box>
   );
 };
 

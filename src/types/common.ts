@@ -29,3 +29,7 @@ export type ModuleWithTranslations<T> = T & {
 };
 
 export type ShowAlert = Promise<SweetAlertResult> | null;
+
+export type TranslationsProps<T> = T & {
+  t: (key: string) => string;
+};
