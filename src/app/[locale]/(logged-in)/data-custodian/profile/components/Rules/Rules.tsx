@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState, useCallback } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { PageSection } from "@/modules";
@@ -78,32 +78,6 @@ export default function Rules() {
     }
   }, [userRulesData, orgRulesData, formattedUserRules, formattedOrgRules]);
 
-  const UserRulesCheckboxList = useCallback(
-    () => (
-      <CheckboxList
-        isLoading={isLoadingUserRules}
-        items={formattedUserRules}
-        title={t("userRulesTitle")}
-        checked={userRules}
-        setChecked={setUserRules}
-      />
-    ),
-    [isLoadingUserRules, formattedUserRules, userRules, setUserRules, t]
-  );
-
-  const OrgRulesCheckboxList = useCallback(
-    () => (
-      <CheckboxList
-        isLoading={isLoadingOrgRules}
-        items={formattedOrgRules}
-        title={t("organisationRulesTitle")}
-        checked={orgRules}
-        setChecked={setOrgRules}
-      />
-    ),
-    [isLoadingOrgRules, formattedOrgRules, orgRules, setOrgRules, t]
-  );
-
   const handleSubmit = async () => {
     const createRulePayload = (
       rulesData:
@@ -154,8 +128,20 @@ export default function Rules() {
       <PageSection
         heading={t("configurationRulesTitle")}
         description={mockedConfigurationRulesDescription}>
-        <UserRulesCheckboxList />
-        <OrgRulesCheckboxList />
+        <CheckboxList
+          isLoading={isLoadingUserRules}
+          items={formattedUserRules}
+          title={t("userRulesTitle")}
+          checked={userRules}
+          setChecked={setUserRules}
+        />
+        <CheckboxList
+          isLoading={isLoadingOrgRules}
+          items={formattedOrgRules}
+          title={t("organisationRulesTitle")}
+          checked={orgRules}
+          setChecked={setOrgRules}
+        />
       </PageSection>
       <FormActions>
         <ButtonSave isLoading={isPending} />

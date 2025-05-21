@@ -2,7 +2,9 @@ import { MutationState, QueryState } from "../types/form";
 import { SearchParams } from "../types/query";
 
 function isQueriesLoading<T extends MutationState & QueryState>(queries: T[]) {
-  return queries.some(query => query.isLoading || query.isPending);
+  return queries.some(
+    query => query.isLoading || query.isPending || query.isFetching
+  );
 }
 
 function isQueriesError<T extends MutationState & QueryState>(queries: T[]) {

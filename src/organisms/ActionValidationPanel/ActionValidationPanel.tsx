@@ -79,9 +79,11 @@ function ActionValidationPanel({
   return (
     <LoadingWrapper variant="basic" loading={queryState?.isLoading || false}>
       <ActionsPanel heading={t("title")}>
-        {logs.map(log => (
-          <ActionsPanelValidationCheck key={log.id} log={log} />
-        ))}
+        {logs
+          .filter(log => log.validation_check.enabled) // move to BE?
+          .map(log => (
+            <ActionsPanelValidationCheck key={log.id} log={log} />
+          ))}
         {actionValidationStatus}
       </ActionsPanel>
       {queryState.isError && (

@@ -2,7 +2,6 @@ import { Paper, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import ActionValidationLogComment from "../../components/ActionValidationLogComment";
 import ViewMore from "../../components/ViewMore";
-import useFallbackTranslations from "../../hooks/useFallbackTranslations";
 import { getValidationLogCommentsQuery } from "../../services/validation_logs";
 import { ValidationLog } from "../../types/logs";
 import ActionValidationMakeDecision from "../ActionValidationMakeDecision";
@@ -11,12 +10,9 @@ interface ActionsPanelValidationCheckProps {
   log: ValidationLog;
 }
 
-const NAMESPACE_TRANSLATION = "ActionsPanelValidationCheck";
-
 export default function ActionsPanelValidationCheck({
   log,
 }: ActionsPanelValidationCheckProps) {
-  const t = useFallbackTranslations(NAMESPACE_TRANSLATION);
   const { data: comments, refetch: refetchComments } = useQuery({
     ...getValidationLogCommentsQuery(log.id),
     enabled: !!log.id,
@@ -37,7 +33,7 @@ export default function ActionsPanelValidationCheck({
         borderRadius: 2,
       }}>
       <Typography variant="h5" sx={{ mb: 2 }}>
-        {t(log.name)}
+        {log.validation_check.description}
       </Typography>
 
       <ViewMore collapseNumRows={2}>
