@@ -83,44 +83,46 @@ export default function ActionLogs({ variant, panelProps }: ActionLogProps) {
           ))}
         </ActionsPanel>
       </PageBody>
-      <PageBody>
-        <Accordion
-          disableGutters
-          elevation={0}
-          sx={{
-            backgroundColor: "transparent",
-            boxShadow: "none",
-            border: 0,
-          }}>
-          <AccordionSummary>
-            <Typography variant="h3">{t("completedActions")}</Typography>
-            <ExpandMoreIcon sx={{ ml: 2 }} />
-          </AccordionSummary>
-          <AccordionDetails>
-            <List disablePadding>
-              {completedActions.map(({ id, action, completed_at }) => (
-                <ListItem key={id} disableGutters>
-                  {!!completed_at && (
-                    <CheckIcon
+      {!!completedActions.length && (
+        <PageBody>
+          <Accordion
+            disableGutters
+            elevation={0}
+            sx={{
+              backgroundColor: "transparent",
+              boxShadow: "none",
+              border: 0,
+            }}>
+            <AccordionSummary>
+              <Typography variant="h3">{t("completedActions")}</Typography>
+              <ExpandMoreIcon sx={{ ml: 2 }} />
+            </AccordionSummary>
+            <AccordionDetails>
+              <List disablePadding>
+                {completedActions.map(({ id, action, completed_at }) => (
+                  <ListItem key={id} disableGutters>
+                    {!!completed_at && (
+                      <CheckIcon
+                        sx={{
+                          mx: 1,
+                          color: completed_at ? "success.main" : "gray",
+                        }}
+                      />
+                    )}
+                    <Typography
                       sx={{
-                        mx: 1,
-                        color: completed_at ? "success.main" : "gray",
-                      }}
-                    />
-                  )}
-                  <Typography
-                    sx={{
-                      color: completed_at ? "success.main" : "inherit",
-                      textDecoration: completed_at ? "line-through" : "none",
-                    }}>
-                    {t(toCamelCase(`${action}.title`))}
-                  </Typography>
-                </ListItem>
-              ))}
-            </List>
-          </AccordionDetails>
-        </Accordion>
-      </PageBody>
+                        color: completed_at ? "success.main" : "inherit",
+                        textDecoration: completed_at ? "line-through" : "none",
+                      }}>
+                      {t(toCamelCase(`${action}.title`))}
+                    </Typography>
+                  </ListItem>
+                ))}
+              </List>
+            </AccordionDetails>
+          </Accordion>
+        </PageBody>
+      )}
     </>
   );
 }
