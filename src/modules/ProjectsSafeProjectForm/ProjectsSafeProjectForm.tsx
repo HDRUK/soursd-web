@@ -156,13 +156,24 @@ export default function UserModalDetails({
                 name="other_approval_committees"
                 addButtonLabel={tForm("add")}
                 createNewRow={() => ""}
-                renderField={(_, index) => (
-                  <FormControlWrapper
-                    displayLabel={false}
-                    placeholder={tForm("otherApprovalCommitteesPlaceholder")}
-                    name={`other_approval_committees.${index}`}
-                    renderField={fieldProps => <TextField {...fieldProps} />}
-                  />
+                renderField={(_, index, removeButton) => (
+                  <Grid container spacing={2}>
+                    <Grid item xs={5}>
+                      <FormControlWrapper
+                        displayLabel={false}
+                        placeholder={tForm(
+                          "otherApprovalCommitteesPlaceholder"
+                        )}
+                        name={`other_approval_committees.${index}`}
+                        renderField={fieldProps => (
+                          <TextField {...fieldProps} />
+                        )}
+                      />
+                    </Grid>
+                    <Grid item xs={1}>
+                      {removeButton}
+                    </Grid>
+                  </Grid>
                 )}
               />
             </Grid>

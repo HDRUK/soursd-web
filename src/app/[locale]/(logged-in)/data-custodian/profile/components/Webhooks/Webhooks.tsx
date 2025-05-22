@@ -176,17 +176,13 @@ export default function Webhooks() {
                       <FormFieldArray<WebhookFormData>
                         name="webhooks"
                         displayLabel={false}
-                        boxSx={{
-                          display: "grid",
-                          gridTemplateColumns: "10fr 1fr",
-                        }}
                         createNewRow={() => ({
                           receiver_url: "",
                           event_trigger: 1,
                         })}
-                        renderField={(field, index) => (
+                        renderField={(field, index, removeButton) => (
                           <Grid container spacing={2} key={field.receiver_url}>
-                            <Grid item xs={6}>
+                            <Grid item xs={5}>
                               <FormControlHorizontal
                                 label="Receiver URL"
                                 required
@@ -199,7 +195,7 @@ export default function Webhooks() {
                                 )}
                               />
                             </Grid>
-                            <Grid item xs={6}>
+                            <Grid item xs={5}>
                               <FormControlHorizontal
                                 label="Event Trigger"
                                 required
@@ -225,6 +221,17 @@ export default function Webhooks() {
                                   </Select>
                                 )}
                               />
+                            </Grid>
+                            <Grid item xs={1}>
+                              <Box
+                                sx={{
+                                  height: "100%",
+                                  display: "flex",
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                }}>
+                                {removeButton}
+                              </Box>
                             </Grid>
                           </Grid>
                         )}
