@@ -176,17 +176,13 @@ export default function Webhooks() {
                       <FormFieldArray<WebhookFormData>
                         name="webhooks"
                         displayLabel={false}
-                        boxSx={{
-                          display: "grid",
-                          gridTemplateColumns: "10fr 1fr",
-                        }}
                         createNewRow={() => ({
                           receiver_url: "",
                           event_trigger: 1,
                         })}
-                        renderField={(field, index) => (
+                        renderField={(field, index, removeButton) => (
                           <Grid container spacing={2} key={field.receiver_url}>
-                            <Grid item xs={6}>
+                            <Grid item xs={5}>
                               <FormControlHorizontal
                                 label="Receiver URL"
                                 required
@@ -199,7 +195,7 @@ export default function Webhooks() {
                                 )}
                               />
                             </Grid>
-                            <Grid item xs={6}>
+                            <Grid item xs={5.5}>
                               <FormControlHorizontal
                                 label="Event Trigger"
                                 required
@@ -208,21 +204,24 @@ export default function Webhooks() {
                                 name={`webhooks.${index}.event_trigger`}
                                 placeholder={tForm("name")}
                                 renderField={fieldProps => (
-                                  <Select
-                                    {...fieldProps}
-                                    inputProps={{
-                                      "aria-label": tForm(
-                                        "webhookEventAriaLabel"
-                                      ),
-                                    }}>
-                                    {webhookEventTriggers?.data.map(
-                                      ({ name, id }) => (
-                                        <MenuItem value={id} key={id}>
-                                          {name}
-                                        </MenuItem>
-                                      )
-                                    )}
-                                  </Select>
+                                  <Box sx={{ display: "flex" }}>
+                                    <Select
+                                      {...fieldProps}
+                                      inputProps={{
+                                        "aria-label": tForm(
+                                          "webhookEventAriaLabel"
+                                        ),
+                                      }}>
+                                      {webhookEventTriggers?.data.map(
+                                        ({ name, id }) => (
+                                          <MenuItem value={id} key={id}>
+                                            {name}
+                                          </MenuItem>
+                                        )
+                                      )}
+                                    </Select>
+                                    {removeButton}
+                                  </Box>
                                 )}
                               />
                             </Grid>
