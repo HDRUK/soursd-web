@@ -1,8 +1,8 @@
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { IconButton, Menu, MenuList } from "@mui/material";
-import { HTMLAttributes, ReactNode, useState } from "react";
+import { IconButton, Menu, MenuList, Box, BoxProps } from "@mui/material";
+import { ReactNode, useState } from "react";
 
-interface ActionMenuProps extends HTMLAttributes<HTMLSpanElement> {
+interface ActionMenuProps extends BoxProps {
   children: ReactNode;
   onOpen?(): void;
   onClose?(): void;
@@ -33,7 +33,7 @@ export default function ActionMenu({
   };
 
   return (
-    <span {...additionalProps}>
+    <Box component="span" {...additionalProps}>
       {!trigger && (
         <IconButton size="small" onClick={handleOpen} aria-label={ariaLabel}>
           {icon}
@@ -53,6 +53,6 @@ export default function ActionMenu({
       <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={handleClose}>
         <MenuList dense>{children}</MenuList>
       </Menu>
-    </span>
+    </Box>
   );
 }

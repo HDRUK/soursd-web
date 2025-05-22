@@ -39,10 +39,18 @@ const mockedValidationLog = (log?: Partial<ValidationLog>): ValidationLog => {
     secondary_entity_id: faker.number.int(),
     tertiary_entity_type: "App\\Models\\Registry",
     tertiary_entity_id: faker.number.int(),
-    name: faker.string.alpha({ length: 10 }).toLowerCase().replace(/ /g, "_"),
     completed_at: completedAt,
     manually_confirmed: completedAt ? (Math.random() > 0.5 ? 1 : 0) : 0,
     comments,
+    validation_check: {
+      id: faker.number.int(),
+      name: faker.string.alpha({ length: 10 }).toLowerCase().replace(/ /g, "_"),
+      description: faker.lorem.sentence(),
+      enabled: 1,
+      applies_to: "Organisation",
+      created_at: faker.date.recent().toISOString(),
+      updated_at: faker.date.recent().toISOString(),
+    },
     ...log,
   };
 };
