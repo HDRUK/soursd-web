@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { TextField, Grid, Box } from "@mui/material";
 import { AppRouterContext } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { useFormContext, Controller } from "react-hook-form";
+import { ReactNode } from "react";
 import FormFieldArray from "./FormFieldArray";
 import Form from "../Form";
 import FormControlWrapper from "../FormControlWrapper";
@@ -32,6 +33,30 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
+interface RenderFieldProps {
+  field: unknown;
+  index: number;
+  removeButton: ReactNode;
+}
+const RenderField = ({ index, removeButton }: RenderFieldProps) => {
+  const { control } = useFormContext();
+  return (
+    <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+      <Controller
+        render={({ field: subField }) => <TextField {...subField} />}
+        name={`users.${index}.name`}
+        control={control}
+      />
+      <Controller
+        render={({ field: subField }) => <TextField {...subField} />}
+        name={`users.${index}.email`}
+        control={control}
+      />
+      {removeButton}
+    </div>
+  );
+};
+
 // -- Basic example --
 const FormFieldArrayBasicProvider = props => (
   <RouterWrapper>
@@ -48,24 +73,7 @@ const FormFieldArrayBasicProvider = props => (
           name: "John Doe",
           email: "john@example.com",
         })}
-        renderField={(field, index, removeButton) => {
-          const { control } = useFormContext();
-          return (
-            <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
-              <Controller
-                render={({ field: subField }) => <TextField {...subField} />}
-                name={`users.${index}.name`}
-                control={control}
-              />
-              <Controller
-                render={({ field: subField }) => <TextField {...subField} />}
-                name={`users.${index}.email`}
-                control={control}
-              />
-              {removeButton}
-            </div>
-          );
-        }}
+        renderField={RenderField}
       />
     </Form>
   </RouterWrapper>
@@ -87,7 +95,7 @@ const FormFieldArrayWithDefaultsProvider = () => {
     <RouterWrapper>
       <Form defaultValues={defaultValues}>
         <FormFieldArray
-          name={"charities"}
+          name="charities"
           initialRowCount={1}
           minimumRows={1}
           displayLabel={false}
@@ -107,14 +115,12 @@ const FormFieldArrayWithDefaultsProvider = () => {
                   name={`charities.${index}.country`}
                   placeholder="Country"
                   renderField={({ value, onChange, ...rest }) => (
-                    <>
-                      <SelectCountry
-                        useCountryCode={false}
-                        value={value}
-                        onChange={onChange}
-                        {...rest}
-                      />
-                    </>
+                    <SelectCountry
+                      useCountryCode={false}
+                      value={value}
+                      onChange={onChange}
+                      {...rest}
+                    />
                   )}
                 />
               </Grid>
