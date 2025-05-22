@@ -1,6 +1,7 @@
 import { colorToRgba } from "@/utils/theme";
 import { createTheme } from "@mui/material";
 import { blue, blueGrey, grey, red } from "@mui/material/colors";
+import { fontSize } from "@mui/system";
 
 const MODE = "light";
 
@@ -19,6 +20,7 @@ const headingStyles = {
 const PALETTE_THEME_PURPLE_BLUE = {
   typography: {
     fontFamily: `"Inter", "Roboto", "Helvetica", "Arial", sans-serif`,
+    fontSize: 14,
     h1: {
       ...headingStyles,
       fontSize: "2.027rem",

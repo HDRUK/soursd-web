@@ -31,7 +31,7 @@ import { createPortal, unstable_batchedUpdates } from "react-dom";
 import { Box } from "@mui/system";
 import DndItem from "../DndItem";
 
-import { Project, ProjectAllUser } from "../../types/application";
+import { ProjectAllUser } from "../../types/application";
 import DndDroppableContainer from "../DndDroppableContainer";
 import DndSortableItem from "../DndSortableItem";
 import UsersBoardCard from "./UsersBoardCard";
@@ -300,8 +300,7 @@ export default function UsersBoard({
                 heading={`${containerId} (${items[containerId].length})`}
                 sx={{
                   height: "100vh",
-                  width: "fit-content",
-                  minWidth: "316px",
+                  width: "236px",
                 }}>
                 {items[containerId].map(value => {
                   return (
@@ -311,7 +310,7 @@ export default function UsersBoard({
                       id={value}
                       containerId={containerId}
                       getIndex={(i: UniqueIdentifier) => getIndex(id, items)}>
-                      <UsersBoardCard user={value} sx={{ width: "300px" }} />
+                      <UsersBoardCard user={value} sx={{ width: "220px" }} />
                     </DndSortableItem>
                   );
                 })}

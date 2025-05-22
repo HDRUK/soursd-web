@@ -18,15 +18,20 @@ const UsersBoardContainer = forwardRef<
       sx={{
         padding: 1,
         background: grey["100"],
-        display: "flex",
-        flexDirection: "column",
-        gap: 2,
         ...sx,
       }}>
-      <Typography variant="h6" sx={{ px: 1, mt: 1, mb: 2 }}>
+      <Typography variant="h6" sx={{ px: 1, my: 1, minHeight: "3.6rem" }}>
         {heading}
       </Typography>
-      {children}
+      <Box
+        {...restProps}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 2,
+        }}>
+        {children}
+      </Box>
     </Box>
   );
 });
