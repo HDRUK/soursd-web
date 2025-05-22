@@ -334,7 +334,7 @@ export default function UsersBoard({
     return (
       user && (
         <DndItem value={user.id} dragOverlay>
-          <UsersBoardCard user={user} sx={{ width: "300px" }} />
+          <UsersBoardCard user={user} sx={{ width: "220px" }} />
         </DndItem>
       )
     );
