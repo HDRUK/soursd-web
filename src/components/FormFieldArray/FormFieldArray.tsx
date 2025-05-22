@@ -11,7 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import {
   ArrayPath,
   Control,
@@ -125,7 +125,7 @@ const FormFieldArray = <T extends FieldValues>({
                 }
                 onClick={() => remove(index)}
                 data-testid="remove-from-field-array-button">
-                <DeleteIcon />
+                <DeleteIcon color="error" />
               </IconButton>
             </Tooltip>
           );

@@ -68,7 +68,7 @@ export default function Form<T extends FieldValues>({
 
   useEffect(() => {
     if (defaultValues && !deepEqual(defaultValues, prevDefaultValues.current)) {
-      //reset(defaultValues);
+      reset(defaultValues);
       prevDefaultValues.current = defaultValues;
     }
   }, [defaultValues, reset]);
