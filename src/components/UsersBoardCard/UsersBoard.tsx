@@ -36,7 +36,7 @@ import DndDroppableContainer from "../DndDroppableContainer";
 import DndSortableItem from "../DndSortableItem";
 import UsersBoardCard from "./UsersBoardCard";
 import UsersBoardColumn from "./UsersBoardColumn";
-import { columnsCoordinateGetter } from "./utils";
+import { columnsCoordinateGetter, findContainer, getIndex } from "./utils";
 
 const dropAnimation: DropAnimation = {
   sideEffects: defaultDropAnimationSideEffects({
@@ -143,36 +143,6 @@ export default function UsersBoard({
     })
   );
 
-  const findContainer = (id: UniqueIdentifier) => {
-    if (id in items) {
-      return id;
-    }
-
-    return Object.keys(items).find(key => items[key].includes(id));
-  };
-
-  const findItem = ({ id }) => {
-    let matchedItem;
-
-    Object.keys(items).forEach(key => {
-      matchedItem = items[key].find(item => item.id === id);
-
-      if (matchedItem) return;
-    });
-
-    return matchedItem;
-  };
-
-  const getIndex = (id: UniqueIdentifier) => {
-    const container = findContainer(id);
-
-    if (!container) {
-      return -1;
-    }
-
-    return items[container].indexOf(id);
-  };
-
   const onDragCancel = () => {
     if (clonedItems) {
       setItems(clonedItems);
@@ -208,8 +178,8 @@ export default function UsersBoard({
           return;
         }
 
-        const overContainer = findContainer(overId);
-        const activeContainer = findContainer(active.id);
+        const overContainer = findContainer(overId, items);
+        const activeContainer = findContainer(active.id, items);
 
         if (!overContainer || !activeContainer) {
           return;
@@ -268,7 +238,7 @@ export default function UsersBoard({
           });
         }
 
-        const activeContainer = findContainer(active.id);
+        const activeContainer = findContainer(active.id, items);
         const overId = over?.id;
 
         if (!activeContainer || overId == null) {
@@ -293,7 +263,7 @@ export default function UsersBoard({
           return;
         }
 
-        const overContainer = findContainer(overId);
+        const overContainer = findContainer(overId, items);
 
         if (overContainer) {
           const activeIndex = items[activeContainer].indexOf(active.id);
@@ -333,14 +303,14 @@ export default function UsersBoard({
                   width: "fit-content",
                   minWidth: "316px",
                 }}>
-                {items[containerId].map((value, index) => {
+                {items[containerId].map(value => {
                   return (
                     <DndSortableItem
                       disabled={isSortingContainer}
                       key={value}
                       id={value}
                       containerId={containerId}
-                      getIndex={getIndex}>
+                      getIndex={(i: UniqueIdentifier) => getIndex(id, items)}>
                       <UsersBoardCard user={value} sx={{ width: "300px" }} />
                     </DndSortableItem>
                   );

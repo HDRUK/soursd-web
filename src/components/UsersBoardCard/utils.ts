@@ -4,6 +4,7 @@ import {
   KeyboardCode,
   DroppableContainer,
   KeyboardCoordinateGetter,
+  UniqueIdentifier,
 } from "@dnd-kit/core";
 
 const directions: string[] = [
@@ -13,7 +14,7 @@ const directions: string[] = [
   KeyboardCode.Left,
 ];
 
-export const columnsCoordinateGetter: KeyboardCoordinateGetter = (
+const columnsCoordinateGetter: KeyboardCoordinateGetter = (
   event,
   { context: { active, droppableRects, droppableContainers, collisionRect } }
 ) => {
@@ -112,3 +113,29 @@ export const columnsCoordinateGetter: KeyboardCoordinateGetter = (
 
   return undefined;
 };
+
+function findContainer<T extends { id: UniqueIdentifier }>(
+  id: UniqueIdentifier,
+  items: T[]
+) {
+  if (id in items) {
+    return id;
+  }
+
+  return Object.keys(items).find(key => items[key].includes(id));
+}
+
+function getIndex<T extends { id: UniqueIdentifier }>(
+  id: UniqueIdentifier,
+  items: T[]
+) {
+  const container = findContainer(id, items);
+
+  if (!container) {
+    return -1;
+  }
+
+  return items[container].indexOf(id);
+}
+
+export { getIndex, findContainer, columnsCoordinateGetter };
