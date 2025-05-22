@@ -9,6 +9,7 @@ import yup from "@/config/yup";
 import { ResearcherProject } from "@/types/application";
 import { MutationState } from "@/types/form";
 import {
+  Box,
   FormControlLabel,
   Grid,
   Paper,
@@ -166,12 +167,12 @@ export default function UserModalDetails({
                         )}
                         name={`other_approval_committees.${index}`}
                         renderField={fieldProps => (
-                          <TextField {...fieldProps} />
+                          <Box sx={{ display: "flex" }}>
+                            <TextField {...fieldProps} fullWidth />
+                            {removeButton}
+                          </Box>
                         )}
                       />
-                    </Grid>
-                    <Grid item xs={1}>
-                      {removeButton}
                     </Grid>
                   </Grid>
                 )}

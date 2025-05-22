@@ -13,6 +13,7 @@ import { ProjectDetails } from "@/types/application";
 import { MutationState } from "@/types/form";
 import { injectParamsIntoPath } from "@/utils/application";
 import {
+  Box,
   FormControlLabel,
   Grid,
   Link,
@@ -86,12 +87,12 @@ export default function ProjectsSafeDataForm({
                     name={`datasets.${index}`}
                     placeholder={t("datasetsPlaceholder")}
                     renderField={fieldProps => (
-                      <TextField {...fieldProps} fullWidth />
+                      <Box sx={{ display: "flex" }}>
+                        <TextField {...fieldProps} fullWidth />
+                        {removeButton}
+                      </Box>
                     )}
                   />
-                </Grid>
-                <Grid item xs={1}>
-                  {removeButton}
                 </Grid>
               </Grid>
             )}

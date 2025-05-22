@@ -195,7 +195,7 @@ export default function Webhooks() {
                                 )}
                               />
                             </Grid>
-                            <Grid item xs={5}>
+                            <Grid item xs={5.5}>
                               <FormControlHorizontal
                                 label="Event Trigger"
                                 required
@@ -204,34 +204,26 @@ export default function Webhooks() {
                                 name={`webhooks.${index}.event_trigger`}
                                 placeholder={tForm("name")}
                                 renderField={fieldProps => (
-                                  <Select
-                                    {...fieldProps}
-                                    inputProps={{
-                                      "aria-label": tForm(
-                                        "webhookEventAriaLabel"
-                                      ),
-                                    }}>
-                                    {webhookEventTriggers?.data.map(
-                                      ({ name, id }) => (
-                                        <MenuItem value={id} key={id}>
-                                          {name}
-                                        </MenuItem>
-                                      )
-                                    )}
-                                  </Select>
+                                  <Box sx={{ display: "flex" }}>
+                                    <Select
+                                      {...fieldProps}
+                                      inputProps={{
+                                        "aria-label": tForm(
+                                          "webhookEventAriaLabel"
+                                        ),
+                                      }}>
+                                      {webhookEventTriggers?.data.map(
+                                        ({ name, id }) => (
+                                          <MenuItem value={id} key={id}>
+                                            {name}
+                                          </MenuItem>
+                                        )
+                                      )}
+                                    </Select>
+                                    {removeButton}
+                                  </Box>
                                 )}
                               />
-                            </Grid>
-                            <Grid item xs={1}>
-                              <Box
-                                sx={{
-                                  height: "100%",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  justifyContent: "center",
-                                }}>
-                                {removeButton}
-                              </Box>
                             </Grid>
                           </Grid>
                         )}

@@ -203,7 +203,7 @@ export default function DigitalIdentifiers() {
                                 )}
                               />
                             </Grid>
-                            <Grid item xs={5}>
+                            <Grid item xs={5.5}>
                               <FormControlWrapper
                                 displayLabel
                                 fullWidth
@@ -211,20 +211,12 @@ export default function DigitalIdentifiers() {
                                 name={`charities.${index}.registration_id`}
                                 placeholder={tForm("textFieldPlaceholder")}
                                 renderField={fieldProps => (
-                                  <TextField {...fieldProps} />
+                                  <Box sx={{ display: "flex" }}>
+                                    <TextField {...fieldProps} />
+                                    {removeButton}
+                                  </Box>
                                 )}
                               />
-                            </Grid>
-                            <Grid item xs={1}>
-                              <Box
-                                sx={{
-                                  height: "100%",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  justifyContent: "center",
-                                }}>
-                                {removeButton}
-                              </Box>
                             </Grid>
                           </Grid>
                         )}
