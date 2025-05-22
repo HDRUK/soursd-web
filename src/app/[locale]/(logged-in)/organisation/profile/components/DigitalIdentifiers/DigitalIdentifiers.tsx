@@ -4,7 +4,6 @@ import ContactLink from "@/components/ContactLink";
 import Form from "@/components/Form/Form";
 import FormActions from "@/components/FormActions";
 import Checkbox from "@mui/material/Checkbox";
-import FormControlHorizontal from "@/components/FormControlHorizontal";
 import FormFieldArray from "@/components/FormFieldArray";
 import SelectCountry from "@/components/SelectCountry";
 import yup from "@/config/yup";
@@ -12,7 +11,7 @@ import { VALIDATION_CHARITY_ID, VALIDATION_ROR_ID } from "@/consts/form";
 
 import { useStore } from "@/data/store";
 import { PageBody, PageSection } from "@/modules";
-import { Grid, Link, TextField } from "@mui/material";
+import { Box, Grid, Link, TextField } from "@mui/material";
 import { useTranslations } from "next-intl";
 import React, { useMemo } from "react";
 import { ROUTES } from "@/consts/router";
@@ -20,6 +19,7 @@ import { useRouter } from "next/navigation";
 import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
 import { Charity } from "@/types/application";
 import usePatchOrganisation from "../../hooks/usePatchOrganisation";
+import FormControlWrapper from "@/components/FormControlWrapper";
 
 export interface DigitalIdentifiersFormValues {
   companies_house_no: string;
@@ -125,8 +125,8 @@ export default function DigitalIdentifiers() {
             return (
               <>
                 <Grid container rowSpacing={3}>
-                  <Grid item xs={12}>
-                    <FormControlHorizontal
+                  <Grid item xs={7}>
+                    <FormControlWrapper
                       name="companies_house_no"
                       renderField={fieldProps => <TextField {...fieldProps} />}
                       description={tOrgProfile.rich(
@@ -144,8 +144,8 @@ export default function DigitalIdentifiers() {
                     />
                   </Grid>
 
-                  <Grid item xs={12}>
-                    <FormControlHorizontal
+                  <Grid item xs={7}>
+                    <FormControlWrapper
                       name="ror_id"
                       renderField={fieldProps => <TextField {...fieldProps} />}
                       description={tForm.rich("rorIdDescription", {
@@ -158,8 +158,9 @@ export default function DigitalIdentifiers() {
                     />
                   </Grid>
 
-                  <Grid item xs={12}>
-                    <FormControlHorizontal
+                  <Grid item xs={7}>
+                    <FormControlWrapper
+                      labelPosition="right"
                       name="isCharity"
                       label={tForm("isCharity")}
                       description={tOrgProfile("isCharityDescription")}
@@ -171,63 +172,61 @@ export default function DigitalIdentifiers() {
 
                   {watch("isCharity") && (
                     <Grid item xs={12}>
-                      <FormControlHorizontal
-                        displayLabel={false}
-                        displayPlaceholder={false}
-                        labelMd={0}
-                        contentMd={12}
+                      <FormFieldArray<FormData>
                         name="charities"
-                        renderField={fieldProps => (
-                          <FormFieldArray<FormData>
-                            name={fieldProps.name}
-                            boxSx={{
-                              display: "grid",
-                              p: 0,
-                              gridTemplateColumns: "2fr 3fr 1fr",
-                            }}
-                            initialRowCount={1}
-                            minimumRows={1}
-                            createNewRow={() => ({
-                              registration_id: "",
-                              country: "United Kingdom",
-                            })}
-                            addButtonLabel={tForm("addAnotherCharity")}
-                            renderField={(field, index) => (
-                              <React.Fragment key={field.name}>
-                                <FormControlHorizontal
-                                  displayLabel
-                                  label={tForm("country")}
-                                  labelMd={0}
-                                  contentMd={12}
-                                  name={`charities.${index}.country`}
-                                  placeholder="Country"
-                                  renderField={({
-                                    value,
-                                    onChange,
-                                    ...rest
-                                  }) => (
-                                    <SelectCountry
-                                      useCountryCode={false}
-                                      value={value}
-                                      onChange={onChange}
-                                      {...rest}
-                                    />
-                                  )}
-                                />
-                                <FormControlHorizontal
-                                  displayLabel
-                                  label={tForm("charityRegistrationId")}
-                                  labelMd={0}
-                                  contentMd={12}
-                                  name={`charities.${index}.registration_id`}
-                                  placeholder={tForm("textFieldPlaceholder")}
-                                  renderField={fieldProps => (
-                                    <TextField {...fieldProps} />
-                                  )}
-                                />
-                              </React.Fragment>
-                            )}
-                          />
+                        initialRowCount={1}
+                        minimumRows={1}
+                        displayLabel={false}
+                        createNewRow={() => ({
+                          country: "United Kingdom",
+                          registration_id: "",
+                        })}
+                        addButtonLabel={tForm("addAnotherCharity")}
+                        renderField={(field, index, removeButton) => (
+                          <Grid container columnSpacing={3} key={field.id}>
+                            <Grid item xs={5}>
+                              <FormControlWrapper
+                                fullWidth
+                                sx={{
+                                  width: "100%",
+                                }}
+                                label={tForm("country")}
+                                name={`charities.${index}.country`}
+                                placeholder="Country"
+                                renderField={({ value, onChange, ...rest }) => (
+                                  <SelectCountry
+                                    useCountryCode={false}
+                                    value={value}
+                                    onChange={onChange}
+                                    {...rest}
+                                  />
+                                )}
+                              />
+                            </Grid>
+                            <Grid item xs={5}>
+                              <FormControlWrapper
+                                displayLabel
+                                fullWidth
+                                label={tForm("charityRegistrationId")}
+                                name={`charities.${index}.registration_id`}
+                                placeholder={tForm("textFieldPlaceholder")}
+                                renderField={fieldProps => (
+                                  <TextField {...fieldProps} />
+                                )}
+                              />
+                            </Grid>
+                            <Grid item xs={1}>
+                              <Box
+                                sx={{
+                                  height: "100%",
+                                  display: "flex",
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                }}>
+                                {removeButton}
+                              </Box>
+                            </Grid>
+                          </Grid>
                         )}
                       />
                     </Grid>

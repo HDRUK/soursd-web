@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  Box,
   FormControl,
   FormControlLabelProps,
   FormHelperText,
@@ -29,6 +30,7 @@ export interface FormControlProps
   displayPlaceholder?: boolean;
   fullWidth?: boolean;
   t?: ReturnType<typeof useTranslations>;
+  labelPosition?: "top" | "left" | "right";
 }
 
 const NAMESPACE_TRANSLATION_FORM = "Form";
@@ -45,12 +47,8 @@ export default function FormControlWrapper({
   description,
   t,
   disabled,
-  sx = {
-    m: 0,
-    width: "100%",
-    display: "flex",
-    alignItems: "flex-start",
-  },
+  labelPosition = "top",
+  sx = {},
 }: FormControlProps) {
   let tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
 
@@ -66,6 +64,23 @@ export default function FormControlWrapper({
   const { isFieldRequired } = context;
   const isRequired = isFieldRequired?.(name);
 
+  const isHorizontal = labelPosition === "left" || labelPosition === "right";
+  const flexDirection =
+    labelPosition === "top"
+      ? "column"
+      : labelPosition === "left"
+        ? "row"
+        : "row-reverse";
+
+  const controlSx = {
+    m: 0,
+    width: "100%",
+    display: "flex",
+    alignItems: isHorizontal ? "center" : "flex-start",
+    flexDirection,
+    ...sx,
+  };
+
   return (
     <Controller
       disabled={context.formState.disabled || disabled}
@@ -75,29 +90,39 @@ export default function FormControlWrapper({
         field: { ref, ...field },
         fieldState: { invalid, error },
       }) => (
-        <FormControl sx={sx} fullWidth={fullWidth} error={invalid}>
-          {displayLabel && (
-            <FormLabel htmlFor={field.name} sx={{ pb: 1 }}>
-              {label || tForm(tKey)}
-              {isRequired && <span style={{ color: "red" }}>*</span>}
-            </FormLabel>
-          )}
-          {renderField({
-            id: field.name,
-            inputRef: ref,
-            error: invalid,
-            placeholder: displayPlaceholder
-              ? placeholder || tForm(`${tKey}Placeholder`)
-              : "",
-            fullWidth,
-            "data-testid": field.name,
-            "aria-labelledby": `${field.name}-label`,
-            ...field,
-          })}
-          {!!description && (
-            <FormControlDescription>{description}</FormControlDescription>
-          )}
-          {error && <FormHelperText>{error.message}</FormHelperText>}
+        <FormControl
+          error={invalid}
+          sx={{ width: "100%", display: "flex", flexDirection: "column" }}>
+          <Box sx={controlSx}>
+            <Box sx={{ width: fullWidth ? "100%" : "auto" }}>
+              {displayLabel && (
+                <FormLabel htmlFor={field.name} sx={{ pb: 1 }}>
+                  {label || tForm(tKey)}
+                  {isRequired && <span style={{ color: "red" }}>*</span>}
+                </FormLabel>
+              )}
+            </Box>
+            <Box sx={{ flex: 1, width: fullWidth ? "100%" : "auto" }}>
+              {renderField({
+                id: field.name,
+                inputRef: ref,
+                error: invalid,
+                placeholder: displayPlaceholder
+                  ? placeholder || tForm(`${tKey}Placeholder`)
+                  : "",
+                fullWidth,
+                "data-testid": field.name,
+                "aria-labelledby": `${field.name}-label`,
+                ...field,
+              })}
+            </Box>
+          </Box>
+          <Box sx={{ width: "100%", mt: 1 }}>
+            {!!description && (
+              <FormControlDescription>{description}</FormControlDescription>
+            )}
+            {error && <FormHelperText>{error.message}</FormHelperText>}
+          </Box>
         </FormControl>
       )}
     />

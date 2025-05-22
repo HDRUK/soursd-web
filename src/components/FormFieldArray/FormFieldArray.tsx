@@ -11,7 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import {
   ArrayPath,
   Control,
@@ -31,7 +31,11 @@ interface FormFieldArrayProps<
   name: ArrayPath<T>;
   control?: Control<T>;
   createNewRow?: () => F;
-  renderField: (field: F, index: number) => React.ReactNode;
+  renderField: (
+    field: F,
+    index: number,
+    removeButton?: React.ReactNode
+  ) => React.ReactNode;
   removeButtonLabel?: string;
   addButtonLabel?: string;
   boxSx?: SxProps;
@@ -111,27 +115,26 @@ const FormFieldArray = <T extends FieldValues>({
     <div>
       {displayLabel && <Typography>{t(toCamelCase(name))}</Typography>}
       <Box sx={{ pb: 1, gap: 2, display: "flex", flexDirection: "column" }}>
-        {fieldsArray.map((field, index) => (
-          <Box key={field.id} sx={{ gap: 3, ...boxSx }}>
-            {renderField(field, index)}
-            <Box
-              sx={{
-                mt: 4,
-              }}>
-              <Tooltip title={removeButtonLabel || t("arrayRemoveButton")}>
-                <IconButton
-                  disabled={
-                    isDisabled ||
-                    !!(minimumRows && fieldsArray.length <= minimumRows)
-                  }
-                  onClick={() => remove(index)}
-                  data-testid="remove-from-field-array-button">
-                  <DeleteIcon />
-                </IconButton>
-              </Tooltip>
+        {fieldsArray.map((field, index) => {
+          const removeButton = (
+            <Tooltip title={removeButtonLabel || t("arrayRemoveButton")}>
+              <IconButton
+                disabled={
+                  isDisabled ||
+                  !!(minimumRows && fieldsArray.length <= minimumRows)
+                }
+                onClick={() => remove(index)}
+                data-testid="remove-from-field-array-button">
+                <DeleteIcon />
+              </IconButton>
+            </Tooltip>
+          );
+          return (
+            <Box key={field.id} sx={{ gap: 3, ...boxSx }}>
+              {renderField(field, index, removeButton)}
             </Box>
-          </Box>
-        ))}
+          );
+        })}
         {rootErrors?.message && (
           <Typography color="error">{rootErrors.message}</Typography>
         )}
