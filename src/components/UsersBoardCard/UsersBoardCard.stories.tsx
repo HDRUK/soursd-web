@@ -1,36 +1,51 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { mockedProjectUser } from "@/mocks/data/custodian";
-import { renderUserNameCell } from "@/utils/cells";
-import { Grid, Typography } from "@mui/material";
-import UserBoardCard from ".";
-import UsersBoard from "../UsersBoard";
-import UsersBoardColumn from "../UsersBoardColumn";
-import Text from "../Text";
-import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import { rectSortingStrategy } from "@dnd-kit/sortable";
+import UsersBoard from "./UsersBoard";
 
 const meta = {
   title: "components/UserBoardCard",
-  component: UserBoardCard,
+  component: UsersBoard,
   tags: ["autodocs"],
-} satisfies Meta<typeof UserBoardCard>;
+} satisfies Meta<typeof UsersBoard>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const newIssuesList = [mockedProjectUser({ id: 1 })];
+const formReceived = [mockedProjectUser({ id: 1 })];
 
-const openIssuesList = [
-  mockedProjectUser({ id: 2 }),
-  mockedProjectUser({ id: 3 }),
-  mockedProjectUser({ id: 4 }),
-  mockedProjectUser({ id: 5 }),
+const validationInProgressData = [
+  mockedProjectUser({ id: 2, first_name: "Chevy", last_name: "Chase" }),
+  mockedProjectUser({ id: 3, first_name: "Sigourney", last_name: "Weaver" }),
+  mockedProjectUser({ id: 4, first_name: "John", last_name: "Smith" }),
+  mockedProjectUser({ id: 5, first_name: "Will", last_name: "Weaton" }),
+];
+
+const validationComplete = [
+  mockedProjectUser({ id: 6, first_name: "Alexander", last_name: "Siddig" }),
+];
+
+const infoRequested = [
+  mockedProjectUser({ id: 7, first_name: "Colm", last_name: "Meaney" }),
+];
+
+const escalation = [
+  mockedProjectUser({ id: 8, first_name: "Michael", last_name: "Dorn" }),
+];
+
+const validated = [
+  mockedProjectUser({ id: 9, first_name: "Marina", last_name: "Sirtis" }),
 ];
 
 const initialData = {
-  new: newIssuesList,
-  open: openIssuesList,
+  "Form Received": formReceived,
+  "Validation In Progress": validationInProgressData,
+  "Validation Complete": validationComplete,
+  "More User Information Requested": infoRequested,
+  "Escalation to Validation Committee": escalation,
+  Validated: validated,
 };
 
 export const Draggable: Story = {
@@ -39,58 +54,11 @@ export const Draggable: Story = {
   },
   render: props => {
     return (
-      <UsersBoard initialData={initialData}>
-        {state => {
-          const gridWidth = 12 / Object.keys(initialData).length;
-
-          return (
-            <Grid container columnSpacing={2}>
-              {Object.keys(state).map((key: string) => {
-                return (
-                  <Grid item xs={gridWidth}>
-                    <UsersBoardColumn
-                      id={key}
-                      heading={`Form Received (${state[key].length})`}>
-                      {state[key].map(data => {
-                        console.log("DATA", data);
-                        return (
-                          <UserBoardCard key={data.id} id={data.id} data={data}>
-                            <Typography
-                              variant="h6"
-                              sx={{
-                                color: "menuList1.main",
-                                mb: 1,
-                              }}>
-                              {renderUserNameCell(data)}
-                            </Typography>
-                            <Typography color="success.main">
-                              {data.organisation_name}
-                            </Typography>
-                            <Typography>
-                              {data.project_name} (id: {data.project_id})
-                            </Typography>
-                            <Typography>{data.project_role}</Typography>
-                            <Text
-                              startIcon={
-                                <PersonOutlineIcon
-                                  sx={{
-                                    color: "success.main",
-                                  }}
-                                />
-                              }>
-                              Project & SDE
-                            </Text>
-                          </UserBoardCard>
-                        );
-                      })}
-                    </UsersBoardColumn>
-                  </Grid>
-                );
-              })}
-            </Grid>
-          );
-        }}
-      </UsersBoard>
+      <UsersBoard
+        initialData={initialData}
+        strategy={rectSortingStrategy}
+        vertical={false}
+      />
     );
   },
 };

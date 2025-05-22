@@ -1,0 +1,382 @@
+import {
+  CancelDrop,
+  CollisionDetection,
+  DndContext,
+  DragOverlay,
+  DropAnimation,
+  KeyboardCoordinateGetter,
+  KeyboardSensor,
+  MeasuringStrategy,
+  Modifiers,
+  MouseSensor,
+  TouchSensor,
+  UniqueIdentifier,
+  closestCenter,
+  defaultDropAnimationSideEffects,
+  getFirstCollision,
+  pointerWithin,
+  rectIntersection,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import {
+  SortableContext,
+  SortingStrategy,
+  arrayMove,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal, unstable_batchedUpdates } from "react-dom";
+
+import { Box } from "@mui/system";
+import DndItem from "../DndItem";
+
+import { ProjectAllUser } from "../../types/application";
+import DndDroppableContainer from "../DndDroppableContainer";
+import DndSortableItem from "../DndSortableItem";
+import UsersBoardCard from "./UsersBoardCard";
+import UsersBoardColumn from "./UsersBoardColumn";
+import { columnsCoordinateGetter } from "./utils";
+
+const dropAnimation: DropAnimation = {
+  sideEffects: defaultDropAnimationSideEffects({
+    styles: {
+      active: {
+        opacity: "0.5",
+      },
+    },
+  }),
+};
+
+type Items = Record<UniqueIdentifier, ProjectAllUser[]>;
+
+interface UsersBoardProps {
+  adjustScale?: boolean;
+  cancelDrop?: CancelDrop;
+  columns?: number;
+  containerStyle?: React.CSSProperties;
+  coordinateGetter?: KeyboardCoordinateGetter;
+  wrapperStyle?(args: { index: number }): React.CSSProperties;
+  renderItem?: any;
+  strategy?: SortingStrategy;
+  modifiers?: Modifiers;
+  scrollable?: boolean;
+  vertical?: boolean;
+  initialData: Items;
+}
+
+const PLACEHOLDER_ID = "placeholder";
+
+export default function UsersBoard({
+  adjustScale = false,
+  cancelDrop,
+  initialData,
+  coordinateGetter = columnsCoordinateGetter,
+  modifiers,
+  strategy = verticalListSortingStrategy,
+  vertical = false,
+}: UsersBoardProps) {
+  const [items, setItems] = useState(initialData);
+  const [containers, setContainers] = useState(
+    Object.keys(items) as UniqueIdentifier[]
+  );
+  const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
+  const lastOverId = useRef<UniqueIdentifier | null>(null);
+  const recentlyMovedToNewContainer = useRef(false);
+  const isSortingContainer = activeId ? containers.includes(activeId) : false;
+
+  const collisionDetectionStrategy: CollisionDetection = useCallback(
+    args => {
+      if (activeId && activeId in items) {
+        return closestCenter({
+          ...args,
+          droppableContainers: args.droppableContainers.filter(
+            container => container.id in items
+          ),
+        });
+      }
+
+      const pointerIntersections = pointerWithin(args);
+      const intersections =
+        pointerIntersections.length > 0
+          ? pointerIntersections
+          : rectIntersection(args);
+      let overId = getFirstCollision(intersections, "id");
+
+      if (overId != null) {
+        if (overId in items) {
+          const containerItems = items[overId];
+
+          if (containerItems.length > 0) {
+            overId = closestCenter({
+              ...args,
+              droppableContainers: args.droppableContainers.filter(
+                container =>
+                  container.id !== overId &&
+                  containerItems.includes(container.id)
+              ),
+            })[0]?.id;
+          }
+        }
+
+        lastOverId.current = overId;
+
+        return [{ id: overId }];
+      }
+
+      if (recentlyMovedToNewContainer.current) {
+        lastOverId.current = activeId;
+      }
+
+      return lastOverId.current ? [{ id: lastOverId.current }] : [];
+    },
+    [activeId, items]
+  );
+
+  const [clonedItems, setClonedItems] = useState<Items | null>(null);
+
+  const sensors = useSensors(
+    useSensor(MouseSensor),
+    useSensor(TouchSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter,
+    })
+  );
+
+  const findContainer = (id: UniqueIdentifier) => {
+    if (id in items) {
+      return id;
+    }
+
+    return Object.keys(items).find(key => items[key].includes(id));
+  };
+
+  const findItem = ({ id }) => {
+    let matchedItem;
+
+    Object.keys(items).forEach(key => {
+      matchedItem = items[key].find(item => item.id === id);
+
+      if (matchedItem) return;
+    });
+
+    return matchedItem;
+  };
+
+  const getIndex = (id: UniqueIdentifier) => {
+    const container = findContainer(id);
+
+    if (!container) {
+      return -1;
+    }
+
+    return items[container].indexOf(id);
+  };
+
+  const onDragCancel = () => {
+    if (clonedItems) {
+      setItems(clonedItems);
+    }
+
+    setActiveId(null);
+    setClonedItems(null);
+  };
+
+  useEffect(() => {
+    requestAnimationFrame(() => {
+      recentlyMovedToNewContainer.current = false;
+    });
+  }, [items]);
+
+  return (
+    <DndContext
+      sensors={sensors}
+      collisionDetection={collisionDetectionStrategy}
+      measuring={{
+        droppable: {
+          strategy: MeasuringStrategy.Always,
+        },
+      }}
+      onDragStart={({ active }) => {
+        setActiveId(active.id);
+        setClonedItems(items);
+      }}
+      onDragOver={({ active, over }) => {
+        const overId = over?.id;
+
+        if (overId == null || active.id in items) {
+          return;
+        }
+
+        const overContainer = findContainer(overId);
+        const activeContainer = findContainer(active.id);
+
+        if (!overContainer || !activeContainer) {
+          return;
+        }
+
+        if (activeContainer !== overContainer) {
+          setItems(items => {
+            const activeItems = items[activeContainer];
+            const overItems = items[overContainer];
+            const overIndex = overItems.indexOf(overId);
+            const activeIndex = activeItems.indexOf(active.id);
+
+            let newIndex: number;
+
+            if (overId in items) {
+              newIndex = overItems.length + 1;
+            } else {
+              const isBelowOverItem =
+                over &&
+                active.rect.current.translated &&
+                active.rect.current.translated.top >
+                  over.rect.top + over.rect.height;
+
+              const modifier = isBelowOverItem ? 1 : 0;
+
+              newIndex =
+                overIndex >= 0 ? overIndex + modifier : overItems.length + 1;
+            }
+
+            recentlyMovedToNewContainer.current = true;
+
+            return {
+              ...items,
+              [activeContainer]: items[activeContainer].filter(
+                item => item !== active.id
+              ),
+              [overContainer]: [
+                ...items[overContainer].slice(0, newIndex),
+                items[activeContainer][activeIndex],
+                ...items[overContainer].slice(
+                  newIndex,
+                  items[overContainer].length
+                ),
+              ],
+            };
+          });
+        }
+      }}
+      onDragEnd={({ active, over }) => {
+        if (active.id in items && over?.id) {
+          setContainers(containers => {
+            const activeIndex = containers.indexOf(active.id);
+            const overIndex = containers.indexOf(over.id);
+
+            return arrayMove(containers, activeIndex, overIndex);
+          });
+        }
+
+        const activeContainer = findContainer(active.id);
+        const overId = over?.id;
+
+        if (!activeContainer || overId == null) {
+          setActiveId(null);
+          return;
+        }
+
+        if (overId === PLACEHOLDER_ID) {
+          const newContainerId = getNextContainerId();
+
+          unstable_batchedUpdates(() => {
+            setContainers(containers => [...containers, newContainerId]);
+            setItems(items => ({
+              ...items,
+              [activeContainer]: items[activeContainer].filter(
+                id => id !== activeId
+              ),
+              [newContainerId]: [active.id],
+            }));
+            setActiveId(null);
+          });
+          return;
+        }
+
+        const overContainer = findContainer(overId);
+
+        if (overContainer) {
+          const activeIndex = items[activeContainer].indexOf(active.id);
+          const overIndex = items[overContainer].indexOf(overId);
+
+          if (activeIndex !== overIndex) {
+            setItems(items => ({
+              ...items,
+              [overContainer]: arrayMove(
+                items[overContainer],
+                activeIndex,
+                overIndex
+              ),
+            }));
+          }
+        }
+
+        setActiveId(null);
+      }}
+      cancelDrop={cancelDrop}
+      onDragCancel={onDragCancel}
+      modifiers={modifiers}>
+      <Box
+        sx={{
+          display: "inline-grid",
+          boxSizing: "border-box",
+          gridAutoFlow: vertical ? "row" : "column",
+          gap: 2,
+        }}>
+        {containers.map(containerId => (
+          <DndDroppableContainer key={containerId} id={containerId}>
+            <SortableContext items={items[containerId]} strategy={strategy}>
+              <UsersBoardColumn
+                heading={`${containerId} (${items[containerId].length})`}
+                sx={{
+                  height: "100vh",
+                  width: "fit-content",
+                  minWidth: "316px",
+                }}>
+                {items[containerId].map((value, index) => {
+                  return (
+                    <DndSortableItem
+                      disabled={isSortingContainer}
+                      key={value}
+                      id={value}
+                      containerId={containerId}
+                      getIndex={getIndex}>
+                      <UsersBoardCard user={value} sx={{ width: "300px" }} />
+                    </DndSortableItem>
+                  );
+                })}
+              </UsersBoardColumn>
+            </SortableContext>
+          </DndDroppableContainer>
+        ))}
+      </Box>
+      {createPortal(
+        <DragOverlay adjustScale={adjustScale} dropAnimation={dropAnimation}>
+          {activeId &&
+            !containers.includes(activeId) &&
+            renderSortableItemDragOverlay(activeId)}
+        </DragOverlay>,
+        document.body
+      )}
+    </DndContext>
+  );
+
+  function renderSortableItemDragOverlay(id: UniqueIdentifier) {
+    const user = findItem(id);
+
+    return (
+      user && (
+        <DndItem value={id} dragOverlay>
+          <UsersBoardCard user={user} sx={{ width: "300px" }} />
+        </DndItem>
+      )
+    );
+  }
+
+  function getNextContainerId() {
+    const containerIds = Object.keys(items);
+    const lastContainerId = containerIds[containerIds.length - 1];
+
+    return String.fromCharCode(lastContainerId.charCodeAt(0) + 1);
+  }
+}

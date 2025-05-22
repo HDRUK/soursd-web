@@ -1,49 +1,50 @@
-import { useDraggable } from "@dnd-kit/core";
-import { CSS } from "@dnd-kit/utilities";
-import { Card, SxProps } from "@mui/material";
-import { ReactNode } from "react";
+import { ProjectAllUser } from "@/types/application";
+import { renderUserNameCell } from "@/utils/cells";
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import { Card, CardProps, Typography } from "@mui/material";
+import Text from "../Text";
 
-interface UsersBoardCardProps<T> {
-  id: string;
-  data: T;
-  children: ReactNode;
-  isDraggable?: boolean;
+export interface UsersBoardCardProps extends CardProps {
+  user: ProjectAllUser;
 }
 
-export default function UsersBoardCard<T>({
-  id,
-  data,
-  children,
-  isDraggable = true,
-}: UsersBoardCardProps<T>) {
-  const { attributes, listeners, setNodeRef, transform, isDragging } =
-    useDraggable({
-      id,
-      data,
-      disabled: !isDraggable,
-    });
-
-  let draggableSx: SxProps = {
-    p: 1,
-    cursor: "move",
-  };
-
-  if (isDragging) {
-    draggableSx = {
-      ...draggableSx,
-      background: "#F6DFF1",
-      transform: `${CSS.Translate.toString(transform)}${isDragging ? " rotate(10deg)" : ""}`,
-    };
-  } else if (isDraggable) {
-    draggableSx = {
-      ...draggableSx,
-      cursor: "pointer",
-    };
-  }
+export default function UsersBoardCard({
+  user,
+  sx,
+  ...restProps
+}: UsersBoardCardProps) {
+  const { organisation_name, project_id, project_name, project_role } = user;
 
   return (
-    <Card ref={setNodeRef} {...listeners} {...attributes} sx={draggableSx}>
-      {children}
+    <Card
+      sx={{
+        p: 2,
+        ...sx,
+      }}
+      {...restProps}>
+      <Typography
+        variant="h6"
+        sx={{
+          color: "menuList1.main",
+          mb: 1,
+        }}>
+        {renderUserNameCell(user)}
+      </Typography>
+      <Typography color="success.main">{organisation_name}</Typography>
+      <Typography sx={{ wordBreak: "break-word" }}>
+        {project_name} (id: {project_id})
+      </Typography>
+      <Typography>{project_role}</Typography>
+      <Text
+        startIcon={
+          <PersonOutlineIcon
+            sx={{
+              color: "success.main",
+            }}
+          />
+        }>
+        Project & SDE
+      </Text>
     </Card>
   );
 }

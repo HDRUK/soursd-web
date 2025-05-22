@@ -1,5 +1,5 @@
 import { GetCustodianProjectUserResponse } from "@/services/custodians";
-import { CustodianUser, Custodian } from "@/types/application";
+import { CustodianUser, Custodian, ProjectAllUser } from "@/types/application";
 import { faker } from "@faker-js/faker";
 
 const mockedCustodian = (custodian?: Partial<Custodian>): Custodian => ({
@@ -31,9 +31,7 @@ const mockedCustodianUser = (
   user_permissions: custodianUser?.user_permissions || [],
 });
 
-const mockedProjectUser = (
-  props: Partial<GetCustodianProjectUserResponse>
-) => ({
+const mockedProjectUser = (props: Partial<ProjectAllUser>): ProjectAllUser => ({
   id: 1,
   first_name: "Dan",
   last_name: "Ackroyd",

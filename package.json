@@ -12,7 +12,6 @@
     "test": "jest --transformIgnorePatterns \"node_modules/(?!pretty-bytes)/\" --env=jsdom",
     "test:watch": "TZ=UTC jest --watch --transformIgnorePatterns \"node_modules/(?!pretty-bytes)/\"  --env=jsdom",
     "test:coverage": "jest --coverage",
-    "pre-commit": "npx lint-staged",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "chromatic": "npx chromatic --project-token=$CHROMATIC_PROJECT_TOKEN"
