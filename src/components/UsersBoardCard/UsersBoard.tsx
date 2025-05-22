@@ -31,7 +31,7 @@ import { createPortal, unstable_batchedUpdates } from "react-dom";
 import { Box } from "@mui/system";
 import DndItem from "../DndItem";
 
-import { ProjectAllUser } from "../../types/application";
+import { Project, ProjectAllUser } from "../../types/application";
 import DndDroppableContainer from "../DndDroppableContainer";
 import DndSortableItem from "../DndSortableItem";
 import UsersBoardCard from "./UsersBoardCard";
@@ -353,7 +353,7 @@ export default function UsersBoard({
       {createPortal(
         <DragOverlay adjustScale={adjustScale} dropAnimation={dropAnimation}>
           {activeId &&
-            !containers.includes(activeId) &&
+            !containers.includes(activeId.id) &&
             renderSortableItemDragOverlay(activeId)}
         </DragOverlay>,
         document.body
@@ -361,12 +361,10 @@ export default function UsersBoard({
     </DndContext>
   );
 
-  function renderSortableItemDragOverlay(id: UniqueIdentifier) {
-    const user = findItem(id);
-
+  function renderSortableItemDragOverlay(user: ProjectAllUser) {
     return (
       user && (
-        <DndItem value={id} dragOverlay>
+        <DndItem value={user.id} dragOverlay>
           <UsersBoardCard user={user} sx={{ width: "300px" }} />
         </DndItem>
       )
