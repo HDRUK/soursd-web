@@ -782,6 +782,7 @@
     "col1": "Field",
     "col2": "Old Value",
     "col3": "New Value",
+    "colValue": "Value",
     "toolTipMarkAsUnread": "Mark message as unread and close!"
   },
   "Organisation": {

@@ -76,8 +76,6 @@ export default function NotificationModal({
     approveOrDenyRequest(requestId, status);
   };
 
-  console.log(notification.data.details);
-
   return (
     <Modal
       data-testid="notification-modal"
@@ -218,7 +216,7 @@ export default function NotificationModal({
                 <TableHead>
                   <TableRow>
                     <TableCell>{t("col1")}</TableCell>
-                    <TableCell>{t("col3")}</TableCell>
+                    <TableCell>{t("colValue")}</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
