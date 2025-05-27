@@ -76,6 +76,16 @@ export default function NotificationModal({
     approveOrDenyRequest(requestId, status);
   };
 
+  const { details } = notification.data;
+  const isDetailsObject = typeof details === "object";
+
+  const hasOldNewStructure =
+    isDetailsObject &&
+    Object.values(details).some(
+      val =>
+        typeof val === "object" && val !== null && "old" in val && "new" in val
+    );
+
   return (
     <Modal
       data-testid="notification-modal"
@@ -179,31 +189,49 @@ export default function NotificationModal({
               ))}
             </List>
           )}
-
-          {Array.isArray(notification.data.details) ? (
+          {isDetailsObject ? (
             <TableContainer
               component={Paper}
               sx={{ marginTop: 0, width: "100%" }}>
               <Table size="small">
                 <TableHead>
                   <TableRow>
-                    <TableCell>{t("col1")}</TableCell>
-                    <TableCell align="right">{t("col2")}</TableCell>
-                    <TableCell align="right">{t("col3")}</TableCell>
+                    <TableCell>{t("colField")}</TableCell>
+                    {hasOldNewStructure ? (
+                      <>
+                        <TableCell align="right">{t("colOldValue")}</TableCell>
+                        <TableCell align="right">{t("colNewValue")}</TableCell>
+                      </>
+                    ) : (
+                      <TableCell align="right">{t("colValue")}</TableCell>
+                    )}
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {notification.data.details.map(
-                    ({ key, old, new: newValue }) => (
-                      <TableRow key={key}>
-                        <TableCell component="th" scope="row">
-                          {key}
+                  {Object.entries(details).map(([key, value]) => (
+                    <TableRow key={key}>
+                      <TableCell component="th" scope="row">
+                        {key}
+                      </TableCell>
+                      {typeof value === "object" &&
+                      value !== null &&
+                      "old" in value &&
+                      "new" in value ? (
+                        <>
+                          <TableCell align="right">
+                            {value.old ?? "—"}
+                          </TableCell>
+                          <TableCell align="right">
+                            {value.new ?? "—"}
+                          </TableCell>
+                        </>
+                      ) : (
+                        <TableCell align="right" colSpan={2}>
+                          {value ?? "—"}
                         </TableCell>
-                        <TableCell align="right">{old}</TableCell>
-                        <TableCell align="right">{newValue}</TableCell>
-                      </TableRow>
-                    )
-                  )}
+                      )}
+                    </TableRow>
+                  ))}
                 </TableBody>
               </Table>
             </TableContainer>
@@ -211,7 +239,6 @@ export default function NotificationModal({
             <>
               <Box
                 sx={{ mb: 1 }}
-                /* This purposefully doesn't use DOMPurify as we explicitly control the content from the API */
                 dangerouslySetInnerHTML={{
                   __html: notification.data.details || "No further details.",
                 }}
@@ -229,9 +256,9 @@ export default function NotificationModal({
                       key={id}
                       variant="contained"
                       color={name === "Approve" ? "primary" : "secondary"}
-                      onClick={() => {
-                        handleApproveOrDeny(id, name === "Approve" ? 1 : 2);
-                      }}>
+                      onClick={() =>
+                        handleApproveOrDeny(id, name === "Approve" ? 1 : 2)
+                      }>
                       {name}
                     </Button>
                   )
