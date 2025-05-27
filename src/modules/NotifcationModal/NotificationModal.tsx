@@ -76,6 +76,8 @@ export default function NotificationModal({
     approveOrDenyRequest(requestId, status);
   };
 
+  console.log(notification.data.details);
+
   return (
     <Modal
       data-testid="notification-modal"
@@ -207,11 +209,36 @@ export default function NotificationModal({
                 </TableBody>
               </Table>
             </TableContainer>
+          ) : typeof notification.data.details === "object" &&
+            notification.data.details !== null ? (
+            <TableContainer
+              component={Paper}
+              sx={{ marginTop: 0, width: "100%" }}>
+              <Table size="small">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>{t("col1")}</TableCell>
+                    <TableCell>{t("col3")}</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {Object.entries(notification.data.details).map(
+                    ([key, value]) => (
+                      <TableRow key={key}>
+                        <TableCell component="th" scope="row">
+                          {key}
+                        </TableCell>
+                        <TableCell>{value ?? "—"}</TableCell>
+                      </TableRow>
+                    )
+                  )}
+                </TableBody>
+              </Table>
+            </TableContainer>
           ) : (
             <>
               <Box
                 sx={{ mb: 1 }}
-                /* This purposefully doesn't use DOMPurify as we explicitly control the content from the API */
                 dangerouslySetInnerHTML={{
                   __html: notification.data.details || "No further details.",
                 }}
@@ -229,9 +256,9 @@ export default function NotificationModal({
                       key={id}
                       variant="contained"
                       color={name === "Approve" ? "primary" : "secondary"}
-                      onClick={() => {
-                        handleApproveOrDeny(id, name === "Approve" ? 1 : 2);
-                      }}>
+                      onClick={() =>
+                        handleApproveOrDeny(id, name === "Approve" ? 1 : 2)
+                      }>
                       {name}
                     </Button>
                   )
