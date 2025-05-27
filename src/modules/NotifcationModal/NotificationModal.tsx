@@ -77,7 +77,7 @@ export default function NotificationModal({
   };
 
   const { details } = notification.data;
-  const isDetailsObject = typeof details === "object" && details !== null;
+  const isDetailsObject = typeof details === "object" && details !== undefined;
 
   const hasOldNewStructure =
     isDetailsObject &&
