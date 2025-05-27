@@ -779,9 +779,10 @@
     "orcIdSuccessDescription": "Employment, educaton and qualifications has been gathered from your ORCiD profile. You will need to reload the page to see the updates."
   },
   "NotificationsModal": {
-    "col1": "Field",
-    "col2": "Old Value",
-    "col3": "New Value",
+    "colField": "Field",
+    "colOldValue": "Old Value",
+    "colNewValue": "New Value",
+    "colValue": "Value",
     "toolTipMarkAsUnread": "Mark message as unread and close!"
   },
   "Organisation": {
