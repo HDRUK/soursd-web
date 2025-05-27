@@ -17,6 +17,8 @@ const Home = () => {
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const organisation = useStore(state => state.getOrganisation());
 
+  console.log(organisation);
+
   return (
     <PageBodyContainer heading={tProfile("homeTitle")}>
       <PageColumns>
