@@ -173,7 +173,7 @@ type User = ModelState<{
   orcid_scanning_completed_at: string | null;
   created_at: string;
   feed_source?: UserFeedSource;
-  unclaimed?: boolean;
+  unclaimed?: number;
   registry: {
     digi_ident: string;
     files?: File[];
