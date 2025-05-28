@@ -194,7 +194,7 @@ export default function AffiliationsPage() {
               heading={
                 selectedAffiliation
                   ? tProfile("editAffiliationForm")
-                  : tProfile("addAffiliationForm")
+                  : tProfile("addAffiliationSelectOrganisationForm")
               }>
               <AffiliationsForm
                 onClose={() => {

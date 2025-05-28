@@ -53,6 +53,8 @@ export default function AffiliationsForm({
     number | null
   >();
 
+  const [organisationExists, setOrganisationExists] = useState<boolean>(false);
+
   const { data: organisationsData, refetch: refetchOrganisations } =
     useOrganisationsQuery();
 
@@ -80,6 +82,7 @@ export default function AffiliationsForm({
         organisation_id: yup
           .string()
           .required(tForm("organisationRequiredInvalid")),
+        organisation_email: yup.string().optional(),
         relationship: yup
           .string()
           .required(tForm("relationshipRequiredInvalid")),
@@ -204,6 +207,24 @@ export default function AffiliationsForm({
                     }
                   />
                 </Grid>
+                <Grid item xs={12}>
+                  <FormControlWrapper
+                    name="organisation_email"
+                    renderField={fieldProps => <TextField {...fieldProps} />}
+                    description={
+                      !!initialValues &&
+                      !initialValues?.email && (
+                        <Box sx={{ display: "flex", color: "warning.main" }}>
+                          <WarningIcon />
+                          <Typography>
+                            {tProfile("affiliationsEmailWarningMessage")}
+                          </Typography>
+                        </Box>
+                      )
+                    }
+                  />
+                </Grid>
+
                 {useDepartment && (
                   <Grid item xs={12}>
                     <FormControlWrapper
