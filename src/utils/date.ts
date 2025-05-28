@@ -21,7 +21,7 @@ function formatStringToISO(date?: string) {
   return date ? format(date, "yyyy-MM-dd") : undefined;
 }
 
-function getDate(date?: string) {
+function getDate(date?: string | null) {
   return date ? new Date(date) : undefined;
 }
 
