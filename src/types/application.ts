@@ -127,6 +127,8 @@ type UserProfileCompletionJson = Record<
 
 interface Auth {
   email: string;
+  given_name: string;
+  family_name: string;
 }
 
 type Identity = {

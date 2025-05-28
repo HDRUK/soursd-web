@@ -162,8 +162,8 @@ export default function NavBar() {
                   {text || icon}
                 </Button>
               ))}
-              {storedUser && <NotificationsMenu />}
-              {storedUser && (
+              {storedUser?.unclaimed === false && <NotificationsMenu />}
+              {storedUser?.unclaimed === false && (
                 <MaskLabel
                   initials={`${getInitials(`${storedUser?.first_name} ${storedUser?.last_name}`)}`}
                   label=""
@@ -229,7 +229,7 @@ export default function NavBar() {
                 </Button>
               </MenuItem>
             ))}
-            {storedUser && (
+            {storedUser?.unclaimed === false && (
               <MenuItem
                 key="Notifications"
                 sx={{
