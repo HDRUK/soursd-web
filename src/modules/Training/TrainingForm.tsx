@@ -10,7 +10,7 @@ import DateInput from "@/components/DateInput";
 import { FileType } from "@/consts/files";
 import yup from "@/config/yup";
 import dayjs from "dayjs";
-import { formatDBDate } from "@/utils/date";
+import { formatDBDate, getDate } from "@/utils/date";
 import { PostTrainingsPayload } from "@/services/trainings/types";
 import useFileUpload from "@/hooks/useFileUpload";
 import useUserFileUpload from "@/hooks/useUserFileUpload";
@@ -139,8 +139,8 @@ export default function TrainingForm({
     defaultValues: {
       provider: initialValues?.provider || "",
       training_name: initialValues?.training_name || "",
-      awarded_at: initialValues?.awarded_at || "",
-      expires_at: initialValues?.expires_at || "",
+      awarded_at: getDate(initialValues?.awarded_at) || "",
+      expires_at: getDate(initialValues?.expires_at) || "",
     },
   };
 
