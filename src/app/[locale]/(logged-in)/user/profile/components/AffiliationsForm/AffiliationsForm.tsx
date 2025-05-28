@@ -26,6 +26,7 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo, useState } from "react";
+import { getDate } from "@/utils/date";
 import AskOrganisationModal from "../AskOrganisation";
 
 export interface AffiliationsFormProps {
@@ -104,15 +105,15 @@ export default function AffiliationsForm({
         current_employer:
           (!!initialValues?.from && !initialValues?.to) || false,
         relationship: initialValues?.relationship || "",
-        from: initialValues?.from || null,
-        to: initialValues?.to || null,
+        from: getDate(initialValues?.from) || null,
+        to: getDate(initialValues?.to) || null,
         role: initialValues?.role || "",
         email: initialValues?.email || "",
         ror: "", // keeping this blank for now
         department: "", // keeping this blank for now
       },
     }),
-    []
+    [initialValues]
   );
 
   const relationshipOptions = [
@@ -153,8 +154,11 @@ export default function AffiliationsForm({
         schema={schema}
         {...formOptions}
         sx={{ mb: 3 }}>
-        {({ watch }) => {
+        {({ watch, setValue }) => {
           const isCurrent = watch("current_employer");
+          if (isCurrent) {
+            setValue("to", null, { shouldValidate: true });
+          }
 
           return (
             <>
