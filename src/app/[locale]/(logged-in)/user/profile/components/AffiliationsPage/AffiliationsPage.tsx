@@ -120,6 +120,15 @@ export default function AffiliationsPage() {
       return (
         <ActionMenu>
           <ActionMenuItem
+            onClick={() => {
+              setSelectedAffiliation(affiliation);
+              setOpen(true);
+            }}
+            sx={{ color: "menuList1.main" }}
+            icon={<CreateOutlinedIcon sx={{ color: "menuList1.main" }} />}>
+            {tProfile("viewOrEdit")}
+          </ActionMenuItem>
+          <ActionMenuItem
             onClick={() => showConfirmDelete(affiliation.id)}
             sx={{ color: "error.main" }}
             icon={<DeleteOutlineOutlinedIcon sx={{ color: "error.main" }} />}>
@@ -136,15 +145,6 @@ export default function AffiliationsPage() {
               {tProfile("reinviteOrganisation")}
             </ActionMenuItem>
           )}
-          <ActionMenuItem
-            onClick={() => {
-              setSelectedAffiliation(affiliation);
-              setOpen(true);
-            }}
-            sx={{ color: "menuList1.main" }}
-            icon={<CreateOutlinedIcon sx={{ color: "menuList1.main" }} />}>
-            {tProfile("viewOrEdit")}
-          </ActionMenuItem>
         </ActionMenu>
       );
     },
