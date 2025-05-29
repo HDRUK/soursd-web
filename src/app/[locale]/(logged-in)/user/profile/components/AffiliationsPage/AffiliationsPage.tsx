@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useMutation } from "@tanstack/react-query";
 import { CellContext } from "@tanstack/react-table";
@@ -81,30 +81,34 @@ export default function AffiliationsPage() {
     handleSubmit: handleCreateAndInviteOrganisation,
   } = useOrganisationInvite();
 
-  const combinedQueryState = getCombinedQueryState([
-    inviteQueryState,
-    postAffiliationQueryState,
-    patchAffiliationQueryState,
-  ]) as QueryState;
+  const combinedQueryState = getCombinedQueryState(
+    [inviteQueryState, postAffiliationQueryState, patchAffiliationQueryState],
+    false
+  ) as QueryState;
 
-  useQueryAlerts(combinedQueryState, {
-    commonAlertProps: {
-      willClose: () => {
-        setOpen(false);
-        setSelectedAffiliation(undefined);
+  useQueryAlerts(
+    selectedAffiliation
+      ? patchAffiliationQueryState
+      : postAffiliationQueryState,
+    {
+      commonAlertProps: {
+        willClose: () => {
+          setOpen(false);
+          setSelectedAffiliation(undefined);
+        },
       },
-    },
-    successAlertProps: {
-      confirmButtonText: tProfile("affiliationActionSuccessButton"),
-      text: selectedAffiliation
-        ? tProfile("patchAffiliationSuccess")
-        : tProfile("postAffiliationSuccess"),
-    },
-    errorAlertProps: {
-      text: renderErrorToString(tProfile, "affiliationActionError"),
-      confirmButtonText: tProfile("affiliationActionErrorButton"),
-    },
-  });
+      successAlertProps: {
+        confirmButtonText: tProfile("affiliationActionSuccessButton"),
+        text: selectedAffiliation
+          ? tProfile("patchAffiliationSuccess")
+          : tProfile("postAffiliationSuccess"),
+      },
+      errorAlertProps: {
+        text: renderErrorToString(tProfile, "affiliationActionError"),
+        confirmButtonText: tProfile("affiliationActionErrorButton"),
+      },
+    }
+  );
 
   const showConfirmDelete = useQueryConfirmAlerts(restDeleteState, {
     confirmAlertProps: {

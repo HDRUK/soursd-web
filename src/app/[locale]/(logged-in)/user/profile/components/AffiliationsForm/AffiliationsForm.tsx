@@ -99,9 +99,8 @@ export default function AffiliationsForm({
           .email(tForm("professionalEmailFormatInvalid"))
           .when("current_employer", {
             is: (value: boolean) => !!value,
-            otherwise: schema =>
-              schema.required(tForm("professionalEmailRequired")),
-            then: schema => schema.notRequired(),
+            otherwise: schema => schema.notRequired(),
+            then: schema => schema.required(tForm("professionalEmailRequired")),
           }),
       }),
     [tForm, selectOrganisation]
