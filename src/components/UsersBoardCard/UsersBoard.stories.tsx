@@ -54,11 +54,7 @@ export const Draggable: Story = {
   },
   render: props => {
     return (
-      <UsersBoard
-        initialData={initialData}
-        strategy={rectSortingStrategy}
-        vertical={false}
-      />
+      <UsersBoard initialData={initialData} strategy={rectSortingStrategy} />
     );
   },
 };

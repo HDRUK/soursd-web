@@ -31,8 +31,8 @@ export default function UsersBoardCard({
         {renderUserNameCell(user)}
       </Typography>
       <Typography color="success.main">{organisation_name}</Typography>
-      <Typography sx={{ wordBreak: "break-word" }}>
-        {project_name} (id: {project_id})
+      <Typography sx={{ wordBreak: "break-word", width: 220 }}>
+        <span>{project_name}</span>
       </Typography>
       <Typography>{project_role}</Typography>
       <Text

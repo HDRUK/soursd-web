@@ -2,6 +2,8 @@ import {
   CancelDrop,
   CollisionDetection,
   DndContext,
+  DragEndEvent,
+  DragOverEvent,
   DragOverlay,
   DropAnimation,
   KeyboardCoordinateGetter,
@@ -36,7 +38,13 @@ import DndDroppableContainer from "../DndDroppableContainer";
 import DndSortableItem from "../DndSortableItem";
 import UsersBoardCard from "./UsersBoardCard";
 import UsersBoardColumn from "./UsersBoardColumn";
-import { columnsCoordinateGetter, findContainer, getIndex } from "./utils";
+import {
+  columnsCoordinateGetter,
+  findContainer,
+  findItem,
+  findItemIndex,
+  getIndex,
+} from "./utils";
 
 const dropAnimation: DropAnimation = {
   sideEffects: defaultDropAnimationSideEffects({
@@ -77,61 +85,12 @@ export default function UsersBoard({
   vertical = false,
 }: UsersBoardProps) {
   const [items, setItems] = useState(initialData);
-  const [containers, setContainers] = useState(
-    Object.keys(items) as UniqueIdentifier[]
-  );
+  const [containers] = useState(Object.keys(items) as UniqueIdentifier[]);
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
+  // const lastContainerId = useRef<UniqueIdentifier | null>(null);
   const lastOverId = useRef<UniqueIdentifier | null>(null);
   const recentlyMovedToNewContainer = useRef(false);
   const isSortingContainer = activeId ? containers.includes(activeId) : false;
-
-  const collisionDetectionStrategy: CollisionDetection = useCallback(
-    args => {
-      if (activeId && activeId in items) {
-        return closestCenter({
-          ...args,
-          droppableContainers: args.droppableContainers.filter(
-            container => container.id in items
-          ),
-        });
-      }
-
-      const pointerIntersections = pointerWithin(args);
-      const intersections =
-        pointerIntersections.length > 0
-          ? pointerIntersections
-          : rectIntersection(args);
-      let overId = getFirstCollision(intersections, "id");
-
-      if (overId != null) {
-        if (overId in items) {
-          const containerItems = items[overId];
-
-          if (containerItems.length > 0) {
-            overId = closestCenter({
-              ...args,
-              droppableContainers: args.droppableContainers.filter(
-                container =>
-                  container.id !== overId &&
-                  containerItems.includes(container.id)
-              ),
-            })[0]?.id;
-          }
-        }
-
-        lastOverId.current = overId;
-
-        return [{ id: overId }];
-      }
-
-      if (recentlyMovedToNewContainer.current) {
-        lastOverId.current = activeId;
-      }
-
-      return lastOverId.current ? [{ id: lastOverId.current }] : [];
-    },
-    [activeId, items]
-  );
 
   const [clonedItems, setClonedItems] = useState<Items | null>(null);
 
@@ -143,13 +102,99 @@ export default function UsersBoard({
     })
   );
 
-  const onDragCancel = () => {
+  const handleDragCancel = () => {
     if (clonedItems) {
       setItems(clonedItems);
     }
 
     setActiveId(null);
     setClonedItems(null);
+  };
+
+  const handleDragEnd = ({ over, active }: DragEndEvent) => {
+    if (!over?.id) {
+      setActiveId(null);
+      return;
+    }
+
+    const overContainer = findContainer(over.id, items);
+    const activeContainer = findContainer(active.id, items);
+
+    if (overContainer && activeContainer && over?.id) {
+      const activeIndex = findItemIndex(activeContainer, active.id, items);
+      const overIndex = findItemIndex(overContainer, over.id, items);
+
+      if (activeIndex !== overIndex) {
+        setItems(items => ({
+          ...items,
+          [overContainer]: arrayMove(
+            items[overContainer],
+            activeIndex,
+            overIndex
+          ),
+        }));
+      }
+    }
+
+    setActiveId(null);
+  };
+
+  const handleDragOver = ({ active, over }: DragOverEvent) => {
+    const overId = over?.id;
+
+    if (overId == null || active.id in items) {
+      return;
+    }
+
+    const overContainer = findContainer(overId, items);
+    const activeContainer = findContainer(active.id, items);
+
+    if (!overContainer || !activeContainer) {
+      return;
+    }
+
+    if (activeContainer !== overContainer) {
+      setItems(items => {
+        const activeItems = items[activeContainer];
+        const overItems = items[overContainer];
+        const overIndex = overItems.findIndex(({ id }) => id === overId);
+        const activeIndex = activeItems.findIndex(({ id }) => id === active.id);
+
+        let newIndex: number;
+
+        if (overId in items) {
+          newIndex = overItems.length + 1;
+        } else {
+          const isBelowOverItem =
+            over &&
+            active.rect.current.translated &&
+            active.rect.current.translated.top >
+              over.rect.top + over.rect.height;
+
+          const modifier = isBelowOverItem ? 1 : 0;
+
+          newIndex =
+            overIndex >= 0 ? overIndex + modifier : overItems.length + 1;
+        }
+
+        recentlyMovedToNewContainer.current = true;
+
+        return {
+          ...items,
+          [activeContainer]: items[activeContainer].filter(
+            item => item.id !== active.id
+          ),
+          [overContainer]: [
+            ...items[overContainer].slice(0, newIndex),
+            items[activeContainer][activeIndex],
+            ...items[overContainer].slice(
+              newIndex,
+              items[overContainer].length
+            ),
+          ],
+        };
+      });
+    }
   };
 
   useEffect(() => {
@@ -161,7 +206,6 @@ export default function UsersBoard({
   return (
     <DndContext
       sensors={sensors}
-      collisionDetection={collisionDetectionStrategy}
       measuring={{
         droppable: {
           strategy: MeasuringStrategy.Always,
@@ -171,126 +215,16 @@ export default function UsersBoard({
         setActiveId(active.id);
         setClonedItems(items);
       }}
-      onDragOver={({ active, over }) => {
-        const overId = over?.id;
-
-        if (overId == null || active.id in items) {
-          return;
-        }
-
-        const overContainer = findContainer(overId, items);
-        const activeContainer = findContainer(active.id, items);
-
-        if (!overContainer || !activeContainer) {
-          return;
-        }
-
-        if (activeContainer !== overContainer) {
-          setItems(items => {
-            const activeItems = items[activeContainer];
-            const overItems = items[overContainer];
-            const overIndex = overItems.indexOf(overId);
-            const activeIndex = activeItems.indexOf(active.id);
-
-            let newIndex: number;
-
-            if (overId in items) {
-              newIndex = overItems.length + 1;
-            } else {
-              const isBelowOverItem =
-                over &&
-                active.rect.current.translated &&
-                active.rect.current.translated.top >
-                  over.rect.top + over.rect.height;
-
-              const modifier = isBelowOverItem ? 1 : 0;
-
-              newIndex =
-                overIndex >= 0 ? overIndex + modifier : overItems.length + 1;
-            }
-
-            recentlyMovedToNewContainer.current = true;
-
-            return {
-              ...items,
-              [activeContainer]: items[activeContainer].filter(
-                item => item !== active.id
-              ),
-              [overContainer]: [
-                ...items[overContainer].slice(0, newIndex),
-                items[activeContainer][activeIndex],
-                ...items[overContainer].slice(
-                  newIndex,
-                  items[overContainer].length
-                ),
-              ],
-            };
-          });
-        }
-      }}
-      onDragEnd={({ active, over }) => {
-        if (active.id in items && over?.id) {
-          setContainers(containers => {
-            const activeIndex = containers.indexOf(active.id);
-            const overIndex = containers.indexOf(over.id);
-
-            return arrayMove(containers, activeIndex, overIndex);
-          });
-        }
-
-        const activeContainer = findContainer(active.id, items);
-        const overId = over?.id;
-
-        if (!activeContainer || overId == null) {
-          setActiveId(null);
-          return;
-        }
-
-        if (overId === PLACEHOLDER_ID) {
-          const newContainerId = getNextContainerId();
-
-          unstable_batchedUpdates(() => {
-            setContainers(containers => [...containers, newContainerId]);
-            setItems(items => ({
-              ...items,
-              [activeContainer]: items[activeContainer].filter(
-                id => id !== activeId
-              ),
-              [newContainerId]: [active.id],
-            }));
-            setActiveId(null);
-          });
-          return;
-        }
-
-        const overContainer = findContainer(overId, items);
-
-        if (overContainer) {
-          const activeIndex = items[activeContainer].indexOf(active.id);
-          const overIndex = items[overContainer].indexOf(overId);
-
-          if (activeIndex !== overIndex) {
-            setItems(items => ({
-              ...items,
-              [overContainer]: arrayMove(
-                items[overContainer],
-                activeIndex,
-                overIndex
-              ),
-            }));
-          }
-        }
-
-        setActiveId(null);
-      }}
+      onDragOver={handleDragOver}
+      onDragEnd={handleDragEnd}
       cancelDrop={cancelDrop}
-      onDragCancel={onDragCancel}
+      onDragCancel={handleDragCancel}
       modifiers={modifiers}>
       <Box
         sx={{
           display: "inline-grid",
           boxSizing: "border-box",
-          gridAutoFlow: vertical ? "row" : "column",
+          gridAutoFlow: "column",
           gap: 2,
         }}>
         {containers.map(containerId => (
@@ -302,15 +236,14 @@ export default function UsersBoard({
                   height: "100vh",
                   width: "236px",
                 }}>
-                {items[containerId].map(value => {
+                {items[containerId].map(user => {
                   return (
                     <DndSortableItem
                       disabled={isSortingContainer}
-                      key={value}
-                      id={value}
-                      containerId={containerId}
-                      getIndex={(i: UniqueIdentifier) => getIndex(id, items)}>
-                      <UsersBoardCard user={value} sx={{ width: "220px" }} />
+                      key={user.id}
+                      id={user.id}
+                      index={findItemIndex(containerId, user.id, items)}>
+                      <UsersBoardCard user={user} sx={{ width: "220px" }} />
                     </DndSortableItem>
                   );
                 })}
@@ -319,10 +252,11 @@ export default function UsersBoard({
           </DndDroppableContainer>
         ))}
       </Box>
+      BLAH: {JSON.stringify(activeId)}
       {createPortal(
         <DragOverlay adjustScale={adjustScale} dropAnimation={dropAnimation}>
           {activeId &&
-            !containers.includes(activeId.id) &&
+            !containers.includes(activeId) &&
             renderSortableItemDragOverlay(activeId)}
         </DragOverlay>,
         document.body
@@ -330,10 +264,13 @@ export default function UsersBoard({
     </DndContext>
   );
 
-  function renderSortableItemDragOverlay(user: ProjectAllUser) {
+  function renderSortableItemDragOverlay(id: UniqueIdentifier) {
+    console.log("ACTIVE ID", id);
+    const user = findItem(id, items);
+
     return (
       user && (
-        <DndItem value={user.id} dragOverlay>
+        <DndItem value={id} dragOverlay>
           <UsersBoardCard user={user} sx={{ width: "220px" }} />
         </DndItem>
       )

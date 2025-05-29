@@ -116,26 +116,43 @@ const columnsCoordinateGetter: KeyboardCoordinateGetter = (
 
 function findContainer<T extends { id: UniqueIdentifier }>(
   id: UniqueIdentifier,
-  items: T[]
+  items: Record<string, T[]>
 ) {
   if (id in items) {
     return id;
   }
 
-  return Object.keys(items).find(key => items[key].includes(id));
+  return Object.keys(items).find(key =>
+    items[key].find(({ id: itemId }) => id === itemId)
+  );
 }
 
-function getIndex<T extends { id: UniqueIdentifier }>(
+function findItemIndex<T extends { id: UniqueIdentifier }>(
+  containerId: UniqueIdentifier,
   id: UniqueIdentifier,
-  items: T[]
+  items: Record<string, T[]>
 ) {
-  const container = findContainer(id, items);
-
-  if (!container) {
-    return -1;
-  }
-
-  return items[container].indexOf(id);
+  return items[containerId].findIndex(({ id: itemId }) => itemId === id);
 }
 
-export { getIndex, findContainer, columnsCoordinateGetter };
+function findItem<T extends { id: UniqueIdentifier }>(
+  id: UniqueIdentifier,
+  items: Record<string, T[]>
+) {
+  let foundItem;
+
+  Object.keys(items).some(key => {
+    const item = items[key as keyof typeof items].find(
+      ({ id: itemId }) => id === itemId
+    );
+
+    if (item) {
+      foundItem = item;
+      return !!foundItem;
+    }
+  });
+
+  return foundItem;
+}
+
+export { findContainer, findItem, columnsCoordinateGetter, findItemIndex };
