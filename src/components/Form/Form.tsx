@@ -59,6 +59,7 @@ export default function Form<T extends FieldValues>({
     ...(schema && {
       resolver: yupResolver(schema) as unknown as Resolver<T>,
     }),
+    shouldUnregister: false,
   };
 
   const methods = useForm<T>(formOptions);
