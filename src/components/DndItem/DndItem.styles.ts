@@ -1,5 +1,6 @@
 import { styled } from "@mui/material";
 import { Box, css } from "@mui/system";
+import { DndItemProps } from "./DndItem";
 
 const StyledWrapper = styled(Box)(
   ({ dragOverlay }) => css`
@@ -47,12 +48,15 @@ const StyledWrapper = styled(Box)(
 );
 
 const StyledItem = styled(Box)(
-  ({ theme, dragging, dragOverlay, disabled }) => css`
+  ({ dragging, dragOverlay, disabled }: Partial<DndItemProps>) => css`
     position: relative;
     display: flex;
     flex-grow: 1;
     align-items: center;
-    background-color: $background-color;
+    ${disabled &&
+    `
+      opacity: 0.6;
+    `}
     box-shadow: $box-shadow;
     outline: none;
     border-radius: calc(4px / var(--scale-x, 1));
@@ -106,6 +110,7 @@ const StyledItem = styled(Box)(
       transform: scale(var(--scale));
       box-shadow: var(--box-shadow-picked-up);
       opacity: 1;
+      transform: rotate(10deg);
     `}
   `
 );

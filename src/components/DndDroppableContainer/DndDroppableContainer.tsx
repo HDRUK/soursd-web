@@ -1,7 +1,7 @@
 import { UniqueIdentifier, useDroppable } from "@dnd-kit/core";
 import DndContainer, { DndContainerProps } from "../DndContainer";
 
-type DndDroppableContainerProps = DndContainerProps & {
+export type DndDroppableContainerProps = DndContainerProps & {
   disabled?: boolean;
   id: UniqueIdentifier;
   items: UniqueIdentifier[];

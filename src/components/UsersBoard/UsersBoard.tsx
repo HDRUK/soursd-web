@@ -1,23 +1,16 @@
 import {
   CancelDrop,
-  CollisionDetection,
   DndContext,
   DragEndEvent,
   DragOverEvent,
   DragOverlay,
   DropAnimation,
-  KeyboardCoordinateGetter,
-  KeyboardSensor,
   MeasuringStrategy,
   Modifiers,
   MouseSensor,
   TouchSensor,
   UniqueIdentifier,
-  closestCenter,
   defaultDropAnimationSideEffects,
-  getFirstCollision,
-  pointerWithin,
-  rectIntersection,
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
@@ -27,24 +20,21 @@ import {
   arrayMove,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal, unstable_batchedUpdates } from "react-dom";
+import { useDebouncedCallback } from "use-debounce";
 
 import { Box } from "@mui/system";
 import DndItem from "../DndItem";
 
+import { dndDragRotate } from "../../consts/styles";
 import { ProjectAllUser } from "../../types/application";
 import DndDroppableContainer from "../DndDroppableContainer";
 import DndSortableItem from "../DndSortableItem";
 import UsersBoardCard from "./UsersBoardCard";
 import UsersBoardColumn from "./UsersBoardColumn";
-import {
-  columnsCoordinateGetter,
-  findContainer,
-  findItem,
-  findItemIndex,
-  getIndex,
-} from "./utils";
+import { findContainer, findItem, findItemIndex } from "./utils";
+import { ActionMenu } from "../ActionMenu";
 
 const dropAnimation: DropAnimation = {
   sideEffects: defaultDropAnimationSideEffects({
@@ -61,46 +51,27 @@ type Items = Record<UniqueIdentifier, ProjectAllUser[]>;
 interface UsersBoardProps {
   adjustScale?: boolean;
   cancelDrop?: CancelDrop;
-  columns?: number;
-  containerStyle?: React.CSSProperties;
-  coordinateGetter?: KeyboardCoordinateGetter;
-  wrapperStyle?(args: { index: number }): React.CSSProperties;
-  renderItem?: any;
   strategy?: SortingStrategy;
   modifiers?: Modifiers;
-  scrollable?: boolean;
-  vertical?: boolean;
   initialData: Items;
 }
-
-const PLACEHOLDER_ID = "placeholder";
 
 export default function UsersBoard({
   adjustScale = false,
   cancelDrop,
   initialData,
-  coordinateGetter = columnsCoordinateGetter,
   modifiers,
   strategy = verticalListSortingStrategy,
-  vertical = false,
 }: UsersBoardProps) {
   const [items, setItems] = useState(initialData);
   const [containers] = useState(Object.keys(items) as UniqueIdentifier[]);
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
-  // const lastContainerId = useRef<UniqueIdentifier | null>(null);
-  const lastOverId = useRef<UniqueIdentifier | null>(null);
   const recentlyMovedToNewContainer = useRef(false);
   const isSortingContainer = activeId ? containers.includes(activeId) : false;
 
   const [clonedItems, setClonedItems] = useState<Items | null>(null);
 
-  const sensors = useSensors(
-    useSensor(MouseSensor),
-    useSensor(TouchSensor),
-    useSensor(KeyboardSensor, {
-      coordinateGetter,
-    })
-  );
+  const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor));
 
   const handleDragCancel = () => {
     if (clonedItems) {
@@ -112,34 +83,39 @@ export default function UsersBoard({
   };
 
   const handleDragEnd = ({ over, active }: DragEndEvent) => {
-    if (!over?.id) {
-      setActiveId(null);
-      return;
-    }
-
-    const overContainer = findContainer(over.id, items);
-    const activeContainer = findContainer(active.id, items);
-
-    if (overContainer && activeContainer && over?.id) {
-      const activeIndex = findItemIndex(activeContainer, active.id, items);
-      const overIndex = findItemIndex(overContainer, over.id, items);
-
-      if (activeIndex !== overIndex) {
-        setItems(items => ({
-          ...items,
-          [overContainer]: arrayMove(
-            items[overContainer],
-            activeIndex,
-            overIndex
-          ),
-        }));
+    //wait
+    unstable_batchedUpdates(() => {
+      if (!over?.id) {
+        setActiveId(null);
+        return;
       }
-    }
 
-    setActiveId(null);
+      const overContainer = findContainer(over.id, items);
+      const activeContainer = findContainer(active.id, items);
+
+      if (overContainer && activeContainer && over?.id) {
+        const activeIndex = findItemIndex(activeContainer, active.id, items);
+        const overIndex = findItemIndex(overContainer, over.id, items);
+
+        if (activeIndex !== overIndex) {
+          console.log("UPDATING ITEMS");
+          setItems(items => ({
+            ...items,
+            [overContainer]: arrayMove(
+              items[overContainer],
+              activeIndex,
+              overIndex
+            ),
+          }));
+        }
+      }
+
+      setActiveId(null);
+    });
   };
 
   const handleDragOver = ({ active, over }: DragOverEvent) => {
+    console.log({ active, over });
     const overId = over?.id;
 
     if (overId == null || active.id in items) {
@@ -155,6 +131,7 @@ export default function UsersBoard({
 
     if (activeContainer !== overContainer) {
       setItems(items => {
+        console.log("Updating items", items);
         const activeItems = items[activeContainer];
         const overItems = items[overContainer];
         const overIndex = overItems.findIndex(({ id }) => id === overId);
@@ -203,6 +180,8 @@ export default function UsersBoard({
     });
   }, [items]);
 
+  const throttledDragOver = useDebouncedCallback(handleDragOver, 100);
+
   return (
     <DndContext
       sensors={sensors}
@@ -215,10 +194,12 @@ export default function UsersBoard({
         setActiveId(active.id);
         setClonedItems(items);
       }}
-      onDragOver={handleDragOver}
+      onDragOver={(e: DragOverEvent) => {
+        throttledDragOver(e);
+      }}
       onDragEnd={handleDragEnd}
-      cancelDrop={cancelDrop}
       onDragCancel={handleDragCancel}
+      cancelDrop={cancelDrop}
       modifiers={modifiers}>
       <Box
         sx={{
@@ -231,6 +212,9 @@ export default function UsersBoard({
           <DndDroppableContainer key={containerId} id={containerId}>
             <SortableContext items={items[containerId]} strategy={strategy}>
               <UsersBoardColumn
+                dragOver={
+                  activeId && findItemIndex(containerId, activeId, items) > -1
+                }
                 heading={`${containerId} (${items[containerId].length})`}
                 sx={{
                   height: "100vh",
@@ -243,7 +227,11 @@ export default function UsersBoard({
                       key={user.id}
                       id={user.id}
                       index={findItemIndex(containerId, user.id, items)}>
-                      <UsersBoardCard user={user} sx={{ width: "220px" }} />
+                      <UsersBoardCard
+                        user={user}
+                        sx={{ width: "220px" }}
+                        actions={<ActionMenu>Move to </ActionMenu>}
+                      />
                     </DndSortableItem>
                   );
                 })}
@@ -252,7 +240,6 @@ export default function UsersBoard({
           </DndDroppableContainer>
         ))}
       </Box>
-      BLAH: {JSON.stringify(activeId)}
       {createPortal(
         <DragOverlay adjustScale={adjustScale} dropAnimation={dropAnimation}>
           {activeId &&
@@ -265,22 +252,21 @@ export default function UsersBoard({
   );
 
   function renderSortableItemDragOverlay(id: UniqueIdentifier) {
-    console.log("ACTIVE ID", id);
     const user = findItem(id, items);
 
     return (
       user && (
-        <DndItem value={id} dragOverlay>
-          <UsersBoardCard user={user} sx={{ width: "220px" }} />
+        <DndItem dragOverlay>
+          <UsersBoardCard
+            user={user}
+            sx={{
+              width: "220px",
+              backgroundColor: "neutralPink.main",
+              ...dndDragRotate,
+            }}
+          />
         </DndItem>
       )
     );
-  }
-
-  function getNextContainerId() {
-    const containerIds = Object.keys(items);
-    const lastContainerId = containerIds[containerIds.length - 1];
-
-    return String.fromCharCode(lastContainerId.charCodeAt(0) + 1);
   }
 }

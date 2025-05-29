@@ -1,15 +1,18 @@
 import { ProjectAllUser } from "@/types/application";
 import { renderUserNameCell } from "@/utils/cells";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
-import { Card, CardProps, Typography } from "@mui/material";
+import { Box, Card, CardProps, Typography } from "@mui/material";
 import Text from "../Text";
+import { ReactNode } from "react";
 
 export interface UsersBoardCardProps extends CardProps {
   user: ProjectAllUser;
+  actions?: ReactNode;
 }
 
 export default function UsersBoardCard({
   user,
+  actions,
   sx,
   ...restProps
 }: UsersBoardCardProps) {
@@ -22,17 +25,18 @@ export default function UsersBoardCard({
         ...sx,
       }}
       {...restProps}>
-      <Typography
+      <Text
+        endIcon={<Box onMouseDown={e => e.stopPropagation()}>{actions}</Box>}
         variant="h6"
         sx={{
           color: "menuList1.main",
           mb: 1,
         }}>
-        {renderUserNameCell(user)}
-      </Typography>
+        <Box sx={{ flexGrow: 1 }}>{renderUserNameCell(user)}</Box>
+      </Text>
       <Typography color="success.main">{organisation_name}</Typography>
-      <Typography sx={{ wordBreak: "break-word", width: 220 }}>
-        <span>{project_name}</span>
+      <Typography sx={{ whiteSpace: "normal" }}>
+        {project_name} (id: {project_id})
       </Typography>
       <Typography>{project_role}</Typography>
       <Text

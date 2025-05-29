@@ -16,22 +16,15 @@ function DndSortableItem({
   index,
   children,
 }: DndSortableItemProps) {
-  const {
-    setNodeRef,
-    listeners,
-    isDragging,
-    isSorting,
-    transform,
-    transition,
-  } = useSortable({
-    id,
-  });
+  const { setNodeRef, listeners, isDragging, transform, transition } =
+    useSortable({
+      id,
+    });
+
   return (
     <DndItem
       ref={disabled ? undefined : setNodeRef}
-      value={id}
       dragging={isDragging}
-      sorting={isSorting}
       index={index}
       transition={transition}
       transform={transform}

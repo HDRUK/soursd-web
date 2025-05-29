@@ -1,7 +1,6 @@
 import { colorToRgba } from "@/utils/theme";
 import { createTheme } from "@mui/material";
 import { blue, blueGrey, grey, red } from "@mui/material/colors";
-import { fontSize } from "@mui/system";
 
 const MODE = "light";
 
@@ -70,7 +69,7 @@ const PALETTE_THEME_PURPLE_BLUE = {
       contrastText: "#000",
     },
     background2: createColor(blueGrey["800"]),
-    primary: createColor("#CC51B4"),
+    primary: createColor("#BE37A3"),
     secondary: createColor("#E3E3E3"),
     warning: createColor("#F3C853"),
     info: createColor(blue["200"]),
