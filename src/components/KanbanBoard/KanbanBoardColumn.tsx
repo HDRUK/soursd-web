@@ -3,17 +3,14 @@ import { grey } from "@mui/material/colors";
 import { Box, BoxProps } from "@mui/system";
 import { forwardRef, ReactNode } from "react";
 
-export interface UsersBoardContainerProps extends BoxProps {
+export interface KanbanBoardColumnProps extends BoxProps {
   heading: ReactNode;
   dragOver: boolean;
 }
 
-const UsersBoardContainer = forwardRef<
-  HTMLDivElement,
-  UsersBoardContainerProps
->(
+const KanbanBoardColumn = forwardRef<HTMLDivElement, KanbanBoardColumnProps>(
   (
-    { children, sx, heading, dragOver, ...restProps }: UsersBoardContainerProps,
+    { children, sx, heading, dragOver, ...restProps }: KanbanBoardColumnProps,
     ref
   ) => {
     return (
@@ -64,4 +61,4 @@ const UsersBoardContainer = forwardRef<
   }
 );
 
-export default UsersBoardContainer;
+export default KanbanBoardColumn;

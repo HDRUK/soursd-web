@@ -20,21 +20,20 @@ import {
   arrayMove,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { useEffect, useRef, useState } from "react";
+import { ComponentType, useEffect, useRef, useState } from "react";
 import { createPortal, unstable_batchedUpdates } from "react-dom";
 import { useDebouncedCallback } from "use-debounce";
 
-import { Box } from "@mui/system";
 import DndItem from "../DndItem";
 
 import { dndDragRotate } from "../../consts/styles";
 import { ProjectAllUser } from "../../types/application";
+import { ActionMenu } from "../ActionMenu";
 import DndDroppableContainer from "../DndDroppableContainer";
 import DndSortableItem from "../DndSortableItem";
-import UsersBoardCard from "./UsersBoardCard";
-import UsersBoardColumn from "./UsersBoardColumn";
+import KanbanBoardColumn from "./KanbanBoardColumn";
+import KanbanBoardColumns from "./KanbanBoardColumns";
 import { findContainer, findItem, findItemIndex } from "./utils";
-import { ActionMenu } from "../ActionMenu";
 
 const dropAnimation: DropAnimation = {
   sideEffects: defaultDropAnimationSideEffects({
@@ -48,21 +47,23 @@ const dropAnimation: DropAnimation = {
 
 type Items = Record<UniqueIdentifier, ProjectAllUser[]>;
 
-interface UsersBoardProps {
+interface KanbanBoardProps<T> {
   adjustScale?: boolean;
   cancelDrop?: CancelDrop;
   strategy?: SortingStrategy;
   modifiers?: Modifiers;
   initialData: Items;
+  cardComponent: ComponentType<T>;
 }
 
-export default function UsersBoard({
+export default function KanbanBoard<T>({
   adjustScale = false,
   cancelDrop,
   initialData,
   modifiers,
   strategy = verticalListSortingStrategy,
-}: UsersBoardProps) {
+  ...restProps
+}: KanbanBoardProps<T>) {
   const [items, setItems] = useState(initialData);
   const [containers] = useState(Object.keys(items) as UniqueIdentifier[]);
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
@@ -72,6 +73,25 @@ export default function UsersBoard({
   const [clonedItems, setClonedItems] = useState<Items | null>(null);
 
   const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor));
+
+  const renderSortableItemDragOverlay = (id: UniqueIdentifier) => {
+    const user = findItem(id, items);
+
+    return (
+      user && (
+        <DndItem dragOverlay>
+          <restProps.cardComponent
+            user={user}
+            sx={{
+              width: "220px",
+              backgroundColor: "neutralPink.main",
+              ...dndDragRotate,
+            }}
+          />
+        </DndItem>
+      )
+    );
+  };
 
   const handleDragCancel = () => {
     if (clonedItems) {
@@ -83,7 +103,6 @@ export default function UsersBoard({
   };
 
   const handleDragEnd = ({ over, active }: DragEndEvent) => {
-    //wait
     unstable_batchedUpdates(() => {
       if (!over?.id) {
         setActiveId(null);
@@ -98,7 +117,6 @@ export default function UsersBoard({
         const overIndex = findItemIndex(overContainer, over.id, items);
 
         if (activeIndex !== overIndex) {
-          console.log("UPDATING ITEMS");
           setItems(items => ({
             ...items,
             [overContainer]: arrayMove(
@@ -115,7 +133,6 @@ export default function UsersBoard({
   };
 
   const handleDragOver = ({ active, over }: DragOverEvent) => {
-    console.log({ active, over });
     const overId = over?.id;
 
     if (overId == null || active.id in items) {
@@ -131,7 +148,6 @@ export default function UsersBoard({
 
     if (activeContainer !== overContainer) {
       setItems(items => {
-        console.log("Updating items", items);
         const activeItems = items[activeContainer];
         const overItems = items[overContainer];
         const overIndex = overItems.findIndex(({ id }) => id === overId);
@@ -201,17 +217,11 @@ export default function UsersBoard({
       onDragCancel={handleDragCancel}
       cancelDrop={cancelDrop}
       modifiers={modifiers}>
-      <Box
-        sx={{
-          display: "inline-grid",
-          boxSizing: "border-box",
-          gridAutoFlow: "column",
-          gap: 2,
-        }}>
+      <KanbanBoardColumns>
         {containers.map(containerId => (
           <DndDroppableContainer key={containerId} id={containerId}>
             <SortableContext items={items[containerId]} strategy={strategy}>
-              <UsersBoardColumn
+              <KanbanBoardColumn
                 dragOver={
                   activeId && findItemIndex(containerId, activeId, items) > -1
                 }
@@ -227,7 +237,7 @@ export default function UsersBoard({
                       key={user.id}
                       id={user.id}
                       index={findItemIndex(containerId, user.id, items)}>
-                      <UsersBoardCard
+                      <restProps.cardComponent
                         user={user}
                         sx={{ width: "220px" }}
                         actions={<ActionMenu>Move to </ActionMenu>}
@@ -235,11 +245,11 @@ export default function UsersBoard({
                     </DndSortableItem>
                   );
                 })}
-              </UsersBoardColumn>
+              </KanbanBoardColumn>
             </SortableContext>
           </DndDroppableContainer>
         ))}
-      </Box>
+      </KanbanBoardColumns>
       {createPortal(
         <DragOverlay adjustScale={adjustScale} dropAnimation={dropAnimation}>
           {activeId &&
@@ -250,23 +260,4 @@ export default function UsersBoard({
       )}
     </DndContext>
   );
-
-  function renderSortableItemDragOverlay(id: UniqueIdentifier) {
-    const user = findItem(id, items);
-
-    return (
-      user && (
-        <DndItem dragOverlay>
-          <UsersBoardCard
-            user={user}
-            sx={{
-              width: "220px",
-              backgroundColor: "neutralPink.main",
-              ...dndDragRotate,
-            }}
-          />
-        </DndItem>
-      )
-    );
-  }
 }

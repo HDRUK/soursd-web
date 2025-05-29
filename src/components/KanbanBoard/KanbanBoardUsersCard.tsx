@@ -2,20 +2,20 @@ import { ProjectAllUser } from "@/types/application";
 import { renderUserNameCell } from "@/utils/cells";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import { Box, Card, CardProps, Typography } from "@mui/material";
-import Text from "../Text";
 import { ReactNode } from "react";
+import Text from "../Text";
 
-export interface UsersBoardCardProps extends CardProps {
+export interface KanbanBoardUsersCardProps extends CardProps {
   user: ProjectAllUser;
   actions?: ReactNode;
 }
 
-export default function UsersBoardCard({
+export default function KanbanBoardUsersCard({
   user,
   actions,
   sx,
   ...restProps
-}: UsersBoardCardProps) {
+}: KanbanBoardUsersCardProps) {
   const { organisation_name, project_id, project_name, project_role } = user;
 
   return (

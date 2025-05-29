@@ -2,13 +2,14 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { mockedProjectUser } from "@/mocks/data/custodian";
 import { rectSortingStrategy } from "@dnd-kit/sortable";
-import UsersBoard from "./UsersBoard";
+import KanbanBoard from "./KanbanBoard";
+import KanbanBoardUsersCard from "./KanbanBoardUsersCard";
 
 const meta = {
-  title: "components/UserBoardCard",
-  component: UsersBoard,
+  title: "components/KanbanBoard",
+  component: KanbanBoard,
   tags: ["autodocs"],
-} satisfies Meta<typeof UsersBoard>;
+} satisfies Meta<typeof KanbanBoard>;
 
 export default meta;
 
@@ -49,12 +50,14 @@ const initialData = {
 };
 
 export const Draggable: Story = {
-  args: {
-    children: [],
-  },
+  args: {},
   render: props => {
     return (
-      <UsersBoard initialData={initialData} strategy={rectSortingStrategy} />
+      <KanbanBoard
+        cardComponent={KanbanBoardUsersCard}
+        initialData={initialData}
+        strategy={rectSortingStrategy}
+      />
     );
   },
 };

@@ -31,18 +31,6 @@ const DndItem = React.forwardRef<HTMLLIElement, DndItemProps>(
     },
     ref
   ) => {
-    useEffect(() => {
-      if (!dragOverlay) {
-        return;
-      }
-
-      document.body.style.cursor = "grabbing";
-
-      return () => {
-        document.body.style.cursor = "";
-      };
-    }, [dragOverlay]);
-
     return (
       <StyledWrapper
         sx={{
@@ -56,6 +44,10 @@ const DndItem = React.forwardRef<HTMLLIElement, DndItemProps>(
           "--scale-x": transform?.scaleX ? `${transform.scaleX}` : undefined,
           "--scale-y": transform?.scaleY ? `${transform.scaleY}` : undefined,
           "--index": index,
+          cursor: "grab",
+          ...(dragOverlay && {
+            cursor: " grabbing",
+          }),
         }}
         ref={ref}>
         <StyledItem
