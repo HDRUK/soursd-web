@@ -329,7 +329,9 @@ interface ResearcherEndorsement {
 interface ResearcherAffiliation {
   id: number;
   member_id: string;
-  organisation_id: number;
+  organisation_id?: number;
+  organisation_name?: string;
+  organisation_email?: string;
   relationship?: string;
   current_employer: boolean;
   from?: string | null;

@@ -32,6 +32,9 @@ import { Message } from "@/components/Message";
 import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
 import { Status } from "@/components/ChipStatus";
 import useQueryConfirmAlerts from "@/hooks/useQueryConfirmAlerts";
+import useOrganisationInvite from "@/queries/useOrganisationInvite";
+import { QueryState } from "@/types/form";
+import { getCombinedQueryState } from "@/utils/query";
 import { renderErrorToString } from "@/utils/translations";
 import AffiliationsForm from "../AffiliationsForm";
 import AskOrganisationModal from "../AskOrganisation";
@@ -73,29 +76,35 @@ export default function AffiliationsPage() {
     deleteAffiliationQuery()
   );
 
-  useQueryAlerts(
-    selectedAffiliation
-      ? patchAffiliationQueryState
-      : postAffiliationQueryState,
-    {
-      commonAlertProps: {
-        willClose: () => {
-          setOpen(false);
-          setSelectedAffiliation(undefined);
-        },
+  const {
+    queryState: inviteQueryState,
+    handleSubmit: handleCreateAndInviteOrganisation,
+  } = useOrganisationInvite();
+
+  const combinedQueryState = getCombinedQueryState([
+    inviteQueryState,
+    postAffiliationQueryState,
+    patchAffiliationQueryState,
+  ]) as QueryState;
+
+  useQueryAlerts(combinedQueryState, {
+    commonAlertProps: {
+      willClose: () => {
+        setOpen(false);
+        setSelectedAffiliation(undefined);
       },
-      successAlertProps: {
-        confirmButtonText: tProfile("affiliationActionSuccessButton"),
-        text: selectedAffiliation
-          ? tProfile("patchAffiliationSuccess")
-          : tProfile("postAffiliationSuccess"),
-      },
-      errorAlertProps: {
-        text: renderErrorToString(tProfile, "affiliationActionError"),
-        confirmButtonText: tProfile("affiliationActionErrorButton"),
-      },
-    }
-  );
+    },
+    successAlertProps: {
+      confirmButtonText: tProfile("affiliationActionSuccessButton"),
+      text: selectedAffiliation
+        ? tProfile("patchAffiliationSuccess")
+        : tProfile("postAffiliationSuccess"),
+    },
+    errorAlertProps: {
+      text: renderErrorToString(tProfile, "affiliationActionError"),
+      confirmButtonText: tProfile("affiliationActionErrorButton"),
+    },
+  });
 
   const showConfirmDelete = useQueryConfirmAlerts(restDeleteState, {
     confirmAlertProps: {
@@ -161,15 +170,37 @@ export default function AffiliationsPage() {
 
   const handleDetailsSubmit = useCallback(
     async (fields: PostAffiliationPayload) => {
+      let organisation_id = fields?.organisation_id;
+
+      if (!organisation_id) {
+        const invitePayload = {
+          organisation_name: fields.organisation_name as string,
+          lead_applicant_email: fields.organisation_email as string,
+        };
+        organisation_id =
+          await handleCreateAndInviteOrganisation(invitePayload);
+      }
+
+      const {
+        organisation_name: _name,
+        organisation_email: _email,
+        ...restFields
+      } = fields;
+
+      const payload = {
+        ...restFields,
+        organisation_id,
+      };
+
       if (selectedAffiliation) {
         // Update existing affiliation
         await patchAffiliation({
           affiliationId: selectedAffiliation.id,
-          payload: fields,
+          payload,
         });
       } else {
         // Create new affiliation
-        await postAffiliations(fields);
+        await postAffiliations(payload);
       }
       refetch();
     },
@@ -202,11 +233,7 @@ export default function AffiliationsPage() {
                   setSelectedAffiliation(undefined);
                 }}
                 onSubmit={handleDetailsSubmit}
-                queryState={
-                  selectedAffiliation
-                    ? patchAffiliationQueryState
-                    : postAffiliationQueryState
-                }
+                queryState={combinedQueryState}
                 initialValues={selectedAffiliation}
               />
             </FormModal>
@@ -252,7 +279,7 @@ export default function AffiliationsPage() {
             previousHref={routes.profileResearcherExperience.path}
             nextHref={routes.profileResearcherTraining.path}
             nextStepText={tProfile("training")}
-            isLoading={postAffiliationQueryState.isPending}
+            isLoading={combinedQueryState.isLoading}
           />
         </PageBody>
       </PageGuidance>

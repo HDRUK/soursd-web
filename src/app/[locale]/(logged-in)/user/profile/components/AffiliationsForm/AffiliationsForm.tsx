@@ -10,7 +10,7 @@ import { AffiliationRelationship } from "@/consts/user";
 import { getOrganisationQuery } from "@/services/organisations";
 import useOrganisationsQuery from "@/services/organisations/useOrganisationsQuery";
 import { ResearcherAffiliation } from "@/types/application";
-import { MutationState } from "@/types/form";
+import { QueryState } from "@/types/form";
 import WarningIcon from "@mui/icons-material/Warning";
 import { LoadingButton } from "@mui/lab";
 import {
@@ -31,7 +31,7 @@ import { getDate } from "@/utils/date";
 export interface AffiliationsFormProps {
   onSubmit: (affiliation: ResearcherAffiliation) => void;
   onClose: () => void;
-  queryState: MutationState;
+  queryState: QueryState;
   initialValues?: ResearcherAffiliation;
 }
 
@@ -48,15 +48,13 @@ export default function AffiliationsForm({
   const tProfile = useTranslations(NAMESPACE_TRANSLATION);
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
-  const [inviteOpen, setInviteOpen] = useState(false);
   const [selectedOrganisationId, setSelectedOrganisationId] = useState<
     number | null
   >();
 
-  const [organisationExists, setOrganisationExists] = useState<boolean>(false);
+  const [selectOrganisation, setSelectOrganisation] = useState<boolean>(true);
 
-  const { data: organisationsData, refetch: refetchOrganisations } =
-    useOrganisationsQuery();
+  const { data: organisationsData } = useOrganisationsQuery();
 
   // keeping in some department code..
   // - this is not used, but incase we want to turn it on..
@@ -79,11 +77,18 @@ export default function AffiliationsForm({
             then: schema => schema.notRequired(),
           })
           .nullable(),
-        organisation_id: yup
-          .string()
-          .required(tForm("organisationRequiredInvalid")),
-        organisation_name: yup.string().optional(),
-        organisation_email: yup.string().email().optional(),
+        organisation_id: selectOrganisation
+          ? yup.string().required(tForm("organisationRequiredInvalid"))
+          : yup.string().notRequired(),
+        organisation_name: selectOrganisation
+          ? yup.string().notRequired()
+          : yup.string().required(tForm("organisationNameRequired")),
+        organisation_email: selectOrganisation
+          ? yup.string().notRequired()
+          : yup
+              .string()
+              .email(tForm("emailInvalid"))
+              .required(tForm("organisationEmailRequired")),
         relationship: yup
           .string()
           .required(tForm("relationshipRequiredInvalid")),
@@ -99,14 +104,14 @@ export default function AffiliationsForm({
             then: schema => schema.notRequired(),
           }),
       }),
-    [tForm]
+    [tForm, selectOrganisation]
   );
 
   const formOptions = useMemo(
     () => ({
       defaultValues: {
         member_id: initialValues?.member_id || "",
-        organisation_id: initialValues?.organisation_id || "",
+        organisation_id: initialValues?.organisation_id || undefined,
         current_employer:
           (!!initialValues?.from && !initialValues?.to) || false,
         relationship: initialValues?.relationship || "",
@@ -116,8 +121,8 @@ export default function AffiliationsForm({
         email: initialValues?.email || "",
         ror: "", // keeping this blank for now
         department: "", // keeping this blank for now
-        organisation_name: "",
-        organisation_email: "",
+        organisation_name: undefined,
+        organisation_email: undefined,
       },
     }),
     [initialValues]
@@ -125,8 +130,7 @@ export default function AffiliationsForm({
 
   useEffect(() => {
     if (initialValues?.organisation_id) {
-      console.log("setting ID");
-      setOrganisationExists(true);
+      setSelectOrganisation(true);
     }
   }, [initialValues]);
 
@@ -172,11 +176,14 @@ export default function AffiliationsForm({
         if (isCurrent) {
           setValue("to", null, { shouldValidate: true });
         }
+        if (!selectOrganisation) {
+          setValue("organisation_id", undefined);
+        }
 
         return (
           <>
             <Grid container rowSpacing={3}>
-              {organisationExists ? (
+              {selectOrganisation ? (
                 <Grid item xs={12}>
                   <FormControlWrapper
                     name="organisation_id"
@@ -201,7 +208,7 @@ export default function AffiliationsForm({
                                 link: chunks => (
                                   <Link
                                     component="button"
-                                    onClick={() => setOrganisationExists(false)}
+                                    onClick={() => setSelectOrganisation(false)}
                                     sx={{ pb: 0.4 }}>
                                     {chunks}
                                   </Link>
@@ -218,7 +225,7 @@ export default function AffiliationsForm({
                               onClick={e => {
                                 e.preventDefault();
                                 e.stopPropagation();
-                                setOrganisationExists(false);
+                                setSelectOrganisation(false);
                               }}
                               sx={{ pb: 0.25 }}>
                               {chunks}
@@ -242,7 +249,7 @@ export default function AffiliationsForm({
                             onClick={e => {
                               e.preventDefault();
                               e.stopPropagation();
-                              setOrganisationExists(true);
+                              setSelectOrganisation(true);
                             }}
                             sx={{ pb: 0.25 }}>
                             {chunks}
@@ -358,7 +365,7 @@ export default function AffiliationsForm({
               <Button variant="outlined" onClick={onClose}>
                 {tApplication("cancel")}
               </Button>
-              <LoadingButton loading={queryState.isPending} type="submit">
+              <LoadingButton loading={queryState.isLoading} type="submit">
                 {tForm("save")}
               </LoadingButton>
             </FormActions>
