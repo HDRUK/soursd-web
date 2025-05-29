@@ -7,7 +7,7 @@ import { CellContext } from "@tanstack/react-table";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import EmailIcon from "@mui/icons-material/Email";
-import { Button, Typography } from "@mui/material";
+import { Button, CircularProgress, Typography } from "@mui/material";
 import { useStore } from "@/data/store";
 import { mockedResearcherAffiliationsGuidance } from "@/mocks/data/cms";
 import {
@@ -36,6 +36,7 @@ import useOrganisationInvite from "@/queries/useOrganisationInvite";
 import { QueryState } from "@/types/form";
 import { getCombinedQueryState } from "@/utils/query";
 import { renderErrorToString } from "@/utils/translations";
+import { showAlert } from "@/utils/showAlert";
 import AffiliationsForm from "../AffiliationsForm";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
@@ -44,7 +45,6 @@ export default function AffiliationsPage() {
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
   const [open, setOpen] = useState(false);
-  const [inviteOpen, setInviteOpen] = useState(false);
   const [selectedAffiliation, setSelectedAffiliation] = useState<
     ResearcherAffiliation | undefined
   >(undefined);
@@ -78,6 +78,7 @@ export default function AffiliationsPage() {
   const {
     queryState: inviteQueryState,
     handleSubmit: handleCreateAndInviteOrganisation,
+    mutateOrganisationInvite,
   } = useOrganisationInvite();
 
   const combinedQueryState = getCombinedQueryState(
@@ -125,6 +126,13 @@ export default function AffiliationsPage() {
     },
   });
 
+  const handleResendInvite = async (affiliation: ResearcherAffiliation) => {
+    await mutateOrganisationInvite(affiliation?.organisation_id as number);
+    showAlert("success", {
+      text: tProfile("resendInviteSuccess"),
+    });
+  };
+
   const renderActionMenuCell = useCallback(
     (info: CellContext<ResearcherAffiliation, unknown>) => {
       const affiliation = info.row.original;
@@ -148,19 +156,26 @@ export default function AffiliationsPage() {
           </ActionMenuItem>
           {status === Status.AFFILIATION_INVITED && (
             <ActionMenuItem
+              disabled={inviteQueryState.isLoading}
               onClick={() => {
                 setSelectedAffiliation(affiliation);
-                //setInviteOpen(true);
+                handleResendInvite(affiliation);
               }}
               sx={{ color: "menuList1.main" }}
-              icon={<EmailIcon sx={{ color: "menuList1.main" }} />}>
+              icon={
+                inviteQueryState.isLoading ? (
+                  <CircularProgress size={20} />
+                ) : (
+                  <EmailIcon sx={{ color: "menuList1.main" }} />
+                )
+              }>
               {tProfile("reinviteOrganisation")}
             </ActionMenuItem>
           )}
         </ActionMenu>
       );
     },
-    []
+    [inviteQueryState]
   );
 
   const extraColumns = [

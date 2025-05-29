@@ -52,6 +52,8 @@ export default function useOrganisationInvite({
     () => ({
       queryState,
       handleSubmit,
+      mutateOrganisationUnclaimed,
+      mutateOrganisationInvite,
     }),
     [queryState]
   );
