@@ -10,7 +10,7 @@ import { AffiliationRelationship } from "@/consts/user";
 import { getOrganisationQuery } from "@/services/organisations";
 import useOrganisationsQuery from "@/services/organisations/useOrganisationsQuery";
 import { ResearcherAffiliation } from "@/types/application";
-import { MutationState } from "@/types/form";
+import { QueryState } from "@/types/form";
 import WarningIcon from "@mui/icons-material/Warning";
 import { LoadingButton } from "@mui/lab";
 import {
@@ -25,14 +25,13 @@ import {
 } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { getDate } from "@/utils/date";
-import AskOrganisationModal from "../AskOrganisation";
 
 export interface AffiliationsFormProps {
   onSubmit: (affiliation: ResearcherAffiliation) => void;
   onClose: () => void;
-  queryState: MutationState;
+  queryState: QueryState;
   initialValues?: ResearcherAffiliation;
 }
 
@@ -49,13 +48,13 @@ export default function AffiliationsForm({
   const tProfile = useTranslations(NAMESPACE_TRANSLATION);
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
-  const [inviteOpen, setInviteOpen] = useState(false);
   const [selectedOrganisationId, setSelectedOrganisationId] = useState<
     number | null
   >();
 
-  const { data: organisationsData, refetch: refetchOrganisations } =
-    useOrganisationsQuery();
+  const [selectOrganisation, setSelectOrganisation] = useState<boolean>(true);
+
+  const { data: organisationsData } = useOrganisationsQuery();
 
   // keeping in some department code..
   // - this is not used, but incase we want to turn it on..
@@ -78,9 +77,18 @@ export default function AffiliationsForm({
             then: schema => schema.notRequired(),
           })
           .nullable(),
-        organisation_id: yup
-          .string()
-          .required(tForm("organisationRequiredInvalid")),
+        organisation_id: selectOrganisation
+          ? yup.string().required(tForm("organisationRequiredInvalid"))
+          : yup.string().notRequired(),
+        organisation_name: selectOrganisation
+          ? yup.string().notRequired()
+          : yup.string().required(tForm("organisationNameRequired")),
+        organisation_email: selectOrganisation
+          ? yup.string().notRequired()
+          : yup
+              .string()
+              .email(tForm("emailInvalid"))
+              .required(tForm("organisationEmailRequired")),
         relationship: yup
           .string()
           .required(tForm("relationshipRequiredInvalid")),
@@ -88,17 +96,21 @@ export default function AffiliationsForm({
         role: yup.string().required(tForm("roleRequiredInvalid")),
         email: yup
           .string()
-          .required(tForm("emailRequiredInvalid"))
-          .email(tForm("professionalEmailFormatInvalid")),
+          .email(tForm("professionalEmailFormatInvalid"))
+          .when("current_employer", {
+            is: (value: boolean) => !!value,
+            otherwise: schema => schema.notRequired(),
+            then: schema => schema.required(tForm("professionalEmailRequired")),
+          }),
       }),
-    [tForm]
+    [tForm, selectOrganisation]
   );
 
   const formOptions = useMemo(
     () => ({
       defaultValues: {
         member_id: initialValues?.member_id || "",
-        organisation_id: initialValues?.organisation_id || "",
+        organisation_id: initialValues?.organisation_id || undefined,
         current_employer:
           (!!initialValues?.from && !initialValues?.to) || false,
         relationship: initialValues?.relationship || "",
@@ -108,10 +120,18 @@ export default function AffiliationsForm({
         email: initialValues?.email || "",
         ror: "", // keeping this blank for now
         department: "", // keeping this blank for now
+        organisation_name: undefined,
+        organisation_email: undefined,
       },
     }),
     [initialValues]
   );
+
+  useEffect(() => {
+    if (initialValues?.organisation_id) {
+      setSelectOrganisation(true);
+    }
+  }, [initialValues]);
 
   const relationshipOptions = [
     {
@@ -145,21 +165,24 @@ export default function AffiliationsForm({
   }, []);
 
   return (
-    <>
-      <Form
-        onSubmit={handleSubmit}
-        schema={schema}
-        {...formOptions}
-        sx={{ mb: 3 }}>
-        {({ watch, setValue }) => {
-          const isCurrent = watch("current_employer");
-          if (isCurrent) {
-            setValue("to", null, { shouldValidate: true });
-          }
+    <Form
+      onSubmit={handleSubmit}
+      schema={schema}
+      {...formOptions}
+      sx={{ mb: 3 }}>
+      {({ watch, setValue }) => {
+        const isCurrent = watch("current_employer");
+        if (isCurrent) {
+          setValue("to", null, { shouldValidate: true });
+        }
+        if (!selectOrganisation) {
+          setValue("organisation_id", undefined);
+        }
 
-          return (
-            <>
-              <Grid container rowSpacing={3}>
+        return (
+          <>
+            <Grid container rowSpacing={3}>
+              {selectOrganisation ? (
                 <Grid item xs={12}>
                   <FormControlWrapper
                     name="organisation_id"
@@ -184,7 +207,7 @@ export default function AffiliationsForm({
                                 link: chunks => (
                                   <Link
                                     component="button"
-                                    onClick={() => setInviteOpen(true)}
+                                    onClick={() => setSelectOrganisation(false)}
                                     sx={{ pb: 0.4 }}>
                                     {chunks}
                                   </Link>
@@ -198,7 +221,11 @@ export default function AffiliationsForm({
                           link: chunks => (
                             <Link
                               component="button"
-                              onClick={() => setInviteOpen(true)}
+                              onClick={e => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                setSelectOrganisation(false);
+                              }}
                               sx={{ pb: 0.25 }}>
                               {chunks}
                             </Link>
@@ -208,73 +235,115 @@ export default function AffiliationsForm({
                     }
                   />
                 </Grid>
-                {useDepartment && (
+              ) : (
+                <>
                   <Grid item xs={12}>
                     <FormControlWrapper
-                      name="department"
-                      renderField={fieldProps => (
-                        <SelectDepartments
-                          organisation={selectedOrganisation?.data}
-                          {...fieldProps}
-                        />
-                      )}
+                      name="organisation_name"
+                      renderField={fieldProps => <TextField {...fieldProps} />}
+                      description={tProfile.rich("organisationListed", {
+                        link: chunks => (
+                          <Link
+                            component="button"
+                            onClick={e => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              setSelectOrganisation(true);
+                            }}
+                            sx={{ pb: 0.25 }}>
+                            {chunks}
+                          </Link>
+                        ),
+                      })}
                     />
                   </Grid>
-                )}
-                <Grid item xs={12}>
-                  <Grid container columnSpacing={3}>
-                    <Grid item xs={6}>
-                      <FormControlWrapper
-                        name="from"
-                        renderField={fieldProps => (
-                          <DateInput {...fieldProps} />
-                        )}
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <FormControlWrapper
-                        name="to"
-                        disabled={isCurrent}
-                        renderField={fieldProps => (
-                          <DateInput {...fieldProps} disabled={isCurrent} />
-                        )}
-                      />
-                    </Grid>
+                  <Grid item xs={12}>
+                    <FormControlWrapper
+                      name="organisation_email"
+                      renderField={fieldProps => <TextField {...fieldProps} />}
+                      description={
+                        !!initialValues &&
+                        !initialValues?.email && (
+                          <Box sx={{ display: "flex", color: "warning.main" }}>
+                            <WarningIcon />
+                            <Typography>
+                              {tProfile("affiliationsEmailWarningMessage")}
+                            </Typography>
+                          </Box>
+                        )
+                      }
+                    />
                   </Grid>
-                </Grid>
-                <Grid item xs={12}>
-                  <FormControlCheckbox
-                    name="current_employer"
-                    label={tForm("currentEmployer")}
-                  />
-                </Grid>
+                </>
+              )}
+
+              {useDepartment && (
                 <Grid item xs={12}>
                   <FormControlWrapper
-                    name="relationship"
+                    name="department"
                     renderField={fieldProps => (
-                      <SelectInput
+                      <SelectDepartments
+                        organisation={selectedOrganisation?.data}
                         {...fieldProps}
-                        options={relationshipOptions}
                       />
                     )}
                   />
                 </Grid>
-                <Grid item xs={12}>
-                  <FormControlWrapper
-                    name="role"
-                    renderField={fieldProps => <TextField {...fieldProps} />}
-                  />
+              )}
+              <Grid item xs={12}>
+                <Grid container columnSpacing={3}>
+                  <Grid item xs={6}>
+                    <FormControlWrapper
+                      name="from"
+                      renderField={fieldProps => <DateInput {...fieldProps} />}
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <FormControlWrapper
+                      name="to"
+                      disabled={isCurrent}
+                      renderField={fieldProps => (
+                        <DateInput {...fieldProps} disabled={isCurrent} />
+                      )}
+                    />
+                  </Grid>
                 </Grid>
-                <Grid item xs={12}>
-                  <FormControlWrapper
-                    description={tProfile("memberIdDescription")}
-                    name="member_id"
-                    renderField={fieldProps => <TextField {...fieldProps} />}
-                  />
-                </Grid>
+              </Grid>
+              <Grid item xs={12}>
+                <FormControlCheckbox
+                  name="current_employer"
+                  label={tForm("currentEmployer")}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormControlWrapper
+                  name="relationship"
+                  renderField={fieldProps => (
+                    <SelectInput
+                      {...fieldProps}
+                      options={relationshipOptions}
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormControlWrapper
+                  name="role"
+                  renderField={fieldProps => <TextField {...fieldProps} />}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormControlWrapper
+                  description={tProfile("memberIdDescription")}
+                  name="member_id"
+                  renderField={fieldProps => <TextField {...fieldProps} />}
+                />
+              </Grid>
+              {isCurrent && (
                 <Grid item xs={12}>
                   <FormControlWrapper
                     name="email"
+                    label={tForm("emailAddressAtEmployer")}
                     renderField={fieldProps => <TextField {...fieldProps} />}
                     description={
                       !!initialValues &&
@@ -289,24 +358,19 @@ export default function AffiliationsForm({
                     }
                   />
                 </Grid>
-              </Grid>
-              <FormActions>
-                <Button variant="outlined" onClick={onClose}>
-                  {tApplication("cancel")}
-                </Button>
-                <LoadingButton loading={queryState.isPending} type="submit">
-                  {tForm("save")}
-                </LoadingButton>
-              </FormActions>
-            </>
-          );
-        }}
-      </Form>
-      <AskOrganisationModal
-        open={inviteOpen}
-        onSuccess={refetchOrganisations}
-        onClose={() => setInviteOpen(false)}
-      />
-    </>
+              )}
+            </Grid>
+            <FormActions>
+              <Button variant="outlined" onClick={onClose}>
+                {tApplication("cancel")}
+              </Button>
+              <LoadingButton loading={queryState.isLoading} type="submit">
+                {tForm("save")}
+              </LoadingButton>
+            </FormActions>
+          </>
+        );
+      }}
+    </Form>
   );
 }
