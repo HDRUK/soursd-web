@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useMutation } from "@tanstack/react-query";
 import { CellContext } from "@tanstack/react-table";
@@ -37,7 +37,6 @@ import { QueryState } from "@/types/form";
 import { getCombinedQueryState } from "@/utils/query";
 import { renderErrorToString } from "@/utils/translations";
 import AffiliationsForm from "../AffiliationsForm";
-import AskOrganisationModal from "../AskOrganisation";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
@@ -151,7 +150,7 @@ export default function AffiliationsPage() {
             <ActionMenuItem
               onClick={() => {
                 setSelectedAffiliation(affiliation);
-                setInviteOpen(true);
+                //setInviteOpen(true);
               }}
               sx={{ color: "menuList1.main" }}
               icon={<EmailIcon sx={{ color: "menuList1.main" }} />}>
@@ -274,11 +273,7 @@ export default function AffiliationsPage() {
               {tProfile("addAffiliation")}
             </Button>
           </div>
-          <AskOrganisationModal
-            organisationId={selectedAffiliation?.organisation.id}
-            open={inviteOpen}
-            onClose={() => setInviteOpen(false)}
-          />
+
           <ProfileNavigationFooter
             previousHref={routes.profileResearcherExperience.path}
             nextHref={routes.profileResearcherTraining.path}
