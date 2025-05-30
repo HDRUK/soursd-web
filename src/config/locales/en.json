@@ -99,8 +99,8 @@
     "deleteUserButton": "Delete user",
     "cancelButton": "Cancel",
     "noDeleteUser": "You cannot delete your own user",
-    "organisationsPeople": "People",
-    "organisationsNameAddress": "Name & Address",
+    "organisationsPeople": "Users",
+    "organisationsNameAddress": "Address",
     "organisationsDigitalIdentifiers": "Digital Identifiers",
     "organisationsSectorWebsite": "Sector size & website",
     "organisationsSubsidiaries": "UK subsidiaries",
@@ -1117,8 +1117,8 @@
   "Organisations": {
     "People": {
       "name": "Employee / Student name",
-      "affiliationEmail": "Email",
-      "affiliationStatus": "Status"
+      "affiliationEmail": "Professional Email",
+      "affiliationStatus": "Affiliation status"
     },
     "DataSecurityCompliance": {
       "info": "Information",
