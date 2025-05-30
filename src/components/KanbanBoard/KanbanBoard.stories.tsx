@@ -50,14 +50,12 @@ const initialData = {
 };
 
 export const Draggable: Story = {
-  args: {},
+  args: {
+    cardComponent: KanbanBoardUsersCard,
+    initialData,
+    strategy: rectSortingStrategy,
+  },
   render: props => {
-    return (
-      <KanbanBoard
-        cardComponent={KanbanBoardUsersCard}
-        initialData={initialData}
-        strategy={rectSortingStrategy}
-      />
-    );
+    return <KanbanBoard {...props} />;
   },
 };

@@ -1,6 +1,6 @@
 import type { DraggableSyntheticListeners } from "@dnd-kit/core";
 import type { Transform } from "@dnd-kit/utilities";
-import React, { ReactNode, useEffect } from "react";
+import React, { ReactNode } from "react";
 
 import { BoxProps } from "@mui/system";
 import { StyledItem, StyledWrapper } from "./DndItem.styles";

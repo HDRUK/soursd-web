@@ -6,17 +6,17 @@ import { ReactNode } from "react";
 import Text from "../Text";
 
 export interface KanbanBoardUsersCardProps extends CardProps {
-  user: ProjectAllUser;
+  data: ProjectAllUser;
   actions?: ReactNode;
 }
 
 export default function KanbanBoardUsersCard({
-  user,
+  data,
   actions,
   sx,
   ...restProps
 }: KanbanBoardUsersCardProps) {
-  const { organisation_name, project_id, project_name, project_role } = user;
+  const { organisation_name, project_id, project_name, project_role } = data;
 
   return (
     <Card
@@ -32,7 +32,7 @@ export default function KanbanBoardUsersCard({
           color: "menuList1.main",
           mb: 1,
         }}>
-        <Box sx={{ flexGrow: 1 }}>{renderUserNameCell(user)}</Box>
+        <Box sx={{ flexGrow: 1 }}>{renderUserNameCell(data)}</Box>
       </Text>
       <Typography color="success.main">{organisation_name}</Typography>
       <Typography sx={{ whiteSpace: "normal" }}>

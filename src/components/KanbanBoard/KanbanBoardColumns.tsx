@@ -2,7 +2,7 @@ import { Box, BoxProps } from "@mui/system";
 
 export type KanbanBoardColumnsProps = BoxProps;
 
-export default function KanbanBoardColumns<T>({
+export default function KanbanBoardColumns({
   children,
   sx,
   ...restProps

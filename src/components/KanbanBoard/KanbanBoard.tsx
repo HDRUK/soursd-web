@@ -75,13 +75,13 @@ export default function KanbanBoard<T>({
   const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor));
 
   const renderSortableItemDragOverlay = (id: UniqueIdentifier) => {
-    const user = findItem(id, items);
+    const data = findItem(id, items);
 
     return (
-      user && (
+      data && (
         <DndItem dragOverlay>
           <restProps.cardComponent
-            user={user}
+            user={data}
             sx={{
               width: "220px",
               backgroundColor: "neutralPink.main",
@@ -238,7 +238,7 @@ export default function KanbanBoard<T>({
                       id={user.id}
                       index={findItemIndex(containerId, user.id, items)}>
                       <restProps.cardComponent
-                        user={user}
+                        data={user}
                         sx={{ width: "220px" }}
                         actions={<ActionMenu>Move to </ActionMenu>}
                       />

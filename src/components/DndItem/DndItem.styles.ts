@@ -1,6 +1,5 @@
 import { styled } from "@mui/material";
 import { Box, css } from "@mui/system";
-import { DndItemProps } from "./DndItem";
 
 const StyledWrapper = styled(Box)(
   ({ dragOverlay }) => css`
@@ -48,7 +47,15 @@ const StyledWrapper = styled(Box)(
 );
 
 const StyledItem = styled(Box)(
-  ({ dragging, dragOverlay, disabled }: Partial<DndItemProps>) => css`
+  ({
+    dragging,
+    dragOverlay,
+    disabled,
+  }: {
+    dragging: boolean;
+    dragOverlay: boolean;
+    disabled: boolean;
+  }) => css`
     position: relative;
     display: flex;
     flex-grow: 1;
