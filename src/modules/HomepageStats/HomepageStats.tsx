@@ -1,6 +1,6 @@
 "use client";
 
-import StatsBox, { StatsBoxProps } from "@/components/StatsBox";
+import StatsBox, { StatsBoxProps } from "../../components/StatsBox";
 import { StyledHomepageStats } from "./HomepageStats.styles";
 
 interface HomepageStatsProps {

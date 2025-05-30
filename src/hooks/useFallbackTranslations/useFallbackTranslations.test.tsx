@@ -1,4 +1,4 @@
-import { renderHook } from "@/utils/testUtils";
+import { renderHook } from "../../utils/testUtils";
 import useFallbackTranslations from "./useFallbackTranslations";
 
 describe("useTranslatedTitle", () => {

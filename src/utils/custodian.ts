@@ -1,5 +1,5 @@
-import { CustodianUserRoles } from "@/consts/custodian";
-import { CustodianUser, Permission } from "@/types/application";
+import { CustodianUserRoles } from "../consts/custodian";
+import { CustodianUser, Permission } from "../types/application";
 import { getPermission } from "./permissions";
 
 function isCustodianAdministrator(

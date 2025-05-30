@@ -1,4 +1,4 @@
-import { act, renderHook, waitFor } from "@/utils/testUtils";
+import { act, renderHook, waitFor } from "../../utils/testUtils";
 import useQueryRefetch, { UseQueryRefetchProps } from "./useQueryRefetch";
 
 const mockRefetchQueries = jest.fn(() => Promise.resolve());

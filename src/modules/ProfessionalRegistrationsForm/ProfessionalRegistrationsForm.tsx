@@ -1,17 +1,17 @@
 "use client";
 
-import ButtonSave from "@/components/ButtonSave";
-import Form from "@/components/Form";
-import FormActions from "@/components/FormActions";
-
-import FormControlHorizontal from "@/components/FormControlHorizontal";
-import FormSection from "@/components/FormSection";
-import yup from "@/config/yup";
-import { ResearcherProfessionalRegistration } from "@/types/application";
-import { MutationState } from "@/types/form";
 import { Button, Grid, TextField } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
+import ButtonSave from "../../components/ButtonSave";
+import Form from "../../components/Form";
+import FormActions from "../../components/FormActions";
+
+import FormControlHorizontal from "../../components/FormControlHorizontal";
+import FormSection from "../../components/FormSection";
+import yup from "../../config/yup";
+import { ResearcherProfessionalRegistration } from "../../types/application";
+import { MutationState } from "../../types/form";
 
 export interface ProfessionalRegistrationsFormProps {
   onSubmit: (

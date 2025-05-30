@@ -1,7 +1,7 @@
-import { act, renderHook, waitFor } from "@/utils/testUtils";
-import { getProjects } from "@/services/projects";
 import { useRouter } from "@/i18n/routing";
-import { ProjectsResponse } from "@/services/projects/types";
+import { act, renderHook, waitFor } from "../../utils/testUtils";
+import { getProjects } from "../../services/projects";
+import { ProjectsResponse } from "../../services/projects/types";
 import usePaginatedQuery, { PaginatedQueryReturn } from "./usePaginatedQuery";
 
 jest.mock("@/data/store");

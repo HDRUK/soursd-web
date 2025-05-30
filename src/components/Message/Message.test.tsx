@@ -1,4 +1,4 @@
-import { render, screen } from "@/utils/testUtils";
+import { render, screen } from "../../utils/testUtils";
 import Message, { MessageProps } from "./Message";
 import MessageContent from "./MessageContent";
 import MessageTitle from "./MessageTitle";
