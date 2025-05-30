@@ -432,7 +432,7 @@ interface ProjectUser {
   registry: Registry;
 }
 
-interface ProjectAllUser {
+type ProjectAllUser = ModelState<{
   id: number;
   user_id: number;
   registry_id: number;
@@ -442,7 +442,12 @@ interface ProjectAllUser {
   affiliation_id: number;
   organisation_name: string;
   role: Partial<Role>;
-}
+  digi_ident: string;
+  project_id: number;
+  project_name: string;
+  project_role: string;
+  organisation_id: number;
+}>;
 
 interface Department {
   category: string;

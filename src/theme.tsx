@@ -251,6 +251,7 @@ const theme = createTheme(
   {
     typography: {
       fontFamily: roboto.style.fontFamily,
+      fontSize: 14,
     },
     spacing: 4,
     components: {
@@ -268,9 +269,11 @@ const theme = createTheme(
         },
       },
       MuiCssBaseline: {
-        styleOverrides: {
-          fontSize: "11px",
-        },
+        styleOverrides: `
+          html {
+            font-size: 14px;
+          }
+      `,
       },
       MuiButton: {
         defaultProps: {
