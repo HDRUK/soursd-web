@@ -36,20 +36,7 @@ export default function Home({ custodian }: HomeProps) {
             <ActionLogs
               variant="custodian"
               panelProps={{
-                heading: "Welcome to SOURSD",
-                description: (
-                  <>
-                    You’ll see a list of tasks below we’ve assigned to you to
-                    complete your profile. To help you do that as quickly as
-                    possible here’s a list of things you’ll need before you dive
-                    in:
-                    <ul>
-                      <li>Prerequisite 1</li>
-                      <li>Prerequisite 2</li>
-                      <li>Prerequisite 3</li>
-                    </ul>
-                  </>
-                ),
+                heading: t("homeTitle"),
               }}
             />
           </PageSection>
