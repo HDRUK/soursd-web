@@ -1,4 +1,5 @@
-import { CustodianUser, Custodian } from "@/types/application";
+import { GetCustodianProjectUserResponse } from "@/services/custodians";
+import { CustodianUser, Custodian, ProjectAllUser } from "@/types/application";
 import { faker } from "@faker-js/faker";
 
 const mockedCustodian = (custodian?: Partial<Custodian>): Custodian => ({
@@ -30,4 +31,25 @@ const mockedCustodianUser = (
   user_permissions: custodianUser?.user_permissions || [],
 });
 
-export { mockedCustodian, mockedCustodianUser };
+const mockedProjectUser = (props: Partial<ProjectAllUser>): ProjectAllUser => ({
+  id: 1,
+  first_name: "Dan",
+  last_name: "Ackroyd",
+  user_id: 10,
+  digi_ident: "$2y$12$ldUAvE7ZsHkodDzZKJH4je9tNs/G9B7M0k.4ywN0em0v/KO5GQDTu",
+  registry_id: 1,
+  project_id: 1,
+  project_name:
+    "Exploring the Impact of Digital Health Interventions on Mental Health Outcomes in Young Adults",
+  project_role: "Principal Investigator (PI)",
+  organisation_id: 1,
+  organisation_name: "Health Pathways (UK) Limited",
+  model_state: {
+    state: {
+      slug: "registered",
+    },
+  },
+  ...props,
+});
+
+export { mockedCustodian, mockedCustodianUser, mockedProjectUser };
