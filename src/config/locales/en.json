@@ -307,6 +307,7 @@
     "professionalEmail": "Email address at employer or institute",
     "professionalEmailPlaceholder": "Email address at employer or institute",
     "professionalEmailFormatInvalid": "Email address must be a valid format",
+    "professionalEmailRequired": "Email address must be provided",
     "relationship": "Relationship with Organisation",
     "relationshipPlaceholder": "Relationship with Organisation",
     "relationshipRequiredInvalid": "Relationship with Organisation is required",
@@ -328,7 +329,11 @@
     "hrNameRequiredInvalid": "Hr email is required",
     "hrEmailRequiredInvalid": "Hr name is required",
     "nameRequiredInvalid": "Name is a required field",
-    "organisationNameRequiredInvalid": "Organisation is a required field",
+    "organisationNameRequired": "Organisation name is a required field",
+    "organisationEmail": "Email address",
+    "organisationEmailPlaceholder": "Email address",
+    "organisationEmailRequired": "Organisation email address is required",
+    "emailAddressAtEmployer": "Email address at employer or institute",
     "firstNameRequiredInvalid": "First name is a required field",
     "lastNameRequiredInvalid": "Last name is a required field",
     "location": "Location",
@@ -584,6 +589,9 @@
     "subsidiaryWebsitePlaceholder": "Subsidiary website",
     "status": "Change status",
     "statusPlaceholder": "Select a status from the list",
+    "text": "Text",
+    "textPlaceholder": "Enter text here...",
+    "textRequired": "Required field",
     "SafeProject": {
       "add": "Add",
       "status": "Status",
@@ -776,9 +784,10 @@
     "orcIdSuccessDescription": "Employment, educaton and qualifications has been gathered from your ORCiD profile. You will need to reload the page to see the updates."
   },
   "NotificationsModal": {
-    "col1": "Field",
-    "col2": "Old Value",
-    "col3": "New Value",
+    "colField": "Field",
+    "colOldValue": "Old Value",
+    "colNewValue": "New Value",
+    "colValue": "Value",
     "toolTipMarkAsUnread": "Mark message as unread and close!"
   },
   "Organisation": {
@@ -801,6 +810,7 @@
     "home": "Home",
     "inviteThemHere": "Invite them here",
     "organisationNotListed": "Organisation not listed? <link> Ask them to register </link>",
+    "organisationListed": "Organisation already exists? <link> Select them here </link>",
     "affiliationsDescription": "Please provide information for each Organisation you are currently affiliated with. An affiliation can either be an employment or enrolment as a student at a higher education institute. Please provide current affiliations even if this information has been provided in your CV as this is needed for your organisations to confirm your affiliation.",
     "postAffiliationSuccess": "You have successfully created an affiliation",
     "postAffiliationError": "There was an error creating your affiliation. Please try again or contact us at <contactLink></contactLink>",
@@ -898,10 +908,12 @@
     "affiliationActionError": "An error occurred. Please try again or <contactLink>contact us</contactLink> if the problem persists.",
     "affiliationActionErrorButton": "Close",
     "editAffiliationForm": "Edit Affiliation",
-    "addAffiliationForm": "Add Affiliation",
+    "addAffiliationSelectOrganisationForm": "Add an employer or institute",
+    "addAffiliationInviteOrganisationForm": "Invite an organisation to register",
     "viewOrEdit": "View or edit",
     "delete": "Delete",
     "reinviteOrganisation": "Resend invitiation",
+    "resendInviteSuccess": "An invite has been sent to the organisation again!",
     "missingOrcIdMessage": "There’s some missing information from your ORCID that we need you to complete",
     "affiliationOrganisationWarningMessage": "Please complete this field as we couldn’t match the information. Sometimes the identifier of an Organisation within an ORCID profile does not exactly match the identifier of an Organisation registered within SOURSD therefore please select an Organisation from the dropdown box. If the Organisation is not listed, please <link> invite them here </link>",
     "affiliationsEmailWarningMessage": "Please complete this field as we couldn’t match the information.",
@@ -1105,7 +1117,7 @@
   "Organisations": {
     "People": {
       "name": "Employee / Student name",
-      "email": "Email",
+      "affiliationEmail": "Email",
       "affiliationStatus": "Status"
     },
     "DataSecurityCompliance": {
@@ -1517,5 +1529,27 @@
     "caption": "Copied to clipboard",
     "copy": "Copy",
     "copied": "Copied"
+  },
+  "ValidationChecks": {
+    "userChecksTitle": "User validation checks",
+    "organisationChecksTitle": "Organisation validation checks",
+    "updateCheckSuccess": "Successfully updated which validation checks you have enabled",
+    "successButton": "OK",
+    "addUserValidationCheck": "Add validation check",
+    "addOrgValidationCheck": "Add validation check",
+    "userEditTitle": "Edit User validation check",
+    "orgEditTitle": "Edit Organisation validation check",
+    "userAddTitle": "Add User validation check",
+    "orgAddTitle": "Add Organisation validation check"
+  },
+  "CheckboxItem": {
+    "edit": "Edit"
+  },
+  "AddEditCheckboxItem": {
+    "cancel": "Cancel",
+    "save": "Save",
+    "label": "Description",
+    "text": "Text",
+    "textRequired": "Text is required"
   }
 }

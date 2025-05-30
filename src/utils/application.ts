@@ -39,19 +39,18 @@ function injectParamsIntoPath(
   return replacedPath;
 }
 
-function getInitials(name: string) {
+function getInitials(name: string): string {
   if (!name) return "";
-  const nameParts = name.split(" ");
 
-  if (nameParts.length === 1) {
-    return nameParts[0].substring(0, 1);
-  }
+  const ignoreWords = new Set(["of", "the", "and", "for", "in", "on", "at"]);
+  const nameParts = name
+    .split(" ")
+    .filter(word => !ignoreWords.has(word.toLowerCase()));
 
   return nameParts
-    .map(value => value.charAt(0))
     .slice(0, 2)
-    .join("")
-    .toUpperCase();
+    .map(word => word.charAt(0).toUpperCase())
+    .join("");
 }
 
 export { parseSystemConfig, isProduction, injectParamsIntoPath, getInitials };

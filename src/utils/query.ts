@@ -2,7 +2,9 @@ import { MutationState, QueryState } from "@/types/form";
 import { SearchParams } from "@/types/query";
 
 function isQueriesLoading<T extends MutationState & QueryState>(queries: T[]) {
-  return queries.some(query => query.isLoading || query.isPending);
+  return queries.some(
+    query => query.isLoading || query.isPending || query.isFetching
+  );
 }
 
 function isQueriesError<T extends MutationState & QueryState>(queries: T[]) {
@@ -16,8 +18,14 @@ function isQueriesFetched<T extends MutationState & QueryState>(queries: T[]) {
   );
 }
 
-function isQueriesSuccess<T extends MutationState & QueryState>(queries: T[]) {
+function isAllQueriesSuccess<T extends MutationState & QueryState>(
+  queries: T[]
+) {
   return queries.filter(query => query.isSuccess).length === queries.length;
+}
+
+function isAnyQuerySuccess<T extends MutationState & QueryState>(queries: T[]) {
+  return queries.some(query => query.isSuccess);
 }
 
 function getSearchQuerystring(searchParams: SearchParams) {
@@ -63,14 +71,17 @@ function getQueriesError<T extends MutationState & QueryState>(queries: T[]) {
 }
 
 function getCombinedQueryState<T extends MutationState & QueryState>(
-  queries: T[]
+  queries: T[],
+  allSuccess: boolean = true
 ) {
   return {
     isLoading: isQueriesLoading(queries),
     isError: isQueriesError(queries),
     error: getQueriesError(queries),
     isFetched: isQueriesFetched(queries),
-    isSuccess: isQueriesSuccess(queries),
+    isSuccess: allSuccess
+      ? isAllQueriesSuccess(queries)
+      : isAnyQuerySuccess(queries),
   };
 }
 
@@ -80,7 +91,8 @@ export {
   isQueriesError,
   isQueriesFetched,
   isQueriesLoading,
-  isQueriesSuccess,
+  isAnyQuerySuccess,
+  isAllQueriesSuccess,
   getSearchQuerystring,
   getSearchSortOrder,
 };

@@ -3,6 +3,7 @@ interface QueryState {
   error?: unknown | string | null;
   isSuccess?: boolean;
   isFetched?: boolean;
+  isFetching?: boolean;
   isLoading?: boolean;
   reset?: () => void;
 }

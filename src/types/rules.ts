@@ -1,5 +1,5 @@
 export interface Rule {
-  label: string;
+  label?: string;
   text: string;
   active: boolean;
   id: number;

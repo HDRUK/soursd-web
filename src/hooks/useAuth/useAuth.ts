@@ -19,7 +19,8 @@ export default function useAuth() {
         const response = await fetch("/api/auth/me");
         if (response.ok) {
           const userData = await response.json();
-          setUser({ email: userData.user.email });
+          const { email, given_name, family_name } = userData.user;
+          setUser({ email, given_name, family_name });
         } else {
           setUser(undefined);
         }

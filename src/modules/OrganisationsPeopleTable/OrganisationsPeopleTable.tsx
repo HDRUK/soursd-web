@@ -1,52 +1,54 @@
-"use client";
-
 import ChipStatus from "@/components/ChipStatus";
-import Table, { TableProps } from "@/components/Table";
-import { useStore } from "@/data/store";
+import Table from "@/components/Table";
+import useColumns from "@/hooks/useColumns";
 import { User } from "@/types/application";
+import { ModuleTables } from "@/types/modules";
+import { RouteConfig } from "@/types/router";
 import { renderUserNameCell } from "@/utils/cells";
+import { filterColumns } from "@/utils/table";
 import { ColumnDef } from "@tanstack/react-table";
-import { useTranslations } from "next-intl";
+import { useMemo } from "react";
 
-interface OrganisationsPeopleTableProps
-  extends Omit<TableProps<User>, "columns"> {
-  columns?: TableProps<User>["columns"];
-  tKey?: string;
+export type OrganisationsPeopleTableColumns =
+  | "name"
+  | "affiliationEmail"
+  | "affiliationStatus";
+
+export interface OrganisationsPeopleTableProps
+  extends ModuleTables<User, OrganisationsPeopleTableColumns> {
+  routes?: {
+    name: RouteConfig;
+  };
 }
 
-const NAMESPACE_TRANSLATION = "Organisations.People";
-
 export default function OrganisationsPeopleTable({
-  tKey = NAMESPACE_TRANSLATION,
-  columns,
+  routes,
+  t,
+  extraColumns,
+  includeColumns = ["name", "affiliationEmail", "affiliationStatus"],
   ...restProps
 }: OrganisationsPeopleTableProps) {
-  const t = useTranslations(tKey);
-  const routes = useStore(state => state.getApplication().routes);
+  const { createDefaultColumn } = useColumns<User>({ t });
 
-  const defaultColumns: ColumnDef<User>[] = columns || [
-    {
-      accessorKey: "name",
-      header: t("name"),
-      cell: info =>
-        renderUserNameCell(
-          info.row.original,
-          routes.profileCustodianUsersProjects.path
+  const columns = useMemo(() => {
+    const initialColumns: ColumnDef<User>[] = [
+      createDefaultColumn("name", {
+        cell: info => renderUserNameCell(info.row.original, routes?.name?.path),
+      }),
+      createDefaultColumn("affiliationEmail", {
+        accessorKey: "registry.affiliations",
+        cell: info => info.getValue()?.[0]?.email,
+      }),
+      createDefaultColumn("affiliationStatus", {
+        accessorKey: "registry.affiliations",
+        cell: info => (
+          <ChipStatus status={info.getValue()?.[0]?.registryAffiliationState} />
         ),
-    },
-    {
-      accessorKey: "registry.affiliations",
-      header: t("email"),
-      cell: info => info.getValue()?.[0].email,
-    },
-    {
-      accessorKey: "registry.affiliations",
-      header: t("affiliationStatus"),
-      cell: info => (
-        <ChipStatus status={info.getValue()?.[0].registryAffiliationState} />
-      ),
-    },
-  ];
+      }),
+    ];
 
-  return <Table columns={defaultColumns} isPaginated {...restProps} />;
+    return filterColumns(initialColumns, includeColumns, extraColumns || []);
+  }, [includeColumns, extraColumns, routes, t]);
+
+  return <Table columns={columns} isPaginated {...restProps} />;
 }

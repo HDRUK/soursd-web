@@ -15,6 +15,16 @@ interface ActionLog {
   completed_at: string | null;
 }
 
+interface ValidationCheck {
+  id: number;
+  name: string;
+  description: string;
+  applies_to: string;
+  enabled: number;
+  created_at: string;
+  updated_at: string;
+}
+
 interface ValidationLog {
   id: number;
   entity_type: string;
@@ -27,8 +37,15 @@ interface ValidationLog {
   completed_at: string | null;
   manually_confirmed: number;
   comments?: Comment[];
+  validation_check: ValidationCheck;
 }
 
 type ActionLogEntity = "user" | "organisation" | "custodian";
 
-export type { ActionLog, ActionLogEntity, ValidationLog, Comment };
+export type {
+  ActionLog,
+  ActionLogEntity,
+  ValidationLog,
+  ValidationCheck,
+  Comment,
+};

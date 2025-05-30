@@ -19,7 +19,6 @@ import {
   useTheme,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { LinkProps } from "next/link";
 import { MouseEvent, useEffect, useState } from "react";
 import { CONTACT_MAIL_ADDRESS } from "@/config/contacts";
 import PageCenter from "../PageCenter";
@@ -39,6 +38,56 @@ export enum ButtonVariant {
   Outlined = "outlined",
 }
 
+interface ButtonProps {
+  color: ButtonColor;
+  variant: ButtonVariant;
+  text?: string;
+  icon?: React.ReactNode;
+  isSign?: boolean;
+  onClick?: (e: MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;
+  href?: string;
+}
+
+function renderButtons(
+  buttons: ButtonProps[],
+  options?: {
+    asMenuItem?: boolean;
+    fullWidth?: boolean;
+  }
+): React.ReactNode {
+  const { asMenuItem = false, fullWidth = false } = options || {};
+
+  return buttons.map(({ text, icon, href, onClick, ...restProps }, index) => {
+    const content = text || icon;
+    const key = `${text || index}`;
+
+    const button = href ? (
+      <Button
+        component={Link}
+        href={href}
+        key={key}
+        fullWidth={fullWidth}
+        {...restProps}>
+        {content}
+      </Button>
+    ) : (
+      <Button key={key} onClick={onClick} fullWidth={fullWidth} {...restProps}>
+        {content}
+      </Button>
+    );
+
+    return asMenuItem ? (
+      <MenuItem
+        key={`menu-${key}`}
+        sx={{ "&:hover": { backgroundColor: "transparent" } }}>
+        {button}
+      </MenuItem>
+    ) : (
+      button
+    );
+  });
+}
+
 export default function NavBar() {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_NAVBAR);
   const storedUser = useStore(store => store.getUser());
@@ -53,15 +102,7 @@ export default function NavBar() {
     }
   }, [isDesktop, isDrawerOpen]);
 
-  const left_buttons: {
-    color: ButtonColor;
-    variant: ButtonVariant;
-    text?: string;
-    icon?: React.ReactNode;
-    isSign?: boolean;
-    onClick?: LinkProps["onClick"];
-    href?: string;
-  }[] = [
+  const left_buttons: ButtonProps[] = [
     {
       color: ButtonColor.Inherit,
       variant: ButtonVariant.Text,
@@ -93,20 +134,12 @@ export default function NavBar() {
       href: "/support",
     },
   ];
-  const right_buttons: {
-    color: ButtonColor;
-    variant: ButtonVariant;
-    text?: string;
-    icon?: React.ReactNode;
-    isSign?: boolean;
-    onClick?: LinkProps["onClick"];
-    href?: string;
-  }[] = [
+  const right_buttons: ButtonProps[] = [
     {
       color: ButtonColor.Primary,
       variant: ButtonVariant.Outlined,
       text: storedUser ? t("signOutButton") : t("signInButton"),
-      onClick: (e: MouseEvent<HTMLAnchorElement>) => {
+      onClick: (e: MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
         e.preventDefault();
 
         if (storedUser) {
@@ -123,7 +156,7 @@ export default function NavBar() {
             color: ButtonColor.Primary,
             variant: ButtonVariant.Contained,
             text: t("registerButton"),
-            onClick: (e: MouseEvent<HTMLAnchorElement>) => {
+            onClick: (e: MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
               e.preventDefault();
 
               handleRegister();
@@ -146,24 +179,12 @@ export default function NavBar() {
           <StyledHeader>
             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
               <SoursdLogo variant="titled" sx={{ mt: "-9px", mr: "40px" }} />
-              {left_buttons.map(({ text, icon, ...restProps }) => (
-                <Button
-                  component={Link}
-                  sx={{ minWidth: 0 }}
-                  {...restProps}
-                  key={text}>
-                  {text || icon}
-                </Button>
-              ))}
+              {renderButtons(left_buttons)}
             </Box>
             <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-              {right_buttons.map(({ text, icon, ...restProps }) => (
-                <Button component={Link} {...restProps} key={text}>
-                  {text || icon}
-                </Button>
-              ))}
-              {storedUser && <NotificationsMenu />}
-              {storedUser && (
+              {renderButtons(right_buttons)}
+              {storedUser?.unclaimed === 0 && <NotificationsMenu />}
+              {storedUser?.unclaimed === 0 && (
                 <MaskLabel
                   initials={`${getInitials(`${storedUser?.first_name} ${storedUser?.last_name}`)}`}
                   label=""
@@ -211,25 +232,12 @@ export default function NavBar() {
           dismissAriaLabel={t("ariaCloseMobileMenu")}
           isDismissable>
           <MenuList>
-            {left_buttons.map(({ text, ...restProps }) => (
-              <MenuItem
-                key={text}
-                sx={{ "&:hover": { backgroundColor: "transparent" } }}>
-                <Button component={Link} fullWidth {...restProps}>
-                  {text}
-                </Button>
-              </MenuItem>
-            ))}
-            {right_buttons.map(({ text, ...restProps }) => (
-              <MenuItem
-                key={text}
-                sx={{ "&:hover": { backgroundColor: "transparent" } }}>
-                <Button component={Link} fullWidth {...restProps}>
-                  {text}
-                </Button>
-              </MenuItem>
-            ))}
-            {storedUser && (
+            {renderButtons(left_buttons, { asMenuItem: true, fullWidth: true })}
+            {renderButtons(right_buttons, {
+              asMenuItem: true,
+              fullWidth: true,
+            })}
+            {storedUser?.unclaimed === 0 && (
               <MenuItem
                 key="Notifications"
                 sx={{
