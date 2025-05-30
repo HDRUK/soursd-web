@@ -1,5 +1,5 @@
 import { PageBody, PageBodyContainer } from "@/modules";
-import ProjectsList from "@/modules/Projects";
+import ProjectsList from "@/organisms/Projects";
 import { useTranslations } from "next-intl";
 
 const NAMESPACE_TRANSLATION = "Projects";

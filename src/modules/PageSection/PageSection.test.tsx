@@ -1,4 +1,8 @@
-import { commonAccessibilityTests, render, screen } from "@/utils/testUtils";
+import {
+  commonAccessibilityTests,
+  render,
+  screen,
+} from "../../utils/testUtils";
 import PageSection from "./PageSection";
 
 const renderTest = () => render(<PageSection heading="This is a heading" />);

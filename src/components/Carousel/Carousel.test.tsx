@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@/utils/testUtils";
+import { render, screen, waitFor } from "../../utils/testUtils";
 import Carousel from "./Carousel";
 import CarouselSlide from "./CarouselSlide";
 import { mockedCarouselSlides } from "./mockData";

@@ -1,6 +1,6 @@
-import Text from "@/components/Text";
-import { ResearcherProfessionalRegistration } from "@/types/application";
 import { Typography } from "@mui/material";
+import Text from "../../components/Text";
+import { ResearcherProfessionalRegistration } from "../../types/application";
 
 interface ResearcherProfessionalRegistrationEntryProps {
   data: ResearcherProfessionalRegistration;

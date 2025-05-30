@@ -1,10 +1,10 @@
-import { FileResponse } from "@/services/files/types";
+import { useEffect, useState } from "react";
+import { FileResponse } from "../../services/files/types";
 import {
   isFileScanFailed,
   isFileScanComplete,
   isFileScanning,
-} from "@/utils/file";
-import { useEffect, useState } from "react";
+} from "../../utils/file";
 
 export default function useFileScanned(file: FileResponse | undefined) {
   const [isNotInfected, setIsNotInfected] = useState(false);

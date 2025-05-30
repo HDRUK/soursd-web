@@ -1,4 +1,4 @@
-import { render, screen, userEvent } from "@/utils/testUtils";
+import { render, screen, userEvent } from "../../utils/testUtils";
 import ActionValidationStatus, {
   UseApprovalHook,
 } from "./ActionValidationStatus";

@@ -1,4 +1,4 @@
-import { Position } from "@/consts/ui";
+import { Position } from "../consts/ui";
 
 function isPositionVertical(position: Position) {
   return position === Position.BOTTOM || position === Position.TOP;
