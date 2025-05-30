@@ -1,9 +1,9 @@
-import { ProjectAllUser } from "../../types/application";
-import { renderUserNameCell } from "../../utils/cells";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import { Box, Card, CardProps, Typography } from "@mui/material";
 import { ReactNode } from "react";
 import Text from "../../components/Text";
+import { ProjectAllUser } from "../../types/application";
+import { renderUserNameCell } from "../../utils/cells";
 
 export interface KanbanBoardUsersCardProps extends CardProps {
   data: ProjectAllUser;
