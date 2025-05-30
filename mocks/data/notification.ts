@@ -2,7 +2,7 @@ import { Notification } from "@/types/notifications";
 import { faker } from "@faker-js/faker";
 
 const mockedNotification = (
-  unread: Boolean = true,
+  unread: boolean = true,
   notification?: Partial<Notification>
 ): Notification => ({
   id: faker.string.uuid(),

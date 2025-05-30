@@ -127,6 +127,8 @@ type UserProfileCompletionJson = Record<
 
 interface Auth {
   email: string;
+  given_name: string;
+  family_name: string;
 }
 
 type Identity = {
@@ -171,7 +173,7 @@ type User = ModelState<{
   orcid_scanning_completed_at: string | null;
   created_at: string;
   feed_source?: UserFeedSource;
-  unclaimed?: boolean;
+  unclaimed?: number;
   registry: {
     digi_ident: string;
     files?: File[];
@@ -327,7 +329,9 @@ interface ResearcherEndorsement {
 interface ResearcherAffiliation {
   id: number;
   member_id: string;
-  organisation_id: number;
+  organisation_id?: number;
+  organisation_name?: string;
+  organisation_email?: string;
   relationship?: string;
   current_employer: boolean;
   from?: string | null;

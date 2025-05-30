@@ -15,11 +15,12 @@ import useFileUpload from "../../hooks/useFileUpload";
 import useUserFileUpload from "../../hooks/useUserFileUpload";
 import FileUploadDetails from "../../modules/FileUploadDetails/FileUploadDetails";
 import { PostTrainingsPayload } from "../../services/trainings/types";
+
 import {
   File as ApplicationFile,
   ResearcherTraining,
 } from "../../types/application";
-import { formatDBDate } from "../../utils/date";
+import { formatDBDate, getDate } from "../../utils/date";
 
 const NAMESPACE_TRANSLATION_FORM = "Form.Training";
 const NAMESPACE_TRANSLATION_FILE_UPLOAD = "Certification";
@@ -139,8 +140,8 @@ export default function TrainingForm({
     defaultValues: {
       provider: initialValues?.provider || "",
       training_name: initialValues?.training_name || "",
-      awarded_at: initialValues?.awarded_at || "",
-      expires_at: initialValues?.expires_at || "",
+      awarded_at: getDate(initialValues?.awarded_at) || "",
+      expires_at: getDate(initialValues?.expires_at) || "",
     },
   };
 

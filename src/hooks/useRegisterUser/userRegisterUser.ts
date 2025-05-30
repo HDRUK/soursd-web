@@ -42,7 +42,7 @@ export default function useRegisterUser({ selected }: UseRegisterUserArgs) {
 
     if (selected === AccountType.ORGANISATION) {
       const { data } = await mutateAsyncOrganisation({
-        organisation_name: "",
+        organisation_name: `${auth?.user?.given_name} ${auth?.user?.family_name} Org`,
         lead_applicant_email: auth?.user?.email,
         unclaimed: 0,
       });

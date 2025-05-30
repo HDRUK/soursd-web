@@ -1,5 +1,6 @@
 import { useStore } from "@/data/store";
 import {
+  Box,
   FormControlLabel,
   Grid,
   Link,
@@ -76,17 +77,24 @@ export default function ProjectsSafeDataForm({
             minimumRows={1}
             createNewRow={() => ""}
             tKey={NAMESPACE_TRANSLATION}
-            renderField={(_, index) => (
-              <FormControlHorizontal
-                displayLabel={false}
-                labelMd={0}
-                contentMd={12}
-                name={`datasets.${index}`}
-                placeholder={t("datasetsPlaceholder")}
-                renderField={fieldProps => (
-                  <TextField {...fieldProps} fullWidth />
-                )}
-              />
+            renderField={(_, index, removeButton) => (
+              <Grid container spacing={2}>
+                <Grid item xs={5}>
+                  <FormControlHorizontal
+                    displayLabel={false}
+                    labelMd={0}
+                    contentMd={12}
+                    name={`datasets.${index}`}
+                    placeholder={t("datasetsPlaceholder")}
+                    renderField={fieldProps => (
+                      <Box sx={{ display: "flex" }}>
+                        <TextField {...fieldProps} fullWidth />
+                        {removeButton}
+                      </Box>
+                    )}
+                  />
+                </Grid>
+              </Grid>
             )}
           />
         </Grid>
