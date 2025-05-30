@@ -76,13 +76,15 @@ export default function ActionLogs({ variant, panelProps }: ActionLogProps) {
 
   return (
     <>
-      <PageBody>
-        <ActionsPanel variant="plain" {...panelProps}>
-          {hydratedInCompletedActions.map(action => (
-            <ActionsPanelItem {...action} />
-          ))}
-        </ActionsPanel>
-      </PageBody>
+      {!!hydratedInCompletedActions.length && (
+        <PageBody>
+          <ActionsPanel variant="plain" {...panelProps}>
+            {hydratedInCompletedActions.map(action => (
+              <ActionsPanelItem {...action} />
+            ))}
+          </ActionsPanel>
+        </PageBody>
+      )}
       <PageBody>
         <Accordion
           disableGutters
