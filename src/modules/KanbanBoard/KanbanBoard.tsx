@@ -8,6 +8,7 @@ import {
   MeasuringStrategy,
   Modifiers,
   MouseSensor,
+  Over,
   TouchSensor,
   UniqueIdentifier,
   defaultDropAnimationSideEffects,
@@ -34,6 +35,7 @@ import { ProjectAllUser } from "../../types/application";
 import { findContainer, findItem, findItemIndex } from "../../utils/dnd";
 import KanbanBoardColumn from "./KanbanBoardColumn";
 import KanbanBoardColumns from "./KanbanBoardColumns";
+import useDroppableSortItems from "@/hooks/useDroppableSortItems";
 
 const dropAnimation: DropAnimation = {
   sideEffects: defaultDropAnimationSideEffects({
@@ -54,6 +56,7 @@ interface KanbanBoardProps<T> {
   modifiers?: Modifiers;
   initialData: Items;
   cardComponent: ComponentType<T>;
+  onDrop?: (containerId: UniqueIdentifier, item: Over) => void;
 }
 
 export default function KanbanBoard<T>({
@@ -62,8 +65,12 @@ export default function KanbanBoard<T>({
   initialData,
   modifiers,
   strategy = verticalListSortingStrategy,
+  onDrop,
   ...restProps
 }: KanbanBoardProps<T>) {
+  const { handleDragSort, handleSort } = useDroppableSortItems({
+    onDrop,
+  });
   const [items, setItems] = useState(initialData);
   const [containers] = useState(Object.keys(items) as UniqueIdentifier[]);
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
@@ -81,7 +88,7 @@ export default function KanbanBoard<T>({
       data && (
         <DndItem dragOverlay>
           <restProps.cardComponent
-            user={data}
+            data={data}
             sx={{
               width: "220px",
               backgroundColor: "neutralPink.main",
@@ -102,92 +109,30 @@ export default function KanbanBoard<T>({
     setClonedItems(null);
   };
 
-  const handleDragEnd = ({ over, active }: DragEndEvent) => {
+  const handleDragEnd = (e: DragEndEvent) => {
     unstable_batchedUpdates(() => {
-      if (!over?.id) {
-        setActiveId(null);
-        return;
-      }
-
-      const overContainer = findContainer(over.id, items);
-      const activeContainer = findContainer(active.id, items);
-
-      if (overContainer && activeContainer && over?.id) {
-        const activeIndex = findItemIndex(activeContainer, active.id, items);
-        const overIndex = findItemIndex(overContainer, over.id, items);
-
-        if (activeIndex !== overIndex) {
-          setItems(items => ({
+      handleSort(e, items, (state: Items) => {
+        setItems(items => {
+          return {
             ...items,
-            [overContainer]: arrayMove(
-              items[overContainer],
-              activeIndex,
-              overIndex
-            ),
-          }));
-        }
-      }
+            ...state,
+          };
+        });
+      });
 
       setActiveId(null);
     });
   };
 
-  const handleDragOver = ({ active, over }: DragOverEvent) => {
-    const overId = over?.id;
+  const handleDragOver = (e: DragOverEvent) => {
+    handleDragSort(e, items, (state: Items) => {
+      setItems(prevState => ({
+        ...prevState,
+        ...state,
+      }));
 
-    if (overId == null || active.id in items) {
-      return;
-    }
-
-    const overContainer = findContainer(overId, items);
-    const activeContainer = findContainer(active.id, items);
-
-    if (!overContainer || !activeContainer) {
-      return;
-    }
-
-    if (activeContainer !== overContainer) {
-      setItems(items => {
-        const activeItems = items[activeContainer];
-        const overItems = items[overContainer];
-        const overIndex = overItems.findIndex(({ id }) => id === overId);
-        const activeIndex = activeItems.findIndex(({ id }) => id === active.id);
-
-        let newIndex: number;
-
-        if (overId in items) {
-          newIndex = overItems.length + 1;
-        } else {
-          const isBelowOverItem =
-            over &&
-            active.rect.current.translated &&
-            active.rect.current.translated.top >
-              over.rect.top + over.rect.height;
-
-          const modifier = isBelowOverItem ? 1 : 0;
-
-          newIndex =
-            overIndex >= 0 ? overIndex + modifier : overItems.length + 1;
-        }
-
-        recentlyMovedToNewContainer.current = true;
-
-        return {
-          ...items,
-          [activeContainer]: items[activeContainer].filter(
-            item => item.id !== active.id
-          ),
-          [overContainer]: [
-            ...items[overContainer].slice(0, newIndex),
-            items[activeContainer][activeIndex],
-            ...items[overContainer].slice(
-              newIndex,
-              items[overContainer].length
-            ),
-          ],
-        };
-      });
-    }
+      recentlyMovedToNewContainer.current = true;
+    });
   };
 
   useEffect(() => {
@@ -230,15 +175,15 @@ export default function KanbanBoard<T>({
                   height: "100vh",
                   width: "236px",
                 }}>
-                {items[containerId].map(user => {
+                {items[containerId].map(data => {
                   return (
                     <DndSortableItem
                       disabled={isSortingContainer}
-                      key={user.id}
-                      id={user.id}
-                      index={findItemIndex(containerId, user.id, items)}>
+                      key={data.id}
+                      id={data.id}
+                      index={findItemIndex(containerId, data.id, items)}>
                       <restProps.cardComponent
-                        data={user}
+                        data={data}
                         sx={{ width: "220px" }}
                         actions={<ActionMenu>Move to </ActionMenu>}
                       />
