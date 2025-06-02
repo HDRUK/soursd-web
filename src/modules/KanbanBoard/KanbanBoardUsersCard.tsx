@@ -22,6 +22,10 @@ export default function KanbanBoardUsersCard({
     <Card
       sx={{
         p: 2,
+        "> p": {
+          fontSize: "0.875rem",
+          whiteSpace: "normal",
+        },
         ...sx,
       }}
       {...restProps}>
@@ -31,11 +35,12 @@ export default function KanbanBoardUsersCard({
         sx={{
           color: "menuList1.main",
           mb: 1,
+          fontSize: "1rem",
         }}>
         <Box sx={{ flexGrow: 1 }}>{renderUserNameCell(data)}</Box>
       </Text>
       <Typography color="success.main">{organisation_name}</Typography>
-      <Typography sx={{ whiteSpace: "normal" }}>
+      <Typography>
         {project_name} (id: {project_id})
       </Typography>
       <Typography>{project_role}</Typography>
