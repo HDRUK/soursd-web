@@ -1,6 +1,5 @@
 "use client";
 
-import { toCamelCase } from "@/utils/string";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {
   Box,
@@ -21,6 +20,7 @@ import {
   useFormContext,
   Path,
 } from "react-hook-form";
+import { toCamelCase } from "../../utils/string";
 
 export type RootError = { type?: string; message?: string };
 

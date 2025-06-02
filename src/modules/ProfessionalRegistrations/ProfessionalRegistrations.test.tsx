@@ -1,12 +1,12 @@
+import { mockedProfessionalRegistration, mockedUser } from "@/mocks/data/user";
+import { EntityType } from "../../types/api";
 import {
   commonAccessibilityTests,
   render,
   screen,
   waitFor,
   within,
-} from "@/utils/testUtils";
-import { EntityType } from "@/types/api";
-import { mockedProfessionalRegistration, mockedUser } from "@/mocks/data/user";
+} from "../../utils/testUtils";
 import ProfessionalRegistrations from "./ProfessionalRegistrations";
 
 const renderProfessionalRegistrationsComponent = () => {

@@ -1,4 +1,4 @@
-import { renderHook, waitFor } from "@/utils/testUtils";
+import { renderHook, waitFor } from "../../utils/testUtils";
 import useQueriesHistories from "./useQueriesHistories";
 
 const setupUseQueryHistories = () => renderHook(() => useQueriesHistories(1));

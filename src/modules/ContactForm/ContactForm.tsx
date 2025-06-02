@@ -8,7 +8,7 @@ import SendIcon from "@mui/icons-material/Send";
 import { Box, Button, OutlinedInput } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
-import yup from "@/config/yup";
+import yup from "../../config/yup";
 import { StyledForm, StyledFormPersonalDetails } from "./ContactForm.styles";
 
 const schema = yup.object().shape({

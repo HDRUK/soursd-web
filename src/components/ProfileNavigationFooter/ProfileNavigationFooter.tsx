@@ -3,7 +3,7 @@
 import { ArrowBack } from "@mui/icons-material";
 import { Box, Button, Typography, Grid } from "@mui/material";
 import { useTranslations } from "next-intl";
-import SoursdLogo from "@/components/SoursdLogo";
+import SoursdLogo from "../SoursdLogo";
 import ButtonSave from "../ButtonSave";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";

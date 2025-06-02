@@ -1,8 +1,9 @@
 "use server";
 
-import { EXCLUDE_REDIRECT_URLS } from "@/consts/router";
-import getMe from "@/services/auth/getMe";
-import { getAccessToken } from "@/utils/auth";
+import { redirect } from "next/navigation";
+import { EXCLUDE_REDIRECT_URLS } from "../../consts/router";
+import getMe from "../../services/auth/getMe";
+import { getAccessToken } from "../../utils/auth";
 import {
   getHomepageRedirectPath,
   getProfileRedirectPath,
@@ -10,8 +11,7 @@ import {
   getRegisterRedirectPath,
   getSeverErrorRedirectPath,
   isInPath,
-} from "@/utils/redirects";
-import { redirect } from "next/navigation";
+} from "../../utils/redirects";
 import usePathServerSide from "../usePathServerSide";
 
 export default async function useApplicationRedirects() {

@@ -1,10 +1,10 @@
-import { FileStatus } from "@/consts/files";
 import { mockedFile } from "@/mocks/data/file";
 import { faker } from "@faker-js/faker";
+import { FileStatus } from "../consts/files";
 import {
   getLatestCV,
-  isFileScanFailed,
   isFileScanComplete,
+  isFileScanFailed,
   isFileScanning,
 } from "./file";
 

@@ -1,13 +1,3 @@
-import ChipStatus, { Status } from "@/components/ChipStatus";
-import DateInput from "@/components/DateInput";
-import Form, { FormProps } from "@/components/Form";
-import FormActions from "@/components/FormActions";
-import FormControlWrapper from "@/components/FormControlWrapper";
-import FormFieldArray from "@/components/FormFieldArray";
-import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
-import yup from "@/config/yup";
-import { ResearcherProject } from "@/types/application";
-import { MutationState } from "@/types/form";
 import {
   Box,
   FormControlLabel,
@@ -19,6 +9,16 @@ import {
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
+import ChipStatus, { Status } from "../../components/ChipStatus";
+import DateInput from "../../components/DateInput";
+import Form, { FormProps } from "../../components/Form";
+import FormActions from "../../components/FormActions";
+import FormControlWrapper from "../../components/FormControlWrapper";
+import FormFieldArray from "../../components/FormFieldArray";
+import ProfileNavigationFooter from "../../components/ProfileNavigationFooter";
+import yup from "../../config/yup";
+import { ResearcherProject } from "../../types/application";
+import { MutationState } from "../../types/form";
 
 export interface UserModalDetailsProps extends FormProps<ResearcherProject> {
   mutateState: MutationState;

@@ -1,13 +1,13 @@
 import { useTranslations } from "next-intl";
-import yup from "@/config/yup";
-import Form from "@/components/Form";
 import { Grid, Box } from "@mui/material";
 import { TextareaAutosize } from "@mui/base/TextareaAutosize";
-import FormControl from "@/components/FormControlWrapper";
 import { LoadingButton } from "@mui/lab";
 import { useState, useMemo, useEffect } from "react";
-import SelectValidationActionStatus from "@/components/SelectValidationActionStatus";
-import { ApprovalResponse } from "@/services/approvals";
+import FormControl from "../../components/FormControlWrapper";
+import Form from "../../components/Form";
+import yup from "../../config/yup";
+import SelectValidationActionStatus from "../../components/SelectValidationActionStatus";
+import { ApprovalResponse } from "../../services/approvals";
 
 const NAMESPACE_TRANSLATION_ACTION_VALIDATION = "ActionValidationPanel";
 
