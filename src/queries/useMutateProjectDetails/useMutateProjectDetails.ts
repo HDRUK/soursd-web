@@ -1,10 +1,10 @@
+import { useMutation } from "@tanstack/react-query";
+import { useCallback, useMemo, useState } from "react";
+import { ProjectDetails } from "../../types/application";
 import {
   postProjectDetailsQuery,
   putProjectDetailsQuery,
-} from "@/services/project_details";
-import { ProjectDetails } from "@/types/application";
-import { useMutation } from "@tanstack/react-query";
-import { useCallback, useMemo, useState } from "react";
+} from "../../services/project_details";
 
 interface UseCustodianInviteProps {
   onSuccess?: () => void;

@@ -6,7 +6,7 @@ import {
   PageColumns,
 } from "@/modules";
 import { useTranslations } from "next-intl";
-import ActionLogs from "@/modules/ActionLogs";
+import ActionLogs from "@/organisms/ActionLogs";
 import SoursdCard from "@/components/SoursdCard";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";

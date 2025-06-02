@@ -1,8 +1,8 @@
-import Table from "@/components/Table";
-import { Charity } from "@/types/application";
 import { Link } from "@mui/material";
 import { ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
+import { Charity } from "../../types/application";
+import Table from "../../components/Table";
 
 interface CharitiesTableProps {
   charitiesData: Charity[];

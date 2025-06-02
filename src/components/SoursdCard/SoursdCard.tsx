@@ -1,6 +1,6 @@
-import { getInitials } from "@/utils/application";
 import { Box, Paper, PaperProps, Typography } from "@mui/material";
 import { ReactNode } from "react";
+import { getInitials } from "../../utils/application";
 import ChipStatus, { Status } from "../ChipStatus";
 import MaskLabel from "../MaskLabel";
 import Text from "../Text";

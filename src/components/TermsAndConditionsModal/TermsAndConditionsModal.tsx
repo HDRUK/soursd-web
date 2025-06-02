@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { Typography, Button, Box, List } from "@mui/material";
-import Markdown from "@/components/Markdown";
-import FormModal, { FormModalProps } from "@/components/FormModal";
 import { useTranslations } from "next-intl";
 import {
   mockedTermsAndConditionsBusiness,
   mockedTermsAndConditionsConsumer,
 } from "@/mocks/data/terms_and_conditions/index";
 import descriptionContent from "@/mocks/data/terms_and_conditions/description.md";
+import FormModal, { FormModalProps } from "../FormModal";
+import Markdown from "../Markdown";
 import {
   StyledListItemButton,
   StyledRadio,

@@ -1,5 +1,5 @@
-import { waitFor } from "@/utils/testUtils";
 import { renderHook } from "@testing-library/react";
+import { waitFor } from "../../utils/testUtils";
 import useRouteChange from "./useRouteChange";
 
 const mockAddEventListener = jest.fn();

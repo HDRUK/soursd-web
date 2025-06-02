@@ -1,5 +1,5 @@
-import { MutationState, QueryState } from "@/types/form";
-import { SearchParams } from "@/types/query";
+import { MutationState, QueryState } from "../types/form";
+import { SearchParams } from "../types/query";
 
 function isQueriesLoading<T extends MutationState & QueryState>(queries: T[]) {
   return queries.some(

@@ -3,7 +3,7 @@ import {
   fireEvent,
   render,
   screen,
-} from "@/utils/testUtils";
+} from "../../utils/testUtils";
 import { ActionMenu, ActionMenuItem } from ".";
 
 const renderSections = () =>

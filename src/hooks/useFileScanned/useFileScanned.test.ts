@@ -1,7 +1,7 @@
-import { FileStatus } from "@/consts/files";
 import { mockedFile } from "@/mocks/data/file";
-import { FileResponse } from "@/services/files/types";
-import { renderHook } from "@/utils/testUtils";
+import { FileStatus } from "../../consts/files";
+import { FileResponse } from "../../services/files/types";
+import { renderHook } from "../../utils/testUtils";
 import useFileScanned from "./useFileScanned";
 
 const setupUseFileScanned = (file?: Partial<FileResponse | undefined>) =>

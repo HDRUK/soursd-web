@@ -1,11 +1,11 @@
-import Legend from "@/components/Legend";
+import { useTranslations } from "next-intl";
+import Legend from "../../components/Legend";
 import {
   ApprovedIcon,
   ApprovedUserIcon,
   IdentityVerifiedIcon,
   PendingIcon,
-} from "@/consts/icons";
-import { useTranslations } from "next-intl";
+} from "../../consts/icons";
 
 const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 

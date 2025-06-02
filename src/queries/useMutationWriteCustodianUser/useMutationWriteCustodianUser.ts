@@ -1,9 +1,9 @@
+import { useMutation } from "@tanstack/react-query";
+import { CustodianUser } from "../../types/application";
 import {
   patchCustodianUser,
   postCustodianUser,
-} from "@/services/custodian_users";
-import { CustodianUser } from "@/types/application";
-import { useMutation } from "@tanstack/react-query";
+} from "../../services/custodian_users";
 
 interface UseMutationCustodianWriteUserOptions {
   user: CustodianUser;

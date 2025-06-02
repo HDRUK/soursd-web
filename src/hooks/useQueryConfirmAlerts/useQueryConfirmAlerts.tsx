@@ -1,9 +1,9 @@
 import { ShowAlert, ShowAlertOptions } from "@/types/common";
 import { MutationState, QueryState } from "@/types/form";
-import { showAlert } from "@/utils/showAlert";
 import { useTranslations } from "next-intl";
 import { useCallback, useRef, useState } from "react";
 import { SweetAlertIcon } from "sweetalert2";
+import { showAlert } from "../../utils/showAlert";
 import useQueryAlerts, { QueryAlertOptions } from "../useQueryAlerts";
 
 const NAMESPACE_TRANSALATIONS_APPLICATION = "Application";
