@@ -1,9 +1,7 @@
+import { DndItems } from "@/types/dnd";
 import { Collision, UniqueIdentifier } from "@dnd-kit/core";
 
-function findContainer<T extends { id: UniqueIdentifier }>(
-  id: UniqueIdentifier,
-  items: Record<string, T[]>
-) {
+function findContainer<T>(id: UniqueIdentifier, items: DndItems<T>) {
   if (id in items) {
     return id;
   }
@@ -13,18 +11,15 @@ function findContainer<T extends { id: UniqueIdentifier }>(
   );
 }
 
-function findItemIndex<T extends { id: UniqueIdentifier }>(
+function findItemIndex<T>(
   containerId: UniqueIdentifier,
   id: UniqueIdentifier,
-  items: Record<string, T[]>
+  items: DndItems<T>
 ) {
   return items[containerId].findIndex(({ id: itemId }) => itemId === id);
 }
 
-function findItem<T extends { id: UniqueIdentifier }>(
-  id: UniqueIdentifier,
-  items: Record<string, T[]>
-) {
+function findItem<T>(id: UniqueIdentifier, items: DndItems<T>) {
   let foundItem;
 
   Object.keys(items).some(key => {

@@ -8,7 +8,6 @@ import {
   MeasuringStrategy,
   Modifiers,
   MouseSensor,
-  Over,
   TouchSensor,
   UniqueIdentifier,
   defaultDropAnimationSideEffects,
@@ -18,7 +17,6 @@ import {
 import {
   SortableContext,
   SortingStrategy,
-  arrayMove,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { ComponentType, useEffect, useRef, useState } from "react";
@@ -27,15 +25,15 @@ import { useDebouncedCallback } from "use-debounce";
 
 import DndItem from "../../components/DndItem";
 
+import useDroppableSortItems from "@/hooks/useDroppableSortItems";
 import { ActionMenu } from "../../components/ActionMenu";
 import DndDroppableContainer from "../../components/DndDroppableContainer";
 import DndSortableItem from "../../components/DndSortableItem";
 import { dndDragRotate } from "../../consts/styles";
-import { ProjectAllUser } from "../../types/application";
-import { findContainer, findItem, findItemIndex } from "../../utils/dnd";
+import { findItem, findItemIndex } from "../../utils/dnd";
 import KanbanBoardColumn from "./KanbanBoardColumn";
 import KanbanBoardColumns from "./KanbanBoardColumns";
-import useDroppableSortItems from "@/hooks/useDroppableSortItems";
+import { DndItems } from "@/types/dnd";
 
 const dropAnimation: DropAnimation = {
   sideEffects: defaultDropAnimationSideEffects({
@@ -47,16 +45,15 @@ const dropAnimation: DropAnimation = {
   }),
 };
 
-type Items = Record<UniqueIdentifier, ProjectAllUser[]>;
-
 interface KanbanBoardProps<T> {
   adjustScale?: boolean;
   cancelDrop?: CancelDrop;
   strategy?: SortingStrategy;
   modifiers?: Modifiers;
-  initialData: Items;
+  initialData: DndItems<T>;
   cardComponent: ComponentType<T>;
-  onDrop?: (containerId: UniqueIdentifier, item: Over) => void;
+  onDragEnd?: (containerId: UniqueIdentifier, items: DndItems<T>) => void;
+  onDragOver?: (containerId: UniqueIdentifier, items: DndItems<T>) => void;
 }
 
 export default function KanbanBoard<T>({
@@ -65,19 +62,21 @@ export default function KanbanBoard<T>({
   initialData,
   modifiers,
   strategy = verticalListSortingStrategy,
-  onDrop,
+  onDragEnd,
+  onDragOver,
   ...restProps
 }: KanbanBoardProps<T>) {
-  const { handleDragSort, handleSort } = useDroppableSortItems({
-    onDrop,
+  const { handleDragSort, handleSort } = useDroppableSortItems<T>({
+    onDragEnd,
+    onDragOver,
   });
-  const [items, setItems] = useState(initialData);
+  const [items, setItems] = useState<DndItems<T>>(initialData);
   const [containers] = useState(Object.keys(items) as UniqueIdentifier[]);
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
   const recentlyMovedToNewContainer = useRef(false);
   const isSortingContainer = activeId ? containers.includes(activeId) : false;
 
-  const [clonedItems, setClonedItems] = useState<Items | null>(null);
+  const [clonedItems, setClonedItems] = useState<DndItems<T> | null>(null);
 
   const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor));
 
@@ -111,7 +110,7 @@ export default function KanbanBoard<T>({
 
   const handleDragEnd = (e: DragEndEvent) => {
     unstable_batchedUpdates(() => {
-      handleSort(e, items, (state: Items) => {
+      handleSort(e, items, (state: DndItems<T>) => {
         setItems(items => {
           return {
             ...items,
@@ -125,7 +124,7 @@ export default function KanbanBoard<T>({
   };
 
   const handleDragOver = (e: DragOverEvent) => {
-    handleDragSort(e, items, (state: Items) => {
+    handleDragSort(e, items, (state: DndItems<T>) => {
       setItems(prevState => ({
         ...prevState,
         ...state,

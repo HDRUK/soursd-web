@@ -1,21 +1,29 @@
-import { DragEndEvent, Over, UniqueIdentifier } from "@dnd-kit/core";
-import { findContainer, findItemIndex } from "../../utils/dnd";
+import { DndItems } from "@/types/dnd";
+import { DragEndEvent, UniqueIdentifier } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 import { useMemo } from "react";
+import { findContainer, findItemIndex } from "../../utils/dnd";
 
-export interface UseDroppableSortItemsProps {
-  onDrop?: (containerId: UniqueIdentifier, item: Over) => void;
-  onDragOver?: <T>(containerId: UniqueIdentifier, items: T) => void;
+export type Items<T> = Record<
+  UniqueIdentifier,
+  T & {
+    id: UniqueIdentifier;
+  }
+>;
+
+export interface UseDroppableSortItemsProps<T> {
+  onDragEnd?: (containerId: UniqueIdentifier, items: DndItems<T>) => void;
+  onDragOver?: (containerId: UniqueIdentifier, items: DndItems<T>) => void;
 }
 
-export default function useDroppableSortItems({
-  onDrop,
+export default function useDroppableSortItems<T>({
+  onDragEnd,
   onDragOver,
-}: UseDroppableSortItemsProps) {
-  const handleSort = <T extends { id: UniqueIdentifier }>(
+}: UseDroppableSortItemsProps<T>) {
+  const handleSort = (
     e: DragEndEvent,
-    items: Record<string, T[]>,
-    callback: (state: Record<string, T[]>) => void
+    items: DndItems<T>,
+    callback: (state: DndItems<T>) => void
   ) => {
     const { over, active } = e;
 
@@ -29,23 +37,26 @@ export default function useDroppableSortItems({
       const overIndex = findItemIndex(overContainer, over.id, items);
 
       if (activeIndex !== overIndex) {
-        callback({
+        const state = {
+          ...items,
           [overContainer]: arrayMove(
             items[overContainer],
             activeIndex,
             overIndex
           ),
-        });
+        } as DndItems<T>;
 
-        onDrop?.(overContainer, over);
+        callback(state);
+
+        onDragEnd?.(overContainer, state);
       }
     }
   };
 
-  const handleDragSort = <T extends { id: UniqueIdentifier }>(
+  const handleDragSort = (
     e: DragEndEvent,
-    items: Record<string, T[]>,
-    callback: (state: Record<string, T[]>) => void
+    items: DndItems<T>,
+    callback: (state: DndItems<T>) => void
   ) => {
     const { over, active } = e;
     const overId = over?.id;
@@ -92,7 +103,7 @@ export default function useDroppableSortItems({
           items[activeContainer][activeIndex],
           ...items[overContainer].slice(newIndex, items[overContainer].length),
         ],
-      };
+      } as DndItems<T>;
 
       callback(state);
 
@@ -105,6 +116,6 @@ export default function useDroppableSortItems({
       handleSort,
       handleDragSort,
     }),
-    [onDrop]
+    [onDragEnd, onDragOver]
   );
 }
