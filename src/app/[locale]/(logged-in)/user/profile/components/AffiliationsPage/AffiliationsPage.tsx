@@ -133,8 +133,6 @@ export default function AffiliationsPage() {
     });
   };
 
-  console.log(affiliationsData);
-
   const renderActionMenuCell = useCallback(
     (info: CellContext<ResearcherAffiliation, unknown>) => {
       const affiliation = info.row.original;
