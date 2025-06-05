@@ -31,9 +31,6 @@ export async function GET() {
     }
   }
 
-  cookieStore.delete("access_token");
-  cookieStore.delete("refresh_token");
-
   return NextResponse.redirect(
     encodeURI(`${process.env.NEXT_PUBLIC_LOCAL_ENV}`)
   );
