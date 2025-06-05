@@ -6,11 +6,19 @@ import { forwardRef, ReactNode } from "react";
 export interface KanbanBoardColumnProps extends BoxProps {
   heading: ReactNode;
   dragOver: boolean;
+  isDropAllowed?: boolean;
 }
 
 const KanbanBoardColumn = forwardRef<HTMLDivElement, KanbanBoardColumnProps>(
   (
-    { children, sx, heading, dragOver, ...restProps }: KanbanBoardColumnProps,
+    {
+      children,
+      sx,
+      heading,
+      dragOver,
+      isDropAllowed,
+      ...restProps
+    }: KanbanBoardColumnProps,
     ref
   ) => {
     return (
@@ -21,17 +29,21 @@ const KanbanBoardColumn = forwardRef<HTMLDivElement, KanbanBoardColumnProps>(
           padding: 1,
           backgroundColor: grey["100"],
           position: "relative",
-          ...(dragOver && {
-            backgroundColor: grey["200"],
-            "&:before": {
-              position: "absolute",
-              top: 0,
-              right: 0,
-              left: 0,
-              borderTop: "2px solid",
-              borderColor: "primary.main",
-              content: '""',
-            },
+          ...(dragOver &&
+            isDropAllowed !== false && {
+              backgroundColor: grey["200"],
+              "&:before": {
+                position: "absolute",
+                top: 0,
+                right: 0,
+                left: 0,
+                borderTop: "2px solid",
+                borderColor: "primary.main",
+                content: '""',
+              },
+            }),
+          ...(isDropAllowed === false && {
+            opacity: 0.3,
           }),
           ...sx,
         }}>
@@ -41,9 +53,10 @@ const KanbanBoardColumn = forwardRef<HTMLDivElement, KanbanBoardColumnProps>(
             px: 1,
             my: 1,
             minHeight: "3.6rem",
-            ...(dragOver && {
-              color: "primary.main",
-            }),
+            ...(dragOver &&
+              isDropAllowed !== false && {
+                color: "primary.main",
+              }),
           }}>
           {heading}
         </Typography>

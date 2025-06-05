@@ -8,10 +8,12 @@ export interface DndSortableItemProps {
   id: UniqueIdentifier;
   index: number;
   disabled?: boolean;
+  isDroppable?: boolean;
 }
 
 function DndSortableItem({
   disabled,
+  isDroppable,
   id,
   index,
   children,
@@ -28,7 +30,15 @@ function DndSortableItem({
       index={index}
       transition={transition}
       transform={transform}
-      listeners={listeners}>
+      listeners={listeners}
+      sx={
+        isDroppable === false && {
+          visibility: "hidden",
+          position: "fixed",
+          zIndex: 0,
+          cursor: "no-drop",
+        }
+      }>
       {children}
     </DndItem>
   );

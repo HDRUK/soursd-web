@@ -4,6 +4,7 @@ import {
   DragEndEvent,
   DragOverEvent,
   DragOverlay,
+  DragStartEvent,
   DropAnimation,
   MeasuringStrategy,
   Modifiers,
@@ -25,15 +26,27 @@ import { useDebouncedCallback } from "use-debounce";
 
 import DndItem from "../../components/DndItem";
 
-import useDroppableSortItems from "@/hooks/useDroppableSortItems";
+import useDroppableSortItems, {
+  UseDroppableSortItemsProps,
+} from "@/hooks/useDroppableSortItems";
 import { ActionMenu } from "../../components/ActionMenu";
 import DndDroppableContainer from "../../components/DndDroppableContainer";
 import DndSortableItem from "../../components/DndSortableItem";
 import { dndDragRotate } from "../../consts/styles";
-import { findItem, findItemIndex } from "../../utils/dnd";
+import {
+  findContainer,
+  findItem,
+  findItemInContainer,
+  findItemIndex,
+} from "../../utils/dnd";
 import KanbanBoardColumn from "./KanbanBoardColumn";
 import KanbanBoardColumns from "./KanbanBoardColumns";
-import { DndItems } from "@/types/dnd";
+import {
+  DndItems,
+  DragUpdateEventArgs,
+  DragUpdateEventArgsInitial,
+} from "../../types/dnd";
+import { WithStateWorkflow } from "@/types/application";
 
 const dropAnimation: DropAnimation = {
   sideEffects: defaultDropAnimationSideEffects({
@@ -45,34 +58,41 @@ const dropAnimation: DropAnimation = {
   }),
 };
 
-interface KanbanBoardProps<T> {
+interface KanbanBoardProps<T>
+  extends WithStateWorkflow<UseDroppableSortItemsProps<T>> {
   adjustScale?: boolean;
   cancelDrop?: CancelDrop;
   strategy?: SortingStrategy;
   modifiers?: Modifiers;
   initialData: DndItems<T>;
   cardComponent: ComponentType<T>;
-  onDragEnd?: (containerId: UniqueIdentifier, items: DndItems<T>) => void;
-  onDragOver?: (containerId: UniqueIdentifier, items: DndItems<T>) => void;
 }
 
 export default function KanbanBoard<T>({
   adjustScale = false,
   cancelDrop,
   initialData,
+  stateWorkflow,
   modifiers,
   strategy = verticalListSortingStrategy,
   onDragEnd,
   onDragOver,
+  onDragUpdate,
   ...restProps
 }: KanbanBoardProps<T>) {
-  const { handleDragSort, handleSort } = useDroppableSortItems<T>({
-    onDragEnd,
-    onDragOver,
-  });
+  const { handleDragSort, handleSort, handleDragSortStart } =
+    useDroppableSortItems<T>({
+      onDragEnd,
+      onDragOver,
+      onDragUpdate,
+    });
   const [items, setItems] = useState<DndItems<T>>(initialData);
   const [containers] = useState(Object.keys(items) as UniqueIdentifier[]);
-  const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
+  const [activeData, setActiveData] =
+    useState<DragUpdateEventArgsInitial<T> | null>(null);
+
+  const activeId = activeData?.item.id;
+
   const recentlyMovedToNewContainer = useRef(false);
   const isSortingContainer = activeId ? containers.includes(activeId) : false;
 
@@ -85,7 +105,7 @@ export default function KanbanBoard<T>({
 
     return (
       data && (
-        <DndItem dragOverlay>
+        <DndItem dragOverlay isDroppable={data.isDroppable}>
           <restProps.cardComponent
             data={data}
             sx={{
@@ -104,34 +124,54 @@ export default function KanbanBoard<T>({
       setItems(clonedItems);
     }
 
-    setActiveId(null);
+    setActiveData(null);
     setClonedItems(null);
+  };
+
+  const isAllowed = (_, { initial, containerId }) => {
+    return !!(
+      initial.containerId === containerId ||
+      stateWorkflow?.transitions[initial.containerId]?.includes(containerId)
+    );
   };
 
   const handleDragEnd = (e: DragEndEvent) => {
     unstable_batchedUpdates(() => {
-      handleSort(e, items, (state: DndItems<T>) => {
-        setItems(items => {
-          return {
-            ...items,
-            ...state,
-          };
-        });
+      handleSort(e, items, {
+        isAllowed,
+        setState: (state: DndItems<T>) => {
+          setItems(items => {
+            return {
+              ...items,
+              ...state,
+            };
+          });
+        },
       });
 
-      setActiveId(null);
+      setActiveData(null);
     });
   };
 
   const handleDragOver = (e: DragOverEvent) => {
-    handleDragSort(e, items, (state: DndItems<T>) => {
-      setItems(prevState => ({
-        ...prevState,
-        ...state,
-      }));
+    handleDragSort(e, items, {
+      isAllowed,
+      setState: (state: DndItems<T>) => {
+        setItems(prevState => ({
+          ...prevState,
+          ...state,
+        }));
 
-      recentlyMovedToNewContainer.current = true;
+        recentlyMovedToNewContainer.current = true;
+      },
     });
+  };
+
+  const handleDragStart = (e: DragOverEvent) => {
+    const initialData = handleDragSortStart(e, items);
+
+    setActiveData(initialData);
+    setClonedItems(items);
   };
 
   useEffect(() => {
@@ -150,10 +190,7 @@ export default function KanbanBoard<T>({
           strategy: MeasuringStrategy.Always,
         },
       }}
-      onDragStart={({ active }) => {
-        setActiveId(active.id);
-        setClonedItems(items);
-      }}
+      onDragStart={handleDragStart}
       onDragOver={(e: DragOverEvent) => {
         throttledDragOver(e);
       }}
@@ -169,6 +206,16 @@ export default function KanbanBoard<T>({
                 dragOver={
                   activeId && findItemIndex(containerId, activeId, items) > -1
                 }
+                isDropAllowed={
+                  !activeId ||
+                  isAllowed(
+                    {},
+                    {
+                      initial: activeData,
+                      containerId,
+                    }
+                  )
+                }
                 heading={`${containerId} (${items[containerId].length})`}
                 sx={{
                   height: "100vh",
@@ -178,6 +225,7 @@ export default function KanbanBoard<T>({
                   return (
                     <DndSortableItem
                       disabled={isSortingContainer}
+                      isDroppable={data.isDroppable}
                       key={data.id}
                       id={data.id}
                       index={findItemIndex(containerId, data.id, items)}>

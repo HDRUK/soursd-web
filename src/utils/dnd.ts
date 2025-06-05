@@ -19,6 +19,14 @@ function findItemIndex<T>(
   return items[containerId].findIndex(({ id: itemId }) => itemId === id);
 }
 
+function findItemInContainer<T>(
+  containerId: UniqueIdentifier,
+  id: UniqueIdentifier,
+  items: DndItems<T>
+) {
+  return items[containerId].find(item => item.id === id);
+}
+
 function findItem<T>(id: UniqueIdentifier, items: DndItems<T>) {
   let foundItem;
 
@@ -42,4 +50,10 @@ function findFirstDroppable(collisions: Collision[] | null) {
   return collisions?.find(({ data }) => !!data?.droppableContainer);
 }
 
-export { findContainer, findItem, findItemIndex, findFirstDroppable };
+export {
+  findItemInContainer,
+  findContainer,
+  findItem,
+  findItemIndex,
+  findFirstDroppable,
+};
