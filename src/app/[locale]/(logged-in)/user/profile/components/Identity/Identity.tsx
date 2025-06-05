@@ -26,7 +26,6 @@ import { useRouter } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
 import ReactDOMServer from "react-dom/server";
 import useQueryAlerts from "@/hooks/useQueryAlerts";
-import VeriffTermsAndConditions from "../VeriffTermsAndConditions";
 
 export interface IdentityFormValues {
   first_name: string;
@@ -196,10 +195,10 @@ export default function Identity() {
                 </FormActions>
               </>
             </Form>
-            <VeriffTermsAndConditions
+            {/* <VeriffTermsAndConditions
               open={showModal}
               onClose={() => setShowModal(false)}
-            />
+            /> */}
           </PageSection>
         </PageBody>
       </PageGuidance>
