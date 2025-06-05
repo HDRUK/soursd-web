@@ -1,12 +1,12 @@
+import { useMutation } from "@tanstack/react-query";
+import { useCallback, useMemo } from "react";
+import { MutationState } from "../../types/form";
 import {
   postCustodianInviteQuery,
   PostCustodianPayload,
   postCustodianQuery,
-} from "@/services/custodians";
-import { MutationState } from "@/types/form";
-import { getCombinedQueryState } from "@/utils/query";
-import { useMutation } from "@tanstack/react-query";
-import { useCallback, useMemo } from "react";
+} from "../../services/custodians";
+import { getCombinedQueryState } from "../../utils/query";
 
 interface UseCustodianInviteProps {
   onSuccess: () => void;

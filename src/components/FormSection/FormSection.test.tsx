@@ -1,4 +1,8 @@
-import { commonAccessibilityTests, render, screen } from "@/utils/testUtils";
+import {
+  commonAccessibilityTests,
+  render,
+  screen,
+} from "../../utils/testUtils";
 import FormSection from "./FormSection";
 
 const renderTest = () => render(<FormSection heading="This is a heading" />);

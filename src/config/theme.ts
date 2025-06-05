@@ -19,6 +19,7 @@ const headingStyles = {
 const PALETTE_THEME_PURPLE_BLUE = {
   typography: {
     fontFamily: `"Inter", "Roboto", "Helvetica", "Arial", sans-serif`,
+    fontSize: 14,
     h1: {
       ...headingStyles,
       fontSize: "2.027rem",
@@ -68,7 +69,7 @@ const PALETTE_THEME_PURPLE_BLUE = {
       contrastText: "#000",
     },
     background2: createColor(blueGrey["800"]),
-    primary: createColor("#CC51B4"),
+    primary: createColor("#BE37A3"),
     secondary: createColor("#E3E3E3"),
     warning: createColor("#F3C853"),
     info: createColor(blue["200"]),

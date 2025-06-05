@@ -1,6 +1,6 @@
 import { Autocomplete, AutocompleteProps, TextField } from "@mui/material";
-import { Option } from "@/types/common";
-import { getCountryOptions } from "@/utils/countries";
+import { Option } from "../../types/common";
+import { getCountryOptions } from "../../utils/countries";
 
 interface SelectCountryProps
   extends Omit<

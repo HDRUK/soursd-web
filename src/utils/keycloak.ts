@@ -1,4 +1,4 @@
-import keycloakConfig from "@/config/keycloak";
+import keycloakConfig from "../config/keycloak";
 
 const getLoginUrl = () => {
   const authUrl = `${keycloakConfig.authServerUrl}/realms/${keycloakConfig.realm}/protocol/openid-connect/auth`;

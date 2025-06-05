@@ -1,6 +1,6 @@
-import { getCountryCode, getCountryOptions } from "@/utils/countries";
 import { countries } from "countries-list";
-import { Option } from "@/types/common";
+import { Option } from "../types/common";
+import { getCountryCode, getCountryOptions } from "./countries";
 
 describe("getCountryCode", () => {
   it("should return the correct country code for a valid country name", () => {

@@ -31,7 +31,10 @@ export default function ActionsPanelItem({
           <Typography color="textSecondary.main">{description}</Typography>
         </Box>
       </Box>
-      <Box sx={{ minWidth: "200px", textAlign: "right" }}>{action}</Box>
+      <Box
+        sx={{ minWidth: "200px", display: "flex", justifyContent: "flex-end" }}>
+        {action}
+      </Box>
     </Paper>
   );
 }

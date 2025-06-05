@@ -1,5 +1,5 @@
-import { Option } from "@/types/common";
 import { countries } from "countries-list";
+import { Option } from "../types/common";
 
 /**
  * Get the country code for a given country name
