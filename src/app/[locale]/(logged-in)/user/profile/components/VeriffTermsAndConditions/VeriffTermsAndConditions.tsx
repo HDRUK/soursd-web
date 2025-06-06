@@ -24,6 +24,11 @@ export default function VeriffTermsAndConditions({
   const t = useTranslations(NAMESPACE_TRANSLATION);
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
 
+  const handleClose = () => {
+    onClose();
+    setAgreed(false);
+  };
+
   return (
     <FormModal
       heading={t("title")}
@@ -59,7 +64,7 @@ export default function VeriffTermsAndConditions({
         </Button>
         <StartVeriffFrameButton
           onSuccess={onSuccess}
-          onClose={onClose}
+          onClose={handleClose}
           disabled={!agreed}
         />
       </FormActions>

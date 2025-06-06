@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 
-// const { IDVT_SUPPLIER_BASE_URL, IDVT_SUPPLIER_API_KEY } = process.env;
-
 export async function POST(req: NextRequest) {
   const body = await req.json();
   const { firstName, lastName, vendorData } = body;
@@ -18,7 +16,7 @@ export async function POST(req: NextRequest) {
       },
       vendorData,
       timestamp: new Date().toISOString(),
-      callback: "https://yourdomain.com/whatever",
+      callback: "",
     },
   };
 
