@@ -4,17 +4,29 @@ import { useState } from "react";
 import { createVeriffFrame, MESSAGES } from "@veriff/incontext-sdk";
 import { LoadingButton } from "@mui/lab";
 import { useStore } from "@/data/store";
+import { showAlert } from "@/utils/showAlert";
+import { useTranslations } from "next-intl";
+
+const NAMESPACE_TRANSLATION = "VeriffTermsAndConditions";
 
 interface StartVeriffFrameButtonProps {
-  onSuccess: () => void;
+  onStart?: () => void;
+  onCancel?: () => void;
+  onSuccess?: () => void;
+  onOther?: (msg: MESSAGES) => void;
   onClose: () => void;
   disabled: boolean;
 }
 
 export default function StartVeriffFrameButton({
+  onStart,
+  onSuccess,
+  onCancel,
+  onOther,
   onClose,
   disabled = true,
 }: StartVeriffFrameButtonProps) {
+  const t = useTranslations(NAMESPACE_TRANSLATION);
   const user = useStore(state => state.getUser());
   const [loading, setLoading] = useState(false);
 
@@ -43,29 +55,26 @@ export default function StartVeriffFrameButton({
         onEvent(msg) {
           switch (msg) {
             case MESSAGES.STARTED:
-              console.log("Verification started");
+              onStart?.();
               break;
             case MESSAGES.SUBMITTED:
-              console.log("Verification submitted");
-              break;
             case MESSAGES.FINISHED:
-              console.log("Verification finished");
+              onSuccess?.();
               break;
             case MESSAGES.CANCELED:
-              console.log("Verrif cancelled");
-              break;
-            case MESSAGES.RELOAD_REQUEST:
-              console.log("Reload requested");
+              onCancel?.();
               break;
             default:
-              break;
+              onOther?.(msg);
           }
           onClose();
         },
       });
     } catch (e) {
-      console.log(`Verification failed`);
-      console.error(e);
+      const errorMessage = e instanceof Error ? e.message : String(e);
+      showAlert("error", {
+        text: errorMessage,
+      });
     } finally {
       setLoading(false);
     }
@@ -76,7 +85,7 @@ export default function StartVeriffFrameButton({
       loading={loading}
       onClick={startVerification}
       disabled={disabled}>
-      Start Verification
+      {t("startVerificationButton")}
     </LoadingButton>
   );
 }

@@ -2,11 +2,9 @@ import FormModal from "@/components/FormModal";
 import { Checkbox, Button, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-
-import FormModalBody from "@/components/FormModalBody";
-
-import StartVeriffFrameButton from "./StartVeriffFrameButton";
 import FormActions from "@/components/FormActions";
+import FormModalBody from "@/components/FormModalBody";
+import StartVeriffFrameButton from "./StartVeriffFrameButton";
 
 interface VeriffTermsAndConditionsProps {
   open: boolean;
