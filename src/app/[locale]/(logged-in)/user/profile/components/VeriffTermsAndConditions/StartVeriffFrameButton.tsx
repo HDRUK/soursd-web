@@ -1,11 +1,14 @@
 "use client";
 
-import { useState } from "react";
 import { createVeriffFrame, MESSAGES } from "@veriff/incontext-sdk";
 import { LoadingButton } from "@mui/lab";
 import { useStore } from "@/data/store";
-import { showAlert } from "@/utils/showAlert";
 import { useTranslations } from "next-intl";
+import { useMutation } from "@tanstack/react-query";
+import {
+  postStartVeriffQuery,
+  PostStartVeriffPayload,
+} from "@/services/veriff";
 
 const NAMESPACE_TRANSLATION = "VeriffTermsAndConditions";
 
@@ -28,28 +31,20 @@ export default function StartVeriffFrameButton({
 }: StartVeriffFrameButtonProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION);
   const user = useStore(state => state.getUser());
-  const [loading, setLoading] = useState(false);
+
+  const { mutateAsync: startIdvtCheck, isPending } = useMutation(
+    postStartVeriffQuery()
+  );
 
   const startVerification = async () => {
-    setLoading(true);
+    const payload = {
+      firstName: user?.first_name,
+      lastName: user?.last_name,
+      idNumber: user?.id,
+      vendorData: btoa(user?.registry?.digi_ident as string),
+    } as PostStartVeriffPayload;
 
-    try {
-      // server side call
-      const res = await fetch("/api/veriff/start", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          firstName: user?.first_name,
-          lastName: user?.last_name,
-          idNumber: user?.id,
-          vendorData: btoa(user?.registry?.digi_ident as string),
-        }),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) throw new Error(data.error || "Verification failed");
-
+    await startIdvtCheck(payload).then(data => {
       createVeriffFrame({
         url: data.url,
         onEvent(msg) {
@@ -70,19 +65,12 @@ export default function StartVeriffFrameButton({
           onClose();
         },
       });
-    } catch (e) {
-      const errorMessage = e instanceof Error ? e.message : String(e);
-      showAlert("error", {
-        text: errorMessage,
-      });
-    } finally {
-      setLoading(false);
-    }
+    });
   };
 
   return (
     <LoadingButton
-      loading={loading}
+      loading={isPending}
       onClick={startVerification}
       disabled={disabled}>
       {t("startVerificationButton")}
