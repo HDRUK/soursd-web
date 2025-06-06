@@ -19,13 +19,17 @@ import {
   PageSection,
 } from "@/modules";
 import { putUserQuery } from "@/services/users";
-import { Button, Grid, TextField } from "@mui/material";
+import { Button, Grid, TextField, Typography } from "@mui/material";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
 import ReactDOMServer from "react-dom/server";
 import useQueryAlerts from "@/hooks/useQueryAlerts";
+import { User } from "@/types/application";
+import VeriffTermsAndConditions from "../VeriffTermsAndConditions";
+import { CheckCircle } from "@mui/icons-material";
+import Text from "@/components/Text";
 
 export interface IdentityFormValues {
   first_name: string;
@@ -41,6 +45,12 @@ export default function Identity() {
   const queryClient = useQueryClient();
   const router = useRouter();
   const user = useStore(state => state.getUser());
+  const { registry } = user as User;
+  const { identity } = registry;
+  const { idvt_started_at, idvt_success } = identity || {
+    idvt_started_at: undefined,
+    idvt_success: 0,
+  };
 
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
@@ -67,6 +77,14 @@ export default function Identity() {
     },
     [user]
   );
+
+  const handleVeriffSuccess = () => {
+    if (user?.id) {
+      queryClient.refetchQueries({
+        queryKey: ["getUser", user.id],
+      });
+    }
+  };
 
   useQueryAlerts(updateUser, {
     errorAlertProps: {
@@ -175,14 +193,24 @@ export default function Identity() {
                   <Grid container spacing={3}>
                     <Grid container item spacing={3}>
                       <Grid item xs={8}>
-                        <Button
-                          variant="outlined"
-                          onClick={() => setShowModal(true)}>
-                          {tProfile("idvtCheckButton")}
-                        </Button>
-                        <Markdown variant="subtitle">
-                          {tProfile("idvtCheckDescription")}
-                        </Markdown>
+                        {idvt_success ? (
+                          <Text startIcon={<CheckCircle color="success" />}>
+                            {tProfile("idvtCheckComplete")}
+                          </Text>
+                        ) : (
+                          <>
+                            <Button
+                              variant="outlined"
+                              onClick={() => setShowModal(true)}>
+                              {idvt_started_at
+                                ? tProfile("idvtCheckButtonRestart")
+                                : tProfile("idvtCheckButtonStart")}
+                            </Button>
+                            <Markdown variant="subtitle">
+                              {tProfile("idvtCheckDescription")}
+                            </Markdown>
+                          </>
+                        )}
                       </Grid>
                     </Grid>
                   </Grid>
@@ -195,10 +223,11 @@ export default function Identity() {
                 </FormActions>
               </>
             </Form>
-            {/* <VeriffTermsAndConditions
+            <VeriffTermsAndConditions
               open={showModal}
+              onSuccess={handleVeriffSuccess}
               onClose={() => setShowModal(false)}
-            /> */}
+            />
           </PageSection>
         </PageBody>
       </PageGuidance>
