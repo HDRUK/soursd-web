@@ -7,15 +7,15 @@ import {
   ActionMenuProps,
 } from "../../components/ActionMenu";
 
-export interface KanbanBoardUsersActionsProps
+export interface KanbanBoardActionsMenuProps
   extends Omit<ActionMenuProps, "children"> {
   columns: string[];
 }
 
-export default function KanbanBoardUsersActions({
+export default function KanbanBoardActionsMenu({
   columns,
   ...restProps
-}: KanbanBoardUsersActionsProps) {
+}: KanbanBoardActionsMenuProps) {
   const actions = useMemo(
     () =>
       ({ handleClose }: ActionMenuHelpers) => (

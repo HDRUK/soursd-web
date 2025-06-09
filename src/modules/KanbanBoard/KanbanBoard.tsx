@@ -26,8 +26,8 @@ import { useDebouncedCallback } from "use-debounce";
 
 import useDroppableSortItems, {
   UseDroppableSortItemsProps,
-} from "@/hooks/useDroppableSortItems";
-import { WithStateWorkflow } from "@/types/application";
+} from "../../hooks/useDroppableSortItems";
+import { WithStateWorkflow } from "../../types/application";
 import DndItem from "../../components/DndItem";
 
 import DndDroppableContainer from "../../components/DndDroppableContainer";
@@ -35,9 +35,9 @@ import DndSortableItem from "../../components/DndSortableItem";
 import { dndDragRotate } from "../../consts/styles";
 import { DndItems, DragUpdateEventArgsInitial } from "../../types/dnd";
 import { findDroppables, findItem, findItemIndex } from "../../utils/dnd";
+import KanbanBoardActionsMenu from "./KanbanBoardActions";
 import KanbanBoardColumn from "./KanbanBoardColumn";
 import KanbanBoardColumns from "./KanbanBoardColumns";
-import KanbanBoardUsersActions from "./KanbanBoardUsersActions";
 
 const dropAnimation: DropAnimation = {
   sideEffects: defaultDropAnimationSideEffects({
@@ -230,7 +230,7 @@ export default function KanbanBoard<T>({
                         data={data}
                         sx={{ width: "220px" }}
                         actions={
-                          <KanbanBoardUsersActions
+                          <KanbanBoardActionsMenu
                             columns={getAllowedColumns(containerId)}
                           />
                         }
