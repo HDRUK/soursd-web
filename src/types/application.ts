@@ -132,6 +132,8 @@ type Identity = {
   idvt_errors?: string;
   idvt_result: number;
   idvt_result_perc: number;
+  idvt_started_at: string;
+  idvt_success: number;
   passport_path: string;
   postcode: string;
   registry_id: number;
@@ -463,6 +465,7 @@ export type {
   Charity,
   Department,
   File,
+  Identity,
   Organisation,
   OrganisationIdvt,
   Permission,
