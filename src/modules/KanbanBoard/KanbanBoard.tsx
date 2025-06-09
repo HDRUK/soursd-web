@@ -28,12 +28,8 @@ import useDroppableSortItems, {
   UseDroppableSortItemsProps,
 } from "@/hooks/useDroppableSortItems";
 import { WithStateWorkflow } from "@/types/application";
-import { IconButton, MenuItem, Select } from "@mui/material";
-import { Box } from "@mui/system";
-import { Check } from "@mui/icons-material";
 import DndItem from "../../components/DndItem";
 
-import { ActionMenu, ActionMenuItem } from "../../components/ActionMenu";
 import DndDroppableContainer from "../../components/DndDroppableContainer";
 import DndSortableItem from "../../components/DndSortableItem";
 import { dndDragRotate } from "../../consts/styles";
@@ -41,6 +37,7 @@ import { DndItems, DragUpdateEventArgsInitial } from "../../types/dnd";
 import { findDroppables, findItem, findItemIndex } from "../../utils/dnd";
 import KanbanBoardColumn from "./KanbanBoardColumn";
 import KanbanBoardColumns from "./KanbanBoardColumns";
+import KanbanBoardUsersActions from "./KanbanBoardUsersActions";
 
 const dropAnimation: DropAnimation = {
   sideEffects: defaultDropAnimationSideEffects({
@@ -233,27 +230,9 @@ export default function KanbanBoard<T>({
                         data={data}
                         sx={{ width: "220px" }}
                         actions={
-                          <ActionMenu>
-                            <ActionMenuItem
-                              collapseContent={
-                                <Box
-                                  sx={{
-                                    display: "flex",
-                                    gap: 1,
-                                  }}>
-                                  <Select sx={{ minWidth: 200 }}>
-                                    {getAllowedColumns(containerId).map(key => (
-                                      <MenuItem>{key}</MenuItem>
-                                    ))}
-                                  </Select>
-                                  <IconButton>
-                                    <Check />
-                                  </IconButton>
-                                </Box>
-                              }>
-                              Move to
-                            </ActionMenuItem>
-                          </ActionMenu>
+                          <KanbanBoardUsersActions
+                            columns={getAllowedColumns(containerId)}
+                          />
                         }
                       />
                     </DndSortableItem>

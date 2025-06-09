@@ -1,9 +1,16 @@
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { IconButton, Menu, MenuList, Box, BoxProps } from "@mui/material";
-import { ReactNode, useState } from "react";
+import { ReactNode, useRef, useState } from "react";
 
-interface ActionMenuProps extends BoxProps {
-  children: ReactNode;
+export interface ActionMenuHelpers {
+  handleClose: () => void;
+  handleOpen: () => void;
+}
+
+export interface ActionMenuProps extends BoxProps {
+  children:
+    | ReactNode
+    | (({ handleClose, handleOpen }: ActionMenuHelpers) => ReactNode);
   onOpen?(): void;
   onClose?(): void;
   trigger?: ReactNode;
@@ -20,6 +27,7 @@ export default function ActionMenu({
   ...restProps
 }: ActionMenuProps) {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  const triggerRef = useRef();
 
   const { ["aria-label"]: ariaLabel, ...additionalProps } = restProps;
 
@@ -36,7 +44,11 @@ export default function ActionMenu({
   return (
     <Box component="span" {...additionalProps}>
       {!trigger && (
-        <IconButton size="small" onClick={handleOpen} aria-label={ariaLabel}>
+        <IconButton
+          ref={triggerRef}
+          size="small"
+          onClick={handleOpen}
+          aria-label={ariaLabel}>
           {icon}
         </IconButton>
       )}
@@ -53,7 +65,13 @@ export default function ActionMenu({
       )}
       <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={handleClose}>
         <MenuList dense sx={sx}>
-          {children}
+          {typeof children === "function"
+            ? children({
+                handleClose,
+                handleOpen: () =>
+                  handleOpen({ currentTarget: triggerRef.current }),
+              })
+            : children}
         </MenuList>
       </Menu>
     </Box>

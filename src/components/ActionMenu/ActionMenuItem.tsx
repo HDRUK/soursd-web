@@ -10,7 +10,15 @@ import { ReactNode, useState } from "react";
 interface ActionMenuItemProps extends MenuItemProps {
   children: ReactNode;
   icon?: ReactNode;
-  collapseContent?: ReactNode;
+  collapseContent?:
+    | ReactNode
+    | (({
+        handleCollapse,
+        handleExpand,
+      }: {
+        handleCollapse: () => void;
+        handleExpand: () => void;
+      }) => ReactNode);
 }
 
 export default function ActionMenuItem({
@@ -20,11 +28,11 @@ export default function ActionMenuItem({
   sx,
   ...restProps
 }: ActionMenuItemProps) {
-  const [collapseOpen, setCollapseOpen] = useState(false);
+  const [collapseIn, setCollapseIn] = useState(false);
 
   let menuItemSx = sx;
 
-  if (collapseOpen) {
+  if (collapseIn) {
     menuItemSx = {
       ...menuItemSx,
       display: "flex",
@@ -41,15 +49,20 @@ export default function ActionMenuItem({
         <ListItemText
           onClick={() => {
             if (collapseContent) {
-              setCollapseOpen(!collapseOpen);
+              setCollapseIn(!collapseIn);
             }
           }}>
           {children}
         </ListItemText>
       </div>
       {collapseContent && (
-        <Collapse component="div" in={collapseOpen}>
-          {collapseContent}
+        <Collapse component="div" in={collapseIn}>
+          {typeof collapseContent === "function"
+            ? collapseContent({
+                handleCollapse: () => setCollapseIn(false),
+                handleExpand: () => setCollapseIn(true),
+              })
+            : collapseContent}
         </Collapse>
       )}
     </MenuItem>
