@@ -152,10 +152,15 @@ export const mockedUserTrainingGuidanceProps = {
 export const mockedRegisterGuidanceProps = {
   infoTitle: "Guidance",
   info: (
-    <Typography>
-      Hover over the options to the left to view more information about account
-      types.
-    </Typography>
+    <>
+      <Typography mb={2}>
+        Select an option to view more information about account types.
+      </Typography>
+      <Typography mb={2}>
+        <strong>Note:</strong> If you hold multiple roles, you’ll need a
+        separate account for each.
+      </Typography>
+    </>
   ),
 };
 
