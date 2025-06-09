@@ -46,6 +46,18 @@ function findItem<T>(id: UniqueIdentifier, items: DndItems<T>) {
   return foundItem;
 }
 
+function pruneItem<T>(id: UniqueIdentifier, items: DndItems<T>) {
+  return Object.keys(items).reduce((data, key) => {
+    data[key] = items[key].filter(item => item.id !== id);
+
+    return data;
+  }, {});
+}
+
+function findDroppables<T>(containerId: UniqueIdentifier, items: DndItems<T>) {
+  return items[containerId].filter(item => item.isDroppable !== false);
+}
+
 function findFirstDroppable(collisions: Collision[] | null) {
   return collisions?.find(({ data }) => !!data?.droppableContainer);
 }
@@ -56,4 +68,6 @@ export {
   findItem,
   findItemIndex,
   findFirstDroppable,
+  pruneItem,
+  findDroppables,
 };

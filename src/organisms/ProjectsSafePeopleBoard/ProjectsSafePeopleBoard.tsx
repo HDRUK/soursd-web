@@ -19,7 +19,7 @@ export default function ProjectsSafePeopleBoard() {
       { containerId, item, state }: DragUpdateEventArgs<ProjectAllUser>
     ) => {
       console.log(e, containerId, item, state);
-      //updateUserCard();
+      // updateUserCard();
     },
     []
   );

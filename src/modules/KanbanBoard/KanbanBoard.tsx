@@ -4,7 +4,6 @@ import {
   DragEndEvent,
   DragOverEvent,
   DragOverlay,
-  DragStartEvent,
   DropAnimation,
   MeasuringStrategy,
   Modifiers,
@@ -15,6 +14,7 @@ import {
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
+import { restrictToFirstScrollableAncestor } from "@dnd-kit/modifiers";
 import {
   SortableContext,
   SortingStrategy,
@@ -24,29 +24,23 @@ import { ComponentType, useEffect, useRef, useState } from "react";
 import { createPortal, unstable_batchedUpdates } from "react-dom";
 import { useDebouncedCallback } from "use-debounce";
 
-import DndItem from "../../components/DndItem";
-
 import useDroppableSortItems, {
   UseDroppableSortItemsProps,
 } from "@/hooks/useDroppableSortItems";
-import { ActionMenu } from "../../components/ActionMenu";
+import { WithStateWorkflow } from "@/types/application";
+import { IconButton, MenuItem, Select } from "@mui/material";
+import { Box } from "@mui/system";
+import { Check } from "@mui/icons-material";
+import DndItem from "../../components/DndItem";
+
+import { ActionMenu, ActionMenuItem } from "../../components/ActionMenu";
 import DndDroppableContainer from "../../components/DndDroppableContainer";
 import DndSortableItem from "../../components/DndSortableItem";
 import { dndDragRotate } from "../../consts/styles";
-import {
-  findContainer,
-  findItem,
-  findItemInContainer,
-  findItemIndex,
-} from "../../utils/dnd";
+import { DndItems, DragUpdateEventArgsInitial } from "../../types/dnd";
+import { findDroppables, findItem, findItemIndex } from "../../utils/dnd";
 import KanbanBoardColumn from "./KanbanBoardColumn";
 import KanbanBoardColumns from "./KanbanBoardColumns";
-import {
-  DndItems,
-  DragUpdateEventArgs,
-  DragUpdateEventArgsInitial,
-} from "../../types/dnd";
-import { WithStateWorkflow } from "@/types/application";
 
 const dropAnimation: DropAnimation = {
   sideEffects: defaultDropAnimationSideEffects({
@@ -135,6 +129,12 @@ export default function KanbanBoard<T>({
     );
   };
 
+  const getAllowedColumns = (containerId: UniqueIdentifier) => {
+    return Object.keys(items).filter(key =>
+      isAllowed({}, { initial: { containerId }, containerId: key })
+    );
+  };
+
   const handleDragEnd = (e: DragEndEvent) => {
     unstable_batchedUpdates(() => {
       handleSort(e, items, {
@@ -216,9 +216,9 @@ export default function KanbanBoard<T>({
                     }
                   )
                 }
-                heading={`${containerId} (${items[containerId].length})`}
+                heading={`${containerId} (${findDroppables(containerId, items).length})`}
                 sx={{
-                  height: "100vh",
+                  height: "100%",
                   width: "236px",
                 }}>
                 {items[containerId].map(data => {
@@ -232,7 +232,29 @@ export default function KanbanBoard<T>({
                       <restProps.cardComponent
                         data={data}
                         sx={{ width: "220px" }}
-                        actions={<ActionMenu>Move to </ActionMenu>}
+                        actions={
+                          <ActionMenu>
+                            <ActionMenuItem
+                              collapseContent={
+                                <Box
+                                  sx={{
+                                    display: "flex",
+                                    gap: 1,
+                                  }}>
+                                  <Select sx={{ minWidth: 200 }}>
+                                    {getAllowedColumns(containerId).map(key => (
+                                      <MenuItem>{key}</MenuItem>
+                                    ))}
+                                  </Select>
+                                  <IconButton>
+                                    <Check />
+                                  </IconButton>
+                                </Box>
+                              }>
+                              Move to
+                            </ActionMenuItem>
+                          </ActionMenu>
+                        }
                       />
                     </DndSortableItem>
                   );
@@ -243,7 +265,10 @@ export default function KanbanBoard<T>({
         ))}
       </KanbanBoardColumns>
       {createPortal(
-        <DragOverlay adjustScale={adjustScale} dropAnimation={dropAnimation}>
+        <DragOverlay
+          adjustScale={adjustScale}
+          dropAnimation={dropAnimation}
+          modifiers={[restrictToFirstScrollableAncestor]}>
           {activeId &&
             !containers.includes(activeId) &&
             renderSortableItemDragOverlay(activeId)}

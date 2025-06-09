@@ -16,6 +16,7 @@ export default function ActionMenu({
   onClose,
   trigger,
   icon = <MoreVertIcon />,
+  sx,
   ...restProps
 }: ActionMenuProps) {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
@@ -51,7 +52,9 @@ export default function ActionMenu({
         </span>
       )}
       <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={handleClose}>
-        <MenuList dense>{children}</MenuList>
+        <MenuList dense sx={sx}>
+          {children}
+        </MenuList>
       </Menu>
     </Box>
   );

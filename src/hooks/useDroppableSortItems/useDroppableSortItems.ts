@@ -7,7 +7,12 @@ import {
 } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 import { useMemo, useRef } from "react";
-import { findContainer, findItem, findItemIndex } from "../../utils/dnd";
+import {
+  findContainer,
+  findItem,
+  findItemIndex,
+  pruneItem,
+} from "../../utils/dnd";
 
 export interface UseDroppableSortItemsProps<T> {
   onDragStart?: (e: DragStartEvent, data: DragUpdateEventArgs<T>) => void;
@@ -33,13 +38,41 @@ export default function useDroppableSortItems<T>({
     containerId: UniqueIdentifier;
   }>();
 
+  const getInitialState = (items: DndItems<T>) => {
+    const state = pruneItem(initialArgs.current?.item.id, items) as DndItems<T>;
+
+    const initialContainerItems = [
+      ...items[initialArgs.current?.containerId],
+      initialArgs.current?.item,
+    ];
+
+    return {
+      ...state,
+      [initialArgs.current?.containerId]: arrayMove(
+        initialContainerItems,
+        initialContainerItems.length - 1,
+        initialArgs.current?.itemIndex
+      ),
+    };
+  };
+
   const handleSort = (
     e: DragEndEvent,
     items: DndItems<T>,
     options: UseDroppableSortItemsFnOptions<T>
   ) => {
-    const { over, active } = e;
+    const { over, active, collisions } = e;
     const { setState, isAllowed } = options;
+
+    if (!collisions?.length) {
+      const state = getInitialState(items);
+
+      setState(state);
+      onDragEnd?.(e, {
+        initial: initialArgs.current,
+        state,
+      });
+    }
 
     if (!over?.id) return;
 
@@ -80,26 +113,13 @@ export default function useDroppableSortItems<T>({
           onDragEnd?.(e, eventArgs);
           onDragUpdate?.(e, eventArgs);
         } else {
-          const initialContainerItems = [
-            ...items[initialArgs.current?.containerId],
-            initialArgs.current?.item,
-          ];
-
-          const state = {
-            ...items,
-            [overContainer]: items[overContainer].filter(
-              item => item.id !== initialArgs.current?.item.id
-            ),
-            [initialArgs.current?.containerId]: arrayMove(
-              initialContainerItems,
-              initialContainerItems.length - 1,
-              initialArgs.current?.itemIndex
-            ),
-          } as DndItems<T>;
+          const state = getInitialState(items);
 
           setState(state);
-
-          onDragEnd?.(e, eventArgs);
+          onDragEnd?.(e, {
+            initial: initialArgs.current,
+            state,
+          });
         }
       }
     }

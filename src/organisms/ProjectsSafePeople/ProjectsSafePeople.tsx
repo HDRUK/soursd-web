@@ -28,10 +28,6 @@ import {
   renderOrganisationsNameCell,
   renderUserNameCell,
 } from "../../utils/cells";
-import KanbanBoard from "../../modules/KanbanBoard";
-import { mockedKanbanProjectUser } from "@/mocks/data/project";
-import { rectSortingStrategy } from "@dnd-kit/sortable";
-import KanbanBoardUsersCard from "@/modules/KanbanBoard/KanbanBoardUsersCard";
 import ProjectsSafePeopleBoard from "../ProjectsSafePeopleBoard";
 
 const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
