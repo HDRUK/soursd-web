@@ -1,13 +1,14 @@
-import FormActions from "@/components/FormActions";
-import ButtonSave from "@/components/ButtonSave";
 import FormModal from "@/components/FormModal";
 import { Checkbox, Button, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import FormActions from "@/components/FormActions";
 import FormModalBody from "@/components/FormModalBody";
+import StartVeriffFrameButton from "./StartVeriffFrameButton";
 
 interface VeriffTermsAndConditionsProps {
   open: boolean;
+  onSuccess: () => void;
   onClose: () => void;
 }
 
@@ -16,16 +17,16 @@ const NAMESPACE_TRANSLATION_FORM = "Form";
 
 export default function VeriffTermsAndConditions({
   open,
+  onSuccess,
   onClose,
 }: VeriffTermsAndConditionsProps) {
+  const [agreed, setAgreed] = useState(false);
   const t = useTranslations(NAMESPACE_TRANSLATION);
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
-  const [value, setValue] = useState(false);
 
-  const handleSave = () => {
-    // something needs to happen here
-    // - no BE in place so will come in another ticket
+  const handleClose = () => {
     onClose();
+    setAgreed(false);
   };
 
   return (
@@ -45,7 +46,6 @@ export default function VeriffTermsAndConditions({
             ),
           })}
         </Typography>
-
         <Typography>
           {t.rich("descriptionPart2", {
             theirLink: chunks => (
@@ -55,15 +55,18 @@ export default function VeriffTermsAndConditions({
             ),
           })}
         </Typography>
-
-        <Checkbox value={value} onChange={e => setValue(e.target.checked)} />
+        <Checkbox value={agreed} onChange={e => setAgreed(e.target.checked)} />
         {t("checkboxLabel")}
       </FormModalBody>
       <FormActions sx={{ display: "flex", justifyContent: "space-between" }}>
         <Button onClick={onClose} variant="outlined">
           {tForm("cancelButton")}
         </Button>
-        <ButtonSave onClick={handleSave} disabled={false} />
+        <StartVeriffFrameButton
+          onSuccess={onSuccess}
+          onClose={handleClose}
+          disabled={!agreed}
+        />
       </FormActions>
     </FormModal>
   );

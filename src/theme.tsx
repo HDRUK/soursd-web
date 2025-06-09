@@ -271,7 +271,7 @@ const theme = createTheme(
       MuiCssBaseline: {
         styleOverrides: `
           html {
-            font-size: 14px;
+            font-size: 16px;
           }
       `,
       },
