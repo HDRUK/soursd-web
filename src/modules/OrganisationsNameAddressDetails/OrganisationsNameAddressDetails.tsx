@@ -1,6 +1,6 @@
-import FieldsToText from "@/components/FieldsToText";
-import { Organisation } from "@/types/application";
 import { Box, Typography } from "@mui/material";
+import FieldsToText from "../../components/FieldsToText";
+import { Organisation } from "../../types/application";
 import SubsidiariesTable from "../SubsidiariesTable";
 
 interface OrganisationsNameAddressDetailsProps {

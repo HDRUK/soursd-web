@@ -11,8 +11,24 @@ export const mockedBannerContent = () => (
   </>
 );
 
+export const mockedOrganisationHomeIntro =
+  "The Organisation account is set up by a SRO (Senior Responsible Officer), who is required to get a declaration signed on behalf of their Organisation and upload this. SOURSD contains information about your Users (employees and students) and their work on sensitive data projects. The SRO is responsible for verifying this information. The SRO must have a position of seniority, as they are held accountable for the data.";
+
 export const mockedProjectsIntro =
   "The project list below outlines your projects pending approval, including validated Users and Organisations. Clicking on a project will show you more information and next steps.";
+
+export const mockedUserHomeIntro = (
+  <>
+    To complete your profile, please find a list of tasks assigned to you below.
+    Before getting started, make sure you have the following ready:
+    <ul>
+      <li>A form of ID (e.g. passport or driving licence)</li>
+      <li>Your ORCiD</li>
+      <li>An up-to-date CV</li>
+      <li>Any relevant training certificates or professional member IDs</li>
+    </ul>
+  </>
+);
 
 export const mockedPendingAffiliations = (
   <>

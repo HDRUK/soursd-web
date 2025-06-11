@@ -1,5 +1,5 @@
-import { ROLES, ROLES_STATE } from "@/consts/roles";
-import { RolePermission } from "@/types/roles";
+import { ROLES, ROLES_STATE } from "../consts/roles";
+import { RolePermission } from "../types/roles";
 
 const isRoleValid = (roles?: RolePermission | RolePermission[]) => {
   const CURRENT_USER_ROLES = JSON.parse(

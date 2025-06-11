@@ -1,4 +1,4 @@
-import { renderHook } from "@/utils/testUtils";
+import { renderHook } from "../../utils/testUtils";
 import useFeature from "./useFeature";
 
 describe("useFeature", () => {

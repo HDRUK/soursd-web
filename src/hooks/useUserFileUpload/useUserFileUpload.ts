@@ -1,8 +1,8 @@
-import { FileType } from "@/consts/files";
 import { EntityType } from "@/types/api";
 import { File, User } from "@/types/application";
-import { getFileFromEvent, resetFileFromEvent } from "@/utils/file";
 import { ChangeEvent, useCallback } from "react";
+import { getFileFromEvent, resetFileFromEvent } from "../../utils/file";
+import { FileType } from "../../consts/files";
 
 export interface UseUserFileUploadProps {
   fileType: FileType;

@@ -1,11 +1,11 @@
+import { faker } from "@faker-js/faker";
 import {
   act,
   commonAccessibilityTests,
   fireEvent,
   render,
   screen,
-} from "@/utils/testUtils";
-import { faker } from "@faker-js/faker";
+} from "../../utils/testUtils";
 import ContactForm from "./ContactForm";
 
 const mockSubmit = jest.fn();

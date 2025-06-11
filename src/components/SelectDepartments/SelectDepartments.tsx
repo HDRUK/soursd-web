@@ -1,5 +1,5 @@
-import { Organisation } from "@/types/application";
 import { MenuItem, Select, SelectProps } from "@mui/material";
+import { Organisation } from "../../types/application";
 
 export interface SelectDepartmentsProps {
   organisation?: Organisation;

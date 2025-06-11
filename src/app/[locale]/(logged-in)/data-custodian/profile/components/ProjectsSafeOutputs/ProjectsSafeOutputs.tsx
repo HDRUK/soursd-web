@@ -2,7 +2,7 @@ import { useStore } from "@/data/store";
 import useQueryAlerts from "@/hooks/useQueryAlerts";
 import { mockedSafeProjectGuidanceProps } from "@/mocks/data/cms";
 import { PageBody, PageGuidance, PageSection } from "@/modules";
-import ProjectsSafeOutputsForm from "@/modules/ProjectsSafeOutputsForm";
+import ProjectsSafeOutputsForm from "@/organisms/ProjectsSafeOutputsForm";
 import useMutateProjectDetails from "@/queries/useMutateProjectDetails";
 import { PutProjectDetailsPayload } from "@/services/projects";
 import { ProjectDetails } from "@/types/application";

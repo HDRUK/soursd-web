@@ -99,8 +99,8 @@
     "deleteUserButton": "Delete user",
     "cancelButton": "Cancel",
     "noDeleteUser": "You cannot delete your own user",
-    "organisationsPeople": "People",
-    "organisationsNameAddress": "Name & Address",
+    "organisationsPeople": "Users",
+    "organisationsNameAddress": "Address",
     "organisationsDigitalIdentifiers": "Digital Identifiers",
     "organisationsSectorWebsite": "Sector size & website",
     "organisationsSubsidiaries": "UK subsidiaries",
@@ -200,7 +200,9 @@
     "addNewMemberButton": "Add a new member",
     "requestAddNewMemberButton": "Request member is affiliated",
     "userListDescription": "This table enables Validation Team members to track and manage application workflow from initial enquiry to project closure.  Clicking on a User will show you more information and next steps.",
-    "noResultsMessage": "No members found"
+    "noResultsMessage": "No members found",
+    "homeTitle": "Your outstanding actions",
+    "searchProjectUsersPlaceholder": "Search for User, Project Name, Organisation"
   },
   "OrganisationStats": {
     "affiliatedUsers": "Affiliated Users",
@@ -889,7 +891,9 @@
     "locationMissing": "Location not provided",
     "digiIdent": "Digital identifier",
     "idvtCheckSection": "Identification Verification Technology (IDVT)",
-    "idvtCheckButton": "Start IDVT check",
+    "idvtCheckButtonStart": "Start IDVT check",
+    "idvtCheckButtonRestart": "Restart IDVT check",
+    "idvtCheckComplete": "Check Complete",
     "idvtCheckDescription": "Not all Data Custodians require this check to be completed. Those Data Custodians that do, can request that this check is completed prior to project approval. To work across the breadth of UK Data Custodians, we recommend that you complete this check as it may streamline approval processes. \n\nIDVT checks are carried out by a 3rd party supplier against the following criteria: valid government issued identification (fraud), likeness check against ID (identity), liveness check (identity), sanctions check (anti money laundering). Please note neither SOURSD nor the 3rd party supplier store a copy of your identity documents",
     "idvtComplete": "IDVT checks complete",
     "idvtIncomplete": "IDVT checks incomplete",
@@ -1117,8 +1121,8 @@
   "Organisations": {
     "People": {
       "name": "Employee / Student name",
-      "affiliationEmail": "Email",
-      "affiliationStatus": "Status"
+      "affiliationEmail": "Professional Email",
+      "affiliationStatus": "Affiliation status"
     },
     "DataSecurityCompliance": {
       "info": "Information",
@@ -1204,7 +1208,7 @@
     "userName": "Name",
     "organisation": "Organisation",
     "organisations": "Organisation(s)",
-    "status": "Status",
+    "validationStatus": "Validation status",
     "filterActions": {
       "approved": "Approved",
       "pending": "Pending",
@@ -1458,7 +1462,8 @@
     "title": "This will take you to Veriff’s website to verify your identity.",
     "descriptionPart1": "For more information on how we process your data see our <ourLink>privacy policy</ourLink>.",
     "descriptionPart2": "For more information on how Veriff will process your data see their <theirLink>privacy policy</theirLink>.",
-    "checkboxLabel": "I consent to the above terms and conditions"
+    "checkboxLabel": "I consent to the above terms and conditions",
+    "startVerificationButton": "Start Verification Check"
   },
   "Rules": {
     "passed": "Pass",

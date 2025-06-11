@@ -1,5 +1,5 @@
-import { renderHook, act } from "@/utils/testUtils";
-import useFileDownload from "@/hooks/useFileDownload";
+import { renderHook, act } from "../../utils/testUtils";
+import useFileDownload from ".";
 
 describe("useFileDownload", () => {
   beforeEach(() => {

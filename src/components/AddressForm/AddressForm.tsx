@@ -1,13 +1,12 @@
 "use client";
 
-import FormControl from "@/components/FormControlWrapper";
 import { Grid, TextField } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { AddressFields } from "@/types/application";
-import GoogleAutocomplete from "@/components/GoogleAutocomplete";
-import SelectCountry from "@/components/SelectCountry";
-
 import { useFormContext } from "react-hook-form";
+import FormControl from "../FormControlWrapper";
+import { AddressFields } from "../../types/application";
+import GoogleAutocomplete from "../GoogleAutocomplete";
+import SelectCountry from "../SelectCountry";
 
 export interface AddressFormProps {
   name: string;

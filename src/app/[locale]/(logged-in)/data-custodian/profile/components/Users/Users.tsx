@@ -13,6 +13,7 @@ import PageBody from "@/modules/PageBody";
 import PageBodyContainer from "@/modules/PageBodyContainer";
 import { Box, Typography } from "@mui/material";
 import { renderUserNameCell } from "@/utils/cells";
+import SearchBar from "@/modules/SearchBar";
 
 const NAMESPACE_TRANSLATIONS_PROJECTS = "Projects";
 const NAMESPACE_TRANSLATIONS_APPLICATION = "Application";
@@ -63,6 +64,8 @@ export default function Users({ variant }: ProjectsProps) {
     last_page,
     total,
     setPage,
+    updateQueryParams,
+    resetQueryParams,
     ...queryState
   } = useProjectsUsersQuery(entityId, {
     variant,
@@ -72,7 +75,7 @@ export default function Users({ variant }: ProjectsProps) {
 
   const columns: ColumnDef<CustodianProjectUser>[] = [
     {
-      accessorKey: "user_id",
+      accessorKey: "registry.user.id",
       header: t("userName"),
       cell: info => {
         let route = null;
@@ -93,8 +96,8 @@ export default function Users({ variant }: ProjectsProps) {
 
         return renderUserNameCell(
           {
-            first_name: info.row.original.first_name,
-            last_name: info.row.original.last_name,
+            first_name: info.row.original.registry.user.first_name,
+            last_name: info.row.original.registry.user.last_name,
             id: info.getValue(),
           } as User,
           route.path,
@@ -103,20 +106,21 @@ export default function Users({ variant }: ProjectsProps) {
       },
     },
     {
-      accessorKey: "organisation_name",
+      accessorKey: "affiliation.organisation.organisation_name",
       header: t("organisation"),
     },
     {
-      accessorKey: "project_name",
+      accessorKey: "project.title",
       header: t("title"),
     },
     {
-      accessorKey: "project_role",
+      accessorKey: "role.name",
       header: tApplication("projectRole"),
     },
     {
-      accessorKey: "status",
-      header: t("status"),
+      accessorKey: "status.to.be.implemented",
+      header: t("validationStatus"),
+      // this needs to be BE implemented to be the model state per custodian validation/approval
       cell: info => (
         <ChipStatus status={info.row.original.model_state?.state.slug} />
       ),
@@ -131,6 +135,17 @@ export default function Users({ variant }: ProjectsProps) {
             <Typography variant="body1">
               {tProfile("userListDescription")}
             </Typography>
+          </Box>
+          <Box sx={{ pt: 2 }}>
+            <SearchBar
+              onClear={resetQueryParams}
+              onSearch={(text: string) => {
+                updateQueryParams({
+                  "name[]": text,
+                });
+              }}
+              placeholder={tProfile("searchProjectUsersPlaceholder")}
+            />
           </Box>
         </PageSection>
         <PageSection>

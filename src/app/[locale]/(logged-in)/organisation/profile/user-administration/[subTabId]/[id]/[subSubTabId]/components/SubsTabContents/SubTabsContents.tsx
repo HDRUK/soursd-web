@@ -1,10 +1,10 @@
 "use client";
 
 import { notFound } from "next/navigation";
-import UserAffiliations from "@/modules/UserAffiliations";
-import UserHistory from "@/modules/UserHistory";
-import UserIdentity from "@/modules/UserIdentity";
-import UserTrainingAccreditations from "@/modules/UserTrainingAccreditations";
+import UserAffiliations from "@/organisms/UserAffiliations";
+import UserHistory from "@/organisms/UserHistory";
+import UserIdentity from "@/organisms/UserIdentity";
+import UserTrainingAccreditations from "@/organisms/UserTrainingAccreditations";
 import { EntityType } from "@/types/api";
 import UserProjects from "../../../../../../components/UserProjects";
 import { UserSubTabs } from "../../../../../../consts/tabs";

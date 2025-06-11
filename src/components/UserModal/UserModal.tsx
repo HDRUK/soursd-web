@@ -1,9 +1,9 @@
-import FormModal, { FormModalProps } from "@/components/FormModal";
-import SendInviteUser from "@/modules/SendInviteUser";
-import { Organisation } from "@/types/application";
 import { useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback } from "react";
+import FormModal, { FormModalProps } from "../FormModal";
+import SendInviteUser from "../../modules/SendInviteUser";
+import { Organisation } from "../../types/application";
 
 export interface UserModalProps extends Omit<FormModalProps, "children"> {
   organisation: Organisation;

@@ -1,6 +1,6 @@
 import React from "react";
 import { Box } from "@mui/material";
-import { PALETTE_THEME_PURPLE_BLUE } from "@/config/theme";
+import { PALETTE_THEME_PURPLE_BLUE } from "../../config/theme";
 
 type StatusIndicatorProps = {
   variant?: "success" | "error";

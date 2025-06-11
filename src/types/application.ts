@@ -92,19 +92,6 @@ interface CustodianUser {
   user_permissions: UserPermission[];
 }
 
-type CustodianProjectUser = ModelState<{
-  user_id: number;
-  first_name: string;
-  last_name: string;
-  digi_ident: string;
-  registry_id: number;
-  project_id: number;
-  project_name: string;
-  project_role: string;
-  organisation_id: number;
-  organisation_name: string;
-}>;
-
 interface UserProfileCompletionFields {
   name: string;
   required?: boolean;
@@ -145,6 +132,8 @@ type Identity = {
   idvt_errors?: string;
   idvt_result: number;
   idvt_result_perc: number;
+  idvt_started_at: string;
+  idvt_success: number;
   passport_path: string;
   postcode: string;
   registry_id: number;
@@ -432,7 +421,9 @@ interface ProjectUser {
   registry: Registry;
 }
 
-interface ProjectAllUser {
+type CustodianProjectUser = ProjectUser;
+
+type ProjectAllUser = ModelState<{
   id: number;
   user_id: number;
   registry_id: number;
@@ -442,7 +433,12 @@ interface ProjectAllUser {
   affiliation_id: number;
   organisation_name: string;
   role: Partial<Role>;
-}
+  digi_ident: string;
+  project_id: number;
+  project_name: string;
+  project_role: string;
+  organisation_id: number;
+}>;
 
 interface Department {
   category: string;
@@ -469,6 +465,7 @@ export type {
   Charity,
   Department,
   File,
+  Identity,
   Organisation,
   OrganisationIdvt,
   Permission,

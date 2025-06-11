@@ -6,8 +6,9 @@ import {
   PageColumns,
 } from "@/modules";
 import { useTranslations } from "next-intl";
-import ActionLogs from "@/modules/ActionLogs";
+import ActionLogs from "@/organisms/ActionLogs";
 import SoursdCard from "@/components/SoursdCard";
+import { mockedUserHomeIntro } from "@/mocks/data/cms";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
@@ -26,19 +27,7 @@ export default function Home() {
             variant="user"
             panelProps={{
               heading: "Welcome to SOURSD",
-              description: (
-                <>
-                  You’ll see a list of tasks below we’ve assigned to you to
-                  complete your profile. To help you do that as quickly as
-                  possible here’s a list of things you’ll need before you dive
-                  in:
-                  <ul>
-                    <li>An ID such as a passport or driving licence</li>
-                    <li>Your ORCID or CV</li>
-                    <li>Any training or professional certificates</li>
-                  </ul>
-                </>
-              ),
+              description: mockedUserHomeIntro,
             }}
           />
         </PageColumnBody>
