@@ -1,5 +1,4 @@
 import { PageBody, PageGuidance, PageBodyContainer } from "@/modules";
-import { mockedConfigurationRulesGuidanceProps } from "@/mocks/data/cms";
 import { toCamelCase } from "@/utils/string";
 import { useTranslations } from "next-intl";
 import {
@@ -25,7 +24,7 @@ function SubPage({ params }: PageProps) {
 
   return (
     <PageBodyContainer heading={t(toCamelCase(`${params.tabId}Title`))}>
-      <PageGuidance {...mockedConfigurationRulesGuidanceProps}>
+      <PageGuidance profile="organisation" {...params}>
         <PageBody>
           <SubTabsSections {...params} />
           <SubTabsContents {...params} />
