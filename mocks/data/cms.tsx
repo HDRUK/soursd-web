@@ -2,6 +2,7 @@ import ChipStatus, { Status } from "@/components/ChipStatus";
 import ContactLink from "@/components/ContactLink";
 import Ol from "@/components/Ol";
 import { Box, Typography } from "@mui/material";
+import { ReactNode } from "react";
 
 export const mockedBannerContent = () => (
   <>
@@ -58,12 +59,10 @@ export const mockedPendingAffiliations = (
 export const mockedSafeProjectGuidanceProps = {
   infoTitle: "Did you know?",
   info: (
-    <>
-      <Typography>
-        The project properties are following the data use register transparency
-        standard.
-      </Typography>
-    </>
+    <Typography>
+      The project properties are following the data use register transparency
+      standard.
+    </Typography>
   ),
 };
 
@@ -128,7 +127,8 @@ export const mockedUserTrainingGuidanceProps = {
           The{" "}
           <a
             href="https://www.scadr.ac.uk/administrative-data/training/ons-safe-researcher-training-course-ons-srt"
-            target="_blank">
+            target="_blank"
+            rel="noreferrer">
             ONS safe researcher training course
           </a>{" "}
           – delivered by ONS, SCADR, UKDS (required for researchers accessing
@@ -138,7 +138,8 @@ export const mockedUserTrainingGuidanceProps = {
           The Medical Research Council, regulatory support centre –{" "}
           <a
             href="https://bygsystems.net/mrcrsc-lms/enrol/index.php?id=72"
-            target="_blank">
+            target="_blank"
+            rel="noreferrer">
             Research, GDPR and confidentiality quiz
           </a>
         </li>
@@ -151,10 +152,15 @@ export const mockedUserTrainingGuidanceProps = {
 export const mockedRegisterGuidanceProps = {
   infoTitle: "Guidance",
   info: (
-    <Typography>
-      Hover over the options to the left to view more information about account
-      types.
-    </Typography>
+    <>
+      <Typography mb={2}>
+        Select an option to view more information about account types.
+      </Typography>
+      <Typography mb={2}>
+        <strong>Note:</strong> If you hold multiple roles, you’ll need a
+        separate account for each.
+      </Typography>
+    </>
   ),
 };
 
@@ -258,11 +264,9 @@ export const mockedSoursdHomepageInfo = {
 export const mockedSoursdHomepageUsages = {
   infoTitle: "SoursdUsages",
   infoHeader: (
-    <>
-      <Typography variant="h2" mb={2}>
-        With SOURSD you can...
-      </Typography>
-    </>
+    <Typography variant="h2" mb={2}>
+      With SOURSD you can...
+    </Typography>
   ),
 };
 
@@ -401,6 +405,191 @@ export const mockedConfigurationRulesGuidanceProps = {
       </Typography>
     </>
   ),
+};
+
+interface GuidanceProps {
+  infoTitle: string;
+  info: ReactNode;
+}
+export type SubTabGuidance = Record<string, GuidanceProps>;
+
+export type TabGuidance = Record<string, SubTabGuidance>;
+
+export type ProfileGuidance = Record<string, TabGuidance>;
+
+export const mockedOrganisationProfileGuidance: TabGuidance = {
+  details: {
+    "name-and-address": {
+      infoTitle: " Did you know?",
+      info: (
+        <>
+          <Typography mb={5}>
+            Providing SOURSD with full Organisation information helps Data
+            Custodians validate your Organisation. The more information you
+            provide, the faster and easier the validation process becomes for
+            Users (an employee of an Organisation or student of a higher
+            education institution) to gain access to sensitive data.
+          </Typography>
+          <Typography mb={5}>
+            If your Organisation’s headquarters is based in the UK, your legal
+            name and address should align with the listing on Companies House.
+          </Typography>
+        </>
+      ),
+    },
+    "digital-identifiers": {
+      infoTitle: " Did you know?",
+      info: (
+        <Typography mb={5}>
+          Where applicable, providing SOURSD with information on persistent
+          digital identifiers associated with your Organisation enables Data
+          Custodians to verify your Organisation’s Companies House filing,
+          Research Organisation Registry (ROR) identifier and charity
+          registration. This accelerates Organisation validation by Data
+          Custodians.
+        </Typography>
+      ),
+    },
+    "sector-size-and-website": {
+      infoTitle: " Did you know?",
+      info: (
+        <Typography mb={5}>
+          Providing SOURSD with information on your Organisation’s sector, size
+          and website accelerates Organisation validation by Data Custodians.
+        </Typography>
+      ),
+    },
+    "security-compliance": {
+      infoTitle: " Did you know?",
+      info: (
+        <>
+          <Typography mb={5}>
+            Providing SOURSD with a record of your Organisation’s data security
+            compliance certifications will provide Data Custodians with
+            confidence that an Organisation is compliant with required data
+            security certifications.
+          </Typography>
+          <Typography mb={5}>
+            Some Data Custodians require this information even if Users are
+            accessing data within Trusted Research Environments (TREs) or Secure
+            Data Environments (SDEs). Text box 2
+          </Typography>
+        </>
+      ),
+    },
+  },
+  "user-administration": {
+    "employees-and-students": {
+      infoTitle: "What does affiliation mean?",
+      info: (
+        <>
+          <Typography mb={3}>
+            SOURSD stores records of Users who are or have been working with
+            sensitive data. These Users can have different roles, such as
+            primary investigators, researchers, data analysts, developers, and
+            students.
+          </Typography>
+
+          <Typography mb={3}>
+            As an Organisation, you can confirm that a SOURSD User profile
+            corresponds to an employee or student at your Organisation. This is
+            called <strong>affiliating a User</strong>. A User has one SOURSD
+            account that remains with them throughout their career and can be
+            affiliated with multiple Organisations.
+          </Typography>
+
+          <Typography mb={3}>
+            When affiliating a User, your Organisation is responsible for their
+            behaviour when accessing sensitive data. By affiliating, you are
+            confirming:
+          </Typography>
+
+          <ul style={{ paddingLeft: "1.25rem" }}>
+            <li>
+              There is a verified link (e.g. employment contract, honorary
+              contract, or student enrolment) between the User and your
+              Organisation.
+            </li>
+            <li>
+              The SOURSD User profile accurately matches your employee or
+              student.
+            </li>
+            <li>
+              Your Organisation approves the User to access sensitive data.
+            </li>
+            <li>
+              The User’s organisational email matches their official email
+              address within your Organisation.
+            </li>
+          </ul>
+
+          <Typography mt={3}>
+            Users can create their own SOURSD accounts and request affiliation.
+            Alternatively, your Organisation can invite Users to create or
+            configure their account for affiliation by selecting{" "}
+            <strong>'Add User'</strong> and following the steps.
+          </Typography>
+        </>
+      ),
+    },
+    delegates: {
+      infoTitle: "Organisation responsibilities",
+      info: (
+        <>
+          <Typography mb={3}>
+            Organisations are responsible for the behaviour of a User, who is
+            either an employee, on an honorary contract, or a student of their
+            institution.
+          </Typography>
+
+          <Typography mb={3}>
+            <strong>Senior Responsible Officers (SROs)</strong> are accountable
+            for overseeing their Organisation’s SOURSD presence. They are
+            responsible for:
+          </Typography>
+
+          <ul style={{ marginBottom: "1rem", paddingLeft: "1.25rem" }}>
+            <li>Creating the Organisation’s SOURSD account</li>
+            <li>
+              Nominating administrative <strong>Delegates</strong> to manage
+              User affiliations
+            </li>
+            <li>
+              Providing and maintaining accurate information in the
+              Organisation’s SOURSD profile
+            </li>
+          </ul>
+
+          <Typography mb={3}>
+            It's essential that your Organisation designates an SRO at the
+            Organisational level. SOURSD deals with sensitive data involving
+            your employees or students, so senior-level accountability and
+            visibility are critical.
+          </Typography>
+
+          <Typography mb={3}>
+            <strong>Delegates</strong> are nominated administrative individuals
+            or groups authorised to act on behalf of the Organisation. They are
+            responsible for:
+          </Typography>
+
+          <ul style={{ marginBottom: "1rem", paddingLeft: "1.25rem" }}>
+            <li>Verifying a User’s affiliation with the Organisation</li>
+            <li>
+              Accepting SOURSD's Terms of Use on behalf of the Organisation
+            </li>
+            <li>
+              Ensuring information in SOURSD is accurate and properly authorised
+            </li>
+          </ul>
+        </>
+      ),
+    },
+  },
+};
+
+export const mockedProfileGuidance: ProfileGuidance = {
+  organisation: mockedOrganisationProfileGuidance,
 };
 
 export const mockedAbout = {
