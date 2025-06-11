@@ -148,12 +148,6 @@ export default function AffiliationsPage() {
             icon={<CreateOutlinedIcon sx={{ color: "menuList1.main" }} />}>
             {tProfile("viewOrEdit")}
           </ActionMenuItem>
-          <ActionMenuItem
-            onClick={() => showConfirmDelete(affiliation.id)}
-            sx={{ color: "error.main" }}
-            icon={<DeleteOutlineOutlinedIcon sx={{ color: "error.main" }} />}>
-            {tProfile("delete")}
-          </ActionMenuItem>
           {status === Status.AFFILIATION_INVITED && (
             <ActionMenuItem
               disabled={inviteQueryState.isLoading}
@@ -172,6 +166,12 @@ export default function AffiliationsPage() {
               {tProfile("reinviteOrganisation")}
             </ActionMenuItem>
           )}
+          <ActionMenuItem
+            onClick={() => showConfirmDelete(affiliation.id)}
+            sx={{ color: "error.main" }}
+            icon={<DeleteOutlineOutlinedIcon sx={{ color: "error.main" }} />}>
+            {tProfile("delete")}
+          </ActionMenuItem>
         </ActionMenu>
       );
     },
