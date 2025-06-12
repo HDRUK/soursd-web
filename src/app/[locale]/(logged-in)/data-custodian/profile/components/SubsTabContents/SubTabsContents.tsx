@@ -1,7 +1,6 @@
 "use client";
 
 import { useStore } from "@/data/store";
-import ProjectsSafePeople from "@/organisms/ProjectsSafePeople";
 import { EntityType } from "@/types/api";
 import { notFound } from "next/navigation";
 import UserAffiliations from "@/organisms/UserAffiliations";
@@ -31,6 +30,7 @@ import UserCustodianOrgInfo from "../UserCustodianOrgInfo";
 import UserProjects from "../UserProjects";
 import ValidationChecks from "../ValidationChecks";
 import Webhooks from "../Webhooks";
+import ProjectsSafePeople from "../ProjectsSafePeople";
 
 interface TabsContentsProps {
   tabId: PageTabs;
@@ -91,7 +91,7 @@ export default function SubTabsContents({
       content = <UserAffiliations />;
       break;
     case ProjectsSubTabs.SAFE_PEOPLE:
-      content = <ProjectsSafePeople variant={EntityType.CUSTODIAN} />;
+      content = <ProjectsSafePeople />;
       break;
     case ProjectsSubTabs.SAFE_DATA:
       content = <ProjectsSafeData />;

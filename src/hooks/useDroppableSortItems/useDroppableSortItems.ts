@@ -23,7 +23,7 @@ export interface UseDroppableSortItemsProps<T> {
 
 export interface UseDroppableSortItemsFnOptions<T> {
   setState: (state: DndItems<T>) => void;
-  isAllowed: (e: DragUpdateEvent, data: DragUpdateEventArgs<T>) => boolean;
+  isAllowed?: (e: DragUpdateEvent, data: DragUpdateEventArgs<T>) => boolean;
 }
 
 export default function useDroppableSortItems<T>({
@@ -86,7 +86,7 @@ export default function useDroppableSortItems<T>({
 
       if (activeIndex !== overIndex) {
         if (
-          isAllowed(e, {
+          isAllowed?.(e, {
             containerId: overContainer,
             initial: initialArgs.current,
           })
@@ -176,7 +176,7 @@ export default function useDroppableSortItems<T>({
           ...items[overContainer].slice(0, newIndex),
           {
             ...items[activeContainer][activeIndex],
-            isDroppable: isAllowed(e, {
+            isDroppable: isAllowed?.(e, {
               containerId: overContainer,
               initial: initialArgs.current,
             }),

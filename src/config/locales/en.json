@@ -12,6 +12,14 @@
     "scanOkText": "File was successfully scanned",
     "scanErrorText": "Your file file may have a virus"
   },
+  "Kanban": {
+    "form_received": "Form received",
+    "validation_in_progress": "Validation In Progress",
+    "validation_complete": "Validation Complete",
+    "more_user_info_req": "More User Information Requested",
+    "escalate_validation": "Escalation to Validation Committee",
+    "validated": "Validated"
+  },
   "Application": {
     "role": "Role",
     "email": "Email",
@@ -42,6 +50,12 @@
     "status_affiliation_invited": "Invited",
     "status_affiliation_approved": "Approved",
     "status_affiliation_rejected": "Rejected",
+    "status_form_received": "Form received",
+    "status_validation_in_progress": "Validation In Progress",
+    "status_validation_complete": "Validation Complete",
+    "status_more_user_info_req": "More User Information Requested",
+    "status_escalate_validation": "Escalation to Validation Committee",
+    "status_validated": "Validated",
     "status_notSet": "None",
     "projectStatus": "Project status",
     "projectRole": "Project Role",
@@ -1177,6 +1191,11 @@
     "projectStatus": "Status"
   },
   "Projects": {
+    "safeProject": "Safe Project",
+    "safeData": "Safe Data",
+    "safePeople": "Safe People",
+    "safeSettings": "Safe Settings",
+    "safeOutputs": "Safe Outputs",
     "addNewProjectTitle": "New project",
     "addNewProjectButton": "Add new project",
     "custodians": "Data custodian",

@@ -24,11 +24,12 @@ import { ComponentType, useEffect, useRef, useState } from "react";
 import { createPortal, unstable_batchedUpdates } from "react-dom";
 import { useDebouncedCallback } from "use-debounce";
 
+import DndItem from "../../components/DndItem";
 import useDroppableSortItems, {
+  UseDroppableSortItemsFnOptions,
   UseDroppableSortItemsProps,
 } from "../../hooks/useDroppableSortItems";
-import { WithStateWorkflow } from "../../types/application";
-import DndItem from "../../components/DndItem";
+import { WithStateWorkflow, WithTranslations } from "../../types/application";
 
 import DndDroppableContainer from "../../components/DndDroppableContainer";
 import DndSortableItem from "../../components/DndSortableItem";
@@ -50,25 +51,27 @@ const dropAnimation: DropAnimation = {
 };
 
 interface KanbanBoardProps<T>
-  extends WithStateWorkflow<UseDroppableSortItemsProps<T>> {
+  extends WithStateWorkflow<WithTranslations<UseDroppableSortItemsProps<T>>> {
   adjustScale?: boolean;
   cancelDrop?: CancelDrop;
   strategy?: SortingStrategy;
   modifiers?: Modifiers;
   initialData: DndItems<T>;
   cardComponent: ComponentType<T>;
+  droppableFnOptions: Partial<UseDroppableSortItemsFnOptions<T>>;
 }
 
 export default function KanbanBoard<T>({
   adjustScale = false,
   cancelDrop,
   initialData,
-  stateWorkflow,
   modifiers,
   strategy = verticalListSortingStrategy,
   onDragEnd,
   onDragOver,
   onDragUpdate,
+  t,
+  droppableFnOptions,
   ...restProps
 }: KanbanBoardProps<T>) {
   const { handleDragSort, handleSort, handleDragSortStart } =
@@ -119,23 +122,19 @@ export default function KanbanBoard<T>({
     setClonedItems(null);
   };
 
-  const isAllowed = (_, { initial, containerId }) => {
-    return !!(
-      initial.containerId === containerId ||
-      stateWorkflow?.transitions[initial.containerId]?.includes(containerId)
-    );
-  };
-
   const getAllowedColumns = (containerId: UniqueIdentifier) => {
     return Object.keys(items).filter(key =>
-      isAllowed({}, { initial: { containerId }, containerId: key })
+      droppableFnOptions.isAllowed(
+        {},
+        { initial: { containerId }, containerId: key }
+      )
     );
   };
 
   const handleDragEnd = (e: DragEndEvent) => {
     unstable_batchedUpdates(() => {
       handleSort(e, items, {
-        isAllowed,
+        ...droppableFnOptions,
         setState: (state: DndItems<T>) => {
           setItems(items => {
             return {
@@ -152,7 +151,7 @@ export default function KanbanBoard<T>({
 
   const handleDragOver = (e: DragOverEvent) => {
     handleDragSort(e, items, {
-      isAllowed,
+      ...droppableFnOptions,
       setState: (state: DndItems<T>) => {
         setItems(prevState => ({
           ...prevState,
@@ -205,7 +204,7 @@ export default function KanbanBoard<T>({
                 }
                 isDropAllowed={
                   !activeId ||
-                  isAllowed(
+                  droppableFnOptions.isAllowed(
                     {},
                     {
                       initial: activeData,
@@ -213,7 +212,7 @@ export default function KanbanBoard<T>({
                     }
                   )
                 }
-                heading={`${containerId} (${findDroppables(containerId, items).length})`}
+                heading={`${t(containerId)} (${findDroppables(containerId, items).length})`}
                 sx={{
                   height: "100%",
                   width: "236px",

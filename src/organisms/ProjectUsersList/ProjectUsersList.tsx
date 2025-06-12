@@ -13,34 +13,35 @@ import Table from "../../components/Table";
 import { FilterIcon, PrimaryContactIcon } from "../../consts/icons";
 import useQueryAlerts from "../../hooks/useQueryAlerts";
 import useQueryConfirmAlerts from "../../hooks/useQueryConfirmAlerts";
-import { PageBody, PageSection } from "../../modules";
+import { PageSection } from "../../modules";
 import SearchActionMenu from "../../modules/SearchActionMenu";
 import SearchBar from "../../modules/SearchBar";
+import { usePaginatedGetUsers } from "../../services/custodian_approvals";
 import {
   deleteProjectUserQuery,
   putProjectUserPrimaryContactQuery,
-  useGetProjectUsers,
 } from "../../services/projects";
 import { DeleteProjectUserPayload } from "../../services/projects/types";
 import { EntityType } from "../../types/api";
-import { ProjectUser, User } from "../../types/application";
+import { ProjectUser } from "../../types/application";
 import {
   renderOrganisationsNameCell,
   renderUserNameCell,
 } from "../../utils/cells";
-import ProjectsSafePeopleBoard from "../ProjectsSafePeopleBoard";
+import ProjectUsersBoard from "../ProjectUsersBoard";
 
 const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
 
-interface ProjectsSafePeopleProps {
+interface ProjectUsersListProps {
   variant: EntityType;
 }
 
-export default function ProjectsSafePeople({
-  variant,
-}: ProjectsSafePeopleProps) {
-  const project = useStore(state => state.getCurrentProject());
+export default function ProjectUsersList({ variant }: ProjectUsersListProps) {
+  const { projectId, custodianId } = useStore(state => ({
+    projectId: state.getCurrentProject().id,
+    custodianId: state.getCustodian()?.id,
+  }));
 
   const {
     data: projectUsers,
@@ -53,13 +54,13 @@ export default function ProjectsSafePeople({
     queryParams,
     refetch,
     ...queryState
-  } = useGetProjectUsers(project.id);
+  } = usePaginatedGetUsers(1);
 
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
   const routes = useStore(state => state.getApplication().routes);
   const [showAddModal, setShowAddModal] = useState(false);
-  const [showListView, setShowListView] = useState(true);
+  const [showListView, setShowListView] = useState(false);
 
   const { mutateAsync: deleteUserAsync, ...deleteQueryState } = useMutation(
     deleteProjectUserQuery()
@@ -96,12 +97,13 @@ export default function ProjectsSafePeople({
     default:
       userPath = undefined;
   }
+
   const renderNameCell = useCallback(
     <T extends ProjectUser>(info: CellContext<T, unknown>) => {
       return (
         <Box sx={{ display: "flex" }}>
-          {renderUserNameCell(info.getValue() as User, userPath, {
-            projectId: project.id,
+          {renderUserNameCell(info.getValue(), userPath, {
+            projectId,
           })}
           {!!info.row.original.primary_contact && <PrimaryContactIcon />}
         </Box>
@@ -112,8 +114,10 @@ export default function ProjectsSafePeople({
 
   const renderActionMenuCell = (info: CellContext<ProjectUser, unknown>) => {
     const {
-      primary_contact,
-      registry: { id: registryId },
+      project_has_user: {
+        primary_contact,
+        registry: { id: registryId },
+      },
     } = info.row.original;
 
     return (
@@ -121,7 +125,7 @@ export default function ProjectsSafePeople({
         <ActionMenuItem
           onClick={() => {
             showDeleteConfirm({
-              projectId: project.id,
+              projectId,
               registryId,
             });
           }}>
@@ -130,7 +134,7 @@ export default function ProjectsSafePeople({
         <ActionMenuItem
           onClick={async () => {
             await makePrimaryContactAsync({
-              projectId: project.id,
+              projectId,
               registryId,
               primaryContact: !primary_contact,
             });
@@ -160,22 +164,22 @@ export default function ProjectsSafePeople({
   const columns: ColumnDef<ProjectUser>[] = [
     {
       cell: renderNameCell,
-      accessorKey: "registry.user",
+      accessorKey: "project_has_user.registry.user",
       header: tApplication("name"),
     },
     {
-      accessorKey: "role.name",
+      accessorKey: "project_has_user.role.name",
       header: tApplication("projectRole"),
     },
     {
-      accessorKey: "affiliation.organisation",
+      accessorKey: "project_has_user.affiliation.organisation",
       header: tApplication("organisationName"),
       cell: info => renderOrganisationsNameCell(info.getValue()),
     },
     ...(variant !== EntityType.USER
       ? [
           {
-            accessorKey: "registry.user.status",
+            accessorKey: "model_state.state.slug",
             header: tApplication("status"),
             cell: renderStatus,
           },
@@ -188,7 +192,7 @@ export default function ProjectsSafePeople({
   ];
 
   return (
-    <PageBody heading={t("safePeople")}>
+    <>
       <PageSection>
         <Box component="form" role="search">
           <SearchBar
@@ -246,12 +250,12 @@ export default function ProjectsSafePeople({
       <PageSection>
         <ProjectsAddUserModal
           request={variant === EntityType.ORGANISATION}
-          projectId={project.id}
+          projectId={projectId}
           open={showAddModal}
           onClose={() => setShowAddModal(false)}
         />
-        {showListView ? (
-          <ProjectsSafePeopleBoard />
+        {variant === EntityType.CUSTODIAN && !showListView ? (
+          <ProjectUsersBoard custodianId={custodianId} users={projectUsers} />
         ) : (
           <Table
             total={total}
@@ -264,6 +268,6 @@ export default function ProjectsSafePeople({
           />
         )}
       </PageSection>
-    </PageBody>
+    </>
   );
 }
