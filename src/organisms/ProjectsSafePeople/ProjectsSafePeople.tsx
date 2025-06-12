@@ -27,6 +27,7 @@ import {
   renderOrganisationsNameCell,
   renderUserNameCell,
 } from "../../utils/cells";
+import ProjectUsersBoard from "../ProjectUsersBoard";
 
 const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
