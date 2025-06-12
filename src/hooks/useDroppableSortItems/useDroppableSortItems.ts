@@ -19,6 +19,10 @@ export interface UseDroppableSortItemsProps<T> {
   onDragEnd?: (e: DragEndEvent, data: DragUpdateEventArgs<T>) => void;
   onDragOver?: (e: DragOverEvent, data: DragUpdateEventArgs<T>) => void;
   onDragUpdate?: (e: DragUpdateEvent, data: DragUpdateEventArgs<T>) => void;
+  onMove?: (
+    e: DragUpdateEvent,
+    data: UseDroppableSortItemsFnOptions<T>
+  ) => void;
 }
 
 export interface UseDroppableSortItemsFnOptions<T> {
@@ -31,6 +35,7 @@ export default function useDroppableSortItems<T>({
   onDragOver,
   onDragUpdate,
   onDragStart,
+  onMove,
 }: UseDroppableSortItemsProps<T>) {
   const initialArgs = useRef<{
     item: T;
@@ -56,7 +61,7 @@ export default function useDroppableSortItems<T>({
     };
   };
 
-  const handleSort = (
+  const handleDragSortEnd = (
     e: DragEndEvent,
     items: DndItems<T>,
     options: UseDroppableSortItemsFnOptions<T>
@@ -123,6 +128,29 @@ export default function useDroppableSortItems<T>({
         }
       }
     }
+  };
+
+  const handleMove = (
+    { containerId, item, items },
+    options: UseDroppableSortItemsFnOptions<T>
+  ) => {
+    const prunedState = pruneItem(item.id, items) as DndItems<T>;
+
+    const state = {
+      ...prunedState,
+      [containerId]: [...prunedState[containerId], item],
+    } as DndItems<T>;
+
+    options.setState(state);
+
+    const eventArgs = {
+      containerId,
+      item,
+      itemIndex: prunedState[containerId].length,
+      state,
+    };
+
+    onMove?.({}, eventArgs);
   };
 
   const handleDragSort = (
@@ -220,9 +248,10 @@ export default function useDroppableSortItems<T>({
 
   return useMemo(
     () => ({
-      handleSort,
+      handleDragSortEnd,
       handleDragSort,
       handleDragSortStart,
+      handleMove,
     }),
     [onDragEnd, onDragOver]
   );

@@ -71,15 +71,17 @@ export default function KanbanBoard<T>({
   onDragEnd,
   onDragOver,
   onDragUpdate,
+  onMove,
   t,
   droppableFnOptions,
   ...restProps
 }: KanbanBoardProps<T>) {
-  const { handleDragSort, handleSort, handleDragSortStart } =
+  const { handleDragSort, handleDragSortEnd, handleDragSortStart, handleMove } =
     useDroppableSortItems<T>({
       onDragEnd,
       onDragOver,
       onDragUpdate,
+      onMove,
     });
   const [items, setItems] = useState<DndItems<T>>(initialData);
   const [containers] = useState(Object.keys(items) as UniqueIdentifier[]);
@@ -134,7 +136,7 @@ export default function KanbanBoard<T>({
 
   const handleDragEnd = (e: DragEndEvent) => {
     unstable_batchedUpdates(() => {
-      handleSort(e, items, {
+      handleDragSortEnd(e, items, {
         ...droppableFnOptions,
         setState: (state: DndItems<T>) => {
           setItems(items => {
@@ -162,6 +164,24 @@ export default function KanbanBoard<T>({
         recentlyMovedToNewContainer.current = true;
       },
     });
+  };
+
+  const handleMoveClick = (item: T, moveToId: UniqueIdentifier) => {
+    handleMove(
+      {
+        containerId: moveToId,
+        item,
+        items,
+      },
+      {
+        setState: (state: DndItems<T>) => {
+          setItems(prevState => ({
+            ...prevState,
+            ...state,
+          }));
+        },
+      }
+    );
   };
 
   const handleDragStart = (e: DragOverEvent) => {
@@ -232,6 +252,9 @@ export default function KanbanBoard<T>({
                         actions={
                           <KanbanBoardActionsMenu
                             columns={getAllowedColumns(containerId)}
+                            onMoveClick={(_, moveToId) =>
+                              handleMoveClick(data, moveToId)
+                            }
                           />
                         }
                       />

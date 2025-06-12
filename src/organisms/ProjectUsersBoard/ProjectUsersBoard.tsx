@@ -91,6 +91,7 @@ export default function ProjectUsersBoard({
         stateWorkflow={stateWorkflow.data}
         strategy={rectSortingStrategy}
         onDragUpdate={handleUpdateSafePeople}
+        onMove={handleUpdateSafePeople}
         droppableFnOptions={droppableFnOptions}
       />
     )
