@@ -414,6 +414,7 @@ interface Project {
 interface ProjectUser {
   id: number;
   project_id: number;
+  project: Project;
   project_role_id: number;
   primary_contact: boolean;
   user_digital_ident: string;

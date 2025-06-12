@@ -16,12 +16,12 @@ import { getCustodianProjectUserValidationLogsQuery } from "@/services/validatio
 import { getUserQuery } from "@/services/users";
 import ActionValidationPanel from "@/organisms/ActionValidationPanel";
 import { ActionValidationVariants } from "@/organisms/ActionValidationPanel/ActionValidationPanel";
-import { getProjectUserQuery } from "@/services/project_users";
-import getProjectQuery from "@/services/projects/getProjectQuery";
-import UserDetails from "@/components/UserDetails";
+import ProjectUserDetails from "@/components/ProjectUserDetails";
 import { UserSubTabs } from "../../../../../consts/tabs";
 import SubTabsSections from "../SubTabSections";
 import SubTabsContents from "../SubsTabContents";
+import { getCustodianProjectUserQuery } from "@/services/custodians";
+import ChipStatus from "@/components/ChipStatus";
 
 interface CustodianProjectUserProps {
   projectUserId: number;
@@ -37,10 +37,15 @@ function CustodianProjectUser({
   const t = useTranslations(NAMESPACE_TRANSLATION_CUSTODIAN_PROJECT_USER);
   const custodian = useStore(state => state.getCustodian());
 
-  const { data: projectUser, isFetched: isFetchedProjectUser } = useQuery(
-    getProjectUserQuery(projectUserId)
-  );
-  const { registry, project } = projectUser?.data || {};
+  const {
+    data: custodianProjectUser,
+    isFetched: isFetchedCustodianProjectUser,
+  } = useQuery(getCustodianProjectUserQuery(custodian?.id, projectUserId));
+
+  const { project_has_user: projectUser, model_state: state } =
+    custodianProjectUser?.data || {};
+
+  const { registry, project } = projectUser || {};
 
   const { data: userData, isFetched } = useQuery({
     ...getUserQuery(+registry?.user?.id),
@@ -60,19 +65,24 @@ function CustodianProjectUser({
     enabled: !!registry?.id,
   });
 
-  if (!project && isFetchedProjectUser) {
+  if (!project && !projectUser && isFetchedCustodianProjectUser) {
     notFound();
   }
 
-  const { user, setUser, setProject } = useStore(state => ({
+  const { user, setUser, setProject, setProjectUser } = useStore(state => ({
     user: state.getCurrentUser(),
     setUser: state.setCurrentUser,
     setProject: state.setCurrentProject,
+    setProjectUser: state.setCurrentProjectUser,
   }));
 
   useEffect(() => {
-    if (project) setProject(project);
+    if (projectUser) setProjectUser(projectUser);
   }, [projectUser]);
+
+  useEffect(() => {
+    if (project) setProject(project);
+  }, [project]);
 
   useEffect(() => {
     if (userData?.data) setUser(userData.data);
@@ -80,15 +90,23 @@ function CustodianProjectUser({
 
   return (
     user && (
-      <PageBodyContainer heading={t("title", { projectTitle: project?.title })}>
+      <PageBodyContainer
+        heading={
+          <>
+            {t("title", {
+              projectTitle: project?.title,
+            })}{" "}
+            <ChipStatus size="large" status={state?.state.slug} />
+          </>
+        }>
         <PageColumns>
           <PageColumnBody lg={8}>
-            <UserDetails user={user} />
+            <ProjectUserDetails projectUser={projectUser} />
             <SubTabsSections
               projectUserId={projectUserId}
               subTabId={subTabId}
             />
-            <SubTabsContents userId={user.id} subTabId={subTabId} />
+            <SubTabsContents subTabId={subTabId} />
           </PageColumnBody>
           <PageColumnDetails lg={4}>
             <ActionValidationPanel

@@ -3,7 +3,7 @@ import { getSearchQuerystring } from "@/utils/query";
 import { SearchParams } from "@/types/query";
 import { getRequest } from "../requests";
 import { handleJsonResponse } from "../requestHelpers";
-import { GetCustodianProjectUserResponse } from "./types";
+import { GetCustodianProjectUsersResponse } from "./types";
 
 export type ProjectEntities = "organisation" | "custodian" | "user";
 
@@ -11,7 +11,7 @@ export default async (
   id: number,
   searchParams: SearchParams,
   options?: ResponseOptions
-): Promise<ResponseJson<Paged<GetCustodianProjectUserResponse>>> => {
+): Promise<ResponseJson<Paged<GetCustodianProjectUsersResponse>>> => {
   const response = await getRequest(
     `/custodian_approvals/${id}/projectUsers${getSearchQuerystring(searchParams)}`
   );

@@ -8,17 +8,20 @@ import Form from "../../components/Form";
 import yup from "../../config/yup";
 import SelectValidationActionStatus from "../../components/SelectValidationActionStatus";
 import { ApprovalResponse } from "../../services/approvals";
+import { ChangeValidationStatusPayload } from "@/hooks/useProjectUserCustodianApproval/useProjectUserCustodianApproval";
+import { Option } from "@/types/common";
 
 const NAMESPACE_TRANSLATION_ACTION_VALIDATION = "ActionValidationPanel";
 
 export interface ActionValidationStatusFormValues {
-  status: number;
+  status: string;
   comment: string;
 }
 
 export type UseApprovalHook<TParams> = (params: TParams) => {
   data?: ApprovalResponse;
-  approve: (comment: string) => void;
+  statusOptions: Option[];
+  changeValidationStatus: (payload: ChangeValidationStatusPayload) => void;
   reject: (comment: string) => void;
   isLoading: boolean;
   isError?: boolean;
@@ -34,28 +37,23 @@ const ActionValidationStatus = <TParams,>({
   hookParams,
 }: ActionValidationStatusProps<TParams>) => {
   const t = useTranslations(NAMESPACE_TRANSLATION_ACTION_VALIDATION);
-  const { data, approve, reject, isLoading } = useApprovalHook(hookParams);
+  const { data, statusOptions, changeValidationStatus, isLoading } =
+    useApprovalHook(hookParams);
 
   const schema = yup.object().shape({
-    status: yup.number().required(),
+    status: yup.string().required(),
     comment: yup.string().required(),
   });
 
-  const [initialStatus, setInitialStatus] = useState(0);
+  const [initialStatus, setInitialStatus] = useState<string>();
 
   useEffect(() => {
     if (isLoading) return;
-    setInitialStatus(data?.approved || 0);
+    setInitialStatus(data?.model_state?.state?.slug);
   }, [data]);
-
-  const [currentStatus, setCurrentStatus] = useState(0);
-  useEffect(() => {
-    setCurrentStatus(initialStatus);
-  }, [initialStatus]);
 
   const formOptions = useMemo(
     () => ({
-      shouldReset: false,
       defaultValues: {
         status: initialStatus,
         comment: "",
@@ -66,11 +64,7 @@ const ActionValidationStatus = <TParams,>({
 
   const handleSubmit = (formData: ActionValidationStatusFormValues) => {
     const { status, comment } = formData;
-    if (status === 1) {
-      approve(comment);
-    } else {
-      reject(comment);
-    }
+    changeValidationStatus({ status, comment });
   };
 
   return (
@@ -81,9 +75,9 @@ const ActionValidationStatus = <TParams,>({
             name="status"
             renderField={fieldProps => (
               <SelectValidationActionStatus
+                options={statusOptions || []}
                 isLoading={isLoading}
                 {...fieldProps}
-                handleChange={(value: number) => setCurrentStatus(value)}
               />
             )}
           />
@@ -118,7 +112,6 @@ const ActionValidationStatus = <TParams,>({
         <Grid item xs={12}>
           <LoadingButton
             loading={isLoading}
-            disabled={currentStatus === initialStatus}
             type="submit"
             sx={{ display: "flex", justifySelf: "end" }}>
             {t("updateStatusButton")}

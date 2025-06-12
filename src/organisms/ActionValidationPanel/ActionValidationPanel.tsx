@@ -25,8 +25,7 @@ interface ActionValidationPanelProps {
 
 interface CustodianParams {
   custodianId: number;
-  projectId: number;
-  registryId: number;
+  projectUserId: number;
 }
 
 interface OrganisationParams {
@@ -41,14 +40,11 @@ function ActionValidationPanel({
 }: ActionValidationPanelProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_ACTION_VALIDATION);
 
-  const { custodianId, projectId, registryId, organisationId } = useStore(
-    store => ({
-      custodianId: store.getCustodian()?.id as number,
-      projectId: store.getCurrentProject()?.id as number,
-      registryId: store.getCurrentUser()?.registry_id as number,
-      organisationId: store.getCurrentOrganisation()?.id as number,
-    })
-  );
+  const { custodianId, projectUserId, organisationId } = useStore(store => ({
+    custodianId: store.getCustodian()?.id as number,
+    organisationId: store.getCurrentOrganisation()?.id as number,
+    projectUserId: store.getCurrentProjectUser()?.id as number,
+  }));
 
   let actionValidationStatus;
   switch (variant) {
@@ -56,7 +52,7 @@ function ActionValidationPanel({
       actionValidationStatus = (
         <ActionValidationStatus<CustodianParams>
           useApprovalHook={useProjectUserCustodianApproval}
-          hookParams={{ custodianId, projectId, registryId }}
+          hookParams={{ custodianId, projectUserId }}
           t={t}
         />
       );

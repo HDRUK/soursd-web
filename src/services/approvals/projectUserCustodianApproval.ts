@@ -1,29 +1,26 @@
 import { ResponseJson, ResponseOptions } from "@/types/requests";
-import { postRequest, getRequest, deleteRequest } from "../requests";
+import { putRequest, getRequest } from "../requests";
 import { handleJsonResponse } from "../requestHelpers";
 import { ApprovalResponse } from "./types";
 
-type RequestMethod = "POST" | "GET" | "DELETE";
+type RequestMethod = "PUT" | "GET";
 
 interface PostApprovalPayload {
-  approved: number;
-  comment: string;
+  status: string;
 }
 
 export default async (
   method: RequestMethod,
   custodianId: string | number,
-  projectId: string | number,
-  registryId: string | number,
+  projectUserId: string | number,
   payload: PostApprovalPayload | undefined,
   options: ResponseOptions
 ): Promise<ResponseJson<ApprovalResponse>> => {
-  const url = `/custodian_approvals/${custodianId}/projects/${projectId}/registry/${registryId}`;
+  const url = `/custodian_approvals/${custodianId}/projectUsers/${projectUserId}`;
 
   const requestFn = {
-    POST: postRequest,
+    PUT: putRequest,
     GET: getRequest,
-    DELETE: deleteRequest,
   }[method];
 
   if (!requestFn) {

@@ -22,6 +22,7 @@ import getCustodianUsers from "./getCustodianUsers";
 import usePaginatedCustodianUsers from "./usePaginatedCustodianUsers";
 import postCustodianProject from "./postCustodianProject";
 import postCustodianProjectQuery from "./postCustodianProjectQuery";
+import getCustodianProjectUserQuery from "./getCustodianProjectUserQuery";
 
 export {
   getCustodian,
@@ -48,6 +49,7 @@ export {
   usePaginatedCustodianUsers,
   postCustodianProject,
   postCustodianProjectQuery,
+  getCustodianProjectUserQuery,
 };
 
 export type * from "./types";

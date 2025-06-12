@@ -42,8 +42,8 @@ const nextConfig = withNextIntl({
         destination: `/:locale/data-custodian/profile/home`,
       },
       {
-        source: "/:locale/data-custodian/profile/users/:id",
-        destination: `/:locale/data-custodian/profile/users/:id/identity`,
+        source: "/:locale/data-custodian/profile/projectUsers/:id",
+        destination: `/:locale/data-custodian/profile/projectUsers/:id/identity`,
       },
       {
         source: "/:locale/data-custodian/profile/configuration",

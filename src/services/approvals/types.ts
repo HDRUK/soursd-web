@@ -1,4 +1,5 @@
 import { EntityType } from "@/types/api";
+import { CustodianProjectUser } from "@/types/application";
 
 interface Approval {
   custodian_id: number;
@@ -24,16 +25,13 @@ interface DeleteApprovalPayloadWithEntity extends DeleteApprovalPayload {
   type: EntityType;
 }
 
-interface ApprovalResponse {
-  project_id: number;
-  user_id: number;
-  custodian_id: number;
-  approved: number;
-  comment: string;
-}
+type ApprovalResponse = CustodianProjectUser;
+
+type WorkflowStateResponse = string[];
 
 export type {
   Approval,
+  WorkflowStateResponse,
   PostApprovalPayload,
   PostApprovalPayloadWithEntity,
   DeleteApprovalPayload,

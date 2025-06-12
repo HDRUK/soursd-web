@@ -10,7 +10,7 @@ import { UserGroup } from "@/consts/user";
 import { useStore } from "@/data/store";
 import { useQuery } from "@tanstack/react-query";
 // import { getCustodianProjectUserValidationLogsQuery } from "@/services/validation_logs";
-import UserDetails from "@/components/UserDetails";
+import UserDetails from "@/components/ProjectUserDetails";
 import { getUserQuery } from "@/services/users";
 // import ActionValidationPanel from "@/modules/ActionValidationPanel";
 import { useTranslations } from "next-intl";

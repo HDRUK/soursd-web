@@ -1,21 +1,30 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { MutationState } from "@/types/form";
+import { useTranslations } from "next-intl";
 import { projectUserCustodianApproval } from "../../services/approvals";
+import { projectUserCustodianStates } from "../../services/approvals";
+
 import useQueryAlerts from "../useQueryAlerts";
+import { getCustodianProjectUserQuery } from "@/services/custodians";
 
 type CustodianParams = {
-  custodianId: string | number;
-  projectId: string | number;
-  registryId: string | number;
+  custodianId: number;
+  projectUserId: number;
 };
+
+export interface ChangeValidationStatusPayload {
+  status: string;
+  comment: string;
+}
+
+const NAMESPACE_TRANSLATION = "Application";
 
 export const useProjectUserCustodianApproval = ({
   custodianId,
-  projectId,
-  registryId,
+  projectUserId,
 }: CustodianParams) => {
-  const queryKey = ["custodianApproval", custodianId, projectId, registryId];
+  const tApplication = useTranslations(NAMESPACE_TRANSLATION);
   const queryClient = useQueryClient();
 
   const [mutationState, setMutationState] = useState<MutationState>({
@@ -29,20 +38,26 @@ export const useProjectUserCustodianApproval = ({
     isLoading: isFetching,
     isError,
     refetch,
-  } = useQuery({
-    queryKey,
+  } = useQuery(
+    getCustodianProjectUserQuery(custodianId as number, projectUserId as number)
+  );
+
+  const { data: statusOptionsData } = useQuery({
+    queryKey: ["custodianApprovalStates"],
     queryFn: () =>
-      projectUserCustodianApproval(
-        "GET",
-        custodianId,
-        projectId,
-        registryId,
-        undefined,
-        {
-          error: { message: "fetchApprovalError" },
-        }
-      ),
+      projectUserCustodianStates({
+        error: { message: "fetchStatesError" },
+      }),
   });
+
+  const statusOptions = useMemo(
+    () =>
+      statusOptionsData?.data?.map(item => ({
+        value: item,
+        label: tApplication(`status_${item}`),
+      })) || [],
+    [statusOptionsData]
+  );
 
   useEffect(() => {
     setMutationState(state => ({
@@ -54,40 +69,31 @@ export const useProjectUserCustodianApproval = ({
 
   const onSuccess = () => {
     setMutationState(state => ({ ...state, isSuccess: true }));
-    queryClient.invalidateQueries({ queryKey });
+    queryClient.refetchQueries({
+      queryKey: [
+        "getCustodianProjectUser",
+        Number(custodianId),
+        Number(projectUserId),
+      ],
+    });
   };
 
-  const { mutateAsync: approve, isPending: isApproving } = useMutation({
-    mutationFn: (comment: string) =>
-      projectUserCustodianApproval(
-        "POST",
-        custodianId,
-        projectId,
-        registryId,
-        { approved: 1, comment },
-        {
-          error: { message: "approvalError" },
-        }
-      ),
-    onSuccess,
-  });
+  const { mutateAsync: changeValidationStatus, isPending: isUpdating } =
+    useMutation({
+      mutationFn: (payload: ChangeValidationStatusPayload) =>
+        projectUserCustodianApproval(
+          "PUT",
+          custodianId,
+          projectUserId,
+          payload,
+          {
+            error: { message: "changeValidationStatusError" },
+          }
+        ),
+      onSuccess,
+    });
 
-  const { mutateAsync: reject, isPending: isRejecting } = useMutation({
-    mutationFn: (comment: string) =>
-      projectUserCustodianApproval(
-        "POST",
-        custodianId,
-        projectId,
-        registryId,
-        { approved: 0, comment },
-        {
-          error: { message: "rejectionError" },
-        }
-      ),
-    onSuccess,
-  });
-
-  const isLoading = isFetching || isApproving || isRejecting;
+  const isLoading = isFetching || isUpdating;
 
   useQueryAlerts(mutationState);
 
@@ -95,8 +101,8 @@ export const useProjectUserCustodianApproval = ({
     data: data?.data,
     isLoading,
     isError,
-    approve,
-    reject,
+    statusOptions,
+    changeValidationStatus,
     refetch,
   };
 };
