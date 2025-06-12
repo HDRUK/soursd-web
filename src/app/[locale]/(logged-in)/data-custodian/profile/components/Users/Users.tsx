@@ -14,6 +14,9 @@ import PageBodyContainer from "@/modules/PageBodyContainer";
 import { Box, Typography } from "@mui/material";
 import { renderProjectUserNameCell, renderUserNameCell } from "@/utils/cells";
 import SearchBar from "@/modules/SearchBar";
+import KanbanBoard from "@/modules/KanbanBoard";
+import KanbanBoardUsersCard from "@/modules/KanbanBoard/KanbanBoardUsersCard";
+import ProjectUsersBoard from "@/organisms/ProjectUsersBoard";
 
 const NAMESPACE_TRANSLATIONS_PROJECTS = "Projects";
 const NAMESPACE_TRANSLATIONS_APPLICATION = "Application";
@@ -152,6 +155,9 @@ export default function Users({ variant }: ProjectsProps) {
               placeholder={tProfile("searchProjectUsersPlaceholder")}
             />
           </Box>
+        </PageSection>
+        <PageSection>
+          <ProjectUsersBoard custodianProjectUsers={projectsData} />
         </PageSection>
         <PageSection>
           <Table

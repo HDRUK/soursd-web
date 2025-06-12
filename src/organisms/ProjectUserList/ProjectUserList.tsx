@@ -214,7 +214,6 @@ export default function ProjectUsersList({ variant }: ProjectUsersListProps) {
                   aria-label={tApplication("filterBy")}
                   multiple
                 />
-
                 <Grid
                   item
                   xs={12}

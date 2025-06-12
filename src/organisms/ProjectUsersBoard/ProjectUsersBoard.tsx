@@ -1,26 +1,29 @@
 import { UseDroppableSortItemsFnOptions } from "@/hooks/useDroppableSortItems";
 import KanbanBoardUsersCard from "@/modules/KanbanBoard/KanbanBoardUsersCard";
-import { getProjectUsersWorkflowQuery } from "@/services/custodian_approvals";
+//import { getProjectUsersWorkflowQuery } from "@/services/custodian_approvals";
 import { DndItems, DragUpdateEvent, DragUpdateEventArgs } from "@/types/dnd";
 import { rectSortingStrategy } from "@dnd-kit/sortable";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo } from "react";
-import putUserStatusQuery from "@/services/custodian_approvals/putUserStatusQuery";
+//import putUserStatusQuery from "@/services/custodian_approvals/putUserStatusQuery";
 import KanbanBoard from "../../modules/KanbanBoard";
-import { ProjectAllUser } from "../../types/application";
+import { CustodianProjectUser, ProjectAllUser } from "../../types/application";
 
 const NAMESPACE_TRANSLATION_APPLICATION = "Kanban";
 
 interface ProjectUsersBoardProps {
   custodianId: number;
-  users: ProjectAllUser[];
+  custodianProjectUsers: CustodianProjectUser[];
 }
 
 export default function ProjectUsersBoard({
   custodianId,
-  users,
+  custodianProjectUsers,
 }: ProjectUsersBoardProps) {
+  console.log(custodianProjectUsers);
+  return <b> {custodianProjectUsers?.length} </b>;
+
   const t = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
   const { mutateAsync: updateUserStatus } = useMutation(putUserStatusQuery());
 
