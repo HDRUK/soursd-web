@@ -8,6 +8,14 @@ import {
 } from "@/consts/user";
 import { RuleState } from "./rules";
 
+interface StateWorkflow {
+  transitions: Record<string, string[]>;
+}
+
+type WithStateWorkflow<T> = T & {
+  stateWorkflow: StateWorkflow;
+};
+
 type ModelState<T> = T & {
   model_state: {
     state: {
@@ -499,4 +507,6 @@ export type {
   UserProfileCompletionSchema,
   ProjectRole,
   ProjectDetails,
+  WithStateWorkflow,
+  StateWorkflow,
 };
