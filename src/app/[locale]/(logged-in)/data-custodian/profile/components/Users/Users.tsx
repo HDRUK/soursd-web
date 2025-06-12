@@ -5,14 +5,14 @@ import Table from "@/components/Table";
 import { StoreState, useStore } from "@/data/store";
 import PageSection from "@/modules/PageSection";
 import { ProjectEntities } from "@/services/projects/getEntityProjects";
-import useProjectsUsersQuery from "@/services/custodians/useCustodianProjectsUsersQuery";
-import { CustodianProjectUser, User } from "@/types/application";
+import useCustodianProjectsUsersQuery from "@/services/custodians/useCustodianProjectsUsersQuery";
+import { CustodianProjectUser, ProjectUser, User } from "@/types/application";
 import { ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
 import PageBody from "@/modules/PageBody";
 import PageBodyContainer from "@/modules/PageBodyContainer";
 import { Box, Typography } from "@mui/material";
-import { renderUserNameCell } from "@/utils/cells";
+import { renderProjectUserNameCell, renderUserNameCell } from "@/utils/cells";
 import SearchBar from "@/modules/SearchBar";
 
 const NAMESPACE_TRANSLATIONS_PROJECTS = "Projects";
@@ -67,15 +67,15 @@ export default function Users({ variant }: ProjectsProps) {
     updateQueryParams,
     resetQueryParams,
     ...queryState
-  } = useProjectsUsersQuery(entityId, {
+  } = useCustodianProjectsUsersQuery(entityId, {
     variant,
-    queryKeyBase: ["getProjects"],
+    queryKeyBase: ["getCustionProjectUsers"],
     enabled: !!entityId,
   });
 
   const columns: ColumnDef<CustodianProjectUser>[] = [
     {
-      accessorKey: "registry.user.id",
+      accessorKey: "project_has_user",
       header: t("userName"),
       cell: info => {
         let route = null;
@@ -94,36 +94,41 @@ export default function Users({ variant }: ProjectsProps) {
             route = null;
         }
 
+        return renderProjectUserNameCell(
+          info.getValue() as ProjectUser,
+          route?.path
+        );
+
         return renderUserNameCell(
           {
-            first_name: info.row.original.registry.user.first_name,
-            last_name: info.row.original.registry.user.last_name,
+            first_name:
+              info.row.original?.project_has_user.registry?.user.first_name,
+            last_name:
+              info.row.original?.project_has_user.registry?.user.last_name,
             id: info.getValue(),
           } as User,
           route.path,
-          { projectId: info.row.original.project_id }
+          { projectId: info.row.original.project_has_user.project_id }
         );
       },
     },
     {
-      accessorKey: "affiliation.organisation.organisation_name",
+      accessorKey:
+        "project_has_user.affiliation.organisation.organisation_name",
       header: t("organisation"),
     },
     {
-      accessorKey: "project.title",
+      accessorKey: "project_has_user.project.title",
       header: t("title"),
     },
     {
-      accessorKey: "role.name",
+      accessorKey: "project_has_user.role.name",
       header: tApplication("projectRole"),
     },
     {
-      accessorKey: "status.to.be.implemented",
+      accessorKey: "model_state.state.slug",
       header: t("validationStatus"),
-      // this needs to be BE implemented to be the model state per custodian validation/approval
-      cell: info => (
-        <ChipStatus status={info.row.original.model_state?.state.slug} />
-      ),
+      cell: info => <ChipStatus status={info.getValue()} />,
     },
   ];
 

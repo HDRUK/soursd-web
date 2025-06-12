@@ -13,8 +13,7 @@ export default async (
   options?: ResponseOptions
 ): Promise<ResponseJson<Paged<GetCustodianProjectUserResponse>>> => {
   const response = await getRequest(
-    `/custodians/${id}/projects_users${getSearchQuerystring(searchParams)}`
+    `/custodian_approvals/${id}/projectUsers${getSearchQuerystring(searchParams)}`
   );
-
   return handleJsonResponse(response, options);
 };

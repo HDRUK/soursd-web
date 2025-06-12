@@ -412,6 +412,7 @@ interface Project {
 }
 
 interface ProjectUser {
+  id: number;
   project_id: number;
   project_role_id: number;
   primary_contact: boolean;
@@ -421,7 +422,14 @@ interface ProjectUser {
   registry: Registry;
 }
 
-type CustodianProjectUser = ProjectUser;
+type CustodianProjectUser = ModelState<{
+  id: number;
+  project_has_user_id: number;
+  custodian_id: number;
+  created_at: string;
+  updated_at: string;
+  project_has_user: ProjectUser;
+}>;
 
 type ProjectAllUser = ModelState<{
   id: number;

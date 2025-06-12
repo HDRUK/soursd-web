@@ -11,7 +11,7 @@ interface GetEntityProjectsQuery<T> extends Partial<PaginatedQueryProps<T>> {
   variant: ProjectEntities;
 }
 
-export default function useProjectsUsersQuery<T>(
+export default function useCustodianProjectsUsersQuery<T>(
   id: number,
   { variant, defaultQueryParams, ...restParams }: GetEntityProjectsQuery<T>
 ) {

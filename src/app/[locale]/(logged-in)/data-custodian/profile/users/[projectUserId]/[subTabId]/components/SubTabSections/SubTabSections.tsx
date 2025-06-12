@@ -5,7 +5,7 @@ import SubTabs from "@/modules/SubTabs";
 import { Option } from "@/types/common";
 import { injectParamsIntoPath } from "@/utils/application";
 import { useTranslations } from "next-intl";
-import { UserSubTabs } from "../../../../../../../consts/tabs";
+import { UserSubTabs } from "../../../../../consts/tabs";
 
 const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 
@@ -14,14 +14,12 @@ export interface SubTabsMap {
 }
 
 interface SubTabsSectionsProps {
-  userId: number;
-  projectId: number;
+  projectUserId: number;
   subTabId: UserSubTabs;
 }
 
 export default function SubTabsSections({
-  projectId,
-  userId,
+  projectUserId,
   subTabId,
 }: SubTabsSectionsProps) {
   const routes = useStore(store => store.getApplication().routes);
@@ -34,8 +32,7 @@ export default function SubTabsSections({
       href: injectParamsIntoPath(
         routes.profileCustodianUsersAffiliations.path,
         {
-          projectId,
-          userId,
+          projectUserId,
         }
       ),
     },
@@ -43,16 +40,14 @@ export default function SubTabsSections({
       label: t("projects"),
       value: UserSubTabs.PROJECTS,
       href: injectParamsIntoPath(routes.profileCustodianUsersProjects.path, {
-        projectId,
-        userId,
+        projectUserId,
       }),
     },
     {
       label: t("identity"),
       value: UserSubTabs.IDENTITY,
       href: injectParamsIntoPath(routes.profileCustodianUsersIdentity.path, {
-        projectId,
-        userId,
+        projectUserId,
       }),
     },
     {
@@ -61,8 +56,7 @@ export default function SubTabsSections({
       href: injectParamsIntoPath(
         routes.profileCustodianUsersTrainingAccreditations.path,
         {
-          projectId,
-          userId,
+          projectUserId,
         }
       ),
     },
@@ -72,8 +66,7 @@ export default function SubTabsSections({
       href: injectParamsIntoPath(
         routes.profileCustodianUsersCustodianOrgInfo.path,
         {
-          projectId,
-          userId,
+          projectUserId,
         }
       ),
     },
@@ -81,8 +74,7 @@ export default function SubTabsSections({
       label: t("history"),
       value: UserSubTabs.HISTORY,
       href: injectParamsIntoPath(routes.profileCustodianUsersHistory.path, {
-        projectId,
-        userId,
+        projectUserId,
       }),
     },
   ];

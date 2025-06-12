@@ -7,9 +7,9 @@ import UserHistory from "@/organisms/UserHistory";
 import UserIdentity from "@/organisms/UserIdentity";
 import UserTrainingAccreditations from "@/organisms/UserTrainingAccreditations";
 import { EntityType } from "@/types/api";
-import UserCustodianOrgInfo from "../../../../../../../components/UserCustodianOrgInfo";
-import UserProjects from "../../../../../../../components/UserProjects";
-import { UserSubTabs } from "../../../../../../../consts/tabs";
+import UserCustodianOrgInfo from "../../../../../components/UserCustodianOrgInfo";
+import UserProjects from "../../../../../components/UserProjects";
+import { UserSubTabs } from "../../../../../consts/tabs";
 
 interface TabsContentsProps {
   subTabId: UserSubTabs;

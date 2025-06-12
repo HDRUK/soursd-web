@@ -6,6 +6,7 @@ import {
   Organisation,
   Project,
   ProjectAllUser,
+  ProjectUser,
   ResearcherAffiliation,
   ResearcherProject,
   User,
@@ -74,6 +75,25 @@ function renderUserNameCell(
     : `${first_name} ${last_name}`;
 }
 
+function renderProjectUserNameCell(
+  projectUser: ProjectUser,
+  route?: string,
+  options: Record<string, number> = {}
+) {
+  if (!projectUser) return "";
+  const { registry, id } = projectUser;
+  const { user } = registry;
+
+  const { first_name, last_name } = user;
+
+  return route && id
+    ? renderLinkNameCell(`${first_name} ${last_name}`, route, {
+        projectUserId: id,
+        ...options,
+      })
+    : `${first_name} ${last_name}`;
+}
+
 function renderWarningCell<T extends ResearcherAffiliation>(
   info: CellContext<T, unknown>
 ) {
@@ -128,6 +148,7 @@ export {
   renderOrganisationsNameCell,
   renderProjectNameCell,
   renderProjectsNameCell,
+  renderProjectUserNameCell,
   renderUserNameCell,
   renderUserOrganisationsNameCell,
   renderWarningCell,

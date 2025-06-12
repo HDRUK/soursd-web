@@ -3,20 +3,16 @@ import CustodianProjectUser from "./components";
 interface PageProps {
   params: {
     id: number;
-    projectId: number;
-    subTabId: number;
+    projectUserId: number;
+    subTabId: string;
   };
 }
 
 function CustodianProjectUserPage({
-  params: { id: userId, projectId, subTabId },
+  params: { projectUserId, subTabId },
 }: PageProps) {
   return (
-    <CustodianProjectUser
-      projectId={projectId}
-      userId={userId}
-      subTabId={subTabId}
-    />
+    <CustodianProjectUser projectUserId={projectUserId} subTabId={subTabId} />
   );
 }
 

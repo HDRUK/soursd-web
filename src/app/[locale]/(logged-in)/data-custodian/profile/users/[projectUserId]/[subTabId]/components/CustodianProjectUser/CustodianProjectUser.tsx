@@ -16,50 +16,51 @@ import { getCustodianProjectUserValidationLogsQuery } from "@/services/validatio
 import { getUserQuery } from "@/services/users";
 import ActionValidationPanel from "@/organisms/ActionValidationPanel";
 import { ActionValidationVariants } from "@/organisms/ActionValidationPanel/ActionValidationPanel";
-
+import { getProjectUserQuery } from "@/services/project_users";
 import getProjectQuery from "@/services/projects/getProjectQuery";
 import UserDetails from "@/components/UserDetails";
-import { UserSubTabs } from "../../../../../../../consts/tabs";
+import { UserSubTabs } from "../../../../../consts/tabs";
 import SubTabsSections from "../SubTabSections";
 import SubTabsContents from "../SubsTabContents";
 
 interface CustodianProjectUserProps {
-  projectId: number;
-  userId: number;
+  projectUserId: number;
   subTabId: UserSubTabs;
 }
 
 const NAMESPACE_TRANSLATION_CUSTODIAN_PROJECT_USER = "CustodianProjectUser";
 
 function CustodianProjectUser({
-  projectId,
-  userId,
+  projectUserId,
   subTabId,
 }: CustodianProjectUserProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_CUSTODIAN_PROJECT_USER);
   const custodian = useStore(state => state.getCustodian());
-  const { data: project, isFetched: isFetchedProject } = useQuery(
-    getProjectQuery(projectId)
-  );
 
-  const { data: userData, isFetched } = useQuery(getUserQuery(+userId));
+  const { data: projectUser, isFetched: isFetchedProjectUser } = useQuery(
+    getProjectUserQuery(projectUserId)
+  );
+  const { registry, project } = projectUser?.data || {};
+
+  const { data: userData, isFetched } = useQuery({
+    ...getUserQuery(+registry?.user?.id),
+    enabled: !!registry?.user?.id,
+  });
 
   if (userData?.data.user_group !== UserGroup.USERS && isFetched) {
     notFound();
   }
 
-  const { registry_id: registryId } = userData?.data || {};
-
   const { data: validationLogs, ...queryState } = useQuery({
     ...getCustodianProjectUserValidationLogsQuery(
       custodian?.id as number,
-      projectId,
-      registryId as number
+      project?.id as number,
+      registry?.id as number
     ),
-    enabled: !!registryId,
+    enabled: !!registry?.id,
   });
 
-  if (!project?.data && isFetchedProject) {
+  if (!project && isFetchedProjectUser) {
     notFound();
   }
 
@@ -70,26 +71,24 @@ function CustodianProjectUser({
   }));
 
   useEffect(() => {
-    if (project) setProject(project?.data);
-  }, [project]);
+    if (project) setProject(project);
+  }, [projectUser]);
 
   useEffect(() => {
-    if (userData?.data) setUser(userData?.data);
+    if (userData?.data) setUser(userData.data);
   }, [userData]);
 
   return (
     user && (
-      <PageBodyContainer
-        heading={t("title", { projectTitle: project?.data.title })}>
+      <PageBodyContainer heading={t("title", { projectTitle: project?.title })}>
         <PageColumns>
           <PageColumnBody lg={8}>
             <UserDetails user={user} />
             <SubTabsSections
-              userId={userId}
-              projectId={projectId}
+              projectUserId={projectUserId}
               subTabId={subTabId}
             />
-            <SubTabsContents userId={userId} subTabId={subTabId} />
+            <SubTabsContents userId={user.id} subTabId={subTabId} />
           </PageColumnBody>
           <PageColumnDetails lg={4}>
             <ActionValidationPanel

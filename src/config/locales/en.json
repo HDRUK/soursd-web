@@ -43,6 +43,8 @@
     "status_affiliation_approved": "Approved",
     "status_affiliation_rejected": "Rejected",
     "status_notSet": "None",
+    "status_form_received": "Form Received",
+    "status_validation_in_progress": "Validation In Progress",
     "projectStatus": "Project status",
     "projectRole": "Project Role",
     "actions": "Actions",
