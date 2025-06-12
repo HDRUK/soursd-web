@@ -65,6 +65,7 @@ export default function KanbanBoard<T>({
   adjustScale = false,
   cancelDrop,
   initialData,
+  stateWorkflow,
   modifiers,
   strategy = verticalListSortingStrategy,
   onDragEnd,

@@ -39,8 +39,8 @@ interface ProjectUsersListProps {
 
 export default function ProjectUsersList({ variant }: ProjectUsersListProps) {
   const { projectId, custodianId } = useStore(state => ({
-    projectId: state.getCurrentProject().id,
-    custodianId: state.getCustodian()?.id,
+    projectId: state.getCurrentProject()?.id,
+    custodianId: state.getCustodian()?.id || 1,
   }));
 
   const {
@@ -54,7 +54,7 @@ export default function ProjectUsersList({ variant }: ProjectUsersListProps) {
     queryParams,
     refetch,
     ...queryState
-  } = usePaginatedGetUsers(1);
+  } = usePaginatedGetUsers(custodianId);
 
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);

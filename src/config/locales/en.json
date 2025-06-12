@@ -1191,6 +1191,7 @@
     "projectStatus": "Status"
   },
   "Projects": {
+    "status": "Project status",
     "safeProject": "Safe Project",
     "safeData": "Safe Data",
     "safePeople": "Safe People",
