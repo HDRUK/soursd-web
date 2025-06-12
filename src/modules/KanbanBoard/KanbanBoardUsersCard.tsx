@@ -16,7 +16,7 @@ export default function KanbanBoardUsersCard({
   sx,
   ...restProps
 }: KanbanBoardUsersCardProps) {
-  const { organisation_name, project_id, project_name, project_role } = data;
+  const { affiliation, project, role, registry } = data;
 
   return (
     <Card
@@ -37,13 +37,15 @@ export default function KanbanBoardUsersCard({
           mb: 1,
           fontSize: "1rem",
         }}>
-        <Box sx={{ flexGrow: 1 }}>{renderUserNameCell(data)}</Box>
+        <Box sx={{ flexGrow: 1 }}>{renderUserNameCell(registry.user)}</Box>
       </Text>
-      <Typography color="success.main">{organisation_name}</Typography>
-      <Typography>
-        {project_name} (id: {project_id})
+      <Typography color="success.main">
+        {affiliation.organisation.organisation_name}
       </Typography>
-      <Typography>{project_role}</Typography>
+      <Typography>
+        {project.title} (id: {project.id})
+      </Typography>
+      <Typography>{role.name}</Typography>
       <Text
         startIcon={
           <PersonOutlineIcon
