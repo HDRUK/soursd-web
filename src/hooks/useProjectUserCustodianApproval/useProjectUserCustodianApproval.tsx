@@ -6,9 +6,11 @@ import { useTranslations } from "next-intl";
 import useQueryAlerts from "../useQueryAlerts";
 
 import {
+  getCustodianProjectUserStatesQuery,
   getCustodianProjectUserQuery,
-  getCustodianProjectUsersQuery,
-} from "@/services/custodians";
+  putCustodianProjectUserQuery,
+  ChangeValidationStatusPayload,
+} from "@/services/custodian_approvals";
 
 type CustodianParams = {
   custodianId: number;
@@ -30,22 +32,19 @@ export const useProjectUserCustodianApproval = ({
     isPending: false,
   });
 
+  const custodianProjectUserQuery = getCustodianProjectUserQuery(
+    custodianId as number,
+    projectUserId as number
+  );
   const {
     data,
     isLoading: isFetching,
     isError,
-    refetch,
-  } = useQuery(
-    getCustodianProjectUserQuery(custodianId as number, projectUserId as number)
-  );
+  } = useQuery(custodianProjectUserQuery);
 
-  const { data: statusOptionsData } = useQuery({
-    queryKey: ["custodianApprovalStates"],
-    queryFn: () =>
-      projectUserCustodianStates({
-        error: { message: "fetchStatesError" },
-      }),
-  });
+  const { data: statusOptionsData } = useQuery(
+    getCustodianProjectUserStatesQuery()
+  );
 
   const statusOptions = useMemo(
     () =>
@@ -64,31 +63,28 @@ export const useProjectUserCustodianApproval = ({
     }));
   }, [data]);
 
-  const onSuccess = () => {
-    setMutationState(state => ({ ...state, isSuccess: true }));
+  const refetch = () => {
     queryClient.refetchQueries({
-      queryKey: [
-        "getCustodianProjectUser",
-        Number(custodianId),
-        Number(projectUserId),
-      ],
+      queryKey: custodianProjectUserQuery.queryKey,
     });
   };
 
-  const { mutateAsync: changeValidationStatus, isPending: isUpdating } =
+  const onSuccess = () => {
+    setMutationState(state => ({ ...state, isSuccess: true }));
+    refetch();
+  };
+
+  const { mutateAsync: mutateCustodianProjectUser, isPending: isUpdating } =
     useMutation({
-      mutationFn: (payload: ChangeValidationStatusPayload) =>
-        projectUserCustodianApproval(
-          "PUT",
-          custodianId,
-          projectUserId,
-          payload,
-          {
-            error: { message: "changeValidationStatusError" },
-          }
-        ),
+      ...putCustodianProjectUserQuery(custodianId),
       onSuccess,
     });
+
+  const changeValidationStatus = (payload: ChangeValidationStatusPayload) => {
+    mutateCustodianProjectUser({ params: { projectUserId }, payload }).then(
+      () => refetch()
+    );
+  };
 
   const isLoading = isFetching || isUpdating;
 
