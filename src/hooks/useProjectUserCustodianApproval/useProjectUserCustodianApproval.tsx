@@ -2,27 +2,36 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import { MutationState } from "@/types/form";
 import { useTranslations } from "next-intl";
-
 import useQueryAlerts from "../useQueryAlerts";
-
 import {
   getCustodianProjectUserStatesQuery,
   getCustodianProjectUserQuery,
   putCustodianProjectUserQuery,
   ChangeValidationStatusPayload,
 } from "@/services/custodian_approvals";
+import { CustodianProjectUser } from "@/types/application";
+import { Option } from "@/types/common";
 
 type CustodianParams = {
   custodianId: number;
   projectUserId: number;
 };
 
+export interface UseProjectUserCustodianApprovalResult {
+  data: CustodianProjectUser;
+  isLoading: boolean;
+  isError: boolean;
+  statusOptions: Option[];
+  changeValidationStatus: (payload: ChangeValidationStatusPayload) => void;
+  refetch: () => void;
+}
+
 const NAMESPACE_TRANSLATION = "Application";
 
 export const useProjectUserCustodianApproval = ({
   custodianId,
   projectUserId,
-}: CustodianParams) => {
+}: CustodianParams): UseProjectUserCustodianApprovalResult => {
   const tApplication = useTranslations(NAMESPACE_TRANSLATION);
   const queryClient = useQueryClient();
 

@@ -53,19 +53,18 @@ function ActionValidationPanel({
         <ActionValidationStatus<CustodianParams>
           useApprovalHook={useProjectUserCustodianApproval}
           hookParams={{ custodianId, projectUserId }}
-          t={t}
         />
       );
       break;
     }
     case ActionValidationVariants.Organisation: {
-      actionValidationStatus = (
+      // need to reimplement this in another ticket
+      /*actionValidationStatus = (
         <ActionValidationStatus<OrganisationParams>
           useApprovalHook={useOrganisationCustodianApproval}
           hookParams={{ custodianId, organisationId }}
-          t={t}
         />
-      );
+      );*/
       break;
     }
     default:

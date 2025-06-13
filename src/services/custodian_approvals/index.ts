@@ -8,6 +8,7 @@ import getCustodianProjectUserStatesQuery from "./getCustodianProjectUserStatesQ
 import getCustodianProjectUserQuery from "./getCustodianProjectUserQuery";
 import getCustodianProjectUsersQuery from "./getCustodianProjectUsersQuery";
 import putCustodianProjectUserQuery from "./putCustodianProjectUserQuery";
+import usePaginatedCustodianProjectUsers from "./usePaginatedCustodianProjectUsers";
 
 export {
   getCustodianProjectUserStates,
@@ -18,6 +19,7 @@ export {
   getCustodianProjectUserQuery,
   getCustodianProjectUsersQuery,
   putCustodianProjectUserQuery,
+  usePaginatedCustodianProjectUsers,
 };
 
 export type * from "./types";

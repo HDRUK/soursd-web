@@ -5,7 +5,10 @@ import { rectSortingStrategy } from "@dnd-kit/sortable";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo } from "react";
-import useProjectUserCustodianApproval from "@/hooks/useProjectUserCustodianApproval";
+import {
+  getCustodianProjectUserStatesQuery,
+  putCustodianProjectUserQuery,
+} from "@/services/custodian_approvals";
 import KanbanBoard from "../../modules/KanbanBoard";
 import { CustodianProjectUser, ProjectUser } from "../../types/application";
 
@@ -22,27 +25,13 @@ export default function ProjectUsersBoard({
 }: ProjectUsersBoardProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
 
-  const { data: statusOptionsData } = useQuery({
-    queryKey: ["custodianApprovalStates"],
-    queryFn: () =>
-      projectUserCustodianStates({
-        error: { message: "fetchStatesError" },
-      }),
-  });
-  const { mutateAsync: changeValidationStatus, isPending: isUpdating } =
-    useMutation({
-      mutationFn: ({ params, payload }) =>
-        projectUserCustodianApproval(
-          "PUT",
-          custodianId,
-          params.projectUserId,
-          payload,
-          {
-            error: { message: "changeValidationStatusError" },
-          }
-        ),
-      //onSuccess,
-    });
+  const { data: statusOptionsData } = useQuery(
+    getCustodianProjectUserStatesQuery()
+  );
+
+  const { mutateAsync: changeValidationStatus } = useMutation(
+    putCustodianProjectUserQuery(custodianId)
+  );
 
   const stateWorkflow = statusOptionsData?.data;
 

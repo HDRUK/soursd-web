@@ -3,13 +3,11 @@ import { Grid, Box } from "@mui/material";
 import { TextareaAutosize } from "@mui/base/TextareaAutosize";
 import { LoadingButton } from "@mui/lab";
 import { useState, useMemo, useEffect } from "react";
+import { UseProjectUserCustodianApprovalResult } from "@/hooks/useProjectUserCustodianApproval/useProjectUserCustodianApproval";
 import FormControl from "../../components/FormControlWrapper";
 import Form from "../../components/Form";
 import yup from "../../config/yup";
 import SelectValidationActionStatus from "../../components/SelectValidationActionStatus";
-import { ApprovalResponse } from "../../services/custodian_approvals";
-import { ChangeValidationStatusPayload } from "@/hooks/useProjectUserCustodianApproval/useProjectUserCustodianApproval";
-import { Option } from "@/types/common";
 
 const NAMESPACE_TRANSLATION_ACTION_VALIDATION = "ActionValidationPanel";
 
@@ -18,14 +16,9 @@ export interface ActionValidationStatusFormValues {
   comment: string;
 }
 
-export type UseApprovalHook<TParams> = (params: TParams) => {
-  data?: ApprovalResponse;
-  statusOptions: Option[];
-  changeValidationStatus: (payload: ChangeValidationStatusPayload) => void;
-  reject: (comment: string) => void;
-  isLoading: boolean;
-  isError?: boolean;
-};
+export type UseApprovalHook<TParams> = (
+  params: TParams
+) => UseProjectUserCustodianApprovalResult;
 
 interface ActionValidationStatusProps<TParams> {
   useApprovalHook: UseApprovalHook<TParams>;

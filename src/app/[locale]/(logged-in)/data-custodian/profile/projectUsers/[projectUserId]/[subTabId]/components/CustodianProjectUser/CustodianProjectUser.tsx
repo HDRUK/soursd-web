@@ -20,7 +20,7 @@ import ProjectUserDetails from "@/components/ProjectUserDetails";
 import { UserSubTabs } from "../../../../../consts/tabs";
 import SubTabsSections from "../SubTabSections";
 import SubTabsContents from "../SubsTabContents";
-import { getCustodianProjectUserQuery } from "@/services/custodians";
+import { getCustodianProjectUserQuery } from "@/services/custodian_approvals";
 import ChipStatus from "@/components/ChipStatus";
 
 interface CustodianProjectUserProps {
