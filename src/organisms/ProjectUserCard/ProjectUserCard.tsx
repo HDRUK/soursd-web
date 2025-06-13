@@ -14,7 +14,7 @@ import IconButton from "../../components/IconButton";
 import Text from "../../components/Text";
 import { ApprovedUserIcon } from "../../consts/icons";
 import { UserDetailsModal } from "../../modules";
-import { getEntityApproval } from "../../services/approvals";
+import { getEntityApproval } from "../../services/custodian_approvals";
 import { getUserApprovedProjects } from "../../services/projects";
 import { EntityType } from "../../types/api";
 import { ProjectUser } from "../../types/application";

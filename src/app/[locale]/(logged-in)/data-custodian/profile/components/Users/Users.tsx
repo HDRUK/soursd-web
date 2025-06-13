@@ -157,7 +157,11 @@ export default function Users({ variant }: ProjectsProps) {
           </Box>
         </PageSection>
         <PageSection>
-          <ProjectUsersBoard custodianProjectUsers={projectsData} />
+          {/* note this is using paginated data */}
+          <ProjectUsersBoard
+            custodianId={entityId}
+            custodianProjectUsers={projectsData}
+          />
         </PageSection>
         <PageSection>
           <Table

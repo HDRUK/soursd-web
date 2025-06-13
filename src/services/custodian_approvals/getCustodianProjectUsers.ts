@@ -5,8 +5,6 @@ import { getRequest } from "../requests";
 import { handleJsonResponse } from "../requestHelpers";
 import { GetCustodianProjectUsersResponse } from "./types";
 
-export type ProjectEntities = "organisation" | "custodian" | "user";
-
 export default async (
   id: number,
   searchParams: SearchParams,

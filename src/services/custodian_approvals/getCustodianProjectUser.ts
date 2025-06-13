@@ -1,17 +1,15 @@
-import { EntityType } from "@/types/api";
 import { ResponseJson, ResponseOptions } from "@/types/requests";
 import { getRequest } from "../requests";
 import { handleJsonResponse } from "../requestHelpers";
+import { GetCustodianProjectUserResponse } from "./types";
 
 export default async (
-  entityType: EntityType,
-  id: string | number,
-  custodianId: string | number,
-  options: ResponseOptions
-): Promise<ResponseJson<boolean>> => {
+  custodianId: number,
+  projectUserId: number,
+  options?: ResponseOptions
+): Promise<ResponseJson<GetCustodianProjectUserResponse>> => {
   const response = await getRequest(
-    `/approvals/${entityType}/${id}/custodian/${custodianId}`
+    `/custodian_approvals/${custodianId}/projectUsers/${projectUserId}`
   );
-
   return handleJsonResponse(response, options);
 };

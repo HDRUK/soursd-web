@@ -2,21 +2,18 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import { MutationState } from "@/types/form";
 import { useTranslations } from "next-intl";
-import { projectUserCustodianApproval } from "../../services/approvals";
-import { projectUserCustodianStates } from "../../services/approvals";
 
 import useQueryAlerts from "../useQueryAlerts";
-import { getCustodianProjectUserQuery } from "@/services/custodians";
+
+import {
+  getCustodianProjectUserQuery,
+  getCustodianProjectUsersQuery,
+} from "@/services/custodians";
 
 type CustodianParams = {
   custodianId: number;
   projectUserId: number;
 };
-
-export interface ChangeValidationStatusPayload {
-  status: string;
-  comment: string;
-}
 
 const NAMESPACE_TRANSLATION = "Application";
 

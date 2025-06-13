@@ -102,7 +102,7 @@ export default function KanbanBoard<T>({
 
     return (
       data && (
-        <DndItem dragOverlay isDroppable={data.isDroppable}>
+        <DndItem dragOverlay isDroppable={data?.isDroppable}>
           <restProps.cardComponent
             data={data}
             sx={{
@@ -242,7 +242,7 @@ export default function KanbanBoard<T>({
                   return (
                     <DndSortableItem
                       disabled={isSortingContainer}
-                      isDroppable={data.isDroppable}
+                      isDroppable={data?.isDroppable}
                       key={data.id}
                       id={data.id}
                       index={findItemIndex(containerId, data.id, items)}>

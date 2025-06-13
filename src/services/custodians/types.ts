@@ -67,10 +67,6 @@ type PostCustodianPayload = Custodian;
 type PostCustodianResponse = number;
 type PostCustodianInviteResponse = Custodian;
 
-type GetCustodianProjectUsersResponse = CustodianProjectUser[];
-
-type GetCustodianProjectUserResponse = CustodianProjectUser;
-
 type GetCustodianOrganisationsResponse = Organisation[];
 
 type GetCustodianOrganisationUsersResponse = User[];
@@ -102,8 +98,6 @@ export type {
   GetCustodianEntityModelResponse,
   PutCustodianActiveEntityModelPayload,
   PutCustodianActiveEntityModelResponse,
-  GetCustodianProjectUsersResponse,
-  GetCustodianProjectUserResponse,
   GetCustodiansUserProjectsResponse,
   GetCustodianOrganisationsResponse,
   GetCustodianOrganisationUsersResponse,

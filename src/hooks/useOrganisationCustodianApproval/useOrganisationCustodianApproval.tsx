@@ -5,7 +5,7 @@ import useQueryAlerts from "../useQueryAlerts";
 import {
   getOrganisationApprovalQuery,
   postOrganisationApprovalQuery,
-} from "../../services/approvals";
+} from "../../services/custodian_approvals";
 
 type CustodianParams = {
   custodianId: string | number;

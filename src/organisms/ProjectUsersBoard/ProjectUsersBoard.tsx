@@ -1,14 +1,13 @@
 import { UseDroppableSortItemsFnOptions } from "@/hooks/useDroppableSortItems";
 import KanbanBoardUsersCard from "@/modules/KanbanBoard/KanbanBoardUsersCard";
-//import { getProjectUsersWorkflowQuery } from "@/services/custodian_approvals";
 import { DndItems, DragUpdateEvent, DragUpdateEventArgs } from "@/types/dnd";
 import { rectSortingStrategy } from "@dnd-kit/sortable";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo } from "react";
-//import putUserStatusQuery from "@/services/custodian_approvals/putUserStatusQuery";
+import useProjectUserCustodianApproval from "@/hooks/useProjectUserCustodianApproval";
 import KanbanBoard from "../../modules/KanbanBoard";
-import { CustodianProjectUser, ProjectAllUser } from "../../types/application";
+import { CustodianProjectUser, ProjectUser } from "../../types/application";
 
 const NAMESPACE_TRANSLATION_APPLICATION = "Kanban";
 
@@ -21,39 +20,60 @@ export default function ProjectUsersBoard({
   custodianId,
   custodianProjectUsers,
 }: ProjectUsersBoardProps) {
-  console.log(custodianProjectUsers);
-  return <b> {custodianProjectUsers?.length} </b>;
-
   const t = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
-  const { mutateAsync: updateUserStatus } = useMutation(putUserStatusQuery());
 
-  const { data: stateWorkflow } = useQuery(getProjectUsersWorkflowQuery());
+  const { data: statusOptionsData } = useQuery({
+    queryKey: ["custodianApprovalStates"],
+    queryFn: () =>
+      projectUserCustodianStates({
+        error: { message: "fetchStatesError" },
+      }),
+  });
+  const { mutateAsync: changeValidationStatus, isPending: isUpdating } =
+    useMutation({
+      mutationFn: ({ params, payload }) =>
+        projectUserCustodianApproval(
+          "PUT",
+          custodianId,
+          params.projectUserId,
+          payload,
+          {
+            error: { message: "changeValidationStatusError" },
+          }
+        ),
+      //onSuccess,
+    });
+
+  const stateWorkflow = statusOptionsData?.data;
 
   const initialData = useMemo(() => {
-    if (stateWorkflow?.data && users) {
-      const data: DndItems<ProjectAllUser> = {};
+    if (!stateWorkflow || !custodianProjectUsers) return null;
 
-      Object.keys(stateWorkflow?.data).forEach((key: string) => {
-        data[key] = [];
-      });
+    const data = Object.fromEntries(
+      stateWorkflow.map(state => [state, []])
+    ) as DndItems<ProjectUser>;
 
-      users.forEach(user => {
-        data[user.model_state.state.slug].push(user.project_has_user);
-      });
+    custodianProjectUsers.forEach(
+      ({
+        model_state: {
+          state: { slug },
+        },
+        project_has_user,
+      }) => {
+        data[slug].push(project_has_user);
+      }
+    );
 
-      return data;
-    }
-
-    return null;
-  }, [stateWorkflow?.data, users]);
+    return data;
+  }, [stateWorkflow, custodianProjectUsers]);
 
   const droppableFnOptions = useMemo<
-    Partial<UseDroppableSortItemsFnOptions<ProjectAllUser>>
+    Partial<UseDroppableSortItemsFnOptions<ProjectUser>>
   >(
     () => ({
       isAllowed: (
         _,
-        { initial, containerId }: DragUpdateEventArgs<ProjectAllUser>
+        { initial, containerId }: DragUpdateEventArgs<ProjectUser>
       ) => {
         return process.env.NEXT_PUBLIC_FEATURE_PROJECT_USERS_WORKFLOW === "true"
           ? !!(
@@ -69,15 +89,16 @@ export default function ProjectUsersBoard({
   const handleUpdateSafePeople = useCallback(
     (
       _: DragUpdateEvent,
-      { containerId, item }: DragUpdateEventArgs<ProjectAllUser>
+      { containerId, item }: DragUpdateEventArgs<ProjectUser>
     ) => {
-      updateUserStatus({
+      console.log("here!!!");
+      changeValidationStatus({
         params: {
-          custodianId,
-          id: item.id,
+          projectUserId: item.id,
         },
         payload: {
           status: containerId,
+          comment: "drag change",
         },
       });
     },
@@ -85,9 +106,9 @@ export default function ProjectUsersBoard({
   );
 
   return (
-    stateWorkflow?.data &&
+    stateWorkflow &&
     initialData && (
-      <KanbanBoard<ProjectAllUser>
+      <KanbanBoard<CustodianProjectUser>
         t={t}
         cardComponent={KanbanBoardUsersCard}
         initialData={initialData}

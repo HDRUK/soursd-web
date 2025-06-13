@@ -7,7 +7,7 @@ import FormControl from "../../components/FormControlWrapper";
 import Form from "../../components/Form";
 import yup from "../../config/yup";
 import SelectValidationActionStatus from "../../components/SelectValidationActionStatus";
-import { ApprovalResponse } from "../../services/approvals";
+import { ApprovalResponse } from "../../services/custodian_approvals";
 import { ChangeValidationStatusPayload } from "@/hooks/useProjectUserCustodianApproval/useProjectUserCustodianApproval";
 import { Option } from "@/types/common";
 
