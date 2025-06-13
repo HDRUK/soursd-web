@@ -1,5 +1,6 @@
 import { useStore } from "@/data/store";
 import { Add } from "@mui/icons-material";
+import ListIcon from "@mui/icons-material/List";
 import { Box, Button, Grid } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { CellContext, ColumnDef } from "@tanstack/react-table";
@@ -27,6 +28,7 @@ import {
   renderOrganisationsNameCell,
   renderUserNameCell,
 } from "../../utils/cells";
+import ProjectsSafePeopleBoard from "../ProjectsSafePeopleBoard";
 
 const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
@@ -57,6 +59,7 @@ export default function ProjectsSafePeople({
   const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
   const routes = useStore(state => state.getApplication().routes);
   const [showAddModal, setShowAddModal] = useState(false);
+  const [showListView, setShowListView] = useState(true);
 
   const { mutateAsync: deleteUserAsync, ...deleteQueryState } = useMutation(
     deleteProjectUserQuery()
@@ -208,7 +211,23 @@ export default function ProjectsSafePeople({
                   multiple
                 />
 
-                <Grid item xs={12} md={3} sx={{ textAlign: "right" }}>
+                <Grid
+                  item
+                  xs={12}
+                  md={3}
+                  sx={{ display: "flex", justifyContent: "flex-end", gap: 1 }}>
+                  {variant === EntityType.CUSTODIAN && (
+                    <Button
+                      variant="outlined"
+                      startIcon={<ListIcon />}
+                      onClick={() => {
+                        setShowListView(!showListView);
+                      }}>
+                      {!showListView
+                        ? "Switch to list view"
+                        : "Switch to board view"}
+                    </Button>
+                  )}
                   <Button
                     startIcon={<Add />}
                     onClick={() => {
@@ -231,15 +250,19 @@ export default function ProjectsSafePeople({
           open={showAddModal}
           onClose={() => setShowAddModal(false)}
         />
-        <Table
-          total={total}
-          last_page={last_page}
-          setPage={setPage}
-          data={projectUsers}
-          columns={columns}
-          queryState={queryState}
-          isPaginated
-        />
+        {showListView ? (
+          <ProjectsSafePeopleBoard />
+        ) : (
+          <Table
+            total={total}
+            last_page={last_page}
+            setPage={setPage}
+            data={projectUsers}
+            columns={columns}
+            queryState={queryState}
+            isPaginated
+          />
+        )}
       </PageSection>
     </PageBody>
   );

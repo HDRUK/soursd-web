@@ -14,6 +14,7 @@ export interface DndItemProps extends BoxProps {
   transform?: Transform | null;
   listeners?: DraggableSyntheticListeners;
   transition?: string | null;
+  isDroppable?: boolean;
 }
 
 const DndItem = React.forwardRef<HTMLLIElement, DndItemProps>(
@@ -27,6 +28,7 @@ const DndItem = React.forwardRef<HTMLLIElement, DndItemProps>(
       transition,
       transform,
       children,
+      isDroppable,
       ...restProps
     },
     ref
@@ -45,8 +47,12 @@ const DndItem = React.forwardRef<HTMLLIElement, DndItemProps>(
           "--scale-y": transform?.scaleY ? `${transform.scaleY}` : undefined,
           "--index": index,
           cursor: "grab",
-          ...(dragOverlay && {
-            cursor: " grabbing",
+          ...(dragOverlay &&
+            isDroppable !== false && {
+              cursor: " grabbing",
+            }),
+          ...(isDroppable === false && {
+            cursor: "not-allowed",
           }),
         }}
         ref={ref}>

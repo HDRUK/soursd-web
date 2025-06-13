@@ -1,9 +1,7 @@
+import { DndItems } from "@/types/dnd";
 import { Collision, UniqueIdentifier } from "@dnd-kit/core";
 
-function findContainer<T extends { id: UniqueIdentifier }>(
-  id: UniqueIdentifier,
-  items: Record<string, T[]>
-) {
+function findContainer<T>(id: UniqueIdentifier, items: DndItems<T>) {
   if (id in items) {
     return id;
   }
@@ -13,18 +11,23 @@ function findContainer<T extends { id: UniqueIdentifier }>(
   );
 }
 
-function findItemIndex<T extends { id: UniqueIdentifier }>(
+function findItemIndex<T>(
   containerId: UniqueIdentifier,
   id: UniqueIdentifier,
-  items: Record<string, T[]>
+  items: DndItems<T>
 ) {
   return items[containerId].findIndex(({ id: itemId }) => itemId === id);
 }
 
-function findItem<T extends { id: UniqueIdentifier }>(
+function findItemInContainer<T>(
+  containerId: UniqueIdentifier,
   id: UniqueIdentifier,
-  items: Record<string, T[]>
+  items: DndItems<T>
 ) {
+  return items[containerId].find(item => item.id === id);
+}
+
+function findItem<T>(id: UniqueIdentifier, items: DndItems<T>) {
   let foundItem;
 
   Object.keys(items).some(key => {
@@ -43,8 +46,28 @@ function findItem<T extends { id: UniqueIdentifier }>(
   return foundItem;
 }
 
+function pruneItem<T>(id: UniqueIdentifier, items: DndItems<T>) {
+  return Object.keys(items).reduce((data, key) => {
+    data[key] = items[key].filter(item => item.id !== id);
+
+    return data;
+  }, {});
+}
+
+function findDroppables<T>(containerId: UniqueIdentifier, items: DndItems<T>) {
+  return items[containerId].filter(item => item.isDroppable !== false);
+}
+
 function findFirstDroppable(collisions: Collision[] | null) {
   return collisions?.find(({ data }) => !!data?.droppableContainer);
 }
 
-export { findContainer, findItem, findItemIndex, findFirstDroppable };
+export {
+  findItemInContainer,
+  findContainer,
+  findItem,
+  findItemIndex,
+  findFirstDroppable,
+  pruneItem,
+  findDroppables,
+};

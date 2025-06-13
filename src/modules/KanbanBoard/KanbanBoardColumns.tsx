@@ -14,6 +14,7 @@ export default function KanbanBoardColumns({
         boxSizing: "border-box",
         gridAutoFlow: "column",
         gap: 2,
+        overflow: "scroll",
         ...sx,
       }}
       {...restProps}>
