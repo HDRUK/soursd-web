@@ -16,6 +16,12 @@ type WithStateWorkflow<T> = T & {
   stateWorkflow: StateWorkflow;
 };
 
+type Translations = (key: string) => string;
+
+type WithTranslations<T> = T & {
+  t: Translations;
+};
+
 type ModelState<T> = T & {
   model_state: {
     state: {
@@ -426,7 +432,7 @@ interface ProjectUser {
   project_role_id: number;
   primary_contact: boolean;
   user_digital_ident: string;
-  role: Partial<Role>;
+  role?: Partial<Role>;
   affiliation: Partial<ResearcherAffiliation>;
   registry: Registry;
 }
@@ -509,4 +515,5 @@ export type {
   ProjectDetails,
   WithStateWorkflow,
   StateWorkflow,
+  WithTranslations,
 };

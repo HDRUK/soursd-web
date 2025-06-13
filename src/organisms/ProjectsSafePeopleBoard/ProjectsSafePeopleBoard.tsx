@@ -6,9 +6,9 @@ import KanbanBoardUsersCard from "@/modules/KanbanBoard/KanbanBoardUsersCard";
 import { DragUpdateEvent, DragUpdateEventArgs } from "@/types/dnd";
 import { rectSortingStrategy } from "@dnd-kit/sortable";
 import { useCallback } from "react";
+import { useTranslations } from "next-intl";
 import KanbanBoard from "../../modules/KanbanBoard";
 import { ProjectAllUser } from "../../types/application";
-import { useTranslations } from "next-intl";
 
 export default function ProjectsSafePeopleBoard() {
   const t = useTranslations("temp");

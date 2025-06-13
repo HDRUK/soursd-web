@@ -4,7 +4,7 @@ import ActionsPanel from "../../components/ActionsPanel";
 import LoadingWrapper from "../../components/LoadingWrapper";
 import { Message } from "../../components/Message";
 import useOrganisationCustodianApproval from "../../hooks/useOrganisationCustodianApproval";
-import useProjectUserCustodianApproval from "../../hooks/useProjectUserCustodianApproval";
+import useCustodianProjectUser from "../../hooks/useCustodianProjectUser";
 import ActionValidationStatus from "../../modules/ActionValidationStatus";
 import { QueryState } from "../../types/form";
 import { ValidationLog } from "../../types/logs";
@@ -51,7 +51,7 @@ function ActionValidationPanel({
     case ActionValidationVariants.ProjectUser: {
       actionValidationStatus = (
         <ActionValidationStatus<CustodianParams>
-          useApprovalHook={useProjectUserCustodianApproval}
+          useApprovalHook={useCustodianProjectUser}
           hookParams={{ custodianId, projectUserId }}
         />
       );
@@ -59,12 +59,12 @@ function ActionValidationPanel({
     }
     case ActionValidationVariants.Organisation: {
       // need to reimplement this in another ticket
-      /*actionValidationStatus = (
+      actionValidationStatus = (
         <ActionValidationStatus<OrganisationParams>
           useApprovalHook={useOrganisationCustodianApproval}
           hookParams={{ custodianId, organisationId }}
         />
-      );*/
+      );
       break;
     }
     default:

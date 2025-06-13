@@ -3,7 +3,6 @@ import {
   Custodian,
   CustodianUser,
   Organisation,
-  CustodianProjectUser,
   ResearcherProject,
   User,
 } from "@/types/application";

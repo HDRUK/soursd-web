@@ -17,11 +17,11 @@ import { getUserQuery } from "@/services/users";
 import ActionValidationPanel from "@/organisms/ActionValidationPanel";
 import { ActionValidationVariants } from "@/organisms/ActionValidationPanel/ActionValidationPanel";
 import ProjectUserDetails from "@/components/ProjectUserDetails";
+import { getCustodianProjectUserQuery } from "@/services/custodian_approvals";
+import ChipStatus from "@/components/ChipStatus";
 import { UserSubTabs } from "../../../../../consts/tabs";
 import SubTabsSections from "../SubTabSections";
 import SubTabsContents from "../SubsTabContents";
-import { getCustodianProjectUserQuery } from "@/services/custodian_approvals";
-import ChipStatus from "@/components/ChipStatus";
 
 interface CustodianProjectUserProps {
   projectUserId: number;
@@ -48,7 +48,7 @@ function CustodianProjectUser({
   const { registry, project } = projectUser || {};
 
   const { data: userData, isFetched } = useQuery({
-    ...getUserQuery(+registry?.user?.id),
+    ...getUserQuery(registry?.user?.id as number),
     enabled: !!registry?.user?.id,
   });
 

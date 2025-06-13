@@ -3,7 +3,7 @@ import { Grid, Box } from "@mui/material";
 import { TextareaAutosize } from "@mui/base/TextareaAutosize";
 import { LoadingButton } from "@mui/lab";
 import { useState, useMemo, useEffect } from "react";
-import { UseProjectUserCustodianApprovalResult } from "@/hooks/useProjectUserCustodianApproval/useProjectUserCustodianApproval";
+import { UseCustodianProjectUserResult } from "@/hooks/useCustodianProjectUser/useCustodianProjectUser";
 import FormControl from "../../components/FormControlWrapper";
 import Form from "../../components/Form";
 import yup from "../../config/yup";
@@ -18,7 +18,7 @@ export interface ActionValidationStatusFormValues {
 
 export type UseApprovalHook<TParams> = (
   params: TParams
-) => UseProjectUserCustodianApprovalResult;
+) => UseCustodianProjectUserResult;
 
 interface ActionValidationStatusProps<TParams> {
   useApprovalHook: UseApprovalHook<TParams>;

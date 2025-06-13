@@ -1,12 +1,12 @@
 import { Box, Button, MenuItem, Select } from "@mui/material";
 import { MouseEvent, useMemo, useState } from "react";
+import { UniqueIdentifier } from "@dnd-kit/core";
 import {
   ActionMenu,
   ActionMenuHelpers,
   ActionMenuItem,
   ActionMenuProps,
 } from "../../components/ActionMenu";
-import { UniqueIdentifier } from "@dnd-kit/core";
 
 export interface KanbanBoardActionsMenuProps
   extends Omit<ActionMenuProps, "children"> {

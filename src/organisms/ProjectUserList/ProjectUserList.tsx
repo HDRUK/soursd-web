@@ -16,7 +16,7 @@ import useQueryConfirmAlerts from "../../hooks/useQueryConfirmAlerts";
 import { PageSection } from "../../modules";
 import SearchActionMenu from "../../modules/SearchActionMenu";
 import SearchBar from "../../modules/SearchBar";
-import { usePaginatedGetUsers } from "../../services/custodian_approvals";
+import { usePaginatedCustodianProjectUsers } from "../../services/custodian_approvals";
 import {
   deleteProjectUserQuery,
   putProjectUserPrimaryContactQuery,
@@ -54,7 +54,7 @@ export default function ProjectUsersList({ variant }: ProjectUsersListProps) {
     queryParams,
     refetch,
     ...queryState
-  } = usePaginatedGetUsers(custodianId);
+  } = usePaginatedCustodianProjectUsers(custodianId);
 
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);

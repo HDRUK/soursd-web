@@ -5,13 +5,13 @@ import Table from "@/components/Table";
 import { useStore } from "@/data/store";
 import PageSection from "@/modules/PageSection";
 import { usePaginatedCustodianProjectUsers } from "@/services/custodian_approvals";
-import { CustodianProjectUser, ProjectUser, User } from "@/types/application";
+import { CustodianProjectUser, ProjectUser } from "@/types/application";
 import { ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
 import PageBody from "@/modules/PageBody";
 import PageBodyContainer from "@/modules/PageBodyContainer";
 import { Box, Typography } from "@mui/material";
-import { renderProjectUserNameCell, renderUserNameCell } from "@/utils/cells";
+import { renderProjectUserNameCell } from "@/utils/cells";
 import SearchBar from "@/modules/SearchBar";
 import ProjectUsersBoard from "@/organisms/ProjectUsersBoard";
 

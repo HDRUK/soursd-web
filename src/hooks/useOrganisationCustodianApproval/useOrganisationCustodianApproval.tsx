@@ -1,11 +1,8 @@
-import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
-import { useMemo } from "react";
-import { getCombinedQueryState } from "../../utils/query";
-import useQueryAlerts from "../useQueryAlerts";
-import {
-  getOrganisationApprovalQuery,
-  postOrganisationApprovalQuery,
-} from "../../services/custodian_approvals";
+// import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
+// import { useQueryClient } from "@tanstack/react-query";
+// import { useMemo } from "react";
+// import { getCombinedQueryState } from "../../utils/query";
+// import useQueryAlerts from "../useQueryAlerts";
 
 type CustodianParams = {
   custodianId: string | number;
@@ -16,7 +13,13 @@ export const useOrganisationCustodianApproval = ({
   custodianId,
   organisationId,
 }: CustodianParams) => {
-  const queryKey = useMemo(
+  return { custodianId, organisationId };
+
+  /*
+  - being changed/ fixed in the BE
+
+
+    const queryKey = useMemo(
     () => ["custodianOrganisationApproval", custodianId, organisationId],
     [custodianId, organisationId]
   );
@@ -28,6 +31,7 @@ export const useOrganisationCustodianApproval = ({
       organisationId,
     })
   );
+  
 
   const queryClient = useQueryClient();
 
@@ -35,10 +39,12 @@ export const useOrganisationCustodianApproval = ({
     queryClient.invalidateQueries({ queryKey });
   };
 
+
   const { mutateAsync: mutationApproval, ...mutationState } = useMutation({
     ...postOrganisationApprovalQuery({ custodianId, organisationId }),
     onSuccess,
   });
+  
 
   const combinedQueryState = getCombinedQueryState([queryState, mutationState]);
 
@@ -52,6 +58,7 @@ export const useOrganisationCustodianApproval = ({
     mutationApproval({ approved: 0, comment });
   };
 
+
   return {
     data: data?.data,
     ...combinedQueryState,
@@ -59,4 +66,5 @@ export const useOrganisationCustodianApproval = ({
     reject,
     refetch,
   };
+  */
 };

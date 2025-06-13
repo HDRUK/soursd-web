@@ -1,28 +1,31 @@
+import { mockedCustodianHasProjectUser } from "@/mocks/data/custodian";
 import { render, screen, userEvent } from "../../utils/testUtils";
 import ActionValidationStatus, {
   UseApprovalHook,
 } from "./ActionValidationStatus";
 
 describe("<ActionValidationStatus />", () => {
-  const approveMock = jest.fn();
-  const rejectMock = jest.fn();
+  const changeValidationStatusMock = jest.fn();
+  const refetchMock = jest.fn();
 
   const createMockHook = (
-    approved = 0,
+    status = "test1",
     isLoading = false
   ): UseApprovalHook<{ organisationId: number; custodianId: number }> => {
     return () => ({
-      data: {
-        approved,
-        project_id: 1,
-        user_id: 2,
-        custodian_id: 3,
-        comment: "Mock comment",
-      },
-      approve: approveMock,
-      reject: rejectMock,
+      data: mockedCustodianHasProjectUser({
+        model_state: { state: { slug: status } },
+      }),
+      changeValidationStatus: changeValidationStatusMock,
+      statusOptions: [
+        { label: "Test #1", value: "test1" },
+        { label: "Test #2", value: "test2" },
+        { label: "Approved", value: "approved" },
+        { label: "Rejected", value: "rejected" },
+      ],
       isLoading,
       isError: false,
+      refetch: refetchMock,
     });
   };
 
@@ -35,13 +38,11 @@ describe("<ActionValidationStatus />", () => {
     );
 
   it("it can approve", async () => {
-    renderComponent(createMockHook(0, false));
+    renderComponent(createMockHook("not_approved", false));
+
     expect(
       await screen.findByRole("textbox", { name: /comment/i })
     ).toBeInTheDocument();
-    expect(
-      screen.getByRole("button", { name: /update status/i })
-    ).toBeDisabled();
 
     const commentBox = screen.getByRole("textbox", { name: /comment/i });
     const statusSelect = screen.getByRole("combobox");
@@ -59,27 +60,21 @@ describe("<ActionValidationStatus />", () => {
 
     await userEvent.click(button);
 
-    expect(approveMock).toHaveBeenCalledWith("Approving this");
+    expect(changeValidationStatusMock).toHaveBeenCalledWith({
+      status: "approved",
+      comment: "Approving this",
+    });
   });
-
   it("it can reject", async () => {
-    renderComponent(createMockHook(1, false));
-    expect(
-      await screen.findByRole("textbox", { name: /comment/i })
-    ).toBeInTheDocument();
+    renderComponent(createMockHook("approved", false));
 
-    expect(
-      screen.getByRole("button", { name: /update status/i })
-    ).toBeDisabled();
-
-    const commentBox = screen.getByRole("textbox", { name: /comment/i });
+    const commentBox = await screen.findByRole("textbox", { name: /comment/i });
     const statusSelect = screen.getByRole("combobox");
     await userEvent.click(statusSelect);
 
     const notApprovedOption = await screen.findByRole("option", {
-      name: /^Not approved$/,
+      name: /^Rejected$/,
     });
-
     await userEvent.click(notApprovedOption);
 
     await userEvent.type(commentBox, "Rejecting this");
@@ -89,6 +84,9 @@ describe("<ActionValidationStatus />", () => {
 
     await userEvent.click(button);
 
-    expect(rejectMock).toHaveBeenCalledWith("Rejecting this");
+    expect(changeValidationStatusMock).toHaveBeenCalledWith({
+      status: "rejected",
+      comment: "Rejecting this",
+    });
   });
 });
