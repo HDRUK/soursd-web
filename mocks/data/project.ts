@@ -44,9 +44,7 @@ const mockedProjectDetails = (
 });
 
 const mockedProjectStateWorkflow = () => ({
-  transitions: {
-    "Form Received": ["Validation In Progress"],
-  },
+  "Form Received": ["Validation In Progress"],
 });
 
 const mockedKanbanProjectUser = () => {
@@ -76,12 +74,12 @@ const mockedKanbanProjectUser = () => {
   ];
 
   return {
-    "Form Received": formReceived,
-    "Validation In Progress": validationInProgressData,
-    "Validation Complete": validationComplete,
-    "More User Information Requested": infoRequested,
-    "Escalation to Validation Committee": escalation,
-    Validated: validated,
+    form_received: formReceived,
+    validation_in_progress: validationInProgressData,
+    validation_complete: validationComplete,
+    more_user_info_req: infoRequested,
+    escalate_validation: escalation,
+    validated,
   };
 };
 

@@ -1,16 +1,13 @@
-import { Status } from "@/components/ChipStatus";
+import { Status } from "../../components/ChipStatus";
 import {
-  ResearcherProject,
-  ProjectUser,
   ProjectAllUser,
   ProjectDetails,
-} from "@/types/application";
+  ResearcherProject,
+} from "../../types/application";
 
 type ProjectsResponse = ResearcherProject[];
 
 type ProjectResponse = ResearcherProject;
-
-type ProjectUsersResponse = ProjectUser[];
 
 type DeleteProjectUserPayload = {
   projectId: number;
@@ -46,18 +43,17 @@ type PutProjectDetailsResponse = number;
 type ProjectDetailsResponse = ProjectDetails;
 
 export type {
-  ProjectsResponse,
-  ProjectAllUserResponse,
-  ProjectUsersResponse,
-  ProjectResponse,
   DeleteProjectUserPayload,
+  PostProjectUsersResponse,
+  ProjectAllUserResponse,
+  ProjectDetailsResponse,
+  ProjectResponse,
+  ProjectsResponse,
   PutPrimaryContactPayload,
   PutPrimaryContactQuery,
+  PutProjectDetailsPayload,
+  PutProjectDetailsResponse,
   PutProjectPayload,
   PutProjectResponse,
   PutProjectUsersPayload,
-  PostProjectUsersResponse,
-  PutProjectDetailsPayload,
-  PutProjectDetailsResponse,
-  ProjectDetailsResponse,
 };

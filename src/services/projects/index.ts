@@ -12,7 +12,6 @@ import putProjectUserPrimaryContactQuery from "./putProjectUserPrimaryContactQue
 import putProjectQuery from "./putProjectQuery";
 import putProject from "./putProject";
 import putProjectUsersQuery from "./putProjectUsersQuery";
-import useGetProjectUsers from "./useGetProjectUsers";
 import useGetProjectAllUsers from "./useGetProjectAllUsers";
 
 export {
@@ -30,7 +29,6 @@ export {
   putProjectQuery,
   putProject,
   putProjectUsersQuery,
-  useGetProjectUsers,
   useGetProjectAllUsers,
 };
 
