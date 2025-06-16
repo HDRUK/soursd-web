@@ -6,12 +6,10 @@ import KanbanBoardUsersCard from "@/modules/KanbanBoard/KanbanBoardUsersCard";
 import { DragUpdateEvent, DragUpdateEventArgs } from "@/types/dnd";
 import { rectSortingStrategy } from "@dnd-kit/sortable";
 import { useCallback } from "react";
-import { useTranslations } from "next-intl";
 import KanbanBoard from "../../modules/KanbanBoard";
 import { ProjectAllUser } from "../../types/application";
 
 export default function ProjectsSafePeopleBoard() {
-  const t = useTranslations("temp");
   // const { mutateAsync: updateUserCard } =
   //   useMutation(putProjectUserPrimaryContactQuery());
 
@@ -33,7 +31,6 @@ export default function ProjectsSafePeopleBoard() {
       stateWorkflow={mockedProjectStateWorkflow()}
       strategy={rectSortingStrategy}
       onDragUpdate={handleUpdateSafePeople}
-      t={t}
     />
   );
 }
