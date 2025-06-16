@@ -4,6 +4,7 @@ import { TextareaAutosize } from "@mui/base/TextareaAutosize";
 import { LoadingButton } from "@mui/lab";
 import { useState, useMemo, useEffect } from "react";
 import { UseCustodianProjectUserResult } from "@/hooks/useCustodianProjectUser/useCustodianProjectUser";
+import { UseCustodianProjectOrganisationResult } from "@/hooks/useCustodianProjectOrganisation/useCustodianProjectOrganisation";
 import FormControl from "../../components/FormControlWrapper";
 import Form from "../../components/Form";
 import yup from "../../config/yup";
@@ -18,7 +19,7 @@ export interface ActionValidationStatusFormValues {
 
 export type UseApprovalHook<TParams> = (
   params: TParams
-) => UseCustodianProjectUserResult;
+) => UseCustodianProjectUserResult | UseCustodianProjectOrganisationResult;
 
 interface ActionValidationStatusProps<TParams> {
   useApprovalHook: UseApprovalHook<TParams>;

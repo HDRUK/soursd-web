@@ -446,6 +446,23 @@ type CustodianProjectUser = ModelState<{
   project_has_user: ProjectUser;
 }>;
 
+interface ProjectOrganisation {
+  id: number;
+  project_id: number;
+  organisation_id: number;
+  organisation: Organisation;
+  project: Project;
+}
+
+type CustodianProjectOrganisation = ModelState<{
+  id: number;
+  project_has_organisation_id: number;
+  custodian_id: number;
+  created_at: string;
+  updated_at: string;
+  project_organisation: ProjectOrganisation;
+}>;
+
 type ProjectAllUser = ModelState<{
   id: number;
   user_id: number;
@@ -485,6 +502,7 @@ export type {
   Custodian,
   CustodianUser,
   CustodianProjectUser,
+  CustodianProjectOrganisation,
   Charity,
   Department,
   File,
@@ -494,6 +512,7 @@ export type {
   Permission,
   Project,
   ProjectUser,
+  ProjectOrganisation,
   ProjectAllUser,
   ResearcherAccreditation,
   ResearcherAffiliation,
