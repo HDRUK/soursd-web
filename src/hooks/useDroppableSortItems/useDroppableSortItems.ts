@@ -70,6 +70,7 @@ export default function useDroppableSortItems<T>({
     const { setState, isAllowed } = options;
 
     if (!collisions?.length) {
+      console.log("NO COLLISIONS");
       const state = getInitialState(items);
 
       setState(state);
@@ -89,43 +90,42 @@ export default function useDroppableSortItems<T>({
       const activeItem = findItem(active.id, items);
       const overIndex = findItemIndex(overContainer, over.id, items);
 
-      if (activeIndex !== overIndex) {
-        if (
-          isAllowed?.(e, {
-            containerId: overContainer,
-            initial: initialArgs.current,
-          })
-        ) {
-          const state = {
-            ...items,
-            [overContainer]: arrayMove(
-              items[overContainer],
-              activeIndex,
-              overIndex
-            ),
-          } as DndItems<T>;
+      if (
+        isAllowed?.(e, {
+          containerId: overContainer,
+          initial: initialArgs.current,
+        })
+      ) {
+        console.log("ALL GOOD");
+        const state = {
+          ...items,
+          [overContainer]: arrayMove(
+            items[overContainer],
+            activeIndex,
+            overIndex
+          ),
+        } as DndItems<T>;
 
-          setState(state);
+        setState(state);
 
-          const eventArgs = {
-            containerId: overContainer,
-            item: activeItem,
-            itemIndex: overIndex,
-            state,
-            initial: initialArgs.current,
-          };
+        const eventArgs = {
+          containerId: overContainer,
+          item: activeItem,
+          itemIndex: overIndex,
+          state,
+          initial: initialArgs.current,
+        };
+        console.log("NO COLLISIONS");
+        onDragUpdate?.(e, eventArgs);
+        onDragEnd?.(e, eventArgs);
+      } else {
+        const state = getInitialState(items);
 
-          onDragEnd?.(e, eventArgs);
-          onDragUpdate?.(e, eventArgs);
-        } else {
-          const state = getInitialState(items);
-
-          setState(state);
-          onDragEnd?.(e, {
-            initial: initialArgs.current,
-            state,
-          });
-        }
+        setState(state);
+        onDragEnd?.(e, {
+          initial: initialArgs.current,
+          state,
+        });
       }
     }
   };
@@ -238,6 +238,8 @@ export default function useDroppableSortItems<T>({
       item: activeItem,
       itemIndex: activeItemIndex,
     };
+
+    console.log("START", initialArgs.current);
 
     onDragStart?.(e, {
       initial: initialArgs.current,

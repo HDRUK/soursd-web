@@ -5,7 +5,7 @@ import { Box, Button, Grid } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { CellContext, ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ActionMenu, ActionMenuItem } from "../../components/ActionMenu";
 import ChipStatus, { Status } from "../../components/ChipStatus";
 import ProjectsAddUserModal from "../../components/ProjectsAddUserModal";
@@ -82,6 +82,12 @@ export default function ProjectUsersList({ variant }: ProjectUsersListProps) {
   );
 
   useQueryAlerts(primaryContactQueryState);
+
+  useEffect(() => {
+    if (showListView) {
+      refetch();
+    }
+  }, [showListView]);
 
   let userPath;
   switch (variant) {

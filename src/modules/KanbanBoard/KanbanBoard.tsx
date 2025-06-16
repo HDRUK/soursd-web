@@ -39,6 +39,7 @@ import { findDroppables, findItem, findItemIndex } from "../../utils/dnd";
 import KanbanBoardActionsMenu from "./KanbanBoardActions";
 import KanbanBoardColumn from "./KanbanBoardColumn";
 import KanbanBoardColumns from "./KanbanBoardColumns";
+import { PropsWithQuery } from "@/types/form";
 
 const dropAnimation: DropAnimation = {
   sideEffects: defaultDropAnimationSideEffects({
@@ -50,8 +51,20 @@ const dropAnimation: DropAnimation = {
   }),
 };
 
+const errorAnimation: DropAnimation = {
+  sideEffects: defaultDropAnimationSideEffects({
+    styles: {
+      active: {
+        opacity: "0.5",
+      },
+    },
+  }),
+};
+
 interface KanbanBoardProps<T>
-  extends WithStateWorkflow<WithTranslations<UseDroppableSortItemsProps<T>>> {
+  extends PropsWithQuery<
+    WithStateWorkflow<WithTranslations<UseDroppableSortItemsProps<T>>>
+  > {
   adjustScale?: boolean;
   cancelDrop?: CancelDrop;
   strategy?: SortingStrategy;
@@ -67,6 +80,7 @@ export default function KanbanBoard<T>({
   initialData,
   stateWorkflow,
   modifiers,
+  queryState,
   strategy = verticalListSortingStrategy,
   onDragEnd,
   onDragOver,
@@ -87,6 +101,7 @@ export default function KanbanBoard<T>({
   const [containers] = useState(Object.keys(items) as UniqueIdentifier[]);
   const [activeData, setActiveData] =
     useState<DragUpdateEventArgsInitial<T> | null>(null);
+  const initialArgs = useRef<DragUpdateEventArgsInitial<T> | null>();
 
   const activeId = activeData?.item.id;
 
@@ -182,12 +197,16 @@ export default function KanbanBoard<T>({
         },
       }
     );
+
+    initialArgs.current = null;
   };
 
   const handleDragStart = (e: DragOverEvent) => {
-    const initialData = handleDragSortStart(e, items);
+    const data = handleDragSortStart(e, items);
 
-    setActiveData(initialData);
+    initialArgs.current = data;
+
+    setActiveData(data);
     setClonedItems(items);
   };
 
@@ -196,6 +215,17 @@ export default function KanbanBoard<T>({
       recentlyMovedToNewContainer.current = false;
     });
   }, [items]);
+
+  useEffect(() => {
+    if (queryState.isError && initialArgs.current) {
+      //How do we animate state here
+
+      handleMoveClick(
+        initialArgs.current.item,
+        initialArgs.current.containerId
+      );
+    }
+  }, [queryState.isError]);
 
   const throttledDragOver = useDebouncedCallback(handleDragOver, 100);
 
@@ -241,6 +271,7 @@ export default function KanbanBoard<T>({
                 {items[containerId].map(data => {
                   return (
                     <DndSortableItem
+                      errorAnimation={errorAnimation}
                       disabled={isSortingContainer}
                       isDroppable={data.isDroppable}
                       key={data.id}
@@ -251,6 +282,7 @@ export default function KanbanBoard<T>({
                         sx={{ width: "220px" }}
                         actions={
                           <KanbanBoardActionsMenu
+                            t={t}
                             columns={getAllowedColumns(containerId)}
                             onMoveClick={(_, moveToId) =>
                               handleMoveClick(data, moveToId)

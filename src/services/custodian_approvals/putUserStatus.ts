@@ -9,7 +9,7 @@ export default async (
   options?: ResponseOptions
 ): Promise<ResponseJson<number>> => {
   const response = await putRequest(
-    `${process.env.NEXT_PUBLIC_API_V1_URL}/custodian_approvals/${params.custodianId}/projectUsers/${params.id}`,
+    `${process.env.NEXT_PUBLIC_API_V1_URL}/custodian_adpprovals/${params.custodianId}/projectUsers/${params.id}`,
     payload
   );
 

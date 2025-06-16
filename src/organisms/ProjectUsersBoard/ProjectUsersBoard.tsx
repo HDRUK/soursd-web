@@ -9,6 +9,7 @@ import { useCallback, useMemo } from "react";
 import putUserStatusQuery from "@/services/custodian_approvals/putUserStatusQuery";
 import KanbanBoard from "../../modules/KanbanBoard";
 import { ProjectAllUser } from "../../types/application";
+import useQueryAlerts from "@/hooks/useQueryAlerts";
 
 const NAMESPACE_TRANSLATION_APPLICATION = "Kanban";
 
@@ -22,7 +23,8 @@ export default function ProjectUsersBoard({
   users,
 }: ProjectUsersBoardProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
-  const { mutateAsync: updateUserStatus } = useMutation(putUserStatusQuery());
+  const { mutateAsync: updateUserStatus, ...restUpdateState } =
+    useMutation(putUserStatusQuery());
 
   const { data: stateWorkflow } = useQuery(getProjectUsersWorkflowQuery());
 
@@ -43,6 +45,8 @@ export default function ProjectUsersBoard({
 
     return null;
   }, [stateWorkflow?.data, users]);
+
+  useQueryAlerts(restUpdateState);
 
   const droppableFnOptions = useMemo<
     Partial<UseDroppableSortItemsFnOptions<ProjectAllUser>>
@@ -81,6 +85,8 @@ export default function ProjectUsersBoard({
     []
   );
 
+  const { isError, isSuccess } = restUpdateState;
+
   return (
     stateWorkflow?.data &&
     initialData && (
@@ -90,8 +96,9 @@ export default function ProjectUsersBoard({
         initialData={initialData}
         stateWorkflow={stateWorkflow.data}
         strategy={rectSortingStrategy}
-        onDragUpdate={handleUpdateSafePeople}
+        onDragEnd={handleUpdateSafePeople}
         onMove={handleUpdateSafePeople}
+        queryState={{ isError, isSuccess }}
         droppableFnOptions={droppableFnOptions}
       />
     )

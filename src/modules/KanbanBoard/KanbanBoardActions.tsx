@@ -7,9 +7,10 @@ import {
   ActionMenuProps,
 } from "../../components/ActionMenu";
 import { UniqueIdentifier } from "@dnd-kit/core";
+import { WithTranslations } from "../../types/application";
 
 export interface KanbanBoardActionsMenuProps
-  extends Omit<ActionMenuProps, "children"> {
+  extends WithTranslations<Omit<ActionMenuProps, "children">> {
   columns: string[];
   onMoveClick: (
     e: MouseEvent<HTMLButtonElement>,
@@ -18,6 +19,7 @@ export interface KanbanBoardActionsMenuProps
 }
 
 export default function KanbanBoardActionsMenu({
+  t,
   columns,
   onMoveClick,
   ...restProps
@@ -43,7 +45,7 @@ export default function KanbanBoardActionsMenu({
                 value={status}
                 onChange={handleStatusChange}>
                 {columns.map(key => (
-                  <MenuItem value={key}>{key}</MenuItem>
+                  <MenuItem value={key}>{t(key)}</MenuItem>
                 ))}
               </Select>
               <Button variant="outlined" onClick={handleClose}>
