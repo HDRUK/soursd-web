@@ -36,8 +36,6 @@ export default function Organisations() {
     shouldUpdateQuerystring: true,
   });
 
-  console.log("HELLO", data);
-
   return (
     <PageBodyContainer heading={tProfile("organisations")}>
       <PageBody>

@@ -157,7 +157,7 @@ const storeMethods = (set: StoreSet, get: StoreGet) => ({
   getCurrentOrganisation: () => {
     return get().current.organisation;
   },
-  setCurrentProjectOrganistion: (projectOrganisation: ProjectOrganisation) =>
+  setCurrentProjectOrganisation: (projectOrganisation: ProjectOrganisation) =>
     set(
       produce(state => {
         state.current.projectOrganisation = projectOrganisation;

@@ -17,19 +17,17 @@ import { useEffect } from "react";
 import { OrganisationsSubTabs } from "../../../../../consts/tabs";
 import SubTabsContents from "../SubsTabContents";
 import SubTabsSections from "../SubTabSections";
+import ChipStatus from "@/components/ChipStatus";
 
 interface CustodianProjectUserProps {
   projectOrganisationId: number;
   subTabId: OrganisationsSubTabs;
 }
 
-const NAMESPACE_TRANSLATION_CUSTODIAN_PROJECT_USER = "CustodianProjectUser";
-
 function CustodianProjectOrganisation({
   projectOrganisationId,
   subTabId,
 }: CustodianProjectUserProps) {
-  //const t = useTranslations(NAMESPACE_TRANSLATION_CUSTODIAN_PROJECT_USER);
   const custodian = useStore(state => state.getCustodian());
 
   const {
@@ -42,14 +40,10 @@ function CustodianProjectOrganisation({
     )
   );
 
-  const { project_organisation: projectOrganisation } =
+  const { project_organisation: projectOrganisation, model_state: state } =
     custodianProjectOrganisation?.data || {};
 
-  const {
-    data: organisationData,
-    isPending,
-    isFetched,
-  } = useQuery({
+  const { data: organisationData, isFetched } = useQuery({
     ...getOrganisationQuery(
       custodianProjectOrganisation?.data.project_organisation.organisation
         .id as number
@@ -61,14 +55,13 @@ function CustodianProjectOrganisation({
     notFound();
   }
 
-  const { organisation, setOrganisation, setCurrentProjectOrganisation } =
-    useStore(state => ({
+  const { organisation, setOrganisation, setProjectOrganisation } = useStore(
+    state => ({
       organisation: state.getCurrentOrganisation(),
       setOrganisation: state.setCurrentOrganisation,
-      setCurrentProjectOrganisation: state.setCurrentProjectOrganisation,
-    }));
-
-  console.log("HELLO", setCurrentProjectOrganisation);
+      setProjectOrganisation: state.setCurrentProjectOrganisation,
+    })
+  );
 
   const { data: validationLogs, ...queryState } = useQuery({
     ...getCustodianOrganisationValidationLogsQuery(
@@ -79,8 +72,7 @@ function CustodianProjectOrganisation({
   });
 
   useEffect(() => {
-    if (projectOrganisation)
-      setCurrentProjectOrganisation?.(projectOrganisation);
+    if (projectOrganisation) setProjectOrganisation(projectOrganisation);
   }, [projectOrganisation]);
 
   useEffect(() => {
@@ -89,7 +81,14 @@ function CustodianProjectOrganisation({
 
   return (
     organisation && (
-      <PageBodyContainer heading={organisation.organisation_name}>
+      <PageBodyContainer
+        heading={
+          <>
+            {organisation.organisation_name}{" "}
+            <ChipStatus size="large" status={state?.state.slug} />
+          </>
+        }>
+        {/*<PageBodyContainer heading={organisation.organisation_name}>*/}
         <PageColumns>
           <PageColumnBody lg={8}>
             <SubTabsSections

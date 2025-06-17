@@ -36,6 +36,11 @@ function injectParamsIntoPath(
     replacedPath = replacedPath.replace(`{${name}}`, params[name]?.toString());
   });
 
+  console.log("HELLO", path);
+  console.log("HELLO", params);
+  console.log("HELLO", replacedPath);
+  console.log("HELLO------------------");
+
   return replacedPath;
 }
 
