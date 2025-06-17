@@ -4,7 +4,7 @@ import { getCustodianProjectOrganisationQuery } from "@/services/custodian_appro
 import { getOrganisationQuery } from "@/services/organisations";
 import { notFound } from "next/navigation";
 import { getCustodianOrganisationValidationLogsQuery } from "@/services/validation_logs";
-
+import ChipStatus from "@/components/ChipStatus";
 import ActionValidationPanel from "@/organisms/ActionValidationPanel";
 import { ActionValidationVariants } from "@/organisms/ActionValidationPanel/ActionValidationPanel";
 import {
@@ -17,7 +17,6 @@ import { useEffect } from "react";
 import { OrganisationsSubTabs } from "../../../../../consts/tabs";
 import SubTabsContents from "../SubsTabContents";
 import SubTabsSections from "../SubTabSections";
-import ChipStatus from "@/components/ChipStatus";
 
 interface CustodianProjectUserProps {
   projectOrganisationId: number;
@@ -88,7 +87,6 @@ function CustodianProjectOrganisation({
             <ChipStatus size="large" status={state?.state.slug} />
           </>
         }>
-        {/*<PageBodyContainer heading={organisation.organisation_name}>*/}
         <PageColumns>
           <PageColumnBody lg={8}>
             <SubTabsSections

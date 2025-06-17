@@ -1468,10 +1468,10 @@
       "description": "",
       "buttonText": "Add projects"
     },
-    "addOrganisationsCompleted": {
-      "title": "Add Organisations",
-      "description": "",
-      "buttonText": "Add Organisations"
+    "approveAnOrganisationCompleted": {
+      "title": "Approve an Organisation",
+      "description": "View all the organisations associated with any of your projects to approve them",
+      "buttonText": "Approve an organisation"
     }
   },
   "ProjectsAddUserModal": {

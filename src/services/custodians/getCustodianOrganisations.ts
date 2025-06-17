@@ -12,7 +12,6 @@ export default async function getCustodianOrganisations(
 ): Promise<ResponseJson<Paged<GetCustodianOrganisationsResponse>>> {
   const response = await getRequest(
     `/custodian_approvals/${custodianId}/projectOrganisations${getSearchQuerystring(searchParams)}`
-    //`/custodians/${custodianId}/organisations`
   );
   return handleJsonResponse(response, options);
 }
