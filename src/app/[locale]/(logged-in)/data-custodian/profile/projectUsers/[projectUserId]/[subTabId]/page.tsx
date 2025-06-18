@@ -1,4 +1,4 @@
-import CustodianProjectUser from "./components";
+import CustodianProjectUser from "./components/CustodianProjectUser";
 
 interface PageProps {
   params: {

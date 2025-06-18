@@ -26,28 +26,28 @@ export default function OrganisationsProjectsTable({
 
   const defaultColumns: ColumnDef<Organisation>[] = columns || [
     {
-      accessorKey: "organisation_name",
+      accessorKey: "project_organisation.organisation.organisation_name",
       header: t("organisationName"),
       cell: info =>
         renderLinkNameCell(
           info.getValue(),
           routes.profileCustodianOrganisationsPeople.path,
           {
-            id: info.row.original.id,
+            projectOrganisationId: info.row.original.id,
           }
         ),
     },
     {
-      accessorKey: "project.title",
+      accessorKey: "project_organisation.project.title",
       header: t("projects"),
     },
     {
-      accessorKey: "sro_officer",
+      accessorKey: "project_organisation.organisation.sro_officer",
       header: t("sroOfficer"),
       cell: info => renderUserNameCell(info.getValue()),
     },
     {
-      accessorKey: "project.model_state.state.slug",
+      accessorKey: "model_state.state.slug",
       header: t("projectStatus"),
       cell: info => <ChipStatus status={info.getValue()} />,
     },

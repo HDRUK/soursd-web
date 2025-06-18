@@ -37,27 +37,27 @@ const ROUTES: Routes = {
     permissions: [UserGroup.CUSTODIANS],
   },
   profileCustodianOrganisations: {
-    path: "/data-custodian/profile/organisations",
+    path: "/data-custodian/profile/projectOrganisations",
     permissions: [UserGroup.CUSTODIANS],
   },
   profileCustodianOrganisationsPeople: {
-    path: "/data-custodian/profile/organisations/{id}/people",
+    path: "/data-custodian/profile/projectOrganisations/{projectOrganisationId}/people",
     permissions: [UserGroup.CUSTODIANS],
   },
   profileCustodianOrganisationsNameAddress: {
-    path: "/data-custodian/profile/organisations/{id}/name_address",
+    path: "/data-custodian/profile/projectOrganisations/{projectOrganisationId}/name_address",
     permissions: [UserGroup.CUSTODIANS],
   },
   profileCustodianOrganisationsDigitalIdentifiers: {
-    path: "/data-custodian/profile/organisations/{id}/digital_identifiers",
+    path: "/data-custodian/profile/projectOrganisations/{projectOrganisationId}/digital_identifiers",
     permissions: [UserGroup.CUSTODIANS],
   },
   profileCustodianOrganisationsSectorWebsite: {
-    path: "/data-custodian/profile/organisations/{id}/sector_website",
+    path: "/data-custodian/profile/projectOrganisations/{projectOrganisationId}/sector_website",
     permissions: [UserGroup.CUSTODIANS],
   },
   profileCustodianOrganisationsDataSecurityCompliance: {
-    path: "/data-custodian/profile/organisations/{id}/data_security_compliance",
+    path: "/data-custodian/profile/projectOrganisations/{projectOrganisationId}/data_security_compliance",
     permissions: [UserGroup.CUSTODIANS],
   },
   profileCustodianConfiguration: {

@@ -3,7 +3,7 @@ import { useTranslations } from "next-intl";
 import ActionsPanel from "../../components/ActionsPanel";
 import LoadingWrapper from "../../components/LoadingWrapper";
 import { Message } from "../../components/Message";
-import useOrganisationCustodianApproval from "../../hooks/useOrganisationCustodianApproval";
+import useCustodianProjectOrganisation from "../../hooks/useCustodianProjectOrganisation";
 import useCustodianProjectUser from "../../hooks/useCustodianProjectUser";
 import ActionValidationStatus from "../../modules/ActionValidationStatus";
 import { QueryState } from "../../types/form";
@@ -30,7 +30,7 @@ interface CustodianParams {
 
 interface OrganisationParams {
   custodianId: number;
-  organisationId: number;
+  projectOrganisationId: number;
 }
 
 function ActionValidationPanel({
@@ -40,11 +40,15 @@ function ActionValidationPanel({
 }: ActionValidationPanelProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_ACTION_VALIDATION);
 
-  const { custodianId, projectUserId, organisationId } = useStore(store => ({
-    custodianId: store.getCustodian()?.id as number,
-    organisationId: store.getCurrentOrganisation()?.id as number,
-    projectUserId: store.getCurrentProjectUser()?.id as number,
-  }));
+  const { custodianId, projectUserId, projectOrganisationId } = useStore(
+    store => ({
+      custodianId: store.getCustodian()?.id as number,
+      organisationId: store.getCurrentOrganisation()?.id as number,
+      projectUserId: store.getCurrentProjectUser()?.id as number,
+      projectOrganisationId: store.getCurrentProjectOrganisation()
+        ?.id as number,
+    })
+  );
 
   let actionValidationStatus;
   switch (variant) {
@@ -61,8 +65,8 @@ function ActionValidationPanel({
       // need to reimplement this in another ticket
       actionValidationStatus = (
         <ActionValidationStatus<OrganisationParams>
-          useApprovalHook={useOrganisationCustodianApproval}
-          hookParams={{ custodianId, organisationId }}
+          useApprovalHook={useCustodianProjectOrganisation}
+          hookParams={{ custodianId, projectOrganisationId }}
         />
       );
       break;
