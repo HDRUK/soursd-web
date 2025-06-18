@@ -16,7 +16,10 @@ import {
   ResearcherProfessionalRegistration,
   ProjectRole,
   ProjectUser,
+<<<<<<< HEAD
   ProjectOrganisation,
+=======
+>>>>>>> origin
 } from "@/types/application";
 import { Routes } from "@/types/router";
 import { produce } from "immer";
@@ -71,7 +74,10 @@ interface StoreState {
     organisation?: Organisation;
     user?: User;
     projectUser?: ProjectUser;
+<<<<<<< HEAD
     projectOrganisation?: ProjectOrganisation;
+=======
+>>>>>>> origin
   };
   application: StoreApplication;
   setRoutes: (routes: Routes) => void;
@@ -81,10 +87,13 @@ interface StoreState {
   setCurrentUser: (user: User) => void;
   getCurrentProjectUser: () => ProjectUser;
   setCurrentProjectUser: (projectUser: ProjectUser) => void;
+<<<<<<< HEAD
   getCurrentProjectOrganisation: () => ProjectUser;
   setCurrentProjectOrganisation: (
     projectOrganisation: ProjectOrganisation
   ) => void;
+=======
+>>>>>>> origin
   getCurrentOrganisation: () => Organisation;
   setCurrentOrganisation: (organisation: Organisation) => void;
   getUser: () => User | undefined;
