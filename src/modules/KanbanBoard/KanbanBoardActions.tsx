@@ -1,5 +1,6 @@
 import { Box, Button, MenuItem, Select } from "@mui/material";
-import { useMemo } from "react";
+import { MouseEvent, useMemo, useState } from "react";
+import { UniqueIdentifier } from "@dnd-kit/core";
 import {
   ActionMenu,
   ActionMenuHelpers,
@@ -10,12 +11,23 @@ import {
 export interface KanbanBoardActionsMenuProps
   extends Omit<ActionMenuProps, "children"> {
   columns: string[];
+  onMoveClick: (
+    e: MouseEvent<HTMLButtonElement>,
+    containerId: UniqueIdentifier
+  ) => void;
 }
 
 export default function KanbanBoardActionsMenu({
   columns,
+  onMoveClick,
   ...restProps
 }: KanbanBoardActionsMenuProps) {
+  const [status, setStatus] = useState<string>("");
+
+  const handleStatusChange = e => {
+    setStatus(e.target.value);
+  };
+
   const actions = useMemo(
     () =>
       ({ handleClose }: ActionMenuHelpers) => (
@@ -26,21 +38,24 @@ export default function KanbanBoardActionsMenu({
                 display: "flex",
                 gap: 1,
               }}>
-              <Select sx={{ minWidth: 200 }} value="">
+              <Select
+                sx={{ minWidth: 200 }}
+                value={status}
+                onChange={handleStatusChange}>
                 {columns.map(key => (
-                  <MenuItem>{key}</MenuItem>
+                  <MenuItem value={key}>{key}</MenuItem>
                 ))}
               </Select>
               <Button variant="outlined" onClick={handleClose}>
                 Cancel
               </Button>
-              <Button>Confirm</Button>
+              <Button onClick={e => onMoveClick(e, status)}>Confirm</Button>
             </Box>
           }>
           Move to
         </ActionMenuItem>
       ),
-    [columns]
+    [columns, status]
   );
 
   return <ActionMenu {...restProps}>{actions}</ActionMenu>;

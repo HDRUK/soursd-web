@@ -15,7 +15,6 @@ import getCustodianEntityModelQuery from "./getCustodianEntityModelQuery";
 import getCustodianEntityModel from "./getCustodianEntityModel";
 import putCustodianActiveEntityModelQuery from "./putCustodianActiveEntityModelQuery";
 import putCustodianActiveEntityModel from "./putCustodianActiveEntityModel";
-import getCustodianProjectUsers from "./getCustodianProjectUsers";
 import usePaginatedCustodianOrganisationUsers from "./usePaginatedCustodianOrganisationUsers";
 import getCustodianOrganisationUsers from "./getCustodianOrganisationUsers";
 import getCustodianUsers from "./getCustodianUsers";
@@ -37,7 +36,6 @@ export {
   getCustodianEntityModel,
   putCustodianActiveEntityModelQuery,
   putCustodianActiveEntityModel,
-  getCustodianProjectUsers,
   getCustodiansUserProjects,
   usePaginatedCustodiansUserProjects,
   getCustodianOrganisations,

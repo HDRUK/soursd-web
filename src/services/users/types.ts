@@ -53,7 +53,7 @@ type PostUserResponse = any;
 type PostUserInviteResponse = User;
 
 interface UserHistory {
-  message: string;
+  log: string;
   details?: string;
   created_at: string;
 }

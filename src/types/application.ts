@@ -16,6 +16,12 @@ type WithStateWorkflow<T> = T & {
   stateWorkflow: StateWorkflow;
 };
 
+type Translations = (key: string) => string;
+
+type WithTranslations<T> = T & {
+  t: Translations;
+};
+
 type ModelState<T> = T & {
   model_state: {
     state: {
@@ -420,16 +426,25 @@ interface Project {
 }
 
 interface ProjectUser {
+  id: number;
   project_id: number;
+  project: Project;
   project_role_id: number;
   primary_contact: boolean;
   user_digital_ident: string;
-  role: Partial<Role>;
+  role?: Partial<Role>;
   affiliation: Partial<ResearcherAffiliation>;
   registry: Registry;
 }
 
-type CustodianProjectUser = ProjectUser;
+type CustodianProjectUser = ModelState<{
+  id: number;
+  project_has_user_id: number;
+  custodian_id: number;
+  created_at: string;
+  updated_at: string;
+  project_has_user: ProjectUser;
+}>;
 
 type ProjectAllUser = ModelState<{
   id: number;
@@ -500,4 +515,5 @@ export type {
   ProjectDetails,
   WithStateWorkflow,
   StateWorkflow,
+  WithTranslations,
 };

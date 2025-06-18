@@ -81,7 +81,7 @@ const ROUTES: Routes = {
     permissions: [UserGroup.CUSTODIANS],
   },
   profileCustodianUsers: {
-    path: "/data-custodian/profile/users",
+    path: "/data-custodian/profile/projectUsers",
     permissions: [UserGroup.CUSTODIANS],
   },
   profileCustodianKeycards: {
@@ -89,7 +89,7 @@ const ROUTES: Routes = {
     permissions: [UserGroup.CUSTODIANS],
   },
   profileCustodianUserById: {
-    path: "/data-custodian/profile/users/{id}",
+    path: "/data-custodian/profile/projectUsers/{id}",
     permissions: [UserGroup.CUSTODIANS],
   },
   profileCustodianProjectsSafeProject: {
@@ -113,27 +113,27 @@ const ROUTES: Routes = {
     permissions: [UserGroup.CUSTODIANS],
   },
   profileCustodianUsersHistory: {
-    path: "/data-custodian/profile/users/{userId}/projects/{projectId}/history",
+    path: "/data-custodian/profile/projectUsers/{projectUserId}/history",
     permissions: [UserGroup.CUSTODIANS],
   },
   profileCustodianUsersTrainingAccreditations: {
-    path: "/data-custodian/profile/users/{userId}/projects/{projectId}/training_accreditations",
+    path: "/data-custodian/profile/projectUsers/{projectUserId}/training_accreditations",
     permissions: [UserGroup.CUSTODIANS],
   },
   profileCustodianUsersIdentity: {
-    path: "/data-custodian/profile/users/{userId}/projects/{projectId}/identity",
+    path: "/data-custodian/profile/projectUsers/{projectUserId}/identity",
     permissions: [UserGroup.CUSTODIANS],
   },
   profileCustodianUsersProjects: {
-    path: "/data-custodian/profile/users/{userId}/projects/{projectId}/projects",
+    path: "/data-custodian/profile/projectUsers/{projectUserId}/projects",
     permissions: [UserGroup.CUSTODIANS],
   },
   profileCustodianUsersCustodianOrgInfo: {
-    path: "/data-custodian/profile/users/{userId}/projects/{projectId}/custodian_org_info",
+    path: "/data-custodian/profile/projectUsers/{projectUserId}/custodian_org_info",
     permissions: [UserGroup.CUSTODIANS],
   },
   profileCustodianUsersAffiliations: {
-    path: "/data-custodian/profile/users/{userId}/projects/{projectId}/affiliations",
+    path: "/data-custodian/profile/projectUsers/{projectUserId}/affiliations",
     permissions: [UserGroup.CUSTODIANS],
   },
   permissionsResearcherCustodian: {

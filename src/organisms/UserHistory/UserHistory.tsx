@@ -21,7 +21,7 @@ export default function UserHistory() {
     <Box sx={{ gap: 2, display: "flex", flexDirection: "column" }}>
       {userHistory?.data?.map(item => (
         <Card
-          key={item.message}
+          key={item.log}
           sx={{
             boxShadow: 1,
             borderRadius: 1,
@@ -30,7 +30,7 @@ export default function UserHistory() {
             sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
             <MaskLabel
               initials={`${getInitials(`${user?.first_name} ${user?.last_name}`)}`}
-              label={t(item.message)}
+              label={t(item.log)}
               size="small"
               sx={{ justifyContent: "flex-start" }}
             />
