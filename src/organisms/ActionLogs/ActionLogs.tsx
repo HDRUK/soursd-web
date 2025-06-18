@@ -15,6 +15,7 @@ import { getActionLogsQuery } from "../../services/action_logs";
 import { ActionLogEntity } from "../../types/logs";
 import { toCamelCase } from "../../utils/string";
 import generateActions, { ActionConfig } from "./utils";
+import { Box } from "@mui/system";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ActionLogs";
 
@@ -94,9 +95,18 @@ export default function ActionLogs({ variant, panelProps }: ActionLogProps) {
             boxShadow: "none",
             border: 0,
           }}>
-          <AccordionSummary>
-            <Typography variant="h3">{t("completedActions")}</Typography>
-            <ExpandMoreIcon sx={{ ml: 2 }} />
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                width: "100%",
+              }}>
+              <Typography variant="h3">{t("completedActions")}</Typography>{" "}
+              {completedActions.length && (
+                <Typography>{t("completedActionsDescription")}</Typography>
+              )}
+            </Box>
           </AccordionSummary>
           <AccordionDetails>
             <List disablePadding>
