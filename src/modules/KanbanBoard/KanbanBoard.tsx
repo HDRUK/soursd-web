@@ -35,6 +35,7 @@ import DndDroppableContainer from "../../components/DndDroppableContainer";
 import DndSortableItem from "../../components/DndSortableItem";
 import { dndDragRotate } from "../../consts/styles";
 import { DndItems, DragUpdateEventArgsInitial } from "../../types/dnd";
+import { PropsWithQuery } from "../../types/form";
 import { findDroppables, findItem, findItemIndex } from "../../utils/dnd";
 import KanbanBoardActionsMenu from "./KanbanBoardActions";
 import KanbanBoardColumn from "./KanbanBoardColumn";
@@ -51,7 +52,9 @@ const dropAnimation: DropAnimation = {
 };
 
 interface KanbanBoardProps<T>
-  extends WithStateWorkflow<WithTranslations<UseDroppableSortItemsProps<T>>> {
+  extends PropsWithQuery<
+    WithStateWorkflow<WithTranslations<UseDroppableSortItemsProps<T>>>
+  > {
   adjustScale?: boolean;
   cancelDrop?: CancelDrop;
   strategy?: SortingStrategy;
@@ -65,8 +68,8 @@ export default function KanbanBoard<T>({
   adjustScale = false,
   cancelDrop,
   initialData,
-  // stateWorkflow,
   modifiers,
+  queryState,
   strategy = verticalListSortingStrategy,
   onDragEnd,
   onDragOver,
@@ -87,6 +90,8 @@ export default function KanbanBoard<T>({
   const [containers] = useState(Object.keys(items) as UniqueIdentifier[]);
   const [activeData, setActiveData] =
     useState<DragUpdateEventArgsInitial<T> | null>(null);
+  const initialArgs = useRef<DragUpdateEventArgsInitial<T> | null>();
+  const { isError } = queryState;
 
   const activeId = activeData?.item.id;
 
@@ -102,7 +107,7 @@ export default function KanbanBoard<T>({
 
     return (
       data && (
-        <DndItem dragOverlay isDroppable={data?.isDroppable}>
+        <DndItem dragOverlay isDroppable={data.isDroppable}>
           <restProps.cardComponent
             data={data}
             sx={{
@@ -166,28 +171,31 @@ export default function KanbanBoard<T>({
     });
   };
 
-  const handleMoveClick = (item: T, moveToId: UniqueIdentifier) => {
-    handleMove(
-      {
-        containerId: moveToId,
-        item,
-        items,
+  const handleMoveClick = (
+    item: T,
+    moveToId: UniqueIdentifier,
+    isError?: boolean
+  ) => {
+    handleMove({
+      containerId: moveToId,
+      item,
+      items,
+      isError,
+      setState: (state: DndItems<T>) => {
+        setItems(prevState => ({
+          ...prevState,
+          ...state,
+        }));
       },
-      {
-        setState: (state: DndItems<T>) => {
-          setItems(prevState => ({
-            ...prevState,
-            ...state,
-          }));
-        },
-      }
-    );
+    });
   };
 
   const handleDragStart = (e: DragOverEvent) => {
-    const initialData = handleDragSortStart(e, items);
+    const data = handleDragSortStart(e, items);
 
-    setActiveData(initialData);
+    initialArgs.current = data;
+
+    setActiveData(data);
     setClonedItems(items);
   };
 
@@ -196,6 +204,20 @@ export default function KanbanBoard<T>({
       recentlyMovedToNewContainer.current = false;
     });
   }, [items]);
+
+  useEffect(() => {
+    if (isError && initialArgs.current) {
+      handleMoveClick(
+        initialArgs.current.item,
+        initialArgs.current.containerId,
+        isError
+      );
+
+      initialArgs.current = null;
+
+      queryState.reset();
+    }
+  }, [isError]);
 
   const throttledDragOver = useDebouncedCallback(handleDragOver, 100);
 
@@ -242,15 +264,19 @@ export default function KanbanBoard<T>({
                   return (
                     <DndSortableItem
                       disabled={isSortingContainer}
-                      isDroppable={data?.isDroppable}
-                      key={data.id}
+                      isDroppable={data.isDroppable}
+                      isError={data.isError}
+                      key={`${containerId}${data.id}`}
                       id={data.id}
                       index={findItemIndex(containerId, data.id, items)}>
                       <restProps.cardComponent
                         data={data}
-                        sx={{ width: "220px" }}
+                        sx={{
+                          width: "220px",
+                        }}
                         actions={
                           <KanbanBoardActionsMenu
+                            t={t}
                             columns={getAllowedColumns(containerId)}
                             onMoveClick={(_, moveToId) =>
                               handleMoveClick(data, moveToId)

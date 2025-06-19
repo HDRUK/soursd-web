@@ -6,7 +6,7 @@ import { WorkflowStateResponse } from "./types";
 export default async (
   options: ResponseOptions
 ): Promise<ResponseJson<WorkflowStateResponse>> => {
-  const url = `/custodian_approvals/projectUsers/getWorkflowStates`;
+  const url = `/custodian_approvals/projectUsers/workflowStates`;
   const response = await getRequest(url);
   return handleJsonResponse(response, options);
 };

@@ -1,14 +1,15 @@
 import { UseDroppableSortItemsFnOptions } from "@/hooks/useDroppableSortItems";
+import useQueryAlerts from "@/hooks/useQueryAlerts";
 import KanbanBoardUsersCard from "@/modules/KanbanBoard/KanbanBoardUsersCard";
+import {
+  getCustodianProjectUserWorkflowTransitionsQuery,
+  putCustodianProjectUserQuery,
+} from "@/services/custodian_approvals";
 import { DndItems, DragUpdateEvent, DragUpdateEventArgs } from "@/types/dnd";
 import { rectSortingStrategy } from "@dnd-kit/sortable";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo } from "react";
-import {
-  getCustodianProjectUserStatesQuery,
-  putCustodianProjectUserQuery,
-} from "@/services/custodian_approvals";
 import KanbanBoard from "../../modules/KanbanBoard";
 import { CustodianProjectUser, ProjectUser } from "../../types/application";
 
@@ -25,36 +26,38 @@ export default function ProjectUsersBoard({
 }: ProjectUsersBoardProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
 
-  const { data: statusOptionsData } = useQuery(
-    getCustodianProjectUserStatesQuery()
-  );
+  const {
+    mutateAsync: changeValidationStatus,
+    ...updateValidationMutationState
+  } = useMutation(putCustodianProjectUserQuery(custodianId));
 
-  const { mutateAsync: changeValidationStatus } = useMutation(
-    putCustodianProjectUserQuery(custodianId)
-  );
+  const { isError, isSuccess, reset } = updateValidationMutationState;
 
-  const stateWorkflow = statusOptionsData?.data;
+  const { data: stateWorkflow } = useQuery(
+    getCustodianProjectUserWorkflowTransitionsQuery()
+  );
 
   const initialData = useMemo(() => {
-    if (!stateWorkflow || !custodianProjectUsers) return null;
+    if (stateWorkflow?.data && custodianProjectUsers) {
+      const data: DndItems<ProjectUser> = {};
 
-    const data = Object.fromEntries(
-      stateWorkflow.map(state => [state, []])
-    ) as DndItems<ProjectUser>;
+      Object.keys(stateWorkflow?.data).forEach((key: string) => {
+        data[key] = [];
+      });
 
-    custodianProjectUsers.forEach(
-      ({
-        model_state: {
-          state: { slug },
-        },
-        project_has_user,
-      }) => {
-        data[slug].push(project_has_user);
-      }
-    );
+      custodianProjectUsers.forEach(user => {
+        data[user.model_state.state.slug].push(user.project_has_user);
+      });
 
-    return data;
-  }, [stateWorkflow, custodianProjectUsers]);
+      return data;
+    }
+
+    return null;
+  }, [stateWorkflow?.data, custodianProjectUsers]);
+
+  useQueryAlerts(updateValidationMutationState, {
+    showOnlyError: true,
+  });
 
   const droppableFnOptions = useMemo<
     Partial<UseDroppableSortItemsFnOptions<ProjectUser>>
@@ -62,7 +65,7 @@ export default function ProjectUsersBoard({
     () => ({
       isAllowed: (
         _,
-        { initial, containerId }: DragUpdateEventArgs<ProjectUser>
+        { initial, containerId }: DragUpdateEventArgs<ProjectAllUser>
       ) => {
         return process.env.NEXT_PUBLIC_FEATURE_PROJECT_USERS_WORKFLOW === "true"
           ? !!(
@@ -80,16 +83,17 @@ export default function ProjectUsersBoard({
       _: DragUpdateEvent,
       { containerId, item }: DragUpdateEventArgs<ProjectUser>
     ) => {
-      console.log("here!!!");
-      changeValidationStatus({
-        params: {
-          projectUserId: item.id,
-        },
-        payload: {
-          status: containerId,
-          comment: "drag change",
-        },
-      });
+      if (containerId && item?.id) {
+        changeValidationStatus({
+          params: {
+            projectUserId: item.id,
+          },
+          payload: {
+            status: containerId,
+            comment: "drag change",
+          },
+        });
+      }
     },
     []
   );
@@ -97,15 +101,15 @@ export default function ProjectUsersBoard({
   return (
     stateWorkflow &&
     initialData && (
-      <KanbanBoard<CustodianProjectUser>
+      <KanbanBoard<ProjectUser>
         t={t}
         cardComponent={KanbanBoardUsersCard}
         initialData={initialData}
-        stateWorkflow={stateWorkflow.data}
         strategy={rectSortingStrategy}
         onDragUpdate={handleUpdateSafePeople}
         onMove={handleUpdateSafePeople}
         droppableFnOptions={droppableFnOptions}
+        queryState={{ isError, isSuccess, reset }}
       />
     )
   );

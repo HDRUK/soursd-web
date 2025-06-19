@@ -13,6 +13,7 @@ import {
 } from "../types/application";
 import { injectParamsIntoPath } from "./application";
 import { formatShortDate } from "./date";
+import ChipStatus, { Status } from "@/components/ChipStatus";
 
 function renderAffiliationDateRangeCell<T extends ResearcherAffiliation>(
   info: CellContext<T, unknown>
@@ -75,25 +76,6 @@ function renderUserNameCell(
     : `${first_name} ${last_name}`;
 }
 
-function renderProjectUserNameCell(
-  projectUser: ProjectUser,
-  route?: string,
-  options: Record<string, number> = {}
-) {
-  if (!projectUser) return "";
-  const { registry, id } = projectUser;
-  const { user } = registry;
-
-  const { first_name, last_name } = user;
-
-  return route && id
-    ? renderLinkNameCell(`${first_name} ${last_name}`, route, {
-        projectUserId: id,
-        ...options,
-      })
-    : `${first_name} ${last_name}`;
-}
-
 function renderWarningCell<T extends ResearcherAffiliation>(
   info: CellContext<T, unknown>
 ) {
@@ -141,6 +123,10 @@ function renderOrganisationsNameCell(values: Organisation | Organisation[]) {
   return names;
 }
 
+const renderStatusCell = (info: CellContext<User | ProjectUser, unknown>) => (
+  <ChipStatus status={info.getValue() as Status} />
+);
+
 export {
   renderAffiliationDateRangeCell,
   renderLinkNameCell,
@@ -148,8 +134,8 @@ export {
   renderOrganisationsNameCell,
   renderProjectNameCell,
   renderProjectsNameCell,
-  renderProjectUserNameCell,
   renderUserNameCell,
   renderUserOrganisationsNameCell,
   renderWarningCell,
+  renderStatusCell,
 };

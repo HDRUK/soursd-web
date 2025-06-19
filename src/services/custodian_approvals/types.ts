@@ -1,9 +1,10 @@
 import {
   CustodianProjectUser,
   CustodianProjectOrganisation,
-} from "@/types/application";
+} from "../../types/application";
 
 type WorkflowStateResponse = string[];
+type WorkflowTransitionsResponse = Record<string, string[]>;
 
 type GetCustodianProjectUsersResponse = CustodianProjectUser[];
 type GetCustodianProjectUserResponse = CustodianProjectUser;
@@ -18,6 +19,7 @@ interface ChangeValidationStatusPayload {
 
 export type {
   WorkflowStateResponse,
+  WorkflowTransitionsResponse,
   GetCustodianProjectUsersResponse,
   GetCustodianProjectUserResponse,
   GetCustodianProjectOrganisationsResponse,
