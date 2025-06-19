@@ -36,7 +36,9 @@ export default function ProjectUsersList({
 }: ProjectUsersListProps) {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_PROJECT_USERS);
 
-  const [showListView, setShowListView] = useState(false);
+  const [showListView, setShowListView] = useState(
+    variant !== EntityType.CUSTODIAN
+  );
   const [showAddModal, setShowAddModal] = useState(false);
 
   const {
@@ -75,12 +77,15 @@ export default function ProjectUsersList({
     );
   };
 
-  const extraColumns: ColumnDef<CustodianProjectUser>[] = [
-    {
-      header: t("actions"),
-      cell: renderActionMenuCell,
-    },
-  ];
+  const extraColumns: ColumnDef<CustodianProjectUser>[] =
+    variant === EntityType.CUSTODIAN
+      ? [
+          {
+            header: t("actions"),
+            cell: renderActionMenuCell,
+          },
+        ]
+      : [];
 
   const filterProps = {
     resetQueryParams,
@@ -100,16 +105,18 @@ export default function ProjectUsersList({
               : [ProjectUsersFilterKeys.SORT, ProjectUsersFilterKeys.STATUS]
           }
           {...filterProps}>
-          <Button
-            variant="outlined"
-            startIcon={
-              !showListView ? <ListIcon /> : <ViewColumnIconOutlined />
-            }
-            onClick={() => {
-              setShowListView(!showListView);
-            }}>
-            {!showListView ? "Switch to list view" : "Switch to board view"}
-          </Button>
+          {variant === EntityType.CUSTODIAN && (
+            <Button
+              variant="outlined"
+              startIcon={
+                !showListView ? <ListIcon /> : <ViewColumnIconOutlined />
+              }
+              onClick={() => {
+                setShowListView(!showListView);
+              }}>
+              {!showListView ? "Switch to list view" : "Switch to board view"}
+            </Button>
+          )}
 
           {projectId && (
             <>

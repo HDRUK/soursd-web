@@ -3,10 +3,10 @@
 import { useStore } from "@/data/store";
 import PageBody from "@/modules/PageBody";
 import ProjectUsersList from "@/organisms/ProjectUsersList";
+import { EntityType } from "@/types/api";
 
 export default function ProjectsSafePeople() {
-  const { custodianId, projectId, route } = useStore(state => ({
-    custodianId: state.getCustodian()?.id,
+  const { projectId, route } = useStore(state => ({
     projectId: state.getCurrentProject().id,
     route: state.getApplication().routes.profileCustodianUsersProjects,
   }));
@@ -14,7 +14,8 @@ export default function ProjectsSafePeople() {
   return (
     <PageBody>
       <ProjectUsersList
-        custodianId={custodianId}
+        variant={EntityType.USER}
+        custodianId={1}
         projectId={projectId}
         routes={{
           name: route,
