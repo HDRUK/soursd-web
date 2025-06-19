@@ -5,6 +5,7 @@ import PageBody from "@/modules/PageBody";
 import PageBodyContainer from "@/modules/PageBodyContainer";
 import PageSection from "@/modules/PageSection";
 import ProjectUsersList from "@/organisms/ProjectUsersList";
+import { EntityType } from "@/types/api";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 
@@ -26,6 +27,7 @@ export default function Users() {
           </Typography>
         </PageSection>
         <ProjectUsersList
+          variant={EntityType.CUSTODIAN}
           custodianId={custodianId}
           routes={{
             name: nameRoute,

@@ -24,7 +24,6 @@ export default function ProjectUsersListActionMenuItems({
   data,
   t,
 }: ProjectUsersListActionMenuProps) {
-  console.log("ON DELETE", onDelete);
   const { mutateAsync: deleteUserAsync, ...deleteQueryState } = useMutation(
     deleteProjectUserQuery()
   );

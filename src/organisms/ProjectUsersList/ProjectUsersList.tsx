@@ -17,7 +17,7 @@ import ViewColumnIconOutlined from "@mui/icons-material/ViewColumnOutlined";
 import { Button } from "@mui/material";
 import { CellContext, ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProjectUsersListActionMenuItems from "./ProjectUsersListActionMenuItems";
 
 const NAMESPACE_TRANSLATIONS_PROJECT_USERS = "Projects.Users";
@@ -57,6 +57,10 @@ export default function ProjectUsersList({
   } = usePaginatedCustodianProjectUsers(custodianId, {
     defaultQueryParams: { project_id: projectId },
   });
+
+  useEffect(() => {
+    if (showListView) refetch();
+  }, [showListView]);
 
   const actionMenuProps = {
     onDelete: () => refetch(),

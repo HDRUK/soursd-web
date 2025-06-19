@@ -3,6 +3,7 @@
 import { useStore } from "@/data/store";
 import PageBody from "@/modules/PageBody";
 import ProjectUsersList from "@/organisms/ProjectUsersList";
+import { EntityType } from "@/types/api";
 
 export default function ProjectsSafePeople() {
   const { custodianId, projectId, route } = useStore(state => ({
@@ -14,6 +15,7 @@ export default function ProjectsSafePeople() {
   return (
     <PageBody>
       <ProjectUsersList
+        variant={EntityType.CUSTODIAN}
         custodianId={custodianId}
         projectId={projectId}
         routes={{
