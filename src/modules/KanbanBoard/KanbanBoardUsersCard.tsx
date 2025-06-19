@@ -1,22 +1,26 @@
-import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import { Box, Card, CardProps, Typography } from "@mui/material";
 import { ReactNode } from "react";
 import Text from "../../components/Text";
-import { ProjectAllUser } from "../../types/application";
-import { renderUserNameCell } from "../../utils/cells";
+import { ProjectUser, WithRoutes } from "../../types/application";
+import {
+  renderProjectUserNameCell,
+  renderUserOrganisationsNameCell,
+} from "../../utils/cells";
 
-export interface KanbanBoardUsersCardProps extends CardProps {
-  data: ProjectAllUser;
-  actions?: ReactNode;
-}
+export type KanbanBoardUsersCardProps = CardProps &
+  WithRoutes<{
+    data: ProjectUser;
+    actions?: ReactNode;
+  }>;
 
 export default function KanbanBoardUsersCard({
   data,
   actions,
   sx,
+  routes,
   ...restProps
 }: KanbanBoardUsersCardProps) {
-  const { affiliation, project, role, registry } = data;
+  const { affiliation, project, role } = data;
 
   return (
     <Card
@@ -30,32 +34,25 @@ export default function KanbanBoardUsersCard({
       }}
       {...restProps}>
       <Text
-        endIcon={<Box onMouseDown={e => e.stopPropagation()}>{actions}</Box>}
+        onMouseDown={e => e.stopPropagation()}
+        endIcon={actions}
         variant="h6"
         sx={{
           color: "menuList1.main",
           mb: 1,
           fontSize: "1rem",
         }}>
-        <Box sx={{ flexGrow: 1 }}>{renderUserNameCell(registry.user)}</Box>
+        <Box sx={{ flexGrow: 1 }}>
+          {renderProjectUserNameCell(data, routes.name.path)}
+        </Box>
       </Text>
       <Typography color="success.main">
-        {affiliation.organisation.organisation_name}
+        {renderUserOrganisationsNameCell(affiliation?.organisation)}
       </Typography>
       <Typography>
         {project.title} (id: {project.id})
       </Typography>
-      <Typography>{role.name}</Typography>
-      <Text
-        startIcon={
-          <PersonOutlineIcon
-            sx={{
-              color: "success.main",
-            }}
-          />
-        }>
-        Project & SDE
-      </Text>
+      <Typography>{role?.name}</Typography>
     </Card>
   );
 }

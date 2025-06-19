@@ -5,6 +5,7 @@ import React, { ReactNode } from "react";
 import { BoxProps } from "@mui/system";
 import { StyledItem, StyledWrapper } from "./DndItem.styles";
 import { errorVariants } from "./DndItem.animations";
+import { motion } from "framer-motion";
 
 export interface DndItemProps extends BoxProps {
   children: ReactNode;
@@ -48,7 +49,6 @@ const DndItem = React.forwardRef<HTMLLIElement, DndItemProps>(
   ) => {
     return (
       <StyledWrapper
-        {...getAnimationProps({ isError })}
         sx={{
           transition: [transition].filter(Boolean).join(", "),
           "--translate-x": transform
@@ -70,15 +70,17 @@ const DndItem = React.forwardRef<HTMLLIElement, DndItemProps>(
           }),
         }}
         ref={ref}>
-        <StyledItem
-          dragging={dragging}
-          dragOverlay={dragOverlay}
-          disabled={disabled}
-          tabIndex={0}
-          {...listeners}
-          {...restProps}>
-          {children}
-        </StyledItem>
+        <motion.div {...getAnimationProps({ isError })}>
+          <StyledItem
+            dragging={dragging}
+            dragOverlay={dragOverlay}
+            disabled={disabled}
+            tabIndex={0}
+            {...listeners}
+            {...restProps}>
+            {children}
+          </StyledItem>
+        </motion.div>
       </StyledWrapper>
     );
   }

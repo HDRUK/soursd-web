@@ -2,16 +2,14 @@ import useColumns from "@/hooks/useColumns";
 import { ModuleTables } from "@/types/modules";
 import { RouteConfig } from "@/types/router";
 import { filterColumns } from "@/utils/table";
-import { Box } from "@mui/system";
-import { CellContext, ColumnDef } from "@tanstack/react-table";
+import { ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
 import Table from "../../components/Table";
-import { PrimaryContactIcon } from "../../consts/icons";
-import { CustodianProjectUser, ProjectUser } from "../../types/application";
+import { CustodianProjectUser, WithRoutes } from "../../types/application";
 import {
   renderOrganisationsNameCell,
+  renderProjectUserNameCell,
   renderStatusCell,
-  renderUserNameCell,
 } from "../../utils/cells";
 
 export type ProjectUsersTableColumns =
@@ -20,12 +18,9 @@ export type ProjectUsersTableColumns =
   | "organisationName"
   | "status";
 
-export interface ProjectUsersTableProps
-  extends ModuleTables<CustodianProjectUser, ProjectUsersTableColumns> {
-  routes?: {
-    name: RouteConfig;
-  };
-}
+export type ProjectUsersTableProps = WithRoutes<
+  ModuleTables<CustodianProjectUser, ProjectUsersTableColumns>
+>;
 
 export default function ProjectUsersTable({
   t,
@@ -36,28 +31,12 @@ export default function ProjectUsersTable({
 }: ProjectUsersTableProps) {
   const { createDefaultColumn } = useColumns<CustodianProjectUser>({ t });
 
-  console.log("restProps.data", restProps.data);
-
-  const renderNameCell = <T extends CustodianProjectUser>(
-    info: CellContext<T, unknown>
-  ) => {
-    const user = info.getValue() as ProjectUser;
-
-    return (
-      <Box sx={{ display: "flex" }}>
-        {renderUserNameCell(user as ProjectUser, routes?.name?.path, {
-          projectUserId: info.row.original.id,
-        })}
-        {!!user.primary_contact && <PrimaryContactIcon />}
-      </Box>
-    );
-  };
-
   const columns = useMemo(() => {
     const initialColumns: ColumnDef<CustodianProjectUser>[] = [
       createDefaultColumn("name", {
-        accessorKey: "project_has_user.registry.user",
-        cell: renderNameCell,
+        accessorKey: "project_has_user",
+        cell: info =>
+          renderProjectUserNameCell(info.getValue(), routes?.name?.path),
       }),
       createDefaultColumn("projectRole", {
         accessorKey: "project_has_user.role.name",

@@ -37,7 +37,6 @@ import { dndDragRotate } from "../../consts/styles";
 import { DndItems, DragUpdateEventArgsInitial } from "../../types/dnd";
 import { PropsWithQuery } from "../../types/form";
 import { findDroppables, findItem, findItemIndex } from "../../utils/dnd";
-import KanbanBoardActionsMenu from "./KanbanBoardActions";
 import KanbanBoardColumn from "./KanbanBoardColumn";
 import KanbanBoardColumns from "./KanbanBoardColumns";
 
@@ -61,7 +60,16 @@ interface KanbanBoardProps<T>
   modifiers?: Modifiers;
   initialData: DndItems<T>;
   cardComponent: ComponentType<T>;
+  cardActionsComponent?: ComponentType<KanbanBoardHelperProps>;
   droppableFnOptions: Partial<UseDroppableSortItemsFnOptions<T>>;
+}
+
+export interface KanbanBoardHelperProps {
+  allowedColumns: string[];
+  onMoveClick: (
+    e: React.MouseEvent<HTMLButtonElement>,
+    containerId: UniqueIdentifier
+  ) => void;
 }
 
 export default function KanbanBoard<T>({
@@ -213,8 +221,6 @@ export default function KanbanBoard<T>({
         isError
       );
 
-      initialArgs.current = null;
-
       queryState.reset();
     }
   }, [isError]);
@@ -275,12 +281,12 @@ export default function KanbanBoard<T>({
                           width: "220px",
                         }}
                         actions={
-                          <KanbanBoardActionsMenu
-                            t={t}
-                            columns={getAllowedColumns(containerId)}
-                            onMoveClick={(_, moveToId) =>
-                              handleMoveClick(data, moveToId)
-                            }
+                          <restProps.cardActionsComponent
+                            allowedColumns={getAllowedColumns(containerId)}
+                            onMoveClick={(
+                              _: DragEvent,
+                              moveToId: UniqueIdentifier
+                            ) => handleMoveClick(data, moveToId)}
                           />
                         }
                       />

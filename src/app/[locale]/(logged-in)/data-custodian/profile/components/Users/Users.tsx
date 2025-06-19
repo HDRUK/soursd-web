@@ -12,7 +12,10 @@ const NAMESPACE_TRANSLATIONS_PROFILE = "CustodianProfile";
 
 export default function Users() {
   const tProfile = useTranslations(NAMESPACE_TRANSLATIONS_PROFILE);
-  const custodianId = useStore(state => state.getCustodian()?.id);
+  const { custodianId, nameRoute } = useStore(state => ({
+    custodianId: state.getCustodian()?.id,
+    nameRoute: state.getApplication().routes.profileCustodianUsersIdentity,
+  }));
 
   return (
     <PageBodyContainer heading={tProfile("usersListTitle")}>
@@ -22,7 +25,12 @@ export default function Users() {
             {tProfile("usersListDescription")}
           </Typography>
         </PageSection>
-        <ProjectUsersList custodianId={custodianId} />
+        <ProjectUsersList
+          custodianId={custodianId}
+          routes={{
+            name: nameRoute,
+          }}
+        />
       </PageBody>
     </PageBodyContainer>
   );

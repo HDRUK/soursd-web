@@ -1,6 +1,14 @@
+"use client";
+
+import { ActionMenu } from "@/components/ActionMenu";
 import { UseDroppableSortItemsFnOptions } from "@/hooks/useDroppableSortItems";
 import useQueryAlerts from "@/hooks/useQueryAlerts";
-import KanbanBoardUsersCard from "@/modules/KanbanBoard/KanbanBoardUsersCard";
+import KanbanBoardActionsMenuItems, {
+  KanbanBoardActionsMenuItemsProps,
+} from "@/modules/KanbanBoard/KanbanBoardActionMenuItems";
+import KanbanBoardUsersCard, {
+  KanbanBoardUsersCardProps,
+} from "@/modules/KanbanBoard/KanbanBoardUsersCard";
 import {
   getCustodianProjectUserWorkflowTransitionsQuery,
   putCustodianProjectUserQuery,
@@ -9,22 +17,31 @@ import { DndItems, DragUpdateEvent, DragUpdateEventArgs } from "@/types/dnd";
 import { rectSortingStrategy } from "@dnd-kit/sortable";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import { useCallback, useMemo } from "react";
+import { ReactNode, useCallback, useMemo } from "react";
 import KanbanBoard from "../../modules/KanbanBoard";
-import { CustodianProjectUser, ProjectUser } from "../../types/application";
+import {
+  CustodianProjectUser,
+  ProjectUser,
+  WithRoutes,
+} from "../../types/application";
+import ProjectUsersActionItems from "./ProjectUsersActionItems";
+import ProjectUsersListActionMenuItems from "../ProjectUsersList/ProjectUsersListActionMenuItems";
 
-const NAMESPACE_TRANSLATION_APPLICATION = "Kanban";
+const NAMESPACE_TRANSLATION_KANBAN = "Kanban";
 
-interface ProjectUsersBoardProps {
+type ProjectUsersBoardProps = WithRoutes<{
   custodianId: number;
   custodianProjectUsers: CustodianProjectUser[];
-}
+  userActions: (data: CustodianProjectUser) => ReactNode;
+}>;
 
 export default function ProjectUsersBoard({
   custodianId,
   custodianProjectUsers,
+  routes,
+  userActions,
 }: ProjectUsersBoardProps) {
-  const t = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
+  const t = useTranslations(NAMESPACE_TRANSLATION_KANBAN);
 
   const {
     mutateAsync: changeValidationStatus,
@@ -65,7 +82,7 @@ export default function ProjectUsersBoard({
     () => ({
       isAllowed: (
         _,
-        { initial, containerId }: DragUpdateEventArgs<ProjectAllUser>
+        { initial, containerId }: DragUpdateEventArgs<ProjectUser>
       ) => {
         return process.env.NEXT_PUBLIC_FEATURE_PROJECT_USERS_WORKFLOW === "true"
           ? !!(
@@ -98,15 +115,31 @@ export default function ProjectUsersBoard({
     []
   );
 
+  const cardComponent = useCallback((props: KanbanBoardUsersCardProps) => {
+    return <KanbanBoardUsersCard {...props} routes={routes} />;
+  }, []);
+
+  const cardActionsComponent = useCallback(
+    ({ data, ...restProps }: KanbanBoardActionsMenuItemsProps) => {
+      return (
+        <ActionMenu>
+          <ProjectUsersListActionMenuItems {...restProps} t={t} />
+        </ActionMenu>
+      );
+    },
+    []
+  );
+
   return (
     stateWorkflow &&
     initialData && (
       <KanbanBoard<ProjectUser>
         t={t}
-        cardComponent={KanbanBoardUsersCard}
+        cardActionsComponent={cardActionsComponent}
+        cardComponent={cardComponent}
         initialData={initialData}
         strategy={rectSortingStrategy}
-        onDragUpdate={handleUpdateSafePeople}
+        onDragEnd={handleUpdateSafePeople}
         onMove={handleUpdateSafePeople}
         droppableFnOptions={droppableFnOptions}
         queryState={{ isError, isSuccess, reset }}

@@ -235,7 +235,7 @@ export default function useDroppableSortItems<T>({
       };
 
       onDragOver?.(e, eventArgs);
-      onDragUpdate?.(e, eventArgs);
+      // onDragUpdate?.(e, eventArgs);
     }
   };
 
@@ -249,8 +249,6 @@ export default function useDroppableSortItems<T>({
       item: activeItem,
       itemIndex: activeItemIndex,
     };
-
-    console.log("START", initialArgs.current);
 
     onDragStart?.(e, {
       initial: initialArgs.current,

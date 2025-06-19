@@ -54,12 +54,12 @@ export default function ProjectUsersFilters({
   const sortActions = [
     {
       label: t("sortActions.AZ"),
-      onClick: () => handleSortToggle("first_name", SearchDirections.ASC),
+      onClick: () => handleSortToggle("name", SearchDirections.ASC),
       checked: sortDirection === SearchDirections.ASC,
     },
     {
       label: t("sortActions.ZA"),
-      onClick: () => handleSortToggle("first_name", SearchDirections.DESC),
+      onClick: () => handleSortToggle("name", SearchDirections.DESC),
       checked: sortDirection === SearchDirections.DESC,
     },
   ];
@@ -80,9 +80,7 @@ export default function ProjectUsersFilters({
       onClear={resetQueryParams}
       onSearch={(text: string) => {
         updateQueryParams({
-          "first_name[]": text,
-          "last_name[]": text,
-          "email[]": text,
+          "name[]": text,
         });
       }}
       placeholder={t("searchPlaceholder")}>
