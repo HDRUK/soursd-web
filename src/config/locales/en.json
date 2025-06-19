@@ -12,15 +12,6 @@
     "scanOkText": "File was successfully scanned",
     "scanErrorText": "Your file file may have a virus"
   },
-  "Kanban": {
-    "form_received": "Form received",
-    "validation_in_progress": "Validation In Progress",
-    "validation_complete": "Validation Complete",
-    "more_user_info_req": "More User Information Requested",
-    "more_org_info_req": "More Organisation Information Requested",
-    "escalate_validation": "Escalation to Validation Committee",
-    "validated": "Validated"
-  },
   "Application": {
     "role": "Role",
     "email": "Email",
@@ -1190,6 +1181,13 @@
   },
   "Projects": {
     "Users": {
+      "form_received": "Form received",
+      "validation_in_progress": "Validation In Progress",
+      "validation_complete": "Validation Complete",
+      "more_user_info_req": "More User Information Requested",
+      "more_org_info_req": "More Organisation Information Requested",
+      "escalate_validation": "Escalation to Validation Committee",
+      "validated": "Validated",
       "status": "Project status",
       "organisationName": "Organisation name",
       "projectRole": "Project role",

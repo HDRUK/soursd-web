@@ -3,9 +3,9 @@ import type { Transform } from "@dnd-kit/utilities";
 import React, { ReactNode } from "react";
 
 import { BoxProps } from "@mui/system";
+import { motion } from "framer-motion";
 import { StyledItem, StyledWrapper } from "./DndItem.styles";
 import { errorVariants } from "./DndItem.animations";
-import { motion } from "framer-motion";
 
 export interface DndItemProps extends BoxProps {
   children: ReactNode;
@@ -28,6 +28,8 @@ const getAnimationProps = ({ isError }: Pick<DndItemProps, "isError">) => {
       initial: "initial",
     };
   }
+
+  return null;
 };
 
 const DndItem = React.forwardRef<HTMLLIElement, DndItemProps>(

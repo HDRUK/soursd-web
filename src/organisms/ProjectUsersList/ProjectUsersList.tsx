@@ -68,7 +68,7 @@ export default function ProjectUsersList({
     return (
       <ActionMenu>
         <ProjectUsersListActionMenuItems
-          data={info.row.original}
+          data={info.row.original.project_has_user}
           {...actionMenuProps}
         />
       </ActionMenu>
@@ -140,12 +140,7 @@ export default function ProjectUsersList({
             custodianId={custodianId}
             custodianProjectUsers={custodianProjectUsers}
             routes={routes}
-            userActions={(data: CustodianProjectUser) => (
-              <ProjectUsersListActionMenuItems
-                data={data}
-                {...actionMenuProps}
-              />
-            )}
+            {...actionMenuProps}
           />
         ) : (
           <ProjectUsersTable

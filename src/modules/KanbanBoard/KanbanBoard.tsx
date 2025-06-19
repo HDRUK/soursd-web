@@ -60,11 +60,12 @@ interface KanbanBoardProps<T>
   modifiers?: Modifiers;
   initialData: DndItems<T>;
   cardComponent: ComponentType<T>;
-  cardActionsComponent?: ComponentType<KanbanBoardHelperProps>;
+  cardActionsComponent?: ComponentType<KanbanBoardHelperProps<T>>;
   droppableFnOptions: Partial<UseDroppableSortItemsFnOptions<T>>;
 }
 
-export interface KanbanBoardHelperProps {
+export interface KanbanBoardHelperProps<T> {
+  data?: T;
   allowedColumns: string[];
   onMoveClick: (
     e: React.MouseEvent<HTMLButtonElement>,
@@ -225,6 +226,10 @@ export default function KanbanBoard<T>({
     }
   }, [isError]);
 
+  useEffect(() => {
+    setItems(initialData);
+  }, [initialData]);
+
   const throttledDragOver = useDebouncedCallback(handleDragOver, 100);
 
   return (
@@ -282,6 +287,7 @@ export default function KanbanBoard<T>({
                         }}
                         actions={
                           <restProps.cardActionsComponent
+                            data={data}
                             allowedColumns={getAllowedColumns(containerId)}
                             onMoveClick={(
                               _: DragEvent,

@@ -8,12 +8,12 @@ import {
   deleteProjectUserQuery,
   putProjectUserPrimaryContactQuery,
 } from "@/services/projects";
-import { CustodianProjectUser, WithTranslations } from "@/types/application";
+import { ProjectUser, WithTranslations } from "@/types/application";
 import { useMutation } from "@tanstack/react-query";
 
 export type ProjectUsersListActionMenuProps = WithTranslations<{
   projectId?: number;
-  data: CustodianProjectUser;
+  data: ProjectUser;
   onDelete: () => void;
   onPrimaryContactChange: () => void;
 }>;
@@ -24,6 +24,7 @@ export default function ProjectUsersListActionMenuItems({
   data,
   t,
 }: ProjectUsersListActionMenuProps) {
+  console.log("ON DELETE", onDelete);
   const { mutateAsync: deleteUserAsync, ...deleteQueryState } = useMutation(
     deleteProjectUserQuery()
   );
@@ -44,11 +45,9 @@ export default function ProjectUsersListActionMenuItems({
   useQueryAlerts(primaryContactQueryState);
 
   const {
-    project_has_user: {
-      project_id,
-      primary_contact,
-      registry: { id: registryId },
-    },
+    project_id,
+    primary_contact,
+    registry: { id: registryId },
   } = data;
 
   return (

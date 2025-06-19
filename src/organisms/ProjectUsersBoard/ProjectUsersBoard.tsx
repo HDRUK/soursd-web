@@ -3,9 +3,6 @@
 import { ActionMenu } from "@/components/ActionMenu";
 import { UseDroppableSortItemsFnOptions } from "@/hooks/useDroppableSortItems";
 import useQueryAlerts from "@/hooks/useQueryAlerts";
-import KanbanBoardActionsMenuItems, {
-  KanbanBoardActionsMenuItemsProps,
-} from "@/modules/KanbanBoard/KanbanBoardActionMenuItems";
 import KanbanBoardUsersCard, {
   KanbanBoardUsersCardProps,
 } from "@/modules/KanbanBoard/KanbanBoardUsersCard";
@@ -17,31 +14,32 @@ import { DndItems, DragUpdateEvent, DragUpdateEventArgs } from "@/types/dnd";
 import { rectSortingStrategy } from "@dnd-kit/sortable";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import { ReactNode, useCallback, useMemo } from "react";
-import KanbanBoard from "../../modules/KanbanBoard";
+import { useCallback, useMemo } from "react";
+import KanbanBoard, { KanbanBoardHelperProps } from "../../modules/KanbanBoard";
 import {
   CustodianProjectUser,
   ProjectUser,
   WithRoutes,
 } from "../../types/application";
-import ProjectUsersActionItems from "./ProjectUsersActionItems";
-import ProjectUsersListActionMenuItems from "../ProjectUsersList/ProjectUsersListActionMenuItems";
+import ProjectUsersBoardActionItems from "./ProjectUsersBoardActionItems";
 
-const NAMESPACE_TRANSLATION_KANBAN = "Kanban";
+const NAMESPACE_TRANSLATION = "Projects.Users";
 
 type ProjectUsersBoardProps = WithRoutes<{
   custodianId: number;
   custodianProjectUsers: CustodianProjectUser[];
-  userActions: (data: CustodianProjectUser) => ReactNode;
+  onDelete: () => void;
+  onPrimaryContactChange: () => void;
 }>;
 
 export default function ProjectUsersBoard({
   custodianId,
   custodianProjectUsers,
   routes,
-  userActions,
+  onDelete,
+  onPrimaryContactChange,
 }: ProjectUsersBoardProps) {
-  const t = useTranslations(NAMESPACE_TRANSLATION_KANBAN);
+  const t = useTranslations(NAMESPACE_TRANSLATION);
 
   const {
     mutateAsync: changeValidationStatus,
@@ -120,11 +118,21 @@ export default function ProjectUsersBoard({
   }, []);
 
   const cardActionsComponent = useCallback(
-    ({ data, ...restProps }: KanbanBoardActionsMenuItemsProps) => {
+    (props: KanbanBoardHelperProps<ProjectUser>) => {
       return (
-        <ActionMenu>
-          <ProjectUsersListActionMenuItems {...restProps} t={t} />
-        </ActionMenu>
+        props.data && (
+          <ActionMenu>
+            {({ handleClose }) => (
+              <ProjectUsersBoardActionItems
+                handleClose={handleClose}
+                onDelete={onDelete}
+                onPrimaryContactChange={onPrimaryContactChange}
+                {...props}
+                t={t}
+              />
+            )}
+          </ActionMenu>
+        )
       );
     },
     []

@@ -1,5 +1,5 @@
 import { Box, Button, MenuItem, Select } from "@mui/material";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import {
   ActionMenuHelpers,
   ActionMenuItem,
@@ -11,7 +11,7 @@ import { KanbanBoardHelperProps } from "./KanbanBoard";
 export type KanbanBoardActionsMenuItemsProps = WithTranslations<
   Omit<ActionMenuProps, "children">
 > &
-  KanbanBoardHelperProps &
+  KanbanBoardHelperProps<unknown> &
   Pick<ActionMenuHelpers, "handleClose">;
 
 export default function KanbanBoardActionsMenuItems({
@@ -27,30 +27,28 @@ export default function KanbanBoardActionsMenuItems({
   };
 
   return (
-    <>
-      <ActionMenuItem
-        collapseContent={
-          <Box
-            sx={{
-              display: "flex",
-              gap: 1,
-            }}>
-            <Select
-              sx={{ minWidth: 200 }}
-              value={status}
-              onChange={handleStatusChange}>
-              {allowedColumns.map(key => (
-                <MenuItem value={key}>{t(key)}</MenuItem>
-              ))}
-            </Select>
-            <Button variant="outlined" onClick={handleClose}>
-              Cancel
-            </Button>
-            <Button onClick={e => onMoveClick(e, status)}>Confirm</Button>
-          </Box>
-        }>
-        Move to
-      </ActionMenuItem>
-    </>
+    <ActionMenuItem
+      collapseContent={
+        <Box
+          sx={{
+            display: "flex",
+            gap: 1,
+          }}>
+          <Select
+            sx={{ minWidth: 200 }}
+            value={status}
+            onChange={handleStatusChange}>
+            {allowedColumns.map(key => (
+              <MenuItem value={key}>{t(key)}</MenuItem>
+            ))}
+          </Select>
+          <Button variant="outlined" onClick={handleClose}>
+            Cancel
+          </Button>
+          <Button onClick={e => onMoveClick(e, status)}>Confirm</Button>
+        </Box>
+      }>
+      Move to
+    </ActionMenuItem>
   );
 }
