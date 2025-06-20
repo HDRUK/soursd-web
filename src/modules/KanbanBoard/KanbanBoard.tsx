@@ -141,7 +141,7 @@ export default function KanbanBoard<T>({
 
   const getAllowedColumns = (containerId: UniqueIdentifier) => {
     return Object.keys(items).filter(key =>
-      droppableFnOptions.isAllowed(
+      droppableFnOptions.isTransitionAllowed(
         {},
         { initial: { containerId }, containerId: key }
       )
@@ -258,7 +258,7 @@ export default function KanbanBoard<T>({
                 }
                 isDropAllowed={
                   !activeId ||
-                  droppableFnOptions.isAllowed(
+                  droppableFnOptions.isTransitionAllowed(
                     {},
                     {
                       initial: activeData,

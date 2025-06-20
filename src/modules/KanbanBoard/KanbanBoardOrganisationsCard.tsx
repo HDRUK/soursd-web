@@ -1,12 +1,16 @@
 import { Box, Card, CardProps, Typography } from "@mui/material";
 import { ReactNode } from "react";
 import Text from "../../components/Text";
-import { ProjectOrganisation, WithRoutes } from "../../types/application";
+import {
+  CustodianProjectOrganisation,
+  ProjectOrganisation,
+  WithRoutes,
+} from "../../types/application";
 import { renderLinkNameCell } from "../../utils/cells";
 
 export type KanbanBoardOrganisationsCardProps = CardProps &
   WithRoutes<{
-    data: ProjectOrganisation;
+    data: CustodianProjectOrganisation;
     actions?: ReactNode;
   }>;
 
@@ -17,7 +21,9 @@ export default function KanbanBoardOrganisationsCard({
   routes,
   ...restProps
 }: KanbanBoardOrganisationsCardProps) {
-  const { project, id } = data;
+  const {
+    project_organisation: { project, id, organisation },
+  } = data;
 
   return (
     <Card
@@ -41,7 +47,7 @@ export default function KanbanBoardOrganisationsCard({
         }}>
         <Box sx={{ flexGrow: 1 }}>
           {renderLinkNameCell(
-            data.organisation.organisation_name,
+            organisation.organisation_name,
             routes.name.path,
             {
               projectOrganisationId: id,

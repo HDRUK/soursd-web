@@ -1,7 +1,11 @@
 import { Box, Card, CardProps, Typography } from "@mui/material";
 import { ReactNode } from "react";
 import Text from "../../components/Text";
-import { ProjectUser, WithRoutes } from "../../types/application";
+import {
+  CustodianProjectUser,
+  ProjectUser,
+  WithRoutes,
+} from "../../types/application";
 import {
   renderProjectUserNameCell,
   renderUserOrganisationsNameCell,
@@ -9,7 +13,7 @@ import {
 
 export type KanbanBoardUsersCardProps = CardProps &
   WithRoutes<{
-    data: ProjectUser;
+    data: CustodianProjectUser;
     actions?: ReactNode;
   }>;
 
@@ -20,7 +24,10 @@ export default function KanbanBoardUsersCard({
   routes,
   ...restProps
 }: KanbanBoardUsersCardProps) {
-  const { affiliation, project, role } = data;
+  const {
+    project_has_user,
+    project_has_user: { affiliation, project, role },
+  } = data;
 
   return (
     <Card
@@ -43,7 +50,7 @@ export default function KanbanBoardUsersCard({
           fontSize: "1rem",
         }}>
         <Box sx={{ flexGrow: 1 }}>
-          {renderProjectUserNameCell(data, routes.name.path)}
+          {renderProjectUserNameCell(project_has_user, routes.name.path)}
         </Box>
       </Text>
       <Typography color="success.main">

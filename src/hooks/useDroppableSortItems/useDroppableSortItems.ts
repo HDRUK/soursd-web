@@ -27,7 +27,10 @@ export interface UseDroppableSortItemsProps<T> {
 
 export interface UseDroppableSortItemsFnOptions<T> {
   setState: (state: DndItems<T>) => void;
-  isAllowed?: (e: DragUpdateEvent, data: DragUpdateEventArgs<T>) => boolean;
+  isTransitionAllowed?: (
+    e: DragUpdateEvent,
+    data: DragUpdateEventArgs<T>
+  ) => boolean;
 }
 
 export interface UseDroppableSortItemsMoveOptions<T>
@@ -75,7 +78,7 @@ export default function useDroppableSortItems<T>({
     options: UseDroppableSortItemsFnOptions<T>
   ) => {
     const { over, active, collisions } = e;
-    const { setState, isAllowed } = options;
+    const { setState, isTransitionAllowed } = options;
 
     if (!collisions?.length) {
       const state = getInitialState(items);
@@ -98,7 +101,7 @@ export default function useDroppableSortItems<T>({
       const overIndex = findItemIndex(overContainer, over.id, items);
 
       if (
-        isAllowed?.(e, {
+        isTransitionAllowed?.(e, {
           containerId: overContainer,
           initial: initialArgs.current,
         })
@@ -171,7 +174,7 @@ export default function useDroppableSortItems<T>({
   ) => {
     const { over, active } = e;
     const overId = over?.id;
-    const { setState, isAllowed } = options;
+    const { setState, isTransitionAllowed } = options;
 
     if (overId == null || active.id in items) {
       return;
@@ -215,7 +218,7 @@ export default function useDroppableSortItems<T>({
           ...items[overContainer].slice(0, newIndex),
           {
             ...items[activeContainer][activeIndex],
-            isDroppable: isAllowed?.(e, {
+            isDroppable: isTransitionAllowed?.(e, {
               containerId: overContainer,
               initial: initialArgs.current,
             }),

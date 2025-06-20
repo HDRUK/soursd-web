@@ -8,12 +8,12 @@ import {
   deleteCustodianProjectUserQuery,
 } from "@/services/custodian_approvals";
 import { putProjectUserPrimaryContactQuery } from "@/services/projects";
-import { ProjectUser, WithTranslations } from "@/types/application";
+import { CustodianProjectUser, WithTranslations } from "@/types/application";
 import { useMutation } from "@tanstack/react-query";
 
 export type ProjectUsersListActionMenuProps = WithTranslations<{
   projectId?: number;
-  data: ProjectUser;
+  data: CustodianProjectUser;
   onDelete: () => void;
   onPrimaryContactChange: () => void;
 }>;

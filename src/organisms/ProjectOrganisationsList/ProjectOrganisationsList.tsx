@@ -14,9 +14,9 @@ import { CellContext, ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import ProjectOrganisationsListActionMenuItems from "./ProjectOrganisationsListActionMenuItems";
-import ProjectUsersFilters, {
-  ProjectUsersFilterKeys,
-} from "@/modules/ProjectUsersFilters";
+import ProjectOrganisationsFilters, {
+  ProjectOrganisationsFilterKeys,
+} from "@/modules/ProjectOrganisationsFilters";
 import { Button } from "@mui/material";
 
 const NAMESPACE_TRANSLATIONS_PROJECT_USERS = "Projects.Organisations";
@@ -55,8 +55,6 @@ export default function ProjectOrganisationsList({
   } = usePaginatedCustodianProjectOrganisations(custodianId, {
     defaultQueryParams: { project_id: projectId },
   });
-
-  console.log("custodianProjectOrganisations", custodianProjectOrganisations);
 
   useEffect(() => {
     if (showListView) refetch();
@@ -101,11 +99,14 @@ export default function ProjectOrganisationsList({
   return (
     <>
       <PageSection>
-        <ProjectUsersFilters
+        <ProjectOrganisationsFilters
           includeFilters={
             !showListView
-              ? [ProjectUsersFilterKeys.STATUS]
-              : [ProjectUsersFilterKeys.SORT, ProjectUsersFilterKeys.STATUS]
+              ? [ProjectOrganisationsFilterKeys.STATUS]
+              : [
+                  ProjectOrganisationsFilterKeys.SORT,
+                  ProjectOrganisationsFilterKeys.STATUS,
+                ]
           }
           {...filterProps}>
           {variant === EntityType.CUSTODIAN && (
@@ -118,7 +119,7 @@ export default function ProjectOrganisationsList({
               {!showListView ? "Switch to list view" : "Switch to board view"}
             </Button>
           )}
-        </ProjectUsersFilters>
+        </ProjectOrganisationsFilters>
       </PageSection>
       <PageSection>
         {/* note this is using paginated data */}
