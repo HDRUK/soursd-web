@@ -1,6 +1,8 @@
 // import getOrganisationApprovalQuery from "./getOrganisationApprovalQuery";
 
 import getCustodianProjectUserStates from "./getCustodianProjectUserStates";
+import getCustodianProjectUserWorkflowTransitions from "./getCustodianProjectUserWorkflowTransitions";
+import getCustodianProjectUserWorkflowTransitionsQuery from "./getCustodianProjectUserWorkflowTransitionsQuery";
 import getCustodianProjectUser from "./getCustodianProjectUser";
 import getCustodianProjectUsers from "./getCustodianProjectUsers";
 import putCustodianProjectUser from "./putCustodianProjectUser";
@@ -40,6 +42,8 @@ export {
   getCustodianProjectOrganisationsQuery,
   putCustodianProjectOrganisationQuery,
   usePaginatedCustodianProjectOrganisations,
+  getCustodianProjectUserWorkflowTransitions,
+  getCustodianProjectUserWorkflowTransitionsQuery,
 };
 
 export type * from "./types";

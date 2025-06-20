@@ -30,7 +30,7 @@ export default function ProjectOrganisationsBoard() {
       initialData={mockedKanbanProjectUser()}
       stateWorkflow={mockedProjectStateWorkflow}
       strategy={rectSortingStrategy}
-      onDragUpdate={handleUpdateState}
+      onDragEnd={handleUpdateState}
     />
   );
 }
