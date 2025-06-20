@@ -1,7 +1,7 @@
 "use client";
 
 import { ActionMenu } from "@/components/ActionMenu";
-import { UseDroppableSortItemsFnOptions } from "@/hooks/useDroppableSortItems";
+import useProjectEntityBoard from "@/hooks/useProjectEntityBoard";
 import useQueryAlerts from "@/hooks/useQueryAlerts";
 import KanbanBoardOrganisationsCard, {
   KanbanBoardOrganisationsCardProps,
@@ -11,18 +11,16 @@ import {
   putCustodianProjectOrganisationQuery,
 } from "@/services/custodian_approvals";
 import { DragUpdateEvent, DragUpdateEventArgs } from "@/types/dnd";
-import { getItemsByTransitions, isTransitionAllowed } from "@/utils/dnd";
 import { rectSortingStrategy } from "@dnd-kit/sortable";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 import KanbanBoard, { KanbanBoardHelperProps } from "../../modules/KanbanBoard";
 import {
   CustodianProjectOrganisation,
   WithRoutes,
 } from "../../types/application";
 import ProjectOrganisationsBoardActionItems from "./ProjectOrganisationsBoardActionItems";
-import useProjectEntityBoard from "@/hooks/useProjectEntityBoard";
 
 const NAMESPACE_TRANSLATION = "Projects.Organisations";
 

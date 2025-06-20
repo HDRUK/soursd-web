@@ -6,10 +6,7 @@ import { PropsWithChildren, useMemo } from "react";
 import { FilterIcon } from "../../consts/icons";
 import { SearchDirections } from "../../consts/search";
 import { PaginatedQueryReturn } from "../../hooks/usePaginatedQuery";
-import {
-  CustodianProjectOrganisation,
-  CustodianProjectUser,
-} from "../../types/application";
+import { CustodianProjectOrganisation } from "../../types/application";
 import { getSearchSortOrder } from "../../utils/query";
 import SearchActionMenu from "../SearchActionMenu";
 import SearchBar from "../SearchBar";
@@ -60,12 +57,14 @@ export default function ProjectOrganisationsFilters({
   const sortActions = [
     {
       label: t("sortActions.AZ"),
-      onClick: () => handleSortToggle("name", SearchDirections.ASC),
+      onClick: () =>
+        handleSortToggle("organisation_name", SearchDirections.ASC),
       checked: sortDirection === SearchDirections.ASC,
     },
     {
       label: t("sortActions.ZA"),
-      onClick: () => handleSortToggle("name", SearchDirections.DESC),
+      onClick: () =>
+        handleSortToggle("organisation_name", SearchDirections.DESC),
       checked: sortDirection === SearchDirections.DESC,
     },
   ];
@@ -86,7 +85,7 @@ export default function ProjectOrganisationsFilters({
       onClear={resetQueryParams}
       onSearch={(text: string) => {
         updateQueryParams({
-          "name[]": text,
+          "organisation_name[]": text,
         });
       }}
       placeholder={t("searchPlaceholder")}>

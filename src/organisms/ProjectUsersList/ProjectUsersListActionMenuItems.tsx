@@ -44,9 +44,11 @@ export default function ProjectUsersListActionMenuItems({
   useQueryAlerts(primaryContactQueryState);
 
   const {
-    project_id,
-    primary_contact,
-    registry: { id: registryId },
+    project_has_user: {
+      project_id,
+      primary_contact,
+      registry: { id: registryId },
+    },
   } = data;
 
   return (
