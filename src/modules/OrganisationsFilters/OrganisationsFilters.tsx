@@ -1,15 +1,14 @@
 "use client";
 
+import useSort from "@/hooks/useSort";
 import SortIcon from "@mui/icons-material/Sort";
 import { useTranslations } from "next-intl";
 import { Status } from "../../components/ChipStatus";
 import { FilterIcon } from "../../consts/icons";
-import { SearchDirections } from "../../consts/search";
 import { PaginatedQueryReturn } from "../../hooks/usePaginatedQuery";
-import SearchBar from "../SearchBar";
 import { Organisation } from "../../types/application";
-import { getSearchSortOrder } from "../../utils/query";
 import SearchActionMenu from "../SearchActionMenu";
+import SearchBar from "../SearchBar";
 
 const NAMESPACE_TRANSLATIONS_PROJECTS = "Organisations";
 const NAMESPACE_TRANSLATIONS_APPLICATION = "Application";
@@ -45,22 +44,17 @@ export default function OrganisationsFilters({
     return includeFilters.includes(key);
   };
 
-  const sortDirection = getSearchSortOrder(queryParams);
-
-  const sortActions = [
-    {
-      label: t("Search.sortActions_AZ"),
-      onClick: () =>
-        handleSortToggle("organisation_name", SearchDirections.ASC),
-      checked: sortDirection === SearchDirections.ASC,
-    },
-    {
-      label: t("Search.sortActions_ZA"),
-      onClick: () =>
-        handleSortToggle("organisation_name", SearchDirections.DESC),
-      checked: sortDirection === SearchDirections.DESC,
-    },
-  ];
+  const { actions: sortActions } = useSort({
+    queryParams,
+    items: [
+      {
+        label: t("sortByOrganisationName"),
+        key: "organisation_name",
+      },
+    ],
+    onSort: (key: string, direction: string) =>
+      handleSortToggle(key, direction),
+  });
 
   const filterStatusActions = [
     {

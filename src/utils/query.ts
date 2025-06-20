@@ -52,6 +52,12 @@ function getSearchSortOrder(queryParams: SearchParams) {
   );
 }
 
+function getSearchSortParam(queryParams: SearchParams) {
+  return (
+    typeof queryParams?.sort === "string" && queryParams?.sort.split(":")[0]
+  );
+}
+
 function getQueriesError<T extends MutationState & QueryState>(queries: T[]) {
   let errors: Error[] = [];
 
@@ -95,4 +101,5 @@ export {
   isAllQueriesSuccess,
   getSearchQuerystring,
   getSearchSortOrder,
+  getSearchSortParam,
 };

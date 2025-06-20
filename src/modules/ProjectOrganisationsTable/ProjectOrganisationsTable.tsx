@@ -8,11 +8,7 @@ import {
   CustodianProjectOrganisation,
   WithRoutes,
 } from "../../types/application";
-import {
-  renderLinkNameCell,
-  renderOrganisationsNameCell,
-  renderStatusCell,
-} from "../../utils/cells";
+import { renderLinkNameCell, renderStatusCell } from "../../utils/cells";
 
 export type ProjectOrganisationsTableColumns =
   | "organisationName"

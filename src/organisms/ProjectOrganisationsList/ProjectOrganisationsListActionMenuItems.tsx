@@ -37,15 +37,13 @@ export default function ProjectOrganisationsListActionMenuItems({
   });
 
   return (
-    <>
-      <ActionMenuItem
-        onClick={() => {
-          showDeleteConfirm({
-            projectId: data.project_id,
-          });
-        }}>
-        {t("removeOrganisationFromProject")}
-      </ActionMenuItem>
-    </>
+    <ActionMenuItem
+      onClick={() => {
+        showDeleteConfirm({
+          projectId: data.project_id,
+        });
+      }}>
+      {t("removeOrganisationFromProject")}
+    </ActionMenuItem>
   );
 }

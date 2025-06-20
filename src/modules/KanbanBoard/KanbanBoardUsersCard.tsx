@@ -1,11 +1,7 @@
 import { Box, Card, CardProps, Typography } from "@mui/material";
 import { ReactNode } from "react";
 import Text from "../../components/Text";
-import {
-  CustodianProjectUser,
-  ProjectUser,
-  WithRoutes,
-} from "../../types/application";
+import { CustodianProjectUser, WithRoutes } from "../../types/application";
 import {
   renderProjectUserNameCell,
   renderUserOrganisationsNameCell,

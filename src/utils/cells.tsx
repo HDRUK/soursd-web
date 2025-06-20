@@ -11,7 +11,6 @@ import {
   Organisation,
   Project,
   ProjectAllUser,
-  ProjectOrganisation,
   ProjectUser,
   ResearcherAffiliation,
   ResearcherProject,

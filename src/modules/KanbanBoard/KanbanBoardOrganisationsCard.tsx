@@ -3,7 +3,6 @@ import { ReactNode } from "react";
 import Text from "../../components/Text";
 import {
   CustodianProjectOrganisation,
-  ProjectOrganisation,
   WithRoutes,
 } from "../../types/application";
 import { renderLinkNameCell } from "../../utils/cells";

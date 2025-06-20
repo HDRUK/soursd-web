@@ -1163,8 +1163,7 @@
       "organisationSize": "Organisation size"
     },
     "Search": {
-      "sortActions_AZ": "Sort by Organisation Name A-Z",
-      "sortActions_ZA": "Sort by Organisation Name Z-A",
+      "sortByOrganisationName": "Organisation Name",
       "filterByProjectStatus": "Filter by status"
     },
     "sroOfficer": "Senior Responsible Officer",
@@ -1244,10 +1243,9 @@
     "approvedKey": "Approved Project",
     "unapprovedKey": "Project Pending Approval",
     "searchPlaceholder": "Search Projects",
-    "sortActions": {
-      "AZ": "Sort Alphabetical A-Z",
-      "ZA": "Sort Alphabetical Z-A"
-    },
+    "sortByOrganisationName": "Organisation name",
+    "sortByName": "Name",
+    "sortByProjectTitle": "Project title",
     "endDate": "End date",
     "startDate": "Start date",
     "projects": "Projects",
