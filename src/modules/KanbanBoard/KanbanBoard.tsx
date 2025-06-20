@@ -201,7 +201,7 @@ export default function KanbanBoard<T>({
 
   const handleDragStart = (e: DragOverEvent) => {
     const data = handleDragSortStart(e, items);
-
+    console.log("DRAGGING");
     initialArgs.current = data;
 
     setActiveData(data);

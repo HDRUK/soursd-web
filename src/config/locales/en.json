@@ -203,6 +203,8 @@
     "dataUseDescriptionPlaceholder": "Data description",
     "usersListTitle": "Users",
     "usersListDescription": "This table enables Validation Team members to track and manage application workflow from initial enquiry to project closure.  Clicking on a User will show you more information and next steps.",
+    "organisationsListTitle": "Organisations",
+    "organisationsListDescription": "This page enables you and your team members to track and manage Organisation validation across all projects.  Clicking on an Organisation will show you more information and any next steps. You can also drag and drop Organisations between the different status lanes.",
     "noResultsMessage": "No members found",
     "homeTitle": "Your outstanding actions",
     "searchProjectUsersPlaceholder": "Search for User, Project Name, Organisation"
@@ -1198,6 +1200,23 @@
       "removeUserFromProject": "Remove from project",
       "addNewMemberButton": "Add a new member",
       "requestAddNewMemberButton": "Request member is affiliated"
+    },
+    "Organisations": {
+      "organisationSroOfficer": "Senior Responsible Officer",
+      "projectName": "Project name",
+      "pending": "Pending",
+      "validation_in_progress": "Validation In Progress",
+      "validation_complete": "Validation Complete",
+      "more_user_info_req": "More User Information Requested",
+      "more_org_info_req": "More Organisation Information Requested",
+      "escalate_validation": "Escalation to Validation Committee",
+      "validated": "Validated",
+      "status": "Project status",
+      "organisationName": "Organisation name",
+      "projectRole": "Project role",
+      "name": "Name",
+      "actions": "Actions",
+      "removeOrganisationFromProject": "Remove from project"
     },
     "status": "Project status",
     "safeProject": "Safe Project",

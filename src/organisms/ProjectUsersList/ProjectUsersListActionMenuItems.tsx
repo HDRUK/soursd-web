@@ -4,10 +4,10 @@ import { ActionMenuItem } from "@/components/ActionMenu";
 import useQueryAlerts from "@/hooks/useQueryAlerts";
 import useQueryConfirmAlerts from "@/hooks/useQueryConfirmAlerts";
 import {
-  DeleteProjectUserPayload,
-  deleteProjectUserQuery,
-  putProjectUserPrimaryContactQuery,
-} from "@/services/projects";
+  DeleteCustodianProjectUserPayload,
+  deleteCustodianProjectUserQuery,
+} from "@/services/custodian_approvals";
+import { putProjectUserPrimaryContactQuery } from "@/services/projects";
 import { ProjectUser, WithTranslations } from "@/types/application";
 import { useMutation } from "@tanstack/react-query";
 
@@ -25,7 +25,7 @@ export default function ProjectUsersListActionMenuItems({
   t,
 }: ProjectUsersListActionMenuProps) {
   const { mutateAsync: deleteUserAsync, ...deleteQueryState } = useMutation(
-    deleteProjectUserQuery()
+    deleteCustodianProjectUserQuery()
   );
 
   const { mutateAsync: makePrimaryContactAsync, ...primaryContactQueryState } =
@@ -34,7 +34,7 @@ export default function ProjectUsersListActionMenuItems({
   const showDeleteConfirm = useQueryConfirmAlerts(deleteQueryState, {
     confirmAlertProps: {
       preConfirm: async payload => {
-        await deleteUserAsync(payload as DeleteProjectUserPayload);
+        await deleteUserAsync(payload as DeleteCustodianProjectUserPayload);
 
         onDelete();
       },

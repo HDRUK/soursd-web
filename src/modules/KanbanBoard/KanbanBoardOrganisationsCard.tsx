@@ -1,26 +1,23 @@
 import { Box, Card, CardProps, Typography } from "@mui/material";
 import { ReactNode } from "react";
 import Text from "../../components/Text";
-import { ProjectUser, WithRoutes } from "../../types/application";
-import {
-  renderProjectUserNameCell,
-  renderUserOrganisationsNameCell,
-} from "../../utils/cells";
+import { ProjectOrganisation, WithRoutes } from "../../types/application";
+import { renderLinkNameCell } from "../../utils/cells";
 
-export type KanbanBoardUsersCardProps = CardProps &
+export type KanbanBoardOrganisationsCardProps = CardProps &
   WithRoutes<{
-    data: ProjectUser;
+    data: ProjectOrganisation;
     actions?: ReactNode;
   }>;
 
-export default function KanbanBoardUsersCard({
+export default function KanbanBoardOrganisationsCard({
   data,
   actions,
   sx,
   routes,
   ...restProps
-}: KanbanBoardUsersCardProps) {
-  const { affiliation, project, role } = data;
+}: KanbanBoardOrganisationsCardProps) {
+  const { project, id } = data;
 
   return (
     <Card
@@ -43,16 +40,19 @@ export default function KanbanBoardUsersCard({
           fontSize: "1rem",
         }}>
         <Box sx={{ flexGrow: 1 }}>
-          {renderProjectUserNameCell(data, routes.name.path)}
+          {renderLinkNameCell(
+            data.organisation.organisation_name,
+            routes.name.path,
+            {
+              projectOrganisationId: id,
+            }
+          )}
         </Box>
       </Text>
-      <Typography color="success.main">
-        {renderUserOrganisationsNameCell(affiliation?.organisation)}
-      </Typography>
+      <Typography color="success.main">Number affiliated users</Typography>
       <Typography>
         {project.title} (id: {project.id})
       </Typography>
-      <Typography>{role?.name}</Typography>
     </Card>
   );
 }
