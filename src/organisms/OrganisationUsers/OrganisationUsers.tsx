@@ -87,7 +87,10 @@ export default function OrganisationUsers() {
       cell: info => {
         return renderUserNameCell(
           info.row.original,
-          routes.profileOrganisationUsersIdentity?.path
+          routes.profileOrganisationUsersIdentity?.path,
+          {
+            userId: info.row.original.id,
+          }
         );
       },
     },

@@ -9,11 +9,13 @@ export interface DndSortableItemProps {
   index: number;
   disabled?: boolean;
   isDroppable?: boolean;
+  isError?: boolean;
 }
 
 function DndSortableItem({
   disabled,
   isDroppable,
+  isError,
   id,
   index,
   children,
@@ -31,14 +33,8 @@ function DndSortableItem({
       transition={transition}
       transform={transform}
       listeners={listeners}
-      sx={
-        isDroppable === false && {
-          visibility: "hidden",
-          position: "fixed",
-          zIndex: 0,
-          cursor: "no-drop",
-        }
-      }>
+      isDroppable={isDroppable !== false}
+      isError={isError}>
       {children}
     </DndItem>
   );

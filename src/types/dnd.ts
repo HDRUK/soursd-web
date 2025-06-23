@@ -5,6 +5,7 @@ export type DndItems<T> = Record<
   (T & {
     id: UniqueIdentifier;
     isDroppable?: boolean;
+    isError?: boolean;
   })[]
 >;
 

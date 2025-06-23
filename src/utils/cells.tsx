@@ -1,5 +1,10 @@
+"use client";
+
+import ChipStatus, { Status } from "@/components/ChipStatus";
+import { PrimaryContactIcon } from "@/consts/icons";
 import WarningAmberOutlinedIcon from "@mui/icons-material/WarningAmberOutlined";
 import { Link, Typography } from "@mui/material";
+import { Box } from "@mui/system";
 import { CellContext } from "@tanstack/react-table";
 import {
   CustodianUser,
@@ -52,9 +57,9 @@ function renderLinkNameCell(
   options: Record<string, number>
 ) {
   return (
-    <Typography color="primary">
-      <Link href={injectParamsIntoPath(route, options)}>{name}</Link>
-    </Typography>
+    <Link href={injectParamsIntoPath(route, options)} color="menuList1.main">
+      {name}
+    </Link>
   );
 }
 
@@ -65,34 +70,29 @@ function renderUserNameCell(
 ) {
   if (!user) return "";
 
-  const { first_name, last_name, id } = user;
-
-  return route && id
-    ? renderLinkNameCell(`${first_name} ${last_name}`, route, {
-        userId: id,
-        ...options,
-      })
-    : `${first_name} ${last_name}`;
-}
-
-function renderProjectUserNameCell(
-  projectUser: ProjectUser,
-  route?: string,
-  options: Record<string, number> = {}
-) {
-  if (!projectUser) return "";
-  const { registry, id } = projectUser;
-  const { user } = registry;
-
   const { first_name, last_name } = user;
 
-  return route && id
-    ? renderLinkNameCell(`${first_name} ${last_name}`, route, {
-        projectUserId: id,
-        ...options,
-      })
+  return route
+    ? renderLinkNameCell(`${first_name} ${last_name}`, route, options)
     : `${first_name} ${last_name}`;
 }
+
+const renderProjectUserNameCell = (data: ProjectUser, route: string) => {
+  const {
+    id,
+    primary_contact,
+    registry: { user },
+  } = data;
+
+  return (
+    <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+      {renderUserNameCell(user, route, {
+        projectUserId: id,
+      })}
+      {!!primary_contact && <PrimaryContactIcon fontSize="small" />}
+    </Box>
+  );
+};
 
 function renderWarningCell<T extends ResearcherAffiliation>(
   info: CellContext<T, unknown>
@@ -114,9 +114,9 @@ function renderProjectsNameCell(values: ResearcherProject[]) {
 }
 
 function renderUserOrganisationsNameCell(
-  values: Organisation | Organisation[]
+  values: Organisation | Organisation[] | undefined
 ) {
-  const names = renderOrganisationsNameCell(values);
+  const names = values && renderOrganisationsNameCell(values);
 
   return (
     names || (
@@ -141,6 +141,10 @@ function renderOrganisationsNameCell(values: Organisation | Organisation[]) {
   return names;
 }
 
+const renderStatusCell = (info: CellContext<User | ProjectUser, unknown>) => (
+  <ChipStatus status={info.getValue() as Status} />
+);
+
 export {
   renderAffiliationDateRangeCell,
   renderLinkNameCell,
@@ -149,6 +153,7 @@ export {
   renderProjectNameCell,
   renderProjectsNameCell,
   renderProjectUserNameCell,
+  renderStatusCell,
   renderUserNameCell,
   renderUserOrganisationsNameCell,
   renderWarningCell,

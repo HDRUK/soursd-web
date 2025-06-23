@@ -6,8 +6,8 @@ import { ProjectFilterKeys } from "@/modules/ProjectsFilters";
 import { usePaginatedCustodiansUserProjects } from "@/services/custodians";
 import { ResearcherProject } from "@/types/application";
 import {
-  renderUserOrganisationsNameCell,
   renderProjectNameCell,
+  renderUserOrganisationsNameCell,
 } from "@/utils/cells";
 import { ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";

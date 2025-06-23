@@ -7,6 +7,7 @@ import {
   UserProfileCompletionCategories,
 } from "@/consts/user";
 import { RuleState } from "./rules";
+import { RouteConfig } from "./router";
 
 interface StateWorkflow {
   transitions: Record<string, string[]>;
@@ -22,12 +23,18 @@ type WithTranslations<T> = T & {
   t: Translations;
 };
 
-type ModelState<T> = T & {
-  model_state: {
-    state: {
-      slug: Status;
-    };
+type ModelState = {
+  state: {
+    slug: Status;
   };
+};
+
+type WithModelState<T> = T & {
+  model_state: ModelState;
+};
+
+type WithRoutes<T> = T & {
+  routes: Record<string, RouteConfig>;
 };
 
 interface File {
@@ -57,7 +64,7 @@ interface Permission {
   };
 }
 
-type Custodian = ModelState<{
+type Custodian = WithModelState<{
   id: number;
   created_at: string;
   updated_at: string;
@@ -156,7 +163,7 @@ type Identity = {
   updated_at?: string;
 };
 
-type User = ModelState<{
+type User = WithModelState<{
   id: number;
   registry_id: number;
   first_name: string;
@@ -229,7 +236,7 @@ interface OrganisationIdvt {
 
 type Organisation = OrganisationIdvt &
   AddressFields &
-  ModelState<{
+  WithModelState<{
     companies_house_no: string;
     organisation_name: string;
     organisation_unique_id: string;
@@ -271,7 +278,7 @@ type Organisation = OrganisationIdvt &
     departments: Department[];
     unclaimed: number;
     organisation_size?: number;
-    project?: ModelState<ResearcherProject>;
+    project?: WithModelState<ResearcherProject>;
   }>;
 
 interface ResearcherEducation {
@@ -358,7 +365,7 @@ interface ProjectRole {
   name: string;
 }
 
-type ResearcherProject = ModelState<{
+type ResearcherProject = WithModelState<{
   id: number;
   title: string;
   lay_summary: string;
@@ -437,7 +444,7 @@ interface ProjectUser {
   registry: Registry;
 }
 
-type CustodianProjectUser = ModelState<{
+type CustodianProjectUser = WithModelState<{
   id: number;
   project_has_user_id: number;
   custodian_id: number;
@@ -454,7 +461,7 @@ interface ProjectOrganisation {
   project: Project;
 }
 
-type CustodianProjectOrganisation = ModelState<{
+type CustodianProjectOrganisation = WithModelState<{
   id: number;
   project_has_organisation_id: number;
   custodian_id: number;
@@ -463,7 +470,7 @@ type CustodianProjectOrganisation = ModelState<{
   project_organisation: ProjectOrganisation;
 }>;
 
-type ProjectAllUser = ModelState<{
+type ProjectAllUser = WithModelState<{
   id: number;
   user_id: number;
   registry_id: number;
@@ -534,5 +541,9 @@ export type {
   ProjectDetails,
   WithStateWorkflow,
   StateWorkflow,
+  Translations,
   WithTranslations,
+  ModelState,
+  WithModelState,
+  WithRoutes,
 };

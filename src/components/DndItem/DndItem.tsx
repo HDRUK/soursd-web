@@ -3,7 +3,9 @@ import type { Transform } from "@dnd-kit/utilities";
 import React, { ReactNode } from "react";
 
 import { BoxProps } from "@mui/system";
+import { motion } from "framer-motion";
 import { StyledItem, StyledWrapper } from "./DndItem.styles";
+import { errorVariants } from "./DndItem.animations";
 
 export interface DndItemProps extends BoxProps {
   children: ReactNode;
@@ -15,7 +17,20 @@ export interface DndItemProps extends BoxProps {
   listeners?: DraggableSyntheticListeners;
   transition?: string | null;
   isDroppable?: boolean;
+  isError?: boolean;
 }
+
+const getAnimationProps = ({ isError }: Pick<DndItemProps, "isError">) => {
+  if (isError) {
+    return {
+      animate: "error",
+      variants: errorVariants,
+      initial: "initial",
+    };
+  }
+
+  return null;
+};
 
 const DndItem = React.forwardRef<HTMLLIElement, DndItemProps>(
   (
@@ -29,6 +44,7 @@ const DndItem = React.forwardRef<HTMLLIElement, DndItemProps>(
       transform,
       children,
       isDroppable,
+      isError,
       ...restProps
     },
     ref
@@ -56,15 +72,17 @@ const DndItem = React.forwardRef<HTMLLIElement, DndItemProps>(
           }),
         }}
         ref={ref}>
-        <StyledItem
-          dragging={dragging}
-          dragOverlay={dragOverlay}
-          disabled={disabled}
-          tabIndex={0}
-          {...listeners}
-          {...restProps}>
-          {children}
-        </StyledItem>
+        <motion.div {...getAnimationProps({ isError })}>
+          <StyledItem
+            dragging={dragging}
+            dragOverlay={dragOverlay}
+            disabled={disabled}
+            tabIndex={0}
+            {...listeners}
+            {...restProps}>
+            {children}
+          </StyledItem>
+        </motion.div>
       </StyledWrapper>
     );
   }
