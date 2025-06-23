@@ -3,6 +3,7 @@
 import useSort from "@/hooks/useSort";
 import SortIcon from "@mui/icons-material/Sort";
 import { useTranslations } from "next-intl";
+import useFilter from "@/hooks/useFilter";
 import { Status } from "../../components/ChipStatus";
 import { FilterIcon } from "../../consts/icons";
 import { PaginatedQueryReturn } from "../../hooks/usePaginatedQuery";
@@ -56,24 +57,28 @@ export default function OrganisationsFilters({
       handleSortToggle(key, direction),
   });
 
-  const filterStatusActions = [
-    {
-      label: tApplication("status_approved"),
-      onClick: () => handleFieldToggle("filter", [Status.PROJECT_APPROVED, ""]),
-      checked: queryParams.filter === Status.PROJECT_APPROVED,
-    },
-    {
-      label: tApplication("status_pending"),
-      onClick: () => handleFieldToggle("filter", [Status.PROJECT_PENDING, ""]),
-      checked: queryParams.filter === Status.PROJECT_PENDING,
-    },
-    {
-      label: tApplication("status_completed"),
-      onClick: () =>
-        handleFieldToggle("filter", [Status.PROJECT_COMPLETED, ""]),
-      checked: queryParams.filter === Status.PROJECT_COMPLETED,
-    },
-  ];
+  const { actions: filterStatusActions } = useFilter({
+    queryParams,
+    items: [
+      {
+        label: t("status_approved"),
+        key: "filter",
+        value: Status.PROJECT_APPROVED,
+      },
+      {
+        label: t("status_pending"),
+        key: "filter",
+        value: Status.PROJECT_PENDING,
+      },
+      {
+        label: t("status_completed"),
+        key: "filter",
+        value: Status.PROJECT_COMPLETED,
+      },
+    ],
+    onFilter: (key: string, value: string) =>
+      handleFieldToggle(key, [value, ""]),
+  });
 
   return (
     <SearchBar
