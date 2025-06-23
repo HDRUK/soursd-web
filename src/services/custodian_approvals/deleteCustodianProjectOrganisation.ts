@@ -8,7 +8,7 @@ export default async (
   options: ResponseOptions
 ): Promise<ResponseJson<null>> => {
   const response = await deleteRequest(
-    `/custodian_approvals/${custodianId}/projectUsers/${id}`
+    `/custodian_approvals/${custodianId}/projectOrganisations/${id}`
   );
 
   return handleJsonResponse(response, options);
