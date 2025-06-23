@@ -1530,12 +1530,39 @@
     "CUSTODIAN_ADMIN": "Admin"
   },
   "UserHistory": {
-    "profile_completed": "Profile completed",
-    "affiliations_complete": "Affiliations completed",
-    "profile_created": "Profile Created",
     "daysSince": "{days} days ago",
-    "custodian_rejected": "Custodian Rejected User",
-    "custodian_approved": "Custodian Approved User"
+    "user": {
+      "created": {
+        "title": "User account created",
+        "description": "with primary email \"{attributes_email}\"   "
+      },
+      "updated": {
+        "title": "User updated their details",
+        "description": "The following data was changed: {attributeKeys}"
+      }
+    },
+    "project_has_user": {
+      "created": {
+        "title": "User added to project",
+        "description": "The user was added to the project titled \"{project_title}\""
+      }
+    },
+    "validation_check": {
+      "passed": {
+        "title": "Passed validation check",
+        "description": "{check_description}"
+      },
+      "failed": {
+        "title": "Failed validation check",
+        "description": "{check_description}"
+      }
+    },
+    "custodian_project_validation_status": {
+      "status_changed": {
+        "title": "Project validation status changed",
+        "description": "{new_status} on project \"{project_name}\""
+      }
+    }
   },
   "ConfirmAffiliation": {
     "heading": "Pending affiliations",
