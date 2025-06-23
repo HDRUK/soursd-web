@@ -1,4 +1,4 @@
-import { UserProvider } from "@/consts/user";
+import { UserProvider, UserHistoryLog } from "@/consts/user";
 import { ResearcherProject, User } from "@/types/application";
 
 type PatchUserPayload = Partial<User>;
@@ -53,9 +53,16 @@ type PostUserResponse = any;
 type PostUserInviteResponse = User;
 
 interface UserHistory {
-  log: string;
-  details?: string;
+  id: number;
+  description: string;
+  event: UserHistoryLog;
+  log_name: string;
+  properties: Record<string, Record<string, string>>;
   created_at: string;
+  updated_at: string;
+  subject_type: string;
+  subject: Partial<User>;
+  causer: Partial<User>;
 }
 
 export type {
