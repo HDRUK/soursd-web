@@ -9,6 +9,8 @@ import { PaginatedQueryReturn } from "../../hooks/usePaginatedQuery";
 import { CustodianProjectOrganisation } from "../../types/application";
 import SearchActionMenu from "../SearchActionMenu";
 import SearchBar from "../SearchBar";
+import { Status } from "@/components/ChipStatus";
+import useFilter from "@/hooks/useFilter";
 
 const NAMESPACE_TRANSLATIONS_PROJECTS = "Projects";
 const NAMESPACE_TRANSLATIONS_APPLICATION = "Application";
@@ -63,16 +65,18 @@ export default function ProjectOrganisationsFilters({
       handleSortToggle(key, direction),
   });
 
-  const filterStatusActions = useMemo(
-    () => [
+  const { actions: filterStatusActions } = useFilter({
+    queryParams,
+    items: [
       {
         label: tApplication("status_registered"),
-        onClick: () => handleFieldToggle("status", ["registered", ""]),
-        checked: queryParams.status === "registered",
+        key: "filter",
+        value: Status.REGISTERED,
       },
     ],
-    [queryParams, handleFieldToggle, t]
-  );
+    onFilter: (key: string, value: string) =>
+      handleFieldToggle(key, [value, ""]),
+  });
 
   return (
     <SearchBar
