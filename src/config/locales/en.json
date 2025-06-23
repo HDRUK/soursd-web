@@ -1556,6 +1556,12 @@
         "title": "Failed validation check",
         "description": "{check_description}"
       }
+    },
+    "custodian_project_validation_status": {
+      "status_changed": {
+        "title": "Project validation status changed",
+        "description": "{new_status} on project \"{project_name}\""
+      }
     }
   },
   "ConfirmAffiliation": {

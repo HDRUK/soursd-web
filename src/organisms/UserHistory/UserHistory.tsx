@@ -8,6 +8,7 @@ import MaskLabel from "../../components/MaskLabel";
 import { getUserHistoryQuery } from "../../services/users";
 
 const NAMESPACE_TRANSLATION = "UserHistory";
+const NAMESPACE_TRANSLATION_APPLICATION = "Application";
 
 function flattenObject(
   obj: Record<string, unknown>,
@@ -33,6 +34,7 @@ function flattenObject(
 export default function UserHistory() {
   const user = useStore(store => store.getCurrentUser());
   const t = useTranslations(NAMESPACE_TRANSLATION);
+  const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
 
   const { data: userHistory } = useQuery(
     getUserHistoryQuery(user?.id as number)
@@ -48,6 +50,18 @@ export default function UserHistory() {
         const userName = `${logUser?.first_name} ${logUser?.last_name}`;
 
         const changedAttributeKeys = Object.keys(properties?.attributes ?? {});
+
+        const baseProperties = flattenObject(properties);
+
+        const hydratedProperties = {
+          ...baseProperties,
+          ...(properties.old_status && {
+            old_status: tApplication(`status_${properties.old_status}`),
+          }),
+          ...(properties.new_status && {
+            new_status: tApplication(`status_${properties.new_status}`),
+          }),
+        };
 
         return (
           <Card
@@ -74,7 +88,7 @@ export default function UserHistory() {
                   <Typography variant="body2" sx={{ fontStyle: "italic" }}>
                     {t(`${log_name}.${event}.description`, {
                       attributeKeys: changedAttributeKeys.join(", "),
-                      ...(flattenObject(properties) ?? {}),
+                      ...(hydratedProperties ?? {}),
                     } as unknown as TranslationValues)}
                   </Typography>
                   <Typography variant="caption" color="text.secondary">
