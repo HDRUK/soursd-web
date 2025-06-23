@@ -1,22 +1,21 @@
 "use client";
 
 import { ActionMenu } from "@/components/ActionMenu";
+import ButtonToggle from "@/components/ButtonToggle";
 import PageSection from "@/modules/PageSection";
-// import ProjectOrganisationsFilters, {
-//   ProjectOrganisationsFilterKeys,
-// } from "@/modules/ProjectOrganisationsFilters";
+import ProjectOrganisationsFilters, {
+  ProjectOrganisationsFilterKeys,
+} from "@/modules/ProjectOrganisationsFilters";
 import ProjectOrganisationsTable from "@/modules/ProjectOrganisationsTable";
 import ProjectOrganisationsBoard from "@/organisms/ProjectOrganisationsBoard";
 import { usePaginatedCustodianProjectOrganisations } from "@/services/custodian_approvals";
 import { EntityType } from "@/types/api";
 import { CustodianProjectOrganisation, WithRoutes } from "@/types/application";
+import ListIcon from "@mui/icons-material/List";
+import ViewColumnIconOutlined from "@mui/icons-material/ViewColumnOutlined";
 import { CellContext, ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
-import ProjectOrganisationsFilters, {
-  ProjectOrganisationsFilterKeys,
-} from "@/modules/ProjectOrganisationsFilters";
-import { Button } from "@mui/material";
 import ProjectOrganisationsListActionMenuItems from "./ProjectOrganisationsListActionMenuItems";
 
 const NAMESPACE_TRANSLATIONS_PROJECT_USERS = "Projects.Organisations";
@@ -110,14 +109,17 @@ export default function ProjectOrganisationsList({
           }
           {...filterProps}>
           {variant === EntityType.CUSTODIAN && (
-            <Button
-              variant="outlined"
-              startIcon={!showListView ? "" : ""}
-              onClick={() => {
-                setShowListView(!showListView);
-              }}>
-              {!showListView ? "Switch to list view" : "Switch to board view"}
-            </Button>
+            <ButtonToggle
+              toggleOffButtonProps={{
+                startIcon: <ListIcon />,
+                label: "Switch to list view",
+              }}
+              toggleOnButtonProps={{
+                startIcon: <ViewColumnIconOutlined />,
+                label: "Switch to board view",
+              }}
+              onToggle={setShowListView}
+            />
           )}
         </ProjectOrganisationsFilters>
       </PageSection>

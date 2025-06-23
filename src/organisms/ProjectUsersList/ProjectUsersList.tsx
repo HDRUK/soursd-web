@@ -1,6 +1,7 @@
 "use client";
 
 import { ActionMenu } from "@/components/ActionMenu";
+import ButtonToggle from "@/components/ButtonToggle";
 import ProjectsAddUserModal from "@/components/ProjectsAddUserModal";
 import PageSection from "@/modules/PageSection";
 import ProjectUsersFilters, {
@@ -110,16 +111,17 @@ export default function ProjectUsersList({
           }
           {...filterProps}>
           {variant === EntityType.CUSTODIAN && (
-            <Button
-              variant="outlined"
-              startIcon={
-                !showListView ? <ListIcon /> : <ViewColumnIconOutlined />
-              }
-              onClick={() => {
-                setShowListView(!showListView);
-              }}>
-              {!showListView ? "Switch to list view" : "Switch to board view"}
-            </Button>
+            <ButtonToggle
+              toggleOffButtonProps={{
+                startIcon: <ListIcon />,
+                label: "Switch to list view",
+              }}
+              toggleOnButtonProps={{
+                startIcon: <ViewColumnIconOutlined />,
+                label: "Switch to board view",
+              }}
+              onToggle={setShowListView}
+            />
           )}
 
           {projectId && (
