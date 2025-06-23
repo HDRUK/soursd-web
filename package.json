@@ -47,7 +47,7 @@
     "@veriff/js-sdk": "^1.5.1",
     "axios": "^1.7.7",
     "babel-jest": "^29.7.0",
-    "cookie": "^0.6.0",
+    "cookie": "^0.7.0",
     "cookies-next": "^4.2.1",
     "countries-list": "^3.1.1",
     "date-fns": "^4.1.0",
