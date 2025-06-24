@@ -2,12 +2,9 @@
 
 import { ActionMenuItem } from "@/components/ActionMenu";
 import useQueryAlerts from "@/hooks/useQueryAlerts";
-import useQueryConfirmAlerts from "@/hooks/useQueryConfirmAlerts";
-import {
-  DeleteCustodianProjectUserPayload,
-  deleteCustodianProjectUserQuery,
-} from "@/services/custodian_approvals";
+import useMutateDeleteEntityFromProjectWithConfirmation from "@/queries/useMutateDeleteEntityFromProjectWithConfirmation";
 import { putProjectUserPrimaryContactQuery } from "@/services/projects";
+import { EntityType } from "@/types/api";
 import { CustodianProjectUser, WithTranslations } from "@/types/application";
 import { useMutation } from "@tanstack/react-query";
 
@@ -24,27 +21,19 @@ export default function ProjectUsersListActionMenuItems({
   data,
   t,
 }: ProjectUsersListActionMenuProps) {
-  const { mutateAsync: deleteUserAsync, ...deleteQueryState } = useMutation(
-    deleteCustodianProjectUserQuery()
-  );
+  const { showConfirm } = useMutateDeleteEntityFromProjectWithConfirmation({
+    entityType: EntityType.USER,
+    onDelete,
+  });
 
   const { mutateAsync: makePrimaryContactAsync, ...primaryContactQueryState } =
     useMutation(putProjectUserPrimaryContactQuery());
-
-  const showDeleteConfirm = useQueryConfirmAlerts(deleteQueryState, {
-    confirmAlertProps: {
-      preConfirm: async payload => {
-        await deleteUserAsync(payload as DeleteCustodianProjectUserPayload);
-
-        onDelete();
-      },
-    },
-  });
 
   useQueryAlerts(primaryContactQueryState);
 
   const {
     project_has_user: {
+      id,
       project_id,
       primary_contact,
       registry: { id: registryId },
@@ -55,10 +44,7 @@ export default function ProjectUsersListActionMenuItems({
     <>
       <ActionMenuItem
         onClick={() => {
-          showDeleteConfirm({
-            projectId: project_id,
-            registryId,
-          });
+          showConfirm(id);
         }}>
         {t("removeUserFromProject")}
       </ActionMenuItem>

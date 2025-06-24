@@ -1,0 +1,3 @@
+import useMutateDeleteEntityFromProjectWithConfirmation from "./useMutateDeleteEntityFromProjectWithConfirmation";
+
+export default useMutateDeleteEntityFromProjectWithConfirmation;

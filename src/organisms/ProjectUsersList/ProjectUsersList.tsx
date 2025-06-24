@@ -75,7 +75,7 @@ export default function ProjectUsersList({
     return (
       <ActionMenu>
         <ProjectUsersListActionMenuItems
-          data={info.row.original.project_has_user}
+          data={info.row.original}
           {...actionMenuProps}
         />
       </ActionMenu>

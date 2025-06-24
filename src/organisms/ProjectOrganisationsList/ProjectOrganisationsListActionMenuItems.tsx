@@ -1,17 +1,16 @@
 "use client";
 
 import { ActionMenuItem } from "@/components/ActionMenu";
-import useQueryConfirmAlerts from "@/hooks/useQueryConfirmAlerts";
+import useMutateDeleteEntityFromProjectWithConfirmation from "@/queries/useMutateDeleteEntityFromProjectWithConfirmation";
+import { EntityType } from "@/types/api";
 import {
-  DeleteCustodianProjectOrganisationPayload,
-  deleteCustodianProjectOrganisationQuery,
-} from "@/services/custodian_approvals";
-import { ProjectOrganisation, WithTranslations } from "@/types/application";
-import { useMutation } from "@tanstack/react-query";
+  CustodianProjectOrganisation,
+  WithTranslations,
+} from "@/types/application";
 
 export type ProjectOrganisationsListActionMenuProps = WithTranslations<{
   projectId?: number;
-  data: ProjectOrganisation;
+  data: CustodianProjectOrganisation;
   onDelete: () => void;
 }>;
 
@@ -20,28 +19,19 @@ export default function ProjectOrganisationsListActionMenuItems({
   data,
   t,
 }: ProjectOrganisationsListActionMenuProps) {
-  const { mutateAsync: deleteUserAsync, ...deleteQueryState } = useMutation(
-    deleteCustodianProjectOrganisationQuery()
-  );
-
-  const showDeleteConfirm = useQueryConfirmAlerts(deleteQueryState, {
-    confirmAlertProps: {
-      preConfirm: async payload => {
-        await deleteUserAsync(
-          payload as DeleteCustodianProjectOrganisationPayload
-        );
-
-        onDelete();
-      },
-    },
+  const { showConfirm } = useMutateDeleteEntityFromProjectWithConfirmation({
+    entityType: EntityType.ORGANISATION,
+    onDelete,
   });
+
+  const {
+    project_organisation: { id },
+  } = data;
 
   return (
     <ActionMenuItem
       onClick={() => {
-        showDeleteConfirm({
-          projectId: data.project_id,
-        });
+        showConfirm(id);
       }}>
       {t("removeOrganisationFromProject")}
     </ActionMenuItem>

@@ -70,7 +70,7 @@ export default function ProjectOrganisationsList({
     return (
       <ActionMenu>
         <ProjectOrganisationsListActionMenuItems
-          data={info.row.original.project_organisation}
+          data={info.row.original}
           {...actionMenuProps}
         />
       </ActionMenu>
