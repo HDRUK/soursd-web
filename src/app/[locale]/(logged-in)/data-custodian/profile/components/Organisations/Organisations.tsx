@@ -11,7 +11,7 @@ import { useTranslations } from "next-intl";
 
 const NAMESPACE_TRANSLATIONS_PROFILE = "CustodianProfile";
 
-export default function Users() {
+export default function Organisations() {
   const tProfile = useTranslations(NAMESPACE_TRANSLATIONS_PROFILE);
   const { custodianId, nameRoute } = useStore(state => ({
     custodianId: state.getCustodian()?.id,
