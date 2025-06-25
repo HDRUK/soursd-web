@@ -18,7 +18,7 @@ export default function useOrganisationsQuery({
   return usePaginatedQuery({
     queryKeyBase: queryKey,
     defaultQueryParams: {
-      sort: `organisations.organisation_name:${SearchDirections.ASC}`,
+      sort: `organisation_name:${SearchDirections.ASC}`,
       ...defaultQueryParams,
     },
     queryFn: queryParams =>
