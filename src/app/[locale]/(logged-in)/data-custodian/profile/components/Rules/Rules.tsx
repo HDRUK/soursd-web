@@ -47,7 +47,7 @@ export default function Rules() {
 
   const formatRules = (rulesData): Rule[] => {
     return (
-      rulesData?.data.map(rule => {
+      rulesData?.data?.map(rule => {
         return {
           id: rule.id,
           label: rule.name || rule.id,
@@ -89,7 +89,7 @@ export default function Rules() {
         | undefined,
       checkedState: boolean[]
     ) =>
-      rulesData?.data.map((rule: { id: number }, index: number) => ({
+      rulesData?.data?.map((rule: { id: number }, index: number) => ({
         entity_model_id: rule.id,
         active: checkedState[index],
       })) || [];
@@ -143,7 +143,7 @@ export default function Rules() {
           setChecked={setOrgRules}
         />
       </PageSection>
-      <FormActions>
+      <FormActions sx={{ justifyContent: "flex-end" }}>
         <ButtonSave isLoading={isPending} />
       </FormActions>
     </Form>
