@@ -21,6 +21,14 @@ enum UserFeedSource {
   ORG = "ORG",
 }
 
+enum UserHistoryLog {
+  CREATED = "created",
+  UPDATED = "updated",
+  DELETED = "deleted",
+  USER_REMOVED_FROM_PROJECT = "user_removed_from_project",
+  USER_ADDED_TO_PROJECT = "user_added_to_project",
+}
+
 enum AffiliationRelationship {
   EMPLOYEE = "employee",
   STUDENT = "student",
@@ -32,5 +40,6 @@ export {
   UserProvider,
   UserProfileCompletionCategories,
   UserFeedSource,
+  UserHistoryLog,
   AffiliationRelationship,
 };
