@@ -1182,6 +1182,8 @@
   },
   "Projects": {
     "Users": {
+      "cancel": "Cancel",
+      "move": "Change status",
       "form_received": "Form received",
       "validation_in_progress": "Validation In Progress",
       "validation_complete": "Validation Complete",
@@ -1201,6 +1203,8 @@
       "requestAddNewMemberButton": "Request member is affiliated"
     },
     "Organisations": {
+      "cancel": "Cancel",
+      "move": "Change status",
       "organisationSroOfficer": "Senior Responsible Officer",
       "projectName": "Project name",
       "pending": "Pending",

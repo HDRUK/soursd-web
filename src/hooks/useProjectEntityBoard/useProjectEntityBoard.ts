@@ -1,9 +1,8 @@
 import { WorkflowTransitionsResponse } from "@/services/custodian_approvals";
 import { WithModelState } from "@/types/application";
-import { DndItems, DragUpdateEventArgs } from "@/types/dnd";
+import { DndItems } from "@/types/dnd";
 import { UniqueIdentifier } from "@dnd-kit/core";
 import { useMemo } from "react";
-import { UseDroppableSortItemsFnOptions } from "../useDroppableSortItems";
 
 interface UseProjectEntityBoardProps<T> {
   data: T[];
@@ -15,17 +14,17 @@ export default function useProjectEntityBoard<
     id: UniqueIdentifier;
   }>,
 >({ data, stateWorkflow }: UseProjectEntityBoardProps<T>) {
-  function isTransitionAllowed<T>(
-    stateWorkflow: WorkflowTransitionsResponse | undefined,
-    { initial, containerId }: DragUpdateEventArgs<T>
+  function isTransitionAllowed(
+    status: UniqueIdentifier | undefined,
+    transitionStatus: UniqueIdentifier | undefined
   ) {
     return process.env.NEXT_PUBLIC_FEATURE_PROJECT_USERS_WORKFLOW === "true"
       ? !!(
           stateWorkflow &&
-          initial?.containerId &&
-          containerId &&
-          (initial.containerId === containerId ||
-            stateWorkflow[initial.containerId].includes(containerId))
+          status &&
+          transitionStatus &&
+          (transitionStatus === status ||
+            stateWorkflow[status].includes(transitionStatus))
         )
       : true;
   }
@@ -58,18 +57,20 @@ export default function useProjectEntityBoard<
     [stateWorkflow, data]
   );
 
-  const droppableFnOptions = useMemo<
-    Partial<UseDroppableSortItemsFnOptions<T>>
-  >(
-    () => ({
-      isTransitionAllowed: (_, options: DragUpdateEventArgs<T>) =>
-        isTransitionAllowed(stateWorkflow, options),
-    }),
-    [stateWorkflow]
-  );
+  function getAllowedTransitions(status: UniqueIdentifier) {
+    return itemsByTransitions
+      ? Object.keys(itemsByTransitions).filter(key =>
+          isTransitionAllowed(status, key)
+        )
+      : [];
+  }
 
-  return {
-    itemsByTransitions,
-    droppableFnOptions,
-  };
+  return useMemo(
+    () => ({
+      itemsByTransitions,
+      isTransitionAllowed,
+      getAllowedTransitions,
+    }),
+    [stateWorkflow, data]
+  );
 }

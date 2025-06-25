@@ -61,16 +61,13 @@ interface KanbanBoardProps<T>
   initialData: DndItems<T>;
   cardComponent: ComponentType<T>;
   cardActionsComponent?: ComponentType<KanbanBoardHelperProps<T>>;
-  droppableFnOptions: Partial<UseDroppableSortItemsFnOptions<T>>;
+  options: Partial<UseDroppableSortItemsFnOptions<T>> | undefined;
 }
 
 export interface KanbanBoardHelperProps<T> {
   data?: T;
-  allowedColumns: string[];
-  onMoveClick: (
-    e: React.MouseEvent<HTMLButtonElement>,
-    containerId: UniqueIdentifier
-  ) => void;
+  allowedTransitions: string[];
+  onMoveClick: (id: number, status: string) => void;
 }
 
 export default function KanbanBoard<T>({
@@ -85,7 +82,7 @@ export default function KanbanBoard<T>({
   onDragUpdate,
   onMove,
   t,
-  droppableFnOptions,
+  options,
   ...restProps
 }: KanbanBoardProps<T>) {
   const { handleDragSort, handleDragSortEnd, handleDragSortStart, handleMove } =
@@ -141,17 +138,15 @@ export default function KanbanBoard<T>({
 
   const getAllowedColumns = (containerId: UniqueIdentifier) => {
     return Object.keys(items).filter(key =>
-      droppableFnOptions.isTransitionAllowed(
-        {},
-        { initial: { containerId }, containerId: key }
-      )
+      options?.isTransitionAllowed?.(key, containerId)
     );
   };
 
   const handleDragEnd = (e: DragEndEvent) => {
+    console.log("options", options);
     unstable_batchedUpdates(() => {
       handleDragSortEnd(e, items, {
-        ...droppableFnOptions,
+        ...options,
         setState: (state: DndItems<T>) => {
           setItems(items => {
             return {
@@ -168,7 +163,7 @@ export default function KanbanBoard<T>({
 
   const handleDragOver = (e: DragOverEvent) => {
     handleDragSort(e, items, {
-      ...droppableFnOptions,
+      ...options,
       setState: (state: DndItems<T>) => {
         setItems(prevState => ({
           ...prevState,
@@ -191,6 +186,7 @@ export default function KanbanBoard<T>({
       items,
       isError,
       setState: (state: DndItems<T>) => {
+        console.log("SETTING STATE", state);
         setItems(prevState => ({
           ...prevState,
           ...state,
@@ -201,7 +197,7 @@ export default function KanbanBoard<T>({
 
   const handleDragStart = (e: DragOverEvent) => {
     const data = handleDragSortStart(e, items);
-    console.log("DRAGGING");
+
     initialArgs.current = data;
 
     setActiveData(data);
@@ -222,7 +218,7 @@ export default function KanbanBoard<T>({
         isError
       );
 
-      queryState.reset();
+      queryState.reset?.();
     }
   }, [isError]);
 
@@ -258,12 +254,9 @@ export default function KanbanBoard<T>({
                 }
                 isDropAllowed={
                   !activeId ||
-                  droppableFnOptions.isTransitionAllowed(
-                    {},
-                    {
-                      initial: activeData,
-                      containerId,
-                    }
+                  options?.isTransitionAllowed?.(
+                    activeData?.containerId,
+                    containerId
                   )
                 }
                 heading={`${t(containerId)} (${findDroppables(containerId, items).length})`}

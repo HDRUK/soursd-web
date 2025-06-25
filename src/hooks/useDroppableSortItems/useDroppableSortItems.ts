@@ -19,17 +19,14 @@ export interface UseDroppableSortItemsProps<T> {
   onDragEnd?: (e: DragEndEvent, data: DragUpdateEventArgs<T>) => void;
   onDragOver?: (e: DragOverEvent, data: DragUpdateEventArgs<T>) => void;
   onDragUpdate?: (e: DragUpdateEvent, data: DragUpdateEventArgs<T>) => void;
-  onMove?: (
-    e: DragUpdateEvent,
-    data: UseDroppableSortItemsFnOptions<T>
-  ) => void;
+  onMove?: (e: DragUpdateEvent, data: DragUpdateEventArgs<T>) => void;
 }
 
 export interface UseDroppableSortItemsFnOptions<T> {
   setState: (state: DndItems<T>) => void;
   isTransitionAllowed?: (
-    e: DragUpdateEvent,
-    data: DragUpdateEventArgs<T>
+    status: UniqueIdentifier | undefined,
+    transitionStatus: UniqueIdentifier | undefined
   ) => boolean;
 }
 
@@ -101,10 +98,7 @@ export default function useDroppableSortItems<T>({
       const overIndex = findItemIndex(overContainer, over.id, items);
 
       if (
-        isTransitionAllowed?.(e, {
-          containerId: overContainer,
-          initial: initialArgs.current,
-        })
+        isTransitionAllowed?.(initialArgs.current?.containerId, overContainer)
       ) {
         const state = {
           ...items,
@@ -140,6 +134,7 @@ export default function useDroppableSortItems<T>({
   };
 
   const handleMove = (options: UseDroppableSortItemsMoveOptions<T>) => {
+    console.log("HANDLE MOVE", options);
     const { containerId, item, items, isError, setState } = options;
 
     const prunedState = pruneItem(item.id, items) as DndItems<T>;
@@ -154,7 +149,14 @@ export default function useDroppableSortItems<T>({
         },
       ],
     } as DndItems<T>;
-
+    console.log(
+      "MOVING ITEM",
+      item,
+      "TO CONTAINER",
+      containerId,
+      "WITH STATE",
+      state
+    );
     setState(state);
 
     const eventArgs = {
@@ -218,10 +220,10 @@ export default function useDroppableSortItems<T>({
           ...items[overContainer].slice(0, newIndex),
           {
             ...items[activeContainer][activeIndex],
-            isDroppable: isTransitionAllowed?.(e, {
-              containerId: overContainer,
-              initial: initialArgs.current,
-            }),
+            isDroppable: isTransitionAllowed?.(
+              initialArgs.current?.containerId,
+              overContainer
+            ),
           },
           ...items[overContainer].slice(newIndex, items[overContainer].length),
         ],
