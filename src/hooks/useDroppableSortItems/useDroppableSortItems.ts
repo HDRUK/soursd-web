@@ -134,7 +134,6 @@ export default function useDroppableSortItems<T>({
   };
 
   const handleMove = (options: UseDroppableSortItemsMoveOptions<T>) => {
-    console.log("HANDLE MOVE", options);
     const { containerId, item, items, isError, setState } = options;
 
     const prunedState = pruneItem(item.id, items) as DndItems<T>;
@@ -149,14 +148,7 @@ export default function useDroppableSortItems<T>({
         },
       ],
     } as DndItems<T>;
-    console.log(
-      "MOVING ITEM",
-      item,
-      "TO CONTAINER",
-      containerId,
-      "WITH STATE",
-      state
-    );
+
     setState(state);
 
     const eventArgs = {

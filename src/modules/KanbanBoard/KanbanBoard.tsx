@@ -156,7 +156,6 @@ export default function KanbanBoard<T>({
   };
 
   const handleDragEnd = (e: DragEndEvent) => {
-    console.log("options", options);
     unstable_batchedUpdates(() => {
       handleDragSortEnd(e, items, {
         ...options,
@@ -199,7 +198,6 @@ export default function KanbanBoard<T>({
       items,
       isError,
       setState: (state: DndItems<T>) => {
-        console.log("SETTING STATE", state);
         setItems(prevState => ({
           ...prevState,
           ...state,
