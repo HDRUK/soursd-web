@@ -14,6 +14,7 @@ import {
 export type ProjectUsersTableColumns =
   | "name"
   | "projectRole"
+  | "projectName"
   | "organisationName"
   | "status";
 
@@ -24,7 +25,13 @@ export type ProjectUsersTableProps = WithRoutes<
 export default function ProjectUsersTable({
   t,
   routes,
-  includeColumns = ["name", "projectRole", "organisationName", "status"],
+  includeColumns = [
+    "name",
+    "projectRole",
+    "projectName",
+    "organisationName",
+    "status",
+  ],
   extraColumns,
   ...restProps
 }: ProjectUsersTableProps) {
@@ -39,6 +46,9 @@ export default function ProjectUsersTable({
       }),
       createDefaultColumn("projectRole", {
         accessorKey: "project_has_user.role.name",
+      }),
+      createDefaultColumn("projectName", {
+        accessorKey: "project_has_user.project.title",
       }),
       createDefaultColumn("organisationName", {
         accessorKey: "project_has_user.affiliation.organisation",

@@ -54,12 +54,12 @@ export default function ProjectUsersFilters({
   const sortActions = [
     {
       label: t("sortActions.AZ"),
-      onClick: () => handleSortToggle("name", SearchDirections.ASC),
+      onClick: () => handleSortToggle("projects.title", SearchDirections.ASC),
       checked: sortDirection === SearchDirections.ASC,
     },
     {
       label: t("sortActions.ZA"),
-      onClick: () => handleSortToggle("name", SearchDirections.DESC),
+      onClick: () => handleSortToggle("projects.title", SearchDirections.DESC),
       checked: sortDirection === SearchDirections.DESC,
     },
   ];
