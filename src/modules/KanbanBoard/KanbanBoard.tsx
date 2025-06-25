@@ -29,13 +29,17 @@ import useDroppableSortItems, {
   UseDroppableSortItemsFnOptions,
   UseDroppableSortItemsProps,
 } from "../../hooks/useDroppableSortItems";
-import { WithStateWorkflow, WithTranslations } from "../../types/application";
+import {
+  WithRoutes,
+  WithStateWorkflow,
+  WithTranslations,
+} from "../../types/application";
 
 import DndDroppableContainer from "../../components/DndDroppableContainer";
 import DndSortableItem from "../../components/DndSortableItem";
 import { dndDragRotate } from "../../consts/styles";
 import { DndItems, DragUpdateEventArgsInitial } from "../../types/dnd";
-import { PropsWithQuery } from "../../types/form";
+import { PropsWithQuery, QueryState } from "../../types/form";
 import { findDroppables, findItem, findItemIndex } from "../../utils/dnd";
 import KanbanBoardColumn from "./KanbanBoardColumn";
 import KanbanBoardColumns from "./KanbanBoardColumns";
@@ -49,6 +53,15 @@ const dropAnimation: DropAnimation = {
     },
   }),
 };
+
+export type KanbanBoardEntityProps<T> = WithRoutes<{
+  itemsByTransitions: DndItems<T>;
+  onMove: (id: number, status: string) => void;
+  onDragEnd: (id: number, status: string) => void;
+  updateQueryState: QueryState;
+  actions?: (props: KanbanBoardHelperProps<T>) => React.ReactNode;
+  options?: Partial<UseDroppableSortItemsFnOptions<T>>;
+}>;
 
 interface KanbanBoardProps<T>
   extends PropsWithQuery<

@@ -1,13 +1,10 @@
 "use client";
 
 import { PaginatedQueryHelpers } from "@/hooks/usePaginatedQuery";
+import { KanbanBoardEntityProps } from "@/modules/KanbanBoard";
 import ProjectOrganisationsTable from "@/modules/ProjectOrganisationsTable";
 import { EntityType } from "@/types/api";
-import {
-  CustodianProjectOrganisation,
-  ProjectBoard,
-  WithRoutes,
-} from "@/types/application";
+import { CustodianProjectOrganisation, WithRoutes } from "@/types/application";
 import { CellContext, ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
 
@@ -15,7 +12,7 @@ const NAMESPACE_TRANSLATIONS_PROJECT_USERS = "Projects.Organisations";
 
 type ProjectOrganisationsListProps<T = CustodianProjectOrganisation> =
   WithRoutes<
-    ProjectBoard<T> & {
+    KanbanBoardEntityProps<T> & {
       variant: EntityType;
     } & PaginatedQueryHelpers & {
         data: CustodianProjectOrganisation[];

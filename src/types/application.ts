@@ -6,10 +6,6 @@ import {
   UserGroup,
   UserProfileCompletionCategories,
 } from "@/consts/user";
-import { QueryState } from "@tanstack/react-query";
-import { UseDroppableSortItemsFnOptions } from "@/hooks/useDroppableSortItems";
-import { KanbanBoardHelperProps } from "@/modules/KanbanBoard";
-import { DndItems } from "./dnd";
 import { RouteConfig } from "./router";
 import { RuleState } from "./rules";
 
@@ -506,15 +502,6 @@ interface Department {
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 type SystemConfig = Record<string, any>;
 
-type ProjectBoard<T> = WithRoutes<{
-  itemsByTransitions: DndItems<T>;
-  onMove: (id: number, status: string) => void;
-  onDragEnd: (id: number, status: string) => void;
-  updateQueryState: QueryState;
-  actions?: (props: KanbanBoardHelperProps<T>) => React.ReactNode;
-  options?: Partial<UseDroppableSortItemsFnOptions<T>>;
-}>;
-
 export type {
   AddressFields,
   Approval,
@@ -559,5 +546,4 @@ export type {
   ModelState,
   WithModelState,
   WithRoutes,
-  ProjectBoard,
 };

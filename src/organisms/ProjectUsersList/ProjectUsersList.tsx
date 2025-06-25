@@ -1,13 +1,10 @@
 "use client";
 
 import { PaginatedQueryHelpers } from "@/hooks/usePaginatedQuery";
+import { KanbanBoardEntityProps } from "@/modules/KanbanBoard";
 import ProjectUsersTable from "@/modules/ProjectUsersTable";
 import { EntityType } from "@/types/api";
-import {
-  CustodianProjectUser,
-  ProjectBoard,
-  WithRoutes,
-} from "@/types/application";
+import { CustodianProjectUser, WithRoutes } from "@/types/application";
 import { CellContext, ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
 
@@ -18,7 +15,7 @@ type ProjectUsersListProps<T = CustodianProjectUser> = WithRoutes<
     variant: EntityType;
   } & PaginatedQueryHelpers & {
       data: CustodianProjectUser[];
-    } & ProjectBoard<T>
+    } & KanbanBoardEntityProps<T>
 >;
 
 export default function ProjectUsersList({

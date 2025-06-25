@@ -60,7 +60,7 @@ export default function ProjectUsers({
     },
     helpers: { isTransitionAllowed, itemsByTransitions, getAllowedTransitions },
   } = useProjectEntity({
-    query: () =>
+    usePaginatedQuery: () =>
       usePaginatedCustodianProjectUsers(custodianId, {
         defaultQueryParams: {
           project_id: projectId,

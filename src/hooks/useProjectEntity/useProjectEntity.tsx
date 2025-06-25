@@ -8,12 +8,11 @@ import {
   usePaginatedCustodianProjectUsers,
 } from "@/services/custodian_approvals";
 import { EntityType } from "@/types/api";
-import { WithRoutes } from "@/types/application";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 
 type UseProjectEntityProps = {
-  query: () => ReturnType<
+  usePaginatedQuery: () => ReturnType<
     | typeof usePaginatedCustodianProjectUsers
     | typeof usePaginatedCustodianProjectOrganisations
   >;
@@ -21,10 +20,10 @@ type UseProjectEntityProps = {
 };
 
 export default function useProjectEntity({
-  query,
+  usePaginatedQuery,
   variant,
 }: UseProjectEntityProps) {
-  const queryReturn = query();
+  const queryReturn = usePaginatedQuery();
 
   const { data: stateWorkflow } = useQuery(
     variant === EntityType.ORGANISATION
@@ -42,6 +41,6 @@ export default function useProjectEntity({
       helpers,
       query: queryReturn,
     }),
-    [stateWorkflow?.data, query]
+    [stateWorkflow?.data, queryReturn]
   );
 }

@@ -7,16 +7,16 @@ import { DragUpdateEvent, DragUpdateEventArgs } from "@/types/dnd";
 import { rectSortingStrategy } from "@dnd-kit/sortable";
 import { useTranslations } from "next-intl";
 import { useCallback } from "react";
-import KanbanBoard, { KanbanBoardHelperProps } from "../../modules/KanbanBoard";
-import {
-  CustodianProjectOrganisation,
-  ProjectBoard,
-} from "../../types/application";
+import KanbanBoard, {
+  KanbanBoardEntityProps,
+  KanbanBoardHelperProps,
+} from "../../modules/KanbanBoard";
+import { CustodianProjectOrganisation } from "../../types/application";
 
 const NAMESPACE_TRANSLATION = "Projects.Organisations";
 
 type ProjectOrganisationsBoardProps<T = CustodianProjectOrganisation> =
-  ProjectBoard<T>;
+  KanbanBoardEntityProps<T>;
 
 export default function ProjectOrganisationsBoard({
   itemsByTransitions,

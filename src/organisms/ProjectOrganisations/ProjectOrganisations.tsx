@@ -58,7 +58,8 @@ export default function ProjectOrganisations({
     },
     helpers: { isTransitionAllowed, itemsByTransitions, getAllowedTransitions },
   } = useProjectEntity({
-    query: () => usePaginatedCustodianProjectOrganisations(custodianId),
+    usePaginatedQuery: () =>
+      usePaginatedCustodianProjectOrganisations(custodianId),
     variant: EntityType.ORGANISATION,
   });
 
