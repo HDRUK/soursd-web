@@ -1,6 +1,5 @@
 import ReactQueryClientProvider from "@/app/[locale]/components/ReactQueryClientProvider";
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
-import { CookieProvider } from "@/context/CookieContext";
 import { AppCacheProvider } from "@mui/material-nextjs/v14-pagesRouter";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -46,11 +45,9 @@ const Wrapper = ({ children }: { children: ReactNode }) => {
         <LocalizationProvider>
           <ReactQueryClientProvider>
             <ThemeRegistry>
-              <CookieProvider>
-                <QueryClientProvider client={queryClient}>
-                  {children}
-                </QueryClientProvider>
-              </CookieProvider>
+              <QueryClientProvider client={queryClient}>
+                {children}
+              </QueryClientProvider>
             </ThemeRegistry>
           </ReactQueryClientProvider>
         </LocalizationProvider>
