@@ -1,9 +1,8 @@
-import { ConfigProps } from "@/components/Config";
 import { ReactNode } from "react";
 import { PageTabs } from "../../consts/tabs";
 import TabsSections from "../TabsSections";
 
-interface LayoutProps extends ConfigProps {
+interface LayoutProps {
   children: ReactNode;
   params: {
     tabId: PageTabs;
