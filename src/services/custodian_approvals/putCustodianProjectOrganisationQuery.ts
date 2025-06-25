@@ -6,9 +6,11 @@ interface MutationArgs {
   payload: ChangeValidationStatusPayload;
 }
 
-export default function putCustodianProjectUserQuery(custodianId: number) {
+export default function putCustodianProjectOrganisationQuery(
+  custodianId: number
+) {
   return {
-    mutationKey: ["putCustodianProjectUserQuery", custodianId],
+    mutationKey: ["putCustodianProjectOrganisationQuery", custodianId],
     mutationFn: async ({ params, payload }: MutationArgs) => {
       const { projectOrganisationId } = params;
       return putCustodianProjectOrganisation(
@@ -16,7 +18,7 @@ export default function putCustodianProjectUserQuery(custodianId: number) {
         projectOrganisationId,
         payload,
         {
-          error: { message: "putCustodianProjectUserError" },
+          error: { message: "putCustodianProjectOrganisationError" },
         }
       );
     },

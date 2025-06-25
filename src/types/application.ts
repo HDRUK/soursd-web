@@ -6,8 +6,8 @@ import {
   UserGroup,
   UserProfileCompletionCategories,
 } from "@/consts/user";
-import { RuleState } from "./rules";
 import { RouteConfig } from "./router";
+import { RuleState } from "./rules";
 
 interface StateWorkflow {
   transitions: Record<string, string[]>;

@@ -1,7 +1,7 @@
 import Page from "../components/Page";
 import { PageTabs } from "../consts/tabs";
 
-function UsersPage() {
+function ProjectOrganisationsPage() {
   return (
     <Page
       params={{
@@ -11,4 +11,4 @@ function UsersPage() {
   );
 }
 
-export default UsersPage;
+export default ProjectOrganisationsPage;

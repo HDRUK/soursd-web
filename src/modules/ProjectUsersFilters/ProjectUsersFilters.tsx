@@ -3,11 +3,10 @@
 import SortIcon from "@mui/icons-material/Sort";
 import { useTranslations } from "next-intl";
 import { PropsWithChildren, useMemo } from "react";
+import useSort from "@/hooks/useSort";
 import { FilterIcon } from "../../consts/icons";
-import { SearchDirections } from "../../consts/search";
 import { PaginatedQueryReturn } from "../../hooks/usePaginatedQuery";
 import { CustodianProjectUser } from "../../types/application";
-import { getSearchSortOrder } from "../../utils/query";
 import SearchActionMenu from "../SearchActionMenu";
 import SearchBar from "../SearchBar";
 
@@ -49,20 +48,17 @@ export default function ProjectUsersFilters({
     return includeFilters.includes(key);
   };
 
-  const sortDirection = getSearchSortOrder(queryParams);
-
-  const sortActions = [
-    {
-      label: t("sortActions.AZ"),
-      onClick: () => handleSortToggle("name", SearchDirections.ASC),
-      checked: sortDirection === SearchDirections.ASC,
-    },
-    {
-      label: t("sortActions.ZA"),
-      onClick: () => handleSortToggle("name", SearchDirections.DESC),
-      checked: sortDirection === SearchDirections.DESC,
-    },
-  ];
+  const { actions: sortActions } = useSort({
+    queryParams,
+    items: [
+      {
+        label: t("sortByName"),
+        key: "name",
+      },
+    ],
+    onSort: (key: string, direction: string) =>
+      handleSortToggle(key, direction),
+  });
 
   const filterStatusActions = useMemo(
     () => [

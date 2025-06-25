@@ -8,18 +8,25 @@ import {
 import { WithTranslations } from "../../types/application";
 import { KanbanBoardHelperProps } from "./KanbanBoard";
 
-export type KanbanBoardActionsMenuItemsProps = WithTranslations<
+export type KanbanBoardActionsMenuItemsProps<T> = WithTranslations<
   Omit<ActionMenuProps, "children">
 > &
   KanbanBoardHelperProps<unknown> &
-  Pick<ActionMenuHelpers, "handleClose">;
+  Pick<ActionMenuHelpers, "handleClose"> & {
+    data: T;
+  };
 
-export default function KanbanBoardActionsMenuItems({
+export default function KanbanBoardActionsMenuItems<
+  T extends {
+    id: number;
+  },
+>({
   t,
-  allowedColumns,
+  allowedTransitions,
   onMoveClick,
   handleClose,
-}: KanbanBoardActionsMenuItemsProps) {
+  data,
+}: KanbanBoardActionsMenuItemsProps<T>) {
   const [status, setStatus] = useState<string>("");
 
   const handleStatusChange = e => {
@@ -38,17 +45,17 @@ export default function KanbanBoardActionsMenuItems({
             sx={{ minWidth: 200 }}
             value={status}
             onChange={handleStatusChange}>
-            {allowedColumns.map(key => (
+            {allowedTransitions.map(key => (
               <MenuItem value={key}>{t(key)}</MenuItem>
             ))}
           </Select>
           <Button variant="outlined" onClick={handleClose}>
-            Cancel
+            {t("cancel")}
           </Button>
-          <Button onClick={e => onMoveClick(e, status)}>Confirm</Button>
+          <Button onClick={() => onMoveClick(data.id, status)}>Confirm</Button>
         </Box>
       }>
-      Move to
+      {t("move")}
     </ActionMenuItem>
   );
 }
