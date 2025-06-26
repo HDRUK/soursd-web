@@ -120,6 +120,7 @@
     "safeData": "Safe Data",
     "safeSettings": "Safe Settings",
     "home": "Home",
+    "homeIntro": "Welcome to the Safe People Registry. You’ll see a list of tasks below to complete your profile.",
     "contacts": "Contacts",
     "contactsHeading": "Administrative Contacts",
     "uniqueIdentifierTitle": "SOURSD Identifier",
@@ -1420,6 +1421,7 @@
   },
   "ActionLogs": {
     "completedActions": "Completed Actions",
+    "completedActionsDescription": "Your completed actions will appear here",
     "profileCompleted": {
       "title": "Add your personal details",
       "description": "",
@@ -1477,18 +1479,18 @@
     },
     "completeConfiguration": {
       "title": "Complete your configuration",
-      "description": "This is where we need you to setup things like IDV technology and decision models...",
+      "description": "This is where you can setup your rules and validation checks, IDVT technology and API endpoints.",
       "buttonText": "Complete your configuration"
     },
     "addContactsCompleted": {
-      "title": "Add your contacts",
-      "description": "As well as yourself, it’s a good idea to set up your colleagues who will help administer the system and approve Users, projects and Organisations",
-      "buttonText": "Add contacts"
+      "title": "Add your team members",
+      "description": "As well as yourself, it’s a good idea to set up your colleagues who will help administer the system, validate Users and Organisations, and approve projects.",
+      "buttonText": "Add team members"
     },
     "addUsersCompleted": {
       "title": "Add your Users",
       "description": "",
-      "buttonText": "Add users"
+      "buttonText": "Add Users"
     },
     "addProjectsCompleted": {
       "title": "Add your projects",
