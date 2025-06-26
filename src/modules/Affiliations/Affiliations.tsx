@@ -53,6 +53,8 @@ export default function Affiliations({
     <ChipStatus status={info.getValue() as Status} color="success" />
   );
 
+  console.log(affiliationsData);
+
   const columns: ColumnDef<ResearcherAffiliation>[] = [
     {
       accessorKey: "warning",
@@ -79,7 +81,7 @@ export default function Affiliations({
       header: tApplication("staffStudentId"),
     },
     {
-      accessorKey: "registryAffiliationState",
+      accessorKey: "model_state.state.slug",
       header: tApplication("status"),
       cell: renderStatus,
     },

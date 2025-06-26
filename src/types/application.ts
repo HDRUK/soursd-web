@@ -336,7 +336,7 @@ interface ResearcherEndorsement {
   reported_by: number;
 }
 
-interface ResearcherAffiliation {
+type ResearcherAffiliation = WithModelState<{
   id: number;
   member_id: string;
   organisation_id?: number;
@@ -353,7 +353,7 @@ interface ResearcherAffiliation {
   primary_contact?: boolean;
   registryAffiliationState?: string;
   department: string;
-}
+}>;
 
 interface ResearcherProjectApproval {
   project_id: number;
