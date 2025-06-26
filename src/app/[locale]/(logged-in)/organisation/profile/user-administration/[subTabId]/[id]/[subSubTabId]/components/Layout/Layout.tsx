@@ -1,9 +1,8 @@
-import { ConfigProps } from "@/components/Config";
 import { ReactNode } from "react";
 import { UserSubTabs } from "../../../../../../consts/tabs";
 import SubTabSections from "../SubTabSections";
 
-interface LayoutProps extends ConfigProps {
+interface LayoutProps {
   children: ReactNode;
   params: {
     id: number;
