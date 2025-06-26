@@ -2,6 +2,7 @@
 
 import ButtonToggle from "@/components/ButtonToggle";
 import ProjectsAddUserModal from "@/components/ProjectsAddUserModal";
+import Results from "@/components/Results";
 import useProjectEntity from "@/hooks/useProjectEntity";
 import useQueryAlerts from "@/hooks/useQueryAlerts";
 import { KanbanBoardHelperProps } from "@/modules/KanbanBoard";
@@ -23,9 +24,8 @@ import { Button } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import Results from "@/components/Results";
-import ProjectUsersActions from "./ProjectUsersActions";
 import ProjectUsersList from "../ProjectUsersList";
+import ProjectUsersActions from "./ProjectUsersActions";
 
 const NAMESPACE_TRANSLATIONS_PROJECT_USERS = "Projects.Users";
 

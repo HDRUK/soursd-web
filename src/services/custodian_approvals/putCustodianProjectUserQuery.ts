@@ -8,7 +8,7 @@ interface MutationArgs {
 
 export default function putCustodianProjectUserQuery(custodianId: number) {
   return {
-    mutationKey: ["putCustodianProjectUserQuery", custodianId],
+    mutationKey: ["putCustodianProjectUser", custodianId],
     mutationFn: async ({ params, payload }: MutationArgs) => {
       const { projectUserId } = params;
       return putCustodianProjectUser(custodianId, projectUserId, payload, {
