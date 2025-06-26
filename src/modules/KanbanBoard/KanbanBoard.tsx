@@ -63,7 +63,7 @@ export type KanbanBoardEntityProps<T> = WithRoutes<{
   options?: Partial<UseDroppableSortItemsFnOptions<T>>;
 }>;
 
-interface KanbanBoardProps<T>
+export interface KanbanBoardProps<T>
   extends PropsWithQuery<
     WithStateWorkflow<WithTranslations<UseDroppableSortItemsProps<T>>>
   > {
@@ -98,6 +98,7 @@ export default function KanbanBoard<T>({
   options,
   ...restProps
 }: KanbanBoardProps<T>) {
+  console.log("KanbanBoard rendered", initialData);
   const { handleDragSort, handleDragSortEnd, handleDragSortStart, handleMove } =
     useDroppableSortItems<T>({
       onDragEnd,
