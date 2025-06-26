@@ -53,8 +53,6 @@ export default function Affiliations({
     <ChipStatus status={info.getValue() as Status} color="success" />
   );
 
-  console.log(affiliationsData);
-
   const columns: ColumnDef<ResearcherAffiliation>[] = [
     {
       accessorKey: "warning",
