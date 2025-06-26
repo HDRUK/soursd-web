@@ -1,6 +1,7 @@
 "use client";
 
 import ButtonToggle from "@/components/ButtonToggle";
+import ProjectsAddUserModal from "@/components/ProjectsAddUserModal";
 import useProjectEntity from "@/hooks/useProjectEntity";
 import useQueryAlerts from "@/hooks/useQueryAlerts";
 import { KanbanBoardHelperProps } from "@/modules/KanbanBoard";
@@ -15,16 +16,15 @@ import {
 } from "@/services/custodian_approvals";
 import { EntityType } from "@/types/api";
 import { CustodianProjectUser, WithRoutes } from "@/types/application";
+import AddIcon from "@mui/icons-material/Add";
 import ListIcon from "@mui/icons-material/List";
 import ViewColumnIconOutlined from "@mui/icons-material/ViewColumnOutlined";
+import { Button } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Button } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
-import ProjectsAddUserModal from "@/components/ProjectsAddUserModal";
-import ProjectUsersActions from "./ProjectUsersActions";
 import ProjectUsersList from "../ProjectUsersList";
+import ProjectUsersActions from "./ProjectUsersActions";
 
 const NAMESPACE_TRANSLATIONS_PROJECT_USERS = "Projects.Users";
 
