@@ -8,11 +8,11 @@ import { CustodianProjectUser } from "@/types/application";
 import { rectSortingStrategy } from "@dnd-kit/sortable";
 import { useTranslations } from "next-intl";
 import { useCallback } from "react";
+import { ActionMenu } from "@/components/ActionMenu";
 import KanbanBoard, { KanbanBoardProps } from "./KanbanBoard";
 import KanbanBoardUsersCard, {
   KanbanBoardUsersCardProps,
 } from "./KanbanBoardUsersCard";
-import { ActionMenu } from "@/components/ActionMenu";
 
 const meta = {
   title: "modules/KanbanBoard",
@@ -44,7 +44,7 @@ const WrappingComponent = (props: KanbanBoardProps<CustodianProjectUser>) => {
       {...props}
       t={t}
       cardComponent={cardComponent}
-      cardActionsComponent={() => <ActionMenu></ActionMenu>}
+      cardActionsComponent={() => <ActionMenu />}
     />
   );
 };
