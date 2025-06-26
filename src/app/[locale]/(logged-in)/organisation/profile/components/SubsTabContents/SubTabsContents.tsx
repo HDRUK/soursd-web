@@ -2,10 +2,8 @@
 
 import { useStore } from "@/data/store";
 import { PageBody } from "@/modules";
-import ProjectsSafePeople from "@/organisms/ProjectsSafePeople";
-import { EntityType } from "@/types/api";
-import { notFound } from "next/navigation";
 import OrganisationUsers from "@/organisms/OrganisationUsers";
+import { notFound } from "next/navigation";
 import {
   DetailsPageSubTabs,
   getSubTabs,
@@ -18,11 +16,12 @@ import Delegates from "../Delegates";
 import DigitalIdentifiers from "../DigitalIdentifiers";
 import NameAndAddress from "../NameAndAddress";
 import ProjectsSafeData from "../ProjectsSafeData";
+import ProjectsSafeOutputs from "../ProjectsSafeOutputs";
+import ProjectsSafePeople from "../ProjectsSafePeople";
 import ProjectsSafeProject from "../ProjectsSafeProject";
 import ProjectsSafeSettings from "../ProjectsSafeSettings";
 import SectorSizeAndWebsite from "../SectorSizeAndWebsite";
 import SecurityCompliance from "../SecurityCompliance";
-import ProjectsSafeOutputs from "../ProjectsSafeOutputs";
 
 interface TabsContentsProps {
   tabId: string;
@@ -71,7 +70,7 @@ export default function SubTabsContents({
       content = <OrganisationUsers />;
       break;
     case ProjectsSubTabs.SAFE_PEOPLE:
-      content = <ProjectsSafePeople variant={EntityType.ORGANISATION} />;
+      content = <ProjectsSafePeople />;
       break;
     case ProjectsSubTabs.SAFE_DATA:
       content = <ProjectsSafeData id={id} />;

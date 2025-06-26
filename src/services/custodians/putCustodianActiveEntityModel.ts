@@ -7,12 +7,12 @@ import {
 } from "./types";
 
 export default async (
-  id: number | undefined,
+  custodianId: number | undefined,
   payload: PutCustodianActiveEntityModelPayload,
   options?: ResponseOptions
 ): Promise<ResponseJson<PutCustodianActiveEntityModelResponse>> => {
   const response = await putRequest(
-    `/custodian_config/update-active/${id}`,
+    `/custodian_config/${custodianId}/entity_models`,
     payload
   );
 

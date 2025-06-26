@@ -1,6 +1,15 @@
+import { Status } from "@/components/ChipStatus";
 import { GetCustodianProjectUserResponse } from "@/services/custodians";
-import { CustodianUser, Custodian, ProjectAllUser } from "@/types/application";
+import {
+  CustodianUser,
+  Custodian,
+  ProjectAllUser,
+  CustodianProjectUser,
+  ProjectUser,
+} from "@/types/application";
 import { faker } from "@faker-js/faker";
+import { mockedProject } from "./project";
+import { mockedAffiliation, mockedUser } from "./user";
 
 const mockedCustodian = (custodian?: Partial<Custodian>): Custodian => ({
   id: 1,
@@ -52,4 +61,45 @@ const mockedProjectUser = (props: Partial<ProjectAllUser>): ProjectAllUser => ({
   ...props,
 });
 
-export { mockedCustodian, mockedCustodianUser, mockedProjectUser };
+const mockedProjectHasUser = (props: Partial<ProjectUser>): ProjectUser => ({
+  id: 1,
+  project_id: 1,
+  project: mockedProject(),
+  project_role_id: 1,
+  primary_contact: false,
+  user_digital_ident:
+    "$2y$12$ldUAvE7ZsHkodDzZKJH4je9tNs/G9B7M0k.4ywN0em0v/KO5GQDTu",
+  affiliation: mockedAffiliation(),
+  registry: {
+    id: 1,
+    created_at: faker.date.past().toISOString(),
+    updated_at: faker.date.recent().toISOString(),
+    user: mockedUser(),
+  },
+  ...props,
+});
+
+const mockedCustodianHasProjectUser = (
+  props: Partial<CustodianProjectUser>
+): CustodianProjectUser => ({
+  id: 1,
+  project_has_user_id: 1,
+  custodian_id: 1,
+  created_at: faker.date.past().toISOString(),
+  updated_at: faker.date.recent().toISOString(),
+  project_has_user: mockedProjectHasUser({ id: 1 }),
+  model_state: {
+    state: {
+      slug: Status.PENDING,
+    },
+  },
+  ...props,
+});
+
+export {
+  mockedCustodian,
+  mockedCustodianUser,
+  mockedProjectUser,
+  mockedProjectHasUser,
+  mockedCustodianHasProjectUser,
+};

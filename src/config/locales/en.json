@@ -22,9 +22,6 @@
     "delete": "Delete",
     "edit": "Edit",
     "status": "Status",
-    "makePrimaryContact": "Make primary contact",
-    "removeAsPrimaryContact": "Remove as primary contact",
-    "removeUserFromProject": "Remove from project",
     "name": "Name",
     "status_registered": "SOURSD account created",
     "status_invited": "Invited",
@@ -43,6 +40,13 @@
     "status_affiliation_approved": "Approved",
     "status_affiliation_rejected": "Rejected",
     "status_notSet": "None",
+    "status_form_received": "Form Received",
+    "status_validation_in_progress": "Validation In Progress",
+    "status_validation_complete": "Validation Complete",
+    "status_more_user_info_req": "More User Information Requested",
+    "status_more_org_info_req": "More Organisation Information Requested",
+    "status_escalate_validation": "Escalate Validation",
+    "status_validated": "Validated",
     "projectStatus": "Project status",
     "projectRole": "Project Role",
     "actions": "Actions",
@@ -198,9 +202,10 @@
     "datasetLinkageDescriptionPlaceholder": "Linked datasets",
     "dataUseDescription": "Data description",
     "dataUseDescriptionPlaceholder": "Data description",
-    "addNewMemberButton": "Add a new member",
-    "requestAddNewMemberButton": "Request member is affiliated",
-    "userListDescription": "This table enables Validation Team members to track and manage application workflow from initial enquiry to project closure.  Clicking on a User will show you more information and next steps.",
+    "usersListTitle": "Users",
+    "usersListDescription": "This table enables Validation Team members to track and manage application workflow from initial enquiry to project closure.  Clicking on a User will show you more information and next steps.",
+    "organisationsListTitle": "Organisations",
+    "organisationsListDescription": "This page enables you and your team members to track and manage Organisation validation across all projects.  Clicking on an Organisation will show you more information and any next steps. You can also drag and drop Organisations between the different status lanes.",
     "noResultsMessage": "No members found",
     "homeTitle": "Your outstanding actions",
     "searchProjectUsersPlaceholder": "Search for User, Project Name, Organisation"
@@ -1159,8 +1164,7 @@
       "organisationSize": "Organisation size"
     },
     "Search": {
-      "sortActions_AZ": "Sort by Organisation Name A-Z",
-      "sortActions_ZA": "Sort by Organisation Name Z-A",
+      "sortByOrganisationName": "Organisation Name",
       "filterByProjectStatus": "Filter by status"
     },
     "sroOfficer": "Senior Responsible Officer",
@@ -1178,6 +1182,52 @@
     "projectStatus": "Status"
   },
   "Projects": {
+    "Users": {
+      "cancel": "Cancel",
+      "move": "Change status",
+      "form_received": "Form received",
+      "validation_in_progress": "Validation In Progress",
+      "validation_complete": "Validation Complete",
+      "more_user_info_req": "More User Information Requested",
+      "more_org_info_req": "More Organisation Information Requested",
+      "escalate_validation": "Escalation to Validation Committee",
+      "validated": "Validated",
+      "status": "Project status",
+      "organisationName": "Organisation name",
+      "projectRole": "Project role",
+      "name": "Name",
+      "actions": "Actions",
+      "makePrimaryContact": "Make primary contact",
+      "removeAsPrimaryContact": "Remove as primary contact",
+      "removeUserFromProject": "Remove from project",
+      "addNewMemberButton": "Add a new member",
+      "requestAddNewMemberButton": "Request member is affiliated"
+    },
+    "Organisations": {
+      "cancel": "Cancel",
+      "move": "Change status",
+      "organisationSroOfficer": "Senior Responsible Officer",
+      "projectName": "Project name",
+      "pending": "Pending",
+      "validation_in_progress": "Validation In Progress",
+      "validation_complete": "Validation Complete",
+      "more_user_info_req": "More User Information Requested",
+      "more_org_info_req": "More Organisation Information Requested",
+      "escalate_validation": "Escalation to Validation Committee",
+      "validated": "Validated",
+      "status": "Project status",
+      "organisationName": "Organisation name",
+      "projectRole": "Project role",
+      "name": "Name",
+      "actions": "Actions",
+      "removeOrganisationFromProject": "Remove from project"
+    },
+    "status": "Project status",
+    "safeProject": "Safe Project",
+    "safeData": "Safe Data",
+    "safePeople": "Safe People",
+    "safeSettings": "Safe Settings",
+    "safeOutputs": "Safe Outputs",
     "addNewProjectTitle": "New project",
     "addNewProjectButton": "Add new project",
     "custodians": "Data custodian",
@@ -1198,10 +1248,9 @@
     "approvedKey": "Approved Project",
     "unapprovedKey": "Project Pending Approval",
     "searchPlaceholder": "Search Projects",
-    "sortActions": {
-      "AZ": "Sort Alphabetical A-Z",
-      "ZA": "Sort Alphabetical Z-A"
-    },
+    "sortByOrganisationName": "Organisation name",
+    "sortByName": "Name",
+    "sortByProjectTitle": "Project title",
     "endDate": "End date",
     "startDate": "Start date",
     "projects": "Projects",
@@ -1448,10 +1497,10 @@
       "description": "",
       "buttonText": "Add projects"
     },
-    "addOrganisationsCompleted": {
-      "title": "Add Organisations",
-      "description": "",
-      "buttonText": "Add Organisations"
+    "approveAnOrganisationCompleted": {
+      "title": "Approve an Organisation",
+      "description": "View all the organisations associated with any of your projects to approve them",
+      "buttonText": "Approve an organisation"
     }
   },
   "ProjectsAddUserModal": {
@@ -1504,12 +1553,39 @@
     "CUSTODIAN_ADMIN": "Admin"
   },
   "UserHistory": {
-    "profile_completed": "Profile completed",
-    "affiliations_complete": "Affiliations completed",
-    "profile_created": "Profile Created",
     "daysSince": "{days} days ago",
-    "custodian_rejected": "Custodian Rejected User",
-    "custodian_approved": "Custodian Approved User"
+    "user": {
+      "created": {
+        "title": "User account created",
+        "description": "with primary email \"{attributes_email}\"   "
+      },
+      "updated": {
+        "title": "User updated their details",
+        "description": "The following data was changed: {attributeKeys}"
+      }
+    },
+    "project_has_user": {
+      "created": {
+        "title": "User added to project",
+        "description": "The user was added to the project titled \"{project_title}\""
+      }
+    },
+    "validation_check": {
+      "passed": {
+        "title": "Passed validation check",
+        "description": "{check_description}"
+      },
+      "failed": {
+        "title": "Failed validation check",
+        "description": "{check_description}"
+      }
+    },
+    "custodian_project_validation_status": {
+      "status_changed": {
+        "title": "Project validation status changed",
+        "description": "{new_status} on project \"{project_name}\""
+      }
+    }
   },
   "ConfirmAffiliation": {
     "heading": "Pending affiliations",

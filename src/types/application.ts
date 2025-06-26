@@ -6,6 +6,7 @@ import {
   UserGroup,
   UserProfileCompletionCategories,
 } from "@/consts/user";
+import { RouteConfig } from "./router";
 import { RuleState } from "./rules";
 
 interface StateWorkflow {
@@ -16,12 +17,24 @@ type WithStateWorkflow<T> = T & {
   stateWorkflow: StateWorkflow;
 };
 
-type ModelState<T> = T & {
-  model_state: {
-    state: {
-      slug: Status;
-    };
+type Translations = (key: string) => string;
+
+type WithTranslations<T> = T & {
+  t: Translations;
+};
+
+type ModelState = {
+  state: {
+    slug: Status;
   };
+};
+
+type WithModelState<T> = T & {
+  model_state: ModelState;
+};
+
+type WithRoutes<T> = T & {
+  routes: Record<string, RouteConfig>;
 };
 
 interface File {
@@ -51,7 +64,7 @@ interface Permission {
   };
 }
 
-type Custodian = ModelState<{
+type Custodian = WithModelState<{
   id: number;
   created_at: string;
   updated_at: string;
@@ -150,7 +163,7 @@ type Identity = {
   updated_at?: string;
 };
 
-type User = ModelState<{
+type User = WithModelState<{
   id: number;
   registry_id: number;
   first_name: string;
@@ -223,7 +236,7 @@ interface OrganisationIdvt {
 
 type Organisation = OrganisationIdvt &
   AddressFields &
-  ModelState<{
+  WithModelState<{
     companies_house_no: string;
     organisation_name: string;
     organisation_unique_id: string;
@@ -265,7 +278,7 @@ type Organisation = OrganisationIdvt &
     departments: Department[];
     unclaimed: number;
     organisation_size?: number;
-    project?: ModelState<ResearcherProject>;
+    project?: WithModelState<ResearcherProject>;
   }>;
 
 interface ResearcherEducation {
@@ -352,7 +365,7 @@ interface ProjectRole {
   name: string;
 }
 
-type ResearcherProject = ModelState<{
+type ResearcherProject = WithModelState<{
   id: number;
   title: string;
   lay_summary: string;
@@ -420,18 +433,44 @@ interface Project {
 }
 
 interface ProjectUser {
+  id: number;
   project_id: number;
+  project: Project;
   project_role_id: number;
   primary_contact: boolean;
   user_digital_ident: string;
-  role: Partial<Role>;
+  role?: Partial<Role>;
   affiliation: Partial<ResearcherAffiliation>;
   registry: Registry;
 }
 
-type CustodianProjectUser = ProjectUser;
+type CustodianProjectUser = WithModelState<{
+  id: number;
+  project_has_user_id: number;
+  custodian_id: number;
+  created_at: string;
+  updated_at: string;
+  project_has_user: ProjectUser;
+}>;
 
-type ProjectAllUser = ModelState<{
+interface ProjectOrganisation {
+  id: number;
+  project_id: number;
+  organisation_id: number;
+  organisation: Organisation;
+  project: Project;
+}
+
+type CustodianProjectOrganisation = WithModelState<{
+  id: number;
+  project_has_organisation_id: number;
+  custodian_id: number;
+  created_at: string;
+  updated_at: string;
+  project_organisation: ProjectOrganisation;
+}>;
+
+type ProjectAllUser = WithModelState<{
   id: number;
   user_id: number;
   registry_id: number;
@@ -470,6 +509,7 @@ export type {
   Custodian,
   CustodianUser,
   CustodianProjectUser,
+  CustodianProjectOrganisation,
   Charity,
   Department,
   File,
@@ -479,6 +519,7 @@ export type {
   Permission,
   Project,
   ProjectUser,
+  ProjectOrganisation,
   ProjectAllUser,
   ResearcherAccreditation,
   ResearcherAffiliation,
@@ -500,4 +541,9 @@ export type {
   ProjectDetails,
   WithStateWorkflow,
   StateWorkflow,
+  Translations,
+  WithTranslations,
+  ModelState,
+  WithModelState,
+  WithRoutes,
 };

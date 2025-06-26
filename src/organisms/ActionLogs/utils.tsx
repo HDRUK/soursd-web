@@ -81,7 +81,7 @@ const generateActions = (routes: Route) => {
       icon: <ContentPasteIcon />,
       path: routes.profileCustodianProjects.path,
     },
-    add_organisations_completed: {
+    approve_an_organisation_completed: {
       icon: <CorporateFareIcon />,
       path: routes.profileCustodianOrganisations.path,
     },

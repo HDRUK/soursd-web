@@ -24,18 +24,23 @@ import { ComponentType, useEffect, useRef, useState } from "react";
 import { createPortal, unstable_batchedUpdates } from "react-dom";
 import { useDebouncedCallback } from "use-debounce";
 
+import DndItem from "../../components/DndItem";
 import useDroppableSortItems, {
+  UseDroppableSortItemsFnOptions,
   UseDroppableSortItemsProps,
 } from "../../hooks/useDroppableSortItems";
-import { WithStateWorkflow } from "../../types/application";
-import DndItem from "../../components/DndItem";
+import {
+  WithRoutes,
+  WithStateWorkflow,
+  WithTranslations,
+} from "../../types/application";
 
 import DndDroppableContainer from "../../components/DndDroppableContainer";
 import DndSortableItem from "../../components/DndSortableItem";
 import { dndDragRotate } from "../../consts/styles";
 import { DndItems, DragUpdateEventArgsInitial } from "../../types/dnd";
+import { PropsWithQuery, QueryState } from "../../types/form";
 import { findDroppables, findItem, findItemIndex } from "../../utils/dnd";
-import KanbanBoardActionsMenu from "./KanbanBoardActions";
 import KanbanBoardColumn from "./KanbanBoardColumn";
 import KanbanBoardColumns from "./KanbanBoardColumns";
 
@@ -49,38 +54,63 @@ const dropAnimation: DropAnimation = {
   }),
 };
 
+export type KanbanBoardEntityProps<T> = WithRoutes<{
+  itemsByTransitions: DndItems<T>;
+  onMove: (id: number, status: string) => void;
+  onDragEnd: (id: number, status: string) => void;
+  updateQueryState: QueryState;
+  actions?: (props: KanbanBoardHelperProps<T>) => React.ReactNode;
+  options?: Partial<UseDroppableSortItemsFnOptions<T>>;
+}>;
+
 interface KanbanBoardProps<T>
-  extends WithStateWorkflow<UseDroppableSortItemsProps<T>> {
+  extends PropsWithQuery<
+    WithStateWorkflow<WithTranslations<UseDroppableSortItemsProps<T>>>
+  > {
   adjustScale?: boolean;
   cancelDrop?: CancelDrop;
   strategy?: SortingStrategy;
   modifiers?: Modifiers;
   initialData: DndItems<T>;
   cardComponent: ComponentType<T>;
+  cardActionsComponent?: ComponentType<KanbanBoardHelperProps<T>>;
+  options: Partial<UseDroppableSortItemsFnOptions<T>> | undefined;
+}
+
+export interface KanbanBoardHelperProps<T> {
+  data?: T;
+  allowedTransitions: string[];
+  onMoveClick: (id: number, status: string) => void;
 }
 
 export default function KanbanBoard<T>({
   adjustScale = false,
   cancelDrop,
   initialData,
-  stateWorkflow,
   modifiers,
+  queryState,
   strategy = verticalListSortingStrategy,
   onDragEnd,
   onDragOver,
   onDragUpdate,
+  onMove,
+  t,
+  options,
   ...restProps
 }: KanbanBoardProps<T>) {
-  const { handleDragSort, handleSort, handleDragSortStart } =
+  const { handleDragSort, handleDragSortEnd, handleDragSortStart, handleMove } =
     useDroppableSortItems<T>({
       onDragEnd,
       onDragOver,
       onDragUpdate,
+      onMove,
     });
   const [items, setItems] = useState<DndItems<T>>(initialData);
   const [containers] = useState(Object.keys(items) as UniqueIdentifier[]);
   const [activeData, setActiveData] =
     useState<DragUpdateEventArgsInitial<T> | null>(null);
+  const initialArgs = useRef<DragUpdateEventArgsInitial<T> | null>();
+  const { isError } = queryState;
 
   const activeId = activeData?.item.id;
 
@@ -119,23 +149,16 @@ export default function KanbanBoard<T>({
     setClonedItems(null);
   };
 
-  const isAllowed = (_, { initial, containerId }) => {
-    return !!(
-      initial.containerId === containerId ||
-      stateWorkflow?.transitions[initial.containerId]?.includes(containerId)
-    );
-  };
-
   const getAllowedColumns = (containerId: UniqueIdentifier) => {
     return Object.keys(items).filter(key =>
-      isAllowed({}, { initial: { containerId }, containerId: key })
+      options?.isTransitionAllowed?.(key, containerId)
     );
   };
 
   const handleDragEnd = (e: DragEndEvent) => {
     unstable_batchedUpdates(() => {
-      handleSort(e, items, {
-        isAllowed,
+      handleDragSortEnd(e, items, {
+        ...options,
         setState: (state: DndItems<T>) => {
           setItems(items => {
             return {
@@ -152,7 +175,7 @@ export default function KanbanBoard<T>({
 
   const handleDragOver = (e: DragOverEvent) => {
     handleDragSort(e, items, {
-      isAllowed,
+      ...options,
       setState: (state: DndItems<T>) => {
         setItems(prevState => ({
           ...prevState,
@@ -164,10 +187,31 @@ export default function KanbanBoard<T>({
     });
   };
 
-  const handleDragStart = (e: DragOverEvent) => {
-    const initialData = handleDragSortStart(e, items);
+  const handleMoveClick = (
+    item: T,
+    moveToId: UniqueIdentifier,
+    isError?: boolean
+  ) => {
+    handleMove({
+      containerId: moveToId,
+      item,
+      items,
+      isError,
+      setState: (state: DndItems<T>) => {
+        setItems(prevState => ({
+          ...prevState,
+          ...state,
+        }));
+      },
+    });
+  };
 
-    setActiveData(initialData);
+  const handleDragStart = (e: DragOverEvent) => {
+    const data = handleDragSortStart(e, items);
+
+    initialArgs.current = data;
+
+    setActiveData(data);
     setClonedItems(items);
   };
 
@@ -176,6 +220,22 @@ export default function KanbanBoard<T>({
       recentlyMovedToNewContainer.current = false;
     });
   }, [items]);
+
+  useEffect(() => {
+    if (isError && initialArgs.current) {
+      handleMoveClick(
+        initialArgs.current.item,
+        initialArgs.current.containerId,
+        isError
+      );
+
+      queryState.reset?.();
+    }
+  }, [isError]);
+
+  useEffect(() => {
+    setItems(initialData);
+  }, [initialData]);
 
   const throttledDragOver = useDebouncedCallback(handleDragOver, 100);
 
@@ -205,15 +265,12 @@ export default function KanbanBoard<T>({
                 }
                 isDropAllowed={
                   !activeId ||
-                  isAllowed(
-                    {},
-                    {
-                      initial: activeData,
-                      containerId,
-                    }
+                  options?.isTransitionAllowed?.(
+                    activeData?.containerId,
+                    containerId
                   )
                 }
-                heading={`${containerId} (${findDroppables(containerId, items).length})`}
+                heading={`${t(containerId)} (${findDroppables(containerId, items).length})`}
                 sx={{
                   height: "100%",
                   width: "236px",
@@ -223,15 +280,23 @@ export default function KanbanBoard<T>({
                     <DndSortableItem
                       disabled={isSortingContainer}
                       isDroppable={data.isDroppable}
-                      key={data.id}
+                      isError={data.isError}
+                      key={`${containerId}${data.id}`}
                       id={data.id}
                       index={findItemIndex(containerId, data.id, items)}>
                       <restProps.cardComponent
                         data={data}
-                        sx={{ width: "220px" }}
+                        sx={{
+                          width: "220px",
+                        }}
                         actions={
-                          <KanbanBoardActionsMenu
-                            columns={getAllowedColumns(containerId)}
+                          <restProps.cardActionsComponent
+                            data={data}
+                            allowedColumns={getAllowedColumns(containerId)}
+                            onMoveClick={(
+                              _: DragEvent,
+                              moveToId: UniqueIdentifier
+                            ) => handleMoveClick(data, moveToId)}
                           />
                         }
                       />

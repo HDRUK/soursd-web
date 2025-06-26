@@ -55,7 +55,7 @@ function pruneItem<T>(id: UniqueIdentifier, items: DndItems<T>) {
 }
 
 function findDroppables<T>(containerId: UniqueIdentifier, items: DndItems<T>) {
-  return items[containerId].filter(item => item.isDroppable !== false);
+  return items[containerId].filter(item => item?.isDroppable !== false);
 }
 
 function findFirstDroppable(collisions: Collision[] | null) {

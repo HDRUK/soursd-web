@@ -19,11 +19,23 @@ export interface UseDroppableSortItemsProps<T> {
   onDragEnd?: (e: DragEndEvent, data: DragUpdateEventArgs<T>) => void;
   onDragOver?: (e: DragOverEvent, data: DragUpdateEventArgs<T>) => void;
   onDragUpdate?: (e: DragUpdateEvent, data: DragUpdateEventArgs<T>) => void;
+  onMove?: (e: DragUpdateEvent, data: DragUpdateEventArgs<T>) => void;
 }
 
 export interface UseDroppableSortItemsFnOptions<T> {
   setState: (state: DndItems<T>) => void;
-  isAllowed: (e: DragUpdateEvent, data: DragUpdateEventArgs<T>) => boolean;
+  isTransitionAllowed?: (
+    status: UniqueIdentifier | undefined,
+    transitionStatus: UniqueIdentifier | undefined
+  ) => boolean;
+}
+
+export interface UseDroppableSortItemsMoveOptions<T>
+  extends UseDroppableSortItemsFnOptions<T> {
+  containerId: UniqueIdentifier;
+  item: T;
+  items: DndItems<T>;
+  isError?: boolean;
 }
 
 export default function useDroppableSortItems<T>({
@@ -31,6 +43,7 @@ export default function useDroppableSortItems<T>({
   onDragOver,
   onDragUpdate,
   onDragStart,
+  onMove,
 }: UseDroppableSortItemsProps<T>) {
   const initialArgs = useRef<{
     item: T;
@@ -56,13 +69,13 @@ export default function useDroppableSortItems<T>({
     };
   };
 
-  const handleSort = (
+  const handleDragSortEnd = (
     e: DragEndEvent,
     items: DndItems<T>,
     options: UseDroppableSortItemsFnOptions<T>
   ) => {
     const { over, active, collisions } = e;
-    const { setState, isAllowed } = options;
+    const { setState, isTransitionAllowed } = options;
 
     if (!collisions?.length) {
       const state = getInitialState(items);
@@ -84,45 +97,68 @@ export default function useDroppableSortItems<T>({
       const activeItem = findItem(active.id, items);
       const overIndex = findItemIndex(overContainer, over.id, items);
 
-      if (activeIndex !== overIndex) {
-        if (
-          isAllowed(e, {
-            containerId: overContainer,
-            initial: initialArgs.current,
-          })
-        ) {
-          const state = {
-            ...items,
-            [overContainer]: arrayMove(
-              items[overContainer],
-              activeIndex,
-              overIndex
-            ),
-          } as DndItems<T>;
+      if (
+        isTransitionAllowed?.(initialArgs.current?.containerId, overContainer)
+      ) {
+        const state = {
+          ...items,
+          [overContainer]: arrayMove(
+            items[overContainer],
+            activeIndex,
+            overIndex
+          ),
+        } as DndItems<T>;
 
-          setState(state);
+        setState(state);
 
-          const eventArgs = {
-            containerId: overContainer,
-            item: activeItem,
-            itemIndex: overIndex,
-            state,
-            initial: initialArgs.current,
-          };
+        const eventArgs = {
+          containerId: overContainer,
+          item: activeItem,
+          itemIndex: overIndex,
+          state,
+          initial: initialArgs.current,
+        };
 
-          onDragEnd?.(e, eventArgs);
-          onDragUpdate?.(e, eventArgs);
-        } else {
-          const state = getInitialState(items);
+        onDragUpdate?.(e, eventArgs);
+        onDragEnd?.(e, eventArgs);
+      } else {
+        const state = getInitialState(items);
 
-          setState(state);
-          onDragEnd?.(e, {
-            initial: initialArgs.current,
-            state,
-          });
-        }
+        setState(state);
+        onDragEnd?.(e, {
+          initial: initialArgs.current,
+          state,
+        });
       }
     }
+  };
+
+  const handleMove = (options: UseDroppableSortItemsMoveOptions<T>) => {
+    const { containerId, item, items, isError, setState } = options;
+
+    const prunedState = pruneItem(item.id, items) as DndItems<T>;
+
+    const state = {
+      ...prunedState,
+      [containerId]: [
+        ...prunedState[containerId],
+        {
+          ...item,
+          isError,
+        },
+      ],
+    } as DndItems<T>;
+
+    setState(state);
+
+    const eventArgs = {
+      containerId,
+      item,
+      itemIndex: prunedState[containerId].length,
+      state,
+    };
+
+    onMove?.({}, eventArgs);
   };
 
   const handleDragSort = (
@@ -132,7 +168,7 @@ export default function useDroppableSortItems<T>({
   ) => {
     const { over, active } = e;
     const overId = over?.id;
-    const { setState, isAllowed } = options;
+    const { setState, isTransitionAllowed } = options;
 
     if (overId == null || active.id in items) {
       return;
@@ -176,10 +212,10 @@ export default function useDroppableSortItems<T>({
           ...items[overContainer].slice(0, newIndex),
           {
             ...items[activeContainer][activeIndex],
-            isDroppable: isAllowed(e, {
-              containerId: overContainer,
-              initial: initialArgs.current,
-            }),
+            isDroppable: isTransitionAllowed?.(
+              initialArgs.current?.containerId,
+              overContainer
+            ),
           },
           ...items[overContainer].slice(newIndex, items[overContainer].length),
         ],
@@ -196,7 +232,7 @@ export default function useDroppableSortItems<T>({
       };
 
       onDragOver?.(e, eventArgs);
-      onDragUpdate?.(e, eventArgs);
+      // onDragUpdate?.(e, eventArgs);
     }
   };
 
@@ -220,9 +256,10 @@ export default function useDroppableSortItems<T>({
 
   return useMemo(
     () => ({
-      handleSort,
+      handleDragSortEnd,
       handleDragSort,
       handleDragSortStart,
+      handleMove,
     }),
     [onDragEnd, onDragOver]
   );

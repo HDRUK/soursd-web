@@ -33,7 +33,10 @@ export default function OrganisationsPeopleTable({
   const columns = useMemo(() => {
     const initialColumns: ColumnDef<User>[] = [
       createDefaultColumn("name", {
-        cell: info => renderUserNameCell(info.row.original, routes?.name?.path),
+        cell: info =>
+          renderUserNameCell(info.row.original, routes?.name?.path, {
+            userId: info.row.original.id,
+          }),
       }),
       createDefaultColumn("affiliationEmail", {
         accessorKey: "registry.affiliations",

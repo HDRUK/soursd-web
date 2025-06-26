@@ -3,7 +3,6 @@ import {
   Custodian,
   CustodianUser,
   Organisation,
-  ProjectAllUser,
   ResearcherProject,
   User,
 } from "@/types/application";
@@ -67,8 +66,6 @@ type PostCustodianPayload = Custodian;
 type PostCustodianResponse = number;
 type PostCustodianInviteResponse = Custodian;
 
-type GetCustodianProjectUserResponse = ProjectAllUser[];
-
 type GetCustodianOrganisationsResponse = Organisation[];
 
 type GetCustodianOrganisationUsersResponse = User[];
@@ -100,7 +97,6 @@ export type {
   GetCustodianEntityModelResponse,
   PutCustodianActiveEntityModelPayload,
   PutCustodianActiveEntityModelResponse,
-  GetCustodianProjectUserResponse,
   GetCustodiansUserProjectsResponse,
   GetCustodianOrganisationsResponse,
   GetCustodianOrganisationUsersResponse,

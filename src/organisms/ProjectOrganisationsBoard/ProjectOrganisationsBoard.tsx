@@ -1,36 +1,70 @@
-import {
-  mockedKanbanProjectUser,
-  mockedProjectStateWorkflow,
-} from "@/mocks/data/project";
-import KanbanBoardUsersCard from "@/modules/KanbanBoard/KanbanBoardUsersCard";
+"use client";
+
+import KanbanBoardOrganisationsCard, {
+  KanbanBoardOrganisationsCardProps,
+} from "@/modules/KanbanBoard/KanbanBoardOrganisationsCard";
 import { DragUpdateEvent, DragUpdateEventArgs } from "@/types/dnd";
 import { rectSortingStrategy } from "@dnd-kit/sortable";
+import { useTranslations } from "next-intl";
 import { useCallback } from "react";
-import KanbanBoard from "../../modules/KanbanBoard";
-import { ProjectAllUser } from "../../types/application";
+import KanbanBoard, {
+  KanbanBoardEntityProps,
+  KanbanBoardHelperProps,
+} from "../../modules/KanbanBoard";
+import { CustodianProjectOrganisation } from "../../types/application";
 
-export default function ProjectOrganisationsBoard() {
-  // const { mutateAsync: updateUserCard } =
-  //   useMutation(putProjectUserPrimaryContactQuery());
+const NAMESPACE_TRANSLATION = "Projects.Organisations";
 
-  const handleUpdateState = useCallback(
+type ProjectOrganisationsBoardProps<T = CustodianProjectOrganisation> =
+  KanbanBoardEntityProps<T>;
+
+export default function ProjectOrganisationsBoard({
+  itemsByTransitions,
+  onMove,
+  routes,
+  updateQueryState,
+  options,
+  actions,
+}: ProjectOrganisationsBoardProps) {
+  const t = useTranslations(NAMESPACE_TRANSLATION);
+
+  const cardComponent = useCallback(
+    (props: KanbanBoardOrganisationsCardProps) => {
+      return <KanbanBoardOrganisationsCard {...props} routes={routes} />;
+    },
+    []
+  );
+
+  const cardActionsComponent = useCallback(
+    (props: KanbanBoardHelperProps<CustodianProjectOrganisation>) => {
+      return props.data && actions && actions(props);
+    },
+    []
+  );
+
+  const handleMove = useCallback(
     (
-      e: DragUpdateEvent,
-      { containerId, item, state }: DragUpdateEventArgs<ProjectAllUser>
+      _: DragUpdateEvent,
+      data: DragUpdateEventArgs<CustodianProjectOrganisation>
     ) => {
-      console.log(e, containerId, item, state);
-      // updateUserCard();
+      if (!data.item || !data.containerId) return;
+
+      onMove(data.item.id, data.containerId as string);
     },
     []
   );
 
   return (
-    <KanbanBoard<ProjectAllUser>
-      cardComponent={KanbanBoardUsersCard}
-      initialData={mockedKanbanProjectUser()}
-      stateWorkflow={mockedProjectStateWorkflow}
+    <KanbanBoard<CustodianProjectOrganisation>
+      t={t}
+      cardActionsComponent={cardActionsComponent}
+      cardComponent={cardComponent}
+      initialData={itemsByTransitions}
       strategy={rectSortingStrategy}
-      onDragUpdate={handleUpdateState}
+      onDragEnd={handleMove}
+      onMove={handleMove}
+      options={options}
+      queryState={updateQueryState}
     />
   );
 }

@@ -3,8 +3,8 @@ import { useTranslations } from "next-intl";
 import ActionsPanel from "../../components/ActionsPanel";
 import LoadingWrapper from "../../components/LoadingWrapper";
 import { Message } from "../../components/Message";
-import useOrganisationCustodianApproval from "../../hooks/useOrganisationCustodianApproval";
-import useProjectUserCustodianApproval from "../../hooks/useProjectUserCustodianApproval";
+import useCustodianProjectOrganisation from "../../hooks/useCustodianProjectOrganisation";
+import useCustodianProjectUser from "../../hooks/useCustodianProjectUser";
 import ActionValidationStatus from "../../modules/ActionValidationStatus";
 import { QueryState } from "../../types/form";
 import { ValidationLog } from "../../types/logs";
@@ -25,13 +25,12 @@ interface ActionValidationPanelProps {
 
 interface CustodianParams {
   custodianId: number;
-  projectId: number;
-  registryId: number;
+  projectUserId: number;
 }
 
 interface OrganisationParams {
   custodianId: number;
-  organisationId: number;
+  projectOrganisationId: number;
 }
 
 function ActionValidationPanel({
@@ -41,12 +40,13 @@ function ActionValidationPanel({
 }: ActionValidationPanelProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_ACTION_VALIDATION);
 
-  const { custodianId, projectId, registryId, organisationId } = useStore(
+  const { custodianId, projectUserId, projectOrganisationId } = useStore(
     store => ({
       custodianId: store.getCustodian()?.id as number,
-      projectId: store.getCurrentProject()?.id as number,
-      registryId: store.getCurrentUser()?.registry_id as number,
       organisationId: store.getCurrentOrganisation()?.id as number,
+      projectUserId: store.getCurrentProjectUser()?.id as number,
+      projectOrganisationId: store.getCurrentProjectOrganisation()
+        ?.id as number,
     })
   );
 
@@ -55,19 +55,18 @@ function ActionValidationPanel({
     case ActionValidationVariants.ProjectUser: {
       actionValidationStatus = (
         <ActionValidationStatus<CustodianParams>
-          useApprovalHook={useProjectUserCustodianApproval}
-          hookParams={{ custodianId, projectId, registryId }}
-          t={t}
+          useApprovalHook={useCustodianProjectUser}
+          hookParams={{ custodianId, projectUserId }}
         />
       );
       break;
     }
     case ActionValidationVariants.Organisation: {
+      // need to reimplement this in another ticket
       actionValidationStatus = (
         <ActionValidationStatus<OrganisationParams>
-          useApprovalHook={useOrganisationCustodianApproval}
-          hookParams={{ custodianId, organisationId }}
-          t={t}
+          useApprovalHook={useCustodianProjectOrganisation}
+          hookParams={{ custodianId, projectOrganisationId }}
         />
       );
       break;
