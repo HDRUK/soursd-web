@@ -3,7 +3,7 @@ import { faker } from "@faker-js/faker";
 import { mockedOrganisation } from "./organisation";
 import { RequestFrequency } from "@/consts/projects";
 import { type ProjectDetails } from "@/types/application";
-import { mockedProjectUser } from "./custodian";
+import { mockedProjectUser, mockedCustodianHasProjectUser } from "./custodian";
 
 const mockedProject = (
   project?: Partial<ResearcherProject>
@@ -45,43 +45,69 @@ const mockedProjectDetails = (
 
 const mockedProjectStateWorkflow = () => ({
   transitions: {
-    "Form Received": ["Validation In Progress"],
+    form_received: ["validation_in_progress", "more_user_info_req"],
+    validation_in_progress: [
+      "validation_complete",
+      "more_user_info_req",
+      "escalate_validation",
+      "validated",
+    ],
+    validation_complete: ["escalate_validation", "validated"],
+    more_user_info_req: ["escalate_validation", "validated"],
+    escalate_validation: ["validated"],
+    validated: [],
   },
 });
 
-const mockedKanbanProjectUser = () => {
-  const formReceived = [mockedProjectUser({ id: 1 })];
+const mockedKanbanCustodianProjectUsers = () => {
+  const formReceived = [mockedCustodianHasProjectUser({ id: 1 })];
 
   const validationInProgressData = [
-    mockedProjectUser({ id: 2, first_name: "Chevy", last_name: "Chase" }),
-    mockedProjectUser({ id: 3, first_name: "Sigourney", last_name: "Weaver" }),
-    mockedProjectUser({ id: 4, first_name: "John", last_name: "Smith" }),
-    mockedProjectUser({ id: 5, first_name: "Will", last_name: "Weaton" }),
+    mockedCustodianHasProjectUser({
+      id: 2,
+    }),
+    mockedCustodianHasProjectUser({
+      id: 3,
+    }),
+    mockedCustodianHasProjectUser({
+      id: 4,
+    }),
+    mockedCustodianHasProjectUser({
+      id: 5,
+    }),
   ];
 
   const validationComplete = [
-    mockedProjectUser({ id: 6, first_name: "Alexander", last_name: "Siddig" }),
+    mockedCustodianHasProjectUser({
+      id: 6,
+    }),
   ];
 
   const infoRequested = [
-    mockedProjectUser({ id: 7, first_name: "Colm", last_name: "Meaney" }),
+    mockedCustodianHasProjectUser({
+      id: 7,
+    }),
   ];
 
   const escalation = [
-    mockedProjectUser({ id: 8, first_name: "Michael", last_name: "Dorn" }),
+    mockedCustodianHasProjectUser({
+      id: 8,
+    }),
   ];
 
   const validated = [
-    mockedProjectUser({ id: 9, first_name: "Marina", last_name: "Sirtis" }),
+    mockedCustodianHasProjectUser({
+      id: 9,
+    }),
   ];
 
   return {
-    "Form Received": formReceived,
-    "Validation In Progress": validationInProgressData,
-    "Validation Complete": validationComplete,
-    "More User Information Requested": infoRequested,
-    "Escalation to Validation Committee": escalation,
-    Validated: validated,
+    form_received: formReceived,
+    validation_in_progress: validationInProgressData,
+    validation_complete: validationComplete,
+    more_user_info_req: infoRequested,
+    escalation_validation: escalation,
+    validated,
   };
 };
 
@@ -89,6 +115,6 @@ export {
   mockedProjects,
   mockedProject,
   mockedProjectDetails,
-  mockedKanbanProjectUser,
+  mockedKanbanCustodianProjectUsers,
   mockedProjectStateWorkflow,
 };
