@@ -19,7 +19,7 @@ export default function usePaginatedCustodianProjectUsers(
   return usePaginatedQuery({
     queryKeyBase: [queryKey, custodianId],
     defaultQueryParams: {
-      sort: `title:${SearchDirections.ASC}`,
+      sort: `projects.title:${SearchDirections.ASC}`,
       ...options?.defaultQueryParams,
     },
     queryFn: queryParams =>
