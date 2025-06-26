@@ -87,30 +87,6 @@ jest.mock("@/data/store", () => ({
   useStore: jest.fn(),
 }));
 
-jest.mock("react-google-recaptcha", () => {
-  const RecaptchaV2 = forwardRef((props, ref) => {
-    useImperativeHandle(ref, () => ({
-      getValue: jest.fn(() => true),
-      reset: jest.fn(),
-      execute: jest.fn(),
-      executeAsync: jest.fn(() => "token"),
-    }));
-
-    return (
-      <input
-        ref={ref}
-        type="checkbox"
-        id="recapture"
-        data-testid="recaptcha"
-        aria-label="recaptcha"
-        {...props}
-      />
-    );
-  });
-
-  return RecaptchaV2;
-});
-
 global.matchMedia = () => {
   return {
     matches: false,
