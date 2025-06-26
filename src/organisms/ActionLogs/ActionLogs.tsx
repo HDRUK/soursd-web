@@ -8,6 +8,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
+import { Box } from "@mui/system";
 import ActionsPanel, { ActionsPanelProps } from "../../components/ActionsPanel";
 import ActionsPanelItem from "../../components/ActionsPanelItem";
 import { PageBody } from "../../modules";
@@ -15,7 +16,6 @@ import { getActionLogsQuery } from "../../services/action_logs";
 import { ActionLogEntity } from "../../types/logs";
 import { toCamelCase } from "../../utils/string";
 import generateActions, { ActionConfig } from "./utils";
-import { Box } from "@mui/system";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ActionLogs";
 
