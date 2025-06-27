@@ -58,7 +58,7 @@ export default function ProjectOrganisationsFilters({
     items: [
       {
         label: t("sortByOrganisationName"),
-        key: "organisation_name",
+        key: "organisations.organisation_name",
       },
     ],
     onSort: (key: string, direction: string) =>
