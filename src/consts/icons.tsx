@@ -1,26 +1,13 @@
-import StatusIndicator from "@/components/StatusIndicator";
-import BlockIcon from "@mui/icons-material/BlockOutlined";
+import Add from "@mui/icons-material/Add";
 import BusinessIcon from "@mui/icons-material/Business";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import GppBadOutlinedIcon from "@mui/icons-material/GppBadOutlined";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
-import ShieldOutlinedIcon from "@mui/icons-material/ShieldOutlined";
-import TaskAltOutlinedIcon from "@mui/icons-material/TaskAltOutlined";
-import VerifiedUserOutlinedIcon from "@mui/icons-material/VerifiedUserOutlined";
-import WorkspacePremiumOutlinedIcon from "@mui/icons-material/WorkspacePremiumOutlined";
 import StarIcon from "@mui/icons-material/Star";
+import VerifiedUserOutlinedIcon from "@mui/icons-material/VerifiedUserOutlined";
 import { SvgIconProps } from "@mui/material";
 import { yellow } from "@mui/material/colors";
-import Add from "@mui/icons-material/Add";
-
-const IdentityVerifiedIcon = (props: SvgIconProps) => {
-  const { sx, ...restProps } = props;
-
-  return (
-    <ShieldOutlinedIcon {...restProps} sx={{ color: "default.main", ...sx }} />
-  );
-};
 
 const VerifyIcon = (props: SvgIconProps) => {
   const { sx, ...restProps } = props;
@@ -45,26 +32,6 @@ const AddIcon = (props: SvgIconProps) => {
   return <Add {...props} />;
 };
 
-const ApprovedUserIcon = (props: SvgIconProps) => (
-  <TaskAltOutlinedIcon {...props} sx={{ color: "success.main" }} />
-);
-
-const ApprovedTrainingIcon = (props: SvgIconProps) => (
-  <WorkspacePremiumOutlinedIcon {...props} sx={{ color: "mint.main" }} />
-);
-
-const ApprovedIcon = (props: SvgIconProps) => (
-  <StatusIndicator {...props} variant="success" size="large" />
-);
-
-const PendingIcon = (props: SvgIconProps) => (
-  <StatusIndicator {...props} variant="error" size="large" />
-);
-
-const DecoupleIcon = (props: SvgIconProps) => (
-  <BlockIcon {...props} sx={{ color: "error.main" }} />
-);
-
 const TrashIcon = (props: SvgIconProps) => (
   <DeleteIcon {...props} sx={{ color: "error.main" }} />
 );
@@ -82,18 +49,12 @@ const PrimaryContactIcon = (props: SvgIconProps) => (
 );
 
 export {
-  ApprovedIcon,
-  ApprovedTrainingIcon,
-  ApprovedUserIcon,
-  DecoupleIcon,
+  AddIcon,
   EditIcon,
   FilterIcon,
-  IdentityVerifiedIcon,
   OrganisationIcon,
-  PendingIcon,
+  PrimaryContactIcon,
   RejectIcon,
   TrashIcon,
   VerifyIcon,
-  PrimaryContactIcon,
-  AddIcon,
 };
