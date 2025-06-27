@@ -2,7 +2,6 @@ import theme from "@/theme";
 import dayjs from "dayjs";
 import Cookies from "js-cookie";
 import Swal, { SweetAlertIcon, SweetAlertResult } from "sweetalert2";
-import "../app/sweetalert2-custom.css";
 import { ShowAlertOptions } from "../types/common";
 
 const notificationValues = [
@@ -51,10 +50,6 @@ export const showAlert = (
       html: text,
       customClass: {
         container: "swal2-container",
-        confirmButton:
-          "MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary",
-        cancelButton:
-          "MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary",
       },
       willClose: () => {
         if (untilDuration) {

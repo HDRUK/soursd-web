@@ -36,11 +36,17 @@ export default function Results({
       {queryState?.isError && !queryState?.isLoading && (
         <Message severity="error">{errorMessage}</Message>
       )}
-      <LoadingWrapper
-        variant="basic"
-        loading={queryState?.isLoading && !queryState?.isError}>
-        {!!total && <div role="list">{children}</div>}
-      </LoadingWrapper>
+      <Box
+        sx={{
+          position: "relative",
+          minHeight: "100px",
+        }}>
+        <LoadingWrapper
+          variant="basic"
+          loading={queryState?.isLoading && !queryState?.isError}>
+          {!!total && <div role="list">{children}</div>}
+        </LoadingWrapper>
+      </Box>
       {pagination && (
         <Box
           sx={{
