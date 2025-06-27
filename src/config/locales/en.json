@@ -1201,7 +1201,9 @@
       "projectRole": "Project role",
       "name": "Name",
       "actions": "Actions",
-      "removeOrganisationFromProject": "Remove from project"
+      "removeOrganisationFromProject": "Remove from project",
+      "noResultsMessage": "It looks like there are no organisations for any projects.",
+      "errorMessage": "Couldn't get the users for this project. Please try again or <contactLink>contact support</contactLink> if the problem persists."
     },
     "status": "Project status",
     "safeProject": "Safe Project",
