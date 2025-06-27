@@ -7,7 +7,7 @@ export default async (
   registryId: number | string,
   options: ResponseOptions
 ): Promise<ResponseJson<ProjectsResponse>> => {
-  const response = await getRequest(`/projects/user/${registryId}/approved`);
+  const response = await getRequest(`/projects/user/${registryId}/validated`);
 
   return handleJsonResponse(response, options);
 };

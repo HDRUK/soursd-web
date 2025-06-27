@@ -12,8 +12,8 @@ import {
   getProfessionalRegistrationsQuery,
 } from "../../services/professional_registrations";
 import {
-  getUserApprovedProjects,
-  getUserApprovedProjectsQuery,
+  getUserValidatedProjects,
+  getUserValidatedProjectsQuery,
 } from "../../services/projects";
 import {
   getTrainingByRegistryId,
@@ -23,7 +23,9 @@ import {
 export interface HistoryCombinedData {
   getEducations: Awaited<ReturnType<typeof getEducations>>;
   getTrainings: Awaited<ReturnType<typeof getTrainingByRegistryId>>;
-  getUserApprovedProjects: Awaited<ReturnType<typeof getUserApprovedProjects>>;
+  getUserValidatedProjects: Awaited<
+    ReturnType<typeof getUserValidatedProjects>
+  >;
   getAccreditations: Awaited<ReturnType<typeof getAccreditations>>;
   getAffiliations: Awaited<ReturnType<typeof getAffiliations>>;
   getProfessionalRegistrations: Awaited<
@@ -41,7 +43,7 @@ export default function useQueriesHistory(
         getEducationsQuery(registryId, options),
         getTrainingByRegistryIdQuery(registryId, options),
         getAccreditationsQuery(registryId, options),
-        getUserApprovedProjectsQuery(registryId, options),
+        getUserValidatedProjectsQuery(registryId, options),
         getProfessionalRegistrationsQuery(registryId, options),
       ]
     : [];

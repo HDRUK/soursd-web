@@ -79,7 +79,7 @@ export default function Affiliations({
       header: tApplication("staffStudentId"),
     },
     {
-      accessorKey: "registryAffiliationState",
+      accessorKey: "model_state.state.slug",
       header: tApplication("status"),
       cell: renderStatus,
     },

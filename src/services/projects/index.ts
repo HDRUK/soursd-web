@@ -3,8 +3,8 @@ import getEntityProjects from "./getEntityProjects";
 import getProjectUsers from "./getProjectUsers";
 import getProject from "./getProject";
 import getAllProjects from "./getAllProjects";
-import getUserApprovedProjects from "./getUserApprovedProjects";
-import getUserApprovedProjectsQuery from "./getUserApprovedProjectsQuery";
+import getUserValidatedProjects from "./getUserValidatedProjects";
+import getUserValidatedProjectsQuery from "./getUserValidatedProjectsQuery";
 import putProjectUserPrimaryContact from "./putProjectUserPrimaryContact";
 import putProjectUserPrimaryContactQuery from "./putProjectUserPrimaryContactQuery";
 import putProjectQuery from "./putProjectQuery";
@@ -18,8 +18,8 @@ export {
   getEntityProjects,
   getProjectUsers,
   getAllProjects,
-  getUserApprovedProjects,
-  getUserApprovedProjectsQuery,
+  getUserValidatedProjects,
+  getUserValidatedProjectsQuery,
   getProject,
   putProjectUserPrimaryContact,
   putProjectUserPrimaryContactQuery,
