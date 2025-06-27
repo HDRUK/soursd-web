@@ -31,11 +31,7 @@ export default function KeyFeatures() {
             sx={{ marginBottom: "16px", fontWeight: "500" }}>
             User and Organisation Registers
           </Typography>
-<<<<<<< HEAD
           <Typography variant="body1" color="textSecondary.main">
-=======
-          <Typography variant="body1" color="textSecondary">
->>>>>>> 544ec29b (feat(SOURSD-1078): palette alignment and font)
             A platform for Users (researchers, analysts, students, others who
             access sensitive data) and Organisations to create profiles and
             share relevant information for Data Custodians to assess if a person
@@ -48,11 +44,7 @@ export default function KeyFeatures() {
             sx={{ marginBottom: "16px", fontWeight: "500" }}>
             Visibility across Data Custodians
           </Typography>
-<<<<<<< HEAD
           <Typography variant="body1" color="textSecondary.main">
-=======
-          <Typography variant="body1" color="textSecondary">
->>>>>>> 544ec29b (feat(SOURSD-1078): palette alignment and font)
             SOURSD records Data Custodian approvals for previous and current
             projects as well as approvals for other functionality in
             complementary systems.
@@ -64,11 +56,7 @@ export default function KeyFeatures() {
             sx={{ marginBottom: "16px", fontWeight: "500" }}>
             Multiple authentication routes
           </Typography>
-<<<<<<< HEAD
           <Typography variant="body1" color="textSecondary.main">
-=======
-          <Typography variant="body1" color="textSecondary">
->>>>>>> 544ec29b (feat(SOURSD-1078): palette alignment and font)
             SOURSD provides Single Sign-On (SSO) through multiple providers,
             such as; Google, LinkedIn and LSRI via Keycloak. This enables users
             to easily associate their SOURSD account with existing credentials.
