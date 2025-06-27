@@ -12,7 +12,11 @@ interface ColorOverrides {
   textPrimary: true;
   midGrey: true;
   clear: true;
+<<<<<<< HEAD
   homepageKeyFeatures: true;
+=======
+  homepageKeyFeature: true;
+>>>>>>> 544ec29b (feat(SOURSD-1078): palette alignment and font)
   homepageUsage: true;
   muiBorder: true;
   warningDark: true;
@@ -46,7 +50,11 @@ declare module "@mui/material/styles/createPalette" {
     textPrimary: SimplePaletteColorOptions;
     midGrey: SimplePaletteColorOptions;
     clear: SimplePaletteColorOptions;
+<<<<<<< HEAD
     homepageKeyFeatures: SimplePaletteColorOptions;
+=======
+    homepageKeyFeature: SimplePaletteColorOptions;
+>>>>>>> 544ec29b (feat(SOURSD-1078): palette alignment and font)
     homepageUsage: SimplePaletteColorOptions;
     muiBorder: SimplePaletteColorOptions;
     warningDark: SimplePaletteColorOptions;
