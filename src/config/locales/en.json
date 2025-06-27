@@ -961,29 +961,6 @@
     "profileNotComplete": "Profile not complete",
     "profileNotCompletePopup": "This user's profile is not \"complete\". They may not have provided some required by your policies. Please check the information below."
   },
-  "ResearcherHistories": {
-    "noAccreditationsFound": "Could not find any accreditation history",
-    "noEducationsFound": "Could not find any education history",
-    "noEmploymentsFound": "Could not find any employment history",
-    "noProjectsFound": "Could not find any project history",
-    "noTrainingsFound": "Could not find any training history",
-    "noProfessionalRegistrationsFound": "Could not find any professional registrations history history",
-    "expiresAt": "Expires at",
-    "provider": "Provider",
-    "awardingBody": "Awarding body",
-    "awardedAt": "Awarded at",
-    "expiresOn": "Expires on",
-    "accreditations": "Accreditations",
-    "employment": "Employments",
-    "education": "Education",
-    "projects": "Projects",
-    "training": "Training",
-    "professionalRegistrations": "Professional Registrations",
-    "certification": "Certification:"
-  },
-  "ResearcherDetails": {
-    "getUserDetailsForCustodianError": "Couldn't get the user's details"
-  },
   "OrganisationDetails": {
     "getOrganisationDetailsForCustodianError": "Couldn't get the organisation's details"
   },
@@ -1343,14 +1320,6 @@
     "toolTip": "Decouple this user from your organisation",
     "alertTitle": "Decouple User?",
     "alertText": "Are you sure you want to remove {first_name} {last_name} from your organisation ({organisation_name})",
-    "alertConfirm": "Delete",
-    "alertCancel": "Cancel"
-  },
-  "DecoupleDelegate": {
-    "title": "Delete",
-    "toolTip": "Decouple this user as a delegate from your organisation",
-    "alertTitle": "Decouple Delegate User?",
-    "alertText": "Are you sure you want to remove {first_name} {last_name} as a delegate from your organisation ({organisation_name})",
     "alertConfirm": "Delete",
     "alertCancel": "Cancel"
   },

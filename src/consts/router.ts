@@ -1,7 +1,5 @@
-import { RoutePermissions, Routes } from "@/types/router";
+import { Routes } from "@/types/router";
 import { UserGroup } from "./user";
-
-const PROTECTED_ROUTES: RoutePermissions[] = [];
 
 const ROUTES: Routes = {
   invite: {
@@ -292,4 +290,4 @@ const ROUTES: Routes = {
 
 const EXCLUDE_REDIRECT_URLS: string[] = [ROUTES.invite.path];
 
-export { PROTECTED_ROUTES, ROUTES, EXCLUDE_REDIRECT_URLS };
+export { EXCLUDE_REDIRECT_URLS, ROUTES };
