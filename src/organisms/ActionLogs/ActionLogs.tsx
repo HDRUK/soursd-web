@@ -8,6 +8,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
+import { Box } from "@mui/system";
 import ActionsPanel, { ActionsPanelProps } from "../../components/ActionsPanel";
 import ActionsPanelItem from "../../components/ActionsPanelItem";
 import { PageBody } from "../../modules";
@@ -94,9 +95,18 @@ export default function ActionLogs({ variant, panelProps }: ActionLogProps) {
             boxShadow: "none",
             border: 0,
           }}>
-          <AccordionSummary>
-            <Typography variant="h3">{t("completedActions")}</Typography>
-            <ExpandMoreIcon sx={{ ml: 2 }} />
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                width: "100%",
+              }}>
+              <Typography variant="h3">{t("completedActions")}</Typography>{" "}
+              {completedActions.length && (
+                <Typography>{t("completedActionsDescription")}</Typography>
+              )}
+            </Box>
           </AccordionSummary>
           <AccordionDetails>
             <List disablePadding>

@@ -3,12 +3,12 @@ import { handleJsonResponse } from "../requestHelpers";
 import { deleteRequest } from "../requests";
 
 export default async (
-  projectId: number,
-  registryId: number,
+  custodianId: number,
+  id: number,
   options: ResponseOptions
 ): Promise<ResponseJson<null>> => {
   const response = await deleteRequest(
-    `/projects/${projectId}/users/${registryId}`
+    `/custodian_approvals/${custodianId}/projectOrganisations/${id}`
   );
 
   return handleJsonResponse(response, options);

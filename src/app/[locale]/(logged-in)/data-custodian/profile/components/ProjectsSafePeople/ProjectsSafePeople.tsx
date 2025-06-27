@@ -2,7 +2,7 @@
 
 import { useStore } from "@/data/store";
 import PageBody from "@/modules/PageBody";
-import ProjectUsersList from "@/organisms/ProjectUsersList";
+import ProjectUsers from "@/organisms/ProjectUsers";
 import { EntityType } from "@/types/api";
 
 export default function ProjectsSafePeople() {
@@ -14,7 +14,7 @@ export default function ProjectsSafePeople() {
 
   return (
     <PageBody>
-      <ProjectUsersList
+      <ProjectUsers
         variant={EntityType.CUSTODIAN}
         custodianId={custodianId}
         projectId={projectId}

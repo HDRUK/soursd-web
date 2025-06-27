@@ -4,14 +4,12 @@ import { defineMatchMedia } from "@/utils/testUtils";
 import "@testing-library/jest-dom";
 import "jest-axe/extend-expect";
 import * as matchers from "jest-extended";
-import { forwardRef, useImperativeHandle } from "react";
 import { TextEncoder } from "util";
 import { mock200Json, mockDownloadFile, mockPagedResults } from "./jest.utils";
 import { mockedJwt } from "./mocks/data/auth";
 import { mockedCustodian, mockedCustodianUser } from "./mocks/data/custodian";
 import { mockedNotification } from "./mocks/data/notification";
 import { mockedOrganisation } from "./mocks/data/organisation";
-import { mockedValidationComment } from "./mocks/data/validation_log";
 import { mockedPermission } from "./mocks/data/permission";
 import { mockedProject, mockedProjects } from "./mocks/data/project";
 import { mockedApiPermissions, mockedStoreState } from "./mocks/data/store";
@@ -25,6 +23,7 @@ import {
   mockedTraining,
   mockedUser,
 } from "./mocks/data/user";
+import { mockedValidationComment } from "./mocks/data/validation_log";
 import { ResponseMessageType } from "./src/consts/requests";
 
 const nextRouterMock = require("next-router-mock");
@@ -85,30 +84,6 @@ jest.mock("@/hooks/usePathServerSide", () => jest.fn());
 jest.mock("@/data/store", () => ({
   useStore: jest.fn(),
 }));
-
-jest.mock("react-google-recaptcha", () => {
-  const RecaptchaV2 = forwardRef((props, ref) => {
-    useImperativeHandle(ref, () => ({
-      getValue: jest.fn(() => true),
-      reset: jest.fn(),
-      execute: jest.fn(),
-      executeAsync: jest.fn(() => "token"),
-    }));
-
-    return (
-      <input
-        ref={ref}
-        type="checkbox"
-        id="recapture"
-        data-testid="recaptcha"
-        aria-label="recaptcha"
-        {...props}
-      />
-    );
-  });
-
-  return RecaptchaV2;
-});
 
 global.matchMedia = () => {
   return {

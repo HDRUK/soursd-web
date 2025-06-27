@@ -120,6 +120,7 @@
     "safeData": "Safe Data",
     "safeSettings": "Safe Settings",
     "home": "Home",
+    "homeIntro": "Welcome to the Safe People Registry. You’ll see a list of tasks below to complete your profile.",
     "contacts": "Contacts",
     "contactsHeading": "Administrative Contacts",
     "uniqueIdentifierTitle": "SOURSD Identifier",
@@ -203,6 +204,8 @@
     "dataUseDescriptionPlaceholder": "Data description",
     "usersListTitle": "Users",
     "usersListDescription": "This table enables Validation Team members to track and manage application workflow from initial enquiry to project closure.  Clicking on a User will show you more information and next steps.",
+    "organisationsListTitle": "Organisations",
+    "organisationsListDescription": "This page enables you and your team members to track and manage Organisation validation across all projects.  Clicking on an Organisation will show you more information and any next steps. You can also drag and drop Organisations between the different status lanes.",
     "noResultsMessage": "No members found",
     "homeTitle": "Your outstanding actions",
     "searchProjectUsersPlaceholder": "Search for User, Project Name, Organisation"
@@ -1161,8 +1164,7 @@
       "organisationSize": "Organisation size"
     },
     "Search": {
-      "sortActions_AZ": "Sort by Organisation Name A-Z",
-      "sortActions_ZA": "Sort by Organisation Name Z-A",
+      "sortByOrganisationName": "Organisation Name",
       "filterByProjectStatus": "Filter by status"
     },
     "sroOfficer": "Senior Responsible Officer",
@@ -1181,6 +1183,8 @@
   },
   "Projects": {
     "Users": {
+      "cancel": "Cancel",
+      "move": "Change status",
       "form_received": "Form received",
       "validation_in_progress": "Validation In Progress",
       "validation_complete": "Validation Complete",
@@ -1199,6 +1203,25 @@
       "removeUserFromProject": "Remove from project",
       "addNewMemberButton": "Add a new member",
       "requestAddNewMemberButton": "Request member is affiliated"
+    },
+    "Organisations": {
+      "cancel": "Cancel",
+      "move": "Change status",
+      "organisationSroOfficer": "Senior Responsible Officer",
+      "projectName": "Project name",
+      "pending": "Pending",
+      "validation_in_progress": "Validation In Progress",
+      "validation_complete": "Validation Complete",
+      "more_user_info_req": "More User Information Requested",
+      "more_org_info_req": "More Organisation Information Requested",
+      "escalate_validation": "Escalation to Validation Committee",
+      "validated": "Validated",
+      "status": "Project status",
+      "organisationName": "Organisation name",
+      "projectRole": "Project role",
+      "name": "Name",
+      "actions": "Actions",
+      "removeOrganisationFromProject": "Remove from project"
     },
     "status": "Project status",
     "safeProject": "Safe Project",
@@ -1226,10 +1249,9 @@
     "approvedKey": "Approved Project",
     "unapprovedKey": "Project Pending Approval",
     "searchPlaceholder": "Search Projects",
-    "sortActions": {
-      "AZ": "Sort Alphabetical A-Z",
-      "ZA": "Sort Alphabetical Z-A"
-    },
+    "sortByOrganisationName": "Organisation name",
+    "sortByName": "Name",
+    "sortByProjectTitle": "Project title",
     "endDate": "End date",
     "startDate": "Start date",
     "projects": "Projects",
@@ -1400,6 +1422,7 @@
   },
   "ActionLogs": {
     "completedActions": "Completed Actions",
+    "completedActionsDescription": "Your completed actions will appear here",
     "profileCompleted": {
       "title": "Add your personal details",
       "description": "",
@@ -1457,18 +1480,18 @@
     },
     "completeConfiguration": {
       "title": "Complete your configuration",
-      "description": "This is where we need you to setup things like IDV technology and decision models...",
+      "description": "This is where you can setup your rules and validation checks, IDVT technology and API endpoints.",
       "buttonText": "Complete your configuration"
     },
     "addContactsCompleted": {
-      "title": "Add your contacts",
-      "description": "As well as yourself, it’s a good idea to set up your colleagues who will help administer the system and approve Users, projects and Organisations",
-      "buttonText": "Add contacts"
+      "title": "Add your team members",
+      "description": "As well as yourself, it’s a good idea to set up your colleagues who will help administer the system, validate Users and Organisations, and approve projects.",
+      "buttonText": "Add team members"
     },
     "addUsersCompleted": {
       "title": "Add your Users",
       "description": "",
-      "buttonText": "Add users"
+      "buttonText": "Add Users"
     },
     "addProjectsCompleted": {
       "title": "Add your projects",

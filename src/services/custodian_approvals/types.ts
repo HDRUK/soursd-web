@@ -17,6 +17,16 @@ interface ChangeValidationStatusPayload {
   comment: string;
 }
 
+interface DeleteCustodianProjectUserPayload {
+  custodianId: number;
+  id: number;
+}
+
+interface DeleteCustodianProjectOrganisationPayload {
+  custodianId: number;
+  id: number;
+}
+
 export type {
   WorkflowStateResponse,
   WorkflowTransitionsResponse,
@@ -25,4 +35,6 @@ export type {
   GetCustodianProjectOrganisationsResponse,
   GetCustodianProjectOrganisationResponse,
   ChangeValidationStatusPayload,
+  DeleteCustodianProjectUserPayload,
+  DeleteCustodianProjectOrganisationPayload,
 };

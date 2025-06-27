@@ -10,7 +10,7 @@ export interface FeatureProps {
 }
 
 export default function Feature({ id, children }: FeatureProps) {
-  const { isAllowed } = useFeature(id);
+  const { isTransitionAllowed } = useFeature(id);
 
-  return isAllowed ? children : null;
+  return isTransitionAllowed ? children : null;
 }

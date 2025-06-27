@@ -4,7 +4,7 @@ import { useStore } from "@/data/store";
 import PageBody from "@/modules/PageBody";
 import PageBodyContainer from "@/modules/PageBodyContainer";
 import PageSection from "@/modules/PageSection";
-import ProjectUsersList from "@/organisms/ProjectUsersList";
+import ProjectUsers from "@/organisms/ProjectUsers";
 import { EntityType } from "@/types/api";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
@@ -26,7 +26,7 @@ export default function Users() {
             {tProfile("usersListDescription")}
           </Typography>
         </PageSection>
-        <ProjectUsersList
+        <ProjectUsers
           variant={EntityType.CUSTODIAN}
           custodianId={custodianId}
           routes={{

@@ -76,6 +76,9 @@ const mockedProjectHasUser = (props: Partial<ProjectUser>): ProjectUser => ({
     updated_at: faker.date.recent().toISOString(),
     user: mockedUser(),
   },
+  role: {
+    name: "Principal Investigator (PI)",
+  },
   ...props,
 });
 

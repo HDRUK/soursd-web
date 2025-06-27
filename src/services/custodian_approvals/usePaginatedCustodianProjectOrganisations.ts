@@ -20,7 +20,7 @@ export default function usePaginatedCustodianProjectOrganisations(
   return usePaginatedQuery({
     queryKeyBase: [queryKey, custodianId],
     defaultQueryParams: {
-      sort: `title:${SearchDirections.ASC}`,
+      sort: `organisations.organisation_name:${SearchDirections.ASC}`,
       ...options?.defaultQueryParams,
     },
     queryFn: queryParams =>

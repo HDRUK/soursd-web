@@ -29,13 +29,17 @@ import useDroppableSortItems, {
   UseDroppableSortItemsFnOptions,
   UseDroppableSortItemsProps,
 } from "../../hooks/useDroppableSortItems";
-import { WithStateWorkflow, WithTranslations } from "../../types/application";
+import {
+  WithRoutes,
+  WithStateWorkflow,
+  WithTranslations,
+} from "../../types/application";
 
 import DndDroppableContainer from "../../components/DndDroppableContainer";
 import DndSortableItem from "../../components/DndSortableItem";
 import { dndDragRotate } from "../../consts/styles";
 import { DndItems, DragUpdateEventArgsInitial } from "../../types/dnd";
-import { PropsWithQuery } from "../../types/form";
+import { PropsWithQuery, QueryState } from "../../types/form";
 import { findDroppables, findItem, findItemIndex } from "../../utils/dnd";
 import KanbanBoardColumn from "./KanbanBoardColumn";
 import KanbanBoardColumns from "./KanbanBoardColumns";
@@ -50,7 +54,16 @@ const dropAnimation: DropAnimation = {
   }),
 };
 
-interface KanbanBoardProps<T>
+export type KanbanBoardEntityProps<T> = WithRoutes<{
+  itemsByTransitions: DndItems<T>;
+  onMove: (id: number, status: string) => void;
+  onDragEnd: (id: number, status: string) => void;
+  updateQueryState: QueryState;
+  actions?: (props: KanbanBoardHelperProps<T>) => React.ReactNode;
+  options?: Partial<UseDroppableSortItemsFnOptions<T>>;
+}>;
+
+export interface KanbanBoardProps<T>
   extends PropsWithQuery<
     WithStateWorkflow<WithTranslations<UseDroppableSortItemsProps<T>>>
   > {
@@ -61,16 +74,13 @@ interface KanbanBoardProps<T>
   initialData: DndItems<T>;
   cardComponent: ComponentType<T>;
   cardActionsComponent?: ComponentType<KanbanBoardHelperProps<T>>;
-  droppableFnOptions: Partial<UseDroppableSortItemsFnOptions<T>>;
+  options: Partial<UseDroppableSortItemsFnOptions<T>> | undefined;
 }
 
 export interface KanbanBoardHelperProps<T> {
   data?: T;
-  allowedColumns: string[];
-  onMoveClick: (
-    e: React.MouseEvent<HTMLButtonElement>,
-    containerId: UniqueIdentifier
-  ) => void;
+  allowedTransitions: string[];
+  onMoveClick: (id: number, status: string) => void;
 }
 
 export default function KanbanBoard<T>({
@@ -85,9 +95,10 @@ export default function KanbanBoard<T>({
   onDragUpdate,
   onMove,
   t,
-  droppableFnOptions,
+  options,
   ...restProps
 }: KanbanBoardProps<T>) {
+  console.log("KanbanBoard rendered", initialData);
   const { handleDragSort, handleDragSortEnd, handleDragSortStart, handleMove } =
     useDroppableSortItems<T>({
       onDragEnd,
@@ -141,17 +152,14 @@ export default function KanbanBoard<T>({
 
   const getAllowedColumns = (containerId: UniqueIdentifier) => {
     return Object.keys(items).filter(key =>
-      droppableFnOptions.isAllowed(
-        {},
-        { initial: { containerId }, containerId: key }
-      )
+      options?.isTransitionAllowed?.(key, containerId)
     );
   };
 
   const handleDragEnd = (e: DragEndEvent) => {
     unstable_batchedUpdates(() => {
       handleDragSortEnd(e, items, {
-        ...droppableFnOptions,
+        ...options,
         setState: (state: DndItems<T>) => {
           setItems(items => {
             return {
@@ -168,7 +176,7 @@ export default function KanbanBoard<T>({
 
   const handleDragOver = (e: DragOverEvent) => {
     handleDragSort(e, items, {
-      ...droppableFnOptions,
+      ...options,
       setState: (state: DndItems<T>) => {
         setItems(prevState => ({
           ...prevState,
@@ -222,7 +230,7 @@ export default function KanbanBoard<T>({
         isError
       );
 
-      queryState.reset();
+      queryState.reset?.();
     }
   }, [isError]);
 
@@ -258,12 +266,9 @@ export default function KanbanBoard<T>({
                 }
                 isDropAllowed={
                   !activeId ||
-                  droppableFnOptions.isAllowed(
-                    {},
-                    {
-                      initial: activeData,
-                      containerId,
-                    }
+                  options?.isTransitionAllowed?.(
+                    activeData?.containerId,
+                    containerId
                   )
                 }
                 heading={`${t(containerId)} (${findDroppables(containerId, items).length})`}

@@ -12,11 +12,6 @@ type ProjectResponse = ResearcherProject;
 
 type ProjectUsersResponse = ProjectUser[];
 
-type DeleteProjectUserPayload = {
-  projectId: number;
-  registryId: number;
-};
-
 interface PutPrimaryContactQuery {
   projectId: number;
   registryId: number;
@@ -50,7 +45,6 @@ export type {
   ProjectAllUserResponse,
   ProjectUsersResponse,
   ProjectResponse,
-  DeleteProjectUserPayload,
   PutPrimaryContactPayload,
   PutPrimaryContactQuery,
   PutProjectPayload,
