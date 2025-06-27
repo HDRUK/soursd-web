@@ -1,9 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { Box, Typography } from "@mui/material";
-import { MUI_AUGMENTED_COLOR_OPTIONS_ARG_TYPES } from "../../consts/storybook";
 import { FeatureBox, FeatureBoxContent, FeatureBoxInfo } from ".";
-import Quote from "../Quote";
+import { MUI_AUGMENTED_COLOR_OPTIONS_ARG_TYPES } from "../../consts/storybook";
 
 const meta = {
   title: "components/FeatureBox",
@@ -30,9 +29,7 @@ export const Basic: Story = {
       <FeatureBoxInfo>
         <Typography variant="h5">Title</Typography>
       </FeatureBoxInfo>
-      <FeatureBoxContent>
-        <Quote>Researcher quote goes here</Quote>
-      </FeatureBoxContent>
+      <FeatureBoxContent>Content goes here</FeatureBoxContent>
     </FeatureBox>
   ),
 };

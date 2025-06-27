@@ -7,8 +7,6 @@ import PageBody from "./PageBody";
 import PageColumns from "./PageColumns";
 import PageColumnBody from "./PageColumnBody";
 import PageColumnDetails from "./PageColumnDetails";
-import PageTitle from "./PageTitle";
-import UserDetailsModal from "./UserDetailsModal";
 import PageBodyContainer from "./PageBodyContainer";
 import ProjectsFilters from "./ProjectsFilters";
 import OrganisationsFilters from "./OrganisationsFilters";
@@ -23,9 +21,7 @@ export {
   PageGuidance,
   PageSection,
   PageBody,
-  PageTitle,
   ProjectsFilters,
-  UserDetailsModal,
   PageBodyContainer,
   PageColumns,
   PageColumnDetails,
