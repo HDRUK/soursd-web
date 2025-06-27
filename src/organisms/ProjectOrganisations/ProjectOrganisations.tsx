@@ -164,8 +164,6 @@ export default function ProjectOrganisations({
     />
   );
 
-  console.log("itemsByTransitions", itemsByTransitions);
-
   return (
     <>
       <PageSection>
