@@ -15,7 +15,7 @@ export interface QuoteProps extends Omit<BoxProps, "outlined"> {
 export default function Mask({
   children,
   size = "80px",
-  color = "lightGreen",
+  color = "primary",
   ...restProps
 }: QuoteProps) {
   const theme = useTheme();

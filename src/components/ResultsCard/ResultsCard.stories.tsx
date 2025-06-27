@@ -27,7 +27,7 @@ export const Basic: Story = {
     content: (
       <>
         <Typography variant="h6">User name</Typography>
-        <Typography color="caption.main">Description</Typography>
+        <Typography color="textSecondary.main">Description</Typography>
       </>
     ),
     details: <Typography>Last logged in: 12/12/2024</Typography>,

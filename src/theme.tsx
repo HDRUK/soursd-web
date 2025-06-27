@@ -3,6 +3,7 @@
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import { AugmentedColorPaletteOptions, Theme } from "@mui/material";
 import { TableCellProps } from "@mui/material/TableCell";
+import grey from "@mui/material/colors/grey";
 import { createTheme, darken } from "@mui/material/styles";
 import { createBreakpoints } from "@mui/system";
 import { Roboto } from "next/font/google";
@@ -48,7 +49,7 @@ const createTabStyles = (theme: Theme) => {
     padding: "4px 8px",
     minHeight: "36px",
     flexGrow: 1,
-    backgroundColor: theme.palette.greys.extraLight,
+    backgroundColor: grey["100"],
     boxShadow: `inset 0 -4px 4px -2px rgba(0, 0, 0, 0.1)`,
     "&:hover": {
       backgroundColor: getHoverColor(theme),
@@ -177,6 +178,8 @@ const createMuiTableStyles = (ownerState: TableCellProps) => {
       fontWeight: "bold",
       borderTop: "1px solid rgba(224, 224, 224, 1)",
     }),
+    ...theme.typography.small,
+    lineHeight: "140%",
   };
 };
 
@@ -186,7 +189,7 @@ const createMuiChipStyles = () => {
     paddingRight: "4px",
     background: "midGrey.main",
     "& > .MuiChip-label": {
-      color: "midGrey.contrastText",
+      color: "midGrey",
     },
   };
 };
@@ -273,6 +276,9 @@ const theme = createTheme(
           html {
             font-size: 16px;
           }
+          body {
+            line-height: 140%;
+          }
       `,
       },
       MuiButton: {
@@ -283,6 +289,13 @@ const theme = createTheme(
           root: {
             boxShadow: "none",
             textTransform: "none",
+          },
+        },
+      },
+      MuiTypography: {
+        styleOverrides: {
+          root: {
+            lineHeight: "140%",
           },
         },
       },
@@ -317,7 +330,7 @@ const theme = createTheme(
       MuiInputLabel: {
         styleOverrides: {
           root: {
-            fontSize: "1em",
+            ...paletteTheme.typography.small,
             fontWeight: "500",
           },
         },
@@ -387,7 +400,7 @@ const theme = createTheme(
       },
       MuiTabs: {
         defaultProps: {
-          color: "greyLight",
+          color: grey["300"],
         },
         styleOverrides: {
           root: ({ ownerState }) => createTabsStyles(ownerState),

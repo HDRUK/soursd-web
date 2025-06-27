@@ -59,8 +59,10 @@ export default function UserHistoryEntry({
           {endDate && `- ${formatDisplayShortDate(endDate)}`}
         </Typography>
       </Box>
-      <Typography sx={{ color: "caption.main" }}>{description}</Typography>
-      <Typography sx={{ color: "caption.main", display: "flex" }}>
+      <Typography sx={{ color: "textSecondary.main" }}>
+        {description}
+      </Typography>
+      <Typography sx={{ color: "textSecondary.main", display: "flex" }}>
         {t("certification")}
         <StyledCertificationLink
           hasCertification={isCertificationPresent && certification.length > 0}

@@ -45,13 +45,16 @@ export const showAlert = (
           .map(item => item.title),
       confirmButtonColor: theme.palette.primary.main,
       confirmButtonText: confirmButtonText ?? "OK",
-      denyButtonColor: theme.palette.default.main,
       denyButtonText: cancelButtonText,
       showDenyButton: !!cancelButtonText,
       allowOutsideClick: false,
       html: text,
       customClass: {
         container: "swal2-container",
+        confirmButton:
+          "MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary",
+        cancelButton:
+          "MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary",
       },
       willClose: () => {
         if (untilDuration) {

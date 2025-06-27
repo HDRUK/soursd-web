@@ -40,7 +40,7 @@ export default function KanbanBoardOrganisationsCard({
         endIcon={actions}
         variant="h6"
         sx={{
-          color: "menuList1.main",
+          color: "secondary.main",
           mb: 1,
           fontSize: "1rem",
         }}>

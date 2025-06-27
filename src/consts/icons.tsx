@@ -49,10 +49,6 @@ const ApprovedUserIcon = (props: SvgIconProps) => (
   <TaskAltOutlinedIcon {...props} sx={{ color: "success.main" }} />
 );
 
-const ApprovedTrainingIcon = (props: SvgIconProps) => (
-  <WorkspacePremiumOutlinedIcon {...props} sx={{ color: "mint.main" }} />
-);
-
 const ApprovedIcon = (props: SvgIconProps) => (
   <StatusIndicator {...props} variant="success" size="large" />
 );
@@ -83,7 +79,6 @@ const PrimaryContactIcon = (props: SvgIconProps) => (
 
 export {
   ApprovedIcon,
-  ApprovedTrainingIcon,
   ApprovedUserIcon,
   DecoupleIcon,
   EditIcon,
