@@ -144,8 +144,8 @@ export default function AffiliationsPage() {
               setSelectedAffiliation(affiliation);
               setOpen(true);
             }}
-            sx={{ color: "menuList1.main" }}
-            icon={<CreateOutlinedIcon sx={{ color: "menuList1.main" }} />}>
+            sx={{ color: "secondary.main" }}
+            icon={<CreateOutlinedIcon sx={{ color: "secondary.main" }} />}>
             {tProfile("viewOrEdit")}
           </ActionMenuItem>
           {status === Status.AFFILIATION_INVITED && (
@@ -155,12 +155,12 @@ export default function AffiliationsPage() {
                 setSelectedAffiliation(affiliation);
                 handleResendInvite(affiliation);
               }}
-              sx={{ color: "menuList1.main" }}
+              sx={{ color: "secondary.main" }}
               icon={
                 inviteQueryState.isLoading ? (
                   <CircularProgress size={20} />
                 ) : (
-                  <EmailIcon sx={{ color: "menuList1.main" }} />
+                  <EmailIcon sx={{ color: "secondary.main" }} />
                 )
               }>
               {tProfile("reinviteOrganisation")}

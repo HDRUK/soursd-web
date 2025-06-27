@@ -40,7 +40,7 @@ function renderProjectNameCell<T extends Project>(
   const { title, id } = info.row.original;
 
   return (
-    <Typography color="primary">
+    <Typography color="primary" variant="small">
       <Link
         href={injectParamsIntoPath(route, {
           id,
@@ -57,7 +57,7 @@ function renderLinkNameCell(
   options: Record<string, number>
 ) {
   return (
-    <Link href={injectParamsIntoPath(route, options)} color="menuList1.main">
+    <Link href={injectParamsIntoPath(route, options)} color="secondary.main">
       {name}
     </Link>
   );

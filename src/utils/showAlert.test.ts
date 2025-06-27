@@ -12,6 +12,16 @@ jest.mock("js-cookie");
 
 (get as jest.Mock).mockReturnValue(null);
 
+const commonAlertProps = {
+  customClass: {
+    container: "swal2-container",
+    confirmButton:
+      "MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary",
+    cancelButton:
+      "MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary",
+  },
+};
+
 describe("Alert Utils", () => {
   afterEach(() => {
     jest.clearAllMocks();
@@ -30,14 +40,11 @@ describe("Alert Utils", () => {
         html: "This is an error message.",
         confirmButtonColor: theme.palette.primary.main,
         confirmButtonText: "OK",
-        customClass: {
-          container: "swal2-container",
-        },
-        denyButtonColor: theme.palette.default.main,
         denyButtonText: undefined,
         showDenyButton: false,
         allowOutsideClick: false,
         willClose: expect.any(Function),
+        ...commonAlertProps,
       });
     });
 
@@ -54,14 +61,11 @@ describe("Alert Utils", () => {
         html: "Operation completed successfully!",
         confirmButtonColor: theme.palette.primary.main,
         confirmButtonText: "OK",
-        customClass: {
-          container: "swal2-container",
-        },
-        denyButtonColor: theme.palette.default.main,
         denyButtonText: undefined,
         showDenyButton: false,
         allowOutsideClick: false,
         willClose: expect.any(Function),
+        ...commonAlertProps,
       });
     });
 
@@ -79,14 +83,11 @@ describe("Alert Utils", () => {
         html: "Do you want to proceed?",
         confirmButtonColor: theme.palette.primary.main,
         confirmButtonText: "Yes",
-        customClass: {
-          container: "swal2-container",
-        },
-        denyButtonColor: theme.palette.default.main,
         denyButtonText: "No",
         showDenyButton: true,
         allowOutsideClick: false,
         willClose: expect.any(Function),
+        ...commonAlertProps,
       });
     });
   });

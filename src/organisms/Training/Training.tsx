@@ -181,13 +181,13 @@ export default function Training({
         <ActionMenu aria-label={`Actions for ${training.training_name}`}>
           <ActionMenuItem
             onClick={() => handleOpenModal(training)}
-            sx={{ color: "menuList1.main" }}
-            icon={<CreateOutlinedIcon sx={{ color: "menuList1.main" }} />}>
+            sx={{ color: "secondary.main" }}
+            icon={<CreateOutlinedIcon sx={{ color: "secondary.main" }} />}>
             {tProfile("viewOrEdit")}
           </ActionMenuItem>
           <ActionMenuItem
-            icon={<TaskAltIcon sx={{ color: "menuList1.main" }} />}
-            sx={{ color: "menuList1.main" }}
+            icon={<TaskAltIcon sx={{ color: "secondary.main" }} />}
+            sx={{ color: "secondary.main" }}
             onClick={() =>
               !!certificateFileId && downloadFile(certificateFileId)
             }
