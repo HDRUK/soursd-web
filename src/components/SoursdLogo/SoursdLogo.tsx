@@ -5,6 +5,7 @@ import logoDefault from "public/soursd_logo.svg";
 import logoWhite from "public/soursd_logo_white.svg";
 import { grey } from "@mui/material/colors";
 import { StyledLogoContainer, StyledLogoTitle } from "./SoursdLogo.styles";
+import { grey } from "@mui/material/colors";
 
 const NAMESPACE_TRANSLATIONS_SOURSD_LOGO = "SoursdLogo";
 
