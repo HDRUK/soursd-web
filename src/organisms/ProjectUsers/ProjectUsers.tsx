@@ -23,8 +23,11 @@ import { Button } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import ProjectUsersList from "../ProjectUsersList";
+import { Button } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import ProjectsAddUserModal from "@/components/ProjectsAddUserModal";
 import ProjectUsersActions from "./ProjectUsersActions";
+import ProjectUsersList from "../ProjectUsersList";
 
 const NAMESPACE_TRANSLATIONS_PROJECT_USERS = "Projects.Users";
 
