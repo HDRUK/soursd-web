@@ -1,6 +1,5 @@
 "use client";
 
-import theme from "@/theme";
 import { showAlert } from "@/utils/showAlert";
 import { Box } from "@mui/material";
 import { useEffect } from "react";
