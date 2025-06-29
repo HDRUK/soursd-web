@@ -20,7 +20,8 @@ import yup from "../../config/yup";
 import { ResearcherProject } from "../../types/application";
 import { MutationState } from "../../types/form";
 
-export interface UserModalDetailsProps extends FormProps<ResearcherProject> {
+export interface ProjectsSafeProjectFormProps
+  extends FormProps<ResearcherProject> {
   mutateState: MutationState;
   project: ResearcherProject;
 }
@@ -30,7 +31,7 @@ const NAMESPACE_TRANSLATION_FORM = "Form.SafeProject";
 export default function UserModalDetails({
   mutateState,
   ...restProps
-}: UserModalDetailsProps) {
+}: ProjectsSafeProjectFormProps) {
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
 
   const schema = useMemo(
@@ -61,7 +62,12 @@ export default function UserModalDetails({
   };
 
   return (
-    <Form schema={schema} {...formOptions} {...restProps} autoComplete="off">
+    <Form
+      aria-label="Safe project"
+      schema={schema}
+      {...formOptions}
+      {...restProps}
+      autoComplete="off">
       <Grid container columnSpacing={8}>
         <Grid
           item
@@ -97,12 +103,14 @@ export default function UserModalDetails({
               <Grid container columnSpacing={3}>
                 <Grid item xs={6}>
                   <FormControlWrapper
+                    t={tForm}
                     name="start_date"
                     renderField={fieldProps => <DateInput {...fieldProps} />}
                   />
                 </Grid>
                 <Grid item xs={6}>
                   <FormControlWrapper
+                    t={tForm}
                     name="end_date"
                     renderField={fieldProps => <DateInput {...fieldProps} />}
                   />

@@ -1,9 +1,16 @@
 import { Organisation } from "@/services/organisations";
+import { Charity } from "@/types/application";
 import { faker } from "@faker-js/faker";
-import { mockedPermission } from "./permission";
-import { mockedUser } from "./user";
 import { mockedApproval } from "./approvals";
 import { mockedDepartment } from "./departments";
+import { mockedPermission } from "./permission";
+import { mockedUser } from "./user";
+
+const mockedCharity = (charity?: Partial<Charity>) => ({
+  registration_id: faker.string.numeric(8),
+  country: faker.location.country(),
+  ...charity,
+});
 
 const mockedOrganisation = (
   organisation?: Partial<Organisation>
@@ -45,6 +52,7 @@ const mockedOrganisation = (
       category: "Health-Focused Departments",
     }),
   ],
+  charities: [mockedCharity()],
   registries: [
     {
       user: mockedUser({
@@ -85,4 +93,4 @@ const mockedOrganisation = (
   ...organisation,
 });
 
-export { mockedOrganisation };
+export { mockedCharity, mockedOrganisation };

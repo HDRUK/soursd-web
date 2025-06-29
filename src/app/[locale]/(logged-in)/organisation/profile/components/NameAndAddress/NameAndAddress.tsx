@@ -90,6 +90,7 @@ export default function NameAndAddress() {
   return (
     <PageBody>
       <Form
+        aria-label="Name and address"
         schema={schema}
         onSubmit={handleSubmit}
         {...formOptions}

@@ -6,10 +6,13 @@ import {
   ProjectAllUser,
   CustodianProjectUser,
   ProjectUser,
+  CustodianProjectOrganisation,
+  ProjectOrganisation,
 } from "@/types/application";
 import { faker } from "@faker-js/faker";
 import { mockedProject } from "./project";
 import { mockedAffiliation, mockedUser } from "./user";
+import { mockedOrganisation } from "./organisation";
 
 const mockedCustodian = (custodian?: Partial<Custodian>): Custodian => ({
   id: 1,
@@ -82,6 +85,16 @@ const mockedProjectHasUser = (props: Partial<ProjectUser>): ProjectUser => ({
   ...props,
 });
 
+const mockedProjectHasOrganisation = (
+  props: Partial<ProjectOrganisation>
+): ProjectOrganisation => ({
+  id: 1,
+  project_id: 1,
+  project: mockedProject(),
+  organisation: mockedOrganisation(),
+  ...props,
+});
+
 const mockedCustodianHasProjectUser = (
   props: Partial<CustodianProjectUser>
 ): CustodianProjectUser => ({
@@ -99,10 +112,29 @@ const mockedCustodianHasProjectUser = (
   ...props,
 });
 
+const mockedCustodianHasProjectOrganisation = (
+  props: Partial<CustodianProjectOrganisation>
+): CustodianProjectOrganisation => ({
+  id: 1,
+  project_has_organisation_id: 1,
+  custodian_id: 1,
+  created_at: faker.date.past().toISOString(),
+  updated_at: faker.date.recent().toISOString(),
+  project_organisation: mockedProjectHasOrganisation({ id: 1 }),
+  model_state: {
+    state: {
+      slug: Status.PENDING,
+    },
+  },
+  ...props,
+});
+
 export {
   mockedCustodian,
   mockedCustodianUser,
   mockedProjectUser,
   mockedProjectHasUser,
   mockedCustodianHasProjectUser,
+  mockedCustodianHasProjectOrganisation,
+  mockedProjectHasOrganisation,
 };

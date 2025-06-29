@@ -302,6 +302,9 @@
     "uploadCertification": "Upload Certificate"
   },
   "Form": {
+    "atLeastOneCharityRequired": "At least 1 charity is required",
+    "charityCountryRequired": "Charity country is required",
+    "organisationNameRequiredInvalid": "Organisation name is required",
     "unsavedAlertText": "Are you sure you want to leave the form with unsaved changes?",
     "unsavedAlertTitle": "You have unsaved changes",
     "unsavedAlertConfirmButton": "Leave form",
@@ -1169,7 +1172,7 @@
       "more_org_info_req": "More Organisation Information Requested",
       "escalate_validation": "Escalation to Validation Committee",
       "validated": "Validated",
-      "status": "Validation Status",
+      "status": "Validation status",
       "organisationName": "Organisation name",
       "projectRole": "Project role",
       "projectName": "Project name",
@@ -1196,7 +1199,7 @@
       "more_org_info_req": "More Organisation Information Requested",
       "escalate_validation": "Escalation to Validation Committee",
       "validated": "Validated",
-      "status": "Project status",
+      "status": "Validation status",
       "organisationName": "Organisation name",
       "projectRole": "Project role",
       "name": "Name",
