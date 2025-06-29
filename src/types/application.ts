@@ -224,6 +224,7 @@ interface Charity extends AddressFields {
   id: number;
   registration_id: string;
   name: string;
+  country: string;
   website?: string;
 }
 

@@ -7,11 +7,21 @@ import * as matchers from "jest-extended";
 import { TextEncoder } from "util";
 import { mock200Json, mockDownloadFile, mockPagedResults } from "./jest.utils";
 import { mockedJwt } from "./mocks/data/auth";
-import { mockedCustodian, mockedCustodianUser } from "./mocks/data/custodian";
+import {
+  mockedCustodian,
+  mockedCustodianHasProjectOrganisation,
+  mockedCustodianHasProjectUser,
+  mockedCustodianUser,
+} from "./mocks/data/custodian";
 import { mockedNotification } from "./mocks/data/notification";
 import { mockedOrganisation } from "./mocks/data/organisation";
 import { mockedPermission } from "./mocks/data/permission";
-import { mockedProject, mockedProjects } from "./mocks/data/project";
+import {
+  mockedKanbanCustodianProjectUsers,
+  mockedProject,
+  mockedProjects,
+  mockedProjectStateWorkflow,
+} from "./mocks/data/project";
 import { mockedApiPermissions, mockedStoreState } from "./mocks/data/store";
 import { mockedSystemConfig } from "./mocks/data/systemConfig";
 import {
@@ -262,6 +272,39 @@ async function mockFetch(url: string, init?: RequestInit) {
         }),
       ]);
     }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/custodian_approvals/projectOrganisations/workflowTransitions`: {
+      return mock200Json(mockedProjectStateWorkflow());
+    }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/custodian_approvals/1/projectOrganisations`: {
+      return mock200Json(
+        mockPagedResults(
+          [
+            mockedCustodianHasProjectOrganisation({
+              id: 1,
+              model_state: { state: { slug: "form_received" } },
+            }),
+          ],
+          page,
+          perPage
+        )
+      );
+    }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/custodian_approvals/projectUsers/workflowTransitions`: {
+      return mock200Json(mockedProjectStateWorkflow());
+    }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/custodian_approvals/1/projectUsers`:
+      return mock200Json(
+        mockPagedResults(
+          [
+            mockedCustodianHasProjectUser({
+              id: 1,
+              model_state: { state: { slug: "form_received" } },
+            }),
+          ],
+          page,
+          perPage
+        )
+      );
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/projects`: {
       return mock200Json(mockPagedResults(mockedProjects(10), page, perPage));
     }
