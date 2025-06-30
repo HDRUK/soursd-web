@@ -8,7 +8,6 @@ import {
 } from "@/consts/user";
 import { RouteConfig } from "./router";
 import { RuleState } from "./rules";
-import { PaginatedQueryProps } from "@/hooks/usePaginatedQuery";
 import { QueryParams } from "./query";
 
 interface StateWorkflow {

@@ -28,9 +28,9 @@ import { Button } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { SEARCH_PAGE_MAX_PER_PAGE } from "@/consts/search";
 import ProjectUsersList from "../ProjectUsersList";
 import ProjectUsersActions from "./ProjectUsersActions";
-import { SEARCH_PAGE_MAX_PER_PAGE } from "@/consts/search";
 
 const NAMESPACE_TRANSLATIONS_PROJECT_USERS = "Projects.Users";
 

@@ -21,9 +21,9 @@ import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Results from "@/components/Results";
+import { SEARCH_PAGE_MAX_PER_PAGE } from "@/consts/search";
 import ProjectOrganisationsList from "../ProjectOrganisationsList";
 import ProjectOrganisationsActions from "./ProjectOrganisationsActions";
-import { SEARCH_PAGE_MAX_PER_PAGE } from "@/consts/search";
 
 const NAMESPACE_TRANSLATIONS_PROJECT_USERS = "Projects.Organisations";
 

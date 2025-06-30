@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 import { faker } from "@faker-js/faker";
-import VeriffTermsAndConditions from "./VeriffTermsAndConditions";
 import { mockedUser } from "@/mocks/data/user";
+import VeriffTermsAndConditions from "./VeriffTermsAndConditions";
 
 const mockUrl = faker.internet.url();
 
@@ -79,7 +79,7 @@ describe("<VeriffTermsAndConditions />", () => {
   it("calls query when Start is clicked", async () => {
     setupTest();
 
-    const { id, first_name, last_name } = user;
+    const { id } = user;
 
     const checkbox = screen.getByRole("checkbox");
     fireEvent.click(checkbox);

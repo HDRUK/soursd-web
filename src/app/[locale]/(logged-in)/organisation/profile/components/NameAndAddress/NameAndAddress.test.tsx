@@ -5,8 +5,8 @@ import {
   userEvent,
   waitFor,
 } from "@/utils/testUtils";
-import NameAndAddress from "./NameAndAddress";
 import { mockedOrganisation } from "@/mocks/data/organisation";
+import NameAndAddress from "./NameAndAddress";
 
 const patchProps = {
   isError: false,
