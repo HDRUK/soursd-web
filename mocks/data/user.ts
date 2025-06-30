@@ -12,6 +12,7 @@ import { faker } from "@faker-js/faker";
 import { mockedApproval } from "./approvals";
 import { mockedFile } from "./file";
 import { mockedPermission } from "./permission";
+import { mockedDepartment } from "./departments";
 
 const mockedUser = (user?: Partial<User>): User => ({
   profile_completed_at: null,
@@ -26,6 +27,7 @@ const mockedUser = (user?: Partial<User>): User => ({
   organisations: [],
   orcid_scanning: false,
   orcid_scanning_completed_at: null,
+  departments: [mockedDepartment({ id: 2 })],
   registry: {
     files: [mockedFile()],
     verified: true,
