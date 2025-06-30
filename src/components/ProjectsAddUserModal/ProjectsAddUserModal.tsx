@@ -36,9 +36,6 @@ export default function ProjectsAddUserModal({
         text: "This does nothing yet, this feature has not been implemented",
       });
     } else {
-      console.log({
-        users: projectUsers.filter(u => u.project_user_id || u.role),
-      });
       await mutateAsync({
         params: {
           id: projectId,
