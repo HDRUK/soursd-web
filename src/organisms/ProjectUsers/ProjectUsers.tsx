@@ -75,8 +75,6 @@ export default function ProjectUsers({
     variant: EntityType.USER,
   });
 
-  console.log("test", custodianProjectUsers);
-
   const {
     mutateAsync: changeValidationStatus,
     ...updateValidationMutationState
