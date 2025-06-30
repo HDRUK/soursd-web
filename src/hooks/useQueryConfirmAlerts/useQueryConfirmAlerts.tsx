@@ -32,6 +32,7 @@ export default function useQueryConfirmAlerts<T>(
     title: t("alertDeleteTitle"),
     confirmButtonText: t("alertDeleteConfirmButton"),
     cancelButtonText: t("alertDeleteCancelButton"),
+    confirmButtonColor: "#DC3645",
     ...alertOptions?.confirmAlertProps,
     preConfirm: async () => {
       await alertOptions?.confirmAlertProps?.preConfirm<T>?.(

@@ -20,6 +20,7 @@ import ViewColumnIconOutlined from "@mui/icons-material/ViewColumnOutlined";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import Results from "@/components/Results";
 import ProjectOrganisationsList from "../ProjectOrganisationsList";
 import ProjectOrganisationsActions from "./ProjectOrganisationsActions";
 
@@ -142,6 +143,27 @@ export default function ProjectOrganisations({
     ]
   );
 
+  const listComponent = !showListView ? (
+    <ProjectOrganisationsBoard
+      options={{
+        isTransitionAllowed,
+      }}
+      {...commonProps}
+    />
+  ) : (
+    <ProjectOrganisationsList
+      {...commonProps}
+      total={total}
+      last_page={last_page}
+      page={page}
+      setPage={setPage}
+      queryState={queryState}
+      isPaginated
+      variant={variant}
+      t={t}
+    />
+  );
+
   return (
     <>
       <PageSection>
@@ -170,31 +192,15 @@ export default function ProjectOrganisations({
           )}
         </ProjectOrganisationsFilters>
       </PageSection>
-      {itemsByTransitions && (
-        <PageSection>
-          {/* note this is using paginated data */}
-          {!showListView ? (
-            <ProjectOrganisationsBoard
-              options={{
-                isTransitionAllowed,
-              }}
-              {...commonProps}
-            />
-          ) : (
-            <ProjectOrganisationsList
-              {...commonProps}
-              total={total}
-              last_page={last_page}
-              page={page}
-              setPage={setPage}
-              queryState={queryState}
-              isPaginated
-              variant={variant}
-              t={t}
-            />
-          )}
-        </PageSection>
-      )}
+      <PageSection>
+        <Results
+          total={total}
+          noResultsMessage={t("noResultsMessage")}
+          errorMessage={t("errorMessage")}
+          queryState={queryState}>
+          {itemsByTransitions && listComponent}
+        </Results>
+      </PageSection>
     </>
   );
 }

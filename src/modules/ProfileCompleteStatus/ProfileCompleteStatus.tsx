@@ -31,7 +31,7 @@ export default function ProfileCompleteStatus({
           </Text>
           <Text
             component="div"
-            variant="caption"
+            variant="small"
             endIcon={
               <>
                 <ContentCopyIcon />

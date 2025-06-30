@@ -197,9 +197,9 @@ export default function ProfessionalRegistrations({
                       setIsEditMode(true);
                       setIsModalOpen(true);
                     }}
-                    sx={{ color: "menuList1.main" }}
+                    sx={{ color: "secondary.main" }}
                     icon={
-                      <CreateOutlinedIcon sx={{ color: "menuList1.main" }} />
+                      <CreateOutlinedIcon sx={{ color: "secondary.main" }} />
                     }>
                     {tApplication("edit")}
                   </ActionMenuItem>

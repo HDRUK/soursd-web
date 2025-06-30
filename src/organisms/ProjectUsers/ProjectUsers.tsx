@@ -1,6 +1,7 @@
 "use client";
 
 import ButtonToggle from "@/components/ButtonToggle";
+import ProjectsAddUserModal from "@/components/ProjectsAddUserModal";
 import useProjectEntity from "@/hooks/useProjectEntity";
 import useQueryAlerts from "@/hooks/useQueryAlerts";
 import { KanbanBoardHelperProps } from "@/modules/KanbanBoard";
@@ -15,14 +16,14 @@ import {
 } from "@/services/custodian_approvals";
 import { EntityType } from "@/types/api";
 import { CustodianProjectUser, WithRoutes } from "@/types/application";
+import AddIcon from "@mui/icons-material/Add";
 import ListIcon from "@mui/icons-material/List";
 import ViewColumnIconOutlined from "@mui/icons-material/ViewColumnOutlined";
+import { Button } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Button } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
-import ProjectsAddUserModal from "@/components/ProjectsAddUserModal";
+import Results from "@/components/Results";
 import ProjectUsersActions from "./ProjectUsersActions";
 import ProjectUsersList from "../ProjectUsersList";
 
@@ -148,6 +149,26 @@ export default function ProjectUsers({
     [showListView, custodianProjectUsers, itemsByTransitions, routes, t]
   );
 
+  const listComponent = !showListView ? (
+    <ProjectUsersBoard
+      options={{
+        isTransitionAllowed,
+      }}
+      {...commonProps}
+    />
+  ) : (
+    <ProjectUsersList
+      {...commonProps}
+      total={total}
+      last_page={last_page}
+      page={page}
+      setPage={setPage}
+      isPaginated
+      variant={variant}
+      t={t}
+    />
+  );
+
   return (
     <>
       <PageSection>
@@ -184,39 +205,27 @@ export default function ProjectUsers({
           )}
         </ProjectUsersFilters>
       </PageSection>
-      {itemsByTransitions && (
-        <PageSection>
-          {projectId && (
-            <ProjectsAddUserModal
-              request={variant === EntityType.ORGANISATION}
-              projectId={projectId}
-              open={showAddModal}
-              onClose={() => setShowAddModal(false)}
-            />
-          )}
+
+      <PageSection>
+        {projectId && (
+          <ProjectsAddUserModal
+            request={variant === EntityType.ORGANISATION}
+            projectId={projectId}
+            open={showAddModal}
+            onClose={() => setShowAddModal(false)}
+          />
+        )}
+        <Results
+          total={total}
+          noResultsMessage={
+            projectId ? t("noResultsMessageProject") : t("noResultsMessage")
+          }
+          errorMessage={t("errorMessage")}
+          queryState={queryState}>
           {/* note this is using paginated data */}
-          {!showListView ? (
-            <ProjectUsersBoard
-              options={{
-                isTransitionAllowed,
-              }}
-              {...commonProps}
-            />
-          ) : (
-            <ProjectUsersList
-              {...commonProps}
-              total={total}
-              last_page={last_page}
-              page={page}
-              setPage={setPage}
-              queryState={queryState}
-              isPaginated
-              variant={variant}
-              t={t}
-            />
-          )}
-        </PageSection>
-      )}
+          {itemsByTransitions && listComponent}
+        </Results>
+      </PageSection>
     </>
   );
 }

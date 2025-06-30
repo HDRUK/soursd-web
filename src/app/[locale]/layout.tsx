@@ -34,6 +34,9 @@ export default function RootLayout({
 
   return (
     <html lang={locale}>
+      <head>
+        <link rel="stylesheet" href="/css/sweetalert2-custom.css" />
+      </head>
       <Box
         component="body"
         className={inter.className}
