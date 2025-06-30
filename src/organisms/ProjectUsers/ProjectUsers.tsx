@@ -74,6 +74,8 @@ export default function ProjectUsers({
     variant: EntityType.USER,
   });
 
+  console.log("test", custodianProjectUsers);
+
   const {
     mutateAsync: changeValidationStatus,
     ...updateValidationMutationState
@@ -184,16 +186,19 @@ export default function ProjectUsers({
           )}
         </ProjectUsersFilters>
       </PageSection>
+
+      {projectId && (
+        <ProjectsAddUserModal
+          request={variant === EntityType.ORGANISATION}
+          projectId={projectId}
+          custodianId={custodianId}
+          open={showAddModal}
+          onClose={() => setShowAddModal(false)}
+        />
+      )}
+
       {itemsByTransitions && (
         <PageSection>
-          {projectId && (
-            <ProjectsAddUserModal
-              request={variant === EntityType.ORGANISATION}
-              projectId={projectId}
-              open={showAddModal}
-              onClose={() => setShowAddModal(false)}
-            />
-          )}
           {/* note this is using paginated data */}
           {!showListView ? (
             <ProjectUsersBoard

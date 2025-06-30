@@ -10,6 +10,7 @@ import ProjectsAddUserForm from "../ProjectsAddUserForm";
 interface ProjectsAddUserModaProps extends Omit<FormModalProps, "children"> {
   request: boolean;
   projectId: number;
+  custodianId: number;
   onClose: () => void;
 }
 
@@ -18,6 +19,7 @@ const NAMESPACE_TRANSLATION = "ProjectsAddUserModal";
 export default function ProjectsAddUserModal({
   request = false,
   projectId,
+  custodianId,
   onClose,
   ...restProps
 }: ProjectsAddUserModaProps) {
@@ -34,11 +36,16 @@ export default function ProjectsAddUserModal({
         text: "This does nothing yet, this feature has not been implemented",
       });
     } else {
+      console.log({
+        users: projectUsers.filter(u => u.project_user_id || u.role),
+      });
       await mutateAsync({
         params: {
           id: projectId,
         },
-        payload: { users: projectUsers },
+        payload: {
+          users: projectUsers.filter(u => u.project_user_id || u.role),
+        },
       });
     }
   };
@@ -47,7 +54,7 @@ export default function ProjectsAddUserModal({
     successAlertProps: {
       willClose: () => {
         queryClient.refetchQueries({
-          queryKey: ["getProjectUsers", projectId],
+          queryKey: ["getPaginatedCustodianProjectUsers", custodianId],
         });
         onClose?.();
       },
