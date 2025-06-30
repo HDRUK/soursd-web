@@ -10,8 +10,8 @@ const StyledContent = styled("div")`
   padding: 24px;
   padding-top: 60px;
   padding-bottom: 48px;
-  background: ${theme.palette.homepageInfo.light};
-  color: ${theme.palette.homepageInfo.contrastText};
+  color: ${theme.palette.secondary.contrastText};
+  background-color: ${theme.palette.secondary.main};
 `;
 
 export { StyledContent };

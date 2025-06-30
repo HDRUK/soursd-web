@@ -29,7 +29,7 @@ export default function SoursdCard({
         p: 3,
         wordBreak: "break-word",
         border: "1px solid",
-        borderColor: "borderDefault.main",
+        borderColor: "muiBorder",
         ...sx,
       }}
       {...restProps}>

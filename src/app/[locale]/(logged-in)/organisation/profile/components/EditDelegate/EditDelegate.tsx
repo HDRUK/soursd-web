@@ -19,7 +19,7 @@ const EditDelegate = ({ user, onSuccess }: DecoupleUserProps) => {
   return (
     <>
       <ActionMenuItem
-        sx={{ color: "menuList1.main" }}
+        sx={{ color: "secondary.main" }}
         onClick={() => setOpenModal(true)}
         icon={<EditIcon />}>
         {t("title")}

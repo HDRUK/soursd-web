@@ -5,56 +5,51 @@ type KeysMatching<T, V> = {
 }[keyof T];
 
 interface ColorOverrides {
-  background1: true;
-  background2: true;
-  highlight: true;
-  default: true;
   inactive: true;
-  caption: true;
-  inverseSurface: true;
-  greyLight: true;
-  postitYellow: true;
-  mint: true;
-  greyLight: true;
-  greys: true;
-  lightPurple: true;
   neutralPink: true;
   neutralGrey: true;
-  grey700: true;
   textSecondary: true;
   textPrimary: true;
   midGrey: true;
   clear: true;
-  borderDefault: true;
-  lightGreen: true;
+  homepageKeyFeature: true;
+  homepageUsage: true;
+  muiBorder: true;
+  warningDark: true;
+  white: true;
+}
+declare module "@mui/material/Typography" {
+  interface TypographyPropsVariantOverrides {
+    small: true;
+    tiny: true;
+  }
+}
+
+declare module "@mui/material/styles" {
+  interface TypographyVariantsOptions {
+    small?: React.CSSProperties;
+    tiny?: React.CSSProperties;
+  }
+  interface TypographyVariants {
+    small: React.CSSProperties;
+    tiny: React.CSSProperties;
+  }
 }
 
 declare module "@mui/material/styles/createPalette" {
   interface CustomPalette {
-    background1: SimplePaletteColorOptions;
-    background2: SimplePaletteColorOptions;
-    highlight: SimplePaletteColorOptions;
-    default: SimplePaletteColorOptions;
+    white: string;
     inactive: SimplePaletteColorOptions;
-    caption: SimplePaletteColorOptions;
-    inverseSurface: SimplePaletteColorOptions;
-    greyLight: SimplePaletteColorOptions;
-    greys: SimplePaletteColorOptions;
-    postitYellow: SimplePaletteColorOptions;
-    mint: SimplePaletteColorOptions;
-    lightPurple: SimplePaletteColorOptions;
     neutralPink: SimplePaletteColorOptions;
     neutralGrey: SimplePaletteColorOptions;
-    grey700: string;
     textSecondary: SimplePaletteColorOptions;
     textPrimary: SimplePaletteColorOptions;
     midGrey: SimplePaletteColorOptions;
     clear: SimplePaletteColorOptions;
-    homepageInfo: SimplePaletteColorOptions;
     homepageKeyFeature: SimplePaletteColorOptions;
     homepageUsage: SimplePaletteColorOptions;
-    borderDefault: SimplePaletteColorOptions;
-    lightGreen: SimplePaletteColorOptions;
+    muiBorder: SimplePaletteColorOptions;
+    warningDark: SimplePaletteColorOptions;
   }
 
   interface Palette extends CustomPalette {}

@@ -48,7 +48,7 @@ const CheckboxItem = ({
       {onEdit && (
         <ActionMenu sx={{ ml: "auto" }}>
           <ActionMenuItem
-            sx={{ color: "menuList1.main" }}
+            sx={{ color: "secondary.main" }}
             onClick={() => setOpenModal(true)}>
             {t("edit")}
           </ActionMenuItem>

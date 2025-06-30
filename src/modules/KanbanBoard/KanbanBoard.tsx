@@ -98,7 +98,6 @@ export default function KanbanBoard<T>({
   options,
   ...restProps
 }: KanbanBoardProps<T>) {
-  console.log("KanbanBoard rendered", initialData);
   const { handleDragSort, handleDragSortEnd, handleDragSortStart, handleMove } =
     useDroppableSortItems<T>({
       onDragEnd,

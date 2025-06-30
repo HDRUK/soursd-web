@@ -53,7 +53,7 @@ export default function ProjectUsersFilters({
     items: [
       {
         label: t("sortByName"),
-        key: "name",
+        key: "projects.title",
       },
     ],
     onSort: (key: string, direction: string) =>

@@ -123,7 +123,7 @@ export default function FileLink({
             )}
           </Link>
         )}
-        <Typography variant="caption" color="caption.main" component="div">
+        <Typography variant="small" color="textSecondary.main" component="div">
           {fileTypesText || t("fileTypesText")}
           {". "}
           {fileMaxSizeText || t("maxSizeText", translationsMaxSize)}
