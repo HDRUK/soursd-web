@@ -42,10 +42,12 @@ export default function EditDelegateForm({
 
   const handleSubmit = useCallback(
     async (fields: DelegatesFormValues) => {
+      console.log("Saving", fields);
       mutateDelegate({ ...fields }).then(() => onSuccess());
     },
     [mutateDelegate, onSuccess]
   );
+
   const schema = useMemo(
     () =>
       yup.object().shape({
@@ -71,6 +73,7 @@ export default function EditDelegateForm({
       sx={{ mt: 1 }}
       schema={schema}
       onSubmit={handleSubmit}
+      aria-label="Edit delegate"
       {...formOptions}>
       <>
         <FormSection>
