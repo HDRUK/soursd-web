@@ -17,7 +17,6 @@ import { mockedNotification } from "./mocks/data/notification";
 import { mockedOrganisation } from "./mocks/data/organisation";
 import { mockedPermission } from "./mocks/data/permission";
 import {
-  mockedKanbanCustodianProjectUsers,
   mockedProject,
   mockedProjects,
   mockedProjectStateWorkflow,
