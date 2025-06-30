@@ -8,6 +8,8 @@ import {
 } from "@/consts/user";
 import { RouteConfig } from "./router";
 import { RuleState } from "./rules";
+import { PaginatedQueryProps } from "@/hooks/usePaginatedQuery";
+import { QueryParams } from "./query";
 
 interface StateWorkflow {
   transitions: Record<string, string[]>;
@@ -35,6 +37,10 @@ type WithModelState<T> = T & {
 
 type WithRoutes<T> = T & {
   routes: Record<string, RouteConfig>;
+};
+
+type WithPaginatedQueryParms<T> = T & {
+  paginatedQueryParams: QueryParams;
 };
 
 interface File {
@@ -547,4 +553,5 @@ export type {
   ModelState,
   WithModelState,
   WithRoutes,
+  WithPaginatedQueryParms,
 };

@@ -12,6 +12,9 @@ const defaultProps = {
   projectId: 2,
   routes: { name: { path: "/profile" } },
   variant: EntityType.CUSTODIAN,
+  paginatedQueryParams: {
+    perPage: 25,
+  },
 };
 
 const setupTest = () => {
