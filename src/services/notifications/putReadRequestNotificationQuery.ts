@@ -1,13 +1,13 @@
 import { ResponseOptions } from "@/types/requests";
 import { handleJsonResponse } from "../requestHelpers";
-import { patchRequest } from "../requests";
+import { putRequest } from "../requests";
 
 export default async (
   requestId: number,
   status: number,
   options: ResponseOptions
 ) => {
-  const response = await patchRequest(`/request_access/${requestId}`, {
+  const response = await putRequest(`/request_access/${requestId}`, {
     status,
   });
 

@@ -14,7 +14,7 @@ import { ROUTES } from "@/consts/router";
 import FormSection from "@/components/FormSection";
 import { PatchOrganisationPayload } from "@/services/organisations";
 import { dateToString } from "@/utils/date";
-import usePatchOrganisation from "../../hooks/usePatchOrganisation";
+import useUpdateOrganisation from "../../hooks/useUpdateOrganisation";
 import {
   certificationRows,
   getDefaultValues,
@@ -31,7 +31,7 @@ export default function SecurityCompliance() {
   const t = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
-  const { isPending: isLoading, onSubmit } = usePatchOrganisation({
+  const { isPending: isLoading, onSubmit } = useUpdateOrganisation({
     id: organisation?.id,
   });
 

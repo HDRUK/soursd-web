@@ -32,7 +32,7 @@ import { Notification } from "../../types/notifications";
 import { formatDBDate } from "../../utils/date";
 import { toTitleCase } from "../../utils/string";
 import { formatNotificationType } from "../../utils/notifications";
-import usePatchReadRequest from "../NotificationsMenu/hooks/usePatchReadRequest";
+import usePutReadRequest from "../NotificationsMenu/hooks/usePutReadRequest";
 
 const NAMESPACE_TRANSLATIONS = "NotificationsModal";
 
@@ -57,7 +57,7 @@ export default function NotificationModal({
   const theme = useTheme();
   const mobileMediaQuery = theme.breakpoints.down("sm");
 
-  const { mutateAsync: mutateReadRequest } = usePatchReadRequest();
+  const { mutateAsync: mutateReadRequest } = usePutReadRequest();
 
   const approveOrDenyRequest = async (requestId: number, status: number) => {
     if (!requestId || !status) return;

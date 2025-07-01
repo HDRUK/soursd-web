@@ -1,5 +1,5 @@
 import { ResponseJson, ResponseOptions } from "@/types/requests";
-import { patchRequest } from "../requests";
+import { putRequest } from "../requests";
 import { handleJsonResponse } from "../requestHelpers";
 import { PatchCustodianUserPayload, PatchCustodianUserResponse } from "./types";
 
@@ -8,7 +8,7 @@ export default async (
   payload: PatchCustodianUserPayload,
   options: ResponseOptions
 ): Promise<ResponseJson<PatchCustodianUserResponse>> => {
-  const response = await patchRequest(`/custodian_users/${userId}`, payload);
+  const response = await putRequest(`/custodian_users/${userId}`, payload);
 
   return handleJsonResponse(response, options);
 };

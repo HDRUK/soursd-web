@@ -1,5 +1,5 @@
 import { ResponseJson, ResponseOptions } from "@/types/requests";
-import { patchRequest } from "../requests";
+import { putRequest } from "../requests";
 import { handleJsonResponse } from "../requestHelpers";
 import { OrganisationResponse, PatchOrganisationPayload } from "./types";
 
@@ -8,7 +8,8 @@ export default async (
   payload: PatchOrganisationPayload,
   options: ResponseOptions
 ): Promise<ResponseJson<OrganisationResponse>> => {
-  const response = await patchRequest(`/organisations/${id}`, payload);
+  console.log("here2", payload);
+  const response = await putRequest(`/organisations/${id}`, payload);
 
   return handleJsonResponse(response, options);
 };

@@ -1,7 +1,7 @@
 "use client";
 
 import {
-  patchOrganisation,
+  putOrganisation,
   PatchOrganisationPayload,
   getOrganisationQuery,
 } from "@/services/organisations";
@@ -15,8 +15,8 @@ interface UseUpdateOrganisationProps {
   messageSuccess?: boolean;
 }
 
-const NAMESPACE_TRANSLATION = "UsePatchOrganisation";
-const usePatchOrganisation = ({
+const NAMESPACE_TRANSLATION = "UseUpdateOrganisation";
+const useUpdateOrganisation = ({
   id,
   messageSuccess = true,
 }: UseUpdateOrganisationProps) => {
@@ -27,11 +27,11 @@ const usePatchOrganisation = ({
 
   const t = useTranslations(NAMESPACE_TRANSLATION);
   const mutation = useMutation({
-    mutationKey: ["patchOrganisation", id],
+    mutationKey: ["putOrganisation", id],
     mutationFn: (payload: Partial<PatchOrganisationPayload>) =>
-      patchOrganisation(id as number, payload, {
+      putOrganisation(id as number, payload, {
         403: {
-          message: "patchOrganisationForbidden",
+          message: "putOrganisationForbidden",
         },
       }),
   });
@@ -67,4 +67,4 @@ const usePatchOrganisation = ({
   };
 };
 
-export default usePatchOrganisation;
+export default useUpdateOrganisation;
