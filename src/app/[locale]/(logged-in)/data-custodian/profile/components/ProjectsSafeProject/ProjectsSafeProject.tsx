@@ -79,7 +79,6 @@ export default function ProjectsSafeProject() {
         <ProjectsSafeProjectForm
           defaultValues={defaultValues}
           mutateState={mutateState}
-          project={project}
           onSubmit={handleSubmit}
         />
       </PageBody>

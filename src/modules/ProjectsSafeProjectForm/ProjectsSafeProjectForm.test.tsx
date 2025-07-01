@@ -1,36 +1,17 @@
 import { fireEvent, render, screen, waitFor } from "@/utils/testUtils";
-import { Status } from "../../components/ChipStatus";
+import { mockedProject } from "@/mocks/data/project";
 import ProjectsSafeProjectForm, {
   ProjectsSafeProjectFormProps,
 } from "./ProjectsSafeProjectForm";
+import { faker } from "@faker-js/faker";
+import { Status } from "@/components/ChipStatus";
 
 const defaultProps: ProjectsSafeProjectFormProps = {
   mutateState: { isPending: false, isError: false, isSuccess: false },
-  project: {
-    unique_id: "123",
-    title: "Test Project",
-    request_category_type: "type",
-    start_date: "2024-01-01",
-    end_date: "2024-12-31",
-    lay_summary: "summary",
-    public_benefit: "benefit",
-    technical_summary: "tech",
-    status: Status.PROJECT_APPROVED,
-    other_approval_committees: [],
-  },
   onSubmit: jest.fn(),
-  defaultValues: {
+  defaultValues: mockedProject({
     unique_id: "123",
-    title: "Test Project",
-    request_category_type: "type",
-    start_date: "2024-01-01",
-    end_date: "2024-12-31",
-    lay_summary: "summary",
-    public_benefit: "benefit",
-    technical_summary: "tech",
-    status: Status.PROJECT_APPROVED,
-    other_approval_committees: [],
-  },
+  }),
 };
 
 function setupTest(props?: Partial<ProjectsSafeProjectFormProps>) {
@@ -74,6 +55,8 @@ describe("<ProjectsSafeProjectForm />", () => {
 
   it("submits the form when values are filled", async () => {
     setupTest();
+
+    console.log("defaultProps", defaultProps);
 
     const form = await screen.findByRole("form", { name: "Safe project" });
     fireEvent.submit(form);

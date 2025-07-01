@@ -10,6 +10,7 @@ import ProjectsAddUserForm from "../ProjectsAddUserForm";
 interface ProjectsAddUserModaProps extends Omit<FormModalProps, "children"> {
   request: boolean;
   projectId: number;
+  custodianId: number;
   onClose: () => void;
 }
 
@@ -18,6 +19,7 @@ const NAMESPACE_TRANSLATION = "ProjectsAddUserModal";
 export default function ProjectsAddUserModal({
   request = false,
   projectId,
+  custodianId,
   onClose,
   ...restProps
 }: ProjectsAddUserModaProps) {
@@ -38,7 +40,9 @@ export default function ProjectsAddUserModal({
         params: {
           id: projectId,
         },
-        payload: { users: projectUsers },
+        payload: {
+          users: projectUsers.filter(u => u.project_user_id || u.role),
+        },
       });
     }
   };
@@ -47,7 +51,7 @@ export default function ProjectsAddUserModal({
     successAlertProps: {
       willClose: () => {
         queryClient.refetchQueries({
-          queryKey: ["getProjectUsers", projectId],
+          queryKey: ["getPaginatedCustodianProjectUsers", custodianId],
         });
         onClose?.();
       },

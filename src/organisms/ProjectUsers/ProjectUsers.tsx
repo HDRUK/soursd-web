@@ -222,15 +222,17 @@ export default function ProjectUsers({
         </ProjectUsersFilters>
       </PageSection>
 
+      {projectId && (
+        <ProjectsAddUserModal
+          request={variant === EntityType.ORGANISATION}
+          projectId={projectId}
+          custodianId={custodianId}
+          open={showAddModal}
+          onClose={() => setShowAddModal(false)}
+        />
+      )}
+
       <PageSection>
-        {projectId && (
-          <ProjectsAddUserModal
-            request={variant === EntityType.ORGANISATION}
-            projectId={projectId}
-            open={showAddModal}
-            onClose={() => setShowAddModal(false)}
-          />
-        )}
         <Results
           total={total}
           noResultsMessage={

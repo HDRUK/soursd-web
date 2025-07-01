@@ -50,7 +50,7 @@ const DateInput = ({
     <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={locale}>
       <DatePicker
         label={label}
-        value={value}
+        value={typeof value === "string" ? new Date(value) : value}
         onChange={handleChange}
         format={dateFormat}
         slotProps={{

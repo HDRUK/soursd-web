@@ -23,12 +23,11 @@ import { MutationState } from "../../types/form";
 export interface ProjectsSafeProjectFormProps
   extends FormProps<ResearcherProject> {
   mutateState: MutationState;
-  project: ResearcherProject;
 }
 
 const NAMESPACE_TRANSLATION_FORM = "Form.SafeProject";
 
-export default function UserModalDetails({
+export default function ProjectsSafeProjectForm({
   mutateState,
   ...restProps
 }: ProjectsSafeProjectFormProps) {

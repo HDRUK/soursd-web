@@ -387,6 +387,7 @@ type ResearcherProject = WithModelState<{
   organisations: Organisation[];
   custodians?: Custodian[];
   project_detail: ProjectDetails;
+  status: Status;
 }>;
 
 interface ProjectDetails {
@@ -478,6 +479,7 @@ type CustodianProjectOrganisation = WithModelState<{
 
 type ProjectAllUser = WithModelState<{
   id: number;
+  project_user_id?: number | null;
   user_id: number;
   registry_id: number;
   first_name: string;
