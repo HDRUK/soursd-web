@@ -1278,7 +1278,8 @@
     "SafeOutputs": {
       "noProjectDetails": "Data does not exist for this section yet",
       "researchOutputs": "Link(s) to research outputs",
-      "dataAssets": "New data assets created"
+      "dataAssets": "New data assets created",
+      "notSet": "Not set"
     },
     "SafeProject": {
       "title": "Project name",
