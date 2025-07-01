@@ -12,17 +12,6 @@ jest.mock("@/hooks/useGatewayProjectImport", () => {
 });
 
 const project = mockedProjectDetails();
-//     unique_id: "abc",
-//     title: "Test Project",
-//     request_category_type: "type",
-//     start_date: "2024-01-01",
-//     end_date: "2024-12-31",
-//     lay_summary: "summary",
-//     public_benefit: "benefit",
-//     technical_summary: "tech",
-//     status: "APPROVED",
-//     other_approval_committees: [],
-//   };
 
 const defaultProps = {
   custodianId: 1,
