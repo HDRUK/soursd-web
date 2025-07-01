@@ -1,10 +1,8 @@
 import {
   clearInputsByLabelText,
-  clearMuiInputs,
   fireEvent,
   render,
   screen,
-  userEvent,
   waitFor,
 } from "@/utils/testUtils";
 import { mockedOrganisation } from "@/mocks/data/organisation";

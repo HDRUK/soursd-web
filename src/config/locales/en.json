@@ -1273,7 +1273,8 @@
     "SafeSettings": {
       "noProjectDetails": "Data does not exist for this section yet",
       "accessType": "Access type",
-      "dataPrivacy": "How has data been processed to enhance privacy?"
+      "dataPrivacy": "How has data been processed to enhance privacy?",
+      "notSet": "Not set"
     },
     "SafeOutputs": {
       "noProjectDetails": "Data does not exist for this section yet",

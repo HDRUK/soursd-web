@@ -1,10 +1,4 @@
-import {
-  fireEvent,
-  render,
-  screen,
-  userEvent,
-  waitFor,
-} from "@/utils/testUtils";
+import { fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 import { Status } from "../../components/ChipStatus";
 import ProjectsSafeProjectForm, {
   ProjectsSafeProjectFormProps,

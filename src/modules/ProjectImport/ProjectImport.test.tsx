@@ -1,7 +1,6 @@
-import { render, screen, fireEvent, waitFor } from "@/utils/testUtils";
-import ProjectImport, { ProjectImportProps } from "./ProjectImport";
-import { ProjectDetails } from "@/types/application";
+import { render, screen, fireEvent } from "@/utils/testUtils";
 import { mockedProjectDetails } from "@/mocks/data/project";
+import ProjectImport, { ProjectImportProps } from "./ProjectImport";
 
 const mockImportProps = jest.fn(() => ({
   handleImportData: jest.fn(),

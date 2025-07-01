@@ -1,10 +1,4 @@
-import {
-  fireEvent,
-  render,
-  screen,
-  userEvent,
-  waitFor,
-} from "@/utils/testUtils";
+import { fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 import { mockedOrganisation } from "@/mocks/data/organisation";
 import NameAndAddress from "./NameAndAddress";
 

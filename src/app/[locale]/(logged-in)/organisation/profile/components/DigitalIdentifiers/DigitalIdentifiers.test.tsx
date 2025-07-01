@@ -1,11 +1,5 @@
 import { mockedCharity, mockedOrganisation } from "@/mocks/data/organisation";
-import {
-  fireEvent,
-  render,
-  screen,
-  userEvent,
-  waitFor,
-} from "@/utils/testUtils";
+import { fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 import DigitalIdentifiers from "./DigitalIdentifiers";
 
 const patchProps = {
