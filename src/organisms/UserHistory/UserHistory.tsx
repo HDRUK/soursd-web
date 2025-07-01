@@ -49,7 +49,11 @@ export default function UserHistory() {
         const logUser = causer || subject;
         const userName = `${logUser?.first_name} ${logUser?.last_name}`;
 
-        const changedAttributeKeys = Object.keys(properties?.attributes ?? {});
+        const changedAttributeString = Object.entries(
+          properties?.attributes || {}
+        )
+          .map(([key, value]) => `${key}: ${value}`)
+          .join(", ");
 
         const baseProperties = flattenObject(properties);
 
@@ -87,7 +91,7 @@ export default function UserHistory() {
 
                   <Typography variant="body2" sx={{ fontStyle: "italic" }}>
                     {t(`${log_name}.${event}.description`, {
-                      attributeKeys: changedAttributeKeys.join(", "),
+                      attributeKeys: changedAttributeString,
                       ...(hydratedProperties ?? {}),
                     } as unknown as TranslationValues)}
                   </Typography>

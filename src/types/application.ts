@@ -472,6 +472,7 @@ type CustodianProjectOrganisation = WithModelState<{
 
 type ProjectAllUser = WithModelState<{
   id: number;
+  project_user_id?: number | null;
   user_id: number;
   registry_id: number;
   first_name: string;

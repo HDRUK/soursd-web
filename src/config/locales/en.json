@@ -1541,6 +1541,14 @@
       "created": {
         "title": "User added to project",
         "description": "The user was added to the project titled \"{project_title}\""
+      },
+      "updated": {
+        "title": "User on project updated",
+        "description": " The following data was changed: {attributeKeys}"
+      },
+      "deleted": {
+        "title": "User removed from project",
+        "description": "The user was removed from the project titled \"{project_title}\""
       }
     },
     "validation_check": {

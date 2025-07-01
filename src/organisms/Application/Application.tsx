@@ -54,7 +54,7 @@ export default function Application({
     getAccreditations: accreditationsData,
     getEducations: educationData,
     getTrainings: trainingData,
-    getUserApprovedProjects: projectsData,
+    getUserValidatedProjects: projectsData,
     getAffiliations: affiliationData,
     getProfessionalRegistrations: professionalRegistrationsData,
   } = historiesData;
