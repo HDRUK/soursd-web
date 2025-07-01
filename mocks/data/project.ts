@@ -44,19 +44,17 @@ const mockedProjectDetails = (
 });
 
 const mockedProjectStateWorkflow = () => ({
-  transitions: {
-    form_received: ["validation_in_progress", "more_user_info_req"],
-    validation_in_progress: [
-      "validation_complete",
-      "more_user_info_req",
-      "escalate_validation",
-      "validated",
-    ],
-    validation_complete: ["escalate_validation", "validated"],
-    more_user_info_req: ["escalate_validation", "validated"],
-    escalate_validation: ["validated"],
-    validated: [],
-  },
+  form_received: ["validation_in_progress", "more_user_info_req"],
+  validation_in_progress: [
+    "validation_complete",
+    "more_user_info_req",
+    "escalate_validation",
+    "validated",
+  ],
+  validation_complete: ["escalate_validation", "validated"],
+  more_user_info_req: ["escalate_validation", "validated"],
+  escalate_validation: ["validated"],
+  validated: [],
 });
 
 const mockedKanbanCustodianProjectUsers = () => {

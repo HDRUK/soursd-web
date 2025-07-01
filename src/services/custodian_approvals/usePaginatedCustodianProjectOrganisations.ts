@@ -16,7 +16,6 @@ export default function usePaginatedCustodianProjectOrganisations(
 ) {
   const queryKey =
     options?.queryKeyBase || "getPaginatedCustodianProjectOrganisations";
-
   return usePaginatedQuery({
     queryKeyBase: [queryKey, custodianId],
     defaultQueryParams: {

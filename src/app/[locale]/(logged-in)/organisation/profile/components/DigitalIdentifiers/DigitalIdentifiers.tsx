@@ -111,6 +111,7 @@ export default function DigitalIdentifiers() {
     <PageBody>
       <PageSection heading={tOrgProfile("detailsDigitalIdentifiersTitle")}>
         <Form
+          aria-label="Digital identifiers"
           schema={schema}
           onSubmit={handleSubmit}
           {...formOptions}

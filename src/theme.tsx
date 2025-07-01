@@ -276,7 +276,8 @@ const theme = createTheme(
           html {
             font-size: 16px;
           }
-          body {
+          body,
+          .swal2-title {
             line-height: 140%;
           }
       `,

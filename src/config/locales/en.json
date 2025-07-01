@@ -302,6 +302,9 @@
     "uploadCertification": "Upload Certificate"
   },
   "Form": {
+    "atLeastOneCharityRequired": "At least 1 charity is required",
+    "charityCountryRequired": "Charity country is required",
+    "organisationNameRequiredInvalid": "Organisation name is required",
     "unsavedAlertText": "Are you sure you want to leave the form with unsaved changes?",
     "unsavedAlertTitle": "You have unsaved changes",
     "unsavedAlertConfirmButton": "Leave form",
@@ -1169,7 +1172,7 @@
       "more_org_info_req": "More Organisation Information Requested",
       "escalate_validation": "Escalation to Validation Committee",
       "validated": "Validated",
-      "status": "Validation Status",
+      "status": "Validation status",
       "organisationName": "Organisation name",
       "projectRole": "Project role",
       "projectName": "Project name",
@@ -1196,12 +1199,14 @@
       "more_org_info_req": "More Organisation Information Requested",
       "escalate_validation": "Escalation to Validation Committee",
       "validated": "Validated",
-      "status": "Project status",
+      "status": "Validation status",
       "organisationName": "Organisation name",
       "projectRole": "Project role",
       "name": "Name",
       "actions": "Actions",
-      "removeOrganisationFromProject": "Remove from project"
+      "removeOrganisationFromProject": "Remove from project",
+      "noResultsMessage": "It looks like there are no organisations for any projects.",
+      "errorMessage": "Couldn't get the users for this project. Please try again or <contactLink>contact support</contactLink> if the problem persists."
     },
     "status": "Project status",
     "safeProject": "Safe Project",
@@ -1514,6 +1519,7 @@
     }
   },
   "ActionsPanelValidationCheck": {
+    "my_fake_title": "Sample title",
     "organisation_aligned_sde_network": "Is the Organisation aligned with the SDE network?",
     "confident_cost_for_projects_will_be_met": "Are we confident costs would be met and profits realised for future projects?"
   },

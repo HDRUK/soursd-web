@@ -21,20 +21,24 @@ import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Results from "@/components/Results";
+import { SEARCH_PAGE_MAX_PER_PAGE } from "@/consts/search";
 import ProjectOrganisationsList from "../ProjectOrganisationsList";
 import ProjectOrganisationsActions from "./ProjectOrganisationsActions";
 
 const NAMESPACE_TRANSLATIONS_PROJECT_USERS = "Projects.Organisations";
 
-type ProjectOrganisationsListProps = WithRoutes<{
-  custodianId: number;
-  variant: EntityType;
-}>;
+type ProjectOrganisationsListProps = WithPaginatedQueryParms<
+  WithRoutes<{
+    custodianId: number;
+    variant: EntityType;
+  }>
+>;
 
 export default function ProjectOrganisations({
   custodianId,
   routes,
   variant,
+  paginatedQueryParams,
 }: ProjectOrganisationsListProps) {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_PROJECT_USERS);
 
@@ -95,6 +99,12 @@ export default function ProjectOrganisations({
   );
 
   useEffect(() => {
+    updateQueryParams({
+      per_page: !showListView
+        ? SEARCH_PAGE_MAX_PER_PAGE
+        : paginatedQueryParams.perPage,
+    });
+
     if (showListView) refetch();
   }, [showListView]);
 
