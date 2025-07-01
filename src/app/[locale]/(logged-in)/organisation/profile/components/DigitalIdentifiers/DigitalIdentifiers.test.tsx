@@ -8,7 +8,7 @@ import {
 } from "@/utils/testUtils";
 import DigitalIdentifiers from "./DigitalIdentifiers";
 
-const patchProps = {
+const putProps = {
   isError: false,
   isPending: false,
   error: null,
@@ -17,7 +17,7 @@ const patchProps = {
 
 jest.mock("../../hooks/useUpdateOrganisation", () => ({
   __esModule: true,
-  default: () => patchProps,
+  default: () => putProps,
 }));
 
 function setupTest() {
@@ -64,7 +64,7 @@ describe("<DigitalIdentifiers />", () => {
     const { charities, companies_house_no, ror_id } = organisation;
 
     await waitFor(() => {
-      expect(patchProps.onSubmit).toHaveBeenCalledWith({
+      expect(putProps.onSubmit).toHaveBeenCalledWith({
         charities,
         companies_house_no,
         ror_id,
@@ -90,7 +90,7 @@ describe("<DigitalIdentifiers />", () => {
     fireEvent.submit(form);
 
     await waitFor(() => {
-      expect(patchProps.onSubmit).not.toHaveBeenCalled();
+      expect(putProps.onSubmit).not.toHaveBeenCalled();
     });
   });
 });

@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { CustodianUser } from "../../types/application";
 import {
-  patchCustodianUser,
+  putCustodianUser,
   postCustodianUser,
 } from "../../services/custodian_users";
 
@@ -31,7 +31,7 @@ export default function useMutationWriteCustodianUser({
         );
       }
 
-      return patchCustodianUser(
+      return putCustodianUser(
         user.id,
         {
           ...payload,

@@ -1,5 +1,5 @@
 import putAffiliation from "./putAffiliation";
-import { PatchAffiliationsPayload } from "./types";
+import { PutAffiliationsPayload } from "./types";
 
 export default function putAffiliationQuery() {
   return {
@@ -9,7 +9,7 @@ export default function putAffiliationQuery() {
       payload,
     }: {
       affiliationId: number;
-      payload: PatchAffiliationsPayload;
+      payload: PutAffiliationsPayload;
     }) => {
       return putAffiliation(affiliationId, payload, {
         error: { message: "putAffiliationError" },

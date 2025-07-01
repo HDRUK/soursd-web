@@ -2,7 +2,7 @@
 
 import {
   putOrganisation,
-  PatchOrganisationPayload,
+  PutOrganisationPayload,
   getOrganisationQuery,
 } from "@/services/organisations";
 import { showAlert } from "@/utils/showAlert";
@@ -28,7 +28,7 @@ const useUpdateOrganisation = ({
   const t = useTranslations(NAMESPACE_TRANSLATION);
   const mutation = useMutation({
     mutationKey: ["putOrganisation", id],
-    mutationFn: (payload: Partial<PatchOrganisationPayload>) =>
+    mutationFn: (payload: Partial<PutOrganisationPayload>) =>
       putOrganisation(id as number, payload, {
         403: {
           message: "putOrganisationForbidden",
@@ -41,7 +41,7 @@ const useUpdateOrganisation = ({
     })
   );
 
-  const onSubmit = async (fields: Partial<PatchOrganisationPayload>) => {
+  const onSubmit = async (fields: Partial<PutOrganisationPayload>) => {
     const payload = { ...fields };
     await mutation.mutateAsync(payload);
 

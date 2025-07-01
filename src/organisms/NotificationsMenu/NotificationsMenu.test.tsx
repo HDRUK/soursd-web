@@ -103,7 +103,7 @@ describe("<NotificationsMenu />", () => {
       );
     });
 
-    const mockPatchNotification = putUserNotification as jest.Mock;
+    const mockPutNotification = putUserNotification as jest.Mock;
 
     const firstNotification = screen.getAllByTestId("notification-item")[0];
     fireEvent.click(firstNotification);
@@ -113,10 +113,10 @@ describe("<NotificationsMenu />", () => {
     });
 
     await waitFor(() => {
-      expect(mockPatchNotification).toHaveBeenCalledTimes(1);
+      expect(mockPutNotification).toHaveBeenCalledTimes(1);
     });
 
-    expect(mockPatchNotification).toHaveBeenCalledWith(
+    expect(mockPutNotification).toHaveBeenCalledWith(
       expect.any(Number),
       expect.any(String),
       NotificationPutType.READ,
@@ -133,16 +133,16 @@ describe("<NotificationsMenu />", () => {
 
     fireEvent.click(screen.getByTestId("mark-notification-as-unread-button"));
 
-    mockPatchNotification.mockClear();
+    mockPutNotification.mockClear();
 
     await waitFor(() => {
-      expect(mockPatchNotification).toHaveBeenCalledTimes(1);
+      expect(mockPutNotification).toHaveBeenCalledTimes(1);
     });
 
-    expect(mockPatchNotification).toHaveBeenCalledWith(
+    expect(mockPutNotification).toHaveBeenCalledWith(
       expect.any(Number),
       expect.any(String),
-      NotificationPatchType.UNREAD,
+      NotificationPutType.UNREAD,
       expect.objectContaining({ suppressThrow: true })
     );
   });

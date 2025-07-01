@@ -3,7 +3,7 @@ import { AffiliationStatus } from "./types";
 
 export default function putRegistryHasAffiliationQuery() {
   return {
-    mutationKey: ["patchAffiliation"],
+    mutationKey: ["putAffiliation"],
     mutationFn: ({
       registryId,
       affiliationId,

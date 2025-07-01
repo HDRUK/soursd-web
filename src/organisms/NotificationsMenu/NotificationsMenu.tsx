@@ -78,7 +78,7 @@ export default function NotificationsMenu() {
 
   const changeReadStatus = (
     notificationId: string,
-    type: NotificationPatchType
+    type: NotificationPutType
   ) => {
     mutateNotification({
       notificationId,
@@ -90,7 +90,7 @@ export default function NotificationsMenu() {
   };
 
   const handleViewNotification = (notif: Notification) => {
-    if (!notif.read_at) changeReadStatus(notif.id, NotificationPatchType.READ);
+    if (!notif.read_at) changeReadStatus(notif.id, NotificationPutType.READ);
     setCurrentNotification(notif);
     setShowNotificationModal(true);
   };
@@ -225,7 +225,7 @@ export default function NotificationsMenu() {
           handleMarkAsUnread={() => {
             changeReadStatus(
               currentNotification.id,
-              NotificationPatchType.UNREAD
+              NotificationPutType.UNREAD
             );
             setShowNotificationModal(false);
           }}

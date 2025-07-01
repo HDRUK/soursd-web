@@ -10,7 +10,7 @@ interface OrganisationsIdvtResponse {
   data: OrganisationIdvt;
 }
 
-type PatchOrganisationPayload = Partial<Organisation>;
+type PutOrganisationPayload = Partial<Organisation>;
 
 type PostOrganisationPayload = Partial<Organisation>;
 type PostOrganisationResponse = Organisation;
@@ -55,7 +55,7 @@ export type {
   OrganisationResponse,
   OrganisationsIdvtResponse,
   OrganisationsResponse,
-  PatchOrganisationPayload,
+  PutOrganisationPayload,
   PostOrganisationInviteUserPayload,
   PostOrganisationInviteUserResponse,
   UpdateOrganisationPermissionsResponse,

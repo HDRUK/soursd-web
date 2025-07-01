@@ -1,12 +1,12 @@
-import patchCustodianRules, {
-  PatchCustodianRulesPayload,
-} from "./patchCustodianRules";
+import putCustodianRules, {
+  PutCustodianRulesPayload,
+} from "./putCustodianRules";
 
-export default function patchCustodianRulesQuery(id?: number) {
+export default function putCustodianRulesQuery(id?: number) {
   return {
-    mutationKey: ["patchCustodianRules", id],
-    mutationFn: (payload: PatchCustodianRulesPayload) =>
-      patchCustodianRules(id as number, payload, {
+    mutationKey: ["putCustodianRules", id],
+    mutationFn: (payload: PutCustodianRulesPayload) =>
+      putCustodianRules(id as number, payload, {
         error: {
           message: "submitError",
         },

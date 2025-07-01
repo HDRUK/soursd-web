@@ -28,7 +28,7 @@ export default function Subsidiaries() {
   const {
     isPending: isLoading,
     onSubmit,
-    ...patchOrganisationQueryState
+    ...putOrganisationQueryState
   } = useUpdateOrganisation({
     id: organisation?.id,
   });
@@ -116,7 +116,7 @@ export default function Subsidiaries() {
         showHeader={false}
         data={organisation?.subsidiaries || []}
         columns={columns}
-        queryState={patchOrganisationQueryState}
+        queryState={putOrganisationQueryState}
         total={organisation?.subsidiaries?.length || 0}
       />
 
