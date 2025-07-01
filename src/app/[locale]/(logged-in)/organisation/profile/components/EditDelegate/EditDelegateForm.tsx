@@ -42,7 +42,6 @@ export default function EditDelegateForm({
 
   const handleSubmit = useCallback(
     async (fields: DelegatesFormValues) => {
-      console.log("Saving", fields);
       mutateDelegate({ ...fields }).then(() => onSuccess());
     },
     [mutateDelegate, onSuccess]

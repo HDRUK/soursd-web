@@ -6,7 +6,6 @@ function isCustodianAdministrator(
   user: CustodianUser,
   permissions: Permission[]
 ) {
-  console.log("******* permissions", permissions);
   const permission = getPermission(
     CustodianUserRoles.ADMINISTRATOR,
     permissions
