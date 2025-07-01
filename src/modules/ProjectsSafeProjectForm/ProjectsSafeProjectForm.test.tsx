@@ -96,14 +96,7 @@ describe("<ProjectsSafeProjectForm />", () => {
 
     const inputs = getAllInputs();
 
-    inputs.forEach(async selector => {
-      if (typeof selector !== "string") {
-        const element = screen.getByLabelText(selector);
-
-        await userEvent.click(element);
-        await userEvent.clear(element);
-      }
-    });
+    clearInputsByLabelText(inputs.filter(input => typeof input !== "string"));
 
     const form = await screen.findByRole("form", { name: "Safe project" });
     fireEvent.submit(form);

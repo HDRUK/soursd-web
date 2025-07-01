@@ -31,7 +31,7 @@ const mockedProjectDetails = (
   id: 1,
   project_id: 4,
   datasets: '["dataset1"]',
-  data_sensitivity_level: "Protected Data",
+  data_sensitivity_level: "Personally Identifiable",
   legal_basis_for_data_article6: "Legal Basis",
   duty_of_confidentiality: true,
   national_data_optout: false,

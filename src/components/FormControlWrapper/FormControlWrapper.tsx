@@ -113,6 +113,9 @@ export default function FormControlWrapper({
                 fullWidth,
                 "data-testid": field.name,
                 "aria-labelledby": `${field.name}-label`,
+                inputProps: {
+                  "aria-label": label || tForm(tKey),
+                },
                 ...field,
               })}
             </Box>

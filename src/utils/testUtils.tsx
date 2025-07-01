@@ -11,6 +11,7 @@ import {
   act,
   render,
   renderHook,
+  screen,
 } from "@testing-library/react";
 import userEvent, { UserEvent } from "@testing-library/user-event";
 import mediaQuery from "css-mediaquery";
@@ -120,11 +121,30 @@ const commonAccessibilityTests = async (rendered: RenderResult) => {
   expect(results).toHaveNoViolations();
 };
 
+const clearInput = async (element: HTMLElement) => {
+  await userEvent.click(element);
+  await userEvent.clear(element);
+};
+
+global.clearInput = clearInput;
+
+async function clearInputsByLabelText(inputs: (string | RegExp)[]) {
+  inputs.forEach(async selector => {
+    const element = screen.getAllByLabelText(selector)[0];
+
+    clearInput(element);
+  });
+}
+
+global.clearInputsByLabelText = clearInputsByLabelText;
+
 export * from "@testing-library/react";
 export * from "@testing-library/user-event";
 
 export {
   commonAccessibilityTests,
+  clearInput,
+  clearInputsByLabelText,
   defineMatchMedia,
   customRender as render,
   customRenderHook as renderHook,

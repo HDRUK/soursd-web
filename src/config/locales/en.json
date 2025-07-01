@@ -302,6 +302,7 @@
     "uploadCertification": "Upload Certificate"
   },
   "Form": {
+    "accessDatePlaceholder": "Access date",
     "atLeastOneCharityRequired": "At least 1 charity is required",
     "charityCountryRequired": "Charity country is required",
     "organisationNameRequiredInvalid": "Organisation name is required",
@@ -630,6 +631,7 @@
       "otherApprovalCommitteesPlaceholder": "Approval committee name"
     },
     "SafeData": {
+      "arrayRemoveButton": "Remove",
       "personallyIdentifiable": "Personally Identifiable",
       "anonymous": "Anonymous",
       "dePersonalised": "De-Personalised",
@@ -1323,7 +1325,7 @@
   "AccreditationsDetails": {
     "title": "Accreditations"
   },
-  "DecoupleUser": {
+  "DecoupleDelegates": {
     "title": "Decouple",
     "toolTip": "Decouple this user from your organisation",
     "alertTitle": "Decouple User?",

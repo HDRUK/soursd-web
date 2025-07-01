@@ -67,8 +67,14 @@ export default function ProjectsSafeDataForm({
     [t]
   );
 
+  console.log("DEFAULT VALUES", restProps.defaultValues);
+
   return (
-    <Form schema={schema} {...formOptions} {...restProps}>
+    <Form
+      aria-label="Project safe data"
+      schema={schema}
+      {...formOptions}
+      {...restProps}>
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <FormFieldArray<FormData>

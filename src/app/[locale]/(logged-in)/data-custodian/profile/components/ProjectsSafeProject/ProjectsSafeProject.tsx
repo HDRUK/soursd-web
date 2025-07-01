@@ -11,7 +11,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import ProjectsSafeProjectForm from "@/modules/ProjectsSafeProjectForm";
-import ProjectImport from "../ProjectImport";
+import ProjectImport from "@/modules/ProjectImport";
 
 const NAMESPACE_TRANSLATION = "CustodianProfile";
 

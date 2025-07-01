@@ -553,4 +553,5 @@ export type {
   WithModelState,
   WithRoutes,
   WithPaginatedQueryParms,
+  UserPermission,
 };

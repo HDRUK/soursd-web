@@ -27,6 +27,8 @@ const SelectInput = ({
 
   const isStandard = variant === "standard";
 
+  console.log("restProps", restProps);
+
   return (
     <FormControl fullWidth variant={variant} size="small">
       <InputLabel>{label}</InputLabel>
@@ -45,6 +47,7 @@ const SelectInput = ({
         }}
         inputProps={{
           "aria-label": ariaLabel || label,
+          "aria-labelledby": "Select data sensitivity level",
         }}
         {...restProps}>
         {options.map(option => (
