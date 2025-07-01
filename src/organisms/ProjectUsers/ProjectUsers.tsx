@@ -222,26 +222,30 @@ export default function ProjectUsers({
         </ProjectUsersFilters>
       </PageSection>
 
-      <PageSection>
-        {projectId && (
-          <ProjectsAddUserModal
-            request={variant === EntityType.ORGANISATION}
-            projectId={projectId}
-            open={showAddModal}
-            onClose={() => setShowAddModal(false)}
-          />
-        )}
-        <Results
-          total={total}
-          noResultsMessage={
-            projectId ? t("noResultsMessageProject") : t("noResultsMessage")
-          }
-          errorMessage={t("errorMessage")}
-          queryState={queryState}>
-          {/* note this is using paginated data */}
-          {itemsByTransitions && listComponent}
-        </Results>
-      </PageSection>
+      {projectId && (
+        <ProjectsAddUserModal
+          request={variant === EntityType.ORGANISATION}
+          projectId={projectId}
+          custodianId={custodianId}
+          open={showAddModal}
+          onClose={() => setShowAddModal(false)}
+        />
+      )}
+
+      {itemsByTransitions && (
+        <PageSection>
+          <Results
+            total={total}
+            noResultsMessage={
+              projectId ? t("noResultsMessageProject") : t("noResultsMessage")
+            }
+            errorMessage={t("errorMessage")}
+            queryState={queryState}>
+            {/* note this is using paginated data */}
+            {itemsByTransitions && listComponent}
+          </Results>
+        </PageSection>
+      )}
     </>
   );
 }
