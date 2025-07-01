@@ -56,8 +56,6 @@ describe("<ProjectsSafeProjectForm />", () => {
   it("submits the form when values are filled", async () => {
     setupTest();
 
-    console.log("defaultProps", defaultProps);
-
     const form = await screen.findByRole("form", { name: "Safe project" });
     fireEvent.submit(form);
 
