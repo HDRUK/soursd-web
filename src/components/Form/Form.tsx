@@ -66,6 +66,12 @@ export default function Form<T extends FieldValues>({
 
   const prevDefaultValues = useRef(defaultValues);
 
+  console.log(
+    "************* methods",
+    methods.formState.errors,
+    methods.getValues()
+  );
+
   useEffect(() => {
     if (defaultValues && !deepEqual(defaultValues, prevDefaultValues.current)) {
       reset(defaultValues);

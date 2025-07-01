@@ -46,7 +46,7 @@ export default function UserModalDetails({
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const permissions = useStore(state => state.config.permissions);
-
+  console.log("************ user", user);
   const schema = useMemo(
     () =>
       yup.object().shape({

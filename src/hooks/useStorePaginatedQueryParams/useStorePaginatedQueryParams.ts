@@ -9,7 +9,5 @@ export default function usePaginatedQueryParams() {
     };
   });
 
-  console.log("********** paginatedQueryParams", paginatedQueryParams);
-
   return paginatedQueryParams;
 }

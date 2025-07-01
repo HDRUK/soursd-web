@@ -89,6 +89,15 @@ export default function UsersModal({
         userPermissions = [administratorPermissions.id];
       }
 
+      console.log("****************", {
+        id: user?.id,
+        first_name,
+        last_name,
+        email,
+        permissions: userPermissions,
+        custodian_id: custodianId,
+      });
+
       const userResponse = await mutatePostUser({
         id: user?.id,
         first_name,

@@ -155,6 +155,36 @@ async function mockFetch(url: string, init?: RequestInit) {
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/permissions`: {
       return mock200Json(mockPagedResults(mockedApiPermissions));
     }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/custodians/1/custodian_users`: {
+      return mock200Json(
+        mockPagedResults([
+          mockedCustodianUser({
+            id: 1,
+            first_name: "John",
+            last_name: "Smith",
+            email: "john.smith@hdruk.ac.uk",
+            user_permissions: [
+              {
+                custodian_user_id: 1,
+                permission_id: 10,
+              },
+            ],
+          }),
+          mockedCustodianUser({
+            id: 2,
+            first_name: "John",
+            last_name: "Smith",
+            email: "john.smith@hdruk.ac.uk",
+            user_permissions: [
+              {
+                custodian_user_id: 1,
+                permission_id: 10,
+              },
+            ],
+          }),
+        ])
+      );
+    }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/custodian_users/1`: {
       return mock200Json(
         mockedCustodianUser({
