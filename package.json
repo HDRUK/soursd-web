@@ -11,7 +11,7 @@
     "lint:quiet": "next lint --quiet",
     "test": "jest --transformIgnorePatterns \"node_modules/(?!pretty-bytes)/\" --env=jsdom",
     "test:watch": "TZ=UTC jest --watch --transformIgnorePatterns \"node_modules/(?!pretty-bytes)/\"  --env=jsdom",
-    "test:coverage": "jest --coverage",
+    "test:coverage": "jest --coverage --transformIgnorePatterns \"node_modules/(?!pretty-bytes)/\"  --env=jsdom",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "chromatic": "npx chromatic --project-token=$CHROMATIC_PROJECT_TOKEN"
