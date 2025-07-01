@@ -27,8 +27,6 @@ const SelectInput = ({
 
   const isStandard = variant === "standard";
 
-  console.log("restProps", restProps);
-
   return (
     <FormControl fullWidth variant={variant} size="small">
       <InputLabel>{label}</InputLabel>

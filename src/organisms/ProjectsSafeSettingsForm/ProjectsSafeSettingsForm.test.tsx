@@ -7,34 +7,28 @@ import {
   screen,
   waitFor,
 } from "@/utils/testUtils";
-import ProjectsSafeDataForm, {
-  ProjectsSafeDataFormProps,
-} from "./ProjectsSafeDataForm";
+import ProjectsSafeSettingsForm, {
+  ProjectsSafeSettingsFormProps,
+} from "./ProjectsSafeSettingsForm";
 
 const defaultProps = {
   defaultValues: createProjectDetailDefaultValues(mockedProjectDetails()),
   onSubmit: jest.fn().mockResolvedValue(null),
 };
 
-function setupTest(props?: ProjectsSafeDataFormProps) {
-  return render(<ProjectsSafeDataForm {...defaultProps} {...props} />);
+function setupTest(props?: ProjectsSafeSettingsFormProps) {
+  return render(<ProjectsSafeSettingsForm {...defaultProps} {...props} />);
 }
 
 function getAllInputs() {
   return [
-    /Select data sensitivity level/,
-    /Lawful condition for provision of data under Article 6/,
-    /I confirm there is a lawful basis to hold and use this data in accordance with the common law duty of confidentiality/,
-    /National data opt-out preferences have been applied to this data/,
-    /One-off request/,
-    /For linked datasets, specify how the linkage will take place/,
-    /Approach to data minimisation/,
-    /Data description/,
-    /Release \/ access date/,
+    /Within a Trusted Research Enviornment or Secure Data Enviornment \(SDE\)/,
+    /Via a data release model/,
+    /How has data been processed to enhance privacy?/,
   ];
 }
 
-describe("<ProjectsSafeDataForm />", () => {
+describe("<ProjectsSafeSettingsForm />", () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
@@ -53,7 +47,7 @@ describe("<ProjectsSafeDataForm />", () => {
     setupTest();
 
     const form = await screen.findByRole("form", {
-      name: "Safe data",
+      name: "Safe settings",
     });
     fireEvent.submit(form);
 
@@ -73,7 +67,7 @@ describe("<ProjectsSafeDataForm />", () => {
     clearInputsByLabelText(getAllInputs());
 
     const form = await screen.findByRole("form", {
-      name: "Safe data",
+      name: "Safe settings",
     });
     fireEvent.submit(form);
 

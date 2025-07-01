@@ -67,11 +67,9 @@ export default function ProjectsSafeDataForm({
     [t]
   );
 
-  console.log("DEFAULT VALUES", restProps.defaultValues);
-
   return (
     <Form
-      aria-label="Project safe data"
+      aria-label="Safe data"
       schema={schema}
       {...formOptions}
       {...restProps}>
