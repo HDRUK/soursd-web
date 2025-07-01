@@ -260,7 +260,7 @@
     "organisationNotFound": "Organisation was not found",
     "getOrganisationStatusError": "Unable to determine validation status",
     "navigationAriaLabel": "Profile tabs",
-    "patchUserError": "There was a problem updating your user details. Please try again or contact us at <contactLink></contactLink>",
+    "putUserError": "There was a problem updating your user details. Please try again or contact us at <contactLink></contactLink>",
     "updateUserButton": "Save",
     "noDelegates": "No Delegates Found",
     "getDelegateError": "Unable to get the list of delegates",
@@ -1335,7 +1335,7 @@
     "title": "Edit",
     "toolTip": "Edit details for this delegate"
   },
-  "UsePatchOrganisation": {
+  "UseUpdateOrganisation": {
     "text": "Organisation Updated!",
     "confirmText": "OK"
   },

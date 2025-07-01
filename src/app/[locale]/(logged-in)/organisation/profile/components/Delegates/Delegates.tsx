@@ -12,7 +12,7 @@ import { Grid, TextField } from "@mui/material";
 import SelectDepartments from "@/components/SelectDepartments";
 import { useTranslations } from "next-intl";
 import Markdown from "@/components/Markdown";
-import { getUserQuery, patchUserQuery } from "@/services/users";
+import { getUserQuery, putUserQuery } from "@/services/users";
 import Form from "@/components/Form";
 import useQueryAlerts from "@/hooks/useQueryAlerts";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -39,8 +39,8 @@ export default function Delegates() {
   const t = useTranslations(NAMESPACE_TRANSLATION_DELEGATES);
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
-  const { mutateAsync: mutateUser, ...patchUserQueryState } = useMutation(
-    patchUserQuery(user?.id as number)
+  const { mutateAsync: mutateUser, ...putUserQueryState } = useMutation(
+    putUserQuery(user?.id as number)
   );
 
   const { data: userData, refetch: refetchUserData } = useQuery({
@@ -54,7 +54,7 @@ export default function Delegates() {
     }
   }, [userData, setUser]);
 
-  useQueryAlerts(patchUserQueryState, {
+  useQueryAlerts(putUserQueryState, {
     errorAlertProps: {
       text: tProfile("errorCreateMessage"),
     },
@@ -166,7 +166,7 @@ export default function Delegates() {
               </FormSection>
               <FormActions>
                 <LoadingButton
-                  loading={patchUserQueryState.isPending}
+                  loading={putUserQueryState.isPending}
                   type="submit">
                   {t("save")}
                 </LoadingButton>

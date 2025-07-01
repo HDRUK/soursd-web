@@ -40,7 +40,7 @@ export default function DigitalIdentifiers() {
     isPending: isLoading,
     error,
     onSubmit,
-  } = usePatchOrgauseUpdateOrganisationnisation({
+  } = useUpdateOrganisation({
     id: organisation?.id,
   });
 
