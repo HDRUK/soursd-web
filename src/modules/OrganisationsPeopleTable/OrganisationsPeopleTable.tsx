@@ -7,6 +7,7 @@ import { RouteConfig } from "@/types/router";
 import { renderUserNameCell } from "@/utils/cells";
 import { filterColumns } from "@/utils/table";
 import { ColumnDef } from "@tanstack/react-table";
+import { useTranslations } from "next-intl";
 import { useMemo } from "react";
 
 export type OrganisationsPeopleTableColumns =

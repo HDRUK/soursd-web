@@ -8,7 +8,7 @@ import { Organisation } from "../../types/application";
 import Text from "../../components/Text";
 import ApprovalStatus from "../../components/ApprovalStatus";
 
-interface OrganisationDetailsProps {
+export interface OrganisationDetailsProps {
   isApproved: boolean;
   data: Organisation;
 }
@@ -48,7 +48,7 @@ export default function OrganisationDetails({
             country,
             postcode,
           ]).map(text => (
-            <div>{text}</div>
+            <div key={text}>{text}</div>
           ))}
         </div>
       </Box>

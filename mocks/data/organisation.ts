@@ -1,5 +1,5 @@
 import { Organisation } from "@/services/organisations";
-import { Charity } from "@/types/application";
+import { Charity, Sector } from "@/types/application";
 import { faker } from "@faker-js/faker";
 import { mockedApproval } from "./approvals";
 import { mockedDepartment } from "./departments";
@@ -7,9 +7,20 @@ import { mockedPermission } from "./permission";
 import { mockedUser } from "./user";
 
 const mockedCharity = (charity?: Partial<Charity>) => ({
+  name: faker.company.name(),
   registration_id: faker.string.numeric(8),
   country: faker.location.country(),
+  website: faker.internet.url(),
   ...charity,
+});
+
+const mockedSector = (sector?: Partial<Sector>) => ({
+  id: faker.number.int(),
+  deleted_at: null,
+  created_at: faker.date.past(),
+  updated_at: faker.date.recent(),
+  name: faker.company.name(),
+  ...sector,
 });
 
 const mockedOrganisation = (
@@ -90,6 +101,7 @@ const mockedOrganisation = (
       }),
     },
   ],
+  sector: mockedSector(),
   ...organisation,
 });
 
