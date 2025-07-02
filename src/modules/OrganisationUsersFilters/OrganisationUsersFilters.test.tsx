@@ -1,11 +1,7 @@
-import { mockedUser } from "@/mocks/data/user";
 import { act, render, screen, userEvent, waitFor } from "@/utils/testUtils";
-import { useTranslations } from "next-intl";
 import OrganisationUsersFilters, {
   OrganisationUsersFiltersProps,
 } from "./OrganisationUsersFilters";
-
-const user = mockedUser();
 
 const defaultProps = {
   updateQueryParams: jest.fn(),

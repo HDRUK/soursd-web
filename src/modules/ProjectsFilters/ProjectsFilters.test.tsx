@@ -3,8 +3,6 @@ import { mockedUser } from "@/mocks/data/user";
 import { act, render, screen, userEvent, waitFor } from "@/utils/testUtils";
 import ProjectsFilters, { ProjectsFiltersProps } from "./ProjectsFilters";
 
-const user = mockedUser();
-
 const defaultProps = {
   updateQueryParams: jest.fn(),
   resetQueryParams: jest.fn(),

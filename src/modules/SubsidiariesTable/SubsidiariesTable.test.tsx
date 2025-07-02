@@ -1,8 +1,7 @@
-import { mockedCharity, mockedSubsidiary } from "@/mocks/data/organisation";
+import { mockedSubsidiary } from "@/mocks/data/organisation";
 import { render, screen } from "@/utils/testUtils";
-import SubsidiariesTable from "./SubsidiariesTable";
-import { faker } from "@faker-js/faker";
 import { formatAddress } from "@/utils/address";
+import SubsidiariesTable from "./SubsidiariesTable";
 
 const subsidiary = mockedSubsidiary();
 

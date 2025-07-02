@@ -1,8 +1,7 @@
-import { mockedProjectDetails } from "@/mocks/data/project";
 import { render, screen } from "@/utils/testUtils";
-import OrganisationsNameAddressDetails from "./OrganisationsNameAddressDetails";
 import { mockedOrganisation } from "@/mocks/data/organisation";
 import { formatAddress } from "@/utils/address";
+import OrganisationsNameAddressDetails from "./OrganisationsNameAddressDetails";
 
 const organisation = mockedOrganisation({
   subsidiaries: [

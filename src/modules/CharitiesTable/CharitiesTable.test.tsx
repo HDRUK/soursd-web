@@ -1,7 +1,7 @@
 import { mockedCharity } from "@/mocks/data/organisation";
 import { render, screen } from "@/utils/testUtils";
-import CharitiesTable from "./CharitiesTable";
 import { faker } from "@faker-js/faker";
+import CharitiesTable from "./CharitiesTable";
 
 const charity = mockedCharity({
   name: faker.company.name(),
