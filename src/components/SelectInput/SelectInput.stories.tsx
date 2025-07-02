@@ -1,5 +1,5 @@
 import React from "react";
-import { Meta, StoryObj } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/nextjs";
 import { useForm, FormProvider } from "react-hook-form";
 import SelectInput, { SelectInputProps } from "./SelectInput";
 

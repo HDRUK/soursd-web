@@ -1,5 +1,5 @@
 import React from "react";
-import { Meta, StoryObj } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/nextjs";
 import { useForm, FormProvider } from "react-hook-form";
 import { AutocompleteRenderInputParams, TextField } from "@mui/material";
 import AutocompleteInput, { AutocompleteInputProps } from "./AutocompleteInput";

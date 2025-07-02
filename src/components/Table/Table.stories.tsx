@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import { ColumnDef } from "@tanstack/react-table";
 import { Box, Select } from "@mui/material";
 import { QueryState } from "../../types/form";

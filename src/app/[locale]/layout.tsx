@@ -6,7 +6,8 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import GlobalStyles from "@mui/material/GlobalStyles";
 import { Box } from "@mui/system";
 import type { Metadata } from "next";
-import { NextIntlClientProvider, useMessages } from "next-intl";
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages } from "next-intl/server";
 import { Inter } from "next/font/google";
 import { notFound } from "next/navigation";
 import { PropsWithChildren } from "react";
@@ -23,14 +24,13 @@ export const metadata: Metadata = {
 type RootLayoutProps = PropsWithChildren<{
   params: { locale: string };
 }>;
+export default async function RootLayout(props: RootLayoutProps) {
+  const { children, params } = props;
+  const { locale } = await params;
 
-export default function RootLayout({
-  children,
-  params: { locale },
-}: RootLayoutProps) {
   if (!locales[locale]) notFound();
 
-  const messages = useMessages();
+  const messages = await getMessages();
 
   return (
     <html lang={locale}>

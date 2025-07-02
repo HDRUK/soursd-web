@@ -50,7 +50,7 @@ export default function UL({
               transform: "translateY(-50%)",
               content: `"${separator}"`,
             },
-            "&:first-child": {
+            "&:first-of-type": {
               pl: 0,
             },
             "&:last-child:after": {

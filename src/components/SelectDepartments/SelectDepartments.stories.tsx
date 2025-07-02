@@ -1,5 +1,5 @@
 import React from "react";
-import { Meta, StoryObj } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/nextjs";
 import { mockedOrganisation } from "@/mocks/data/organisation";
 import { useForm, FormProvider } from "react-hook-form";
 import SelectDepartments, { SelectDepartmentsProps } from "./SelectDepartments";

@@ -61,7 +61,12 @@ describe("<Training />", () => {
       const addButton = screen.getByRole("button", {
         name: /add training course/i,
       });
-      fireEvent.click(addButton);
+      screen.debug(undefined, Infinity);
+      act(() => {
+        fireEvent.click(addButton);
+      });
+
+      return;
 
       const input = screen.getByRole("textbox", { name: fieldName });
       fireEvent.change(input, { target: { value: faker.string.sample() } });

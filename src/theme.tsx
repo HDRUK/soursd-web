@@ -3,7 +3,7 @@
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import { AugmentedColorPaletteOptions, Theme } from "@mui/material";
 import { TableCellProps } from "@mui/material/TableCell";
-import grey from "@mui/material/colors/grey";
+import { grey } from "@mui/material/colors";
 import { createTheme, darken } from "@mui/material/styles";
 import { createBreakpoints } from "@mui/system";
 import { Roboto } from "next/font/google";
