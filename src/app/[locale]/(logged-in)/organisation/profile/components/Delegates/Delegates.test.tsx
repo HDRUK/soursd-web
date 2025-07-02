@@ -8,7 +8,7 @@ import {
   waitFor,
 } from "@/utils/testUtils";
 import { mockUseStore } from "jest.setup";
-import usePatchOrganisation from "../../hooks/usePatchOrganisation";
+import useUpdateOrganisation from "../../hooks/useUpdateOrganisation";
 import Delegates from "./Delegates";
 
 jest.mock("@/data/store");
@@ -20,7 +20,7 @@ jest.mock("@tanstack/react-query", () => ({
 
 const mockSetOrganisation = jest.fn();
 
-jest.mock("../../hooks/usePatchOrganisation");
+jest.mock("../../hooks/useUpdateOrganisation");
 
 const mockOrganisation = mockedOrganisation();
 const mockUser = mockedUser();
@@ -60,7 +60,7 @@ describe("<Delegates />", () => {
       isPending: false,
     });
 
-    (usePatchOrganisation as jest.Mock).mockReturnValue({
+    (useUpdateOrganisation as jest.Mock).mockReturnValue({
       isError: false,
       isPending: false,
       error: null,

@@ -1,17 +1,17 @@
 import getRules from "./getRules";
 import getCustodianRules from "./getCustodianRules";
-import patchCustodianRules from "./patchCustodianRules";
+import putCustodianRules from "./putCustodianRules";
 import getRulesQuery from "./getRulesQuery";
 import getCustodianRulesQuery from "./getCustodianRulesQuery";
-import patchCustodianRulesQuery from "./patchCustodianRulesQuery";
+import putCustodianRulesQuery from "./putCustodianRulesQuery";
 
 export {
   getRules,
   getCustodianRules,
-  patchCustodianRules,
+  putCustodianRules,
   getRulesQuery,
   getCustodianRulesQuery,
-  patchCustodianRulesQuery,
+  putCustodianRulesQuery,
 };
 
 export type * from "./types";

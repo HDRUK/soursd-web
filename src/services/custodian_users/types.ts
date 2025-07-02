@@ -9,20 +9,17 @@ type PostCustodianUserPayload = Omit<
   "created_at" | "updated_at"
 >;
 
-type PatchCustodianUserResponse = CustodianUser;
+type PutCustodianUserResponse = CustodianUser;
 
-type PatchCustodianUserPayload = Omit<
-  CustodianUser,
-  "created_at" | "updated_at"
->;
+type PutCustodianUserPayload = Omit<CustodianUser, "created_at" | "updated_at">;
 
 type GetCustodianUserResponse = CustodianUser;
 
 export type {
   GetCustodiansUsersResponse,
   GetCustodianUserResponse,
-  PatchCustodianUserPayload,
-  PatchCustodianUserResponse,
+  PutCustodianUserPayload,
+  PutCustodianUserResponse,
   PostCustodianUserPayload,
   PostCustodianUserResponse,
 };

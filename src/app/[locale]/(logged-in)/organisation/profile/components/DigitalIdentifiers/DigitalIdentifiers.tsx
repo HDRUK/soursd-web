@@ -19,7 +19,7 @@ import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
 import { Charity } from "@/types/application";
 import FormControlWrapper from "@/components/FormControlWrapper";
 
-import usePatchOrganisation from "../../hooks/usePatchOrganisation";
+import useUpdateOrganisation from "../../hooks/useUpdateOrganisation";
 
 export interface DigitalIdentifiersFormValues {
   companies_house_no: string;
@@ -40,7 +40,7 @@ export default function DigitalIdentifiers() {
     isPending: isLoading,
     error,
     onSubmit,
-  } = usePatchOrganisation({
+  } = useUpdateOrganisation({
     id: organisation?.id,
   });
 

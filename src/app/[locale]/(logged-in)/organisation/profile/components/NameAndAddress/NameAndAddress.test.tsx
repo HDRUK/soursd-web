@@ -2,16 +2,16 @@ import { mockedOrganisation } from "@/mocks/data/organisation";
 import { fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 import NameAndAddress from "./NameAndAddress";
 
-const patchProps = {
+const putProps = {
   isError: false,
   isPending: false,
   error: null,
   onSubmit: jest.fn().mockResolvedValue(null),
 };
 
-jest.mock("../../hooks/usePatchOrganisation", () => ({
+jest.mock("../../hooks/useUpdateOrganisation", () => ({
   __esModule: true,
-  default: () => patchProps,
+  default: () => putProps,
 }));
 
 function setupTest() {
@@ -70,7 +70,7 @@ describe("<NameAndAddress />", () => {
     } = organisation;
 
     await waitFor(() => {
-      expect(patchProps.onSubmit).toHaveBeenCalledWith({
+      expect(putProps.onSubmit).toHaveBeenCalledWith({
         address_1,
         address_2,
         county,
@@ -91,7 +91,7 @@ describe("<NameAndAddress />", () => {
     fireEvent.submit(form);
 
     await waitFor(() => {
-      expect(patchProps.onSubmit).not.toHaveBeenCalled();
+      expect(putProps.onSubmit).not.toHaveBeenCalled();
     });
   });
 });

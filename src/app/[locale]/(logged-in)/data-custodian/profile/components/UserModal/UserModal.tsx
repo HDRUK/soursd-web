@@ -3,7 +3,7 @@ import { Message } from "@/components/Message";
 import { CustodianUserRoles } from "@/consts/custodian";
 import { useStore } from "@/data/store";
 import {
-  patchCustodianUser,
+  putCustodianUser,
   postCustodianUser,
   postCustodianUserInvite,
 } from "@/services/custodian_users";
@@ -45,8 +45,8 @@ export default function UsersModal({
           });
         }
 
-        return patchCustodianUser(user.id, payload, {
-          error: { message: "createUserError" },
+        return putCustodianUser(user.id, payload, {
+          error: { message: "putUserError" },
         });
       },
     });

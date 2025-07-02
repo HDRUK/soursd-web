@@ -17,7 +17,7 @@ import { useMemo } from "react";
 import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
 import { ROUTES } from "@/consts/router";
 import { useRouter } from "next/navigation";
-import usePatchOrganisation from "../../hooks/usePatchOrganisation";
+import useUpdateOrganisation from "../../hooks/useUpdateOrganisation";
 
 export interface SectorFormValues {
   sector_id: number;
@@ -42,7 +42,7 @@ export default function SectorSizeAndWebsite() {
     isPending: isLoading,
     error,
     onSubmit,
-  } = usePatchOrganisation({
+  } = useUpdateOrganisation({
     id: organisation?.id,
   });
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
