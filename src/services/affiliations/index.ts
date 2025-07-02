@@ -3,19 +3,19 @@ import postAffiliation from "./postAffiliation";
 import getAffiliationsQuery from "./getAffiliationsQuery";
 import postAffiliationQuery from "./postAffiliationQuery";
 import deleteAffiliationQuery from "./deleteAffiliationQuery";
-import patchAffiliationQuery from "./patchAffiliationQuery";
-import patchAffiliation from "./patchAffiliation";
+import putAffiliationQuery from "./putAffiliationQuery";
+import putAffiliation from "./putAffiliation";
 import putRegistryHasAffiliationQuery from "./putRegistryHasAffiliationQuery";
 import usePaginatedAffiliations from "./usePaginatedAffiliations";
 
 export {
   getAffiliations,
   postAffiliation,
-  patchAffiliation,
+  putAffiliation,
   getAffiliationsQuery,
   postAffiliationQuery,
   deleteAffiliationQuery,
-  patchAffiliationQuery,
+  putAffiliationQuery,
   putRegistryHasAffiliationQuery,
   usePaginatedAffiliations,
 };

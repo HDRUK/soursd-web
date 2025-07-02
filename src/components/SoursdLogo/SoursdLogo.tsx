@@ -1,9 +1,9 @@
+import { grey } from "@mui/material/colors";
 import { BoxProps } from "@mui/system";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import logoDefault from "public/soursd_logo.svg";
 import logoWhite from "public/soursd_logo_white.svg";
-import { grey } from "@mui/material/colors";
 import { StyledLogoContainer, StyledLogoTitle } from "./SoursdLogo.styles";
 
 const NAMESPACE_TRANSLATIONS_SOURSD_LOGO = "SoursdLogo";

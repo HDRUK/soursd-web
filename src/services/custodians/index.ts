@@ -4,8 +4,8 @@ import getCustodiansUserProjects from "./getCustodiansUserProjects";
 import usePaginatedCustodiansUserProjects from "./usePaginatedCustodiansUserProjects";
 import getCustodianOrganisations from "./getCustodianOrganisations";
 import usePaginatedCustodianOrganisations from "./usePaginatedCustodianOrganisations";
-import patchCustodian from "./patchCustodian";
-import patchCustodianQuery from "./patchCustodianQuery";
+import putCustodian from "./putCustodian";
+import putCustodianQuery from "./putCustodianQuery";
 import getCustodians from "./getCustodians";
 import postCustodian from "./postCustodian";
 import postCustodianQuery from "./postCustodianQuery";
@@ -25,8 +25,8 @@ import postCustodianProjectQuery from "./postCustodianProjectQuery";
 export {
   getCustodian,
   getCustodianQuery,
-  patchCustodian,
-  patchCustodianQuery,
+  putCustodian,
+  putCustodianQuery,
   getCustodians,
   postCustodian,
   postCustodianInvite,

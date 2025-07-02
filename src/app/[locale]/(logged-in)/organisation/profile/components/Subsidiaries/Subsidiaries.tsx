@@ -15,7 +15,7 @@ import SubsidiaryForm, { SubsidiaryFormValues } from "./SubsidiaryForm";
 import RemoveSubsidiary from "./RemoveSubsidiary";
 import EditSubsidiary from "./EditSubsidiary";
 
-import usePatchOrganisation from "../../hooks/usePatchOrganisation";
+import useUpdateOrganisation from "../../hooks/useUpdateOrganisation";
 
 const NAMESPACE_TRANSLATION_FORM = "Form";
 const NAMESPACE_TRANSLATION_ORG_PROFILE = "ProfileOrganisation";
@@ -28,8 +28,8 @@ export default function Subsidiaries() {
   const {
     isPending: isLoading,
     onSubmit,
-    ...patchOrganisationQueryState
-  } = usePatchOrganisation({
+    ...putOrganisationQueryState
+  } = useUpdateOrganisation({
     id: organisation?.id,
   });
 
@@ -116,7 +116,7 @@ export default function Subsidiaries() {
         showHeader={false}
         data={organisation?.subsidiaries || []}
         columns={columns}
-        queryState={patchOrganisationQueryState}
+        queryState={putOrganisationQueryState}
         total={organisation?.subsidiaries?.length || 0}
       />
 

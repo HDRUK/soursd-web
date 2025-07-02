@@ -17,6 +17,6 @@ describe("useTranslatedTitle", () => {
       useFallbackTranslations("ActionsPanelValidationCheck")
     );
     const translated = result.current("my_fake_title");
-    expect(translated).toBe("My Fake Title");
+    expect(translated).toBe("Sample title");
   });
 });

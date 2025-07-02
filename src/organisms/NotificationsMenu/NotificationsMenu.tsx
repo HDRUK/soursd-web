@@ -16,14 +16,14 @@ import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 import useDebounce from "../../hooks/useDebounce";
-import { NotificationPatchType } from "../../services/notifications/types";
+import { NotificationPutType } from "../../services/notifications/types";
 import { Notification } from "../../types/notifications";
 import { formatDBDate } from "../../utils/date";
 import { formatNotificationType } from "../../utils/notifications";
 import { NotificationModal } from "../NotifcationModal";
 import useGetNotificationsCount from "./hooks/useGetNotificationCounts";
 import useGetNotifcations from "./hooks/useGetNotifications";
-import usePatchNotification from "./hooks/usePatchNotification";
+import usePutNotification from "./hooks/usePutNotification";
 import { StyledMenuItem } from "./NotificationsMenu.styles";
 
 const NAMESPACE_TRANSLATIONS = "NotificationsMenu";
@@ -61,7 +61,7 @@ export default function NotificationsMenu() {
     refetchNotifications();
   }, [notificationsCount?.data]);
 
-  const { mutateAsync: mutateNotification } = usePatchNotification(
+  const { mutateAsync: mutateNotification } = usePutNotification(
     user?.id as number
   );
 
@@ -78,7 +78,7 @@ export default function NotificationsMenu() {
 
   const changeReadStatus = (
     notificationId: string,
-    type: NotificationPatchType
+    type: NotificationPutType
   ) => {
     mutateNotification({
       notificationId,
@@ -90,7 +90,7 @@ export default function NotificationsMenu() {
   };
 
   const handleViewNotification = (notif: Notification) => {
-    if (!notif.read_at) changeReadStatus(notif.id, NotificationPatchType.READ);
+    if (!notif.read_at) changeReadStatus(notif.id, NotificationPutType.READ);
     setCurrentNotification(notif);
     setShowNotificationModal(true);
   };
@@ -225,7 +225,7 @@ export default function NotificationsMenu() {
           handleMarkAsUnread={() => {
             changeReadStatus(
               currentNotification.id,
-              NotificationPatchType.UNREAD
+              NotificationPutType.UNREAD
             );
             setShowNotificationModal(false);
           }}

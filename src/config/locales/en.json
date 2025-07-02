@@ -260,7 +260,7 @@
     "organisationNotFound": "Organisation was not found",
     "getOrganisationStatusError": "Unable to determine validation status",
     "navigationAriaLabel": "Profile tabs",
-    "patchUserError": "There was a problem updating your user details. Please try again or contact us at <contactLink></contactLink>",
+    "putUserError": "There was a problem updating your user details. Please try again or contact us at <contactLink></contactLink>",
     "updateUserButton": "Save",
     "noDelegates": "No Delegates Found",
     "getDelegateError": "Unable to get the list of delegates",
@@ -302,6 +302,9 @@
     "uploadCertification": "Upload Certificate"
   },
   "Form": {
+    "atLeastOneCharityRequired": "At least 1 charity is required",
+    "charityCountryRequired": "Charity country is required",
+    "organisationNameRequiredInvalid": "Organisation name is required",
     "unsavedAlertText": "Are you sure you want to leave the form with unsaved changes?",
     "unsavedAlertTitle": "You have unsaved changes",
     "unsavedAlertConfirmButton": "Leave form",
@@ -914,7 +917,7 @@
     "cvUpload": "CV Upload",
     "cvUploadDescription": "Please upload an up-to-date CV , including your professional employment, education and qualifications, and publication record.",
     "affiliationActionSuccessButton": "OK",
-    "patchAffiliationSuccess": "Affiliation updated successfully",
+    "putAffiliationSuccess": "Affiliation updated successfully",
     "affiliationActionError": "An error occurred. Please try again or <contactLink>contact us</contactLink> if the problem persists.",
     "affiliationActionErrorButton": "Close",
     "editAffiliationForm": "Edit Affiliation",
@@ -927,7 +930,7 @@
     "missingOrcIdMessage": "There’s some missing information from your ORCID that we need you to complete",
     "affiliationOrganisationWarningMessage": "Please complete this field as we couldn’t match the information. Sometimes the identifier of an Organisation within an ORCID profile does not exactly match the identifier of an Organisation registered within SOURSD therefore please select an Organisation from the dropdown box. If the Organisation is not listed, please <link> invite them here </link>",
     "affiliationsEmailWarningMessage": "Please complete this field as we couldn’t match the information.",
-    "patchOrganisationForbidden": "Your account does not have permissions to perform this update"
+    "putOrganisationForbidden": "Your account does not have permissions to perform this update"
   },
   "Training": {
     "title": "Training",
@@ -1169,7 +1172,7 @@
       "more_org_info_req": "More Organisation Information Requested",
       "escalate_validation": "Escalation to Validation Committee",
       "validated": "Validated",
-      "status": "Validation Status",
+      "status": "Validation status",
       "organisationName": "Organisation name",
       "projectRole": "Project role",
       "projectName": "Project name",
@@ -1196,12 +1199,14 @@
       "more_org_info_req": "More Organisation Information Requested",
       "escalate_validation": "Escalation to Validation Committee",
       "validated": "Validated",
-      "status": "Project status",
+      "status": "Validation status",
       "organisationName": "Organisation name",
       "projectRole": "Project role",
       "name": "Name",
       "actions": "Actions",
-      "removeOrganisationFromProject": "Remove from project"
+      "removeOrganisationFromProject": "Remove from project",
+      "noResultsMessage": "It looks like there are no organisations for any projects.",
+      "errorMessage": "Couldn't get the users for this project. Please try again or <contactLink>contact support</contactLink> if the problem persists."
     },
     "status": "Project status",
     "safeProject": "Safe Project",
@@ -1330,7 +1335,7 @@
     "title": "Edit",
     "toolTip": "Edit details for this delegate"
   },
-  "UsePatchOrganisation": {
+  "UseUpdateOrganisation": {
     "text": "Organisation Updated!",
     "confirmText": "OK"
   },
@@ -1514,6 +1519,7 @@
     }
   },
   "ActionsPanelValidationCheck": {
+    "my_fake_title": "Sample title",
     "organisation_aligned_sde_network": "Is the Organisation aligned with the SDE network?",
     "confident_cost_for_projects_will_be_met": "Are we confident costs would be met and profits realised for future projects?"
   },

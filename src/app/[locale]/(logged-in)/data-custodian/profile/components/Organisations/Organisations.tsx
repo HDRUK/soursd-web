@@ -1,6 +1,7 @@
 "use client";
 
 import { useStore } from "@/data/store";
+import useStorePaginatedQueryParams from "@/hooks/useStorePaginatedQueryParams";
 import PageBody from "@/modules/PageBody";
 import PageBodyContainer from "@/modules/PageBodyContainer";
 import PageSection from "@/modules/PageSection";
@@ -18,6 +19,8 @@ export default function Organisations() {
     nameRoute: state.getApplication().routes.profileCustodianUsersIdentity,
   }));
 
+  const paginatedQueryParams = useStorePaginatedQueryParams();
+
   return (
     <PageBodyContainer heading={tProfile("organisationsListTitle")}>
       <PageBody>
@@ -32,6 +35,7 @@ export default function Organisations() {
           routes={{
             name: nameRoute,
           }}
+          paginatedQueryParams={paginatedQueryParams}
         />
       </PageBody>
     </PageBodyContainer>

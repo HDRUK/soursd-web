@@ -8,6 +8,7 @@ import {
 } from "@/consts/user";
 import { RouteConfig } from "./router";
 import { RuleState } from "./rules";
+import { QueryParams } from "./query";
 
 interface StateWorkflow {
   transitions: Record<string, string[]>;
@@ -35,6 +36,10 @@ type WithModelState<T> = T & {
 
 type WithRoutes<T> = T & {
   routes: Record<string, RouteConfig>;
+};
+
+type WithPaginatedQueryParms<T> = T & {
+  paginatedQueryParams: QueryParams;
 };
 
 interface File {
@@ -224,6 +229,7 @@ interface Charity extends AddressFields {
   id: number;
   registration_id: string;
   name: string;
+  country: string;
   website?: string;
 }
 
@@ -547,4 +553,5 @@ export type {
   ModelState,
   WithModelState,
   WithRoutes,
+  WithPaginatedQueryParms,
 };

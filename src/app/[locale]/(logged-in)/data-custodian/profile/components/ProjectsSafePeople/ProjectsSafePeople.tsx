@@ -1,6 +1,7 @@
 "use client";
 
 import { useStore } from "@/data/store";
+import useStorePaginatedQueryParams from "@/hooks/useStorePaginatedQueryParams";
 import PageBody from "@/modules/PageBody";
 import ProjectUsers from "@/organisms/ProjectUsers";
 import { EntityType } from "@/types/api";
@@ -12,6 +13,8 @@ export default function ProjectsSafePeople() {
     route: state.getApplication().routes.profileCustodianUsersProjects,
   }));
 
+  const paginatedQueryParams = useStorePaginatedQueryParams();
+
   return (
     <PageBody>
       <ProjectUsers
@@ -21,6 +24,7 @@ export default function ProjectsSafePeople() {
         routes={{
           name: route,
         }}
+        paginatedQueryParams={paginatedQueryParams}
       />
     </PageBody>
   );
