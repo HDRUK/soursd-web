@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { Status } from "../components/ChipStatus";
 import { TEXT_LIST_SEPARATOR } from "../config/db";
 import yup from "../config/yup";
@@ -6,7 +5,7 @@ import { DefaultFormValuesMode } from "../consts/form";
 import { RequestFrequency } from "../consts/projects";
 import { ProjectDetails, ResearcherProject } from "../types/application";
 import { DataUse } from "../types/gateway";
-import { formatDBDate, formatStringToISO, getDate } from "./date";
+import { formatStringToISO, getDate } from "./date";
 import { parseValidJSON } from "./json";
 
 function getCheckboxFormValuesFromIntersection(

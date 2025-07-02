@@ -3,8 +3,6 @@ import { mockedProject } from "@/mocks/data/project";
 import ProjectsSafeProjectForm, {
   ProjectsSafeProjectFormProps,
 } from "./ProjectsSafeProjectForm";
-import { faker } from "@faker-js/faker";
-import { Status } from "@/components/ChipStatus";
 
 const defaultProps: ProjectsSafeProjectFormProps = {
   mutateState: { isPending: false, isError: false, isSuccess: false },
