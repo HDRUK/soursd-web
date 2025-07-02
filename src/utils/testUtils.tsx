@@ -12,6 +12,7 @@ import {
   render,
   renderHook,
   screen,
+  within,
 } from "@testing-library/react";
 import userEvent, { UserEvent } from "@testing-library/user-event";
 import mediaQuery from "css-mediaquery";
@@ -136,6 +137,23 @@ async function clearInputsByLabelText(inputs: (string | RegExp)[]) {
   });
 }
 
+async function changeSelectValueByLabelText(
+  selector: string | RegExp,
+  value: string
+) {
+  const dropdown = await screen.findAllByLabelText(selector);
+  const button = within(dropdown[0]).getByRole("combobox");
+
+  await userEvent.click(button);
+
+  const listbox = screen.getByRole("listbox");
+
+  await userEvent.click(
+    await within(listbox).getByText(new RegExp(value, "i"))
+  );
+}
+
+global.changeSelectValueByLabelText = changeSelectValueByLabelText;
 global.clearInputsByLabelText = clearInputsByLabelText;
 
 export * from "@testing-library/react";

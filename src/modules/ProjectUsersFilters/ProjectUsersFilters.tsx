@@ -18,7 +18,7 @@ export enum ProjectUsersFilterKeys {
   SORT = "sort",
 }
 
-export interface ProjectUsersFilterProps
+export interface ProjectUsersFiltersProps
   extends PropsWithChildren<
     Pick<
       PaginatedQueryReturn<CustodianProjectUser>,
@@ -40,7 +40,7 @@ export default function ProjectUsersFilters({
   updateQueryParams,
   queryParams,
   includeFilters = [ProjectUsersFilterKeys.STATUS, ProjectUsersFilterKeys.SORT],
-}: ProjectUsersFilterProps) {
+}: ProjectUsersFiltersProps) {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_PROJECTS);
   const tApplication = useTranslations(NAMESPACE_TRANSLATIONS_APPLICATION);
 

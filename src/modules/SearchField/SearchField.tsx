@@ -6,7 +6,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import IconButton from "../../components/IconButton";
 import useDebounce from "../../hooks/useDebounce";
 
-type SearchFieldProps = Omit<TextFieldProps, "change"> & {
+export type SearchFieldProps = Omit<TextFieldProps, "change"> & {
   onSearch: (query: string) => void;
   onClear?: () => void;
   placeholder?: string;
@@ -50,10 +50,10 @@ const SearchField = ({
           <InputAdornment position="end">
             {searchQuery ? (
               <IconButton onClick={handleClearSearch} edge="end">
-                <ClearIcon />
+                <ClearIcon titleAccess="Clear" />
               </IconButton>
             ) : (
-              <SearchIcon />
+              <SearchIcon titleAccess="Search" />
             )}
           </InputAdornment>
         ),

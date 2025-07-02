@@ -11,6 +11,7 @@ import SearchBar from "../SearchBar";
 import { ResearcherProject } from "../../types/application";
 import { getSearchSortOrder } from "../../utils/query";
 import SearchActionMenu from "../SearchActionMenu";
+import useSort from "@/hooks/useSort";
 
 const NAMESPACE_TRANSLATIONS_PROJECTS = "Projects";
 const NAMESPACE_TRANSLATIONS_APPLICATION = "Application";
@@ -20,7 +21,7 @@ export enum ProjectFilterKeys {
   STATUS = "status",
 }
 
-export interface ProjectsProps
+export interface ProjectsFiltersProps
   extends Pick<
     PaginatedQueryReturn<ResearcherProject>,
     | "updateQueryParams"
@@ -39,7 +40,7 @@ export default function ProjectsFilters({
   updateQueryParams,
   queryParams,
   includeFilters = [ProjectFilterKeys.DATE, ProjectFilterKeys.STATUS],
-}: ProjectsProps) {
+}: ProjectsFiltersProps) {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_PROJECTS);
   const tApplication = useTranslations(NAMESPACE_TRANSLATIONS_APPLICATION);
 
@@ -47,20 +48,17 @@ export default function ProjectsFilters({
     return includeFilters.includes(key);
   };
 
-  const sortDirection = getSearchSortOrder(queryParams);
-
-  const sortActions = [
-    {
-      label: t("sortActions.AZ"),
-      onClick: () => handleSortToggle("title", SearchDirections.ASC),
-      checked: sortDirection === SearchDirections.ASC,
-    },
-    {
-      label: t("sortActions.ZA"),
-      onClick: () => handleSortToggle("title", SearchDirections.DESC),
-      checked: sortDirection === SearchDirections.DESC,
-    },
-  ];
+  const { actions: sortActions } = useSort({
+    queryParams,
+    items: [
+      {
+        label: t("sortByProjectTitle"),
+        key: "title",
+      },
+    ],
+    onSort: (key: string, direction: string) =>
+      handleSortToggle(key, direction),
+  });
 
   const filterDateActions = [
     {

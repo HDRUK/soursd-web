@@ -1,0 +1,67 @@
+import { mockedUser } from "@/mocks/data/user";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  userEvent,
+  waitFor,
+  within,
+} from "@/utils/testUtils";
+import ProjectUsersFilters, {
+  ProjectUsersFiltersProps,
+} from "./ProjectUsersFilters";
+
+const user = mockedUser();
+
+const defaultProps = {
+  updateQueryParams: jest.fn(),
+  resetQueryParams: jest.fn(),
+  handleSortToggle: jest.fn(),
+  handleFieldToggle: jest.fn(),
+  queryParams: {},
+};
+
+const setupTest = (props?: Partial<ProjectUsersFiltersProps>) => {
+  render(<ProjectUsersFilters {...defaultProps} {...props} />);
+};
+
+describe("<ProjectUsersFilters />", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it("submits a search", async () => {
+    setupTest();
+
+    act(() => {
+      const searchInput = screen.getByRole("textbox");
+
+      userEvent.type(searchInput, "hdruk{enter}");
+    });
+
+    await waitFor(() => {
+      expect(defaultProps.updateQueryParams).toHaveBeenCalledWith({
+        "name[]": "hdruk",
+      });
+    });
+  });
+
+  it("filters a search", async () => {
+    setupTest();
+
+    act(() => {
+      changeSelectValueByLabelText(
+        /Filter by status/,
+        "SOURSD account created"
+      );
+    });
+
+    await waitFor(() => {
+      expect(defaultProps.handleFieldToggle).toHaveBeenCalledWith("status", [
+        "registered",
+        "",
+      ]);
+    });
+  });
+});
