@@ -15,7 +15,7 @@ const patchProps = {
   onSubmit: jest.fn().mockResolvedValue(null),
 };
 
-jest.mock("../../hooks/usePatchOrganisation", () => ({
+jest.mock("../../hooks/useUpdateOrganisation", () => ({
   __esModule: true,
   default: () => patchProps,
 }));
