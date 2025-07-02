@@ -21,7 +21,7 @@ import useQueryAlerts from "@/hooks/useQueryAlerts";
 import { ResearcherAffiliation } from "@/types/application";
 import {
   deleteAffiliationQuery,
-  patchAffiliationQuery,
+  putAffiliationQuery,
   postAffiliationQuery,
   usePaginatedAffiliations,
 } from "@/services/affiliations";
@@ -68,8 +68,8 @@ export default function AffiliationsPage() {
   const { mutateAsync: postAffiliations, ...postAffiliationQueryState } =
     useMutation(postAffiliationQuery(user));
 
-  const { mutateAsync: patchAffiliation, ...patchAffiliationQueryState } =
-    useMutation(patchAffiliationQuery());
+  const { mutateAsync: putAffiliation, ...putAffiliationQueryState } =
+    useMutation(putAffiliationQuery());
 
   const { mutateAsync: deleteAffiliation, ...restDeleteState } = useMutation(
     deleteAffiliationQuery()
@@ -82,14 +82,12 @@ export default function AffiliationsPage() {
   } = useOrganisationInvite();
 
   const combinedQueryState = getCombinedQueryState(
-    [inviteQueryState, postAffiliationQueryState, patchAffiliationQueryState],
+    [inviteQueryState, postAffiliationQueryState, putAffiliationQueryState],
     false
   ) as QueryState;
 
   useQueryAlerts(
-    selectedAffiliation
-      ? patchAffiliationQueryState
-      : postAffiliationQueryState,
+    selectedAffiliation ? putAffiliationQueryState : postAffiliationQueryState,
     {
       commonAlertProps: {
         willClose: () => {
@@ -100,7 +98,7 @@ export default function AffiliationsPage() {
       successAlertProps: {
         confirmButtonText: tProfile("affiliationActionSuccessButton"),
         text: selectedAffiliation
-          ? tProfile("patchAffiliationSuccess")
+          ? tProfile("putAffiliationSuccess")
           : tProfile("postAffiliationSuccess"),
       },
       errorAlertProps: {
@@ -212,7 +210,7 @@ export default function AffiliationsPage() {
 
       if (selectedAffiliation) {
         // Update existing affiliation
-        await patchAffiliation({
+        await putAffiliation({
           affiliationId: selectedAffiliation.id,
           payload,
         });
@@ -222,7 +220,7 @@ export default function AffiliationsPage() {
       }
       refetch();
     },
-    [selectedAffiliation, postAffiliations, patchAffiliation]
+    [selectedAffiliation, postAffiliations, putAffiliation]
   );
 
   const orcIdBannerToAppear = affiliationsData?.some(affiliation => {

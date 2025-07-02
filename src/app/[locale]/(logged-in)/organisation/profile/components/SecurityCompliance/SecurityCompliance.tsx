@@ -12,9 +12,9 @@ import React, { useMemo } from "react";
 import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
 import { ROUTES } from "@/consts/router";
 import FormSection from "@/components/FormSection";
-import { PatchOrganisationPayload } from "@/services/organisations";
+import { PutOrganisationPayload } from "@/services/organisations";
 import { dateToString } from "@/utils/date";
-import usePatchOrganisation from "../../hooks/usePatchOrganisation";
+import useUpdateOrganisation from "../../hooks/useUpdateOrganisation";
 import {
   certificationRows,
   getDefaultValues,
@@ -31,7 +31,7 @@ export default function SecurityCompliance() {
   const t = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
-  const { isPending: isLoading, onSubmit } = usePatchOrganisation({
+  const { isPending: isLoading, onSubmit } = useUpdateOrganisation({
     id: organisation?.id,
   });
 
@@ -48,7 +48,7 @@ export default function SecurityCompliance() {
       ce_plus_expiry_date: dateToString(data.ce_plus_expiry_date),
       iso_expiry_date: dateToString(data.iso_expiry_date),
       dsptk_expiry_date: dateToString(data.dsptk_expiry_date),
-    } as PatchOrganisationPayload;
+    } as PutOrganisationPayload;
 
     onSubmit(payload);
   };

@@ -73,9 +73,9 @@ describe("Trainings", () => {
   });
 
   it("submits form with correct data", async () => {
-    const mockPatchUser = jest.fn();
+    const mockPutUser = jest.fn();
     (useMutation as jest.Mock).mockReturnValue({
-      mutateAsync: mockPatchUser,
+      mutateAsync: mockPutUser,
       isPending: false,
     });
 
@@ -90,7 +90,7 @@ describe("Trainings", () => {
     });
 
     await waitFor(() => {
-      expect(mockPatchUser).toHaveBeenCalledWith({
+      expect(mockPutUser).toHaveBeenCalledWith({
         uksa_registered: true,
         declaration_signed: true,
       });

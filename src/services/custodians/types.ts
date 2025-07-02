@@ -48,8 +48,8 @@ interface PutCustodianActiveEntityModelResponse {
 type GetCustodianResponse = Custodian;
 type GetCustodiansResponse = Custodian[];
 
-type PatchCustodianPayload = Partial<Custodian>;
-type PatchCustodianResponse = Custodian;
+type PutCustodianPayload = Partial<Custodian>;
+type PutCustodianResponse = Custodian;
 
 type GetCustodiansUserProjectsResponse = ResearcherProject[];
 
@@ -88,8 +88,8 @@ export type {
   GetCustodiansResponse,
   SendCustodianInvitePayload,
   SendCustodianInviteResponse,
-  PatchCustodianPayload,
-  PatchCustodianResponse,
+  PutCustodianPayload,
+  PutCustodianResponse,
   PostCustodianPayload,
   PostCustodianResponse,
   PostCustodianInviteResponse,
