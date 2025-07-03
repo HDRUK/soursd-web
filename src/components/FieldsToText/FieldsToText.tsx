@@ -64,7 +64,7 @@ export default function FieldsToText<T>({
             <Typography>{renderItems(_get(data, key))}</Typography>
           </div>
         ) : (
-          <div key={key}>
+          <div key={getHeading(key)}>
             <Typography variant="h6">{getHeading(key)}</Typography>
             <Typography>
               {key.content || renderItems(_get(data, key.column_id))}

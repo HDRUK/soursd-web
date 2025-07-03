@@ -59,7 +59,12 @@ describe("<DigitalIdentifiers />", () => {
 
     await waitFor(() => {
       expect(putProps.onSubmit).toHaveBeenCalledWith({
-        charities,
+        charities: [
+          {
+            country: charities[0].country,
+            registration_id: charities[0].registration_id,
+          },
+        ],
         companies_house_no,
         ror_id,
       });

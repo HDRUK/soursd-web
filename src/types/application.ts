@@ -246,6 +246,7 @@ type Organisation = OrganisationIdvt &
     companies_house_no: string;
     organisation_name: string;
     organisation_unique_id: string;
+    sector: Sector;
     dpo_name: string;
     dpo_email: string;
     hr_name: string;

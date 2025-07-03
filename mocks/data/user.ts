@@ -13,6 +13,7 @@ import { mockedApproval } from "./approvals";
 import { mockedFile } from "./file";
 import { mockedPermission } from "./permission";
 import { mockedDepartment } from "./departments";
+import { Status } from "@/components/ChipStatus";
 
 const mockedUser = (user?: Partial<User>): User => ({
   profile_completed_at: null,
@@ -31,7 +32,6 @@ const mockedUser = (user?: Partial<User>): User => ({
   registry: {
     files: [mockedFile()],
     verified: true,
-
     affiliations: [mockedAffiliation()],
   },
   ...user,
@@ -112,6 +112,7 @@ const mockedAffiliation = (
   to: "",
   department: faker.commerce.department(),
   email: faker.internet.email(),
+  registryAffiliationState: Status.AFFILIATED,
   ...affiliation,
 });
 
