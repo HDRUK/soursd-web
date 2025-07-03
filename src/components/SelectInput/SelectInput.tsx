@@ -45,6 +45,7 @@ const SelectInput = ({
         }}
         inputProps={{
           "aria-label": ariaLabel || label,
+          "aria-labelledby": "Select data sensitivity level",
         }}
         {...restProps}>
         {options.map(option => (

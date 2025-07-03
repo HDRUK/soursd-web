@@ -1,4 +1,4 @@
-import { renderHook, waitFor } from "@/utils/testUtils";
+import { renderHook, waitFor } from "../../utils/testUtils";
 import useQueriesHistories from "./useQueriesHistories";
 
 const setupUseQueryHistories = () => renderHook(() => useQueriesHistories(1));
@@ -17,7 +17,7 @@ describe("useQueryRefetch", () => {
             getAffiliations: null,
             getEducations: null,
             getTrainings: null,
-            getUserApprovedProjects: null,
+            getUserValidatedProjects: null,
             getProfessionalRegistrations: null,
           },
           data: {
@@ -33,7 +33,7 @@ describe("useQueryRefetch", () => {
             getTrainings: expect.objectContaining({
               message: "success",
             }),
-            getUserApprovedProjects: expect.objectContaining({
+            getUserValidatedProjects: expect.objectContaining({
               message: "success",
             }),
             getProfessionalRegistrations: expect.objectContaining({

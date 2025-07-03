@@ -1,6 +1,6 @@
-import { getInitials } from "@/utils/application";
 import { Box, Paper, PaperProps, Typography } from "@mui/material";
 import { ReactNode } from "react";
+import { getInitials } from "../../utils/application";
 import ChipStatus, { Status } from "../ChipStatus";
 import MaskLabel from "../MaskLabel";
 import Text from "../Text";
@@ -29,7 +29,7 @@ export default function SoursdCard({
         p: 3,
         wordBreak: "break-word",
         border: "1px solid",
-        borderColor: "borderDefault.main",
+        borderColor: "muiBorder",
         ...sx,
       }}
       {...restProps}>

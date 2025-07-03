@@ -1,5 +1,5 @@
-import { MutationState, QueryState } from "@/types/form";
-import { SearchParams } from "@/types/query";
+import { MutationState, QueryState } from "../types/form";
+import { SearchParams } from "../types/query";
 
 function isQueriesLoading<T extends MutationState & QueryState>(queries: T[]) {
   return queries.some(
@@ -18,8 +18,14 @@ function isQueriesFetched<T extends MutationState & QueryState>(queries: T[]) {
   );
 }
 
-function isQueriesSuccess<T extends MutationState & QueryState>(queries: T[]) {
+function isAllQueriesSuccess<T extends MutationState & QueryState>(
+  queries: T[]
+) {
   return queries.filter(query => query.isSuccess).length === queries.length;
+}
+
+function isAnyQuerySuccess<T extends MutationState & QueryState>(queries: T[]) {
+  return queries.some(query => query.isSuccess);
 }
 
 function getSearchQuerystring(searchParams: SearchParams) {
@@ -46,6 +52,12 @@ function getSearchSortOrder(queryParams: SearchParams) {
   );
 }
 
+function getSearchSortParam(queryParams: SearchParams) {
+  return (
+    typeof queryParams?.sort === "string" && queryParams?.sort.split(":")[0]
+  );
+}
+
 function getQueriesError<T extends MutationState & QueryState>(queries: T[]) {
   let errors: Error[] = [];
 
@@ -65,14 +77,17 @@ function getQueriesError<T extends MutationState & QueryState>(queries: T[]) {
 }
 
 function getCombinedQueryState<T extends MutationState & QueryState>(
-  queries: T[]
+  queries: T[],
+  allSuccess: boolean = true
 ) {
   return {
     isLoading: isQueriesLoading(queries),
     isError: isQueriesError(queries),
     error: getQueriesError(queries),
     isFetched: isQueriesFetched(queries),
-    isSuccess: isQueriesSuccess(queries),
+    isSuccess: allSuccess
+      ? isAllQueriesSuccess(queries)
+      : isAnyQuerySuccess(queries),
   };
 }
 
@@ -82,7 +97,9 @@ export {
   isQueriesError,
   isQueriesFetched,
   isQueriesLoading,
-  isQueriesSuccess,
+  isAnyQuerySuccess,
+  isAllQueriesSuccess,
   getSearchQuerystring,
   getSearchSortOrder,
+  getSearchSortParam,
 };

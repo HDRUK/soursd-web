@@ -1,29 +1,32 @@
 "use client";
 
-import { ActionMenu, ActionMenuItem } from "@/components/ActionMenu";
-import ContactLink from "@/components/ContactLink";
 import { StoreUserHistories } from "@/data/store";
-import useQueryAlerts from "@/hooks/useQueryAlerts";
-import useQueryConfirmAlerts from "@/hooks/useQueryConfirmAlerts";
-import useMutationUpdateProfessionalRegistration from "@/queries/useMutationUpdateProfessionalRegistration";
+import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import { Button, Typography } from "@mui/material";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { ColumnDef } from "@tanstack/react-table";
+import { useTranslations } from "next-intl";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import ReactDOMServer from "react-dom/server";
+import { ActionMenu, ActionMenuItem } from "../../components/ActionMenu";
+import ContactLink from "../../components/ContactLink";
+import Table from "../../components/Table";
+import { AddIcon } from "../../consts/icons";
+import useQueryAlerts from "../../hooks/useQueryAlerts";
+import useQueryConfirmAlerts from "../../hooks/useQueryConfirmAlerts";
+import useMutationUpdateProfessionalRegistration from "../../queries/useMutationUpdateProfessionalRegistration";
 import {
   deleteProfessionalRegistrationQuery,
   getProfessionalRegistrationsQuery,
   putProfessionalRegistrationQuery,
-} from "@/services/professional_registrations";
-import { PostProfessionalRegistrationPayload } from "@/services/professional_registrations/types";
-import { ResearcherProfessionalRegistration, User } from "@/types/application";
-import { Button, Typography } from "@mui/material";
-import Table from "@/components/Table";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { useTranslations } from "next-intl";
-import { useCallback, useEffect, useState, useMemo } from "react";
-import ReactDOMServer from "react-dom/server";
-import { ColumnDef } from "@tanstack/react-table";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
-import { EntityType } from "@/types/api";
-import { AddIcon } from "@/consts/icons";
+} from "../../services/professional_registrations";
+import { PostProfessionalRegistrationPayload } from "../../services/professional_registrations/types";
+import { EntityType } from "../../types/api";
+import {
+  ResearcherProfessionalRegistration,
+  User,
+} from "../../types/application";
 import ProfessionalRegistrationsFormModal from "./ProfessionalRegistrationsFormModal";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfessionalRegistrations";
@@ -194,9 +197,9 @@ export default function ProfessionalRegistrations({
                       setIsEditMode(true);
                       setIsModalOpen(true);
                     }}
-                    sx={{ color: "menuList1.main" }}
+                    sx={{ color: "secondary.main" }}
                     icon={
-                      <CreateOutlinedIcon sx={{ color: "menuList1.main" }} />
+                      <CreateOutlinedIcon sx={{ color: "secondary.main" }} />
                     }>
                     {tApplication("edit")}
                   </ActionMenuItem>

@@ -1,22 +1,22 @@
+import { useMutation } from "@tanstack/react-query";
+import { useCallback, useMemo } from "react";
+import { MutationState } from "../../types/form";
 import {
   postOrganisationInviteQuery,
   PostOrganisationUnclaimedPayload,
   postOrganisationUnclaimedQuery,
-} from "@/services/organisations";
-import { MutationState } from "@/types/form";
-import { getCombinedQueryState } from "@/utils/query";
-import { useMutation } from "@tanstack/react-query";
-import { useCallback, useMemo } from "react";
+} from "../../services/organisations";
+import { getCombinedQueryState } from "../../utils/query";
 
 interface UseOrganisationInviteProps {
-  onSuccess: () => void;
-  onError: () => void;
+  onSuccess?: () => void;
+  onError?: () => void;
 }
 
 export default function useOrganisationInvite({
   onSuccess,
   onError,
-}: UseOrganisationInviteProps) {
+}: UseOrganisationInviteProps = {}) {
   const {
     mutateAsync: mutateOrganisationUnclaimed,
     ...postOrganisationUnclaimedQueryState
@@ -33,10 +33,11 @@ export default function useOrganisationInvite({
         const { data: id } = await mutateOrganisationUnclaimed(organisation);
 
         await mutateOrganisationInvite(id);
-
-        onSuccess();
+        onSuccess?.();
+        return id;
       } catch (_) {
-        onError();
+        onError?.();
+        return undefined;
       }
     },
     []
@@ -51,6 +52,8 @@ export default function useOrganisationInvite({
     () => ({
       queryState,
       handleSubmit,
+      mutateOrganisationUnclaimed,
+      mutateOrganisationInvite,
     }),
     [queryState]
   );

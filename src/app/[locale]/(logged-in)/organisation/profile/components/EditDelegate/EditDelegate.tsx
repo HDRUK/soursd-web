@@ -6,12 +6,12 @@ import FormModal from "@/components/FormModal";
 import { useState } from "react";
 import EditDelegateForm from "./EditDelegateForm";
 
-interface DecoupleUserProps {
+export interface EditDelegateProps {
   user: User;
   onSuccess: () => void;
 }
 
-const EditDelegate = ({ user, onSuccess }: DecoupleUserProps) => {
+const EditDelegate = ({ user, onSuccess }: EditDelegateProps) => {
   const t = useTranslations("EditDelegate");
 
   const [openModal, setOpenModal] = useState<boolean>(false);
@@ -19,7 +19,7 @@ const EditDelegate = ({ user, onSuccess }: DecoupleUserProps) => {
   return (
     <>
       <ActionMenuItem
-        sx={{ color: "menuList1.main" }}
+        sx={{ color: "secondary.main" }}
         onClick={() => setOpenModal(true)}
         icon={<EditIcon />}>
         {t("title")}

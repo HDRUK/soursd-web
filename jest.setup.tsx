@@ -4,16 +4,26 @@ import { defineMatchMedia } from "@/utils/testUtils";
 import "@testing-library/jest-dom";
 import "jest-axe/extend-expect";
 import * as matchers from "jest-extended";
-import { forwardRef, useImperativeHandle } from "react";
 import { TextEncoder } from "util";
 import { mock200Json, mockDownloadFile, mockPagedResults } from "./jest.utils";
 import { mockedJwt } from "./mocks/data/auth";
-import { mockedCustodian, mockedCustodianUser } from "./mocks/data/custodian";
+import {
+  mockedCustodian,
+  mockedCustodianHasProjectOrganisation,
+  mockedCustodianHasProjectUser,
+  mockedCustodianUser,
+} from "./mocks/data/custodian";
 import { mockedNotification } from "./mocks/data/notification";
 import { mockedOrganisation } from "./mocks/data/organisation";
-import { mockedValidationComment } from "./mocks/data/validation_log";
-import { mockedPermission } from "./mocks/data/permission";
-import { mockedProject, mockedProjects } from "./mocks/data/project";
+import {
+  mockedPermission,
+  mockedUserPermission,
+} from "./mocks/data/permission";
+import {
+  mockedProject,
+  mockedProjects,
+  mockedProjectStateWorkflow,
+} from "./mocks/data/project";
 import { mockedApiPermissions, mockedStoreState } from "./mocks/data/store";
 import { mockedSystemConfig } from "./mocks/data/systemConfig";
 import {
@@ -25,8 +35,8 @@ import {
   mockedTraining,
   mockedUser,
 } from "./mocks/data/user";
+import { mockedValidationComment } from "./mocks/data/validation_log";
 import { ResponseMessageType } from "./src/consts/requests";
-import { useSearchParams } from "next/navigation";
 
 const nextRouterMock = require("next-router-mock");
 
@@ -86,30 +96,6 @@ jest.mock("@/hooks/usePathServerSide", () => jest.fn());
 jest.mock("@/data/store", () => ({
   useStore: jest.fn(),
 }));
-
-jest.mock("react-google-recaptcha", () => {
-  const RecaptchaV2 = forwardRef((props, ref) => {
-    useImperativeHandle(ref, () => ({
-      getValue: jest.fn(() => true),
-      reset: jest.fn(),
-      execute: jest.fn(),
-      executeAsync: jest.fn(() => "token"),
-    }));
-
-    return (
-      <input
-        ref={ref}
-        type="checkbox"
-        id="recapture"
-        data-testid="recaptcha"
-        aria-label="recaptcha"
-        {...props}
-      />
-    );
-  });
-
-  return RecaptchaV2;
-});
 
 global.matchMedia = () => {
   return {
@@ -171,6 +157,36 @@ async function mockFetch(url: string, init?: RequestInit) {
   switch (baseUrl) {
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/permissions`: {
       return mock200Json(mockPagedResults(mockedApiPermissions));
+    }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/custodians/1/custodian_users`: {
+      return mock200Json(
+        mockPagedResults([
+          mockedCustodianUser({
+            id: 1,
+            first_name: "John",
+            last_name: "Smith",
+            email: "john.smith@hdruk.ac.uk",
+            user_permissions: [
+              mockedUserPermission({
+                custodian_user_id: 1,
+                permission_id: 10,
+              }),
+            ],
+          }),
+          mockedCustodianUser({
+            id: 2,
+            first_name: "John",
+            last_name: "Smith",
+            email: "john.smith@hdruk.ac.uk",
+            user_permissions: [
+              mockedUserPermission({
+                custodian_user_id: 1,
+                permission_id: 10,
+              }),
+            ],
+          }),
+        ])
+      );
     }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/custodian_users/1`: {
       return mock200Json(
@@ -288,10 +304,43 @@ async function mockFetch(url: string, init?: RequestInit) {
         }),
       ]);
     }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/custodian_approvals/projectOrganisations/workflowTransitions`: {
+      return mock200Json(mockedProjectStateWorkflow());
+    }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/custodian_approvals/1/projectOrganisations`: {
+      return mock200Json(
+        mockPagedResults(
+          [
+            mockedCustodianHasProjectOrganisation({
+              id: 1,
+              model_state: { state: { slug: "form_received" } },
+            }),
+          ],
+          page,
+          perPage
+        )
+      );
+    }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/custodian_approvals/projectUsers/workflowTransitions`: {
+      return mock200Json(mockedProjectStateWorkflow());
+    }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/custodian_approvals/1/projectUsers`:
+      return mock200Json(
+        mockPagedResults(
+          [
+            mockedCustodianHasProjectUser({
+              id: 1,
+              model_state: { state: { slug: "form_received" } },
+            }),
+          ],
+          page,
+          perPage
+        )
+      );
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/projects`: {
       return mock200Json(mockPagedResults(mockedProjects(10), page, perPage));
     }
-    case `${process.env.NEXT_PUBLIC_API_V1_URL}/projects/user/1/approved`: {
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/projects/user/1/validated`: {
       return mock200Json({
         data: [
           mockedProject({
@@ -306,9 +355,8 @@ async function mockFetch(url: string, init?: RequestInit) {
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/custodians/1/projects`: {
       if (init?.method === "POST") {
         return mock200Json(1);
-      } else {
-        return mock200Json(mockPagedResults(mockedProjects(5)));
       }
+      return mock200Json(mockPagedResults(mockedProjects(5)));
     }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/organisations/1/projects`: {
       return mock200Json(mockPagedResults(mockedProjects(10)));

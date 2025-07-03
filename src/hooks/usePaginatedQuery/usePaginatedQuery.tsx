@@ -128,6 +128,7 @@ const usePaginatedQuery = <T,>({
   });
 
   const { data: queryData, ...restQueryResult } = queryResult;
+
   const pagedData = queryData?.data || {};
 
   const handleSortToggle = useCallback(

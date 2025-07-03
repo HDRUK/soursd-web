@@ -1,16 +1,16 @@
-import { TrashIcon } from "@/consts/icons";
-import { PatchUserPayload, patchUser } from "@/services/users";
 import { useMutation } from "@tanstack/react-query";
-import { showAlert, showLoadingAlertWithPromise } from "@/utils/showAlert";
-import { User } from "@/types/application";
-import { ActionMenuItem } from "@/components/ActionMenu";
 import { useTranslations } from "next-intl";
 import { useStore } from "@/data/store";
+import { TrashIcon } from "../../consts/icons";
+import { PutUserPayload, putUser } from "../../services/users";
+import { showAlert, showLoadingAlertWithPromise } from "../../utils/showAlert";
+import { User } from "../../types/application";
+import { ActionMenuItem } from "../ActionMenu";
 
 interface DecoupleUserProps {
   user: User;
   onSuccess: () => void;
-  payload: PatchUserPayload;
+  payload: PutUserPayload;
   namespace: string;
 }
 
@@ -24,9 +24,9 @@ const DecoupleDelegate = ({
   const organisation = useStore(state => state.config.organisation);
 
   const { mutateAsync } = useMutation({
-    mutationKey: ["patchUser"],
-    mutationFn: (payload: PatchUserPayload) =>
-      patchUser(user.id, payload, {
+    mutationKey: ["putUser"],
+    mutationFn: (payload: PutUserPayload) =>
+      putUser(user.id, payload, {
         error: {
           message: "submitError",
         },

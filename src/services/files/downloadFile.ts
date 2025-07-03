@@ -21,7 +21,8 @@ export default async (id: number) => {
     a.download = fileName;
     document.body.appendChild(a);
     a.click();
-    window.URL.revokeObjectURL(url);
+
+    if (window.URL.revokeObjectURL) window.URL.revokeObjectURL(url);
   } catch (error) {
     console.error("Download error:", error);
   }

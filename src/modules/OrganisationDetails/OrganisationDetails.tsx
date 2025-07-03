@@ -1,14 +1,14 @@
-import ApprovalStatus from "@/components/ApprovalStatus";
-import Text from "@/components/Text";
-import { Organisation } from "@/types/application";
 import MailIcon from "@mui/icons-material/Mail";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import BusinessIcon from "@mui/icons-material/Business";
 import { Box, Link, Typography } from "@mui/material";
-import { filterFalsy } from "@/utils/array";
 import { useTranslations } from "next-intl";
+import { filterFalsy } from "../../utils/array";
+import { Organisation } from "../../types/application";
+import Text from "../../components/Text";
+import ApprovalStatus from "../../components/ApprovalStatus";
 
-interface OrganisationDetailsProps {
+export interface OrganisationDetailsProps {
   isApproved: boolean;
   data: Organisation;
 }
@@ -48,7 +48,7 @@ export default function OrganisationDetails({
             country,
             postcode,
           ]).map(text => (
-            <div>{text}</div>
+            <div key={text}>{text}</div>
           ))}
         </div>
       </Box>

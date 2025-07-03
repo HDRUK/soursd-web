@@ -2,7 +2,7 @@ import { useStore } from "@/data/store";
 import { mockedCustodianUser } from "@/mocks/data/custodian";
 import { mockedApiPermissions } from "@/mocks/data/store";
 import {
-  patchCustodianUser,
+  putCustodianUser,
   postCustodianUser,
   postCustodianUserInvite,
 } from "@/services/custodian_users";
@@ -60,7 +60,7 @@ describe("<UserModal />", () => {
     renderUserModalDetailsUpdate(1);
 
     await waitFor(() => {
-      expect(patchCustodianUser).toHaveBeenCalled();
+      expect(putCustodianUser).toHaveBeenCalled();
     });
 
     expect(postCustodianUserInvite).not.toHaveBeenCalled();

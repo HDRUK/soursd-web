@@ -1,9 +1,9 @@
-import {
-  patchCustodianUser,
-  postCustodianUser,
-} from "@/services/custodian_users";
-import { CustodianUser } from "@/types/application";
 import { useMutation } from "@tanstack/react-query";
+import { CustodianUser } from "../../types/application";
+import {
+  putCustodianUser,
+  postCustodianUser,
+} from "../../services/custodian_users";
 
 interface UseMutationCustodianWriteUserOptions {
   user: CustodianUser;
@@ -31,7 +31,7 @@ export default function useMutationWriteCustodianUser({
         );
       }
 
-      return patchCustodianUser(
+      return putCustodianUser(
         user.id,
         {
           ...payload,

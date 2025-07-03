@@ -1,4 +1,5 @@
-import { BoxProps, useTheme } from "@mui/system";
+import { grey } from "@mui/material/colors";
+import { BoxProps } from "@mui/system";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import logoDefault from "public/soursd_logo.svg";
@@ -20,10 +21,9 @@ export default function SoursdLogo({
   ...restProps
 }: SoursdLogoProps) {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_SOURSD_LOGO);
-  const theme = useTheme();
 
   const logoColor = color === "white" ? logoWhite : logoDefault;
-  const textColor = color === "white" ? "#fff" : theme.palette.grey700;
+  const textColor = color === "white" ? "#fff" : grey["700"];
 
   return (
     <StyledLogoContainer variant={variant} {...restProps}>

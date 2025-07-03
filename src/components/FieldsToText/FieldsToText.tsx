@@ -1,9 +1,9 @@
-import { toCamelCase } from "@/utils/string";
 import { Box, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { ReactNode, useMemo } from "react";
 import _get from "lodash.get";
-import { ArrayElement } from "@/types/common";
+import { toCamelCase } from "../../utils/string";
+import { ArrayElement } from "../../types/common";
 import { Message } from "../Message";
 
 interface FieldsToTextProps<T> {
@@ -59,12 +59,12 @@ export default function FieldsToText<T>({
     <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
       {filteredKeys.map(key =>
         typeof key === "string" ? (
-          <div>
+          <div key={key}>
             <Typography variant="h6">{getHeading(key)}</Typography>
             <Typography>{renderItems(_get(data, key))}</Typography>
           </div>
         ) : (
-          <div>
+          <div key={getHeading(key)}>
             <Typography variant="h6">{getHeading(key)}</Typography>
             <Typography>
               {key.content || renderItems(_get(data, key.column_id))}

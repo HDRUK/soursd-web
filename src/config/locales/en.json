@@ -22,9 +22,6 @@
     "delete": "Delete",
     "edit": "Edit",
     "status": "Status",
-    "makePrimaryContact": "Make primary contact",
-    "removeAsPrimaryContact": "Remove as primary contact",
-    "removeUserFromProject": "Remove from project",
     "name": "Name",
     "status_registered": "SOURSD account created",
     "status_invited": "Invited",
@@ -43,6 +40,13 @@
     "status_affiliation_approved": "Approved",
     "status_affiliation_rejected": "Rejected",
     "status_notSet": "None",
+    "status_form_received": "Form Received",
+    "status_validation_in_progress": "Validation In Progress",
+    "status_validation_complete": "Validation Complete",
+    "status_more_user_info_req": "More User Information Requested",
+    "status_more_org_info_req": "More Organisation Information Requested",
+    "status_escalate_validation": "Escalate Validation",
+    "status_validated": "Validated",
     "projectStatus": "Project status",
     "projectRole": "Project Role",
     "actions": "Actions",
@@ -99,8 +103,8 @@
     "deleteUserButton": "Delete user",
     "cancelButton": "Cancel",
     "noDeleteUser": "You cannot delete your own user",
-    "organisationsPeople": "People",
-    "organisationsNameAddress": "Name & Address",
+    "organisationsPeople": "Users",
+    "organisationsNameAddress": "Address",
     "organisationsDigitalIdentifiers": "Digital Identifiers",
     "organisationsSectorWebsite": "Sector size & website",
     "organisationsSubsidiaries": "UK subsidiaries",
@@ -116,6 +120,7 @@
     "safeData": "Safe Data",
     "safeSettings": "Safe Settings",
     "home": "Home",
+    "homeIntro": "Welcome to the Safe People Registry. You’ll see a list of tasks below to complete your profile.",
     "contacts": "Contacts",
     "contactsHeading": "Administrative Contacts",
     "uniqueIdentifierTitle": "SOURSD Identifier",
@@ -197,10 +202,13 @@
     "datasetLinkageDescriptionPlaceholder": "Linked datasets",
     "dataUseDescription": "Data description",
     "dataUseDescriptionPlaceholder": "Data description",
-    "addNewMemberButton": "Add a new member",
-    "requestAddNewMemberButton": "Request member is affiliated",
-    "userListDescription": "This table enables Validation Team members to track and manage application workflow from initial enquiry to project closure.  Clicking on a User will show you more information and next steps.",
-    "noResultsMessage": "No members found"
+    "usersListTitle": "Users",
+    "usersListDescription": "This table enables Validation Team members to track and manage application workflow from initial enquiry to project closure.  Clicking on a User will show you more information and next steps.",
+    "organisationsListTitle": "Organisations",
+    "organisationsListDescription": "This page enables you and your team members to track and manage Organisation validation across all projects.  Clicking on an Organisation will show you more information and any next steps. You can also drag and drop Organisations between the different status lanes.",
+    "noResultsMessage": "No members found",
+    "homeTitle": "Your outstanding actions",
+    "searchProjectUsersPlaceholder": "Search for User, Project Name, Organisation"
   },
   "OrganisationStats": {
     "affiliatedUsers": "Affiliated Users",
@@ -252,7 +260,7 @@
     "organisationNotFound": "Organisation was not found",
     "getOrganisationStatusError": "Unable to determine validation status",
     "navigationAriaLabel": "Profile tabs",
-    "patchUserError": "There was a problem updating your user details. Please try again or contact us at <contactLink></contactLink>",
+    "putUserError": "There was a problem updating your user details. Please try again or contact us at <contactLink></contactLink>",
     "updateUserButton": "Save",
     "noDelegates": "No Delegates Found",
     "getDelegateError": "Unable to get the list of delegates",
@@ -294,6 +302,10 @@
     "uploadCertification": "Upload Certificate"
   },
   "Form": {
+    "accessDatePlaceholder": "Access date",
+    "atLeastOneCharityRequired": "At least 1 charity is required",
+    "charityCountryRequired": "Charity country is required",
+    "organisationNameRequiredInvalid": "Organisation name is required",
     "unsavedAlertText": "Are you sure you want to leave the form with unsaved changes?",
     "unsavedAlertTitle": "You have unsaved changes",
     "unsavedAlertConfirmButton": "Leave form",
@@ -307,6 +319,7 @@
     "professionalEmail": "Email address at employer or institute",
     "professionalEmailPlaceholder": "Email address at employer or institute",
     "professionalEmailFormatInvalid": "Email address must be a valid format",
+    "professionalEmailRequired": "Email address must be provided",
     "relationship": "Relationship with Organisation",
     "relationshipPlaceholder": "Relationship with Organisation",
     "relationshipRequiredInvalid": "Relationship with Organisation is required",
@@ -328,7 +341,11 @@
     "hrNameRequiredInvalid": "Hr email is required",
     "hrEmailRequiredInvalid": "Hr name is required",
     "nameRequiredInvalid": "Name is a required field",
-    "organisationNameRequiredInvalid": "Organisation is a required field",
+    "organisationNameRequired": "Organisation name is a required field",
+    "organisationEmail": "Email address",
+    "organisationEmailPlaceholder": "Email address",
+    "organisationEmailRequired": "Organisation email address is required",
+    "emailAddressAtEmployer": "Email address at employer or institute",
     "firstNameRequiredInvalid": "First name is a required field",
     "lastNameRequiredInvalid": "Last name is a required field",
     "location": "Location",
@@ -588,6 +605,10 @@
     "textPlaceholder": "Enter text here...",
     "textRequired": "Required field",
     "SafeProject": {
+      "startDatePlaceholder": "Start date",
+      "endDatePlaceholder": "End date",
+      "startDate": "Start date",
+      "endDate": "End date",
       "add": "Add",
       "status": "Status",
       "statusPlaceholder": "Status",
@@ -614,6 +635,7 @@
       "otherApprovalCommitteesPlaceholder": "Approval committee name"
     },
     "SafeData": {
+      "arrayRemoveButton": "Remove",
       "personallyIdentifiable": "Personally Identifiable",
       "anonymous": "Anonymous",
       "dePersonalised": "De-Personalised",
@@ -779,9 +801,10 @@
     "orcIdSuccessDescription": "Employment, educaton and qualifications has been gathered from your ORCiD profile. You will need to reload the page to see the updates."
   },
   "NotificationsModal": {
-    "col1": "Field",
-    "col2": "Old Value",
-    "col3": "New Value",
+    "colField": "Field",
+    "colOldValue": "Old Value",
+    "colNewValue": "New Value",
+    "colValue": "Value",
     "toolTipMarkAsUnread": "Mark message as unread and close!"
   },
   "Organisation": {
@@ -804,6 +827,7 @@
     "home": "Home",
     "inviteThemHere": "Invite them here",
     "organisationNotListed": "Organisation not listed? <link> Ask them to register </link>",
+    "organisationListed": "Organisation already exists? <link> Select them here </link>",
     "affiliationsDescription": "Please provide information for each Organisation you are currently affiliated with. An affiliation can either be an employment or enrolment as a student at a higher education institute. Please provide current affiliations even if this information has been provided in your CV as this is needed for your organisations to confirm your affiliation.",
     "postAffiliationSuccess": "You have successfully created an affiliation",
     "postAffiliationError": "There was an error creating your affiliation. Please try again or contact us at <contactLink></contactLink>",
@@ -882,7 +906,9 @@
     "locationMissing": "Location not provided",
     "digiIdent": "Digital identifier",
     "idvtCheckSection": "Identification Verification Technology (IDVT)",
-    "idvtCheckButton": "Start IDVT check",
+    "idvtCheckButtonStart": "Start IDVT check",
+    "idvtCheckButtonRestart": "Restart IDVT check",
+    "idvtCheckComplete": "Check Complete",
     "idvtCheckDescription": "Not all Data Custodians require this check to be completed. Those Data Custodians that do, can request that this check is completed prior to project approval. To work across the breadth of UK Data Custodians, we recommend that you complete this check as it may streamline approval processes. \n\nIDVT checks are carried out by a 3rd party supplier against the following criteria: valid government issued identification (fraud), likeness check against ID (identity), liveness check (identity), sanctions check (anti money laundering). Please note neither SOURSD nor the 3rd party supplier store a copy of your identity documents",
     "idvtComplete": "IDVT checks complete",
     "idvtIncomplete": "IDVT checks incomplete",
@@ -897,18 +923,20 @@
     "cvUpload": "CV Upload",
     "cvUploadDescription": "Please upload an up-to-date CV , including your professional employment, education and qualifications, and publication record.",
     "affiliationActionSuccessButton": "OK",
-    "patchAffiliationSuccess": "Affiliation updated successfully",
+    "putAffiliationSuccess": "Affiliation updated successfully",
     "affiliationActionError": "An error occurred. Please try again or <contactLink>contact us</contactLink> if the problem persists.",
     "affiliationActionErrorButton": "Close",
     "editAffiliationForm": "Edit Affiliation",
-    "addAffiliationForm": "Add Affiliation",
+    "addAffiliationSelectOrganisationForm": "Add an employer or institute",
+    "addAffiliationInviteOrganisationForm": "Invite an organisation to register",
     "viewOrEdit": "View or edit",
     "delete": "Delete",
     "reinviteOrganisation": "Resend invitiation",
+    "resendInviteSuccess": "An invite has been sent to the organisation again!",
     "missingOrcIdMessage": "There’s some missing information from your ORCID that we need you to complete",
     "affiliationOrganisationWarningMessage": "Please complete this field as we couldn’t match the information. Sometimes the identifier of an Organisation within an ORCID profile does not exactly match the identifier of an Organisation registered within SOURSD therefore please select an Organisation from the dropdown box. If the Organisation is not listed, please <link> invite them here </link>",
     "affiliationsEmailWarningMessage": "Please complete this field as we couldn’t match the information.",
-    "patchOrganisationForbidden": "Your account does not have permissions to perform this update"
+    "putOrganisationForbidden": "Your account does not have permissions to perform this update"
   },
   "Training": {
     "title": "Training",
@@ -941,29 +969,6 @@
     "profileComplete": "Profile complete",
     "profileNotComplete": "Profile not complete",
     "profileNotCompletePopup": "This user's profile is not \"complete\". They may not have provided some required by your policies. Please check the information below."
-  },
-  "ResearcherHistories": {
-    "noAccreditationsFound": "Could not find any accreditation history",
-    "noEducationsFound": "Could not find any education history",
-    "noEmploymentsFound": "Could not find any employment history",
-    "noProjectsFound": "Could not find any project history",
-    "noTrainingsFound": "Could not find any training history",
-    "noProfessionalRegistrationsFound": "Could not find any professional registrations history history",
-    "expiresAt": "Expires at",
-    "provider": "Provider",
-    "awardingBody": "Awarding body",
-    "awardedAt": "Awarded at",
-    "expiresOn": "Expires on",
-    "accreditations": "Accreditations",
-    "employment": "Employments",
-    "education": "Education",
-    "projects": "Projects",
-    "training": "Training",
-    "professionalRegistrations": "Professional Registrations",
-    "certification": "Certification:"
-  },
-  "ResearcherDetails": {
-    "getUserDetailsForCustodianError": "Couldn't get the user's details"
   },
   "OrganisationDetails": {
     "getOrganisationDetailsForCustodianError": "Couldn't get the organisation's details"
@@ -1108,8 +1113,8 @@
   "Organisations": {
     "People": {
       "name": "Employee / Student name",
-      "affiliationEmail": "Email",
-      "affiliationStatus": "Status"
+      "affiliationEmail": "Professional Email",
+      "affiliationStatus": "Affiliation status"
     },
     "DataSecurityCompliance": {
       "info": "Information",
@@ -1145,8 +1150,7 @@
       "organisationSize": "Organisation size"
     },
     "Search": {
-      "sortActions_AZ": "Sort by Organisation Name A-Z",
-      "sortActions_ZA": "Sort by Organisation Name Z-A",
+      "sortByOrganisationName": "Organisation Name",
       "filterByProjectStatus": "Filter by status"
     },
     "sroOfficer": "Senior Responsible Officer",
@@ -1164,6 +1168,58 @@
     "projectStatus": "Status"
   },
   "Projects": {
+    "Users": {
+      "cancel": "Cancel",
+      "move": "Change status",
+      "form_received": "Form received",
+      "validation_in_progress": "Validation In Progress",
+      "validation_complete": "Validation Complete",
+      "more_user_info_req": "More User Information Requested",
+      "more_org_info_req": "More Organisation Information Requested",
+      "escalate_validation": "Escalation to Validation Committee",
+      "validated": "Validated",
+      "status": "Validation status",
+      "organisationName": "Organisation name",
+      "projectRole": "Project role",
+      "projectName": "Project name",
+      "name": "Name",
+      "actions": "Actions",
+      "makePrimaryContact": "Make primary contact",
+      "removeAsPrimaryContact": "Remove as primary contact",
+      "removeUserFromProject": "Remove from project",
+      "addNewMemberButton": "Add a new member",
+      "requestAddNewMemberButton": "Request member is affiliated",
+      "noResultsMessageProject": "It looks like there are no users associated with this project. You can add a new member by clicking the button above.",
+      "noResultsMessage": "It looks like there are no users for any projects. Navigate to a project and under 'Safe People' where you have the ability to add a user to a project.",
+      "errorMessage": "Couldn't get the users for this project. Please try again or <contactLink>contact support</contactLink> if the problem persists."
+    },
+    "Organisations": {
+      "cancel": "Cancel",
+      "move": "Change status",
+      "organisationSroOfficer": "Senior Responsible Officer",
+      "projectName": "Project name",
+      "pending": "Pending",
+      "validation_in_progress": "Validation In Progress",
+      "validation_complete": "Validation Complete",
+      "more_user_info_req": "More User Information Requested",
+      "more_org_info_req": "More Organisation Information Requested",
+      "escalate_validation": "Escalation to Validation Committee",
+      "validated": "Validated",
+      "status": "Validation status",
+      "organisationName": "Organisation name",
+      "projectRole": "Project role",
+      "name": "Name",
+      "actions": "Actions",
+      "removeOrganisationFromProject": "Remove from project",
+      "noResultsMessage": "It looks like there are no organisations for any projects.",
+      "errorMessage": "Couldn't get the users for this project. Please try again or <contactLink>contact support</contactLink> if the problem persists."
+    },
+    "status": "Project status",
+    "safeProject": "Safe Project",
+    "safeData": "Safe Data",
+    "safePeople": "Safe People",
+    "safeSettings": "Safe Settings",
+    "safeOutputs": "Safe Outputs",
     "addNewProjectTitle": "New project",
     "addNewProjectButton": "Add new project",
     "custodians": "Data custodian",
@@ -1184,10 +1240,9 @@
     "approvedKey": "Approved Project",
     "unapprovedKey": "Project Pending Approval",
     "searchPlaceholder": "Search Projects",
-    "sortActions": {
-      "AZ": "Sort Alphabetical A-Z",
-      "ZA": "Sort Alphabetical Z-A"
-    },
+    "sortByOrganisationName": "Organisation name",
+    "sortByName": "Name",
+    "sortByProjectTitle": "Project title",
     "endDate": "End date",
     "startDate": "Start date",
     "projects": "Projects",
@@ -1195,7 +1250,7 @@
     "userName": "Name",
     "organisation": "Organisation",
     "organisations": "Organisation(s)",
-    "status": "Status",
+    "validationStatus": "Validation status",
     "filterActions": {
       "approved": "Approved",
       "pending": "Pending",
@@ -1222,12 +1277,14 @@
     "SafeSettings": {
       "noProjectDetails": "Data does not exist for this section yet",
       "accessType": "Access type",
-      "dataPrivacy": "How has data been processed to enhance privacy?"
+      "dataPrivacy": "How has data been processed to enhance privacy?",
+      "notSet": "Not set"
     },
     "SafeOutputs": {
       "noProjectDetails": "Data does not exist for this section yet",
       "researchOutputs": "Link(s) to research outputs",
-      "dataAssets": "New data assets created"
+      "dataAssets": "New data assets created",
+      "notSet": "Not set"
     },
     "SafeProject": {
       "title": "Project name",
@@ -1274,7 +1331,7 @@
   "AccreditationsDetails": {
     "title": "Accreditations"
   },
-  "DecoupleUser": {
+  "DecoupleDelegates": {
     "title": "Decouple",
     "toolTip": "Decouple this user from your organisation",
     "alertTitle": "Decouple User?",
@@ -1282,19 +1339,11 @@
     "alertConfirm": "Delete",
     "alertCancel": "Cancel"
   },
-  "DecoupleDelegate": {
-    "title": "Delete",
-    "toolTip": "Decouple this user as a delegate from your organisation",
-    "alertTitle": "Decouple Delegate User?",
-    "alertText": "Are you sure you want to remove {first_name} {last_name} as a delegate from your organisation ({organisation_name})",
-    "alertConfirm": "Delete",
-    "alertCancel": "Cancel"
-  },
   "EditDelegate": {
     "title": "Edit",
     "toolTip": "Edit details for this delegate"
   },
-  "UsePatchOrganisation": {
+  "UseUpdateOrganisation": {
     "text": "Organisation Updated!",
     "confirmText": "OK"
   },
@@ -1358,6 +1407,7 @@
   },
   "ActionLogs": {
     "completedActions": "Completed Actions",
+    "completedActionsDescription": "Your completed actions will appear here",
     "profileCompleted": {
       "title": "Add your personal details",
       "description": "",
@@ -1415,28 +1465,28 @@
     },
     "completeConfiguration": {
       "title": "Complete your configuration",
-      "description": "This is where we need you to setup things like IDV technology and decision models...",
+      "description": "This is where you can setup your rules and validation checks, IDVT technology and API endpoints.",
       "buttonText": "Complete your configuration"
     },
     "addContactsCompleted": {
-      "title": "Add your contacts",
-      "description": "As well as yourself, it’s a good idea to set up your colleagues who will help administer the system and approve Users, projects and Organisations",
-      "buttonText": "Add contacts"
+      "title": "Add your team members",
+      "description": "As well as yourself, it’s a good idea to set up your colleagues who will help administer the system, validate Users and Organisations, and approve projects.",
+      "buttonText": "Add team members"
     },
     "addUsersCompleted": {
       "title": "Add your Users",
       "description": "",
-      "buttonText": "Add users"
+      "buttonText": "Add Users"
     },
     "addProjectsCompleted": {
       "title": "Add your projects",
       "description": "",
       "buttonText": "Add projects"
     },
-    "addOrganisationsCompleted": {
-      "title": "Add Organisations",
-      "description": "",
-      "buttonText": "Add Organisations"
+    "approveAnOrganisationCompleted": {
+      "title": "Approve an Organisation",
+      "description": "View all the organisations associated with any of your projects to approve them",
+      "buttonText": "Approve an organisation"
     }
   },
   "ProjectsAddUserModal": {
@@ -1449,7 +1499,8 @@
     "title": "This will take you to Veriff’s website to verify your identity.",
     "descriptionPart1": "For more information on how we process your data see our <ourLink>privacy policy</ourLink>.",
     "descriptionPart2": "For more information on how Veriff will process your data see their <theirLink>privacy policy</theirLink>.",
-    "checkboxLabel": "I consent to the above terms and conditions"
+    "checkboxLabel": "I consent to the above terms and conditions",
+    "startVerificationButton": "Start Verification Check"
   },
   "Rules": {
     "passed": "Pass",
@@ -1476,6 +1527,7 @@
     }
   },
   "ActionsPanelValidationCheck": {
+    "my_fake_title": "Sample title",
     "organisation_aligned_sde_network": "Is the Organisation aligned with the SDE network?",
     "confident_cost_for_projects_will_be_met": "Are we confident costs would be met and profits realised for future projects?"
   },
@@ -1488,12 +1540,47 @@
     "CUSTODIAN_ADMIN": "Admin"
   },
   "UserHistory": {
-    "profile_completed": "Profile completed",
-    "affiliations_complete": "Affiliations completed",
-    "profile_created": "Profile Created",
     "daysSince": "{days} days ago",
-    "custodian_rejected": "Custodian Rejected User",
-    "custodian_approved": "Custodian Approved User"
+    "user": {
+      "created": {
+        "title": "User account created",
+        "description": "with primary email \"{attributes_email}\"   "
+      },
+      "updated": {
+        "title": "User updated their details",
+        "description": "The following data was changed: {attributeKeys}"
+      }
+    },
+    "project_has_user": {
+      "created": {
+        "title": "User added to project",
+        "description": "The user was added to the project titled \"{project_title}\""
+      },
+      "updated": {
+        "title": "User on project updated",
+        "description": " The following data was changed: {attributeKeys}"
+      },
+      "deleted": {
+        "title": "User removed from project",
+        "description": "The user was removed from the project titled \"{project_title}\""
+      }
+    },
+    "validation_check": {
+      "passed": {
+        "title": "Passed validation check",
+        "description": "{check_description}"
+      },
+      "failed": {
+        "title": "Failed validation check",
+        "description": "{check_description}"
+      }
+    },
+    "custodian_project_validation_status": {
+      "status_changed": {
+        "title": "Project validation status changed",
+        "description": "{new_status} on project \"{project_name}\""
+      }
+    }
   },
   "ConfirmAffiliation": {
     "heading": "Pending affiliations",

@@ -8,8 +8,8 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
 import { DatePicker, DatePickerProps } from "@mui/x-date-pickers/DatePicker";
 import { useLocale } from "next-intl";
 import { enGB } from "date-fns/locale/en-GB";
-import { FORMAT_DATE_DB } from "@/consts/date";
 import dayjs from "dayjs";
+import { FORMAT_DATE_DB } from "../../consts/date";
 
 export interface DateInputProps
   extends Omit<DatePickerProps<Date>, "onChange"> {
@@ -28,7 +28,7 @@ const DateInput = ({
   onChange,
   id,
   format: dateFormat = "dd/MM/yyyy",
-  ...rest
+  ...restProps
 }: DateInputProps) => {
   const localeString = useLocale();
   const locale = localeString === "en" ? enGB : enGB; // Add more locales as needed
@@ -50,7 +50,7 @@ const DateInput = ({
     <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={locale}>
       <DatePicker
         label={label}
-        value={value}
+        value={typeof value === "string" ? new Date(value) : value}
         onChange={handleChange}
         format={dateFormat}
         slotProps={{
@@ -60,14 +60,17 @@ const DateInput = ({
             variant: "outlined",
             size: "small",
             inputProps: {
-              "data-testid": (rest as Record<string, string>)?.["data-testid"],
-              "aria-labelledby": (rest as Record<string, string>)?.[
+              "data-testid": (restProps as Record<string, string>)?.[
+                "data-testid"
+              ],
+              "aria-labelledby": (restProps as Record<string, string>)?.[
                 "aria-labelledby"
               ],
+              ...restProps.inputProps,
             },
           },
         }}
-        {...rest}
+        {...restProps}
       />
     </LocalizationProvider>
   );

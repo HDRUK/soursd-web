@@ -3,6 +3,8 @@ import { faker } from "@faker-js/faker";
 import { mockedOrganisation } from "./organisation";
 import { RequestFrequency } from "@/consts/projects";
 import { type ProjectDetails } from "@/types/application";
+import { mockedProjectUser, mockedCustodianHasProjectUser } from "./custodian";
+import { Status } from "@/components/ChipStatus";
 
 const mockedProject = (
   project?: Partial<ResearcherProject>
@@ -17,6 +19,7 @@ const mockedProject = (
   request_category_type: faker.string.sample(),
   other_approval_committees: faker.string.sample(),
   organisations: [mockedOrganisation()],
+  status: Status.PROJECT_PENDING,
   ...project,
 });
 
@@ -24,11 +27,13 @@ const mockedProjects = (count: number): ResearcherProject[] => {
   return Array.from({ length: count }, () => mockedProject());
 };
 
-const mockedProjectDetails = (projectDetails?: Partial<ProjectDetails>): ProjectDetails => ({
+const mockedProjectDetails = (
+  projectDetails?: Partial<ProjectDetails>
+): ProjectDetails => ({
   id: 1,
   project_id: 4,
-  datasets: "[\"dataset1\"]",
-  data_sensitivity_level: "Protected Data",
+  datasets: '["dataset1"]',
+  data_sensitivity_level: "Personally Identifiable",
   legal_basis_for_data_article6: "Legal Basis",
   duty_of_confidentiality: true,
   national_data_optout: false,
@@ -40,4 +45,76 @@ const mockedProjectDetails = (projectDetails?: Partial<ProjectDetails>): Project
   ...projectDetails,
 });
 
-export { mockedProjects, mockedProject, mockedProjectDetails };
+const mockedProjectStateWorkflow = () => ({
+  form_received: ["validation_in_progress", "more_user_info_req"],
+  validation_in_progress: [
+    "validation_complete",
+    "more_user_info_req",
+    "escalate_validation",
+    "validated",
+  ],
+  validation_complete: ["escalate_validation", "validated"],
+  more_user_info_req: ["escalate_validation", "validated"],
+  escalate_validation: ["validated"],
+  validated: [],
+});
+
+const mockedKanbanCustodianProjectUsers = () => {
+  const formReceived = [mockedCustodianHasProjectUser({ id: 1 })];
+
+  const validationInProgressData = [
+    mockedCustodianHasProjectUser({
+      id: 2,
+    }),
+    mockedCustodianHasProjectUser({
+      id: 3,
+    }),
+    mockedCustodianHasProjectUser({
+      id: 4,
+    }),
+    mockedCustodianHasProjectUser({
+      id: 5,
+    }),
+  ];
+
+  const validationComplete = [
+    mockedCustodianHasProjectUser({
+      id: 6,
+    }),
+  ];
+
+  const infoRequested = [
+    mockedCustodianHasProjectUser({
+      id: 7,
+    }),
+  ];
+
+  const escalation = [
+    mockedCustodianHasProjectUser({
+      id: 8,
+    }),
+  ];
+
+  const validated = [
+    mockedCustodianHasProjectUser({
+      id: 9,
+    }),
+  ];
+
+  return {
+    form_received: formReceived,
+    validation_in_progress: validationInProgressData,
+    validation_complete: validationComplete,
+    more_user_info_req: infoRequested,
+    escalation_validation: escalation,
+    validated,
+  };
+};
+
+export {
+  mockedProjects,
+  mockedProject,
+  mockedProjectDetails,
+  mockedKanbanCustodianProjectUsers,
+  mockedProjectStateWorkflow,
+};

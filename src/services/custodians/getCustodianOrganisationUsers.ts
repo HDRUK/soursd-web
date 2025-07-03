@@ -3,7 +3,7 @@ import { getSearchQuerystring } from "@/utils/query";
 import { SearchParams } from "@/types/query";
 import { getRequest } from "../requests";
 import { handleJsonResponse } from "../requestHelpers";
-import { GetCustodianProjectUserResponse } from "./types";
+import { GetCustodianProjectUserResponse } from "../custodian_approvals";
 
 export type ProjectEntities = "organisation" | "custodian" | "user";
 

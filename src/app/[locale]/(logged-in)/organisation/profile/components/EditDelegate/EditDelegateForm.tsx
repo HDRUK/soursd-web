@@ -12,7 +12,7 @@ import { useTranslations } from "next-intl";
 import { useCallback, useMemo } from "react";
 import SelectDepartments from "@/components/SelectDepartments";
 import Form from "@/components/Form";
-import { patchUserQuery } from "@/services/users";
+import { putUserQuery } from "@/services/users";
 import { User } from "@/types/application";
 
 export interface DelegatesFormValues {
@@ -37,7 +37,7 @@ export default function EditDelegateForm({
   const organisation = useStore(state => state.config.organisation);
 
   const { mutateAsync: mutateDelegate, isPending } = useMutation(
-    patchUserQuery(delegate?.id as number)
+    putUserQuery(delegate?.id as number)
   );
 
   const handleSubmit = useCallback(
@@ -46,6 +46,7 @@ export default function EditDelegateForm({
     },
     [mutateDelegate, onSuccess]
   );
+
   const schema = useMemo(
     () =>
       yup.object().shape({
@@ -71,6 +72,7 @@ export default function EditDelegateForm({
       sx={{ mt: 1 }}
       schema={schema}
       onSubmit={handleSubmit}
+      aria-label="Edit delegate"
       {...formOptions}>
       <>
         <FormSection>

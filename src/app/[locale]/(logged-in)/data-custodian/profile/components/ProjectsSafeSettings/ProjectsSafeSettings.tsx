@@ -2,7 +2,7 @@ import { useStore } from "@/data/store";
 import useQueryAlerts from "@/hooks/useQueryAlerts";
 import { mockedSafeProjectGuidanceProps } from "@/mocks/data/cms";
 import { PageBody, PageGuidance, PageSection } from "@/modules";
-import ProjectsSafeSettingsForm from "@/modules/ProjectsSafeSettingsForm";
+import ProjectsSafeSettingsForm from "@/organisms/ProjectsSafeSettingsForm";
 import useMutateProjectDetails from "@/queries/useMutateProjectDetails";
 import { PutProjectDetailsPayload } from "@/services/project_details";
 import { ProjectDetails } from "@/types/application";
@@ -11,7 +11,7 @@ import { pick } from "@/utils/json";
 import { useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import ProjectImport from "../ProjectImport";
+import ProjectImport from "@/modules/ProjectImport";
 
 const NAMESPACE_TRANSLATION = "CustodianProfile";
 

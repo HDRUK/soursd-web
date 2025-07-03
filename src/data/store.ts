@@ -15,6 +15,8 @@ import {
   User,
   ResearcherProfessionalRegistration,
   ProjectRole,
+  ProjectUser,
+  ProjectOrganisation,
 } from "@/types/application";
 import { Routes } from "@/types/router";
 import { produce } from "immer";
@@ -68,6 +70,8 @@ interface StoreState {
     project?: ResearcherProject;
     organisation?: Organisation;
     user?: User;
+    projectUser?: ProjectUser;
+    projectOrganisation?: ProjectOrganisation;
   };
   application: StoreApplication;
   setRoutes: (routes: Routes) => void;
@@ -75,6 +79,12 @@ interface StoreState {
   setCurrentProject: (project: ResearcherProject) => void;
   getCurrentUser: () => User;
   setCurrentUser: (user: User) => void;
+  getCurrentProjectUser: () => ProjectUser;
+  setCurrentProjectUser: (projectUser: ProjectUser) => void;
+  getCurrentProjectOrganisation: () => ProjectUser;
+  setCurrentProjectOrganisation: (
+    projectOrganisation: ProjectOrganisation
+  ) => void;
   getCurrentOrganisation: () => Organisation;
   setCurrentOrganisation: (organisation: Organisation) => void;
   getUser: () => User | undefined;
@@ -129,6 +139,15 @@ const storeMethods = (set: StoreSet, get: StoreGet) => ({
   getCurrentUser: () => {
     return get().current.user;
   },
+  setCurrentProjectUser: (projectUser: ProjectUser) =>
+    set(
+      produce(state => {
+        state.current.projectUser = projectUser;
+      })
+    ),
+  getCurrentProjectUser: () => {
+    return get().current.projectUser;
+  },
   setCurrentOrganisation: (organisation: Organisation) =>
     set(
       produce(state => {
@@ -137,6 +156,15 @@ const storeMethods = (set: StoreSet, get: StoreGet) => ({
     ),
   getCurrentOrganisation: () => {
     return get().current.organisation;
+  },
+  setCurrentProjectOrganisation: (projectOrganisation: ProjectOrganisation) =>
+    set(
+      produce(state => {
+        state.current.projectOrganisation = projectOrganisation;
+      })
+    ),
+  getCurrentProjectOrganisation: () => {
+    return get().current.projectOrganisation;
   },
   setUser: (user: User) =>
     set(

@@ -1,5 +1,18 @@
-import { CustodianUser, Custodian } from "@/types/application";
+import { Status } from "@/components/ChipStatus";
+import { GetCustodianProjectUserResponse } from "@/services/custodians";
+import {
+  CustodianUser,
+  Custodian,
+  ProjectAllUser,
+  CustodianProjectUser,
+  ProjectUser,
+  CustodianProjectOrganisation,
+  ProjectOrganisation,
+} from "@/types/application";
 import { faker } from "@faker-js/faker";
+import { mockedProject } from "./project";
+import { mockedAffiliation, mockedUser } from "./user";
+import { mockedOrganisation } from "./organisation";
 
 const mockedCustodian = (custodian?: Partial<Custodian>): Custodian => ({
   id: 1,
@@ -30,4 +43,98 @@ const mockedCustodianUser = (
   user_permissions: custodianUser?.user_permissions || [],
 });
 
-export { mockedCustodian, mockedCustodianUser };
+const mockedProjectUser = (props: Partial<ProjectAllUser>): ProjectAllUser => ({
+  id: 1,
+  first_name: "Dan",
+  last_name: "Ackroyd",
+  user_id: 10,
+  digi_ident: "$2y$12$ldUAvE7ZsHkodDzZKJH4je9tNs/G9B7M0k.4ywN0em0v/KO5GQDTu",
+  registry_id: 1,
+  project_id: 1,
+  project_name:
+    "Exploring the Impact of Digital Health Interventions on Mental Health Outcomes in Young Adults",
+  project_role: "Principal Investigator (PI)",
+  organisation_id: 1,
+  organisation_name: "Health Pathways (UK) Limited",
+  model_state: {
+    state: {
+      slug: "registered",
+    },
+  },
+  ...props,
+});
+
+const mockedProjectHasUser = (props: Partial<ProjectUser>): ProjectUser => ({
+  id: 1,
+  project_id: 1,
+  project: mockedProject(),
+  project_role_id: 1,
+  primary_contact: false,
+  user_digital_ident:
+    "$2y$12$ldUAvE7ZsHkodDzZKJH4je9tNs/G9B7M0k.4ywN0em0v/KO5GQDTu",
+  affiliation: mockedAffiliation(),
+  registry: {
+    id: 1,
+    created_at: faker.date.past().toISOString(),
+    updated_at: faker.date.recent().toISOString(),
+    user: mockedUser(),
+  },
+  role: {
+    name: "Principal Investigator (PI)",
+  },
+  ...props,
+});
+
+const mockedProjectHasOrganisation = (
+  props: Partial<ProjectOrganisation>
+): ProjectOrganisation => ({
+  id: 1,
+  project_id: 1,
+  project: mockedProject(),
+  organisation: mockedOrganisation(),
+  ...props,
+});
+
+const mockedCustodianHasProjectUser = (
+  props: Partial<CustodianProjectUser>
+): CustodianProjectUser => ({
+  id: 1,
+  project_has_user_id: 1,
+  custodian_id: 1,
+  created_at: faker.date.past().toISOString(),
+  updated_at: faker.date.recent().toISOString(),
+  project_has_user: mockedProjectHasUser({ id: 1 }),
+  model_state: {
+    state: {
+      slug: Status.PENDING,
+    },
+  },
+  ...props,
+});
+
+const mockedCustodianHasProjectOrganisation = (
+  props: Partial<CustodianProjectOrganisation>
+): CustodianProjectOrganisation => ({
+  id: 1,
+  project_has_organisation_id: 1,
+  custodian_id: 1,
+  created_at: faker.date.past().toISOString(),
+  updated_at: faker.date.recent().toISOString(),
+  project_organisation: mockedProjectHasOrganisation({ id: 1 }),
+  model_state: {
+    state: {
+      slug: Status.PENDING,
+    },
+  },
+  ...props,
+});
+
+export {
+  mockedCustodian,
+  mockedCustodianUser,
+  mockedProjectUser,
+  mockedProjectHasUser,
+  mockedCustodianHasProjectUser,
+  mockedCustodianHasProjectOrganisation,
+  mockedProjectHasOrganisation,
+};

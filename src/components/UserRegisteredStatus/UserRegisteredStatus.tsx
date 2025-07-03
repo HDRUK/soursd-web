@@ -14,7 +14,7 @@ export default function UserRegisteredStatus({
 
   return (
     <Typography
-      color="caption.main"
+      color="textSecondary.main"
       sx={{
         textTransform: "uppercase",
       }}>

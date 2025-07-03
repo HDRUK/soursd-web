@@ -1,6 +1,5 @@
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
 import { locales } from "@/config";
-import { CookieProvider } from "@/context/CookieContext";
 import ToastProvider from "@/context/ToastProvider";
 import BannerMessage from "@/modules/BannerMessage";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
@@ -35,33 +34,34 @@ export default function RootLayout({
 
   return (
     <html lang={locale}>
+      <head>
+        <link rel="stylesheet" href="/css/sweetalert2-custom.css" />
+      </head>
       <Box
         component="body"
         className={inter.className}
         sx={{ background: "#f2f2f2" }}>
-        <CookieProvider>
-          <NextIntlClientProvider locale={locale} messages={messages}>
-            <AppRouterCacheProvider options={{ enableCssLayer: true }}>
-              <ReactQueryClientProvider>
-                <ThemeRegistry>
-                  <ToastProvider>
-                    <GlobalStyles
-                      styles={{
-                        [".MuiGrid-item .MuiGrid-container"]: {
-                          maxWidth: "initial",
-                        },
-                      }}
-                    />
-                    {process.env.NEXT_PUBLIC_HIDE_BANNER !== "true" && (
-                      <BannerMessage />
-                    )}
-                    {children}
-                  </ToastProvider>
-                </ThemeRegistry>
-              </ReactQueryClientProvider>
-            </AppRouterCacheProvider>
-          </NextIntlClientProvider>
-        </CookieProvider>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <AppRouterCacheProvider options={{ enableCssLayer: true }}>
+            <ReactQueryClientProvider>
+              <ThemeRegistry>
+                <ToastProvider>
+                  <GlobalStyles
+                    styles={{
+                      [".MuiGrid-item .MuiGrid-container"]: {
+                        maxWidth: "initial",
+                      },
+                    }}
+                  />
+                  {process.env.NEXT_PUBLIC_HIDE_BANNER !== "true" && (
+                    <BannerMessage />
+                  )}
+                  {children}
+                </ToastProvider>
+              </ThemeRegistry>
+            </ReactQueryClientProvider>
+          </AppRouterCacheProvider>
+        </NextIntlClientProvider>
       </Box>
     </html>
   );

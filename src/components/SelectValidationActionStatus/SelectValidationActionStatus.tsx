@@ -1,51 +1,33 @@
-import { useTranslations } from "next-intl";
 import { Select, MenuItem, SelectProps } from "@mui/material";
-import { SelectChangeEvent } from "@mui/material/Select";
+import { Option } from "@/types/common";
 
-const NAMESPACE_TRANSLATION = "SelectValidationActionStatus";
-
-export type SelectValidationActionStatusProps = SelectProps<number> & {
+export type SelectValidationActionStatusProps = SelectProps<string> & {
+  options: Option[];
   isLoading: boolean;
-  handleChange?: (value: number) => void;
 };
 
 const SelectValidationActionStatus = ({
+  options,
   isLoading,
-  handleChange,
+  value,
+  onChange,
   ...fieldProps
 }: SelectValidationActionStatusProps) => {
-  const t = useTranslations(NAMESPACE_TRANSLATION);
-
-  const statusOptions = [
-    {
-      label: t("notApproved"),
-      value: 0,
-    },
-    {
-      label: t("approved"),
-      value: 1,
-    },
-  ];
-
-  const onChange = (
-    event: SelectChangeEvent<number>,
-    child: React.ReactNode
-  ) => {
-    fieldProps.onChange?.(event, child);
-    handleChange?.(event.target.value as number);
-  };
+  const isDisabled = isLoading || options.length === 0;
 
   return (
     <Select
       sx={{ backgroundColor: "white" }}
-      disabled={isLoading}
-      {...fieldProps}
-      onChange={onChange}>
-      {statusOptions?.map(({ label, value }) => (
-        <MenuItem value={value} key={value}>
-          {label}
-        </MenuItem>
-      ))}
+      disabled={isDisabled}
+      value={isDisabled ? "" : value}
+      onChange={onChange}
+      {...fieldProps}>
+      {!isDisabled &&
+        options.map(({ label, value }) => (
+          <MenuItem value={value} key={value}>
+            {label}
+          </MenuItem>
+        ))}
     </Select>
   );
 };

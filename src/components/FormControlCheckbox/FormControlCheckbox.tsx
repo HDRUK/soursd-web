@@ -45,7 +45,7 @@ export default function FormControlCheckbox({
         <>
           <Typography variant="subtitle1">{label}</Typography>
           {labelCaption && (
-            <Typography variant="caption" color="caption.main">
+            <Typography variant="small" color="textSecondary.main">
               {labelCaption}
             </Typography>
           )}

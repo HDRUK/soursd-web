@@ -1,6 +1,5 @@
 "use client";
 
-import theme from "@/theme";
 import { showAlert } from "@/utils/showAlert";
 import { Box } from "@mui/material";
 import { useEffect } from "react";
@@ -62,7 +61,6 @@ const Error = () => {
         justifyContent: "center",
         alignItems: "center",
         height: "100vh",
-        background: `linear-gradient(90deg, ${theme.palette.background1.light} 0%, ${theme.palette.background1.extraLight} 35%, #fff 100%)`,
       }}
     />
   );

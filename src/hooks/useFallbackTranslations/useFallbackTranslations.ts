@@ -1,5 +1,5 @@
 import { useTranslations } from "next-intl";
-import { toTitleCase } from "@/utils/string";
+import { toTitleCase } from "../../utils/string";
 
 function useFallbackTranslations(namespace: string) {
   const t = useTranslations(namespace);

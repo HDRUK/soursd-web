@@ -1,8 +1,8 @@
+import { Box, List, Typography } from "@mui/material";
 import React from "react";
-import { List, Typography, Box } from "@mui/material";
-import { Rule } from "@/types/rules";
-import SkeletonCheckboxList from "./Skeleton";
+import { Rule } from "../../types/rules";
 import CheckboxItem from "../CheckboxItem";
+import SkeletonCheckboxList from "./Skeleton";
 
 interface CheckboxListType {
   items: Rule[];

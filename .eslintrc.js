@@ -59,6 +59,7 @@ module.exports = {
     "react/react-in-jsx-scope": "off",
     "@typescript-eslint/no-empty-object-type": "off",
     "@typescript-eslint/no-require-imports": "off",
+    "import/no-cycle": "off",
     "react/jsx-filename-extension": [
       1,
       {

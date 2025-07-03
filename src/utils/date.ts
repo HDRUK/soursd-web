@@ -1,11 +1,11 @@
-import {
-  FORMAT_DATE_DB,
-  FORMAT_DISPLAY_SHORT_DATE,
-  FORMAT_SHORT_DATE,
-  FORMAT_DISPLAY_LONG_DATE,
-} from "@/consts/date";
 import { format } from "date-fns";
 import dayjs from "dayjs";
+import {
+  FORMAT_DATE_DB,
+  FORMAT_DISPLAY_LONG_DATE,
+  FORMAT_DISPLAY_SHORT_DATE,
+  FORMAT_SHORT_DATE,
+} from "../consts/date";
 
 function isExpired(date: string) {
   const expirationTime = dayjs(date);
@@ -21,7 +21,7 @@ function formatStringToISO(date?: string) {
   return date ? format(date, "yyyy-MM-dd") : undefined;
 }
 
-function getDate(date?: string) {
+function getDate(date?: string | null) {
   return date ? new Date(date) : undefined;
 }
 
@@ -66,15 +66,15 @@ function getDaysSince(dateString: string) {
 }
 
 export {
-  isExpired,
-  isExpiredInvite,
-  formatShortDate,
-  formatNowDBDate,
-  formatDisplayShortDate,
-  formatDisplayLongDate,
-  formatDBDate,
   dateToString,
+  formatDBDate,
+  formatDisplayLongDate,
+  formatDisplayShortDate,
+  formatNowDBDate,
+  formatShortDate,
+  formatStringToISO,
   getDate,
   getDaysSince,
-  formatStringToISO,
+  isExpired,
+  isExpiredInvite,
 };

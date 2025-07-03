@@ -1,13 +1,13 @@
 "use client";
 
-import Text from "@/components/Text";
-import { User } from "@/types/application";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import ErrorIcon from "@mui/icons-material/Error";
 import InfoIcon from "@mui/icons-material/Info";
 import { Tooltip } from "@mui/material";
 import { useTranslations } from "next-intl";
+import Text from "../../components/Text";
+import { User } from "../../types/application";
 
 interface ProfileCompleteStatusProps {
   user: User | undefined;
@@ -31,7 +31,7 @@ export default function ProfileCompleteStatus({
           </Text>
           <Text
             component="div"
-            variant="caption"
+            variant="small"
             endIcon={
               <>
                 <ContentCopyIcon />

@@ -13,11 +13,4 @@ enum ROLES_STATE {
   EDIT = "edit",
 }
 
-const CURRENT_USER_ROLES = [
-  {
-    role: ROLES.DEV,
-    state: ROLES_STATE.VIEW,
-  },
-];
-
-export { ROLES, ROLES_STATE, CURRENT_USER_ROLES };
+export { ROLES, ROLES_STATE };

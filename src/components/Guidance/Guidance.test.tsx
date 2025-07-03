@@ -4,7 +4,7 @@ import {
   render,
   screen,
   waitFor,
-} from "@/utils/testUtils";
+} from "../../utils/testUtils";
 import Guidance, { GuidanceProps } from "./Guidance";
 
 const renderGuidance = (props?: Partial<GuidanceProps>) => {
@@ -32,7 +32,7 @@ describe("<Guidance />", () => {
     renderGuidance();
 
     const title = screen.getByRole("heading", {
-      level: 3,
+      level: 2,
     });
 
     expect(title.textContent).toEqual("Guidance");

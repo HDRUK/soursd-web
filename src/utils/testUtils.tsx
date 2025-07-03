@@ -1,8 +1,8 @@
 import ReactQueryClientProvider from "@/app/[locale]/components/ReactQueryClientProvider";
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
-import messages from "@/config/locales/en.json";
-import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AppCacheProvider } from "@mui/material-nextjs/v14-pagesRouter";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   RenderHookOptions,
   RenderHookResult,
@@ -11,14 +11,15 @@ import {
   act,
   render,
   renderHook,
+  screen,
+  within,
 } from "@testing-library/react";
+import userEvent, { UserEvent } from "@testing-library/user-event";
 import mediaQuery from "css-mediaquery";
+import { axe } from "jest-axe";
 import { NextIntlClientProvider } from "next-intl";
 import React, { ReactNode } from "react";
-import { CookieProvider } from "@/context/CookieContext";
-import userEvent, { UserEvent } from "@testing-library/user-event";
-import { axe } from "jest-axe";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import messages from "../config/locales/en.json";
 
 const defineMatchMedia = (width: number) => {
   Object.defineProperty(window, "matchMedia", {
@@ -46,11 +47,9 @@ const Wrapper = ({ children }: { children: ReactNode }) => {
         <LocalizationProvider>
           <ReactQueryClientProvider>
             <ThemeRegistry>
-              <CookieProvider>
-                <QueryClientProvider client={queryClient}>
-                  {children}
-                </QueryClientProvider>
-              </CookieProvider>
+              <QueryClientProvider client={queryClient}>
+                {children}
+              </QueryClientProvider>
             </ThemeRegistry>
           </ReactQueryClientProvider>
         </LocalizationProvider>
@@ -123,12 +122,48 @@ const commonAccessibilityTests = async (rendered: RenderResult) => {
   expect(results).toHaveNoViolations();
 };
 
+const clearInput = async (element: HTMLElement) => {
+  await userEvent.click(element);
+  await userEvent.clear(element);
+};
+
+global.clearInput = clearInput;
+
+async function clearInputsByLabelText(inputs: (string | RegExp)[]) {
+  inputs.forEach(async selector => {
+    const element = screen.getAllByLabelText(selector)[0];
+
+    clearInput(element);
+  });
+}
+
+async function changeSelectValueByLabelText(
+  selector: string | RegExp,
+  value: string
+) {
+  const dropdown = await screen.findAllByLabelText(selector);
+  const button = within(dropdown[0]).getByRole("combobox");
+
+  await userEvent.click(button);
+
+  const listbox = screen.getByRole("listbox");
+
+  await userEvent.click(
+    await within(listbox).getByText(new RegExp(value, "i"))
+  );
+}
+
+global.changeSelectValueByLabelText = changeSelectValueByLabelText;
+global.clearInputsByLabelText = clearInputsByLabelText;
+
 export * from "@testing-library/react";
 export * from "@testing-library/user-event";
 
 export {
+  clearInput,
+  clearInputsByLabelText,
+  commonAccessibilityTests,
   defineMatchMedia,
   customRender as render,
   customRenderHook as renderHook,
-  commonAccessibilityTests,
 };

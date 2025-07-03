@@ -1,13 +1,3 @@
-import ChipStatus, { Status } from "@/components/ChipStatus";
-import DateInput from "@/components/DateInput";
-import Form, { FormProps } from "@/components/Form";
-import FormActions from "@/components/FormActions";
-import FormControlWrapper from "@/components/FormControlWrapper";
-import FormFieldArray from "@/components/FormFieldArray";
-import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
-import yup from "@/config/yup";
-import { ResearcherProject } from "@/types/application";
-import { MutationState } from "@/types/form";
 import {
   Box,
   FormControlLabel,
@@ -19,18 +9,28 @@ import {
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
+import ChipStatus, { Status } from "../../components/ChipStatus";
+import DateInput from "../../components/DateInput";
+import Form, { FormProps } from "../../components/Form";
+import FormActions from "../../components/FormActions";
+import FormControlWrapper from "../../components/FormControlWrapper";
+import FormFieldArray from "../../components/FormFieldArray";
+import ProfileNavigationFooter from "../../components/ProfileNavigationFooter";
+import yup from "../../config/yup";
+import { ResearcherProject } from "../../types/application";
+import { MutationState } from "../../types/form";
 
-export interface UserModalDetailsProps extends FormProps<ResearcherProject> {
+export interface ProjectsSafeProjectFormProps
+  extends FormProps<ResearcherProject> {
   mutateState: MutationState;
-  project: ResearcherProject;
 }
 
 const NAMESPACE_TRANSLATION_FORM = "Form.SafeProject";
 
-export default function UserModalDetails({
+export default function ProjectsSafeProjectForm({
   mutateState,
   ...restProps
-}: UserModalDetailsProps) {
+}: ProjectsSafeProjectFormProps) {
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
 
   const schema = useMemo(
@@ -61,7 +61,12 @@ export default function UserModalDetails({
   };
 
   return (
-    <Form schema={schema} {...formOptions} {...restProps} autoComplete="off">
+    <Form
+      aria-label="Safe project"
+      schema={schema}
+      {...formOptions}
+      {...restProps}
+      autoComplete="off">
       <Grid container columnSpacing={8}>
         <Grid
           item
@@ -97,12 +102,14 @@ export default function UserModalDetails({
               <Grid container columnSpacing={3}>
                 <Grid item xs={6}>
                   <FormControlWrapper
+                    t={tForm}
                     name="start_date"
                     renderField={fieldProps => <DateInput {...fieldProps} />}
                   />
                 </Grid>
                 <Grid item xs={6}>
                   <FormControlWrapper
+                    t={tForm}
                     name="end_date"
                     renderField={fieldProps => <DateInput {...fieldProps} />}
                   />

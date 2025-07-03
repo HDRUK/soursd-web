@@ -1,9 +1,9 @@
 import { Auth } from "@/types/application";
-import { showAlert } from "@/utils/showAlert";
 import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import ReactDOMServer from "react-dom/server";
-import ContactLink from "@/components/ContactLink";
+import { showAlert } from "../../utils/showAlert";
+import ContactLink from "../../components/ContactLink";
 
 const NAMESPACE_TRANSLATIONS_AUTH = "Auth";
 
@@ -19,7 +19,8 @@ export default function useAuth() {
         const response = await fetch("/api/auth/me");
         if (response.ok) {
           const userData = await response.json();
-          setUser({ email: userData.user.email });
+          const { email, given_name, family_name } = userData.user;
+          setUser({ email, given_name, family_name });
         } else {
           setUser(undefined);
         }

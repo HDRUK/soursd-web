@@ -3,7 +3,6 @@ import {
   Custodian,
   CustodianUser,
   Organisation,
-  ProjectAllUser,
   ResearcherProject,
   User,
 } from "@/types/application";
@@ -49,8 +48,8 @@ interface PutCustodianActiveEntityModelResponse {
 type GetCustodianResponse = Custodian;
 type GetCustodiansResponse = Custodian[];
 
-type PatchCustodianPayload = Partial<Custodian>;
-type PatchCustodianResponse = Custodian;
+type PutCustodianPayload = Partial<Custodian>;
+type PutCustodianResponse = Custodian;
 
 type GetCustodiansUserProjectsResponse = ResearcherProject[];
 
@@ -66,8 +65,6 @@ type PostCustodianInviteUserResponse = number;
 type PostCustodianPayload = Custodian;
 type PostCustodianResponse = number;
 type PostCustodianInviteResponse = Custodian;
-
-type GetCustodianProjectUserResponse = ProjectAllUser[];
 
 type GetCustodianOrganisationsResponse = Organisation[];
 
@@ -91,8 +88,8 @@ export type {
   GetCustodiansResponse,
   SendCustodianInvitePayload,
   SendCustodianInviteResponse,
-  PatchCustodianPayload,
-  PatchCustodianResponse,
+  PutCustodianPayload,
+  PutCustodianResponse,
   PostCustodianPayload,
   PostCustodianResponse,
   PostCustodianInviteResponse,
@@ -100,7 +97,6 @@ export type {
   GetCustodianEntityModelResponse,
   PutCustodianActiveEntityModelPayload,
   PutCustodianActiveEntityModelResponse,
-  GetCustodianProjectUserResponse,
   GetCustodiansUserProjectsResponse,
   GetCustodianOrganisationsResponse,
   GetCustodianOrganisationUsersResponse,

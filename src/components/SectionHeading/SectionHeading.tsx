@@ -29,8 +29,8 @@ export default function SectionHeading({
         borderRadius: "10px",
         py: 2,
         px: 2,
-        backgroundColor: "default.main",
-        color: "default.contrastText",
+        backgroundColor: "secondary.main",
+        color: "secondary.contrastText",
       }),
       ...(type === "form" && {
         fontWeight: "normal",

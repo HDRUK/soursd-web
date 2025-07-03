@@ -1,9 +1,8 @@
 import theme from "@/theme";
-import { ShowAlertOptions } from "@/types/common";
 import dayjs from "dayjs";
 import Cookies from "js-cookie";
 import Swal, { SweetAlertIcon, SweetAlertResult } from "sweetalert2";
-import "../app/sweetalert2-custom.css";
+import { ShowAlertOptions } from "../types/common";
 
 const notificationValues = [
   { type: "error", title: "Oh no! Something went wrong" },
@@ -45,7 +44,6 @@ export const showAlert = (
           .map(item => item.title),
       confirmButtonColor: theme.palette.primary.main,
       confirmButtonText: confirmButtonText ?? "OK",
-      denyButtonColor: theme.palette.default.main,
       denyButtonText: cancelButtonText,
       showDenyButton: !!cancelButtonText,
       allowOutsideClick: false,

@@ -1,20 +1,20 @@
 "use client";
 
-import ContactLink from "@/components/ContactLink";
-import FormActions from "@/components/FormActions";
-import FormModalBody from "@/components/FormModalBody";
-import SelectInput from "@/components/SelectInput";
-import Table from "@/components/Table";
 import { useStore } from "@/data/store";
-import SearchBar from "@/modules/SearchBar";
-import { useGetProjectAllUsers } from "@/services/projects";
-import { ProjectAllUser, Role } from "@/types/application";
-import { MutationState } from "@/types/form";
-import { renderUserNameCell } from "@/utils/cells";
 import { LoadingButton } from "@mui/lab";
 import { CellContext, ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
+import ContactLink from "../ContactLink";
+import FormActions from "../FormActions";
+import FormModalBody from "../FormModalBody";
+import SelectInput from "../SelectInput";
+import Table from "../Table";
+import SearchBar from "../../modules/SearchBar";
+import { useGetProjectAllUsers } from "../../services/projects";
+import { ProjectAllUser, Role } from "../../types/application";
+import { MutationState } from "../../types/form";
+import { renderUserNameCell } from "../../utils/cells";
 
 const NAMESPACE_TRANSLATION = "CustodianProfile";
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
@@ -58,18 +58,12 @@ export default function ProjectsAddUser({
     if (usersData) setProjectUsers(usersData);
   }, [usersData]);
 
-  const selectedProjectUsers = useMemo(
-    () => projectUsers?.filter(u => !!u.role),
-
-    [projectUsers]
-  );
-
   const projectRoles = useStore(state => state.getProjectRoles());
 
-  const handleSelectRole = (row: ProjectAllUser, roleId: number) => {
-    const updatedRole = projectRoles.find(
-      role => role?.id === roleId
-    ) as Partial<Role>;
+  const handleSelectRole = (row: ProjectAllUser, roleId: number | null) => {
+    const updatedRole = roleId
+      ? (projectRoles.find(role => role?.id === roleId) as Partial<Role>)
+      : null;
 
     setProjectUsers(prevUsers => {
       const exists = prevUsers.some(user => user.id === row.id);
@@ -84,21 +78,28 @@ export default function ProjectsAddUser({
 
   const renderRoleSelectorCell = (
     info: CellContext<ProjectAllUser, unknown>
-  ) => (
-    <SelectInput
-      variant="standard"
-      value={info.getValue() as number}
-      size="small"
-      options={projectRoles.map(({ id, name }) => ({
-        label: name,
-        value: id,
-      }))}
-      onChange={({ target: { value } }) => {
-        handleSelectRole(info.row.original, value as number);
-        return value;
-      }}
-    />
-  );
+  ) => {
+    const roleId = info.row.original.role?.id ?? "";
+
+    return (
+      <SelectInput
+        variant="standard"
+        value={roleId}
+        size="small"
+        options={[
+          { label: "-", value: "" },
+          ...projectRoles.map(({ id, name }) => ({
+            label: name,
+            value: id,
+          })),
+        ]}
+        onChange={({ target: { value } }) => {
+          const parsedValue = value === "" ? null : Number(value);
+          handleSelectRole(info.row.original, parsedValue);
+        }}
+      />
+    );
+  };
 
   const columns: ColumnDef<ProjectAllUser>[] = [
     {
@@ -153,7 +154,7 @@ export default function ProjectsAddUser({
         <div />
         <LoadingButton
           loading={mutationState.isPending}
-          onClick={() => onSave(selectedProjectUsers)}>
+          onClick={() => onSave(projectUsers)}>
           {tApplication("saveButton")}
         </LoadingButton>
       </FormActions>

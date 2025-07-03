@@ -15,8 +15,8 @@ import {
   PageGuidance,
   PageSection,
 } from "@/modules";
-import Training from "@/modules/Training";
-import { getUserQuery, patchUserQuery } from "@/services/users";
+import Training from "@/organisms/Training";
+import { getUserQuery, putUserQuery } from "@/services/users";
 import { User } from "@/types/application";
 import { EntityType } from "@/types/api";
 import { Box, Link } from "@mui/material";
@@ -52,11 +52,11 @@ export default function Trainings() {
     refetch,
   } = useQuery(getUserQuery(user?.id));
 
-  const { mutateAsync: patchUser, ...patchUserQueryState } = useMutation(
-    patchUserQuery(user?.id ?? -1)
+  const { mutateAsync: putUser, ...putUserQueryState } = useMutation(
+    putUserQuery(user?.id ?? -1)
   );
 
-  useQueryAlerts(patchUserQueryState, {
+  useQueryAlerts(putUserQueryState, {
     errorAlertProps: {
       text: ReactDOMServer.renderToString(
         tProfile.rich("postUserError", {
@@ -70,7 +70,7 @@ export default function Trainings() {
   });
 
   const handleSubmit = async (data: Partial<User>) => {
-    await patchUser(data);
+    await putUser(data);
     refetch();
     router.push(ROUTES.profileResearcherHome.path);
   };
@@ -145,7 +145,7 @@ export default function Trainings() {
                   previousHref={routes.profileResearcherAffiliations.path}
                   nextStepText={tProfile("completeYourProfile")}
                   isLastStep
-                  isLoading={patchUserQueryState.isPending}
+                  isLoading={putUserQueryState.isPending}
                 />
               </Box>
             </PageBody>

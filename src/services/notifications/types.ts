@@ -1,4 +1,4 @@
-export enum NotificationPatchType {
+export enum NotificationPutType {
   READ = "read",
   UNREAD = "unread",
 }

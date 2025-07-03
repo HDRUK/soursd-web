@@ -1,3 +1,5 @@
+import { faker } from "@faker-js/faker";
+import { mock200Json, mockFailedJson } from "jest.utils";
 import {
   act,
   commonAccessibilityTests,
@@ -5,9 +7,7 @@ import {
   render,
   screen,
   waitFor,
-} from "@/utils/testUtils";
-import { faker } from "@faker-js/faker";
-import { mock200Json, mockFailedJson } from "jest.utils";
+} from "../../utils/testUtils";
 import SendInviteCustodian from "./SendInviteCustodian";
 
 const renderSendInviteCustodian = () => render(<SendInviteCustodian />);

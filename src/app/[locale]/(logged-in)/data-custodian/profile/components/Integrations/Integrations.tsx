@@ -12,7 +12,7 @@ import { useStore } from "@/data/store";
 import { PageBody, PageSection } from "@/modules";
 import { showAlert } from "@/utils/showAlert";
 import FormControlWrapper from "@/components/FormControlWrapper";
-import { patchCustodianQuery } from "@/services/custodians";
+import { putCustodianQuery } from "@/services/custodians";
 import Image from "next/image";
 
 const NAMESPACE_TRANSLATION_CUSTODIAN_PROFILE = "CustodianProfile";
@@ -32,7 +32,7 @@ export default function Integrations() {
   }));
 
   const { mutateAsync: updateCustodian, isPending } = useMutation(
-    patchCustodianQuery(custodian?.id)
+    putCustodianQuery(custodian?.id)
   );
 
   const schema = yup.object<IntegrationsFormValues>().shape({

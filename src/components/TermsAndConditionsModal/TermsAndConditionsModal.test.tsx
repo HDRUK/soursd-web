@@ -5,8 +5,8 @@ import {
   // screen,
   // fireEvent,
   // waitFor,
-} from "@/utils/testUtils";
-// import { termsItems } from "@/consts/termsAndConditions";
+} from "../../utils/testUtils";
+// import { termsItems } from "../../consts/termsAndConditions";
 import TermsAndConditionsModal from "./TermsAndConditionsModal";
 
 jest.mock("next-intl", () => ({

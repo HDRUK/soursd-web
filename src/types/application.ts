@@ -6,14 +6,40 @@ import {
   UserGroup,
   UserProfileCompletionCategories,
 } from "@/consts/user";
+import { RouteConfig } from "./router";
 import { RuleState } from "./rules";
+import { QueryParams } from "./query";
 
-type ModelState<T> = T & {
-  model_state: {
-    state: {
-      slug: Status;
-    };
+interface StateWorkflow {
+  transitions: Record<string, string[]>;
+}
+
+type WithStateWorkflow<T> = T & {
+  stateWorkflow: StateWorkflow;
+};
+
+type Translations = (key: string) => string;
+
+type WithTranslations<T> = T & {
+  t: Translations;
+};
+
+type ModelState = {
+  state: {
+    slug: Status;
   };
+};
+
+type WithModelState<T> = T & {
+  model_state: ModelState;
+};
+
+type WithRoutes<T> = T & {
+  routes: Record<string, RouteConfig>;
+};
+
+type WithPaginatedQueryParms<T> = T & {
+  paginatedQueryParams: QueryParams;
 };
 
 interface File {
@@ -43,7 +69,7 @@ interface Permission {
   };
 }
 
-type Custodian = ModelState<{
+type Custodian = WithModelState<{
   id: number;
   created_at: string;
   updated_at: string;
@@ -92,19 +118,6 @@ interface CustodianUser {
   user_permissions: UserPermission[];
 }
 
-type CustodianProjectUser = ModelState<{
-  user_id: number;
-  first_name: string;
-  last_name: string;
-  digi_ident: string;
-  registry_id: number;
-  project_id: number;
-  project_name: string;
-  project_role: string;
-  organisation_id: number;
-  organisation_name: string;
-}>;
-
 interface UserProfileCompletionFields {
   name: string;
   required?: boolean;
@@ -127,6 +140,8 @@ type UserProfileCompletionJson = Record<
 
 interface Auth {
   email: string;
+  given_name: string;
+  family_name: string;
 }
 
 type Identity = {
@@ -143,6 +158,8 @@ type Identity = {
   idvt_errors?: string;
   idvt_result: number;
   idvt_result_perc: number;
+  idvt_started_at: string;
+  idvt_success: number;
   passport_path: string;
   postcode: string;
   registry_id: number;
@@ -151,7 +168,7 @@ type Identity = {
   updated_at?: string;
 };
 
-type User = ModelState<{
+type User = WithModelState<{
   id: number;
   registry_id: number;
   first_name: string;
@@ -171,7 +188,7 @@ type User = ModelState<{
   orcid_scanning_completed_at: string | null;
   created_at: string;
   feed_source?: UserFeedSource;
-  unclaimed?: boolean;
+  unclaimed?: number;
   registry: {
     digi_ident: string;
     files?: File[];
@@ -212,6 +229,7 @@ interface Charity extends AddressFields {
   id: number;
   registration_id: string;
   name: string;
+  country: string;
   website?: string;
 }
 
@@ -224,10 +242,11 @@ interface OrganisationIdvt {
 
 type Organisation = OrganisationIdvt &
   AddressFields &
-  ModelState<{
+  WithModelState<{
     companies_house_no: string;
     organisation_name: string;
     organisation_unique_id: string;
+    sector: Sector;
     dpo_name: string;
     dpo_email: string;
     hr_name: string;
@@ -266,7 +285,7 @@ type Organisation = OrganisationIdvt &
     departments: Department[];
     unclaimed: number;
     organisation_size?: number;
-    project?: ModelState<ResearcherProject>;
+    project?: WithModelState<ResearcherProject>;
   }>;
 
 interface ResearcherEducation {
@@ -324,10 +343,12 @@ interface ResearcherEndorsement {
   reported_by: number;
 }
 
-interface ResearcherAffiliation {
+type ResearcherAffiliation = WithModelState<{
   id: number;
   member_id: string;
-  organisation_id: number;
+  organisation_id?: number;
+  organisation_name?: string;
+  organisation_email?: string;
   relationship?: string;
   current_employer: boolean;
   from?: string | null;
@@ -339,7 +360,7 @@ interface ResearcherAffiliation {
   primary_contact?: boolean;
   registryAffiliationState?: string;
   department: string;
-}
+}>;
 
 interface ResearcherProjectApproval {
   project_id: number;
@@ -351,7 +372,7 @@ interface ProjectRole {
   name: string;
 }
 
-type ResearcherProject = ModelState<{
+type ResearcherProject = WithModelState<{
   id: number;
   title: string;
   lay_summary: string;
@@ -367,6 +388,7 @@ type ResearcherProject = ModelState<{
   organisations: Organisation[];
   custodians?: Custodian[];
   project_detail: ProjectDetails;
+  status: Status;
 }>;
 
 interface ProjectDetails {
@@ -419,17 +441,46 @@ interface Project {
 }
 
 interface ProjectUser {
+  id: number;
   project_id: number;
+  project: Project;
   project_role_id: number;
   primary_contact: boolean;
   user_digital_ident: string;
-  role: Partial<Role>;
+  role?: Partial<Role>;
   affiliation: Partial<ResearcherAffiliation>;
   registry: Registry;
 }
 
-interface ProjectAllUser {
+type CustodianProjectUser = WithModelState<{
   id: number;
+  project_has_user_id: number;
+  custodian_id: number;
+  created_at: string;
+  updated_at: string;
+  project_has_user: ProjectUser;
+}>;
+
+interface ProjectOrganisation {
+  id: number;
+  project_id: number;
+  organisation_id: number;
+  organisation: Organisation;
+  project: Project;
+}
+
+type CustodianProjectOrganisation = WithModelState<{
+  id: number;
+  project_has_organisation_id: number;
+  custodian_id: number;
+  created_at: string;
+  updated_at: string;
+  project_organisation: ProjectOrganisation;
+}>;
+
+type ProjectAllUser = WithModelState<{
+  id: number;
+  project_user_id?: number | null;
   user_id: number;
   registry_id: number;
   first_name: string;
@@ -438,7 +489,12 @@ interface ProjectAllUser {
   affiliation_id: number;
   organisation_name: string;
   role: Partial<Role>;
-}
+  digi_ident: string;
+  project_id: number;
+  project_name: string;
+  project_role: string;
+  organisation_id: number;
+}>;
 
 interface Department {
   category: string;
@@ -462,14 +518,17 @@ export type {
   Custodian,
   CustodianUser,
   CustodianProjectUser,
+  CustodianProjectOrganisation,
   Charity,
   Department,
   File,
+  Identity,
   Organisation,
   OrganisationIdvt,
   Permission,
   Project,
   ProjectUser,
+  ProjectOrganisation,
   ProjectAllUser,
   ResearcherAccreditation,
   ResearcherAffiliation,
@@ -489,4 +548,13 @@ export type {
   UserProfileCompletionSchema,
   ProjectRole,
   ProjectDetails,
+  WithStateWorkflow,
+  StateWorkflow,
+  Translations,
+  WithTranslations,
+  ModelState,
+  WithModelState,
+  WithRoutes,
+  WithPaginatedQueryParms,
+  UserPermission,
 };

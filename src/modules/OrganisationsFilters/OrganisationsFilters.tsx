@@ -1,15 +1,15 @@
 "use client";
 
-import { Status } from "@/components/ChipStatus";
-import { FilterIcon } from "@/consts/icons";
-import { SearchDirections } from "@/consts/search";
-import { PaginatedQueryReturn } from "@/hooks/usePaginatedQuery";
-import SearchBar from "@/modules/SearchBar";
-import { Organisation } from "@/types/application";
-import { getSearchSortOrder } from "@/utils/query";
+import useSort from "@/hooks/useSort";
 import SortIcon from "@mui/icons-material/Sort";
 import { useTranslations } from "next-intl";
+import useFilter from "@/hooks/useFilter";
+import { Status } from "../../components/ChipStatus";
+import { FilterIcon } from "../../consts/icons";
+import { PaginatedQueryReturn } from "../../hooks/usePaginatedQuery";
+import { Organisation } from "../../types/application";
 import SearchActionMenu from "../SearchActionMenu";
+import SearchBar from "../SearchBar";
 
 const NAMESPACE_TRANSLATIONS_PROJECTS = "Organisations";
 const NAMESPACE_TRANSLATIONS_APPLICATION = "Application";
@@ -45,48 +45,47 @@ export default function OrganisationsFilters({
     return includeFilters.includes(key);
   };
 
-  const sortDirection = getSearchSortOrder(queryParams);
+  const { actions: sortActions } = useSort({
+    queryParams,
+    items: [
+      {
+        label: t("sortByOrganisationName"),
+        key: "organisation_name",
+      },
+    ],
+    onSort: (key: string, direction: string) =>
+      handleSortToggle(key, direction),
+  });
 
-  const sortActions = [
-    {
-      label: t("Search.sortActions_AZ"),
-      onClick: () =>
-        handleSortToggle("organisation_name", SearchDirections.ASC),
-      checked: sortDirection === SearchDirections.ASC,
-    },
-    {
-      label: t("Search.sortActions_ZA"),
-      onClick: () =>
-        handleSortToggle("organisation_name", SearchDirections.DESC),
-      checked: sortDirection === SearchDirections.DESC,
-    },
-  ];
-
-  const filterStatusActions = [
-    {
-      label: tApplication("status_approved"),
-      onClick: () => handleFieldToggle("filter", [Status.PROJECT_APPROVED, ""]),
-      checked: queryParams.filter === Status.PROJECT_APPROVED,
-    },
-    {
-      label: tApplication("status_pending"),
-      onClick: () => handleFieldToggle("filter", [Status.PROJECT_PENDING, ""]),
-      checked: queryParams.filter === Status.PROJECT_PENDING,
-    },
-    {
-      label: tApplication("status_completed"),
-      onClick: () =>
-        handleFieldToggle("filter", [Status.PROJECT_COMPLETED, ""]),
-      checked: queryParams.filter === Status.PROJECT_COMPLETED,
-    },
-  ];
+  const { actions: filterStatusActions } = useFilter({
+    queryParams,
+    items: [
+      {
+        label: t("status_approved"),
+        key: "filter",
+        value: Status.PROJECT_APPROVED,
+      },
+      {
+        label: t("status_pending"),
+        key: "filter",
+        value: Status.PROJECT_PENDING,
+      },
+      {
+        label: t("status_completed"),
+        key: "filter",
+        value: Status.PROJECT_COMPLETED,
+      },
+    ],
+    onFilter: (key: string, value: string) =>
+      handleFieldToggle(key, [value, ""]),
+  });
 
   return (
     <SearchBar
       onClear={resetQueryParams}
       onSearch={(text: string) => {
         updateQueryParams({
-          "organisation_name[]": text,
+          "name[]": text,
         });
       }}
       placeholder={t("searchPlaceholder")}>
