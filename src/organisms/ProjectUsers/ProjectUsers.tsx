@@ -232,20 +232,18 @@ export default function ProjectUsers({
         />
       )}
 
-      {itemsByTransitions && (
-        <PageSection>
-          <Results
-            total={total}
-            noResultsMessage={
-              projectId ? t("noResultsMessageProject") : t("noResultsMessage")
-            }
-            errorMessage={t("errorMessage")}
-            queryState={queryState}>
-            {/* note this is using paginated data */}
-            {itemsByTransitions && listComponent}
-          </Results>
-        </PageSection>
-      )}
+      <PageSection>
+        <Results
+          total={total}
+          noResultsMessage={
+            projectId ? t("noResultsMessageProject") : t("noResultsMessage")
+          }
+          errorMessage={t("errorMessage")}
+          queryState={queryState}>
+          {/* note this is using paginated data */}
+          {itemsByTransitions && listComponent}
+        </Results>
+      </PageSection>
     </>
   );
 }

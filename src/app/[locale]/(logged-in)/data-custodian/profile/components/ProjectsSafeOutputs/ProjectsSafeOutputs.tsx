@@ -11,7 +11,7 @@ import { pick } from "@/utils/json";
 import { useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import ProjectImport from "../ProjectImport";
+import ProjectImport from "@/modules/ProjectImport";
 
 const NAMESPACE_TRANSLATION = "CustodianProfile";
 

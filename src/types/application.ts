@@ -387,6 +387,7 @@ type ResearcherProject = WithModelState<{
   organisations: Organisation[];
   custodians?: Custodian[];
   project_detail: ProjectDetails;
+  status: Status;
 }>;
 
 interface ProjectDetails {
@@ -554,4 +555,5 @@ export type {
   WithModelState,
   WithRoutes,
   WithPaginatedQueryParms,
+  UserPermission,
 };

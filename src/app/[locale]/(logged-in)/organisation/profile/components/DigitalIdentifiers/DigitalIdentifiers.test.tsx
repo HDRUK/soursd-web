@@ -1,11 +1,5 @@
 import { mockedCharity, mockedOrganisation } from "@/mocks/data/organisation";
-import {
-  fireEvent,
-  render,
-  screen,
-  userEvent,
-  waitFor,
-} from "@/utils/testUtils";
+import { fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 import DigitalIdentifiers from "./DigitalIdentifiers";
 
 const putProps = {
@@ -75,14 +69,7 @@ describe("<DigitalIdentifiers />", () => {
   it("does not submit the form when values are cleared", async () => {
     setupTest();
 
-    const inputs = getAllInputs();
-
-    inputs.forEach(async selector => {
-      const element = screen.getAllByLabelText(selector)[0];
-
-      await userEvent.click(element);
-      await userEvent.clear(element);
-    });
+    clearInputsByLabelText(getAllInputs());
 
     const form = await screen.findByRole("form", {
       name: "Digital identifiers",

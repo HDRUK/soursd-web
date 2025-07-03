@@ -68,7 +68,11 @@ export default function ProjectsSafeDataForm({
   );
 
   return (
-    <Form schema={schema} {...formOptions} {...restProps}>
+    <Form
+      aria-label="Safe data"
+      schema={schema}
+      {...formOptions}
+      {...restProps}>
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <FormFieldArray<FormData>

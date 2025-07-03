@@ -302,6 +302,7 @@
     "uploadCertification": "Upload Certificate"
   },
   "Form": {
+    "accessDatePlaceholder": "Access date",
     "atLeastOneCharityRequired": "At least 1 charity is required",
     "charityCountryRequired": "Charity country is required",
     "organisationNameRequiredInvalid": "Organisation name is required",
@@ -604,6 +605,10 @@
     "textPlaceholder": "Enter text here...",
     "textRequired": "Required field",
     "SafeProject": {
+      "startDatePlaceholder": "Start date",
+      "endDatePlaceholder": "End date",
+      "startDate": "Start date",
+      "endDate": "End date",
       "add": "Add",
       "status": "Status",
       "statusPlaceholder": "Status",
@@ -630,6 +635,7 @@
       "otherApprovalCommitteesPlaceholder": "Approval committee name"
     },
     "SafeData": {
+      "arrayRemoveButton": "Remove",
       "personallyIdentifiable": "Personally Identifiable",
       "anonymous": "Anonymous",
       "dePersonalised": "De-Personalised",
@@ -1271,12 +1277,14 @@
     "SafeSettings": {
       "noProjectDetails": "Data does not exist for this section yet",
       "accessType": "Access type",
-      "dataPrivacy": "How has data been processed to enhance privacy?"
+      "dataPrivacy": "How has data been processed to enhance privacy?",
+      "notSet": "Not set"
     },
     "SafeOutputs": {
       "noProjectDetails": "Data does not exist for this section yet",
       "researchOutputs": "Link(s) to research outputs",
-      "dataAssets": "New data assets created"
+      "dataAssets": "New data assets created",
+      "notSet": "Not set"
     },
     "SafeProject": {
       "title": "Project name",
@@ -1323,7 +1331,7 @@
   "AccreditationsDetails": {
     "title": "Accreditations"
   },
-  "DecoupleUser": {
+  "DecoupleDelegates": {
     "title": "Decouple",
     "toolTip": "Decouple this user from your organisation",
     "alertTitle": "Decouple User?",

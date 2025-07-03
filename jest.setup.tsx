@@ -15,7 +15,10 @@ import {
 } from "./mocks/data/custodian";
 import { mockedNotification } from "./mocks/data/notification";
 import { mockedOrganisation } from "./mocks/data/organisation";
-import { mockedPermission } from "./mocks/data/permission";
+import {
+  mockedPermission,
+  mockedUserPermission,
+} from "./mocks/data/permission";
 import {
   mockedProject,
   mockedProjects,
@@ -164,10 +167,10 @@ async function mockFetch(url: string, init?: RequestInit) {
             last_name: "Smith",
             email: "john.smith@hdruk.ac.uk",
             user_permissions: [
-              {
+              mockedUserPermission({
                 custodian_user_id: 1,
                 permission_id: 10,
-              },
+              }),
             ],
           }),
           mockedCustodianUser({
@@ -176,10 +179,10 @@ async function mockFetch(url: string, init?: RequestInit) {
             last_name: "Smith",
             email: "john.smith@hdruk.ac.uk",
             user_permissions: [
-              {
+              mockedUserPermission({
                 custodian_user_id: 1,
                 permission_id: 10,
-              },
+              }),
             ],
           }),
         ])
