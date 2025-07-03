@@ -60,71 +60,80 @@ export default function ApplicationData({
 }: ApplicationDataProps) {
   const path = usePathname();
 
-  const useStoreValues = useStore(state => ({
-    addUrlToHistory: state.addUrlToHistory,
-    user: state.getUser(),
-    setUser: state.setUser,
-    organisation: state.getOrganisation(),
-    setOrganisation: state.setOrganisation,
-    custodian: state.getCustodian(),
-    setCustodian: state.setCustodian,
-    sectors: state.getSectors(),
-    setSectors: state.setSectors,
-    permissions: state.getPermissions(),
-    setPermissions: state.setPermissions,
-    projectRoles: state.getProjectRoles(),
-    setProjectRoles: state.setProjectRoles,
-    histories: state.getHistories(),
-    setHistories: state.setHistories,
-    application: state.getApplication(),
-    setApplication: state.setApplication,
-  }));
+  const addUrlToHistory = useStore(state => state.addUrlToHistory);
 
-  const {
-    addUrlToHistory,
-    user,
-    setUser,
-    organisation,
-    setOrganisation,
-    custodian,
-    setCustodian,
-    sectors,
-    setSectors,
-    permissions,
-    setPermissions,
-    projectRoles,
-    setProjectRoles,
-    histories,
-    setHistories,
-    application,
-    setApplication,
-  } = useStoreValues;
+  const setUser = useStore(state => state.setUser);
+  const user = useStore(state => state.config.user);
+
+  const setOrganisation = useStore(state => state.setOrganisation);
+  const organisation = useStore(state => state.config.organisation);
+
+  const setCustodian = useStore(state => state.setCustodian);
+  const custodian = useStore(state => state.config.custodian);
+
+  const setSectors = useStore(state => state.setSectors);
+  const sectors = useStore(state => state.config.sectors);
+
+  const setPermissions = useStore(state => state.setPermissions);
+  const permissions = useStore(state => state.config.permissions);
+
+  const setProjectRoles = useStore(state => state.setProjectRoles);
+  const projectRoles = useStore(state => state.config.projectRoles);
+
+  const setHistories = useStore(state => state.setHistories);
+  const histories = useStore(state => state.config.histories);
+
+  const setApplication = useStore(state => state.setApplication);
+  const application = useStore(state => state.application);
 
   useEffect(() => {
-    const application = parseSystemConfig(systemConfigData);
-
     setApplication({
       routes: ROUTES,
-      system: application,
+      system: parseSystemConfig(systemConfigData),
     });
+  }, [systemConfigData, setApplication]);
 
-    setPermissions(permissionsData);
-    setSectors(sectorsData);
-    setProjectRoles(projectRolesData);
-    setCustodian(custodianData);
-    setOrganisation(organisationData);
+  useEffect(() => {
     setUser(userData);
+    setOrganisation(organisationData);
+    setCustodian(custodianData);
+    setSectors(sectorsData);
+    setPermissions(permissionsData);
+    setProjectRoles(projectRolesData);
+  }, [
+    userData,
+    organisationData,
+    custodianData,
+    sectorsData,
+    permissionsData,
+    projectRolesData,
+    setUser,
+    setOrganisation,
+    setCustodian,
+    setSectors,
+    setPermissions,
+    setProjectRoles,
+  ]);
 
+  useEffect(() => {
     setHistories({
       accreditations: accreditationsData,
       education: educationData,
       training: trainingData,
-      employments: [],
+      employments: [], // static
       approvedProjects: projectsData,
       affiliations: affiliationData,
       professionalRegistrations: professionalRegistrationsData,
     });
-  }, []);
+  }, [
+    accreditationsData,
+    educationData,
+    trainingData,
+    projectsData,
+    affiliationData,
+    professionalRegistrationsData,
+    setHistories,
+  ]);
 
   useEffect(() => {
     if (path) addUrlToHistory(path);
