@@ -11,7 +11,7 @@ const setupTest = (props?: Partial<SearchFieldProps>) => {
 };
 
 describe("<SearchField />", () => {
-  it("renders warning message if no project details", async () => {
+  it("submits a search", async () => {
     setupTest();
 
     act(() => {
@@ -25,7 +25,7 @@ describe("<SearchField />", () => {
     });
   });
 
-  it("renders warning message if no project details", async () => {
+  it("clears a search", async () => {
     setupTest();
 
     act(async () => {
