@@ -1,4 +1,4 @@
-import { render, screen } from "@/utils/testUtils";
+import { commonAccessibilityTests, render, screen } from "@/utils/testUtils";
 import { mockedProject } from "@/mocks/data/project";
 import { useTranslations } from "next-intl";
 import UserProjectsTable, { UserProjectsTableProps } from "./UserProjectsTable";
@@ -19,7 +19,7 @@ const TestComponent = (props?: Partial<UserProjectsTableProps>) => {
 };
 
 const setupTest = (props?: Partial<UserProjectsTableProps>) => {
-  render(<TestComponent {...props} />);
+  return render(<TestComponent {...props} />);
 };
 
 describe("<UserProjectsTable />", () => {
@@ -41,5 +41,9 @@ describe("<UserProjectsTable />", () => {
     expect(
       screen.getByText(new RegExp(project.model_state.state.slug, "i"))
     ).toBeInTheDocument();
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(setupTest());
   });
 });

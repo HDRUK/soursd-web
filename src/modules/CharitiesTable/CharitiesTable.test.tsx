@@ -1,7 +1,7 @@
 import { mockedCharity } from "@/mocks/data/organisation";
-import { render, screen } from "@/utils/testUtils";
+import { commonAccessibilityTests, render, screen } from "@/utils/testUtils";
 import { faker } from "@faker-js/faker";
-import CharitiesTable from "./CharitiesTable";
+import CharitiesTable, { CharitiesTableProps } from "./CharitiesTable";
 
 const charity = mockedCharity({
   name: faker.company.name(),
@@ -9,18 +9,28 @@ const charity = mockedCharity({
   website: faker.internet.url(),
 });
 
+const setupTest = (props?: Partial<CharitiesTableProps>) => {
+  return render(<CharitiesTable charitiesData={[]} {...props} />);
+};
+
 describe("<CharitiesTable />", () => {
   it("renders warning message if no project details", () => {
-    render(<CharitiesTable charitiesData={[]} />);
+    setupTest();
 
     expect(screen.getByText(/No results/i)).toBeInTheDocument();
   });
 
   it("renders all main fields with correct values", () => {
-    render(<CharitiesTable charitiesData={[charity]} />);
+    setupTest({
+      charitiesData: [charity],
+    });
 
     expect(screen.getByText(charity.registration_id)).toBeInTheDocument();
     expect(screen.getByText(charity.name)).toBeInTheDocument();
     expect(screen.getByText(charity.website)).toBeInTheDocument();
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(setupTest());
   });
 });

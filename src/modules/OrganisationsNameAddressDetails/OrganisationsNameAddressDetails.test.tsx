@@ -1,4 +1,4 @@
-import { render, screen } from "@/utils/testUtils";
+import { commonAccessibilityTests, render, screen } from "@/utils/testUtils";
 import { mockedOrganisation } from "@/mocks/data/organisation";
 import { formatAddress } from "@/utils/address";
 import OrganisationsNameAddressDetails from "./OrganisationsNameAddressDetails";
@@ -11,9 +11,15 @@ const organisation = mockedOrganisation({
   ],
 });
 
+const setupTest = () => {
+  return render(
+    <OrganisationsNameAddressDetails organisationData={organisation} />
+  );
+};
+
 describe("<OrganisationsNameAddressDetails />", () => {
   it("renders all main fields with correct values", () => {
-    render(<OrganisationsNameAddressDetails organisationData={organisation} />);
+    setupTest();
 
     expect(screen.getByText(organisation.address_1)).toBeInTheDocument();
     expect(screen.getByText(organisation.address_1)).toBeInTheDocument();
@@ -24,7 +30,7 @@ describe("<OrganisationsNameAddressDetails />", () => {
   });
 
   it("renders the correct subsidiaries", () => {
-    render(<OrganisationsNameAddressDetails organisationData={organisation} />);
+    setupTest();
 
     expect(
       screen.getByText(organisation.subsidiaries[0].name)
@@ -32,5 +38,9 @@ describe("<OrganisationsNameAddressDetails />", () => {
     expect(
       screen.getByText(formatAddress(organisation.subsidiaries[0]))
     ).toBeInTheDocument();
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(setupTest());
   });
 });

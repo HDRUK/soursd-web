@@ -10,10 +10,10 @@ import {
   within,
 } from "@/utils/testUtils";
 import { faker } from "@faker-js/faker";
+import { useTranslations } from "next-intl";
 import CustodianEditContactForm, {
   CustodianEditContactFormProps,
 } from "./CustodianEditContactForm";
-import { useTranslations } from "next-intl";
 
 jest.mock("@/services/custodians");
 jest.mock("@/data/store");

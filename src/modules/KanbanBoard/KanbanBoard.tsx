@@ -39,7 +39,7 @@ import DndDroppableContainer from "../../components/DndDroppableContainer";
 import DndSortableItem from "../../components/DndSortableItem";
 import { dndDragRotate } from "../../consts/styles";
 import { DndItems, DragUpdateEventArgsInitial } from "../../types/dnd";
-import { PropsWithQuery, QueryState } from "../../types/form";
+import { WithQueryState, QueryState } from "../../types/form";
 import { findDroppables, findItem, findItemIndex } from "../../utils/dnd";
 import KanbanBoardColumn from "./KanbanBoardColumn";
 import KanbanBoardColumns from "./KanbanBoardColumns";
@@ -64,7 +64,7 @@ export type KanbanBoardEntityProps<T> = WithRoutes<{
 }>;
 
 export interface KanbanBoardProps<T>
-  extends PropsWithQuery<
+  extends WithQueryState<
     WithStateWorkflow<WithTranslations<UseDroppableSortItemsProps<T>>>
   > {
   adjustScale?: boolean;

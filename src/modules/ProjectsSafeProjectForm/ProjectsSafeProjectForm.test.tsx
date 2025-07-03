@@ -1,4 +1,10 @@
-import { fireEvent, render, screen, waitFor } from "@/utils/testUtils";
+import {
+  commonAccessibilityTests,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from "@/utils/testUtils";
 import { mockedProject } from "@/mocks/data/project";
 import ProjectsSafeProjectForm, {
   ProjectsSafeProjectFormProps,
@@ -77,5 +83,9 @@ describe("<ProjectsSafeProjectForm />", () => {
     await waitFor(() => {
       expect(defaultProps.onSubmit).not.toHaveBeenCalled();
     });
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(setupTest());
   });
 });

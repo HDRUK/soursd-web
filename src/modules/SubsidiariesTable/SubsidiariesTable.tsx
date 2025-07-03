@@ -4,7 +4,7 @@ import Table from "../../components/Table";
 import { Subsidiary } from "../../types/application";
 import { formatAddress } from "../../utils/address";
 
-interface SubsidiariesTableProps {
+export interface SubsidiariesTableProps {
   subsidiariesData: Subsidiary[];
   tKey?: string;
 }

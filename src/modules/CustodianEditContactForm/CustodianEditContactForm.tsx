@@ -16,7 +16,6 @@ import {
 import CheckIcon from "@mui/icons-material/Check";
 import { LoadingButton } from "@mui/lab";
 import { Button, Grid, TextField, Typography } from "@mui/material";
-import { useTranslations } from "next-intl";
 import { ChangeEvent, useMemo } from "react";
 
 export interface CustodianEditContactFormFields {

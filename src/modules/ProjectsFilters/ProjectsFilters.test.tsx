@@ -1,5 +1,12 @@
 import { Status } from "@/components/ChipStatus";
-import { act, render, screen, userEvent, waitFor } from "@/utils/testUtils";
+import {
+  act,
+  commonAccessibilityTests,
+  render,
+  screen,
+  userEvent,
+  waitFor,
+} from "@/utils/testUtils";
 import ProjectsFilters, { ProjectsFiltersProps } from "./ProjectsFilters";
 
 const defaultProps = {
@@ -11,7 +18,7 @@ const defaultProps = {
 };
 
 const setupTest = (props?: Partial<ProjectsFiltersProps>) => {
-  render(<ProjectsFilters {...defaultProps} {...props} />);
+  return render(<ProjectsFilters {...defaultProps} {...props} />);
 };
 
 describe("<ProjectsFilters />", () => {
@@ -64,5 +71,9 @@ describe("<ProjectsFilters />", () => {
         true
       );
     });
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(setupTest());
   });
 });

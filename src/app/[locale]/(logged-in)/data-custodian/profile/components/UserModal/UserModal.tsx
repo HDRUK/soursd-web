@@ -3,7 +3,7 @@ import { Message } from "@/components/Message";
 import { CustodianUserRoles } from "@/consts/custodian";
 import { useStore } from "@/data/store";
 import CustodianEditContactForm, {
-  CustodianEditContactFormUserFields,
+  CustodianEditContactFormFields,
 } from "@/modules/CustodianEditContactForm";
 import {
   postCustodianUser,
@@ -24,7 +24,6 @@ export interface UserModalProps extends Omit<FormModalProps, "children"> {
   onClose: () => void;
 }
 
-const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 const NAMESPACE_TRANSLATION_PROFILE_FORM = "CustodianProfile.EditContact";
 
 export default function UsersModal({
@@ -33,7 +32,6 @@ export default function UsersModal({
   onClose,
   ...restProps
 }: UserModalProps) {
-  const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const tForm = useTranslations(NAMESPACE_TRANSLATION_PROFILE_FORM);
   const permissions = useStore(state => state.config.permissions);
 
@@ -73,7 +71,7 @@ export default function UsersModal({
   ]);
 
   const handleOnSubmit = useCallback(
-    async (payload: CustodianEditContactFormUserFields) => {
+    async (payload: CustodianEditContactFormFields) => {
       const { first_name, last_name, email, approver, administrator } = payload;
 
       let userPermissions: number[] = [];
