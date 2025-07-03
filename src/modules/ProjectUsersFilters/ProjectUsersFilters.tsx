@@ -52,7 +52,7 @@ export default function ProjectUsersFilters({
     queryParams,
     items: [
       {
-        label: t("sortByName"),
+        label: t("sortByProjectTitle"),
         key: "projects.title",
       },
     ],

@@ -1168,6 +1168,20 @@
     "projectStatus": "Status"
   },
   "Projects": {
+    "ProjectsFilters": {
+      "sortByProjectTitle": "Project name",
+      "filterByStatus_approved": "Approved",
+      "filterByStatus_pending": "Pending",
+      "filterByStatus_completed": "Completed",
+      "filterByActive": "Active projects",
+      "filterByPast": "Past projects",
+      "searchPlaceholder": "Search by Project name"
+    },
+    "UserProjects": {
+      "organisations": "Organisation(s)",
+      "status": "Project status",
+      "title": "Project name"
+    },
     "Users": {
       "cancel": "Cancel",
       "move": "Change status",
@@ -1241,7 +1255,6 @@
     "unapprovedKey": "Project Pending Approval",
     "searchPlaceholder": "Search Projects",
     "sortByOrganisationName": "Organisation name",
-    "sortByName": "Name",
     "sortByProjectTitle": "Project title",
     "endDate": "End date",
     "startDate": "Start date",
@@ -1251,13 +1264,6 @@
     "organisation": "Organisation",
     "organisations": "Organisation(s)",
     "validationStatus": "Validation status",
-    "filterActions": {
-      "approved": "Approved",
-      "pending": "Pending",
-      "completed": "Completed",
-      "activeProjects": "Active projects",
-      "pastProjects": "Past projects"
-    },
     "errorResultsProjects": "Unable to get a list of projects. Please try again or contact us on <contact></contact>",
     "noResultsProjects": "No projects found for the current search terms.",
     "SafeData": {
