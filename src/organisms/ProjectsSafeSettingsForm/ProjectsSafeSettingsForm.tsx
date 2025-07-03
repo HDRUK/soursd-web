@@ -18,7 +18,7 @@ import { ProjectDetails } from "../../types/application";
 import { MutationState } from "../../types/form";
 import { injectParamsIntoPath } from "../../utils/application";
 
-export interface ProjectSafeProjectFormProps
+export interface ProjectsSafeSettingsFormProps
   extends Omit<FormProps<ProjectDetails>, "children"> {
   projectId?: number;
   mutateState?: MutationState;
@@ -30,7 +30,7 @@ export default function ProjectSafeSettingsForm({
   projectId,
   mutateState,
   ...restProps
-}: ProjectSafeProjectFormProps) {
+}: ProjectsSafeSettingsFormProps) {
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const routes = useStore(state => state.getApplication().routes);
 
@@ -49,7 +49,12 @@ export default function ProjectSafeSettingsForm({
   };
 
   return (
-    <Form schema={schema} {...formOptions} {...restProps} autoComplete="off">
+    <Form
+      aria-label="Safe settings"
+      schema={schema}
+      {...formOptions}
+      {...restProps}
+      autoComplete="off">
       <Grid container rowSpacing={3}>
         <Grid item xs={12}>
           <FormControlWrapper

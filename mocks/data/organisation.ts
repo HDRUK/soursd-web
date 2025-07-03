@@ -1,26 +1,44 @@
 import { Organisation } from "@/services/organisations";
-import { Charity } from "@/types/application";
+import { Charity, Sector, Subsidiary } from "@/types/application";
 import { faker } from "@faker-js/faker";
 import { mockedApproval } from "./approvals";
 import { mockedDepartment } from "./departments";
 import { mockedPermission } from "./permission";
 import { mockedUser } from "./user";
+import { mockedAddress } from "./application";
 
 const mockedCharity = (charity?: Partial<Charity>) => ({
+  name: faker.company.name(),
   registration_id: faker.string.numeric(8),
   country: faker.location.country(),
+  website: faker.internet.url(),
   ...charity,
+});
+
+const mockedSector = (sector?: Partial<Sector>) => ({
+  id: faker.number.int(),
+  deleted_at: null,
+  created_at: faker.date.past(),
+  updated_at: faker.date.recent(),
+  name: faker.company.name(),
+  ...sector,
+});
+
+const mockedSubsidiary = (subsidiary?: Partial<Subsidiary>) => ({
+  ...mockedAddress(),
+  id: faker.number.int(),
+  name: faker.string.sample(),
+  pivot: {
+    organisation_id: faker.number.int(),
+    subsidiary_id: faker.number.int(),
+  },
+  ...subsidiary,
 });
 
 const mockedOrganisation = (
   organisation?: Partial<Organisation>
 ): Organisation => ({
-  address_1: faker.string.sample(),
-  address_2: faker.string.sample(),
-  town: faker.string.sample(),
-  county: faker.string.sample(),
-  country: faker.string.sample(),
-  postcode: "RG6 1WG",
+  ...mockedAddress(),
   companies_house_no: "01624297",
   dpo_email: "",
   dpo_name: "",
@@ -90,7 +108,8 @@ const mockedOrganisation = (
       }),
     },
   ],
+  sector: mockedSector(),
   ...organisation,
 });
 
-export { mockedCharity, mockedOrganisation };
+export { mockedCharity, mockedOrganisation, mockedSubsidiary };

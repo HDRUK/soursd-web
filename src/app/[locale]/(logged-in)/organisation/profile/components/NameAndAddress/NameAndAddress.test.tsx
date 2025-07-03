@@ -1,11 +1,5 @@
-import {
-  fireEvent,
-  render,
-  screen,
-  userEvent,
-  waitFor,
-} from "@/utils/testUtils";
 import { mockedOrganisation } from "@/mocks/data/organisation";
+import { fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 import NameAndAddress from "./NameAndAddress";
 
 const putProps = {
@@ -91,14 +85,7 @@ describe("<NameAndAddress />", () => {
   it("does not submit the form when values are cleared", async () => {
     setupTest();
 
-    const inputs = getAllInputs();
-
-    inputs.forEach(async selector => {
-      const element = screen.getAllByLabelText(selector)[0];
-
-      await userEvent.click(element);
-      await userEvent.clear(element);
-    });
+    clearInputsByLabelText(getAllInputs());
 
     const form = await screen.findByRole("form", { name: "Name and address" });
     fireEvent.submit(form);

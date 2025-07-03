@@ -4,6 +4,7 @@ import { mockedOrganisation } from "./organisation";
 import { RequestFrequency } from "@/consts/projects";
 import { type ProjectDetails } from "@/types/application";
 import { mockedProjectUser, mockedCustodianHasProjectUser } from "./custodian";
+import { Status } from "@/components/ChipStatus";
 
 const mockedProject = (
   project?: Partial<ResearcherProject>
@@ -18,6 +19,7 @@ const mockedProject = (
   request_category_type: faker.string.sample(),
   other_approval_committees: faker.string.sample(),
   organisations: [mockedOrganisation()],
+  status: Status.PROJECT_PENDING,
   ...project,
 });
 
@@ -31,7 +33,7 @@ const mockedProjectDetails = (
   id: 1,
   project_id: 4,
   datasets: '["dataset1"]',
-  data_sensitivity_level: "Protected Data",
+  data_sensitivity_level: "Personally Identifiable",
   legal_basis_for_data_article6: "Legal Basis",
   duty_of_confidentiality: true,
   national_data_optout: false,

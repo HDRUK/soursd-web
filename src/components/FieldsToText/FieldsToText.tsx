@@ -59,12 +59,12 @@ export default function FieldsToText<T>({
     <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
       {filteredKeys.map(key =>
         typeof key === "string" ? (
-          <div>
+          <div key={key}>
             <Typography variant="h6">{getHeading(key)}</Typography>
             <Typography>{renderItems(_get(data, key))}</Typography>
           </div>
         ) : (
-          <div>
+          <div key={getHeading(key)}>
             <Typography variant="h6">{getHeading(key)}</Typography>
             <Typography>
               {key.content || renderItems(_get(data, key.column_id))}

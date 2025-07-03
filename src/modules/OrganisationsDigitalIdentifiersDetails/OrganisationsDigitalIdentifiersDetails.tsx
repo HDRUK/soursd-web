@@ -3,7 +3,7 @@ import FieldsToText from "../../components/FieldsToText";
 import { Organisation } from "../../types/application";
 import CharitiesTable from "../CharitiesTable";
 
-interface OrganisationsDigitalIdentifiersDetailsProps {
+export interface OrganisationsDigitalIdentifiersDetailsProps {
   organisationData: Organisation;
   tKey?: string;
 }

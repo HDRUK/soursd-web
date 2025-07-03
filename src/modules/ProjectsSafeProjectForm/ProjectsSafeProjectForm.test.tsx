@@ -1,42 +1,15 @@
-import {
-  fireEvent,
-  render,
-  screen,
-  userEvent,
-  waitFor,
-} from "@/utils/testUtils";
-import { Status } from "../../components/ChipStatus";
+import { fireEvent, render, screen, waitFor } from "@/utils/testUtils";
+import { mockedProject } from "@/mocks/data/project";
 import ProjectsSafeProjectForm, {
   ProjectsSafeProjectFormProps,
 } from "./ProjectsSafeProjectForm";
 
 const defaultProps: ProjectsSafeProjectFormProps = {
   mutateState: { isPending: false, isError: false, isSuccess: false },
-  project: {
-    unique_id: "123",
-    title: "Test Project",
-    request_category_type: "type",
-    start_date: "2024-01-01",
-    end_date: "2024-12-31",
-    lay_summary: "summary",
-    public_benefit: "benefit",
-    technical_summary: "tech",
-    status: Status.PROJECT_APPROVED,
-    other_approval_committees: [],
-  },
   onSubmit: jest.fn(),
-  defaultValues: {
+  defaultValues: mockedProject({
     unique_id: "123",
-    title: "Test Project",
-    request_category_type: "type",
-    start_date: "2024-01-01",
-    end_date: "2024-12-31",
-    lay_summary: "summary",
-    public_benefit: "benefit",
-    technical_summary: "tech",
-    status: Status.PROJECT_APPROVED,
-    other_approval_committees: [],
-  },
+  }),
 };
 
 function setupTest(props?: Partial<ProjectsSafeProjectFormProps>) {
@@ -96,14 +69,7 @@ describe("<ProjectsSafeProjectForm />", () => {
 
     const inputs = getAllInputs();
 
-    inputs.forEach(async selector => {
-      if (typeof selector !== "string") {
-        const element = screen.getByLabelText(selector);
-
-        await userEvent.click(element);
-        await userEvent.clear(element);
-      }
-    });
+    clearInputsByLabelText(inputs.filter(input => typeof input !== "string"));
 
     const form = await screen.findByRole("form", { name: "Safe project" });
     fireEvent.submit(form);

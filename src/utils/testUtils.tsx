@@ -11,6 +11,8 @@ import {
   act,
   render,
   renderHook,
+  screen,
+  within,
 } from "@testing-library/react";
 import userEvent, { UserEvent } from "@testing-library/user-event";
 import mediaQuery from "css-mediaquery";
@@ -120,10 +122,46 @@ const commonAccessibilityTests = async (rendered: RenderResult) => {
   expect(results).toHaveNoViolations();
 };
 
+const clearInput = async (element: HTMLElement) => {
+  await userEvent.click(element);
+  await userEvent.clear(element);
+};
+
+global.clearInput = clearInput;
+
+async function clearInputsByLabelText(inputs: (string | RegExp)[]) {
+  inputs.forEach(async selector => {
+    const element = screen.getAllByLabelText(selector)[0];
+
+    clearInput(element);
+  });
+}
+
+async function changeSelectValueByLabelText(
+  selector: string | RegExp,
+  value: string
+) {
+  const dropdown = await screen.findAllByLabelText(selector);
+  const button = within(dropdown[0]).getByRole("combobox");
+
+  await userEvent.click(button);
+
+  const listbox = screen.getByRole("listbox");
+
+  await userEvent.click(
+    await within(listbox).getByText(new RegExp(value, "i"))
+  );
+}
+
+global.changeSelectValueByLabelText = changeSelectValueByLabelText;
+global.clearInputsByLabelText = clearInputsByLabelText;
+
 export * from "@testing-library/react";
 export * from "@testing-library/user-event";
 
 export {
+  clearInput,
+  clearInputsByLabelText,
   commonAccessibilityTests,
   defineMatchMedia,
   customRender as render,

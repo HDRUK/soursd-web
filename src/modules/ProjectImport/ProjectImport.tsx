@@ -7,7 +7,7 @@ import { useEffect } from "react";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Projects";
 
-interface ProjectImportProps {
+export interface ProjectImportProps {
   custodianId: number;
   projectId: number;
   isImportDisabled: boolean;

@@ -91,6 +91,7 @@ export default function SectorSizeAndWebsite() {
     <PageBody>
       <PageSection heading={tOrgProfile("detailsSectorSizeAndWebsite")}>
         <Form
+          aria-label="Sector size and website"
           schema={schema}
           onSubmit={handleSubmit}
           {...formOptions}

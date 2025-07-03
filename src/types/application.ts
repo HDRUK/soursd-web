@@ -246,6 +246,7 @@ type Organisation = OrganisationIdvt &
     companies_house_no: string;
     organisation_name: string;
     organisation_unique_id: string;
+    sector: Sector;
     dpo_name: string;
     dpo_email: string;
     hr_name: string;
@@ -387,6 +388,7 @@ type ResearcherProject = WithModelState<{
   organisations: Organisation[];
   custodians?: Custodian[];
   project_detail: ProjectDetails;
+  status: Status;
 }>;
 
 interface ProjectDetails {
@@ -554,4 +556,5 @@ export type {
   WithModelState,
   WithRoutes,
   WithPaginatedQueryParms,
+  UserPermission,
 };
