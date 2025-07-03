@@ -10,7 +10,10 @@ import {
   within,
 } from "@/utils/testUtils";
 import { faker } from "@faker-js/faker";
-import UserModalDetails, { UserModalDetailsProps } from "./UserModalDetails";
+import CustodianEditContactForm, {
+  CustodianEditContactFormProps,
+} from "./CustodianEditContactForm";
+import { useTranslations } from "next-intl";
 
 jest.mock("@/services/custodians");
 jest.mock("@/data/store");
@@ -21,26 +24,33 @@ const mockOnSubmit = jest.fn();
 const mockOnClose = jest.fn();
 const defaultUser = mockedCustodianUser();
 
-const renderUserModalDetails = (props?: Partial<UserModalDetailsProps>) => {
-  return render(
-    <UserModalDetails
+const TestComponent = (props?: Partial<CustodianEditContactFormProps>) => {
+  const t = useTranslations("CustodianProfile.EditContact");
+
+  return (
+    <CustodianEditContactForm
       user={defaultUser}
       queryState={{ isLoading: false, isError: false, error: "" }}
       onSubmit={mockOnSubmit}
       onClose={mockOnClose}
+      t={t}
       {...props}
     />
   );
 };
 
-describe("<UserModalDetails />", () => {
+const setupTest = (props?: Partial<CustodianEditContactFormProps>) => {
+  return render(<TestComponent {...props} />);
+};
+
+describe("<CustodianEditContactForm />", () => {
   afterEach(() => {
     mockOnSubmit.mockReset();
     mockOnClose.mockReset();
   });
 
   it("submit is called", async () => {
-    renderUserModalDetails();
+    setupTest();
 
     const { email, first_name, last_name } = defaultUser;
 
@@ -60,7 +70,7 @@ describe("<UserModalDetails />", () => {
   it.each(["first_name", "last_name", "email"])(
     "does not submit when %s is not defined",
     async testId => {
-      renderUserModalDetails();
+      setupTest();
 
       const parentDiv = screen.getByTestId(testId);
       const input = within(parentDiv).getByRole("textbox");
@@ -77,6 +87,6 @@ describe("<UserModalDetails />", () => {
   );
 
   it("has no accessibility violations", async () => {
-    commonAccessibilityTests(renderUserModalDetails());
+    commonAccessibilityTests(setupTest());
   });
 });
