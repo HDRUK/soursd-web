@@ -260,7 +260,7 @@
     "organisationNotFound": "Organisation was not found",
     "getOrganisationStatusError": "Unable to determine validation status",
     "navigationAriaLabel": "Profile tabs",
-    "patchUserError": "There was a problem updating your user details. Please try again or contact us at <contactLink></contactLink>",
+    "putUserError": "There was a problem updating your user details. Please try again or contact us at <contactLink></contactLink>",
     "updateUserButton": "Save",
     "noDelegates": "No Delegates Found",
     "getDelegateError": "Unable to get the list of delegates",
@@ -923,7 +923,7 @@
     "cvUpload": "CV Upload",
     "cvUploadDescription": "Please upload an up-to-date CV , including your professional employment, education and qualifications, and publication record.",
     "affiliationActionSuccessButton": "OK",
-    "patchAffiliationSuccess": "Affiliation updated successfully",
+    "putAffiliationSuccess": "Affiliation updated successfully",
     "affiliationActionError": "An error occurred. Please try again or <contactLink>contact us</contactLink> if the problem persists.",
     "affiliationActionErrorButton": "Close",
     "editAffiliationForm": "Edit Affiliation",
@@ -936,7 +936,7 @@
     "missingOrcIdMessage": "There’s some missing information from your ORCID that we need you to complete",
     "affiliationOrganisationWarningMessage": "Please complete this field as we couldn’t match the information. Sometimes the identifier of an Organisation within an ORCID profile does not exactly match the identifier of an Organisation registered within SOURSD therefore please select an Organisation from the dropdown box. If the Organisation is not listed, please <link> invite them here </link>",
     "affiliationsEmailWarningMessage": "Please complete this field as we couldn’t match the information.",
-    "patchOrganisationForbidden": "Your account does not have permissions to perform this update"
+    "putOrganisationForbidden": "Your account does not have permissions to perform this update"
   },
   "Training": {
     "title": "Training",
@@ -1343,7 +1343,7 @@
     "title": "Edit",
     "toolTip": "Edit details for this delegate"
   },
-  "UsePatchOrganisation": {
+  "UseUpdateOrganisation": {
     "text": "Organisation Updated!",
     "confirmText": "OK"
   },

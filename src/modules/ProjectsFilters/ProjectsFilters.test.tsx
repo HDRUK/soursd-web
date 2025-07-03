@@ -1,5 +1,4 @@
 import { Status } from "@/components/ChipStatus";
-import { mockedUser } from "@/mocks/data/user";
 import { act, render, screen, userEvent, waitFor } from "@/utils/testUtils";
 import ProjectsFilters, { ProjectsFiltersProps } from "./ProjectsFilters";
 

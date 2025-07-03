@@ -160,9 +160,9 @@ export * from "@testing-library/react";
 export * from "@testing-library/user-event";
 
 export {
-  commonAccessibilityTests,
   clearInput,
   clearInputsByLabelText,
+  commonAccessibilityTests,
   defineMatchMedia,
   customRender as render,
   customRenderHook as renderHook,

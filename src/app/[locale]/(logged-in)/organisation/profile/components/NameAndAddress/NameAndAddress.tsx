@@ -15,7 +15,7 @@ import { useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { ROUTES } from "@/consts/router";
 import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
-import usePatchOrganisation from "../../hooks/usePatchOrganisation";
+import useUpdateOrganisation from "../../hooks/useUpdateOrganisation";
 import Subsidiaries from "../Subsidiaries";
 
 export interface NameAndAddressFormValues {
@@ -41,7 +41,7 @@ export default function NameAndAddress() {
     isPending: isLoading,
     error,
     onSubmit,
-  } = usePatchOrganisation({
+  } = useUpdateOrganisation({
     id: organisation?.id,
   });
 

@@ -1,21 +1,12 @@
 import { UserProvider, UserHistoryLog } from "@/consts/user";
 import { ResearcherProject, User } from "@/types/application";
 
-type PatchUserPayload = Partial<User>;
 type PutUserPayload = Partial<User>;
 
 interface UpdatePermissonsPayload {
   user_id: number;
   custodian_id: number;
   permissions: number[];
-}
-
-interface PatchUserResponse {
-  id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  email_verified_at: string;
 }
 
 type PutUserResponse = User;
@@ -69,8 +60,6 @@ export type {
   PostUserPayload,
   PostUserResponse,
   UpdatePermissonsPayload,
-  PatchUserPayload,
-  PatchUserResponse,
   UserResponse,
   UsersResponse,
   PostUserInviteResponse,

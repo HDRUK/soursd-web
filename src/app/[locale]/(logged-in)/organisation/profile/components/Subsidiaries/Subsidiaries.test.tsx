@@ -32,7 +32,7 @@ describe("<Subsidiaries />", () => {
     });
   });
 
-  it("Patch of organisation is called on save", async () => {
+  it("Put of organisation is called on save", async () => {
     render(<Subsidiaries />);
 
     await waitFor(() => {
@@ -71,7 +71,7 @@ describe("<Subsidiaries />", () => {
     });
   });
 
-  it("Patch of organisation is called on save", async () => {
+  it("Put of organisation is called on save", async () => {
     render(<Subsidiaries />);
 
     await waitFor(() => {

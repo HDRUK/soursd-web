@@ -1,9 +1,9 @@
 import getNotificationsCountsQuery from "./getNotificationsCountsQuery";
 import getNotificationsQuery from "./getNotificationsQuery";
-import patchNotificationQuery from "./patchNotificationQuery";
+import putNotificationQuery from "./putNotificationQuery";
 
 export {
   getNotificationsCountsQuery,
   getNotificationsQuery,
-  patchNotificationQuery,
+  putNotificationQuery,
 };
