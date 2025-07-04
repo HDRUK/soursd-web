@@ -9,8 +9,6 @@ import {
 } from "../../utils/testUtils";
 import InviteOrganisation from "./InviteOrganisation";
 
-jest.mock("@/data/store");
-
 const mockSubmit = jest.fn();
 
 const renderInviteOrganisationComponent = () => {

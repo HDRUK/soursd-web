@@ -1,22 +1,25 @@
-import Form from "@/components/Form";
-import FormControlHorizontal from "@/components/FormControlHorizontal";
-import FormModalActions from "@/components/FormModalActions";
-import FormModalBody from "@/components/FormModalBody";
-import FormModalHeader from "@/components/FormModalHeader";
-import FormControlCheckbox from "@/components/FormControlCheckbox";
-import yup from "@/config/yup";
-import { CustodianUserRoles } from "@/consts/custodian";
-import { useStore } from "@/data/store";
-import { CustodianUser, WithTranslations } from "@/types/application";
-import { QueryState } from "@/types/form";
-import {
-  isCustodianAdministrator,
-  isCustodianApprover,
-} from "@/utils/custodian";
 import CheckIcon from "@mui/icons-material/Check";
 import { LoadingButton } from "@mui/lab";
 import { Button, Grid, TextField, Typography } from "@mui/material";
 import { ChangeEvent, useMemo } from "react";
+import Form from "../../components/Form";
+import FormControlCheckbox from "../../components/FormControlCheckbox";
+import FormControlHorizontal from "../../components/FormControlHorizontal";
+import FormModalActions from "../../components/FormModalActions";
+import FormModalBody from "../../components/FormModalBody";
+import FormModalHeader from "../../components/FormModalHeader";
+import yup from "../../config/yup";
+import { CustodianUserRoles } from "../../consts/custodian";
+import {
+  CustodianUser,
+  Permission,
+  WithTranslations,
+} from "../../types/application";
+import { QueryState } from "../../types/form";
+import {
+  isCustodianAdministrator,
+  isCustodianApprover,
+} from "../../utils/custodian";
 
 export interface CustodianEditContactFormFields {
   first_name: string;
@@ -29,6 +32,7 @@ export interface CustodianEditContactFormFields {
 export type CustodianEditContactFormProps = WithTranslations<{
   user: Partial<CustodianUser>;
   queryState: QueryState;
+  permissions: Permission[];
   onSubmit: (payload: CustodianEditContactFormFields) => void;
   onClose: () => void;
 }>;
@@ -38,10 +42,9 @@ export default function CustodianEditContactForm({
   user,
   queryState,
   onSubmit,
+  permissions,
   t,
 }: CustodianEditContactFormProps) {
-  const permissions = useStore(state => state.config.permissions);
-
   const schema = useMemo(
     () =>
       yup.object().shape({

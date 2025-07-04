@@ -3,7 +3,7 @@
 import SortIcon from "@mui/icons-material/Sort";
 import { useTranslations } from "next-intl";
 import { PropsWithChildren, useMemo } from "react";
-import useSort from "@/hooks/useSort";
+import useSort from "../../hooks/useSort";
 import { FilterIcon } from "../../consts/icons";
 import { PaginatedQueryReturn } from "../../hooks/usePaginatedQuery";
 import { CustodianProjectUser } from "../../types/application";

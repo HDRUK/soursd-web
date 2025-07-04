@@ -1,4 +1,4 @@
-import { Status } from "@/components/ChipStatus";
+import { Status } from "../../components/ChipStatus";
 import {
   act,
   commonAccessibilityTests,
@@ -6,7 +6,7 @@ import {
   screen,
   userEvent,
   waitFor,
-} from "@/utils/testUtils";
+} from "../../utils/testUtils";
 import ProjectsFilters, { ProjectsFiltersProps } from "./ProjectsFilters";
 
 const defaultProps = {

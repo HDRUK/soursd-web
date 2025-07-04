@@ -1,5 +1,5 @@
 import useApplicationRedirects from "@/hooks/useApplicationRedirects";
-import { PageContainer } from "@/modules";
+import { RootLayout } from "@/organisms";
 import ApplicationUser from "@/organisms/ApplicationUser";
 import { PropsWithChildren } from "react";
 
@@ -8,7 +8,7 @@ export default async function Layout({ children }: PropsWithChildren) {
 
   return (
     <ApplicationUser>
-      <PageContainer>{children}</PageContainer>
+      <RootLayout>{children}</RootLayout>
     </ApplicationUser>
   );
 }

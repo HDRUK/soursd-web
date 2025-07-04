@@ -2,13 +2,13 @@ import { Box } from "@mui/material";
 import { ReactNode } from "react";
 import Footer from "../Footer";
 import Header from "../Header";
-import PageCenter from "../PageCenter";
+import PageCenter from "../../modules/PageCenter";
 
-interface PageContainerProps {
+interface RootLayoutProps {
   children: ReactNode;
 }
 
-function PageContainer({ children }: PageContainerProps) {
+function RootLayout({ children }: RootLayoutProps) {
   return (
     <Box
       sx={{
@@ -35,4 +35,4 @@ function PageContainer({ children }: PageContainerProps) {
   );
 }
 
-export default PageContainer;
+export default RootLayout;

@@ -1,7 +1,7 @@
 "use client";
 
-import useFilter from "@/hooks/useFilter";
-import useSort from "@/hooks/useSort";
+import useFilter from "../../hooks/useFilter";
+import useSort from "../../hooks/useSort";
 import SortIcon from "@mui/icons-material/Sort";
 import { useTranslations } from "next-intl";
 import { Status } from "../../components/ChipStatus";

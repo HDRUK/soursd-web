@@ -4,7 +4,7 @@ import {
   render,
   screen,
   waitFor,
-} from "@/utils/testUtils";
+} from "../../utils/testUtils";
 import { mockedProject } from "@/mocks/data/project";
 import ProjectsSafeProjectForm, {
   ProjectsSafeProjectFormProps,

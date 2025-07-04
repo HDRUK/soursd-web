@@ -5,7 +5,7 @@ import {
   screen,
   userEvent,
   waitFor,
-} from "@/utils/testUtils";
+} from "../../utils/testUtils";
 import SearchField, { SearchFieldProps } from "./SearchField";
 
 const defaultProps = {

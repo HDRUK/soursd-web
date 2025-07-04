@@ -3,12 +3,12 @@ import type { Meta, StoryObj } from "@storybook/react";
 import {
   mockedKanbanCustodianProjectUsers,
   mockedProjectStateWorkflow,
-} from "@/mocks/data/project";
-import { CustodianProjectUser } from "@/types/application";
+} from "../../mocks/data/project";
+import { CustodianProjectUser } from "../../types/application";
 import { rectSortingStrategy } from "@dnd-kit/sortable";
 import { useTranslations } from "next-intl";
 import { useCallback } from "react";
-import { ActionMenu } from "@/components/ActionMenu";
+import { ActionMenu } from "../../components/ActionMenu";
 import KanbanBoard, { KanbanBoardProps } from "./KanbanBoard";
 import KanbanBoardUsersCard, {
   KanbanBoardUsersCardProps,

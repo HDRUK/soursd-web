@@ -1,20 +1,19 @@
 "use client";
 
-import { useStore } from "@/data/store";
 import { LoadingButton } from "@mui/lab";
 import { CellContext, ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
-import ContactLink from "../ContactLink";
-import FormActions from "../FormActions";
-import FormModalBody from "../FormModalBody";
-import SelectInput from "../SelectInput";
-import Table from "../Table";
-import SearchBar from "../../modules/SearchBar";
+import ContactLink from "../../components/ContactLink";
+import FormActions from "../../components/FormActions";
+import FormModalBody from "../../components/FormModalBody";
+import SelectInput from "../../components/SelectInput";
+import Table from "../../components/Table";
 import { useGetProjectAllUsers } from "../../services/projects";
-import { ProjectAllUser, Role } from "../../types/application";
+import { ProjectAllUser, ProjectRole, Role } from "../../types/application";
 import { MutationState } from "../../types/form";
 import { renderUserNameCell } from "../../utils/cells";
+import SearchBar from "../SearchBar";
 
 const NAMESPACE_TRANSLATION = "CustodianProfile";
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
@@ -25,17 +24,19 @@ export type RowUserState = {
   affiliation_id: number;
 }[];
 
-interface ProjectsAddUserProps {
+interface ProjectsAddUserFormProps {
   projectId: number;
   mutationState: MutationState;
+  projectRoles: ProjectRole[];
   onSave: (projectUsers: ProjectAllUser[]) => void;
 }
 
-export default function ProjectsAddUser({
+export default function ProjectsAddUserForm({
   projectId,
   onSave,
   mutationState,
-}: ProjectsAddUserProps) {
+  projectRoles,
+}: ProjectsAddUserFormProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION);
   const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
 
@@ -57,8 +58,6 @@ export default function ProjectsAddUser({
   useEffect(() => {
     if (usersData) setProjectUsers(usersData);
   }, [usersData]);
-
-  const projectRoles = useStore(state => state.getProjectRoles());
 
   const handleSelectRole = (row: ProjectAllUser, roleId: number | null) => {
     const updatedRole = roleId

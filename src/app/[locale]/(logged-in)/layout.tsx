@@ -1,6 +1,6 @@
 import { UserGroup } from "@/consts/user";
 import useApplicationRedirects from "@/hooks/useApplicationRedirects";
-import { PageContainer } from "@/modules";
+import { RootLayout } from "@/organisms";
 import Application from "@/organisms/Application";
 import { getMe } from "@/services/auth";
 import { getCustodianUser } from "@/services/custodian_users";
@@ -42,7 +42,7 @@ export default async function Layout({ children }: LayoutProps) {
       custodianId={custodianId}
       organisationId={organisationId}
       me={data}>
-      <PageContainer>{children}</PageContainer>
+      <RootLayout>{children}</RootLayout>
     </Application>
   );
 }
