@@ -1,4 +1,4 @@
-import { Footer, Header } from "@/modules";
+import { Footer, Header } from "@/organisms";
 import SupportContent from "./components/SupportContent";
 
 export default function Page() {

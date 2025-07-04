@@ -4,9 +4,9 @@ import {
   render,
   screen,
   waitFor,
-} from "@/utils/testUtils";
+} from "../../utils/testUtils";
 
-import { getRandomString } from "@/utils/string";
+import { getRandomString } from "../../utils/string";
 import { useTranslations } from "next-intl";
 import CustodianIntegrationsForm, {
   CustodianIntegrationsFormProps,

@@ -51,6 +51,7 @@ const DelegateTable = () => {
         user={info.row.original}
         onSuccess={refetchDelegates}
         payload={{ is_delegate: 0 }}
+        organisation={organisation}
         namespace="DecoupleDelegate"
       />
     </ActionMenu>

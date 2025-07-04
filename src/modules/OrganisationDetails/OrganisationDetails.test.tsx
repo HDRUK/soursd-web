@@ -1,5 +1,5 @@
 import { mockedOrganisation } from "@/mocks/data/organisation";
-import { render, screen } from "@/utils/testUtils";
+import { render, screen } from "../../utils/testUtils";
 import OrganisationDetails, {
   OrganisationDetailsProps,
 } from "./OrganisationDetails";

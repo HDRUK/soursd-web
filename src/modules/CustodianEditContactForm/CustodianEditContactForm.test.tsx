@@ -1,6 +1,7 @@
-import { useStore } from "@/data/store";
 import { mockedCustodianUser } from "@/mocks/data/custodian";
 import { mockedApiPermissions } from "@/mocks/data/store";
+import { faker } from "@faker-js/faker";
+import { useTranslations } from "next-intl";
 import {
   commonAccessibilityTests,
   fireEvent,
@@ -8,35 +9,31 @@ import {
   screen,
   waitFor,
   within,
-} from "@/utils/testUtils";
-import { faker } from "@faker-js/faker";
-import { useTranslations } from "next-intl";
+} from "../../utils/testUtils";
 import CustodianEditContactForm, {
   CustodianEditContactFormProps,
 } from "./CustodianEditContactForm";
 
-jest.mock("@/services/custodians");
-jest.mock("@/data/store");
+jest.mock("../../services/custodians");
 
-(useStore as unknown as jest.Mock).mockReturnValue(mockedApiPermissions);
-
-const mockOnSubmit = jest.fn();
-const mockOnClose = jest.fn();
-const defaultUser = mockedCustodianUser();
+const defaultProps = {
+  user: mockedCustodianUser({
+    user_permissions: [
+      {
+        permission_id: 10,
+      },
+    ],
+  }),
+  permissions: mockedApiPermissions,
+  queryState: { isLoading: false, isError: false, error: "" },
+  onSubmit: jest.fn(),
+  onClose: jest.fn(),
+};
 
 const TestComponent = (props?: Partial<CustodianEditContactFormProps>) => {
   const t = useTranslations("CustodianProfile.EditContact");
 
-  return (
-    <CustodianEditContactForm
-      user={defaultUser}
-      queryState={{ isLoading: false, isError: false, error: "" }}
-      onSubmit={mockOnSubmit}
-      onClose={mockOnClose}
-      t={t}
-      {...props}
-    />
-  );
+  return <CustodianEditContactForm {...defaultProps} t={t} {...props} />;
 };
 
 const setupTest = (props?: Partial<CustodianEditContactFormProps>) => {
@@ -45,23 +42,22 @@ const setupTest = (props?: Partial<CustodianEditContactFormProps>) => {
 
 describe("<CustodianEditContactForm />", () => {
   afterEach(() => {
-    mockOnSubmit.mockReset();
-    mockOnClose.mockReset();
+    jest.resetAllMocks();
   });
 
   it("submit is called", async () => {
     setupTest();
 
-    const { email, first_name, last_name } = defaultUser;
+    const { email, first_name, last_name } = defaultProps.user;
 
     fireEvent.submit(screen.getByRole("button", { name: /Save/i }));
 
     await waitFor(() => {
-      expect(mockOnSubmit.mock.lastCall[0]).toEqual({
+      expect(defaultProps.onSubmit).toHaveBeenCalledWith({
         email,
         first_name,
         last_name,
-        administrator: false,
+        administrator: true,
         approver: false,
       });
     });
@@ -82,7 +78,7 @@ describe("<CustodianEditContactForm />", () => {
 
       fireEvent.submit(screen.getByRole("button", { name: /Save/i }));
 
-      expect(mockOnSubmit).not.toHaveBeenCalled();
+      expect(defaultProps.onSubmit).not.toHaveBeenCalled();
     }
   );
 

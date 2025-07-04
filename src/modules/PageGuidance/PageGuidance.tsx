@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import { ReactNode } from "react";
-import { mockedProfileGuidance } from "@/mocks/data/cms";
+import { mockedProfileGuidance } from "../../../mocks/data/cms";
 import Guidance, { GuidanceProps } from "../../components/Guidance";
 
 interface PageGuidanceProps extends GuidanceProps {

@@ -8,7 +8,6 @@ export default async (
   payload: PutOrganisationPayload,
   options: ResponseOptions
 ): Promise<ResponseJson<OrganisationResponse>> => {
-  console.log("here2", payload);
   const response = await putRequest(`/organisations/${id}`, payload);
 
   return handleJsonResponse(response, options);

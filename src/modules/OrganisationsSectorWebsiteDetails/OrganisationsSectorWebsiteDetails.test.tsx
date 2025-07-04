@@ -1,5 +1,9 @@
 import { mockedOrganisation } from "@/mocks/data/organisation";
-import { commonAccessibilityTests, render, screen } from "@/utils/testUtils";
+import {
+  commonAccessibilityTests,
+  render,
+  screen,
+} from "../../utils/testUtils";
 import OrganisationsSectorWebsiteDetails, {
   OrganisationsSectorWebsiteDetailsProps,
 } from "./OrganisationsSectorWebsiteDetails";

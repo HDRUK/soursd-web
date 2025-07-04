@@ -8,7 +8,7 @@ import { HTMLAttributes } from "react";
 import UL from "../../components/UL";
 import SoursdLogo from "../../components/SoursdLogo";
 import { CONTACT_MAIL_ADDRESS } from "../../config/contacts";
-import PageCenter from "../PageCenter";
+import PageCenter from "../../modules/PageCenter";
 import { StyledFooter, StyledBox } from "./Footer.styles";
 
 type FooterProps = HTMLAttributes<HTMLDivElement>;

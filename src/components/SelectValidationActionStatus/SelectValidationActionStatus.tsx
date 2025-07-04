@@ -1,5 +1,5 @@
 import { Select, MenuItem, SelectProps } from "@mui/material";
-import { Option } from "@/types/common";
+import { Option } from "../../types/common";
 
 export type SelectValidationActionStatusProps = SelectProps<string> & {
   options: Option[];

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Typography } from "@mui/material";
-import { Rule } from "@/types/rules";
+import { Rule } from "../../types/rules";
 import { useTranslations } from "next-intl";
 import { ActionMenu, ActionMenuItem } from "../ActionMenu";
 import FormControlCheckbox from "../FormControlCheckbox";

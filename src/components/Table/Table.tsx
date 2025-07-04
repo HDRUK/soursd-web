@@ -14,7 +14,6 @@ import {
   TableOptions,
   useReactTable,
 } from "@tanstack/react-table";
-import { useStore } from "@/data/store";
 import React, { ReactNode } from "react";
 import { QueryState } from "../../types/form";
 import Pagination from "../Pagination";
@@ -27,6 +26,7 @@ export interface TableProps<T> extends Partial<TableOptions<T>> {
   isExpandable?: boolean;
   showHeader?: boolean;
   page?: number;
+  perPage?: number;
   setPage?: React.Dispatch<React.SetStateAction<number>>;
   last_page?: number;
   dense?: boolean;
@@ -50,11 +50,10 @@ const Table = <T,>({
   errorMessage = "Error",
   noResultsMessage = "No results",
   total,
+  perPage = 25,
   sx,
   ...restProps
 }: TableProps<T>) => {
-  const perPage = useStore(state => state.getApplication().system.PER_PAGE);
-
   const table = useReactTable({
     data: data || [],
     columns,
@@ -64,7 +63,7 @@ const Table = <T,>({
     ...restProps,
     initialState: {
       pagination: {
-        pageSize: +perPage.value,
+        pageSize: +perPage,
       },
     },
   });

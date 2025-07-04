@@ -1,5 +1,9 @@
 import { mockedCharity } from "@/mocks/data/organisation";
-import { commonAccessibilityTests, render, screen } from "@/utils/testUtils";
+import {
+  commonAccessibilityTests,
+  render,
+  screen,
+} from "../../utils/testUtils";
 import { faker } from "@faker-js/faker";
 import CharitiesTable, { CharitiesTableProps } from "./CharitiesTable";
 

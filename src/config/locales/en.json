@@ -112,6 +112,10 @@
       "integrationIdFormatInvalid": "Not in the correct format, the ID should be a 40 character string of letters and numbers."
     },
     "EditContact": {
+      "firstNameRequiredInvalid": "First name is a required field",
+      "lastNameRequiredInvalid": "Last name is a required field",
+      "emailFormatInvalid": "Email must be a valid address",
+      "emailRequiredInvalid": "Email is a required field",
       "roleAdministrator": "Administrator",
       "roleApprover": "Approver",
       "roleAdministratorDescription": "Can do everything on the system",

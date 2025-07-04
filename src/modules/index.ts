@@ -1,6 +1,3 @@
-import Footer from "./Footer";
-import Header from "./Header";
-import PageContainer from "./PageContainer";
 import PageGuidance from "./PageGuidance";
 import PageSection from "./PageSection";
 import PageBody from "./PageBody";
@@ -15,9 +12,6 @@ import Affiliations from "./Affiliations";
 
 export {
   Affiliations,
-  Footer,
-  Header,
-  PageContainer,
   PageGuidance,
   PageSection,
   PageBody,

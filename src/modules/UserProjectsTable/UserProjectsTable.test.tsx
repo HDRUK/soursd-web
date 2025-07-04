@@ -1,4 +1,8 @@
-import { commonAccessibilityTests, render, screen } from "@/utils/testUtils";
+import {
+  commonAccessibilityTests,
+  render,
+  screen,
+} from "../../utils/testUtils";
 import { mockedProject } from "@/mocks/data/project";
 import { useTranslations } from "next-intl";
 import UserProjectsTable, { UserProjectsTableProps } from "./UserProjectsTable";

@@ -1,5 +1,5 @@
-import useGatewayProjectImport from "@/hooks/useGatewayProjectImport";
-import { ProjectDetails } from "@/types/application";
+import useGatewayProjectImport from "../../hooks/useGatewayProjectImport";
+import { ProjectDetails } from "../../types/application";
 import CloudDownloadOutlinedIcon from "@mui/icons-material/CloudDownloadOutlined";
 import { Button } from "@mui/material";
 import { useTranslations } from "next-intl";

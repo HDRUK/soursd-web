@@ -133,6 +133,7 @@ export default function UsersModal({
         onSubmit={handleOnSubmit}
         user={user}
         queryState={queryState}
+        permissions={permissions}
         t={t}
       />
     </FormModal>

@@ -1,6 +1,6 @@
-import useColumns from "@/hooks/useColumns";
-import { ModuleTables } from "@/types/modules";
-import { filterColumns } from "@/utils/table";
+import useColumns from "../../hooks/useColumns";
+import { ModuleTables } from "../../types/modules";
+import { filterColumns } from "../../utils/table";
 import { ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
 import Table from "../../components/Table";

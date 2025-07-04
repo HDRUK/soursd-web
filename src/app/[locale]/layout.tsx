@@ -1,4 +1,4 @@
-import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
+import ThemeRegistry from "@/organisms/ThemeRegistry/ThemeRegistry";
 import { locales } from "@/config";
 import ToastProvider from "@/context/ToastProvider";
 import BannerMessage from "@/modules/BannerMessage";

@@ -1,4 +1,4 @@
-import { Footer, Header } from "@/modules";
+import { Footer, Header } from "@/organisms";
 import PrivaryPolicy from "./components/PrivacyPolicy";
 
 export default function Page() {

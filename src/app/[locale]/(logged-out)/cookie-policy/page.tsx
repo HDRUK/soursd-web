@@ -1,4 +1,4 @@
-import { Footer, Header } from "@/modules";
+import { Footer, Header } from "@/organisms";
 import CookiePolicy from "./components/CookiePolicy";
 
 export default function Page() {
