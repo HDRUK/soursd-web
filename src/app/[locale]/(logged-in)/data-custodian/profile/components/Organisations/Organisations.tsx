@@ -16,7 +16,8 @@ export default function Organisations() {
   const tProfile = useTranslations(NAMESPACE_TRANSLATIONS_PROFILE);
   const { custodianId, nameRoute } = useStore(state => ({
     custodianId: state.getCustodian()?.id,
-    nameRoute: state.getApplication().routes.profileCustodianUsersIdentity,
+    nameRoute:
+      state.getApplication().routes.profileCustodianOrganisationsPeople,
   }));
 
   const paginatedQueryParams = useStorePaginatedQueryParams();
