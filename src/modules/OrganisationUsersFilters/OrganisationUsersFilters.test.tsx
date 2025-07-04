@@ -1,4 +1,11 @@
-import { act, render, screen, userEvent, waitFor } from "@/utils/testUtils";
+import {
+  act,
+  commonAccessibilityTests,
+  render,
+  screen,
+  userEvent,
+  waitFor,
+} from "@/utils/testUtils";
 import OrganisationUsersFilters, {
   OrganisationUsersFiltersProps,
 } from "./OrganisationUsersFilters";
@@ -9,7 +16,7 @@ const defaultProps = {
 };
 
 const setupTest = (props?: Partial<OrganisationUsersFiltersProps>) => {
-  render(<OrganisationUsersFilters {...defaultProps} {...props} />);
+  return render(<OrganisationUsersFilters {...defaultProps} {...props} />);
 };
 
 describe("<OrganisationUsersFilters />", () => {
@@ -44,5 +51,9 @@ describe("<OrganisationUsersFilters />", () => {
         show_pending: 1,
       });
     });
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(setupTest());
   });
 });

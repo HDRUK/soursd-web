@@ -1,4 +1,11 @@
-import { act, render, screen, userEvent, waitFor } from "@/utils/testUtils";
+import {
+  act,
+  commonAccessibilityTests,
+  render,
+  screen,
+  userEvent,
+  waitFor,
+} from "@/utils/testUtils";
 import SearchField, { SearchFieldProps } from "./SearchField";
 
 const defaultProps = {
@@ -7,7 +14,7 @@ const defaultProps = {
 };
 
 const setupTest = (props?: Partial<SearchFieldProps>) => {
-  render(<SearchField {...defaultProps} {...props} />);
+  return render(<SearchField {...defaultProps} {...props} />);
 };
 
 describe("<SearchField />", () => {
@@ -44,5 +51,9 @@ describe("<SearchField />", () => {
     await waitFor(() => {
       expect(defaultProps.onClear).toHaveBeenCalled();
     });
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(setupTest());
   });
 });

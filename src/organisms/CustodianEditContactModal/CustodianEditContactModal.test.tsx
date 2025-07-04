@@ -14,7 +14,9 @@ import {
   waitFor,
 } from "@/utils/testUtils";
 import { mock200Json } from "jest.utils";
-import UserModal, { UserModalProps } from "./UserModal";
+import CustodianEditContactModal, {
+  CustodianEditContactModalProps,
+} from "./CustodianEditContactModal";
 
 jest.mock("@/services/custodian_users");
 jest.mock("@/data/store");
@@ -28,9 +30,11 @@ const mockOnClose = jest.fn();
 
 const defaultUser = mockedCustodianUser();
 
-const renderUserModalDetails = (props?: Partial<UserModalProps>) => {
+const renderCustodianEditContactModalDetails = (
+  props?: Partial<CustodianEditContactModalProps>
+) => {
   return render(
-    <UserModal
+    <CustodianEditContactModal
       user={defaultUser}
       custodianId={1}
       onClose={mockOnClose}
@@ -40,8 +44,8 @@ const renderUserModalDetails = (props?: Partial<UserModalProps>) => {
   );
 };
 
-const renderUserModalDetailsUpdate = (id?: number) => {
-  renderUserModalDetails({
+const renderCustodianEditContactModalDetailsUpdate = (id?: number) => {
+  renderCustodianEditContactModalDetails({
     user: {
       ...defaultUser,
       id,
@@ -51,13 +55,13 @@ const renderUserModalDetailsUpdate = (id?: number) => {
   fireEvent.submit(screen.getByRole("button", { name: /Save/i }));
 };
 
-describe("<UserModal />", () => {
+describe("<CustodianEditContactModal />", () => {
   afterEach(() => {
     mockOnClose.mockReset();
   });
 
   it("update user is called with an id", async () => {
-    renderUserModalDetailsUpdate(1);
+    renderCustodianEditContactModalDetailsUpdate(1);
 
     await waitFor(() => {
       expect(putCustodianUser).toHaveBeenCalled();
@@ -67,7 +71,7 @@ describe("<UserModal />", () => {
   });
 
   it("create user is called with no id", async () => {
-    renderUserModalDetailsUpdate();
+    renderCustodianEditContactModalDetailsUpdate();
 
     await waitFor(() => {
       expect(postCustodianUser).toHaveBeenCalled();
@@ -77,7 +81,7 @@ describe("<UserModal />", () => {
   });
 
   it("show a success alert", async () => {
-    renderUserModalDetailsUpdate();
+    renderCustodianEditContactModalDetailsUpdate();
 
     await waitFor(() => screen.findByRole("button", { name: /OK/i }));
 
@@ -85,6 +89,6 @@ describe("<UserModal />", () => {
   });
 
   it("has no accessibility violations", async () => {
-    commonAccessibilityTests(renderUserModalDetails());
+    commonAccessibilityTests(renderCustodianEditContactModalDetails());
   });
 });

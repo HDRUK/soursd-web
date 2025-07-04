@@ -4,6 +4,7 @@ import useQueryConfirmAlerts from "@/hooks/useQueryConfirmAlerts";
 import { PageBody, PageBodyContainer, PageSection } from "@/modules";
 import AdministrativeContacts from "@/modules/AdministrativeContacts";
 import SearchBar from "@/modules/SearchBar";
+import CustodianEditContactModal from "@/organisms/CustodianEditContactModal";
 import { deleteCustodianUser } from "@/services/custodian_users";
 import { usePaginatedCustodianUsers } from "@/services/custodians";
 import { CustodianUser } from "@/types/application";
@@ -14,7 +15,6 @@ import { useMutation } from "@tanstack/react-query";
 import { CellContext } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
-import UserModal from "../UserModal";
 
 const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
 
@@ -171,7 +171,7 @@ export default function Contacts() {
             isPaginated
           />
           {modalProps?.user && custodian?.id && (
-            <UserModal
+            <CustodianEditContactModal
               {...modalProps}
               custodianId={custodian.id}
               onClose={handleCloseModal}

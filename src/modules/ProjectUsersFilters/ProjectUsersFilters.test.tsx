@@ -1,4 +1,11 @@
-import { act, render, screen, userEvent, waitFor } from "@/utils/testUtils";
+import {
+  act,
+  commonAccessibilityTests,
+  render,
+  screen,
+  userEvent,
+  waitFor,
+} from "@/utils/testUtils";
 import ProjectUsersFilters, {
   ProjectUsersFiltersProps,
 } from "./ProjectUsersFilters";
@@ -12,7 +19,7 @@ const defaultProps = {
 };
 
 const setupTest = (props?: Partial<ProjectUsersFiltersProps>) => {
-  render(<ProjectUsersFilters {...defaultProps} {...props} />);
+  return render(<ProjectUsersFilters {...defaultProps} {...props} />);
 };
 
 describe("<ProjectUsersFilters />", () => {
@@ -52,5 +59,9 @@ describe("<ProjectUsersFilters />", () => {
         "",
       ]);
     });
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(setupTest());
   });
 });

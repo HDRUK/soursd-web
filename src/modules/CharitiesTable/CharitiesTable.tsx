@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import { Charity } from "../../types/application";
 import Table from "../../components/Table";
 
-interface CharitiesTableProps {
+export interface CharitiesTableProps {
   charitiesData: Charity[];
   tKey?: string;
 }
