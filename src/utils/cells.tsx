@@ -35,18 +35,22 @@ function renderAffiliationDateRangeCell<T extends ResearcherAffiliation>(
 
 function renderProjectNameCell<T extends Project>(
   info: CellContext<T, unknown>,
-  route: string
+  route?: string
 ) {
   const { title, id } = info.row.original;
 
   return (
     <Typography color="primary" variant="small">
-      <Link
-        href={injectParamsIntoPath(route, {
-          id,
-        })}>
-        {title}
-      </Link>
+      {route ? (
+        <Link
+          href={injectParamsIntoPath(route, {
+            id,
+          })}>
+          {title}
+        </Link>
+      ) : (
+        title
+      )}
     </Typography>
   );
 }

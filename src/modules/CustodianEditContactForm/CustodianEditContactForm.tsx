@@ -7,7 +7,7 @@ import FormControlCheckbox from "@/components/FormControlCheckbox";
 import yup from "@/config/yup";
 import { CustodianUserRoles } from "@/consts/custodian";
 import { useStore } from "@/data/store";
-import { CustodianUser } from "@/types/application";
+import { CustodianUser, WithTranslations } from "@/types/application";
 import { QueryState } from "@/types/form";
 import {
   isCustodianAdministrator,
@@ -16,10 +16,9 @@ import {
 import CheckIcon from "@mui/icons-material/Check";
 import { LoadingButton } from "@mui/lab";
 import { Button, Grid, TextField, Typography } from "@mui/material";
-import { useTranslations } from "next-intl";
 import { ChangeEvent, useMemo } from "react";
 
-export interface CustodianUserFields {
+export interface CustodianEditContactFormFields {
   first_name: string;
   last_name: string;
   email: string;
@@ -27,35 +26,31 @@ export interface CustodianUserFields {
   approver: boolean;
 }
 
-export interface UserModalDetailsProps {
+export type CustodianEditContactFormProps = WithTranslations<{
   user: Partial<CustodianUser>;
   queryState: QueryState;
-  onSubmit: (payload: CustodianUserFields) => void;
+  onSubmit: (payload: CustodianEditContactFormFields) => void;
   onClose: () => void;
-}
+}>;
 
-const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
-const NAMESPACE_TRANSLATION_FORM = "Form";
-
-export default function UserModalDetails({
+export default function CustodianEditContactForm({
   onClose,
   user,
   queryState,
   onSubmit,
-}: UserModalDetailsProps) {
-  const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
-  const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
+  t,
+}: CustodianEditContactFormProps) {
   const permissions = useStore(state => state.config.permissions);
 
   const schema = useMemo(
     () =>
       yup.object().shape({
-        first_name: yup.string().required(tForm("firstNameRequiredInvalid")),
-        last_name: yup.string().required(tForm("lastNameRequiredInvalid")),
+        first_name: yup.string().required(t("firstNameRequiredInvalid")),
+        last_name: yup.string().required(t("lastNameRequiredInvalid")),
         email: yup
           .string()
-          .email(tForm("emailFormatInvalid"))
-          .required(tForm("emailRequiredInvalid")),
+          .email(t("emailFormatInvalid"))
+          .required(t("emailRequiredInvalid")),
       }),
     []
   );
@@ -131,7 +126,7 @@ export default function UserModalDetails({
                   <FormControlCheckbox
                     name="administrator"
                     onChange={handleCheckRole}
-                    label={tForm("roleAdministrator")}
+                    label={t("roleAdministrator")}
                     labelCaption={t("roleAdministratorDescription")}
                   />
                 </Grid>
@@ -139,7 +134,7 @@ export default function UserModalDetails({
                   <FormControlCheckbox
                     name="approver"
                     onChange={handleCheckRole}
-                    label={tForm("roleApprover")}
+                    label={t("roleApprover")}
                     labelCaption={t("roleApproverDescription")}
                   />
                 </Grid>
@@ -148,7 +143,7 @@ export default function UserModalDetails({
 
             <FormModalActions>
               <Button variant="outlined" onClick={onClose}>
-                {tForm("cancelButton")}
+                {t("cancelButton")}
               </Button>
               <LoadingButton
                 type="submit"

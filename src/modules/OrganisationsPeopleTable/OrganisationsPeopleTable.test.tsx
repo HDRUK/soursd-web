@@ -1,5 +1,5 @@
 import { mockedUser } from "@/mocks/data/user";
-import { render, screen } from "@/utils/testUtils";
+import { commonAccessibilityTests, render, screen } from "@/utils/testUtils";
 import { useTranslations } from "next-intl";
 import OrganisationsPeopleTable, {
   OrganisationsPeopleTableProps,
@@ -11,12 +11,12 @@ const TestComponent = (props?: Partial<OrganisationsPeopleTableProps>) => {
   const t = useTranslations("Organisations.People");
 
   return (
-    <OrganisationsPeopleTable t={t} {...props} total={props?.data.length} />
+    <OrganisationsPeopleTable t={t} {...props} total={props?.data?.length} />
   );
 };
 
 const setupTest = (props?: Partial<OrganisationsPeopleTableProps>) => {
-  render(<TestComponent {...props} />);
+  return render(<TestComponent {...props} />);
 };
 
 describe("<OrganisationsPeopleTable />", () => {
@@ -48,5 +48,9 @@ describe("<OrganisationsPeopleTable />", () => {
         new RegExp(`${affiliations[0].registryAffiliationState}`, "i")
       )
     ).toBeInTheDocument();
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(setupTest());
   });
 });

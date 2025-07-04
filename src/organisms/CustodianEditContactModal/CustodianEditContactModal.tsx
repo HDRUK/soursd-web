@@ -18,7 +18,8 @@ import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback } from "react";
 
-export interface UserModalProps extends Omit<FormModalProps, "children"> {
+export interface CustodianEditContactModalProps
+  extends Omit<FormModalProps, "children"> {
   custodianId: number;
   user: Partial<CustodianUser>;
   onClose: () => void;
@@ -31,8 +32,8 @@ export default function UsersModal({
   user,
   onClose,
   ...restProps
-}: UserModalProps) {
-  const tForm = useTranslations(NAMESPACE_TRANSLATION_PROFILE_FORM);
+}: CustodianEditContactModalProps) {
+  const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE_FORM);
   const permissions = useStore(state => state.config.permissions);
 
   const { mutateAsync: mutatePostUser, ...updateCustodianUserState } =
@@ -108,11 +109,11 @@ export default function UsersModal({
 
       showAlert("success", {
         text: user?.id
-          ? tForm("updateSuccessfulDescription")
-          : tForm("createSuccessfulDescription"),
+          ? t("updateSuccessfulDescription")
+          : t("createSuccessfulDescription"),
         title: user?.id
-          ? tForm("updateSuccessfulTitle")
-          : tForm("createSuccessfulTitle"),
+          ? t("updateSuccessfulTitle")
+          : t("createSuccessfulTitle"),
       });
     },
     [custodianId]
@@ -125,14 +126,14 @@ export default function UsersModal({
       onClose={onClose}
       {...restProps}>
       {queryState.isError && !queryState.isLoading && (
-        <Message severity="error">{tForm(queryState.error[0])}</Message>
+        <Message severity="error">{t(queryState.error[0])}</Message>
       )}
       <CustodianEditContactForm
         onClose={onClose}
         onSubmit={handleOnSubmit}
         user={user}
         queryState={queryState}
-        t={tForm}
+        t={t}
       />
     </FormModal>
   );

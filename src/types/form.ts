@@ -7,7 +7,6 @@ interface QueryState {
   isLoading?: boolean;
   reset?: () => void;
 }
-
 interface MutationState {
   isError: boolean;
   error?: unknown | string | null;
@@ -16,12 +15,12 @@ interface MutationState {
   reset?: () => void;
 }
 
-type PropsWithMutation<T> = T & {
+type WithMutationState<T> = T & {
   mutateState: MutationState;
 };
 
-type PropsWithQuery<T> = T & {
+type WithQueryState<T> = T & {
   queryState: QueryState;
 };
 
-export type { QueryState, MutationState, PropsWithMutation, PropsWithQuery };
+export type { QueryState, MutationState, WithQueryState, WithMutationState };
