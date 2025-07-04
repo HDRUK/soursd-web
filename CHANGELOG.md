@@ -1,3 +1,48 @@
+## [1.6.0](https://github.com/HDRUK/soursd-web/compare/v1.5.0...v1.6.0) (2025-07-03)
+
+### ✨ Features
+
+* **SOURSD-1004:** Affiliations form modal (#327) ([02a170f](https://github.com/HDRUK/soursd-web/commit/02a170f8df582273891df606f1f17b768f75cde8))
+* **SOURSD-1004:** Fix order of menu items (#339) ([40649d6](https://github.com/HDRUK/soursd-web/commit/40649d6404a0c50aa14a922b0d18361ddfc681e6))
+* **SOURSD-1007:** Fix showing soursd ID for organisation created (#324) ([e6a07c5](https://github.com/HDRUK/soursd-web/commit/e6a07c54ecbed199e7da0214bfd798e3f3b53b9e))
+* **SOURSD-1007:** fix type casting for unclaimed (#325) ([6083e83](https://github.com/HDRUK/soursd-web/commit/6083e83cae2212fd6d6c3303fe172f16604186df))
+* **SOURSD-1023:** Implementation of Veriff Identity Check (#336) ([acef662](https://github.com/HDRUK/soursd-web/commit/acef6622d703af152df1c40800aa735d9930b2fb))
+* **SOURSD-1023:** update copy for guidance (#338) ([d9b7609](https://github.com/HDRUK/soursd-web/commit/d9b760945e31414ca085fc8381e76d7e2ed66f2d))
+* **SOURSD-1038:** Validation Check editing (#320) ([fd167f4](https://github.com/HDRUK/soursd-web/commit/fd167f4682284c63f286d9e835e5598d59d73a84))
+* **SOURSD-1058:**  tests (#359) ([99578f5](https://github.com/HDRUK/soursd-web/commit/99578f5998ba1f417cfa84717cb107e7ce13690e))
+* **SOURSD-1058:** tests (#357) ([e5ff87a](https://github.com/HDRUK/soursd-web/commit/e5ff87a31022ee2a4029d4386a321b1e40653b5a))
+* **SOURSD-1058:** tests (#362) ([b6c7273](https://github.com/HDRUK/soursd-web/commit/b6c7273cd03baa28f584010df8e35a804f1a4503))
+* **SOURSD-1060:** remove code (#354) ([b9e2377](https://github.com/HDRUK/soursd-web/commit/b9e2377547f88a5a38e8840b69b117fbdf07b152))
+* **SOURSD-1078:** design alignments (#356) ([dbe9655](https://github.com/HDRUK/soursd-web/commit/dbe965509f2628d560bbb09e2e49b2a8a99005a0))
+* **SOURSD-1087:** table pattern (#310) ([6f0dcbe](https://github.com/HDRUK/soursd-web/commit/6f0dcbe83fff4770aaca3979f4963afe20fe9547))
+* **SOURSD-1145:** move some modules into organisms (#319) ([cdbc758](https://github.com/HDRUK/soursd-web/commit/cdbc758019ae7b054dbf25f978b04378511a8a11))
+* **SOURSD-1265:** fix dates for forms (#326) ([608a731](https://github.com/HDRUK/soursd-web/commit/608a731d477ee6bd1476e29e87948c5005956fff))
+* **SOURSD-1292:** kanban and list view project users (#344) ([6ac6087](https://github.com/HDRUK/soursd-web/commit/6ac6087750427739d9dae19aa19f263c6162f92f))
+* **SOURSD-1293:** org board (#346) ([25ddbc0](https://github.com/HDRUK/soursd-web/commit/25ddbc052f643e0c7022e81f381fbede1d9bc800))
+* **SOURSD-1366:** Project Users working for custodians (#341) ([abbb47e](https://github.com/HDRUK/soursd-web/commit/abbb47ea564ac88e98c639c74f296604c561fc26))
+* **SOURSD-1373:** Organisational stuff rework (#343) ([ab77a10](https://github.com/HDRUK/soursd-web/commit/ab77a1073fdb9b3a9ccfa2bf94d66433f97b0579))
+* **SOURSD-1408:** Fixes for project user and project organisation list views (#350) ([c05ecb5](https://github.com/HDRUK/soursd-web/commit/c05ecb5e555659d6dd5ee6acb459c493fc6694b0))
+* **SOURSD-1409:** Updating user history (#358) ([510d025](https://github.com/HDRUK/soursd-web/commit/510d025b59ceb6d84752736cd0616ee2072f6a8b))
+* **SOURSD-1416:** Updated User History (#347) ([f3143b0](https://github.com/HDRUK/soursd-web/commit/f3143b0e037c5f478aef25c1f05062ff23689a64))
+* **SOURSD-1499:** Remove use of PATCH and replace with PUT (#360) ([50244f3](https://github.com/HDRUK/soursd-web/commit/50244f34f4d2e576399a7a80bc668662f8c3f016))
+* **SOURSD-730:** org content (#333) ([efe5aff](https://github.com/HDRUK/soursd-web/commit/efe5aff5a9309234c9b404dd82d140b0d99a10cf))
+* **SOURSD-734:** user profile content (#334) ([271d9fd](https://github.com/HDRUK/soursd-web/commit/271d9fdd0d8a2db36842a40c18ecaef8508e8148))
+* **SOURSD-735:** custodian home content (#352) ([fd173ca](https://github.com/HDRUK/soursd-web/commit/fd173ca0ab72a39208b0322cb7efa4963a224df8))
+* **SOURSD-735:** update custodian home content (#330) ([5653bf5](https://github.com/HDRUK/soursd-web/commit/5653bf508cbe578af46b89a18901e9e3baaec7d2))
+* **SOURSD-810:** kanban board (#329) ([347d2b1](https://github.com/HDRUK/soursd-web/commit/347d2b1bff16dfaf6d834d03527c310668a14099))
+* **SOURSD-810:** move to, workflow state (#337) ([ddde7b3](https://github.com/HDRUK/soursd-web/commit/ddde7b37e20dd9836e8cb659afdc550a985599b6))
+* **SOURSD-826:** Notification on affiliation delete/update (#323) ([ecd4a74](https://github.com/HDRUK/soursd-web/commit/ecd4a7441e1ed1b0546432690e0f4f40117e9a4d))
+* **SOURSD-970:** Enable search for custodian users (#335) ([1233abb](https://github.com/HDRUK/soursd-web/commit/1233abbed5f425f4b1443f859973e531f7494761))
+
+### 🐛 Bug Fixes
+
+* **SOURSD-1005:** Fix the charities page (#321) ([3cba98c](https://github.com/HDRUK/soursd-web/commit/3cba98cb3d5f3ff4f6a06ef93e38b84371b462b4))
+* **SOURSD-1013:** People page for organisation view (#328) ([1112889](https://github.com/HDRUK/soursd-web/commit/11128895748de23a6b688f3a8d8460f61dc2f4d0))
+* **SOURSD-1343:** Fix saving of custodian rules (#348) ([e6f9318](https://github.com/HDRUK/soursd-web/commit/e6f93183c675835110742e18c0e25db7d09cb02d))
+* **SOURSD-1442:** wrong sort fields breaking projects pages (#351) ([c71fa21](https://github.com/HDRUK/soursd-web/commit/c71fa21aeebc628f7ec4f349ddb7db054feab858))
+* **SOURSD-1443:** kanban story (#353) ([1059a63](https://github.com/HDRUK/soursd-web/commit/1059a636678d7e1ff16758c9c29694370113f226))
+* **SOURSD-1453:** add button back (#355) ([0a1e54b](https://github.com/HDRUK/soursd-web/commit/0a1e54bffde5a4f7b5126cdf90747336218f8c7a))
+
 ## [1.5.0](https://github.com/HDRUK/soursd-web/compare/v1.4.0...v1.5.0) (2025-05-19)
 
 ### ✨ Features
