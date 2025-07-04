@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import { TextField, Grid, Box } from "@mui/material";
 import { AppRouterContext } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { useFormContext, Controller } from "react-hook-form";

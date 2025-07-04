@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 import { COOKIE_OPTIONS } from "@/consts/cookies";
 
 export async function GET(req: Request) {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const { searchParams } = new URL(req.url);
   const code = searchParams.get("code");
   const redirectPath = cookieStore.get("redirectPath") ?? { value: "/" };
@@ -21,6 +21,8 @@ export async function GET(req: Request) {
 
   const tokenUrl = `${keycloak.authServerUrl}/realms/${keycloak.realm}/protocol/openid-connect/token`;
 
+  console.log(tokenUrl);
+
   try {
     const response = await axios.post(
       tokenUrl,
@@ -29,7 +31,7 @@ export async function GET(req: Request) {
         client_id: keycloak.clientId,
         client_secret: keycloak.clientSecret,
         code,
-        redirect_uri: keycloak.redirectUriLogin,
+        //redirect_uri: keycloak.redirectUriLogin,
       }),
       { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
     );
@@ -51,7 +53,10 @@ export async function GET(req: Request) {
       encodeURI(`${process.env.NEXT_PUBLIC_LOCAL_ENV}${redirectPath.value}`)
     );
   } catch (e) {
-    console.error(e);
+    console.error("Axios Error:");
+    console.error("Status:", e.response?.status);
+    console.error("Status Text:", e.response?.statusText);
+    console.error("Data:", e.response?.data); // <- This is most helpful for debugging
 
     const errorType = encodeURIComponent("login");
 

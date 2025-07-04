@@ -78,7 +78,7 @@ export default function Training({
     refetch: refetchTrainings,
     ...trainingDataQueryState
   } = useQuery({
-    ...getTrainingByRegistryIdQuery(user?.registry_id),
+    ...getTrainingByRegistryIdQuery(user?.registry_id as number),
     enabled: !!user?.registry_id,
   });
 

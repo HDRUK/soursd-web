@@ -91,8 +91,6 @@ jest.mock("next/navigation", () => {
   };
 });
 
-jest.mock("@/hooks/usePathServerSide", () => jest.fn());
-
 jest.mock("@/data/store", () => ({
   useStore: jest.fn(),
 }));

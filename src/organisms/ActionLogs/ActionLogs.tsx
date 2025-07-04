@@ -26,23 +26,28 @@ interface ActionLogProps {
 
 export default function ActionLogs({ variant, panelProps }: ActionLogProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
-  const { routes, user } = useStore(state => ({
-    routes: state.getApplication().routes,
-    user: state.getUser(),
-  }));
+  const getApplication = useStore(state => state.getApplication);
+  const getUser = useStore(state => state.getUser);
+  const getOrganisation = useStore(state => state.getOrganisation);
+  const getCustodian = useStore(state => state.getCustodian);
 
-  const { id: entityId } = useStore(state => {
-    switch (variant) {
-      case "user":
-        return { id: state.getUser()?.id || 1 };
-      case "organisation":
-        return { id: state.getOrganisation()?.id || 1 };
-      case "custodian":
-        return { id: state.getCustodian()?.id || 1 };
-      default:
-        return { id: 1 };
-    }
-  });
+  const routes = getApplication().routes;
+  const user = getUser();
+
+  let entityId = 1;
+
+  switch (variant) {
+    case "user":
+      entityId = getUser()?.id || 1;
+      break;
+    case "organisation":
+      entityId = getOrganisation()?.id || 1;
+      break;
+    case "custodian":
+      entityId = getCustodian()?.id || 1;
+      break;
+  }
+
   const { data: actionLogData } = useQuery(
     getActionLogsQuery(entityId, variant)
   );

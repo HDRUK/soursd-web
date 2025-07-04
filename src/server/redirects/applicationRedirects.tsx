@@ -1,6 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { getCurrentPathServer } from "@/utils/pathServer";
 import { EXCLUDE_REDIRECT_URLS } from "../../consts/router";
 import getMe from "../../services/auth/getMe";
 import { getAccessToken } from "../../utils/auth";
@@ -12,10 +13,9 @@ import {
   getSeverErrorRedirectPath,
   isInPath,
 } from "../../utils/redirects";
-import usePathServerSide from "../usePathServerSide";
 
-export default async function useApplicationRedirects() {
-  const pathname = usePathServerSide();
+export default async function handleApplicationRedirects() {
+  const pathname = await getCurrentPathServer();
 
   const redirectToPath = (redirectUrl: string, pathname: string) => {
     if (redirectUrl && !isInPath(redirectUrl, pathname)) {

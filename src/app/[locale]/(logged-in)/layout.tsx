@@ -1,5 +1,5 @@
 import { UserGroup } from "@/consts/user";
-import useApplicationRedirects from "@/hooks/useApplicationRedirects";
+import handleApplicationRedirects from "@/server/redirects/applicationRedirects";
 import { PageContainer } from "@/modules";
 import Application from "@/organisms/Application";
 import { getMe } from "@/services/auth";
@@ -25,7 +25,7 @@ export default async function Layout({ children }: LayoutProps) {
   let custodianId;
   let organisationId;
 
-  await useApplicationRedirects();
+  await handleApplicationRedirects();
 
   const { data } = await getMe();
 

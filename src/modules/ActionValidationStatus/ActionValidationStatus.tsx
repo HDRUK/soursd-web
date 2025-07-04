@@ -1,6 +1,5 @@
 import { useTranslations } from "next-intl";
-import { Grid, Box } from "@mui/material";
-import { TextareaAutosize } from "@mui/base/TextareaAutosize";
+import { Grid, Box, TextareaAutosize } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { useState, useMemo, useEffect } from "react";
 import { UseCustodianProjectUserResult } from "@/hooks/useCustodianProjectUser/useCustodianProjectUser";

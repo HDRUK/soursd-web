@@ -1,5 +1,5 @@
 import React from "react";
-import { Meta, StoryObj } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/nextjs";
 import { useForm } from "react-hook-form";
 import { AddressFields } from "../../types/application";
 import GoogleAutocomplete, {

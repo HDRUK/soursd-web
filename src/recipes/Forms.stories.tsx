@@ -1,4 +1,4 @@
-import type { StoryObj } from "@storybook/react";
+import type { StoryObj } from "@storybook/nextjs";
 import SyntaxHighlighter from "react-syntax-highlighter";
 
 interface FormsProps {

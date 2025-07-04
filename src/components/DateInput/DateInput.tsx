@@ -4,7 +4,7 @@ import {
   LocalizationProvider,
   PickerChangeHandlerContext,
 } from "@mui/x-date-pickers";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DatePicker, DatePickerProps } from "@mui/x-date-pickers/DatePicker";
 import { useLocale } from "next-intl";
 import { enGB } from "date-fns/locale/en-GB";

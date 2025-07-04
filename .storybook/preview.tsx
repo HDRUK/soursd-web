@@ -1,5 +1,5 @@
 import messages from "@/config/locales/en.json";
-import type { Preview, StoryFn } from "@storybook/react";
+import type { Preview, StoryFn } from "@storybook/nextjs";
 import { NextIntlClientProvider } from "next-intl";
 import ThemeRegistry from "../src/components/ThemeRegistry/ThemeRegistry";
 
