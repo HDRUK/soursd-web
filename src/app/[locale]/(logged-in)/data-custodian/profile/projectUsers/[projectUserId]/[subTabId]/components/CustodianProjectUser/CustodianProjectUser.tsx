@@ -88,8 +88,6 @@ function CustodianProjectUser({
     if (userData?.data) setUser(userData.data);
   }, [userData]);
 
-  console.log("here2", projectUser);
-
   return (
     user && (
       <PageBodyContainer
