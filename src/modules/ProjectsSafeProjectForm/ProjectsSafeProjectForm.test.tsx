@@ -1,11 +1,11 @@
+import { mockedProject } from "@/mocks/data/project";
 import {
   commonAccessibilityTests,
   fireEvent,
   render,
   screen,
   waitFor,
-} from "@/utils/testUtils";
-import { mockedProject } from "@/mocks/data/project";
+} from "../../utils/testUtils";
 import ProjectsSafeProjectForm, {
   ProjectsSafeProjectFormProps,
 } from "./ProjectsSafeProjectForm";

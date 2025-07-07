@@ -1,7 +1,7 @@
 "use client";
 
 import ButtonToggle from "@/components/ButtonToggle";
-import ProjectsAddUserModal from "@/components/ProjectsAddUserModal";
+import ProjectsAddUserModal from "@/organisms/ProjectsAddUserModal";
 import Results from "@/components/Results";
 import useProjectEntity from "@/hooks/useProjectEntity";
 import useQueryAlerts from "@/hooks/useQueryAlerts";

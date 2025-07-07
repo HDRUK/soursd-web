@@ -3,34 +3,21 @@
 import { ROUTES } from "@/consts/router";
 import {
   Custodian,
+  Histories,
   Organisation,
   Permission,
-  ResearcherAffiliation,
-  ResearcherAccreditation,
-  ResearcherEducation,
-  ResearcherEmployment,
-  ResearcherProject,
-  ResearcherTraining,
-  Sector,
-  User,
-  ResearcherProfessionalRegistration,
+  ProjectOrganisation,
   ProjectRole,
   ProjectUser,
-  ProjectOrganisation,
+  ResearcherProject,
+  Sector,
+  User,
 } from "@/types/application";
 import { Routes } from "@/types/router";
 import { produce } from "immer";
 import { create } from "zustand";
 
-export interface StoreUserHistories {
-  employments: ResearcherEmployment[];
-  training: ResearcherTraining[];
-  education: ResearcherEducation[];
-  approvedProjects: ResearcherProject[];
-  accreditations: ResearcherAccreditation[];
-  affiliations: ResearcherAffiliation[];
-  professionalRegistrations: ResearcherProfessionalRegistration[];
-}
+export type StoreUserHistories = Histories;
 
 export interface StoreApplication {
   routes: Record<
@@ -273,5 +260,5 @@ const useStoreHelpers = () => {
   return helpers;
 };
 
-export { useStore, useStoreHelpers, storeMethods };
+export { storeMethods, useStore, useStoreHelpers };
 export type { StoreState };

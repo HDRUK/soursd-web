@@ -1,8 +1,6 @@
 "use client";
 
-import { QueryParams } from "@/types/query";
 import { useSearchParams } from "@/i18n/routing";
-import { Paged, ResponseJson } from "@/types/requests";
 import {
   keepPreviousData,
   useQuery,
@@ -10,6 +8,8 @@ import {
 } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
+import { QueryParams } from "../../types/query";
+import { Paged, ResponseJson } from "../../types/requests";
 
 const API_SORT_KEY = "sort";
 

@@ -1,5 +1,5 @@
 import { mockedProjectDetails } from "@/mocks/data/project";
-import { render, screen } from "@/utils/testUtils";
+import { render, screen } from "../../utils/testUtils";
 import ProjectsSafeDataDetails from "./ProjectsSafeDataDetails";
 
 const projectDetailsData = mockedProjectDetails();

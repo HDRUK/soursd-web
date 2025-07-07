@@ -1,9 +1,9 @@
-import useQueryConfirmAlerts from "@/hooks/useQueryConfirmAlerts";
-import { deleteProjectOrganisationQuery } from "@/services/project_organisations";
-import { deleteProjectUserQuery } from "@/services/project_users";
-import { EntityType } from "@/types/api";
 import { useMutation } from "@tanstack/react-query";
 import { useMemo } from "react";
+import useQueryConfirmAlerts from "../../hooks/useQueryConfirmAlerts";
+import { deleteProjectOrganisationQuery } from "../../services/project_organisations";
+import { deleteProjectUserQuery } from "../../services/project_users";
+import { EntityType } from "../../types/api";
 
 export interface UseMutateDeleteEntityFromProjectProps {
   entityType: Omit<EntityType, "CUSTODIAN">;

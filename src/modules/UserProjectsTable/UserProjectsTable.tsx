@@ -1,16 +1,16 @@
-import ChipStatus from "@/components/ChipStatus";
-import Table from "@/components/Table";
-import useColumns from "@/hooks/useColumns";
-import { ResearcherProject } from "@/types/application";
-import { ModuleTables } from "@/types/modules";
-import { RouteConfig } from "@/types/router";
+import { ColumnDef } from "@tanstack/react-table";
+import { useMemo } from "react";
+import ChipStatus from "../../components/ChipStatus";
+import Table from "../../components/Table";
+import useColumns from "../../hooks/useColumns";
+import { ResearcherProject } from "../../types/application";
+import { ModuleTables } from "../../types/modules";
+import { RouteConfig } from "../../types/router";
 import {
   renderOrganisationsNameCell,
   renderProjectNameCell,
-} from "@/utils/cells";
-import { filterColumns } from "@/utils/table";
-import { ColumnDef } from "@tanstack/react-table";
-import { useMemo } from "react";
+} from "../../utils/cells";
+import { filterColumns } from "../../utils/table";
 
 export type UserProjectsTableColumns = "title" | "organisations" | "status";
 

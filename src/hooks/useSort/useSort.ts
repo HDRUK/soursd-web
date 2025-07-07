@@ -1,7 +1,7 @@
-import { SearchDirections } from "@/consts/search";
-import { SearchParams } from "@/types/query";
 import { getSearchSortOrder, getSearchSortParam } from "@/utils/query";
 import { ReactNode, useMemo } from "react";
+import { SearchDirections } from "../../consts/search";
+import { SearchParams } from "../../types/query";
 
 interface UseSortProps {
   items: {

@@ -1,7 +1,5 @@
 "use client";
 
-import { StoreUserHistories } from "@/data/store";
-
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
@@ -26,7 +24,7 @@ import {
 } from "../../services/trainings";
 import { PostTrainingsPayload } from "../../services/trainings/types";
 import { EntityType } from "../../types/api";
-import { ResearcherTraining, User } from "../../types/application";
+import { Histories, ResearcherTraining, User } from "../../types/application";
 import { formatShortDate } from "../../utils/date";
 import { showAlert } from "../../utils/showAlert";
 import TrainingForm from "./TrainingForm";
@@ -38,8 +36,8 @@ const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 interface TrainingProps {
   variant: EntityType;
   user: User;
-  setHistories?: (histories: StoreUserHistories) => void;
-  getHistories?: () => StoreUserHistories | undefined;
+  setHistories?: (histories: Histories) => void;
+  getHistories?: () => Histories | undefined;
 }
 
 export default function Training({

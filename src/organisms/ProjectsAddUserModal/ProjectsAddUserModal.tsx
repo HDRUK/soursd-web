@@ -1,11 +1,12 @@
+import { useStore } from "@/data/store";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import FormModal, { FormModalProps } from "../FormModal";
-import { putProjectUsersQuery } from "../../services/projects";
+import FormModal, { FormModalProps } from "../../components/FormModal";
 import useQueryAlerts from "../../hooks/useQueryAlerts";
+import ProjectsAddUserForm from "../../modules/ProjectsAddUserForm";
+import { putProjectUsersQuery } from "../../services/projects";
 import { ProjectAllUser } from "../../types/application";
 import { showAlert } from "../../utils/showAlert";
-import ProjectsAddUserForm from "../ProjectsAddUserForm";
 
 interface ProjectsAddUserModaProps extends Omit<FormModalProps, "children"> {
   request: boolean;
@@ -23,6 +24,7 @@ export default function ProjectsAddUserModal({
   onClose,
   ...restProps
 }: ProjectsAddUserModaProps) {
+  const projectRoles = useStore(state => state.getProjectRoles());
   const t = useTranslations(NAMESPACE_TRANSLATION);
   const queryClient = useQueryClient();
   const { mutateAsync, ...putProjectUsersMutationState } = useMutation(
@@ -66,6 +68,7 @@ export default function ProjectsAddUserModal({
       onClose={onClose}
       {...restProps}>
       <ProjectsAddUserForm
+        projectRoles={projectRoles}
         projectId={projectId}
         mutationState={putProjectUsersMutationState}
         onSave={handleSave}

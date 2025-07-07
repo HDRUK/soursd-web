@@ -1,4 +1,3 @@
-import theme from "@/theme";
 import { Box, BoxProps, CircularProgress } from "@mui/material";
 import React from "react";
 import OverlayCenter from "../OverlayCenter";
@@ -25,7 +24,7 @@ export default function LoadingWrapper({
     additionalProps = {
       ...additionalProps,
       height: "100vh",
-      background: theme.palette.white.default,
+      background: "#fff",
     };
   }
 

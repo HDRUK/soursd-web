@@ -1,14 +1,14 @@
-import React, { useState } from "react";
 import { Typography } from "@mui/material";
-import { Rule } from "@/types/rules";
 import { useTranslations } from "next-intl";
+import React, { useState } from "react";
+import { Rule } from "../../types/rules";
 import { ActionMenu, ActionMenuItem } from "../ActionMenu";
-import FormControlCheckbox from "../FormControlCheckbox";
+import AddEditCheckboxItem from "../AddEditCheckboxItem";
 import {
   StyledListItem,
   StyledListItemText,
 } from "../CheckboxList/CheckboxList.styles";
-import AddEditCheckboxItem from "../AddEditCheckboxItem";
+import FormControlCheckbox from "../FormControlCheckbox";
 
 interface CheckboxItemProps {
   item: Rule;

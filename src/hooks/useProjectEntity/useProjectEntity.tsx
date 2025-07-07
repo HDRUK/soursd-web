@@ -1,15 +1,15 @@
 "use client";
 
-import useProjectEntityBoard from "@/hooks/useProjectEntityBoard";
+import { useQuery } from "@tanstack/react-query";
+import { useMemo } from "react";
 import {
   getCustodianProjectOrganisationWorkflowTransitionsQuery,
   getCustodianProjectUserWorkflowTransitionsQuery,
   usePaginatedCustodianProjectOrganisations,
   usePaginatedCustodianProjectUsers,
-} from "@/services/custodian_approvals";
-import { EntityType } from "@/types/api";
-import { useQuery } from "@tanstack/react-query";
-import { useMemo } from "react";
+} from "../../services/custodian_approvals";
+import { EntityType } from "../../types/api";
+import useProjectEntityBoard from "../useProjectEntityBoard";
 
 type UseProjectEntityProps = {
   usePaginatedQuery: () => ReturnType<

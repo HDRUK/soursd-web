@@ -1,4 +1,4 @@
-import { mockedBannerContent } from "@/mocks/data/cms";
+import { mockedBannerContent } from "../../../mocks/data/cms";
 import { Message, MessageProps } from "../../components/Message";
 
 export default function BannerMessage(props: MessageProps) {

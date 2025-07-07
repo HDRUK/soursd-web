@@ -1,5 +1,5 @@
 import { mockedCharity, mockedOrganisation } from "@/mocks/data/organisation";
-import { render, screen } from "@/utils/testUtils";
+import { render, screen } from "../../utils/testUtils";
 import OrganisationsDigitalIdentifiersDetails, {
   OrganisationsDigitalIdentifiersDetailsProps,
 } from "./OrganisationsDigitalIdentifiersDetails";

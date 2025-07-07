@@ -1,7 +1,11 @@
 import { mockedSubsidiary } from "@/mocks/data/organisation";
-import { commonAccessibilityTests, render, screen } from "@/utils/testUtils";
-import { formatAddress } from "@/utils/address";
-import SubsidiariesTable, { SubsidiariesTableProps } from "./SubsidiariesTable";
+import {
+  commonAccessibilityTests,
+  render,
+  screen,
+} from "../../utils/testUtils";
+import { formatAddress } from "../../utils/address";
+import SubsidiariesTable from "./SubsidiariesTable";
 
 const subsidiary = mockedSubsidiary();
 

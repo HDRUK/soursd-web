@@ -9,8 +9,6 @@ import {
 } from "../../utils/testUtils";
 import InviteCustodian from "./InviteCustodian";
 
-jest.mock("@/data/store");
-
 const mockSubmit = jest.fn();
 
 const renderInviteCustodianComponent = () => {

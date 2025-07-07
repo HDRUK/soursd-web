@@ -1,4 +1,4 @@
-import { Footer, Header } from "@/modules";
+import { Footer, Header } from "@/organisms";
 import KeyFeatures from "./components/KeyFeatures";
 import SoursdInfo from "./components/SoursdInfo";
 import SoursdUsages from "./components/SoursdUsages";

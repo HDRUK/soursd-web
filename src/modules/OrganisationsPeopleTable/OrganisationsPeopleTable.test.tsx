@@ -1,6 +1,10 @@
 import { mockedUser } from "@/mocks/data/user";
-import { commonAccessibilityTests, render, screen } from "@/utils/testUtils";
 import { useTranslations } from "next-intl";
+import {
+  commonAccessibilityTests,
+  render,
+  screen,
+} from "../../utils/testUtils";
 import OrganisationsPeopleTable, {
   OrganisationsPeopleTableProps,
 } from "./OrganisationsPeopleTable";

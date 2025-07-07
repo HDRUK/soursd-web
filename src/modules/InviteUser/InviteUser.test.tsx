@@ -9,8 +9,6 @@ import {
 } from "../../utils/testUtils";
 import InviteUser from "./InviteUser";
 
-jest.mock("@/data/store");
-
 const mockSubmit = jest.fn();
 
 const fields = [/First name/i, /Last name/i, /Email/i];

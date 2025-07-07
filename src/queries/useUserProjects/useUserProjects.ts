@@ -1,6 +1,6 @@
-import { usePaginatedCustodiansUserProjects } from "@/services/custodians";
-import { usePaginatedUserProjects } from "@/services/users";
-import { EntityType } from "@/types/api";
+import { usePaginatedCustodiansUserProjects } from "../../services/custodians";
+import { usePaginatedUserProjects } from "../../services/users";
+import { EntityType } from "../../types/api";
 
 interface UseUserProjectsProps {
   variant: EntityType;

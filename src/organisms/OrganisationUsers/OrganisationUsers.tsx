@@ -11,7 +11,7 @@ import { TrashIcon } from "../../consts/icons";
 import { SearchDirections } from "../../consts/search";
 import usePaginatedQuery from "../../hooks/usePaginatedQuery";
 import { PageBody, PageSection } from "../../modules";
-import OrganisationUsersBulkInvite from "../../modules/OrganisationUsersBulkInvite";
+import OrganisationUsersBulkInvite from "../OrganisationUsersBulkInvite";
 import OrganisationUsersFilters from "../../modules/OrganisationUsersFilters";
 import useMutationWithConfirmation from "../../queries/useMutationWithConfirmation";
 import { deleteAffiliationQuery } from "../../services/affiliations";

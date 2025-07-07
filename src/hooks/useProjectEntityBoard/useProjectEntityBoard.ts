@@ -1,8 +1,8 @@
-import { WorkflowTransitionsResponse } from "@/services/custodian_approvals";
-import { WithModelState } from "@/types/application";
-import { DndItems } from "@/types/dnd";
 import { UniqueIdentifier } from "@dnd-kit/core";
 import { useMemo } from "react";
+import { WithModelState } from "../../types/application";
+import { DndItems } from "../../types/dnd";
+import { WorkflowTransitionsResponse } from "../../services/custodian_approvals";
 
 interface UseProjectEntityBoardProps<T> {
   data: T[];

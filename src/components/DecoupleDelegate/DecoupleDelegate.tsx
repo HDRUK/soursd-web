@@ -1,10 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import { useStore } from "@/data/store";
 import { TrashIcon } from "../../consts/icons";
 import { PutUserPayload, putUser } from "../../services/users";
+import { Organisation, User } from "../../types/application";
 import { showAlert, showLoadingAlertWithPromise } from "../../utils/showAlert";
-import { User } from "../../types/application";
 import { ActionMenuItem } from "../ActionMenu";
 
 interface DecoupleUserProps {
@@ -12,6 +11,7 @@ interface DecoupleUserProps {
   onSuccess: () => void;
   payload: PutUserPayload;
   namespace: string;
+  organisation: Organisation;
 }
 
 const DecoupleDelegate = ({
@@ -19,9 +19,9 @@ const DecoupleDelegate = ({
   onSuccess,
   payload,
   namespace,
+  organisation,
 }: DecoupleUserProps) => {
   const t = useTranslations(namespace);
-  const organisation = useStore(state => state.config.organisation);
 
   const { mutateAsync } = useMutation({
     mutationKey: ["putUser"],

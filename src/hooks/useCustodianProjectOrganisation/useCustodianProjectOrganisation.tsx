@@ -1,15 +1,15 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useMemo, useState } from "react";
-import { MutationState } from "@/types/form";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
+import { useEffect, useMemo, useState } from "react";
 import {
-  getCustodianProjectOrganisationStatesQuery,
-  getCustodianProjectOrganisationQuery,
-  putCustodianProjectOrganisationQuery,
   ChangeValidationStatusPayload,
-} from "@/services/custodian_approvals";
-import { CustodianProjectOrganisation } from "@/types/application";
-import { Option } from "@/types/common";
+  getCustodianProjectOrganisationQuery,
+  getCustodianProjectOrganisationStatesQuery,
+  putCustodianProjectOrganisationQuery,
+} from "../../services/custodian_approvals";
+import { CustodianProjectOrganisation } from "../../types/application";
+import { Option } from "../../types/common";
+import { MutationState } from "../../types/form";
 import useQueryAlerts from "../useQueryAlerts";
 
 type CustodianParams = {
