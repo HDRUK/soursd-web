@@ -49,7 +49,7 @@ describe("KeyFeatures Component", () => {
     ).toBeInTheDocument();
     expect(
       screen.queryAllByText(
-        /SOURSD records Data Custodian approvals for previous and current projects as well as approvals for other functionality in complementary systems./i
+        /Safe People Registry records Data Custodian approvals for previous and current projects as well as approvals for other functionality in complementary systems./i
       )[0]
     ).toBeInTheDocument();
 
@@ -61,7 +61,7 @@ describe("KeyFeatures Component", () => {
     ).toBeInTheDocument();
     expect(
       screen.queryAllByText(
-        /SOURSD provides Single Sign-On \(SSO\) through multiple providers, such as; Google, LinkedIn and LSRI via Keycloak. This enables users to easily associate their SOURSD account with existing credentials./i
+        /Safe People Registry provides Single Sign-On \(SSO\) through multiple providers, such as; Google, LinkedIn and LSRI via Keycloak. This enables users to easily associate their Safe People Registry account with existing credentials./i
       )[0]
     ).toBeInTheDocument();
   });

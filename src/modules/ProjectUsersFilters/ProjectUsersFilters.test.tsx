@@ -49,7 +49,7 @@ describe("<ProjectUsersFilters />", () => {
     act(() => {
       changeSelectValueByLabelText(
         /Filter by status/,
-        "SOURSD account created"
+        "Safe People Registry account created"
       );
     });
 

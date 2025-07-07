@@ -181,8 +181,18 @@ export default function NavBar() {
         data-testid="header-desktop-menu">
         <PageCenter>
           <StyledHeader>
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-              <SoursdLogo variant="titled" sx={{ mt: "-9px", mr: "40px" }} />
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+                flexGrow: 1,
+              }}>
+              <SoursdLogo
+                variant="titled"
+                direction="horizontal"
+                sx={{ mr: 4 }}
+              />
               {renderButtons(left_buttons)}
             </Box>
             <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>

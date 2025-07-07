@@ -1,22 +1,22 @@
 # 9. SUSPENSION AND TERMINATION
 
-## 9.1 Your use of SOURSD may, wholly or partly, be suspended if:
+## 9.1 Your use of Safe People Registry may, wholly or partly, be suspended if:
 
-### 9.1.1 we have concerns about the security of SOURSD;
+### 9.1.1 we have concerns about the security of Safe People Registry;
 
-### 9.1.2 we suspect your use of SOURSD has been fraudulent or is being conducted in an unauthorised way; or
+### 9.1.2 we suspect your use of Safe People Registry has been fraudulent or is being conducted in an unauthorised way; or
 
 ### 9.1.3 we are required by law or regulation to do so.
 
-We will not be liable to you for the unavailability of SOURSD during such suspension.
+We will not be liable to you for the unavailability of Safe People Registry during such suspension.
 
 ## 9.2 If you breach any of these Terms, we may immediately do any or all of the following:
 
 ### 9.2.1 issue a warning to you;
 
-### 9.2.2 temporarily or permanently remove any Input Data uploaded by you to SOURSD;
+### 9.2.2 temporarily or permanently remove any Input Data uploaded by you to Safe People Registry;
 
-### 9.2.3 temporarily or permanently withdraw your right to use SOURSD;
+### 9.2.3 temporarily or permanently withdraw your right to use Safe People Registry;
 
 ### 9.2.4 suspend or terminate your Account;
 
@@ -24,4 +24,4 @@ We will not be liable to you for the unavailability of SOURSD during such suspen
 
 ### 9.2.6 disclose such information to law enforcement authorities as we reasonably feel is necessary to do so.
 
-## 9.3 We may terminate the operation of SOURSD at any time on written notice.
+## 9.3 We may terminate the operation of Safe People Registry at any time on written notice.

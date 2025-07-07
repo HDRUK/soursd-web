@@ -13,7 +13,7 @@ export const mockedBannerContent = () => (
 );
 
 export const mockedOrganisationHomeIntro =
-  "The Organisation account is set up by a SRO (Senior Responsible Officer), who is required to get a declaration signed on behalf of their Organisation and upload this. SOURSD contains information about your Users (employees and students) and their work on sensitive data projects. The SRO is responsible for verifying this information. The SRO must have a position of seniority, as they are held accountable for the data.";
+  "The Organisation account is set up by a SRO (Senior Responsible Officer), who is required to get a declaration signed on behalf of their Organisation and upload this. Safe People Registry contains information about your Users (employees and students) and their work on sensitive data projects. The SRO is responsible for verifying this information. The SRO must have a position of seniority, as they are held accountable for the data.";
 
 export const mockedProjectsIntro =
   "The project list below outlines your projects pending approval, including validated Users and Organisations. Clicking on a project will show you more information and next steps.";
@@ -34,16 +34,19 @@ export const mockedUserHomeIntro = (
 export const mockedPendingAffiliations = (
   <>
     <Typography mb={2}>
-      SOURSD stores records of Users who are research-active working on
-      sensitive data. As an Organisation you can confirm that a SOURSD User
-      profile corresponds to an employee or student at your Organisation. This
-      is called affiliating a User.
+      Safe People Registry stores records of Users who are research-active
+      working on sensitive data. As an Organisation you can confirm that a Safe
+      People Registry User profile corresponds to an employee or student at your
+      Organisation. This is called affiliating a User.
     </Typography>
     <Typography mb={2}>
       When affiliating a User you are confirming that:
     </Typography>
     <Ol>
-      <li>The SOURSD User profile matches that of your employee / student</li>
+      <li>
+        The Safe People Registry User profile matches that of your employee /
+        student
+      </li>
       <li>
         The employee / student is an active researcher / data analyst needing to
         work on sensitive data.
@@ -72,12 +75,12 @@ export const mockedPersonalDetailsGuidanceProps = {
     <>
       <Typography mb={3}>Q. Why do we require this information?</Typography>
       <Typography>
-        A. The primary purpose of SOURSD is to consolidate information about
-        researchers and organisations to allow Data Custodians efficiently
-        assess if a person/organisation is ‘Safe’. You can set up a profile in
-        SOURSD which shares relevant information with Data Custodian, providing
-        as much information about yourself as possible helps Data Custodians
-        assess you more quickly and easily.
+        A. The primary purpose of Safe People Registry is to consolidate
+        information about researchers and organisations to allow Data Custodians
+        efficiently assess if a person/organisation is ‘Safe’. You can set up a
+        profile in Safe People Registry which shares relevant information with
+        Data Custodian, providing as much information about yourself as possible
+        helps Data Custodians assess you more quickly and easily.
       </Typography>
     </>
   ),
@@ -88,9 +91,9 @@ export const mockedUserExperienceGuidanceProps = {
   info: (
     <>
       <Typography mb={3}>
-        Through SOURSD you can provide Data Custodians with an up-to-date record
-        of your employment history, education, qualifications, and publication
-        record.
+        Through Safe People Registry you can provide Data Custodians with an
+        up-to-date record of your employment history, education, qualifications,
+        and publication record.
       </Typography>
       <Typography component="aside">
         <Typography variant="subtitle1" fontWeight={700}>
@@ -170,15 +173,16 @@ export const mockedResearcherAffiliationsGuidance = {
   info: (
     <>
       <Typography mb={2}>
-        Through SOURSD individuals are affiliated with Organisations (employers
-        or higher education institutions or honorary contracts).
+        Through Safe People Registry individuals are affiliated with
+        Organisations (employers or higher education institutions or honorary
+        contracts).
       </Typography>
       <Typography mb={2}>
-        If your Organisation is not on SOURSD you can ask them to register for
-        an account. Affiliated Organisations that haven’t already confirmed your
-        status will be sent an invite to do so, when you click save. When you
-        click save affiliated organisation will be invited to confirm your
-        status, if they have not already do so.
+        If your Organisation is not on Safe People Registry you can ask them to
+        register for an account. Affiliated Organisations that haven’t already
+        confirmed your status will be sent an invite to do so, when you click
+        save. When you click save affiliated organisation will be invited to
+        confirm your status, if they have not already do so.
       </Typography>
       <Typography mb={5}>
         Being affiliated by an Organisation is especially important for
@@ -218,9 +222,9 @@ export const mockedCustodianIdvtInfoContent = (
       <li>Sanctions. (AML)</li>
     </ol>
     <Typography>
-      This feature is supplied as part of SOURSD and is entirely up to you, as a
-      Data Custodian, whether you want these additional security checks carried
-      out, above and beyond what an employer would do.
+      This feature is supplied as part of Safe People Registry and is entirely
+      up to you, as a Data Custodian, whether you want these additional security
+      checks carried out, above and beyond what an employer would do.
     </Typography>
   </>
 );
@@ -265,7 +269,7 @@ export const mockedSoursdHomepageUsages = {
   infoTitle: "SoursdUsages",
   infoHeader: (
     <Typography variant="h2" mb={2}>
-      With SOURSD you can...
+      With Safe People Registry you can...
     </Typography>
   ),
 };
@@ -299,13 +303,13 @@ export const mockedRorIdInfo = (
 export const mockedOrganisationUsersIntro = `
   As a representative of an Organisation, you have been given permission
   to associate your affiliated Users (an employee or student of your
-  Organisation) with your Organisation’s SOURSD account. Users are
+  Organisation) with your Organisation’s Safe People Registry account. Users are
   individuals involved in active research projects using sensitive data.
 `;
 
 export const mockedOrganisationBulkInviteIntro = `
-  Add new affiliated Users to SOURSD. Individual Users will create a
-  SOURSD account for themselves and will affiliate themselves with an
+  Add new affiliated Users to Safe People Registry. Individual Users will create a
+  Safe People Registry account for themselves and will affiliate themselves with an
   Organisation.
 `;
 
@@ -331,27 +335,28 @@ export const mockedDelegateListDescription = (
     </Typography>
     <Typography>
       As a Senior Responsible Officer (SRO) for your Organisation, you can
-      invite nominated Delegates from your Organisation to create a SOURSD
-      account. A Delegate could be a Human Resources (HR) representative,
-      Information Governance representative e.g. Data Protection Officer (DPO) ,
-      Contracts representative or Legal representative.You can invite nominated
-      Delegates to register for a SOURSD account here:
+      invite nominated Delegates from your Organisation to create a Safe People
+      Registry account. A Delegate could be a Human Resources (HR)
+      representative, Information Governance representative e.g. Data Protection
+      Officer (DPO) , Contracts representative or Legal representative.You can
+      invite nominated Delegates to register for a Safe People Registry account
+      here:
     </Typography>
   </>
 );
 
 export const mockedEmployeeStudentAdminDescription = `
-As a representative of an Organisation, you have been given permission to associate your affiliated users (an employee or student of your Organisation) with your Organisation’s SOURSD account. Users are individuals involved in active research projects using sensitive data. 
+As a representative of an Organisation, you have been given permission to associate your affiliated users (an employee or student of your Organisation) with your Organisation’s Safe People Registry account. Users are individuals involved in active research projects using sensitive data. 
 
-Individual users will create a SOURSD account for themselves and will affiliate themselves with an Organisation.
+Individual users will create a Safe People Registry account for themselves and will affiliate themselves with an Organisation.
 
-Automatically invite users to create a SOURSD account. Users will have one SOURSD account that will stay with them throughout their career. Select the user(s) you would like to invite to create a SOURSD account and select ‘Invite User to create a SOURSD account’ in the Actions below. 
+Automatically invite users to create a Safe People Registry account. Users will have one Safe People Registry account that will stay with them throughout their career. Select the user(s) you would like to invite to create a Safe People Registry account and select ‘Invite User to create a Safe People Registry account’ in the Actions below. 
 `;
 
 export const mockedWebhookDescription = (
   <Typography>
-    SOURSD uses an exponential back-off mechanism to avoid missed callbacks. In
-    the event of your server not returning an{" "}
+    Safe People Registry uses an exponential back-off mechanism to avoid missed
+    callbacks. In the event of your server not returning an{" "}
     <strong>HTTP_OK (200) response</strong>, we will continuously try to re-send
     with increasing retry times, until we receive a{" "}
     <strong>HTTP_OK (200) response</strong>, or we reach our send cap.{" "}
@@ -365,11 +370,12 @@ export const mockedWebhookDescription = (
 export const mockedConfigurationRulesDescription = (
   <>
     <Typography mb={2}>
-      SOURSD can be configured to flag if a certain property of a User or
-      Organisation profile does not meet a set of individual Data Custodian
-      "decision models" or criteria, supporting your decision making process.
-      SOURSD does not make any decisions as to which Users or Organisations are
-      considered "safe" - that decision remains with each Data Custodian.
+      Safe People Registry can be configured to flag if a certain property of a
+      User or Organisation profile does not meet a set of individual Data
+      Custodian "decision models" or criteria, supporting your decision making
+      process. Safe People Registry does not make any decisions as to which
+      Users or Organisations are considered "safe" - that decision remains with
+      each Data Custodian.
     </Typography>
     <Typography mb={2}>
       A User or Organisation can still be approved by a Data Custodian to work
@@ -399,9 +405,9 @@ export const mockedConfigurationRulesGuidanceProps = {
         </ol>
       </Typography>
       <Typography mb={5}>
-        This feature is supplied as part of SOURSD and is entirely up to you, as
-        a Data Custodian, whether you want these additional security checks
-        carried out, above and beyond what an employer would do.
+        This feature is supplied as part of Safe People Registry and is entirely
+        up to you, as a Data Custodian, whether you want these additional
+        security checks carried out, above and beyond what an employer would do.
       </Typography>
     </>
   ),
@@ -424,11 +430,11 @@ export const mockedOrganisationProfileGuidance: TabGuidance = {
       info: (
         <>
           <Typography mb={5}>
-            Providing SOURSD with full Organisation information helps Data
-            Custodians validate your Organisation. The more information you
-            provide, the faster and easier the validation process becomes for
-            Users (an employee of an Organisation or student of a higher
-            education institution) to gain access to sensitive data.
+            Providing Safe People Registry with full Organisation information
+            helps Data Custodians validate your Organisation. The more
+            information you provide, the faster and easier the validation
+            process becomes for Users (an employee of an Organisation or student
+            of a higher education institution) to gain access to sensitive data.
           </Typography>
           <Typography mb={5}>
             If your Organisation’s headquarters is based in the UK, your legal
@@ -441,10 +447,10 @@ export const mockedOrganisationProfileGuidance: TabGuidance = {
       infoTitle: " Did you know?",
       info: (
         <Typography mb={5}>
-          Where applicable, providing SOURSD with information on persistent
-          digital identifiers associated with your Organisation enables Data
-          Custodians to verify your Organisation’s Companies House filing,
-          Research Organisation Registry (ROR) identifier and charity
+          Where applicable, providing Safe People Registry with information on
+          persistent digital identifiers associated with your Organisation
+          enables Data Custodians to verify your Organisation’s Companies House
+          filing, Research Organisation Registry (ROR) identifier and charity
           registration. This accelerates Organisation validation by Data
           Custodians.
         </Typography>
@@ -454,8 +460,9 @@ export const mockedOrganisationProfileGuidance: TabGuidance = {
       infoTitle: " Did you know?",
       info: (
         <Typography mb={5}>
-          Providing SOURSD with information on your Organisation’s sector, size
-          and website accelerates Organisation validation by Data Custodians.
+          Providing Safe People Registry with information on your Organisation’s
+          sector, size and website accelerates Organisation validation by Data
+          Custodians.
         </Typography>
       ),
     },
@@ -464,9 +471,9 @@ export const mockedOrganisationProfileGuidance: TabGuidance = {
       info: (
         <>
           <Typography mb={5}>
-            Providing SOURSD with a record of your Organisation’s data security
-            compliance certifications will provide Data Custodians with
-            confidence that an Organisation is compliant with required data
+            Providing Safe People Registry with a record of your Organisation’s
+            data security compliance certifications will provide Data Custodians
+            with confidence that an Organisation is compliant with required data
             security certifications.
           </Typography>
           <Typography mb={5}>
@@ -484,18 +491,18 @@ export const mockedOrganisationProfileGuidance: TabGuidance = {
       info: (
         <>
           <Typography mb={3}>
-            SOURSD stores records of Users who are or have been working with
-            sensitive data. These Users can have different roles, such as
-            primary investigators, researchers, data analysts, developers, and
-            students.
+            Safe People Registry stores records of Users who are or have been
+            working with sensitive data. These Users can have different roles,
+            such as primary investigators, researchers, data analysts,
+            developers, and students.
           </Typography>
 
           <Typography mb={3}>
-            As an Organisation, you can confirm that a SOURSD User profile
-            corresponds to an employee or student at your Organisation. This is
-            called <strong>affiliating a User</strong>. A User has one SOURSD
-            account that remains with them throughout their career and can be
-            affiliated with multiple Organisations.
+            As an Organisation, you can confirm that a Safe People Registry User
+            profile corresponds to an employee or student at your Organisation.
+            This is called <strong>affiliating a User</strong>. A User has one
+            Safe People Registry account that remains with them throughout their
+            career and can be affiliated with multiple Organisations.
           </Typography>
 
           <Typography mb={3}>
@@ -511,8 +518,8 @@ export const mockedOrganisationProfileGuidance: TabGuidance = {
               Organisation.
             </li>
             <li>
-              The SOURSD User profile accurately matches your employee or
-              student.
+              The Safe People Registry User profile accurately matches your
+              employee or student.
             </li>
             <li>
               Your Organisation approves the User to access sensitive data.
@@ -524,9 +531,9 @@ export const mockedOrganisationProfileGuidance: TabGuidance = {
           </ul>
 
           <Typography mt={3}>
-            Users can create their own SOURSD accounts and request affiliation.
-            Alternatively, your Organisation can invite Users to create or
-            configure their account for affiliation by selecting{" "}
+            Users can create their own Safe People Registry accounts and request
+            affiliation. Alternatively, your Organisation can invite Users to
+            create or configure their account for affiliation by selecting{" "}
             <strong>'Add User'</strong> and following the steps.
           </Typography>
         </>
@@ -544,27 +551,27 @@ export const mockedOrganisationProfileGuidance: TabGuidance = {
 
           <Typography mb={3}>
             <strong>Senior Responsible Officers (SROs)</strong> are accountable
-            for overseeing their Organisation’s SOURSD presence. They are
-            responsible for:
+            for overseeing their Organisation’s Safe People Registry presence.
+            They are responsible for:
           </Typography>
 
           <ul style={{ marginBottom: "1rem", paddingLeft: "1.25rem" }}>
-            <li>Creating the Organisation’s SOURSD account</li>
+            <li>Creating the Organisation’s Safe People Registry account</li>
             <li>
               Nominating administrative <strong>Delegates</strong> to manage
               User affiliations
             </li>
             <li>
               Providing and maintaining accurate information in the
-              Organisation’s SOURSD profile
+              Organisation’s Safe People Registry profile
             </li>
           </ul>
 
           <Typography mb={3}>
             It's essential that your Organisation designates an SRO at the
-            Organisational level. SOURSD deals with sensitive data involving
-            your employees or students, so senior-level accountability and
-            visibility are critical.
+            Organisational level. Safe People Registry deals with sensitive data
+            involving your employees or students, so senior-level accountability
+            and visibility are critical.
           </Typography>
 
           <Typography mb={3}>
@@ -576,10 +583,12 @@ export const mockedOrganisationProfileGuidance: TabGuidance = {
           <ul style={{ marginBottom: "1rem", paddingLeft: "1.25rem" }}>
             <li>Verifying a User’s affiliation with the Organisation</li>
             <li>
-              Accepting SOURSD's Terms of Use on behalf of the Organisation
+              Accepting Safe People Registry's Terms of Use on behalf of the
+              Organisation
             </li>
             <li>
-              Ensuring information in SOURSD is accurate and properly authorised
+              Ensuring information in Safe People Registry is accurate and
+              properly authorised
             </li>
           </ul>
         </>
@@ -593,9 +602,9 @@ export const mockedProfileGuidance: ProfileGuidance = {
 };
 
 export const mockedAbout = {
-  infoTitle: "About SOURSD",
+  infoTitle: "About Safe People Registry",
   aboutTitle: "Empowering Safe Data Access for Research and Innovation",
-  about: `SOURSD (Safe Organisation and User Registry for Sensitive Data) is a secure platform
+  about: `Safe People Registry (Safe Organisation and User Registry for Sensitive Data) is a secure platform
 designed to facilitate responsible access to sensitive data. Our mission is to enable
 researchers, Organisations and Data Custodians to collaborate efficiently while
 maintaining security and compliance.`,
@@ -610,7 +619,7 @@ maintaining security and compliance.`,
     "Make informed decisions about granting access while ensuring compliance.",
   purposeTitle: "Our Purpose",
   purpose: `In today’s data-driven world, ensuring that the right people can access the right
-data responsibly is crucial. SOURSD streamlines this process by:
+data responsibly is crucial. Safe People Registry streamlines this process by:
 
 - Providing a registry where Users and Organisations can establish their credentials
 for working with sensitive data.
@@ -618,7 +627,7 @@ for working with sensitive data.
 - Reducing administrative burden by minimising duplication of effort.
 - Enabling seamless authentication with multiple identity providers.`,
   commitmentTitle: "Our Commitment",
-  commitment: `SOURSD is built on principles of trust, security and efficiency. By fostering
+  commitment: `Safe People Registry is built on principles of trust, security and efficiency. By fostering
 collaboration between Data Custodians and Users, we help accelerate innovation
 while safeguarding sensitive information.`,
   footer: "Join us in transforming the way safe data access is managed.",
@@ -627,7 +636,7 @@ while safeguarding sensitive information.`,
 export const mockedFeatures = {
   infoTitle: "Features",
   info: `
-SOURSD is designed to streamline and secure access to sensitive data for researchers,
+Safe People Registry is designed to streamline and secure access to sensitive data for researchers,
 Organisations and Data Custodians. Our platform ensures efficiency, compliance and
 security while reducing administrative burden.`,
   features: `# Key Features`,
@@ -651,8 +660,8 @@ security while reducing administrative burden.`,
   transparency: `
 - Organisations can monitor researcher approvals and manage internal compliance.
 - Researchers can track the status of their project access in real-time.`,
-  footer: `SOURSD is your trusted partner in managing sensitive data access efficiently and securely.`,
-  detailsTitle: `Why Choose SOURSD?`,
+  footer: `Safe People Registry is your trusted partner in managing sensitive data access efficiently and securely.`,
+  detailsTitle: `Why Choose Safe People Registry?`,
   details: `
 - Saves time with direct access to approval teams.
 - Enhances security with strong authentication methods.
