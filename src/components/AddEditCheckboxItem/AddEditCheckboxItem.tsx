@@ -1,14 +1,14 @@
-import React, { useMemo } from "react";
-import { useTranslations } from "next-intl";
-import * as yup from "yup";
-import { TextField } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
+import { TextField } from "@mui/material";
+import { useTranslations } from "next-intl";
+import { useMemo } from "react";
+import * as yup from "yup";
 import { Rule } from "../../types/rules";
-import Form from "..//Form";
-import FormControl from "..//FormControlWrapper";
-import FormActions from "..//FormActions";
-import FormModal from "..//FormModal";
-import FormSection from "..//FormSection";
+import Form from "../Form";
+import FormActions from "../FormActions";
+import FormControl from "../FormControlWrapper";
+import FormModal from "../FormModal";
+import FormSection from "../FormSection";
 
 interface AddEditCheckboxItemProps {
   open: boolean;

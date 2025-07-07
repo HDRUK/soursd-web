@@ -1,9 +1,9 @@
 import { useRouter } from "@/i18n/routing";
-import { AccountType } from "@/types/accounts";
 import { useMutation } from "@tanstack/react-query";
 import { postRegister, PostRegisterPayload } from "../../services/auth";
 import { PostOrganisationPayload } from "../../services/organisations";
 import postOrganisationUnclaimed from "../../services/organisations/postOrganisationUnclaimed";
+import { AccountType } from "../../types/accounts";
 import { getCombinedQueryState } from "../../utils/query";
 import { getProfilePathByEntity } from "../../utils/redirects";
 import useAuth from "../useAuth";

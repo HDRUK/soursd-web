@@ -7,9 +7,11 @@ export type ResponsiveProps<T> = Record<
 >;
 
 export default function useResponsiveProps<T>(
-  responsiveProps: ResponsiveProps<T>
+  responsiveProps: ResponsiveProps<T> | undefined
 ) {
   const { isXs, isSm, isMd, isLg, isXl } = useBreakpointsUp();
+
+  if (!responsiveProps) return {};
 
   const props = Object.keys(responsiveProps).reduce(
     (previous: Partial<T>, key: keyof T) => {

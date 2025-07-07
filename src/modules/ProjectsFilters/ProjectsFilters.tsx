@@ -1,12 +1,12 @@
 "use client";
 
-import useFilter from "../../hooks/useFilter";
-import useSort from "../../hooks/useSort";
 import SortIcon from "@mui/icons-material/Sort";
 import { useTranslations } from "next-intl";
 import { Status } from "../../components/ChipStatus";
 import { FilterIcon } from "../../consts/icons";
+import useFilter from "../../hooks/useFilter";
 import { PaginatedQueryReturn } from "../../hooks/usePaginatedQuery";
+import useSort from "../../hooks/useSort";
 import { ResearcherProject } from "../../types/application";
 import SearchActionMenu from "../SearchActionMenu";
 import SearchBar from "../SearchBar";

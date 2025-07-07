@@ -1,26 +1,25 @@
 "use client";
 
-import { useEffect } from "react";
-import { useTranslations } from "next-intl";
 import { CellContext, ColumnDef } from "@tanstack/react-table";
-import { StoreUserHistories } from "@/data/store";
-import ContactLink from "../../components/ContactLink";
+import { useTranslations } from "next-intl";
+import { useEffect } from "react";
 import ChipStatus, { Status } from "../../components/ChipStatus";
+import ContactLink from "../../components/ContactLink";
 import Table from "../../components/Table";
-import { ResearcherAffiliation } from "../../types/application";
+import { PaginatedQueryHelpers } from "../../hooks/usePaginatedQuery";
+import { Histories, ResearcherAffiliation } from "../../types/application";
 import {
   renderAffiliationDateRangeCell,
   renderOrganisationsNameCell,
   renderWarningCell,
 } from "../../utils/cells";
-import { PaginatedQueryHelpers } from "../../hooks/usePaginatedQuery";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
 
 interface AffiliationsProps {
-  setHistories?: (histories: StoreUserHistories) => void;
-  getHistories?: () => StoreUserHistories | undefined;
+  setHistories?: (histories: Histories) => void;
+  getHistories?: () => Histories | undefined;
   extraColumns?: ColumnDef<ResearcherAffiliation>[];
   affiliationsData: ResearcherAffiliation[] | undefined;
   getAffiliationsQueryState: Partial<PaginatedQueryHelpers>;

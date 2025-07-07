@@ -1,14 +1,14 @@
-import useColumns from "../../hooks/useColumns";
-import { ModuleTables } from "../../types/modules";
-import { filterColumns } from "../../utils/table";
 import { ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
 import Table from "../../components/Table";
+import useColumns from "../../hooks/useColumns";
 import {
   CustodianProjectOrganisation,
   WithRoutes,
 } from "../../types/application";
+import { ModuleTables } from "../../types/modules";
 import { renderLinkNameCell, renderStatusCell } from "../../utils/cells";
+import { filterColumns } from "../../utils/table";
 
 export type ProjectOrganisationsTableColumns =
   | "organisationName"

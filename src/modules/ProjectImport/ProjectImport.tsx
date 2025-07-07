@@ -1,9 +1,9 @@
-import useGatewayProjectImport from "../../hooks/useGatewayProjectImport";
-import { ProjectDetails } from "../../types/application";
 import CloudDownloadOutlinedIcon from "@mui/icons-material/CloudDownloadOutlined";
 import { Button } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useEffect } from "react";
+import useGatewayProjectImport from "../../hooks/useGatewayProjectImport";
+import { ProjectDetails } from "../../types/application";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Projects";
 

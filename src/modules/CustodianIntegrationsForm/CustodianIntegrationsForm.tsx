@@ -1,3 +1,6 @@
+import { Grid, TextField, Typography } from "@mui/material";
+import Image from "next/image";
+import { PropsWithChildren } from "react";
 import ButtonSave from "../../components/ButtonSave";
 import Form, { FormProps } from "../../components/Form";
 import FormActions from "../../components/FormActions";
@@ -6,9 +9,6 @@ import yup from "../../config/yup";
 import { VALIDATION_INTEGRATION_ID } from "../../consts/form";
 import { Custodian, WithTranslations } from "../../types/application";
 import { WithMutationState } from "../../types/form";
-import { Grid, TextField, Typography } from "@mui/material";
-import Image from "next/image";
-import { PropsWithChildren } from "react";
 
 export interface CustodianIntegrationsFormsValues {
   gateway_app_id: string;

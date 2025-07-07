@@ -1,9 +1,9 @@
-import { Auth } from "@/types/application";
-import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
+import { useMemo, useState } from "react";
 import ReactDOMServer from "react-dom/server";
-import { showAlert } from "../../utils/showAlert";
 import ContactLink from "../../components/ContactLink";
+import { Auth } from "../../types/application";
+import { showAlert } from "../../utils/showAlert";
 
 const NAMESPACE_TRANSLATIONS_AUTH = "Auth";
 

@@ -1,10 +1,10 @@
+import { mockedOrganisation } from "@/mocks/data/organisation";
+import { formatAddress } from "../../utils/address";
 import {
   commonAccessibilityTests,
   render,
   screen,
 } from "../../utils/testUtils";
-import { mockedOrganisation } from "@/mocks/data/organisation";
-import { formatAddress } from "../../utils/address";
 import OrganisationsNameAddressDetails from "./OrganisationsNameAddressDetails";
 
 const organisation = mockedOrganisation({

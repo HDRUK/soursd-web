@@ -1,4 +1,3 @@
-import { DndItems, DragUpdateEvent, DragUpdateEventArgs } from "@/types/dnd";
 import {
   DragEndEvent,
   DragOverEvent,
@@ -7,6 +6,11 @@ import {
 } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 import { useMemo, useRef } from "react";
+import {
+  DndItems,
+  DragUpdateEvent,
+  DragUpdateEventArgs,
+} from "../../types/dnd";
 import {
   findContainer,
   findItem,

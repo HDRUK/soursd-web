@@ -69,6 +69,16 @@ interface Permission {
   };
 }
 
+interface Histories {
+  employments: ResearcherEmployment[];
+  training: ResearcherTraining[];
+  education: ResearcherEducation[];
+  approvedProjects: ResearcherProject[];
+  accreditations: ResearcherAccreditation[];
+  affiliations: ResearcherAffiliation[];
+  professionalRegistrations: ResearcherProfessionalRegistration[];
+}
+
 type Custodian = WithModelState<{
   id: number;
   created_at: string;
@@ -557,4 +567,5 @@ export type {
   WithRoutes,
   WithPaginatedQueryParms,
   UserPermission,
+  Histories,
 };

@@ -1,6 +1,6 @@
-import { TranslationsProps } from "@/types/common";
 import { ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
+import { TranslationsProps } from "../../types/common";
 
 type UseColumnsProps = TranslationsProps<{}>;
 

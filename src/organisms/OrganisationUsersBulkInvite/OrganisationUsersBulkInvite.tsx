@@ -2,7 +2,7 @@ import { Box, Button } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import UserBulkInvite from "../../components/UserBulkInvite";
-import UserModal from "../../components/UserModal";
+import UserModal from "../UserModal";
 import { Organisation } from "../../types/application";
 
 const NAMESPACE_TRANSLATION_PROFILE = "ProfileOrganisation";

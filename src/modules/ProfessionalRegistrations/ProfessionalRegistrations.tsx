@@ -1,6 +1,5 @@
 "use client";
 
-import { StoreUserHistories } from "@/data/store";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { Button, Typography } from "@mui/material";
@@ -24,6 +23,7 @@ import {
 import { PostProfessionalRegistrationPayload } from "../../services/professional_registrations/types";
 import { EntityType } from "../../types/api";
 import {
+  Histories,
   ResearcherProfessionalRegistration,
   User,
 } from "../../types/application";
@@ -35,8 +35,8 @@ const NAMESPACE_TRANSLATION_APPLICATION = "Application";
 interface ProfessionalRegistrationsProps {
   variant: EntityType;
   user: User;
-  setHistories?: (histories: StoreUserHistories) => void;
-  getHistories?: () => StoreUserHistories | undefined;
+  setHistories?: (histories: Histories) => void;
+  getHistories?: () => Histories | undefined;
   professionalRegistrations: ResearcherProfessionalRegistration[];
 }
 

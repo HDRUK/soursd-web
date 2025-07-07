@@ -1,3 +1,4 @@
+import { mockedProject } from "@/mocks/data/project";
 import {
   commonAccessibilityTests,
   fireEvent,
@@ -5,7 +6,6 @@ import {
   screen,
   waitFor,
 } from "../../utils/testUtils";
-import { mockedProject } from "@/mocks/data/project";
 import ProjectsSafeProjectForm, {
   ProjectsSafeProjectFormProps,
 } from "./ProjectsSafeProjectForm";

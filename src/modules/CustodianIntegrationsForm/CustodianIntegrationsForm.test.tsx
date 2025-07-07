@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import {
   commonAccessibilityTests,
   fireEvent,
@@ -5,9 +6,7 @@ import {
   screen,
   waitFor,
 } from "../../utils/testUtils";
-
 import { getRandomString } from "../../utils/string";
-import { useTranslations } from "next-intl";
 import CustodianIntegrationsForm, {
   CustodianIntegrationsFormProps,
 } from "./CustodianIntegrationsForm";

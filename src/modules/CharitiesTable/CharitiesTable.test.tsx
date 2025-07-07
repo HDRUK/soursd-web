@@ -1,10 +1,10 @@
 import { mockedCharity } from "@/mocks/data/organisation";
+import { faker } from "@faker-js/faker";
 import {
   commonAccessibilityTests,
   render,
   screen,
 } from "../../utils/testUtils";
-import { faker } from "@faker-js/faker";
 import CharitiesTable, { CharitiesTableProps } from "./CharitiesTable";
 
 const charity = mockedCharity({

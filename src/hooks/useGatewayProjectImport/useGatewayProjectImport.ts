@@ -1,12 +1,12 @@
-import { DataUse } from "@/types/gateway";
-import { ResponseJson } from "@/types/requests";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
 import ReactDOMServer from "react-dom/server";
-import { createDataUseDefaultValues } from "../../utils/form";
-import { postProjectDetailsFromGatewayQuery } from "../../services/project_details";
 import ContactLink from "../../components/ContactLink";
+import { postProjectDetailsFromGatewayQuery } from "../../services/project_details";
+import { DataUse } from "../../types/gateway";
+import { ResponseJson } from "../../types/requests";
+import { createDataUseDefaultValues } from "../../utils/form";
 import useQueryAlerts from "../useQueryAlerts";
 
 const NAMESPACE_TRANSLATION = "Projects";

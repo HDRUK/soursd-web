@@ -1,8 +1,8 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import { useMemo } from "react";
 import { useForm, UseFormReturn } from "react-hook-form";
-import { FormConfig } from "@/types/forms";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { generateSchema, generateDefaultValues } from "../../utils/yup";
+import { FormConfig } from "../../types/forms";
+import { generateDefaultValues, generateSchema } from "../../utils/yup";
 
 export default function useFormFromConfig<T>(
   formFieldsConfig: FormConfig

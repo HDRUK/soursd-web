@@ -1,5 +1,5 @@
-import { SearchParams } from "@/types/query";
 import { ReactNode, useMemo } from "react";
+import { SearchParams } from "../../types/query";
 
 interface UseFilterProps {
   items: {

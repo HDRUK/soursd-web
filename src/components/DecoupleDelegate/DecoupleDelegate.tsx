@@ -1,10 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import { useStore } from "@/data/store";
 import { TrashIcon } from "../../consts/icons";
 import { PutUserPayload, putUser } from "../../services/users";
-import { showAlert, showLoadingAlertWithPromise } from "../../utils/showAlert";
 import { Organisation, User } from "../../types/application";
+import { showAlert, showLoadingAlertWithPromise } from "../../utils/showAlert";
 import { ActionMenuItem } from "../ActionMenu";
 
 interface DecoupleUserProps {

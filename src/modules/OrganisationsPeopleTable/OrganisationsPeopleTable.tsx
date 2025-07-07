@@ -1,3 +1,5 @@
+import { ColumnDef } from "@tanstack/react-table";
+import { useMemo } from "react";
 import ChipStatus from "../../components/ChipStatus";
 import Table from "../../components/Table";
 import useColumns from "../../hooks/useColumns";
@@ -6,8 +8,6 @@ import { ModuleTables } from "../../types/modules";
 import { RouteConfig } from "../../types/router";
 import { renderUserNameCell } from "../../utils/cells";
 import { filterColumns } from "../../utils/table";
-import { ColumnDef } from "@tanstack/react-table";
-import { useMemo } from "react";
 
 export type OrganisationsPeopleTableColumns =
   | "name"
