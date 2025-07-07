@@ -20,7 +20,7 @@ export default function ConfirmAffiliation({
   affiliation,
 }: ConfirmAffiliationProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION);
-  const { currentUser } = useStore(state => ({
+  const { currentUser, organisation } = useStore(state => ({
     currentUser: state.getCurrentUser(),
     organisation: state.getOrganisation(),
   }));
@@ -42,8 +42,8 @@ export default function ConfirmAffiliation({
     queryClient.refetchQueries({
       queryKey: [
         "getOrganisationAffiliation",
-        currentUser.registry_id,
-        affiliation.id,
+        currentUser.registry_id as number,
+        organisation.id as number,
       ],
     });
   };
