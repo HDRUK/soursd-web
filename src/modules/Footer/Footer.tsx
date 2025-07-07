@@ -41,57 +41,75 @@ export default function Footer(props: FooterProps) {
     <Box {...props} component="footer" sx={{ backgroundColor: "midGrey.main" }}>
       <PageCenter>
         <StyledFooter>
-          <SoursdLogo variant="titled" color="white" />
-          <Box sx={{ flexGrow: 1, fontSize: "medium" }}>
-            <UL
+          <SoursdLogo variant="titled" color="white" direction="horizontal" />
+          <Box
+            sx={{
+              display: "flex",
+              flexGrow: 1,
+              gap: 5,
+              flexDirection: {
+                xs: "column",
+                md: "row",
+              },
+              alignItems: {
+                md: "flex-end",
+              },
+            }}>
+            <Box
               sx={{
-                mb: 1,
-              }}
-              responsiveProps={{
-                variant: {
-                  md: "horizontal",
-                  sm: "vertical",
-                },
+                flexGrow: 1,
+                fontSize: "medium",
               }}>
-              {footerLinkPages.map(({ label, ...linkProps }) => (
-                <li key={label}>
-                  <Box
-                    component={Link}
-                    sx={{
-                      color: "#fff",
-                      textDecoration: "none",
-                      fontWeight: "bold",
-                      fontSize: "medium",
-                    }}
-                    {...linkProps}>
-                    {label}
-                  </Box>
-                </li>
-              ))}
-            </UL>
-            {t("copyright")}
-          </Box>
-          <Box>
-            <Typography color="white" sx={{ fontWeight: "bold" }}>
-              {t("fundedByTitle")}
-            </Typography>
-            <StyledBox>
-              <Image
-                src="/images/logos/mrc.svg"
-                width={207}
-                height={64}
-                alt={t("mrcLogoAlt")}
-              />
-
-              <Box sx={{ mb: "-21px" }}>
+              <UL
+                sx={{
+                  mb: 1,
+                }}
+                responsiveProps={{
+                  variant: {
+                    md: "horizontal",
+                    sm: "vertical",
+                  },
+                }}>
+                {footerLinkPages.map(({ label, ...linkProps }) => (
+                  <li key={label}>
+                    <Box
+                      component={Link}
+                      sx={{
+                        color: "#fff",
+                        textDecoration: "none",
+                        fontWeight: "bold",
+                        fontSize: "medium",
+                      }}
+                      {...linkProps}>
+                      {label}
+                    </Box>
+                  </li>
+                ))}
+              </UL>
+              {t("copyright")}
+            </Box>
+            <Box>
+              <Typography color="white" sx={{ fontWeight: "bold" }}>
+                {t("fundedByTitle")}
+              </Typography>
+              <StyledBox>
                 <Image
-                  src="/images/logos/dsit.svg"
-                  width={228}
-                  height={122}
-                  alt={t("dsitLogoAlt")}
+                  src="/images/logos/mrc.svg"
+                  width={207}
+                  height={64}
+                  alt={t("mrcLogoAlt")}
                 />
-              </Box>
-            </StyledBox>
+
+                <Box sx={{ mb: "-21px" }}>
+                  <Image
+                    src="/images/logos/dsit.svg"
+                    width={228}
+                    height={122}
+                    alt={t("dsitLogoAlt")}
+                  />
+                </Box>
+              </StyledBox>
+            </Box>
           </Box>
         </StyledFooter>
       </PageCenter>

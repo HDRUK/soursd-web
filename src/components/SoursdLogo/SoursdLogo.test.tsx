@@ -8,20 +8,20 @@ jest.mock("next-intl", () => ({
 
 describe("SoursdLogo", () => {
   it("renders the logo image", () => {
-    const mockT = jest.fn().mockReturnValue("SOURSD");
+    const mockT = jest.fn().mockReturnValue("Safe People Registry");
     (useTranslations as jest.Mock).mockReturnValue(mockT);
 
     render(<SoursdLogo />);
-    const image = screen.getByRole("img", { name: /SOURSD/i });
+    const image = screen.getByRole("img", { name: /Safe People Registry/i });
     expect(image).toBeInTheDocument();
   });
 
   it("renders the title with the correct translation", () => {
-    const mockT = jest.fn().mockReturnValue("SOURSD");
+    const mockT = jest.fn().mockReturnValue("Safe People Registry");
     (useTranslations as jest.Mock).mockReturnValue(mockT);
 
     render(<SoursdLogo variant="titled" />);
-    const title = screen.getByText("SOURSD");
+    const title = screen.getByText("Safe People Registry");
     expect(title).toBeInTheDocument();
   });
 });

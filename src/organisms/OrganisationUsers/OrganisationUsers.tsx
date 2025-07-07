@@ -101,7 +101,7 @@ export default function OrganisationUsers() {
     },
     {
       accessorKey: "unclaimed",
-      header: "SOURSD account",
+      header: "Safe People Registry account",
       cell: renderAccountCreated,
     },
     {

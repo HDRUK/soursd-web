@@ -26,7 +26,7 @@ export default function Home() {
           <ActionLogs
             variant="user"
             panelProps={{
-              heading: "Welcome to SOURSD",
+              heading: "Welcome to Safe People Registry",
               description: mockedUserHomeIntro,
             }}
           />
