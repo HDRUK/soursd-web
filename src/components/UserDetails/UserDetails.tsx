@@ -1,13 +1,25 @@
 import { Box, BoxProps, Link, Typography } from "@mui/material";
 import { getInitials } from "../../utils/application";
-import { User } from "../../types/application";
+import { Organisation, ProjectUser, User } from "../../types/application";
 import MaskLabel from "../MaskLabel";
 
 export interface UserDetailsProps extends BoxProps {
-  user: User;
+  projectUser?: ProjectUser;
+  user?: User;
+  organisation?: Organisation;
 }
 
-export default function UserDetails({ user, ...restProps }: UserDetailsProps) {
+export default function UserDetails({
+  projectUser,
+  user: directUser,
+  organisation: directOrganisation,
+  ...restProps
+}: UserDetailsProps) {
+  const user = directUser ?? projectUser?.registry?.user;
+  const role = projectUser?.role;
+  const organisation =
+    directOrganisation ?? projectUser?.affiliation?.organisation;
+
   return (
     <Box
       display="flex"
@@ -27,9 +39,19 @@ export default function UserDetails({ user, ...restProps }: UserDetailsProps) {
         <Typography variant="h2" sx={{ flexWrap: 1 }}>
           {user?.first_name} {user?.last_name}
         </Typography>
-        <Link href={`mailto:${user?.email}`} sx={{ wordBreak: "break-all" }}>
-          {user?.email}
-        </Link>
+        {role?.name && (
+          <Typography sx={{ flexWrap: 1 }}>{role.name}</Typography>
+        )}
+        {organisation?.organisation_name && (
+          <Typography sx={{ flexWrap: 1 }}>
+            {organisation.organisation_name}
+          </Typography>
+        )}
+        {user?.email && (
+          <Link href={`mailto:${user.email}`} sx={{ wordBreak: "break-all" }}>
+            {user.email}
+          </Link>
+        )}
       </Box>
     </Box>
   );

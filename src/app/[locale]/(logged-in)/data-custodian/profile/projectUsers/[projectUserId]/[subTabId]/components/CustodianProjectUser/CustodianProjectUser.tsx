@@ -16,9 +16,9 @@ import { getCustodianProjectUserValidationLogsQuery } from "@/services/validatio
 import { getUserQuery } from "@/services/users";
 import ActionValidationPanel from "@/organisms/ActionValidationPanel";
 import { ActionValidationVariants } from "@/organisms/ActionValidationPanel/ActionValidationPanel";
-import ProjectUserDetails from "@/components/ProjectUserDetails";
 import { getCustodianProjectUserQuery } from "@/services/custodian_approvals";
 import ChipStatus from "@/components/ChipStatus";
+import UserDetails from "@/components/UserDetails";
 import { UserSubTabs } from "../../../../../consts/tabs";
 import SubTabsSections from "../SubTabSections";
 import SubTabsContents from "../SubsTabContents";
@@ -88,6 +88,8 @@ function CustodianProjectUser({
     if (userData?.data) setUser(userData.data);
   }, [userData]);
 
+  console.log("here2", projectUser);
+
   return (
     user && (
       <PageBodyContainer
@@ -101,7 +103,7 @@ function CustodianProjectUser({
         }>
         <PageColumns>
           <PageColumnBody lg={8}>
-            <ProjectUserDetails projectUser={projectUser} />
+            <UserDetails projectUser={projectUser} />
             <SubTabsSections
               projectUserId={projectUserId}
               subTabId={subTabId}
