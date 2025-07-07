@@ -1,6 +1,6 @@
 # Safe People Registry Cookie Notice
 
-## Use of cookies by the Safe Organisation and User Registry for Sensitive Data (Safe People Registry)
+## Use of cookies by the Safe People Registry
 
 Safe People Registry uses cookies
 
