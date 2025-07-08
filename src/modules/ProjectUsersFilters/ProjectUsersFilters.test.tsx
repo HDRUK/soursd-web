@@ -16,6 +16,7 @@ const defaultProps = {
   handleSortToggle: jest.fn(),
   handleFieldToggle: jest.fn(),
   queryParams: {},
+  statusList: ["form_received", "validated"],
 };
 
 const setupTest = (props?: Partial<ProjectUsersFiltersProps>) => {
@@ -47,17 +48,15 @@ describe("<ProjectUsersFilters />", () => {
     setupTest();
 
     act(() => {
-      changeSelectValueByLabelText(
-        /Filter by status/,
-        "Safe People Registry account created"
-      );
+      changeSelectValueByLabelText(/Filter by status/, "Form received");
     });
 
     await waitFor(() => {
-      expect(defaultProps.handleFieldToggle).toHaveBeenCalledWith("status", [
-        "registered",
-        "",
-      ]);
+      expect(defaultProps.handleFieldToggle).toHaveBeenCalledWith(
+        "filter",
+        ["form_received", ""],
+        true
+      );
     });
   });
 
