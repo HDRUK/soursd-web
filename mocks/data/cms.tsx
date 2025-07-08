@@ -232,34 +232,11 @@ export const mockedSoursdHomepageInfo = {
   infoTitle: "SoursdInfo",
   info: (
     <>
-      <Typography fontSize="48px" fontWeight="400" mb={1}>
-        <Box component="span" fontWeight="bold">
-          S
-        </Box>
-        afe{" "}
-        <Box component="span" fontWeight="bold">
-          O
-        </Box>
-        rganisation and{" "}
-        <Box component="span" fontWeight="bold">
-          U
-        </Box>
-        ser{" "}
-        <Box component="span" fontWeight="bold">
-          R
-        </Box>
-        egistry for{" "}
-        <Box component="span" fontWeight="bold">
-          S
-        </Box>
-        ensitive{" "}
-        <Box component="span" fontWeight="bold">
-          D
-        </Box>
-        ata
+      <Typography fontSize="48px" fontWeight="700" mb={1}>
+        Safe People Registry
       </Typography>
       <Typography variant="h1" fontWeight="normal">
-        A platform to enable Safe People decision making
+        A platform to enable ‘Safe People’ decision making
       </Typography>
     </>
   ),
@@ -604,7 +581,7 @@ export const mockedProfileGuidance: ProfileGuidance = {
 export const mockedAbout = {
   infoTitle: "About Safe People Registry",
   aboutTitle: "Empowering Safe Data Access for Research and Innovation",
-  about: `Safe People Registry (Safe Organisation and User Registry for Sensitive Data) is a secure platform
+  about: `Safe People Registry is a secure platform
 designed to facilitate responsible access to sensitive data. Our mission is to enable
 researchers, Organisations and Data Custodians to collaborate efficiently while
 maintaining security and compliance.`,
