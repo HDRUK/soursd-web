@@ -316,7 +316,8 @@
     "isCharityDescription": "If your Organisation is a registered charity, please confirm the country your charity is registered and registration ID.",
     "dataSecurityCompliance": "Data Security Compliance",
     "dataSecurityComplianceText": "Please enter your certificate IDs if your Organisation has any of the following:",
-    "uploadCertification": "Upload Certificate"
+    "uploadCertification": "Upload Certificate",
+    "affiliationStatus": "Affiliation status"
   },
   "Form": {
     "accessDatePlaceholder": "Access date",
