@@ -64,12 +64,12 @@ export default function ProjectsFilters({
       {
         label: t("filterByPast"),
         key: "active",
-        value: "1",
+        value: "0",
       },
       {
         label: t("filterByActive"),
         key: "active",
-        value: "0",
+        value: "1",
       },
     ],
     onFilter: (key: string, value: string) =>
