@@ -1,9 +1,8 @@
 import { useStore } from "@/data/store";
-import CancelIcon from "@mui/icons-material/Cancel";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { Box } from "@mui/material";
 import { CellContext, ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
+import ChipStatus from "@/components/ChipStatus";
 import { ActionMenu, ActionMenuItem } from "../../components/ActionMenu";
 import Table from "../../components/Table";
 import Text from "../../components/Text";
@@ -59,13 +58,13 @@ export default function OrganisationUsers() {
     }
   );
 
-  const renderAccountCreated = (info: CellContext<User, unknown>) => (
+  const renderAffiliationStatus = (info: CellContext<User, unknown>) => (
     <Box sx={{ display: "flex", justifyContent: "center" }}>
-      {info.getValue() ? (
-        <CancelIcon color="error" />
-      ) : (
-        <CheckCircleIcon color="success" />
-      )}
+      <ChipStatus
+        status={
+          info.row.original.registry.affiliations[0].model_state.state.slug
+        }
+      />
     </Box>
   );
 
@@ -83,7 +82,7 @@ export default function OrganisationUsers() {
   const columns: ColumnDef<User>[] = [
     {
       accessorKey: "name",
-      header: "Employee / Student name",
+      header: t("employeeName"),
       cell: info => {
         return renderUserNameCell(
           info.row.original,
@@ -96,22 +95,22 @@ export default function OrganisationUsers() {
     },
     {
       accessorKey: "email",
-      header: "Email Address",
+      header: t("emailAddress"),
       cell: info => info.getValue(),
     },
     {
-      accessorKey: "unclaimed",
-      header: "Safe People Registry account",
-      cell: renderAccountCreated,
+      accessorKey: "registry.affiliations",
+      header: t("affiliationStatus"),
+      cell: renderAffiliationStatus,
     },
     {
       accessorKey: "created_at",
-      header: "Invite Sent",
+      header: t("inviteSent"),
       cell: info => formatShortDate(info.getValue() as string),
     },
     {
       accessorKey: "actions",
-      header: "Actions",
+      header: t("actions"),
       cell: renderActions,
     },
   ];
