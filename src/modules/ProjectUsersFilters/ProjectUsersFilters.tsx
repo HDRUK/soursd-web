@@ -2,14 +2,14 @@
 
 import SortIcon from "@mui/icons-material/Sort";
 import { useTranslations } from "next-intl";
-import { PropsWithChildren, useMemo } from "react";
+import { PropsWithChildren } from "react";
 import useSort from "@/hooks/useSort";
+import useFilter from "@/hooks/useFilter";
 import { FilterIcon } from "../../consts/icons";
 import { PaginatedQueryReturn } from "../../hooks/usePaginatedQuery";
 import { CustodianProjectUser } from "../../types/application";
 import SearchActionMenu from "../SearchActionMenu";
 import SearchBar from "../SearchBar";
-import useFilter from "@/hooks/useFilter";
 
 const NAMESPACE_TRANSLATIONS_PROJECTS = "Projects";
 const NAMESPACE_TRANSLATIONS_APPLICATION = "Application";

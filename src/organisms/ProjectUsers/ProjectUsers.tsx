@@ -193,7 +193,7 @@ export default function ProjectUsers({
           statusList={states}
           includeFilters={
             !showListView
-              ? [ProjectUsersFilterKeys.STATUS]
+              ? []
               : [ProjectUsersFilterKeys.SORT, ProjectUsersFilterKeys.STATUS]
           }
           {...filterProps}>
