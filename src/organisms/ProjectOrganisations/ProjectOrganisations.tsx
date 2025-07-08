@@ -62,6 +62,7 @@ export default function ProjectOrganisations({
       ...queryState
     },
     helpers: { isTransitionAllowed, itemsByTransitions, getAllowedTransitions },
+    states,
   } = useProjectEntity({
     usePaginatedQuery: () =>
       usePaginatedCustodianProjectOrganisations(custodianId),
@@ -174,13 +175,16 @@ export default function ProjectOrganisations({
     />
   );
 
+  console.log("STATES", states);
+
   return (
     <>
       <PageSection>
         <ProjectOrganisationsFilters
+          statusList={states}
           includeFilters={
             !showListView
-              ? [ProjectOrganisationsFilterKeys.STATUS]
+              ? []
               : [
                   ProjectOrganisationsFilterKeys.SORT,
                   ProjectOrganisationsFilterKeys.STATUS,

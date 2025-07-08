@@ -31,6 +31,7 @@ export interface ProjectOrganisationsFilterProps
       | "queryParams"
     >
   > {
+  statusList?: string[];
   includeFilters?: ProjectOrganisationsFilterKeys[];
 }
 
@@ -41,6 +42,7 @@ export default function ProjectOrganisationsFilters({
   resetQueryParams,
   updateQueryParams,
   queryParams,
+  statusList,
   includeFilters = [
     ProjectOrganisationsFilterKeys.STATUS,
     ProjectOrganisationsFilterKeys.SORT,
@@ -67,15 +69,14 @@ export default function ProjectOrganisationsFilters({
 
   const { actions: filterStatusActions } = useFilter({
     queryParams,
-    items: [
-      {
-        label: tApplication("status_registered"),
+    items:
+      statusList?.map(status => ({
+        label: tApplication(`status_${status}`),
+        value: status,
         key: "filter",
-        value: Status.REGISTERED,
-      },
-    ],
+      })) || [],
     onFilter: (key: string, value: string) =>
-      handleFieldToggle(key, [value, ""]),
+      handleFieldToggle(key, [value, ""], true),
   });
 
   return (
