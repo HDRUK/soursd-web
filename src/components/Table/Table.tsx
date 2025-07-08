@@ -64,10 +64,7 @@ const Table = <T,>({
     [perPage.value]
   );
 
-  const safeData = useMemo(
-    () => (Array.isArray(data) ? data.filter(Boolean) : []),
-    [data]
-  );
+  const safeData = useMemo(() => (Array.isArray(data) ? data : []), [data]);
 
   const memoizedColumns = useMemo(() => columns, [columns]);
 
@@ -83,7 +80,7 @@ const Table = <T,>({
   const rows = useMemo(() => {
     const rowModel = table.getRowModel();
     return rowModel?.rows ?? [];
-  }, [table]);
+  }, [safeData]);
 
   return (
     <Results
