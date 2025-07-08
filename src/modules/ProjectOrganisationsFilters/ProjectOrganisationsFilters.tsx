@@ -4,7 +4,6 @@ import SortIcon from "@mui/icons-material/Sort";
 import { useTranslations } from "next-intl";
 import { PropsWithChildren } from "react";
 import useSort from "@/hooks/useSort/useSort";
-import { Status } from "@/components/ChipStatus";
 import useFilter from "@/hooks/useFilter";
 import { FilterIcon } from "../../consts/icons";
 import { PaginatedQueryReturn } from "../../hooks/usePaginatedQuery";
