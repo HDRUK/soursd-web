@@ -16,8 +16,8 @@ import ReactQueryClientProvider from "./components/ReactQueryClientProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Researcher Registry",
-  description: "Researcher Registry homepage",
+  title: "Safe People Registry",
+  description: "Safe People Registry homepage",
 };
 
 type RootLayoutProps = PropsWithChildren<{
