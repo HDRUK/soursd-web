@@ -7,13 +7,11 @@ import yup from "@/config/yup";
 import { useStore } from "@/data/store";
 import { LoadingButton } from "@mui/lab";
 import { Button, Grid, TextField } from "@mui/material";
-import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import { useCallback, useMemo } from "react";
+import { useMemo } from "react";
 import SelectDepartments from "@/components/SelectDepartments";
-import Form from "@/components/Form";
-import { putUserQuery } from "@/services/users";
-import { User } from "@/types/application";
+import Form, { FormProps } from "@/components/Form";
+import { WithMutationState } from "@/types/form";
 
 export interface DelegatesFormValues {
   first_name: string;
@@ -21,31 +19,19 @@ export interface DelegatesFormValues {
   department_id: number;
 }
 
-export interface EditDelegateFormProps {
-  delegate: User;
-  onSuccess: () => void;
-  onCancel: () => void;
+export interface EditDelegateFormProps
+  extends WithMutationState<FormProps<DelegatesFormValues>> {
+  onClose?: () => void;
 }
 
 const NAMESPACE_TRANSLATION_DELEGATES = "Form";
 export default function EditDelegateForm({
-  delegate,
-  onSuccess,
-  onCancel,
+  mutateState,
+  onClose,
+  ...restProps
 }: EditDelegateFormProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_DELEGATES);
   const organisation = useStore(state => state.config.organisation);
-
-  const { mutateAsync: mutateDelegate, isPending } = useMutation(
-    putUserQuery(delegate?.id as number)
-  );
-
-  const handleSubmit = useCallback(
-    async (fields: DelegatesFormValues) => {
-      mutateDelegate({ ...fields }).then(() => onSuccess());
-    },
-    [mutateDelegate, onSuccess]
-  );
 
   const schema = useMemo(
     () =>
@@ -59,21 +45,12 @@ export default function EditDelegateForm({
     [t]
   );
 
-  const formOptions = {
-    defaultValues: {
-      first_name: delegate?.first_name,
-      last_name: delegate?.last_name,
-      department_id: delegate?.departments?.[0]?.id,
-    },
-  };
-
   return (
     <Form
       sx={{ mt: 1 }}
       schema={schema}
-      onSubmit={handleSubmit}
       aria-label="Edit delegate"
-      {...formOptions}>
+      {...restProps}>
       <>
         <FormSection>
           <Grid
@@ -111,10 +88,10 @@ export default function EditDelegateForm({
           </Grid>
         </FormSection>
         <FormActions>
-          <Button variant="outlined" onClick={onCancel}>
+          <Button variant="outlined" onClick={onClose}>
             {t("cancelButton")}
           </Button>
-          <LoadingButton loading={isPending} type="submit">
+          <LoadingButton loading={mutateState.isPending} type="submit">
             {t("save")}
           </LoadingButton>
         </FormActions>

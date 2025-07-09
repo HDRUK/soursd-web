@@ -13,7 +13,6 @@ jest.mock("@tanstack/react-query", () => ({
 const defaultProps = {
   user: mockedUser(),
   onSuccess: jest.fn(),
-  onCancel: jest.fn(),
 };
 
 function setupTest(props?: EditDelegateProps) {

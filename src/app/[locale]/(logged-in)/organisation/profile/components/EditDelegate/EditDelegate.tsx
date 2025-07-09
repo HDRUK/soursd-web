@@ -1,10 +1,15 @@
-import { EditIcon } from "@/consts/icons";
 import { ActionMenuItem } from "@/components/ActionMenu";
-import { User } from "@/types/application";
-import { useTranslations } from "next-intl";
+import ContactLink from "@/components/ContactLink";
 import FormModal from "@/components/FormModal";
+import { EditIcon } from "@/consts/icons";
+import useQueryAlerts from "@/hooks/useQueryAlerts";
+import { putUserQuery } from "@/services/users";
+import { User } from "@/types/application";
+import { useMutation } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
-import EditDelegateForm from "./EditDelegateForm";
+import ReactDOMServer from "react-dom/server";
+import EditDelegateForm, { DelegatesFormValues } from "./EditDelegateForm";
 
 export interface EditDelegateProps {
   user: User;
@@ -15,6 +20,34 @@ const EditDelegate = ({ user, onSuccess }: EditDelegateProps) => {
   const t = useTranslations("EditDelegate");
 
   const [openModal, setOpenModal] = useState<boolean>(false);
+
+  const { mutateAsync: mutateDelegate, ...restMutateState } = useMutation(
+    putUserQuery(user?.id as number)
+  );
+
+  const handleSubmit = async (fields: DelegatesFormValues) => {
+    await mutateDelegate(fields);
+  };
+
+  useQueryAlerts(restMutateState, {
+    onSuccess: () => {
+      setOpenModal(false);
+
+      onSuccess();
+    },
+    successAlertProps: {
+      text: t("successAlertText"),
+    },
+    errorAlertProps: {
+      text: ReactDOMServer.renderToString(
+        t.rich("errorAlertText", {
+          contactLink: ContactLink,
+        })
+      ),
+    },
+  });
+
+  const { first_name, last_name, departments } = user;
 
   return (
     <>
@@ -33,14 +66,14 @@ const EditDelegate = ({ user, onSuccess }: EditDelegateProps) => {
           setOpenModal(false);
         }}>
         <EditDelegateForm
-          delegate={user}
-          onCancel={() => {
-            setOpenModal(false);
+          defaultValues={{
+            first_name,
+            last_name,
+            department_id: departments?.[0].id,
           }}
-          onSuccess={() => {
-            setOpenModal(false);
-            onSuccess();
-          }}
+          onSubmit={handleSubmit}
+          onClose={() => setOpenModal(false)}
+          mutateState={restMutateState}
         />
       </FormModal>
     </>

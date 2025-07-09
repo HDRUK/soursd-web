@@ -54,11 +54,12 @@ export default function ProjectsSafeProject() {
       },
       payload,
     });
-
-    queryClient.refetchQueries({ queryKey: ["getProject", project.id] });
   };
 
   useQueryAlerts(mutateState, {
+    onSuccess: () => {
+      queryClient.refetchQueries({ queryKey: ["getProject", project.id] });
+    },
     errorAlertProps: {
       text: t("safeProjectWorkflowStatusError"),
     },

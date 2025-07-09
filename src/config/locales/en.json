@@ -1364,7 +1364,9 @@
   },
   "EditDelegate": {
     "title": "Edit",
-    "toolTip": "Edit details for this delegate"
+    "toolTip": "Edit details for this delegate",
+    "successAlertText": "The delegate has been successfully editted",
+    "errorAlertText": "There has been a problem deleting this data. Please try again or contact us at <contactLink></contactLink>"
   },
   "UseUpdateOrganisation": {
     "text": "Organisation Updated!",
