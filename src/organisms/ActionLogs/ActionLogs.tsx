@@ -22,9 +22,14 @@ const NAMESPACE_TRANSLATION_PROFILE = "ActionLogs";
 interface ActionLogProps {
   variant: ActionLogEntity;
   panelProps: Omit<ActionsPanelProps, "children">;
+  hiddenActions?: string[];
 }
 
-export default function ActionLogs({ variant, panelProps }: ActionLogProps) {
+export default function ActionLogs({
+  variant,
+  panelProps,
+  hiddenActions = ["add_users_completed"],
+}: ActionLogProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
   const { routes, user } = useStore(state => ({
     routes: state.getApplication().routes,
@@ -47,11 +52,16 @@ export default function ActionLogs({ variant, panelProps }: ActionLogProps) {
     getActionLogsQuery(entityId, variant)
   );
 
+  const allActions =
+    actionLogData?.data.filter(
+      action => !hiddenActions.includes(action.action)
+    ) || [];
+
   const completedActions =
-    actionLogData?.data.filter(action => !!action.completed_at) || [];
+    allActions.filter(action => !!action.completed_at) || [];
 
   const inCompletedActions =
-    actionLogData?.data.filter(action => !action.completed_at) || [];
+    allActions.filter(action => !action.completed_at) || [];
 
   const actions: Record<string, ActionConfig> = generateActions(routes);
 
