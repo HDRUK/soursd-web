@@ -79,4 +79,38 @@ describe("<ActionLogs />", () => {
 
     expect(container).not.toHaveTextContent("ActionLogs.actionTest_0.title");
   });
+
+  it("does not render actions listed in hiddenActions prop", () => {
+    (useQuery as jest.Mock).mockReturnValue({
+      data: {
+        data: [
+          {
+            id: faker.number.int(),
+            action: "add_users_completed", // Should be hidden
+            completed_at: null,
+          },
+          {
+            id: faker.number.int(),
+            action: "visible_action", // Should be shown
+            completed_at: null,
+          },
+        ],
+      },
+    });
+
+    render(
+      <ActionLogs
+        variant="organisation"
+        panelProps={{ heading: "Hidden Actions Test" }}
+        hiddenActions={["add_users_completed"]}
+      />
+    );
+
+    expect(
+      screen.queryByText("ActionLogs.visibleAction.title")
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByText("ActionLogs.addUsersCompleted.title")
+    ).not.toBeInTheDocument();
+  });
 });
