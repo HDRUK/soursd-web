@@ -74,7 +74,11 @@ export default function ActionLogs({
       description: t(`${name}.description`),
       icon,
       action: (
-        <Button component={Link} variant="outlined" href={path}>
+        <Button
+          component={Link}
+          variant="outlined"
+          href={path}
+          sx={{ whiteSpace: "nowrap" }}>
           {t(`${name}.buttonText`)}
         </Button>
       ),
@@ -113,7 +117,7 @@ export default function ActionLogs({
                 width: "100%",
               }}>
               <Typography variant="h3">{t("completedActions")}</Typography>{" "}
-              {completedActions.length && (
+              {!!completedActions.length && (
                 <Typography>{t("completedActionsDescription")}</Typography>
               )}
             </Box>
