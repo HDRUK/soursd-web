@@ -11,4 +11,4 @@
 - [ ] I have created mocks for api endpoints (where appropriate)
 - [ ] The interface is responsive (where ticket is relevant)
 - [ ] The interface is at least AA (where ticket is relevant)
-- [ ] Commits are described as chore, fix, feature, test, maintenance
+- [ ] Commits are described as "(chore|fix|feature|test|maintenance): description"
