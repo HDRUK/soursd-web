@@ -15,7 +15,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { useStore } from "@/data/store";
-import React, { ReactNode } from "react";
+import React, { ReactNode, useMemo } from "react";
 import { QueryState } from "../../types/form";
 import Pagination from "../Pagination";
 import Results from "../Results";
@@ -55,19 +55,32 @@ const Table = <T,>({
 }: TableProps<T>) => {
   const perPage = useStore(state => state.getApplication().system.PER_PAGE);
 
-  const table = useReactTable({
-    data: data || [],
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    ...(isPaginated && { getPaginationRowModel: getPaginationRowModel() }),
-    ...restProps,
-    initialState: {
+  const initialState = useMemo(
+    () => ({
       pagination: {
         pageSize: +perPage.value,
       },
-    },
+    }),
+    [perPage.value]
+  );
+
+  const safeData = useMemo(() => (Array.isArray(data) ? data : []), [data]);
+
+  const memoizedColumns = useMemo(() => columns, [columns]);
+
+  const table = useReactTable({
+    data: safeData,
+    columns: memoizedColumns,
+    getCoreRowModel: getCoreRowModel(),
+    ...(isPaginated && { getPaginationRowModel: getPaginationRowModel() }),
+    ...restProps,
+    ...initialState,
   });
+
+  const rows = useMemo(() => {
+    const rowModel = table.getRowModel();
+    return rowModel?.rows ?? [];
+  }, [safeData]);
 
   return (
     <Results
@@ -119,7 +132,7 @@ const Table = <T,>({
           )}
 
           <TableBody>
-            {table?.getRowModel().rows.map(row => (
+            {rows.map(row => (
               <TableRow key={row.id} role="row">
                 {row.getVisibleCells().map(cell => (
                   <TableCell

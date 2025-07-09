@@ -317,7 +317,11 @@
     "dataSecurityCompliance": "Data Security Compliance",
     "dataSecurityComplianceText": "Please enter your certificate IDs if your Organisation has any of the following:",
     "uploadCertification": "Upload Certificate",
-    "affiliationStatus": "Affiliation status"
+    "employeeName": "Employee / Student name",
+    "affiliationStatus": "Affiliation status",
+    "emailAddress": "Email Address",
+    "inviteSent": "Invite Sent",
+    "actions": "Actions"
   },
   "Form": {
     "accessDatePlaceholder": "Access date",

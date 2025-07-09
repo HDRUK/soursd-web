@@ -51,7 +51,7 @@ describe("<ProjectsFilters />", () => {
 
     await waitFor(() => {
       expect(defaultProps.handleFieldToggle).toHaveBeenCalledWith("active", [
-        "1",
+        "0",
         undefined,
       ]);
     });
