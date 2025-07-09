@@ -107,7 +107,7 @@ export default function ActionLogs({ variant, panelProps }: ActionLogProps) {
                 width: "100%",
               }}>
               <Typography variant="h3">{t("completedActions")}</Typography>{" "}
-              {completedActions.length && (
+              {!!completedActions.length && (
                 <Typography>{t("completedActionsDescription")}</Typography>
               )}
             </Box>
