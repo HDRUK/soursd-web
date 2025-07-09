@@ -1,12 +1,18 @@
 import { mockedUser } from "@/mocks/data/user";
 import { fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 import EditDelegate, { EditDelegateProps } from "./EditDelegate";
+import useQueryAlerts from "@/hooks/useQueryAlerts";
 
 const mockMutateAsync = jest.fn().mockResolvedValue(null);
+
+jest.mock("@/hooks/useQueryAlerts");
 
 jest.mock("@tanstack/react-query", () => ({
   useMutation: jest.fn().mockImplementation(() => ({
     mutateAsync: payload => mockMutateAsync(payload),
+    isLoading: false,
+    isError: false,
+    isSuccess: true,
   })),
 }));
 
@@ -20,6 +26,20 @@ function setupTest(props?: EditDelegateProps) {
 
   const title = screen.getByText("Edit");
   fireEvent.click(title);
+
+  return rendered;
+}
+
+async function setupSubmitFormTest(props?: EditDelegateProps) {
+  const rendered = render(<EditDelegate {...defaultProps} {...props} />);
+
+  const title = screen.getByText("Edit");
+  fireEvent.click(title);
+
+  const form = await screen.findByRole("form", {
+    name: "Edit delegate",
+  });
+  fireEvent.submit(form);
 
   return rendered;
 }
@@ -44,12 +64,7 @@ describe("<EditDelegate />", () => {
   });
 
   it("submits the form when values are filled", async () => {
-    setupTest();
-
-    const form = await screen.findByRole("form", {
-      name: "Edit delegate",
-    });
-    fireEvent.submit(form);
+    setupSubmitFormTest();
 
     const { first_name, last_name, departments } = defaultProps.user;
 
@@ -59,6 +74,25 @@ describe("<EditDelegate />", () => {
         last_name,
         department_id: departments?.[0].id,
       });
+    });
+  });
+
+  it("uses useQueryAlert", async () => {
+    setupSubmitFormTest();
+
+    await waitFor(() => {
+      expect(useQueryAlerts).toHaveBeenLastCalledWith(
+        { isError: false, isLoading: false, isSuccess: true },
+        {
+          errorAlertProps: {
+            text: expect.any(String),
+          },
+          onSuccess: expect.any(Function),
+          successAlertProps: {
+            text: expect.any(String),
+          },
+        }
+      );
     });
   });
 
