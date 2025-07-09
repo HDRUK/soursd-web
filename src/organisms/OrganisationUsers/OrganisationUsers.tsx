@@ -47,8 +47,6 @@ export default function OrganisationUsers() {
     shouldUpdateQuerystring: true,
   });
 
-  console.log("here", usersData);
-
   const { showConfirm } = useMutationWithConfirmation(
     deleteAffiliationQuery(),
     {
