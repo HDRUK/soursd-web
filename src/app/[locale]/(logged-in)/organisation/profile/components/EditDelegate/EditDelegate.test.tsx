@@ -1,7 +1,7 @@
 import { mockedUser } from "@/mocks/data/user";
 import { fireEvent, render, screen, waitFor } from "@/utils/testUtils";
-import EditDelegate, { EditDelegateProps } from "./EditDelegate";
 import useQueryAlerts from "@/hooks/useQueryAlerts";
+import EditDelegate, { EditDelegateProps } from "./EditDelegate";
 
 const mockMutateAsync = jest.fn().mockResolvedValue(null);
 
