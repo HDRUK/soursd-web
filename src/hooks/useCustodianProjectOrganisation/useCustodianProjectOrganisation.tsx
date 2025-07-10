@@ -79,29 +79,26 @@ export const useCustodianProjectOrganisation = ({
     });
   };
 
-  const onSuccess = () => {
-    setMutationState(state => ({ ...state, isSuccess: true }));
-    refetch();
-  };
-
   const {
     mutateAsync: mutateCustodianProjectOrganisation,
     isPending: isUpdating,
-  } = useMutation({
-    ...putCustodianProjectOrganisationQuery(custodianId),
-    onSuccess,
-  });
+  } = useMutation(putCustodianProjectOrganisationQuery(custodianId));
 
   const changeValidationStatus = (payload: ChangeValidationStatusPayload) => {
     mutateCustodianProjectOrganisation({
       params: { projectOrganisationId },
       payload,
-    }).then(() => refetch());
+    });
   };
 
   const isLoading = isFetching || isUpdating;
 
-  useQueryAlerts(mutationState);
+  useQueryAlerts(mutationState, {
+    onSuccess: () => {
+      setMutationState(state => ({ ...state, isSuccess: true }));
+      refetch();
+    },
+  });
 
   return {
     data: data?.data,

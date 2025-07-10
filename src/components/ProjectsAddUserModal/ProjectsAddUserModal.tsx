@@ -48,13 +48,12 @@ export default function ProjectsAddUserModal({
   };
 
   useQueryAlerts(putProjectUsersMutationState, {
-    successAlertProps: {
-      willClose: () => {
-        queryClient.refetchQueries({
-          queryKey: ["getPaginatedCustodianProjectUsers", custodianId],
-        });
-        onClose?.();
-      },
+    onSuccess: () => {
+      queryClient.refetchQueries({
+        queryKey: ["getPaginatedCustodianProjectUsers", custodianId],
+      });
+
+      onClose?.();
     },
   });
 

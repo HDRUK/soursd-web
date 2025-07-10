@@ -13,18 +13,22 @@ const NAMESPACE_TRANSLATION = "Projects";
 
 export default function useGatewayProjectImport() {
   const t = useTranslations(NAMESPACE_TRANSLATION);
-  const { mutateAsync } = useMutation(postProjectDetailsFromGatewayQuery());
+  const { mutateAsync, reset } = useMutation(
+    postProjectDetailsFromGatewayQuery()
+  );
+
+  const defaultMutationState = {
+    isError: false,
+    isSuccess: false,
+    isPending: false,
+  };
 
   const [translatedMutationState, setTranslatedMutationState] = useState<{
     data?: ResponseJson<DataUse>;
     isError: boolean;
     isSuccess: boolean;
     isPending: boolean;
-  }>({
-    isError: false,
-    isSuccess: false,
-    isPending: false,
-  });
+  }>(defaultMutationState);
 
   const translateResponse = (data: DataUse) => {
     const { id: _, ...restOfData } = createDataUseDefaultValues(data);
@@ -67,19 +71,27 @@ export default function useGatewayProjectImport() {
     []
   );
 
-  useQueryAlerts(translatedMutationState, {
-    successAlertProps: {
-      text: t("gatewayImportSuccess"),
-      confirmButtonText: t("okButton"),
-    },
-    errorAlertProps: {
-      text: ReactDOMServer.renderToString(
-        t.rich("gatewayImportError", {
-          contactLink: ContactLink,
-        })
-      ),
-    },
-  });
+  useQueryAlerts(
+    { ...translatedMutationState, reset },
+    {
+      commonAlertProps: {
+        willClose: () => {
+          setTranslatedMutationState(defaultMutationState);
+        },
+      },
+      successAlertProps: {
+        text: t("gatewayImportSuccess"),
+        confirmButtonText: t("okButton"),
+      },
+      errorAlertProps: {
+        text: ReactDOMServer.renderToString(
+          t.rich("gatewayImportError", {
+            contactLink: ContactLink,
+          })
+        ),
+      },
+    }
+  );
 
   return {
     ...translatedMutationState,

@@ -11,7 +11,7 @@ import { useState } from "react";
 import { Box, Button } from "@mui/material";
 import ContactLink from "@/components/ContactLink";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
-import DecoupleUser from "@/components/DecoupleDelegate";
+import DecoupleDelegate from "@/components/DecoupleDelegate";
 import { useTranslations } from "next-intl";
 import { ActionMenu } from "@/components/ActionMenu";
 import EditDelegate from "../EditDelegate";
@@ -47,11 +47,11 @@ const DelegateTable = () => {
   const renderActions = (info: CellContext<User, unknown>) => (
     <ActionMenu>
       <EditDelegate user={info.row.original} onSuccess={refetchDelegates} />
-      <DecoupleUser
+      <DecoupleDelegate
         user={info.row.original}
         onSuccess={refetchDelegates}
         payload={{ is_delegate: 0 }}
-        namespace="DecoupleDelegate"
+        namespace="DecoupleDelegates"
       />
     </ActionMenu>
   );

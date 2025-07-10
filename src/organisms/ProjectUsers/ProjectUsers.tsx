@@ -92,7 +92,12 @@ export default function ProjectUsers({
   const { isError, isSuccess, reset } = updateValidationMutationState;
 
   useQueryAlerts(updateValidationMutationState, {
-    showOnlyError: true,
+    onSuccess: () => {
+      if (showListView) {
+        refetch();
+      }
+    },
+    showOnlyError: !showListView,
   });
 
   const handleUpdateSafePeople = useCallback(
@@ -106,10 +111,6 @@ export default function ProjectUsers({
           comment: "status change",
         },
       });
-
-      if (showListView) {
-        refetch();
-      }
     },
     [showListView]
   );

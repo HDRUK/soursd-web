@@ -1,6 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useMemo, useState } from "react";
-import { MutationState } from "@/types/form";
+import { useMemo } from "react";
 import { useTranslations } from "next-intl";
 import {
   getCustodianProjectUserStatesQuery,
@@ -35,12 +34,6 @@ export const useCustodianProjectUser = ({
   const tApplication = useTranslations(NAMESPACE_TRANSLATION);
   const queryClient = useQueryClient();
 
-  const [mutationState, setMutationState] = useState<MutationState>({
-    isError: false,
-    isSuccess: false,
-    isPending: false,
-  });
-
   const custodianProjectUserQuery = getCustodianProjectUserQuery(
     custodianId as number,
     projectUserId as number
@@ -64,40 +57,26 @@ export const useCustodianProjectUser = ({
     [statusOptionsData]
   );
 
-  useEffect(() => {
-    setMutationState(state => ({
-      ...state,
-      isPending: isFetching,
-      isSuccess: false,
-    }));
-  }, [data]);
-
   const refetch = () => {
     queryClient.refetchQueries({
       queryKey: custodianProjectUserQuery.queryKey,
     });
   };
 
-  const onSuccess = () => {
-    setMutationState(state => ({ ...state, isSuccess: true }));
-    refetch();
-  };
-
-  const { mutateAsync: mutateCustodianProjectUser, isPending: isUpdating } =
-    useMutation({
-      ...putCustodianProjectUserQuery(custodianId),
-      onSuccess,
-    });
+  const { mutateAsync: mutateCustodianProjectUser, ...restMutationState } =
+    useMutation(putCustodianProjectUserQuery(custodianId));
 
   const changeValidationStatus = (payload: ChangeValidationStatusPayload) => {
-    mutateCustodianProjectUser({ params: { projectUserId }, payload }).then(
-      () => refetch()
-    );
+    mutateCustodianProjectUser({ params: { projectUserId }, payload });
   };
 
-  const isLoading = isFetching || isUpdating;
+  const isLoading = isFetching || restMutationState.isPending;
 
-  useQueryAlerts(mutationState);
+  useQueryAlerts(restMutationState, {
+    onSuccess: () => {
+      refetch();
+    },
+  });
 
   return {
     data: data?.data,
