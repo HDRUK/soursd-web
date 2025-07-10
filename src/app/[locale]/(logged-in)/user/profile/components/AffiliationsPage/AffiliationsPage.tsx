@@ -89,11 +89,9 @@ export default function AffiliationsPage() {
   useQueryAlerts(
     selectedAffiliation ? putAffiliationQueryState : postAffiliationQueryState,
     {
-      commonAlertProps: {
-        willClose: () => {
-          setOpen(false);
-          setSelectedAffiliation(undefined);
-        },
+      onSuccess: () => {
+        setOpen(false);
+        setSelectedAffiliation(undefined);
       },
       successAlertProps: {
         confirmButtonText: tProfile("affiliationActionSuccessButton"),
@@ -109,11 +107,11 @@ export default function AffiliationsPage() {
   );
 
   const showConfirmDelete = useQueryConfirmAlerts(restDeleteState, {
+    onSuccess: () => refetch(),
     confirmAlertProps: {
       text: tProfile("affiliationsDeleteConfirmMessage"),
       preConfirm: async (id: number) => {
         await deleteAffiliation(id);
-        refetch();
       },
     },
     successAlertProps: {

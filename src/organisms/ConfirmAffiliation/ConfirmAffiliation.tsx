@@ -30,21 +30,23 @@ export default function ConfirmAffiliation({
     putRegistryHasAffiliationQuery()
   );
 
-  useQueryAlerts(mutateState);
+  useQueryAlerts(mutateState, {
+    onSuccess: () => {
+      queryClient.refetchQueries({
+        queryKey: [
+          "getOrganisationAffiliation",
+          currentUser.registry_id as number,
+          organisation.id as number,
+        ],
+      });
+    },
+  });
 
   const handleClick = async (status: AffiliationStatus) => {
     await updateAffiliationStatus({
       registryId: currentUser.registry_id,
       affiliationId: affiliation?.id as number,
       status,
-    });
-
-    queryClient.refetchQueries({
-      queryKey: [
-        "getOrganisationAffiliation",
-        currentUser.registry_id as number,
-        organisation.id as number,
-      ],
     });
   };
 

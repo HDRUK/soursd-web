@@ -43,13 +43,15 @@ export default function ProjectsSafeOutputs() {
       ...project.project_detail,
       ...payload,
     });
-
-    queryClient.refetchQueries({
-      queryKey: ["getProject", project.id],
-    });
   };
 
-  useQueryAlerts(mutateState);
+  useQueryAlerts(mutateState, {
+    onSuccess: () => {
+      queryClient.refetchQueries({
+        queryKey: ["getProject", project.id],
+      });
+    },
+  });
 
   return (
     <PageGuidance {...mockedSafeProjectGuidanceProps}>

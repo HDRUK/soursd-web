@@ -20,8 +20,6 @@ export default function OrganisationUsers() {
     transitions: state.getAffiliationsWorkflowTransitions(),
   }));
 
-  console.log("transitions", transitions);
-
   const {
     data: usersData,
     refetch: refetchOrganisationUsers,
