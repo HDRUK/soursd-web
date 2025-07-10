@@ -9,7 +9,6 @@ import useCustodianProjectUser from "../../hooks/useCustodianProjectUser";
 import ActionValidationStatus from "../../modules/ActionValidationStatus";
 import { QueryState } from "../../types/form";
 import { ValidationLog } from "../../types/logs";
-import ActionsPanelValidationCheck from "../ActionsPanelValidationCheck";
 
 const NAMESPACE_TRANSLATION_ACTION_VALIDATION = "ActionValidationPanel";
 
@@ -110,7 +109,7 @@ function ActionValidationPanel({
   return (
     <LoadingWrapper variant="basic" loading={queryState?.isLoading || false}>
       <ActionsPanel heading={t("title")}>
-        {logs
+        {/* logs
           .filter(log => log.validation_check.enabled) // move to BE?
           .map(log => (
             <ActionsPanelValidationCheck
@@ -118,7 +117,7 @@ function ActionValidationPanel({
               log={log}
               onAction={onAction}
             />
-          ))}
+          )) */}
         {actionValidationStatus}
       </ActionsPanel>
       {queryState.isError && (

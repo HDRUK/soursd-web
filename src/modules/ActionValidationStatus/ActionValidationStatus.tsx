@@ -44,7 +44,7 @@ const ActionValidationStatus = <TParams,>({
   useEffect(() => {
     if (isLoading) return;
     setInitialStatus(data?.model_state?.state?.slug);
-  }, [data]);
+  }, [data, isLoading]);
 
   const formOptions = useMemo(
     () => ({
@@ -65,6 +65,7 @@ const ActionValidationStatus = <TParams,>({
     <Box sx={{ p: 2 }}>
       <Form schema={schema} onSubmit={handleSubmit} {...formOptions}>
         <Grid item xs={12}>
+          {formOptions.defaultValues.status || "no initial status"}
           <FormControl
             name="status"
             renderField={fieldProps => (
