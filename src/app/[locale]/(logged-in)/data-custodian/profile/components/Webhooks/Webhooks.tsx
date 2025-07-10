@@ -1,29 +1,31 @@
-import React, { useMemo } from "react";
-import { useTranslations } from "next-intl";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { Box, Grid, MenuItem, Select, TextField } from "@mui/material";
-import ReactDOMServer from "react-dom/server";
+import ContactLink from "@/components/ContactLink";
+import Form from "@/components/Form";
 import FormActions from "@/components/FormActions";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
 import FormFieldArray from "@/components/FormFieldArray";
-import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
-import Form from "@/components/Form";
 import LoadingWrapper from "@/components/LoadingWrapper";
-import ContactLink from "@/components/ContactLink";
+import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
 import yup from "@/config/yup";
 import { VALIDATION_URL } from "@/consts/form";
 import { ROUTES } from "@/consts/router";
 import { useStore } from "@/data/store";
+import useQueryAlerts from "@/hooks/useQueryAlerts";
+import { mockedWebhookDescription } from "@/mocks/data/cms";
 import { PageBody, PageSection } from "@/modules";
 import {
-  getWebhookEventTriggerQuery,
-  getCustodianWebhooksQuery,
-  postCustodianWebhookQuery,
   deleteCustodianWebhookQuery,
+  getCustodianWebhooksQuery,
+  getWebhookEventTriggerQuery,
+  postCustodianWebhookQuery,
 } from "@/services/webhooks/index";
 import { Webhook } from "@/services/webhooks/types";
+import { getCombinedQueryState } from "@/utils/query";
 import { showAlert } from "@/utils/showAlert";
-import { mockedWebhookDescription } from "@/mocks/data/cms";
+import { Box, Grid, MenuItem, Select, TextField } from "@mui/material";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
+import { useMemo } from "react";
+import ReactDOMServer from "react-dom/server";
 
 const NAMESPACE_TRANSLATION_CUSTODIAN_PROFILE = "CustodianProfile";
 const NAMESPACE_TRANSLATION_FORM = "Form";
@@ -54,11 +56,16 @@ export default function Webhooks() {
   const { data: webhookEventTriggers } = useQuery(
     getWebhookEventTriggerQuery()
   );
-  const { mutateAsync: postWebhook, isPending: isPostLoading } = useMutation(
-    postCustodianWebhookQuery()
-  );
-  const { mutateAsync: deleteWebhook, isPending: isDeleteLoading } =
-    useMutation(deleteCustodianWebhookQuery(custodian?.id));
+  const {
+    mutateAsync: postWebhook,
+    isPending: isPostLoading,
+    ...restPostState
+  } = useMutation(postCustodianWebhookQuery());
+  const {
+    mutateAsync: deleteWebhook,
+    isPending: isDeleteLoading,
+    ...restDeleteState
+  } = useMutation(deleteCustodianWebhookQuery(custodian?.id));
 
   const schema = yup.object<WebhookFormData>().shape({
     webhooks: yup
@@ -97,29 +104,18 @@ export default function Webhooks() {
     operation: "add" | "delete",
     webhook: Webhook | WebhookFormValues
   ) => {
-    try {
-      if (operation === "add") {
-        await postWebhook({
-          custodian_id: custodian.id,
-          url: (webhook as WebhookFormValues).receiver_url,
-          webhook_event_id: (webhook as WebhookFormValues).event_trigger,
-        });
-      } else {
-        await deleteWebhook({ id: (webhook as Webhook).id });
-      }
-      showAlert("success", {
-        text: t("saveSuccess"),
-        confirmButtonText: t("okButton"),
+    if (operation === "add") {
+      await postWebhook({
+        custodian_id: custodian.id,
+        url: (webhook as WebhookFormValues).receiver_url,
+        webhook_event_id: (webhook as WebhookFormValues).event_trigger,
       });
-    } catch (_e) {
-      showAlert("error", {
-        text: ReactDOMServer.renderToString(
-          t.rich("webhookError", { contactLink: ContactLink })
-        ),
-        confirmButtonText: tForm("errorButton"),
-      });
+    } else {
+      await deleteWebhook({ id: (webhook as Webhook).id });
     }
   };
+
+  useQueryAlerts(getCombinedQueryState([restPostState, restDeleteState]));
 
   const handleSubmit = async (fields: WebhookFormData) => {
     const existingWebhooks = webhooksData?.data || [];
@@ -143,12 +139,26 @@ export default function Webhooks() {
         )
     );
 
-    await Promise.all([
-      ...webhooksToDelete.map(webhook =>
-        handleWebhookOperation("delete", webhook)
-      ),
-      ...webhooksToAdd.map(webhook => handleWebhookOperation("add", webhook)),
-    ]);
+    try {
+      await Promise.all([
+        ...webhooksToDelete.map(webhook =>
+          handleWebhookOperation("delete", webhook)
+        ),
+        ...webhooksToAdd.map(webhook => handleWebhookOperation("add", webhook)),
+      ]);
+
+      showAlert("success", {
+        text: t("saveSuccess"),
+        confirmButtonText: t("okButton"),
+      });
+    } catch (_) {
+      showAlert("error", {
+        text: ReactDOMServer.renderToString(
+          t.rich("webhookError", { contactLink: ContactLink })
+        ),
+        confirmButtonText: tForm("errorButton"),
+      });
+    }
 
     await refetchWebhookData();
   };

@@ -62,17 +62,10 @@ export const useCustodianProjectUser = ({
     });
   };
 
-  const onSuccess = () => {
-    refetch();
-  };
-
   const {
     mutateAsync: mutateCustodianProjectUser,
     ...updateCustodianProjectUserMutationState
-  } = useMutation({
-    ...putCustodianProjectUserQuery(custodianId),
-    onSuccess,
-  });
+  } = useMutation(putCustodianProjectUserQuery(custodianId));
 
   const changeValidationStatus = (payload: ChangeValidationStatusPayload) => {
     mutateCustodianProjectUser({ params: { projectUserId }, payload }).then(
@@ -80,7 +73,11 @@ export const useCustodianProjectUser = ({
     );
   };
 
-  useQueryAlerts(updateCustodianProjectUserMutationState);
+  useQueryAlerts(updateCustodianProjectUserMutationState, {
+    onSuccess: () => {
+      refetch();
+    },
+  });
 
   const queryState = getCombinedQueryState([
     getCustodianProjectUserQueryState,

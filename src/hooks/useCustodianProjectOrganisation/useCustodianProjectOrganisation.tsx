@@ -9,7 +9,6 @@ import {
 } from "@/services/custodian_approvals";
 import { CustodianProjectOrganisation } from "@/types/application";
 import { Option } from "@/types/common";
-import { getCombinedQueryState } from "@/utils/query";
 import useQueryAlerts from "../useQueryAlerts";
 
 type CustodianParams = {
@@ -64,31 +63,23 @@ export const useCustodianProjectOrganisation = ({
     });
   };
 
-  const onSuccess = () => {
-    refetch();
-  };
-
   const {
     mutateAsync: mutateCustodianProjectOrganisation,
     ...updateCustodianOrganisationMutationState
-  } = useMutation({
-    ...putCustodianProjectOrganisationQuery(custodianId),
-    onSuccess,
-  });
+  } = useMutation(putCustodianProjectOrganisationQuery(custodianId));
 
   const changeValidationStatus = (payload: ChangeValidationStatusPayload) => {
     mutateCustodianProjectOrganisation({
       params: { projectOrganisationId },
       payload,
-    }).then(() => refetch());
+    });
   };
 
-  useQueryAlerts(updateCustodianOrganisationMutationState);
-
-  const queryState = getCombinedQueryState([
-    getCustodianProjectOrganisationQueryState,
-    updateCustodianOrganisationMutationState,
-  ]);
+  useQueryAlerts(updateCustodianOrganisationMutationState, {
+    onSuccess: () => {
+      refetch();
+    },
+  });
 
   return {
     data: data?.data,

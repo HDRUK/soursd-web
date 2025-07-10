@@ -116,10 +116,10 @@ export default function ProfessionalRegistrations({
   const showDeleteConfirm = useQueryConfirmAlerts<number>(
     deleteProfessionalRegistrationQueryState,
     {
+      onSuccess: () => refetch(),
       confirmAlertProps: {
         preConfirm: async (id: number) => {
           await mutateDeleteAsync(id);
-          refetch();
         },
       },
       errorAlertProps: {

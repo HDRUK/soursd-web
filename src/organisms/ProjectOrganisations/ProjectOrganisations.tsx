@@ -77,7 +77,12 @@ export default function ProjectOrganisations({
   const { isError, isSuccess, reset } = updateValidationMutationState;
 
   useQueryAlerts(updateValidationMutationState, {
-    showOnlyError: true,
+    onSuccess: () => {
+      if (showListView) {
+        refetch();
+      }
+    },
+    showOnlyError: !showListView,
   });
 
   const handleUpdateOrganisation = useCallback(
@@ -91,10 +96,6 @@ export default function ProjectOrganisations({
           comment: "status change",
         },
       });
-
-      if (showListView) {
-        refetch();
-      }
     },
     [showListView]
   );

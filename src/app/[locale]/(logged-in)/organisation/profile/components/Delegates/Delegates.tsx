@@ -55,6 +55,7 @@ export default function Delegates() {
   }, [userData, setUser]);
 
   useQueryAlerts(putUserQueryState, {
+    onSuccess: () => refetchUserData(),
     errorAlertProps: {
       text: tProfile("errorCreateMessage"),
     },
@@ -74,9 +75,7 @@ export default function Delegates() {
       department_id: department,
     };
 
-    mutateUser(payload).then(() => {
-      refetchUserData();
-    });
+    mutateUser(payload);
   };
 
   const schema = useMemo(

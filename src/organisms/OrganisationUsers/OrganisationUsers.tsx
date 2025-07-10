@@ -58,15 +58,17 @@ export default function OrganisationUsers() {
     }
   );
 
-  const renderAffiliationStatus = (info: CellContext<User, unknown>) => (
-    <Box sx={{ display: "flex", justifyContent: "center" }}>
-      <ChipStatus
-        status={
-          info.row.original.registry.affiliations[0].model_state.state.slug
-        }
-      />
-    </Box>
-  );
+  const renderAffiliationStatus = (info: CellContext<User, unknown>) => {
+    return (
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
+        <ChipStatus
+          status={
+            info.row.original.registry.affiliations?.[0].model_state.state.slug
+          }
+        />
+      </Box>
+    );
+  };
 
   const renderActions = (info: CellContext<User, unknown>) => (
     <ActionMenu>
