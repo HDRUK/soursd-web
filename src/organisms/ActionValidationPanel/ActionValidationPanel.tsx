@@ -1,6 +1,7 @@
 import { useStore } from "@/data/store";
 import { useTranslations } from "next-intl";
 import { useQueryClient } from "@tanstack/react-query";
+import { useMemo } from "react";
 import ActionsPanel from "../../components/ActionsPanel";
 import LoadingWrapper from "../../components/LoadingWrapper";
 import { Message } from "../../components/Message";
@@ -9,6 +10,7 @@ import useCustodianProjectUser from "../../hooks/useCustodianProjectUser";
 import ActionValidationStatus from "../../modules/ActionValidationStatus";
 import { QueryState } from "../../types/form";
 import { ValidationLog } from "../../types/logs";
+import ActionsPanelValidationCheck from "../ActionsPanelValidationCheck";
 
 const NAMESPACE_TRANSLATION_ACTION_VALIDATION = "ActionValidationPanel";
 
@@ -57,6 +59,16 @@ function ActionValidationPanel({
 
   const queryClient = useQueryClient();
 
+  const projectUserHookParams = useMemo(
+    () => ({ custodianId, projectUserId }),
+    [custodianId, projectUserId]
+  );
+
+  const organisationHookParams = useMemo(
+    () => ({ custodianId, projectOrganisationId }),
+    [custodianId, projectOrganisationId]
+  );
+
   let actionValidationStatus;
   let onAction = () => {};
   switch (variant) {
@@ -64,7 +76,7 @@ function ActionValidationPanel({
       actionValidationStatus = (
         <ActionValidationStatus<CustodianParams>
           useApprovalHook={useCustodianProjectUser}
-          hookParams={{ custodianId, projectUserId }}
+          hookParams={projectUserHookParams}
         />
       );
 
@@ -83,10 +95,11 @@ function ActionValidationPanel({
     }
     case ActionValidationVariants.Organisation: {
       // need to reimplement this in another ticket
+
       actionValidationStatus = (
         <ActionValidationStatus<OrganisationParams>
           useApprovalHook={useCustodianProjectOrganisation}
-          hookParams={{ custodianId, projectOrganisationId }}
+          hookParams={organisationHookParams}
         />
       );
 
@@ -109,7 +122,7 @@ function ActionValidationPanel({
   return (
     <LoadingWrapper variant="basic" loading={queryState?.isLoading || false}>
       <ActionsPanel heading={t("title")}>
-        {/* logs
+        {logs
           .filter(log => log.validation_check.enabled) // move to BE?
           .map(log => (
             <ActionsPanelValidationCheck
@@ -117,7 +130,7 @@ function ActionValidationPanel({
               log={log}
               onAction={onAction}
             />
-          )) */}
+          ))}
         {actionValidationStatus}
       </ActionsPanel>
       {queryState.isError && (

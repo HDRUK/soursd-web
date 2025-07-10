@@ -69,24 +69,54 @@ function CustodianProjectUser({
     notFound();
   }
 
-  const { user, setUser, setProject, setProjectUser } = useStore(state => ({
+  const {
+    user,
+    setUser,
+    setProject,
+    setProjectUser,
+    getUser,
+    getProject,
+    getProjectUser,
+  } = useStore(state => ({
     user: state.getCurrentUser(),
     setUser: state.setCurrentUser,
     setProject: state.setCurrentProject,
     setProjectUser: state.setCurrentProjectUser,
+    getUser: state.getCurrentUser,
+    getProject: state.getCurrentProject,
+    getProjectUser: state.getCurrentProjectUser,
   }));
 
   useEffect(() => {
-    if (projectUser) setProjectUser(projectUser);
-  }, [projectUser]);
+    if (projectUser) {
+      const current = getProjectUser();
+      if (current?.id !== projectUser.id) {
+        setProjectUser(projectUser);
+      }
+    }
+  }, [projectUser, getProjectUser, setProjectUser]);
 
   useEffect(() => {
-    if (project) setProject(project);
-  }, [project]);
+    if (project) {
+      const current = getProject();
+      if (current?.id !== project.id) {
+        setProject(project);
+      }
+    }
+  }, [project, getProject, setProject]);
 
   useEffect(() => {
-    if (userData?.data) setUser(userData.data);
-  }, [userData]);
+    if (userData?.data) {
+      const current = getUser();
+      if (current?.id !== userData.data.id) {
+        setUser(userData.data);
+      }
+    }
+  }, [userData, getUser, setUser]);
+
+  useEffect(() => {
+    console.log("here CustodianProjectUser rerendered");
+  }, []);
 
   return (
     user && (
