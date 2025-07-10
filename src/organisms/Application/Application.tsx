@@ -67,6 +67,7 @@ export default function Application({
     getPermissions: permissionsData,
     getCustodian: custodianData,
     getProjectRoles: projectRolesData,
+    getAffiliationsWorkflowTransitions: affiliationsWorkflowTransitionsData,
   } = applicationData;
 
   const { isLoading, isError } = getCombinedQueryState([
@@ -79,7 +80,8 @@ export default function Application({
       sectorsData?.data.data?.length === 0 ||
       permissionsData?.data.data?.length === 0 ||
       systemConfigData?.data?.length === 0 ||
-      projectRolesData?.data.length === 0
+      projectRolesData?.data.length === 0 ||
+      !!affiliationsWorkflowTransitionsData?.data.data
     );
   };
 
@@ -110,6 +112,9 @@ export default function Application({
         affiliationData={affiliationData?.data.data}
         professionalRegistrationsData={
           professionalRegistrationsData?.data?.data
+        }
+        affiliationsWorkflowTransitionsData={
+          affiliationsWorkflowTransitionsData?.data
         }>
         {children}
       </ApplicationData>

@@ -54,6 +54,8 @@ interface Paged<T> {
 
 type QueryPayload<T> = T | (() => BodyInit & T);
 
+type GetWorkflowTransitions = Record<string, string[]>;
+
 export type {
   Paged,
   ResponseJson,
@@ -64,4 +66,5 @@ export type {
   MutationOptions,
   QueryFunctionContextDefault,
   MutateWithArgs,
+  GetWorkflowTransitions,
 };

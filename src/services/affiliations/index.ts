@@ -1,6 +1,8 @@
 import getAffiliations from "./getAffiliations";
 import postAffiliation from "./postAffiliation";
 import getAffiliationsQuery from "./getAffiliationsQuery";
+import getAffiliationsWorkflowTransitions from "./getAffiliationsWorkflowTransitions";
+import getAffiliationsWorkflowTransitionsQuery from "./getAffiliationsWorkflowTransitionsQuery";
 import postAffiliationQuery from "./postAffiliationQuery";
 import deleteAffiliationQuery from "./deleteAffiliationQuery";
 import putAffiliationQuery from "./putAffiliationQuery";
@@ -22,4 +24,6 @@ export {
   putAffiliationQuery,
   putRegistryHasAffiliationQuery,
   usePaginatedAffiliations,
+  getAffiliationsWorkflowTransitionsQuery,
+  getAffiliationsWorkflowTransitions,
 };

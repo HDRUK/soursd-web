@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from "../../utils/testUtils";
+import { act, render, screen, waitFor } from "../../utils/testUtils";
 import SearchActionMenu from "./SearchActionMenu";
 
 jest.mock("@mui/icons-material/FilterAlt", () => () => (
@@ -9,47 +9,54 @@ const mockHandleSortToggle = jest.fn();
 
 const actions = [
   {
-    label: "A-Z",
+    label: "Approved",
     onClick: mockHandleSortToggle,
   },
   {
-    label: "Z-A",
+    label: "Pending",
     onClick: mockHandleSortToggle,
   },
 ];
 
-const renderMenuOpen = () => {
-  const rendered = render(
+const setupTest = async () => {
+  return render(
     <SearchActionMenu
       actions={actions}
-      renderedSelectedLabel="Sorted by"
-      renderedDefaultLabel="Sort by"
+      renderedSelectedLabel="Filtered by status"
+      renderedDefaultLabel="Filter by status"
+      aria-label="Filter by"
     />
   );
-
-  fireEvent.mouseDown(screen.getByText("Sort by"));
-
-  return rendered;
 };
 
 describe("SearchActionMenu", () => {
   beforeEach(() => {
-    renderMenuOpen();
+    setupTest();
   });
 
   it("renders all actions correctly", async () => {
+    act(() => {
+      openSelectByLabelText(/Filter by/);
+    });
+
     await waitFor(() =>
       actions.forEach(action => {
-        expect(screen.getByText(action.label)).toBeInTheDocument();
+        expect(
+          screen.getByLabelText(new RegExp(action.label, "i"))
+        ).toBeInTheDocument();
       })
     );
   });
 
-  it("calls the correct handler on action click", () => {
-    const sortAction = screen.getByText("A-Z");
+  it("calls the correct handler on action click", async () => {
+    act(() => {
+      changeSelectValueByLabelText(/Filter by/, "Approved", {
+        component: "ActionList",
+      });
+    });
 
-    fireEvent.click(sortAction);
-
-    expect(mockHandleSortToggle).toHaveBeenCalled();
+    await waitFor(() => {
+      expect(mockHandleSortToggle).toHaveBeenCalled();
+    });
   });
 });

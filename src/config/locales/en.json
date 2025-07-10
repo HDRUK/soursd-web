@@ -1128,6 +1128,9 @@
     "address": "Address"
   },
   "Organisations": {
+    "OrganisationUsersFilters": {
+      "searchPlaceholder": "Search by name or email"
+    },
     "People": {
       "name": "Employee / Student name",
       "affiliationEmail": "Professional Email",
