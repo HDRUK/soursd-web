@@ -40,6 +40,7 @@ export default function useProjectEntity({
     () => ({
       helpers,
       query: queryReturn,
+      states: Object.keys(stateWorkflow?.data || {}),
     }),
     [stateWorkflow?.data, queryReturn]
   );

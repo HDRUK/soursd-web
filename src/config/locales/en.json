@@ -1502,9 +1502,9 @@
       "buttonText": "Add Users"
     },
     "addProjectsCompleted": {
-      "title": "Add your projects",
+      "title": "Add your Projects",
       "description": "",
-      "buttonText": "Add projects"
+      "buttonText": "Add Projects"
     },
     "approveAnOrganisationCompleted": {
       "title": "Approve an Organisation",
