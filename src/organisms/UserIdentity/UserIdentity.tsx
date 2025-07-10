@@ -16,7 +16,7 @@ export default function UserIdentity() {
 
   const idvtComplete =
     !!user?.registry?.identity?.idvt_completed_at &&
-    user?.registry?.identity?.idvt_result === 1;
+    user?.registry?.identity?.idvt_success === 1;
 
   return (
     <PageBodyContainer>
