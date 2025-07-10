@@ -25,7 +25,13 @@ const renderActionValidationPanel = (
   logs = mockedValidationLogs(),
   isLoading = false
 ) => {
-  return render(<ActionValidationPanel logs={logs} isLoading={isLoading} />);
+  return render(
+    <ActionValidationPanel
+      variant="ProjectUser"
+      logs={logs}
+      queryState={{ isLoading, isError: false }}
+    />
+  );
 };
 
 describe("<ActionValidationPanel/>", () => {
