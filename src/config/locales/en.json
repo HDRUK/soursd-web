@@ -161,7 +161,7 @@
     "keycards": "Keycards",
     "projects": "Projects",
     "affiliations": "Affiliations",
-    "custodianOrgInfo": "CustodianOrg information",
+    "custodianOrgInfo": "Automated flags",
     "history": "History",
     "identity": "Identity",
     "trainingAccreditations": "Training and Accreditations",
@@ -1530,9 +1530,16 @@
   "Rules": {
     "passed": "Pass",
     "failed": "Fail",
+    "SanctionsCheck": {
+      "country": "Sanctioned country"
+    },
+    "DelegateCheck": {
+      "delegate_contacts": "Delegate contacts"
+    },
     "IdentityVerification": {
       "registry": {
         "identity": {
+          "idvt_success": "IDVT: This user has completed identity verification.",
           "idvt_result": "IDVT: This user has completed identity verification."
         }
       }
