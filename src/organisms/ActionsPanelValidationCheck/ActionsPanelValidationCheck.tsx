@@ -1,5 +1,6 @@
 import { Paper, Typography } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useStore } from "@/data/store";
 import ActionValidationLogComment from "../../components/ActionValidationLogComment";
 import ViewMore from "../../components/ViewMore";
 import { getValidationLogCommentsQuery } from "../../services/validation_logs";
@@ -13,14 +14,16 @@ interface ActionsPanelValidationCheckProps {
 export default function ActionsPanelValidationCheck({
   log,
 }: ActionsPanelValidationCheckProps) {
+  const queryClient = useQueryClient();
+  const { custodianId, projectId, registryId } = useStore(store => ({
+    custodianId: store.getCustodian()?.id as number,
+    projectId: store.getCurrentProject()?.id as number,
+    registryId: store.getCurrentProjectUser()?.registry.id as number,
+  }));
+
   const { data: comments, refetch: refetchComments } = useQuery({
     ...getValidationLogCommentsQuery(log.id),
     enabled: !!log.id,
-    initialData: {
-      data: log?.comments || [],
-      message: "",
-      status: 200,
-    },
   });
 
   return (
@@ -53,6 +56,14 @@ export default function ActionsPanelValidationCheck({
         log={log}
         onAction={async () => {
           await refetchComments();
+          queryClient.refetchQueries({
+            queryKey: [
+              "getCustodianProjectUserValidationLogs",
+              custodianId,
+              projectId,
+              registryId,
+            ],
+          });
         }}
       />
     </Paper>
