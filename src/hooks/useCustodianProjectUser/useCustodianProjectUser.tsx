@@ -7,6 +7,7 @@ import {
   putCustodianProjectUserQuery,
   ChangeValidationStatusPayload,
 } from "@/services/custodian_approvals";
+import { getCombinedQueryState } from "@/utils/query";
 import { CustodianProjectUser } from "@/types/application";
 import { Option } from "@/types/common";
 import useQueryAlerts from "../useQueryAlerts";
@@ -38,11 +39,9 @@ export const useCustodianProjectUser = ({
     custodianId as number,
     projectUserId as number
   );
-  const {
-    data,
-    isLoading: isFetching,
-    isError,
-  } = useQuery(custodianProjectUserQuery);
+  const { data, ...getCustodianProjectUserQueryState } = useQuery(
+    custodianProjectUserQuery
+  );
 
   const { data: statusOptionsData } = useQuery(
     getCustodianProjectUserStatesQuery()
@@ -54,7 +53,7 @@ export const useCustodianProjectUser = ({
         value: item,
         label: tApplication(`status_${item}`),
       })) || [],
-    [statusOptionsData]
+    [statusOptionsData, tApplication]
   );
 
   const refetch = () => {
@@ -63,16 +62,23 @@ export const useCustodianProjectUser = ({
     });
   };
 
-  const { mutateAsync: mutateCustodianProjectUser, ...restMutationState } =
-    useMutation(putCustodianProjectUserQuery(custodianId));
+  const {
+    mutateAsync: mutateCustodianProjectUser,
+    ...updateCustodianProjectUserMutationState
+  } = useMutation(putCustodianProjectUserQuery(custodianId));
 
   const changeValidationStatus = (payload: ChangeValidationStatusPayload) => {
-    mutateCustodianProjectUser({ params: { projectUserId }, payload });
+    mutateCustodianProjectUser({ params: { projectUserId }, payload }).then(
+      () => refetch()
+    );
   };
 
-  const isLoading = isFetching || restMutationState.isPending;
+  const queryState = getCombinedQueryState([
+    getCustodianProjectUserQueryState,
+    updateCustodianProjectUserMutationState,
+  ]);
 
-  useQueryAlerts(restMutationState, {
+  useQueryAlerts(updateCustodianProjectUserMutationState, {
     onSuccess: () => {
       refetch();
     },
@@ -80,8 +86,8 @@ export const useCustodianProjectUser = ({
 
   return {
     data: data?.data,
-    isLoading,
-    isError,
+    isLoading: queryState.isLoading,
+    isError: queryState.isError,
     statusOptions,
     changeValidationStatus,
     refetch,
