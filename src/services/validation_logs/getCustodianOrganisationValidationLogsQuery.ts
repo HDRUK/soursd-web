@@ -9,7 +9,7 @@ export default function getCustodianOrganisationValidationLogsQuery(
 ) {
   return {
     queryKey: [
-      "getTrainings",
+      "getCustodianOrganisationValidationLogs",
       custodianId,
       organisationId,
       ...(options?.queryKeySuffix || []),

@@ -1,6 +1,5 @@
 import { Paper, Typography } from "@mui/material";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useStore } from "@/data/store";
+import { useQuery } from "@tanstack/react-query";
 import ActionValidationLogComment from "../../components/ActionValidationLogComment";
 import ViewMore from "../../components/ViewMore";
 import { getValidationLogCommentsQuery } from "../../services/validation_logs";
@@ -9,18 +8,13 @@ import ActionValidationMakeDecision from "../ActionValidationMakeDecision";
 
 interface ActionsPanelValidationCheckProps {
   log: ValidationLog;
+  onAction?: () => void;
 }
 
 export default function ActionsPanelValidationCheck({
   log,
+  onAction,
 }: ActionsPanelValidationCheckProps) {
-  const queryClient = useQueryClient();
-  const { custodianId, projectId, registryId } = useStore(store => ({
-    custodianId: store.getCustodian()?.id as number,
-    projectId: store.getCurrentProject()?.id as number,
-    registryId: store.getCurrentProjectUser()?.registry.id as number,
-  }));
-
   const { data: comments, refetch: refetchComments } = useQuery({
     ...getValidationLogCommentsQuery(log.id),
     enabled: !!log.id,
@@ -56,14 +50,7 @@ export default function ActionsPanelValidationCheck({
         log={log}
         onAction={async () => {
           await refetchComments();
-          queryClient.refetchQueries({
-            queryKey: [
-              "getCustodianProjectUserValidationLogs",
-              custodianId,
-              projectId,
-              registryId,
-            ],
-          });
+          onAction?.();
         }}
       />
     </Paper>

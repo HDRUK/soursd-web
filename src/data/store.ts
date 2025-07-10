@@ -81,7 +81,7 @@ interface StoreState {
   setCurrentUser: (user: User) => void;
   getCurrentProjectUser: () => ProjectUser;
   setCurrentProjectUser: (projectUser: ProjectUser) => void;
-  getCurrentProjectOrganisation: () => ProjectUser;
+  getCurrentProjectOrganisation: () => ProjectOrganisation;
   setCurrentProjectOrganisation: (
     projectOrganisation: ProjectOrganisation
   ) => void;
