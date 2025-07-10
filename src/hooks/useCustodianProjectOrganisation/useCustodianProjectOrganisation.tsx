@@ -9,6 +9,7 @@ import {
 } from "@/services/custodian_approvals";
 import { CustodianProjectOrganisation } from "@/types/application";
 import { Option } from "@/types/common";
+import { getCombinedQueryState } from "@/utils/query";
 import useQueryAlerts from "../useQueryAlerts";
 
 type CustodianParams = {
@@ -74,6 +75,11 @@ export const useCustodianProjectOrganisation = ({
       payload,
     });
   };
+
+  const queryState = getCombinedQueryState([
+    getCustodianProjectOrganisationQueryState,
+    updateCustodianOrganisationMutationState,
+  ]);
 
   useQueryAlerts(updateCustodianOrganisationMutationState, {
     onSuccess: () => {

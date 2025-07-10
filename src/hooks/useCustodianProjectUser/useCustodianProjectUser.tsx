@@ -73,16 +73,16 @@ export const useCustodianProjectUser = ({
     );
   };
 
+  const queryState = getCombinedQueryState([
+    getCustodianProjectUserQueryState,
+    updateCustodianProjectUserMutationState,
+  ]);
+
   useQueryAlerts(updateCustodianProjectUserMutationState, {
     onSuccess: () => {
       refetch();
     },
   });
-
-  const queryState = getCombinedQueryState([
-    getCustodianProjectUserQueryState,
-    updateCustodianProjectUserMutationState,
-  ]);
 
   return {
     data: data?.data,
