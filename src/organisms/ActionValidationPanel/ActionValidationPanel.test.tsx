@@ -201,6 +201,7 @@ describe("<ActionValidationPanel/>", () => {
     expect(viewMoreBox).toBeInTheDocument();
 
     const items = viewMoreBox.children;
+
     expect(items.length).toBe(3);
 
     const viewMoreButton = screen.getByTestId("view-more-button");
