@@ -2,7 +2,7 @@ import { useTranslations } from "next-intl";
 import { Grid, Box } from "@mui/material";
 import { TextareaAutosize } from "@mui/base/TextareaAutosize";
 import { LoadingButton } from "@mui/lab";
-import { useState, useMemo, useEffect } from "react";
+import { useMemo } from "react";
 import { UseCustodianProjectUserResult } from "@/hooks/useCustodianProjectUser/useCustodianProjectUser";
 import { UseCustodianProjectOrganisationResult } from "@/hooks/useCustodianProjectOrganisation/useCustodianProjectOrganisation";
 import FormControl from "../../components/FormControlWrapper";
@@ -39,21 +39,16 @@ const ActionValidationStatus = <TParams,>({
     comment: yup.string().required(),
   });
 
-  const [initialStatus, setInitialStatus] = useState<string>();
-
-  useEffect(() => {
-    if (isLoading) return;
-    setInitialStatus(data?.model_state?.state?.slug);
-  }, [data]);
+  const statusSlug = data?.model_state?.state?.slug;
 
   const formOptions = useMemo(
     () => ({
       defaultValues: {
-        status: initialStatus,
+        status: statusSlug,
         comment: "",
       },
     }),
-    [initialStatus]
+    [statusSlug]
   );
 
   const handleSubmit = (formData: ActionValidationStatusFormValues) => {
@@ -63,7 +58,11 @@ const ActionValidationStatus = <TParams,>({
 
   return (
     <Box sx={{ p: 2 }}>
-      <Form schema={schema} onSubmit={handleSubmit} {...formOptions}>
+      <Form
+        key={statusSlug ?? "no-status"}
+        schema={schema}
+        onSubmit={handleSubmit}
+        {...formOptions}>
         <Grid item xs={12}>
           <FormControl
             name="status"

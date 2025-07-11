@@ -10,7 +10,7 @@ export default function getCustodianProjectUserValidationLogsQuery(
 ) {
   return {
     queryKey: [
-      "getTrainings",
+      "getCustodianProjectUserValidationLogs",
       custodianId,
       projectId,
       registryId,

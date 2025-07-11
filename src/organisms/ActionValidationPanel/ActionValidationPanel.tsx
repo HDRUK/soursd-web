@@ -1,5 +1,7 @@
 import { useStore } from "@/data/store";
 import { useTranslations } from "next-intl";
+import { useQueryClient } from "@tanstack/react-query";
+import { useMemo } from "react";
 import ActionsPanel from "../../components/ActionsPanel";
 import LoadingWrapper from "../../components/LoadingWrapper";
 import { Message } from "../../components/Message";
@@ -40,35 +42,77 @@ function ActionValidationPanel({
 }: ActionValidationPanelProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_ACTION_VALIDATION);
 
-  const { custodianId, projectUserId, projectOrganisationId } = useStore(
-    store => ({
-      custodianId: store.getCustodian()?.id as number,
-      organisationId: store.getCurrentOrganisation()?.id as number,
-      projectUserId: store.getCurrentProjectUser()?.id as number,
-      projectOrganisationId: store.getCurrentProjectOrganisation()
-        ?.id as number,
-    })
+  const { custodianId, projectUser, projectOrganisation } = useStore(store => ({
+    custodianId: store.getCustodian()?.id as number,
+    organisationId: store.getCurrentOrganisation(),
+    projectUser: store.getCurrentProjectUser(),
+    projectOrganisation: store.getCurrentProjectOrganisation(),
+  }));
+
+  const projectUserId = projectUser?.id;
+  const registryId = projectUser?.registry?.id;
+
+  const projectOrganisationId = projectOrganisation?.id;
+  const organisationId = projectOrganisation?.organisation_id;
+
+  const projectId = projectUser?.project_id || projectOrganisation?.project_id;
+
+  const queryClient = useQueryClient();
+
+  const projectUserHookParams = useMemo(
+    () => ({ custodianId, projectUserId }),
+    [custodianId, projectUserId]
+  );
+
+  const organisationHookParams = useMemo(
+    () => ({ custodianId, projectOrganisationId }),
+    [custodianId, projectOrganisationId]
   );
 
   let actionValidationStatus;
+  let onAction = () => {};
   switch (variant) {
     case ActionValidationVariants.ProjectUser: {
       actionValidationStatus = (
         <ActionValidationStatus<CustodianParams>
           useApprovalHook={useCustodianProjectUser}
-          hookParams={{ custodianId, projectUserId }}
+          hookParams={projectUserHookParams}
         />
       );
+
+      onAction = () => {
+        queryClient.refetchQueries({
+          queryKey: [
+            "getCustodianProjectUserValidationLogs",
+            custodianId,
+            projectId,
+            registryId,
+          ],
+        });
+      };
+
       break;
     }
     case ActionValidationVariants.Organisation: {
       // need to reimplement this in another ticket
+
       actionValidationStatus = (
         <ActionValidationStatus<OrganisationParams>
           useApprovalHook={useCustodianProjectOrganisation}
-          hookParams={{ custodianId, projectOrganisationId }}
+          hookParams={organisationHookParams}
         />
       );
+
+      onAction = () => {
+        queryClient.refetchQueries({
+          queryKey: [
+            "getCustodianOrganisationValidationLogs",
+            custodianId,
+            organisationId,
+          ],
+        });
+      };
+
       break;
     }
     default:
@@ -81,7 +125,11 @@ function ActionValidationPanel({
         {logs
           .filter(log => log.validation_check.enabled) // move to BE?
           .map(log => (
-            <ActionsPanelValidationCheck key={log.id} log={log} />
+            <ActionsPanelValidationCheck
+              key={log.id}
+              log={log}
+              onAction={onAction}
+            />
           ))}
         {actionValidationStatus}
       </ActionsPanel>
