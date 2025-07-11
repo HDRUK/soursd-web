@@ -1,3 +1,29 @@
+## [1.7.0](https://github.com/HDRUK/soursd-web/compare/v1.6.0...v1.7.0) (2025-07-11)
+
+### ✨ Features
+
+* **REGISTRY-1301:** Fix for affiliating a user (by an org) (#372) ([4f54f0e](https://github.com/HDRUK/soursd-web/commit/4f54f0ede70b5a20a3fd2df138d41101bd439c9b))
+* **REGISTRY-1489:** Attempts to improve rendering (#383) ([317c958](https://github.com/HDRUK/soursd-web/commit/317c9589e3cd51da3ea4f74722f3663586664a8f))
+* **REGISTRY-1495:** change name of project (#370) ([1bc8f53](https://github.com/HDRUK/soursd-web/commit/1bc8f539ca2662deb1acff0b90f69f2259e21b5f))
+* **SOURSD-1058:** user projects and tests (#364) ([e51e0a4](https://github.com/HDRUK/soursd-web/commit/e51e0a4dc361dfeb54ed9586be8c71de0a0324b4))
+* **SOURSD-1503:** Changing polling for notifications (#369) ([8686506](https://github.com/HDRUK/soursd-web/commit/8686506733e03175a2d991beed3f673b8f30c802))
+
+### 🐛 Bug Fixes
+
+* **REGISTRY-1462:** Fix affiliation display  (#373) ([8790bec](https://github.com/HDRUK/soursd-web/commit/8790becbbb1c7bd87cb9f4068a8cf524c55706af))
+* **REGISTRY-1473:** Prevent crashes from memory issues with the tables (#375) ([fe56e92](https://github.com/HDRUK/soursd-web/commit/fe56e921da49a065964394716685ed1307271505))
+* **REGISTRY-1477:** updated query alerts (#381) ([1d669cf](https://github.com/HDRUK/soursd-web/commit/1d669cf7da8019bb3ca344f1427ebfc8d33ef082))
+* **REGISTRY-1484:** missing titles (#378) ([c81ef6b](https://github.com/HDRUK/soursd-web/commit/c81ef6b641fdbfba52f12db09411737b4189c33c))
+* **REGISTRY-1485:** Mark IDVT checks are complete  (#382) ([a7d420d](https://github.com/HDRUK/soursd-web/commit/a7d420d8f823fa326137f735267911c918bebd27))
+* **REGISTRY-1495:** old references (#371) ([f4c7118](https://github.com/HDRUK/soursd-web/commit/f4c7118226480d2e92225a9e72931b96a26cec64))
+* **REGISTRY-1562:** Small fixes to action logs (#379) ([8af5de7](https://github.com/HDRUK/soursd-web/commit/8af5de76a625208946c555991b06523140e45813))
+* **REGISTRY-1563:** Fix to custodian actions (#380) ([4928b14](https://github.com/HDRUK/soursd-web/commit/4928b14f0e42302d8495b88d91146da9ca570857))
+* **REGISTRY-1566:** filters (#376) ([52ce60d](https://github.com/HDRUK/soursd-web/commit/52ce60dd024d4080757dd5d65aca2674e7b9dd65))
+* **REGISTRY-1568:** Fix for project date filters (#374) ([cec3efe](https://github.com/HDRUK/soursd-web/commit/cec3efe91f04665d5eeafd551b7a89b8fe1ebf93))
+* **REGISTRY-1577:** project org filters (#377) ([5019c6d](https://github.com/HDRUK/soursd-web/commit/5019c6d939cfae6e0a7e60feb00e2bae5f75ba92))
+* **REGISTRY-1590:** affiliation filters (#384) ([d2a35c6](https://github.com/HDRUK/soursd-web/commit/d2a35c629455000d52dc4ff7c6c2bcad2ed88ea4))
+* **SOURSD-1561:** Fix to route bug (#366) ([b16eca5](https://github.com/HDRUK/soursd-web/commit/b16eca527f2601d0c89013538e6fdda70c073140))
+
 ## [1.6.0](https://github.com/HDRUK/soursd-web/compare/v1.5.0...v1.6.0) (2025-07-03)
 
 ### ✨ Features
