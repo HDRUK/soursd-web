@@ -31,10 +31,10 @@ describe("<ProjectUsersFilters />", () => {
   it("submits a search", async () => {
     setupTest();
 
-    act(() => {
+    await act(async () => {
       const searchInput = screen.getByRole("textbox");
 
-      userEvent.type(searchInput, "hdruk{enter}");
+      await userEvent.type(searchInput, "hdruk{enter}");
     });
 
     await waitFor(() => {

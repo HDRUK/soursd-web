@@ -1,11 +1,14 @@
-import { User } from "../../types/application";
-import { QueryOptions } from "../../types/requests";
 import useQueriesCombined from "../../hooks/useQueriesCombined";
+import {
+  getAffiliationsWorkflowTransitions,
+  getAffiliationsWorkflowTransitionsQuery,
+} from "../../services/affiliations";
 import { getCustodian, getCustodianQuery } from "../../services/custodians";
 import {
   getOrganisation,
   getOrganisationQuery,
 } from "../../services/organisations";
+
 import {
   getPermissions,
   getPermissionsQuery,
@@ -19,6 +22,8 @@ import {
 } from "../../services/system_config";
 import { getUser } from "../../services/users";
 import getUserQuery from "../../services/users/getUserQuery";
+import { User } from "../../types/application";
+import { QueryOptions } from "../../types/requests";
 
 interface UseApplicationDependenciesProps {
   user?: User;
@@ -34,6 +39,9 @@ interface ApplicationDependenciesCombinedData {
   getPermissions: Awaited<ReturnType<typeof getPermissions>>;
   getCustodian: Awaited<ReturnType<typeof getCustodian>>;
   getProjectRoles: Awaited<ReturnType<typeof getProjectRoles>>;
+  getAffiliationsWorkflowTransitions: Awaited<
+    ReturnType<typeof getAffiliationsWorkflowTransitions>
+  >;
 }
 
 export default function useApplicationDependencies(
@@ -51,6 +59,7 @@ export default function useApplicationDependencies(
         getSectorsQuery(options),
         getPermissionsQuery(options),
         getProjectRolesQuery(options),
+        getAffiliationsWorkflowTransitionsQuery(options),
       ]
     : [];
   return useQueriesCombined<ApplicationDependenciesCombinedData>(queries);

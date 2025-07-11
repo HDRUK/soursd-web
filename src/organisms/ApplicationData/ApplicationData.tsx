@@ -3,6 +3,7 @@
 import { useStore } from "@/data/store";
 import { usePathname } from "@/i18n/routing";
 import { ReactNode, useEffect } from "react";
+import { WorkflowTransitions } from "@/services/custodian_approvals";
 import { ROUTES } from "../../consts/router";
 import {
   Custodian,
@@ -35,6 +36,7 @@ interface ApplicationDataProps {
   projectsData: ResearcherProject[];
   affiliationData: ResearcherAffiliation[];
   professionalRegistrationsData: ResearcherProfessionalRegistration[];
+  affiliationsWorkflowTransitionsData: WorkflowTransitions;
   isOrganisation: boolean;
   isCustodian: boolean;
   children: ReactNode;
@@ -54,6 +56,7 @@ export default function ApplicationData({
   projectsData,
   affiliationData,
   professionalRegistrationsData,
+  affiliationsWorkflowTransitionsData,
   isOrganisation,
   isCustodian,
   children,
@@ -78,6 +81,9 @@ export default function ApplicationData({
     setHistories: state.setHistories,
     application: state.getApplication(),
     setApplication: state.setApplication,
+    affiliationsWorkflowTransitions: state.getAffiliationsWorkflowTransitions(),
+    setAffiliationsWorkflowTransitions:
+      state.setAffiliationsWorkflowTransitions,
   }));
 
   const {
@@ -98,6 +104,8 @@ export default function ApplicationData({
     setHistories,
     application,
     setApplication,
+    affiliationsWorkflowTransitions,
+    setAffiliationsWorkflowTransitions,
   } = useStoreValues;
 
   useEffect(() => {
@@ -114,6 +122,7 @@ export default function ApplicationData({
     setCustodian(custodianData);
     setOrganisation(organisationData);
     setUser(userData);
+    setAffiliationsWorkflowTransitions(affiliationsWorkflowTransitionsData);
 
     setHistories({
       accreditations: accreditationsData,
@@ -130,6 +139,12 @@ export default function ApplicationData({
     if (path) addUrlToHistory(path);
   }, [path]);
 
+  console.log(
+    "affiliationsWorkflowTransitionsData",
+    affiliationsWorkflowTransitionsData,
+    affiliationsWorkflowTransitions
+  );
+
   const isAllSet =
     application &&
     user &&
@@ -138,7 +153,8 @@ export default function ApplicationData({
     ((custodian && isCustodian) || !isCustodian) &&
     !!sectors?.length &&
     !!permissions?.length &&
-    !!projectRoles?.length;
+    !!projectRoles?.length &&
+    !!affiliationsWorkflowTransitions;
 
   return isAllSet && children;
 }

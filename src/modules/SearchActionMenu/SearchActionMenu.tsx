@@ -2,11 +2,11 @@ import {
   BaseSelectProps,
   Checkbox,
   InputAdornment,
-  ListItemText,
   MenuItem,
   Select,
   SelectChangeEvent,
   IconButton,
+  ListItemText,
 } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
 import { ReactNode, useState } from "react";
@@ -84,7 +84,11 @@ const SearchActionMenu = ({
         minWidth: "200px",
       }}>
       {actions?.map(({ label, onClick }) => (
-        <MenuItem key={label} value={label} onClick={onClick}>
+        <MenuItem
+          key={label}
+          value={label}
+          onClick={onClick}
+          aria-label={label}>
           {Array.isArray(values) && (
             <Checkbox
               inputProps={{ "aria-label": `checkbox-${label}` }}
@@ -92,6 +96,7 @@ const SearchActionMenu = ({
               sx={{ p: 0, mr: 1 }}
             />
           )}
+
           <ListItemText primary={label} />
         </MenuItem>
       ))}
