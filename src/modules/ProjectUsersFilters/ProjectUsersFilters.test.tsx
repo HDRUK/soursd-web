@@ -1,4 +1,11 @@
-import { act, render, screen, userEvent, waitFor } from "@/utils/testUtils";
+import {
+  act,
+  commonAccessibilityTests,
+  render,
+  screen,
+  userEvent,
+  waitFor,
+} from "@/utils/testUtils";
 import ProjectUsersFilters, {
   ProjectUsersFiltersProps,
 } from "./ProjectUsersFilters";
@@ -9,10 +16,11 @@ const defaultProps = {
   handleSortToggle: jest.fn(),
   handleFieldToggle: jest.fn(),
   queryParams: {},
+  statusList: ["form_received", "validated"],
 };
 
 const setupTest = (props?: Partial<ProjectUsersFiltersProps>) => {
-  render(<ProjectUsersFilters {...defaultProps} {...props} />);
+  return render(<ProjectUsersFilters {...defaultProps} {...props} />);
 };
 
 describe("<ProjectUsersFilters />", () => {
@@ -23,10 +31,10 @@ describe("<ProjectUsersFilters />", () => {
   it("submits a search", async () => {
     setupTest();
 
-    act(() => {
+    await act(async () => {
       const searchInput = screen.getByRole("textbox");
 
-      userEvent.type(searchInput, "hdruk{enter}");
+      await userEvent.type(searchInput, "hdruk{enter}");
     });
 
     await waitFor(() => {
@@ -40,17 +48,19 @@ describe("<ProjectUsersFilters />", () => {
     setupTest();
 
     act(() => {
-      changeSelectValueByLabelText(
-        /Filter by status/,
-        "SOURSD account created"
-      );
+      changeSelectValueByLabelText(/Filter by status/, "Form received");
     });
 
     await waitFor(() => {
-      expect(defaultProps.handleFieldToggle).toHaveBeenCalledWith("status", [
-        "registered",
-        "",
-      ]);
+      expect(defaultProps.handleFieldToggle).toHaveBeenCalledWith(
+        "filter",
+        ["form_received", ""],
+        true
+      );
     });
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(setupTest());
   });
 });

@@ -137,22 +137,32 @@ async function clearInputsByLabelText(inputs: (string | RegExp)[]) {
   });
 }
 
-async function changeSelectValueByLabelText(
-  selector: string | RegExp,
-  value: string
-) {
+async function openSelectByLabelText(selector: string | RegExp) {
   const dropdown = await screen.findAllByLabelText(selector);
   const button = within(dropdown[0]).getByRole("combobox");
 
   await userEvent.click(button);
-
-  const listbox = screen.getByRole("listbox");
-
-  await userEvent.click(
-    await within(listbox).getByText(new RegExp(value, "i"))
-  );
 }
 
+async function changeSelectValueByLabelText(
+  selector: string | RegExp,
+  value: string,
+  options: {
+    component: "Select" | "ActionList";
+  } = {
+    component: "Select",
+  }
+) {
+  await openSelectByLabelText(selector);
+
+  const item = within(screen.getByRole("listbox"))[
+    options?.component === "Select" ? "getAllByText" : "getAllByLabelText"
+  ](new RegExp(value, "i"))[0];
+
+  await userEvent.click(item);
+}
+
+global.openSelectByLabelText = openSelectByLabelText;
 global.changeSelectValueByLabelText = changeSelectValueByLabelText;
 global.clearInputsByLabelText = clearInputsByLabelText;
 

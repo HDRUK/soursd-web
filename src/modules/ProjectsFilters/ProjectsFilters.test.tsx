@@ -1,5 +1,12 @@
 import { Status } from "@/components/ChipStatus";
-import { act, render, screen, userEvent, waitFor } from "@/utils/testUtils";
+import {
+  act,
+  commonAccessibilityTests,
+  render,
+  screen,
+  userEvent,
+  waitFor,
+} from "@/utils/testUtils";
 import ProjectsFilters, { ProjectsFiltersProps } from "./ProjectsFilters";
 
 const defaultProps = {
@@ -11,7 +18,7 @@ const defaultProps = {
 };
 
 const setupTest = (props?: Partial<ProjectsFiltersProps>) => {
-  render(<ProjectsFilters {...defaultProps} {...props} />);
+  return render(<ProjectsFilters {...defaultProps} {...props} />);
 };
 
 describe("<ProjectsFilters />", () => {
@@ -22,10 +29,10 @@ describe("<ProjectsFilters />", () => {
   it("submits a search", async () => {
     setupTest();
 
-    act(() => {
+    await act(async () => {
       const searchInput = screen.getByRole("textbox");
 
-      userEvent.type(searchInput, "hdruk{enter}");
+      await userEvent.type(searchInput, "hdruk{enter}");
     });
 
     await waitFor(() => {
@@ -39,12 +46,14 @@ describe("<ProjectsFilters />", () => {
     setupTest();
 
     act(() => {
-      changeSelectValueByLabelText(/Filter by date/, "Past projects");
+      changeSelectValueByLabelText(/Filter by date/, "Past projects", {
+        component: "ActionList",
+      });
     });
 
     await waitFor(() => {
       expect(defaultProps.handleFieldToggle).toHaveBeenCalledWith("active", [
-        "1",
+        "0",
         undefined,
       ]);
     });
@@ -54,7 +63,9 @@ describe("<ProjectsFilters />", () => {
     setupTest();
 
     act(() => {
-      changeSelectValueByLabelText(/Filter by status/, "Approved");
+      changeSelectValueByLabelText(/Filter by status/, "Approved", {
+        component: "ActionList",
+      });
     });
 
     await waitFor(() => {
@@ -64,5 +75,9 @@ describe("<ProjectsFilters />", () => {
         true
       );
     });
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(setupTest());
   });
 });

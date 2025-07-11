@@ -37,12 +37,13 @@ export default function ProjectUsersTable({
 }: ProjectUsersTableProps) {
   const { createDefaultColumn } = useColumns<CustodianProjectUser>({ t });
 
+  const namePath = useMemo(() => routes?.name?.path, [routes]);
+
   const columns = useMemo(() => {
     const initialColumns: ColumnDef<CustodianProjectUser>[] = [
       createDefaultColumn("name", {
         accessorKey: "project_has_user",
-        cell: info =>
-          renderProjectUserNameCell(info.getValue(), routes?.name?.path),
+        cell: info => renderProjectUserNameCell(info.getValue(), namePath),
       }),
       createDefaultColumn("projectRole", {
         accessorKey: "project_has_user.role.name",
@@ -61,7 +62,7 @@ export default function ProjectUsersTable({
     ];
 
     return filterColumns(initialColumns, includeColumns, extraColumns || []);
-  }, [includeColumns, extraColumns, routes, t]);
+  }, [includeColumns, extraColumns, namePath, createDefaultColumn]);
 
   return <Table columns={columns} isPaginated {...restProps} />;
 }

@@ -1,20 +1,20 @@
 "use client";
 
+import useFilter from "@/hooks/useFilter";
+import useSort from "@/hooks/useSort";
 import SortIcon from "@mui/icons-material/Sort";
 import { useTranslations } from "next-intl";
-import { useMemo } from "react";
-import useSort from "@/hooks/useSort";
 import { Status } from "../../components/ChipStatus";
 import { FilterIcon } from "../../consts/icons";
 import { PaginatedQueryReturn } from "../../hooks/usePaginatedQuery";
-import SearchBar from "../SearchBar";
 import { ResearcherProject } from "../../types/application";
 import SearchActionMenu from "../SearchActionMenu";
+import SearchBar from "../SearchBar";
 
-const NAMESPACE_TRANSLATIONS_PROJECTS = "Projects";
+const NAMESPACE_TRANSLATIONS_PROJECTS = "Projects.ProjectsFilters";
 const NAMESPACE_TRANSLATIONS_APPLICATION = "Application";
 
-export enum ProjectFilterKeys {
+export enum ProjectsFiltersKeys {
   DATE = "date",
   STATUS = "status",
 }
@@ -28,7 +28,7 @@ export interface ProjectsFiltersProps
     | "handleFieldToggle"
     | "queryParams"
   > {
-  includeFilters?: ProjectFilterKeys[];
+  includeFilters?: ProjectsFiltersKeys[];
 }
 
 export default function ProjectsFilters({
@@ -37,12 +37,12 @@ export default function ProjectsFilters({
   resetQueryParams,
   updateQueryParams,
   queryParams,
-  includeFilters = [ProjectFilterKeys.DATE, ProjectFilterKeys.STATUS],
+  includeFilters = [ProjectsFiltersKeys.DATE, ProjectsFiltersKeys.STATUS],
 }: ProjectsFiltersProps) {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_PROJECTS);
   const tApplication = useTranslations(NAMESPACE_TRANSLATIONS_APPLICATION);
 
-  const hasFilter = (key: ProjectFilterKeys) => {
+  const hasFilter = (key: ProjectsFiltersKeys) => {
     return includeFilters.includes(key);
   };
 
@@ -58,52 +58,46 @@ export default function ProjectsFilters({
       handleSortToggle(key, direction),
   });
 
-  const filterDateActions = [
-    {
-      label: t("filterActions.pastProjects"),
-      onClick: () => handleFieldToggle("active", ["1", undefined]),
-    },
-    {
-      label: t("filterActions.activeProjects"),
-      onClick: () => handleFieldToggle("active", ["0", undefined]),
-    },
-  ];
-
-  const filterStatusActions = useMemo(
-    () => [
+  const { actions: filterDateActions } = useFilter({
+    queryParams,
+    items: [
       {
-        label: t("filterActions.approved"),
-        onClick: () =>
-          handleFieldToggle(
-            "filter",
-            [Status.PROJECT_APPROVED, undefined],
-            true
-          ),
-        checked: queryParams.filter === Status.PROJECT_APPROVED,
+        label: t("filterByPast"),
+        key: "active",
+        value: "0",
       },
       {
-        label: t("filterActions.pending"),
-        onClick: () =>
-          handleFieldToggle(
-            "filter",
-            [Status.PROJECT_PENDING, undefined],
-            true
-          ),
-        checked: queryParams.filter === Status.PROJECT_PENDING,
-      },
-      {
-        label: t("filterActions.completed"),
-        onClick: () =>
-          handleFieldToggle(
-            "filter",
-            [Status.PROJECT_COMPLETED, undefined],
-            true
-          ),
-        checked: queryParams.filter === Status.PROJECT_COMPLETED,
+        label: t("filterByActive"),
+        key: "active",
+        value: "1",
       },
     ],
-    [queryParams, handleFieldToggle, t]
-  );
+    onFilter: (key: string, value: string) =>
+      handleFieldToggle(key, [value, undefined]),
+  });
+
+  const { actions: filterStatusActions } = useFilter({
+    queryParams,
+    items: [
+      {
+        label: t("filterByStatus_approved"),
+        key: "filter",
+        value: Status.PROJECT_APPROVED,
+      },
+      {
+        label: t("filterByStatus_pending"),
+        key: "filter",
+        value: Status.PROJECT_PENDING,
+      },
+      {
+        label: t("filterByStatus_completed"),
+        key: "filter",
+        value: Status.PROJECT_COMPLETED,
+      },
+    ],
+    onFilter: (key: string, value: string) =>
+      handleFieldToggle(key, [value, undefined], true),
+  });
 
   return (
     <SearchBar
@@ -121,7 +115,7 @@ export default function ProjectsFilters({
         renderedDefaultLabel={tApplication("sortBy")}
         aria-label={tApplication("sortBy")}
       />
-      {hasFilter(ProjectFilterKeys.DATE) && (
+      {hasFilter(ProjectsFiltersKeys.DATE) && (
         <SearchActionMenu
           actions={filterDateActions}
           onClear={() => handleFieldToggle("active", [undefined, undefined])}
@@ -131,7 +125,7 @@ export default function ProjectsFilters({
           aria-label={tApplication("filterByDate")}
         />
       )}
-      {hasFilter(ProjectFilterKeys.STATUS) && (
+      {hasFilter(ProjectsFiltersKeys.STATUS) && (
         <SearchActionMenu
           actions={filterStatusActions}
           multiple

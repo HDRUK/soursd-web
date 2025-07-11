@@ -1,8 +1,8 @@
-# SOURSD Cookie Notice
+# Safe People Registry Cookie Notice
 
-## Use of cookies by the Safe Organisation and User Registry for Sensitive Data (SOURSD)
+## Use of cookies by the Safe People Registry
 
-SOURSD uses cookies
+Safe People Registry uses cookies
 
 A cookie is a very small text document, which often includes an anonymous unique identifier. Cookies are created when your browser loads a particular website. The website sends information to the browser which then creates a text file. Every time the user goes back to the same website, the browser retrieves and sends this file to the website’s server. Find out more about the use of cookies at [www.allaboutcookies.org](http://www.allaboutcookies.org).
 

@@ -45,8 +45,8 @@ export default function KeyFeatures() {
             Visibility across Data Custodians
           </Typography>
           <Typography variant="body1" color="textSecondary.main">
-            SOURSD records Data Custodian approvals for previous and current
-            projects as well as approvals for other functionality in
+            Safe People Registry records Data Custodian approvals for previous
+            and current projects as well as approvals for other functionality in
             complementary systems.
           </Typography>
         </StyledContainer>
@@ -57,9 +57,10 @@ export default function KeyFeatures() {
             Multiple authentication routes
           </Typography>
           <Typography variant="body1" color="textSecondary.main">
-            SOURSD provides Single Sign-On (SSO) through multiple providers,
-            such as; Google, LinkedIn and LSRI via Keycloak. This enables users
-            to easily associate their SOURSD account with existing credentials.
+            Safe People Registry provides Single Sign-On (SSO) through multiple
+            providers, such as; Google, LinkedIn and LSRI via Keycloak. This
+            enables users to easily associate their Safe People Registry account
+            with existing credentials.
           </Typography>
         </StyledContainer>
       </StyledFlex>

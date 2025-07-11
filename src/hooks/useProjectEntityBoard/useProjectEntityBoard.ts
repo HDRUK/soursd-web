@@ -1,4 +1,4 @@
-import { WorkflowTransitionsResponse } from "@/services/custodian_approvals";
+import { WorkflowTransitions } from "@/services/custodian_approvals";
 import { WithModelState } from "@/types/application";
 import { DndItems } from "@/types/dnd";
 import { UniqueIdentifier } from "@dnd-kit/core";
@@ -6,7 +6,7 @@ import { useMemo } from "react";
 
 interface UseProjectEntityBoardProps<T> {
   data: T[];
-  stateWorkflow: WorkflowTransitionsResponse | undefined;
+  stateWorkflow: WorkflowTransitions | undefined;
 }
 
 export default function useProjectEntityBoard<
@@ -32,7 +32,7 @@ export default function useProjectEntityBoard<
   function getItemsByTransitions<
     T extends WithModelState<{ id: UniqueIdentifier }>,
   >(
-    stateWorkflow: WorkflowTransitionsResponse | undefined,
+    stateWorkflow: WorkflowTransitions | undefined,
     data: T[] | undefined
   ): DndItems<T> | null {
     if (stateWorkflow && data?.length) {

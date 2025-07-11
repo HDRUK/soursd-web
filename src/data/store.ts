@@ -1,6 +1,7 @@
 "use client";
 
 import { ROUTES } from "@/consts/router";
+import { WorkflowTransitions } from "@/services/custodian_approvals";
 import {
   Custodian,
   Organisation,
@@ -58,6 +59,7 @@ interface StoreState {
       history: string[];
       entries: Routes;
     };
+    affiliationsWorkflowTransitions?: Record<string, string[]>;
     user?: User;
     organisation?: Organisation;
     sectors: Sector[];
@@ -81,7 +83,7 @@ interface StoreState {
   setCurrentUser: (user: User) => void;
   getCurrentProjectUser: () => ProjectUser;
   setCurrentProjectUser: (projectUser: ProjectUser) => void;
-  getCurrentProjectOrganisation: () => ProjectUser;
+  getCurrentProjectOrganisation: () => ProjectOrganisation;
   setCurrentProjectOrganisation: (
     projectOrganisation: ProjectOrganisation
   ) => void;
@@ -95,6 +97,10 @@ interface StoreState {
   setPermissions: (permissions: Permission[]) => void;
   getProjectRoles: () => ProjectRole[];
   setProjectRoles: (projectRoles: ProjectRole[]) => void;
+  getAffiliationsWorkflowTransitions: () => WorkflowTransitions;
+  setAffiliationsWorkflowTransitions: (
+    affiliationsWorkflowTransitions: WorkflowTransitions
+  ) => void;
   getHistories: () => StoreUserHistories | undefined;
   setHistories: (histories: StoreUserHistories) => void;
   getOrganisation: () => Organisation | undefined;
@@ -201,6 +207,18 @@ const storeMethods = (set: StoreSet, get: StoreGet) => ({
     ),
   getPermissions: () => {
     return get().config.permissions;
+  },
+  setAffiliationsWorkflowTransitions: (
+    affiliationsWorkflowTransitions: WorkflowTransitions
+  ) =>
+    set(
+      produce(state => {
+        state.config.affiliationsWorkflowTransitions =
+          affiliationsWorkflowTransitions;
+      })
+    ),
+  getAffiliationsWorkflowTransitions: () => {
+    return get().config.affiliationsWorkflowTransitions;
   },
   setProjectRoles: (projectRoles: ProjectRole[]) =>
     set(

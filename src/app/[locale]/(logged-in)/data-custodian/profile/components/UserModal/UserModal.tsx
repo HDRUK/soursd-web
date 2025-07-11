@@ -2,10 +2,13 @@ import FormModal, { FormModalProps } from "@/components/FormModal";
 import { Message } from "@/components/Message";
 import { CustodianUserRoles } from "@/consts/custodian";
 import { useStore } from "@/data/store";
+import CustodianEditContactForm, {
+  CustodianEditContactFormFields,
+} from "@/modules/CustodianEditContactForm";
 import {
-  putCustodianUser,
   postCustodianUser,
   postCustodianUserInvite,
+  putCustodianUser,
 } from "@/services/custodian_users";
 import { CustodianUser } from "@/types/application";
 import { getPermission } from "@/utils/permissions";
@@ -14,7 +17,6 @@ import { showAlert } from "@/utils/showAlert";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback } from "react";
-import UserModalDetails, { CustodianUserFields } from "../UsersModalDetails";
 
 export interface UserModalProps extends Omit<FormModalProps, "children"> {
   custodianId: number;
@@ -22,7 +24,7 @@ export interface UserModalProps extends Omit<FormModalProps, "children"> {
   onClose: () => void;
 }
 
-const NAMESPACE_TRANSLATION_PROFILE = "CustodianProfile";
+const NAMESPACE_TRANSLATION_PROFILE_FORM = "CustodianProfile.EditContact";
 
 export default function UsersModal({
   custodianId,
@@ -30,7 +32,7 @@ export default function UsersModal({
   onClose,
   ...restProps
 }: UserModalProps) {
-  const t = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
+  const tForm = useTranslations(NAMESPACE_TRANSLATION_PROFILE_FORM);
   const permissions = useStore(state => state.config.permissions);
 
   const { mutateAsync: mutatePostUser, ...updateCustodianUserState } =
@@ -69,7 +71,7 @@ export default function UsersModal({
   ]);
 
   const handleOnSubmit = useCallback(
-    async (payload: CustodianUserFields) => {
+    async (payload: CustodianEditContactFormFields) => {
       const { first_name, last_name, email, approver, administrator } = payload;
 
       let userPermissions: number[] = [];
@@ -106,11 +108,11 @@ export default function UsersModal({
 
       showAlert("success", {
         text: user?.id
-          ? t("updateSuccessfulDescription")
-          : t("createSuccessfulDescription"),
+          ? tForm("updateSuccessfulDescription")
+          : tForm("createSuccessfulDescription"),
         title: user?.id
-          ? t("updateSuccessfulTitle")
-          : t("createSuccessfulTitle"),
+          ? tForm("updateSuccessfulTitle")
+          : tForm("createSuccessfulTitle"),
       });
     },
     [custodianId]
@@ -123,13 +125,14 @@ export default function UsersModal({
       onClose={onClose}
       {...restProps}>
       {queryState.isError && !queryState.isLoading && (
-        <Message severity="error">{t(queryState.error[0])}</Message>
+        <Message severity="error">{tForm(queryState.error[0])}</Message>
       )}
-      <UserModalDetails
+      <CustodianEditContactForm
         onClose={onClose}
         onSubmit={handleOnSubmit}
         user={user}
         queryState={queryState}
+        t={tForm}
       />
     </FormModal>
   );

@@ -27,7 +27,7 @@ const Home = () => {
               <ActionLogs
                 variant="organisation"
                 panelProps={{
-                  heading: "Welcome to SOURSD!",
+                  heading: "Welcome to Safe People Registry!",
                   description: mockedOrganisationHomeIntro,
                 }}
               />

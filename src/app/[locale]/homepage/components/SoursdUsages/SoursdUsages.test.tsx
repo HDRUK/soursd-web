@@ -41,7 +41,9 @@ describe("SoursdUsages Component", () => {
     expect(screen.getByTestId("styled-container")).toBeInTheDocument();
 
     // Verify the header content
-    expect(screen.getByText("With SOURSD you can...")).toBeInTheDocument();
+    expect(
+      screen.getByText("With Safe People Registry you can...")
+    ).toBeInTheDocument();
 
     // Verify the flex container
     expect(screen.getByTestId("styled-flex")).toBeInTheDocument();

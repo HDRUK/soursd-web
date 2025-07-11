@@ -1,5 +1,5 @@
 import { mockedOrganisation } from "@/mocks/data/organisation";
-import { render, screen } from "@/utils/testUtils";
+import { commonAccessibilityTests, render, screen } from "@/utils/testUtils";
 import OrganisationsSectorWebsiteDetails, {
   OrganisationsSectorWebsiteDetailsProps,
 } from "./OrganisationsSectorWebsiteDetails";
@@ -25,5 +25,9 @@ describe("<OrganisationsSectorWebsiteDetails />", () => {
     ).toBeInTheDocument();
     expect(screen.getByText(organisation.website)).toBeInTheDocument();
     expect(screen.getByText(organisation.sector.name)).toBeInTheDocument();
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(setupTest());
   });
 });

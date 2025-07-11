@@ -1,6 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useMemo, useState } from "react";
-import { MutationState } from "@/types/form";
+import { useMemo } from "react";
 import { useTranslations } from "next-intl";
 import {
   getCustodianProjectUserStatesQuery,
@@ -8,6 +7,7 @@ import {
   putCustodianProjectUserQuery,
   ChangeValidationStatusPayload,
 } from "@/services/custodian_approvals";
+import { getCombinedQueryState } from "@/utils/query";
 import { CustodianProjectUser } from "@/types/application";
 import { Option } from "@/types/common";
 import useQueryAlerts from "../useQueryAlerts";
@@ -35,21 +35,13 @@ export const useCustodianProjectUser = ({
   const tApplication = useTranslations(NAMESPACE_TRANSLATION);
   const queryClient = useQueryClient();
 
-  const [mutationState, setMutationState] = useState<MutationState>({
-    isError: false,
-    isSuccess: false,
-    isPending: false,
-  });
-
   const custodianProjectUserQuery = getCustodianProjectUserQuery(
     custodianId as number,
     projectUserId as number
   );
-  const {
-    data,
-    isLoading: isFetching,
-    isError,
-  } = useQuery(custodianProjectUserQuery);
+  const { data, ...getCustodianProjectUserQueryState } = useQuery(
+    custodianProjectUserQuery
+  );
 
   const { data: statusOptionsData } = useQuery(
     getCustodianProjectUserStatesQuery()
@@ -61,16 +53,8 @@ export const useCustodianProjectUser = ({
         value: item,
         label: tApplication(`status_${item}`),
       })) || [],
-    [statusOptionsData]
+    [statusOptionsData, tApplication]
   );
-
-  useEffect(() => {
-    setMutationState(state => ({
-      ...state,
-      isPending: isFetching,
-      isSuccess: false,
-    }));
-  }, [data]);
 
   const refetch = () => {
     queryClient.refetchQueries({
@@ -78,16 +62,10 @@ export const useCustodianProjectUser = ({
     });
   };
 
-  const onSuccess = () => {
-    setMutationState(state => ({ ...state, isSuccess: true }));
-    refetch();
-  };
-
-  const { mutateAsync: mutateCustodianProjectUser, isPending: isUpdating } =
-    useMutation({
-      ...putCustodianProjectUserQuery(custodianId),
-      onSuccess,
-    });
+  const {
+    mutateAsync: mutateCustodianProjectUser,
+    ...updateCustodianProjectUserMutationState
+  } = useMutation(putCustodianProjectUserQuery(custodianId));
 
   const changeValidationStatus = (payload: ChangeValidationStatusPayload) => {
     mutateCustodianProjectUser({ params: { projectUserId }, payload }).then(
@@ -95,14 +73,21 @@ export const useCustodianProjectUser = ({
     );
   };
 
-  const isLoading = isFetching || isUpdating;
+  const queryState = getCombinedQueryState([
+    getCustodianProjectUserQueryState,
+    updateCustodianProjectUserMutationState,
+  ]);
 
-  useQueryAlerts(mutationState);
+  useQueryAlerts(updateCustodianProjectUserMutationState, {
+    onSuccess: () => {
+      refetch();
+    },
+  });
 
   return {
     data: data?.data,
-    isLoading,
-    isError,
+    isLoading: queryState.isLoading,
+    isError: queryState.isError,
     statusOptions,
     changeValidationStatus,
     refetch,

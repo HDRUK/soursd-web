@@ -13,7 +13,7 @@ interface OlProps extends PropsWithChildren<HTMLOListElement> {
     | "default";
 }
 
-export default function Ol({ children, color = "default" }: OlProps) {
+export default function Ol({ children, color = "secondary" }: OlProps) {
   const theme = useTheme();
 
   return (
@@ -37,7 +37,7 @@ export default function Ol({ children, color = "default" }: OlProps) {
           aspectRatio: "1 / 1",
           left: 0,
           top: 0,
-          color: theme.palette[color].contrastText,
+          color: theme.palette[color]?.contrastText,
         },
         "li:before": {
           content: "''",
@@ -45,7 +45,7 @@ export default function Ol({ children, color = "default" }: OlProps) {
           left: "-0.35em",
           top: "0.1em",
           borderRadius: "50%",
-          background: theme.palette[color].main,
+          background: theme.palette[color]?.main,
           height: "1.3em",
           aspectRatio: "1 / 1",
         },

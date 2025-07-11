@@ -10,6 +10,6 @@ export default function getNotificationsCountsQuery(userId: number) {
         },
       }),
     enabled: true,
-    refetchInterval: 10000,
+    refetchInterval: 60000,
   };
 }

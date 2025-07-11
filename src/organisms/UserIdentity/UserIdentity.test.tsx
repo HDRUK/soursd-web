@@ -29,7 +29,7 @@ describe("<UserIdentity />", () => {
             digi_ident: "$1234",
             identity: {
               idvt_completed_at: "04-04-2025T09:00:00",
-              idvt_result: 1,
+              idvt_success: 1,
             },
           },
           location: "London, UK",
@@ -68,7 +68,7 @@ describe("<UserIdentity />", () => {
             digi_ident: "$1234",
             identity: {
               idvt_completed_at: "04-04-2025T09:00:02",
-              idvt_result: 1,
+              idvt_success: 1,
             },
           },
         },
@@ -88,7 +88,7 @@ describe("<UserIdentity />", () => {
           registry: {
             identity: {
               idvt_completed_at: "04-04-2025T09:00:03",
-              idvt_result: 1,
+              idvt_success: 1,
             },
           },
         },
@@ -103,19 +103,19 @@ describe("<UserIdentity />", () => {
   it.each([
     {
       idvt_completed_at: null,
-      idvt_result: 1,
+      idvt_success: 1,
     },
     {
       idvt_completed_at: "04-04-2025T09:00:04",
-      idvt_result: 0,
+      idvt_success: 0,
     },
     {
       idvt_completed_at: "04-04-2025T09:00:05",
-      idvt_result: null,
+      idvt_success: null,
     },
     {
       idvt_completed_at: null,
-      idvt_result: null,
+      idvt_success: null,
     },
   ])("displays correctly when idvt checks not complete", async identity => {
     mockUseStore({

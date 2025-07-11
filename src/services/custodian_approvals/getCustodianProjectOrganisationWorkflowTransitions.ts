@@ -1,11 +1,14 @@
-import { ResponseJson, ResponseOptions } from "../../types/requests";
+import {
+  GetWorkflowTransitions,
+  ResponseJson,
+  ResponseOptions,
+} from "../../types/requests";
 import { getRequest } from "../requests";
 import { handleJsonResponse } from "../requestHelpers";
-import { WorkflowTransitionsResponse } from "./types";
 
 export default async (
   options: ResponseOptions
-): Promise<ResponseJson<WorkflowTransitionsResponse>> => {
+): Promise<ResponseJson<GetWorkflowTransitions>> => {
   const response = await getRequest(
     `/custodian_approvals/projectOrganisations/workflowTransitions`
   );

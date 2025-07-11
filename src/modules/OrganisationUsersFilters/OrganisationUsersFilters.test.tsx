@@ -1,4 +1,11 @@
-import { act, render, screen, userEvent, waitFor } from "@/utils/testUtils";
+import {
+  act,
+  commonAccessibilityTests,
+  render,
+  screen,
+  userEvent,
+  waitFor,
+} from "@/utils/testUtils";
 import OrganisationUsersFilters, {
   OrganisationUsersFiltersProps,
 } from "./OrganisationUsersFilters";
@@ -6,20 +13,27 @@ import OrganisationUsersFilters, {
 const defaultProps = {
   updateQueryParams: jest.fn(),
   resetQueryParams: jest.fn(),
+  handleFieldToggle: jest.fn(),
+  statusList: ["approved", "pending"],
+  queryParams: {},
 };
 
 const setupTest = (props?: Partial<OrganisationUsersFiltersProps>) => {
-  render(<OrganisationUsersFilters {...defaultProps} {...props} />);
+  return render(<OrganisationUsersFilters {...defaultProps} {...props} />);
 };
 
 describe("<OrganisationUsersFilters />", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it("renders warning message if no project details", async () => {
     setupTest();
 
-    act(() => {
+    await act(async () => {
       const searchInput = screen.getByRole("textbox");
 
-      userEvent.type(searchInput, "hdruk{enter}");
+      await userEvent.type(searchInput, "hdruk{enter}");
     });
 
     await waitFor(() => {
@@ -34,15 +48,21 @@ describe("<OrganisationUsersFilters />", () => {
     setupTest();
 
     act(() => {
-      const filterCheckbox = screen.getByLabelText("Show pending invites");
-
-      userEvent.click(filterCheckbox);
+      changeSelectValueByLabelText("Filter by status", "Pending", {
+        component: "ActionList",
+      });
     });
 
     await waitFor(() => {
-      expect(defaultProps.updateQueryParams).toHaveBeenCalledWith({
-        show_pending: 1,
-      });
+      expect(defaultProps.handleFieldToggle).toHaveBeenCalledWith(
+        "filter",
+        ["pending", ""],
+        true
+      );
     });
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(setupTest());
   });
 });

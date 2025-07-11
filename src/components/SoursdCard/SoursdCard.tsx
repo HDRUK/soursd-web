@@ -46,7 +46,9 @@ export default function SoursdCard({
       </Box>
       <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
         <div>
-          <Typography fontWeight={700}>SOURSD identifier:</Typography>
+          <Typography fontWeight={700}>
+            Safe People Registry identifier:
+          </Typography>
           <Text copyable>{identifier}</Text>
         </div>
         {children}

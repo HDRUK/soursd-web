@@ -113,6 +113,11 @@ const mockedAffiliation = (
   department: faker.commerce.department(),
   email: faker.internet.email(),
   registryAffiliationState: Status.AFFILIATED,
+  model_state: {
+    state: {
+      slug: Status.AFFILIATION_APPROVED,
+    },
+  },
   ...affiliation,
 });
 

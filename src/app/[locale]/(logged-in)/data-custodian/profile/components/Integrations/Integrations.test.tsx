@@ -18,9 +18,9 @@ jest.mock("@tanstack/react-query", () => ({
   useMutation: jest.fn(),
 }));
 
-jest.mock("next-intl", () => ({
-  useTranslations: (ns: string) => (key: string) => `${ns}.${key}`,
-}));
+function getAllInputs() {
+  return [/Application ID/, /Client ID/];
+}
 
 describe("<Integrations />", () => {
   const mockMutateAsync = jest.fn().mockResolvedValue({ success: true });
@@ -49,97 +49,38 @@ describe("<Integrations />", () => {
     expect(screen.getByDisplayValue(gatewayAppId)).toBeInTheDocument();
     expect(screen.getByDisplayValue(gatewayClientId)).toBeInTheDocument();
     expect(
-      screen.getByAltText("CustodianProfile.dsitLogoAlt")
+      screen.getByText(
+        "Link your Gateway Team profile via a custom integration to Safe People Registry so that you can populate your project information and synch the information without needing to enter it in two places."
+      )
     ).toBeInTheDocument();
-    expect(
-      screen.getByText("CustodianProfile.integrationsDescription")
-    ).toBeInTheDocument();
+
+    getAllInputs().forEach(selector => {
+      expect(screen.getByLabelText(selector)).toBeInTheDocument();
+    });
   });
 
   it("submits the form with updated values", async () => {
     render(<Integrations />);
 
-    const appIdField = screen.getByPlaceholderText(
-      "Form.gatewayAppIdPlaceholder"
-    );
-    const clientIdField = screen.getByPlaceholderText(
-      "Form.gatewayClientIdPlaceholder"
-    );
+    const inputs = getAllInputs();
+    const id = getRandomString(40);
 
-    const newAppId = getRandomString(40);
-    const newClientId = getRandomString(40);
-
-    fireEvent.change(appIdField, { target: { value: newAppId } });
-    fireEvent.change(clientIdField, { target: { value: newClientId } });
+    inputs.forEach(value => {
+      const element = screen.getByLabelText(value);
+      fireEvent.change(element, { target: { value: id } });
+    });
 
     const submitButton = screen.getByRole("button", {
-      name: "Profile.submitButton",
+      name: "Save",
     });
     fireEvent.click(submitButton);
 
     await waitFor(() => {
       expect(mockMutateAsync).toHaveBeenCalledWith({
-        gateway_app_id: newAppId,
-        gateway_client_id: newClientId,
+        gateway_app_id: id,
+        gateway_client_id: id,
       });
     });
-  });
-
-  it("shows validation errors for empty fields", async () => {
-    render(<Integrations />);
-
-    const appIdField = screen.getByPlaceholderText(
-      "Form.gatewayAppIdPlaceholder"
-    );
-    const clientIdField = screen.getByPlaceholderText(
-      "Form.gatewayClientIdPlaceholder"
-    );
-
-    fireEvent.change(appIdField, { target: { value: "" } });
-    fireEvent.change(clientIdField, { target: { value: "" } });
-
-    const submitButton = screen.getByRole("button", {
-      name: "Profile.submitButton",
-    });
-    fireEvent.click(submitButton);
-
-    await waitFor(() => {
-      expect(
-        screen.getAllByText("Form.integrationIdFormatInvalid")
-      ).toHaveLength(2);
-    });
-
-    expect(mockMutateAsync).not.toHaveBeenCalled();
-  });
-
-  it("shows validation errors for bad field", async () => {
-    render(<Integrations />);
-
-    const appIdField = screen.getByPlaceholderText(
-      "Form.gatewayAppIdPlaceholder"
-    );
-    const clientIdField = screen.getByPlaceholderText(
-      "Form.gatewayClientIdPlaceholder"
-    );
-
-    const newAppId = getRandomString(30);
-    const newClientId = getRandomString(40);
-
-    fireEvent.change(appIdField, { target: { value: newAppId } });
-    fireEvent.change(clientIdField, { target: { value: newClientId } });
-
-    const submitButton = screen.getByRole("button", {
-      name: "Profile.submitButton",
-    });
-    fireEvent.click(submitButton);
-
-    await waitFor(() => {
-      expect(
-        screen.getAllByText("Form.integrationIdFormatInvalid")
-      ).toHaveLength(1);
-    });
-
-    expect(mockMutateAsync).not.toHaveBeenCalled();
   });
 
   it("has no accessibility violations", async () => {

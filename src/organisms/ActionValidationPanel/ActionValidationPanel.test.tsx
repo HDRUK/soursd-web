@@ -25,7 +25,13 @@ const renderActionValidationPanel = (
   logs = mockedValidationLogs(),
   isLoading = false
 ) => {
-  return render(<ActionValidationPanel logs={logs} isLoading={isLoading} />);
+  return render(
+    <ActionValidationPanel
+      variant="ProjectUser"
+      logs={logs}
+      queryState={{ isLoading, isError: false }}
+    />
+  );
 };
 
 describe("<ActionValidationPanel/>", () => {
@@ -195,6 +201,7 @@ describe("<ActionValidationPanel/>", () => {
     expect(viewMoreBox).toBeInTheDocument();
 
     const items = viewMoreBox.children;
+
     expect(items.length).toBe(3);
 
     const viewMoreButton = screen.getByTestId("view-more-button");

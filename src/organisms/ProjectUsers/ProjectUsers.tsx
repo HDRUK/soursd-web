@@ -72,6 +72,7 @@ export default function ProjectUsers({
       queryParams,
       ...queryState
     },
+    states,
     helpers: { isTransitionAllowed, itemsByTransitions, getAllowedTransitions },
   } = useProjectEntity({
     usePaginatedQuery: () =>
@@ -91,7 +92,12 @@ export default function ProjectUsers({
   const { isError, isSuccess, reset } = updateValidationMutationState;
 
   useQueryAlerts(updateValidationMutationState, {
-    showOnlyError: true,
+    onSuccess: () => {
+      if (showListView) {
+        refetch();
+      }
+    },
+    showOnlyError: !showListView,
   });
 
   const handleUpdateSafePeople = useCallback(
@@ -105,10 +111,6 @@ export default function ProjectUsers({
           comment: "status change",
         },
       });
-
-      if (showListView) {
-        refetch();
-      }
     },
     [showListView]
   );
@@ -189,9 +191,10 @@ export default function ProjectUsers({
     <>
       <PageSection>
         <ProjectUsersFilters
+          statusList={states}
           includeFilters={
             !showListView
-              ? [ProjectUsersFilterKeys.STATUS]
+              ? []
               : [ProjectUsersFilterKeys.SORT, ProjectUsersFilterKeys.STATUS]
           }
           {...filterProps}>

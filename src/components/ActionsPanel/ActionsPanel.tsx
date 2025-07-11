@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, BoxProps, Typography, useTheme } from "@mui/material";
 import { ReactNode } from "react";
 
 export interface ActionsPanelProps {
@@ -8,6 +8,7 @@ export interface ActionsPanelProps {
   description?: ReactNode;
   heading?: ReactNode;
   variant?: "plain" | "decorated";
+  panelSx?: BoxProps["sx"];
 }
 
 export default function ActionsPanel({
@@ -15,10 +16,11 @@ export default function ActionsPanel({
   description,
   heading,
   variant = "decorated",
+  panelSx,
 }: ActionsPanelProps) {
   const theme = useTheme();
 
-  const panelSx =
+  const defaultPanelSx =
     variant === "decorated"
       ? {
           backgroundColor: "neutralPink.main",
@@ -44,6 +46,7 @@ export default function ActionsPanel({
         display: "flex",
         flexDirection: "column",
         borderRadius: 3,
+        ...defaultPanelSx,
         ...panelSx,
       }}>
       {heading && (

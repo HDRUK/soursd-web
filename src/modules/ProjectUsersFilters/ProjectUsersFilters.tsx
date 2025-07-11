@@ -2,8 +2,9 @@
 
 import SortIcon from "@mui/icons-material/Sort";
 import { useTranslations } from "next-intl";
-import { PropsWithChildren, useMemo } from "react";
+import { PropsWithChildren } from "react";
 import useSort from "@/hooks/useSort";
+import useFilter from "@/hooks/useFilter";
 import { FilterIcon } from "../../consts/icons";
 import { PaginatedQueryReturn } from "../../hooks/usePaginatedQuery";
 import { CustodianProjectUser } from "../../types/application";
@@ -29,6 +30,7 @@ export interface ProjectUsersFiltersProps
       | "queryParams"
     >
   > {
+  statusList?: string[];
   includeFilters?: ProjectUsersFilterKeys[];
 }
 
@@ -39,6 +41,7 @@ export default function ProjectUsersFilters({
   resetQueryParams,
   updateQueryParams,
   queryParams,
+  statusList,
   includeFilters = [ProjectUsersFilterKeys.STATUS, ProjectUsersFilterKeys.SORT],
 }: ProjectUsersFiltersProps) {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_PROJECTS);
@@ -52,7 +55,7 @@ export default function ProjectUsersFilters({
     queryParams,
     items: [
       {
-        label: t("sortByName"),
+        label: t("sortByProjectTitle"),
         key: "projects.title",
       },
     ],
@@ -60,16 +63,16 @@ export default function ProjectUsersFilters({
       handleSortToggle(key, direction),
   });
 
-  const filterStatusActions = useMemo(
-    () => [
-      {
-        label: tApplication("status_registered"),
-        onClick: () => handleFieldToggle("status", ["registered", ""]),
-        checked: queryParams.status === "registered",
-      },
-    ],
-    [queryParams, handleFieldToggle, t]
-  );
+  const { actions: filterStatusActions } = useFilter({
+    queryParams,
+    items: statusList?.map(status => ({
+      label: tApplication(`status_${status}`),
+      value: status,
+      key: "filter",
+    })),
+    onFilter: (key: string, value: string) =>
+      handleFieldToggle(key, [value, ""], true),
+  });
 
   return (
     <SearchBar

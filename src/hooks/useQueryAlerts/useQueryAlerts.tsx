@@ -4,8 +4,8 @@ import { useTranslations } from "next-intl";
 import { MutableRefObject, useRef } from "react";
 import ReactDOMServer from "react-dom/server";
 import { SweetAlertIcon } from "sweetalert2";
-import { showAlert } from "../../utils/showAlert";
 import ContactLink from "../../components/ContactLink";
+import { showAlert } from "../../utils/showAlert";
 
 const NAMESPACE_TRANSALATIONS_APPLICATION = "Application";
 
@@ -19,6 +19,8 @@ export interface QueryAlertOptions {
   errorAlertProps?: ShowAlertOptions;
   enabled?: boolean;
   showOnlyError?: boolean;
+  onSuccess?: () => void;
+  onError?: () => void;
 }
 
 export default function useQueryAlerts(
@@ -42,8 +44,6 @@ export default function useQueryAlerts(
 
       alertOptions?.commonAlertProps?.willClose?.();
       alertOptions?.successAlertProps?.willClose?.();
-
-      query.reset?.();
     },
   };
 
@@ -62,8 +62,6 @@ export default function useQueryAlerts(
 
       alertOptions?.commonAlertProps?.willClose?.();
       alertOptions?.errorAlertProps?.willClose?.();
-
-      query.reset?.();
     },
   };
 
@@ -71,16 +69,32 @@ export default function useQueryAlerts(
     alertOptions?.enabled === undefined || alertOptions?.enabled === true;
 
   if (!defaultRef?.current && isEnabled) {
+    const element = document.getElementsByClassName(".swal2-container")[0];
+
+    if (element) {
+      element.style.display = "hidden";
+    }
+
     if (query.isError) {
+      alertOptions?.onError?.();
+
       defaultRef.current = showAlert(
         alertOptions?.errorAlertType || "error",
         mergedErrorAlertProps
       );
-    } else if (query.isSuccess && !alertOptions?.showOnlyError) {
-      defaultRef.current = showAlert(
-        alertOptions?.successAlertType || "success",
-        mergedSuccessAlertProps
-      );
+
+      query.reset?.();
+    } else if (query.isSuccess) {
+      alertOptions?.onSuccess?.();
+
+      if (!alertOptions?.showOnlyError) {
+        defaultRef.current = showAlert(
+          alertOptions?.successAlertType || "success",
+          mergedSuccessAlertProps
+        );
+      }
+
+      query.reset?.();
     }
   }
 }

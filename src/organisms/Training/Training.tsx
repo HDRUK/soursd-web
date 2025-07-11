@@ -126,10 +126,8 @@ export default function Training({
   useQueryAlerts(
     selectedTraining ? putTrainingsQueryState : postTrainingsQueryState,
     {
-      commonAlertProps: {
-        willClose: () => {
-          handleCloseModal();
-        },
+      onSuccess: () => {
+        handleCloseModal();
       },
       errorAlertProps: {
         text: selectedTraining
@@ -155,10 +153,10 @@ export default function Training({
   const showDeleteConfirm = useQueryConfirmAlerts<number>(
     deleteProfessionalRegistrationQueryState,
     {
+      onSuccess: () => refetchTrainings(),
       confirmAlertProps: {
         preConfirm: async (id: number) => {
           await mutateDeleteAsync(id);
-          refetchTrainings();
         },
       },
       errorAlertProps: {

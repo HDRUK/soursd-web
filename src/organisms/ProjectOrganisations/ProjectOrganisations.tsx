@@ -62,6 +62,7 @@ export default function ProjectOrganisations({
       ...queryState
     },
     helpers: { isTransitionAllowed, itemsByTransitions, getAllowedTransitions },
+    states,
   } = useProjectEntity({
     usePaginatedQuery: () =>
       usePaginatedCustodianProjectOrganisations(custodianId),
@@ -76,7 +77,12 @@ export default function ProjectOrganisations({
   const { isError, isSuccess, reset } = updateValidationMutationState;
 
   useQueryAlerts(updateValidationMutationState, {
-    showOnlyError: true,
+    onSuccess: () => {
+      if (showListView) {
+        refetch();
+      }
+    },
+    showOnlyError: !showListView,
   });
 
   const handleUpdateOrganisation = useCallback(
@@ -90,10 +96,6 @@ export default function ProjectOrganisations({
           comment: "status change",
         },
       });
-
-      if (showListView) {
-        refetch();
-      }
     },
     [showListView]
   );
@@ -174,13 +176,16 @@ export default function ProjectOrganisations({
     />
   );
 
+  console.log("STATES", states);
+
   return (
     <>
       <PageSection>
         <ProjectOrganisationsFilters
+          statusList={states}
           includeFilters={
             !showListView
-              ? [ProjectOrganisationsFilterKeys.STATUS]
+              ? []
               : [
                   ProjectOrganisationsFilterKeys.SORT,
                   ProjectOrganisationsFilterKeys.STATUS,

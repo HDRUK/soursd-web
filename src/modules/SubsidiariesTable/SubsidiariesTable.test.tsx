@@ -1,21 +1,31 @@
 import { mockedSubsidiary } from "@/mocks/data/organisation";
-import { render, screen } from "@/utils/testUtils";
+import { commonAccessibilityTests, render, screen } from "@/utils/testUtils";
 import { formatAddress } from "@/utils/address";
-import SubsidiariesTable from "./SubsidiariesTable";
+import SubsidiariesTable, { SubsidiariesTableProps } from "./SubsidiariesTable";
 
 const subsidiary = mockedSubsidiary();
 
-describe("<CharitiesTable />", () => {
+const setupTest = (props?: Partial<SubsidiariesTableProps>) => {
+  return render(<SubsidiariesTable subsidiariesData={[]} {...props} />);
+};
+
+describe("<SubsidiariesTable />", () => {
   it("renders warning message if no project details", () => {
-    render(<SubsidiariesTable subsidiariesData={[]} />);
+    setupTest();
 
     expect(screen.getByText(/No results/i)).toBeInTheDocument();
   });
 
   it("renders all main fields with correct values", () => {
-    render(<SubsidiariesTable subsidiariesData={[subsidiary]} />);
+    setupTest({
+      subsidiariesData: [subsidiary],
+    });
 
     expect(screen.getByText(subsidiary.name)).toBeInTheDocument();
     expect(screen.getByText(formatAddress(subsidiary))).toBeInTheDocument();
+  });
+
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(setupTest());
   });
 });

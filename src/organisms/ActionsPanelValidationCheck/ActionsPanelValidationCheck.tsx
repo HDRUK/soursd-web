@@ -8,10 +8,12 @@ import ActionValidationMakeDecision from "../ActionValidationMakeDecision";
 
 interface ActionsPanelValidationCheckProps {
   log: ValidationLog;
+  onAction?: () => void;
 }
 
 export default function ActionsPanelValidationCheck({
   log,
+  onAction,
 }: ActionsPanelValidationCheckProps) {
   const { data: comments, refetch: refetchComments } = useQuery({
     ...getValidationLogCommentsQuery(log.id),
@@ -53,6 +55,7 @@ export default function ActionsPanelValidationCheck({
         log={log}
         onAction={async () => {
           await refetchComments();
+          onAction?.();
         }}
       />
     </Paper>

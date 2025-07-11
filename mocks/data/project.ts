@@ -20,6 +20,11 @@ const mockedProject = (
   other_approval_committees: faker.string.sample(),
   organisations: [mockedOrganisation()],
   status: Status.PROJECT_PENDING,
+  model_state: {
+    state: {
+      slug: Status.APPROVED,
+    },
+  },
   ...project,
 });
 

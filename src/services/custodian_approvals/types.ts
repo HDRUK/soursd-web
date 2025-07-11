@@ -4,7 +4,7 @@ import {
 } from "../../types/application";
 
 type WorkflowStateResponse = string[];
-type WorkflowTransitionsResponse = Record<string, string[]>;
+type WorkflowTransitions = Record<string, string[]>;
 
 type GetCustodianProjectUsersResponse = CustodianProjectUser[];
 type GetCustodianProjectUserResponse = CustodianProjectUser;
@@ -29,7 +29,7 @@ interface DeleteCustodianProjectOrganisationPayload {
 
 export type {
   WorkflowStateResponse,
-  WorkflowTransitionsResponse,
+  WorkflowTransitions,
   GetCustodianProjectUsersResponse,
   GetCustodianProjectUserResponse,
   GetCustodianProjectOrganisationsResponse,
