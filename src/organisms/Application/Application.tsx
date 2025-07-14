@@ -11,6 +11,7 @@ import useQueriesHistories from "../../queries/useQueriesHistories";
 import { User } from "../../types/application";
 import { getCombinedQueryState } from "../../utils/query";
 import ApplicationData from "../ApplicationData";
+import ActionLogUpdater from "../ActionLogUpdater/ActionLogUpdate";
 
 interface ApplicationProps {
   children: ReactNode;
@@ -116,6 +117,7 @@ export default function Application({
         affiliationsWorkflowTransitionsData={
           affiliationsWorkflowTransitionsData?.data
         }>
+        <ActionLogUpdater />
         {children}
       </ApplicationData>
     </LoadingWrapper>

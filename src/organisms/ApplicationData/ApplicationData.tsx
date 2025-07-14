@@ -139,12 +139,6 @@ export default function ApplicationData({
     if (path) addUrlToHistory(path);
   }, [path]);
 
-  console.log(
-    "affiliationsWorkflowTransitionsData",
-    affiliationsWorkflowTransitionsData,
-    affiliationsWorkflowTransitions
-  );
-
   const isAllSet =
     application &&
     user &&

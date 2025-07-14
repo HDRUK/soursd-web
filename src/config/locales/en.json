@@ -1493,7 +1493,7 @@
     },
     "completeConfiguration": {
       "title": "Complete your configuration",
-      "description": "This is where you can setup your rules and validation checks, IDVT technology and API endpoints.",
+      "description": "This is where you can customise the default automated rules and manual checks for validating Users and Organisations, such as requiring Identity Verification or evaluating a CV. You can also set up web hooks.",
       "buttonText": "Complete your configuration"
     },
     "addContactsCompleted": {

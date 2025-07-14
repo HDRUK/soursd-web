@@ -9,6 +9,7 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { Box } from "@mui/system";
+import { injectParamsIntoPath } from "@/utils/application";
 import ActionsPanel, { ActionsPanelProps } from "../../components/ActionsPanel";
 import ActionsPanelItem from "../../components/ActionsPanelItem";
 import { PageBody } from "../../modules";
@@ -67,6 +68,9 @@ export default function ActionLogs({
 
   const hydratedInCompletedActions = inCompletedActions?.map(({ action }) => {
     const { icon, path } = actions[action as keyof typeof actions] ?? {};
+    const { id } = allActions.find(a => a.action === action) || {};
+
+    const hydratedPath = id ? injectParamsIntoPath(path, { id }) : path;
 
     const name = toCamelCase(action);
     return {
@@ -77,7 +81,7 @@ export default function ActionLogs({
         <Button
           component={Link}
           variant="outlined"
-          href={path}
+          href={hydratedPath}
           sx={{ whiteSpace: "nowrap" }}>
           {t(`${name}.buttonText`)}
         </Button>
