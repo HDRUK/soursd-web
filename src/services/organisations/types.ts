@@ -1,5 +1,9 @@
 import { EMAIL_TEMPLATE } from "@/consts/application";
-import { Organisation, OrganisationIdvt } from "@/types/application";
+import {
+  Organisation,
+  OrganisationIdvt,
+  Subsidiary,
+} from "@/types/application";
 import { Paged } from "@/types/requests";
 
 type OrganisationResponse = Organisation;
@@ -49,6 +53,16 @@ interface PostOrganisationInviteUserPayload {
 
 type PostOrganisationInviteUserResponse = number;
 
+type UpdateOrganisationSubsidiary = Subsidiary | Partial<Subsidiary>;
+
+type PutOrganisationSubsidiaryPayload = Subsidiary;
+
+type PutSubsidiaryResponse = Subsidiary;
+
+type PostOrganisationSubsidiaryPayload = Omit<Subsidiary, "id">;
+
+type PostSubsidiaryResponse = Subsidiary;
+
 export type {
   GetOrganisationInviteResponse,
   Organisation,
@@ -64,4 +78,9 @@ export type {
   PostOrganisationResponse,
   PostOrganisationInviteResponse,
   PostOrganisationUnclaimedPayload,
+  UpdateOrganisationSubsidiary,
+  PutOrganisationSubsidiaryPayload,
+  PutSubsidiaryResponse,
+  PostOrganisationSubsidiaryPayload,
+  PostSubsidiaryResponse,
 };

@@ -176,8 +176,6 @@ export default function ProjectOrganisations({
     />
   );
 
-  console.log("STATES", states);
-
   return (
     <>
       <PageSection>

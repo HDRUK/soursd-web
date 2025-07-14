@@ -14,7 +14,10 @@ import {
   mockedCustodianUser,
 } from "./mocks/data/custodian";
 import { mockedNotification } from "./mocks/data/notification";
-import { mockedOrganisation } from "./mocks/data/organisation";
+import {
+  mockedOrganisation,
+  mockedSubsidiary,
+} from "./mocks/data/organisation";
 import {
   mockedPermission,
   mockedUserPermission,
@@ -237,6 +240,18 @@ async function mockFetch(url: string, init?: RequestInit) {
         read: 10,
         unread: 10,
       });
+    }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/organisations/1/subsidiaries`: {
+      if (init?.method === "POST") {
+        return mock200Json(init?.body);
+      }
+    }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/organisations/1/subsidiaries/1`: {
+      if (init?.method === "PUT") {
+        return mock200Json(init?.body);
+      } else if (init?.method === "DELETE") {
+        return mock200Json(null);
+      }
     }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/users`: {
       return mock200Json(

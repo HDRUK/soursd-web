@@ -3,7 +3,7 @@
 import { Grid, TextField } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useFormContext } from "react-hook-form";
-import FormControl from "../FormControlWrapper";
+import FormControlWrapper from "../FormControlWrapper";
 import { AddressFields } from "../../types/application";
 import GoogleAutocomplete from "../GoogleAutocomplete";
 import SelectCountry from "../SelectCountry";
@@ -13,6 +13,7 @@ export interface AddressFormProps {
 }
 
 const NAMESPACE_TRANSLATION_FORM = "Form";
+
 export default function AddressForm({ name }: AddressFormProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION_FORM);
 
@@ -30,7 +31,7 @@ export default function AddressForm({ name }: AddressFormProps) {
   return (
     <>
       <Grid item xs={12}>
-        <FormControl
+        <FormControlWrapper
           name={name}
           renderField={fieldProps => (
             <GoogleAutocomplete
@@ -50,7 +51,7 @@ export default function AddressForm({ name }: AddressFormProps) {
         />
       </Grid>
       <Grid item xs={12}>
-        <FormControl
+        <FormControlWrapper
           name={`${name}.address_1`}
           label={t("address1")}
           renderField={fieldProps => (
@@ -59,7 +60,7 @@ export default function AddressForm({ name }: AddressFormProps) {
         />
       </Grid>
       <Grid item xs={12}>
-        <FormControl
+        <FormControlWrapper
           name={`${name}.address_2`}
           label={t("address2")}
           renderField={fieldProps => (
@@ -68,25 +69,23 @@ export default function AddressForm({ name }: AddressFormProps) {
         />
       </Grid>
       <Grid item xs={12}>
-        <FormControl
+        <FormControlWrapper
           name={`${name}.town`}
           label={t("town")}
           renderField={fieldProps => (
-            <TextField {...fieldProps} placeholder="" />
+            <TextField {...fieldProps} placeholder="dd" />
           )}
         />
       </Grid>
       <Grid item xs={12}>
-        <FormControl
+        <FormControlWrapper
           name={`${name}.county`}
           label={t("county")}
-          renderField={fieldProps => (
-            <TextField {...fieldProps} placeholder="" />
-          )}
+          renderField={fieldProps => <TextField {...fieldProps} />}
         />
       </Grid>
       <Grid item xs={12}>
-        <FormControl
+        <FormControlWrapper
           name={`${name}.country`}
           label={t("country")}
           renderField={fieldProps => (
@@ -100,12 +99,11 @@ export default function AddressForm({ name }: AddressFormProps) {
         />
       </Grid>
       <Grid item xs={12}>
-        <FormControl
+        <FormControlWrapper
+          displayPlaceholder={false}
           name={`${name}.postcode`}
           label={t("postcode")}
-          renderField={fieldProps => (
-            <TextField {...fieldProps} placeholder="" />
-          )}
+          renderField={fieldProps => <TextField {...fieldProps} />}
         />
       </Grid>
     </>

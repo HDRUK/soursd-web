@@ -8,7 +8,7 @@ export default function useOrganisationStore() {
     state.getOrganisation(),
     state.setOrganisation,
   ]);
-  const { data: organisationData } = useQuery(
+  const { data: organisationData, ...restQueryState } = useQuery(
     getOrganisationQuery(organisation?.id as number)
   );
 
@@ -16,5 +16,8 @@ export default function useOrganisationStore() {
     if (organisationData?.data) setOrganisation(organisationData.data);
   }, [organisationData?.data]);
 
-  return organisation;
+  return {
+    organisation,
+    ...restQueryState,
+  };
 }
