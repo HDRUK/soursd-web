@@ -74,6 +74,12 @@ jest.mock("@/i18n/routing", () => ({
   useSearchParams: jest.fn().mockReturnValue(new URLSearchParams("")),
 }));
 
+export const mockUseSearchParams = {
+  get: jest.fn(),
+  entries: jest.fn(() => []),
+  toString: jest.fn(() => ""),
+};
+
 jest.mock("next/navigation", () => {
   return {
     useParams: jest.fn(),
@@ -83,10 +89,7 @@ jest.mock("next/navigation", () => {
       replace: jest.fn(),
       prefetch: jest.fn(),
     }),
-    useSearchParams: () => ({
-      get: () => {},
-      entries: () => [],
-    }),
+    useSearchParams: () => mockUseSearchParams,
     redirect: jest.fn(),
   };
 });
