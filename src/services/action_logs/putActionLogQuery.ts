@@ -7,6 +7,7 @@ export default function putActionLogQuery(options?: QueryOptions) {
     mutationFn: (id: number) => {
       return putActionLog(id, {
         error: { message: "putActionLogError" },
+        ...options,
       });
     },
   };

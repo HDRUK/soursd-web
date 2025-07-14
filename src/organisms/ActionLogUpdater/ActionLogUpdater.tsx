@@ -10,8 +10,6 @@ const ActionLogUpdater = () => {
 
   const { mutateAsync } = useMutation(putActionLogQuery());
 
-  console.log(params);
-
   useEffect(() => {
     const updateLog = async () => {
       if (!markActionComplete) return;

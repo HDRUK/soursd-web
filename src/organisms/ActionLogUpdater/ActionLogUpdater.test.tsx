@@ -1,7 +1,7 @@
 import { render, waitFor } from "@/utils/testUtils";
 import { useMutation } from "@tanstack/react-query";
-import ActionLogUpdater from "./ActionLogUpdater";
 import { mockUseSearchParams } from "jest.setup";
+import ActionLogUpdater from "./ActionLogUpdater";
 
 jest.mock("@tanstack/react-query", () => ({
   useMutation: jest.fn(),
