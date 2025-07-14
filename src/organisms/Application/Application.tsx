@@ -11,7 +11,7 @@ import useQueriesHistories from "../../queries/useQueriesHistories";
 import { User } from "../../types/application";
 import { getCombinedQueryState } from "../../utils/query";
 import ApplicationData from "../ApplicationData";
-import ActionLogUpdater from "../ActionLogUpdater/ActionLogUpdate";
+import ActionLogUpdater from "../ActionLogUpdater/ActionLogUpdater";
 
 interface ApplicationProps {
   children: ReactNode;

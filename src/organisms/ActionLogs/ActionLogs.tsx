@@ -70,7 +70,7 @@ export default function ActionLogs({
     const { icon, path } = actions[action as keyof typeof actions] ?? {};
     const { id } = allActions.find(a => a.action === action) || {};
 
-    const hydratedPath = id ? injectParamsIntoPath(path, { id }) : path;
+    const hydratedPath = id && path ? injectParamsIntoPath(path, { id }) : path;
 
     const name = toCamelCase(action);
     return {
