@@ -30,12 +30,6 @@ function getProjectUser(row: CustodianProjectUser | ProjectUser): ProjectUser {
   return (row as CustodianProjectUser).project_has_user ?? (row as ProjectUser);
 }
 
-function isCustodianUser(
-  row: CustodianProjectUser | ProjectUser
-): row is CustodianProjectUser {
-  return "model_state" in row;
-}
-
 export default function ProjectUsersTable({
   t,
   routes,
