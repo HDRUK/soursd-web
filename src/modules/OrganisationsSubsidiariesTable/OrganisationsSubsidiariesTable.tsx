@@ -8,6 +8,7 @@ import { useMemo } from "react";
 import Table from "../../components/Table";
 import { Subsidiary } from "../../types/application";
 import { formatAddress } from "../../utils/address";
+import IconAction from "@/components/IconAction";
 
 export type OrganisationsSubsidiariesTableColumns =
   | "organisationName"
@@ -41,16 +42,20 @@ export default function OrganisationsSubsidiariesTable({
   const renderActions = (info: CellContext<Subsidiary, unknown>) => (
     <>
       {onEdit && (
-        <EditIcon
-          titleAccess={t("edit")}
-          onClick={() => onEdit(info.row.original)}
-        />
+        <IconAction>
+          <EditIcon
+            titleAccess={t("edit")}
+            onClick={() => onEdit(info.row.original)}
+          />
+        </IconAction>
       )}
       {onDelete && (
-        <TrashIcon
-          titleAccess={t("delete")}
-          onClick={() => onDelete(info.row.original)}
-        />
+        <IconAction>
+          <TrashIcon
+            titleAccess={t("delete")}
+            onClick={() => onDelete(info.row.original)}
+          />
+        </IconAction>
       )}
     </>
   );
