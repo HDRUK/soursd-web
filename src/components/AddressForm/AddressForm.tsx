@@ -72,9 +72,7 @@ export default function AddressForm({ name }: AddressFormProps) {
         <FormControlWrapper
           name={`${name}.town`}
           label={t("town")}
-          renderField={fieldProps => (
-            <TextField {...fieldProps} placeholder="dd" />
-          )}
+          renderField={fieldProps => <TextField {...fieldProps} />}
         />
       </Grid>
       <Grid item xs={12}>
