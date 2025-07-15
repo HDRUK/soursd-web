@@ -18,7 +18,7 @@ const SelectDepartments = ({
   }));
 
   return (
-    <Select {...rest}>
+    <Select placeholder="asdasd" {...rest}>
       {departmentOptions?.map(({ label, value }) => (
         <MenuItem value={value} key={value} id={label}>
           {label}
