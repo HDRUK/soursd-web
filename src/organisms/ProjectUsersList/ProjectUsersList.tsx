@@ -4,17 +4,21 @@ import { PaginatedQueryHelpers } from "@/hooks/usePaginatedQuery";
 import { KanbanBoardEntityProps } from "@/modules/KanbanBoard";
 import ProjectUsersTable from "@/modules/ProjectUsersTable";
 import { EntityType } from "@/types/api";
-import { CustodianProjectUser, WithRoutes } from "@/types/application";
+import {
+  CustodianProjectUser,
+  ProjectUser,
+  WithRoutes,
+} from "@/types/application";
 import { CellContext, ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
 
 const NAMESPACE_TRANSLATIONS_PROJECT_USERS = "Projects.Users";
 
-type ProjectUsersListProps<T = CustodianProjectUser> = WithRoutes<
+type ProjectUsersListProps<T = CustodianProjectUser | ProjectUser> = WithRoutes<
   {
     variant: EntityType;
   } & PaginatedQueryHelpers & {
-      data: CustodianProjectUser[];
+      data: CustodianProjectUser[] | ProjectUser[];
     } & KanbanBoardEntityProps<T>
 >;
 

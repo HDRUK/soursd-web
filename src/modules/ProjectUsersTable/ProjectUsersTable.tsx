@@ -4,7 +4,11 @@ import { filterColumns } from "@/utils/table";
 import { ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
 import Table from "../../components/Table";
-import { CustodianProjectUser, WithRoutes } from "../../types/application";
+import {
+  CustodianProjectUser,
+  ProjectUser,
+  WithRoutes,
+} from "../../types/application";
 import {
   renderOrganisationsNameCell,
   renderProjectUserNameCell,
@@ -19,8 +23,12 @@ export type ProjectUsersTableColumns =
   | "status";
 
 export type ProjectUsersTableProps = WithRoutes<
-  ModuleTables<CustodianProjectUser, ProjectUsersTableColumns>
+  ModuleTables<CustodianProjectUser | ProjectUser, ProjectUsersTableColumns>
 >;
+
+function getProjectUser(row: CustodianProjectUser | ProjectUser): ProjectUser {
+  return (row as CustodianProjectUser).project_has_user ?? (row as ProjectUser);
+}
 
 export default function ProjectUsersTable({
   t,
@@ -35,28 +43,38 @@ export default function ProjectUsersTable({
   extraColumns,
   ...restProps
 }: ProjectUsersTableProps) {
-  const { createDefaultColumn } = useColumns<CustodianProjectUser>({ t });
+  const { createDefaultColumn } = useColumns<
+    CustodianProjectUser | ProjectUser
+  >({ t });
 
   const namePath = useMemo(() => routes?.name?.path, [routes]);
 
   const columns = useMemo(() => {
-    const initialColumns: ColumnDef<CustodianProjectUser>[] = [
+    const initialColumns: ColumnDef<CustodianProjectUser | ProjectUser>[] = [
       createDefaultColumn("name", {
-        accessorKey: "project_has_user",
-        cell: info => renderProjectUserNameCell(info.getValue(), namePath),
+        accessorFn: row => getProjectUser(row),
+        cell: info =>
+          renderProjectUserNameCell(
+            getProjectUser(info.row.original),
+            namePath
+          ),
       }),
       createDefaultColumn("projectRole", {
-        accessorKey: "project_has_user.role.name",
+        accessorFn: row => getProjectUser(row).role?.name,
       }),
       createDefaultColumn("projectName", {
-        accessorKey: "project_has_user.project.title",
+        accessorFn: row => getProjectUser(row).project?.title,
       }),
       createDefaultColumn("organisationName", {
-        accessorKey: "project_has_user.affiliation.organisation",
-        cell: info => renderOrganisationsNameCell(info.getValue()),
+        accessorFn: row => getProjectUser(row).affiliation.organisation,
+        cell: info =>
+          renderOrganisationsNameCell(
+            getProjectUser(info.row.original).affiliation.organisation
+          ),
       }),
       createDefaultColumn("status", {
-        accessorKey: "model_state.state.slug",
+        accessorFn: row =>
+          (row as CustodianProjectUser)?.model_state?.state?.slug,
         cell: renderStatusCell,
       }),
     ];
