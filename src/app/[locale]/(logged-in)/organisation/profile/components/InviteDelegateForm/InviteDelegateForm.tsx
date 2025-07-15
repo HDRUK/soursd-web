@@ -1,11 +1,10 @@
 "use client";
 
 import FormActions from "@/components/FormActions";
-import FormControl from "@/components/FormControlWrapper";
+import FormControlWrapper from "@/components/FormControlWrapper";
 import FormSection from "@/components/FormSection";
 import yup from "@/config/yup";
 import { useStore } from "@/data/store";
-import { showAlert } from "@/utils/showAlert";
 import { LoadingButton } from "@mui/lab";
 import { Button, Grid, TextField } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
@@ -18,6 +17,8 @@ import {
 } from "@/services/organisations";
 import { EMAIL_TEMPLATE } from "@/consts/application";
 import SelectDepartments from "@/components/SelectDepartments";
+import { UserGroup } from "@/consts/user";
+import useQueryAlerts from "@/hooks/useQueryAlerts";
 
 export interface DelegatesFormValues {
   department_name?: string | null;
@@ -40,7 +41,7 @@ export default function InviteDelegateForm({
   const t = useTranslations(NAMESPACE_TRANSLATION_DELEGATES);
   const organisation = useStore(state => state.config.organisation);
 
-  const { mutateAsync, isPending } = useMutation({
+  const { mutateAsync, ...restPostState } = useMutation({
     mutationKey: ["inviteUser", organisation?.id],
     mutationFn: (payload: PostOrganisationInviteUserPayload) => {
       return postOrganisationInviteUser(organisation?.id, payload, {
@@ -62,27 +63,28 @@ export default function InviteDelegateForm({
         first_name: fields.delegate_first_name,
         last_name: fields.delegate_last_name,
         role: fields.delegate_job_title,
-        user_group: "ORGANISATION",
+        user_group: UserGroup.ORGANISATIONS,
         is_delegate: 1,
         identifier: EMAIL_TEMPLATE.DELEGATE_INVITE,
       };
-      await mutateAsync(payload)
-        .then(() => {
-          showAlert("success", {
-            text: t("postDelegatesSuccess"),
-            confirmButtonText: t("closeButton"),
-          });
-          onSuccess();
-        })
-        .catch(error => {
-          showAlert("error", {
-            text: error ? t(error) : t("postDelegatesError"),
-            confirmButtonText: t("errorButton"),
-          });
-        });
+
+      await mutateAsync(payload);
     },
     [mutateAsync, onSuccess, t]
   );
+
+  useQueryAlerts(restPostState, {
+    onSuccess,
+    successAlertProps: {
+      text: t("postDelegatesSuccess"),
+      confirmButtonText: t("closeButton"),
+    },
+    errorAlertProps: {
+      text: t("postDelegatesError"),
+      confirmButtonText: t("errorButton"),
+    },
+  });
+
   const schema = useMemo(
     () =>
       yup.object().shape({
@@ -127,21 +129,21 @@ export default function InviteDelegateForm({
             rowSpacing={3}
             sx={{ width: "70%", justifyContent: "flex-start" }}>
             <Grid item xs={12}>
-              <FormControl
+              <FormControlWrapper
                 name="delegate_first_name"
                 renderField={fieldProps => <TextField {...fieldProps} />}
               />
             </Grid>
 
             <Grid item xs={12}>
-              <FormControl
+              <FormControlWrapper
                 name="delegate_last_name"
                 renderField={fieldProps => <TextField {...fieldProps} />}
               />
             </Grid>
 
             <Grid item xs={12}>
-              <FormControl
+              <FormControlWrapper
                 name="department_name"
                 renderField={fieldProps => (
                   <SelectDepartments
@@ -156,13 +158,13 @@ export default function InviteDelegateForm({
             </Grid>
 
             <Grid item xs={12}>
-              <FormControl
+              <FormControlWrapper
                 name="delegate_job_title"
                 renderField={fieldProps => <TextField {...fieldProps} />}
               />
             </Grid>
             <Grid item xs={12}>
-              <FormControl
+              <FormControlWrapper
                 name="delegate_email"
                 renderField={fieldProps => <TextField {...fieldProps} />}
               />
@@ -173,7 +175,7 @@ export default function InviteDelegateForm({
           <Button variant="outlined" onClick={onCancel}>
             {t("cancelButton")}
           </Button>
-          <LoadingButton loading={isPending} type="submit">
+          <LoadingButton loading={restPostState.isPending} type="submit">
             {t("inviteButton")}
           </LoadingButton>
         </FormActions>
