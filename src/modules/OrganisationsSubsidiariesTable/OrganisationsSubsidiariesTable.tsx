@@ -5,10 +5,10 @@ import { filterColumns } from "@/utils/table";
 import { Typography } from "@mui/material";
 import { CellContext, ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
+import IconAction from "@/components/IconAction";
 import Table from "../../components/Table";
 import { Subsidiary } from "../../types/application";
 import { formatAddress } from "../../utils/address";
-import IconAction from "@/components/IconAction";
 
 export type OrganisationsSubsidiariesTableColumns =
   | "organisationName"
