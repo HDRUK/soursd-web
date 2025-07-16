@@ -174,7 +174,7 @@ describe("<ActionValidationPanel/>", () => {
 
     await userEvent.click(changeDecisionButton);
 
-    let passButton = screen.getByTestId("validation-log-initial-pass");
+    const passButton = screen.getByTestId("validation-log-initial-pass");
     expect(passButton).toBeInTheDocument();
 
     await userEvent.click(passButton);
@@ -212,13 +212,13 @@ describe("<ActionValidationPanel/>", () => {
 
     await userEvent.click(addCommentButton);
 
-    let commentInput = screen.getByRole("textbox", {
+    const commentInput = screen.getByRole("textbox", {
       name: /add any further comment/i,
     });
     expect(commentInput).toBeInTheDocument();
     await userEvent.type(commentInput, "This is a test comment");
 
-    let confirmButton = screen.getByTestId("validation-log-confirm-button");
+    const confirmButton = screen.getByTestId("validation-log-confirm-button");
 
     await userEvent.click(confirmButton);
 
