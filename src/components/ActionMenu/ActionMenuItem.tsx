@@ -1,4 +1,5 @@
 import {
+  Box,
   Collapse,
   ListItemIcon,
   ListItemText,
@@ -44,7 +45,7 @@ export default function ActionMenuItem({
 
   return (
     <MenuItem {...restProps} sx={menuItemSx}>
-      <div>
+      <Box sx={{ display: "flex" }}>
         {icon && <ListItemIcon>{icon}</ListItemIcon>}
         <ListItemText
           onClick={() => {
@@ -54,7 +55,7 @@ export default function ActionMenuItem({
           }}>
           {children}
         </ListItemText>
-      </div>
+      </Box>
       {collapseContent && (
         <Collapse component="div" in={collapseIn}>
           {typeof collapseContent === "function"
