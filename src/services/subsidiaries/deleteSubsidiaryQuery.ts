@@ -7,7 +7,7 @@ type DeleteSubsidiaryMutationArgs = MutateWithArgs<
   undefined
 >;
 
-export default function deleteAffiliationQuery(options?: MutationOptions) {
+export default function deleteSubsidiaryQuery(options?: MutationOptions) {
   return {
     mutationKey: ["deleteSubsidiary", ...(options?.mutationKeySuffix || [])],
     mutationFn: ({ params }: DeleteSubsidiaryMutationArgs) => {
