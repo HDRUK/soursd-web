@@ -40,7 +40,7 @@ export default function FormControlWrapper({
   control,
   label,
   placeholder,
-  displayPlaceholder = true,
+  displayPlaceholder = false,
   displayLabel = true,
   renderField,
   fullWidth = true,
