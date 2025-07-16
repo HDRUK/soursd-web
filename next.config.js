@@ -109,7 +109,6 @@ const nextConfig = withNextIntl({
     // !! WARN !!
     ignoreBuildErrors: true,
   },
-  external: ["react-dom/server"],
 });
 
 const withBundleAnalyzer =
