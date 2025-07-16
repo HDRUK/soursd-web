@@ -82,9 +82,11 @@ const Table = <T,>({
     return rowModel?.rows ?? [];
   }, [safeData]);
 
+  const resultsTotal = (isPaginated ? total : data?.length) || 0;
+
   return (
     <Results
-      total={total}
+      total={resultsTotal}
       queryState={queryState}
       noResultsMessage={noResultsMessage}
       errorMessage={errorMessage}

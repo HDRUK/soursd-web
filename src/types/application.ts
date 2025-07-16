@@ -227,6 +227,7 @@ interface Subsidiary extends AddressFields {
     organisation_id: number;
     subsidiary_id: number;
   };
+  website?: string;
 }
 
 interface Charity extends AddressFields {
