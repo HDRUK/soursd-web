@@ -6,7 +6,6 @@ import FormActions from "@/components/FormActions";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
 import GoogleAutocomplete from "@/components/GoogleAutocomplete";
 import yup from "@/config/yup";
-import { useStore } from "@/data/store";
 import { PageBody, PageSection } from "@/modules";
 import { AddressFields } from "@/types/application";
 import { Grid, TextField } from "@mui/material";
@@ -15,8 +14,9 @@ import { useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { ROUTES } from "@/consts/router";
 import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
+import OrganisationsSubsidiaries from "@/organisms/OrganisationsSubsidiaries/OrganisationsSubsidiaries";
+import useOrganisationStore from "@/queries/useOrganisationStore";
 import useUpdateOrganisation from "../../hooks/useUpdateOrganisation";
-import Subsidiaries from "../Subsidiaries";
 
 export interface NameAndAddressFormValues {
   organisation_name: string;
@@ -33,8 +33,8 @@ const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 const NAMESPACE_TRANSLATION_ORG_PROFILE = "ProfileOrganisation";
 
 export default function NameAndAddress() {
+  const { organisation, refetch } = useOrganisationStore();
   const router = useRouter();
-  const organisation = useStore(state => state.getOrganisation());
 
   const {
     isError,
@@ -85,6 +85,10 @@ export default function NameAndAddress() {
     onSubmit(fields).then(() =>
       router.push(ROUTES.profileOrganisationDetailsDigitalIdentifiers.path)
     );
+  };
+
+  const handleRefetch = () => {
+    refetch();
   };
 
   return (
@@ -179,7 +183,10 @@ export default function NameAndAddress() {
                 </Grid>
               </PageSection>
 
-              <Subsidiaries />
+              <OrganisationsSubsidiaries
+                onEditSuccess={() => handleRefetch()}
+                onDeleteSuccess={() => handleRefetch()}
+              />
 
               <FormActions>
                 <ProfileNavigationFooter

@@ -12,13 +12,14 @@ export default function getOrganisationQuery(
       organisationId,
       ...(options?.queryKeySuffix || []),
     ],
-    queryFn: ({ queryKey }) =>
-      getOrganisation(queryKey[1] as number, {
+    queryFn: ({ queryKey }) => {
+      return getOrganisation(queryKey[1] as number, {
         error: {
           message: "getOrganisationError",
         },
         ...options?.responseOptions,
-      }),
+      });
+    },
     ...options,
   } as UseQueryOptions<Awaited<ReturnType<typeof getOrganisation>>>;
 }

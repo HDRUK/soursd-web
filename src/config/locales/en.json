@@ -302,9 +302,6 @@
     "closeButton": "Close",
     "profileUpdateMessage": "Your profile was successfully updated!",
     "inviteAnotherDelegate": "Add Delegate",
-    "addAnotherSubsidiary": "Add a subsidiary",
-    "removeSubsidiaryToolTip": "Remove this subsidiary",
-    "editSubsidiaryToolTip": "Edit this subsidiary",
     "showPendingInvites": "Show pending invites",
     "clearAll": "clear all",
     "user": "User",
@@ -1123,13 +1120,31 @@
     "registrationId": "Registration ID",
     "website": "Website"
   },
-  "Subsidiaries": {
-    "name": "Name",
-    "address": "Address"
-  },
   "Organisations": {
     "OrganisationUsersFilters": {
       "searchPlaceholder": "Search by name or email"
+    },
+    "Subsidiaries": {
+      "heading": "UK sudsidiaries",
+      "addSubsidiaryButton": "Add a subsidiary",
+      "removeSubsidiaryToolTip": "Remove this subsidiary",
+      "editSubsidiaryToolTip": "Edit this subsidiary",
+      "cancelButton": "Cancel",
+      "saveButton": "Save",
+      "organisationName": "Name",
+      "address": "Address",
+      "actions": "Actions",
+      "edit": "Edit subsidiary",
+      "delete": "Delete subsidiary",
+      "subsidiaryNameRequired": "Subsidiary name is required",
+      "postcodeRequiredInvalid": "Postcode is required",
+      "postcodeFormatInvalid": "The postcode is not valid",
+      "address1RequiredInvalid": "Line 1 of the address is required",
+      "townRequiredInvalid": "Town is required",
+      "digitalToolkitCodeFormatInvalid": "Code is invalid",
+      "ceCertificationNumberRequiredInvalid": "Certification number is invalid",
+      "countyRequiredInvalid": "County is required",
+      "countryRequiredInvalid": "Country is required"
     },
     "People": {
       "name": "Employee / Student name",

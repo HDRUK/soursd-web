@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import useQueriesCombined from "../../hooks/useQueriesCombined";
 import {
   getAffiliationsWorkflowTransitions,
@@ -48,19 +49,24 @@ export default function useApplicationDependencies(
   { user, custodianId, organisationId }: UseApplicationDependenciesProps,
   options: QueryOptions = {}
 ) {
-  const queries = user
-    ? [
-        getSystemConfigQuery(),
-        getUserQuery(user.id, options),
-        ...(organisationId
-          ? [getOrganisationQuery(organisationId, options)]
-          : []),
-        ...(custodianId ? [getCustodianQuery(custodianId, options)] : []),
-        getSectorsQuery(options),
-        getPermissionsQuery(options),
-        getProjectRolesQuery(options),
-        getAffiliationsWorkflowTransitionsQuery(options),
-      ]
-    : [];
+  const queries = useMemo(
+    () =>
+      user
+        ? [
+            getSystemConfigQuery(),
+            getUserQuery(user.id, options),
+            ...(organisationId
+              ? [getOrganisationQuery(organisationId, options)]
+              : []),
+            ...(custodianId ? [getCustodianQuery(custodianId, options)] : []),
+            getSectorsQuery(options),
+            getPermissionsQuery(options),
+            getProjectRolesQuery(options),
+            getAffiliationsWorkflowTransitionsQuery(options),
+          ]
+        : [],
+    []
+  );
+
   return useQueriesCombined<ApplicationDependenciesCombinedData>(queries);
 }
