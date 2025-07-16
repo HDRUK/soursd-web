@@ -4,6 +4,7 @@ import { useState } from "react";
 import { InfoOutlined } from "@mui/icons-material";
 import { useStore } from "@/data/store";
 import { useTranslations } from "next-intl";
+import { ActionMenu, ActionMenuItem } from "@/components/ActionMenu";
 import ActionValidationCommentForm, {
   ActionValidationCommentFormData,
 } from "../../components/ActionValidationCommentForm";
@@ -15,7 +16,6 @@ import {
 } from "../../services/validation_logs";
 import { ValidationLogAction } from "../../services/validation_logs/types";
 import { ValidationLog } from "../../types/logs";
-import { ActionMenu, ActionMenuItem } from "@/components/ActionMenu";
 
 interface ActionValidationMakeDecisionProps {
   log: ValidationLog;
@@ -101,19 +101,14 @@ export default function ActionValidationMakeDecision({
       </Button>
       <ActionMenu trigger={<Button variant="outlined">&#8230;</Button>}>
         {({ handleClose }) => (
-          <>
-            <ActionMenuItem
-              icon={<InfoOutlined color="primary" />}
-              onClick={() => {
-                setSelectedAction(ValidationLogAction.MORE);
-                handleClose();
-              }}>
-              <Typography color="primary">
-                {" "}
-                {t("addMoreInformation")}{" "}
-              </Typography>
-            </ActionMenuItem>
-          </>
+          <ActionMenuItem
+            icon={<InfoOutlined color="primary" />}
+            onClick={() => {
+              setSelectedAction(ValidationLogAction.MORE);
+              handleClose();
+            }}>
+            <Typography color="primary"> {t("addMoreInformation")} </Typography>
+          </ActionMenuItem>
         )}
       </ActionMenu>
     </Box>
