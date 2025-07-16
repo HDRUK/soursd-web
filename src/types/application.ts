@@ -18,7 +18,11 @@ type WithStateWorkflow<T> = T & {
   stateWorkflow: StateWorkflow;
 };
 
-type Translations = (key: string) => string;
+type Translations =
+  | {
+      rich: (key: string | Error, options: unknown) => string;
+    }
+  | ((key: string) => string);
 
 type WithTranslations<T> = T & {
   t: Translations;

@@ -9,11 +9,11 @@ import { useStore } from "@/data/store";
 import FormModal from "@/components/FormModal";
 import { useState } from "react";
 import { Box, Button } from "@mui/material";
-import ContactLink from "@/components/ContactLink";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import DecoupleDelegate from "@/components/DecoupleDelegate";
 import { useTranslations } from "next-intl";
 import { ActionMenu } from "@/components/ActionMenu";
+import ErrorMessage from "@/components/ErrorMessage";
 import EditDelegate from "../EditDelegate";
 import InviteDelegateForm from "../InviteDelegateForm";
 
@@ -92,9 +92,7 @@ const DelegateTable = () => {
         total={delegatesData?.data.length}
         data={delegatesData?.data || []}
         columns={columns}
-        errorMessage={tProfile.rich("getDelegatesError", {
-          contactLink: ContactLink,
-        })}
+        errorMessage={<ErrorMessage t={tProfile} tKey="getDelegatesError" />}
         queryState={{
           isLoading: isLoadingDelegates,
           isError: isErrorDelegates || delegatesData === undefined,
