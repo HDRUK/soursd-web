@@ -43,7 +43,8 @@ describe("<ActionValidationPanel/>", () => {
       return Promise.resolve({
         data: {
           id: faker.number.int(),
-          completed_at: faker.date.recent().toISOString(),
+          completed_at:
+            query === "more" ? null : faker.date.recent().toISOString(),
           manually_confirmed: query === "pass" ? 1 : 0,
         },
       });
@@ -140,6 +141,7 @@ describe("<ActionValidationPanel/>", () => {
     const failedText = screen.getByText(/Failed/i);
     expect(failedText).toBeInTheDocument();
   });
+
   it("test it can change a decision check", async () => {
     const log = mockedValidationLog({ completed_at: null, comments: [] });
     renderActionValidationPanel([log]);
@@ -172,6 +174,11 @@ describe("<ActionValidationPanel/>", () => {
 
     await userEvent.click(changeDecisionButton);
 
+    let passButton = screen.getByTestId("validation-log-initial-pass");
+    expect(passButton).toBeInTheDocument();
+
+    await userEvent.click(passButton);
+
     commentInput = screen.getByRole("textbox", {
       name: /add any further comment/i,
     });
@@ -187,6 +194,36 @@ describe("<ActionValidationPanel/>", () => {
 
     const passedText = screen.getByText(/Passed/i);
     expect(passedText).toBeInTheDocument();
+  });
+
+  it("test it can just add a comment", async () => {
+    const log = mockedValidationLog({ completed_at: null, comments: [] });
+    renderActionValidationPanel([log]);
+
+    const moreButton = screen.getByTestId("validation-log-initial-comment");
+    expect(moreButton).toBeInTheDocument();
+
+    await userEvent.click(moreButton);
+
+    const addCommentButton = await screen.findByTestId(
+      "validation-log-add-more-info"
+    );
+    expect(addCommentButton).toBeInTheDocument();
+
+    await userEvent.click(addCommentButton);
+
+    let commentInput = screen.getByRole("textbox", {
+      name: /add any further comment/i,
+    });
+    expect(commentInput).toBeInTheDocument();
+    await userEvent.type(commentInput, "This is a test comment");
+
+    let confirmButton = screen.getByTestId("validation-log-confirm-button");
+
+    await userEvent.click(confirmButton);
+
+    const passButton = screen.getByTestId("validation-log-initial-pass");
+    expect(passButton).toBeInTheDocument();
   });
 
   it("test it can pass a validation check", async () => {

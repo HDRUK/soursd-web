@@ -99,9 +99,17 @@ export default function ActionValidationMakeDecision({
         startIcon={<RejectIcon />}>
         {t("fail")}
       </Button>
-      <ActionMenu trigger={<Button variant="outlined">&#8230;</Button>}>
+      <ActionMenu
+        trigger={
+          <Button
+            data-testid="validation-log-initial-comment"
+            variant="outlined">
+            &#8230;
+          </Button>
+        }>
         {({ handleClose }) => (
           <ActionMenuItem
+            data-testid="validation-log-add-more-info"
             icon={<InfoOutlined color="primary" />}
             onClick={() => {
               setSelectedAction(ValidationLogAction.MORE);
