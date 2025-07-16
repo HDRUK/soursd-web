@@ -1578,26 +1578,26 @@
     "daysSince": "{days} days ago",
     "user": {
       "created": {
-        "title": "User account created",
+        "title": "Account created",
         "description": "with primary email \"{attributes_email}\"   "
       },
       "updated": {
-        "title": "User updated their details",
+        "title": "Updated their details",
         "description": "The following data was changed: {attributeKeys}"
       }
     },
     "project_has_user": {
       "created": {
-        "title": "User added to project",
-        "description": "The user was added to the project titled \"{project_title}\""
+        "title": "Added {name} to a project",
+        "description": "Titled: \"{project_title}\""
       },
       "updated": {
-        "title": "User on project updated",
-        "description": " The following data was changed: {attributeKeys}"
+        "title": "{name}'s project information was changed",
+        "description": "On \"{project_title}\", the following was changed... {attributeKeys}"
       },
       "deleted": {
-        "title": "User removed from project",
-        "description": "The user was removed from the project titled \"{project_title}\""
+        "title": "Removed {name} from a project",
+        "description": "Titled: \"{project_title}\""
       }
     },
     "validation_check": {
