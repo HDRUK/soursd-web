@@ -1,18 +1,15 @@
 import { ResponseJson, ResponseOptions } from "@/types/requests";
 import { postRequest } from "../requests";
 import { handleJsonResponse } from "../requestHelpers";
-import {
-  PostSubsidiaryResponse,
-  PostOrganisationSubsidiaryPayload,
-} from "./types";
+import { PostSubsidiaryResponse, PostSubsidiaryPayload } from "./types";
 
 export default async (
-  id: number,
-  payload: PostOrganisationSubsidiaryPayload,
+  orgId: number,
+  payload: PostSubsidiaryPayload,
   options: ResponseOptions
 ): Promise<ResponseJson<PostSubsidiaryResponse>> => {
   const response = await postRequest(
-    `/organisations/${id}/subsidiaries`,
+    `/subsidiaries/organisations/${orgId}`,
     payload
   );
 

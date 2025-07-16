@@ -16,12 +16,6 @@ import postOrganisationInviteQuery from "./postOrganisationInviteQuery";
 import useOrganisationsQuery from "./useOrganisationsQuery";
 import getOrganisationRegistries from "./getOrganisationRegistries";
 import getOrganisationRegistriesQuery from "./getOrganisationRegistriesQuery";
-import deleteOrganisationSubsidiary from "./deleteOrganisationSubsidiary";
-import deleteOrganisationSubsidiaryQuery from "./deleteOrganisationSubsidiaryQuery";
-import postOrganisationSubsidiary from "./postOrganisationSubsidiary";
-import postOrganisationSubsidiaryQuery from "./postOrganisationSubsidiaryQuery";
-import putOrganisationSubsidiary from "./putOrganisationSubsidiary";
-import putOrganisationSubsidiaryQuery from "./putOrganisationSubsidiaryQuery";
 
 export {
   getOrganisations,
@@ -42,12 +36,6 @@ export {
   postOrganisationInvite,
   postOrganisationInviteQuery,
   useOrganisationsQuery,
-  deleteOrganisationSubsidiary,
-  deleteOrganisationSubsidiaryQuery,
-  postOrganisationSubsidiary,
-  postOrganisationSubsidiaryQuery,
-  putOrganisationSubsidiary,
-  putOrganisationSubsidiaryQuery,
 };
 
 export type * from "./types";

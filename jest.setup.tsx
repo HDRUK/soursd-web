@@ -157,6 +157,8 @@ async function mockFetch(url: string, init?: RequestInit) {
   const page = Number(queryParams.page) || 1;
   const perPage = Number(queryParams.per_page) || 25;
 
+  console.log(url, init?.method);
+
   switch (baseUrl) {
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/permissions`: {
       return mock200Json(mockPagedResults(mockedApiPermissions));
@@ -241,12 +243,12 @@ async function mockFetch(url: string, init?: RequestInit) {
         unread: 10,
       });
     }
-    case `${process.env.NEXT_PUBLIC_API_V1_URL}/organisations/1/subsidiaries`: {
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/subsidiaries/organisations/1`: {
       if (init?.method === "POST") {
         return mock200Json(init?.body);
       }
     }
-    case `${process.env.NEXT_PUBLIC_API_V1_URL}/organisations/1/subsidiaries/1`: {
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/subsidiaries/1/organisations/1`: {
       if (init?.method === "PUT") {
         return mock200Json(init?.body);
       } else if (init?.method === "DELETE") {

@@ -57,11 +57,7 @@ type UpdateOrganisationSubsidiary = Subsidiary | Partial<Subsidiary>;
 
 type PutOrganisationSubsidiaryPayload = Subsidiary;
 
-type PutSubsidiaryResponse = Subsidiary;
-
 type PostOrganisationSubsidiaryPayload = Omit<Subsidiary, "id">;
-
-type PostSubsidiaryResponse = Subsidiary;
 
 export type {
   GetOrganisationInviteResponse,
@@ -80,7 +76,5 @@ export type {
   PostOrganisationUnclaimedPayload,
   UpdateOrganisationSubsidiary,
   PutOrganisationSubsidiaryPayload,
-  PutSubsidiaryResponse,
   PostOrganisationSubsidiaryPayload,
-  PostSubsidiaryResponse,
 };

@@ -1,3 +1,0 @@
-import useMutationUpdateOrganisationSubsidiary from "./useMutationUpdateOrganisationSubsidiary";
-
-export default useMutationUpdateOrganisationSubsidiary;

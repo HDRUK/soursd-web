@@ -10,11 +10,11 @@ import useQueryAlerts from "@/hooks/useQueryAlerts";
 import OrganisationsSubsidiaryEditForm from "@/modules/OrganisationsSubsidiariesEditForm";
 import OrganisationsSubsidiariesTable from "@/modules/OrganisationsSubsidiariesTable";
 import useMutationWithConfirmation from "@/queries/useMutationWithConfirmation";
-import { deleteOrganisationSubsidiaryQuery } from "@/services/organisations";
+import { deleteSubsidiaryQuery } from "@/services/subsidiaries";
 import { Subsidiary } from "@/types/application";
 import { Typography } from "@mui/material";
 import Button from "@mui/material/Button";
-import useMutationUpdateOrganisationSubsidiary from "../../queries/useMutationUpdateOrganisationSubsidiary";
+import useMutationUpdateSubsidiary from "../../queries/useMutationUpdateSubsidiary";
 
 const NAMESPACE_TRANSLATION = "Organisations.Subsidiaries";
 
@@ -32,16 +32,13 @@ export default function OrganisationsSubsidiaries({
   const [activeSubsidiary, setActiveSubsidiary] = useState<Subsidiary>();
 
   const { mutateAsync: mutateUpdateAsync, ...restUpdateState } =
-    useMutationUpdateOrganisationSubsidiary();
+    useMutationUpdateSubsidiary();
 
-  const { showConfirm } = useMutationWithConfirmation(
-    deleteOrganisationSubsidiaryQuery(),
-    {
-      onSuccess: () => {
-        onDeleteSuccess?.();
-      },
-    }
-  );
+  const { showConfirm } = useMutationWithConfirmation(deleteSubsidiaryQuery(), {
+    onSuccess: () => {
+      onDeleteSuccess?.();
+    },
+  });
 
   useQueryAlerts(restUpdateState, {
     onSuccess: () => {
