@@ -67,7 +67,7 @@ const generateActions = (routes: Route) => {
     },
     complete_configuration: {
       icon: <SettingsIcon />,
-      path: routes.profileCustodianConfiguration.path,
+      path: `${routes.profileCustodianConfiguration.path}?markActionComplete={id}`,
     },
     add_contacts_completed: {
       icon: <ManageAccountsIcon />,

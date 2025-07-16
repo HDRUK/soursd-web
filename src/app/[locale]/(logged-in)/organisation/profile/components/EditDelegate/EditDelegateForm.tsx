@@ -1,17 +1,17 @@
 "use client";
 
+import Form, { FormProps } from "@/components/Form";
 import FormActions from "@/components/FormActions";
-import FormControl from "@/components/FormControlWrapper";
+import FormControlWrapper from "@/components/FormControlWrapper";
 import FormSection from "@/components/FormSection";
+import SelectDepartments from "@/components/SelectDepartments";
 import yup from "@/config/yup";
 import { useStore } from "@/data/store";
+import { WithMutationState } from "@/types/form";
 import { LoadingButton } from "@mui/lab";
 import { Button, Grid, TextField } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
-import SelectDepartments from "@/components/SelectDepartments";
-import Form, { FormProps } from "@/components/Form";
-import { WithMutationState } from "@/types/form";
 
 export interface DelegatesFormValues {
   first_name: string;
@@ -40,7 +40,7 @@ export default function EditDelegateForm({
           .string()
           .required(t("delegateFirstNameRequiredInvalid")),
         last_name: yup.string().required(t("delegateLastNameRequiredInvalid")),
-        department_id: yup.number().required(t("departmentRequiredInvalid")),
+        department_id: yup.number(),
       }),
     [t]
   );
@@ -58,21 +58,21 @@ export default function EditDelegateForm({
             rowSpacing={3}
             sx={{ width: "70%", justifyContent: "flex-start" }}>
             <Grid item xs={12}>
-              <FormControl
+              <FormControlWrapper
                 name="first_name"
                 renderField={fieldProps => <TextField {...fieldProps} />}
               />
             </Grid>
 
             <Grid item xs={12}>
-              <FormControl
+              <FormControlWrapper
                 name="last_name"
                 renderField={fieldProps => <TextField {...fieldProps} />}
               />
             </Grid>
 
             <Grid item xs={12}>
-              <FormControl
+              <FormControlWrapper
                 name="department_id"
                 renderField={fieldProps => (
                   <SelectDepartments

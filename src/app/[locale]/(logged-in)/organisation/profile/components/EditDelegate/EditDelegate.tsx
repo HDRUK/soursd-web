@@ -69,7 +69,7 @@ const EditDelegate = ({ user, onSuccess }: EditDelegateProps) => {
           defaultValues={{
             first_name,
             last_name,
-            department_id: departments?.[0].id,
+            department_id: departments?.[0]?.id,
           }}
           onSubmit={handleSubmit}
           onClose={() => setOpenModal(false)}
