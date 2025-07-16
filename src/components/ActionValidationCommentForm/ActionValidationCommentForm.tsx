@@ -69,16 +69,22 @@ export default function ActionValidationCommentForm({
             type="submit"
             variant="contained"
             color={
-              selectedAction === ValidationLogAction.PASS ? "success" : "error"
+              selectedAction === ValidationLogAction.PASS
+                ? "success"
+                : selectedAction === ValidationLogAction.FAIL
+                  ? "error"
+                  : "primary"
             }
             startIcon={
               selectedAction === ValidationLogAction.PASS ? (
                 <VerifyIcon sx={{ color: "white" }} />
-              ) : (
+              ) : selectedAction === ValidationLogAction.FAIL ? (
                 <RejectIcon sx={{ color: "white" }} />
-              )
+              ) : null
             }>
-            {t("confirm", { action: selectedAction })}
+            {selectedAction === ValidationLogAction.MORE
+              ? t("addMoreInformationButton")
+              : t("confirm", { action: selectedAction })}
           </LoadingButton>
         </Box>
       </Box>
