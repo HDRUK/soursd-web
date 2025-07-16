@@ -2,6 +2,7 @@ import theme from "@/theme";
 import dayjs from "dayjs";
 import Cookies from "js-cookie";
 import Swal, { SweetAlertIcon, SweetAlertResult } from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 import { ShowAlertOptions } from "../types/common";
 
 const notificationValues = [
@@ -35,7 +36,7 @@ export const showAlert = (
   const cookieName = `alert_${id}`;
 
   if (!untilDuration || !Cookies.get(cookieName)) {
-    return Swal.fire({
+    return withReactContent(Swal).fire({
       icon: type,
       title:
         title ??
@@ -96,7 +97,7 @@ export const showLoadingAlertWithPromise = async <T>(
   };
 
   // Show loading spinner
-  Swal.fire({
+  withReactContent(Swal).fire({
     title: optionsWithDefaults.loadingMessage,
     allowOutsideClick: false,
     didOpen: () => {
@@ -109,7 +110,7 @@ export const showLoadingAlertWithPromise = async <T>(
     const result = await promise;
 
     // Show success message
-    Swal.fire({
+    withReactContent(Swal).fire({
       icon: "success",
       title: "Success",
       text: optionsWithDefaults.successMessage,
@@ -120,7 +121,7 @@ export const showLoadingAlertWithPromise = async <T>(
     return result;
   } catch (_) {
     // Show error message
-    Swal.fire({
+    withReactContent(Swal).fire({
       icon: "error",
       title: "Error",
       text: optionsWithDefaults.errorMessage,

@@ -7,8 +7,6 @@ import FormActions from "@/components/FormActions";
 import CheckboxList from "@/components/CheckboxList";
 import { mockedConfigurationRulesDescription } from "@/mocks/data/cms";
 import { showAlert } from "@/utils/showAlert";
-import ContactLink from "@/components/ContactLink";
-import ReactDOMServer from "react-dom/server";
 import { EntityModelTypes } from "@/consts/custodian";
 import {
   getCustodianEntityModelQuery,
@@ -18,6 +16,7 @@ import {
 import { Rule } from "@/types/rules";
 import { useStore } from "@/data/store";
 import ButtonSave from "@/components/ButtonSave";
+import ErrorMessage from "@/components/ErrorMessage";
 
 const NAMESPACE_TRANSLATION_CUSTODIAN_PROFILE = "CustodianProfile";
 
@@ -41,7 +40,7 @@ export default function Rules() {
     )
   );
 
-  const { mutateAsync, isPending, isError } = useMutation(
+  const { mutateAsync, isPending } = useMutation(
     putCustodianActiveEntityModelQuery(custodian?.id)
   );
 
@@ -109,22 +108,14 @@ export default function Rules() {
       });
     } catch (_) {
       showAlert("error", {
-        text: ReactDOMServer.renderToString(
-          t.rich("updateRulesError", {
-            contactLink: ContactLink,
-          })
-        ),
+        text: <ErrorMessage t={t} tKey="updateRulesError" />,
         confirmButtonText: t("errorButton"),
       });
     }
   };
 
-  const formOptions = {
-    error: isError && t.rich("updateRulesError", { contactLink: ContactLink }),
-  };
-
   return (
-    <Form onSubmit={handleSubmit} {...formOptions}>
+    <Form onSubmit={handleSubmit}>
       <PageSection
         heading={t("configurationRulesTitle")}
         description={mockedConfigurationRulesDescription}>

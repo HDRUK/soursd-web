@@ -85,7 +85,7 @@ describe("<EditDelegate />", () => {
         { isError: false, isLoading: false, isSuccess: true },
         {
           errorAlertProps: {
-            text: expect.any(String),
+            text: expect.any(Object),
           },
           onSuccess: expect.any(Function),
           successAlertProps: {

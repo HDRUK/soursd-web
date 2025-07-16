@@ -1,6 +1,5 @@
 "use client";
 
-import ContactLink from "@/components/ContactLink";
 import Form from "@/components/Form";
 import FormActions from "@/components/FormActions";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
@@ -24,11 +23,11 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
-import ReactDOMServer from "react-dom/server";
 import useQueryAlerts from "@/hooks/useQueryAlerts";
 import { User } from "@/types/application";
 import { CheckCircle } from "@mui/icons-material";
 import Text from "@/components/Text";
+import ErrorMessage from "@/components/ErrorMessage";
 import VeriffTermsAndConditions from "../VeriffTermsAndConditions";
 
 export interface IdentityFormValues {
@@ -88,11 +87,7 @@ export default function Identity() {
 
   useQueryAlerts(updateUser, {
     errorAlertProps: {
-      text: ReactDOMServer.renderToString(
-        tProfile.rich("postUserError", {
-          contactLink: ContactLink,
-        })
-      ),
+      text: <ErrorMessage t={tProfile} tKey="postUserError" />,
       confirmButtonText: tProfile("postUserErrorButton"),
     },
     successAlertProps: {
@@ -118,11 +113,9 @@ export default function Identity() {
     []
   );
 
-  const error =
-    updateUser.isError &&
-    tProfile.rich(updateUser.error, {
-      contactLink: ContactLink,
-    });
+  const error = updateUser.isError && (
+    <ErrorMessage t={tProfile} tKey={updateUser.error} />
+  );
 
   const formOptions = {
     defaultValues: {

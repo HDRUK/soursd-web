@@ -1,4 +1,4 @@
-import ContactLink from "@/components/ContactLink";
+import ErrorMessage from "@/components/ErrorMessage";
 import { Message } from "@/components/Message";
 import OverlayCenter from "@/components/OverlayCenter";
 import { Box } from "@mui/material";
@@ -26,9 +26,7 @@ export default function NotFound() {
           height={152}
         />
         <Message severity="error">
-          {t.rich("notFound", {
-            contactLink: ContactLink,
-          })}
+          <ErrorMessage t={t} tKey="notFound" />
         </Message>
       </Box>
     </OverlayCenter>

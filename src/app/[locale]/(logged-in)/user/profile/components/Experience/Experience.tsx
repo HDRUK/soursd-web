@@ -20,9 +20,7 @@ import FormControl from "@/components/FormControlWrapper";
 import Form from "@/components/Form";
 import { useMutation } from "@tanstack/react-query";
 import { putUserQuery } from "@/services/users";
-import ContactLink from "@/components/ContactLink";
 import { showAlert } from "@/utils/showAlert";
-import ReactDOMServer from "react-dom/server";
 import FormActions from "@/components/FormActions";
 import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
 import yup from "@/config/yup";
@@ -30,6 +28,7 @@ import { VALIDATION_ORC_ID } from "@/consts/form";
 import Text from "@/components/Text";
 import FormControlCheckbox from "@/components/FormControlCheckbox";
 import FileUploadDetails from "@/modules/FileUploadDetails/FileUploadDetails";
+import ErrorMessage from "@/components/ErrorMessage";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 const NAMESPACE_TRANSLATION_FORM = "Form";
@@ -94,11 +93,7 @@ export default function Experience() {
         });
       } catch (_) {
         showAlert("error", {
-          text: ReactDOMServer.renderToString(
-            tProfile.rich("postUserError", {
-              contactLink: ContactLink,
-            })
-          ),
+          text: <ErrorMessage t={tProfile} tKey="postUserError" />,
           confirmButtonText: tProfile("postUserErrorButton"),
         });
       }
@@ -106,11 +101,9 @@ export default function Experience() {
     [user, consentScrape, updateUser, tProfile, router]
   );
 
-  const error =
-    updateUser.isError &&
-    tProfile.rich(updateUser.error, {
-      contactLink: ContactLink,
-    });
+  const error = updateUser.isError && (
+    <ErrorMessage t={tProfile} tKey={updateUser.error} />
+  );
 
   const handleConsentScrapeChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {

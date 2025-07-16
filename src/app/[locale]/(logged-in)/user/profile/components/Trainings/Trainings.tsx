@@ -1,6 +1,5 @@
 "use client";
 
-import ContactLink from "@/components/ContactLink";
 import Form from "@/components/Form";
 import FormControlCheckbox from "@/components/FormControlCheckbox";
 import LoadingWrapper from "@/components/LoadingWrapper";
@@ -24,8 +23,8 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useMemo } from "react";
-import ReactDOMServer from "react-dom/server";
 import ProfessionalRegistrations from "@/modules/ProfessionalRegistrations";
+import ErrorMessage from "@/components/ErrorMessage";
 
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
@@ -58,11 +57,7 @@ export default function Trainings() {
 
   useQueryAlerts(putUserQueryState, {
     errorAlertProps: {
-      text: ReactDOMServer.renderToString(
-        tProfile.rich("postUserError", {
-          contactLink: ContactLink,
-        })
-      ),
+      text: <ErrorMessage t={tProfile} tKey="postUserError" />,
     },
     successAlertProps: {
       text: tProfile("postUserSuccess"),

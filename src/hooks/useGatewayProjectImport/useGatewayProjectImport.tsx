@@ -3,10 +3,9 @@ import { ResponseJson } from "@/types/requests";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
-import ReactDOMServer from "react-dom/server";
-import { createDataUseDefaultValues } from "../../utils/form";
+import ErrorMessage from "@/components/ErrorMessage";
 import { postProjectDetailsFromGatewayQuery } from "../../services/project_details";
-import ContactLink from "../../components/ContactLink";
+import { createDataUseDefaultValues } from "../../utils/form";
 import useQueryAlerts from "../useQueryAlerts";
 
 const NAMESPACE_TRANSLATION = "Projects";
@@ -84,11 +83,7 @@ export default function useGatewayProjectImport() {
         confirmButtonText: t("okButton"),
       },
       errorAlertProps: {
-        text: ReactDOMServer.renderToString(
-          t.rich("gatewayImportError", {
-            contactLink: ContactLink,
-          })
-        ),
+        text: <ErrorMessage t={t} tKey="gatewayImportError" />,
       },
     }
   );

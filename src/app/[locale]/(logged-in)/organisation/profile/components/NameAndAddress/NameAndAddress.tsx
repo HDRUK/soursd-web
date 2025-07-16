@@ -1,6 +1,5 @@
 "use client";
 
-import ContactLink from "@/components/ContactLink";
 import Form from "@/components/Form/Form";
 import FormActions from "@/components/FormActions";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
@@ -15,6 +14,7 @@ import { useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { ROUTES } from "@/consts/router";
 import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
+import ErrorMessage from "@/components/ErrorMessage";
 import useUpdateOrganisation from "../../hooks/useUpdateOrganisation";
 import Subsidiaries from "../Subsidiaries";
 
@@ -74,11 +74,7 @@ export default function NameAndAddress() {
       country: organisation?.country,
       postcode: organisation?.postcode,
     },
-    error:
-      isError &&
-      tProfile.rich(error, {
-        contactLink: ContactLink,
-      }),
+    error: isError && <ErrorMessage t={tProfile} tKey={error} />,
   };
 
   const handleSubmit = (fields: Partial<NameAndAddressFormValues>) => {

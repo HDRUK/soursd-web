@@ -12,7 +12,7 @@ export default async (
   options?: ResponseOptions
 ): Promise<ResponseJson<PostOrganisationInviteUserResponse>> => {
   const response = await postRequest(
-    `/organisations/${id}/invite_user`,
+    `/organisatddions/${id}/invite_user`,
     payload
   );
 

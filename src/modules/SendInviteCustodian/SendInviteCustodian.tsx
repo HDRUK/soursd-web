@@ -1,6 +1,5 @@
 import { useTranslations } from "next-intl";
-import ReactDOMServer from "react-dom/server";
-import ContactLink from "../../components/ContactLink";
+import ErrorMessage from "@/components/ErrorMessage";
 import InviteCustodian from "../InviteCustodian";
 import useCustodianInvite from "../../queries/useCustodianInvite";
 import { showAlert } from "../../utils/showAlert";
@@ -12,11 +11,7 @@ export default function SendInviteOrganisation() {
 
   const handleErrorAlert = () => {
     showAlert("error", {
-      text: ReactDOMServer.renderToString(
-        t.rich("inviteCustodianError", {
-          contactLink: ContactLink,
-        })
-      ),
+      text: <ErrorMessage t={t} tKey="inviteCustodianError" />,
       confirmButtonText: t("inviteCustodianErrorButton"),
     });
   };

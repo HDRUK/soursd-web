@@ -1,6 +1,5 @@
 "use client";
 
-import ContactLink from "@/components/ContactLink";
 import Form from "@/components/Form/Form";
 import FormActions from "@/components/FormActions";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
@@ -17,6 +16,7 @@ import { useMemo } from "react";
 import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
 import { ROUTES } from "@/consts/router";
 import { useRouter } from "next/navigation";
+import ErrorMessage from "@/components/ErrorMessage";
 import useUpdateOrganisation from "../../hooks/useUpdateOrganisation";
 
 export interface SectorFormValues {
@@ -68,11 +68,7 @@ export default function SectorSizeAndWebsite() {
       website: organisation?.website,
       organisation_size: organisation?.organisation_size,
     },
-    error:
-      isError &&
-      tProfile.rich(error, {
-        contactLink: ContactLink,
-      }),
+    error: isError && <ErrorMessage t={tProfile} tKey={error} />,
   };
 
   const handleSubmit = (fields: Partial<SectorFormValues>) => {
