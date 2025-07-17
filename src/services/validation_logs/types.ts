@@ -7,6 +7,7 @@ interface PostValidationLogCommentPayload {
 export enum ValidationLogAction {
   PASS = "pass",
   FAIL = "fail",
+  MORE = "more",
 }
 
 export type { PostValidationLogCommentPayload };

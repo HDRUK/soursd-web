@@ -1431,10 +1431,12 @@
   },
   "ActionValidationMakeDecision": {
     "pass": "Pass",
-    "fail": "Fail"
+    "fail": "Fail",
+    "addMoreInformation": "Add more information"
   },
   "ActionValidationCommentForm": {
     "confirm": "Confirm {action}",
+    "addMoreInformationButton": "Add information",
     "cancel": "Cancel"
   },
   "ChangeDecisionChip": {
