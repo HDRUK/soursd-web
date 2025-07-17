@@ -6,9 +6,9 @@ interface InviteUserProps extends Omit<FormModalProps, "children"> {
   onSuccess?: () => void;
 }
 
-const NAMESPACE_TRANSLATION = "CustodianInviteUser";
+const NAMESPACE_TRANSLATION = "InviteUserModal";
 
-export default function CustodianInviteUser({
+export default function InviteUserModal({
   onSuccess,
   ...restProps
 }: InviteUserProps) {

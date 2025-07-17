@@ -1,3 +1,3 @@
-import CustodianInviteUser from "./CustodianInviteUser";
+import InviteUserModal from "./InviteUserModal";
 
-export default CustodianInviteUser;
+export default InviteUserModal;

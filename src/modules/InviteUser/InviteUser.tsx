@@ -49,13 +49,12 @@ export default function InviteUser({ onSuccess }: InviteUserFormProps) {
   const tUser = useTranslations(NAMESPACE_TRANSLATION_ORGANISATION);
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
+  const queryClient = useQueryClient();
   const [selectOrganisation, setSelectOrganisation] = useState<boolean>(true);
 
   const { mutateAsync: mutateUserInvite, ...queryState } = useMutation(
     postOrganisationInviteUserQuery()
   );
-
-  const queryClient = useQueryClient();
 
   useQueryAlerts(queryState, {
     onSuccess: () => onSuccess?.(),

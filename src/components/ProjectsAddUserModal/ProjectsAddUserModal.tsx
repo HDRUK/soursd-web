@@ -8,7 +8,7 @@ import { showAlert } from "../../utils/showAlert";
 import ProjectsAddUserForm from "../ProjectsAddUserForm";
 import Link from "@mui/material/Link";
 import { useState } from "react";
-import CustodianInviteUser from "../CustodianInviteUser";
+import InviteUserModal from "../InviteUserModal";
 
 interface ProjectsAddUserModalProps extends Omit<FormModalProps, "children"> {
   request: boolean;
@@ -98,7 +98,7 @@ export default function ProjectsAddUserModal({
         />
       </FormModal>
 
-      <CustodianInviteUser
+      <InviteUserModal
         onSuccess={() => {
           handleRefreshUsers();
           setOpenInviteUser(false);
