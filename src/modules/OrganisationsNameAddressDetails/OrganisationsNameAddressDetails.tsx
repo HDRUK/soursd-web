@@ -1,7 +1,6 @@
-import { Box, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import FieldsToText from "../../components/FieldsToText";
 import { Organisation } from "../../types/application";
-import SubsidiariesTable from "../SubsidiariesTable";
 
 interface OrganisationsNameAddressDetailsProps {
   organisationData: Organisation;
@@ -34,21 +33,6 @@ export default function OrganisationsNameAddressDetails({
                 <div>{organisationData[key]}</div>
               ))}
             </Typography>
-          ),
-        },
-        {
-          column_id: "subsidiaries",
-          content: (
-            <Box
-              sx={{
-                maxWidth: {
-                  lg: "50%",
-                },
-              }}>
-              <SubsidiariesTable
-                subsidiariesData={organisationData.subsidiaries || []}
-              />
-            </Box>
           ),
         },
       ]}

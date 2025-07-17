@@ -1,4 +1,4 @@
-import ContactLink from "@/components/ContactLink";
+import ErrorMessage from "@/components/ErrorMessage";
 import Form from "@/components/Form";
 import FormActions from "@/components/FormActions";
 import FormControlHorizontal from "@/components/FormControlHorizontal";
@@ -25,7 +25,6 @@ import { Box, Grid, MenuItem, Select, TextField } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
-import ReactDOMServer from "react-dom/server";
 
 const NAMESPACE_TRANSLATION_CUSTODIAN_PROFILE = "CustodianProfile";
 const NAMESPACE_TRANSLATION_FORM = "Form";
@@ -153,9 +152,7 @@ export default function Webhooks() {
       });
     } catch (_) {
       showAlert("error", {
-        text: ReactDOMServer.renderToString(
-          t.rich("webhookError", { contactLink: ContactLink })
-        ),
+        text: <ErrorMessage t={t} tKey="webhookError" />,
         confirmButtonText: tForm("errorButton"),
       });
     }

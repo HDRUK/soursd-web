@@ -1,15 +1,8 @@
 import { commonAccessibilityTests, render, screen } from "@/utils/testUtils";
 import { mockedOrganisation } from "@/mocks/data/organisation";
-import { formatAddress } from "@/utils/address";
 import OrganisationsNameAddressDetails from "./OrganisationsNameAddressDetails";
 
-const organisation = mockedOrganisation({
-  subsidiaries: [
-    mockedOrganisation({
-      name: "HDRUK",
-    }),
-  ],
-});
+const organisation = mockedOrganisation();
 
 const setupTest = () => {
   return render(
@@ -22,22 +15,11 @@ describe("<OrganisationsNameAddressDetails />", () => {
     setupTest();
 
     expect(screen.getByText(organisation.address_1)).toBeInTheDocument();
-    expect(screen.getByText(organisation.address_1)).toBeInTheDocument();
+    expect(screen.getByText(organisation.address_2)).toBeInTheDocument();
     expect(screen.getByText(organisation.town)).toBeInTheDocument();
     expect(screen.getByText(organisation.country)).toBeInTheDocument();
     expect(screen.getByText(organisation.county)).toBeInTheDocument();
     expect(screen.getByText(organisation.postcode)).toBeInTheDocument();
-  });
-
-  it("renders the correct subsidiaries", () => {
-    setupTest();
-
-    expect(
-      screen.getByText(organisation.subsidiaries[0].name)
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText(formatAddress(organisation.subsidiaries[0]))
-    ).toBeInTheDocument();
   });
 
   it("has no accessibility violations", async () => {

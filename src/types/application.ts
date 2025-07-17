@@ -18,7 +18,11 @@ type WithStateWorkflow<T> = T & {
   stateWorkflow: StateWorkflow;
 };
 
-type Translations = (key: string) => string;
+type Translations =
+  | {
+      rich: (key: string | Error, options: unknown) => string;
+    }
+  | ((key: string) => string);
 
 type WithTranslations<T> = T & {
   t: Translations;
@@ -223,6 +227,7 @@ interface Subsidiary extends AddressFields {
     organisation_id: number;
     subsidiary_id: number;
   };
+  website?: string;
 }
 
 interface Charity extends AddressFields {

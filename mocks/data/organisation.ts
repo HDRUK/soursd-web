@@ -32,6 +32,7 @@ const mockedSubsidiary = (subsidiary?: Partial<Subsidiary>) => ({
     organisation_id: faker.number.int(),
     subsidiary_id: faker.number.int(),
   },
+  website: faker.internet.url(),
   ...subsidiary,
 });
 
@@ -109,6 +110,11 @@ const mockedOrganisation = (
     },
   ],
   sector: mockedSector(),
+  subsidiaries: [
+    mockedSubsidiary({
+      id: 1,
+    }),
+  ],
   ...organisation,
 });
 
