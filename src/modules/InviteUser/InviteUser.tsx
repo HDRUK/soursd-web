@@ -29,6 +29,7 @@ import useQueryAlerts from "@/hooks/useQueryAlerts";
 
 export interface InviteUserFormProps {
   onSuccess?: () => void;
+  organisationId?: number;
 }
 
 const NAMESPACE_TRANSLATION_FORM = "Form";
@@ -44,7 +45,10 @@ interface InviteUserFormValues {
   organisation_email?: string;
 }
 
-export default function InviteUser({ onSuccess }: InviteUserFormProps) {
+export default function InviteUser({
+  onSuccess,
+  organisationId: initialOrganisationId,
+}: InviteUserFormProps) {
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const tUser = useTranslations(NAMESPACE_TRANSLATION_ORGANISATION);
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
@@ -120,7 +124,7 @@ export default function InviteUser({ onSuccess }: InviteUserFormProps) {
       first_name: "",
       last_name: "",
       email: "",
-      organisation_id: "",
+      organisation_id: initialOrganisationId || "",
       organisation_name: "",
       organisation_email: "",
     },

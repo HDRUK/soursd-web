@@ -6,7 +6,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 
 import SendInviteCustodian from "@/modules/SendInviteCustodian";
-import SendInviteUser from "@/modules/SendInviteUser";
+import InviteUser from "@/modules/InviteUser";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 
@@ -22,7 +22,7 @@ export default function Sections() {
     },
     {
       name: "user",
-      component: <SendInviteUser />,
+      component: <InviteUser />,
     },
   ];
 
