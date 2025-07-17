@@ -7,6 +7,7 @@ import {
   postOrganisationUnclaimedQuery,
 } from "../../services/organisations";
 import { getCombinedQueryState } from "../../utils/query";
+import useQueryAlerts from "@/hooks/useQueryAlerts";
 
 interface UseOrganisationInviteProps {
   onSuccess?: () => void;
@@ -26,6 +27,8 @@ export default function useOrganisationInvite({
     mutateAsync: mutateOrganisationInvite,
     ...postOrganisationInviteQueryState
   } = useMutation(postOrganisationInviteQuery());
+
+  useQueryAlerts(postOrganisationInviteQueryState);
 
   const handleSubmit = useCallback(
     async (organisation: PostOrganisationUnclaimedPayload) => {

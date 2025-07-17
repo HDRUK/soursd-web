@@ -22,41 +22,5 @@ export default function SendInviteUser({
 }: SendInviteUserProps) {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_ORGANISATION);
 
-  const handleErrorAlert = () => {
-    showAlert("error", {
-      text: <ErrorMessage t={t} tKey="inviteUserError" />,
-      confirmButtonText: t("inviteUserErrorButton"),
-      willClose: () => onError?.(),
-    });
-  };
-
-  const handleSuccessAlert = () => {
-    showAlert("success", {
-      text: t("inviteUserSuccess"),
-      confirmButtonText: t("inviteUserSuccessButton"),
-      willClose: () => onSuccess?.(),
-    });
-  };
-
-  const [selectedOrganisationId, setSelectedOrganisationId] =
-    useState(organisationId);
-
-  const { queryState, handleSubmit } = useUserInvite({
-    organisationId: selectedOrganisationId,
-    onError: handleErrorAlert,
-    onSuccess: handleSuccessAlert,
-  });
-
-  return (
-    <InviteUser
-      onSubmit={handleSubmit}
-      queryState={queryState}
-      selectedOrganisationId={
-        forceSelectOrganisation ? selectedOrganisationId : undefined
-      }
-      setSelectedOrganisationId={
-        forceSelectOrganisation ? setSelectedOrganisationId : undefined
-      }
-    />
-  );
+  return <InviteUser onSuccess={onSuccess} />;
 }

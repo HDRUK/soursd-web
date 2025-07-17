@@ -56,9 +56,19 @@ export default function ProjectsAddUserModal({
         queryKey: ["getPaginatedCustodianProjectUsers", custodianId],
       });
 
+      queryClient.refetchQueries({
+        queryKey: ["getAllProjectUsers", projectId],
+      });
+
       onClose?.();
     },
   });
+
+  const handleRefreshUsers = () => {
+    queryClient.refetchQueries({
+      queryKey: ["getAllProjectUsers", projectId],
+    });
+  };
 
   const [openInviteUser, setOpenInviteUser] = useState(false);
 
@@ -89,6 +99,10 @@ export default function ProjectsAddUserModal({
       </FormModal>
 
       <CustodianInviteUser
+        onSuccess={() => {
+          handleRefreshUsers();
+          setOpenInviteUser(false);
+        }}
         open={openInviteUser}
         onClose={() => setOpenInviteUser(false)}
       />

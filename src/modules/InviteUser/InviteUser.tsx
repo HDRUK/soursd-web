@@ -25,14 +25,10 @@ import {
   postOrganisationInviteUserQuery,
 } from "@/services/organisations";
 import useOrganisationInvite from "@/queries/useOrganisationInvite";
+import useQueryAlerts from "@/hooks/useQueryAlerts";
 
 export interface InviteUserFormProps {
-  onSubmit: (user: PostUserInvitePayload) => void;
-  queryState: MutationState;
-  selectedOrganisationId?: number;
-  setSelectedOrganisationId?: React.Dispatch<
-    React.SetStateAction<number | undefined>
-  >;
+  onSuccess?: () => void;
 }
 
 const NAMESPACE_TRANSLATION_FORM = "Form";
@@ -48,26 +44,10 @@ interface InviteUserFormValues {
   organisation_email?: string;
 }
 
-export default function InviteUserForm({}: InviteUserFormProps) {
+export default function InviteUser({ onSuccess }: InviteUserFormProps) {
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const tUser = useTranslations(NAMESPACE_TRANSLATION_ORGANISATION);
   const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
-
-  const handleErrorAlert = () => {
-    showAlert("error", {
-      //text: <ErrorMessage t={t} tKey="inviteUserError" />,
-      //confirmButtonText: t("inviteUserErrorButton"),
-      //willClose: () => onError?.(),
-    });
-  };
-
-  const handleSuccessAlert = () => {
-    /*showAlert("success", {
-      text: t("inviteUserSuccess"),
-      confirmButtonText: t("inviteUserSuccessButton"),
-      willClose: () => onSuccess?.(),
-    });*/
-  };
 
   const [selectOrganisation, setSelectOrganisation] = useState<boolean>(true);
 
@@ -77,6 +57,10 @@ export default function InviteUserForm({}: InviteUserFormProps) {
 
   const queryClient = useQueryClient();
 
+  useQueryAlerts(queryState, {
+    onSuccess: () => onSuccess?.(),
+  });
+
   const checkEmailExists = async (email: string) => {
     const queryKey = ["getUsersByEmail", email];
     const cachedData = queryClient.getQueryData(queryKey);
@@ -85,12 +69,12 @@ export default function InviteUserForm({}: InviteUserFormProps) {
       return cachedData.data.data.length > 0;
     }
 
-    const data = await queryClient.fetchQuery({
-      queryFn: () => getUsers({ email }),
+    const fetchedData = await queryClient.fetchQuery({
       queryKey,
+      queryFn: () => getUsers({ email }),
     });
 
-    return data.data.data.length > 0;
+    return fetchedData.data.data.length > 0;
   };
 
   const schema = useMemo(

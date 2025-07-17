@@ -49,6 +49,7 @@ export default function ProjectsAddUserForm({
     resetQueryParams,
     ...getUserQueryState
   } = useGetProjectAllUsers(projectId, {
+    queryKeyBase: ["getAllProjectUsers", projectId],
     defaultQueryParams: { "user_group__and[]": "USERS" },
   });
 

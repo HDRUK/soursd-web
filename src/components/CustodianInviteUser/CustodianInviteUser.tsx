@@ -1,16 +1,21 @@
 import { useTranslations } from "next-intl";
-import SendInviteUser from "@/modules/SendInviteUser";
+import InviteUser from "@/modules/InviteUser";
 import FormModal, { FormModalProps } from "../FormModal";
 
-interface InviteUserProps extends Omit<FormModalProps, "children"> {}
+interface InviteUserProps extends Omit<FormModalProps, "children"> {
+  onSuccess?: () => void;
+}
 
 const NAMESPACE_TRANSLATION = "CustodianInviteUser";
 
-export default function CustodianInviteUser({ ...restProps }: InviteUserProps) {
+export default function CustodianInviteUser({
+  onSuccess,
+  ...restProps
+}: InviteUserProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION);
   return (
     <FormModal variant="content" description={t("description")} {...restProps}>
-      <SendInviteUser forceSelectOrganisation={true} />
+      <InviteUser onSuccess={onSuccess} />
     </FormModal>
   );
 }
