@@ -1,9 +1,8 @@
+import ErrorMessage from "@/components/ErrorMessage";
 import { useTranslations } from "next-intl";
-import ReactDOMServer from "react-dom/server";
-import ContactLink from "../../components/ContactLink";
-import InviteOrganisation from "../InviteOrganisation";
 import useOrganisationInvite from "../../queries/useOrganisationInvite";
 import { showAlert } from "../../utils/showAlert";
+import InviteOrganisation from "../InviteOrganisation";
 
 const NAMESPACE_TRANSLATIONS_ORGANISATION = "Organisation";
 
@@ -23,11 +22,7 @@ export default function SendInviteOrganisation({
   const handleErrorAlert = () => {
     onClose?.();
     showAlert("error", {
-      text: ReactDOMServer.renderToString(
-        t.rich("inviteOrganisationError", {
-          contactLink: ContactLink,
-        })
-      ),
+      text: <ErrorMessage t={t} tKey="inviteOrganisationError" />,
       confirmButtonText: t("inviteOrganisationErrorButton"),
     });
   };

@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { ReactNode } from "react";
-import ContactLink from "../../components/ContactLink";
+import ErrorMessage from "@/components/ErrorMessage";
 import LoadingWrapper from "../../components/LoadingWrapper";
 import OverlayCenterAlert from "../../components/OverlayCenterAlert";
 import PageBodyContainer from "../../modules/PageBodyContainer";
@@ -89,9 +89,7 @@ export default function Application({
   return isError || hasMissingDepedencyInformation() ? (
     <PageBodyContainer>
       <OverlayCenterAlert>
-        {t.rich("getDependenciesError", {
-          contactLink: ContactLink,
-        })}
+        <ErrorMessage t={t} tKey="getDependenciesError" />
       </OverlayCenterAlert>
     </PageBodyContainer>
   ) : (

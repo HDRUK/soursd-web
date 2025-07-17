@@ -13,7 +13,7 @@ interface TabsContentsProps {
 
 export default function TabsContents({ tabId }: TabsContentsProps) {
   const user = useStore(state => state.getUser());
-  const organisation = useOrganisationStore();
+  const { organisation } = useOrganisationStore();
 
   if (!user || !organisation) notFound();
 

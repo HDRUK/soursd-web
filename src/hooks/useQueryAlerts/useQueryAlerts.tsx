@@ -2,9 +2,8 @@ import { ShowAlert, ShowAlertOptions } from "@/types/common";
 import { MutationState, QueryState } from "@/types/form";
 import { useTranslations } from "next-intl";
 import { MutableRefObject, useRef } from "react";
-import ReactDOMServer from "react-dom/server";
 import { SweetAlertIcon } from "sweetalert2";
-import ContactLink from "../../components/ContactLink";
+import ErrorMessage from "@/components/ErrorMessage";
 import { showAlert } from "../../utils/showAlert";
 
 const NAMESPACE_TRANSALATIONS_APPLICATION = "Application";
@@ -48,11 +47,7 @@ export default function useQueryAlerts(
   };
 
   const mergedErrorAlertProps = {
-    text: ReactDOMServer.renderToString(
-      t.rich("alertErrorDescription", {
-        contactLink: ContactLink,
-      })
-    ),
+    text: <ErrorMessage t={t} tKey="alertErrorDescription" />,
     title: t("alertErrorTitle"),
     confirmButtonText: t("alertErrorConfirmButton"),
     ...alertOptions?.commonAlertProps,

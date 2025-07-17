@@ -1,6 +1,5 @@
 import { useTranslations } from "next-intl";
-import ReactDOMServer from "react-dom/server";
-import ContactLink from "../../components/ContactLink";
+import ErrorMessage from "@/components/ErrorMessage";
 import InviteUser from "../InviteUser";
 import useUserInvite from "../../queries/useUserInvite";
 import { showAlert } from "../../utils/showAlert";
@@ -22,11 +21,7 @@ export default function SendInviteUser({
 
   const handleErrorAlert = () => {
     showAlert("error", {
-      text: ReactDOMServer.renderToString(
-        t.rich("inviteUserError", {
-          contactLink: ContactLink,
-        })
-      ),
+      text: <ErrorMessage t={t} tKey="inviteUserError" />,
       confirmButtonText: t("inviteUserErrorButton"),
       willClose: () => onError?.(),
     });

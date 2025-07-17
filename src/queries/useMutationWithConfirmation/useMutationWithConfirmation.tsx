@@ -1,8 +1,7 @@
 import { useMutation, UseMutationOptions } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
-import ReactDOMServer from "react-dom/server";
-import ContactLink from "../../components/ContactLink";
+import ErrorMessage from "@/components/ErrorMessage";
 import useQueryConfirmAlerts, {
   QueryAlertConfirmOptions,
 } from "../../hooks/useQueryConfirmAlerts";
@@ -38,9 +37,7 @@ const useMutationWithConfirmation = <
       ...options?.successAlertProps,
     },
     errorAlertProps: {
-      text: ReactDOMServer.renderToString(
-        t.rich("errorAlertText", { contactLink: ContactLink })
-      ),
+      text: <ErrorMessage t={t} tKey="errorAlertText" />,
       title: t("errorAlertTitle"),
       ...options?.errorAlertProps,
     },
