@@ -26,8 +26,6 @@ export default function useUserInvite({
 
   const handleSubmit = useCallback(
     async (payload: PostOrganisationInviteUserPayload) => {
-      alert(organisationId);
-      return;
       try {
         await mutateUserInvite(payload);
 

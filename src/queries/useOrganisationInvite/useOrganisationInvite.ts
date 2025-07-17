@@ -1,5 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { useCallback, useMemo } from "react";
+import useQueryAlerts from "@/hooks/useQueryAlerts";
 import { MutationState } from "../../types/form";
 import {
   postOrganisationInviteQuery,
@@ -7,7 +8,6 @@ import {
   postOrganisationUnclaimedQuery,
 } from "../../services/organisations";
 import { getCombinedQueryState } from "../../utils/query";
-import useQueryAlerts from "@/hooks/useQueryAlerts";
 
 interface UseOrganisationInviteProps {
   onSuccess?: () => void;

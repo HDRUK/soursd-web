@@ -3,29 +3,18 @@ import { LoadingButton } from "@mui/lab";
 import { Grid, TextField, Link } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
+import SelectOrganisation from "@/components/SelectOrganisation";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { postOrganisationInviteUserQuery } from "@/services/organisations";
+import useOrganisationInvite from "@/queries/useOrganisationInvite";
+import useQueryAlerts from "@/hooks/useQueryAlerts";
 import Form from "../../components/Form";
 import FormActions from "../../components/FormActions";
 import FormControlHorizontal from "../../components/FormControlHorizontal";
 import FormSection from "../../components/FormSection";
 import yup from "../../config/yup";
 import { MAX_FORM_WIDTH } from "../../consts/form";
-import {
-  getUsers,
-  getUsersQuery,
-  PostUserInvitePayload,
-} from "../../services/users";
-import { MutationState } from "../../types/form";
-import SelectOrganisation from "@/components/SelectOrganisation";
-import { showAlert } from "@/utils/showAlert";
-import ErrorMessage from "@/components/ErrorMessage";
-import useUserInvite from "@/queries/useUserInvite";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import {
-  postOrganisationInviteQuery,
-  postOrganisationInviteUserQuery,
-} from "@/services/organisations";
-import useOrganisationInvite from "@/queries/useOrganisationInvite";
-import useQueryAlerts from "@/hooks/useQueryAlerts";
+import { getUsers } from "../../services/users";
 
 export interface InviteUserFormProps {
   onSuccess?: () => void;
@@ -166,19 +155,19 @@ export default function InviteUser({
             <Grid container rowSpacing={3}>
               <Grid item xs={12}>
                 <FormControlHorizontal
-                  name={"first_name"}
+                  name="first_name"
                   renderField={fieldProps => <TextField {...fieldProps} />}
                 />
               </Grid>
               <Grid item xs={12}>
                 <FormControlHorizontal
-                  name={"last_name"}
+                  name="last_name"
                   renderField={fieldProps => <TextField {...fieldProps} />}
                 />
               </Grid>
               <Grid item xs={12}>
                 <FormControlHorizontal
-                  name={"email"}
+                  name="email"
                   renderField={fieldProps => <TextField {...fieldProps} />}
                 />
               </Grid>
