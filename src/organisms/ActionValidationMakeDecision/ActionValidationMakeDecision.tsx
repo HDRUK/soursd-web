@@ -1,9 +1,10 @@
-import { Box, Button } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
-
+import { InfoOutlined } from "@mui/icons-material";
 import { useStore } from "@/data/store";
 import { useTranslations } from "next-intl";
+import { ActionMenu, ActionMenuItem } from "@/components/ActionMenu";
 import ActionValidationCommentForm, {
   ActionValidationCommentFormData,
 } from "../../components/ActionValidationCommentForm";
@@ -32,6 +33,10 @@ export default function ActionValidationMakeDecision({
 
   const [currentLog, setCurrentLog] = useState<ValidationLog>(log);
 
+  const [showDecisionChip, setShowDecisionChip] = useState(
+    !!currentLog.completed_at
+  );
+
   const user = useStore(store => store.getUser());
   const { mutateAsync: createComment, isPending: isPendingPostComment } =
     useMutation(postValidationLogCommentQuery());
@@ -55,6 +60,7 @@ export default function ActionValidationMakeDecision({
     });
     await onAction?.();
     setSelectedAction(null);
+    setShowDecisionChip(!!res.data.completed_at);
   };
 
   if (selectedAction) {
@@ -68,17 +74,11 @@ export default function ActionValidationMakeDecision({
     );
   }
 
-  if (currentLog.completed_at) {
+  if (showDecisionChip) {
     return (
       <ChangeDecisionChip
         completed={currentLog.manually_confirmed === 1}
-        onClick={() =>
-          setSelectedAction(
-            currentLog.manually_confirmed === 1
-              ? ValidationLogAction.FAIL
-              : ValidationLogAction.PASS
-          )
-        }
+        onClick={() => setShowDecisionChip(false)}
       />
     );
   }
@@ -99,7 +99,26 @@ export default function ActionValidationMakeDecision({
         startIcon={<RejectIcon />}>
         {t("fail")}
       </Button>
-      <Button variant="outlined"> &#8230;</Button>
+      <ActionMenu
+        trigger={
+          <Button
+            data-testid="validation-log-initial-comment"
+            variant="outlined">
+            &#8230;
+          </Button>
+        }>
+        {({ handleClose }) => (
+          <ActionMenuItem
+            data-testid="validation-log-add-more-info"
+            icon={<InfoOutlined color="primary" />}
+            onClick={() => {
+              setSelectedAction(ValidationLogAction.MORE);
+              handleClose();
+            }}>
+            <Typography color="primary"> {t("addMoreInformation")} </Typography>
+          </ActionMenuItem>
+        )}
+      </ActionMenu>
     </Box>
   );
 }
