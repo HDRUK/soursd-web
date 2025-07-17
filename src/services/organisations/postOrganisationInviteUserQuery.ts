@@ -1,12 +1,16 @@
 import postOrganisationInviteUser from "./postOrganisationInviteUser";
 import { PostOrganisationInviteUserPayload } from "./types";
 
-export default function postOrganisationInviteUserQuery(
-  organisationId: number
-) {
+export default function postOrganisationInviteUserQuery() {
   return {
     mutationKey: ["postOrganisationInviteUser"],
-    mutationFn: async (payload: PostOrganisationInviteUserPayload) => {
+    mutationFn: async ({
+      organisationId,
+      payload,
+    }: {
+      organisationId: number;
+      payload: PostOrganisationInviteUserPayload;
+    }) => {
       return postOrganisationInviteUser(organisationId, payload, {
         error: { message: "postOrganisationInviteUserError" },
       });
