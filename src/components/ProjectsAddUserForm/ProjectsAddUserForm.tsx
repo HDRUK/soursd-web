@@ -25,17 +25,17 @@ export type RowUserState = {
   affiliation_id: number;
 }[];
 
-interface ProjectsAddUserProps {
+interface ProjectsAddUserFormProps {
   projectId: number;
   mutationState: MutationState;
   onSave: (projectUsers: ProjectAllUser[]) => void;
 }
 
-export default function ProjectsAddUser({
+export default function ProjectsAddUserForm({
   projectId,
   onSave,
   mutationState,
-}: ProjectsAddUserProps) {
+}: ProjectsAddUserFormProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION);
   const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
 
@@ -120,6 +120,7 @@ export default function ProjectsAddUser({
       accessorKey: "role.id",
       header: tApplication("role"),
       cell: renderRoleSelectorCell,
+      minSize: 250,
     },
   ];
 

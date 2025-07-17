@@ -4,16 +4,19 @@ import ContactLink from "../../components/ContactLink";
 import InviteUser from "../InviteUser";
 import useUserInvite from "../../queries/useUserInvite";
 import { showAlert } from "../../utils/showAlert";
+import { useState } from "react";
 
 const NAMESPACE_TRANSLATIONS_ORGANISATION = "User";
 
 interface SendInviteUserProps {
+  forceSelectOrganisation?: boolean;
   organisationId?: number;
   onSuccess?: () => void;
   onError?: () => void;
 }
 
 export default function SendInviteUser({
+  forceSelectOrganisation = false,
   organisationId,
   onSuccess,
   onError,
@@ -40,11 +43,25 @@ export default function SendInviteUser({
     });
   };
 
+  const [selectedOrganisationId, setSelectedOrganisationId] =
+    useState(organisationId);
+
   const { queryState, handleSubmit } = useUserInvite({
-    organisationId,
+    organisationId: selectedOrganisationId,
     onError: handleErrorAlert,
     onSuccess: handleSuccessAlert,
   });
 
-  return <InviteUser onSubmit={handleSubmit} queryState={queryState} />;
+  return (
+    <InviteUser
+      onSubmit={handleSubmit}
+      queryState={queryState}
+      selectedOrganisationId={
+        forceSelectOrganisation ? selectedOrganisationId : undefined
+      }
+      setSelectedOrganisationId={
+        forceSelectOrganisation ? setSelectedOrganisationId : undefined
+      }
+    />
+  );
 }

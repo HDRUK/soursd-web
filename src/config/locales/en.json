@@ -1520,8 +1520,11 @@
   "ProjectsAddUserModal": {
     "heading": "Add new team member",
     "requestHeading": "Request to add new team member",
-    "description": "Here’s where you can add a team member to your project. If you can't find them or they're listed under the wrong Organisation, invite them here. If they already have a Safe People Registry account, they’ll be able to select the correct Organisation. Otherwise, they'll be prompted to register for a Safe People Registry account.",
+    "description": "Add a User to start the validation process. You can add existing Safe People Registry Users by searching below. If they are affiliated with the wrong Organisation, you can request corrected Organisation affiliation during the validation process. If you cannot find your User, you can <button>invite them to create a Safe People Registry account here.</button> ",
     "requestDescription": "Here’s where you can request that a team member us added to this project. If you can't find them or they're listed under the wrong Organisation, invite them here. If they already have a Safe People Registry account, they’ll be able to select the correct Organisation. Otherwise, they'll be prompted to register for a Safe People Registry account."
+  },
+  "CustodianInviteUser": {
+    "description": "Complete the fields below to invite a User to create a Safe People Registry account."
   },
   "VeriffTermsAndConditions": {
     "title": "This will take you to Veriff’s website to verify your identity.",

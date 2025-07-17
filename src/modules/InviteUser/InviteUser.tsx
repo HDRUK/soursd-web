@@ -1,6 +1,6 @@
 import SaveIcon from "@mui/icons-material/Save";
 import { LoadingButton } from "@mui/lab";
-import { Grid, TextField } from "@mui/material";
+import { Grid, TextField, Link } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
 import Form from "../../components/Form";
@@ -11,21 +11,30 @@ import yup from "../../config/yup";
 import { MAX_FORM_WIDTH } from "../../consts/form";
 import { PostUserInvitePayload } from "../../services/users";
 import { MutationState } from "../../types/form";
+import SelectOrganisation from "@/components/SelectOrganisation";
 
 export interface InviteUserFormProps {
   onSubmit: (user: PostUserInvitePayload) => void;
   queryState: MutationState;
+  selectedOrganisationId?: number;
+  setSelectedOrganisationId?: React.Dispatch<
+    React.SetStateAction<number | undefined>
+  >;
 }
 
 const NAMESPACE_TRANSLATION_FORM = "Form";
 const NAMESPACE_TRANSLATION_ORGANISATION = "User";
+const NAMESPACE_TRANSLATION_PROFILE = "Profile";
 
 export default function InviteUserForm({
   onSubmit,
   queryState,
+  selectedOrganisationId,
+  setSelectedOrganisationId,
 }: InviteUserFormProps) {
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const tUser = useTranslations(NAMESPACE_TRANSLATION_ORGANISATION);
+  const tProfile = useTranslations(NAMESPACE_TRANSLATION_PROFILE);
 
   const schema = useMemo(
     () =>
@@ -36,6 +45,9 @@ export default function InviteUserForm({
           .string()
           .email(tForm("emailFormatInvalid"))
           .required(tForm("emailRequiredInvalid")),
+        organisation_id: yup
+          .number()
+          .required(tForm("organisationRequiredInvalid")),
       }),
     [tForm]
   );
@@ -45,6 +57,7 @@ export default function InviteUserForm({
       first_name: "",
       last_name: "",
       email: "",
+      organisation_id: selectedOrganisationId,
     },
   };
 
@@ -69,6 +82,34 @@ export default function InviteUserForm({
                   />
                 </Grid>
               ))}
+              <Grid item xs={12}>
+                <FormControlHorizontal
+                  name="organisation_id"
+                  renderField={({ onChange, ...fieldProps }) => (
+                    <SelectOrganisation
+                      {...fieldProps}
+                      onChange={e => {
+                        setSelectedOrganisationId?.(e.target.value as number);
+                        onChange(e);
+                      }}
+                    />
+                  )}
+                  description={tProfile.rich("organisationNotListed", {
+                    link: chunks => (
+                      <Link
+                        component="button"
+                        onClick={e => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          //setSelectOrganisation(false);
+                        }}
+                        sx={{ pb: 0.25 }}>
+                        {chunks}
+                      </Link>
+                    ),
+                  })}
+                />
+              </Grid>
             </Grid>
           </FormSection>
           <FormActions>

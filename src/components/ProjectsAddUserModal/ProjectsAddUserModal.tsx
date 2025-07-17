@@ -6,8 +6,11 @@ import useQueryAlerts from "../../hooks/useQueryAlerts";
 import { ProjectAllUser } from "../../types/application";
 import { showAlert } from "../../utils/showAlert";
 import ProjectsAddUserForm from "../ProjectsAddUserForm";
+import Link from "@mui/material/Link";
+import { useState } from "react";
+import CustodianInviteUser from "../CustodianInviteUser";
 
-interface ProjectsAddUserModaProps extends Omit<FormModalProps, "children"> {
+interface ProjectsAddUserModalProps extends Omit<FormModalProps, "children"> {
   request: boolean;
   projectId: number;
   custodianId: number;
@@ -22,7 +25,7 @@ export default function ProjectsAddUserModal({
   custodianId,
   onClose,
   ...restProps
-}: ProjectsAddUserModaProps) {
+}: ProjectsAddUserModalProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION);
   const queryClient = useQueryClient();
   const { mutateAsync, ...putProjectUsersMutationState } = useMutation(
@@ -57,18 +60,38 @@ export default function ProjectsAddUserModal({
     },
   });
 
+  const [openInviteUser, setOpenInviteUser] = useState(false);
+
   return (
-    <FormModal
-      variant="content"
-      heading={request ? t("requestHeading") : t("heading")}
-      description={request ? t("requestDescription") : t("description")}
-      onClose={onClose}
-      {...restProps}>
-      <ProjectsAddUserForm
-        projectId={projectId}
-        mutationState={putProjectUsersMutationState}
-        onSave={handleSave}
+    <>
+      <FormModal
+        variant="content"
+        heading={request ? t("requestHeading") : t("heading")}
+        description={
+          request
+            ? t("requestDescription")
+            : t.rich("description", {
+                button: chunks => (
+                  <Link onClick={() => setOpenInviteUser(true)}>{chunks}</Link>
+                ),
+              })
+        }
+        onClose={onClose}
+        sx={{
+          minWidth: "60%",
+        }}
+        {...restProps}>
+        <ProjectsAddUserForm
+          projectId={projectId}
+          mutationState={putProjectUsersMutationState}
+          onSave={handleSave}
+        />
+      </FormModal>
+
+      <CustodianInviteUser
+        open={openInviteUser}
+        onClose={() => setOpenInviteUser(false)}
       />
-    </FormModal>
+    </>
   );
 }
