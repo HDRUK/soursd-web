@@ -42,7 +42,7 @@ describe("<SendInviteOrganisation />", () => {
     });
   });
 
-  /*it("shows error when submit fails", async () => {
+  it("shows error when submit fails", async () => {
     global.fetch.mockImplementation((url: string) => {
       if (url.endsWith(`/organisations/unclaimed`)) {
         return mock200Json(1);
@@ -63,5 +63,5 @@ describe("<SendInviteOrganisation />", () => {
 
   it("has no accessibility violations", async () => {
     commonAccessibilityTests(renderSendInviteOrganisation());
-  });*/
+  });
 });

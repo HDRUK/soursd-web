@@ -16,11 +16,6 @@ import yup from "../../config/yup";
 import { MAX_FORM_WIDTH } from "../../consts/form";
 import { getUsers } from "../../services/users";
 
-export interface InviteUserFormProps {
-  onSuccess?: () => void;
-  organisationId?: number;
-}
-
 const NAMESPACE_TRANSLATION_FORM = "Form";
 const NAMESPACE_TRANSLATION_ORGANISATION = "User";
 const NAMESPACE_TRANSLATION_PROFILE = "Profile";
@@ -34,9 +29,16 @@ interface InviteUserFormValues {
   organisation_email?: string;
 }
 
+export interface InviteUserFormProps {
+  onSuccess?: () => void;
+  organisationId?: number;
+  enableEmailCheck?: boolean;
+}
+
 export default function InviteUser({
   onSuccess,
   organisationId: initialOrganisationId,
+  enableEmailCheck = true,
 }: InviteUserFormProps) {
   const tForm = useTranslations(NAMESPACE_TRANSLATION_FORM);
   const tUser = useTranslations(NAMESPACE_TRANSLATION_ORGANISATION);
@@ -65,7 +67,6 @@ export default function InviteUser({
       queryKey,
       queryFn: () => getUsers({ email }),
     });
-
     return fetchedData.data.data.length > 0;
   };
 
@@ -82,9 +83,13 @@ export default function InviteUser({
             "email-exists",
             tForm("emailAlreadyExists"),
             async function (value) {
+              if (!enableEmailCheck) return true;
+
               if (!value) return true;
+
               try {
                 const userExists = await checkEmailExists(value);
+                console.log("here", userExists);
                 return !userExists;
               } catch (err) {
                 console.error("Error checking email existence", err);

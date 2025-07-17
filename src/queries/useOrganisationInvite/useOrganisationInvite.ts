@@ -1,6 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
 import { useCallback, useMemo } from "react";
-import useQueryAlerts from "@/hooks/useQueryAlerts";
 import { MutationState } from "../../types/form";
 import {
   postOrganisationInviteQuery,
@@ -27,8 +26,6 @@ export default function useOrganisationInvite({
     mutateAsync: mutateOrganisationInvite,
     ...postOrganisationInviteQueryState
   } = useMutation(postOrganisationInviteQuery());
-
-  useQueryAlerts(postOrganisationInviteQueryState);
 
   const handleSubmit = useCallback(
     async (organisation: PostOrganisationUnclaimedPayload) => {
