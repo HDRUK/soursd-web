@@ -26,7 +26,6 @@ const renderInviteUserComponent = () => {
 };
 
 describe("<InviteUser />", () => {
-  /*
   it.each(fields)("does not submit when %s is not defined", async fieldName => {
     renderInviteUserComponent();
 
@@ -50,7 +49,6 @@ describe("<InviteUser />", () => {
       throw new Error(`Could not find input ${fieldName}`);
     }
   });
-  */
 
   it("submits with the correct fields", async () => {
     renderInviteUserComponent();
@@ -76,7 +74,7 @@ describe("<InviteUser />", () => {
     });
   });
 
-  //it("has no accessibility violations", async () => {
-  // commonAccessibilityTests(renderInviteUserComponent());
-  //});
+  it("has no accessibility violations", async () => {
+    commonAccessibilityTests(renderInviteUserComponent());
+  });
 });

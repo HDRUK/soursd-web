@@ -1,8 +1,11 @@
-import { MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import {
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  SelectProps,
+} from "@mui/material";
 import { useMemo } from "react";
 import useOrganisationsQuery from "@/services/organisations/useOrganisationsQuery";
-
-import { SelectProps } from "@mui/material";
 
 export interface SelectOrganisationProps {
   onChange?: (event: SelectChangeEvent) => void;
