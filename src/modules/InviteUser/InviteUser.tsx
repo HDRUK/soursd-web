@@ -7,6 +7,7 @@ import SelectOrganisation from "@/components/SelectOrganisation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { postOrganisationInviteUserQuery } from "@/services/organisations";
 import useOrganisationInvite from "@/queries/useOrganisationInvite";
+import { getCombinedQueryState } from "@/utils/query";
 import useQueryAlerts from "@/hooks/useQueryAlerts";
 import Form from "../../components/Form";
 import FormActions from "../../components/FormActions";
@@ -89,7 +90,6 @@ export default function InviteUser({
 
               try {
                 const userExists = await checkEmailExists(value);
-                console.log("here", userExists);
                 return !userExists;
               } catch (err) {
                 console.error("Error checking email existence", err);
@@ -124,8 +124,15 @@ export default function InviteUser({
     },
   };
 
-  const { handleSubmit: handleCreateAndInviteOrganisation } =
-    useOrganisationInvite();
+  const {
+    handleSubmit: handleCreateAndInviteOrganisation,
+    queryState: inviteOrganisationQueryState,
+  } = useOrganisationInvite();
+
+  const combinedQueryState = getCombinedQueryState([
+    queryState,
+    inviteOrganisationQueryState,
+  ]);
 
   const handleSubmit = async (formData: InviteUserFormValues) => {
     const {
@@ -236,7 +243,7 @@ export default function InviteUser({
             <LoadingButton
               type="submit"
               endIcon={<SaveIcon />}
-              loading={queryState.isPending}
+              loading={combinedQueryState.isLoading}
               sx={{ display: "flex", justifySelf: "end" }}>
               {tForm(`inviteButton`)}
             </LoadingButton>
