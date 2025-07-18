@@ -461,6 +461,11 @@ async function mockFetch(url: string, init?: RequestInit) {
         }),
       });
     }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/organisations/1/invite_user`: {
+      return mock200Json({
+        data: true,
+      });
+    }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/users/permissions`: {
       return mock200Json([
         mockedPermission({

@@ -1,8 +1,8 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback } from "react";
+import InviteUser from "@/modules/InviteUser";
 import FormModal, { FormModalProps } from "../FormModal";
-import SendInviteUser from "../../modules/SendInviteUser";
 import { Organisation } from "../../types/application";
 
 export interface UserModalProps extends Omit<FormModalProps, "children"> {
@@ -33,7 +33,7 @@ export default function UsersModal({
       variant="content"
       onClose={onClose}
       {...restProps}>
-      <SendInviteUser
+      <InviteUser
         organisationId={organisation.id}
         onSuccess={handleOnSuccess}
       />

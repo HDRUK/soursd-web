@@ -58,7 +58,7 @@ const Table = <T,>({
   const initialState = useMemo(
     () => ({
       pagination: {
-        pageSize: +perPage.value,
+        pageSize: Number(perPage.value),
       },
     }),
     [perPage.value]
@@ -74,7 +74,7 @@ const Table = <T,>({
     getCoreRowModel: getCoreRowModel(),
     ...(isPaginated && { getPaginationRowModel: getPaginationRowModel() }),
     ...restProps,
-    ...initialState,
+    initialState,
   });
 
   const rows = useMemo(() => {
