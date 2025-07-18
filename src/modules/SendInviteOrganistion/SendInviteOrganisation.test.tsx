@@ -53,7 +53,6 @@ describe("<SendInviteOrganisation />", () => {
 
     await renderSubmitted();
 
-    screen.debug(undefined, Infinity);
     await waitFor(() => {
       expect(
         screen.getByText(/There was an error inviting the Organisation/i)

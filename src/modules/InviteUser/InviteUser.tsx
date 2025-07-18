@@ -56,11 +56,21 @@ export default function InviteUser({
     onSuccess: () => onSuccess?.(),
   });
 
-  const checkEmailExists = async (email: string) => {
+  const {
+    handleSubmit: handleCreateAndInviteOrganisation,
+    queryState: inviteOrganisationQueryState,
+  } = useOrganisationInvite();
+
+  const combinedQueryState = getCombinedQueryState([
+    queryState,
+    inviteOrganisationQueryState,
+  ]);
+
+  const checkEmailExists = async (email: string, useCache = false) => {
     const queryKey = ["getUsersByEmail", email];
     const cachedData = queryClient.getQueryData(queryKey);
 
-    if (cachedData) {
+    if (cachedData && useCache) {
       return cachedData.data.data.length > 0;
     }
 
@@ -123,16 +133,6 @@ export default function InviteUser({
       organisation_email: "",
     },
   };
-
-  const {
-    handleSubmit: handleCreateAndInviteOrganisation,
-    queryState: inviteOrganisationQueryState,
-  } = useOrganisationInvite();
-
-  const combinedQueryState = getCombinedQueryState([
-    queryState,
-    inviteOrganisationQueryState,
-  ]);
 
   const handleSubmit = async (formData: InviteUserFormValues) => {
     const {
