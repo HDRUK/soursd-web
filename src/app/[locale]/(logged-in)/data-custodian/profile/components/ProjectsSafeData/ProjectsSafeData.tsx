@@ -56,6 +56,7 @@ export default function ProjectsSafeData() {
     await mutateAsync({
       ...project.project_detail,
       ...payload,
+      datasets: payload?.datasets?.map(d => d.value),
     });
   };
 
