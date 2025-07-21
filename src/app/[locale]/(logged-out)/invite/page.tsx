@@ -1,8 +1,5 @@
-import { getRegisterUrl } from "@/utils/keycloak";
-import { redirect } from "next/navigation";
+import Invite from "./components";
 
 export default function Page() {
-  redirect(getRegisterUrl());
-
-  return null;
+  return <Invite />;
 }

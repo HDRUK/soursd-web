@@ -184,6 +184,7 @@ type User = WithModelState<{
   profile_steps_completed: string;
   approvals: Approval[];
   organisation_id?: number | null;
+  organisation?: Organisation;
   custodian_id?: number;
   custodian_user_id?: number;
   consent_scrape: boolean;

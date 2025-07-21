@@ -1,7 +1,14 @@
 import { useRouter } from "@/i18n/routing";
 import { AccountType } from "@/types/accounts";
 import { useMutation } from "@tanstack/react-query";
-import { postRegister, PostRegisterPayload } from "../../services/auth";
+import { User } from "@/types/application";
+import Cookies from "js-cookie";
+import {
+  postClaimUser,
+  postRegister,
+  PostRegisterPayload,
+  PostClaimUserPayload,
+} from "../../services/auth";
 import { PostOrganisationPayload } from "../../services/organisations";
 import postOrganisationUnclaimed from "../../services/organisations/postOrganisationUnclaimed";
 import { getCombinedQueryState } from "../../utils/query";
@@ -10,9 +17,13 @@ import useAuth from "../useAuth";
 
 interface UseRegisterUserArgs {
   selected: AccountType | null;
+  unclaimedOrgAdmin: Partial<User> | null;
 }
 
-export default function useRegisterUser({ selected }: UseRegisterUserArgs) {
+export default function useRegisterUser({
+  selected,
+  unclaimedOrgAdmin,
+}: UseRegisterUserArgs) {
   const router = useRouter();
   const auth = useAuth();
 
@@ -21,6 +32,14 @@ export default function useRegisterUser({ selected }: UseRegisterUserArgs) {
     mutationFn: (payload: PostRegisterPayload) => {
       return postRegister(payload, {
         error: { message: "failedToRegister" },
+      });
+    },
+  });
+  const { mutateAsync: mutateClaimUser } = useMutation({
+    mutationKey: ["claimUser"],
+    mutationFn: (payload: PostClaimUserPayload) => {
+      return postClaimUser(payload, {
+        error: { message: "claimUserError" },
       });
     },
   });
@@ -40,7 +59,7 @@ export default function useRegisterUser({ selected }: UseRegisterUserArgs) {
 
     let organisationId;
 
-    if (selected === AccountType.ORGANISATION) {
+    if (selected === AccountType.ORGANISATION && !unclaimedOrgAdmin) {
       const { data } = await mutateAsyncOrganisation({
         organisation_name: `${auth?.user?.given_name} ${auth?.user?.family_name} Org`,
         lead_applicant_email: auth?.user?.email,
@@ -50,12 +69,21 @@ export default function useRegisterUser({ selected }: UseRegisterUserArgs) {
       organisationId = data;
     }
 
-    await mutateAsync({
-      account_type: selected,
-      organisation_id: organisationId,
-    }).then(() => {
-      router.replace(getProfilePathByEntity(selected));
-    });
+    if (unclaimedOrgAdmin?.registry_id) {
+      await mutateClaimUser({
+        registry_id: unclaimedOrgAdmin.registry_id,
+      }).then(() => {
+        Cookies.remove("account_digi_ident");
+        router.replace(getProfilePathByEntity(selected));
+      });
+    } else {
+      await mutateAsync({
+        account_type: selected,
+        organisation_id: organisationId,
+      }).then(() => {
+        router.replace(getProfilePathByEntity(selected));
+      });
+    }
   };
 
   return {

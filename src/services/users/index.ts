@@ -1,5 +1,7 @@
 import getUser from "./getUser";
+import getByIdUser from "./getUserById";
 import getUserQuery from "./getUserQuery";
+import getUserByIdQuery from "./getUserByIdQuery";
 import getUserHistoryQuery from "./getUserQueryHistory";
 import getUsers from "./getUsers";
 import getUsersQuery from "./getUsersQuery";
@@ -14,6 +16,8 @@ import usePaginatedUserProjects from "./usePaginatedUserProjects";
 export {
   getUser,
   getUserQuery,
+  getByIdUser,
+  getUserByIdQuery,
   getUserHistoryQuery,
   getUsers,
   postPermissions,

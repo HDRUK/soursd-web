@@ -16,12 +16,17 @@ import {
   Button,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import useRegisterUser from "@/hooks/useRegisterUser";
 import TermsAndConditionsModal from "@/components/TermsAndConditionsModal";
 import { useRouter } from "next/navigation";
 import { showAlert } from "@/utils/showAlert";
 import { ROUTES } from "@/consts/router";
+import Cookies from "js-cookie";
+import { useQuery } from "@tanstack/react-query";
+import { getUserByIdQuery } from "@/services/users";
+import { User } from "@/types/application";
+import { UserGroup } from "@/consts/user";
 import AccountOption from "../AccountOption";
 
 const NAMESPACE_TRANSLATIONS_PROFILE = "Register";
@@ -32,13 +37,39 @@ export default function AccountConfirm() {
   const tTerms = useTranslations(NAMESPACE_TRANSLATION_TERMS_AND_CONDITIONS);
   const router = useRouter();
 
+  const digiIdent = Cookies.get("account_digi_ident");
+
+  const { data: userData } = useQuery({
+    ...getUserByIdQuery(digiIdent as string),
+    enabled: !!digiIdent,
+  });
+
   const [selected, setSelected] = useState<AccountType | null>(null);
   const [termsChecked, setTermsChecked] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [hasAcceptedTerms, setHasAcceptedTerms] = useState(false);
 
+  const [unclaimedOrgAdmin, setUnclaimedOrgAdmin] =
+    useState<Partial<User> | null>(null);
+
+  useEffect(() => {
+    const user = userData?.data;
+    if (!user) return;
+    if (user.unclaimed === 0 || user.user_group !== UserGroup.ORGANISATIONS) {
+      return;
+    }
+
+    setUnclaimedOrgAdmin(user);
+  }, [userData?.data]);
+
+  useEffect(() => {
+    if (!unclaimedOrgAdmin) return;
+    setSelected(AccountType.ORGANISATION);
+  }, [unclaimedOrgAdmin]);
+
   const { handleRegister, ...registerUserState } = useRegisterUser({
     selected,
+    unclaimedOrgAdmin,
   });
 
   const handleSelect = (option: AccountType) => {
@@ -124,19 +155,26 @@ export default function AccountConfirm() {
           }}>
           <AccountOption
             icon={PeopleIcon}
-            label={t("repOrgButton")}
+            label={
+              unclaimedOrgAdmin?.organisation?.organisation_name ||
+              t("repOrgButton")
+            }
             onClick={handleSelect}
             name={AccountType.ORGANISATION}
             selected={selected}
           />
-          <AccountOption
-            icon={PersonIcon}
-            label={t("repMyselfButton")}
-            onClick={handleSelect}
-            name={AccountType.USER}
-            selected={selected}
-          />
+          {!unclaimedOrgAdmin && (
+            <AccountOption
+              icon={PersonIcon}
+              label={t("repMyselfButton")}
+              onClick={handleSelect}
+              name={AccountType.USER}
+              selected={selected}
+              disabled={!!unclaimedOrgAdmin}
+            />
+          )}
         </Box>
+
         <Box
           sx={{
             textAlign: "center",

@@ -10,6 +10,7 @@ interface AccountOptionProps {
   onClick: (name: AccountType) => void;
   name: AccountType;
   selected: AccountType | null;
+  disabled?: boolean;
 }
 
 const AccountOption: React.FC<AccountOptionProps> = ({
@@ -18,12 +19,14 @@ const AccountOption: React.FC<AccountOptionProps> = ({
   onClick,
   name,
   selected,
+  disabled = false,
 }) => {
   const Icon = icon;
   return (
     <Button
       variant={selected === name ? "contained" : "outlined"}
       onClick={() => onClick(name)}
+      disabled={disabled}
       sx={{
         borderRadius: 2,
         border: 2,
