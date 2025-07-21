@@ -95,7 +95,9 @@ function createProjectDetailDefaultValues(
   const duty_of_confidentiality = data.duty_of_confidentiality || false;
 
   return {
-    datasets: parseValidJSON(data.datasets) || [],
+    datasets: parseValidJSON(data.datasets)?.map(v => ({
+      value: v,
+    })) || [{ value: "" }],
     data_sensitivity_level: data.data_sensitivity_level || "",
     legal_basis_for_data_article6: data.legal_basis_for_data_article6 || "",
     duty_of_confidentiality: options?.transformToReadable
