@@ -27,6 +27,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getUserByIdQuery } from "@/services/users";
 import { User } from "@/types/application";
 import { UserGroup } from "@/consts/user";
+import { getCombinedQueryState } from "@/utils/query";
 import AccountOption from "../AccountOption";
 
 const NAMESPACE_TRANSLATIONS_PROFILE = "Register";
@@ -39,7 +40,7 @@ export default function AccountConfirm() {
 
   const digiIdent = Cookies.get("account_digi_ident");
 
-  const { data: userData } = useQuery({
+  const { data: unclaimedUserData, ...unclaimedUserQueryState } = useQuery({
     ...getUserByIdQuery(digiIdent as string),
     enabled: !!digiIdent,
   });
@@ -53,14 +54,14 @@ export default function AccountConfirm() {
     useState<Partial<User> | null>(null);
 
   useEffect(() => {
-    const user = userData?.data;
+    const user = unclaimedUserData?.data;
     if (!user) return;
     if (user.unclaimed === 0 || user.user_group !== UserGroup.ORGANISATIONS) {
       return;
     }
 
     setUnclaimedOrgAdmin(user);
-  }, [userData?.data]);
+  }, [unclaimedUserData?.data]);
 
   useEffect(() => {
     if (!unclaimedOrgAdmin) return;
@@ -129,7 +130,13 @@ export default function AccountConfirm() {
 
   const isContinueDisabled =
     selected === null || !termsChecked || !hasAcceptedTerms;
-  const { isPending, isError, error } = registerUserState;
+
+  const queryState = getCombinedQueryState([
+    registerUserState,
+    unclaimedUserQueryState,
+  ]);
+
+  const { isLoading, isError, error } = queryState;
 
   return (
     <Guidance {...mockedRegisterGuidanceProps}>
@@ -143,37 +150,42 @@ export default function AccountConfirm() {
         }}>
         <Box sx={{ textAlign: "center", marginBottom: 4 }}>
           <SoursdLogo sx={{ backgroundColor: "transparent" }} />
-          <Typography variant="h3"> {t("title")}</Typography>
+          <Typography variant="h3">
+            {" "}
+            {unclaimedOrgAdmin ? t("claimOrgAccount") : t("title")}
+          </Typography>
         </Box>
 
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            gap: 4,
-            marginBottom: 4,
-          }}>
-          <AccountOption
-            icon={PeopleIcon}
-            label={
-              unclaimedOrgAdmin?.organisation?.organisation_name ||
-              t("repOrgButton")
-            }
-            onClick={handleSelect}
-            name={AccountType.ORGANISATION}
-            selected={selected}
-          />
-          {!unclaimedOrgAdmin && (
+        {!unclaimedUserQueryState.isLoading && (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              gap: 4,
+              marginBottom: 4,
+            }}>
             <AccountOption
-              icon={PersonIcon}
-              label={t("repMyselfButton")}
+              icon={PeopleIcon}
+              label={
+                unclaimedOrgAdmin?.organisation?.organisation_name ||
+                t("repOrgButton")
+              }
               onClick={handleSelect}
-              name={AccountType.USER}
+              name={AccountType.ORGANISATION}
               selected={selected}
-              disabled={!!unclaimedOrgAdmin}
             />
-          )}
-        </Box>
+            {!unclaimedOrgAdmin && (
+              <AccountOption
+                icon={PersonIcon}
+                label={t("repMyselfButton")}
+                onClick={handleSelect}
+                name={AccountType.USER}
+                selected={selected}
+                disabled={!!unclaimedOrgAdmin}
+              />
+            )}
+          </Box>
+        )}
 
         <Box
           sx={{
@@ -196,7 +208,7 @@ export default function AccountConfirm() {
           <LoadingButton
             onClick={handleRegister}
             variant="contained"
-            disabled={isContinueDisabled || isPending}
+            disabled={isContinueDisabled || isLoading}
             sx={{ p: 2 }}
             fullWidth>
             {t("continueButton")}

@@ -68,7 +68,6 @@ export default function useRegisterUser({
 
       organisationId = data;
     }
-
     if (unclaimedOrgAdmin?.registry_id) {
       await mutateClaimUser({
         registry_id: unclaimedOrgAdmin.registry_id,
