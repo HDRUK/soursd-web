@@ -16,12 +16,18 @@ import {
   Button,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import useRegisterUser from "@/hooks/useRegisterUser";
 import TermsAndConditionsModal from "@/components/TermsAndConditionsModal";
 import { useRouter } from "next/navigation";
 import { showAlert } from "@/utils/showAlert";
 import { ROUTES } from "@/consts/router";
+import Cookies from "js-cookie";
+import { useQuery } from "@tanstack/react-query";
+import { getUserByIdQuery } from "@/services/users";
+import { User } from "@/types/application";
+import { UserGroup } from "@/consts/user";
+import { getCombinedQueryState } from "@/utils/query";
 import AccountOption from "../AccountOption";
 
 const NAMESPACE_TRANSLATIONS_PROFILE = "Register";
@@ -32,13 +38,39 @@ export default function AccountConfirm() {
   const tTerms = useTranslations(NAMESPACE_TRANSLATION_TERMS_AND_CONDITIONS);
   const router = useRouter();
 
+  const digiIdent = Cookies.get("account_digi_ident");
+
+  const { data: unclaimedUserData, ...unclaimedUserQueryState } = useQuery({
+    ...getUserByIdQuery(digiIdent as string),
+    enabled: !!digiIdent,
+  });
+
   const [selected, setSelected] = useState<AccountType | null>(null);
   const [termsChecked, setTermsChecked] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [hasAcceptedTerms, setHasAcceptedTerms] = useState(false);
 
+  const [unclaimedOrgAdmin, setUnclaimedOrgAdmin] =
+    useState<Partial<User> | null>(null);
+
+  useEffect(() => {
+    const user = unclaimedUserData?.data;
+    if (!user) return;
+    if (user.unclaimed === 0 || user.user_group !== UserGroup.ORGANISATIONS) {
+      return;
+    }
+
+    setUnclaimedOrgAdmin(user);
+  }, [unclaimedUserData?.data]);
+
+  useEffect(() => {
+    if (!unclaimedOrgAdmin) return;
+    setSelected(AccountType.ORGANISATION);
+  }, [unclaimedOrgAdmin]);
+
   const { handleRegister, ...registerUserState } = useRegisterUser({
     selected,
+    unclaimedOrgAdmin,
   });
 
   const handleSelect = (option: AccountType) => {
@@ -98,7 +130,13 @@ export default function AccountConfirm() {
 
   const isContinueDisabled =
     selected === null || !termsChecked || !hasAcceptedTerms;
-  const { isPending, isError, error } = registerUserState;
+
+  const queryState = getCombinedQueryState([
+    registerUserState,
+    unclaimedUserQueryState,
+  ]);
+
+  const { isLoading, isError, error } = queryState;
 
   return (
     <Guidance {...mockedRegisterGuidanceProps}>
@@ -112,31 +150,43 @@ export default function AccountConfirm() {
         }}>
         <Box sx={{ textAlign: "center", marginBottom: 4 }}>
           <SoursdLogo sx={{ backgroundColor: "transparent" }} />
-          <Typography variant="h3"> {t("title")}</Typography>
+          <Typography variant="h3">
+            {" "}
+            {unclaimedOrgAdmin ? t("claimOrgAccount") : t("title")}
+          </Typography>
         </Box>
 
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            gap: 4,
-            marginBottom: 4,
-          }}>
-          <AccountOption
-            icon={PeopleIcon}
-            label={t("repOrgButton")}
-            onClick={handleSelect}
-            name={AccountType.ORGANISATION}
-            selected={selected}
-          />
-          <AccountOption
-            icon={PersonIcon}
-            label={t("repMyselfButton")}
-            onClick={handleSelect}
-            name={AccountType.USER}
-            selected={selected}
-          />
-        </Box>
+        {!unclaimedUserQueryState.isLoading && (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              gap: 4,
+              marginBottom: 4,
+            }}>
+            <AccountOption
+              icon={PeopleIcon}
+              label={
+                unclaimedOrgAdmin?.organisation?.organisation_name ||
+                t("repOrgButton")
+              }
+              onClick={handleSelect}
+              name={AccountType.ORGANISATION}
+              selected={selected}
+            />
+            {!unclaimedOrgAdmin && (
+              <AccountOption
+                icon={PersonIcon}
+                label={t("repMyselfButton")}
+                onClick={handleSelect}
+                name={AccountType.USER}
+                selected={selected}
+                disabled={!!unclaimedOrgAdmin}
+              />
+            )}
+          </Box>
+        )}
+
         <Box
           sx={{
             textAlign: "center",
@@ -158,7 +208,7 @@ export default function AccountConfirm() {
           <LoadingButton
             onClick={handleRegister}
             variant="contained"
-            disabled={isContinueDisabled || isPending}
+            disabled={isContinueDisabled || isLoading}
             sx={{ p: 2 }}
             fullWidth>
             {t("continueButton")}

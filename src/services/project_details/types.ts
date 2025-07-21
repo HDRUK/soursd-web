@@ -8,7 +8,9 @@ type PostProjectDetailsFromGatewayPayload = {
 
 type PostProjectDetailsPayload = Omit<ProjectDetails, "id">;
 
-type PutProjectDetailsPayload = Partial<ProjectDetails>;
+type PutProjectDetailsPayload = Omit<Partial<ProjectDetails>, "datasets"> & {
+  datasets: { value: string }[];
+};
 
 type PostProjectDetailsFromGatewayResponse = DataUse[];
 

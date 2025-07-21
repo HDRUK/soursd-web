@@ -1099,6 +1099,7 @@
   },
   "Register": {
     "title": "Confirm account type",
+    "claimOrgAccount": "Claim your admin account",
     "postOrganisationUnclaimedError": "Unable to create the initial organisation data, please try again. Alternatively, please contact us at <contactLink></contactLink>",
     "failedToRegister": "Failed to register account. Have you already registered?",
     "repOrgButton": "I represent an organisation",

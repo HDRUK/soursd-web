@@ -51,7 +51,11 @@ export default function ProjectsSafeDataForm({
   const schema = useMemo(
     () =>
       yup.object().shape({
-        datasets: yup.array().of(yup.string()),
+        datasets: yup.array().of(
+          yup.object().shape({
+            value: yup.string(),
+          })
+        ),
         data_sensitivity_level: yup.string(),
         legal_basis_for_data_article6: yup
           .string()
@@ -79,7 +83,7 @@ export default function ProjectsSafeDataForm({
             name="datasets"
             initialRowCount={1}
             minimumRows={1}
-            createNewRow={() => ""}
+            createNewRow={() => ({ value: "" })}
             tKey={NAMESPACE_TRANSLATION}
             renderField={(_, index, removeButton) => (
               <Grid container spacing={2}>
@@ -88,7 +92,7 @@ export default function ProjectsSafeDataForm({
                     displayLabel={false}
                     labelMd={0}
                     contentMd={12}
-                    name={`datasets.${index}`}
+                    name={`datasets.${index}.value`}
                     placeholder={t("datasetsPlaceholder")}
                     renderField={fieldProps => (
                       <Box sx={{ display: "flex" }}>
