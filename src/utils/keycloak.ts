@@ -1,4 +1,3 @@
-import { ReadonlyURLSearchParams } from "next/navigation";
 import keycloakConfig from "../config/keycloak";
 
 const getLoginUrl = () => {
@@ -31,18 +30,12 @@ const handleLogout = () => {
   window.location.href = getLogoutUrl();
 };
 
-const getRegisterUrl = (inputParams?: ReadonlyURLSearchParams | null) => {
+const getRegisterUrl = () => {
   const registerUrl = `${keycloakConfig.authServerUrl}/realms/${keycloakConfig.realm}/protocol/openid-connect/registrations`;
-
-  const inputQuery = inputParams?.toString();
-  const redirectUri = inputQuery
-    ? `${keycloakConfig.redirectUriRegister}?${inputQuery}`
-    : keycloakConfig.redirectUriRegister;
-
   const params = new URLSearchParams({
     client_id: keycloakConfig.clientId,
     scope: "openid profile email",
-    redirect_uri: redirectUri,
+    redirect_uri: keycloakConfig.redirectUriRegister,
     response_type: "code",
   });
 

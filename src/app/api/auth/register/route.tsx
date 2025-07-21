@@ -21,16 +21,6 @@ export async function GET(req: Request) {
   const tokenUrl = `${keycloak.authServerUrl}/realms/${keycloak.realm}/protocol/openid-connect/token`;
 
   try {
-    console.log({
-      grant_type: "authorization_code",
-      client_id: keycloak.clientId,
-      client_secret: keycloak.clientSecret,
-      code,
-      redirect_uri: keycloak.redirectUriRegister,
-    });
-
-    console.log(tokenUrl);
-
     const response = await axios.post(
       tokenUrl,
       new URLSearchParams({
@@ -63,11 +53,11 @@ export async function GET(req: Request) {
     console.error(e);
 
     const errorType = encodeURIComponent("register");
-    return null;
-    // return NextResponse.redirect(
-    //  encodeURI(
-    //    `${process.env.NEXT_PUBLIC_LOCAL_ENV}/en/error?type=${errorType}`
-    //  )
-    // );
+
+    return NextResponse.redirect(
+      encodeURI(
+        `${process.env.NEXT_PUBLIC_LOCAL_ENV}/en/error?type=${errorType}`
+      )
+    );
   }
 }
