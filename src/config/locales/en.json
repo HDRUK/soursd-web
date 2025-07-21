@@ -1126,7 +1126,7 @@
       "searchPlaceholder": "Search by name or email"
     },
     "Subsidiaries": {
-      "heading": "UK sudsidiaries",
+      "heading": "UK subsidiaries",
       "addSubsidiaryButton": "Add a subsidiary",
       "removeSubsidiaryToolTip": "Remove this subsidiary",
       "editSubsidiaryToolTip": "Edit this subsidiary",
@@ -1201,7 +1201,8 @@
     "sectorName": "Organisation sector",
     "website": "Organisation website",
     "organisationSize": "Organisation size",
-    "projectStatus": "Status"
+    "projectStatus": "Status",
+    "organisationsNameAddress": "Address"
   },
   "Projects": {
     "ProjectsFilters": {
