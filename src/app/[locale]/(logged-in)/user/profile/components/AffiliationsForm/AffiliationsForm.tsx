@@ -167,7 +167,7 @@ export default function AffiliationsForm({
                     renderField={({ onChange, ...fieldProps }) => (
                       <SelectOrganisation
                         {...fieldProps}
-                        onChange={() => {
+                        onChange={e => {
                           setSelectedOrganisationId(e.target.value as number);
                           onChange(e);
                         }}
