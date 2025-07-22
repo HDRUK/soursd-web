@@ -80,14 +80,15 @@ function getCombinedQueryState<T extends MutationState & QueryState>(
   queries: T[],
   allSuccess: boolean = true
 ) {
+  const activeQueries = queries.filter(query => query?.fetchStatus !== "idle");
   return {
-    isLoading: isQueriesLoading(queries),
-    isError: isQueriesError(queries),
-    error: getQueriesError(queries),
-    isFetched: isQueriesFetched(queries),
+    isLoading: isQueriesLoading(activeQueries),
+    isError: isQueriesError(activeQueries),
+    error: getQueriesError(activeQueries),
+    isFetched: isQueriesFetched(activeQueries),
     isSuccess: allSuccess
-      ? isAllQueriesSuccess(queries)
-      : isAnyQuerySuccess(queries),
+      ? isAllQueriesSuccess(activeQueries)
+      : isAnyQuerySuccess(activeQueries),
   };
 }
 

@@ -36,7 +36,7 @@ export default function OrganisationsSubsidiariesTable({
   });
 
   const renderNameCell = (info: CellContext<Subsidiary, unknown>) => (
-    <Typography color="primary">{info.getValue() as string}</Typography>
+    <Typography>{info.getValue() as string}</Typography>
   );
 
   const renderActions = (info: CellContext<Subsidiary, unknown>) => (
