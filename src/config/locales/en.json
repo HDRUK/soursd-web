@@ -367,6 +367,7 @@
     "emailAddressAtEmployer": "Email address at employer or institute",
     "firstNameRequiredInvalid": "First name is a required field",
     "lastNameRequiredInvalid": "Last name is a required field",
+    "permissionsRequiredInvalid": "Permissions is a required field",
     "location": "Location",
     "locationRequiredInvalid": "Location is a required field",
     "emailRequiredInvalid": "Email is a required field",
