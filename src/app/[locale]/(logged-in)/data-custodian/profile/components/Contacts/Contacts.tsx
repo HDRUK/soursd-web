@@ -123,17 +123,23 @@ export default function Contacts() {
       <PageBody>
         <PageSection>
           <Box sx={{ display: "flex", gap: 1, mb: 3 }}>
-            <SearchBar
-              onClear={resetQueryParams}
-              onSearch={(text: string) => {
-                updateQueryParams({
-                  "first_name[]": text,
-                  "last_name[]": text,
-                  "email[]": text,
-                });
-              }}
-              placeholder={t("searchPlaceholder")}
-            />
+            <Box
+              component="form"
+              role="search"
+              sx={{ flexGrow: 1 }}
+              onSubmit={e => e.preventDefault()}>
+              <SearchBar
+                onClear={resetQueryParams}
+                onSearch={(text: string) => {
+                  updateQueryParams({
+                    "first_name[]": text,
+                    "last_name[]": text,
+                    "email[]": text,
+                  });
+                }}
+                placeholder={t("searchPlaceholder")}
+              />
+            </Box>
             <Button
               startIcon={<AddIcon />}
               variant="contained"
