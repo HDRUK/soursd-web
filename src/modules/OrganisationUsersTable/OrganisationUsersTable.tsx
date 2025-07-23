@@ -47,7 +47,7 @@ export default function OrganisationUsersTable({
     <Box sx={{ display: "flex", justifyContent: "center" }}>
       <ChipStatus
         status={
-          info.row.original.registry.affiliations?.[0].model_state?.state.slug
+          info.row.original.registry.affiliations?.[0]?.model_state?.state.slug
         }
       />
     </Box>
