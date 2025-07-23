@@ -1,4 +1,3 @@
-import React from "react";
 import { render, screen, fireEvent, within, waitFor } from "@/utils/testUtils";
 import Contacts from "./Contacts";
 
