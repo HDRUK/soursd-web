@@ -22,7 +22,22 @@ jest.mock("@/data/store");
 
 const mockOnSubmit = jest.fn();
 const mockOnClose = jest.fn();
-const defaultUser = mockedCustodianUser();
+
+const MOCK_ADMIN_PERMISSION = {
+  custodian_user_id: 1,
+  permission_id: 10,
+  permission: {
+    id: 10,
+    created_at: "2025-07-21T09:12:14.000000Z",
+    updated_at: "2025-07-21T09:12:14.000000Z",
+    name: "CUSTODIAN_ADMIN",
+    enabled: true,
+  },
+};
+
+const defaultUser = mockedCustodianUser({
+  user_permissions: [MOCK_ADMIN_PERMISSION],
+});
 
 const TestComponent = (props?: Partial<CustodianEditContactFormProps>) => {
   const t = useTranslations("CustodianProfile.EditContact");
@@ -52,7 +67,7 @@ describe("<CustodianEditContactForm />", () => {
   it("submit is called", async () => {
     setupTest();
 
-    const { email, first_name, last_name } = defaultUser;
+    const { email, first_name, last_name, user_permissions } = defaultUser;
 
     fireEvent.submit(screen.getByRole("button", { name: /Save/i }));
 
@@ -61,8 +76,7 @@ describe("<CustodianEditContactForm />", () => {
         email,
         first_name,
         last_name,
-        administrator: false,
-        approver: false,
+        permissions: user_permissions[0].permission.name,
       });
     });
   });
