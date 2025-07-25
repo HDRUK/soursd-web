@@ -66,7 +66,7 @@ export default function ProjectUsersFilters({
   const { actions: filterStatusActions } = useFilter({
     queryParams,
     items: statusList?.map(status => ({
-      label: tApplication(`status_${status}`),
+      label: tApplication(`Status.${status}`),
       value: status,
       key: "filter",
     })),

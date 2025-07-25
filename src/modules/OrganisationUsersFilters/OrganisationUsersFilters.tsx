@@ -48,7 +48,7 @@ export default function OrganisationUsersFilters({
     queryParams,
     items:
       statusList?.map(status => ({
-        label: tApplication(`status_${status}`),
+        label: tApplication(`Status.${status}`),
         value: status,
         key: "filter",
       })) || [],

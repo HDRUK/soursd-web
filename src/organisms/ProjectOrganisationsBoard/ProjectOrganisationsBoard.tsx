@@ -13,7 +13,7 @@ import KanbanBoard, {
 } from "../../modules/KanbanBoard";
 import { CustodianProjectOrganisation } from "../../types/application";
 
-const NAMESPACE_TRANSLATION = "Projects.Organisations";
+const NAMESPACE_TRANSLATION = "Application.Status";
 
 type ProjectOrganisationsBoardProps<T = CustodianProjectOrganisation> =
   KanbanBoardEntityProps<T>;

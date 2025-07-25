@@ -51,7 +51,7 @@ export const useCustodianProjectUser = ({
     () =>
       statusOptionsData?.data?.map(item => ({
         value: item,
-        label: tApplication(`status_${item}`),
+        label: tApplication(`Status.${item}`),
       })) || [],
     [statusOptionsData, tApplication]
   );

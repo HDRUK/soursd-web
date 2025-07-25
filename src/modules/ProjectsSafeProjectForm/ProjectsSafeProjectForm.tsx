@@ -207,24 +207,35 @@ export default function ProjectsSafeProjectForm({
               t={tForm}
               renderField={fieldProps => (
                 <RadioGroup
-                  aria-labelledby="demo-radio-buttons-group-label"
                   value={fieldProps.status}
                   name="status"
                   {...fieldProps}>
-                  <FormControlLabel
-                    value={Status.PROJECT_APPROVED}
-                    control={<Radio />}
-                    label={<ChipStatus status={Status.PROJECT_APPROVED} />}
-                  />
                   <FormControlLabel
                     value={Status.PROJECT_PENDING}
                     control={<Radio />}
                     label={<ChipStatus status={Status.PROJECT_PENDING} />}
                   />
                   <FormControlLabel
+                    value={Status.PROJECT_APPROVED}
+                    control={<Radio />}
+                    label={<ChipStatus status={Status.PROJECT_APPROVED} />}
+                  />
+                  <FormControlLabel
+                    value={Status.PROJECT_IN_PROGRESS}
+                    control={<Radio />}
+                    label={<ChipStatus status={Status.PROJECT_IN_PROGRESS} />}
+                  />
+                  <FormControlLabel
                     value={Status.PROJECT_COMPLETED}
                     control={<Radio />}
                     label={<ChipStatus status={Status.PROJECT_COMPLETED} />}
+                  />
+                  <FormControlLabel
+                    value={Status.PROJECT_DECLINED_APPROVAL}
+                    control={<Radio />}
+                    label={
+                      <ChipStatus status={Status.PROJECT_DECLINED_APPROVAL} />
+                    }
                   />
                 </RadioGroup>
               )}

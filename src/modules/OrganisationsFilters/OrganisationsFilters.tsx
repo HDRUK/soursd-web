@@ -61,17 +61,17 @@ export default function OrganisationsFilters({
     queryParams,
     items: [
       {
-        label: t("status_approved"),
+        label: t("Status.approved"),
         key: "filter",
         value: Status.PROJECT_APPROVED,
       },
       {
-        label: t("status_pending"),
+        label: t("Status.pending"),
         key: "filter",
         value: Status.PROJECT_PENDING,
       },
       {
-        label: t("status_completed"),
+        label: t("Status.completed"),
         key: "filter",
         value: Status.PROJECT_COMPLETED,
       },

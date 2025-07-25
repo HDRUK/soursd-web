@@ -26,13 +26,13 @@ export interface UseCustodianProjectOrganisationResult {
   refetch: () => void;
 }
 
-const NAMESPACE_TRANSLATION = "Application";
+const NAMESPACE_TRANSLATION = "Application.Status";
 
 export const useCustodianProjectOrganisation = ({
   custodianId,
   projectOrganisationId,
 }: CustodianParams): UseCustodianProjectOrganisationResult => {
-  const tApplication = useTranslations(NAMESPACE_TRANSLATION);
+  const tStatus = useTranslations(NAMESPACE_TRANSLATION);
   const queryClient = useQueryClient();
 
   const custodianProjectOrganisationQuery =
@@ -53,9 +53,9 @@ export const useCustodianProjectOrganisation = ({
     () =>
       statusOptionsData?.data?.map(item => ({
         value: item,
-        label: tApplication(`status_${item}`),
+        label: tStatus(item),
       })) || [],
-    [statusOptionsData, tApplication]
+    [statusOptionsData, tStatus]
   );
 
   const refetch = () => {
