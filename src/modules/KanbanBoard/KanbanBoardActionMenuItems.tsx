@@ -19,6 +19,9 @@ export type KanbanBoardActionsMenuItemsProps<T> = WithTranslations<
 export default function KanbanBoardActionsMenuItems<
   T extends {
     id: number;
+    model_state: {
+      state: { slug: string };
+    };
   },
 >({
   t,
@@ -28,7 +31,13 @@ export default function KanbanBoardActionsMenuItems<
   handleClose,
   data,
 }: KanbanBoardActionsMenuItemsProps<T>) {
-  const [status, setStatus] = useState<string>("");
+  const {
+    model_state: {
+      state: { slug },
+    },
+  } = data;
+
+  const [status, setStatus] = useState<string>(slug);
 
   const handleStatusChange = e => {
     setStatus(e.target.value);
