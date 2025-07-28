@@ -21,11 +21,9 @@ describe("<SearchField />", () => {
   it("submits a search", async () => {
     setupTest();
 
-    act(() => {
-      const searchInput = screen.getByRole("textbox");
+    const searchInput = screen.getByRole("textbox");
 
-      userEvent.type(searchInput, "hdruk{enter}");
-    });
+    await userEvent.type(searchInput, "hdruk{enter}");
 
     await waitFor(() => {
       expect(defaultProps.onSearch).toHaveBeenCalledWith("hdruk");
