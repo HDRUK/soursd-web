@@ -20,7 +20,8 @@ export type ProjectUsersTableColumns =
   | "projectRole"
   | "projectName"
   | "organisationName"
-  | "status";
+  | "status"
+  | "affilitionStatus";
 
 export type ProjectUsersTableProps = WithRoutes<
   ModuleTables<CustodianProjectUser | ProjectUser, ProjectUsersTableColumns>
@@ -39,6 +40,7 @@ export default function ProjectUsersTable({
     "projectName",
     "organisationName",
     "status",
+    "affilitionStatus",
   ],
   extraColumns,
   ...restProps
@@ -71,6 +73,12 @@ export default function ProjectUsersTable({
           renderOrganisationsNameCell(
             getProjectUser(info.row.original).affiliation.organisation
           ),
+      }),
+      createDefaultColumn("affilitionStatus", {
+        accessorFn: row =>
+          (row as CustodianProjectUser)?.project_has_user?.affiliation
+            ?.model_state?.state?.slug,
+        cell: renderStatusCell,
       }),
       createDefaultColumn("status", {
         accessorFn: row =>
