@@ -51,7 +51,7 @@ describe("<OrganisationUsersTable />", () => {
     expect(
       screen.getByText(formatShortDate(user.created_at))
     ).toBeInTheDocument();
-    expect(screen.getByText(/Approved/)).toBeInTheDocument();
+    expect(screen.getByText(/Affiliated/)).toBeInTheDocument();
   });
 
   it("has no accessibility violations", async () => {

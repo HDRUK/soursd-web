@@ -89,7 +89,11 @@ export default function ChipStatus({ status, ...restProps }: ChipStatusProps) {
   const hasShortTranslation =
     shortTranslation !== `${NAMESPACE_TRANSLATION}.${tooltipKey}`;
 
-  const label = hasShortTranslation ? shortTranslation : t(status);
+  const label = status
+    ? hasShortTranslation
+      ? shortTranslation
+      : t(status)
+    : t("none");
 
   const chip = (
     <Chip

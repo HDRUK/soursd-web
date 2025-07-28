@@ -64,7 +64,8 @@
       "org_validation_declined_short": "Declined",
       "org_left_project": "Left project",
       "org_left_project_short": "Left",
-      "escalate_validation": "Escalate Validation"
+      "escalate_validation": "Escalate Validation",
+      "none": "None"
     },
     "role": "Role",
     "email": "Email",
@@ -1253,6 +1254,7 @@
       "cancel": "Cancel",
       "move": "Change status",
       "status": "Validation status",
+      "affilitionStatus": "Affiliation status",
       "organisationName": "Organisation name",
       "projectRole": "Project role",
       "projectName": "Project name",
