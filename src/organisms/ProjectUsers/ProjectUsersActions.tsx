@@ -4,7 +4,11 @@ import KanbanBoardActionsMenuItems from "@/modules/KanbanBoard/KanbanBoardAction
 import useMutateDeleteEntityFromProjectWithConfirmation from "@/queries/useMutateDeleteEntityFromProjectWithConfirmation";
 import { putProjectUserPrimaryContactQuery } from "@/services/projects";
 import { EntityType } from "@/types/api";
-import { CustodianProjectUser, WithTranslations } from "@/types/application";
+import {
+  CustodianProjectUser,
+  Translations,
+  WithTranslations,
+} from "@/types/application";
 import { useMutation } from "@tanstack/react-query";
 
 export type ProjectUsersActionsProps<T = CustodianProjectUser> =
@@ -15,6 +19,7 @@ export type ProjectUsersActionsProps<T = CustodianProjectUser> =
     onPrimaryContactChange: () => void;
     onMoveClick: (id: number, status: string) => void;
     allowedTransitions: string[];
+    tStatus: Translations;
   }>;
 
 export default function ProjectUsersActions({
@@ -23,6 +28,7 @@ export default function ProjectUsersActions({
   onPrimaryContactChange,
   data,
   t,
+  tStatus,
   allowedTransitions,
   ...restProps
 }: ProjectUsersActionsProps) {
@@ -58,6 +64,7 @@ export default function ProjectUsersActions({
             allowedTransitions={allowedTransitions}
             data={data}
             t={t}
+            tStatus={tStatus}
             handleClose={handleClose}
             {...restProps}
           />
