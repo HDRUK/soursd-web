@@ -5,7 +5,7 @@ import {
   ActionMenuItem,
   ActionMenuProps,
 } from "../../components/ActionMenu";
-import { WithTranslations } from "../../types/application";
+import { Translations, WithTranslations } from "../../types/application";
 import { KanbanBoardHelperProps } from "./KanbanBoard";
 
 export type KanbanBoardActionsMenuItemsProps<T> = WithTranslations<
@@ -14,7 +14,7 @@ export type KanbanBoardActionsMenuItemsProps<T> = WithTranslations<
   KanbanBoardHelperProps<unknown> &
   Pick<ActionMenuHelpers, "handleClose"> & {
     data: T;
-  };
+  } & { tStatus: Translations };
 
 export default function KanbanBoardActionsMenuItems<
   T extends {
@@ -22,6 +22,7 @@ export default function KanbanBoardActionsMenuItems<
   },
 >({
   t,
+  tStatus,
   allowedTransitions,
   onMoveClick,
   handleClose,
@@ -42,11 +43,11 @@ export default function KanbanBoardActionsMenuItems<
             gap: 1,
           }}>
           <Select
-            sx={{ minWidth: 200 }}
+            sx={{ minWidth: 200, maxWidth: 200 }}
             value={status}
             onChange={handleStatusChange}>
             {allowedTransitions.map(key => (
-              <MenuItem value={key}>{t(key)}</MenuItem>
+              <MenuItem value={key}>{tStatus(key)}</MenuItem>
             ))}
           </Select>
           <Button variant="outlined" onClick={handleClose}>

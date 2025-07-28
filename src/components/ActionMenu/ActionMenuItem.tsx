@@ -44,8 +44,8 @@ export default function ActionMenuItem({
   }
 
   return (
-    <MenuItem {...restProps} sx={menuItemSx}>
-      <Box sx={{ display: "flex" }}>
+    <MenuItem {...restProps} sx={{ flexDirection: "column", ...menuItemSx }}>
+      <Box sx={{ display: "flex", width: "100%" }}>
         {icon && <ListItemIcon>{icon}</ListItemIcon>}
         <ListItemText
           onClick={() => {
