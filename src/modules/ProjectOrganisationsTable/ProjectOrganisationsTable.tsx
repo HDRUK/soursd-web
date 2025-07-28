@@ -51,7 +51,7 @@ export default function ProjectOrganisationsTable({
         accessorKey: "project_organisation.project.title",
       }),
       createDefaultColumn("organisationSroOfficer", {
-        accessorKey: "project_organisation.organisation.sro_officer",
+        accessorKey: "project_organisation.organisation.sro_officer.name",
       }),
       createDefaultColumn("status", {
         accessorKey: "model_state.state.slug",
