@@ -12,6 +12,7 @@ import SearchActionMenu from "../SearchActionMenu";
 import SearchBar from "../SearchBar";
 
 const NAMESPACE_TRANSLATIONS_PROJECTS = "Projects";
+const NAMESPACE_TRANSLATIONS_ORGANISATIONS = "Organisations";
 const NAMESPACE_TRANSLATIONS_APPLICATION = "Application";
 
 export enum ProjectOrganisationsFilterKeys {
@@ -49,6 +50,7 @@ export default function ProjectOrganisationsFilters({
 }: ProjectOrganisationsFilterProps) {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_PROJECTS);
   const tApplication = useTranslations(NAMESPACE_TRANSLATIONS_APPLICATION);
+  const tOrganisation = useTranslations(NAMESPACE_TRANSLATIONS_ORGANISATIONS);
 
   const hasFilter = (key: ProjectOrganisationsFilterKeys) => {
     return includeFilters.includes(key);
@@ -86,7 +88,7 @@ export default function ProjectOrganisationsFilters({
           "organisation_name[]": text,
         });
       }}
-      placeholder={t("searchPlaceholder")}>
+      placeholder={tOrganisation("searchPlaceholder")}>
       {hasFilter(ProjectOrganisationsFilterKeys.SORT) && (
         <SearchActionMenu
           actions={sortActions}
