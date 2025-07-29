@@ -212,6 +212,7 @@ export default function ProjectUsers({
                 label: "Switch to board view",
               }}
               onToggle={setShowListView}
+              sx={{ flexShrink: 0 }}
             />
           )}
           {variant !== EntityType.USER && projectId && (
