@@ -33,7 +33,7 @@ import ProjectUsersList from "../ProjectUsersList";
 import ProjectUsersActions from "./ProjectUsersActions";
 
 const NAMESPACE_TRANSLATIONS_PROJECT_USERS = "Projects.Users";
-const NAMESPACE_TRANSLATIONS_APPLICATION = "Application.Status";
+const NAMESPACE_TRANSLATIONS_STATUS = "Application.Status";
 
 type ProjectUsersListProps = WithPaginatedQueryParms<
   WithRoutes<{
@@ -51,7 +51,7 @@ export default function ProjectUsers({
   paginatedQueryParams,
 }: ProjectUsersListProps) {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_PROJECT_USERS);
-  const tApplication = useTranslations(NAMESPACE_TRANSLATIONS_APPLICATION);
+  const tStatus = useTranslations(NAMESPACE_TRANSLATIONS_STATUS);
 
   const [showListView, setShowListView] = useState(
     variant !== EntityType.CUSTODIAN
@@ -153,7 +153,7 @@ export default function ProjectUsers({
             onDelete={() => refetch()}
             onPrimaryContactChange={() => refetch()}
             t={t}
-            tStatus={tApplication}
+            tStatus={tStatus}
             onMoveClick={async (id, status) => {
               handleUpdateSafePeople(id, status);
             }}
