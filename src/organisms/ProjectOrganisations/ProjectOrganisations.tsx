@@ -26,6 +26,7 @@ import ProjectOrganisationsList from "../ProjectOrganisationsList";
 import ProjectOrganisationsActions from "./ProjectOrganisationsActions";
 
 const NAMESPACE_TRANSLATIONS_PROJECT_USERS = "Projects.Organisations";
+const NAMESPACE_TRANSLATIONS_STATUS = "Application.Status";
 
 type ProjectOrganisationsListProps = WithPaginatedQueryParms<
   WithRoutes<{
@@ -41,6 +42,7 @@ export default function ProjectOrganisations({
   paginatedQueryParams,
 }: ProjectOrganisationsListProps) {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_PROJECT_USERS);
+  const tStatus = useTranslations(NAMESPACE_TRANSLATIONS_STATUS);
 
   const [showListView, setShowListView] = useState(
     variant !== EntityType.CUSTODIAN
@@ -133,6 +135,7 @@ export default function ProjectOrganisations({
       ) => (
         <ProjectOrganisationsActions
           t={t}
+          tStatus={tStatus}
           onMoveClick={async (id, status) => {
             handleUpdateOrganisation(id, status);
           }}
@@ -151,6 +154,7 @@ export default function ProjectOrganisations({
       itemsByTransitions,
       routes,
       t,
+      tStatus,
       getAllowedTransitions,
     ]
   );
@@ -175,8 +179,6 @@ export default function ProjectOrganisations({
       t={t}
     />
   );
-
-  console.log("STATES", states);
 
   return (
     <>

@@ -15,7 +15,7 @@ export default function useGetProjectAllUsers(
     ...restParams
   }: GetPaginatedUsersQuery = {}
 ) {
-  const queryKey = [queryKeyBase || "getUsers"];
+  const queryKey = queryKeyBase || ["getUsers"];
 
   return usePaginatedQuery({
     queryKeyBase: queryKey,

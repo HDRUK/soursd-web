@@ -8,25 +8,17 @@ import SelectInput from "@/components/SelectInput";
 import yup from "@/config/yup";
 import { AffiliationRelationship } from "@/consts/user";
 import { getOrganisationQuery } from "@/services/organisations";
-import useOrganisationsQuery from "@/services/organisations/useOrganisationsQuery";
+
 import { ResearcherAffiliation } from "@/types/application";
 import { QueryState } from "@/types/form";
 import WarningIcon from "@mui/icons-material/Warning";
 import { LoadingButton } from "@mui/lab";
-import {
-  Box,
-  Button,
-  Grid,
-  Link,
-  MenuItem,
-  Select,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Grid, Link, TextField, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { getDate } from "@/utils/date";
+import SelectOrganisation from "@/components/SelectOrganisation";
 
 export interface AffiliationsFormProps {
   onSubmit: (affiliation: ResearcherAffiliation) => void;
@@ -53,8 +45,6 @@ export default function AffiliationsForm({
   >();
 
   const [selectOrganisation, setSelectOrganisation] = useState<boolean>(true);
-
-  const { data: organisationsData } = useOrganisationsQuery();
 
   // keeping in some department code..
   // - this is not used, but incase we want to turn it on..
@@ -145,18 +135,6 @@ export default function AffiliationsForm({
     { label: tApplication("student"), value: AffiliationRelationship.STUDENT },
   ];
 
-  const hydratedOrganisationMenu = useMemo(
-    () =>
-      (organisationsData ?? []).map(
-        (org: { organisation_name: string; id: string }) => (
-          <MenuItem value={org.id} key={org.id} id={org.organisation_name}>
-            {org.organisation_name}
-          </MenuItem>
-        )
-      ),
-    [organisationsData]
-  );
-
   const handleSubmit = useCallback((fields: ResearcherAffiliation) => {
     onSubmit({
       to: null,
@@ -187,14 +165,13 @@ export default function AffiliationsForm({
                   <FormControlWrapper
                     name="organisation_id"
                     renderField={({ onChange, ...fieldProps }) => (
-                      <Select
+                      <SelectOrganisation
+                        {...fieldProps}
                         onChange={e => {
                           setSelectedOrganisationId(e.target.value as number);
                           onChange(e);
                         }}
-                        {...fieldProps}>
-                        {hydratedOrganisationMenu}
-                      </Select>
+                      />
                     )}
                     description={
                       !!initialValues && !initialValues?.organisation_id ? (

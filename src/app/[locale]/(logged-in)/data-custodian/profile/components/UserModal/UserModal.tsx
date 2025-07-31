@@ -1,6 +1,5 @@
 import FormModal, { FormModalProps } from "@/components/FormModal";
 import { Message } from "@/components/Message";
-import { CustodianUserRoles } from "@/consts/custodian";
 import { useStore } from "@/data/store";
 import CustodianEditContactForm, {
   CustodianEditContactFormFields,
@@ -72,24 +71,16 @@ export default function UsersModal({
 
   const handleOnSubmit = useCallback(
     async (payload: CustodianEditContactFormFields) => {
-      const { first_name, last_name, email, approver, administrator } = payload;
+      const {
+        first_name,
+        last_name,
+        email,
+        permissions: permissionPayload,
+      } = payload;
 
-      let userPermissions: number[] = [];
-
-      const approverPermission = getPermission(
-        CustodianUserRoles.APPROVER,
-        permissions
-      );
-      const administratorPermissions = getPermission(
-        CustodianUserRoles.ADMINISTRATOR,
-        permissions
-      );
-
-      if (approver && approverPermission) {
-        userPermissions = [approverPermission.id];
-      } else if (administrator && administratorPermissions) {
-        userPermissions = [administratorPermissions.id];
-      }
+      const userPermissions = [
+        getPermission(permissionPayload, permissions)?.id,
+      ];
 
       const userResponse = await mutatePostUser({
         id: user?.id,

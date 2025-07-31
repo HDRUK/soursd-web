@@ -1,6 +1,5 @@
 "use client";
 
-import ContactLink from "@/components/ContactLink";
 import Form from "@/components/Form/Form";
 import FormActions from "@/components/FormActions";
 import Checkbox from "@mui/material/Checkbox";
@@ -19,6 +18,7 @@ import ProfileNavigationFooter from "@/components/ProfileNavigationFooter";
 import { Charity } from "@/types/application";
 import FormControlWrapper from "@/components/FormControlWrapper";
 
+import ErrorMessage from "@/components/ErrorMessage";
 import useUpdateOrganisation from "../../hooks/useUpdateOrganisation";
 
 export interface DigitalIdentifiersFormValues {
@@ -90,11 +90,7 @@ export default function DigitalIdentifiers() {
       isCharity: organisation?.charities && organisation.charities.length > 0,
       ror_id: organisation?.ror_id,
     },
-    error:
-      isError &&
-      tProfile.rich(error, {
-        contactLink: ContactLink,
-      }),
+    error: isError && <ErrorMessage t={tProfile} tKey={error} />,
   };
 
   const handleSubmit = (fields: Partial<DigitalIdentifiersFormValues>) => {

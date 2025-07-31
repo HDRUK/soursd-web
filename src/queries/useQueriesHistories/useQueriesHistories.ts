@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { QueryOptions } from "../../types/requests";
 import useQueriesCombined from "../../hooks/useQueriesCombined";
 import {
@@ -37,16 +38,20 @@ export default function useQueriesHistory(
   registryId?: number,
   options: QueryOptions = {}
 ) {
-  const queries = registryId
-    ? [
-        getAffiliationsQuery(registryId, options),
-        getEducationsQuery(registryId, options),
-        getTrainingByRegistryIdQuery(registryId, options),
-        getAccreditationsQuery(registryId, options),
-        getUserValidatedProjectsQuery(registryId, options),
-        getProfessionalRegistrationsQuery(registryId, options),
-      ]
-    : [];
+  const queries = useMemo(
+    () =>
+      registryId
+        ? [
+            getAffiliationsQuery(registryId, options),
+            getEducationsQuery(registryId, options),
+            getTrainingByRegistryIdQuery(registryId, options),
+            getAccreditationsQuery(registryId, options),
+            getUserValidatedProjectsQuery(registryId, options),
+            getProfessionalRegistrationsQuery(registryId, options),
+          ]
+        : [],
+    []
+  );
 
   return useQueriesCombined<HistoryCombinedData>(queries);
 }

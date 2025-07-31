@@ -6,6 +6,7 @@ import { ActionLogEntity } from "../../types/logs";
 
 jest.mock("@tanstack/react-query", () => ({
   useQuery: jest.fn(),
+  useRouter: jest.fn(),
 }));
 
 const mockLogs = (count: number, completed = false): ActionLogEntity[] =>

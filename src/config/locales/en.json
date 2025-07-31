@@ -13,6 +13,60 @@
     "scanErrorText": "Your file file may have a virus"
   },
   "Application": {
+    "Status": {
+      "registered": "Safe People Registry account created",
+      "invited": "Invited",
+      "invite_sent": "Invite sent",
+      "affiliated": "Affiliated",
+      "pending": "Pending Validation",
+      "pending_short": "Pending",
+      "completed": "Completed",
+      "approved": "Approved",
+      "undefined": "None",
+      "null": "None",
+      "project_pending": "Pending approval",
+      "project_completed": "Completed",
+      "project_approved": "Approved",
+      "project_in_progress": "In progress",
+      "project_declined_approval": "Declined approval",
+      "affiliation_pending": "Pending Affiliation",
+      "affiliation_pending_short": "Pending",
+      "affiliation_invited": "Invited",
+      "affiliation_approved": "Affiliated",
+      "affiliation_rejected": "Declined Affiliation",
+      "affiliation_rejected_short": "Declined",
+      "affiliation_left": "Left Organisation",
+      "affiliation_left_short": "Left",
+      "notSet": "None",
+      "form_received": "Invite sent",
+      "form_received_short": "Invited",
+      "validation_in_progress": "Validation in progress",
+      "validation_in_progress_short": "In progress",
+      "validation_complete": "Validated",
+      "more_user_info_req": "More User information requested",
+      "more_user_info_req_short": "Info requested",
+      "more_user_info_req_escalation_manager": "Escalation to Validation Manager",
+      "more_user_info_req_escalation_manager_short": "Escalation",
+      "more_user_info_req_escalation_committee": "Escalation to Validation Committee",
+      "more_user_info_req_escalation_committee_short": "Escalation",
+      "user_validation_declined": "Declined Validation",
+      "user_validation_declined_short": "Declined",
+      "user_left_project": "Left project",
+      "user_left_project_short": "Left",
+      "more_org_info_req": "More Organisation information requested",
+      "more_org_info_req_short": "Info requested",
+      "more_org_info_req_escalation_manager": "Escalation to Validation Manager",
+      "more_org_info_req_escalation_manager_short": "Escalation",
+      "more_org_info_req_escalation_committee": "Escalation to Validation Committee",
+      "more_org_info_req_escalation_committee_short": "Escalation",
+      "validated": "Validated",
+      "org_validation_declined": "Declined Validation",
+      "org_validation_declined_short": "Declined",
+      "org_left_project": "Left project",
+      "org_left_project_short": "Left",
+      "escalate_validation": "Escalate Validation",
+      "none": "None"
+    },
     "role": "Role",
     "email": "Email",
     "link": "Link",
@@ -23,30 +77,6 @@
     "edit": "Edit",
     "status": "Status",
     "name": "Name",
-    "status_registered": "Safe People Registry account created",
-    "status_invited": "Invited",
-    "status_invite_sent": "Invite sent",
-    "status_affiliated": "Affiliated",
-    "status_pending": "Pending",
-    "status_completed": "Completed",
-    "status_approved": "Approved",
-    "status_undefined": "None",
-    "status_null": "None",
-    "status_project_pending": "Pending",
-    "status_project_completed": "Completed",
-    "status_project_approved": "Approved",
-    "status_affiliation_pending": "Pending",
-    "status_affiliation_invited": "Invited",
-    "status_affiliation_approved": "Approved",
-    "status_affiliation_rejected": "Rejected",
-    "status_notSet": "None",
-    "status_form_received": "Form Received",
-    "status_validation_in_progress": "Validation In Progress",
-    "status_validation_complete": "Validation Complete",
-    "status_more_user_info_req": "More User Information Requested",
-    "status_more_org_info_req": "More Organisation Information Requested",
-    "status_escalate_validation": "Escalate Validation",
-    "status_validated": "Validated",
     "projectStatus": "Project status",
     "projectRole": "Project Role",
     "actions": "Actions",
@@ -139,7 +169,7 @@
     "organisationsSectorWebsite": "Sector size & website",
     "organisationsSubsidiaries": "UK subsidiaries",
     "organisationsDataSecurity": "Data security compliance",
-    "searchPlaceholder": "Search",
+    "searchPlaceholder": "Search by name or email",
     "safeProject": "Safe Project",
     "safeProjectWorkflowStatusError": "The workflow process for setting status must be Pending -> Approved -> Completed. Please select a different status",
     "filterBy": "Filter by status",
@@ -302,9 +332,6 @@
     "closeButton": "Close",
     "profileUpdateMessage": "Your profile was successfully updated!",
     "inviteAnotherDelegate": "Add Delegate",
-    "addAnotherSubsidiary": "Add a subsidiary",
-    "removeSubsidiaryToolTip": "Remove this subsidiary",
-    "editSubsidiaryToolTip": "Edit this subsidiary",
     "showPendingInvites": "Show pending invites",
     "clearAll": "clear all",
     "user": "User",
@@ -370,6 +397,7 @@
     "emailAddressAtEmployer": "Email address at employer or institute",
     "firstNameRequiredInvalid": "First name is a required field",
     "lastNameRequiredInvalid": "Last name is a required field",
+    "permissionsRequiredInvalid": "Permissions is a required field",
     "location": "Location",
     "locationRequiredInvalid": "Location is a required field",
     "emailRequiredInvalid": "Email is a required field",
@@ -564,6 +592,7 @@
     "emailAddressPlaceholder": "Email Address",
     "emailAddressInvalid": "Email address is not in the correct format",
     "emailAddressRequiredInvalid": "Email address is required",
+    "emailAlreadyExists": "An account already exists with this email",
     "departmentRequiredInvalid": "Department is required",
     "postDelegatesSuccess": "Delegate invited successfully. They should have recieved an email to register",
     "postDelegatesError": "There was a problem with inviting this delegate. Please try again",
@@ -632,7 +661,7 @@
       "startDate": "Start date",
       "endDate": "End date",
       "add": "Add",
-      "status": "Status",
+      "status": "Project Status",
       "statusPlaceholder": "Status",
       "statusRequiredInvalid": "Status is required",
       "uniqueId": "ID",
@@ -1101,6 +1130,7 @@
   },
   "Register": {
     "title": "Confirm account type",
+    "claimOrgAccount": "Claim your admin account",
     "postOrganisationUnclaimedError": "Unable to create the initial organisation data, please try again. Alternatively, please contact us at <contactLink></contactLink>",
     "failedToRegister": "Failed to register account. Have you already registered?",
     "repOrgButton": "I represent an organisation",
@@ -1123,13 +1153,31 @@
     "registrationId": "Registration ID",
     "website": "Website"
   },
-  "Subsidiaries": {
-    "name": "Name",
-    "address": "Address"
-  },
   "Organisations": {
     "OrganisationUsersFilters": {
       "searchPlaceholder": "Search by name or email"
+    },
+    "Subsidiaries": {
+      "heading": "UK subsidiaries",
+      "addSubsidiaryButton": "Add a subsidiary",
+      "removeSubsidiaryToolTip": "Remove this subsidiary",
+      "editSubsidiaryToolTip": "Edit this subsidiary",
+      "cancelButton": "Cancel",
+      "saveButton": "Save",
+      "organisationName": "Name",
+      "address": "Address",
+      "actions": "Actions",
+      "edit": "Edit subsidiary",
+      "delete": "Delete subsidiary",
+      "subsidiaryNameRequired": "Subsidiary name is required",
+      "postcodeRequiredInvalid": "Postcode is required",
+      "postcodeFormatInvalid": "The postcode is not valid",
+      "address1RequiredInvalid": "Line 1 of the address is required",
+      "townRequiredInvalid": "Town is required",
+      "digitalToolkitCodeFormatInvalid": "Code is invalid",
+      "ceCertificationNumberRequiredInvalid": "Certification number is invalid",
+      "countyRequiredInvalid": "County is required",
+      "countryRequiredInvalid": "Country is required"
     },
     "People": {
       "name": "Employee / Student name",
@@ -1185,7 +1233,9 @@
     "sectorName": "Organisation sector",
     "website": "Organisation website",
     "organisationSize": "Organisation size",
-    "projectStatus": "Status"
+    "projectStatus": "Status",
+    "organisationsNameAddress": "Address",
+    "searchPlaceholder": "Search by Organisation name"
   },
   "Projects": {
     "ProjectsFilters": {
@@ -1205,14 +1255,8 @@
     "Users": {
       "cancel": "Cancel",
       "move": "Change status",
-      "form_received": "Form received",
-      "validation_in_progress": "Validation In Progress",
-      "validation_complete": "Validation Complete",
-      "more_user_info_req": "More User Information Requested",
-      "more_org_info_req": "More Organisation Information Requested",
-      "escalate_validation": "Escalation to Validation Committee",
-      "validated": "Validated",
       "status": "Validation status",
+      "affilitionStatus": "Affiliation status",
       "organisationName": "Organisation name",
       "projectRole": "Project role",
       "projectName": "Project name",
@@ -1232,13 +1276,6 @@
       "move": "Change status",
       "organisationSroOfficer": "Senior Responsible Officer",
       "projectName": "Project name",
-      "pending": "Pending",
-      "validation_in_progress": "Validation In Progress",
-      "validation_complete": "Validation Complete",
-      "more_user_info_req": "More User Information Requested",
-      "more_org_info_req": "More Organisation Information Requested",
-      "escalate_validation": "Escalation to Validation Committee",
-      "validated": "Validated",
       "status": "Validation status",
       "organisationName": "Organisation name",
       "projectRole": "Project role",
@@ -1273,7 +1310,7 @@
     "otherApprovalCommittees": "Other approval committees",
     "approvedKey": "Approved Project",
     "unapprovedKey": "Project Pending Approval",
-    "searchPlaceholder": "Search Projects",
+    "searchPlaceholder": "Search by name or Project name",
     "sortByOrganisationName": "Organisation name",
     "sortByProjectTitle": "Project title",
     "endDate": "End date",
@@ -1324,7 +1361,8 @@
       "technicalSummaryRequiredInvalid": "Technical summary is required",
       "otherApprovalCommittees": "Other approval committees",
       "otherApprovalCommitteesPlaceholder": "Approval committee name"
-    }
+    },
+    "notSet": "None"
   },
   "Error": {
     "login": {
@@ -1416,10 +1454,12 @@
   },
   "ActionValidationMakeDecision": {
     "pass": "Pass",
-    "fail": "Fail"
+    "fail": "Fail",
+    "addMoreInformation": "Add more information"
   },
   "ActionValidationCommentForm": {
     "confirm": "Confirm {action}",
+    "addMoreInformationButton": "Add information",
     "cancel": "Cancel"
   },
   "ChangeDecisionChip": {
@@ -1493,7 +1533,7 @@
     },
     "completeConfiguration": {
       "title": "Complete your configuration",
-      "description": "This is where you can setup your rules and validation checks, IDVT technology and API endpoints.",
+      "description": "This is where you can customise the default automated rules and manual checks for validating Users and Organisations, such as requiring Identity Verification or evaluating a CV. You can also set up web hooks.",
       "buttonText": "Complete your configuration"
     },
     "addContactsCompleted": {
@@ -1520,8 +1560,11 @@
   "ProjectsAddUserModal": {
     "heading": "Add new team member",
     "requestHeading": "Request to add new team member",
-    "description": "Here’s where you can add a team member to your project. If you can't find them or they're listed under the wrong Organisation, invite them here. If they already have a Safe People Registry account, they’ll be able to select the correct Organisation. Otherwise, they'll be prompted to register for a Safe People Registry account.",
+    "description": "Add a User to start the validation process. You can add existing Safe People Registry Users by searching below. If they are affiliated with the wrong Organisation, you can request corrected Organisation affiliation during the validation process. If you cannot find your User, you can <button>invite them to create a Safe People Registry account here.</button> ",
     "requestDescription": "Here’s where you can request that a team member us added to this project. If you can't find them or they're listed under the wrong Organisation, invite them here. If they already have a Safe People Registry account, they’ll be able to select the correct Organisation. Otherwise, they'll be prompted to register for a Safe People Registry account."
+  },
+  "InviteUserModal": {
+    "description": "Complete the fields below to invite a User to create a Safe People Registry account."
   },
   "VeriffTermsAndConditions": {
     "title": "This will take you to Veriff’s website to verify your identity.",
@@ -1578,26 +1621,26 @@
     "daysSince": "{days} days ago",
     "user": {
       "created": {
-        "title": "User account created",
+        "title": "Account created",
         "description": "with primary email \"{attributes_email}\"   "
       },
       "updated": {
-        "title": "User updated their details",
+        "title": "Updated their details",
         "description": "The following data was changed: {attributeKeys}"
       }
     },
     "project_has_user": {
       "created": {
-        "title": "User added to project",
-        "description": "The user was added to the project titled \"{project_title}\""
+        "title": "Added {name} to a project",
+        "description": "Titled: \"{project_title}\""
       },
       "updated": {
-        "title": "User on project updated",
-        "description": " The following data was changed: {attributeKeys}"
+        "title": "{name}'s project information was changed",
+        "description": "On \"{project_title}\", the following was changed... {attributeKeys}"
       },
       "deleted": {
-        "title": "User removed from project",
-        "description": "The user was removed from the project titled \"{project_title}\""
+        "title": "Removed {name} from a project",
+        "description": "Titled: \"{project_title}\""
       }
     },
     "validation_check": {

@@ -14,7 +14,10 @@ import {
   mockedCustodianUser,
 } from "./mocks/data/custodian";
 import { mockedNotification } from "./mocks/data/notification";
-import { mockedOrganisation } from "./mocks/data/organisation";
+import {
+  mockedOrganisation,
+  mockedSubsidiary,
+} from "./mocks/data/organisation";
 import {
   mockedPermission,
   mockedUserPermission,
@@ -74,6 +77,12 @@ jest.mock("@/i18n/routing", () => ({
   useSearchParams: jest.fn().mockReturnValue(new URLSearchParams("")),
 }));
 
+export const mockUseSearchParams = {
+  get: jest.fn(),
+  entries: jest.fn(() => []),
+  toString: jest.fn(() => ""),
+};
+
 jest.mock("next/navigation", () => {
   return {
     useParams: jest.fn(),
@@ -83,10 +92,7 @@ jest.mock("next/navigation", () => {
       replace: jest.fn(),
       prefetch: jest.fn(),
     }),
-    useSearchParams: () => ({
-      get: () => {},
-      entries: () => [],
-    }),
+    useSearchParams: () => mockUseSearchParams,
     redirect: jest.fn(),
   };
 });
@@ -153,6 +159,8 @@ async function mockFetch(url: string, init?: RequestInit) {
   const queryParams = Object.fromEntries(new URLSearchParams(queryString));
   const page = Number(queryParams.page) || 1;
   const perPage = Number(queryParams.per_page) || 25;
+
+  console.log(url, init?.method);
 
   switch (baseUrl) {
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/permissions`: {
@@ -237,6 +245,18 @@ async function mockFetch(url: string, init?: RequestInit) {
         read: 10,
         unread: 10,
       });
+    }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/subsidiaries/organisations/1`: {
+      if (init?.method === "POST") {
+        return mock200Json(init?.body);
+      }
+    }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/subsidiaries/1/organisations/1`: {
+      if (init?.method === "PUT") {
+        return mock200Json(init?.body);
+      } else if (init?.method === "DELETE") {
+        return mock200Json(null);
+      }
     }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/users`: {
       return mock200Json(
@@ -439,6 +459,11 @@ async function mockFetch(url: string, init?: RequestInit) {
         data: mockedOrganisation({
           id: 1,
         }),
+      });
+    }
+    case `${process.env.NEXT_PUBLIC_API_V1_URL}/organisations/1/invite_user`: {
+      return mock200Json({
+        data: true,
       });
     }
     case `${process.env.NEXT_PUBLIC_API_V1_URL}/users/permissions`: {

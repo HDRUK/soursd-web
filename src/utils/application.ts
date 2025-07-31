@@ -1,6 +1,6 @@
 import { GetSystemConfigResponse } from "@/services/system_config/types";
-import { VALIDATION_SCHEMA_KEY } from "../consts/application";
 import { escapeAndParse } from "./json";
+import { VALIDATION_SCHEMA_KEY } from "../consts/application";
 
 function parseSystemConfig(data: GetSystemConfigResponse | undefined) {
   return data

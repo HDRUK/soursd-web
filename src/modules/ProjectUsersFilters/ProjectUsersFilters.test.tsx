@@ -48,7 +48,7 @@ describe("<ProjectUsersFilters />", () => {
     setupTest();
 
     act(() => {
-      changeSelectValueByLabelText(/Filter by status/, "Form received");
+      changeSelectValueByLabelText(/Filter by status/, "Invite sent");
     });
 
     await waitFor(() => {

@@ -1,9 +1,9 @@
-import SendInviteUser from "@/modules/SendInviteUser";
+import InviteUser from "@/modules/InviteUser";
 
 interface UserInviteProps {
   organisationId?: number;
 }
 
 export default function UserInvite({ organisationId }: UserInviteProps) {
-  <SendInviteUser organisationId={organisationId} />;
+  <InviteUser organisationId={organisationId} />;
 }

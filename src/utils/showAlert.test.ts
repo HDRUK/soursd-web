@@ -3,6 +3,8 @@ import { get } from "js-cookie";
 import Swal from "sweetalert2";
 import { showAlert, showLoadingAlertWithPromise } from "./showAlert";
 
+jest.mock("sweetalert2-react-content", () => fn => fn);
+
 jest.mock("sweetalert2", () => ({
   fire: jest.fn(),
   showLoading: jest.fn(),

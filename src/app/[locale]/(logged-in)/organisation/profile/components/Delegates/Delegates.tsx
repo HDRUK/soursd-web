@@ -73,6 +73,7 @@ export default function Delegates() {
       email,
       role: job_title,
       department_id: department,
+      is_sro: true,
     };
 
     mutateUser(payload);

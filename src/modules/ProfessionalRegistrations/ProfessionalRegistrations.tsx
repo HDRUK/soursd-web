@@ -8,9 +8,8 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import ReactDOMServer from "react-dom/server";
+import ErrorMessage from "@/components/ErrorMessage";
 import { ActionMenu, ActionMenuItem } from "../../components/ActionMenu";
-import ContactLink from "../../components/ContactLink";
 import Table from "../../components/Table";
 import { AddIcon } from "../../consts/icons";
 import useQueryAlerts from "../../hooks/useQueryAlerts";
@@ -93,17 +92,12 @@ export default function ProfessionalRegistrations({
         },
       },
       errorAlertProps: {
-        text: isEditMode
-          ? ReactDOMServer.renderToString(
-              tProfile.rich("errorPutMessage", {
-                contactLink: ContactLink,
-              })
-            )
-          : ReactDOMServer.renderToString(
-              tProfile.rich("errorCreateMessage", {
-                contactLink: ContactLink,
-              })
-            ),
+        text: (
+          <ErrorMessage
+            t={tProfile}
+            key={isEditMode ? "errorPutMessage" : "errorCreateMessage"}
+          />
+        ),
       },
       successAlertProps: {
         text: isEditMode
@@ -123,11 +117,7 @@ export default function ProfessionalRegistrations({
         },
       },
       errorAlertProps: {
-        text: ReactDOMServer.renderToString(
-          tProfile.rich("errorDeleteMessage", {
-            contactLink: ContactLink,
-          })
-        ),
+        text: <ErrorMessage t={tProfile} tKey="errorDeleteMessage" />,
       },
       successAlertProps: {
         text: tProfile("successDeleteMessage"),
@@ -247,9 +237,12 @@ export default function ProfessionalRegistrations({
         data={professionalRegistrations}
         queryState={getProfessionalRegistrationsQueryState}
         noResultsMessage={tProfile("professionalRegistrationsNoResultsMessage")}
-        errorMessage={tProfile.rich("professionalRegsitrationsErrorMessage", {
-          contactLink: ContactLink,
-        })}
+        errorMessage={
+          <ErrorMessage
+            t={tProfile}
+            key="professionalRegsitrationsErrorMessage"
+          />
+        }
         total={professionalRegistrations.length}
         sx={{ maxWidth: "100%" }}
       />

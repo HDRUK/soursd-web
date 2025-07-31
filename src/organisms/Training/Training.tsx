@@ -9,9 +9,8 @@ import { Button, Typography } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
-import ReactDOMServer from "react-dom/server";
+import ErrorMessage from "@/components/ErrorMessage";
 import { ActionMenu, ActionMenuItem } from "../../components/ActionMenu";
-import ContactLink from "../../components/ContactLink";
 import FormModal from "../../components/FormModal";
 import Table from "../../components/Table";
 import { AddIcon } from "../../consts/icons";
@@ -99,11 +98,7 @@ export default function Training({
       }
     } catch (_) {
       showAlert("error", {
-        text: ReactDOMServer.renderToString(
-          t.rich("fileDownloadError", {
-            contactLink: ContactLink,
-          })
-        ),
+        text: <ErrorMessage t={t} tKey="fileDownloadError" />,
         confirmButtonText: t("errorButton"),
       });
     }
@@ -130,17 +125,12 @@ export default function Training({
         handleCloseModal();
       },
       errorAlertProps: {
-        text: selectedTraining
-          ? ReactDOMServer.renderToString(
-              t.rich("updateTrainingError", {
-                contactLink: ContactLink,
-              })
-            )
-          : ReactDOMServer.renderToString(
-              t.rich("postTrainingError", {
-                contactLink: ContactLink,
-              })
-            ),
+        text: (
+          <ErrorMessage
+            t={t}
+            key={selectedTraining ? "updateTrainingError" : "postTrainingError"}
+          />
+        ),
       },
       successAlertProps: {
         text: selectedTraining
@@ -160,11 +150,7 @@ export default function Training({
         },
       },
       errorAlertProps: {
-        text: ReactDOMServer.renderToString(
-          t.rich("errorDeleteMessage", {
-            contactLink: ContactLink,
-          })
-        ),
+        text: <ErrorMessage t={t} tKey="errorDeleteMessage" />,
       },
       successAlertProps: {
         text: t("successDeleteMessage"),

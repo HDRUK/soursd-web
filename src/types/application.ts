@@ -18,7 +18,11 @@ type WithStateWorkflow<T> = T & {
   stateWorkflow: StateWorkflow;
 };
 
-type Translations = (key: string) => string;
+type Translations =
+  | {
+      rich: (key: string | Error, options: unknown) => string;
+    }
+  | ((key: string) => string);
 
 type WithTranslations<T> = T & {
   t: Translations;
@@ -180,6 +184,7 @@ type User = WithModelState<{
   profile_steps_completed: string;
   approvals: Approval[];
   organisation_id?: number | null;
+  organisation?: Organisation;
   custodian_id?: number;
   custodian_user_id?: number;
   consent_scrape: boolean;
@@ -223,6 +228,7 @@ interface Subsidiary extends AddressFields {
     organisation_id: number;
     subsidiary_id: number;
   };
+  website?: string;
 }
 
 interface Charity extends AddressFields {

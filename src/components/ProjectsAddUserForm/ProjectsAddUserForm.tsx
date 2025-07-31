@@ -5,7 +5,6 @@ import { LoadingButton } from "@mui/lab";
 import { CellContext, ColumnDef } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
-import ContactLink from "../ContactLink";
 import FormActions from "../FormActions";
 import FormModalBody from "../FormModalBody";
 import SelectInput from "../SelectInput";
@@ -15,6 +14,7 @@ import { useGetProjectAllUsers } from "../../services/projects";
 import { ProjectAllUser, Role } from "../../types/application";
 import { MutationState } from "../../types/form";
 import { renderUserNameCell } from "../../utils/cells";
+import ErrorMessage from "../ErrorMessage";
 
 const NAMESPACE_TRANSLATION = "CustodianProfile";
 const NAMESPACE_TRANSLATION_APPLICATION = "Application";
@@ -25,17 +25,17 @@ export type RowUserState = {
   affiliation_id: number;
 }[];
 
-interface ProjectsAddUserProps {
+interface ProjectsAddUserFormProps {
   projectId: number;
   mutationState: MutationState;
   onSave: (projectUsers: ProjectAllUser[]) => void;
 }
 
-export default function ProjectsAddUser({
+export default function ProjectsAddUserForm({
   projectId,
   onSave,
   mutationState,
-}: ProjectsAddUserProps) {
+}: ProjectsAddUserFormProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION);
   const tApplication = useTranslations(NAMESPACE_TRANSLATION_APPLICATION);
 
@@ -49,6 +49,7 @@ export default function ProjectsAddUser({
     resetQueryParams,
     ...getUserQueryState
   } = useGetProjectAllUsers(projectId, {
+    queryKeyBase: ["getAllProjectUsers", projectId],
     defaultQueryParams: { "user_group__and[]": "USERS" },
   });
 
@@ -120,6 +121,7 @@ export default function ProjectsAddUser({
       accessorKey: "role.id",
       header: tApplication("role"),
       cell: renderRoleSelectorCell,
+      minSize: 250,
     },
   ];
 
@@ -141,9 +143,9 @@ export default function ProjectsAddUser({
           data={projectUsers}
           queryState={getUserQueryState}
           noResultsMessage={t("noResultsMessage")}
-          errorMessage={t.rich("professionalRegsitrationsErrorMessage", {
-            contactLink: ContactLink,
-          })}
+          errorMessage={
+            <ErrorMessage t={t} tKey="professionalRegsitrationsErrorMessage" />
+          }
           total={total}
           page={page}
           setPage={setPage}

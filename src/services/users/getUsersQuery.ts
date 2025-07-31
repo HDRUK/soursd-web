@@ -5,16 +5,13 @@ import getUsers from "./getUsers";
 export default function getUsersQuery(options?: QueryOptions) {
   return {
     queryKey: ["getUsers", ...(options?.queryKeySuffix || [])],
-    queryFn: () =>
-      getUsers(
-        {},
-        {
-          error: {
-            message: "getUsersError",
-          },
-          ...options?.responseOptions,
-        }
-      ),
+    queryFn: (searchParams: Record<string, string | number | undefined>) =>
+      getUsers(searchParams, {
+        error: {
+          message: "getUsersError",
+        },
+        ...options?.responseOptions,
+      }),
     ...options,
   } as UseQueryOptions<Awaited<ReturnType<typeof getUsers>>>;
 }

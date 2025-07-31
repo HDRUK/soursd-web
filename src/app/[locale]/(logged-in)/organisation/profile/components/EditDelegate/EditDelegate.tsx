@@ -1,5 +1,4 @@
 import { ActionMenuItem } from "@/components/ActionMenu";
-import ContactLink from "@/components/ContactLink";
 import FormModal from "@/components/FormModal";
 import { EditIcon } from "@/consts/icons";
 import useQueryAlerts from "@/hooks/useQueryAlerts";
@@ -8,7 +7,7 @@ import { User } from "@/types/application";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import ReactDOMServer from "react-dom/server";
+import ErrorMessage from "@/components/ErrorMessage";
 import EditDelegateForm, { DelegatesFormValues } from "./EditDelegateForm";
 
 export interface EditDelegateProps {
@@ -39,11 +38,7 @@ const EditDelegate = ({ user, onSuccess }: EditDelegateProps) => {
       text: t("successAlertText"),
     },
     errorAlertProps: {
-      text: ReactDOMServer.renderToString(
-        t.rich("errorAlertText", {
-          contactLink: ContactLink,
-        })
-      ),
+      text: <ErrorMessage t={t} tKey="errorAlertText" />,
     },
   });
 
@@ -69,7 +64,7 @@ const EditDelegate = ({ user, onSuccess }: EditDelegateProps) => {
           defaultValues={{
             first_name,
             last_name,
-            department_id: departments?.[0].id,
+            department_id: departments?.[0]?.id,
           }}
           onSubmit={handleSubmit}
           onClose={() => setOpenModal(false)}

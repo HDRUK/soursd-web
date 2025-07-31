@@ -49,6 +49,8 @@ export default function UserHistory() {
         const logUser = causer || subject;
         const userName = `${logUser?.first_name} ${logUser?.last_name}`;
 
+        const subjectName = `${subject?.first_name} ${subject?.last_name}`;
+
         const changedAttributeString = Object.entries(
           properties?.attributes || {}
         )
@@ -86,7 +88,7 @@ export default function UserHistory() {
                 <Grid item xs={11}>
                   <Typography variant="h6">{userName}</Typography>
                   <Typography variant="body2">
-                    {t(`${log_name}.${event}.title`)}
+                    {t(`${log_name}.${event}.title`, { name: subjectName })}
                   </Typography>
 
                   <Typography variant="body2" sx={{ fontStyle: "italic" }}>

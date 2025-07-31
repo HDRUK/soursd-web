@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { CellContext, ColumnDef } from "@tanstack/react-table";
 import { StoreUserHistories } from "@/data/store";
-import ContactLink from "../../components/ContactLink";
+import ErrorMessage from "@/components/ErrorMessage";
 import ChipStatus, { Status } from "../../components/ChipStatus";
 import Table from "../../components/Table";
 import { ResearcherAffiliation } from "../../types/application";
@@ -98,9 +98,9 @@ export default function Affiliations({
   return (
     <Table
       noResultsMessage={tProfile("affiliationsNoResultsMessage")}
-      errorMessage={tProfile.rich("affiliationsErrorMessage", {
-        contactLink: ContactLink,
-      })}
+      errorMessage={
+        <ErrorMessage t={tProfile} tKey="affiliationsErrorMessage" />
+      }
       total={total}
       last_page={last_page}
       setPage={setPage}

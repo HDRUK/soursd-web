@@ -58,7 +58,7 @@ const Table = <T,>({
   const initialState = useMemo(
     () => ({
       pagination: {
-        pageSize: +perPage.value,
+        pageSize: Number(perPage.value),
       },
     }),
     [perPage.value]
@@ -74,7 +74,7 @@ const Table = <T,>({
     getCoreRowModel: getCoreRowModel(),
     ...(isPaginated && { getPaginationRowModel: getPaginationRowModel() }),
     ...restProps,
-    ...initialState,
+    initialState,
   });
 
   const rows = useMemo(() => {
@@ -82,9 +82,11 @@ const Table = <T,>({
     return rowModel?.rows ?? [];
   }, [safeData]);
 
+  const resultsTotal = (isPaginated ? total : data?.length) || 0;
+
   return (
     <Results
-      total={total}
+      total={resultsTotal}
       queryState={queryState}
       noResultsMessage={noResultsMessage}
       errorMessage={errorMessage}
