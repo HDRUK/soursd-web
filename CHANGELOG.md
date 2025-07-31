@@ -1,3 +1,32 @@
+## [1.8.0](https://github.com/HDRUK/soursd-web/compare/v1.7.0...v1.8.0) (2025-07-31)
+
+### ✨ Features
+
+* **REGISTRY-1569:** Fix fieldarray default value (#397) ([a7fbb29](https://github.com/HDRUK/soursd-web/commit/a7fbb29f597b127e342c756e90b1c4fccfa5b5cd))
+* **REGISTRY-1602:** Revise affiliation and validation statuses (#403) ([807ff12](https://github.com/HDRUK/soursd-web/commit/807ff12933790bb3f7172ec5b73120b04d7d38ca))
+
+### 🐛 Bug Fixes
+
+* **REGISTRY-1069:** error message (#393) ([99d44a0](https://github.com/HDRUK/soursd-web/commit/99d44a0a279def6c4f7d34b68f005a93ec3b034b))
+* **REGISTRY-1234:** Able to claim existing organisation admin accounts (#396) ([9729b71](https://github.com/HDRUK/soursd-web/commit/9729b71bed5173033db018b282133bb27417126a))
+* **REGISTRY-1261:** subsidiaries refactor (#387) ([33a9faf](https://github.com/HDRUK/soursd-web/commit/33a9faf27917060567f43f1215ffd6739998b9fd))
+* **REGISTRY-1310:** Add ability to add comment to validation checks (#392) ([6dee094](https://github.com/HDRUK/soursd-web/commit/6dee0949c43b8a5fbae77366b030974e4a8a3a3e))
+* **REGISTRY-1325:** Disabled button for enabled or not (#399) ([2674fa0](https://github.com/HDRUK/soursd-web/commit/2674fa082ce76d9de6ee2bfc1b11d64020fbe599))
+* **REGISTRY-1421:** Implementation of inviting organisations  (#394) ([e70d9a9](https://github.com/HDRUK/soursd-web/commit/e70d9a952fc4ba1f78aa43e2705a6a20bb895797))
+* **REGISTRY-1432:** Button styling (#408) ([ff0b8a5](https://github.com/HDRUK/soursd-web/commit/ff0b8a5ed36c157ec99e1296c1053f02a804f16f))
+* **REGISTRY-1477:** test issue (#389) ([dd19f39](https://github.com/HDRUK/soursd-web/commit/dd19f3914c0cf05b0fcdf2994b270554495a2641))
+* **REGISTRY-1490:** Mark as done upon navigation to page (#386) ([85abb70](https://github.com/HDRUK/soursd-web/commit/85abb706fb382ebc41398b2c55c05ee92b0014e4))
+* **REGISTRY-1496:** Updating safe people views for users and organisations (#388) ([1eebd25](https://github.com/HDRUK/soursd-web/commit/1eebd253887469b979924c760fbe338e3f789598))
+* **REGISTRY-1564:** Change Approver and Admin permission to be a radio group (#400) ([13194d4](https://github.com/HDRUK/soursd-web/commit/13194d40098a8f13ed304a6f9c996a8e22590b5f))
+* **REGISTRY-1572:** Update search placeholders (#404) ([6828322](https://github.com/HDRUK/soursd-web/commit/68283220dd2a18dbdfafb6ff53b2b52f2ec4b2f8))
+* **REGISTRY-1573:** Fix status translations (#409) ([7a7a712](https://github.com/HDRUK/soursd-web/commit/7a7a712c21c0e22d571c4d20531db84233f840f7))
+* **REGISTRY-1573:** Status menu selection (#405) ([dcbc49b](https://github.com/HDRUK/soursd-web/commit/dcbc49b9eac0edff2e3ad0f065ae8ece9a88739c))
+* **REGISTRY-1576:** Update text for user history (#390) ([d58e3dd](https://github.com/HDRUK/soursd-web/commit/d58e3dd68a1b1ae702f8a6051fa96259e1e8cc36))
+* **REGISTRY-1578:** Correct SRO behaviour (#406) ([824b70c](https://github.com/HDRUK/soursd-web/commit/824b70caec60ace76c6a9354ca9eaab63e072a92))
+* **REGISTRY-1582:** action menu layout (#391) ([93544fe](https://github.com/HDRUK/soursd-web/commit/93544fe43059ae48ba2253abed51bcd7fffea7ba))
+* **REGISTRY-1614:** Subsidiary typo and styling (#398) ([9fe2a49](https://github.com/HDRUK/soursd-web/commit/9fe2a49993e328332677a497e6248918932ded96))
+* **REGISTRY-1620:** Protect again missing model state (#402) ([6d2aca7](https://github.com/HDRUK/soursd-web/commit/6d2aca779acbdf5e388a56e1117c1a1f16748219))
+
 ## [1.7.0](https://github.com/HDRUK/soursd-web/compare/v1.6.0...v1.7.0) (2025-07-11)
 
 ### ✨ Features
