@@ -2,6 +2,7 @@ import { ActionMenu } from "@/components/ActionMenu";
 import KanbanBoardActionsMenuItems from "@/modules/KanbanBoard/KanbanBoardActionMenuItems";
 import {
   CustodianProjectOrganisation,
+  Translations,
   WithTranslations,
 } from "@/types/application";
 
@@ -10,12 +11,14 @@ type ProjectOrganisationsActionsProps<T = CustodianProjectOrganisation> =
     data: T;
     onMoveClick: (id: number, status: string) => void;
     allowedTransitions: string[];
+    tStatus: Translations;
   }>;
 
 export default function ProjectOrganisationsActions({
   onMoveClick,
   allowedTransitions,
   data,
+  tStatus,
   ...restProps
 }: ProjectOrganisationsActionsProps) {
   return (
@@ -30,6 +33,7 @@ export default function ProjectOrganisationsActions({
           allowedTransitions={allowedTransitions}
           data={data}
           handleClose={handleClose}
+          tStatus={tStatus}
           {...restProps}
         />
       )}
