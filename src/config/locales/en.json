@@ -637,7 +637,6 @@
     "startDateRequiredInvalid": "Start date is required",
     "endDate": "End date",
     "endDatePlaceholder": "End date",
-    "endDateRequiredInvalid": "End date is required",
     "webhookEventAriaLabel": "Webhook Event Trigger",
     "webhookRequiredInvalid": "Webhook event trigger is required",
     "duplicateWebhookError": "Duplicate webhooks detected! Your webhook receiver URLs should be unique.",
@@ -683,7 +682,8 @@
       "technicalSummaryPlaceholder": "Technical summary",
       "technicalSummaryRequiredInvalid": "Technical summary is required",
       "otherApprovalCommittees": "Other approval committees",
-      "otherApprovalCommitteesPlaceholder": "Approval committee name"
+      "otherApprovalCommitteesPlaceholder": "Approval committee name",
+      "startDateRequiredInvalid": "Start date is required"
     },
     "SafeData": {
       "arrayRemoveButton": "Remove",
@@ -959,9 +959,7 @@
     "idvtComplete": "IDVT checks complete",
     "idvtIncomplete": "IDVT checks incomplete",
     "accreditedResearcherCheckboxLabel": "I am a registered Accredited Researcher as published on the UK Statistics Authority website.",
-    "accreditedResearcherLinkHref": "https://www.gov.uk/government/consultations/digital-economy-act-part-5-data-sharing-codes-and-regulations/research-code-of-practice-and-accreditation-criteria",
     "userDeclarationCheckboxLabel": "I have signed a User declaration for accessing Digital Economy Act accredited environments.",
-    "userDeclarationLinkHref": "https://www.gov.uk/government/consultations/digital-economy-act-part-5-data-sharing-codes-and-regulations/research-code-of-practice-and-accreditation-criteria",
     "findOutMore": "Find out more",
     "employmentEducationPublicationRecord": "Employment, education and publication record",
     "orcidDescription": "Please enter your ORCID, if you have one, as this can help Data Custodians identify you.",
