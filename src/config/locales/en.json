@@ -637,7 +637,6 @@
     "startDateRequiredInvalid": "Start date is required",
     "endDate": "End date",
     "endDatePlaceholder": "End date",
-    "endDateRequiredInvalid": "End date is required",
     "webhookEventAriaLabel": "Webhook Event Trigger",
     "webhookRequiredInvalid": "Webhook event trigger is required",
     "duplicateWebhookError": "Duplicate webhooks detected! Your webhook receiver URLs should be unique.",
@@ -683,7 +682,8 @@
       "technicalSummaryPlaceholder": "Technical summary",
       "technicalSummaryRequiredInvalid": "Technical summary is required",
       "otherApprovalCommittees": "Other approval committees",
-      "otherApprovalCommitteesPlaceholder": "Approval committee name"
+      "otherApprovalCommitteesPlaceholder": "Approval committee name",
+      "startDateRequiredInvalid": "Start date is required"
     },
     "SafeData": {
       "arrayRemoveButton": "Remove",
