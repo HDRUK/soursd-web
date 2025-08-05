@@ -5,6 +5,7 @@ export enum Status {
   AFFILIATED = "affiliated",
   PENDING = "pending",
   INVITED = "invited",
+  FORM_RECEIVED = "form_received",
   REGISTERED = "registered",
   INVITE_SENT = "invite_sent",
   APPROVED = "approved",

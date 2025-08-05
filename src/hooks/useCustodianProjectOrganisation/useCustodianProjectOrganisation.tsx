@@ -10,6 +10,7 @@ import {
 import { CustodianProjectOrganisation } from "@/types/application";
 import { Option } from "@/types/common";
 import { getCombinedQueryState } from "@/utils/query";
+import { STATUS_ORDER_MAP } from "@/consts/status";
 import useQueryAlerts from "../useQueryAlerts";
 
 type CustodianParams = {
@@ -51,10 +52,16 @@ export const useCustodianProjectOrganisation = ({
 
   const statusOptions = useMemo(
     () =>
-      statusOptionsData?.data?.map(item => ({
-        value: item,
-        label: tStatus(item),
-      })) || [],
+      statusOptionsData?.data
+        ?.map(item => ({
+          value: item,
+          label: tStatus(item),
+        }))
+        .sort(
+          (a, b) =>
+            (STATUS_ORDER_MAP.get(a.value) ?? Number.MAX_SAFE_INTEGER) -
+            (STATUS_ORDER_MAP.get(b.value) ?? Number.MAX_SAFE_INTEGER)
+        ) || [],
     [statusOptionsData, tStatus]
   );
 
