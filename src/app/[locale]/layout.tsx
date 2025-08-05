@@ -12,8 +12,8 @@ import { notFound } from "next/navigation";
 import { PropsWithChildren } from "react";
 import "../global.css";
 import { GoogleTagManager } from "@next/third-parties/google";
-import ReactQueryClientProvider from "./components/ReactQueryClientProvider";
 import { getMessages } from "next-intl/server";
+import ReactQueryClientProvider from "./components/ReactQueryClientProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
