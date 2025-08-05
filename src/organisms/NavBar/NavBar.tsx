@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { MouseEvent, useEffect, useState } from "react";
+import getMe from "@/services/auth/getMe";
 import HorizontalDrawer from "../../components/HorizontalDrawer";
 import MaskLabel from "../../components/MaskLabel";
 import SoursdLogo from "../../components/SoursdLogo";
@@ -94,11 +95,27 @@ function renderButtons(
 
 export default function NavBar() {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_NAVBAR);
-  const storedUser = useStore(store => store.getUser());
+  const [storedUser, setUser] = useStore(store => [
+    store.getUser(),
+    store.setUser,
+  ]);
   const theme = useTheme();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
+
+  useEffect(() => {
+    const checkUserAndReset = async () => {
+      const response = await getMe({
+        suppressThrow: true,
+      });
+
+      if (response.status === 404 && storedUser) {
+        setUser(undefined);
+      }
+    };
+    checkUserAndReset();
+  }, []);
 
   useEffect(() => {
     if (isDesktop && isDrawerOpen) {
