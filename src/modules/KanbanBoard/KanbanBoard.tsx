@@ -279,7 +279,7 @@ export default function KanbanBoard<T>({
                   return (
                     <DndSortableItem
                       disabled={isSortingContainer}
-                      isDroppable={data.isDroppable}
+                      isDroppable={data?.isDroppable}
                       isError={data.isError}
                       key={`${containerId}${data.id}`}
                       id={data.id}
