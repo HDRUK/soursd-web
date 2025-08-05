@@ -128,7 +128,7 @@ export default function Trainings() {
               <Box sx={{ mt: 1, maxWidth: "50%" }}>
                 <FormControlCheckbox
                   name="declaration_signed"
-                  label={USER_DECLARATION_LINK}
+                  label={tProfile("userDeclarationCheckboxLabel")}
                   labelCaption={
                     <Link
                       href={USER_DECLARATION_LINK}
