@@ -1233,7 +1233,8 @@
     "organisationSize": "Organisation size",
     "projectStatus": "Status",
     "organisationsNameAddress": "Address",
-    "searchPlaceholder": "Search by Organisation name"
+    "searchPlaceholder": "Search by Organisation name",
+    "notSet": "None"
   },
   "Projects": {
     "ProjectsFilters": {

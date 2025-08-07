@@ -11,6 +11,7 @@ import { CustodianProjectOrganisation } from "@/types/application";
 import { Option } from "@/types/common";
 import { getCombinedQueryState } from "@/utils/query";
 import { STATUS_ORDER_MAP } from "@/consts/status";
+import { DEFAULT_STALE_TIME } from "@/consts/requests";
 import useQueryAlerts from "../useQueryAlerts";
 
 type CustodianParams = {
@@ -47,7 +48,9 @@ export const useCustodianProjectOrganisation = ({
   );
 
   const { data: statusOptionsData } = useQuery(
-    getCustodianProjectOrganisationStatesQuery()
+    getCustodianProjectOrganisationStatesQuery({
+      staleTime: DEFAULT_STALE_TIME,
+    })
   );
 
   const statusOptions = useMemo(
