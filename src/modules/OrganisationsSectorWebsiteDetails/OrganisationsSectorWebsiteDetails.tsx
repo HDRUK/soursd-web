@@ -1,4 +1,5 @@
-import { Link } from "@mui/material";
+import { Link as MuiLink } from "@mui/material";
+import { Link } from "@/i18n/routing";
 import FieldsToText from "../../components/FieldsToText";
 import { Organisation } from "../../types/application";
 
@@ -25,9 +26,12 @@ export default function OrganisationsSectorWebsiteDetails({
         {
           column_id: "website",
           content: (
-            <Link href={organisationData.website} target="_blank">
+            <MuiLink
+              component={Link}
+              href={organisationData.website}
+              target="_blank">
               {organisationData.website}
-            </Link>
+            </MuiLink>
           ),
         },
       ]}

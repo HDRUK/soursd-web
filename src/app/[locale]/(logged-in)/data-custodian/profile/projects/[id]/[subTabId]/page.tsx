@@ -27,7 +27,7 @@ function ProjectsSubPage({ params: { subTabId, id } }: SubPageProjectsProps) {
 
   return (
     <LoadingWrapper variant="basic" loading={isPending}>
-      {project?.data && (
+      {project?.data && project.data.id === Number(id) && (
         <SubPageProjects
           projectData={project.data}
           params={{
