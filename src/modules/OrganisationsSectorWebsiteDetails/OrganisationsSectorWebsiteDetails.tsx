@@ -25,7 +25,7 @@ export default function OrganisationsSectorWebsiteDetails({
         "organisation_size",
         {
           column_id: "website",
-          content: (
+          content: organisationData.website && (
             <MuiLink
               component={Link}
               href={organisationData.website}
