@@ -25,7 +25,7 @@ function Users() {
     <PageBodyContainer heading={tProfile("usersListTitle")}>
       <PageBody>
         <PageSection>
-          <Markdown variant="body1">
+          <Markdown>
             {tProfile("usersListDescription")}
           </Markdown>
         </PageSection>
