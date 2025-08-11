@@ -25,9 +25,9 @@ function Users() {
     <PageBodyContainer heading={tProfile("usersListTitle")}>
       <PageBody>
         <PageSection>
-          <Typography variant="body1">
+          <Markdown variant="body1">
             {tProfile("usersListDescription")}
-          </Typography>
+          </Markdown>
         </PageSection>
         <ProjectUsers
           variant={EntityType.CUSTODIAN}
