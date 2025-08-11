@@ -150,10 +150,10 @@ export default function AccountConfirm() {
         }}>
         <Box sx={{ textAlign: "center", marginBottom: 4 }}>
           <SoursdLogo sx={{ backgroundColor: "transparent" }} />
-          <Typography variant="h3">
+          <Markdown variant="h3">
             {" "}
             {unclaimedOrgAdmin ? t("claimOrgAccount") : t("title")}
-          </Typography>
+          </Markdown>
         </Box>
 
         {!unclaimedUserQueryState.isLoading && (
