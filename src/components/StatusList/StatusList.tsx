@@ -43,7 +43,7 @@ export default function StatusList({
             <Box
               key={label}
               sx={{ display: "flex", gap: 2, alignItems: "center" }}>
-              <Typography variant="h6" sx={{ minWidth: "150px" }}>
+              <Typography variant="h6" sx={{ minWidth: 180 }}>
                 {label}:
               </Typography>
               <ChipStatus status={value} />
