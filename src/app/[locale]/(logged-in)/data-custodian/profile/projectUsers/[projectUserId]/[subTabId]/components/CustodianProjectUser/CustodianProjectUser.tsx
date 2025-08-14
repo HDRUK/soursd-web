@@ -42,8 +42,7 @@ function CustodianProjectUser({
     isFetched: isFetchedCustodianProjectUser,
   } = useQuery(getCustodianProjectUserQuery(custodian?.id, projectUserId));
 
-  const { project_has_user: projectUser, model_state: state } =
-    custodianProjectUser?.data || {};
+  const { project_has_user: projectUser } = custodianProjectUser?.data || {};
 
   const { registry, project } = projectUser || {};
 
