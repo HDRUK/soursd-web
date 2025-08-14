@@ -25,6 +25,7 @@
       "undefined": "None",
       "null": "None",
       "project_pending": "Pending approval",
+      "project_pending_short": "Pending",
       "project_completed": "Completed",
       "project_approved": "Approved",
       "project_in_progress": "In progress",
@@ -1288,6 +1289,7 @@
       "errorMessage": "Couldn't get the users for this project. Please try again or <contactLink>contact support</contactLink> if the problem persists."
     },
     "status": "Project status",
+    "organisationStatus": "Organisation status",
     "safeProject": "Safe Project",
     "safeData": "Safe Data",
     "safePeople": "Safe People",
