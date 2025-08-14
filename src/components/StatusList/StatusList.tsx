@@ -1,15 +1,15 @@
 "use client";
 
-import { Box, BoxProps, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import ChipStatus, { Status } from "../ChipStatus";
+import ActionsPanel from "../ActionsPanel";
 
 export interface StatusListProps {
   projectStatus?: Status;
   validationStatus?: Status;
   organisationStatus?: Status;
   affiliationStatus?: Status;
-  panelSx?: BoxProps["sx"];
 }
 
 const NAMESPACE_TRANSLATION = "Application";
@@ -19,7 +19,6 @@ export default function StatusList({
   validationStatus,
   organisationStatus,
   affiliationStatus,
-  panelSx,
 }: StatusListProps) {
   const t = useTranslations(NAMESPACE_TRANSLATION);
 
@@ -31,17 +30,7 @@ export default function StatusList({
   ];
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        borderRadius: 3,
-        backgroundColor: "neutralGrey.main",
-        p: 3,
-        gap: 1,
-        mb: 2,
-        ...panelSx,
-      }}>
+    <ActionsPanel panelSx={{ backgroundColor: "neutralGrey.main", mb: 2 }}>
       <Box
         sx={{
           display: "flex",
@@ -54,11 +43,13 @@ export default function StatusList({
             <Box
               key={label}
               sx={{ display: "flex", gap: 2, alignItems: "center" }}>
-              <Typography sx={{ minWidth: "150px" }}>{label}:</Typography>
+              <Typography variant="h6" sx={{ minWidth: "150px" }}>
+                {label}:
+              </Typography>
               <ChipStatus status={value} />
             </Box>
           ))}
       </Box>
-    </Box>
+    </ActionsPanel>
   );
 }
