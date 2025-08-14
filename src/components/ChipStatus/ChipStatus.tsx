@@ -33,6 +33,7 @@ export enum Status {
   ORG_VALIDATION_DECLINED = "org_validation_declined",
   USER_LEFT_PROJECT = "user_left_project",
   ORG_LEFT_PROJECT = "org_left_project_short",
+  NONE = "none",
 }
 
 const STATUS_WITH_SHORT_DESCRIPTION = [
