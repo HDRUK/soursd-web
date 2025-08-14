@@ -51,9 +51,11 @@ export default function StatusList({
         {statuses
           .filter(s => s.value)
           .map(({ label, value }) => (
-            <Box key={label} sx={{ display: "flex", gap: 2 }}>
+            <Box
+              key={label}
+              sx={{ display: "flex", gap: 2, alignItems: "center" }}>
               <Typography sx={{ minWidth: "150px" }}>{label}:</Typography>
-              <ChipStatus status={value!} />
+              <ChipStatus status={value} />
             </Box>
           ))}
       </Box>
