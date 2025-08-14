@@ -129,7 +129,7 @@ export default function Projects({ variant, entityId }: ProjectsProps) {
         <ChipStatus status={info.row.original.model_state?.state.slug} />
       ),
     },
-    ...(variant !== "user"
+    ...(variant !== "user" && variant !== "custodian"
       ? [
           {
             accessorKey: "organisationStatus",
