@@ -12,7 +12,6 @@ import {
   Box,
   Checkbox,
   FormControlLabel,
-  Typography,
   Button,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
@@ -29,6 +28,7 @@ import { User } from "@/types/application";
 import { UserGroup } from "@/consts/user";
 import { getCombinedQueryState } from "@/utils/query";
 import AccountOption from "../AccountOption";
+import Markdown from "@/components/Markdown";
 
 const NAMESPACE_TRANSLATIONS_PROFILE = "Register";
 const NAMESPACE_TRANSLATION_TERMS_AND_CONDITIONS = "TermsAndConditions";
