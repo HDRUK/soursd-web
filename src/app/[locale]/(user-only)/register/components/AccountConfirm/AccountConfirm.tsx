@@ -8,13 +8,8 @@ import { AccountType } from "@/types/accounts";
 import PeopleIcon from "@mui/icons-material/People";
 import PersonIcon from "@mui/icons-material/Person";
 import { LoadingButton } from "@mui/lab";
-import {
-  Box,
-  Checkbox,
-  FormControlLabel,
-  Typography,
-  Button,
-} from "@mui/material";
+import { Box, Checkbox, FormControlLabel, Button } from "@mui/material";
+import Markdown from "@/components/Markdown";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
 import useRegisterUser from "@/hooks/useRegisterUser";
@@ -150,10 +145,10 @@ export default function AccountConfirm() {
         }}>
         <Box sx={{ textAlign: "center", marginBottom: 4 }}>
           <SoursdLogo sx={{ backgroundColor: "transparent" }} />
-          <Typography variant="h3">
+          <Markdown>
             {" "}
             {unclaimedOrgAdmin ? t("claimOrgAccount") : t("title")}
-          </Typography>
+          </Markdown>
         </Box>
 
         {!unclaimedUserQueryState.isLoading && (
