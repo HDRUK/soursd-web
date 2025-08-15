@@ -1395,11 +1395,11 @@
     "title": "Accreditations"
   },
   "DecoupleDelegates": {
-    "title": "Decouple",
-    "toolTip": "Decouple this user from your organisation",
-    "alertTitle": "Decouple User?",
-    "alertText": "Are you sure you want to remove {first_name} {last_name} from your organisation ({organisation_name})",
-    "alertConfirm": "Delete",
+    "title": "Remove",
+    "toolTip": "Remove this Delegate from your Organisation",
+    "alertTitle": "Remove Delegate?",
+    "alertText": "Are you sure you want to remove {first_name} {last_name} from your Organisation ({organisation_name})",
+    "alertConfirm": "Remove",
     "alertCancel": "Cancel"
   },
   "EditDelegate": {
