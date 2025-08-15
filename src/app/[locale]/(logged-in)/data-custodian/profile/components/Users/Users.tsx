@@ -7,7 +7,7 @@ import PageBodyContainer from "@/modules/PageBodyContainer";
 import PageSection from "@/modules/PageSection";
 import ProjectUsers from "@/organisms/ProjectUsers";
 import { EntityType } from "@/types/api";
-import { Markdown } from "@/components/Markdown";
+import Markdown from "@/components/Markdown";
 import { useTranslations } from "next-intl";
 
 const NAMESPACE_TRANSLATIONS_PROFILE = "CustodianProfile";
