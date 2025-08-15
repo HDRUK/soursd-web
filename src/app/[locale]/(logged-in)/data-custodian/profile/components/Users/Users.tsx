@@ -26,7 +26,7 @@ function Users() {
       <PageBody>
         <PageSection>
           <Markdown>
-            {tProfile("usersListDescription")}
+          {tProfile("usersListDescription")}
           </Markdown>
         </PageSection>
         <ProjectUsers
