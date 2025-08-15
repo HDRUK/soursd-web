@@ -25,7 +25,6 @@ import { UserGroup } from "@/consts/user";
 import { getCombinedQueryState } from "@/utils/query";
 import AccountOption from "../AccountOption";
 
-
 const NAMESPACE_TRANSLATIONS_PROFILE = "Register";
 const NAMESPACE_TRANSLATION_TERMS_AND_CONDITIONS = "TermsAndConditions";
 
