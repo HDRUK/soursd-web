@@ -8,12 +8,7 @@ import { AccountType } from "@/types/accounts";
 import PeopleIcon from "@mui/icons-material/People";
 import PersonIcon from "@mui/icons-material/Person";
 import { LoadingButton } from "@mui/lab";
-import {
-  Box,
-  Checkbox,
-  FormControlLabel,
-  Button,
-} from "@mui/material";
+import {Box, Checkbox, FormControlLabel, Button,} from "@mui/material";
 import Markdown from "@/components/Markdown";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
@@ -29,6 +24,7 @@ import { User } from "@/types/application";
 import { UserGroup } from "@/consts/user";
 import { getCombinedQueryState } from "@/utils/query";
 import AccountOption from "../AccountOption";
+
 
 const NAMESPACE_TRANSLATIONS_PROFILE = "Register";
 const NAMESPACE_TRANSLATION_TERMS_AND_CONDITIONS = "TermsAndConditions";
