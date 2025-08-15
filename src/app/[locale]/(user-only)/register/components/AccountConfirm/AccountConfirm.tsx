@@ -14,6 +14,7 @@ import {
   FormControlLabel,
   Button,
 } from "@mui/material";
+import Markdown from "@/components/Markdown";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
 import useRegisterUser from "@/hooks/useRegisterUser";
@@ -28,7 +29,6 @@ import { User } from "@/types/application";
 import { UserGroup } from "@/consts/user";
 import { getCombinedQueryState } from "@/utils/query";
 import AccountOption from "../AccountOption";
-import Markdown from "@/components/Markdown";
 
 const NAMESPACE_TRANSLATIONS_PROFILE = "Register";
 const NAMESPACE_TRANSLATION_TERMS_AND_CONDITIONS = "TermsAndConditions";
