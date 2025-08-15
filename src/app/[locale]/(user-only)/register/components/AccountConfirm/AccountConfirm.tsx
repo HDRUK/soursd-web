@@ -8,7 +8,7 @@ import { AccountType } from "@/types/accounts";
 import PeopleIcon from "@mui/icons-material/People";
 import PersonIcon from "@mui/icons-material/Person";
 import { LoadingButton } from "@mui/lab";
-import {Box, Checkbox, FormControlLabel, Button,} from "@mui/material";
+import {Box, Checkbox, FormControlLabel, Button} from "@mui/material";
 import Markdown from "@/components/Markdown";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
