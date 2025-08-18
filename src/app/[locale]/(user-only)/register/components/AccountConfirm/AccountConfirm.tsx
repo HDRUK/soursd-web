@@ -3,10 +3,9 @@
 import Guidance from "@/components/Guidance";
 import { Message } from "@/components/Message";
 import SoursdLogo from "@/components/SoursdLogo";
-import { mockedRegisterGuidanceProps } from "@/mocks/data/cms";
 import { AccountType } from "@/types/accounts";
-import PeopleIcon from "@mui/icons-material/People";
-import PersonIcon from "@mui/icons-material/Person";
+import BusinessIcon from "@mui/icons-material/Business";
+import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import { LoadingButton } from "@mui/lab";
 import {
   Box,
@@ -21,13 +20,14 @@ import useRegisterUser from "@/hooks/useRegisterUser";
 import TermsAndConditionsModal from "@/components/TermsAndConditionsModal";
 import { useRouter } from "next/navigation";
 import { showAlert } from "@/utils/showAlert";
-import { ROUTES } from "@/consts/router";
 import Cookies from "js-cookie";
 import { useQuery } from "@tanstack/react-query";
 import { getUserByIdQuery } from "@/services/users";
 import { User } from "@/types/application";
 import { UserGroup } from "@/consts/user";
 import { getCombinedQueryState } from "@/utils/query";
+import { AdminPanelSettingsOutlined } from "@mui/icons-material";
+import { ROUTES } from "@/consts/router";
 import AccountOption from "../AccountOption";
 
 const NAMESPACE_TRANSLATIONS_PROFILE = "Register";
@@ -45,7 +45,8 @@ export default function AccountConfirm() {
     enabled: !!digiIdent,
   });
 
-  const [selected, setSelected] = useState<AccountType | null>(null);
+  const [selectedAccountType, setSelectedAccountType] =
+    useState<AccountType | null>(null);
   const [termsChecked, setTermsChecked] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [hasAcceptedTerms, setHasAcceptedTerms] = useState(false);
@@ -65,16 +66,16 @@ export default function AccountConfirm() {
 
   useEffect(() => {
     if (!unclaimedOrgAdmin) return;
-    setSelected(AccountType.ORGANISATION);
+    setSelectedAccountType(AccountType.ORGANISATION);
   }, [unclaimedOrgAdmin]);
 
   const { handleRegister, ...registerUserState } = useRegisterUser({
-    selected,
+    selected: selectedAccountType,
     unclaimedOrgAdmin,
   });
 
   const handleSelect = (option: AccountType) => {
-    setSelected(option);
+    setSelectedAccountType(option);
   };
 
   const handleOpenModal = () => setIsModalOpen(true);
@@ -109,14 +110,17 @@ export default function AccountConfirm() {
   const renderBoldText = useCallback(
     (chunks: React.ReactNode) => (
       <Button
-        disabled={!!selected}
+        disabled={!!selectedAccountType}
         onClick={handleOpenModal}
         variant="text"
         sx={{
-          pb: 1,
           textTransform: "none",
           fontWeight: "bold",
           backgroundColor: "none",
+          color: "secondary.main",
+          textAlign: "left",
+          p: 0,
+          pb: 1,
           "&:hover": {
             backgroundColor: "none",
             textDecoration: "underline",
@@ -129,7 +133,7 @@ export default function AccountConfirm() {
   );
 
   const isContinueDisabled =
-    selected === null || !termsChecked || !hasAcceptedTerms;
+    selectedAccountType === null || !termsChecked || !hasAcceptedTerms;
 
   const queryState = getCombinedQueryState([
     registerUserState,
@@ -139,7 +143,9 @@ export default function AccountConfirm() {
   const { isLoading, isError, error } = queryState;
 
   return (
-    <Guidance {...mockedRegisterGuidanceProps}>
+    <Guidance
+      infoTitle={t(`${selectedAccountType || "default"}Title`)}
+      info={t(`${selectedAccountType || "default"}Guidance`)}>
       <Box
         sx={{
           display: "flex",
@@ -151,7 +157,6 @@ export default function AccountConfirm() {
         <Box sx={{ textAlign: "center", marginBottom: 4 }}>
           <SoursdLogo sx={{ backgroundColor: "transparent" }} />
           <Typography variant="h3">
-            {" "}
             {unclaimedOrgAdmin ? t("claimOrgAccount") : t("title")}
           </Typography>
         </Box>
@@ -164,23 +169,42 @@ export default function AccountConfirm() {
               gap: 4,
               marginBottom: 4,
             }}>
+            {!unclaimedOrgAdmin && (
+              <AccountOption
+                icon={PeopleAltOutlinedIcon}
+                label={t.rich("repMyselfButton", {
+                  bold: chunks => <strong>{chunks}</strong>,
+                })}
+                onClick={handleSelect}
+                name={AccountType.USER}
+                selected={selectedAccountType}
+                disabled={!!unclaimedOrgAdmin}
+              />
+            )}
+
             <AccountOption
-              icon={PeopleIcon}
+              icon={BusinessIcon}
               label={
                 unclaimedOrgAdmin?.organisation?.organisation_name ||
-                t("repOrgButton")
+                t.rich("repOrgButton", {
+                  bold: chunks => <strong>{chunks}</strong>,
+                })
               }
               onClick={handleSelect}
               name={AccountType.ORGANISATION}
-              selected={selected}
+              selected={selectedAccountType}
             />
+
             {!unclaimedOrgAdmin && (
               <AccountOption
-                icon={PersonIcon}
-                label={t("repMyselfButton")}
+                icon={AdminPanelSettingsOutlined}
+                label={t.rich("repCustodianButton", {
+                  bold: chunks => <strong>{chunks}</strong>,
+                  br: () => <br />,
+                })}
                 onClick={handleSelect}
-                name={AccountType.USER}
-                selected={selected}
+                name={AccountType.CUSTODIAN}
+                selected={selectedAccountType}
                 disabled={!!unclaimedOrgAdmin}
               />
             )}
@@ -203,7 +227,11 @@ export default function AccountConfirm() {
                 disabled={!hasAcceptedTerms}
               />
             }
-            label={t.rich("termsLabel", { bold: renderBoldText })}
+            label={
+              <Typography fontSize={14} textAlign="left" maxWidth={300}>
+                {t.rich("termsLabel", { bold: renderBoldText })}
+              </Typography>
+            }
           />
           <LoadingButton
             onClick={handleRegister}
@@ -225,7 +253,7 @@ export default function AccountConfirm() {
       </Box>
 
       <TermsAndConditionsModal
-        accountType={selected}
+        accountType={selectedAccountType}
         open={isModalOpen}
         onClose={handleCloseModal}
         onAccept={handleAcceptTerms}
