@@ -63,7 +63,7 @@ export default function Guidance({
                 {infoTitle}
               </GuidanceTitle>
               <Box sx={{ overflowY: "auto" }}>
-                <Markdown>{info}</Markdown>
+                {typeof info === "string" ? <Markdown>{info}</Markdown> : info}
               </Box>
             </StyledInfo>
           </Collapse>
