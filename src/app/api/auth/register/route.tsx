@@ -8,6 +8,7 @@ export async function GET(req: Request) {
   const cookieStore = cookies();
   const { searchParams } = new URL(req.url);
   const code = searchParams.get("code");
+  const accountType = searchParams.get("state");
 
   cookieStore.delete("redirectPath");
 
@@ -47,7 +48,9 @@ export async function GET(req: Request) {
     });
 
     return NextResponse.redirect(
-      encodeURI(`${process.env.NEXT_PUBLIC_LOCAL_ENV}/en/register`)
+      encodeURI(
+        `${process.env.NEXT_PUBLIC_LOCAL_ENV}/en/register?type=${accountType}`
+      )
     );
   } catch (e) {
     console.error(e);
