@@ -46,7 +46,7 @@ describe("<AccountConfirm />", () => {
     render(<AccountConfirm />);
 
     const termsLink = screen.getByRole("button", {
-      name: "Terms and Conditions",
+      name: "Safe People Registry Terms and Conditions",
     });
     fireEvent.click(termsLink);
 

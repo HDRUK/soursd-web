@@ -1131,17 +1131,26 @@
     "signOutButton": "Sign Out"
   },
   "Register": {
-    "title": "Confirm account type",
+    "title": "What would you like to do?",
     "claimOrgAccount": "Claim your admin account",
     "postOrganisationUnclaimedError": "Unable to create the initial organisation data, please try again. Alternatively, please contact us at <contactLink></contactLink>",
     "failedToRegister": "Failed to register account. Have you already registered?",
-    "repOrgButton": "I represent an organisation",
-    "repMyselfButton": "I represent myself as an individual",
-    "termsLabel": "I confirm I have and agree to Safe People Registry <bold> Terms and Conditions </bold>",
+    "repOrgButton": "Set up my <bold>Organisation</bold> account",
+    "repMyselfButton": "Show I'm safe to access sensitive data as a <bold>User</bold>",
+    "repCustodianButton": "Set up my <br></br><bold>Data Custodian</bold> account",
+    "termsLabel": "I confirm I have read and agreed to the <bold>Safe People Registry Terms and Conditions</bold>",
     "continueButton": "Continue",
     "inviteAccepted": "This invite has already been accepted. If you are having problems accessing the platform, please contact us at <contactLink></contactLink>",
     "loadingAriaLabel": "Registering",
-    "registeringCustodianAriaLabel": "Registering custodian"
+    "registeringCustodianAriaLabel": "Registering custodian",
+    "defaultTitle": "Guidance",
+    "defaultGuidance": "Select an option to view more information about account types.\n\n**Note:** If you hold multiple roles, you'll need a separate account for each.",
+    "userTitle": "Users",
+    "userGuidance": "SOURSD is for individuals who need access to sensitive data for research or development. It allows you to create a profile with your identity, training, experience, and affiliations (e.g. an employer or academic institution – referred to as an Organisation in SOURSD).\n\nYour profile isn’t public, but verified UK Data Custodians can view it when assessing data access requests, helping them evaluate the Safe People part of the Five Safes Framework.\n\nTypical SOURSD users include researchers, data analysts, and AI developers from sectors like academia, industry, and the public sector. If you want to:\n- setup, view, or edit your profile\n- request affiliation from an Organisation\n- view your current or past projects\n\nthen please choose this option.\n\n**Note**: If you hold multiple roles, you'll need a separate account for each.",
+    "organisationTitle": "Organisations",
+    "organisationGuidance": "SOURSD helps Organisations that employ or teach researchers working with sensitive data to create a profile with key information such as identity and data security compliance.\n\nYou can:\n- View and manage affiliated User profiles\n- Approve or remove Users from projects\n- Notify Data Custodians when a User leaves your Organisation\n- See which projects your Users are involved in\n\nData Custodians use this information to assess the Safe People part of the Five Safes Framework. If you're representing an Organisation and want to take any of the above actions, choose this option.\n\n**Note:** If you hold multiple roles, you’ll need a separate account for each.",
+    "custodianTitle": "Data Custodians",
+    "custodianGuidance": "SOURSD enables Data Custodian access to User and Organisation profiles, supporting assessment of the Safe People component of the Five Safes Framework.\n\nIf you manage secure research data (e.g. via a Trusted Research Environment, Safe Haven, or Secure Data Environment) and need to:\n- View or edit your Organisation profile\n- Validate Users and Organisations\n- Manage projects (past and present)\n- Configure User permissions for data access\n\nthen please choose this option.\n\n**Note:** If you hold multiple roles, you’ll need a separate account for each."
   },
   "ProjectUserCard": {
     "notFound": {
