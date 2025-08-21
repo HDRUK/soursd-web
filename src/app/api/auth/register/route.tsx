@@ -47,11 +47,12 @@ export async function GET(req: Request) {
       maxAge: refresh_expires_in,
     });
 
-    return NextResponse.redirect(
-      encodeURI(
-        `${process.env.NEXT_PUBLIC_LOCAL_ENV}/en/register?type=${accountType}`
-      )
-    );
+    const baseUrl = `${process.env.NEXT_PUBLIC_LOCAL_ENV}/en/register`;
+    const url = accountType
+      ? `${baseUrl}?type=${encodeURIComponent(accountType)}`
+      : baseUrl;
+
+    return NextResponse.redirect(encodeURI(url));
   } catch (e) {
     console.error(e);
 
