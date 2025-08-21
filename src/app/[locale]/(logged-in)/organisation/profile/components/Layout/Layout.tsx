@@ -1,5 +1,4 @@
 import { ReactNode } from "react";
-import useApplicationRedirects from "@/hooks/useApplicationRedirects";
 import { PageTabs } from "../../consts/tabs";
 import TabsSections from "../TabsSections";
 
@@ -11,7 +10,6 @@ interface LayoutProps {
 }
 
 async function Layout({ children, params: { tabId } }: LayoutProps) {
-  await useApplicationRedirects();
 
   return (
     <>
