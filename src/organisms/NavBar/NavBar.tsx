@@ -15,17 +15,15 @@ import {
 import { useTranslations } from "next-intl";
 import { MouseEvent, useEffect, useState } from "react";
 import getMe from "@/services/auth/getMe";
+import { useRouter } from "next/navigation";
+import { ROUTES } from "@/consts/router";
 import HorizontalDrawer from "../../components/HorizontalDrawer";
 import MaskLabel from "../../components/MaskLabel";
 import SoursdLogo from "../../components/SoursdLogo";
 import { CONTACT_MAIL_ADDRESS } from "../../config/contacts";
 import PageCenter from "../../modules/PageCenter";
 import { getInitials } from "../../utils/application";
-import {
-  handleLogin,
-  handleLogout,
-  handleRegister,
-} from "../../utils/keycloak";
+import { handleLogin, handleLogout } from "../../utils/keycloak";
 import NotificationsMenu from "../NotificationsMenu";
 import { StyledContainer, StyledHeader } from "./NavBar.styles";
 
@@ -95,6 +93,7 @@ function renderButtons(
 
 export default function NavBar() {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_NAVBAR);
+  const router = useRouter();
   const [storedUser, setUser] = useStore(store => [
     store.getUser(),
     store.setUser,
@@ -179,8 +178,7 @@ export default function NavBar() {
             text: t("registerButton"),
             onClick: (e: MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
               e.preventDefault();
-
-              handleRegister();
+              router.push(ROUTES.register.path);
             },
           },
         ]),

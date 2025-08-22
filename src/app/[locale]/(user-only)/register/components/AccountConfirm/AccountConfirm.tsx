@@ -16,33 +16,55 @@ import {
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
-import useRegisterUser from "@/hooks/useRegisterUser";
 import TermsAndConditionsModal from "@/components/TermsAndConditionsModal";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { showAlert } from "@/utils/showAlert";
 import Cookies from "js-cookie";
 import { useQuery } from "@tanstack/react-query";
 import { getUserByIdQuery } from "@/services/users";
 import { User } from "@/types/application";
-import { UserGroup } from "@/consts/user";
 import { getCombinedQueryState } from "@/utils/query";
 import { ROUTES } from "@/consts/router";
+import useRegisterUser from "@/hooks/useRegisterUser";
+import { handleRegister as handleRegisterKeycloak } from "@/utils/keycloak";
+import { UserGroup } from "@/consts/user";
+import useAuth from "@/hooks/useAuth";
+import LoadingWrapper from "@/components/LoadingWrapper";
 import AccountOption from "../AccountOption";
 
 const NAMESPACE_TRANSLATIONS_PROFILE = "Register";
 const NAMESPACE_TRANSLATION_TERMS_AND_CONDITIONS = "TermsAndConditions";
 
-export default function AccountConfirm() {
+interface AccountConfirmProps {
+  showAccountPicker: boolean;
+  pendingAccount: boolean;
+  hasAccessToken: boolean;
+}
+
+const isValidAccountType = (accountType?: string | null) => {
+  return (
+    accountType === AccountType.USER || accountType === AccountType.ORGANISATION
+  );
+};
+
+export default function AccountConfirm({
+  showAccountPicker,
+  pendingAccount,
+  hasAccessToken,
+}: AccountConfirmProps) {
   const t = useTranslations(NAMESPACE_TRANSLATIONS_PROFILE);
   const tTerms = useTranslations(NAMESPACE_TRANSLATION_TERMS_AND_CONDITIONS);
   const router = useRouter();
+  const auth = useAuth();
 
   const digiIdent = Cookies.get("account_digi_ident");
+  const storedAccountType = Cookies.get("account_type");
 
   const { data: unclaimedUserData, ...unclaimedUserQueryState } = useQuery({
     ...getUserByIdQuery(digiIdent as string),
     enabled: !!digiIdent,
   });
+  const params = useSearchParams();
 
   const [selectedAccountType, setSelectedAccountType] =
     useState<AccountType | null>(null);
@@ -52,6 +74,8 @@ export default function AccountConfirm() {
 
   const [unclaimedOrgAdmin, setUnclaimedOrgAdmin] =
     useState<Partial<User> | null>(null);
+
+  const accountType = params?.get("type") || storedAccountType;
 
   useEffect(() => {
     const user = unclaimedUserData?.data;
@@ -69,13 +93,27 @@ export default function AccountConfirm() {
   }, [unclaimedOrgAdmin]);
 
   const { handleRegister, ...registerUserState } = useRegisterUser({
-    selected: selectedAccountType,
+    accountType: accountType || selectedAccountType,
     unclaimedOrgAdmin,
   });
 
   const handleSelect = (option: AccountType) => {
     setSelectedAccountType(option);
   };
+
+  // Create a new account automatically if type query param exists
+  useEffect(() => {
+    if (
+      pendingAccount &&
+      auth.user &&
+      accountType &&
+      isValidAccountType(accountType) &&
+      !unclaimedUserData &&
+      !unclaimedUserQueryState.isLoading
+    ) {
+      handleRegister(auth.user);
+    }
+  }, [params, pendingAccount, auth.user, accountType]);
 
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
@@ -141,6 +179,23 @@ export default function AccountConfirm() {
 
   const { isLoading, isError, error } = queryState;
 
+  // Show loader while creating user or org if cookie and account type are available
+  if (pendingAccount && isValidAccountType(accountType)) {
+    return (
+      <Box
+        sx={{
+          height: "70vh",
+          position: "relative",
+        }}>
+        <LoadingWrapper loading={!isError}>
+          <Message severity="error" sx={{ mb: 3 }}>
+            {t(error)}
+          </Message>
+        </LoadingWrapper>
+      </Box>
+    );
+  }
+
   return (
     <Guidance
       infoTitle={t(`${selectedAccountType || "default"}Title`)}
@@ -160,7 +215,7 @@ export default function AccountConfirm() {
           </Typography>
         </Box>
 
-        {!unclaimedUserQueryState.isLoading && (
+        {!unclaimedUserQueryState.isLoading && showAccountPicker && (
           <Box
             sx={{
               display: "flex",
@@ -216,35 +271,58 @@ export default function AccountConfirm() {
             justifyContent: "center",
             gap: 1,
           }}>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={termsChecked}
-                onChange={e => setTermsChecked(e.target.checked)}
-                disabled={!hasAcceptedTerms}
-              />
-            }
-            label={
-              <Typography fontSize={14} textAlign="left" maxWidth={300}>
-                {t.rich("termsLabel", { bold: renderBoldText })}
-              </Typography>
-            }
-          />
-          <LoadingButton
-            onClick={handleRegister}
-            variant="contained"
-            disabled={isContinueDisabled || isLoading}
-            sx={{ p: 2 }}
-            fullWidth>
-            {t("continueButton")}
-          </LoadingButton>
+          {(!accountType ||
+            !auth.user ||
+            !unclaimedOrgAdmin ||
+            !unclaimedUserData) && (
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={termsChecked}
+                  onChange={e => setTermsChecked(e.target.checked)}
+                  disabled={!hasAcceptedTerms}
+                />
+              }
+              label={
+                <Typography fontSize={14} textAlign="left" maxWidth={300}>
+                  {t.rich("termsLabel", { bold: renderBoldText })}
+                </Typography>
+              }
+            />
+          )}
+
+          {!pendingAccount && (
+            <LoadingButton
+              onClick={() => {
+                Cookies.set("account_type", selectedAccountType!);
+                handleRegisterKeycloak(selectedAccountType);
+              }}
+              variant="contained"
+              disabled={isContinueDisabled || isLoading}
+              sx={{ p: 2 }}
+              fullWidth>
+              {t("continueButton")}
+            </LoadingButton>
+          )}
+
+          {hasAccessToken && (
+            <LoadingButton
+              onClick={() => auth.user && handleRegister(auth.user)}
+              disabled={registerUserState.isLoading}
+              variant="contained"
+              sx={{ p: 2 }}
+              fullWidth>
+              {t("continueButton")}
+            </LoadingButton>
+          )}
+
           {isError && (
             <Message severity="error" sx={{ mb: 3 }}>
               {t(error)}
             </Message>
           )}
         </Box>
-        {(!hasAcceptedTerms || !termsChecked) && (
+        {(!hasAcceptedTerms || !termsChecked) && !pendingAccount && (
           <Message severity="info">{tTerms("termsAndConditionsInfo")}</Message>
         )}
       </Box>
