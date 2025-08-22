@@ -10,7 +10,6 @@ interface LayoutProps {
 }
 
 async function Layout({ children, params: { tabId } }: LayoutProps) {
-
   return (
     <>
       <TabsSections tabId={tabId} />
