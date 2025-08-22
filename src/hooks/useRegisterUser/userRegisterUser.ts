@@ -98,11 +98,11 @@ export default function useRegisterUser({
           last_name: user?.family_name,
           unclaimed: 0,
         });
-      } else {
-        await mutateRegisterNewUser({
-          account_type: accountType,
-        });
       }
+
+      await mutateRegisterNewUser({
+        account_type: accountType,
+      });
     }
 
     router.replace(getProfilePathByEntity(accountType));
