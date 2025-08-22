@@ -88,18 +88,17 @@ export default function useRegisterUser({
 
       // Set unclaimed org to claimed
       await mutateAsyncOrganisation({ unclaimed: 0 });
+    } else if (accountType === AccountType.ORGANISATION) {
+      // No invite - Create new org
+      await mutateAsyncRegisterNewOrganisation({
+        organisation_name: `${user?.given_name} ${user?.family_name} Org`,
+        lead_applicant_email: user?.email,
+        first_name: user?.given_name,
+        last_name: user?.family_name,
+        unclaimed: 0,
+      });
     } else {
-      // No invite - Create new org and user or just user
-      if (accountType === AccountType.ORGANISATION) {
-        await mutateAsyncRegisterNewOrganisation({
-          organisation_name: `${user?.given_name} ${user?.family_name} Org`,
-          lead_applicant_email: user?.email,
-          first_name: user?.given_name,
-          last_name: user?.family_name,
-          unclaimed: 0,
-        });
-      }
-
+      // No invite - Create user
       await mutateRegisterNewUser({
         account_type: accountType,
       });
