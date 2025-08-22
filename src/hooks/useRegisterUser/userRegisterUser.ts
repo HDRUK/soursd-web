@@ -2,6 +2,8 @@ import { useRouter } from "@/i18n/routing";
 import { AccountType } from "@/types/accounts";
 import { useMutation } from "@tanstack/react-query";
 import { Auth, User } from "@/types/application";
+import { getProfilePathByEntity } from "@/utils/redirects";
+import Cookies from "js-cookie";
 import {
   postClaimUser,
   postRegister,
@@ -9,14 +11,12 @@ import {
   PostClaimUserPayload,
 } from "../../services/auth";
 import {
+  postOrganisationNewAccount,
   PostOrganisationNewAccountPayload,
   putOrganisation,
   PutOrganisationPayload,
 } from "../../services/organisations";
 import { getCombinedQueryState } from "../../utils/query";
-import Cookies from "js-cookie";
-import { getProfilePathByEntity } from "@/utils/redirects";
-import postOrganisationNewAccount from "@/services/organisations/postOrganisationNewAccount";
 
 interface UseRegisterUserArgs {
   accountType: AccountType | null;
