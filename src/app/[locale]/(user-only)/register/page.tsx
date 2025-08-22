@@ -8,7 +8,7 @@ import AccountConfirm from "./components/AccountConfirm/AccountConfirm";
 
 async function Page({ searchParams }: { searchParams: SearchParams }) {
   const hasAccessToken = !!cookies().get("access_token");
-  const showAccountPicker = !searchParams.type;
+  const showAccountPicker = !searchParams.type || !hasAccessToken;
 
   const { data } = await getMe({ suppressThrow: true });
 
